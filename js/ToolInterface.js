@@ -2,7 +2,7 @@ var studioMenubar;
 var materials;
 var projectFiles;
 var gameStage;
-var stageTitle;
+var stageList;
 function ToolInterface(){
 }
 ToolInterface.init = function(){
@@ -33,7 +33,7 @@ ToolInterface.init = function(){
 	ToolInterface.titleInit();
 };
 ToolInterface.titleInit = function(){
-	stageTitle = new LSprite();
+	var stageTitle = new LSprite();
 	var closeButton = new LButton(new LBitmap(new LBitmapData(datalist["iconClose"],0,0,24,24)),new LBitmap(new LBitmapData(datalist["iconClose"],24,0,24,24)));
 	closeButton.x = 5;
 	closeButton.y = 12;
