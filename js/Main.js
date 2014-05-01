@@ -4,7 +4,9 @@ var stageLayer;
 var loadingLayer;
 var datalist;
 var loadData = [
-{path:"./images/translucent.png",name:"translucent"},
+{path:"./images/iconPlay.png",name:"iconPlay"},
+{path:"./images/iconStop.png",name:"iconStop"},
+{path:"./images/iconClose.png",name:"iconClose"},
 {path:"./js/StudioMenubar.js",type:"js"},
 {path:"./js/ProjectFiles.js",type:"js"},
 {path:"./js/Materials.js",type:"js"},

@@ -3,7 +3,19 @@ function Materials(){
 	base(self,LSprite,[]);
 	self.graphics.drawRect(2,"#000000",[0,0,200,500],true,"#333333");
 	self.graphics.drawRect(2,"#000000",[1,1,200,23],true,"#222222");
-	self.graphics.drawRect(1,"#000000",[0,500,200,200],true,"#FFFFFF");
+	//self.graphics.drawRect(1,"#000000",[0,500,200,200],true,"#000000");
+	var translucentLayer = new LSprite();
+	for(var i=0;i<19;i++){
+		for(var j=0;j<20;j++){
+			translucentLayer.graphics.drawRect(0,"#CCCCCC",[(i+j)%2==1?(i*10):(10 + i*10),j*10,10,10],true,"#FFFFFF");
+			translucentLayer.graphics.drawRect(0,"#CCCCCC",[(i+j)%2==0?(i*10):(10 + i*10),j*10,10,10],true,"#CCCCCC");
+		}
+	}
+	var translucentBitmapData = new LBitmapData(null,0,0,200,200);
+	translucentBitmapData.draw(translucentLayer);
+	var translucentBitmap = new LBitmap(translucentBitmapData);
+	self.addChild(translucentBitmap);
+	translucentBitmap.y = 500;
 	
 	var title = new LTextField();
 	title.x = 3;
@@ -29,7 +41,16 @@ Materials.prototype.add = function(name,image){
 	self.showLayer.addChild(child);
 	var label = new LTextField();
 	label.x = 3;
-	label.text = name;
+	label.name = name;
+	var i=10;
+	do{
+		label.text = name.substring(0,i++);
+		if(label.getWidth() > 170){
+			i--;
+			break;
+		}
+	}while(i < name.length);
+	label.text = name.substring(0,i);
 	label.color = "#FFFFFF";
 	child.addChild(label);
 	child.data = new LBitmapData(image);
