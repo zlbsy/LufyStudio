@@ -36,10 +36,12 @@ function StudioMenubar(){
 		]}
 	];
 	var back = new LSprite();
+	self.back = back;
 	self.addChild(back);
 	var menu = new LMenubar(list,{textSize:20,textColor:"#FFFFFF",lineColor:"#000000",backgroundColor:"#333333"});
-	self.addChild(menu);
-	back.graphics.drawRect(0,"#000000",[0,0,LGlobal.width,menu.getHeight()],true,"#333333");
+	self.menu = menu;
+	self.addChild(self.menu);
+	self.back.graphics.drawRect(0,"#000000",[0,0,LGlobal.width,menu.getHeight()],true,"#333333");
 }
 StudioMenubar.prototype.aboutStudio = function(e){
 	LMessageBox.show({
