@@ -1,13 +1,16 @@
 var studioMenubar;
 var materials;
+var property;
 var projectFiles;
 var gameStage;
 var stageList = [];
 var playLayer;
+var titleLayer;
 function ToolInterface(){
 }
 ToolInterface.init = function(){
-	
+	titleLayer = new LSprite();
+	stageLayer.addChild(titleLayer);
 	gameStage = new LSprite();
 	gameStage.graphics.drawRect(1,"#333333",[0,0,800,480],true,"#FFFFFF");
 	stageLayer.addChild(gameStage);
@@ -15,45 +18,66 @@ ToolInterface.init = function(){
 	studioMenubar = new StudioMenubar();
 	rootLayer.addChild(studioMenubar);
 	stageLayer.y = studioMenubar.getHeight();
+	
 	materials = new Materials();
 	materials.x = LGlobal.width - materials.getWidth();
 	stageLayer.addChild(materials);
+	
+	property = new Property();
+	property.x = LGlobal.width - property.getWidth();
+	stageLayer.addChild(property);
+	
+	materials.toshow();
 	
 	projectFiles = new ProjectFiles();
 	projectFiles.x = materials.x - projectFiles.getWidth();
 	stageLayer.addChild(projectFiles);
 	
 	playLayer = new LSprite();
+	playLayer.addEventListener(LMouseEvent.DOUBLE_CLICK,function(e){alert("db");});
 	var iconPlay = new LBitmap(new LBitmapData(datalist["iconPlay"]));
-	iconPlay.x = (iconPlay.getWidth()*3 + 6 - iconPlay.getWidth())*0.5;
+	iconPlay.x = 2;
 	playLayer.addChild(iconPlay);
-	playLayer.graphics.drawRect(1,"#000000",[0,0,iconPlay.getWidth()*3 + 6,48],true,"#666666");
+	var iconStop = new LBitmap(new LBitmapData(datalist["iconStop"]));
+	//iconStop.x = (iconPlay.getWidth()*3 + 6 - iconPlay.getWidth())*0.5;
+	iconStop.x = iconPlay.getWidth() + 4;
+	playLayer.addChild(iconStop);
+	var iconOut = new LBitmap(new LBitmapData(datalist["iconOut"]));
+	iconOut.x = iconPlay.getWidth()*2 + 6;
+	playLayer.addChild(iconOut);
+	playLayer.graphics.drawRect(1,"#000000",[0,0,iconPlay.getWidth()*3 + 6,32],true,"#666666");
 	playLayer.x = (LGlobal.width - playLayer.getWidth())*0.5;
 	stageLayer.addChild(playLayer);
 	
 	gameStage.y = iconPlay.getHeight();
 	window.onresize = ToolInterface.onresize;
 	
-	ToolInterface.titleInit();
+	ToolInterface.titleInit("舞台",new LSprite());
+	//ToolInterface.titleInit("舞台",gameStage);
 };
-ToolInterface.titleInit = function(){
+ToolInterface.titleInit = function(_name,_stage){
+	var closeButton,startX=titleLayer.getWidth();
 	var stageTitle = new LSprite();
-	var closeButton = new LButton(new LBitmap(new LBitmapData(datalist["iconClose"],0,0,24,24)),new LBitmap(new LBitmapData(datalist["iconClose"],24,0,24,24)));
-	closeButton.x = 5;
-	closeButton.y = 12;
-	stageTitle.addChild(closeButton);
-	
+	stageTitle.stage = _stage;
+	stageTitle.y = 3;
+	if(stageList.length > 0){
+		closeButton = new LButton(new LBitmap(new LBitmapData(datalist["iconClose"],0,0,24,24)),new LBitmap(new LBitmapData(datalist["iconClose"],24,0,24,24)));
+		closeButton.x = startX+5;
+		closeButton.y = 4;
+		stageTitle.addChild(closeButton);
+	}
 	var titleLabel = new LTextField();
-	titleLabel.text = "舞台";
+	titleLabel.text = _name;
 	titleLabel.color = "#FFFFFF";
-	titleLabel.size = 14;
-	titleLabel.x = closeButton.x + 30;
-	titleLabel.y = closeButton.y;
+	titleLabel.size = 12;
+	titleLabel.x = startX + 10 + (closeButton?closeButton.getWidth():0);
+	titleLabel.y = 8;
 	stageTitle.addChild(titleLabel);
 	
-	stageTitle.graphics.drawRect(1,"#000000",[0,0,200,48],true,"#666666");
-	stageLayer.addChild(stageTitle);
-	stageList.push(stageTitle);
+	stageTitle.graphics.drawRoundRect(1,"#000000",[titleLayer.getWidth(),0,titleLabel.x + titleLabel.getWidth() + 10 - startX,40,10],true,"#666666");
+	titleLayer.addChild(stageTitle);
+	gameStage.addChild(_stage);
+	stageList.push(stageTitle.stage);
 };
 
 LGlobal.onShow = function (){
@@ -90,10 +114,14 @@ ToolInterface.resize = function(){
 	rootLayer.graphics.clear();
 	rootLayer.graphics.drawRect(0,"#000000",[0,0,LGlobal.width,LGlobal.height],true,"#999999");
 	
+	var backgroundColor=LGlobal.canvas.createLinearGradient(0,-20,0,30);
+	backgroundColor.addColorStop(0,"#FFFFFF");
+	backgroundColor.addColorStop(1,"#000000");
 	studioMenubar.back.graphics.clear();
-	studioMenubar.back.graphics.drawRect(0,"#000000",[0,0,LGlobal.width,studioMenubar.menu.getHeight()],true,"#333333");
+	studioMenubar.back.graphics.drawRect(0,"#000000",[0,0,LGlobal.width,studioMenubar.menu.getHeight()],true,backgroundColor);
 	
 	materials.x = LGlobal.width - materials.getWidth();
+	property.x = LGlobal.width - materials.getWidth();
 	projectFiles.x = materials.x - projectFiles.getWidth();
 	playLayer.x = (LGlobal.width - playLayer.getWidth())*0.5;
 	

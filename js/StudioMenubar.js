@@ -13,7 +13,7 @@ function StudioMenubar(){
 				{label:"LSprite",click:function(){trace("文件");}},
 				{label:"LAnimationTimeline",click:function(){trace("文件");}},
 				{label:"LBitmap",click:function(){trace("文件");}},
-				{label:"LBitmapData",click:function(){trace("文件");}}
+				{label:"LBitmapData",click:function(){setTimeout(function(){self.createBitmapData();},50);}}
 			]},
 			{label:"读取工程",click:function(){trace("File");}},
 			{label:"读取图片",click:self.loadImage}
@@ -38,10 +38,23 @@ function StudioMenubar(){
 	var back = new LSprite();
 	self.back = back;
 	self.addChild(back);
-	var menu = new LMenubar(list,{textSize:20,textColor:"#FFFFFF",lineColor:"#000000",backgroundColor:"#333333"});
+	
+	var backgroundColor=LGlobal.canvas.createLinearGradient(0,-20,0,30);
+	backgroundColor.addColorStop(0,"#FFFFFF");
+	backgroundColor.addColorStop(1,"#000000");
+	/*
+	var selectColor=LGlobal.canvas.createLinearGradient(0,-10,0,30);
+	selectColor.addColorStop(0,"#FFFFFF");
+	selectColor.addColorStop(1,"#1E90FF");*/
+	var menu = new LMenubar(list,{textSize:20,textColor:"#FFFFFF",lineColor:"#000000",backgroundColor:backgroundColor,itemBackgroundColor:"#333333"});
+	
+	
+	//var menu = new LMenubar(list,{textSize:16,textColor:"#FFFFFF",lineColor:"#000000",backgroundColor:"#333333"});
 	self.menu = menu;
 	self.addChild(self.menu);
-	self.back.graphics.drawRect(0,"#000000",[0,0,LGlobal.width,menu.getHeight()],true,"#333333");
+	self.back.graphics.drawRect(0,"#000000",[0,0,LGlobal.width,menu.getHeight()],true,backgroundColor);
+	//self.menu.mainMenuHide();
+	//self.menu.openMainMenu(0);
 }
 StudioMenubar.prototype.aboutStudio = function(e){
 	LMessageBox.show({
@@ -104,4 +117,34 @@ StudioMenubar.prototype.loadImageComplete = function(e){
 	return;
 	var b = new LBitmap(new LBitmapData(loader.content));
 	addChild(b);
+};
+StudioMenubar.prototype.createBitmapData = function(){
+	var self = this;
+	/*
+	var display = new LSprite();
+	display.graphics.drawRect(0,"#000000",[0,0,400,300]);
+	var nameLabel = new LTextField();
+	nameLabel.x = 50;
+	nameLabel.y = 50;
+	nameLabel.color="#000000";
+	nameLabel.text = "名字";
+	display.addChild(nameLabel);
+	var nameInput = new LTextField();
+	nameInput.x = 150;
+	nameInput.y = nameLabel.y + 5;
+	nameInput.text = "LBitmapData1";
+	nameInput.setType(LTextFieldType.INPUT);
+	display.addChild(nameInput);
+	setTimeout(function(){
+		LMessageBox.show({title:"新建LBitmapData",displayObject:display});
+	},100);
+	return;*/
+
+		var bitmapDataStage = new LSprite();
+		bitmapDataStage.addChild(new LBitmap(new LBitmapData("#000000",0,0,200,200)));
+		bitmapDataStage.addChild(new LBitmap(new LBitmapData("#000000",0,0,200,200)));
+		bitmapDataStage.childType = "LBitmapData";
+		bitmapDataStage.name = "LBitmapData"+bitmapDataStage.objectIndex;
+		ToolInterface.titleInit("LBitmapData",bitmapDataStage);
+		projectFiles.add(bitmapDataStage.name,bitmapDataStage);
 };

@@ -6,16 +6,20 @@ var datalist;
 var loadData = [
 {path:"./images/iconPlay.png",name:"iconPlay"},
 {path:"./images/iconStop.png",name:"iconStop"},
+{path:"./images/iconOut.png",name:"iconOut"},
 {path:"./images/iconClose.png",name:"iconClose"},
 {path:"./js/StudioMenubar.js",type:"js"},
 {path:"./js/ProjectFiles.js",type:"js"},
 {path:"./js/Materials.js",type:"js"},
+{path:"./js/Property.js",type:"js"},
+{path:"./js/LBitmapDataMenu.js",type:"js"},
 {path:"./js/ToolInterface.js",type:"js"}
 ];
 function main(){
 	LMouseEventContainer.set(LMouseEvent.MOUSE_DOWN,true);
 	LMouseEventContainer.set(LMouseEvent.MOUSE_UP,true);
 	LMouseEventContainer.set(LMouseEvent.MOUSE_MOVE,true);
+	LMouseEventContainer.set(LMouseEvent.DOUBLE_CLICK,true);
 	LGlobal.setDebug(true);
 	
 	initLayer();
