@@ -50,6 +50,9 @@ ToolInterface.init = function(){
 	stageLayer.addChild(playLayer);
 	
 	gameStage.y = iconPlay.getHeight();
+	gameStage.mask = new LSprite();
+	gameStage.mask.y = gameStage.y;
+	gameStage.mask.graphics.drawRect(0,"#333333",[0,0,LGlobal.width,LGlobal.height]);
 	window.onresize = ToolInterface.onresize;
 	
 	ToolInterface.titleInit("舞台",new LSprite());

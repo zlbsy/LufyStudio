@@ -76,16 +76,19 @@ Property.prototype.frameBitmapData = function(e){
 	if(s.input.text > s.max)s.input.text = s.max;
 	if(s.input.text < s.min)s.input.text = s.min;
 	var bitmapData = s.root.displayObject.getChildAt(1).bitmapData;
+	var bitmap = s.root.displayObject.getChildAt(1);
 	var bitmapDataBack = s.root.displayObject.getChildAt(0);
-	bitmapDataBack.alpha = 0.2;
+	bitmapDataBack.alpha = 0.4;
 	switch(s.input.name){
 		case "x":
 			bitmapData.setProperties(s.input.text,bitmapData.y,bitmapData.width,bitmapData.height);
-			bitmapDataBack.x = -bitmapData.x;
+			//bitmapDataBack.x = -bitmapData.x;
+			bitmap.x = bitmapData.x;
 			break;
 		case "y":
 			bitmapData.setProperties(bitmapData.x,s.input.text,bitmapData.width,bitmapData.height);
-			bitmapDataBack.y = -bitmapData.y;
+			//bitmapDataBack.y = -bitmapData.y;
+			bitmap.y = bitmapData.y;
 			break;
 		case "width":
 			bitmapData.setProperties(bitmapData.x,bitmapData.y,s.input.text,bitmapData.height);
@@ -153,7 +156,7 @@ Property.prototype.toshowBitmapData = function(displayObject){
 	xInput.text = displayObject.getChildAt(1).bitmapData.x;
 	xInput.setType(LTextFieldType.INPUT,xBack);
 	self.showLayer.addChild(xInput);
-	self.setMouseEventBitmapData(xLabel,xInput,0,parseInt(displayObject.getChildAt(1).bitmapData.width));
+	self.setMouseEventBitmapData(xLabel,xInput,0,parseInt(displayObject.getChildAt(1).bitmapData.image.width));
 	
 	var yLabel = new LTextField();
 	yLabel.color = "#FFFFFF";
@@ -172,7 +175,7 @@ Property.prototype.toshowBitmapData = function(displayObject){
 	yInput.text = displayObject.getChildAt(1).bitmapData.y;
 	yInput.setType(LTextFieldType.INPUT,yBack);
 	self.showLayer.addChild(yInput);
-	self.setMouseEventBitmapData(yLabel,yInput,0,parseInt(displayObject.getChildAt(1).bitmapData.height));
+	self.setMouseEventBitmapData(yLabel,yInput,0,parseInt(displayObject.getChildAt(1).bitmapData.image.height));
 	
 	
 	var sizeLabel = new LTextField();
@@ -199,7 +202,7 @@ Property.prototype.toshowBitmapData = function(displayObject){
 	wInput.text = displayObject.getChildAt(1).bitmapData.width;
 	wInput.setType(LTextFieldType.INPUT,wBack);
 	self.showLayer.addChild(wInput);
-	self.setMouseEventBitmapData(wLabel,wInput,0,parseInt(displayObject.getChildAt(1).bitmapData.width));
+	self.setMouseEventBitmapData(wLabel,wInput,0,parseInt(displayObject.getChildAt(1).bitmapData.image.width));
 	
 	var hLabel = new LTextField();
 	hLabel.color = "#FFFFFF";
@@ -218,5 +221,5 @@ Property.prototype.toshowBitmapData = function(displayObject){
 	hInput.text = displayObject.getChildAt(1).bitmapData.height;
 	hInput.setType(LTextFieldType.INPUT,hBack);
 	self.showLayer.addChild(hInput);
-	self.setMouseEventBitmapData(hLabel,hInput,0,parseInt(displayObject.getChildAt(1).bitmapData.height));
+	self.setMouseEventBitmapData(hLabel,hInput,0,parseInt(displayObject.getChildAt(1).bitmapData.image.height));
 };
