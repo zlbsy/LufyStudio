@@ -13,6 +13,7 @@ var loadData = [
 {path:"./js/Materials.js",type:"js"},
 {path:"./js/Property.js",type:"js"},
 {path:"./js/LBitmapDataMenu.js",type:"js"},
+{path:"./js/LBitmapDataObject.js",type:"js"},
 {path:"./js/ToolInterface.js",type:"js"}
 ];
 function main(){

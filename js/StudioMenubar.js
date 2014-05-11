@@ -13,10 +13,11 @@ function StudioMenubar(){
 				{label:"LSprite",click:function(){trace("文件");}},
 				{label:"LAnimationTimeline",click:function(){trace("文件");}},
 				{label:"LBitmap",click:function(){trace("文件");}},
-				{label:"LBitmapData",click:function(){setTimeout(function(){self.createBitmapData();},50);}}
+				{label:"LBitmapData",click:function(){self.createBitmapData();}}
 			]},
 			{label:"读取工程",click:function(){trace("File");}},
-			{label:"读取图片",click:self.loadImage}
+			{label:"读取图片",click:self.loadImage},
+			{label:"保存",click:self.save}
 		]},
 		{label:"编辑",list:[
 			{label:"Test1",click:function(){trace("Test1");}},
@@ -67,6 +68,18 @@ StudioMenubar.prototype.aboutAuthor = function(e){
 		title:"关于作者",
 		message:"测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试"
 	});
+};
+StudioMenubar.prototype.save = function(e){
+	var self = e.target.parent;
+	var stageList = gameStage.childList;
+	var displayObject = stageList[stageList.length - 1];
+	console.log(displayObject.childType);
+	switch(displayObject.childType){
+		case "LBitmapData":
+			LBitmapDataObject.save(displayObject);
+			//self.toshowBitmapData(displayObject);
+			break;
+	}
 };
 StudioMenubar.prototype.loadImage = function(e){
 	var self = e.target.parent;
@@ -140,11 +153,11 @@ StudioMenubar.prototype.createBitmapData = function(){
 	},100);
 	return;*/
 
-		var bitmapDataStage = new LSprite();
-		bitmapDataStage.addChild(new LBitmap(new LBitmapData("#000000",0,0,200,200)));
-		bitmapDataStage.addChild(new LBitmap(new LBitmapData("#000000",0,0,200,200)));
-		bitmapDataStage.childType = "LBitmapData";
-		bitmapDataStage.name = "LBitmapData"+bitmapDataStage.objectIndex;
-		ToolInterface.titleInit("LBitmapData",bitmapDataStage);
-		projectFiles.add(bitmapDataStage.name,bitmapDataStage);
+	var bitmapDataStage = new LSprite();
+	bitmapDataStage.addChild(new LBitmap(new LBitmapData("#000000",0,0,200,200)));
+	bitmapDataStage.addChild(new LBitmap(new LBitmapData("#000000",0,0,200,200)));
+	bitmapDataStage.childType = "LBitmapData";
+	bitmapDataStage.name = "LBitmapData"+bitmapDataStage.objectIndex;
+	ToolInterface.titleInit(bitmapDataStage.name,bitmapDataStage);
+	projectFiles.add(bitmapDataStage.name,bitmapDataStage);
 };

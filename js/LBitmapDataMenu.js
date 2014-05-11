@@ -21,7 +21,9 @@ function LBitmapDataMenu(child){
 };
 LBitmapDataMenu.prototype.addToStage = function(){
 	var self = this;
+	var stageList = gameStage.childList;
 	var displayObject = stageList[stageList.length - 1];
+	console.log("LBitmapDataMenu.prototype.addToStage",displayObject);
 	if(displayObject.childType != "LBitmapData"){
 		self.remove();
 		LMessageBox.show({

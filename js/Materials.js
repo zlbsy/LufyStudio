@@ -95,6 +95,7 @@ Materials.prototype.review = function(child){
 Materials.prototype.toshow = function(e){
 	var self = this;
 	if(e)self = e.clickTarget.parent;
+	if(self.view)self.view.visible = true;
 	self.scrollbar.visible = true;
 	self.translucentBitmap.visible = true;
 	self.titleLayer.graphics.clear();

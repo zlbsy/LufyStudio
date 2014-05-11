@@ -35,12 +35,14 @@ Property.prototype.toshow = function(e){
 	self.showLayer.removeAllChild();
 	
 	self.scrollbar.visible = true;
+	if(materials.view)materials.view.visible = false;
 	materials.scrollbar.visible = false;
 	materials.translucentBitmap.visible = false;
 	self.titleLayer.graphics.clear();
 	self.titleLayer.graphics.drawRect(2,"#000000",[51,1,50,23],true,"#333333");
 	materials.titleLayer.graphics.clear();
 	materials.titleLayer.graphics.drawRect(0,"#000000",[1,1,50,23],false,"#333333");
+	var stageList = gameStage.childList;
 	var displayObject = stageList[stageList.length - 1];
 	self.displayObject = displayObject;
 	console.log(displayObject);

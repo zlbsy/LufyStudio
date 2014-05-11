@@ -3,7 +3,6 @@ var materials;
 var property;
 var projectFiles;
 var gameStage;
-var stageList = [];
 var playLayer;
 var titleLayer;
 function ToolInterface(){
@@ -59,28 +58,50 @@ ToolInterface.init = function(){
 	//ToolInterface.titleInit("舞台",gameStage);
 };
 ToolInterface.titleInit = function(_name,_stage){
-	var closeButton,startX=titleLayer.getWidth();
+	for(var i=0,l=gameStage.childList.length;i<l;i++){
+		gameStage.childList[i].visible = false;
+	}
+	var closeButton;
 	var stageTitle = new LSprite();
 	stageTitle.stage = _stage;
 	stageTitle.y = 3;
-	if(stageList.length > 0){
+	if(gameStage.childList.length > 0){
 		closeButton = new LButton(new LBitmap(new LBitmapData(datalist["iconClose"],0,0,24,24)),new LBitmap(new LBitmapData(datalist["iconClose"],24,0,24,24)));
-		closeButton.x = startX+5;
+		closeButton.x = 5;
 		closeButton.y = 4;
+		closeButton.addEventListener(LMouseEvent.MOUSE_UP,ToolInterface.removeStageFromCloseButton);
 		stageTitle.addChild(closeButton);
 	}
 	var titleLabel = new LTextField();
 	titleLabel.text = _name;
 	titleLabel.color = "#FFFFFF";
 	titleLabel.size = 12;
-	titleLabel.x = startX + 10 + (closeButton?closeButton.getWidth():0);
+	titleLabel.x = 10 + (closeButton?closeButton.getWidth():0);
 	titleLabel.y = 8;
 	stageTitle.addChild(titleLabel);
 	
-	stageTitle.graphics.drawRoundRect(1,"#000000",[titleLayer.getWidth(),0,titleLabel.x + titleLabel.getWidth() + 10 - startX,40,10],true,"#666666");
+	stageTitle.graphics.drawRoundRect(1,"#000000",[0,0,titleLabel.x + titleLabel.getWidth() + 10,40,10],true,"#666666");
+	stageTitle.x = titleLayer.getWidth();
 	titleLayer.addChild(stageTitle);
 	gameStage.addChild(_stage);
-	stageList.push(stageTitle.stage);
+	_stage.visible = true;
+	//stageList.push(stageTitle.stage);
+};
+ToolInterface.removeStageFromCloseButton = function(e){
+	var closeBtn = e.clickTarget;
+	closeBtn.parent.stage.remove();
+	closeBtn.parent.remove();
+	var l=titleLayer.childList.length,startX=0;
+	for(var i=0;i<l;i++){
+		if(i==l-1){
+			gameStage.childList[i].visible = true;
+		}else{
+			gameStage.childList[i].visible = false;
+		}
+		titleLayer.childList[i].x = startX;
+		console.log("titleLayer.childList[i].getWidth()",titleLayer.childList[i].getWidth());
+		startX += titleLayer.childList[i].getWidth();
+	}
 };
 
 LGlobal.onShow = function (){
