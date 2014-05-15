@@ -12,7 +12,7 @@ function StudioMenubar(){
 				{label:"工程",click:function(){trace("工程");}},
 				{label:"LSprite",click:function(){trace("文件");}},
 				{label:"LAnimationTimeline",click:function(){trace("文件");}},
-				{label:"LBitmap",click:function(){trace("文件");}},
+				{label:"LBitmap",click:function(){self.createBitmap();}},
 				{label:"LBitmapData",click:function(){self.createBitmapData();}}
 			]},
 			{label:"读取工程",click:function(){trace("File");}},
@@ -77,7 +77,9 @@ StudioMenubar.prototype.save = function(e){
 	switch(displayObject.childType){
 		case "LBitmapData":
 			LBitmapDataObject.save(displayObject);
-			//self.toshowBitmapData(displayObject);
+			break;
+		case "LBitmap":
+			LBitmapObject.save(displayObject);
 			break;
 	}
 };
@@ -127,32 +129,9 @@ StudioMenubar.prototype.loadImageComplete = function(e){
 	var loader = e.target;
 	var self = loader.menubar;
 	materials.add(loader.fileName,loader.content);
-	return;
-	var b = new LBitmap(new LBitmapData(loader.content));
-	addChild(b);
 };
 StudioMenubar.prototype.createBitmapData = function(){
 	var self = this;
-	/*
-	var display = new LSprite();
-	display.graphics.drawRect(0,"#000000",[0,0,400,300]);
-	var nameLabel = new LTextField();
-	nameLabel.x = 50;
-	nameLabel.y = 50;
-	nameLabel.color="#000000";
-	nameLabel.text = "名字";
-	display.addChild(nameLabel);
-	var nameInput = new LTextField();
-	nameInput.x = 150;
-	nameInput.y = nameLabel.y + 5;
-	nameInput.text = "LBitmapData1";
-	nameInput.setType(LTextFieldType.INPUT);
-	display.addChild(nameInput);
-	setTimeout(function(){
-		LMessageBox.show({title:"新建LBitmapData",displayObject:display});
-	},100);
-	return;*/
-
 	var bitmapDataStage = new LSprite();
 	bitmapDataStage.addChild(new LBitmap(new LBitmapData("#000000",0,0,200,200)));
 	bitmapDataStage.addChild(new LBitmap(new LBitmapData("#000000",0,0,200,200)));
@@ -161,3 +140,13 @@ StudioMenubar.prototype.createBitmapData = function(){
 	ToolInterface.titleInit(bitmapDataStage.name,bitmapDataStage);
 	projectFiles.add(bitmapDataStage.name,bitmapDataStage);
 };
+StudioMenubar.prototype.createBitmap = function(){
+	var self = this;
+	var bitmapStage = new LSprite();
+	bitmapStage.addChild(new LBitmap(new LBitmapData("#FFFFFF",0,0,1,1)));
+	bitmapStage.childType = "LBitmap";
+	bitmapStage.name = "LBitmap"+bitmapStage.objectIndex;
+	ToolInterface.titleInit(bitmapStage.name,bitmapStage);
+	projectFiles.add(bitmapStage.name,bitmapStage);
+};
+

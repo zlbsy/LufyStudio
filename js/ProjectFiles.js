@@ -56,8 +56,27 @@ ProjectFiles.prototype.add = function(name,displayObject){
 		}
 		child.graphics.drawRect(0,"#666666",[0,0,200,22],true,"#666666");
 		self.select = child;
+		var copyChild = child.clone();
+		var co = child.getRootCoordinate();
+		copyChild.x = co.x-stageLayer.x;
+		copyChild.y = co.y-stageLayer.y;
+		delete copyChild.data;
+		copyChild.childType = child.data.childType;
+		stageLayer.addChild(copyChild);
+		copyChild.addEventListener(LMouseEvent.MOUSE_UP,function(e){
+			var child = e.clickTarget;
+			child.stopDrag();
+			console.log(child);
+			var name = child.getChildAt(0).text;
+			child.remove();
+			if(child.childType == "LBitmapData"){
+				LBitmapDataObject.addToBitmap(name);
+			}
+		});
+		copyChild.startDrag();
 	});
 	child.addEventListener(LMouseEvent.MOUSE_MOVE,function(e){
+		if(LGlobal.IS_MOUSE_DOWN)return;
 		var child = e.clickTarget;
 		self.showTitle(child,e);
 	});
@@ -68,7 +87,7 @@ ProjectFiles.prototype.add = function(name,displayObject){
 	child.addEventListener(LMouseEvent.DOUBLE_CLICK,function(e){
 		var child = e.clickTarget;
 		var bitmapDataStage = child.data.clone();
-	console.log("LMouseEvent.DOUBLE_CLICK",child.data,bitmapDataStage);
+		console.log("LMouseEvent.DOUBLE_CLICK",child.data,bitmapDataStage);
 		ToolInterface.titleInit(bitmapDataStage.name,bitmapDataStage);
 	});
 	console.log("child.data",child.data);

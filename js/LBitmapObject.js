@@ -1,26 +1,15 @@
-function LBitmapDataObject(){
+function LBitmapObject(){
 };
-LBitmapDataObject.save = function(displayObject){
+LBitmapObject.save = function(displayObject){
 	var childList = projectFiles.showLayer.childList;
 	for(var i=0,l=childList.length;i<l;i++){
 		if(childList[i].data.name == displayObject.name){
-			//childList[i].data = displayObject.clone();
-			var list = childList[i].data.childList;
-			for(var j=0;j<list.length;j++){
-				var data = childList[i].data.childList[j].bitmapData;
-				var copyData = displayObject.childList[j].bitmapData;
-				data.image = copyData.image;
-				data.x = copyData.x;
-				data.y = copyData.y;
-				data.width = copyData.width;
-				data.height = copyData.height;
-			}
-			console.log("LBitmapDataObject.save",childList[i].data);
+			childList[i].data.getChildAt(0).bitmapData = displayObject.getChildAt(0).bitmapData;
 			break;
 		}
 	}
 };
-LBitmapDataObject.addToBitmap = function(name){
+LBitmapObject.addToSprite = function(name){
 	var stageList = gameStage.childList;
 	var bitmapLayer = stageList[stageList.length - 1];
 	if(bitmapLayer.childType != "LBitmap"){
