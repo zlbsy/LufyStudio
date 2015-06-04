@@ -21,9 +21,9 @@ ArmDetailedView.prototype.setArmEnlist=function(){
 	name.y = icon.y + 5;
 	layer.addChild(name);
 	
-	var quantity = getStrokeLabel(self.soldierData.quantity, 20, "#FFFFFF", "#000000", 4);
-	quantity.x = icon.x + icon.getWidth() + 10;
-	quantity.y = name.y + name.getHeight() + 10;
+	var quantity = getStrokeLabel(String.format("{0}人",self.soldierData.quantity), 20, "#FFFFFF", "#000000", 4);
+	quantity.x = name.x + name.getWidth() + 50;
+	quantity.y = name.y;
 	layer.addChild(quantity);
 	
 	self.enlistPrice = soldierModel.enlistPrice();
@@ -33,23 +33,27 @@ ArmDetailedView.prototype.setArmEnlist=function(){
 	enlistConfrim.y = 100;
 	layer.addChild(enlistConfrim);
 	
-	var enlistFrom = getStrokeLabel(500, 20, "#FFFFFF", "#000000", 4);
+	var enlistFrom = getStrokeLabel(String.format("{0}人",EnlistSetting.ENLIST_FROM), 20, "#FFFFFF", "#000000", 4);
 	enlistFrom.x = 50;
 	enlistFrom.y = 150;
 	layer.addChild(enlistFrom);
 	
-	var enlistTo = getStrokeLabel(1000, 20, "#FFFFFF", "#000000", 4);
+	var enlistTo = getStrokeLabel(String.format("{0}人",EnlistSetting.ENLIST_TO), 20, "#FFFFFF", "#000000", 4);
 	enlistTo.x = enlistFrom.x + 240 - enlistTo.getWidth();
 	enlistTo.y = enlistFrom.y;
 	layer.addChild(enlistTo);
 	
-	var r = new LRange(240);
+	var rangeBackground = getBitmap(new LPanel(new LBitmapData(LMvc.datalist["win04"]),240,40));
+	var rangeSelect = new LBitmap(new LBitmapData(LMvc.datalist["range"]));
+	var r = new LRange(rangeBackground, rangeSelect);
 	r.x = 50;
 	r.y = enlistFrom.y + enlistFrom.getHeight();
 	self.enlistRange = r;
 	layer.addChild(r);
 
 	var enlistConfrim = getStrokeLabel("", 20, "#FFFFFF", "#000000", 4);
+	enlistConfrim.setWordWrap(true);
+	enlistConfrim.width = 400;
 	enlistConfrim.x = 50;
 	enlistConfrim.y = 230;
 	self.enlistConfrim = enlistConfrim;
@@ -69,9 +73,9 @@ ArmDetailedView.prototype.set=function(){
 ArmDetailedView.prototype.onframe = function(event){
 	var self = event.currentTarget;
 	
+	var enlistCount = EnlistSetting.ENLIST_FROM + (EnlistSetting.ENLIST_TO - EnlistSetting.ENLIST_FROM) * self.enlistRange.value*0.01 >>> 0;
+	var enlistPrice = self.enlistPrice * enlistCount / EnlistSetting.ENLIST_FROM >>> 0;
 	
-	var enlistPrice = self.enlistPrice * (100 + self.enlistRange.value)*0.01 >>> 0;
-	
-	self.enlistConfrim.text = String.format("花费金钱:{0}",enlistPrice);
+	self.enlistConfrim.text = String.format("花费金钱:{0}\n招募{1}人", enlistPrice, enlistCount);
 };
 

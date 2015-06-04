@@ -11,6 +11,7 @@ BuildFarmlandView.prototype.showMenu=function(){
 	var buttonAgriculture = getButton(Language.get("agriculture"),200);
 	buttonAgriculture.y = menuY;
 	layer.addChild(buttonAgriculture);
+	buttonAgriculture.addEventListener(LMouseEvent.MOUSE_UP, self.onClickAgricultureButton);
 	
 	menuY += menuHeight;
 	var buttonExplore = getButton(Language.get("explore"),200);
@@ -19,7 +20,17 @@ BuildFarmlandView.prototype.showMenu=function(){
 	
 	return layer;
 };
-BuildFarmlandView.prototype.onClick=function(event){
-	var self = event.currentTarget;
-	self.controller.tavernShow();
+BuildFarmlandView.prototype.onClickAgricultureButton=function(event){
+	var self = event.currentTarget.parent.parent.parent;
+	self.controller.loadCharacterList(CharacterListType.AGRICULTURE,self);
+};
+BuildFarmlandView.prototype.hideBuild=function(){
+	var self = this;
+	self.menuLayer.visible = false;
+	self.controller.view.baseLayer.visible = false;
+};
+BuildFarmlandView.prototype.showBuild=function(){
+	var self = this;
+	self.menuLayer.visible = true;
+	self.controller.view.baseLayer.visible = true;
 };

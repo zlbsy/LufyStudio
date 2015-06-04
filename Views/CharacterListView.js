@@ -55,8 +55,34 @@ CharacterListView.prototype.listInit=function(){
 			buttonMove.addEventListener(LMouseEvent.MOUSE_UP, self.onClickMoveButton.bind(self));
 			self.dataList = generals;
 			break;
+		case CharacterListType.AGRICULTURE:
+			title.text = Language.get(CharacterListType.AGRICULTURE);
+			var button = getButton(Language.get("agriculture"),200);
+			button.x = (LGlobal.width - 200) * 0.5;
+			button.y = LGlobal.height - button.getHeight() - 15;
+			self.addChild(button);
+			button.addEventListener(LMouseEvent.MOUSE_UP, self.onClickAgricultureButton);
+			self.dataList = generals;
+			break;
 	}
 	self.showList();
+};
+CharacterListView.prototype.onClickAgricultureButton=function(event){
+	var self = event.currentTarget.parent, checked = false;
+	self.listChildLayer.childList.forEach(function(child){
+		if(child.constructor.name !== "CharacterListChildView" || !child.checkbox.checked){
+			return;
+		}
+		child.charaModel.job(Job.AGRICULTURE);
+		checked = true;
+	});
+	if(checked){
+		self.controller.fromController.closeCharacterList();
+	}else{
+		var obj = {title:Language.get("confirm"),message:Language.get("dialog_select_generals"),height:200,okEvent:null};
+		var windowLayer = ConfirmWindow(obj);
+		self.addChild(windowLayer);
+	}
 };
 CharacterListView.prototype.getCutoverButton=function(name){
 	var self = this;
@@ -92,7 +118,7 @@ CharacterListView.prototype.onClickCutoverButton=function(event){
 };
 CharacterListView.prototype.onClickMoveButton=function(event){
 	var self = this, moveCount = 0;
-	var checkSelectCharacter = self.listLayer.childList.find(function(child){
+	var checkSelectCharacter = self.listChildLayer.childList.find(function(child){
 		return child.constructor.name == "CharacterListChildView" && child.checkbox.checked;
 	});
 	if(checkSelectCharacter){
@@ -112,7 +138,7 @@ CharacterListView.prototype.moveToCity=function(event){
 	//var contentLayer = contentLayer.getChildAt(contentLayer.numChildren - 1).contentLayer;
 	//var self = contentLayer.getChildAt(contentLayer.numChildren - 1);
 	var controller = self.controller;
-	self.listLayer.childList.forEach(function(child){
+	self.listChildLayer.childList.forEach(function(child){
 		if(child.constructor.name !== "CharacterListChildView" || !child.checkbox.checked){
 			return;
 		}
@@ -185,7 +211,7 @@ CharacterListView.prototype.setAbilityTab=function(){
 CharacterListView.prototype.showList=function(){
 	var self = this;
 	var listHeight = LGlobal.height - self.contentLayer.y;
-	if(self.controller.characterListType == CharacterListType.CHARACTER_MOVE){
+	if(self.controller.characterListType != CharacterListType.CHARACTER_LIST){
 		listHeight = LGlobal.height - self.contentLayer.y - 70;
 	}
 	var panel = getBitmap(new LPanel(new LBitmapData(LMvc.datalist["win05"]),LGlobal.width, LGlobal.height - self.contentLayer.y));

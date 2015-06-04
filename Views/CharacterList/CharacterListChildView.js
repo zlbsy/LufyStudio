@@ -18,6 +18,7 @@ CharacterListChildView.prototype.setCheckBox = function() {
 		case CharacterListType.CHARACTER_LIST:
 			break;
 		case CharacterListType.CHARACTER_MOVE:
+		case CharacterListType.AGRICULTURE:
 			var bitmap = new LBitmap(new LBitmapData(LMvc.datalist["checkbox-background"]));
 			var bitmapSelect = new LBitmap(new LBitmapData(LMvc.datalist["checkbox-on"]));
 			var check = new LCheckBox(bitmap, bitmapSelect);
@@ -31,7 +32,7 @@ CharacterListChildView.prototype.setCheckBox = function() {
 CharacterListChildView.prototype.hitTestPoint = function(offsetX,offsetY) {
 	var self = this;
 	var hit = self.callParent("hitTestPoint",arguments);
-	if(self.controller.characterListType == CharacterListType.CHARACTER_MOVE){
+	if(self.checkbox){
 		return hit && !self.checkbox.hitTestPoint(offsetX,offsetY);
 	}
 	return hit;

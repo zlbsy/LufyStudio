@@ -7,6 +7,10 @@ var MoveType = {
 	INFANTRY:0,//步兵
 	CAVALRY:1//骑兵
 };
+var EnlistSetting = {
+	ENLIST_FROM:500,
+	ENLIST_TO:1000
+};
 /* {id:1,name:"兵种名",type:SoldierType,movetype:MoveType,distance:移动力,
 	property:兵种属性,
 	equipment:可以装备的装备的种类,
