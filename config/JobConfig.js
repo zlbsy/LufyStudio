@@ -1,4 +1,4 @@
-Job = {
+var Job = {
 	IDLE:"idle",
 	MOVE:"move",
 	AGRICULTURE:"agriculture",
