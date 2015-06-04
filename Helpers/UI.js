@@ -1,0 +1,93 @@
+function getBitmap(displayObject){
+	var bitmapData = new LBitmapData(null,0,0,displayObject.getWidth(),displayObject.getHeight(),LBitmapData.DATA_CANVAS);
+	bitmapData.draw(displayObject);
+	return new LBitmap(bitmapData);
+}
+function getButton(text,width,img){
+	if(typeof img == UNDEFINED){
+		img = "win01";
+	}
+	var bitmapWin = new LPanel(new LBitmapData(LMvc.datalist[img]),width,50);
+	var textLabel = getStrokeLabel(text,18,"#FFFFFF","#000000",3);
+	textLabel.x = (width - textLabel.getWidth()) * 0.5;
+	textLabel.y = (50 - textLabel.getHeight()) * 0.5;
+	bitmapWin.addChild(textLabel);
+	return new LButton(getBitmap(bitmapWin));
+}
+function getTranslucentBitmap(){
+	var backgroundData = new LBitmapData(LMvc.datalist["translucent"]);
+	var background = new LBitmap(backgroundData);
+	background.scaleX = LGlobal.width / backgroundData.width;
+	background.scaleY = LGlobal.height / backgroundData.height;
+	return background;
+}
+/**
+ *title,message,okEvent,cancelEvent 
+ */
+function ConfirmWindow(obj){
+	console.log("ConfirmWindow",obj);
+	var windowLayer = new LSprite();
+	windowLayer.addChild(getTranslucentBitmap());
+	windowLayer.addEventListener(LMouseEvent.MOUSE_DOWN, function(){});
+	windowLayer.addEventListener(LMouseEvent.MOUSE_UP, function(){});
+	windowLayer.addEventListener(LMouseEvent.MOUSE_MOVE, function(){});
+	windowLayer.addEventListener(LMouseEvent.MOUSE_OVER, function(){});
+	windowLayer.addEventListener(LMouseEvent.MOUSE_OUT, function(){});
+	
+	var backgroundData = new LBitmapData(LMvc.datalist["win05"]);
+	if(!obj.width){
+		obj.width = 320;
+	}
+	if(!obj.height){
+		obj.height = 300;
+	}
+	var panel = getBitmap(new LPanel(backgroundData,obj.width,obj.height));
+	panel.x = (LGlobal.width - panel.getWidth()) * 0.5;
+	panel.y = (LGlobal.height - panel.getHeight()) * 0.5;
+	windowLayer.addChild(panel);
+	var titleData = new LBitmapData(LMvc.datalist["win02"]);
+	var titlePanel = getBitmap(new LPanel(titleData,160,60));
+	titlePanel.x = (LGlobal.width - titlePanel.getWidth()) * 0.5;
+	titlePanel.y = panel.y - 10;
+	windowLayer.addChild(titlePanel);
+	
+	var title = getStrokeLabel(obj.title,20,"#FFFFFF","#000000",4);
+	title.x = (LGlobal.width - title.getWidth())*0.5;
+	title.y = panel.y + 8;
+	windowLayer.addChild(title);
+	var msg;
+	if(obj.subWindow){
+		msg = obj.subWindow;
+	}else{
+		msg = getStrokeLabel(obj.message,16,"#FFFFFF","#000000",4);
+		msg.width = 260;
+		msg.setWordWrap(true,27);
+	}
+	msg.x = panel.x + 30;
+	msg.y = panel.y + 70;
+	windowLayer.addChild(msg);
+	
+	var okPanel = new LButton(new LBitmap(new LBitmapData(LMvc.datalist["ok"])));
+	okPanel.y = panel.y + panel.getHeight() - okPanel.getHeight() - 20;
+	windowLayer.addChild(okPanel);
+	
+	if(typeof obj.cancelEvent != UNDEFINED){
+		var cancelPanel = new LButton(new LBitmap(new LBitmapData(LMvc.datalist["close"])));
+		cancelPanel.y = panel.y + panel.getHeight() - cancelPanel.getHeight() - 20;
+		windowLayer.addChild(cancelPanel);
+		
+		cancelPanel.addEventListener(LMouseEvent.MOUSE_UP, obj.cancelEvent?obj.cancelEvent:function(event){
+			event.currentTarget.parent.remove();
+		});
+	
+		okPanel.x = LGlobal.width*0.5 - okPanel.getWidth() - 20;
+		cancelPanel.x = LGlobal.width*0.5 + 20;
+	}else{
+		okPanel.x = (LGlobal.width - okPanel.getWidth())*0.5;
+	}
+	okPanel.addEventListener(LMouseEvent.MOUSE_UP, obj.okEvent?obj.okEvent:function(event){
+		event.currentTarget.parent.remove();
+	});
+	
+	return windowLayer;
+}

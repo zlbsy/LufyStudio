@@ -1,0 +1,3 @@
+var EquipmentEvent = {
+	Dress:"dress"
+};
