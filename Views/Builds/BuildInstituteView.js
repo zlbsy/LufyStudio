@@ -20,7 +20,7 @@ BuildInstituteView.prototype.showMenu=function(){
 	
 	return layer;
 };
-BuildCitygateView.prototype.onClickTechnologyButton=function(event){
+BuildInstituteView.prototype.onClickTechnologyButton=function(event){
 	var self = event.currentTarget.parent.parent.parent;
 	self.controller.loadCharacterList(CharacterListType.TECHNOLOGY,self);
 };
