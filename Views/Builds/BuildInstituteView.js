@@ -11,7 +11,7 @@ BuildInstituteView.prototype.showMenu=function(){
 	var buttonTechnology = getButton(Language.get("technology"),200);
 	buttonTechnology.y = menuY;
 	layer.addChild(buttonTechnology);
-	buttonPolice.addEventListener(LMouseEvent.MOUSE_UP, self.onClickTechnologyButton);
+	buttonTechnology.addEventListener(LMouseEvent.MOUSE_UP, self.onClickTechnologyButton);
 	
 	menuY += menuHeight;
 	var buttonResearch = getButton(Language.get("research"),200);
