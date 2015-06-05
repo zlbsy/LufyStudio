@@ -283,8 +283,20 @@ AreaModel.prototype.troops=function(){
 AreaModel.prototype.position=function(){
 	return this.data.position;
 };
-AreaModel.prototype.generals=function(){
-	return this.data.generals;
+AreaModel.prototype.generals=function(job){
+	var self = this;
+	if(job){
+		var list = [];
+		for(var i=0,l=self.data.generals.length;i<l;i++){
+			var chara = self.data.generals[i];
+			console.log("chara.job()="+chara.job(),job);
+			if(chara.job() == job){
+				list.push(chara);
+			}
+		}
+		return list;
+	}
+	return self.data.generals;
 };
 AreaModel.prototype.outOfOffice=function(){
 	return this.data.out_of_offices;

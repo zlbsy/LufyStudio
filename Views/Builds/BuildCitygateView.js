@@ -7,6 +7,7 @@ BuildCitygateView.prototype.showMenu=function(){
 	var buttonPolice = getButton(Language.get("police"),200);
 	buttonPolice.y = menuY;
 	layer.addChild(buttonPolice);
+	buttonPolice.addEventListener(LMouseEvent.MOUSE_UP, self.onClickPoliceButton);
 	
 	menuY += menuHeight;
 	var buttonRepair = getButton(Language.get("repair"),200);
@@ -24,4 +25,8 @@ BuildCitygateView.prototype.showMenu=function(){
 BuildCitygateView.prototype.onClickMapButton=function(event){
 	var self = this;
 	self.controller.gotoMap();
+};
+BuildCitygateView.prototype.onClickPoliceButton=function(event){
+	var self = event.currentTarget.parent.parent.parent;
+	self.controller.loadCharacterList(CharacterListType.POLICE,self);
 };

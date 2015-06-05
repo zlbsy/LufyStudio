@@ -25,7 +25,7 @@ CityController.prototype.helperLoad=function(){
 };
 CityController.prototype.libraryLoad=function(){
 	var self = this;
-	var libraris = ["Face"];
+	var libraris = ["Face","Toast"];
 	libraris.push("language/chinese/Language");
 	self.load.library(libraris,self.viewLoad);
 };

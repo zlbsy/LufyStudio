@@ -24,13 +24,3 @@ BuildFarmlandView.prototype.onClickAgricultureButton=function(event){
 	var self = event.currentTarget.parent.parent.parent;
 	self.controller.loadCharacterList(CharacterListType.AGRICULTURE,self);
 };
-BuildFarmlandView.prototype.hideBuild=function(){
-	var self = this;
-	self.menuLayer.visible = false;
-	self.controller.view.baseLayer.visible = false;
-};
-BuildFarmlandView.prototype.showBuild=function(){
-	var self = this;
-	self.menuLayer.visible = true;
-	self.controller.view.baseLayer.visible = true;
-};

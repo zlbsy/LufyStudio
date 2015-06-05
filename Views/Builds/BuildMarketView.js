@@ -11,6 +11,7 @@ BuildMarketView.prototype.showMenu=function(){
 	var buttonBusiness = getButton(Language.get("business"),200);
 	buttonBusiness.y = menuY;
 	layer.addChild(buttonBusiness);
+	buttonBusiness.addEventListener(LMouseEvent.MOUSE_UP, self.onClickBusinessButton);
 	
 	menuY += menuHeight;
 	var buttonExplore = getButton(Language.get("explore"),200);
@@ -19,7 +20,7 @@ BuildMarketView.prototype.showMenu=function(){
 	
 	return layer;
 };
-BuildMarketView.prototype.onClick=function(event){
-	var self = event.currentTarget;
-	self.controller.tavernShow();
+BuildMarketView.prototype.onClickBusinessButton=function(event){
+	var self = event.currentTarget.parent.parent.parent;
+	self.controller.loadCharacterList(CharacterListType.BUSINESS,self);
 };

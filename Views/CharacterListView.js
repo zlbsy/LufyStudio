@@ -13,6 +13,7 @@ CharacterListView.prototype.init=function(){
 	self.charaDetailedLayer = new LSprite();
 	self.addChild(self.charaDetailedLayer);
 	self.listInit();
+	Toast.makeText(Language.get("dialog_select_generals")).show();
 };
 CharacterListView.prototype.listInit=function(){
 	var self = this;
@@ -53,27 +54,48 @@ CharacterListView.prototype.listInit=function(){
 			buttonMove.y = LGlobal.height - buttonMove.getHeight() - 15;
 			self.addChild(buttonMove);
 			buttonMove.addEventListener(LMouseEvent.MOUSE_UP, self.onClickMoveButton.bind(self));
-			self.dataList = generals;
+			self.dataList = cityModel.generals(Job.IDLE);
+			
+			self.addEventListener(LCheckBox.ON_CHANGE, self.onChangeChildSelect);
 			break;
-		case CharacterListType.AGRICULTURE:
-			title.text = Language.get(CharacterListType.AGRICULTURE);
-			var button = getButton(Language.get("agriculture"),200);
+		default:
+			title.text = Language.get(self.controller.characterListType);
+			var button = getButton(Language.get("execute"),200);
 			button.x = (LGlobal.width - 200) * 0.5;
 			button.y = LGlobal.height - button.getHeight() - 15;
 			self.addChild(button);
-			button.addEventListener(LMouseEvent.MOUSE_UP, self.onClickAgricultureButton);
-			self.dataList = generals;
+			button.addEventListener(LMouseEvent.MOUSE_UP, self.onClickExecuteButton);
+			self.dataList = cityModel.generals(Job.IDLE);
 			break;
 	}
 	self.showList();
 };
-CharacterListView.prototype.onClickAgricultureButton=function(event){
+CharacterListView.prototype.onChangeChildSelect=function(event){
+	var self = event.currentTarget;
+	
+};
+CharacterListView.prototype.onClickExecuteButton=function(event){
 	var self = event.currentTarget.parent, checked = false;
 	self.listChildLayer.childList.forEach(function(child){
 		if(child.constructor.name !== "CharacterListChildView" || !child.checkbox.checked){
 			return;
 		}
-		child.charaModel.job(Job.AGRICULTURE);
+		var jobContent = "";
+		switch(self.controller.characterListType){
+			case CharacterListType.AGRICULTURE:
+				jobContent = Job.AGRICULTURE;
+				break;
+			case CharacterListType.BUSINESS:
+				jobContent = Job.BUSINESS;
+				break;
+			case CharacterListType.POLICE:
+				jobContent = Job.POLICE;
+				break;
+			case CharacterListType.TECHNOLOGY:
+				jobContent = Job.TECHNOLOGY;
+				break;
+		}
+		child.charaModel.job(jobContent);
 		checked = true;
 	});
 	if(checked){

@@ -68,6 +68,9 @@ CharacterModel.prototype.job = function(value) {
 		self.data.job = value;
 		return;
 	}
+	if(!self.data.job){
+		return Job.IDLE;
+	}
 	return self.data.job;
 };
 CharacterModel.prototype.moveTo = function(cityId) {

@@ -15,6 +15,7 @@ Language.getSoldier = function(key){
 };
 Language.data = {
 	"return":"返回",
+	"execute":"执行",
 	
 	"tab_equipment":"装备",
 	"tab_skill":"技能",

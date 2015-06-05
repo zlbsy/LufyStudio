@@ -11,6 +11,7 @@ BuildInstituteView.prototype.showMenu=function(){
 	var buttonTechnology = getButton(Language.get("technology"),200);
 	buttonTechnology.y = menuY;
 	layer.addChild(buttonTechnology);
+	buttonPolice.addEventListener(LMouseEvent.MOUSE_UP, self.onClickTechnologyButton);
 	
 	menuY += menuHeight;
 	var buttonResearch = getButton(Language.get("research"),200);
@@ -19,7 +20,7 @@ BuildInstituteView.prototype.showMenu=function(){
 	
 	return layer;
 };
-BuildInstituteView.prototype.onClick=function(event){
-	var self = event.currentTarget;
-	self.controller.tavernShow();
+BuildCitygateView.prototype.onClickTechnologyButton=function(event){
+	var self = event.currentTarget.parent.parent.parent;
+	self.controller.loadCharacterList(CharacterListType.TECHNOLOGY,self);
 };

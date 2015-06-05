@@ -41,3 +41,13 @@ BuildBaseView.prototype.setMenuPosition=function(build, menuLayer){
 		}
 	}
 };
+BuildBaseView.prototype.hideBuild=function(){
+	var self = this;
+	self.menuLayer.visible = false;
+	self.controller.view.baseLayer.visible = false;
+};
+BuildBaseView.prototype.showBuild=function(){
+	var self = this;
+	self.menuLayer.visible = true;
+	self.controller.view.baseLayer.visible = true;
+};
