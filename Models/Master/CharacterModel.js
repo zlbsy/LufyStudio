@@ -58,7 +58,7 @@ CharacterModel.prototype.loyalty = function(value) {
 CharacterModel.prototype.jobLabel = function() {
 	var self = this;
 	if(!self.data.job){
-		self.data.job = "null";
+		self.data.job = Job.IDLE;
 	}
 	return Language.get(self.data.job);
 };
@@ -111,9 +111,6 @@ CharacterModel.prototype.content = function(value) {
 };
 CharacterModel.prototype.faceImg = function() {
 	return this.data.faceImg;
-};
-CharacterModel.prototype.face = function() {
-	
 };
 CharacterModel.prototype.face = function() {
 	return new Face(LMvc.IMG_PATH + "face/" + this.data.faceImg + ".png");

@@ -66,13 +66,21 @@ CharacterListView.prototype.listInit=function(){
 			self.addChild(button);
 			button.addEventListener(LMouseEvent.MOUSE_UP, self.onClickExecuteButton);
 			self.dataList = cityModel.generals(Job.IDLE);
+			self.addEventListener(LCheckBox.ON_CHANGE, self.onChangeChildSelect);
 			break;
 	}
 	self.showList();
 };
 CharacterListView.prototype.onChangeChildSelect=function(event){
-	var self = event.currentTarget;
-	
+	console.log("event.currentTarget=",event.currentTarget);
+	var self = event.currentTarget,selectCount=0;
+	self.listChildLayer.childList.forEach(function(child){
+		if(child.constructor.name !== "CharacterListChildView" || !child.checkbox.checked){
+			return;
+		}
+		selectCount++;
+	});
+	console.log("selectCount=",selectCount);
 };
 CharacterListView.prototype.onClickExecuteButton=function(event){
 	var self = event.currentTarget.parent, checked = false;

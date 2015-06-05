@@ -289,7 +289,6 @@ AreaModel.prototype.generals=function(job){
 		var list = [];
 		for(var i=0,l=self.data.generals.length;i<l;i++){
 			var chara = self.data.generals[i];
-			console.log("chara.job()="+chara.job(),job);
 			if(chara.job() == job){
 				list.push(chara);
 			}
