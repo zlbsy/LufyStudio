@@ -20,6 +20,8 @@ CharacterListView.prototype.listInit=function(){
 	var cityModel = self.controller.getValue("cityData");
 	var generals = cityModel.generals();
 	var outOfOffice = cityModel.outOfOffice();
+	self.selectedCount = 0;
+	self.overageMoney = cityModel.moneyAsNumber();
 	
 	var title = getStrokeLabel("",30,"#FFFFFF","#000000",4);
 	title.x = 15;
@@ -42,76 +44,91 @@ CharacterListView.prototype.listInit=function(){
 	self.contentLayer = new LSprite();
 	self.contentLayer.y = 110;
 	self.listLayer.addChild(self.contentLayer);
+	
+	title.text = Language.get(self.controller.characterListType);
+	var buttonLabel = null, showMoney = false;
 	switch(self.controller.characterListType){
 		case CharacterListType.CHARACTER_LIST:
-			title.text = Language.get(CharacterListType.CHARACTER_LIST);
 			self.dataList = generals.concat(outOfOffice);
 			break;
 		case CharacterListType.CHARACTER_MOVE:
-			title.text = Language.get(CharacterListType.CHARACTER_MOVE);
-			var buttonMove = getButton(Language.get("move_start"),200);
-			buttonMove.x = (LGlobal.width - 200) * 0.5;
-			buttonMove.y = LGlobal.height - buttonMove.getHeight() - 15;
-			self.addChild(buttonMove);
-			buttonMove.addEventListener(LMouseEvent.MOUSE_UP, self.onClickMoveButton.bind(self));
+			buttonLabel = "move_start";
 			self.dataList = cityModel.generals(Job.IDLE);
-			
-			self.addEventListener(LCheckBox.ON_CHANGE, self.onChangeChildSelect);
 			break;
 		default:
-			title.text = Language.get(self.controller.characterListType);
-			var button = getButton(Language.get("execute"),200);
-			button.x = (LGlobal.width - 200) * 0.5;
-			button.y = LGlobal.height - button.getHeight() - 15;
-			self.addChild(button);
-			button.addEventListener(LMouseEvent.MOUSE_UP, self.onClickExecuteButton);
+			buttonLabel = "execute";
+			showMoney = true;
 			self.dataList = cityModel.generals(Job.IDLE);
-			self.addEventListener(LCheckBox.ON_CHANGE, self.onChangeChildSelect);
 			break;
+	}
+	if(buttonLabel){
+		var button = getButton(Language.get(buttonLabel),200);
+		button.x = (LGlobal.width - 200) * 0.5;
+		button.y = LGlobal.height - button.getHeight() - 15;
+		self.addChild(button);
+		button.addEventListener(LMouseEvent.MOUSE_UP, self.onClickExecuteButton);
+		self.addEventListener(LCheckBox.ON_CHANGE, self.onChangeChildSelect);
+		if(showMoney){
+			var lblMoney = getStrokeLabel(String.format("{0}：{1} - {2} = {3}", Language.get("money"), cityModel.money(), 0, cityModel.money()),26,"#FFFFFF","#000000",4);
+			lblMoney.x = (LGlobal.width - lblMoney.getWidth()) * 0.5;
+			lblMoney.y = button.y - lblMoney.getHeight() - 10;
+			self.lblMoney = lblMoney;
+			self.addChild(lblMoney);
+		}
 	}
 	self.showList();
 };
 CharacterListView.prototype.onChangeChildSelect=function(event){
-	console.log("event.currentTarget=",event.currentTarget);
-	var self = event.currentTarget,selectCount=0;
+	var self = event.currentTarget,selectedCount=0;
 	self.listChildLayer.childList.forEach(function(child){
 		if(child.constructor.name !== "CharacterListChildView" || !child.checkbox.checked){
 			return;
 		}
-		selectCount++;
+		selectedCount++;
 	});
-	console.log("selectCount=",selectCount);
+	self.selectedCount = selectedCount;
+	if(!self.lblMoney){
+		return;
+	}
+	var cityModel = self.controller.getValue("cityData");
+	var usedMoney = getJobPrice(characterListType2JobType(self.controller.characterListType)) * self.selectedCount;
+	var overageMoney = cityModel.moneyAsNumber() - usedMoney;
+	self.usedMoney = usedMoney;
+	self.overageMoney = overageMoney;
+	self.lblMoney.text = String.format("{0}：{1} - {2} = {3}", Language.get("money"), cityModel.money(), LString.numberFormat(usedMoney,3), LString.numberFormat(overageMoney,3));
+	self.lblMoney.x = (LGlobal.width - self.lblMoney.getWidth()) * 0.5;
 };
 CharacterListView.prototype.onClickExecuteButton=function(event){
-	var self = event.currentTarget.parent, checked = false;
-	self.listChildLayer.childList.forEach(function(child){
-		if(child.constructor.name !== "CharacterListChildView" || !child.checkbox.checked){
-			return;
-		}
-		var jobContent = "";
-		switch(self.controller.characterListType){
-			case CharacterListType.AGRICULTURE:
-				jobContent = Job.AGRICULTURE;
-				break;
-			case CharacterListType.BUSINESS:
-				jobContent = Job.BUSINESS;
-				break;
-			case CharacterListType.POLICE:
-				jobContent = Job.POLICE;
-				break;
-			case CharacterListType.TECHNOLOGY:
-				jobContent = Job.TECHNOLOGY;
-				break;
-		}
-		child.charaModel.job(jobContent);
-		checked = true;
-	});
-	if(checked){
-		self.controller.fromController.closeCharacterList();
-	}else{
+	var self = event.currentTarget.parent;
+	if(self.selectedCount <= 0){
 		var obj = {title:Language.get("confirm"),message:Language.get("dialog_select_generals"),height:200,okEvent:null};
 		var windowLayer = ConfirmWindow(obj);
 		self.addChild(windowLayer);
+		return;
+	}else if(self.overageMoney < 0 && self.controller.characterListType != CharacterListType.CHARACTER_MOVE){
+		var obj = {title:Language.get("confirm"),message:Language.get("dialog_no_money"),height:200,okEvent:null};
+		var windowLayer = ConfirmWindow(obj);
+		self.addChild(windowLayer);
+		return;
+	}
+	if(self.controller.characterListType == CharacterListType.CHARACTER_MOVE){
+		var checkSelectCharacter = self.listChildLayer.childList.find(function(child){
+			return child.constructor.name == "CharacterListChildView" && child.checkbox.checked;
+		});
+		self.controller.fromController.addEventListener(LCityEvent.SELECT_CITY, self.moveToCity);
+		self.controller.toSelectMap(checkSelectCharacter.charaModel.name());
+	}else{
+		self.listChildLayer.childList.forEach(function(child){
+			if(child.constructor.name !== "CharacterListChildView" || !child.checkbox.checked){
+				return;
+			}
+			var jobContent = characterListType2JobType(self.controller.characterListType);
+			child.charaModel.job(jobContent);
+		});
+		var cityModel = self.controller.getValue("cityData");
+		cityModel.money(self.overageMoney);
+		self.controller.fromController.closeCharacterList();
+		LMvc.CityController.dispatchEvent(LController.NOTIFY_ALL);
 	}
 };
 CharacterListView.prototype.getCutoverButton=function(name){
@@ -121,65 +138,44 @@ CharacterListView.prototype.getCutoverButton=function(name){
 	buttonCutover.x = 210;
 	buttonCutover.y = 5;
 	buttonCutover.name = name;
-	self.listLayer.addChild(buttonCutover);console.log("getCutoverButton self",self," self.listLayer" , self.listLayer+",self.listLayer.parent" , self.listLayer.parent);
+	self.listLayer.addChild(buttonCutover);
 	buttonCutover.addEventListener(LMouseEvent.MOUSE_UP, self.onClickCutoverButton);
 };
 CharacterListView.prototype.onClickCutoverButton=function(event){
 	var buttonCutover = event.currentTarget, self = buttonCutover.parent.parent, cutoverName = "";
 	var cutoverName = "";
 	if(buttonCutover.name == CharacterListView.CUTOVER_BASIC){
-		buttonCutover.remove();
 		cutoverName = CharacterListView.CUTOVER_ABILITY;
-		self.getCutoverButton(cutoverName);
 		self.basicTab.visible = false;
 		self.abilityTab.visible = true;
 	}else if(buttonCutover.name == CharacterListView.CUTOVER_ABILITY){
-		buttonCutover.remove();
 		cutoverName = CharacterListView.CUTOVER_BASIC;
-		self.getCutoverButton(cutoverName);
 		self.basicTab.visible = true;
 		self.abilityTab.visible = false;
 	}
+	buttonCutover.remove();
+	self.getCutoverButton(cutoverName);
 	self.listChildLayer.childList.forEach(function(child){
 		if(child.constructor.name == "CharacterListChildView"){
 			child.cutover(cutoverName);
 		}
 	});
 };
-CharacterListView.prototype.onClickMoveButton=function(event){
-	var self = this, moveCount = 0;
-	var checkSelectCharacter = self.listChildLayer.childList.find(function(child){
-		return child.constructor.name == "CharacterListChildView" && child.checkbox.checked;
-	});
-	if(checkSelectCharacter){
-		self.controller.fromController.addEventListener(LCityEvent.SELECT_CITY, self.moveToCity);
-		self.controller.toSelectMap(checkSelectCharacter.charaModel.name());
-	}else{
-		var obj = {title:Language.get("confirm"),message:Language.get("dialog_select_generals"),height:200,okEvent:null};
-		var windowLayer = ConfirmWindow(obj);
-		self.addChild(windowLayer);
-	}
-};
 CharacterListView.prototype.moveToCity=function(event){
 	console.log("moveToCity",event);
 	var contentLayer = event.currentTarget.view.contentLayer;
 	var self = contentLayer.getChildAt(contentLayer.numChildren - 1);
-	//console.log("characterListView",characterListView);
-	//var contentLayer = contentLayer.getChildAt(contentLayer.numChildren - 1).contentLayer;
-	//var self = contentLayer.getChildAt(contentLayer.numChildren - 1);
 	var controller = self.controller;
 	self.listChildLayer.childList.forEach(function(child){
 		if(child.constructor.name !== "CharacterListChildView" || !child.checkbox.checked){
 			return;
 		}
 		child.charaModel.moveTo(event.cityId);
-		//child.charaModel.job(Job.MOVE);
 	});
 	var fromController = controller.fromController;
 	controller.removeEventListener(LCityEvent.SELECT_CITY, self.moveToCity);
 	controller.closeCharacterList();
 	fromController.showCharacterList();
-	return;
 };
 CharacterListView.prototype.onClickCloseButton=function(event){
 	this.controller.closeCharacterList();
@@ -202,48 +198,42 @@ CharacterListView.prototype.setBasicTab=function(){
 	self.basicTab = new LSprite();
 	self.basicTab.x = 170;
 	self.tabMenuLayer.addChild(self.basicTab);
-	var buttonExpedition = getButton(Language.get("belong"),60);
-	self.basicTab.addChild(buttonExpedition);
-	var buttonExpedition = getButton(Language.get("identity"),60);
-	buttonExpedition.x = 60;
-	self.basicTab.addChild(buttonExpedition);
-	var buttonExpedition = getButton(Language.get("city"),60);
-	buttonExpedition.x = 60*2;
-	self.basicTab.addChild(buttonExpedition);
-	var buttonExpedition = getButton(Language.get("loyalty"),60);
-	buttonExpedition.x = 60*3;
-	self.basicTab.addChild(buttonExpedition);
-	var buttonExpedition = getButton(Language.get("status"),60);
-	buttonExpedition.x = 60*4;
-	self.basicTab.addChild(buttonExpedition);
+	var tabs = ["belong", "identity", "city", "loyalty", "status"];
+	for(var i=0;i<tabs.length;i++){
+		var button = getButton(Language.get(tabs[i]),60);
+		button.name = tabs[i];
+		button.x = 60 * i;
+		self.basicTab.addChild(button);
+	}
 };
 CharacterListView.prototype.setAbilityTab=function(){
 	var self = this;
 	self.abilityTab = new LSprite();
 	self.abilityTab.x = 170;
 	self.tabMenuLayer.addChild(self.abilityTab);
-	var buttonExpedition = getButton(Language.get("command"),60);
-	self.abilityTab.addChild(buttonExpedition);
-	var buttonExpedition = getButton(Language.get("force"),60);
-	buttonExpedition.x = 60;
-	self.abilityTab.addChild(buttonExpedition);
-	var buttonExpedition = getButton(Language.get("intelligence"),60);
-	buttonExpedition.x = 60*2;
-	self.abilityTab.addChild(buttonExpedition);
-	var buttonExpedition = getButton(Language.get("agility"),60);
-	buttonExpedition.x = 60*3;
-	self.abilityTab.addChild(buttonExpedition);
-	var buttonExpedition = getButton(Language.get("luck"),60);
-	buttonExpedition.x = 60*4;
-	self.abilityTab.addChild(buttonExpedition);
+	var tabs = ["command", "force", "intelligence", "agility", "luck"];
+	for(var i=0;i<tabs.length;i++){
+		var button = getButton(Language.get(tabs[i]),60);
+		button.name = tabs[i];
+		button.x = 60 * i;
+		self.abilityTab.addChild(button);
+	}
 	self.abilityTab.visible = false;
 };
 CharacterListView.prototype.showList=function(){
 	var self = this;
 	var listHeight = LGlobal.height - self.contentLayer.y;
-	if(self.controller.characterListType != CharacterListType.CHARACTER_LIST){
-		listHeight = LGlobal.height - self.contentLayer.y - 70;
+	var minusHeight = 0;
+	switch(self.controller.characterListType){
+		case CharacterListType.CHARACTER_LIST:
+			break;
+		case CharacterListType.CHARACTER_MOVE:
+			minusHeight = 70;
+			break;
+		default:
+			minusHeight = 100;
 	}
+	listHeight = LGlobal.height - self.contentLayer.y - minusHeight;
 	var panel = getBitmap(new LPanel(new LBitmapData(LMvc.datalist["win05"]),LGlobal.width, LGlobal.height - self.contentLayer.y));
 	self.contentLayer.addChild(panel);
 	

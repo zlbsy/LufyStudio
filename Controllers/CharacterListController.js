@@ -11,9 +11,12 @@ CharacterListController.prototype.construct=function(){
 };
 CharacterListController.prototype.configLoad=function(){
 	var self = this;
-	self.load.config(["Equipment","Arms","Belong","Position","Soldiers","Strategy"],self.modelLoad);
+	self.load.config(["Equipment","Arms","Belong","Position","Soldiers","Strategy"],self.helperLoad);
 };
-
+CharacterListController.prototype.helperLoad=function(){
+	var self = this;
+	self.load.helper(["JobHelper"],self.modelLoad);
+};
 CharacterListController.prototype.modelLoad=function(){
 	var self = this;
 	self.load.model(["Items/Item","Master/SoldierMaster","Master/Soldier","Master/StrategyMaster","Master/Strategy"],self.viewLoad);

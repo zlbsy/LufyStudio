@@ -51,7 +51,6 @@ AreaIconView.prototype.onUp=function(event){
 			self.controller.showCity(self.areaStatus.id());
 		}
 	}
-	//self.controller.showStage(self.areaStatus.id());
 };
 AreaIconView.prototype.selectCityComplete=function(event){
 	var self = this;

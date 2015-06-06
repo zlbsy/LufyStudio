@@ -2,7 +2,7 @@ function CityModel(){
 	base(this,MyModel,[]);
 }
 CityModel.prototype.construct=function(){
-	var self = this;console.log("CityModel.prototype.construct",self.controller);
+	var self = this;
 };
 CityModel.prototype.getImages=function(){
 	var list = [

@@ -31,6 +31,7 @@ Language.data = {
 	"return_top":"回主页面",
 	"confirm":"确认",
 	"dialog_select_generals":"请选择武将！",
+	"dialog_no_money":"金钱不够！",
 	"dialog_move_generals_confirm":"要将{0}等将领移动到{1}吗？",
 	"dialog_move_generals_error":"无法移动到此城市！",
 	"dialog_remove_equipment_confirm":"要解除装备{0}吗？",

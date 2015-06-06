@@ -218,8 +218,19 @@ AreaModel.prototype.size=function(){
 AreaModel.prototype.level=function(){
 	return this.data.level;
 };
-AreaModel.prototype.money=function(){
+AreaModel.prototype.money=function(value){
+	if(typeof value != UNDEFINED){
+		this.data.money = value;
+		return;
+	}
 	return LString.numberFormat(this.data.money,3);
+};
+AreaModel.prototype.moneyAsNumber=function(value){
+	if(typeof value != UNDEFINED){
+		this.data.money = value;
+		return;
+	}
+	return this.data.money;
 };
 AreaModel.prototype.food=function(){
 	return LString.numberFormat(this.data.food,3);

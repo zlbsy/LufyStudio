@@ -131,3 +131,7 @@ CityView.prototype.init=function(){
 	self.buildLayerInit();
 	self.statusLayerInit();
 };
+CityView.prototype.updateView = function(){
+	var self = this;
+	console.log("CityView.prototype.updateView run");
+};

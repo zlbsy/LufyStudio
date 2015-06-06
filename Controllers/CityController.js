@@ -73,12 +73,10 @@ CityController.prototype.loadCharacterList = function(type,buildView){
 	LMvc.changeLoading(TranslucentLoading);
 	self.characterListType = type;
 	self.buildView = buildView;
-	console.log("CityController.prototype.loadCharacterList self.characterListType",self.characterListType);
 	self.loadMvc("CharacterList",self.showCharacterList);
 };
 CityController.prototype.showCharacterList=function(){
 	var self = this;
-	console.log("CityController.prototype.showCharacterList self.characterListType",self.characterListType);
 	var characterList = new CharacterListController(self.characterListType,self);
 	self.view.contentLayer.addChild(characterList.view);
 	self.buildView.hideBuild();
@@ -90,7 +88,6 @@ CityController.prototype.closeCharacterList=function(){
 };
 CityController.prototype.loadArmList = function(type,buildView){
 	var self = this;
-	console.log("CityController.prototype.loadArmList run");
 	LMvc.keepLoading(true);
 	LMvc.changeLoading(TranslucentLoading);
 	self.armListType = type;

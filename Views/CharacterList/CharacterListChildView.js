@@ -30,7 +30,6 @@ CharacterListChildView.prototype.setCheckBox = function() {
 	}
 };
 CharacterListChildView.prototype.onChangeSelect = function(event) {
-console.log("CharacterListChildView event.currentTarget",event.currentTarget);
 	var self = event.currentTarget.parent;
 	self.parentView.dispatchEvent(LCheckBox.ON_CHANGE);
 };
