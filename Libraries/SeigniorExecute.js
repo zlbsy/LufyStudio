@@ -24,11 +24,27 @@ SeigniorExecute.prototype.areaRun=function(area){
 	for(var i=0;i<generals.length;i++){
 		chara = generals[i];
 		job = chara.job();
+		console.log("SeigniorExecute.prototype.areaRun job",chara.id(),job);
 		switch(job){
 			case Job.MOVE:
-			list.push(chara);
-			break;
+				list.push(chara);
+				break;
+			case Job.AGRICULTURE:
+				agricultureRun(chara);
+				break;
+			case Job.BUSINESS:
+				businessRun(chara);
+				break;
+			case Job.POLICE:
+				policeRun(chara);
+				break;
+			case Job.TECHNOLOGY:
+				technologyRun(chara);
+				break;
 		}
+	}
+	if(list.length == 0){
+		return;
 	}
 	console.log("SeigniorExecute.prototype.areaRun list",list.length);
 	for(var i=0;i<list.length;i++){
@@ -36,9 +52,9 @@ SeigniorExecute.prototype.areaRun=function(area){
 		job = chara.job();
 		switch(job){
 			case Job.MOVE:
-			console.log("SeigniorExecute.prototype.areaRun chara",chara.id());
-			chara.moveTo();
-			break;
+				console.log("SeigniorExecute.prototype.areaRun move chara",chara.id());
+				chara.moveTo();
+				break;
 		}
 	}
 };

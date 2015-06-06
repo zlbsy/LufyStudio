@@ -26,3 +26,19 @@ function getJobPrice(jobType) {
 	console.error("Can't get JobPrice");
 	return 0;
 }
+function agricultureRun(characterModel){
+	console.log("agricultureRun : ",characterModel.id());
+	characterModel.job(Job.IDLE);
+}
+function businessRun(characterModel){
+	console.log("businessRun : ",characterModel.id());
+	characterModel.job(Job.IDLE);
+}
+function policeRun(characterModel){
+	console.log("policeRun : ",characterModel.id());
+	characterModel.job(Job.IDLE);
+}
+function technologyRun(characterModel){
+	console.log("technologyRun : ",characterModel.id());
+	characterModel.job(Job.IDLE);
+}

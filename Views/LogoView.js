@@ -78,6 +78,7 @@ LogoView.prototype.showMenu=function(){
 };
 LogoView.prototype.loadChapterList=function(event){
 	var self = this;
+	self.topMenuLayer.mouseChildren = false;
 	self.controller.loadChapterList();
 };
 LogoView.prototype.showChapterList=function(list){
@@ -114,9 +115,11 @@ LogoView.prototype.chapterMenuClosed=function(event){
 	var self = this;
 	self.chapterMenuLayer.remove();
 	self.chapterMenuLayer = null;
+	self.topMenuLayer.mouseChildren = true;
 };
 LogoView.prototype.returnTopMenu=function(event){
 	var self = this;
+	self.chapterMenuLayer.mouseChildren = false;
 	LTweenLite.to(self.topMenuLayer,0.5,{x:self.topMenuLayer.tx, alpha:1});
 	LTweenLite.to(self.chapterMenuLayer,0.5,{x:self.chapterMenuLayer.tx+210, alpha:0,onComplete:self.chapterMenuClosed.bind(self)});
 };
@@ -126,5 +129,6 @@ LogoView.prototype.showChapter=function(event){
 	if(typeof event.currentTarget.chapterId !== "number"){
 		return;
 	}
+	self.chapterMenuLayer.mouseChildren = false;
 	self.controller.showChapter(event.currentTarget.chapterId);
 };

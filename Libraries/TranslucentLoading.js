@@ -6,6 +6,8 @@ function TranslucentLoading(data){
 	background.scaleX = LGlobal.width / backgroundData.width;
 	background.scaleY = LGlobal.height / backgroundData.height;
 	s.addChild(background);
+	s.addEventListener(LMouseEvent.MOUSE_DOWN, function(){});
+	s.addEventListener(LMouseEvent.MOUSE_UP, function(){});
 	var loadingData = new LBitmapData(LMvc.datalist["common-loading"]);
 	var anime = new LAnimationTimeline(loadingData,LGlobal.divideCoordinate(loadingData.width,loadingData.height,1,loadingData.width/loadingData.height >>> 0));
 	anime.x = (LGlobal.width - loadingData.height)*0.5;
