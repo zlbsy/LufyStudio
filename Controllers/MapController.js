@@ -9,7 +9,7 @@ MapController.prototype.construct=function(){
 };
 MapController.prototype.configLoad=function(){
 	var self = this;
-	self.load.config(["characterList","Job","Items"],self.modelLoad);
+	self.load.config(["characterList","Job","Items","Event"],self.modelLoad);
 };
 MapController.prototype.modelLoad=function(){
 	var self = this;

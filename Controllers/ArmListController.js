@@ -41,6 +41,21 @@ ArmListController.prototype.closeArmDetailed=function(){
 ArmListController.prototype.closeArmList=function(){
 	this.fromController.closeArmList();
 };
-
+ArmListController.prototype.loadCharacterList = function(type){
+	var self = this;
+	LMvc.keepLoading(true);
+	LMvc.changeLoading(TranslucentLoading);
+	self.characterListType = type;
+	self.loadMvc("CharacterList",self.showCharacterList);
+};
+ArmListController.prototype.showCharacterList=function(){
+	var self = this;
+	var characterList = new CharacterListController(self.characterListType,self);
+	self.view.characterListLayer.addChild(characterList.view);
+	self.dispatchEvent(CharacterListEvent.SHOW);
+};
+ArmListController.prototype.closeCharacterList=function(){
+	this.dispatchEvent(CharacterListEvent.CLOSE);
+};
 
 

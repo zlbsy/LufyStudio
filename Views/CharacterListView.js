@@ -55,6 +55,10 @@ CharacterListView.prototype.listInit=function(){
 			buttonLabel = "move_start";
 			self.dataList = cityModel.generals(Job.IDLE);
 			break;
+		case CharacterListType.ENLIST:
+			buttonLabel = "execute";
+			self.dataList = cityModel.generals(Job.IDLE);
+			break;
 		default:
 			buttonLabel = "execute";
 			showMoney = true;
@@ -228,6 +232,7 @@ CharacterListView.prototype.showList=function(){
 		case CharacterListType.CHARACTER_LIST:
 			break;
 		case CharacterListType.CHARACTER_MOVE:
+		case CharacterListType.ENLIST:
 			minusHeight = 70;
 			break;
 		default:

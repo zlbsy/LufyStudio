@@ -51,3 +51,7 @@ BuildBaseView.prototype.showBuild=function(){
 	self.menuLayer.visible = true;
 	self.controller.view.baseLayer.visible = true;
 };
+BuildBaseView.prototype.die=function(){
+	var self = this;
+	
+};

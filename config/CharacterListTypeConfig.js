@@ -6,3 +6,5 @@ CharacterListType.AGRICULTURE = "agriculture";
 CharacterListType.BUSINESS = "business";
 CharacterListType.POLICE = "police";
 CharacterListType.TECHNOLOGY = "technology";
+CharacterListType.ENLIST = "enlist";
+
