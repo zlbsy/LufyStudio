@@ -70,12 +70,22 @@ ArmDetailedView.prototype.set=function(){
 		return;
 	}
 };
+ArmDetailedView.prototype.getEnlistCount = function(){
+	var self = this;
+	var length = self.controller.selectCharacters.length;
+	var enlistCount = EnlistSetting.ENLIST_FROM + (EnlistSetting.ENLIST_TO - EnlistSetting.ENLIST_FROM) * self.enlistRange.value*0.01 >>> 0;
+	return enlistCount * length;
+};
+ArmDetailedView.prototype.getEnlistPrice = function(count){
+	var self = this;
+	var enlistCount = count ? count : self.getEnlistCount();
+	return self.enlistPrice * enlistCount / EnlistSetting.ENLIST_FROM >>> 0;
+};
 ArmDetailedView.prototype.onframe = function(event){
 	var self = event.currentTarget;
 	
-	var enlistCount = EnlistSetting.ENLIST_FROM + (EnlistSetting.ENLIST_TO - EnlistSetting.ENLIST_FROM) * self.enlistRange.value*0.01 >>> 0;
-	var enlistPrice = self.enlistPrice * enlistCount / EnlistSetting.ENLIST_FROM >>> 0;
-	
+	var enlistCount = self.getEnlistCount();
+	var enlistPrice = self.getEnlistPrice(enlistCount);
 	self.enlistConfrim.text = String.format("花费金钱:{0}\n招募{1}人", enlistPrice, enlistCount);
 };
 

@@ -1,15 +1,10 @@
-function LCityEvent(){}
-LCityEvent.SELECT_CITY = "select_city";
-
 function CityController(){
-	base(this,MyController,[]);
+	base(this,OpenCharacterListController,[]);
 }
 CityController.prototype.construct=function(){
 	var self = this;
-	//LMvc.keepLoading(true);
 	var list = self.model.getImages();
 	self.load.image(list,self.configLoad);
-	//self.load.image(list,self.getSatus);
 };
 CityController.prototype.configLoad=function(){
 	var self = this;
@@ -32,8 +27,7 @@ CityController.prototype.libraryLoad=function(){
 CityController.prototype.viewLoad=function(){
 	var self = this;
 	self.load.view(["Builds/Build","Builds/BuildBase","Builds/BuildMarket","Builds/BuildBarrack","Builds/BuildCitygate",
-	"Builds/BuildOfficial","Builds/BuildFarmland","Builds/BuildTavern","Builds/BuildInstitute","Common/HeaderStatus"
-	/*,"Common/CharacterList","Common/CharacterListChild","Common/CharacterDetailed"*/],self.init);
+	"Builds/BuildOfficial","Builds/BuildFarmland","Builds/BuildTavern","Builds/BuildInstitute","Common/HeaderStatus"],self.init);
 };
 CityController.prototype.init=function(){
 	var self = this;
@@ -67,25 +61,7 @@ CityController.prototype.toSelectMap=function(characterName){
 		}
 	});
 };
-CityController.prototype.loadCharacterList = function(type,buildView){
-	var self = this;
-	LMvc.keepLoading(true);
-	LMvc.changeLoading(TranslucentLoading);
-	self.characterListType = type;
-	self.buildView = buildView;
-	self.loadMvc("CharacterList",self.showCharacterList);
-};
-CityController.prototype.showCharacterList=function(){
-	var self = this;
-	var characterList = new CharacterListController(self.characterListType,self);
-	self.view.contentLayer.addChild(characterList.view);
-	self.buildView.hideBuild();
-};
-CityController.prototype.closeCharacterList=function(){
-	var self = this;
-	self.view.contentLayer.removeChildAt(self.view.contentLayer.numChildren - 1);
-	self.buildView.showBuild();
-};
+
 CityController.prototype.loadArmList = function(type,buildView){
 	var self = this;
 	LMvc.keepLoading(true);

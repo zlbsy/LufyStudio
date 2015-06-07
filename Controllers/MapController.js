@@ -5,7 +5,11 @@ MapController.MODE_MAP = "map";
 MapController.MODE_CHARACTER_MOVE = "generals_move";
 MapController.prototype.construct=function(){
 	var self = this;
-	self.configLoad();
+	self.baseControllersLoad();
+};
+MapController.prototype.baseControllersLoad=function(){
+	var self = this;
+	self.load.controller(["OpenCharacterList"],self.configLoad);
 };
 MapController.prototype.configLoad=function(){
 	var self = this;

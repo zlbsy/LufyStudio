@@ -4,6 +4,9 @@ function CityView(){
 CityView.prototype.construct=function(){
 	this.controller.addEventListener(LEvent.COMPLETE, this.init.bind(this));
 };
+CityView.prototype.addCharacterListView=function(characterListView){
+	this.contentLayer.addChild(characterListView);
+};
 CityView.prototype.layerInit=function(){
 	var self = this;
 	self.baseLayer = new LSprite();

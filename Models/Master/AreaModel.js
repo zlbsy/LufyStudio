@@ -276,11 +276,14 @@ AreaModel.prototype.troopsSum=function(){
 	}
 	return LString.numberFormat(troopsSum,3);
 };
-AreaModel.prototype.troops=function(){
+AreaModel.prototype.troops=function(id){
 	var self = this;
 	var troops = [];
 	for(var i=0;i<self.data.troops.length;i++){
 		var troop = self.data.troops[i];
+		if(typeof id != UNDEFINED && troop.id == id){
+			return troop.quantity;
+		}
 		if(troop.learned){
 			troops.push(troop);
 		}

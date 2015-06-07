@@ -1,5 +1,6 @@
 function BuildBaseView(controller, buildName){
 	var self = this;
+	self.isBuildBaseView = true;
 	base(self,LView,[controller]);
 	self.setBackground();
 	var build = controller.view.buildLayer.childList.find(function(child){
@@ -12,6 +13,9 @@ function BuildBaseView(controller, buildName){
 	var menuLayer = self.showMenu();
 	self.menuLayer.addChild(menuLayer);
 	self.setMenuPosition(build, menuLayer);
+	
+	self.controller.addEventListener(CharacterListEvent.SHOW, self.hideBuild);
+	self.controller.addEventListener(CharacterListEvent.CLOSE, self.showBuild);
 }
 BuildBaseView.prototype.showMenu=function(){};
 BuildBaseView.prototype.setBackground=function(){
@@ -41,17 +45,26 @@ BuildBaseView.prototype.setMenuPosition=function(build, menuLayer){
 		}
 	}
 };
-BuildBaseView.prototype.hideBuild=function(){
-	var self = this;
+BuildBaseView.prototype.hideBuild=function(event){
+	var contentLayer = event.currentTarget.view.contentLayer;
+	var self = contentLayer.childList.find(function(child){
+		return child.isBuildBaseView;
+	});
 	self.menuLayer.visible = false;
 	self.controller.view.baseLayer.visible = false;
 };
-BuildBaseView.prototype.showBuild=function(){
-	var self = this;
+BuildBaseView.prototype.showBuild=function(event){
+	var contentLayer = event.currentTarget.view.contentLayer;
+	var self = contentLayer.childList.find(function(child){
+		return child.isBuildBaseView;
+	});
+	contentLayer.removeChildAt(contentLayer.numChildren - 1);
 	self.menuLayer.visible = true;
 	self.controller.view.baseLayer.visible = true;
 };
 BuildBaseView.prototype.die=function(){
 	var self = this;
-	
+	self.callParent("die",arguments);
+	self.controller.removeEventListener(CharacterListEvent.SHOW, self.hideBuild);
+	self.controller.removeEventListener(CharacterListEvent.CLOSE, self.showBuild);
 };

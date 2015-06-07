@@ -62,6 +62,11 @@ CharacterModel.prototype.jobLabel = function() {
 	}
 	return Language.get(self.data.job);
 };
+CharacterModel.prototype.enlist = function(enlistArmId, enlistCount) {
+	var self = this;
+	self.data.targetEnlist = {id:enlistArmId,count:enlistCount};
+	self.job(Job.ENLIST);
+};
 CharacterModel.prototype.job = function(value) {
 	var self = this;
 	if(typeof value != UNDEFINED){

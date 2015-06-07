@@ -2,7 +2,7 @@ function ArmListController(armListType,fromController){
 	var self = this;
 	self.armListType = armListType;
 	self.fromController = fromController;
-	base(self,MyController,[]);
+	base(self,OpenCharacterListController,[]);
 }
 ArmListController.prototype.construct=function(){
 	var self = this;
@@ -11,13 +11,11 @@ ArmListController.prototype.construct=function(){
 };
 ArmListController.prototype.configLoad=function(){
 	var self = this;
-	console.log("ArmListController.prototype.configLoad run");
 	self.load.config(["Equipment","Arms","ArmListType","Belong","Position","Soldiers","Strategy"],self.modelLoad);
 };
 
 ArmListController.prototype.modelLoad=function(){
 	var self = this;
-	console.log("ArmListController.prototype.modelLoad run");
 	self.load.model(["Master/SoldierMaster","Master/Soldier"],self.viewLoad);
 };
 ArmListController.prototype.viewLoad=function(){
@@ -27,7 +25,6 @@ ArmListController.prototype.viewLoad=function(){
 };
 ArmListController.prototype.init=function(status){
 	var self = this;
-	console.log("ArmListController.prototype.init run");
 	SoldierMasterModel.setMaster(SoldierDatas);
 	LMvc.keepLoading(false);
 	var cityData = AreaModel.getArea(LMvc.cityId);
@@ -40,22 +37,6 @@ ArmListController.prototype.closeArmDetailed=function(){
 };
 ArmListController.prototype.closeArmList=function(){
 	this.fromController.closeArmList();
-};
-ArmListController.prototype.loadCharacterList = function(type){
-	var self = this;
-	LMvc.keepLoading(true);
-	LMvc.changeLoading(TranslucentLoading);
-	self.characterListType = type;
-	self.loadMvc("CharacterList",self.showCharacterList);
-};
-ArmListController.prototype.showCharacterList=function(){
-	var self = this;
-	var characterList = new CharacterListController(self.characterListType,self);
-	self.view.characterListLayer.addChild(characterList.view);
-	self.dispatchEvent(CharacterListEvent.SHOW);
-};
-ArmListController.prototype.closeCharacterList=function(){
-	this.dispatchEvent(CharacterListEvent.CLOSE);
 };
 
 

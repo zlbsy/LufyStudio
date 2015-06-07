@@ -3,8 +3,8 @@ function ArmListView(){
 }
 ArmListView.prototype.construct=function(){
 	this.controller.addEventListener(LEvent.COMPLETE, this.init.bind(this));
-	this.controller.addEventListener(CharacterListEvent.SHOW, this.characterListShow.bind(this));
-	this.controller.addEventListener(CharacterListEvent.CLOSE, this.characterListClose.bind(this));
+	this.controller.addEventListener(CharacterListEvent.SHOW, this.characterListShow);
+	this.controller.addEventListener(CharacterListEvent.CLOSE, this.characterListClose);
 };
 ArmListView.prototype.init=function(){
 	var self = this;
@@ -154,14 +154,35 @@ ArmListView.prototype.armClickUp = function(event) {
 ArmListView.prototype.showArmDetailed=function(soldierData){
 	var self = this;
 	var armDetailed = new ArmDetailedView(self.controller, soldierData);
-	var obj = {title:Language.get("enlist"),subWindow:armDetailed,width:400,height:480,okEvent:null,cancelEvent:null};
+	var obj = {title:Language.get("enlist"),subWindow:armDetailed,width:400,height:480,okEvent:self.enlist,cancelEvent:null};
 	var windowLayer = ConfirmWindow(obj);
-	LMvc.layer.addChild(windowLayer);
+	//LMvc.layer.addChild(windowLayer);
+	self.armDetailedLayer.addChild(windowLayer);
 	//self.armDetailedLayer.addChild(armDetailed);
 	//self.listChildLayer.visible = false;
 };
-ArmListView.prototype.showArmList=function(){
-	var self = this;
+ArmListView.prototype.enlist=function(event){
+	var self = event.currentTarget.parent.parent.parent;
+	var selectCharacters = self.controller.selectCharacters;
+	var armDetailed = self.armDetailedLayer.getChildAt(0).childList.find(function(child){
+		return child.constructor.name == "ArmDetailedView";
+	});
+	var enlistCount = armDetailed.getEnlistCount();
+	var price = armDetailed.getEnlistPrice(enlistCount);
+	var cityModel = self.controller.fromController.getValue("cityData");
+	var money = cityModel.moneyAsNumber();
+	if(money < price){
+		var obj = {title:Language.get("confirm"),message:Language.get("dialog_no_money"),height:200,okEvent:null};
+		var windowLayer = ConfirmWindow(obj);
+		LMvc.layer.addChild(windowLayer);
+		return;
+	}
+	cityModel.money(money - price);
+	var singleEnlistCount = (enlistCount / selectCharacters.length) >> 0;
+	for(var i=0;i<selectCharacters.length;i++){
+		var charaModel = selectCharacters[i];
+		charaModel.enlist(self.enlistArmId,singleEnlistCount);
+	}
 	self.armDetailedLayer.removeAllChild();
 	//self.listChildLayer.visible = true;
 };
@@ -169,12 +190,15 @@ ArmListView.prototype.toSelectCharacter=function(){
 	var self = this;
 	self.controller.loadCharacterList(CharacterListType.ENLIST,self);
 };
-ArmListView.prototype.characterListShow=function(){
-	var self = this;
+ArmListView.prototype.addCharacterListView=function(characterListView){
+	this.characterListLayer.addChild(characterListView);
+};
+ArmListView.prototype.characterListShow=function(event){
+	var self = event.currentTarget.view;
 	self.listLayer.visible = false;
 };
-ArmListView.prototype.characterListClose=function(){
-	var self = this;
+ArmListView.prototype.characterListClose=function(event){
+	var self = event.currentTarget.view;
 	self.characterListLayer.removeChildAt(self.characterListLayer.numChildren - 1);
 	self.listLayer.visible = true;
 	var soldierData = self.dataList.find(function(child){

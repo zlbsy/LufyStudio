@@ -121,6 +121,16 @@ CharacterListView.prototype.onClickExecuteButton=function(event){
 		});
 		self.controller.fromController.addEventListener(LCityEvent.SELECT_CITY, self.moveToCity);
 		self.controller.toSelectMap(checkSelectCharacter.charaModel.name());
+	}else if(self.controller.characterListType == CharacterListType.ENLIST){
+		var armListController = self.controller.fromController;
+		armListController.selectCharacters = [];
+		self.listChildLayer.childList.forEach(function(child){
+			if(child.constructor.name !== "CharacterListChildView" || !child.checkbox.checked){
+				return;
+			}
+			armListController.selectCharacters.push(child.charaModel);
+		});
+		self.controller.fromController.closeCharacterList();
 	}else{
 		self.listChildLayer.childList.forEach(function(child){
 			if(child.constructor.name !== "CharacterListChildView" || !child.checkbox.checked){

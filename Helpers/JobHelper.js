@@ -8,6 +8,8 @@ function characterListType2JobType(characterListType) {
 			return Job.POLICE;
 		case CharacterListType.TECHNOLOGY:
 			return Job.TECHNOLOGY;
+		case CharacterListType.ENLIST:
+			return Job.ENLIST;
 	}
 	console.error("Can't change to jobType");
 	return Job.IDLE;
@@ -75,6 +77,6 @@ function technologyRun(characterModel){
 function enlistRun(characterModel){
 	//招募：运气+统率
 	console.log("enlistRun : ",characterModel.id());
-	
+	//troops();
 	characterModel.job(Job.IDLE);
 }
