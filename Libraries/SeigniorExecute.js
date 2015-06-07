@@ -41,6 +41,9 @@ SeigniorExecute.prototype.areaRun=function(area){
 			case Job.TECHNOLOGY:
 				technologyRun(chara);
 				break;
+			case Job.ENLIST:
+				enlistRun(chara);
+				break;
 		}
 	}
 	if(list.length == 0){

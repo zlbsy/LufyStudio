@@ -5,6 +5,7 @@ var Job = {
 	BUSINESS:"business",
 	POLICE:"police",
 	TECHNOLOGY:"technology",
+	ENLIST:"enlist",
 	END:"end"
 };
 var JobPrice = {

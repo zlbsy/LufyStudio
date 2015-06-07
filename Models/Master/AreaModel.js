@@ -236,13 +236,29 @@ AreaModel.prototype.food=function(){
 	return LString.numberFormat(this.data.food,3);
 };
 AreaModel.prototype.technology=function(){
+	if(typeof value != UNDEFINED){
+		this.data.technology += value;
+		if(this.data.technology < 0){
+			this.data.technology = 0;
+		}
+		return;
+	}
 	return LString.numberFormat(this.data.technology,3);
 };
 AreaModel.prototype.population=function(){
 	return LString.numberFormat(this.data.population,3);
 };
-AreaModel.prototype.police=function(){
-	return LString.numberFormat(this.data.police,3);
+AreaModel.prototype.police=function(value){
+	if(typeof value != UNDEFINED){
+		this.data.police += value;
+		if(this.data.police < 0){
+			this.data.police = 0;
+		}else if(this.data.police > 100){
+			this.data.police = 100;
+		}
+		return;
+	}
+	return this.data.police >> 0;
 };
 AreaModel.prototype.city_defense=function(){
 	return LString.numberFormat(this.data.city_defense,3);
@@ -281,8 +297,15 @@ AreaModel.prototype.agriculture=function(value){
 	}
 	return this.data.agriculture >> 0;
 };
-AreaModel.prototype.business=function(){
-	return this.data.business;
+AreaModel.prototype.business=function(value){
+	if(typeof value != UNDEFINED){
+		this.data.agriculture += value;
+		if(this.data.agriculture < 0){
+			this.data.agriculture = 0;
+		}
+		return;
+	}
+	return this.data.business >> 0;
 };
 AreaModel.prototype.position=function(){
 	return this.data.position;
