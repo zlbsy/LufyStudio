@@ -24,7 +24,7 @@ SeigniorExecute.prototype.areaRun=function(area){
 	for(var i=0;i<generals.length;i++){
 		chara = generals[i];
 		job = chara.job();
-		console.log("SeigniorExecute.prototype.areaRun job",chara.id(),job);
+		//console.log("SeigniorExecute.prototype.areaRun job",chara.id(),job);
 		switch(job){
 			case Job.MOVE:
 				list.push(chara);

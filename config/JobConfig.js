@@ -13,3 +13,10 @@ var JobPrice = {
 	POLICE:500,
 	TECHNOLOGY:500,
 };
+var JobCoefficient = {
+	NORMAL:90,
+	AGRICULTURE:1,
+	BUSINESS:1,
+	POLICE:1,
+	TECHNOLOGY:1,
+};
