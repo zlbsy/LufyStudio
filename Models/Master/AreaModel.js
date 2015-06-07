@@ -270,26 +270,19 @@ AreaModel.prototype.troops=function(){
 		}
 	}
 	return troops;
-	/*
-	if(!self._troops){
-		self._troops = [];
-		for(var i=0;i<self.data.troops.length;i++){
-			var troop = self.data.troops[i];
-			var soldier = new SoldierModel(null,troop);
-			self._troops.push(soldier);
+};
+AreaModel.prototype.agriculture=function(value){
+	if(typeof value != UNDEFINED){
+		this.data.agriculture += value;
+		if(this.data.agriculture < 0){
+			this.data.agriculture = 0;
 		}
+		return;
 	}
-	var troops = [];
-	console.log("self._troops = " + self._troops.length);
-	for(var i=0;i<self._troops.length;i++){
-		var soldier = self._troops[i];
-	console.log("soldier = " + soldier.learned());
-		if(soldier.learned()){
-			troops.push(soldier);
-		}
-	}
-	console.log("troops = " + troops.length);
-	return troops;*/
+	return this.data.agriculture >> 0;
+};
+AreaModel.prototype.business=function(){
+	return this.data.business;
 };
 AreaModel.prototype.position=function(){
 	return this.data.position;

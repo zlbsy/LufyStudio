@@ -27,11 +27,13 @@ function getJobPrice(jobType) {
 	return 0;
 }
 /*
-	//治安：武力+爆发
-	//农业：运气+爆发
+	//治安：武力+敏捷
 	//商业：智力+运气
+	//农业：智力+敏捷
+	//技术：智力+统率
 	//修补：武力+统率
-	//农业：运气+爆发
+	//招募：运气+统率
+	//谍报：武力+运气
 var JobCoefficient = {
 	NORMAL:90,
 	AGRICULTURE:1,
@@ -45,9 +47,9 @@ function getJobResult(realValue,coefficient){
 }
 function agricultureRun(characterModel){
 	console.log("agricultureRun : ",characterModel.id());
-	//农业：运气+爆发
-	var value = getJobResult(characterModel.luck(),JobCoefficient.AGRICULTURE);
-	
+	var value01 = getJobResult(characterModel.luck(),JobCoefficient.AGRICULTURE);
+	var value02 = getJobResult(characterModel.luck(),JobCoefficient.AGRICULTURE);
+	characterModel.city().agriculture(value01 + value02);
 	characterModel.job(Job.IDLE);
 }
 function businessRun(characterModel){
