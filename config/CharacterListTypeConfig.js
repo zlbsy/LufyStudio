@@ -7,4 +7,5 @@ CharacterListType.BUSINESS = "business";
 CharacterListType.POLICE = "police";
 CharacterListType.TECHNOLOGY = "technology";
 CharacterListType.ENLIST = "enlist";
-
+CharacterListType.HIRE = "hire";
+CharacterListType.CHARACTER_HIRE = "generals_hire";

@@ -16,7 +16,7 @@ Language.getSoldier = function(key){
 Language.data = {
 	"return":"返回",
 	"execute":"执行",
-	
+	"who_can_do":"派谁去?",
 	"tab_equipment":"装备",
 	"tab_skill":"技能",
 	"tab_arms":"兵种",
@@ -32,6 +32,7 @@ Language.data = {
 	"confirm":"确认",
 	"dialog_select_generals":"请选择武将！",
 	"dialog_no_money":"金钱不够！",
+	"dialog_error_hire_more":"一次只能录用一个在野武将！",
 	"dialog_move_generals_confirm":"要将{0}等将领移动到{1}吗？",
 	"dialog_move_generals_error":"无法移动到此城市！",
 	"dialog_remove_equipment_confirm":"要解除装备{0}吗？",

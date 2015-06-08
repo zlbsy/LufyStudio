@@ -59,6 +59,10 @@ CharacterListView.prototype.listInit=function(){
 			buttonLabel = "execute";
 			self.dataList = cityModel.generals(Job.IDLE);
 			break;
+		case CharacterListType.HIRE:
+			buttonLabel = "execute";
+			self.dataList = outOfOffice;
+			break;
 		default:
 			buttonLabel = "execute";
 			showMoney = true;
@@ -114,6 +118,11 @@ CharacterListView.prototype.onClickExecuteButton=function(event){
 		var windowLayer = ConfirmWindow(obj);
 		self.addChild(windowLayer);
 		return;
+	}else if(self.selectedCount > 1 && self.controller.characterListType == CharacterListType.HIRE){
+		var obj = {title:Language.get("confirm"),message:Language.get("dialog_error_hire_more"),height:200,okEvent:null};
+		var windowLayer = ConfirmWindow(obj);
+		self.addChild(windowLayer);
+		return;
 	}
 	if(self.controller.characterListType == CharacterListType.CHARACTER_MOVE){
 		var checkSelectCharacter = self.listChildLayer.childList.find(function(child){
@@ -131,6 +140,12 @@ CharacterListView.prototype.onClickExecuteButton=function(event){
 			armListController.selectCharacters.push(child.charaModel);
 		});
 		self.controller.fromController.closeCharacterList();
+	}else if(self.controller.characterListType == CharacterListType.HIRE){
+		var fromController = self.controller.fromController;
+		fromController.hireCharacter = self.listChildLayer.childList.find(function(child){
+			return child.constructor.name == "CharacterListChildView" && child.checkbox.checked;
+		});
+		fromController.closeCharacterList();
 	}else{
 		self.listChildLayer.childList.forEach(function(child){
 			if(child.constructor.name !== "CharacterListChildView" || !child.checkbox.checked){

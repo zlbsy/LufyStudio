@@ -50,11 +50,11 @@ LMvc.areaData = {
 				{chara_id:25,lv:3,feat:166,loyalty:50},
 				{chara_id:26,lv:3,feat:166,loyalty:50},
 				{chara_id:27,lv:3,feat:166,loyalty:50},
-				{chara_id:28,lv:3,feat:166,loyalty:50},
-				{chara_id:29,lv:3,feat:166,loyalty:50}
+				{chara_id:28,lv:3,feat:166,loyalty:50}
 			],
 			out_of_offices:[
-				{chara_id:8,lv:1,feat:0}
+				{chara_id:8,lv:1,feat:0},
+				{chara_id:29,lv:1,feat:0}
 			],
 			not_debut:[
 				{chara_id:9,lv:1,feat:0}
