@@ -17,14 +17,26 @@ SeigniorExecute.prototype.run=function(){
 	self.maskHide();
 };
 SeigniorExecute.prototype.areaRun=function(area){
+	var self = this;
+	self.areaGainRun(area);
+	self.areaJobRun(area);
+};
+SeigniorExecute.prototype.areaGainRun=function(area){
+	var self = this;
+	//TODO::自然灾害
+	//金钱
+	area.money();
+	//粮食
+	//人口
+};
+SeigniorExecute.prototype.areaJobRun=function(area){
 	var self = this, chara, job;
 	var generals = area.generals();
-	console.log("SeigniorExecute.prototype.areaRun",generals);
+	console.log("SeigniorExecute.prototype.areaJobRun",generals);
 	var list = [];
 	for(var i=0;i<generals.length;i++){
 		chara = generals[i];
 		job = chara.job();
-		//console.log("SeigniorExecute.prototype.areaRun job",chara.id(),job);
 		switch(job){
 			case Job.MOVE:
 				list.push(chara);
@@ -42,20 +54,18 @@ SeigniorExecute.prototype.areaRun=function(area){
 				technologyRun(chara);
 				break;
 			case Job.ENLIST:
-				enlistRun(chara);
+				chara.enlist();
 				break;
 		}
 	}
 	if(list.length == 0){
 		return;
 	}
-	console.log("SeigniorExecute.prototype.areaRun list",list.length);
 	for(var i=0;i<list.length;i++){
 		chara = list[i];
 		job = chara.job();
 		switch(job){
 			case Job.MOVE:
-				console.log("SeigniorExecute.prototype.areaRun move chara",chara.id());
 				chara.moveTo();
 				break;
 		}
@@ -67,6 +77,7 @@ SeigniorExecute.prototype.areasRun=function(chara_id){
 		var areaModel = AreaModel.list[i];
 		if(areaModel.seignior_chara_id() == chara_id){
 			self.areaRun(areaModel);
+			break;
 		}
 	}
 };

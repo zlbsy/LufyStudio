@@ -56,16 +56,6 @@ BuildOfficialView.prototype.onClickCloseButton=function(event){
 	self.menuLayer.visible = true;
 	self.controller.view.baseLayer.visible = true;
 };
-BuildOfficialView.prototype.hideBuild=function(){
-	var self = this;
-	self.menuLayer.visible = false;
-	self.controller.view.baseLayer.visible = false;
-};
-BuildOfficialView.prototype.showBuild=function(){
-	var self = this;
-	self.menuLayer.visible = true;
-	self.controller.view.baseLayer.visible = true;
-};
 BuildOfficialView.prototype.onClickGeneralsListButton=function(event){
 	var self = this;
 	self.controller.loadCharacterList(CharacterListType.CHARACTER_LIST,self);

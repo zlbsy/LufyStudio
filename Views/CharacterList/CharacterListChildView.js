@@ -119,7 +119,7 @@ CharacterListChildView.prototype.setAbilityProperties = function() {
 	name.x = 60 * 2 + 5;
 	name.y = 5;
 	layer.addChild(name);
-	var name = getStrokeLabel(self.charaModel.agilie(), 18, "#FFFFFF", "#000000", 4);
+	var name = getStrokeLabel(self.charaModel.agility(), 18, "#FFFFFF", "#000000", 4);
 	name.x = 60 * 3 + 5;
 	name.y = 5;
 	layer.addChild(name);

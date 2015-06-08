@@ -43,7 +43,7 @@ HeaderStatusView.prototype.set=function(){
 	self.setStatus(Language.get("out_of_office"), cityModel.outOfOfficeSum(), self.stepMiniWidth * 2 + 5, self.stepHeight * 4, self.stepMiniWidth);
 	
 	self.setStatus(Language.get("population"), cityModel.population(), self.stepMiniWidth * 3 + 5, self.stepHeight * 2, self.stepWidth);
-	self.setStatus(Language.get("money"), cityModel.money(), self.stepMiniWidth * 3 + 5, self.stepHeight * 3, self.stepWidth);
+	self.setStatus(Language.get("money"), cityModel.moneyLabel(), self.stepMiniWidth * 3 + 5, self.stepHeight * 3, self.stepWidth);
 	self.setStatus(Language.get("food"), cityModel.food(), self.stepMiniWidth * 3 + 5, self.stepHeight * 4, self.stepWidth);
 };
 HeaderStatusView.prototype.updateView = function(){

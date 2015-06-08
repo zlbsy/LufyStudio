@@ -218,16 +218,26 @@ AreaModel.prototype.size=function(){
 AreaModel.prototype.level=function(){
 	return this.data.level;
 };
-AreaModel.prototype.money=function(value){
-	if(typeof value != UNDEFINED){
-		this.data.money = value;
-		return;
+AreaModel.prototype.plus=function(key, value, min, max){
+	if(typeof min == UNDEFINED){
+		min = 0;
 	}
+	if(typeof max == UNDEFINED){
+		max = Number.MAX_VALUE;
+	}
+	this.data[key] += value;
+	if(this.data[key] < min){
+		this.data[key] = min;
+	}else if(this.data[key] > max){
+		this.data[key] = max;
+	}
+};
+AreaModel.prototype.moneyLabel=function(value){
 	return LString.numberFormat(this.data.money,3);
 };
-AreaModel.prototype.moneyAsNumber=function(value){
+AreaModel.prototype.money=function(value){
 	if(typeof value != UNDEFINED){
-		this.data.money = value;
+		this.plus("money",value);
 		return;
 	}
 	return this.data.money;
@@ -235,12 +245,9 @@ AreaModel.prototype.moneyAsNumber=function(value){
 AreaModel.prototype.food=function(){
 	return LString.numberFormat(this.data.food,3);
 };
-AreaModel.prototype.technology=function(){
+AreaModel.prototype.technology=function(value){
 	if(typeof value != UNDEFINED){
-		this.data.technology += value;
-		if(this.data.technology < 0){
-			this.data.technology = 0;
-		}
+		this.plus("technology",value);
 		return;
 	}
 	return LString.numberFormat(this.data.technology,3);
@@ -250,12 +257,7 @@ AreaModel.prototype.population=function(){
 };
 AreaModel.prototype.police=function(value){
 	if(typeof value != UNDEFINED){
-		this.data.police += value;
-		if(this.data.police < 0){
-			this.data.police = 0;
-		}else if(this.data.police > 100){
-			this.data.police = 100;
-		}
+		this.plus("police",value, 0, 100);
 		return;
 	}
 	return this.data.police >> 0;
@@ -276,13 +278,18 @@ AreaModel.prototype.troopsSum=function(){
 	}
 	return LString.numberFormat(troopsSum,3);
 };
-AreaModel.prototype.troops=function(id){
+AreaModel.prototype.troops=function(id, value){
 	var self = this;
 	var troops = [];
 	for(var i=0;i<self.data.troops.length;i++){
 		var troop = self.data.troops[i];
 		if(typeof id != UNDEFINED && troop.id == id){
-			return troop.quantity;
+			if(typeof value == UNDEFINED){
+				return troop;
+			}else{
+				self.data.troops[i] = value;
+				return;
+			}
 		}
 		if(troop.learned){
 			troops.push(troop);
@@ -292,20 +299,14 @@ AreaModel.prototype.troops=function(id){
 };
 AreaModel.prototype.agriculture=function(value){
 	if(typeof value != UNDEFINED){
-		this.data.agriculture += value;
-		if(this.data.agriculture < 0){
-			this.data.agriculture = 0;
-		}
+		this.plus("agriculture",value);
 		return;
 	}
 	return this.data.agriculture >> 0;
 };
 AreaModel.prototype.business=function(value){
 	if(typeof value != UNDEFINED){
-		this.data.agriculture += value;
-		if(this.data.agriculture < 0){
-			this.data.agriculture = 0;
-		}
+		this.plus("business",value);
 		return;
 	}
 	return this.data.business >> 0;

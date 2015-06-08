@@ -71,12 +71,18 @@ function technologyRun(characterModel){
 	console.log("technologyRun : ",characterModel.id());
 	var value01 = getJobResult(characterModel.intelligence(),JobCoefficient.TECHNOLOGY);
 	var value02 = getJobResult(characterModel.command(),JobCoefficient.TECHNOLOGY);
-	characterModel.city().police(value01 + value02);
+	characterModel.city().technology(value01 + value02);
 	characterModel.job(Job.IDLE);
 }
-function enlistRun(characterModel){
+function enlistRun(characterModel, targetEnlist){
 	//招募：运气+统率
 	console.log("enlistRun : ",characterModel.id());
-	//troops();
+	var area = characterModel.city();
+	var troop = area.troops(targetEnlist.id);
+	var value01 = getJobResult(characterModel.luck(),JobCoefficient.ENLIST);
+	var value02 = getJobResult(characterModel.command(),JobCoefficient.ENLIST);
+	var quantity = (targetEnlist.quantity * (value01 + value02) / JobCoefficient.NORMAL) >> 0;
+	troop.quantity += quantity;
+	area.troops(targetEnlist.id, troop);
 	characterModel.job(Job.IDLE);
 }

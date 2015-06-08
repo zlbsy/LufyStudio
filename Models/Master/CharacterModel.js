@@ -64,8 +64,21 @@ CharacterModel.prototype.jobLabel = function() {
 };
 CharacterModel.prototype.enlist = function(enlistArmId, enlistCount) {
 	var self = this;
-	self.data.targetEnlist = {id:enlistArmId,count:enlistCount};
-	self.job(Job.ENLIST);
+	if(typeof enlistArmId == UNDEFINED){
+		enlistRun(self,self.data.targetEnlist);
+		self.data.targetEnlist = null;
+		/*
+		var area = self.city();
+		var troop = area.troops(self.data.targetEnlist.id);
+		troop.quantity += self.data.targetEnlist.quantity;
+		area.troops(self.data.targetEnlist.id, troop);
+		self.data.targetEnlist = null;
+		self.job(Job.IDLE);
+		*/
+	}else{
+		self.data.targetEnlist = {id:enlistArmId,quantity:enlistCount};
+		self.job(Job.ENLIST);
+	}
 };
 CharacterModel.prototype.job = function(value) {
 	var self = this;
@@ -145,8 +158,8 @@ CharacterModel.prototype.force = function() {
 CharacterModel.prototype.intelligence = function() {
 	return this.data.intelligence;
 };
-CharacterModel.prototype.agilie = function() {
-	return this.data.agilie;
+CharacterModel.prototype.agility = function() {
+	return this.data.agility;
 };
 CharacterModel.prototype.luck = function() {
 	return this.data.luck;

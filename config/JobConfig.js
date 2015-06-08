@@ -20,4 +20,5 @@ var JobCoefficient = {
 	BUSINESS:1,
 	POLICE:1,
 	TECHNOLOGY:1,
+	ENLIST:0.25
 };

@@ -21,8 +21,8 @@ CharacterListView.prototype.listInit=function(){
 	var generals = cityModel.generals();
 	var outOfOffice = cityModel.outOfOffice();
 	self.selectedCount = 0;
-	self.overageMoney = cityModel.moneyAsNumber();
-	
+	self.overageMoney = cityModel.money();
+	self.usedMoney = 0;
 	var title = getStrokeLabel("",30,"#FFFFFF","#000000",4);
 	title.x = 15;
 	title.y = 10;
@@ -73,7 +73,7 @@ CharacterListView.prototype.listInit=function(){
 		button.addEventListener(LMouseEvent.MOUSE_UP, self.onClickExecuteButton);
 		self.addEventListener(LCheckBox.ON_CHANGE, self.onChangeChildSelect);
 		if(showMoney){
-			var lblMoney = getStrokeLabel(String.format("{0}：{1} - {2} = {3}", Language.get("money"), cityModel.money(), 0, cityModel.money()),26,"#FFFFFF","#000000",4);
+			var lblMoney = getStrokeLabel(String.format("{0}：{1} - {2} = {3}", Language.get("money"), cityModel.moneyLabel(), 0, cityModel.moneyLabel()),26,"#FFFFFF","#000000",4);
 			lblMoney.x = (LGlobal.width - lblMoney.getWidth()) * 0.5;
 			lblMoney.y = button.y - lblMoney.getHeight() - 10;
 			self.lblMoney = lblMoney;
@@ -96,10 +96,10 @@ CharacterListView.prototype.onChangeChildSelect=function(event){
 	}
 	var cityModel = self.controller.getValue("cityData");
 	var usedMoney = getJobPrice(characterListType2JobType(self.controller.characterListType)) * self.selectedCount;
-	var overageMoney = cityModel.moneyAsNumber() - usedMoney;
+	var overageMoney = cityModel.money() - usedMoney;
 	self.usedMoney = usedMoney;
 	self.overageMoney = overageMoney;
-	self.lblMoney.text = String.format("{0}：{1} - {2} = {3}", Language.get("money"), cityModel.money(), LString.numberFormat(usedMoney,3), LString.numberFormat(overageMoney,3));
+	self.lblMoney.text = String.format("{0}：{1} - {2} = {3}", Language.get("money"), cityModel.moneyLabel(), LString.numberFormat(usedMoney,3), LString.numberFormat(overageMoney,3));
 	self.lblMoney.x = (LGlobal.width - self.lblMoney.getWidth()) * 0.5;
 };
 CharacterListView.prototype.onClickExecuteButton=function(event){
@@ -140,7 +140,7 @@ CharacterListView.prototype.onClickExecuteButton=function(event){
 			child.charaModel.job(jobContent);
 		});
 		var cityModel = self.controller.getValue("cityData");
-		cityModel.money(self.overageMoney);
+		cityModel.money(-self.usedMoney);
 		self.controller.fromController.closeCharacterList();
 		LMvc.CityController.dispatchEvent(LController.NOTIFY_ALL);
 	}

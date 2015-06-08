@@ -170,14 +170,14 @@ ArmListView.prototype.enlist=function(event){
 	var enlistCount = armDetailed.getEnlistCount();
 	var price = armDetailed.getEnlistPrice(enlistCount);
 	var cityModel = self.controller.fromController.getValue("cityData");
-	var money = cityModel.moneyAsNumber();
+	var money = cityModel.money();
 	if(money < price){
 		var obj = {title:Language.get("confirm"),message:Language.get("dialog_no_money"),height:200,okEvent:null};
 		var windowLayer = ConfirmWindow(obj);
 		LMvc.layer.addChild(windowLayer);
 		return;
 	}
-	cityModel.money(money - price);
+	cityModel.money(-price);
 	var singleEnlistCount = (enlistCount / selectCharacters.length) >> 0;
 	for(var i=0;i<selectCharacters.length;i++){
 		var charaModel = selectCharacters[i];
