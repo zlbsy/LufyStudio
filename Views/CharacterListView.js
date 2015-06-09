@@ -13,7 +13,6 @@ CharacterListView.prototype.init=function(){
 	self.charaDetailedLayer = new LSprite();
 	self.addChild(self.charaDetailedLayer);
 	self.listInit();
-	Toast.makeText(Language.get("dialog_select_generals")).show();
 };
 CharacterListView.prototype.listInit=function(){
 	var self = this;
@@ -60,13 +59,18 @@ CharacterListView.prototype.listInit=function(){
 			self.dataList = cityModel.generals(Job.IDLE);
 			break;
 		case CharacterListType.HIRE:
-			buttonLabel = "execute";
+			buttonLabel = "hire";
 			self.dataList = outOfOffice;
+			break;
+		case CharacterListType.CHARACTER_HIRE:
+			buttonLabel = "execute";
+			self.dataList = cityModel.generals(Job.IDLE);
 			break;
 		default:
 			buttonLabel = "execute";
 			showMoney = true;
 			self.dataList = cityModel.generals(Job.IDLE);
+			Toast.makeText(Language.get("dialog_select_generals")).show();
 			break;
 	}
 	if(buttonLabel){
@@ -142,8 +146,20 @@ CharacterListView.prototype.onClickExecuteButton=function(event){
 		self.controller.fromController.closeCharacterList();
 	}else if(self.controller.characterListType == CharacterListType.HIRE){
 		var fromController = self.controller.fromController;
-		fromController.hireCharacter = self.listChildLayer.childList.find(function(child){
+		var childView = self.listChildLayer.childList.find(function(child){
 			return child.constructor.name == "CharacterListChildView" && child.checkbox.checked;
+		});
+		fromController.hireCharacter = childView.charaModel;
+		fromController.closeCharacterList();
+	}else if(self.controller.characterListType == CharacterListType.CHARACTER_HIRE){
+		var fromController = self.controller.fromController;
+		var hireCharacter = fromController.hireCharacter;
+		fromController.hireCharacter = null;
+		self.listChildLayer.childList.forEach(function(child){
+			if(child.constructor.name !== "CharacterListChildView" || !child.checkbox.checked){
+				return;
+			}
+			child.charaModel.hire(hireCharacter.id());
 		});
 		fromController.closeCharacterList();
 	}else{
@@ -207,7 +223,11 @@ CharacterListView.prototype.moveToCity=function(event){
 	fromController.showCharacterList();
 };
 CharacterListView.prototype.onClickCloseButton=function(event){
-	this.controller.closeCharacterList();
+	var self = this;
+	if(self.controller.characterListType == CharacterListType.CHARACTER_HIRE){
+		fromController.hireCharacter = null;
+	}
+	self.controller.closeCharacterList();
 };
 CharacterListView.prototype.showTabMenu=function(){
 	var self = this;

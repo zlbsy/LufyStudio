@@ -28,6 +28,9 @@ CharacterModel.prototype.id = function() {
 CharacterModel.prototype.name = function() {
 	return Language.getCharacter("character_"+this.data.id);
 };
+CharacterModel.prototype.compatibility = function() {
+	return this.data.compatibility;
+};
 CharacterModel.prototype.seignior = function(chara_id) {
 	var self = this;
 	if(typeof chara_id != UNDEFINED){
@@ -41,11 +44,17 @@ CharacterModel.prototype.seignior = function(chara_id) {
 };
 CharacterModel.prototype.identity = function(value) {
 	var self = this;
-	if(typeof value != UNDEFINED){
-		self.data.identity = Language.get(value);
-		return;
+	var seignior = self.seignior();
+	if(!seignior){
+		return Language.get("out_of_office");
 	}
-	return self.data.identity;
+	var identity = "general";
+	if(self.id() == self.seignior().id()){
+		identity = "monarch";
+	}else if(self.id() == self.city().prefecture()){
+		identity = "prefecture";
+	}
+	return Language.get(identity);
 };
 CharacterModel.prototype.loyalty = function(value) {
 	var self = this;
@@ -67,17 +76,19 @@ CharacterModel.prototype.enlist = function(enlistArmId, enlistCount) {
 	if(typeof enlistArmId == UNDEFINED){
 		enlistRun(self,self.data.targetEnlist);
 		self.data.targetEnlist = null;
-		/*
-		var area = self.city();
-		var troop = area.troops(self.data.targetEnlist.id);
-		troop.quantity += self.data.targetEnlist.quantity;
-		area.troops(self.data.targetEnlist.id, troop);
-		self.data.targetEnlist = null;
-		self.job(Job.IDLE);
-		*/
 	}else{
 		self.data.targetEnlist = {id:enlistArmId,quantity:enlistCount};
 		self.job(Job.ENLIST);
+	}
+};
+CharacterModel.prototype.hire = function(id) {
+	var self = this;
+	if(typeof id == UNDEFINED){
+		hireRun(self,self.data.targetHireId);
+		self.data.targetHireId = null;
+	}else{
+		self.data.targetHireId = id;
+		self.job(Job.HIRE);
 	}
 };
 CharacterModel.prototype.job = function(value) {

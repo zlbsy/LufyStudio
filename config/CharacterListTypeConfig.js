@@ -7,5 +7,5 @@ CharacterListType.BUSINESS = "business";
 CharacterListType.POLICE = "police";
 CharacterListType.TECHNOLOGY = "technology";
 CharacterListType.ENLIST = "enlist";
-CharacterListType.HIRE = "hire";
-CharacterListType.CHARACTER_HIRE = "generals_hire";
+CharacterListType.HIRE = "hire";//登用
+CharacterListType.CHARACTER_HIRE = "generals_hire";//派谁去登用

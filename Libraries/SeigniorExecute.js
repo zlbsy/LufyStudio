@@ -56,6 +56,9 @@ SeigniorExecute.prototype.areaJobRun=function(area){
 			case Job.ENLIST:
 				chara.enlist();
 				break;
+			case Job.HIRE:
+				chara.hire();
+				break;
 		}
 	}
 	if(list.length == 0){

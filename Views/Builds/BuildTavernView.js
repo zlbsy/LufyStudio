@@ -16,12 +16,12 @@ BuildTavernView.prototype.showMenu=function(){
 	var buttonHire = getButton(Language.get("hire"),200);
 	buttonHire.y = menuY;
 	layer.addChild(buttonHire);
-	buttonHire.addEventListener(LMouseEvent.MOUSE_UP, self.onClickHireButton.bind(self));
+	buttonHire.addEventListener(LMouseEvent.MOUSE_UP, self.onClickHireButton);
 	
 	return layer;
 };
 BuildTavernView.prototype.onClickHireButton=function(event){
-	var self = this;
+	var self = event.currentTarget.parent.parent.parent;
 	self.controller.loadCharacterList(CharacterListType.HIRE,self);
 };
 BuildTavernView.prototype.showBuild=function(event){
@@ -29,12 +29,8 @@ BuildTavernView.prototype.showBuild=function(event){
 	var self = contentLayer.childList.find(function(child){
 		return child.isBuildBaseView;
 	});
-	self.callParent("die",arguments);
-	self.controller.loadCharacterList(CharacterListType.CHARACTER_HIRE,self);
-};
-BuildBaseView.prototype.die=function(){
-	var self = this;
-	self.callParent("die",arguments);
-	self.controller.removeEventListener(CharacterListEvent.SHOW, self.hideBuild);
-	self.controller.removeEventListener(CharacterListEvent.CLOSE, self.showBuild);
+	self.callParent("showBuild",arguments);
+	if(self.controller.hireCharacter){
+		self.controller.loadCharacterList(CharacterListType.CHARACTER_HIRE,self);
+	}
 };

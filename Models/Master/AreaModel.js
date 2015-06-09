@@ -117,13 +117,13 @@ AreaModel.prototype.setSeignor = function(seignior,areaData){
 				var charaData = areaData[key][i];
 				var chara = CharacterModel.getChara(charaData.chara_id);
 				chara.seignior(seignior.chara_id);
-				var identity = "general";
+				/*var identity = "general";
 				if(charaData.chara_id == seignior.chara_id){
 					identity = "monarch";
 				}else if(charaData.chara_id == areaData.prefecture){
 					identity = "prefecture";
 				}
-				chara.identity(identity);
+				chara.identity(identity);*/
 				chara.loyalty(charaData.loyalty);
 				chara.cityId(areaData.area_id);
 				if(charaData.equipments){
@@ -138,7 +138,7 @@ AreaModel.prototype.setSeignor = function(seignior,areaData){
 			for(var i=0,l=areaData[key].length;i<l;i++){
 				var charaData = areaData[key][i];
 				var chara = CharacterModel.getChara(charaData.chara_id);
-				chara.identity("out_of_office");
+				//chara.identity("out_of_office");
 				if(charaData.equipments){
 					chara.equip(charaData.equipments);
 				}

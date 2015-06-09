@@ -10,6 +10,8 @@ function characterListType2JobType(characterListType) {
 			return Job.TECHNOLOGY;
 		case CharacterListType.ENLIST:
 			return Job.ENLIST;
+		case CharacterListType.HIRE:
+			return Job.HIRE;
 	}
 	console.error("Can't change to jobType");
 	return Job.IDLE;
@@ -86,3 +88,46 @@ function enlistRun(characterModel, targetEnlist){
 	area.troops(targetEnlist.id, troop);
 	characterModel.job(Job.IDLE);
 }
+function hireRun(characterModel, hireCharacterId){
+	//录用：运气+相性
+	console.log("hireRun : ",characterModel.id());
+	var area = characterModel.city();
+	var outOfOffice = area.outOfOffice();
+	var hireCharacterIndex = outOfOffice.findIndex(function(child){
+		return child.id() == hireCharacterId;
+	});
+	characterModel.job(Job.IDLE);
+	if(hireCharacterIndex < 0){
+		//TODO::失败
+		console.log("hireRun : 失败 null");
+		return;
+	}
+	var compatibility;
+	var hireCharacter = outOfOffice[hireCharacterIndex];
+	var hireCharacter = CharacterModel.getChara(hireCharacterId);
+	var percentage = (JobCoefficient.NORMAL + characterModel.luck()) * 0.5 / JobCoefficient.NORMAL;
+	compatibility = Math.abs(characterModel.seignior().compatibility() - hireCharacter.compatibility());
+	if(compatibility > JobCoefficient.COMPATIBILITY){
+		compatibility -= JobCoefficient.COMPATIBILITY;
+	}
+	percentage *= (JobCoefficient.COMPATIBILITY - compatibility) / JobCoefficient.COMPATIBILITY;
+	compatibility = Math.abs(characterModel.compatibility() - hireCharacter.compatibility());
+	if(compatibility > JobCoefficient.COMPATIBILITY){
+		compatibility -= JobCoefficient.COMPATIBILITY;
+	}
+	percentage *= (JobCoefficient.COMPATIBILITY - compatibility) / JobCoefficient.COMPATIBILITY;
+	var rand = Math.random();
+	if(rand > percentage){
+		//TODO::失败
+		console.log("hireRun : 失败 " + rand + " > " + percentage + " = " + (rand > percentage));
+		return;
+	}
+	hireCharacter.seignior(characterModel.seignior().id());
+	var loyalty = 100 * percentage >> 0;
+	hireCharacter.loyalty(loyalty > 100 ? 100 : loyalty);
+	outOfOffice.splice(hireCharacterIndex, 1);
+	var generals = area.generals();
+	generals.push(hireCharacter);
+	console.log("hireRun : 成功");
+}
+

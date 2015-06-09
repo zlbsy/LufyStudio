@@ -6,6 +6,7 @@ var Job = {
 	POLICE:"police",
 	TECHNOLOGY:"technology",
 	ENLIST:"enlist",
+	HIRE:"hire",
 	END:"end"
 };
 var JobPrice = {
@@ -20,5 +21,6 @@ var JobCoefficient = {
 	BUSINESS:1,
 	POLICE:1,
 	TECHNOLOGY:1,
-	ENLIST:0.25
+	ENLIST:0.25,
+	COMPATIBILITY:75
 };
