@@ -16,8 +16,16 @@ OpenCharacterListController.prototype.showCharacterList=function(){
 	self.view.addCharacterListView(characterList.view);
 	self.dispatchEvent(CharacterListEvent.SHOW);
 };
-OpenCharacterListController.prototype.closeCharacterList=function(){
-	this.dispatchEvent(CharacterListEvent.CLOSE);
+OpenCharacterListController.prototype.closeCharacterList=function(obj){
+	var e = new LEvent(CharacterListEvent.CLOSE);
+	if(!obj){
+		obj = {};
+	}
+	e.characterList = obj.characterList;
+	e.usedMoney = obj.usedMoney;
+	e.characterListType = obj.characterListType;
+	e.characterListType = this.characterListType;
+	this.dispatchEvent(e);
 };
 
 

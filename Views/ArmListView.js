@@ -79,43 +79,12 @@ ArmListView.prototype.showList=function(){
 	self.listChildLayer.addEventListener(LMouseEvent.MOUSE_DOWN, self.armClickDown);
 	self.listChildLayer.addEventListener(LMouseEvent.MOUSE_UP, self.armClickUp.bind(self));
 };
-ArmListView.prototype.onClickMoveButton=function(event){
-	var self = this, moveCount = 0;
-	var checkSelectArm = self.listLayer.childList.find(function(child){
-		return child.constructor.name == "ArmListChildView" && child.checkbox.checked;
-	});
-	if(checkSelectArm){
-		self.controller.fromController.addEventListener(LCityEvent.SELECT_CITY, self.moveToCity);
-		self.controller.toSelectMap(checkSelectCharacter.charaModel.name());
-	}else{
-		var obj = {title:Language.get("confirm"),message:Language.get("dialog_select_generals"),height:200,okEvent:null};
-		var windowLayer = ConfirmWindow(obj);
-		self.addChild(windowLayer);
-	}
-};
-ArmListView.prototype.moveToCity=function(event){
-	console.log("moveToCity",event);
-	var contentLayer = event.currentTarget.view.contentLayer;
-	var self = contentLayer.getChildAt(contentLayer.numChildren - 1);
-	//console.log("characterListView",characterListView);
-	//var contentLayer = contentLayer.getChildAt(contentLayer.numChildren - 1).contentLayer;
-	//var self = contentLayer.getChildAt(contentLayer.numChildren - 1);
-	var controller = self.controller;
-	self.listLayer.childList.forEach(function(child){
-		if(child.constructor.name !== "ArmListChildView" || !child.checkbox.checked){
-			return;
-		}
-		child.charaModel.moveTo(event.cityId);
-		//child.charaModel.job(Job.MOVE);
-	});
-	var fromController = controller.fromController;
-	controller.removeEventListener(LCityEvent.SELECT_CITY, self.moveToCity);
-	controller.closeCharacterList();
-	fromController.showCharacterList();
-	return;
-};
 ArmListView.prototype.onClickCloseButton=function(event){
+	var doEnlist = this.doEnlist;
 	this.controller.closeArmList();
+	if(doEnlist){
+		LMvc.CityController.dispatchEvent(LController.NOTIFY_ALL);
+	}
 };
 ArmListView.prototype.showTabMenu=function(){
 	var self = this;
@@ -161,9 +130,9 @@ ArmListView.prototype.showArmDetailed=function(soldierData){
 	//self.armDetailedLayer.addChild(armDetailed);
 	//self.listChildLayer.visible = false;
 };
-ArmListView.prototype.enlist=function(event){
+ArmListView.prototype.enlist=function(event){console.log("ArmListView.prototype.enlist");
 	var self = event.currentTarget.parent.parent.parent;
-	var selectCharacters = self.controller.selectCharacters;
+	var selectCharacters = self.controller.getValue("selectCharacters");
 	var armDetailed = self.armDetailedLayer.getChildAt(0).childList.find(function(child){
 		return child.constructor.name == "ArmDetailedView";
 	});
@@ -184,7 +153,7 @@ ArmListView.prototype.enlist=function(event){
 		charaModel.enlist(self.enlistArmId,singleEnlistCount);
 	}
 	self.armDetailedLayer.removeAllChild();
-	//self.listChildLayer.visible = true;
+	self.doEnlist = true;
 };
 ArmListView.prototype.toSelectCharacter=function(){
 	var self = this;
@@ -198,7 +167,9 @@ ArmListView.prototype.characterListShow=function(event){
 	self.listLayer.visible = false;
 };
 ArmListView.prototype.characterListClose=function(event){
+	console.log("ArmListView.prototype.characterListClose",event);
 	var self = event.currentTarget.view;
+	self.controller.setValue("selectCharacters",event.characterList);
 	self.characterListLayer.removeChildAt(self.characterListLayer.numChildren - 1);
 	self.listLayer.visible = true;
 	var soldierData = self.dataList.find(function(child){

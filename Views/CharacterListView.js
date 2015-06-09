@@ -66,6 +66,10 @@ CharacterListView.prototype.listInit=function(){
 			buttonLabel = "execute";
 			self.dataList = cityModel.generals(Job.IDLE);
 			break;
+		case CharacterListType.EXPEDITION:
+			buttonLabel = "expedition";
+			self.dataList = cityModel.generals(Job.IDLE);
+			break;
 		default:
 			buttonLabel = "execute";
 			showMoney = true;
@@ -117,64 +121,21 @@ CharacterListView.prototype.onClickExecuteButton=function(event){
 		var windowLayer = ConfirmWindow(obj);
 		self.addChild(windowLayer);
 		return;
-	}else if(self.overageMoney < 0 && self.controller.characterListType != CharacterListType.CHARACTER_MOVE){
+	}else if(self.overageMoney < 0){
 		var obj = {title:Language.get("confirm"),message:Language.get("dialog_no_money"),height:200,okEvent:null};
 		var windowLayer = ConfirmWindow(obj);
 		self.addChild(windowLayer);
 		return;
-	}else if(self.selectedCount > 1 && self.controller.characterListType == CharacterListType.HIRE){
-		var obj = {title:Language.get("confirm"),message:Language.get("dialog_error_hire_more"),height:200,okEvent:null};
-		var windowLayer = ConfirmWindow(obj);
-		self.addChild(windowLayer);
-		return;
 	}
-	if(self.controller.characterListType == CharacterListType.CHARACTER_MOVE){
-		var checkSelectCharacter = self.listChildLayer.childList.find(function(child){
-			return child.constructor.name == "CharacterListChildView" && child.checkbox.checked;
-		});
-		self.controller.fromController.addEventListener(LCityEvent.SELECT_CITY, self.moveToCity);
-		self.controller.toSelectMap(checkSelectCharacter.charaModel.name());
-	}else if(self.controller.characterListType == CharacterListType.ENLIST){
-		var armListController = self.controller.fromController;
-		armListController.selectCharacters = [];
-		self.listChildLayer.childList.forEach(function(child){
-			if(child.constructor.name !== "CharacterListChildView" || !child.checkbox.checked){
-				return;
-			}
-			armListController.selectCharacters.push(child.charaModel);
-		});
-		self.controller.fromController.closeCharacterList();
-	}else if(self.controller.characterListType == CharacterListType.HIRE){
-		var fromController = self.controller.fromController;
-		var childView = self.listChildLayer.childList.find(function(child){
-			return child.constructor.name == "CharacterListChildView" && child.checkbox.checked;
-		});
-		fromController.hireCharacter = childView.charaModel;
-		fromController.closeCharacterList();
-	}else if(self.controller.characterListType == CharacterListType.CHARACTER_HIRE){
-		var fromController = self.controller.fromController;
-		var hireCharacter = fromController.hireCharacter;
-		fromController.hireCharacter = null;
-		self.listChildLayer.childList.forEach(function(child){
-			if(child.constructor.name !== "CharacterListChildView" || !child.checkbox.checked){
-				return;
-			}
-			child.charaModel.hire(hireCharacter.id());
-		});
-		fromController.closeCharacterList();
-	}else{
-		self.listChildLayer.childList.forEach(function(child){
-			if(child.constructor.name !== "CharacterListChildView" || !child.checkbox.checked){
-				return;
-			}
-			var jobContent = characterListType2JobType(self.controller.characterListType);
-			child.charaModel.job(jobContent);
-		});
-		var cityModel = self.controller.getValue("cityData");
-		cityModel.money(-self.usedMoney);
-		self.controller.fromController.closeCharacterList();
-		LMvc.CityController.dispatchEvent(LController.NOTIFY_ALL);
-	}
+	var characterList = [];
+	self.listChildLayer.childList.forEach(function(child){
+		if(child.constructor.name !== "CharacterListChildView" || !child.checkbox.checked){
+			return;
+		}
+		characterList.push(child.charaModel);
+	});
+	self.controller.fromController.closeCharacterList({characterList : characterList, usedMoney : self.usedMoney, characterListType : self.controller.characterListType});
+	LMvc.CityController.dispatchEvent(LController.NOTIFY_ALL);
 };
 CharacterListView.prototype.getCutoverButton=function(name){
 	var self = this;
@@ -205,22 +166,6 @@ CharacterListView.prototype.onClickCutoverButton=function(event){
 			child.cutover(cutoverName);
 		}
 	});
-};
-CharacterListView.prototype.moveToCity=function(event){
-	console.log("moveToCity",event);
-	var contentLayer = event.currentTarget.view.contentLayer;
-	var self = contentLayer.getChildAt(contentLayer.numChildren - 1);
-	var controller = self.controller;
-	self.listChildLayer.childList.forEach(function(child){
-		if(child.constructor.name !== "CharacterListChildView" || !child.checkbox.checked){
-			return;
-		}
-		child.charaModel.moveTo(event.cityId);
-	});
-	var fromController = controller.fromController;
-	controller.removeEventListener(LCityEvent.SELECT_CITY, self.moveToCity);
-	controller.closeCharacterList();
-	fromController.showCharacterList();
 };
 CharacterListView.prototype.onClickCloseButton=function(event){
 	var self = this;

@@ -53,14 +53,33 @@ BuildBaseView.prototype.hideBuild=function(event){
 	self.menuLayer.visible = false;
 	self.controller.view.baseLayer.visible = false;
 };
+BuildBaseView.prototype.selectComplete=function(event){
+	var self = this;
+	var characterList = event.characterList;
+	if(!characterList){
+		self.cityId = null;
+		return true;
+	}
+	characterList.forEach(function(child){
+		var jobContent = characterListType2JobType(event.characterListType);
+		child.job(jobContent);
+	});
+	var cityModel = self.controller.getValue("cityData");
+	cityModel.money(-event.usedMoney);
+	return true;
+};
 BuildBaseView.prototype.showBuild=function(event){
 	var contentLayer = event.currentTarget.view.contentLayer;
 	var self = contentLayer.childList.find(function(child){
 		return child.isBuildBaseView;
 	});
+	if(!self.selectComplete(event)){
+		return false;
+	}
 	contentLayer.removeChildAt(contentLayer.numChildren - 1);
 	self.menuLayer.visible = true;
 	self.controller.view.baseLayer.visible = true;
+	return true;
 };
 BuildBaseView.prototype.die=function(){
 	var self = this;

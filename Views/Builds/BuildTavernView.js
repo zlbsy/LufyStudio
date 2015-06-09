@@ -29,8 +29,35 @@ BuildTavernView.prototype.showBuild=function(event){
 	var self = contentLayer.childList.find(function(child){
 		return child.isBuildBaseView;
 	});
-	self.callParent("showBuild",arguments);
-	if(self.controller.hireCharacter){
+	var result = self.callParent("showBuild",arguments);
+	if(event.characterListType == CharacterListType.HIRE && result){
 		self.controller.loadCharacterList(CharacterListType.CHARACTER_HIRE,self);
 	}
+};
+BuildTavernView.prototype.selectComplete=function(event){
+	var self = this;
+	console.log("BuildOfficialView.prototype.selectComplete event = " , event);
+	var characterList = event.characterList;
+	if(!characterList){
+		self.cityId = null;
+		return true;
+	}
+	if(event.characterListType == CharacterListType.HIRE){
+		if(event.characterList.length > 1){
+			var obj = {title:Language.get("confirm"),message:Language.get("dialog_error_hire_more"),height:200,okEvent:null};
+			var windowLayer = ConfirmWindow(obj);
+			self.addChild(windowLayer);
+			return false;
+		}else{
+			self.controller.setValue("hireCharacter",event.characterList[0]);
+			return true;
+		}
+	}else if(event.characterListType == CharacterListType.CHARACTER_HIRE){
+		var hireCharacter = self.controller.getValue("hireCharacter");
+		self.controller.setValue("hireCharacter",null);
+		event.characterList.forEach(function(child){
+			child.hire(hireCharacter.id());
+		});
+	}
+	return true;
 };

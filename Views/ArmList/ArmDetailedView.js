@@ -72,7 +72,8 @@ ArmDetailedView.prototype.set=function(){
 };
 ArmDetailedView.prototype.getEnlistCount = function(){
 	var self = this;
-	var length = self.controller.selectCharacters.length;
+	var selectCharacters = self.controller.getValue("selectCharacters");
+	var length = selectCharacters.length;
 	var enlistCount = EnlistSetting.ENLIST_FROM + (EnlistSetting.ENLIST_TO - EnlistSetting.ENLIST_FROM) * self.enlistRange.value*0.01 >>> 0;
 	return enlistCount * length;
 };

@@ -47,9 +47,9 @@ CityController.prototype.gotoMap=function(){
 	LMvc.CityController = null;
 	LMvc.MapController.view.visible = true;
 };
-CityController.prototype.toSelectMap=function(characterName){
+CityController.prototype.toSelectMap=function(eventType){
 	var self = this;
-	self.selectCharacterName = characterName;
+	self.eventType = eventType;
 	self.view.visible = false;
 	LMvc.MapController.view.visible = true;
 	var cityData = self.getValue("cityData");

@@ -9,7 +9,7 @@ LMvc.areaData = {
 		generals_count : 6,
 		color : "red",
 		areas : [{
-			area_id : 1,
+			area_id : 2,
 			prefecture : 1,
 			money : 3000,
 			food : 2000,
@@ -60,7 +60,7 @@ LMvc.areaData = {
 				{chara_id:9,lv:1,feat:0}
 			]
 		},{
-			area_id : 2,
+			area_id : 1,
 			prefecture : 16,
 			money : 3000,
 			food : 2000,
@@ -89,7 +89,7 @@ LMvc.areaData = {
 		city_count : 3,
 		color : "black",
 		areas : [{
-			area_id : 10,
+			area_id : 12,
 			money : 2000,
 			troops : 4500
 		}]

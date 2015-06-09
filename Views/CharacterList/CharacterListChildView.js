@@ -35,6 +35,9 @@ CharacterListChildView.prototype.onChangeSelect = function(event) {
 };
 CharacterListChildView.prototype.hitTestPoint = function(offsetX,offsetY) {
 	var self = this;
+	if(self.controller.characterListType == CharacterListType.EXPEDITION){
+		return false;
+	}
 	var hit = self.callParent("hitTestPoint",arguments);
 	if(self.checkbox){
 		return hit && !self.checkbox.hitTestPoint(offsetX,offsetY);
@@ -70,7 +73,29 @@ CharacterListChildView.prototype.setStatus = function() {
 	self.addChild(bitmapName);
 	self.setBasicProperties();
 	self.setAbilityProperties();
+	if(self.controller.characterListType == CharacterListType.EXPEDITION){
+		self.setArmProperties();
+		self.basicProperties.visible = false;
+		self.abilityProperties.visible = false;
+		self.armProperties.visible = true;
+	}
 }; 
+CharacterListChildView.prototype.setArmProperties = function() {
+	var self = this;
+	var layer = new LSprite();
+	layer.graphics.drawRect(0, "#ff0000", [0, 0, LGlobal.width - 200, 50]);
+	var com = new LComboBox();
+	com.setChild({label:"测试一",value:"data1"});
+	com.setChild({label:"测试二",value:"data2"});
+	com.setChild({label:"测试三",value:"data3"});
+	com.x = 2;
+	com.y = 5;
+	layer.addChild(com);
+	layer.x = 180;
+	layer.y = 10;
+	self.addChild(layer);
+	self.armProperties = layer;
+};
 CharacterListChildView.prototype.setBasicProperties = function() {
 	var self = this;
 	var layer = new LSprite();

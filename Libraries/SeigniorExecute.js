@@ -80,7 +80,6 @@ SeigniorExecute.prototype.areasRun=function(chara_id){
 		var areaModel = AreaModel.list[i];
 		if(areaModel.seignior_chara_id() == chara_id){
 			self.areaRun(areaModel);
-			break;
 		}
 	}
 };
