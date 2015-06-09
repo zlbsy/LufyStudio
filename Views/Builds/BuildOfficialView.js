@@ -48,28 +48,27 @@ BuildOfficialView.prototype.showMenu=function(){
 };
 BuildOfficialView.prototype.onClickExpeditionButton=function(event){
 	var self = this;
-	console.log("onClickExpeditionButton");
+	self.controller.addEventListener(LCityEvent.SELECT_CITY, self.expeditionSelectCharacter);
+	self.controller.toSelectMap(CharacterListType.EXPEDITION);
+	//self.controller.loadCharacterList(CharacterListType.EXPEDITION,self);
 };
-BuildOfficialView.prototype.onClickCloseButton=function(event){
+BuildOfficialView.prototype.expeditionSelectCharacter=function(event){
+	var self = this;
+	self.controller.removeEventListener(LCityEvent.SELECT_CITY, self.moveToCity);
+	//self.controller.toSelectMap(checkSelectCharacter.charaModel.name());
+	//self.controller.loadCharacterList(CharacterListType.EXPEDITION,self);
+};
+/*BuildOfficialView.prototype.onClickCloseButton=function(event){
 	var self = this;
 	self.contentLayer.removeAllChild();
 	self.menuLayer.visible = true;
 	self.controller.view.baseLayer.visible = true;
-};
+};*/
 BuildOfficialView.prototype.onClickGeneralsListButton=function(event){
 	var self = this;
 	self.controller.loadCharacterList(CharacterListType.CHARACTER_LIST,self);
-	return;
-	var characterListView = new CharacterListView(self.controller, CharacterListView.CHARACTER_LIST, self);
-	self.contentLayer.addChild(characterListView);
 };
 BuildOfficialView.prototype.onClickGeneralsMoveButton=function(event){
 	var self = this;
 	self.controller.loadCharacterList(CharacterListType.CHARACTER_MOVE,self);
-	return;
-	self.menuLayer.visible = false;
-	self.controller.view.baseLayer.visible = false;
-	
-	var characterListView = new CharacterListView(self.controller, CharacterListView.CHARACTER_MOVE, self);
-	self.contentLayer.addChild(characterListView);
 };

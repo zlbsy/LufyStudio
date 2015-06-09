@@ -35,6 +35,7 @@ Language.data = {
 	"dialog_error_hire_more":"一次只能录用一个在野武将！",
 	"dialog_move_generals_confirm":"要将{0}等将领移动到{1}吗？",
 	"dialog_move_generals_error":"无法移动到此城市！",
+	"dialog_expedition_select_error":"无法攻击此城市！",
 	"dialog_remove_equipment_confirm":"要解除装备{0}吗？",
 	"dialog_select_seignior_confirm":"选择{0}吗？",
 	"name":"姓名",

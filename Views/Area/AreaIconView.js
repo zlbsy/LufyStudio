@@ -31,11 +31,24 @@ AreaIconView.prototype.onUp=function(event){
 			var obj;
 			var cityData = LMvc.CityController.getValue("cityData");
 			var neighbor = cityData.neighbor();
+			var errorMessage = "";
 			if(neighbor.indexOf(self.areaStatus.id()) < 0){
 				obj = {title:Language.get("confirm"),message:Language.get("dialog_move_generals_error"),height:240};
 			}else if(LMvc.cityId == self.areaStatus.id()){
 				obj = {title:Language.get("confirm"),message:Language.get("dialog_move_generals_error"),height:240};
-			}else if(cityData.seignior_chara_id() != self.areaStatus.seignior_chara_id()){
+			}/*else if(cityData.seignior_chara_id() != self.areaStatus.seignior_chara_id()){
+				obj = {title:Language.get("confirm"),message:Language.get("dialog_move_generals_error"),height:240};
+			}else{
+				obj = {title:Language.get("confirm"),
+				message:String.format(Language.get("dialog_move_generals_confirm"),LMvc.CityController.selectCharacterName,self.areaStatus.name()),
+				height:240,
+				okEvent:function(event){
+					self.selectCityComplete(event);
+				},cancelEvent:null};
+			}*/else if(LMvc.CityController.eventType == CharacterListType.EXPEDITION){
+				if(cityData.seignior_chara_id() == self.areaStatus.seignior_chara_id()){
+					obj = {title:Language.get("confirm"),message:Language.get("dialog_expedition_select_error"),height:240};
+				}
 				obj = {title:Language.get("confirm"),message:Language.get("dialog_move_generals_error"),height:240};
 			}else{
 				obj = {title:Language.get("confirm"),
