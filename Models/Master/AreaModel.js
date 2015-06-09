@@ -139,6 +139,7 @@ AreaModel.prototype.setSeignor = function(seignior,areaData){
 				var charaData = areaData[key][i];
 				var chara = CharacterModel.getChara(charaData.chara_id);
 				//chara.identity("out_of_office");
+				chara.cityId(areaData.area_id);
 				if(charaData.equipments){
 					chara.equip(charaData.equipments);
 				}
