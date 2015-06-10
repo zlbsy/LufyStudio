@@ -243,7 +243,7 @@ CharacterListView.prototype.setArmTab=function(){
 	self.armTab.x = 170;
 	self.tabMenuLayer.addChild(self.armTab);
 	var tabs = ["troops", "tab_arms"];
-	var tabSize = [180, 120];
+	var tabSize = [120, 100];
 	for(var i=0;i<tabs.length;i++){
 		var button = getButton(Language.get(tabs[i]),tabSize[i]);
 		button.name = tabs[i];
