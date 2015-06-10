@@ -88,8 +88,8 @@ CharacterListChildView.prototype.setStatus = function() {
 CharacterListChildView.prototype.setArmProperties = function() {
 	var self = this;
 	var layer = new LSprite();
-	layer.graphics.drawRect(0, "#ff0000", [0, 0, LGlobal.width - 180, 50]);
-	var bitmap = new LBitmap(new LBitmapData(LMvc.datalist["checkbox-background"]));
+	layer.graphics.drawRect(0, "#ff0000", [0, 0, LGlobal.width - 200, 50]);
+	/*var bitmap = new LBitmap(new LBitmapData(LMvc.datalist["checkbox-background"]));
 	var panel = new LPanel(new LBitmapData(LMvc.datalist["win01"]),110,40);
 	var bitmapOn = new LBitmap(new LBitmapData(LMvc.datalist["combobox_arraw"]));
 	var bitmapOff = new LBitmap(new LBitmapData(LMvc.datalist["combobox_arraw"]));
@@ -121,7 +121,30 @@ CharacterListChildView.prototype.setArmProperties = function() {
 	layer.x = 160;
 	layer.y = 5;
 	self.addChild(layer);
-	self.armProperties = layer;
+	self.armProperties = layer;*/
+	var name = getStrokeLabel( "1234/9999", 18, "#FFFFFF", "#000000", 4);
+	name.x = 2;
+	name.y = 10;
+	layer.addChild(name);
+	var soldiers = self.charaModel.soldiers();
+	var soldierModel = soldiers[0];
+	var name = getStrokeLabel(soldierModel.name(), 18, "#FFFFFF", "#000000", 4);
+	name.x = 120;
+	name.y = 10;
+	layer.addChild(name);
+	var panel = new LPanel(new LBitmapData(LMvc.datalist["win01"]),80,40);
+	panel.x = 200;
+	panel.y = 0;
+	layer.addChild(panel);
+	var name = getStrokeLabel("分配", 18, "#FFFFFF", "#000000", 4);
+	name.x = (panel.getWidth() - name.getWidth())*0.5;
+	name.y = (panel.getHeight() - name.getHeight())*0.5;;
+	panel.addChild(name);
+	var armPropertiesBitmap = getBitmap(layer);
+	armPropertiesBitmap.x = 180;
+	armPropertiesBitmap.y = 5;
+	self.addChild(armPropertiesBitmap);
+	self.armProperties = armPropertiesBitmap;
 };
 CharacterListChildView.prototype.setBasicProperties = function() {
 	var self = this;
