@@ -23,7 +23,7 @@ CharacterListController.prototype.modelLoad=function(){
 };
 CharacterListController.prototype.viewLoad=function(){
 	var self = this;
-	self.load.view(["CharacterList/CharacterListChild","Common/CharacterDetailed",
+	self.load.view(["CharacterList/CharacterListChild","CharacterList/CharacterDetailed","CharacterList/CharacterExpedition",
 	"Equipments/Equipments","Equipments/EquipmentsChild","Equipments/EquipmentDetailed",
 	"Soldiers/Soldiers","Soldiers/SoldiersChild","Soldiers/SoldierDetailed",
 	"Strategy/Strategy","Strategy/StrategyChild","Strategy/StrategyDetailed"],self.init);

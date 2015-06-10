@@ -1,7 +1,8 @@
 function CharacterDetailedView(controller,characterModel){
 	var self = this;
 	base(self,LView,[controller]);
-	self.nowTab = CharacterDetailedView.TAB_EQUIPMENT;
+	console.log("CharacterDetailedView",characterModel);
+	self.nowTab = CharacterDetailedView.TAB_STATUS;
 	self.set(characterModel);
 }
 CharacterDetailedView.prototype.layerInit=function(){
@@ -28,7 +29,7 @@ CharacterDetailedView.prototype.clickRightArrow=function(event){
 };
 CharacterDetailedView.prototype.changeCharacter=function(value){
 	var self = this;
-	var characterList = UserModel.own().characterList;
+	var characterList= self.controller.view.dataList;
 	var index = characterList.findIndex(function(child){
 		return child.id() == self.characterModel.id();
 	});
@@ -45,15 +46,25 @@ CharacterDetailedView.prototype.set=function(characterModel){
 	var self = this;
 	self.die();
 	self.removeAllChild();
-	
+	var faceW = 224, faceH = 336;
+	self.faceW = faceW;
+	self.faceH = faceH;
 	self.characterModel = characterModel;
 	self.layerInit();
-
-	var card = new Card(self.characterModel);
-	card.x = (LGlobal.width - card.cardW) * 0.5;
-	card.y = 50;
-	self.layer.addChild(card);
-	self.card = card;
+	var win = new LPanel(new LBitmapData(LMvc.datalist["win05"]),faceW + 10,faceH + 10);
+	win.x = (LGlobal.width - faceW - 10) * 0.5;
+	win.y = 10;
+	self.layer.addChild(win);
+	var face = self.characterModel.face();
+	face.x = win.x + 5;
+	face.y = win.y + 5;
+	self.face = face;
+	self.layer.addChild(face);
+	
+	var name = getStrokeLabel(self.characterModel.name(), 20, "#FFFFFF", "#000000", 4);
+	name.x = face.x + 10;
+	name.y = face.y + 10;
+	self.layer.addChild(name);
 	
 	self.TabShow(self.nowTab);
 	self.ctrlLayerInit();
@@ -63,6 +74,7 @@ CharacterDetailedView.TAB_SKILL = "tab_skill";
 CharacterDetailedView.TAB_ARMS = "tab_arms";
 CharacterDetailedView.TAB_LINEUPS = "tab_lineups";
 CharacterDetailedView.TAB_STATUS = "tab_status";
+CharacterDetailedView.TAB_PROPERTIES = "tab_properties";
 CharacterDetailedView.prototype.TabClick=function(event){
 	var self = this;
 	self.TabShow(event.currentTarget.tabName);
@@ -71,14 +83,14 @@ CharacterDetailedView.prototype.TabShow=function(tab){
 	var self = this, tabIcon, layer;
 	self.tabLayer.removeAllChild();
 	self.nowTab = tab;
-	var tabs = [CharacterDetailedView.TAB_EQUIPMENT,CharacterDetailedView.TAB_SKILL,CharacterDetailedView.TAB_ARMS,CharacterDetailedView.TAB_LINEUPS,CharacterDetailedView.TAB_STATUS];
+	var tabs = [CharacterDetailedView.TAB_STATUS,CharacterDetailedView.TAB_PROPERTIES,CharacterDetailedView.TAB_SKILL,CharacterDetailedView.TAB_ARMS,CharacterDetailedView.TAB_EQUIPMENT];
 	for(var i=0,l=tabs.length;i<l;i++){
 		tabIcon = new LSprite();
 		if(tabs[i] == tab){
-			layer = new LPanel(new LBitmapData(LMvc.datalist["win03"],0,0,27,22),90,50);
+			layer = new LPanel(new LBitmapData(LMvc.datalist["win01"],0,0,51,34),90,50);
 			tabIcon.y = -10;
 		}else{
-			layer = new LPanel(new LBitmapData(LMvc.datalist["win03"],0,0,27,22),90,40);
+			layer = new LPanel(new LBitmapData(LMvc.datalist["win01"],0,0,51,34),90,40);
 			tabIcon.tabName = tabs[i];
 			tabIcon.addEventListener(LMouseEvent.MOUSE_UP,self.TabClick.bind(self));
 		}
@@ -90,7 +102,7 @@ CharacterDetailedView.prototype.TabShow=function(tab){
 		tabIcon.x = 90 * i;
 		self.tabLayer.addChild(tabIcon);
 	}
-	var back = getBitmap(new LPanel(new LBitmapData(LMvc.datalist["win03"]),450,LGlobal.height - self.tabLayer.y - 45));
+	var back = getBitmap(new LPanel(new LBitmapData(LMvc.datalist["win02"]),450,LGlobal.height - self.tabLayer.y - 45,18,24,22,24));
 	back.y = 35;
 	self.tabLayer.addChild(back);
 	switch(tab){
@@ -98,13 +110,13 @@ CharacterDetailedView.prototype.TabShow=function(tab){
 			self.showEquipment();
 			break;
 		case CharacterDetailedView.TAB_SKILL:
-			self.showSkills();
+			self.showStrategy();
 			break;
 		case CharacterDetailedView.TAB_ARMS:
 			self.showArms();
 			break;
-		case CharacterDetailedView.TAB_LINEUPS:
-			self.showLineups();
+		case CharacterDetailedView.TAB_PROPERTIES:
+			//self.showLineups();
 			break;
 		case CharacterDetailedView.TAB_STATUS:
 			self.showStatus();
@@ -113,96 +125,104 @@ CharacterDetailedView.prototype.TabShow=function(tab){
 };
 CharacterDetailedView.prototype.showEquipment=function(){
 	var self = this;
-	var dataWin = new LBitmapData(LMvc.datalist["win06"]);
-	for(var i=0,l=PositionConfig.positions.length;i<l;i++){
+	var icon,iconSize = 60;
+	var equipmentCoordinates = [];
+	equipmentCoordinates[PositionConfig.Head] = {x:(self.faceW - iconSize)*0.5,y:0};
+	equipmentCoordinates[PositionConfig.Hand] = {x:0,y:(self.faceH - iconSize) * 0.5};
+	equipmentCoordinates[PositionConfig.Body] = {x:(self.faceW - iconSize)*0.5,y:(self.faceH - iconSize) * 0.5};
+	equipmentCoordinates[PositionConfig.Foot] = {x:(self.faceW - iconSize)*0.5,y:self.faceH - iconSize};
+	equipmentCoordinates[PositionConfig.Accessories] = {x:self.faceW - iconSize,y:(self.faceH - iconSize) * 0.5};
+	var equipments = self.characterModel.equipments();
+	for(var i=0;i<PositionConfig.positions.length;i++){
 		var position = PositionConfig.positions[i];
-		var equipment = self.characterModel.equipments().find(function(child){
+		var coordinate = equipmentCoordinates[position];
+		var equipment = equipments.find(function(child){
 			return child.position() == position;
 		});
-		var icon,iconSize = 80;
 		if(equipment){
 			icon = equipment.icon(new LPoint(iconSize,iconSize));
+			icon.removeItemId = equipment.id();
+			icon.addEventListener(LMouseEvent.MOUSE_UP,self.removeEquipment);
 		}else{
-			icon = new LPanel(new LBitmapData(LMvc.datalist["win06"]),iconSize,iconSize);
+			icon = new LPanel(new LBitmapData(LMvc.datalist["win03"]),iconSize,iconSize);
 		}
-		icon.x = 10 + i*85;
-		icon.y = 50;
-		icon.position = position;
-		self.tabLayer.addChild(icon);
-		icon.addEventListener(LMouseEvent.MOUSE_UP,self.selectEquipment.bind(self));
-	}
-};
-CharacterDetailedView.prototype.selectEquipment=function(event){
-	var self = this;
-	console.log(event.currentTarget);
-	console.log(event.currentTarget.position);
-	//把现在的画面BitmapData化，然后选择装备一览
-	self.controller.equipmentsShow(self.characterModel.character_id());
-};
-CharacterDetailedView.prototype.showSkills=function(){
-	var self = this;
-	var skills = self.characterModel.skills();
-	for(var i=0,l=skills.length;i<l;i++){
-		var skill = skills[i];
-		var icon = skill.icon(new LPoint(80,80));
-		icon.x = 10 + i*85;
-		icon.y = 50;
+		icon.x = self.face.x + coordinate.x - self.tabLayer.x;
+		icon.y = self.face.y + coordinate.y - self.tabLayer.y;
 		self.tabLayer.addChild(icon);
 	}
+	var equipmentsView = new EquipmentsView(self.controller, "equipment", new LPoint(LGlobal.width - 50, LGlobal.height - self.tabLayer.y - 80));
+	equipmentsView.x = 10;
+	equipmentsView.y = 50;
+	self.tabLayer.addChild(equipmentsView);
+	equipmentsView.addEventListener(EquipmentEvent.Dress,self.dressEquipment.bind(self));
+};
+CharacterDetailedView.prototype.dressEquipment=function(event){
+	var self = this;
+	var selectItemModel = event.selectItemModel;
+	self.characterModel.equip(selectItemModel);
+	
+	var cityData = LMvc.CityController.getValue("cityData");
+	cityData.removeItem(selectItemModel);
+	self.changeCharacter(0);
+};
+CharacterDetailedView.prototype.removeEquipment=function(event){
+	var icon = event.currentTarget;
+	var self = icon.parent.parent;
+	self.removeItemId = icon.removeItemId;
+	var equipment = self.characterModel.equipments().find(function(child){
+		return child.id() == self.removeItemId;
+	});
+	var obj = {title:Language.get("confirm"),message:String.format(Language.get("dialog_remove_equipment_confirm"),equipment.name()),height:200,
+		okEvent:self.removeEquipmentRun,cancelEvent:null};
+	var windowLayer = ConfirmWindow(obj);
+	self.addChild(windowLayer);
+};
+CharacterDetailedView.prototype.removeEquipmentRun=function(event){
+	var self = event.currentTarget.parent.parent;
+	self.characterModel.equipOff(self.removeItemId);
+	self.changeCharacter(0);
+};
+CharacterDetailedView.prototype.showStrategy=function(){
+	var self = this;
+	var strategyView = new StrategyView(self.controller, self.characterModel, new LPoint(LGlobal.width - 50, LGlobal.height - self.tabLayer.y - 80));
+	strategyView.x = 10;
+	strategyView.y = 50;
+	self.tabLayer.addChild(strategyView);
 };
 CharacterDetailedView.prototype.showArms=function(){
 	var self = this;
-	for (var i = 0; i < ArmsConfig.Arms.length; i++) {
-		var armId = ArmsConfig.Arms[i].id;
-		var arm = {character_id:armId,star:1,level:1};
-		var charaArm = new CharacterModel(self.controller,arm);
-		var face = charaArm.minFace(70);
-		if(self.characterModel.soldiers().indexOf(armId) >= 0){
-			face.bitmapData.setCoordinate(0,face.bitmapData.y);
-		}else{
-			face.bitmapData.setCoordinate(60,face.bitmapData.y);
-		}
-		face.x = 2 + i*75;
-		face.y = 60;
-		self.tabLayer.addChildAt(face);
-	}
+	var soldiersView = new SoldiersView(self.controller, self.characterModel, new LPoint(LGlobal.width - 50, LGlobal.height - self.tabLayer.y - 80));
+	soldiersView.x = 10;
+	soldiersView.y = 50;
+	self.tabLayer.addChild(soldiersView);
 };
-CharacterDetailedView.prototype.showLineups=function(){
-	var self = this;
-	var lineups = self.characterModel.lineups();
-	for(var i=0;i<lineupsConfig.length;i++){
-		var lineupChild = lineupsConfig[i];
-		var lineup = lineups.find(function(child){
-			return child == lineupChild.id;
-		});
-		var rect = lineupChild.rect;
-		var lineupWidth = 100, lineupHeight = 100;
-		var bitmapData = new LBitmapData(LMvc.datalist["lineups"],rect[0],rect[1],rect[2],rect[3]);
-		if(lineup){
-			bitmapData.setCoordinate(bitmapData.x, bitmapData.height);
-		}
-		var lineupBitmap = new LBitmap(bitmapData);
-		lineupBitmap.id = lineupChild.id;
-		lineupBitmap.scaleX = lineupWidth/lineupBitmap.bitmapData.width;
-		lineupBitmap.scaleY = lineupHeight/lineupBitmap.bitmapData.height;
-		lineupBitmap.x = 10 + (lineupWidth + 10) * (i % 4);
-		lineupBitmap.y = 50 + (lineupHeight + 10) * (i / 4 >>> 0);
-		self.tabLayer.addChild(lineupBitmap);
-	}
-};
+
 CharacterDetailedView.prototype.showStatus=function(){
 	var self = this;
 	var statusLayer = new LSprite();
 	var txtHeight = 25, startY = -txtHeight + 5, startX = 5;
-	var labels = ["attack","magicAttack","defense","magicDefense","breakout","dodge"];
-	var datas = [self.characterModel.attack(),self.characterModel.magicAttack(),self.characterModel.defense(),
-	self.characterModel.magicDefense(),self.characterModel.breakout(),self.characterModel.dodge()];
+	var labels = ["belong","identity","city","loyalty","status"];
+ 	var seignior = self.characterModel.seignior();
+	var datas = [
+	seignior ? seignior.name() : Language.get("nothing"),
+	self.characterModel.identity(),
+	self.characterModel.city().name(),
+	seignior ? self.characterModel.loyalty() : "--",
+	self.characterModel.jobLabel()
+	];
+	for(var i=0;i<labels.length;i++){
+		startY += txtHeight;
+		var lblCost = getStrokeLabel(String.format("{0} : {1}",Language.get(labels[i]), datas[i]),20,"#FFFFFF","#000000",4);
+		lblCost.x = startX;
+		lblCost.y = startY;
+		statusLayer.addChild(lblCost);
+	}
+	/*
 	startY += txtHeight;
 	var lblCost = getStrokeLabel(String.format("{0} : {1}",Language.get("cost"), self.characterModel.cost()),20,"#FFFFFF","#000000",4);
 	lblCost.x = startX;
 	lblCost.y = startY;
 	statusLayer.addChild(lblCost);
-	
 	startY += txtHeight;
 	var lblHp = getStrokeLabel(String.format("{0} : {1}","HP", self.characterModel.maxHp()),20,"#FFFFFF","#000000",4);
 	lblHp.x = startX;
@@ -280,10 +300,10 @@ CharacterDetailedView.prototype.showStatus=function(){
 	lblAgility.x = startX;
 	lblAgility.y = startY;
 	statusLayer.addChild(lblAgility);
-	
+	*/
 	startY += txtHeight;
 	statusLayer.graphics.drawRect(0, "#000000", [0, 0, LGlobal.width - 50, startY]);
-	
+	/*
 	var center = new LPoint(280, 145);
 	var angle = 360 / labels.length;
 	var middleR = 110;
@@ -314,7 +334,7 @@ CharacterDetailedView.prototype.showStatus=function(){
 	statusLayer.graphics.drawVertices(2, "#ff0000", smallList);
 	statusLayer.graphics.drawVertices(1, "#000000", middleList);
 	statusLayer.graphics.drawRect(1, "#000000", [middleList[0][0], middleList[0][1], 5, 5]);
-	
+	*/
 	var statusBitmap = getBitmap(statusLayer);
 	var backLayer = new LSprite();
 	backLayer.addChild(statusBitmap);
@@ -331,7 +351,7 @@ CharacterDetailedView.prototype.ctrlLayerInit=function(){
 	var left = new LBitmap(leftBitmapData);
 	var leftButton = new LButton(left);
 	leftButton.x = 10;
-	leftButton.y = self.card.y + (self.card.cardH - leftBitmapData.height) * 0.5;
+	leftButton.y = 100;
 	self.ctrlLayer.addChild(leftButton);
 	leftButton.addEventListener(LMouseEvent.MOUSE_UP,self.clickLeftArrow.bind(self));
 	var rightBitmapData = new LBitmapData(null,0,0,leftBitmapData.width,leftBitmapData.height,LBitmapData.DATA_CANVAS);
@@ -346,14 +366,11 @@ CharacterDetailedView.prototype.ctrlLayerInit=function(){
 	self.ctrlLayer.addChild(rightButton);
 	rightButton.addEventListener(LMouseEvent.MOUSE_UP,self.clickRightArrow.bind(self));
 	
-	var returnBitmapData = new LBitmapData(LMvc.datalist["icon-return"]);
-	var returnBitmap = new LBitmap(returnBitmapData);
-	var returnButton = new LButton(returnBitmap);
-	returnButton.x = 20;
-	returnButton.y = LGlobal.height - returnBitmapData.height - 20;
-	self.ctrlLayer.addChild(returnButton);
-	returnButton.addEventListener(LMouseEvent.MOUSE_UP,self.returnList.bind(self));
+	var buttonClose = getButton(Language.get("return"),60);
+	buttonClose.x = LGlobal.width - buttonClose.getWidth() - 5;
+	self.ctrlLayer.addChild(buttonClose);
+	buttonClose.addEventListener(LMouseEvent.MOUSE_UP, self.closeCharacterDetailed.bind(self));
 };
-CharacterDetailedView.prototype.returnList=function(){
-	this.controller.view.showCharacterList();
+CharacterDetailedView.prototype.closeCharacterDetailed=function(){
+	this.controller.closeCharacterDetailed();
 };

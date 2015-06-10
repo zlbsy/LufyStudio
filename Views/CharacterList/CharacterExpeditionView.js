@@ -1,11 +1,10 @@
-function CharacterDetailedView(controller,characterModel){
+function CharacterExpeditionView(controller,characterModel){
 	var self = this;
 	base(self,LView,[controller]);
-	console.log("CharacterDetailedView",characterModel);
-	self.nowTab = CharacterDetailedView.TAB_STATUS;
+	console.log("CharacterExpeditionView",characterModel);
 	self.set(characterModel);
 }
-CharacterDetailedView.prototype.layerInit=function(){
+CharacterExpeditionView.prototype.layerInit=function(){
 	var self = this;
 	var backLayer = new LSprite();
 	backLayer.graphics.drawRect(0,"#000000",[0,0,LGlobal.width,LGlobal.height],true,"#FFFFFF");
@@ -21,29 +20,48 @@ CharacterDetailedView.prototype.layerInit=function(){
 	self.ctrlLayer = new LSprite();
 	self.addChild(self.ctrlLayer);
 };
-CharacterDetailedView.prototype.clickLeftArrow=function(event){
-	this.changeCharacter(-1);
-};
-CharacterDetailedView.prototype.clickRightArrow=function(event){
-	this.changeCharacter(1);
-};
-CharacterDetailedView.prototype.changeCharacter=function(value){
+CharacterExpeditionView.prototype.set=function(characterModel){
 	var self = this;
-	var characterList= self.controller.view.dataList;
-	var index = characterList.findIndex(function(child){
-		return child.id() == self.characterModel.id();
-	});
-	index = index + value;
-	if(index < 0){
-		index = characterList.length - 1;
-	}else if(index >= characterList.length){
-		index = 0;
+	var bitmap = new LBitmap(new LBitmapData(LMvc.datalist["checkbox-background"]));
+	var panel = new LPanel(new LBitmapData(LMvc.datalist["win01"]),110,40);
+	var bitmapOn = new LBitmap(new LBitmapData(LMvc.datalist["combobox_arraw"]));
+	var bitmapOff = new LBitmap(new LBitmapData(LMvc.datalist["combobox_arraw"]));
+	var rangeBackground = getBitmap(new LPanel(new LBitmapData(LMvc.datalist["win04"]),170,40));
+	var rangeSelect = new LBitmap(new LBitmapData(LMvc.datalist["range"]));
+	
+	var soldiers = characterModel.soldiers();
+	
+	var layer = new LSprite();
+	self.addChild(layer);
+	
+	var width = 48, height = 48;
+	var soldierModel = soldiers[0];
+	var icon = soldierModel.icon(new LPoint(width,height), true);
+	layer.addChild(icon);
+	
+	var com = new LComboBox(16,"#000000","Arial",panel,bitmapOff,bitmapOn);
+	for(var i=0;i<soldiers.length;i++){
+		soldierModel = soldiers[i];
+		com.setChild({label:soldierModel.name(),value:i});
 	}
-	var characterModel = characterList[index];
-	self.set(characterModel);
-};
-CharacterDetailedView.prototype.set=function(characterModel){
-	var self = this;
+	com.y = 55;
+	layer.addChild(com);
+	
+	var name = getStrokeLabel( "兵力：1234/9999", 18, "#FFFFFF", "#000000", 4);
+	name.x = 150;
+	name.y = 10;
+	layer.addChild(name);
+	var r = new LRange(rangeBackground, rangeSelect);
+	r.x = 150;
+	r.y = 50;
+	layer.addChild(r);
+	
+	var name = getStrokeLabel( "城内可用兵力：9999999", 18, "#FFFFFF", "#000000", 4);
+	name.x = 10;
+	name.y = 120;
+	layer.addChild(name);
+	return;
+	
 	self.die();
 	self.removeAllChild();
 	var faceW = 224, faceH = 336;
@@ -69,21 +87,21 @@ CharacterDetailedView.prototype.set=function(characterModel){
 	self.TabShow(self.nowTab);
 	self.ctrlLayerInit();
 };
-CharacterDetailedView.TAB_EQUIPMENT = "tab_equipment";
-CharacterDetailedView.TAB_SKILL = "tab_skill";
-CharacterDetailedView.TAB_ARMS = "tab_arms";
-CharacterDetailedView.TAB_LINEUPS = "tab_lineups";
-CharacterDetailedView.TAB_STATUS = "tab_status";
-CharacterDetailedView.TAB_PROPERTIES = "tab_properties";
-CharacterDetailedView.prototype.TabClick=function(event){
+CharacterExpeditionView.TAB_EQUIPMENT = "tab_equipment";
+CharacterExpeditionView.TAB_SKILL = "tab_skill";
+CharacterExpeditionView.TAB_ARMS = "tab_arms";
+CharacterExpeditionView.TAB_LINEUPS = "tab_lineups";
+CharacterExpeditionView.TAB_STATUS = "tab_status";
+CharacterExpeditionView.TAB_PROPERTIES = "tab_properties";
+CharacterExpeditionView.prototype.TabClick=function(event){
 	var self = this;
 	self.TabShow(event.currentTarget.tabName);
 };
-CharacterDetailedView.prototype.TabShow=function(tab){
+CharacterExpeditionView.prototype.TabShow=function(tab){
 	var self = this, tabIcon, layer;
 	self.tabLayer.removeAllChild();
 	self.nowTab = tab;
-	var tabs = [CharacterDetailedView.TAB_STATUS,CharacterDetailedView.TAB_PROPERTIES,CharacterDetailedView.TAB_SKILL,CharacterDetailedView.TAB_ARMS,CharacterDetailedView.TAB_EQUIPMENT];
+	var tabs = [CharacterExpeditionView.TAB_STATUS,CharacterExpeditionView.TAB_PROPERTIES,CharacterExpeditionView.TAB_SKILL,CharacterExpeditionView.TAB_ARMS,CharacterExpeditionView.TAB_EQUIPMENT];
 	for(var i=0,l=tabs.length;i<l;i++){
 		tabIcon = new LSprite();
 		if(tabs[i] == tab){
@@ -106,24 +124,24 @@ CharacterDetailedView.prototype.TabShow=function(tab){
 	back.y = 35;
 	self.tabLayer.addChild(back);
 	switch(tab){
-		case CharacterDetailedView.TAB_EQUIPMENT:
+		case CharacterExpeditionView.TAB_EQUIPMENT:
 			self.showEquipment();
 			break;
-		case CharacterDetailedView.TAB_SKILL:
+		case CharacterExpeditionView.TAB_SKILL:
 			self.showStrategy();
 			break;
-		case CharacterDetailedView.TAB_ARMS:
+		case CharacterExpeditionView.TAB_ARMS:
 			self.showArms();
 			break;
-		case CharacterDetailedView.TAB_PROPERTIES:
+		case CharacterExpeditionView.TAB_PROPERTIES:
 			//self.showLineups();
 			break;
-		case CharacterDetailedView.TAB_STATUS:
+		case CharacterExpeditionView.TAB_STATUS:
 			self.showStatus();
 			break;
 	}
 };
-CharacterDetailedView.prototype.showEquipment=function(){
+CharacterExpeditionView.prototype.showEquipment=function(){
 	var self = this;
 	var icon,iconSize = 60;
 	var equipmentCoordinates = [];
@@ -156,7 +174,7 @@ CharacterDetailedView.prototype.showEquipment=function(){
 	self.tabLayer.addChild(equipmentsView);
 	equipmentsView.addEventListener(EquipmentEvent.Dress,self.dressEquipment.bind(self));
 };
-CharacterDetailedView.prototype.dressEquipment=function(event){
+CharacterExpeditionView.prototype.dressEquipment=function(event){
 	var self = this;
 	var selectItemModel = event.selectItemModel;
 	self.characterModel.equip(selectItemModel);
@@ -165,7 +183,7 @@ CharacterDetailedView.prototype.dressEquipment=function(event){
 	cityData.removeItem(selectItemModel);
 	self.changeCharacter(0);
 };
-CharacterDetailedView.prototype.removeEquipment=function(event){
+CharacterExpeditionView.prototype.removeEquipment=function(event){
 	var icon = event.currentTarget;
 	var self = icon.parent.parent;
 	self.removeItemId = icon.removeItemId;
@@ -177,19 +195,19 @@ CharacterDetailedView.prototype.removeEquipment=function(event){
 	var windowLayer = ConfirmWindow(obj);
 	self.addChild(windowLayer);
 };
-CharacterDetailedView.prototype.removeEquipmentRun=function(event){
+CharacterExpeditionView.prototype.removeEquipmentRun=function(event){
 	var self = event.currentTarget.parent.parent;
 	self.characterModel.equipOff(self.removeItemId);
 	self.changeCharacter(0);
 };
-CharacterDetailedView.prototype.showStrategy=function(){
+CharacterExpeditionView.prototype.showStrategy=function(){
 	var self = this;
 	var strategyView = new StrategyView(self.controller, self.characterModel, new LPoint(LGlobal.width - 50, LGlobal.height - self.tabLayer.y - 80));
 	strategyView.x = 10;
 	strategyView.y = 50;
 	self.tabLayer.addChild(strategyView);
 };
-CharacterDetailedView.prototype.showArms=function(){
+CharacterExpeditionView.prototype.showArms=function(){
 	var self = this;
 	var soldiersView = new SoldiersView(self.controller, self.characterModel, new LPoint(LGlobal.width - 50, LGlobal.height - self.tabLayer.y - 80));
 	soldiersView.x = 10;
@@ -197,7 +215,7 @@ CharacterDetailedView.prototype.showArms=function(){
 	self.tabLayer.addChild(soldiersView);
 };
 
-CharacterDetailedView.prototype.showStatus=function(){
+CharacterExpeditionView.prototype.showStatus=function(){
 	var self = this;
 	var statusLayer = new LSprite();
 	var txtHeight = 25, startY = -txtHeight + 5, startX = 5;
@@ -344,7 +362,7 @@ CharacterDetailedView.prototype.showStatus=function(){
 	self.tabLayer.addChild(sc);
 };
 
-CharacterDetailedView.prototype.ctrlLayerInit=function(){
+CharacterExpeditionView.prototype.ctrlLayerInit=function(){
 	var self = this;
 	
 	var leftBitmapData = new LBitmapData(LMvc.datalist["arrow"]);
@@ -371,6 +389,6 @@ CharacterDetailedView.prototype.ctrlLayerInit=function(){
 	self.ctrlLayer.addChild(buttonClose);
 	buttonClose.addEventListener(LMouseEvent.MOUSE_UP, self.closeCharacterDetailed.bind(self));
 };
-CharacterDetailedView.prototype.closeCharacterDetailed=function(){
+CharacterExpeditionView.prototype.closeCharacterDetailed=function(){
 	this.controller.closeCharacterDetailed();
 };

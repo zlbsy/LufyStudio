@@ -70,6 +70,10 @@ CharacterListView.prototype.listInit=function(){
 		case CharacterListType.EXPEDITION:
 			buttonLabel = "expedition";
 			self.dataList = cityModel.generals(Job.IDLE);
+			for(var i=0;i<self.dataList.length;i++){
+				var characterModel = self.dataList[i];
+				characterModel.troops(0);
+			}
 			break;
 		default:
 			buttonLabel = "execute";

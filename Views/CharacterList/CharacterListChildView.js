@@ -35,14 +35,25 @@ CharacterListChildView.prototype.onChangeSelect = function(event) {
 };
 CharacterListChildView.prototype.hitTestPoint = function(offsetX,offsetY) {
 	var self = this;
-	if(self.controller.characterListType == CharacterListType.EXPEDITION){
-		return false;
+	if(self.controller.characterListType == CharacterListType.EXPEDITION && self.armProperties.visible){
+		if(offsetX > 370){
+			console.log(self.charaModel.name());
+			var characterExpedition = new CharacterExpeditionView(self.controller, self.charaModel);
+			var obj = {title:Language.get("分配"),subWindow:characterExpedition,width:400,height:320,okEvent:self.updateArmProperties.bind(self),cancelEvent:null};
+			var windowLayer = ConfirmWindow(obj);
+			self.controller.view.addChild(windowLayer);
+			return false;
+		}
 	}
 	var hit = self.callParent("hitTestPoint",arguments);
 	if(self.checkbox){
 		return hit && !self.checkbox.hitTestPoint(offsetX,offsetY);
 	}
 	return hit;
+};
+CharacterListChildView.prototype.updateArmProperties = function() {
+	var self = this;
+	console.log("CharacterListChildView.prototype.updateArmProperties",self);
 };
 CharacterListChildView.prototype.cutover = function(value) {
 	var self = this;
@@ -122,12 +133,13 @@ CharacterListChildView.prototype.setArmProperties = function() {
 	layer.y = 5;
 	self.addChild(layer);
 	self.armProperties = layer;*/
-	var name = getStrokeLabel( "1234/9999", 18, "#FFFFFF", "#000000", 4);
+	var soldiers = self.charaModel.soldiers();
+	var soldierModel = soldiers[0];
+	
+	var name = getStrokeLabel( String.format("{0}/{1}",soldierModel.troops(),soldierModel.maxTroops()), 18, "#FFFFFF", "#000000", 4);
 	name.x = 2;
 	name.y = 10;
 	layer.addChild(name);
-	var soldiers = self.charaModel.soldiers();
-	var soldierModel = soldiers[0];
 	var name = getStrokeLabel(soldierModel.name(), 18, "#FFFFFF", "#000000", 4);
 	name.x = 120;
 	name.y = 10;

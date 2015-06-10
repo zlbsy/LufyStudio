@@ -42,6 +42,16 @@ CharacterModel.prototype.seignior = function(chara_id) {
 	}
 	return CharacterModel.getChara(self.data.seignior_id);
 };
+CharacterModel.prototype.troops = function(value) {
+	if(typeof value != UNDEFINED){
+		this.data.troops = value;
+	}
+	return this.data.troops;
+};
+CharacterModel.prototype.maxTroops = function(value) {
+	//TODO::
+	return 9999;
+};
 CharacterModel.prototype.identity = function(value) {
 	var self = this;
 	var seignior = self.seignior();
