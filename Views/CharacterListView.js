@@ -6,6 +6,7 @@ CharacterListView.prototype.construct=function(){
 };
 CharacterListView.CUTOVER_BASIC = "basic_properties";
 CharacterListView.CUTOVER_ABILITY = "ability_properties";
+CharacterListView.CUTOVER_ARM = "arm_properties";
 CharacterListView.prototype.init=function(){
 	var self = this;
 	self.listLayer = new LSprite();
@@ -27,7 +28,7 @@ CharacterListView.prototype.listInit=function(){
 	title.y = 10;
 	self.listLayer.addChild(title);
 	
-	self.getCutoverButton(CharacterListView.CUTOVER_BASIC);
+	self.getCutoverButton(self.controller.characterListType == CharacterListType.EXPEDITION ? CharacterListView.CUTOVER_ARM : CharacterListView.CUTOVER_BASIC);
 	
 	var bitmapClose = new LBitmap(new LBitmapData(LMvc.datalist["close"]));
 	var buttonClose = new LButton(bitmapClose);
@@ -150,14 +151,33 @@ CharacterListView.prototype.getCutoverButton=function(name){
 CharacterListView.prototype.onClickCutoverButton=function(event){
 	var buttonCutover = event.currentTarget, self = buttonCutover.parent.parent, cutoverName = "";
 	var cutoverName = "";
-	if(buttonCutover.name == CharacterListView.CUTOVER_BASIC){
-		cutoverName = CharacterListView.CUTOVER_ABILITY;
-		self.basicTab.visible = false;
-		self.abilityTab.visible = true;
-	}else if(buttonCutover.name == CharacterListView.CUTOVER_ABILITY){
-		cutoverName = CharacterListView.CUTOVER_BASIC;
-		self.basicTab.visible = true;
-		self.abilityTab.visible = false;
+	if(self.controller.characterListType == CharacterListType.EXPEDITION){
+		if(buttonCutover.name == CharacterListView.CUTOVER_ARM){
+			cutoverName = CharacterListView.CUTOVER_BASIC;
+			self.armTab.visible = false;
+			self.basicTab.visible = true;
+			self.abilityTab.visible = false;
+		}else if(buttonCutover.name == CharacterListView.CUTOVER_BASIC){
+			cutoverName = CharacterListView.CUTOVER_ABILITY;
+			self.basicTab.visible = false;
+			self.armTab.visible = false;
+			self.abilityTab.visible = true;
+		}else if(buttonCutover.name == CharacterListView.CUTOVER_ABILITY){
+			cutoverName = CharacterListView.CUTOVER_ARM;
+			self.armTab.visible = true;
+			self.basicTab.visible = false;
+			self.abilityTab.visible = false;
+		}
+	}else{
+		if(buttonCutover.name == CharacterListView.CUTOVER_BASIC){
+			cutoverName = CharacterListView.CUTOVER_ABILITY;
+			self.basicTab.visible = false;
+			self.abilityTab.visible = true;
+		}else if(buttonCutover.name == CharacterListView.CUTOVER_ABILITY){
+			cutoverName = CharacterListView.CUTOVER_BASIC;
+			self.basicTab.visible = true;
+			self.abilityTab.visible = false;
+		}
 	}
 	buttonCutover.remove();
 	self.getCutoverButton(cutoverName);
@@ -186,6 +206,9 @@ CharacterListView.prototype.showTabMenu=function(){
 	
 	self.setBasicTab();
 	self.setAbilityTab();
+	if(self.controller.characterListType == CharacterListType.EXPEDITION){
+		self.setArmTab();
+	}
 };
 CharacterListView.prototype.setBasicTab=function(){
 	var self = this;
@@ -213,6 +236,21 @@ CharacterListView.prototype.setAbilityTab=function(){
 		self.abilityTab.addChild(button);
 	}
 	self.abilityTab.visible = false;
+};
+CharacterListView.prototype.setArmTab=function(){
+	var self = this;
+	self.armTab = new LSprite();
+	self.armTab.x = 170;
+	self.tabMenuLayer.addChild(self.armTab);
+	var tabs = ["troops", "tab_arms"];
+	var tabSize = [180, 120];
+	for(var i=0;i<tabs.length;i++){
+		var button = getButton(Language.get(tabs[i]),tabSize[i]);
+		button.name = tabs[i];
+		button.x = self.armTab.getWidth();
+		self.armTab.addChild(button);
+	}
+	self.basicTab.visible = false;
 };
 CharacterListView.prototype.showList=function(){
 	var self = this;
@@ -246,7 +284,7 @@ CharacterListView.prototype.showList=function(){
 		scHeight = childLayer.y + childLayer.getHeight();
 	}
 	self.listChildLayer.graphics.drawRect(0, "#000000", [0, 0, LGlobal.width - 30, scHeight]);
-	var sc = new LScrollbar(self.listChildLayer, LGlobal.width - 20, listHeight - 30, 10);
+	var sc = new LScrollbar(self.listChildLayer, LGlobal.width - 20, listHeight - 30, 10, false);
 	sc._showLayer.graphics.clear();
 	sc.y = 15;
 	self.contentLayer.addChild(sc);

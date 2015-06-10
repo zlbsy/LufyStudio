@@ -48,7 +48,12 @@ CharacterListChildView.prototype.cutover = function(value) {
 	var self = this;
 	self.basicProperties.visible = false;
 	self.abilityProperties.visible = false;
-	if (value == CharacterListView.CUTOVER_BASIC) {
+	if(self.armProperties){
+		self.armProperties.visible = false;
+	}
+	if (value == CharacterListView.CUTOVER_ARM) {
+		self.armProperties.visible = true;
+	} else if (value == CharacterListView.CUTOVER_BASIC) {
 		self.basicProperties.visible = true;
 	} else if (value == CharacterListView.CUTOVER_ABILITY) {
 		self.abilityProperties.visible = true;
@@ -58,9 +63,9 @@ CharacterListChildView.prototype.cutover = function(value) {
 CharacterListChildView.prototype.setStatus = function() {
 	var self = this;
 	var layer = new LSprite();
-	layer.graphics.drawRect(0, "#ff0000", [0, 0, 440, 50]);
+	layer.graphics.drawRect(0, "#ff0000", [0, 0, 420, 50]);
 	var bitmapLine = new LBitmap(new LBitmapData(LMvc.datalist["icon-line"]));
-	bitmapLine.scaleX = 440;
+	bitmapLine.scaleX = 420;
 	bitmapLine.y = 40;
 	layer.addChild(bitmapLine);
 	var name = getStrokeLabel(self.charaModel.name(), 20, "#FFFFFF", "#000000", 4);
@@ -83,16 +88,38 @@ CharacterListChildView.prototype.setStatus = function() {
 CharacterListChildView.prototype.setArmProperties = function() {
 	var self = this;
 	var layer = new LSprite();
-	layer.graphics.drawRect(0, "#ff0000", [0, 0, LGlobal.width - 200, 50]);
-	var com = new LComboBox();
+	layer.graphics.drawRect(0, "#ff0000", [0, 0, LGlobal.width - 180, 50]);
+	var bitmap = new LBitmap(new LBitmapData(LMvc.datalist["checkbox-background"]));
+	var panel = new LPanel(new LBitmapData(LMvc.datalist["win01"]),110,40);
+	var bitmapOn = new LBitmap(new LBitmapData(LMvc.datalist["combobox_arraw"]));
+	var bitmapOff = new LBitmap(new LBitmapData(LMvc.datalist["combobox_arraw"]));
+	var rangeBackground = getBitmap(new LPanel(new LBitmapData(LMvc.datalist["win04"]),100,40));
+	var rangeSelect = new LBitmap(new LBitmapData(LMvc.datalist["range"]));
+	
+	
+	var arm = getStrokeLabel("1234", 18, "#FFFFFF", "#000000", 2);
+	arm.x = 0;
+	arm.y = 3;
+	layer.addChild(arm);
+	var arm = getStrokeLabel("2000", 18, "#CCCCCC", "#000000", 2);
+	arm.x = 0;
+	arm.y = 25;
+	layer.addChild(arm);
+	
+	
+	var r = new LRange(rangeBackground, rangeSelect);
+	r.x = 70;
+	layer.addChild(r);
+	
+	var com = new LComboBox(16,"#000000","Arial",panel,bitmapOff,bitmapOn);
 	com.setChild({label:"测试一",value:"data1"});
 	com.setChild({label:"测试二",value:"data2"});
 	com.setChild({label:"测试三",value:"data3"});
-	com.x = 2;
+	com.x = 180;
 	com.y = 5;
 	layer.addChild(com);
-	layer.x = 180;
-	layer.y = 10;
+	layer.x = 160;
+	layer.y = 5;
 	self.addChild(layer);
 	self.armProperties = layer;
 };
