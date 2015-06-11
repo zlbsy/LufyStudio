@@ -23,6 +23,9 @@ SoldierModel.prototype.proficiency = function() {
 SoldierModel.prototype.name = function() {
 	return this.master().name();
 };
+SoldierModel.prototype.troops = function(charaModel) {
+	return 900;
+};
 SoldierModel.prototype.enlistPrice = function() {
 	return this.master().enlistPrice();
 };

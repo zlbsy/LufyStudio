@@ -286,7 +286,6 @@ AreaModel.prototype.troops=function(id, value){
 	var troops = [];
 	for(var i=0;i<self.data.troops.length;i++){
 		var troop = self.data.troops[i];
-		console.log("id="+id+",troop.id="+troop.id);
 		if(typeof id != UNDEFINED && troop.id == id){
 			if(typeof value == UNDEFINED){
 				return troop;

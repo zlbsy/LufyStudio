@@ -51,9 +51,15 @@ CharacterListChildView.prototype.hitTestPoint = function(offsetX,offsetY) {
 	}
 	return hit;
 };
-CharacterListChildView.prototype.updateArmProperties = function() {
+CharacterListChildView.prototype.updateArmProperties = function(event) {
 	var self = this;
-	console.log("CharacterListChildView.prototype.updateArmProperties",self);
+	var windowLayer = event.currentTarget.parent;
+	var characterExpedition = windowLayer.childList.find(function(child){
+		return child.constructor.name == "CharacterExpeditionView";
+	});
+	characterExpedition.apply();
+	self.setArmProperties();
+	windowLayer.remove();
 };
 CharacterListChildView.prototype.cutover = function(value) {
 	var self = this;
@@ -98,41 +104,11 @@ CharacterListChildView.prototype.setStatus = function() {
 }; 
 CharacterListChildView.prototype.setArmProperties = function() {
 	var self = this;
+	if(self.armProperties){
+		self.armProperties.remove();
+	}
 	var layer = new LSprite();
 	layer.graphics.drawRect(0, "#ff0000", [0, 0, LGlobal.width - 200, 50]);
-	/*var bitmap = new LBitmap(new LBitmapData(LMvc.datalist["checkbox-background"]));
-	var panel = new LPanel(new LBitmapData(LMvc.datalist["win01"]),110,40);
-	var bitmapOn = new LBitmap(new LBitmapData(LMvc.datalist["combobox_arraw"]));
-	var bitmapOff = new LBitmap(new LBitmapData(LMvc.datalist["combobox_arraw"]));
-	var rangeBackground = getBitmap(new LPanel(new LBitmapData(LMvc.datalist["win04"]),100,40));
-	var rangeSelect = new LBitmap(new LBitmapData(LMvc.datalist["range"]));
-	
-	
-	var arm = getStrokeLabel("1234", 18, "#FFFFFF", "#000000", 2);
-	arm.x = 0;
-	arm.y = 3;
-	layer.addChild(arm);
-	var arm = getStrokeLabel("2000", 18, "#CCCCCC", "#000000", 2);
-	arm.x = 0;
-	arm.y = 25;
-	layer.addChild(arm);
-	
-	
-	var r = new LRange(rangeBackground, rangeSelect);
-	r.x = 70;
-	layer.addChild(r);
-	
-	var com = new LComboBox(16,"#000000","Arial",panel,bitmapOff,bitmapOn);
-	com.setChild({label:"测试一",value:"data1"});
-	com.setChild({label:"测试二",value:"data2"});
-	com.setChild({label:"测试三",value:"data3"});
-	com.x = 180;
-	com.y = 5;
-	layer.addChild(com);
-	layer.x = 160;
-	layer.y = 5;
-	self.addChild(layer);
-	self.armProperties = layer;*/
 	var soldiers = self.charaModel.soldiers();
 	var soldierModel = soldiers[0];
 	
