@@ -58,8 +58,13 @@ CharacterExpeditionView.prototype.set=function(){
 	layer.addChild(r);
 	
 	var cityModel = self.controller.getValue("cityData");
+	console.log("currentSoldierModel.id()="+currentSoldierModel.id());
 	var canUseTroops = cityModel.troops(currentSoldierModel.id());
-	var name = getStrokeLabel( "城内可用兵力：" + canUseTroops, 18, "#FFFFFF", "#000000", 4);
+	console.log("canUseTroops="+canUseTroops);
+	for(var k in canUseTroops){
+		console.log(k+"="+canUseTroops[k]);
+	}
+	var name = getStrokeLabel( "城内可用兵力：" + canUseTroops.quantity, 18, "#FFFFFF", "#000000", 4);
 	name.x = 10;
 	name.y = 120;
 	layer.addChild(name);

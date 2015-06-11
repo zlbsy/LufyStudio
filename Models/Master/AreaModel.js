@@ -100,14 +100,16 @@ AreaModel.prototype.setSeignor = function(seignior,areaData){
 			continue;
 		}else if(key == "troops"){
 			var troops = areaData[key];
-			for(var i=0,l=this.data[key].length;i<l;i++){
-				var troop = this.data[key][i];
-				for(var j=0;j<troops.length;j++){
-					if(troop.id == troops[j].id){
-						troop.quantity = troops[j].quantity;
-						troop.learned = troops[j].learned;
-						break;
-					}
+			for(var j=0;j<troops.length;j++){
+				var troopIndex = this.data.troops.findIndex(function(child){
+					return child.id == troops[j].id;
+				});
+				if(troopIndex >= 0){
+					var troop = this.data.troops[troopIndex];
+					troop.quantity = troops[j].quantity;
+					troop.learned = troops[j].learned;
+				}else{
+					this.data.troops.push(troops[j]);
 				}
 			}
 			continue;
@@ -284,6 +286,7 @@ AreaModel.prototype.troops=function(id, value){
 	var troops = [];
 	for(var i=0;i<self.data.troops.length;i++){
 		var troop = self.data.troops[i];
+		console.log("id="+id+",troop.id="+troop.id);
 		if(typeof id != UNDEFINED && troop.id == id){
 			if(typeof value == UNDEFINED){
 				return troop;

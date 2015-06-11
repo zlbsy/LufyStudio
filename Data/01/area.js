@@ -20,6 +20,8 @@ LMvc.areaData = {
 			police : 70,
 			city_defense : 1000,
 			troops : [
+				{id:1,quantity:4000,learned:1},
+				{id:2,quantity:2000,learned:1},
 				{id:4,quantity:4000,learned:1},
 				{id:7,quantity:2000,learned:1}
 			],
@@ -72,7 +74,7 @@ LMvc.areaData = {
 			city_defense : 1000,
 			troops : [
 				{id:1,quantity:4000},
-				{id:2,quantity:2000}
+				{id:2,quantity:5000}
 			],
 			generals:[
 				{chara_id:10,lv:3,feat:817,loyalty:100},
