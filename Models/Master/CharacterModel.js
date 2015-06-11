@@ -50,7 +50,7 @@ CharacterModel.prototype.troops = function(value) {
 };
 CharacterModel.prototype.maxTroops = function(value) {
 	//TODO::
-	return 9999;
+	return 1000;
 };
 CharacterModel.prototype.identity = function(value) {
 	var self = this;

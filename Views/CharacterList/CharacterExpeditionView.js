@@ -2,7 +2,8 @@ function CharacterExpeditionView(controller,characterModel){
 	var self = this;
 	base(self,LView,[controller]);
 	console.log("CharacterExpeditionView",characterModel);
-	self.set(characterModel);
+	self.characterModel = characterModel;
+	self.set();
 }
 CharacterExpeditionView.prototype.layerInit=function(){
 	var self = this;
@@ -20,7 +21,7 @@ CharacterExpeditionView.prototype.layerInit=function(){
 	self.ctrlLayer = new LSprite();
 	self.addChild(self.ctrlLayer);
 };
-CharacterExpeditionView.prototype.set=function(characterModel){
+CharacterExpeditionView.prototype.set=function(){
 	var self = this;
 	var bitmap = new LBitmap(new LBitmapData(LMvc.datalist["checkbox-background"]));
 	var panel = new LPanel(new LBitmapData(LMvc.datalist["win01"]),110,40);
@@ -29,25 +30,25 @@ CharacterExpeditionView.prototype.set=function(characterModel){
 	var rangeBackground = getBitmap(new LPanel(new LBitmapData(LMvc.datalist["win04"]),170,40));
 	var rangeSelect = new LBitmap(new LBitmapData(LMvc.datalist["range"]));
 	
-	var soldiers = characterModel.soldiers();
+	var soldiers = self.characterModel.soldiers();
 	
 	var layer = new LSprite();
 	self.addChild(layer);
 	
 	var width = 48, height = 48;
-	var soldierModel = soldiers[0];
-	var icon = soldierModel.icon(new LPoint(width,height), true);
+	var currentSoldierModel = soldiers[0];
+	var icon = currentSoldierModel.icon(new LPoint(width,height), true);
 	layer.addChild(icon);
 	
 	var com = new LComboBox(16,"#000000","Arial",panel,bitmapOff,bitmapOn);
 	for(var i=0;i<soldiers.length;i++){
-		soldierModel = soldiers[i];
+		var soldierModel = soldiers[i];
 		com.setChild({label:soldierModel.name(),value:i});
 	}
 	com.y = 55;
 	layer.addChild(com);
 	
-	var name = getStrokeLabel( "兵力：1234/9999", 18, "#FFFFFF", "#000000", 4);
+	var name = getStrokeLabel( String.format("{0}：{1}/{2}","兵力",self.characterModel.troops(),self.characterModel.maxTroops()), 18, "#FFFFFF", "#000000", 4);
 	name.x = 150;
 	name.y = 10;
 	layer.addChild(name);
@@ -56,7 +57,9 @@ CharacterExpeditionView.prototype.set=function(characterModel){
 	r.y = 50;
 	layer.addChild(r);
 	
-	var name = getStrokeLabel( "城内可用兵力：9999999", 18, "#FFFFFF", "#000000", 4);
+	var cityModel = self.controller.getValue("cityData");
+	var canUseTroops = cityModel.troops(currentSoldierModel.id());
+	var name = getStrokeLabel( "城内可用兵力：" + canUseTroops, 18, "#FFFFFF", "#000000", 4);
 	name.x = 10;
 	name.y = 120;
 	layer.addChild(name);

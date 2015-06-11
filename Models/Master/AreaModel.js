@@ -296,6 +296,9 @@ AreaModel.prototype.troops=function(id, value){
 			troops.push(troop);
 		}
 	}
+	if(typeof id != UNDEFINED){
+		return {};
+	}
 	return troops;
 };
 AreaModel.prototype.agriculture=function(value){
