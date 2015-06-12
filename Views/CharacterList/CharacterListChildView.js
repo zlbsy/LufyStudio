@@ -37,7 +37,6 @@ CharacterListChildView.prototype.hitTestPoint = function(offsetX,offsetY) {
 	var self = this;
 	if(self.controller.characterListType == CharacterListType.EXPEDITION && self.armProperties.visible){
 		if(offsetX > 370){
-			console.log(self.charaModel.name());
 			var characterExpedition = new CharacterExpeditionView(self.controller, self.charaModel);
 			var obj = {title:Language.get("分配"),subWindow:characterExpedition,width:400,height:320,okEvent:self.updateArmProperties.bind(self),cancelEvent:null};
 			var windowLayer = ConfirmWindow(obj);

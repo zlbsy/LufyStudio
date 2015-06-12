@@ -1,7 +1,6 @@
 function CharacterExpeditionView(controller,characterModel){
 	var self = this;
 	base(self,LView,[controller]);
-	console.log("CharacterExpeditionView",characterModel);
 	self.characterModel = characterModel;
 	self.set();
 }
@@ -39,7 +38,6 @@ CharacterExpeditionView.prototype.set=function(){
 	
 	var cityModel = self.controller.getValue("cityData");
 	var troopsList = cityModel.troops();
-	console.log("troopsList",troopsList);
 	self.troopsList = [];
 	for(var i=0;i<troopsList.length;i++){
 		self.troopsList.push({id:troopsList[i].id,quantity:troopsList[i].quantity});
@@ -87,8 +85,7 @@ CharacterExpeditionView.prototype.set=function(){
 	Troops = self.troopsList.find(function(child){
 		return child.id == currentSoldierModel.id();
 	});
-	console.log("currentTroops=",currentTroops,currentTroops*100/self.troopsList[currentTroopsIndex].quantity);
-	r.setValue(currentTroops*100/self.troopsList[currentTroopsIndex].quantity);
+	r.setValue(currentTroops*100/self.maxTroops);
 };
 CharacterExpeditionView.prototype.onchangeSoldier=function(event){
 	var soldierComboBox = event.currentTarget;
@@ -138,7 +135,7 @@ CharacterExpeditionView.prototype.apply=function(){
 			troops[i].quantity = self.troopsList[i].quantity;
 		}
 	}
-	console.log("apply",self.characterModel.troops());
+	//console.log("apply",self.characterModel.troops());
 	//var cityTroops = cityModel.troops(soldier.id());
 	//cityTroops.quantity = self.canUseTroops - troop;
 	//cityModel.troops(soldier.id(), cityTroops);

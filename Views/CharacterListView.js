@@ -196,6 +196,13 @@ CharacterListView.prototype.onClickCloseButton=function(event){
 	if(self.controller.characterListType == CharacterListType.CHARACTER_HIRE){
 		fromController.hireCharacter = null;
 	}
+	var cityModel = self.controller.getValue("cityData");
+	var troops = cityModel.troops();
+	self.listChildLayer.childList.forEach(function(child){
+		if(child.constructor.name !== "CharacterListChildView"){
+			return;
+		}
+	});
 	self.controller.closeCharacterList();
 };
 CharacterListView.prototype.showTabMenu=function(){
