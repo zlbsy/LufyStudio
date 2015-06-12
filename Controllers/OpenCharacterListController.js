@@ -17,13 +17,19 @@ OpenCharacterListController.prototype.showCharacterList=function(){
 	self.dispatchEvent(CharacterListEvent.SHOW);
 };
 OpenCharacterListController.prototype.closeCharacterList=function(obj){
+	console.log("closeCharacterList",obj);
 	var e = new LEvent(CharacterListEvent.CLOSE);
 	if(!obj){
 		obj = {};
 	}
-	e.characterList = obj.characterList;
-	e.usedMoney = obj.usedMoney;
-	e.characterListType = obj.characterListType;
+	for(var k in obj){
+		if(obj.hasOwnProperty(k)){console.log("closeCharacterList k= ",k);
+			e[k] = obj[k];
+		}
+	}
+	//e.characterList = obj.characterList;
+	//e.usedMoney = obj.usedMoney;
+	//e.characterListType = obj.characterListType;
 	e.characterListType = this.characterListType;
 	this.dispatchEvent(e);
 };

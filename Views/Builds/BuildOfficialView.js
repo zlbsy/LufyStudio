@@ -119,6 +119,15 @@ BuildOfficialView.prototype.showBuild=function(event){
 	if(!result){
 		return;
 	}
+	console.log("event.subEventType = " ,event.subEventType,"event.characterListType =",event.characterListType);
+	if(event.subEventType == "return"){
+		if(event.characterListType == CharacterListType.EXPEDITION){
+			
+		}else if(event.characterListType == CharacterListType.SELECT_LEADER){
+			self.controller.loadCharacterList(CharacterListType.EXPEDITION,self);
+		}
+		return;
+	}
 	if(!self.load){
 		self.load = new LMvcLoader(self);
 	}

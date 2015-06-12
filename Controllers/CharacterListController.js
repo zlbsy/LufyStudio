@@ -41,8 +41,8 @@ CharacterListController.prototype.init=function(status){
 CharacterListController.prototype.closeCharacterDetailed=function(){
 	this.view.showCharacterList();
 };
-CharacterListController.prototype.closeCharacterList=function(){
-	this.fromController.closeCharacterList();
+CharacterListController.prototype.closeCharacterList=function(obj){
+	this.fromController.closeCharacterList(obj);
 };
 CharacterListController.prototype.toSelectMap=function(characterName){
 	this.fromController.toSelectMap(characterName);

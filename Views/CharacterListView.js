@@ -19,7 +19,6 @@ CharacterListView.prototype.listInit=function(){
 	var self = this;
 	var cityModel = self.controller.getValue("cityData");
 	var generals = cityModel.generals();
-	var outOfOffice = cityModel.outOfOffice();
 	self.selectedCount = 0;
 	self.overageMoney = cityModel.money();
 	self.usedMoney = 0;
@@ -49,30 +48,17 @@ CharacterListView.prototype.listInit=function(){
 	var buttonLabel = null, showMoney = false;
 	switch(self.controller.characterListType){
 		case CharacterListType.CHARACTER_LIST:
-			self.dataList = generals.concat(outOfOffice);
-			break;
-		case CharacterListType.CHARACTER_MOVE:
-			buttonLabel = "move_start";
-			self.dataList = cityModel.generals(Job.IDLE);
-			break;
-		case CharacterListType.ENLIST:
-			buttonLabel = "execute";
-			self.dataList = cityModel.generals(Job.IDLE);
+			self.dataList = generals.concat(cityModel.outOfOffice());
 			break;
 		case CharacterListType.HIRE:
 			buttonLabel = "hire";
-			self.dataList = outOfOffice;
-			break;
-		case CharacterListType.CHARACTER_HIRE:
-			buttonLabel = "execute";
-			self.dataList = cityModel.generals(Job.IDLE);
+			self.dataList = cityModel.outOfOffice();
 			break;
 		case CharacterListType.EXPEDITION:
 			buttonLabel = "expedition";
 			self.dataList = cityModel.generals(Job.IDLE);
 			for(var i=0;i<self.dataList.length;i++){
-				var characterModel = self.dataList[i];
-				characterModel.troops(0);
+				self.dataList[i].troops(0);
 			}
 			break;
 		case CharacterListType.SELECT_LEADER:
@@ -85,6 +71,14 @@ CharacterListView.prototype.listInit=function(){
 			showMoney = true;
 			self.dataList = cityModel.generals(Job.IDLE);
 			Toast.makeText(Language.get("dialog_select_generals")).show();
+			switch(self.controller.characterListType){
+				case CharacterListType.CHARACTER_MOVE:
+					buttonLabel = "move_start";
+				case CharacterListType.ENLIST:
+				case CharacterListType.CHARACTER_HIRE:
+					showMoney = false;
+					break;
+			}
 			break;
 	}
 	if(buttonLabel){
@@ -212,7 +206,7 @@ CharacterListView.prototype.onClickCloseButton=function(event){
 			return;
 		}
 	});
-	self.controller.closeCharacterList();
+	self.controller.closeCharacterList({subEventType:"return"});
 };
 CharacterListView.prototype.showTabMenu=function(){
 	var self = this;
