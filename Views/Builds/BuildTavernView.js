@@ -46,7 +46,7 @@ BuildTavernView.prototype.selectComplete=function(event){
 		if(event.characterList.length > 1){
 			var obj = {title:Language.get("confirm"),message:Language.get("dialog_error_hire_more"),height:200,okEvent:null};
 			var windowLayer = ConfirmWindow(obj);
-			self.addChild(windowLayer);
+			LMvc.layer.addChild(windowLayer);
 			return false;
 		}else{
 			self.controller.setValue("hireCharacter",event.characterList[0]);

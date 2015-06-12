@@ -97,6 +97,16 @@ BuildOfficialView.prototype.selectComplete=function(event){
 	}else if(event.characterListType == CharacterListType.EXPEDITION){
 		console.log("BuildOfficialView.prototype.selectComplete CharacterListType.EXPEDITION " , event.characterList);
 		self.controller.setValue("expeditionCharacterList", event.characterList);
+	}else if(event.characterListType == CharacterListType.SELECT_LEADER){
+		if(event.characterList.length > 1){
+			var obj = {title:Language.get("confirm"),message:Language.get("dialog_select_leader_error"),height:200,okEvent:null};
+			var windowLayer = ConfirmWindow(obj);
+			LMvc.layer.addChild(windowLayer);
+			return false;
+		}else{
+			self.controller.setValue("expeditionLeader",event.characterList[0]);
+			return true;
+		}
 	}
 	return true;
 };
@@ -106,16 +116,22 @@ BuildOfficialView.prototype.showBuild=function(event){
 		return child.isBuildBaseView;
 	});
 	var result = self.callParent("showBuild",arguments);
-	if(event.characterListType == CharacterListType.EXPEDITION && result){
-		if(!self.load){
-			self.load = new LMvcLoader(self);
-		}
+	if(!result){
+		return;
+	}
+	if(!self.load){
+		self.load = new LMvcLoader(self);
+	}
+	if(event.characterListType == CharacterListType.EXPEDITION){
+		self.controller.loadCharacterList(CharacterListType.SELECT_LEADER,self);
+	}else if(event.characterListType == CharacterListType.SELECT_LEADER){
+		//self.load.view(["Builds/ExpeditionReady"],self.expeditionReady);
 		self.load.view(["Builds/ExpeditionReady"],self.expeditionReady);
 	}
 };
 BuildOfficialView.prototype.expeditionReady=function(){
 	var self = this;
-	console.log("BuildOfficialView.prototype.expeditionReady",self);
+	console.log("BuildOfficialView.prototype.expeditionReady",self);return;
 	var readyView = new ExpeditionReadyView(self.controller);
 	self.addChild(readyView);
 	self.menuLayer.visible = false;

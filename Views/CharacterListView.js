@@ -75,6 +75,11 @@ CharacterListView.prototype.listInit=function(){
 				characterModel.troops(0);
 			}
 			break;
+		case CharacterListType.SELECT_LEADER:
+			buttonLabel = "execute";
+			self.dataList = self.controller.fromController.getValue("expeditionCharacterList");
+			Toast.makeText(Language.get("dialog_expedition_select_leader")).show();
+			break;
 		default:
 			buttonLabel = "execute";
 			showMoney = true;
@@ -132,18 +137,7 @@ CharacterListView.prototype.onClickExecuteButton=function(event){
 		self.addChild(windowLayer);
 		return;
 	}
-	if(self.controller.characterListType == CharacterListType.EXPEDITION){
-		self.expeditionReady();
-	}else{
-		self.selectExecute();
-	}
-};
-CharacterListView.prototype.expeditionReady=function(){
-	var self = this;
-	var characterExpeditionReady = new CharacterExpeditionReadyView(self.controller,self.charaModel);
-	var obj = {title:Language.get("军资"),subWindow:characterExpeditionReady,width:400,height:320,okEvent:self.selectExecute.bind(self),cancelEvent:null};
-	var windowLayer = ConfirmWindow(obj);
-	self.controller.view.addChild(windowLayer);
+	self.selectExecute();
 };
 CharacterListView.prototype.selectExecute=function(){
 	var self = this;
