@@ -132,6 +132,21 @@ CharacterListView.prototype.onClickExecuteButton=function(event){
 		self.addChild(windowLayer);
 		return;
 	}
+	if(self.controller.characterListType == CharacterListType.EXPEDITION){
+		self.expeditionReady();
+	}else{
+		self.selectExecute();
+	}
+};
+CharacterListView.prototype.expeditionReady=function(){
+	var self = this;
+	var characterExpeditionReady = new CharacterExpeditionReadyView(self.controller,self.charaModel);
+	var obj = {title:Language.get("军资"),subWindow:characterExpeditionReady,width:400,height:320,okEvent:self.selectExecute.bind(self),cancelEvent:null};
+	var windowLayer = ConfirmWindow(obj);
+	self.controller.view.addChild(windowLayer);
+};
+CharacterListView.prototype.selectExecute=function(){
+	var self = this;
 	var characterList = [];
 	self.listChildLayer.childList.forEach(function(child){
 		if(child.constructor.name !== "CharacterListChildView" || !child.checkbox.checked){
