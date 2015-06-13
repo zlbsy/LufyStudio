@@ -137,9 +137,9 @@ ArmListView.prototype.armClickUp = function(event) {
 		Math.abs(arm.offsetY - event.offsetY) < 5 &&
 		arm.hitTestPoint(event.offsetX, event.offsetY)) {
 		//self.showArmDetailed(arm.soldierData);
-		self.enlistArmId = arm.soldierData.id;
+		self.enlistArmId = arm.soldierModel.id();
 		if(self.controller.armListType == ArmListType.EXPEDITION){
-			self.showArmDetailed(arm.soldierData);
+			self.showArmDetailed(arm.soldierModel);
 		}else{
 			self.toSelectCharacter();
 		}
@@ -151,15 +151,23 @@ ArmListView.prototype.troopsSelect=function(event){
 	var armDetailed = windowLayer.childList.find(function(child){
 		return child.constructor.name == "ArmDetailedView";
 	});
+	var soldierModel = armDetailed.soldierModel;
 	windowLayer.remove();
+	var listChildView = self.listChildLayer.childList.find(function(child){
+		return child.soldierModel.id() == soldierModel.id();
+	});
+	console.log("ArmListView.prototype.troopsSelect listChildView",listChildView);
+	var quantity = soldierModel.quantity();
+	var selectQuantity = soldierModel.selectQuantity();
+	
+	listChildView.update();
 };
-ArmListView.prototype.showArmDetailed=function(soldierData){
+ArmListView.prototype.showArmDetailed=function(soldierModel){
 	var self = this;
-	alert("showArmDetailed");
-	var armDetailed = new ArmDetailedView(self.controller, soldierData);
+	//console.error("ArmListView.prototype.showArmDetailed"+self.controller.armListType,ArmListType.EXPEDITION,soldierData);
+	var armDetailed = new ArmDetailedView(self.controller, soldierModel);
 	if(self.controller.armListType == ArmListType.EXPEDITION){
-		var soldier = SoldierMasterModel.getMaster(soldierData.id);
-		var title = soldier.name();
+		var title = soldierModel.name();
 		var obj = {title:title,subWindow:armDetailed,width:400,height:250,okEvent:self.troopsSelect.bind(this),cancelEvent:null};
 		var windowLayer = ConfirmWindow(obj);
 		LMvc.layer.addChild(windowLayer);
@@ -210,12 +218,12 @@ ArmListView.prototype.characterListClose=function(event){
 	
 	console.log("ArmListView.prototype.characterListClose",event);
 	var self = event.currentTarget.view;
-	alert("ArmListView.prototype.characterListClose"+self.controller.armListType);
+	console.log("ArmListView.prototype.characterListClose"+self.controller.armListType);
 	self.controller.setValue("selectCharacters",event.characterList);
 	self.characterListLayer.removeChildAt(self.characterListLayer.numChildren - 1);
 	self.listLayer.visible = true;
 	var soldierData = self.dataList.find(function(child){
 		return child.id = self.enlistArmId;
 	});
-	self.showArmDetailed(soldierData);
+	self.showArmDetailed(new SoldierModel(null, soldierData));
 };

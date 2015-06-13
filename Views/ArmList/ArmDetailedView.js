@@ -1,8 +1,10 @@
-function ArmDetailedView(controller, soldierData){
+function ArmDetailedView(controller, soldierModel){
 	var self = this;
 	base(self,LView,[controller]);
 	//self.soldierData = soldierData;
-	self.soldierModel = new SoldierModel(null,soldierData);
+	//self.soldierModel = new SoldierModel(null,soldierData);
+	//console.error("ArmDetailedView",soldierModel);
+	self.soldierModel = soldierModel;
 	self.set();
 }
 ArmDetailedView.prototype.setArmEnlist=function(){
@@ -22,7 +24,7 @@ ArmDetailedView.prototype.setArmEnlist=function(){
 	name.y = icon.y + 5;
 	layer.addChild(name);
 	
-	var quantity = getStrokeLabel(String.format("{0}人",self.soldierData.quantity), 20, "#FFFFFF", "#000000", 4);
+	var quantity = getStrokeLabel(String.format("{0}人",soldierModel.quantity()), 20, "#FFFFFF", "#000000", 4);
 	quantity.x = name.x + name.getWidth() + 50;
 	quantity.y = name.y;
 	layer.addChild(quantity);
@@ -107,6 +109,10 @@ ArmDetailedView.prototype.getEnlistPrice = function(count){
 	var self = this;
 	var enlistCount = count ? count : self.getEnlistCount();
 	return self.enlistPrice * enlistCount / EnlistSetting.ENLIST_FROM >>> 0;
+};
+ArmDetailedView.prototype.getSelectQuantity = function(){
+	var self = this;
+	return self.soldierModel.quantity() * self.range.value * 0.01 >> 0;
 };
 ArmDetailedView.prototype.onChange = function(event){
 	var range = event.currentTarget;
