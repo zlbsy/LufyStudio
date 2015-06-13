@@ -245,8 +245,15 @@ AreaModel.prototype.money=function(value){
 	}
 	return this.data.money;
 };
-AreaModel.prototype.food=function(){
+AreaModel.prototype.foodLabel=function(){
 	return LString.numberFormat(this.data.food,3);
+};
+AreaModel.prototype.food=function(value){
+	if(typeof value != UNDEFINED){
+		this.plus("food",value);
+		return;
+	}
+	return this.data.food;
 };
 AreaModel.prototype.technology=function(value){
 	if(typeof value != UNDEFINED){

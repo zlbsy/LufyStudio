@@ -82,6 +82,7 @@ ArmDetailedView.prototype.setArmExpedition=function(){
 	var r = new LRange(rangeBackground, rangeSelect);
 	r.x = 50;
 	r.y = quantity.y + quantity.getHeight() + 10;
+	r.setValue(soldierModel.readyQuantity()*100/soldierModel.quantity() >> 0);
 	self.range = r;
 	layer.addChild(r);
 	

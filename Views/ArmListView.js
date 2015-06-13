@@ -156,10 +156,10 @@ ArmListView.prototype.troopsSelect=function(event){
 	var listChildView = self.listChildLayer.childList.find(function(child){
 		return child.soldierModel.id() == soldierModel.id();
 	});
-	console.log("ArmListView.prototype.troopsSelect listChildView",listChildView);
-	var quantity = soldierModel.quantity();
-	var selectQuantity = soldierModel.selectQuantity();
 	
+	var value = armDetailed.getSelectQuantity();
+	soldierModel.readyQuantity(value);
+	var selectQuantity = soldierModel.readyQuantity();
 	listChildView.update();
 };
 ArmListView.prototype.showArmDetailed=function(soldierModel){

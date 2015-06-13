@@ -54,7 +54,7 @@ ArmListChildView.prototype.setExpeditionStatus = function() {
 	name.y = 5;
 	layer.addChild(name);
 	
-	var quantity = getStrokeLabel(String.format("{0}/{1}",soldierModel.readyQuantity(),soldierModel.quantity()), 20, "#FFFFFF", "#000000", 4);
+	var quantity = getStrokeLabel(String.format("{0}/{1}",soldierModel.readyQuantity(), soldierModel.quantity()), 20, "#FFFFFF", "#000000", 4);
 	quantity.x = 150;
 	quantity.y = 5;
 	layer.addChild(quantity);
