@@ -17,6 +17,18 @@ SoldierModel.prototype.id = function() {
 SoldierModel.prototype.learned = function() {
 	return this.data.learned;
 };
+SoldierModel.prototype.readyQuantity = function(value) {
+	if(typeof value != UNDEFINED){
+		this.data.readyQuantity = value;
+		return;
+	}else if(typeof this.data.readyQuantity == UNDEFINED){
+		this.data.readyQuantity = 0;
+	}
+	return this.data.readyQuantity;
+};
+SoldierModel.prototype.quantity = function(value) {
+	return this.data.quantity;
+};
 SoldierModel.prototype.proficiency = function() {
 	return this.data.proficiency;
 };

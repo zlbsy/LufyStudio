@@ -155,9 +155,12 @@ ArmListView.prototype.troopsSelect=function(event){
 };
 ArmListView.prototype.showArmDetailed=function(soldierData){
 	var self = this;
+	alert("showArmDetailed");
 	var armDetailed = new ArmDetailedView(self.controller, soldierData);
 	if(self.controller.armListType == ArmListType.EXPEDITION){
-		var obj = {title:Language.get(ArmListType.EXPEDITION),subWindow:armDetailed,width:400,height:300,okEvent:self.troopsSelect.bind(this),cancelEvent:null};
+		var soldier = SoldierMasterModel.getMaster(soldierData.id);
+		var title = soldier.name();
+		var obj = {title:title,subWindow:armDetailed,width:400,height:250,okEvent:self.troopsSelect.bind(this),cancelEvent:null};
 		var windowLayer = ConfirmWindow(obj);
 		LMvc.layer.addChild(windowLayer);
 	}else{
@@ -204,8 +207,10 @@ ArmListView.prototype.characterListShow=function(event){
 	self.listLayer.visible = false;
 };
 ArmListView.prototype.characterListClose=function(event){
+	
 	console.log("ArmListView.prototype.characterListClose",event);
 	var self = event.currentTarget.view;
+	alert("ArmListView.prototype.characterListClose"+self.controller.armListType);
 	self.controller.setValue("selectCharacters",event.characterList);
 	self.characterListLayer.removeChildAt(self.characterListLayer.numChildren - 1);
 	self.listLayer.visible = true;
