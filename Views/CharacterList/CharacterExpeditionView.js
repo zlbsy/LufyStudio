@@ -135,9 +135,4 @@ CharacterExpeditionView.prototype.apply=function(){
 			troops[i].quantity = self.troopsList[i].quantity;
 		}
 	}
-	//console.log("apply",self.characterModel.troops());
-	//var cityTroops = cityModel.troops(soldier.id());
-	//cityTroops.quantity = self.canUseTroops - troop;
-	//cityModel.troops(soldier.id(), cityTroops);
-	//self.controller.setValue("cityData", cityModel);
 };

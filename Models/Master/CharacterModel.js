@@ -46,7 +46,7 @@ CharacterModel.prototype.troops = function(value) {
 	if(typeof value != UNDEFINED){
 		this.data.troops = value;
 	}
-	return this.data.troops;
+	return typeof this.data.troops == UNDEFINED ? 0 : this.data.troops;
 };
 CharacterModel.prototype.maxTroops = function(value) {
 	//TODO::
@@ -184,6 +184,10 @@ CharacterModel.prototype.agility = function() {
 };
 CharacterModel.prototype.luck = function() {
 	return this.data.luck;
+};
+CharacterModel.prototype.currentSoldiers = function() {
+	var soldiers = this.soldiers();
+	return soldiers[0];
 };
 CharacterModel.prototype.soldiers = function() {
 	var self = this;

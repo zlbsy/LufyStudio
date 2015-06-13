@@ -31,7 +31,7 @@ BuildBarrackView.prototype.showMenu=function(){
 	
 	return layer;
 };
-BuildBarrackView.prototype.hideBuild=function(){
+/*BuildBarrackView.prototype.hideBuild=function(){
 	var self = this;
 	self.menuLayer.visible = false;
 	self.controller.view.baseLayer.visible = false;
@@ -40,12 +40,42 @@ BuildBarrackView.prototype.showBuild=function(){
 	var self = this;
 	self.menuLayer.visible = true;
 	self.controller.view.baseLayer.visible = true;
+};*/
+BuildBarrackView.prototype.hideArmBuild=function(event){
+	var controller = event.currentTarget;
+	var armListLayer = controller.getValue("armListLayer");
+	var self = armListLayer.parent;
+	
+	self.menuLayer.visible = false;
+	self.controller.view.baseLayer.visible = false;
+};
+BuildBarrackView.prototype.showArmBuild=function(event){
+	var controller = event.currentTarget;
+	var armListLayer = controller.getValue("armListLayer");
+	var self = armListLayer.parent;
+	console.log("showArmBuild",self);
+	armListLayer.remove();
+	self.menuLayer.visible = true;
+	self.controller.view.baseLayer.visible = true;
+	console.log("self.menuLayer.visible",self.menuLayer.visible);
+	self.controller.removeEventListener(ArmListEvent.SHOW, self.hideArmBuild);
+	self.controller.removeEventListener(ArmListEvent.CLOSE, self.showArmBuild);
 };
 BuildBarrackView.prototype.onClickArmyListButton=function(event){
 	var self = event.currentTarget.parent.parent.parent;
-	self.controller.loadArmList(ArmListType.ARM_LIST,self);
+	self.controller.addEventListener(ArmListEvent.SHOW, self.hideArmBuild);
+	self.controller.addEventListener(ArmListEvent.CLOSE, self.showArmBuild);
+	var armListLayer = new LSprite();
+	self.addChild(armListLayer);
+	self.controller.setValue("armListLayer", armListLayer);
+	self.controller.loadArmList(ArmListType.ARM_LIST);
 };
 BuildBarrackView.prototype.onClickEnlistButton=function(event){
 	var self = event.currentTarget.parent.parent.parent;
-	self.controller.loadArmList(ArmListType.ARM_ENLIST,self);
+	self.controller.addEventListener(ArmListEvent.SHOW, self.hideArmBuild);
+	self.controller.addEventListener(ArmListEvent.CLOSE, self.showArmBuild);
+	var armListLayer = new LSprite();
+	self.addChild(armListLayer);
+	self.controller.setValue("armListLayer", armListLayer);
+	self.controller.loadArmList(ArmListType.ARM_ENLIST);
 };

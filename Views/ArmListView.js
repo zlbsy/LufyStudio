@@ -24,13 +24,13 @@ ArmListView.prototype.listInit=function(){
 	title.x = 15;
 	title.y = 10;
 	self.listLayer.addChild(title);
-	
-	var bitmapClose = new LBitmap(new LBitmapData(LMvc.datalist["close"]));
-	var buttonClose = new LButton(bitmapClose);
-	buttonClose.x = LGlobal.width - bitmapClose.getWidth() - 5;
-	self.listLayer.addChild(buttonClose);
-	buttonClose.addEventListener(LMouseEvent.MOUSE_UP, self.onClickCloseButton.bind(self));
-
+	if(self.controller.armListType != ArmListType.EXPEDITION){
+		var bitmapClose = new LBitmap(new LBitmapData(LMvc.datalist["close"]));
+		var buttonClose = new LButton(bitmapClose);
+		buttonClose.x = LGlobal.width - bitmapClose.getWidth() - 5;
+		self.listLayer.addChild(buttonClose);
+		buttonClose.addEventListener(LMouseEvent.MOUSE_UP, self.onClickCloseButton.bind(self));
+	}
 	self.tabMenuLayer = new LSprite();
 	self.tabMenuLayer.y = 60;
 	self.listLayer.addChild(self.tabMenuLayer);
@@ -40,7 +40,7 @@ ArmListView.prototype.listInit=function(){
 	self.contentLayer.y = 110;
 	self.listLayer.addChild(self.contentLayer);
 	
-	title.text = Language.get(ArmListType.ARM_LIST);
+	title.text = Language.get(self.controller.armListType);
 	self.dataList = cityModel.troops();
 	
 	self.showList();
@@ -51,7 +51,18 @@ ArmListView.prototype.showList=function(){
 	if(self.controller.armListType == ArmListType.ARM_LIST){
 		listHeight = LGlobal.height - self.contentLayer.y - 70;
 	}
-	var panel = getBitmap(new LPanel(new LBitmapData(LMvc.datalist["win05"]),LGlobal.width, LGlobal.height - self.contentLayer.y));
+	var winWidth,winHeight;
+	if(self.controller.armListType == ArmListType.EXPEDITION){
+		var coordinate = self.contentLayer.getRootCoordinate();
+		winWidth = 420;
+		winHeight = 210;
+		self.tabMenuLayer.y = 50;
+		self.contentLayer.y = 100;
+	}else{
+		winWidth = LGlobal.width;
+		winHeight = LGlobal.height - self.contentLayer.y;
+	}
+	var panel = getBitmap(new LPanel(new LBitmapData(LMvc.datalist["win05"]),winWidth, winHeight));
 	self.contentLayer.addChild(panel);
 	
 	var cityModel = self.controller.getValue("cityData");
@@ -67,8 +78,8 @@ ArmListView.prototype.showList=function(){
 		}
 		scHeight = childLayer.y + childLayer.getHeight();
 	}
-	self.listChildLayer.graphics.drawRect(0, "#000000", [0, 0, LGlobal.width - 30, scHeight]);
-	var sc = new LScrollbar(self.listChildLayer, LGlobal.width - 20, listHeight - 30, 10);
+	self.listChildLayer.graphics.drawRect(0, "#000000", [0, 0, winWidth - 30, scHeight]);
+	var sc = new LScrollbar(self.listChildLayer, winWidth - 20, winHeight - 30, 10,false);
 	sc._showLayer.graphics.clear();
 	sc.y = 15;
 	self.contentLayer.addChild(sc);
@@ -88,17 +99,27 @@ ArmListView.prototype.onClickCloseButton=function(event){
 };
 ArmListView.prototype.showTabMenu=function(){
 	var self = this;
-	var buttonExpedition = getButton("↓",50);
-	buttonExpedition.x = 10;
-	self.tabMenuLayer.addChild(buttonExpedition);
-	
-	var buttonExpedition = getButton(Language.get("arm_name"),110);
-	buttonExpedition.x = 60;
-	self.tabMenuLayer.addChild(buttonExpedition);
-	
-	var buttonExpedition = getButton(Language.get("troops"),300);
-	buttonExpedition.x = 170;
-	self.tabMenuLayer.addChild(buttonExpedition);
+	if(self.controller.armListType == ArmListType.EXPEDITION){
+		var buttonExpedition = getButton(Language.get("arm_name"),100);
+		//buttonExpedition.x = 60;
+		self.tabMenuLayer.addChild(buttonExpedition);
+		
+		var buttonExpedition = getButton(Language.get("troops"),300);
+		buttonExpedition.x = 100;
+		self.tabMenuLayer.addChild(buttonExpedition);
+	}else{
+		var buttonExpedition = getButton("↓",50);
+		buttonExpedition.x = 10;
+		self.tabMenuLayer.addChild(buttonExpedition);
+		
+		var buttonExpedition = getButton(Language.get("arm_name"),110);
+		buttonExpedition.x = 60;
+		self.tabMenuLayer.addChild(buttonExpedition);
+		
+		var buttonExpedition = getButton(Language.get("troops"),300);
+		buttonExpedition.x = 170;
+		self.tabMenuLayer.addChild(buttonExpedition);
+	}
 };
 ArmListView.prototype.armClickDown = function(event) {
 	var arm = event.target;
@@ -117,18 +138,34 @@ ArmListView.prototype.armClickUp = function(event) {
 		arm.hitTestPoint(event.offsetX, event.offsetY)) {
 		//self.showArmDetailed(arm.soldierData);
 		self.enlistArmId = arm.soldierData.id;
-		self.toSelectCharacter();
+		if(self.controller.armListType == ArmListType.EXPEDITION){
+			self.showArmDetailed(arm.soldierData);
+		}else{
+			self.toSelectCharacter();
+		}
 	}
+};
+ArmListView.prototype.troopsSelect=function(event){
+	var self = this;
+	var windowLayer = event.currentTarget.parent;
+	var armDetailed = windowLayer.childList.find(function(child){
+		return child.constructor.name == "ArmDetailedView";
+	});
+	windowLayer.remove();
 };
 ArmListView.prototype.showArmDetailed=function(soldierData){
 	var self = this;
 	var armDetailed = new ArmDetailedView(self.controller, soldierData);
-	var obj = {title:Language.get("enlist"),subWindow:armDetailed,width:400,height:480,okEvent:self.enlist,cancelEvent:null};
-	var windowLayer = ConfirmWindow(obj);
-	//LMvc.layer.addChild(windowLayer);
-	self.armDetailedLayer.addChild(windowLayer);
-	//self.armDetailedLayer.addChild(armDetailed);
-	//self.listChildLayer.visible = false;
+	if(self.controller.armListType == ArmListType.EXPEDITION){
+		var obj = {title:Language.get(ArmListType.EXPEDITION),subWindow:armDetailed,width:400,height:300,okEvent:self.troopsSelect.bind(this),cancelEvent:null};
+		var windowLayer = ConfirmWindow(obj);
+		LMvc.layer.addChild(windowLayer);
+	}else{
+		var obj = {title:Language.get("enlist"),subWindow:armDetailed,width:400,height:480,okEvent:self.enlist,cancelEvent:null};
+		var windowLayer = ConfirmWindow(obj);
+		//LMvc.layer.addChild(windowLayer);
+		self.armDetailedLayer.addChild(windowLayer);
+	}
 };
 ArmListView.prototype.enlist=function(event){console.log("ArmListView.prototype.enlist");
 	var self = event.currentTarget.parent.parent.parent;

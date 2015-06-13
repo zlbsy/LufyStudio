@@ -16,7 +16,7 @@ CityController.prototype.modelLoad=function(){
 };
 CityController.prototype.helperLoad=function(){
 	var self = this;
-	self.load.helper(["Label"],self.libraryLoad);
+	self.load.helper(["Label","Troops"],self.libraryLoad);
 };
 CityController.prototype.libraryLoad=function(){
 	var self = this;
@@ -62,6 +62,7 @@ CityController.prototype.toSelectMap=function(eventType){
 	});
 };
 
+/*
 CityController.prototype.loadArmList = function(type,buildView){
 	var self = this;
 	LMvc.keepLoading(true);
@@ -80,4 +81,4 @@ CityController.prototype.closeArmList=function(){
 	var self = this;
 	self.view.contentLayer.removeChildAt(self.view.contentLayer.numChildren - 1);
 	self.buildView.showBuild();
-};
+};*/

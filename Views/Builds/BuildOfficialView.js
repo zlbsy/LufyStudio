@@ -122,7 +122,10 @@ BuildOfficialView.prototype.showBuild=function(event){
 	console.log("event.subEventType = " ,event.subEventType,"event.characterListType =",event.characterListType);
 	if(event.subEventType == "return"){
 		if(event.characterListType == CharacterListType.EXPEDITION){
-			
+			var expeditionCharacterList = self.controller.getValue("expeditionCharacterList");
+			var cityData = self.controller.getValue("cityData");
+			troopsFromCharactersToCity(expeditionCharacterList, cityData);
+			self.controller.dispatchEvent(LController.NOTIFY_ALL);
 		}else if(event.characterListType == CharacterListType.SELECT_LEADER){
 			self.controller.loadCharacterList(CharacterListType.EXPEDITION,self);
 		}
@@ -134,14 +137,24 @@ BuildOfficialView.prototype.showBuild=function(event){
 	if(event.characterListType == CharacterListType.EXPEDITION){
 		self.controller.loadCharacterList(CharacterListType.SELECT_LEADER,self);
 	}else if(event.characterListType == CharacterListType.SELECT_LEADER){
-		//self.load.view(["Builds/ExpeditionReady"],self.expeditionReady);
 		self.load.view(["Builds/ExpeditionReady"],self.expeditionReady);
 	}
 };
 BuildOfficialView.prototype.expeditionReady=function(){
 	var self = this;
-	console.log("BuildOfficialView.prototype.expeditionReady",self);return;
+	console.log("BuildOfficialView.prototype.expeditionReady",self);
 	var readyView = new ExpeditionReadyView(self.controller);
-	self.addChild(readyView);
+	//self.addChild(readyView);
+	var obj = {title:Language.get("备战军资"),subWindow:readyView,width:480,height:540,okEvent:self.expeditionReadyComplete,cancelEvent:null};
+	var windowLayer = ConfirmWindow(obj);
+	self.addChild(windowLayer);
 	self.menuLayer.visible = false;
+};
+BuildOfficialView.prototype.expeditionReadyComplete=function(event){
+	var windowLayer = event.currentTarget.parent;
+	var self = windowLayer.parent;
+	var readyView = windowLayer.childList.find(function(child){
+		return child.constructor.name == "ExpeditionReadyView";
+	});
+	windowLayer.remove();
 };

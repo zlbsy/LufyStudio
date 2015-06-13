@@ -23,7 +23,7 @@ OpenCharacterListController.prototype.closeCharacterList=function(obj){
 		obj = {};
 	}
 	for(var k in obj){
-		if(obj.hasOwnProperty(k)){console.log("closeCharacterList k= ",k);
+		if(obj.hasOwnProperty(k)){
 			e[k] = obj[k];
 		}
 	}
@@ -34,4 +34,33 @@ OpenCharacterListController.prototype.closeCharacterList=function(obj){
 	this.dispatchEvent(e);
 };
 
-
+OpenCharacterListController.prototype.loadArmList = function(type){
+	var self = this;
+	LMvc.keepLoading(true);
+	LMvc.changeLoading(TranslucentLoading);
+	self.armListType = type;
+	self.loadMvc("ArmList",self.showArmList);
+};
+OpenCharacterListController.prototype.showArmList=function(){
+	var self = this;
+	var armList = new ArmListController(self.armListType,self);
+	var armListLayer = self.getValue("armListLayer");
+	armListLayer.addChild(armList.view);
+	self.dispatchEvent(ArmListEvent.SHOW);
+};
+OpenCharacterListController.prototype.closeArmList=function(obj){
+	var self = this;
+	var armListLayer = self.getValue("armListLayer");
+	armListLayer.removeChildAt(armListLayer.numChildren - 1);
+	var e = new LEvent(ArmListEvent.CLOSE);
+	if(!obj){
+		obj = {};
+	}
+	for(var k in obj){
+		if(obj.hasOwnProperty(k)){
+			e[k] = obj[k];
+		}
+	}
+	e.armListType = self.armListType;
+	self.dispatchEvent(e);
+};

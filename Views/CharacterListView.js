@@ -54,13 +54,13 @@ CharacterListView.prototype.listInit=function(){
 			buttonLabel = "hire";
 			self.dataList = cityModel.outOfOffice();
 			break;
-		case CharacterListType.EXPEDITION:
+		/*case CharacterListType.EXPEDITION:
 			buttonLabel = "expedition";
 			self.dataList = cityModel.generals(Job.IDLE);
 			for(var i=0;i<self.dataList.length;i++){
 				self.dataList[i].troops(0);
 			}
-			break;
+			break;*/
 		case CharacterListType.SELECT_LEADER:
 			buttonLabel = "execute";
 			self.dataList = self.controller.fromController.getValue("expeditionCharacterList");
@@ -76,6 +76,7 @@ CharacterListView.prototype.listInit=function(){
 					buttonLabel = "move_start";
 				case CharacterListType.ENLIST:
 				case CharacterListType.CHARACTER_HIRE:
+				case CharacterListType.EXPEDITION:
 					showMoney = false;
 					break;
 			}
@@ -199,13 +200,13 @@ CharacterListView.prototype.onClickCloseButton=function(event){
 	if(self.controller.characterListType == CharacterListType.CHARACTER_HIRE){
 		fromController.hireCharacter = null;
 	}
-	var cityModel = self.controller.getValue("cityData");
-	var troops = cityModel.troops();
-	self.listChildLayer.childList.forEach(function(child){
+	//var cityModel = self.controller.getValue("cityData");
+	//var troops = cityModel.troops();
+	/*self.listChildLayer.childList.forEach(function(child){
 		if(child.constructor.name !== "CharacterListChildView"){
 			return;
 		}
-	});
+	});*/
 	self.controller.closeCharacterList({subEventType:"return"});
 };
 CharacterListView.prototype.showTabMenu=function(){

@@ -93,6 +93,7 @@ Language.data = {
 	"repair":"修补",
 	"big_map":"大地图",
 	"expedition":"出征",
+	"arm_expedition":"预备兵力",
 	"generals_list":"武将一览",
 	"generals_move":"武将移动",
 	"move_start":"移动开始",
