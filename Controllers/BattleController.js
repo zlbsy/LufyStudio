@@ -1,4 +1,4 @@
-function BattleController(fromController){
+function BattleController(battleData, fromController){
 	base(this,MyController,[]);
 	this.fromController = fromController;
 }

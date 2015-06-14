@@ -69,11 +69,16 @@ ExpeditionReadyView.prototype.onMoneyChange=function(event){
 };
 ExpeditionReadyView.prototype.getData=function(event){
 	var self = this;
-	var obj = {},readyArms = {};
+	var obj = {},readyArms = [];
 	obj.food = self.selectFood;
 	obj.money = self.selectMoney;
-	var armListLayer = self.controller.getValue("armListLayer");
-	self.dataList = cityModel.troops();
+	var cityModel = self.controller.getValue("cityData");
+	var troops = cityModel.troops();
+	for(var i=0;i<troops.length;i++){
+		readyArms.push({id:troops[i].id,quantity:troops[i].readyQuantity});
+		troops[i].quantity -= troops[i].readyQuantity;
+		troops[i].readyQuantity = 0;
+	}
 	obj.readyArms = readyArms;
 	return obj;
 };

@@ -156,5 +156,11 @@ BuildOfficialView.prototype.expeditionReadyComplete=function(event){
 	var readyView = windowLayer.childList.find(function(child){
 		return child.constructor.name == "ExpeditionReadyView";
 	});
+	var data = readyView.getData();
+	data.expeditionCharacterList = self.controller.getValue("expeditionCharacterList");
+	data.expeditionLeader = self.controller.getValue("expeditionLeader");
+	console.log("expeditionReadyComplete",data,expeditionCharacterList,expeditionLeader);
 	windowLayer.remove();
+	self.controller.setValue("battleData",data);
+	self.gotoBattle();
 };

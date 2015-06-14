@@ -61,7 +61,18 @@ CityController.prototype.toSelectMap=function(eventType){
 		}
 	});
 };
-
+CityController.prototype.gotoBattle=function(){
+	var self = this;
+	LMvc.CityController = null;
+	LMvc.keepLoading(true);
+	self.loadMvc("Battle",self.cityLoadComplete);
+};
+CityController.prototype.battleLoadComplete=function(){
+	var self = this;
+	var battleData = self.getValue("battleData");
+	var battle = new BattleController(battleData, self.view);
+	self.view.parent.addChild(battle);
+};
 /*
 CityController.prototype.loadArmList = function(type,buildView){
 	var self = this;
