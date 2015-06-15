@@ -45,7 +45,7 @@ BattleView.prototype.layerInit=function(){
 	//地图层
 	self.mapLayer = new BattleMapView(self.controller);
 	self.baseLayer.addChild(self.mapLayer);
-	return;
+	/*
 	//路径层
 	self.roadLayer = new LSouSouSMapRoadView(self.controller);
 	self.baseLayer.addChild(self.roadLayer);
@@ -54,10 +54,11 @@ BattleView.prototype.layerInit=function(){
 	self.baseLayer.addChild(self.charaLayer);
 	//遮挡层
 	self.buildLayer = new LSprite();
-	self.baseLayer.addChild(self.buildLayer);
+	self.baseLayer.addChild(self.buildLayer);*/
 	//预览层
-	self.miniLayer = new LSouSouSMapMiniPreviewView(self.controller);
+	self.miniLayer = new BattleMiniPreviewView(self.controller);
 	self.addChild(self.miniLayer);
+	return;
 	//Test code
 	self.buildLayer.alpha = 0.4;
     self.buildLayer.graphics.add(function (){

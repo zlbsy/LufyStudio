@@ -42,6 +42,7 @@ BattleController.prototype.init = function(){
 	var self = this;
 	self.queryInit();
 	LMvc.keepLoading(false);
+	self.fromController.view.parent.addChild(self.view);
 	self.fromController.view.remove();
 	LMvc.CityController = null;
 	console.log("BattleController.prototype.init -- start --");
@@ -63,20 +64,23 @@ BattleController.prototype.queryInit=function(){
 	self.query = new BattleQuery(self.model.map.data);
 };
 BattleController.prototype.mapMouseUp = function(event){
-	if(SouSouSMapSelectMenuController.instance().view.visible){
+	//TODO::
+	/*if(SouSouSMapSelectMenuController.instance().view.visible){
 		return;
-	}
+	}*/
 	var self = event.currentTarget.parent.controller;
-	if(LSouSouObject.talkLayer){
+	/*if(LSouSouObject.talkLayer){
 		if(LSouSouObject.talkOver){
 			//TalkRemove();
 		}
 		return;
-	}
+	}*/
 	event.currentTarget.stopDrag();
 	if(Math.abs(self.downX - event.offsetX) > 12 || Math.abs(self.downY - event.offsetY) > 12){
 		return;
 	}
+	//TODO::
+	return;
 	if(!self.view.roadLayer.visible){
 		self.characterClick(event.selfX,event.selfY);
 		return;
@@ -92,13 +96,14 @@ BattleController.prototype.mapMouseUp = function(event){
 	self.clickOnRoadLayer(event);
 };
 BattleController.prototype.mapMouseDown = function(event){
-	if(SouSouSMapSelectMenuController.instance().view.visible){
+	//TODO::
+	/*if(SouSouSMapSelectMenuController.instance().view.visible){
 		return;
-	}
+	}*/
 	var self = event.currentTarget.parent.controller;
-	if(LSouSouObject.talkLayer || LSouSouObject.runMode){
+	/*if(LSouSouObject.talkLayer || LSouSouObject.runMode){
 		return;
-	}
+	}*/
 	self.downX = event.offsetX;
 	self.downY = event.offsetY;
 	event.currentTarget.startDrag(event.touchPointID);

@@ -14,11 +14,13 @@ BattleMapView.prototype.setSmall = function(data){
 	
 	var loader = new LLoader();
 	loader.addEventListener(LEvent.COMPLETE,self.setBig.bind(this));
-	loader.load(LMvc.IMG_PATH+"sousou/smap/" + data["img-big"]+(LGlobal.traceDebug?("?"+(new Date()).getTime()):""));
+	loader.load(LMvc.IMG_PATH+"smap/" + data["img-big"]+(LGlobal.traceDebug?("?"+(new Date()).getTime()):""));
 };
 BattleMapView.prototype.setBig = function(event){
 	var self = this;
 	self.map.bitmapData = new LBitmapData(event.target);
+	self.datas = [self.map.bitmapData, self.map.bitmapData.clone()];
+	self.dataIndex = 0;
 	self.map.scaleX = self.map.scaleY = 1;
 	self.addEventListener(LEvent.ENTER_FRAME, self.onframe);
 };
@@ -26,5 +28,10 @@ BattleMapView.prototype.onframe = function(event){
 	var self = event.currentTarget;
 	self.map.x = -self.parent.x;
 	self.map.y = -self.parent.y;
-	self.map.bitmapData.setProperties(self.map.x,self.map.y,LGlobal.width,LGlobal.height);
+	var bitmapData = self.datas[self.dataIndex++];
+	if(self.dataIndex >= self.datas.length){
+		self.dataIndex = 0;
+	}
+	bitmapData.setProperties(self.map.x,self.map.y,LGlobal.width,LGlobal.height);
+	self.map.bitmapData = bitmapData;
 };
