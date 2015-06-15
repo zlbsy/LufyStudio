@@ -12,7 +12,15 @@ BattleView.prototype.init=function(){
 	//地图点击事件
 	self.baseLayer.addEventListener(LMouseEvent.MOUSE_DOWN, self.controller.mapMouseDown);
 	self.baseLayer.addEventListener(LMouseEvent.MOUSE_UP, self.controller.mapMouseUp);
+	self.miniLayer.addEventListener(LMouseEvent.MOUSE_DOWN, self.miniLayerStartDrag);
+	self.miniLayer.addEventListener(LMouseEvent.MOUSE_UP, self.miniLayerStopDrag);
 	self.addEventListener(LEvent.ENTER_FRAME, self.onframe);
+};
+BattleView.prototype.miniLayerStartDrag = function(event){
+	event.currentTarget.startDrag(event.touchPointID);
+};
+BattleView.prototype.miniLayerStopDrag = function(event){
+	event.currentTarget.stopDrag();
 };
 /**
  * 地图层实现
@@ -48,11 +56,11 @@ BattleView.prototype.layerInit=function(){
 	/*
 	//路径层
 	self.roadLayer = new LSouSouSMapRoadView(self.controller);
-	self.baseLayer.addChild(self.roadLayer);
+	self.baseLayer.addChild(self.roadLayer);*/
 	//人物层
-	self.charaLayer = new LSouSouSMapCharacterLayerView(self.controller);
+	self.charaLayer = new BattleCharacterLayerView(self.controller);
 	self.baseLayer.addChild(self.charaLayer);
-	//遮挡层
+	/*//遮挡层
 	self.buildLayer = new LSprite();
 	self.baseLayer.addChild(self.buildLayer);*/
 	//预览层

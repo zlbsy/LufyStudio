@@ -1,7 +1,8 @@
 function BattleCharacterLayerView(controller) {
 	var self = this;
 	LExtends(self, LView, [controller]);
-	self.addEventListener(LEvent.ENTER_FRAME, self.onframe);
+	
+	//self.addEventListener(LEvent.ENTER_FRAME, self.onframe);
 };
 BattleCharacterLayerView.prototype.onframe = function(event) {
 	var self = event.currentTarget, child, x, y, stepWidth = self.model.stepWidth, stepHeight = self.model.stepHeight;

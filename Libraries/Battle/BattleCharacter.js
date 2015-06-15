@@ -1,198 +1,97 @@
-var CharacterAction = {
-	STAND:"stand",
-	MOVE:"move",
-	ATTACK:"attack",
-	BLOCK:"block",
-	HERT:"hert",
-	WAKE:"wake",
-	PANT:"pant",
-	LEVELUP:"levelup"
-};
-var CharacterDirection = {
-	DOWN:"down",
-	LEFT:"left",
-	RIGHT:"right",
-	UP:"up",
-	LEFT_DOWN:"left_down",
-	RIGHT_DOWN:"right_down",
-	LEFT_UP:"left_up",
-	RIGHT_UP:"right_up"
-};
-function BattleCharacter(index,w,h,action,direction,RS){
+function BattleCharacter(index, w, h, action, direction) {
 	var self = this;
-	base(self,LSprite,[]);
-	if(!RS)RS = "R";
-	self.index = index;
-	self.RS = RS;
-	self.data = LMvc.datalist["chara"]["peo"+self.index];
-	self.list = {};
-	self.to = new LPoint(self.x,self.y);
-	self.roads = [];
-	self.layer = new LSprite();
-	self.addChild(self.layer);
-	var r = self.data[self.RS+"Rect"];
-	self.layer.x = w*0.5 - (r[0]+r[2]*0.5);
-	self.layer.y = h*0.5 -r[3] - r[1];
-	if(LGlobal.traceDebug){
-		self.layer.graphics.drawRect(1,"#000000",r);
-	}
-	self.w = w;
-	self.h = h;
-	self.step = self.moveStep = 2;
-	self.moveBevelStep = self.moveStep*Math.sin(45*Math.PI/180);
-	self.moveBevelStep = (self.moveBevelStep*100 >>> 0)/100;
-	
-	self.rect = [w*0.5-r[2]*0.5,h*0.5-r[3],w*0.5+r[2]*0.5,h*0.5];
-	
-	self.directionList = {
-		"-1,-1":CharacterDirection.LEFT_UP,
-		"-1,0":CharacterDirection.LEFT,
-		"-1,1":CharacterDirection.LEFT_DOWN,
-		"0,-1":CharacterDirection.UP,
-		"0,1":CharacterDirection.DOWN,
-		"1,-1":CharacterDirection.RIGHT_UP,
-		"1,0":CharacterDirection.RIGHT,
-		"1,1":CharacterDirection.RIGHT_DOWN
-	};
-	self.coordinateRects = {};
-	self.layer.addEventListener(LEvent.ENTER_FRAME,self.onframe);
-	if(!action){
-		action = CharacterAction.STAND;
-	}
-	if(!direction){
-		direction = CharacterDirection.DOWN;
-	}
-	self.setActionDirection(action,direction);
+	LExtends(self, Character, [index, w, h, action, direction, RS]);
+	var r = self.data[self.RS + "Rect"];
+	self.layer.x = w * 0.5 - (r[0] + r[2] * 0.5);
+	self.layer.y = h * 0.5 - (r[1] + r[3] * 0.5);
+	self.belong = null;
+	self.AI = new BattleCharacterAI(self);
 }
-BattleCharacter.MOVE_COMPLETE = "move_complete";
-BattleCharacter.prototype.histTestOn = function(x,y){
-	var s = this.rect;
-	return x>=s[0] && x <= s[2] && y>= s[1] && y <= s[3];
-};
-BattleCharacter.prototype.setActionDirection = function(action,direction){
+BattleCharacter.MOVE_COMPLETE = "moveComplete";
+BattleCharacter.SHOW_MOVE_ROAD = "showMoveRoad";
+BattleCharacter.MOVING = "moving";
+BattleCharacter.WAIT_ATTACK = "waitAttack";
+BattleCharacter.WAIT_SELECT = "waitSelect";
+BattleCharacter.prototype.addAnimation = function() {
 	var self = this;
-	if(self.action == action && self.direction == direction)return;
-	var key = action+"-"+direction;
-	if(!self.list[key]){
-		self.list[key] = new Action(self.data[self.RS],action,direction,self.data[self.RS+"Width"],self.data[self.RS+"Height"],self.RS);
-		self.layer.addChild(self.list[key]);
-	}
-	if(self.actionObject){
-		self.actionObject.visible = false;
-	}
-	self.actionObject = self.list[key];
-	self.actionObject.visible = true;
-	self.action = action;
-	self.direction = direction;
-};
-BattleCharacter.prototype.changeAction = function(action){
-	var self = this;
-	self.setActionDirection(action,self.direction);
-};
-BattleCharacter.prototype.changeDirection = function(direction){
-	var self = this;
-	self.setActionDirection(self.action,direction);
-};
-BattleCharacter.prototype.setMoveDirection = function(x,y){
-	var self = this;
-	var direction = self.directionList[x+","+y];
-	self.setActionDirection(CharacterAction.MOVE,direction);
-};
-BattleCharacter.prototype.setCoordinate = function(x,y){
-	var self = this;
-	self.x = self.to.x = x;
-	self.y = self.to.y = y;
-};
-BattleCharacter.prototype.locationX = function(){
-	return this.x/this.w >>> 0;
-};
-BattleCharacter.prototype.locationY = function(){
-	return this.y/this.h >>> 0;
-};
-BattleCharacter.prototype.getTo = function(){
-	var self = this;
-	return [self.to.x/self.w >>> 0,self.to.y/self.h >>> 0];
-};
-BattleCharacter.prototype.setTo = function(){
-	var self = this;
-	var road = self.roads.shift();
-	self.to.x = road.x*self.w;
-	self.to.y = road.y*self.h;	
-};
-BattleCharacter.prototype.getValue = function(v1,v2){
-	if(v1 == v2)return 0;
-	return v1 < v2 ? 1 : -1;
-};
-BattleCharacter.prototype.checkCoordinate = function(controller,initFlag){
-	var self = this;
-	var model=controller.model,i,obj,rect,rects = model.atRect,coor;
-	for(i=0;i<rects.length;i++){
-		obj = rects[i];
-		rect = obj.rect;
-		if(obj.index != self.index){
-			continue;
-		}
-		coor = self.getTo();
-		if(coor[0] >= rect.x && coor[0] <= rect.right && 
-			coor[1] >= rect.y && coor[1] <= rect.bottom){
-			if(self.coordinateRects[obj.fun]){
-				continue;
-			}
-			self.coordinateRects[obj.fun] = true;
-			if(initFlag){
-				continue;
-			}
-			ScriptFunction.analysis("Call."+obj.fun + "();");
-		}else if(self.coordinateRects[obj.fun]){
-			self.coordinateRects[obj.fun]= null;
-		}
+	if (self.RS == "S") {
+		self.addSAnimation();
+	} else {
+		//R
 	}
 };
-BattleCharacter.prototype.move = function(){
-	var self = this,controller=self.parent.parent.parent.controller;
-	if(self.x == self.to.x && self.y == self.to.y)return;
-	
-	if(self.x != self.to.x && self.y != self.to.y){
-		self.step = self.moveBevelStep;
-	}else{
-		self.step = self.moveStep;
+BattleCharacter.prototype.addSAnimation = function() {
+	var self = this;
+	var img = "defaultSCharacter";
+	if (self.data["S"] > 0) {
+		if (LMvc.datalist["SCharacter-" + self.data["S"]]) {
+			img = "SCharacter-" + self.data["S"];
+		} else {
+			loader = new LLoader();
+			loader.parent = self;
+			loader.addEventListener(LEvent.COMPLETE, self.loadSOver);
+			loader.load(LMvc.IMG_PATH + "character/" + self.data["S"] + "/s/1.png", "bitmapData");
+		}
 	}
-	var mx = self.getValue(self.x , self.to.x),my = self.getValue(self.y , self.to.y);
-	self.x += self.step*mx;
-	self.y += self.step*my;
-	var cx = self.getValue(self.x , self.to.x),cy = self.getValue(self.y , self.to.y);
-	if(mx != cx || my != cy){
-		if(self.roads.length == 0){
-			self.x = self.to.x;
-			self.y = self.to.y;
-			self.changeAction(CharacterAction.STAND);
-			if(controller.mapMove)controller.mapMove();
-			self.checkCoordinate(controller);
-			self.dispatchEvent(Character.MOVE_COMPLETE);
-			return;
-		}
-		var next = self.roads[0];
-		var nx = self.getValue(self.to.x , next.x),ny = self.getValue(self.to.y , next.y);
-		if(mx != nx || my != ny){
-			self.x = self.to.x;
-			self.y = self.to.y;
-		}
-		if(self.roads.length > 0){
-			self.setTo();
-			self.checkCoordinate(controller);
-		}
-		
-	}
-	self.setMoveDirection(mx,my);
-	if(controller.mapMove)controller.mapMove();
+
+	var bitmapData = new LBitmapData(LMvc.datalist[img]);
+	self.anime = new LAnimationTimeline(bitmapData, LMvc.datalist["SAction"]);
+	self.anime.speed = 5;
+	self.layer.addChild(self.anime);
+	//self.layer.graphics.drawRect(1, "#ff0000", [0, 0, 64, 64]);
+	var r = self.data[self.RS+"Rect"];
+	self.addShape(LShape.RECT,[r[0] + self.layer.x,r[1] + self.layer.y + r[3] * 0.5,r[2],r[3]]);
+};
+BattleCharacter.prototype.loadSOver = function(event){
+	var self = event.currentTarget.parent;
+	var animeBitmapData = self.anime.bitmap.bitmapData;
+	var bitmapData = new LBitmapData(event.target,animeBitmapData.x,animeBitmapData.y,animeBitmapData.width,animeBitmapData.height);
+	self.anime.bitmap.bitmapData = bitmapData;
 };
 BattleCharacter.prototype.onframe = function(event){
 	var self = event.currentTarget.parent;
-	if(self.RS == "R")self.move();
+	self.move();
+};
+BattleCharacter.prototype.setActionDirection = function(action, direction) {
+	var self = this;
+	if (self.action == action && self.direction == direction) {
+		return;
+	}
+	if (!self.anime) {
+		self.addAnimation();
+	}
+
+	var label;
+	if (action == CharacterAction.HERT || action == CharacterAction.WAKE || action == CharacterAction.PANT || action == CharacterAction.LEVELUP) {
+		label = action;
+	} else {
+		label = action + "_" + direction;
+	}
+	self.anime.gotoAndPlay(label);
+	self.action = action;
+	self.direction = direction;
 };
 BattleCharacter.prototype.setRoad = function(list){
 	var self = this;
-	self.roads = list;
-	if(self.to.x == self.x && self.to.y == self.y)self.setTo();
+	self.callParent("setRoad",arguments);
+	self.mode = BattleCharacter.MOVING;
+	self.dispatchEvent(BattleCharacter.MOVING);
 };
-
+BattleCharacter.prototype.setRangeAttack = function(){
+	var self = this;
+	LSouSouObject.SouSouSMap.view.roadLayer.setRangeAttack(self);
+	self.mode = BattleCharacter.WAIT_ATTACK;
+	self.dispatchEvent(BattleCharacter.WAIT_ATTACK);
+};
+BattleCharacter.prototype.saveShowMoveRoadObject = function(roadList) {
+	var self = this;
+	self.mode = BattleCharacter.SHOW_MOVE_ROAD;
+	self.showMoveRoadObject = {x:self.x,y:self.y,action:self.action,direction:self.direction,roadList:roadList};
+};
+BattleCharacter.prototype.returnShowMoveRoadObject = function() {
+	var self = this;
+	self.setCoordinate(self.showMoveRoadObject.x,self.showMoveRoadObject.y);
+	self.setActionDirection(self.action,self.direction);
+	LSouSouObject.SouSouSMap.clickSelfCharacter(self);
+	self.dispatchEvent(BattleCharacter.SHOW_MOVE_ROAD);
+};
