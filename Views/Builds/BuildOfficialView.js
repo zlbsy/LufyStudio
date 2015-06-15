@@ -48,8 +48,12 @@ BuildOfficialView.prototype.showMenu=function(){
 };
 BuildOfficialView.prototype.onClickExpeditionButton=function(event){
 	var self = this;
+	
+	//TODO::
+	self.controller.gotoBattle();
+	/*
 	self.controller.addEventListener(LCityEvent.SELECT_CITY, self.expeditionSelectCharacter);
-	self.controller.toSelectMap(CharacterListType.EXPEDITION);
+	self.controller.toSelectMap(CharacterListType.EXPEDITION);*/
 };
 BuildOfficialView.prototype.expeditionSelectCharacter=function(event){
 	var controller = event.currentTarget;
@@ -162,5 +166,5 @@ BuildOfficialView.prototype.expeditionReadyComplete=function(event){
 	console.log("expeditionReadyComplete",data,expeditionCharacterList,expeditionLeader);
 	windowLayer.remove();
 	self.controller.setValue("battleData",data);
-	self.gotoBattle();
+	self.controller.gotoBattle();
 };

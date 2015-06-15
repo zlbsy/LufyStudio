@@ -1,107 +1,165 @@
 function BattleController(battleData, fromController){
+	console.log("BattleController -- start --");
 	base(this,MyController,[]);
 	this.fromController = fromController;
 }
 BattleController.prototype.construct=function(){
 	var self = this;
-	self.configLoad();
+	self.downX = self.downY = 0;
+	self.initOver = false;
+	LMvc.keepLoading(true);
+	self.mvcLoad();
 };
-BattleController.prototype.configLoad=function(){
+BattleController.prototype.mvcLoad=function(){
 	var self = this;
-	self.load.config(["BattleMap","Arms"],self.libraryLoad);
+	//self.loadMvc(["sousou/SMap/SouSouSMapSelectMenu"],self.libraryLoad);
+	self.libraryLoad();
 };
 BattleController.prototype.libraryLoad=function(){
 	var self = this;
-	self.load.library(["characterSetting","Character","SingleCombatCharacter","HpBar","Face","Num"],self.helperLoad);
+	//self.load.library(["sousou/character/LSouSouMember","sousou/character/LSouSouCharacter","sousou/character/LSouSouCharacterAI","sousou/Arms","character/Action","character/Character","character/Face","LStarQuery","window/WindowPanel","BitmapSprite","LSouSouSQuery"],self.helperLoad);
+	self.load.library(["Battle/Action","Battle/BattleCharacter","LStarQuery","Battle/BattleQuery"],self.helperLoad);
 };
 BattleController.prototype.helperLoad=function(){
 	var self = this;
-	self.load.helper(["Hert","Arms","Stop"],self.modelLoad);
-};
-BattleController.prototype.modelLoad=function(){
-	var self = this;
-	self.load.model(["User/User","User/Character","User/Skill","Battle/Castle"],self.viewLoad);
+	self.load.helper(["Talk"],self.viewLoad);
 };
 BattleController.prototype.viewLoad=function(){
 	var self = this;
-	var views = ["Battle/BattleResult","Battle/BattleNext","Battle/SingleCombat","Battle/Castle","Battle/BattleBackground","Battle/Power","Battle/CharacterButton","Battle/CommandMenu","Battle/CharacterMenu","Battle/AttackArrow","Battle/Shockwave"];
-	views.push("Battle/FireGod");
-	self.load.view(views,self.getArms);
-	//self.load.view(views,self.getCharacters);
+	self.load.view(["Battle/Background","Battle/BattleMiniPreview","Battle/BattleMap"],self.addMap);
 };
-BattleController.prototype.getCharacters=function(){
+BattleController.prototype.addMap=function(){
 	var self = this;
-	//self.userModel = new UserModel(self);
-	//self.userModel.getCharacters(self.getArms);
-	UserModel.own(self).getCharacters(self.getArms);
+	var mapPath = "s01.smap";
+	self.model.loadMapFile(mapPath,self.globalFilesLoad);
 };
-BattleController.prototype.getArms=function(){
+BattleController.prototype.globalFilesLoad = function(){
 	var self = this;
-	console.log("BattleController getArms");
-	//self.userModel = new UserModel(self);
-	//self.userModel.getArms(self.fromController.selectCharacterList, self.getEnemyArms);
-	UserModel.own(self).getArms(self.fromController.selectCharacterList, self.getEnemyArms);
-};
-BattleController.prototype.getEnemyArms=function(){
-	var self = this;
-	console.log("BattleController getEnemyArms");
-	self.model.getEnemyArms(self.imageLoad);
-};
-BattleController.prototype.imageLoad=function(){
-	var self = this;
-	console.log("BattleController imageLoad");
 	var list = self.model.getImages();
-	console.log("BattleController imageLoad list");
 	self.load.image(list,self.init);
 };
-BattleController.prototype.init=function(){
+BattleController.prototype.init = function(){
 	var self = this;
-	console.log("BattleController init");
-	LMvc.battleController = self;
-	LMvc.stageController.view.visible = false;
+	self.queryInit();
 	LMvc.keepLoading(false);
-	self.mode = BattleMapConfig.GameBattle;
-	self.view.init();
+	self.fromController.view.remove();
+	LMvc.CityController = null;
+	console.log("BattleController.prototype.init -- start --");
+	self.dispatchEvent(LEvent.COMPLETE);
+	self.dispatchEvent(LController.NOTIFY);
+};
+BattleController.prototype.addOurCharacter=function(index,action,direction,x,y,callback){
+	this.view.charaLayer.addOurCharacter(index,action,direction,x,y,callback);
+};
+BattleController.prototype.addEnemyCharacter=function(index,action,direction,x,y,isHide,ai,callback){
+	this.view.charaLayer.addEnemyCharacter(index,action,direction,x,y,isHide,ai,callback);
+};
+BattleController.prototype.addFriendCharacter=function(index,action,direction,x,y,isHide,ai,callback){
+	this.view.charaLayer.addFriendCharacter(index,action,direction,x,y,isHide,ai,callback);
+};
+BattleController.prototype.queryInit=function(){
+	var self = this;
+	var map = self.model.map.data;
+	self.query = new BattleQuery(self.model.map.data);
 };
 BattleController.prototype.mapMouseUp = function(event){
-	if(LMvc.stop)return;
+	if(SouSouSMapSelectMenuController.instance().view.visible){
+		return;
+	}
 	var self = event.currentTarget.parent.controller;
-	if(self.view.characterMenu.winPanel.visible){
-		if(self.view.characterMenu.winPanel.hitTestPoint(event.offsetX,event.offsetY))return;
-	}else if(self.clickTargetCharacter && self.clickTargetCharacter.hitTestPoint(event.offsetX,event.offsetY)){
-		self.clickTargetCharacter.go();
-		delete self.clickTargetCharacter;
+	if(LSouSouObject.talkLayer){
+		if(LSouSouObject.talkOver){
+			//TalkRemove();
+		}
 		return;
 	}
 	event.currentTarget.stopDrag();
+	if(Math.abs(self.downX - event.offsetX) > 12 || Math.abs(self.downY - event.offsetY) > 12){
+		return;
+	}
+	if(!self.view.roadLayer.visible){
+		self.characterClick(event.selfX,event.selfY);
+		return;
+	}
+	if(!self.view.roadLayer.hitTestPoint(event.offsetX,event.offsetY)){
+		self.notClickOnRoadLayer(event);
+		return;
+	}
+	if(LSouSouObject.ctrlChara.mode == LSouSouCharacter.WAIT_ATTACK){
+		self.physicalAttack(event);
+		return;
+	}
+	self.clickOnRoadLayer(event);
 };
 BattleController.prototype.mapMouseDown = function(event){
-	if(LMvc.stop)return;
-	var self = event.currentTarget.parent.controller;
-	if(self.view.characterMenu.winPanel.visible){
-		if(self.view.characterMenu.winPanel.hitTestPoint(event.offsetX,event.offsetY))return;
-	}else{
-		var chara = self.getCharaAtMouse(event);
-		if(chara){
-			self.clickTargetCharacter = chara;
-			return;
-		}
+	if(SouSouSMapSelectMenuController.instance().view.visible){
+		return;
 	}
+	var self = event.currentTarget.parent.controller;
+	if(LSouSouObject.talkLayer || LSouSouObject.runMode){
+		return;
+	}
+	self.downX = event.offsetX;
+	self.downY = event.offsetY;
 	event.currentTarget.startDrag(event.touchPointID);
 };
-BattleController.prototype.getCharaAtMouse=function(event){
-	var self = this;
-	for(var i=0,l=self.model.ourCharacterList.length;i<l;i++){
-		var chara = self.model.ourCharacterList[i];
-		if(chara.readyMode == Character.READY_MODE_WAITING && chara.hitTestPoint(event.offsetX,event.offsetY)){
-			return chara;
-		}
+BattleController.prototype.physicalAttack = function(event){
+	var self = event.currentTarget.parent.controller;
+	var chara = self.view.charaLayer.getCharacterFromCoordinate(event.selfX,event.selfY);
+	if(!chara || chara.belong != LSouSouObject.BELONG_ENEMY){
+		return;
 	}
-	return null;
+	self.view.roadLayer.clear();
+	LSouSouObject.ctrlChara.AI.physicalAttack(chara);
 };
-BattleController.prototype.returnStage=function(event){
-	var self = event.currentTarget.parent.parent.parent.controller;
-	console.log(self);
-	self.view.remove();
-	LMvc.stageController.view.visible = true;
+BattleController.prototype.clickOnRoadLayer = function(event){
+	var self = event.currentTarget.parent.controller;
+	var chara = self.view.charaLayer.getCharacterFromCoordinate(event.selfX,event.selfY);
+	if(chara){
+		return;
+	}
+	chara = LSouSouObject.ctrlChara;
+		
+	var coordinate = chara.getTo();
+	var fx = coordinate[0] , fy = coordinate[1];
+	var returnList = self.query.queryPath(new LPoint(fx,fy),new LPoint(event.selfX/self.model.stepWidth >>> 0,event.selfY/self.model.stepHeight >>> 0));
+	if(returnList.length > 0){
+		self.view.roadLayer.clear();
+		chara.setRoad(returnList);//move
+	}
+};
+BattleController.prototype.notClickOnRoadLayer = function(event){
+	var self = event.currentTarget.parent.controller;
+	switch(LSouSouObject.ctrlChara.mode){
+		case LSouSouCharacter.SHOW_MOVE_ROAD:
+			self.view.roadLayer.clear();
+			LSouSouObject.ctrlChara.removeAllEventListener();
+			break;
+		case LSouSouCharacter.WAIT_ATTACK:
+			self.view.roadLayer.clear();
+			LSouSouObject.ctrlChara.dispatchEvent(LSouSouCharacter.MOVE_COMPLETE);
+			break;
+	}
+};
+BattleController.prototype.characterClick = function(cx,cy){
+	var self = this;
+	var chara = self.view.charaLayer.getCharacterFromCoordinate(cx,cy);
+	switch(chara.belong){
+		case LSouSouObject.BELONG_SELF:
+			LSouSouObject.ctrlChara = chara;
+			LSouSouObject.ctrlChara.AI.setEvent();
+			self.clickSelfCharacter(chara);
+			break;
+		case LSouSouObject.BELONG_FRIEND:
+			break;
+		case LSouSouObject.BELONG_ENEMY:
+			break;
+	}
+};
+BattleController.prototype.clickSelfCharacter = function(chara){
+	var self = this;
+	var path = self.query.makePath(chara);
+	self.view.roadLayer.setSelfMoveRoads(path);
+	self.view.roadLayer.addRangeAttack(chara);
+	LSouSouObject.ctrlChara.saveShowMoveRoadObject();
 };

@@ -65,31 +65,11 @@ CityController.prototype.gotoBattle=function(){
 	var self = this;
 	LMvc.CityController = null;
 	LMvc.keepLoading(true);
-	self.loadMvc("Battle",self.cityLoadComplete);
+	self.loadMvc("Battle",self.battleLoadComplete);
 };
 CityController.prototype.battleLoadComplete=function(){
 	var self = this;
 	var battleData = self.getValue("battleData");
-	var battle = new BattleController(battleData, self.view);
+	var battle = new BattleController(battleData, self);
 	self.view.parent.addChild(battle);
 };
-/*
-CityController.prototype.loadArmList = function(type,buildView){
-	var self = this;
-	LMvc.keepLoading(true);
-	LMvc.changeLoading(TranslucentLoading);
-	self.armListType = type;
-	self.buildView = buildView;
-	self.loadMvc("ArmList",self.showArmList);
-};
-CityController.prototype.showArmList=function(){
-	var self = this;
-	var armList = new ArmListController(self.armListType,self);
-	self.view.contentLayer.addChild(armList.view);
-	self.buildView.hideBuild();
-};
-CityController.prototype.closeArmList=function(){
-	var self = this;
-	self.view.contentLayer.removeChildAt(self.view.contentLayer.numChildren - 1);
-	self.buildView.showBuild();
-};*/

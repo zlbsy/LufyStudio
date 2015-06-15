@@ -2,7 +2,7 @@ function BackgroundView(controller){
 	var self = this;
 	LExtends(self,LView,[controller]);
 }
-BackgroundView.prototype.set = function(bitmapData,dragRange){
+BackgroundView.prototype.set = function(bitmapData){
 	var self = this;
 	self.map = new LBitmap(bitmapData);
 	self.addChild(self.map);
