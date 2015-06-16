@@ -1,7 +1,12 @@
 function BattleCharacterLayerView(controller) {
 	var self = this;
 	LExtends(self, LView, [controller]);
-	self.addCharaLayer(1,CharacterAction.MOVE,CharacterDirection.DOWN,2,2);
+	for(var i = 0;i<10;i++){
+		for(var j=0;j<12;j++){
+		self.addCharaLayer(1,CharacterAction.MOVE,CharacterDirection.DOWN,i,j);
+		}
+	}
+	
 	//self.addEventListener(LEvent.ENTER_FRAME, self.onframe);
 };
 BattleCharacterLayerView.prototype.onframe = function(event) {
@@ -67,5 +72,6 @@ BattleCharacterLayerView.prototype.addCharaLayer=function(index,action,direction
 	var chara = new BattleCharacter(index,stepWidth,stepHeight);
 	chara.setCoordinate(parseInt(x)*stepWidth,parseInt(y)*stepHeight);
 	self.addChild(chara);
+	chara.changeAction(CharacterAction.MOVE);
 	return chara;
 };

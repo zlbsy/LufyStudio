@@ -66,10 +66,13 @@ BattleView.prototype.layerInit=function(){
 	//预览层
 	self.miniLayer = new BattleMiniPreviewView(self.controller);
 	self.addChild(self.miniLayer);
-	return;
+	
 	//Test code
+	self.buildLayer = new LSprite();
+	self.baseLayer.addChild(self.buildLayer);
 	self.buildLayer.alpha = 0.4;
-    self.buildLayer.graphics.add(function (){
+	var layer = new LSprite();
+    layer.graphics.add(function (){
     	var stepHeight = self.model.stepHeight;
     	var stepWidth = self.model.stepWidth;
     	var c = LGlobal.canvas;
@@ -85,7 +88,8 @@ BattleView.prototype.layerInit=function(){
 		}
 		c.stroke();
 	});
-	
+	self.buildLayer.addChild(layer);
+	return;
 	var f = new FPS();
 	self.addChild(f);
 	
