@@ -1,6 +1,7 @@
 function BattleCharacter(id, w, h) {
 	var self = this;
 	LExtends(self, Character, [id, w, h]);
+	self.layer.x = self.layer.y = -8;
 	self.belong = null;
 	//self.AI = new BattleCharacterAI(self);
 }
