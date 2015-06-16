@@ -77,6 +77,14 @@ SoldierModel.prototype.explanation = function() {
 SoldierModel.prototype.next = function() {
 	return this.master().next();
 };
+SoldierModel.prototype.img = function() {
+	var self = this;
+	var imgIndex = self.data.img;
+	if(!imgIndex){
+		imgIndex = self.master().img();
+	}
+	return imgIndex;
+};
 SoldierModel.prototype.icon=function(size,anime){
 	var self = this;
 	if(!size){

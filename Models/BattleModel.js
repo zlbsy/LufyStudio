@@ -36,9 +36,7 @@ BattleModel.prototype.getImages=function(){
 	list.push({name:"rect",path:LMvc.IMG_PATH+"map/rect.png"});
 	list.push({name:"sMenu",path:LMvc.IMG_PATH+"sousou/menu.png"});
 	list.push({name:"openmenu",path:LMvc.IMG_PATH+"menu/openmenu.png"});*/
-	list.push({name:"default-s-atk",path:LMvc.IMG_PATH+"character/default/s/atk.png"});
-	list.push({name:"default-s-mov",path:LMvc.IMG_PATH+"character/default/s/mov.png"});
-	list.push({name:"default-s-spc",path:LMvc.IMG_PATH+"character/default/s/spc.png"});
+	list.push({name:"character-s-default",path:LMvc.IMG_PATH+"character/s/default.png"});
 	list.push({name:"img-small",path:LMvc.IMG_PATH+"smap/" + self.map["img-small"]});
 	return list;
 };

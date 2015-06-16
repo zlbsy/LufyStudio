@@ -18,7 +18,7 @@ var CharacterDirection = {
 	LEFT_UP:"left_up",
 	RIGHT_UP:"right_up"
 };
-function Character(id,w,h){
+function Character(id,w,h,action,direction){
 	var self = this;
 	base(self,LSprite,[]);
 	self.id = id;

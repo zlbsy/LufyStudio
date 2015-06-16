@@ -1,7 +1,7 @@
 function BattleCharacterLayerView(controller) {
 	var self = this;
 	LExtends(self, LView, [controller]);
-	
+	self.addCharaLayer(1,CharacterAction.MOVE,CharacterDirection.DOWN,2,2);
 	//self.addEventListener(LEvent.ENTER_FRAME, self.onframe);
 };
 BattleCharacterLayerView.prototype.onframe = function(event) {
@@ -64,7 +64,7 @@ BattleCharacterLayerView.prototype.addCharaLayer=function(index,action,direction
 	var grids = map.data;
 	var stepWidth = map.width/grids[0].length;
 	var stepHeight = map.height/grids.length;
-	var chara = new LSouSouCharacter(index,stepWidth,stepHeight,action,direction,"S");
+	var chara = new BattleCharacter(index,stepWidth,stepHeight);
 	chara.setCoordinate(parseInt(x)*stepWidth,parseInt(y)*stepHeight);
 	self.addChild(chara);
 	return chara;

@@ -1,28 +1,40 @@
-function BattleCharacter(index, w, h, action, direction) {
+function BattleCharacter(id, w, h) {
 	var self = this;
-	LExtends(self, Character, [index, w, h, action, direction, RS]);
-	var r = self.data[self.RS + "Rect"];
-	self.layer.x = w * 0.5 - (r[0] + r[2] * 0.5);
-	self.layer.y = h * 0.5 - (r[1] + r[3] * 0.5);
+	LExtends(self, Character, [id, w, h]);
 	self.belong = null;
-	self.AI = new BattleCharacterAI(self);
+	//self.AI = new BattleCharacterAI(self);
 }
 BattleCharacter.MOVE_COMPLETE = "moveComplete";
 BattleCharacter.SHOW_MOVE_ROAD = "showMoveRoad";
 BattleCharacter.MOVING = "moving";
 BattleCharacter.WAIT_ATTACK = "waitAttack";
 BattleCharacter.WAIT_SELECT = "waitSelect";
+BattleCharacter.getAnimationData = function(){
+	if(!BattleCharacter._animationData){
+		// 1792 x 64
+		var list = LGlobal.divideCoordinate(1792, 64, 1, 28);
+		BattleCharacter._animationData = [
+			[list[0][0],list[0][1],list[0][2],list[0][3]],
+			[list[0][4],list[0][5],list[0][6],list[0][7]],
+			[list[0][8],list[0][9],list[0][10],list[0][11]],
+			[list[0][12],list[0][13]],[list[0][14],list[0][15]],[list[0][16],list[0][17]],
+			[list[0][18]],[list[0][19]],[list[0][20]],
+			[list[0][21],list[0][22]],
+			[list[0][23]],[list[0][24]],[list[0][25]],
+			[list[0][26],list[0][27]],
+		];
+	}
+	return BattleCharacter._animationData;
+};
 BattleCharacter.prototype.addAnimation = function() {
 	var self = this;
-	if (self.RS == "S") {
-		self.addSAnimation();
-	} else {
-		//R
-	}
-};
-BattleCharacter.prototype.addSAnimation = function() {
-	var self = this;
-	var img = "defaultSCharacter";
+	var img = "character-s-default";
+	var bitmapData = new LBitmapData(LMvc.datalist[img]);
+	self.anime = new LAnimationTimeline(bitmapData, BattleCharacter.getAnimationData());
+	self.anime.speed = 5;
+	self.layer.addChild(self.anime);
+	self.setAnimationLabel();
+	/*
 	if (self.data["S"] > 0) {
 		if (LMvc.datalist["SCharacter-" + self.data["S"]]) {
 			img = "SCharacter-" + self.data["S"];
@@ -40,7 +52,46 @@ BattleCharacter.prototype.addSAnimation = function() {
 	self.layer.addChild(self.anime);
 	//self.layer.graphics.drawRect(1, "#ff0000", [0, 0, 64, 64]);
 	var r = self.data[self.RS+"Rect"];
-	self.addShape(LShape.RECT,[r[0] + self.layer.x,r[1] + self.layer.y + r[3] * 0.5,r[2],r[3]]);
+	self.addShape(LShape.RECT,[r[0] + self.layer.x,r[1] + self.layer.y + r[3] * 0.5,r[2],r[3]]);*/
+};
+BattleCharacter.prototype.setAnimationLabel = function() {
+	var self = this;
+	var anime = self.anime;
+	//ATTACK
+	anime.setLabel(String.format("{0}-{1}",CharacterAction.ATTACK,CharacterDirection.DOWN),0,0,1,false);
+	anime.setLabel(String.format("{0}-{1}",CharacterAction.ATTACK,CharacterDirection.UP),1,0,1,false);
+	anime.setLabel(String.format("{0}-{1}",CharacterAction.ATTACK,CharacterDirection.LEFT),2,0,1,false);
+	anime.setLabel(String.format("{0}-{1}",CharacterAction.ATTACK,CharacterDirection.RIGHT),2,0,1,true);
+	//MOVE
+	anime.setLabel(String.format("{0}-{1}",CharacterAction.MOVE,CharacterDirection.DOWN),3,0,1,false);
+	anime.setLabel(String.format("{0}-{1}",CharacterAction.MOVE,CharacterDirection.UP),4,0,1,false);
+	anime.setLabel(String.format("{0}-{1}",CharacterAction.MOVE,CharacterDirection.LEFT),5,0,1,false);
+	anime.setLabel(String.format("{0}-{1}",CharacterAction.MOVE,CharacterDirection.RIGHT),5,0,1,true);
+	//STAND
+	anime.setLabel(String.format("{0}-{1}",CharacterAction.STAND,CharacterDirection.DOWN),6,0,1,false);
+	anime.setLabel(String.format("{0}-{1}",CharacterAction.STAND,CharacterDirection.UP),7,0,1,false);
+	anime.setLabel(String.format("{0}-{1}",CharacterAction.STAND,CharacterDirection.LEFT),8,0,1,false);
+	anime.setLabel(String.format("{0}-{1}",CharacterAction.STAND,CharacterDirection.RIGHT),8,0,1,true);
+	//PANT
+	anime.setLabel(String.format("{0}-{1}",CharacterAction.PANT,CharacterDirection.DOWN),9,0,1,false);
+	anime.setLabel(String.format("{0}-{1}",CharacterAction.PANT,CharacterDirection.UP),9,0,1,false);
+	anime.setLabel(String.format("{0}-{1}",CharacterAction.PANT,CharacterDirection.LEFT),9,0,1,false);
+	anime.setLabel(String.format("{0}-{1}",CharacterAction.PANT,CharacterDirection.RIGHT),9,0,1,false);
+	//BLOCK
+	anime.setLabel(String.format("{0}-{1}",CharacterAction.BLOCK,CharacterDirection.DOWN),10,0,1,false);
+	anime.setLabel(String.format("{0}-{1}",CharacterAction.BLOCK,CharacterDirection.UP),11,0,1,false);
+	anime.setLabel(String.format("{0}-{1}",CharacterAction.BLOCK,CharacterDirection.LEFT),12,0,1,false);
+	anime.setLabel(String.format("{0}-{1}",CharacterAction.BLOCK,CharacterDirection.RIGHT),12,0,1,true);
+	//HERT
+	anime.setLabel(String.format("{0}-{1}",CharacterAction.HERT,CharacterDirection.DOWN),13,0,1,false);
+	anime.setLabel(String.format("{0}-{1}",CharacterAction.HERT,CharacterDirection.UP),13,0,1,false);
+	anime.setLabel(String.format("{0}-{1}",CharacterAction.HERT,CharacterDirection.LEFT),13,0,1,false);
+	anime.setLabel(String.format("{0}-{1}",CharacterAction.HERT,CharacterDirection.RIGHT),13,0,1,false);
+	//LEVELUP
+	anime.setLabel(String.format("{0}-{1}",CharacterAction.LEVELUP,CharacterDirection.DOWN),14,0,1,false);
+	anime.setLabel(String.format("{0}-{1}",CharacterAction.LEVELUP,CharacterDirection.UP),14,0,1,false);
+	anime.setLabel(String.format("{0}-{1}",CharacterAction.LEVELUP,CharacterDirection.LEFT),14,0,1,false);
+	anime.setLabel(String.format("{0}-{1}",CharacterAction.LEVELUP,CharacterDirection.RIGHT),14,0,1,false);
 };
 BattleCharacter.prototype.loadSOver = function(event){
 	var self = event.currentTarget.parent;
@@ -65,7 +116,7 @@ BattleCharacter.prototype.setActionDirection = function(action, direction) {
 	if (action == CharacterAction.HERT || action == CharacterAction.WAKE || action == CharacterAction.PANT || action == CharacterAction.LEVELUP) {
 		label = action;
 	} else {
-		label = action + "_" + direction;
+		label = action + "-" + direction;
 	}
 	self.anime.gotoAndPlay(label);
 	self.action = action;
