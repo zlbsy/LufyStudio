@@ -56,6 +56,10 @@ BattleController.prototype.init = function(){
 	console.log("BattleController.prototype.init -- start --");
 	self.dispatchEvent(LEvent.COMPLETE);
 	self.dispatchEvent(LController.NOTIFY);
+	
+	self.addOurCharacter(1,CharacterAction.MOVE,CharacterDirection.DOWN,3,2);
+	self.addEnemyCharacter(2,CharacterAction.MOVE,CharacterDirection.LEFT,5,5);
+	self.addFriendCharacter(3,CharacterAction.MOVE,CharacterDirection.RIGHT,1,7);
 };
 BattleController.prototype.addOurCharacter=function(index,action,direction,x,y,callback){
 	this.view.charaLayer.addOurCharacter(index,action,direction,x,y,callback);

@@ -8,10 +8,10 @@ function BattleCharacterView(controller, id, w, h) {
 }
 BattleCharacterView.DEFAULT_IMG = "character-s-default";
 BattleCharacterView.getAnimationData = function(){
-	if(!BattleCharacter._animationData){
+	if(!BattleCharacterView._animationData){
 		// 1792 x 64
 		var list = LGlobal.divideCoordinate(1792, 64, 1, 28);
-		BattleCharacter._animationData = [
+		BattleCharacterView._animationData = [
 			[list[0][0],list[0][1],list[0][2],list[0][3]],
 			[list[0][4],list[0][5],list[0][6],list[0][7]],
 			[list[0][8],list[0][9],list[0][10],list[0][11]],
@@ -22,7 +22,7 @@ BattleCharacterView.getAnimationData = function(){
 			[list[0][26],list[0][27]],
 		];
 	}
-	return BattleCharacter._animationData;
+	return BattleCharacterView._animationData;
 };
 BattleCharacterView.prototype.addAnimation = function() {
 	var self = this;
@@ -36,27 +36,7 @@ BattleCharacterView.prototype.addAnimation = function() {
 	var loader = new LLoader();
 	loader.parent = self;
 	loader.addEventListener(LEvent.COMPLETE, self.loadSOver);
-	console.log("addAnimation " + LMvc.IMG_PATH + "character/s/"+img+".png");
 	loader.load(LMvc.IMG_PATH + "character/s/"+img+".png", "bitmapData");
-	/*
-	if (self.data["S"] > 0) {
-		if (LMvc.datalist["SCharacter-" + self.data["S"]]) {
-			img = "SCharacter-" + self.data["S"];
-		} else {
-			loader = new LLoader();
-			loader.parent = self;
-			loader.addEventListener(LEvent.COMPLETE, self.loadSOver);
-			loader.load(LMvc.IMG_PATH + "character/" + self.data["S"] + "/s/1.png", "bitmapData");
-		}
-	}
-
-	var bitmapData = new LBitmapData(LMvc.datalist[img]);
-	self.anime = new LAnimationTimeline(bitmapData, LMvc.datalist["SAction"]);
-	self.anime.speed = 5;
-	self.layer.addChild(self.anime);
-	//self.layer.graphics.drawRect(1, "#ff0000", [0, 0, 64, 64]);
-	var r = self.data[self.RS+"Rect"];
-	self.addShape(LShape.RECT,[r[0] + self.layer.x,r[1] + self.layer.y + r[3] * 0.5,r[2],r[3]]);*/
 };
 BattleCharacterView.prototype.setAnimationLabel = function() {
 	var self = this;

@@ -18,16 +18,11 @@ var CharacterDirection = {
 	LEFT_UP:"left_up",
 	RIGHT_UP:"right_up"
 };
-var CharacterConfig = {
-	MOVE_COMPLETE :"move_complete"
-};
-var BattleCharacter = {
-	MOVE_COMPLETE : "moveComplete",
-	SHOW_MOVE_ROAD : "showMoveRoad",
-	MOVING : "moving",
-	WAIT_ATTACK : "waitAttack",
-	WAIT_SELECT : "waitSelect"
-};
 var BattleCharacterSize = {
 	width:48,height:48
+};
+var CharacterConfig = {
+	BELONG_SELF : "belong_self",
+	BELONG_ENEMY : "belong_enemy",
+	BELONG_FRIEND : "belong_friend"
 };

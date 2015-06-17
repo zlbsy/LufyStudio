@@ -1,11 +1,18 @@
-CharacterListEvent = {};
+var CharacterListEvent = {};
 CharacterListEvent.SHOW = "characterList_show";
 CharacterListEvent.CLOSE = "characterList_close";
 
-ArmListEvent = {};
+var ArmListEvent = {};
 ArmListEvent.SHOW = "armList_show";
 ArmListEvent.CLOSE = "armList_close";
 
-LCityEvent = {};
+var LCityEvent = {};
 LCityEvent.SELECT_CITY = "select_city";
 
+
+var BattleCharacterEvent = {};
+BattleCharacterEvent.MOVE_COMPLETE = "moveComplete";
+BattleCharacterEvent.SHOW_MOVE_ROAD = "showMoveRoad";
+BattleCharacterEvent.MOVING = "moving";
+BattleCharacterEvent.WAIT_ATTACK = "waitAttack";
+BattleCharacterEvent.WAIT_SELECT = "waitSelect";

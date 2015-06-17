@@ -134,7 +134,7 @@ CharacterView.prototype.move = function(){
 			self.changeAction(CharacterAction.STAND);
 			if(controller.mapMove)controller.mapMove();
 			self.checkCoordinate(controller);
-			self.dispatchEvent(Character.MOVE_COMPLETE);
+			self.dispatchEvent(BattleCharacterEvent.MOVE_COMPLETE);
 			return;
 		}
 		var next = self.roads[0];

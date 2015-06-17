@@ -1,12 +1,12 @@
 function BattleCharacterLayerView(controller) {
 	var self = this;
 	LExtends(self, LView, [controller]);
-	for(var i = 0;i<15;i++){
+	/*for(var i = 0;i<15;i++){
 		for(var j=0;j<12;j++){
 		self.addCharaLayer(1,CharacterAction.MOVE,CharacterDirection.DOWN,i,j);
 		}
 	}
-	
+	*/
 	//self.addEventListener(LEvent.ENTER_FRAME, self.onframe);
 };
 BattleCharacterLayerView.prototype.onframe = function(event) {
@@ -34,12 +34,10 @@ BattleCharacterLayerView.prototype.getCharacterFromCoordinate=function(x,y){
 	}
 	return null;
 };
-BattleCharacterLayerView.prototype.addOurCharacter=function(index,action,direction,x,y,callback){
+BattleCharacterLayerView.prototype.addOurCharacter=function(id,action,direction,x,y,callback){
 	var self = this;
-	var member = LSouSouObject.memberList.find(function(element, index, array){return element.index() == LSouSouObject.perWarList[index];});
-	var chara = self.addCharaLayer(member.index(),action,direction,x,y);
-	chara.member = member;
-	chara.belong = LSouSouObject.BELONG_SELF;
+	var chara = self.addCharaLayer(id,action,direction,x,y);
+	chara.belong = CharacterConfig.BELONG_SELF;
 	chara.changeAction(CharacterAction.MOVE);
 	self.model.ourList.push(chara);
 	if(typeof callback == "function")callback();
@@ -47,7 +45,7 @@ BattleCharacterLayerView.prototype.addOurCharacter=function(index,action,directi
 BattleCharacterLayerView.prototype.addEnemyCharacter=function(index,action,direction,x,y,isHide,ai,callback){
 	var self = this;
 	var chara = self.addCharaLayer(index,action,direction,x,y);
-	chara.belong = LSouSouObject.BELONG_ENEMY;
+	chara.belong = CharacterConfig.BELONG_ENEMY;
 	chara.changeAction(CharacterAction.MOVE);
 	self.model.enemyList.push(chara);
 	if(typeof callback == "function")callback();
@@ -55,7 +53,7 @@ BattleCharacterLayerView.prototype.addEnemyCharacter=function(index,action,direc
 BattleCharacterLayerView.prototype.addFriendCharacter=function(index,action,direction,x,y,isHide,ai,callback){
 	var self = this;
 	var chara = self.addCharaLayer(index,action,direction,x,y);
-	chara.belong = LSouSouObject.BELONG_FRIEND;
+	chara.belong = CharacterConfig.BELONG_FRIEND;
 	chara.changeAction(CharacterAction.MOVE);
 	self.model.friendList.push(chara);
 	if(typeof callback == "function")callback();
@@ -72,6 +70,6 @@ BattleCharacterLayerView.prototype.addCharaLayer=function(index,action,direction
 	var chara = new BattleCharacterView(self.controller,index,stepWidth,stepHeight);
 	chara.setCoordinate(parseInt(x)*stepWidth,parseInt(y)*stepHeight);
 	self.addChild(chara);
-	chara.changeAction(CharacterAction.MOVE);
+	chara.setActionDirection(action,direction);
 	return chara;
 };
