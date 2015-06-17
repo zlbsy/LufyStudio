@@ -28,3 +28,6 @@ var BattleCharacter = {
 	WAIT_ATTACK : "waitAttack",
 	WAIT_SELECT : "waitSelect"
 };
+var BattleCharacterSize = {
+	width:48,height:48
+};

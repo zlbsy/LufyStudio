@@ -1,7 +1,7 @@
 function BattleCharacterLayerView(controller) {
 	var self = this;
 	LExtends(self, LView, [controller]);
-	for(var i = 0;i<10;i++){
+	for(var i = 0;i<15;i++){
 		for(var j=0;j<12;j++){
 		self.addCharaLayer(1,CharacterAction.MOVE,CharacterDirection.DOWN,i,j);
 		}

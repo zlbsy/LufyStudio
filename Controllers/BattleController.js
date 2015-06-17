@@ -34,7 +34,7 @@ BattleController.prototype.modelLoad=function(){
 };
 BattleController.prototype.viewLoad=function(){
 	var self = this;
-	self.load.view(["Battle/Background","Battle/BattleMiniPreview","Battle/BattleMap","Battle/BattleCharacterLayer","Common/Character","Battle/BattleCharacter"],self.addMap);
+	self.load.view(["Battle/Background","Battle/BattleMiniPreview","Battle/BattleMap","Battle/BattleCharacterLayer","Common/Character","Battle/BattleCharacter","Battle/BattleRoad"],self.addMap);
 };
 BattleController.prototype.addMap=function(){
 	var self = this;
@@ -87,12 +87,13 @@ BattleController.prototype.mapMouseUp = function(event){
 	if(Math.abs(self.downX - event.offsetX) > 12 || Math.abs(self.downY - event.offsetY) > 12){
 		return;
 	}
-	//TODO::
-	return;
+	
 	if(!self.view.roadLayer.visible){
 		self.characterClick(event.selfX,event.selfY);
 		return;
 	}
+	//TODO::
+	return;
 	if(!self.view.roadLayer.hitTestPoint(event.offsetX,event.offsetY)){
 		self.notClickOnRoadLayer(event);
 		return;
@@ -157,6 +158,8 @@ BattleController.prototype.notClickOnRoadLayer = function(event){
 BattleController.prototype.characterClick = function(cx,cy){
 	var self = this;
 	var chara = self.view.charaLayer.getCharacterFromCoordinate(cx,cy);
+	alert(chara);
+	return;
 	switch(chara.belong){
 		case LSouSouObject.BELONG_SELF:
 			LSouSouObject.ctrlChara = chara;

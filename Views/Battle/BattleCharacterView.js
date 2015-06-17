@@ -4,6 +4,7 @@ function BattleCharacterView(controller, id, w, h) {
 	self.layer.x = self.layer.y = -8;
 	self.belong = null;
 	//self.AI = new BattleCharacterAI(self);
+	self.addShape(LShape.RECT,[0,0,BattleCharacterSize.width,BattleCharacterSize.height]);
 }
 BattleCharacterView.DEFAULT_IMG = "character-s-default";
 BattleCharacterView.getAnimationData = function(){

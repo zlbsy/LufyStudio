@@ -53,10 +53,11 @@ BattleView.prototype.layerInit=function(){
 	//地图层
 	self.mapLayer = new BattleMapView(self.controller);
 	self.baseLayer.addChild(self.mapLayer);
-	/*
+	
 	//路径层
-	self.roadLayer = new LSouSouSMapRoadView(self.controller);
-	self.baseLayer.addChild(self.roadLayer);*/
+	self.roadLayer = new BattleRoadView(self.controller);
+	self.baseLayer.addChild(self.roadLayer);
+	self.roadLayer.visible = false;
 	//人物层
 	self.charaLayer = new BattleCharacterLayerView(self.controller);
 	self.baseLayer.addChild(self.charaLayer);
