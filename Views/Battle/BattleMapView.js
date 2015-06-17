@@ -1,6 +1,8 @@
 function BattleMapView(controller){
 	var self = this;
 	LExtends(self,LView,[controller]);
+	self.loadMapComplete = false;
+	self.staticCharacters = [];
 	self.speed = 5;
 	self._speed = 0;
 };
@@ -26,7 +28,15 @@ BattleMapView.prototype.setBig = function(event){
 	self.map.bitmapData = self.datas[0];
 	self.dataIndex = 0;
 	self.map.scaleX = self.map.scaleY = 1;
+	self.loadMapComplete = true;
 	self.addEventListener(LEvent.ENTER_FRAME, self.onframe);
+	if(self.staticCharacters.length == 0){
+		return;
+	}
+	self.staticCharacters.forEach(function(child){
+		child.toStatic(true);
+	});
+	self.staticCharacters.length = 0;
 	/*
 	self.controller.view.charaLayer.childList.forEach(function(chara){
 		self.characterIn(chara);
@@ -53,11 +63,16 @@ BattleMapView.prototype.onframe = function(event){
 };
 BattleMapView.prototype.characterIn = function(chara){
 	var self = this;
+	if(!self.loadMapComplete){
+		self.staticCharacters.push(chara);
+		return false;
+	}
 	var bitmapData = self.datas[0];
 	bitmapData.copyPixels(chara.anime.bitmap.bitmapData,new LRectangle(8,8,48,48),new LPoint(chara.x,chara.y));
 	chara.anime.onframe();
 	bitmapData = self.datas[1];
 	bitmapData.copyPixels(chara.anime.bitmap.bitmapData,new LRectangle(8,8,48,48),new LPoint(chara.x,chara.y));
+	return true;
 };
 BattleMapView.prototype.characterOut = function(chara){
 	var self = this;

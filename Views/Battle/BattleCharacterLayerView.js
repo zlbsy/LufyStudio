@@ -69,7 +69,7 @@ BattleCharacterLayerView.prototype.addCharaLayer=function(index,action,direction
 	var grids = map.data;
 	var stepWidth = map.width/grids[0].length;
 	var stepHeight = map.height/grids.length;
-	var chara = new BattleCharacter(index,stepWidth,stepHeight);
+	var chara = new BattleCharacterView(self.controller,index,stepWidth,stepHeight);
 	chara.setCoordinate(parseInt(x)*stepWidth,parseInt(y)*stepHeight);
 	self.addChild(chara);
 	chara.changeAction(CharacterAction.MOVE);

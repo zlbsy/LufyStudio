@@ -13,20 +13,28 @@ BattleController.prototype.construct=function(){
 BattleController.prototype.mvcLoad=function(){
 	var self = this;
 	//self.loadMvc(["sousou/SMap/SouSouSMapSelectMenu"],self.libraryLoad);
-	self.libraryLoad();
+	self.configLoad();
+};
+BattleController.prototype.configLoad=function(){
+	var self = this;
+	self.load.config(["Character"],self.libraryLoad);
 };
 BattleController.prototype.libraryLoad=function(){
 	var self = this;
 	//self.load.library(["sousou/character/LSouSouMember","sousou/character/LSouSouCharacter","sousou/character/LSouSouCharacterAI","sousou/Arms","character/Action","character/Character","character/Face","LStarQuery","window/WindowPanel","BitmapSprite","LSouSouSQuery"],self.helperLoad);
-	self.load.library(["Character","Battle/BattleCharacter","LStarQuery","Battle/BattleQuery"],self.helperLoad);
+	self.load.library(["LStarQuery","Battle/BattleQuery"],self.helperLoad);
 };
 BattleController.prototype.helperLoad=function(){
 	var self = this;
-	self.load.helper(["Talk"],self.viewLoad);
+	self.load.helper(["Talk"],self.modelLoad);
+};
+BattleController.prototype.modelLoad=function(){
+	var self = this;
+	self.load.model(["Master/SoldierMaster","Master/Soldier"],self.viewLoad);
 };
 BattleController.prototype.viewLoad=function(){
 	var self = this;
-	self.load.view(["Battle/Background","Battle/BattleMiniPreview","Battle/BattleMap","Battle/BattleCharacterLayer"],self.addMap);
+	self.load.view(["Battle/Background","Battle/BattleMiniPreview","Battle/BattleMap","Battle/BattleCharacterLayer","Common/Character","Battle/BattleCharacter"],self.addMap);
 };
 BattleController.prototype.addMap=function(){
 	var self = this;
