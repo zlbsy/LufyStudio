@@ -22,7 +22,7 @@ BattleController.prototype.configLoad=function(){
 BattleController.prototype.libraryLoad=function(){
 	var self = this;
 	//self.load.library(["sousou/character/LSouSouMember","sousou/character/LSouSouCharacter","sousou/character/LSouSouCharacterAI","sousou/Arms","character/Action","character/Character","character/Face","LStarQuery","window/WindowPanel","BitmapSprite","LSouSouSQuery"],self.helperLoad);
-	self.load.library(["LStarQuery","Battle/BattleQuery"],self.helperLoad);
+	self.load.library(["LStarQuery","Battle/BattleQuery","Battle/BattleCharacterAI"],self.helperLoad);
 };
 BattleController.prototype.helperLoad=function(){
 	var self = this;
@@ -60,7 +60,7 @@ BattleController.prototype.init = function(){
 	self.dispatchEvent(LController.NOTIFY);
 	
 	self.addOurCharacter(1,CharacterAction.MOVE,CharacterDirection.DOWN,5,5);
-	self.addOurCharacter(2,CharacterAction.MOVE,CharacterDirection.UP,5,8);
+	self.addOurCharacter(2,CharacterAction.MOVE,CharacterDirection.UP,6,8);
 	self.addEnemyCharacter(3,CharacterAction.MOVE,CharacterDirection.LEFT,3,2);
 	self.addFriendCharacter(4,CharacterAction.MOVE,CharacterDirection.RIGHT,1,7);
 };

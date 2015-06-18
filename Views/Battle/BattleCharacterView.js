@@ -4,7 +4,7 @@ function BattleCharacterView(controller, id, w, h) {
 	self.layer.x = self.layer.y = -8;
 	self.belong = null;
 	self.bitmapDatas = {};
-	//self.AI = new BattleCharacterAI(self);
+	self.AI = new BattleCharacterAI(self);
 	self.addShape(LShape.RECT,[0,0,BattleCharacterSize.width,BattleCharacterSize.height]);
 }
 BattleCharacterView.DEFAULT_IMG = "character-s-default";
@@ -31,12 +31,9 @@ BattleCharacterView.prototype.getBitmapData = function() {
 		var rowIndex = self.anime.rowIndex, colIndex = self.anime.colIndex;
 		var key = rowIndex+"_"+colIndex;
 		if(!self.bitmapDatas[key]){
-			//self.bitmapDatas[key] = new LBitmapData(null,0,0,BattleCharacterSize.width+160,BattleCharacterSize.height+160,LBitmapData.DATA_CANVAS);
-			self.bitmapDatas[key] = new LBitmapData(null,0,0,64,64,LBitmapData.DATA_CANVAS);
-			//TODO::128 alert("getBitmapData 1"+self.getWidth());
-			//self.bitmapDatas[key].draw(self,new LMatrix(-1));
-			console.log("self.anime.bitmap.bitmapData",self.anime.bitmap.bitmapData.x,self.anime.bitmap.bitmapData.y,self.anime.bitmap.bitmapData.width,self.anime.bitmap.bitmapData.height);
-			self.bitmapDatas[key].draw(self.anime.bitmap.bitmapData,new LMatrix(-1).translate(64,0));
+			var bitmapData = self.anime.bitmap.bitmapData.clone();
+			self.bitmapDatas[key] = new LBitmapData(null,0,0,bitmapData.width,bitmapData.height,LBitmapData.DATA_CANVAS);
+			self.bitmapDatas[key].draw(bitmapData,new LMatrix(-1).translate(bitmapData.width,0));
 		}
 		return self.bitmapDatas[key];
 	}else{
