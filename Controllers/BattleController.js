@@ -99,16 +99,16 @@ BattleController.prototype.mapMouseUp = function(event){
 		self.characterClick(event.selfX,event.selfY);
 		return;
 	}
-	//TODO::
-	return;
 	if(!self.view.roadLayer.hitTestPoint(event.offsetX,event.offsetY)){
 		self.notClickOnRoadLayer(event);
 		return;
 	}
+	//TODO::
+	/*
 	if(LSouSouObject.ctrlChara.mode == LSouSouCharacter.WAIT_ATTACK){
 		self.physicalAttack(event);
 		return;
-	}
+	}*/
 	self.clickOnRoadLayer(event);
 };
 BattleController.prototype.mapMouseDown = function(event){
@@ -180,6 +180,7 @@ BattleController.prototype.characterClick = function(cx,cy){
 };
 BattleController.prototype.clickSelfCharacter = function(chara){
 	var self = this;
+	chara.toStatic(false);
 	var path = self.query.makePath(chara);
 	self.view.roadLayer.setSelfMoveRoads(path);
 	self.view.roadLayer.addRangeAttack(chara);

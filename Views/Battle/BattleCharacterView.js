@@ -92,6 +92,9 @@ BattleCharacterView.prototype.toStatic = function(value){
 		if(result){
 			self.anime.visible = false;
 		}
+	}else{
+		self.controller.view.mapLayer.characterOut(self);
+		self.anime.visible = true;
 	}
 };
 BattleCharacterView.prototype.onframe = function(event){
