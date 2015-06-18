@@ -35,6 +35,7 @@ BattleCharacterView.prototype.getBitmapData = function() {
 			self.bitmapDatas[key] = new LBitmapData(null,0,0,64,64,LBitmapData.DATA_CANVAS);
 			//TODO::128 alert("getBitmapData 1"+self.getWidth());
 			//self.bitmapDatas[key].draw(self,new LMatrix(-1));
+			console.log("self.anime.bitmap.bitmapData",self.anime.bitmap.bitmapData.x,self.anime.bitmap.bitmapData.y,self.anime.bitmap.bitmapData.width,self.anime.bitmap.bitmapData.height);
 			self.bitmapDatas[key].draw(self.anime.bitmap.bitmapData,new LMatrix(-1).translate(64,0));
 		}
 		return self.bitmapDatas[key];
