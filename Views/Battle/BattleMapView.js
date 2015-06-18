@@ -68,10 +68,10 @@ BattleMapView.prototype.characterIn = function(chara){
 		return false;
 	}
 	var bitmapData = self.datas[0];
-	bitmapData.copyPixels(chara.anime.bitmap.bitmapData,new LRectangle(8,8,48,48),new LPoint(chara.x,chara.y));
+	bitmapData.copyPixels(chara.getBitmapData(),new LRectangle(8,8,48,48),new LPoint(chara.x,chara.y));
 	chara.anime.onframe();
 	bitmapData = self.datas[1];
-	bitmapData.copyPixels(chara.anime.bitmap.bitmapData,new LRectangle(8,8,48,48),new LPoint(chara.x,chara.y));
+	bitmapData.copyPixels(chara.getBitmapData(),new LRectangle(8,8,48,48),new LPoint(chara.x,chara.y));
 	return true;
 };
 BattleMapView.prototype.characterOut = function(chara){
