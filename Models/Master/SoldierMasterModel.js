@@ -53,8 +53,21 @@ SoldierMasterModel.prototype.equipment = function() {
 SoldierMasterModel.prototype.restrain = function() {
 	return this.data.restrain;
 };
-SoldierMasterModel.prototype.terrain = function() {
-	return this.data.terrain;
+SoldierMasterModel.prototype.terrain = function(terrainId) {
+	var self = this;
+	if(!self._terrains){
+		self._terrains = [];
+		for(var i=0;i<self.data.terrain.length;i++){
+			var child = self.data.terrain[i];
+			self._terrains[child.id] = child;
+		}
+	}
+	var terrainData = self._terrains[terrainId];
+	if(!terrainData){
+		terrainData = {"id": 1, "value": 110, "moveCost": 1};//{"addition":100,"cost":1};
+		self._terrains[terrainId] = terrainData;
+	}
+	return terrainData;
 };
 SoldierMasterModel.prototype.rangeAttack = function() {
 	return this.data.rangeAttack;

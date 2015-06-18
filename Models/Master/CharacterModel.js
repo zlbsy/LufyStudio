@@ -193,8 +193,8 @@ CharacterModel.prototype.soldiers = function() {
 	var self = this;
 	if(!self._soldiers){
 		self._soldiers = [];
-		for(var i=0;i<this.data.soldiers.length;i++){
-			var soldier = new SoldierModel(null, this.data.soldiers[i]);
+		for(var i=0;i<self.data.soldiers.length;i++){
+			var soldier = new SoldierModel(null, self.data.soldiers[i]);
 			self._soldiers.push(soldier);
 		}
 	}

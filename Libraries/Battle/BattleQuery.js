@@ -64,9 +64,9 @@ BattleQuery.prototype.makePath = function(chara){
 		}
 	}
 	self._starPoint = self._map[chara.locationY()][chara.locationX()];
-	var soldier = chara.data.currentSoldiers();
-	console.log("soldier=",soldier,soldier.master());
+	var soldier = self._chara.data.currentSoldiers();
 	self._starPoint.moveLong = soldier.movePower();
+	console.log("self._starPoint.moveLong = " + self._starPoint.moveLong);
 	self.loopPath(self._starPoint);
 	return self._path;
 };
@@ -88,9 +88,9 @@ BattleQuery.prototype.loopPath = function(thisPoint){
 		var checkPoint = checkList[i];
 		if(!checkPoint.moveLong)checkPoint.moveLong = 0;
 		if(checkPoint.isChecked && checkPoint.moveLong >= thisPoint.moveLong)continue;
-		//TODO::
-		//var cost = self._chara.member.getArms().terrain().cost;
-		var cost = 1;
+		var soldier = self._chara.data.currentSoldiers();
+		var cost = soldier.terrain(self._map[checkPoint.y][checkPoint.x].value).moveCost;
+		console.log("cost = " + cost,soldier.terrain(self._map[checkPoint.y][checkPoint.x].value));
 		cost += self._enemyCost[checkPoint.x + "-" + checkPoint.y] != null && self._enemyCost[checkPoint.x + "-" + checkPoint.y] != "all" ? self._enemyCost[checkPoint.x + "-" + checkPoint.y]:0;
 		checkPoint.moveLong = thisPoint.moveLong - cost;
 		if (self._enemyCost[checkPoint.x + "-" + checkPoint.y] == "all" && checkPoint.moveLong > 1)checkPoint.moveLong = 1;
