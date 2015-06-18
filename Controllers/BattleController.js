@@ -17,7 +17,7 @@ BattleController.prototype.mvcLoad=function(){
 };
 BattleController.prototype.configLoad=function(){
 	var self = this;
-	self.load.config(["Character"],self.libraryLoad);
+	self.load.config(["Soldiers","Character"],self.libraryLoad);
 };
 BattleController.prototype.libraryLoad=function(){
 	var self = this;
@@ -48,11 +48,13 @@ BattleController.prototype.globalFilesLoad = function(){
 };
 BattleController.prototype.init = function(){
 	var self = this;
+	SoldierMasterModel.setMaster(SoldierDatas);
 	self.queryInit();
 	LMvc.keepLoading(false);
 	self.fromController.view.parent.addChild(self.view);
 	self.fromController.view.remove();
 	LMvc.CityController = null;
+	LMvc.BattleController = self;
 	console.log("BattleController.prototype.init -- start --");
 	self.dispatchEvent(LEvent.COMPLETE);
 	self.dispatchEvent(LController.NOTIFY);
@@ -162,17 +164,16 @@ BattleController.prototype.notClickOnRoadLayer = function(event){
 BattleController.prototype.characterClick = function(cx,cy){
 	var self = this;
 	var chara = self.view.charaLayer.getCharacterFromCoordinate(cx,cy);
-	alert(chara);
-	return;
 	switch(chara.belong){
-		case LSouSouObject.BELONG_SELF:
-			LSouSouObject.ctrlChara = chara;
-			LSouSouObject.ctrlChara.AI.setEvent();
+		case CharacterConfig.BELONG_SELF:
+			BattleController.ctrlChara = chara;
+			//TODO::
+			//BattleController.ctrlChara.AI.setEvent();
 			self.clickSelfCharacter(chara);
 			break;
-		case LSouSouObject.BELONG_FRIEND:
+		case CharacterConfig.BELONG_FRIEND:
 			break;
-		case LSouSouObject.BELONG_ENEMY:
+		case CharacterConfig.BELONG_ENEMY:
 			break;
 	}
 };
@@ -181,5 +182,6 @@ BattleController.prototype.clickSelfCharacter = function(chara){
 	var path = self.query.makePath(chara);
 	self.view.roadLayer.setSelfMoveRoads(path);
 	self.view.roadLayer.addRangeAttack(chara);
-	LSouSouObject.ctrlChara.saveShowMoveRoadObject();
+	//TODO::
+	//LSouSouObject.ctrlChara.saveShowMoveRoadObject();
 };

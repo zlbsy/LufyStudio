@@ -30,9 +30,9 @@ BattleQuery.prototype.makePath = function(chara){
 	self.setStart();
 	self._enemyCost = {};
 	var thisChara;
-	if(chara.belong == LSouSouObject.BELONG_SELF || chara.belong == LSouSouObject.BELONG_FRIEND){
-		for(var i=0;i<LSouSouObject.SouSouSMap.model.enemyList.length;i++){
-			thisChara = LSouSouObject.SouSouSMap.model.enemyList[i];
+	if(chara.belong == CharacterConfig.BELONG_SELF || chara.belong == CharacterConfig.BELONG_FRIEND){
+		for(var i=0;i<LMvc.BattleController.model.enemyList.length;i++){
+			thisChara = LMvc.BattleController.model.enemyList[i];
 			if(thisChara.visible){
 				self._enemyCost[thisChara.locationX() + "-" + thisChara.locationY()] = 255;
 				self.setPathAll((thisChara.locationX() - 1) , thisChara.locationY() , -1);
@@ -41,9 +41,9 @@ BattleQuery.prototype.makePath = function(chara){
 				self.setPathAll(thisChara.locationX() , (thisChara.locationY() + 1) , -1);
 			}
 		}
-	}else if(chara.belong == LSouSouObject.BELONG_ENEMY){
-		for(var i=0;i<LSouSouObject.SouSouSMap.model.ourList.length;i++){
-			thisChara = LSouSouObject.SouSouSMap.model.ourList[i];
+	}else if(chara.belong == CharacterConfig.BELONG_ENEMY){
+		for(var i=0;i<LMvc.BattleController.model.ourList.length;i++){
+			thisChara = LMvc.BattleController.model.ourList[i];
 			if(thisChara.visible){
 				self._enemyCost[thisChara.locationX() + "-" + thisChara.locationY()] = 255;
 				self.setPathAll((thisChara.locationX() - 1) , thisChara.locationY() , -1);
@@ -52,8 +52,8 @@ BattleQuery.prototype.makePath = function(chara){
 				self.setPathAll(thisChara.locationX() , (thisChara.locationY() + 1) , -1);
 			}
 		}
-		for(var i=0;i<LSouSouObject.SouSouSMap.model.friendList.length;i++){
-			thisChara = LSouSouObject.SouSouSMap.model.friendList[i];
+		for(var i=0;i<LMvc.BattleController.model.friendList.length;i++){
+			thisChara = LMvc.BattleController.model.friendList[i];
 			if(thisChara.visible){
 				self._enemyCost[thisChara.locationX() + "-" + thisChara.locationY()] = 255;
 				self.setPathAll((thisChara.locationX() - 1) , thisChara.locationY() , -1);
@@ -64,8 +64,9 @@ BattleQuery.prototype.makePath = function(chara){
 		}
 	}
 	self._starPoint = self._map[chara.locationY()][chara.locationX()];
-	var arms = chara.member.getArms();
-	self._starPoint.moveLong = arms.distance();
+	var soldier = chara.data.currentSoldiers();
+	console.log("soldier=",soldier,soldier.master());
+	self._starPoint.moveLong = soldier.movePower();
 	self.loopPath(self._starPoint);
 	return self._path;
 };
@@ -87,7 +88,9 @@ BattleQuery.prototype.loopPath = function(thisPoint){
 		var checkPoint = checkList[i];
 		if(!checkPoint.moveLong)checkPoint.moveLong = 0;
 		if(checkPoint.isChecked && checkPoint.moveLong >= thisPoint.moveLong)continue;
-		var cost = self._chara.member.getArms().terrain().cost;
+		//TODO::
+		//var cost = self._chara.member.getArms().terrain().cost;
+		var cost = 1;
 		cost += self._enemyCost[checkPoint.x + "-" + checkPoint.y] != null && self._enemyCost[checkPoint.x + "-" + checkPoint.y] != "all" ? self._enemyCost[checkPoint.x + "-" + checkPoint.y]:0;
 		checkPoint.moveLong = thisPoint.moveLong - cost;
 		if (self._enemyCost[checkPoint.x + "-" + checkPoint.y] == "all" && checkPoint.moveLong > 1)checkPoint.moveLong = 1;
@@ -97,7 +100,7 @@ BattleQuery.prototype.loopPath = function(thisPoint){
 BattleQuery.prototype.setStart = function(){
 	var self=this,node;
 	self.callParent("setStart",arguments);
-	var roadList = LSouSouObject.SouSouSMap.view.roadLayer.roadList;
+	var roadList = LMvc.BattleController.view.roadLayer.roadList;
 	if(!roadList)return;
 	for(var i=0;i<roadList.length;i++){
 		node = roadList[i];

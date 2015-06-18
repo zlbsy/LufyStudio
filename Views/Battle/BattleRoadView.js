@@ -14,16 +14,16 @@ function BattleRoadView(controller){
 BattleRoadView.prototype.setSelfMoveRoads = function(nodes){
 	var self = this;
 	self.clear();
-	self.belong = LSouSouObject.BELONG_SELF;
+	self.belong = CharacterConfig.BELONG_SELF;
 	self.roadList = nodes;
 	self.setRoads(nodes, self.blueData);
 };
 BattleRoadView.prototype.setRangeAttack = function(chara){
-	var self = this,arms,ranges,range,x,y,nodes = [];
+	var self = this,solider,ranges,range,x,y,nodes = [];
 	x = chara.locationX();
 	y = chara.locationY();
-	arms = chara.member.getArms();
-	ranges = arms.rangeAttack();
+	solider = chara.data.currentSoldiers();
+	ranges = solider.rangeAttack();
 	for(var i=0;i<ranges.length;i++){
 		range = ranges[i];
 		nodes.push(new LPoint(x + range[0],y + range[1]));
@@ -31,11 +31,11 @@ BattleRoadView.prototype.setRangeAttack = function(chara){
 	self.setRoads(nodes, self.redData);
 };
 BattleRoadView.prototype.addRangeAttack = function(chara){
-	var self = this,arms,ranges,range,x,y,nodes = [];
+	var self = this,solider,ranges,range,x,y,nodes = [];
 	x = chara.locationX();
 	y = chara.locationY();
-	arms = chara.member.getArms();
-	ranges = arms.rangeAttack();
+	solider = chara.data.currentSoldiers();
+	ranges = solider.rangeAttack();
 	for(var i=0;i<ranges.length;i++){
 		range = ranges[i];
 		nodes.push(new LPoint(x + range[0],y + range[1]));
