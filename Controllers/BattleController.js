@@ -12,8 +12,8 @@ BattleController.prototype.construct=function(){
 };
 BattleController.prototype.mvcLoad=function(){
 	var self = this;
-	//self.loadMvc(["sousou/SMap/SouSouSMapSelectMenu"],self.libraryLoad);
-	self.configLoad();
+	self.loadMvc(["BattleSelectMenu"],self.configLoad);
+	//self.configLoad();
 };
 BattleController.prototype.configLoad=function(){
 	var self = this;

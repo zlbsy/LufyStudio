@@ -3,8 +3,8 @@ function BattleSelectMenuController(){
 }
 BattleSelectMenuController.prototype.construct=function(){
 	var self = this;
-	self.addEventListener(BattleSelectMenuController.ATTACK,self.attack);
-	self.addEventListener(BattleSelectMenuController.CANCEL,self.cancel);
+	self.addEventListener(BattleSelectMenuEvent.ATTACK,self.attack);
+	self.addEventListener(BattleSelectMenuEvent.CANCEL,self.cancel);
 };
 BattleSelectMenuController.instance = function(){
 	if(!BattleSelectMenuController._instance){
@@ -19,10 +19,10 @@ BattleSelectMenuController.instance = function(){
 	return BattleSelectMenuController._instance;
 };
 BattleSelectMenuController.prototype.show = function(){
-	this.view.show();
+	this.dispatchEvent(BattleSelectMenuEvent.SELECT_MENU_SHOW);
 };
 BattleSelectMenuController.prototype.hide = function(eventString){
-	this.view.hide(eventString);
+	this.dispatchEvent(BattleSelectMenuEvent.SELECT_MENU_HIDDEN);
 };
 BattleSelectMenuController.prototype.click = function(event){
 	event.currentTarget.hide(event.target.name);

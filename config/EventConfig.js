@@ -20,3 +20,5 @@ BattleCharacterEvent.WAIT_SELECT = "waitSelect";
 var BattleSelectMenuEvent = {};
 BattleSelectMenuEvent.ATTACK = "attack";
 BattleSelectMenuEvent.CANCEL = "cancel";
+BattleSelectMenuEvent.SELECT_MENU_SHOW = "select_menu_show";
+BattleSelectMenuEvent.SELECT_MENU_HIDDEN = "select_menu_hidden";
