@@ -16,3 +16,7 @@ BattleCharacterEvent.SHOW_MOVE_ROAD = "showMoveRoad";
 BattleCharacterEvent.MOVING = "moving";
 BattleCharacterEvent.WAIT_ATTACK = "waitAttack";
 BattleCharacterEvent.WAIT_SELECT = "waitSelect";
+
+var BattleSelectMenuEvent = {};
+BattleSelectMenuEvent.ATTACK = "attack";
+BattleSelectMenuEvent.CANCEL = "cancel";

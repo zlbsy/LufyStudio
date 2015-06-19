@@ -26,7 +26,7 @@ BattleRoadView.prototype.setRangeAttack = function(chara){
 	ranges = solider.rangeAttack();
 	for(var i=0;i<ranges.length;i++){
 		range = ranges[i];
-		nodes.push(new LPoint(x + range[0],y + range[1]));
+		nodes.push(new LPoint(x + parseInt(range[0]),y + parseInt(range[1])));
 	}
 	self.setRoads(nodes, self.redData);
 };
@@ -38,7 +38,7 @@ BattleRoadView.prototype.addRangeAttack = function(chara){
 	ranges = solider.rangeAttack();
 	for(var i=0;i<ranges.length;i++){
 		range = ranges[i];
-		nodes.push(new LPoint(x + range[0],y + range[1]));
+		nodes.push(new LPoint(x + range.x,y + range.y));
 	}
 	self.setRoads(nodes, self.redRange);
 };

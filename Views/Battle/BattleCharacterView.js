@@ -127,12 +127,12 @@ BattleCharacterView.prototype.setActionDirection = function(action, direction) {
 		self.addAnimation();
 	}
 
-	var label;
-	if (action == CharacterAction.HERT || action == CharacterAction.WAKE || action == CharacterAction.PANT || action == CharacterAction.LEVELUP) {
+	var label = action + "-" + direction;
+	/*if (action == CharacterAction.HERT || action == CharacterAction.WAKE || action == CharacterAction.PANT || action == CharacterAction.LEVELUP) {
 		label = action;
 	} else {
 		label = action + "-" + direction;
-	}
+	}*/
 	self.anime.gotoAndPlay(label);
 	self.action = action;
 	self.direction = direction;
@@ -140,24 +140,24 @@ BattleCharacterView.prototype.setActionDirection = function(action, direction) {
 BattleCharacterView.prototype.setRoad = function(list){
 	var self = this;
 	self.callParent("setRoad",arguments);
-	self.mode = BattleCharacter.MOVING;
-	self.dispatchEvent(BattleCharacter.MOVING);
+	self.mode = BattleCharacterEvent.MOVING;
+	self.dispatchEvent(BattleCharacterEvent.MOVING);
 };
 BattleCharacterView.prototype.setRangeAttack = function(){
 	var self = this;
-	LSouSouObject.SouSouSMap.view.roadLayer.setRangeAttack(self);
-	self.mode = BattleCharacter.WAIT_ATTACK;
-	self.dispatchEvent(BattleCharacter.WAIT_ATTACK);
+	LMvc.BattleController.view.roadLayer.setRangeAttack(self);
+	self.mode = BattleCharacterEvent.WAIT_ATTACK;
+	self.dispatchEvent(BattleCharacterEvent.WAIT_ATTACK);
 };
 BattleCharacterView.prototype.saveShowMoveRoadObject = function(roadList) {
 	var self = this;
-	self.mode = BattleCharacter.SHOW_MOVE_ROAD;
+	self.mode = BattleCharacterEvent.SHOW_MOVE_ROAD;
 	self.showMoveRoadObject = {x:self.x,y:self.y,action:self.action,direction:self.direction,roadList:roadList};
 };
 BattleCharacterView.prototype.returnShowMoveRoadObject = function() {
 	var self = this;
 	self.setCoordinate(self.showMoveRoadObject.x,self.showMoveRoadObject.y);
 	self.setActionDirection(self.action,self.direction);
-	LSouSouObject.SouSouSMap.clickSelfCharacter(self);
-	self.dispatchEvent(BattleCharacter.SHOW_MOVE_ROAD);
+	LMvc.BattleController.clickSelfCharacter(self);
+	self.dispatchEvent(BattleCharacterEvent.SHOW_MOVE_ROAD);
 };
