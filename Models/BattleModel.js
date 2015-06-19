@@ -33,8 +33,8 @@ BattleModel.prototype.getImages=function(){
 	var self = this;
 	var list = [];
 	/*list.push({name:"talkbox",path:LMvc.IMG_PATH+"common/talkbox.png"});
-	list.push({name:"sMenu",path:LMvc.IMG_PATH+"sousou/menu.png"});
-	list.push({name:"openmenu",path:LMvc.IMG_PATH+"menu/openmenu.png"});*/
+	list.push({name:"sMenu",path:LMvc.IMG_PATH+"sousou/menu.png"});*/
+	list.push({name:"battle-menu",path:LMvc.IMG_PATH+"battle/menu.png"});
 	list.push({name:"rect",path:LMvc.IMG_PATH+"battle/rect.png"});
 	list.push({name:"character-s-default",path:LMvc.IMG_PATH+"character/s/default.png"});
 	list.push({name:"img-small",path:LMvc.IMG_PATH+"smap/" + self.map["img-small"]});

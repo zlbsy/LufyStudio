@@ -3,6 +3,21 @@ function getBitmap(displayObject){
 	bitmapData.draw(displayObject);
 	return new LBitmap(bitmapData);
 }
+function getIconButton(icon, rect, text,width,img){
+	if(typeof img == UNDEFINED){
+		img = "win01";
+	}
+	var bitmapWin = new LPanel(new LBitmapData(LMvc.datalist[img]),width,50);
+	var bitmapIcon = new LBitmap(new LBitmapData(LMvc.datalist[icon],rect.x,rect.y,rect.width,rect.height));
+	bitmapIcon.x = 10;
+	bitmapIcon.y = (50 - bitmapIcon.getHeight()) * 0.5;
+	bitmapWin.addChild(bitmapIcon);
+	var textLabel = getStrokeLabel(text,18,"#FFFFFF","#000000",3);
+	textLabel.x = bitmapIcon.getHeight() + (width - bitmapIcon.x - bitmapIcon.getHeight() - textLabel.getWidth()) * 0.5;
+	textLabel.y = (50 - textLabel.getHeight()) * 0.5;
+	bitmapWin.addChild(textLabel);
+	return new LButton(getBitmap(bitmapWin));
+}
 function getButton(text,width,img){
 	if(typeof img == UNDEFINED){
 		img = "win01";

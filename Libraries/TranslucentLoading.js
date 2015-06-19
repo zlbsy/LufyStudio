@@ -8,10 +8,18 @@ function TranslucentLoading(data){
 	s.addChild(background);
 	s.addEventListener(LMouseEvent.MOUSE_DOWN, function(){});
 	s.addEventListener(LMouseEvent.MOUSE_UP, function(){});
-	var loadingData = new LBitmapData(LMvc.datalist["common-loading"]);
-	var anime = new LAnimationTimeline(loadingData,LGlobal.divideCoordinate(loadingData.width,loadingData.height,1,loadingData.width/loadingData.height >>> 0));
-	anime.x = (LGlobal.width - loadingData.height)*0.5;
-	anime.y = (LGlobal.height - loadingData.height)*0.5;
-	s.addChild(anime);
+	var bitmap = new LBitmap(new LBitmapData(LMvc.datalist["common-loading"]));
+	bitmap.x = -bitmap.getWidth()*0.5;
+	bitmap.y = -bitmap.getHeight()*0.5;
+	s.layer = new LSprite();
+	s.addChild(s.layer);
+	s.layer.addChild(bitmap);
+	s.layer.x = LGlobal.width * 0.5;
+	s.layer.y = LGlobal.height * 0.5;
+	s.addEventListener(LEvent.ENTER_FRAME,s.onframe);
 }
 TranslucentLoading.prototype.setProgress = function (value){};
+TranslucentLoading.prototype.onframe = function(event){
+	var self = event.currentTarget;
+	self.layer.rotate += 10;
+};
