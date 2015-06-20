@@ -8,7 +8,7 @@ CityController.prototype.construct=function(){
 };
 CityController.prototype.configLoad=function(){
 	var self = this;
-	self.load.config(["Arms","Belong","CharacterListType","ArmListType"],self.modelLoad);
+	self.load.config(["Arms","Belong","CharacterListType","ArmListType","BattleMap"],self.modelLoad);
 };
 CityController.prototype.modelLoad=function(){
 	var self = this;
