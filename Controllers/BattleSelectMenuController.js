@@ -12,8 +12,6 @@ BattleSelectMenuController.instance = function(){
 		selectMenuInstance.baseView = LMvc.BattleController.view;
 		LMvc.BattleController.view.parent.addChild(selectMenuInstance.view);
 		selectMenuInstance.view.visible = false;
-		selectMenuInstance.view.x = LGlobal.width * 0.5;
-		selectMenuInstance.view.y = LGlobal.height * 0.5;
 		BattleSelectMenuController._instance = selectMenuInstance;
 	}
 	return BattleSelectMenuController._instance;
