@@ -14,12 +14,29 @@ BattleCharacterAI.prototype.physicalAttack = function(target) {
 	console.log("LSouSouCharacterAI.prototype.physicalAttack");
 	self.target = target;
 	var direction = self.getDirectionFromTarget(target);
+	
 	self.chara.setActionDirection(CharacterAction.ATTACK, direction);
+	self.chara.addEventListener(BattleCharacterEvent.ATTACK_ACTION_COMPLETE,self.attackActionComplete);
 };
-BattleCharacterAI.prototype.getDirectionFromTarget = function(target) {
+BattleCharacterAI.prototype.attackActionComplete = function(event) {
+	var chara = event.currentTarget;
+	var self = chara.AI;
+	chara.removeEventListener(BattleCharacterEvent.ATTACK_ACTION_COMPLETE,self.attackActionComplete);
+	chara.changeAction(CharacterAction.STAND);
+	self.target.toStatic(false);
+	self.target.changeAction(CharacterAction.HERT);
+	self.target.addEventListener(BattleCharacterEvent.HERT_ACTION_COMPLETE,self.target.AI.hertActionComplete);
+};
+BattleCharacterAI.prototype.hertActionComplete = function(event) {
+	var chara = event.currentTarget;
+	var self = chara.AI;
+	chara.changeAction(CharacterAction.STAND);
+	self.chara.toStatic(true);
+};
+BattleCharacterAI.prototype.getDirectionFromTarget = function() {
 	var self = this, direction = self.chara.direction;
 	var coordinate = self.chara.getTo();
-	var coordinateTo = target.getTo();
+	var coordinateTo = self.target.getTo();
 	var angle = Math.atan2(coordinateTo[1] - coordinate[1],coordinateTo[0] - coordinate[0])*180/Math.PI + 180;
 	if(angle < 22.5 || angle > 337.5){
 		direction = CharacterDirection.LEFT;

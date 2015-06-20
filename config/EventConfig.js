@@ -16,6 +16,8 @@ BattleCharacterEvent.SHOW_MOVE_ROAD = "showMoveRoad";
 BattleCharacterEvent.MOVING = "moving";
 BattleCharacterEvent.WAIT_ATTACK = "waitAttack";
 BattleCharacterEvent.WAIT_SELECT = "waitSelect";
+BattleCharacterEvent.ATTACK_ACTION_COMPLETE = "attackActionComplete";
+BattleCharacterEvent.HERT_ACTION_COMPLETE = "hertActionComplete";
 
 var BattleSelectMenuEvent = {};
 BattleSelectMenuEvent.ATTACK = "attack";

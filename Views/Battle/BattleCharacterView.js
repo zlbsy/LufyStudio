@@ -14,14 +14,14 @@ BattleCharacterView.getAnimationData = function(){
 		// 1792 x 64
 		var list = LGlobal.divideCoordinate(1792, 64, 1, 28);
 		BattleCharacterView._animationData = [
-			[list[0][0],list[0][1],list[0][2],list[0][3]],
-			[list[0][4],list[0][5],list[0][6],list[0][7]],
-			[list[0][8],list[0][9],list[0][10],list[0][11]],
+			[list[0][0],list[0][1],list[0][2],list[0][3],list[0][3]],
+			[list[0][4],list[0][5],list[0][6],list[0][7],list[0][7]],
+			[list[0][8],list[0][9],list[0][10],list[0][11],list[0][11]],
 			[list[0][12],list[0][13]],[list[0][14],list[0][15]],[list[0][16],list[0][17]],
 			[list[0][18]],[list[0][19]],[list[0][20]],
 			[list[0][21],list[0][22]],
 			[list[0][23]],[list[0][24]],[list[0][25]],
-			[list[0][26],list[0][27]],
+			[list[0][26],list[0][26]],[list[0][27]],
 		];
 	}
 	return BattleCharacterView._animationData;
@@ -47,6 +47,9 @@ BattleCharacterView.prototype.addAnimation = function() {
 	self.anime = new LAnimationTimeline(bitmapData, BattleCharacterView.getAnimationData());
 	self.anime.speed = BattleMapConfig.SPEED;
 	self.layer.addChild(self.anime);
+	self.anime.addEventListener(LEvent.COMPLETE, self.actionComplete);
+	self.anime.addEventListener(LEvent.COMPLETE_START, self.actionCompleteStart);
+	
 	self.setAnimationLabel();
 	
 	var img = self.data.currentSoldiers().img();
@@ -95,12 +98,10 @@ BattleCharacterView.prototype.setAnimationLabel = function() {
 	anime.setLabel(String.format("{0}-{1}",CharacterAction.LEVELUP,CharacterDirection.RIGHT),14,0,1,false);
 };
 BattleCharacterView.prototype.loadSOver = function(event){
-	console.log("BattleCharacterView.prototype.loadSOver");
 	var self = event.currentTarget.parent;
 	var animeBitmapData = self.anime.bitmap.bitmapData;
 	var bitmapData = new LBitmapData(event.target,animeBitmapData.x,animeBitmapData.y,animeBitmapData.width,animeBitmapData.height);
 	self.anime.bitmap.bitmapData = bitmapData;
-	//self.anime.onframe();
 	self.toStatic(true);
 };
 BattleCharacterView.prototype.toStatic = function(value){
@@ -127,11 +128,33 @@ BattleCharacterView.prototype.setActionDirection = function(action, direction) {
 	if (!self.anime) {
 		self.addAnimation();
 	}
-
+	self.anime._send_complete = false;
 	var label = action + "-" + direction;
 	self.anime.gotoAndPlay(label);
 	self.action = action;
 	self.direction = direction;
+};
+BattleCharacterView.prototype.actionComplete = function(event){
+	var self = event.currentTarget.parent.parent;
+	switch(self.action){
+		case CharacterAction.ATTACK:
+			//self.dispatchEvent(BattleCharacterEvent.ATTACK_ACTION_COMPLETE);
+			break;
+		case CharacterAction.HERT:
+			self.dispatchEvent(BattleCharacterEvent.HERT_ACTION_COMPLETE);
+			break;
+	}
+};
+BattleCharacterView.prototype.actionCompleteStart = function(event){
+	var self = event.currentTarget.parent.parent;
+	switch(self.action){
+		case CharacterAction.ATTACK:
+			self.dispatchEvent(BattleCharacterEvent.ATTACK_ACTION_COMPLETE);
+			break;
+		case CharacterAction.HERT:
+			//self.dispatchEvent(BattleCharacterEvent.HERT_ACTION_COMPLETE);
+			break;
+	}
 };
 BattleCharacterView.prototype.setRoad = function(list){
 	var self = this;
