@@ -3,7 +3,7 @@ function BattleMapView(controller){
 	LExtends(self,LView,[controller]);
 	self.loadMapComplete = false;
 	self.staticCharacters = [];
-	self.speed = 5;
+	self.speed = BattleMapConfig.SPEED;
 	self._speed = 0;
 };
 BattleMapView.prototype.setSmall = function(data){

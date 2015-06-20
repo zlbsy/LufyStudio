@@ -44,7 +44,7 @@ BattleCharacterView.prototype.addAnimation = function() {
 	var self = this;
 	var bitmapData = new LBitmapData(LMvc.datalist[BattleCharacterView.DEFAULT_IMG]);
 	self.anime = new LAnimationTimeline(bitmapData, BattleCharacterView.getAnimationData());
-	self.anime.speed = 5;
+	self.anime.speed = BattleMapConfig.SPEED;
 	self.layer.addChild(self.anime);
 	self.setAnimationLabel();
 	
@@ -128,11 +128,6 @@ BattleCharacterView.prototype.setActionDirection = function(action, direction) {
 	}
 
 	var label = action + "-" + direction;
-	/*if (action == CharacterAction.HERT || action == CharacterAction.WAKE || action == CharacterAction.PANT || action == CharacterAction.LEVELUP) {
-		label = action;
-	} else {
-		label = action + "-" + direction;
-	}*/
 	self.anime.gotoAndPlay(label);
 	self.action = action;
 	self.direction = direction;
