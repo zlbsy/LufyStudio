@@ -1,6 +1,7 @@
 function BattleCharacterView(controller, id, w, h) {
 	var self = this;
 	LExtends(self, CharacterView, [controller, id, w, h]);
+	self.step = self.moveStep = 4;
 	self.layer.x = self.layer.y = -8;
 	self.belong = null;
 	self.bitmapDatas = {};

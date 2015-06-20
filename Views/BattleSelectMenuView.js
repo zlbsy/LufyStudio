@@ -10,6 +10,11 @@ BattleSelectMenuView.prototype.close=function(event){
 	var self = event.currentTarget.parent;
 	self.closeSelectMenu();
 };
+BattleSelectMenuView.prototype.cancel=function(event){
+	var self = event.currentTarget.parent;
+	self.controller.dispatchEvent(BattleSelectMenuEvent.CANCEL);
+	self.closeSelectMenu();
+};
 BattleSelectMenuView.prototype.closeSelectMenu=function(){
 	this.visible = false;
 };
@@ -18,8 +23,8 @@ BattleSelectMenuView.prototype.layerInit=function(){
 	var translucentLayer = new LSprite();
 	translucentLayer.addShape(LShape.RECT,[0,0,LGlobal.width,LGlobal.height]);
 	self.addChild(translucentLayer);
-	translucentLayer.addEventListener(LMouseEvent.MOUSE_DOWN, this.onclick);
-	translucentLayer.addEventListener(LMouseEvent.MOUSE_UP, this.close);
+	translucentLayer.addEventListener(LMouseEvent.MOUSE_DOWN, self.onclick);
+	translucentLayer.addEventListener(LMouseEvent.MOUSE_UP, self.cancel);
 	
 	self.mainLayer = new LSprite();
 	self.addChild(self.mainLayer);

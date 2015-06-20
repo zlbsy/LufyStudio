@@ -79,10 +79,9 @@ BattleController.prototype.queryInit=function(){
 	self.query = new BattleQuery(self.model.map.data);
 };
 BattleController.prototype.mapMouseUp = function(event){
-	//TODO::
-	/*if(SouSouSMapSelectMenuController.instance().view.visible){
+	if(BattleSelectMenuController.instance().view.visible){
 		return;
-	}*/
+	}
 	var self = event.currentTarget.parent.controller;
 	/*if(LSouSouObject.talkLayer){
 		if(LSouSouObject.talkOver){
@@ -103,19 +102,16 @@ BattleController.prototype.mapMouseUp = function(event){
 		self.notClickOnRoadLayer(event);
 		return;
 	}
-	//TODO::
-	/*
-	if(LSouSouObject.ctrlChara.mode == LSouSouCharacter.WAIT_ATTACK){
+	if(BattleController.ctrlChara.mode == BattleCharacterEvent.WAIT_ATTACK){
 		self.physicalAttack(event);
 		return;
-	}*/
+	}
 	self.clickOnRoadLayer(event);
 };
 BattleController.prototype.mapMouseDown = function(event){
-	//TODO::
-	/*if(SouSouSMapSelectMenuController.instance().view.visible){
+	if(BattleSelectMenuController.instance().view.visible){
 		return;
-	}*/
+	}
 	var self = event.currentTarget.parent.controller;
 	/*if(LSouSouObject.talkLayer || LSouSouObject.runMode){
 		return;
@@ -126,12 +122,14 @@ BattleController.prototype.mapMouseDown = function(event){
 };
 BattleController.prototype.physicalAttack = function(event){
 	var self = event.currentTarget.parent.controller;
+	console.log("BattleController.prototype.physicalAttack ",self);
 	var chara = self.view.charaLayer.getCharacterFromCoordinate(event.selfX,event.selfY);
-	if(!chara || chara.belong != LSouSouObject.BELONG_ENEMY){
+	console.log("chara",chara);
+	if(!chara || chara.belong != CharacterConfig.BELONG_ENEMY){
 		return;
 	}
 	self.view.roadLayer.clear();
-	LSouSouObject.ctrlChara.AI.physicalAttack(chara);
+	BattleController.ctrlChara.AI.physicalAttack(chara);
 };
 BattleController.prototype.clickOnRoadLayer = function(event){
 	var self = event.currentTarget.parent.controller;
