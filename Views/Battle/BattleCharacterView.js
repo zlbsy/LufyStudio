@@ -21,7 +21,7 @@ BattleCharacterView.getAnimationData = function(){
 			[list[0][18]],[list[0][19]],[list[0][20]],
 			[list[0][21],list[0][22]],
 			[list[0][23]],[list[0][24]],[list[0][25]],
-			[list[0][26],list[0][26]],[list[0][27]],
+			[list[0][26]],[list[0][27]],
 		];
 	}
 	return BattleCharacterView._animationData;
@@ -41,16 +41,24 @@ BattleCharacterView.prototype.getBitmapData = function() {
 		return self.anime.bitmap.bitmapData;
 	}
 };
+BattleCharacterView.prototype.attackToHert = function(anime) {
+	var self = anime.parent.parent;
+	self.dispatchEvent(BattleCharacterActionEvent.ATTACK_ACTION_COMPLETE);
+};
 BattleCharacterView.prototype.addAnimation = function() {
 	var self = this;
 	var bitmapData = new LBitmapData(LMvc.datalist[BattleCharacterView.DEFAULT_IMG]);
 	self.anime = new LAnimationTimeline(bitmapData, BattleCharacterView.getAnimationData());
 	self.anime.speed = BattleMapConfig.SPEED;
 	self.layer.addChild(self.anime);
-	self.anime.addEventListener(LEvent.COMPLETE, self.actionComplete);
-	self.anime.addEventListener(LEvent.COMPLETE_START, self.actionCompleteStart);
-	
 	self.setAnimationLabel();
+	self.anime.setFrameSpeedAt(13,0,2);
+	
+	self.anime.addEventListener(LEvent.COMPLETE, self.actionComplete);
+	self.anime.addFrameScript(String.format("{0}-{1}",CharacterAction.ATTACK_START,CharacterDirection.DOWN),self.attackToHert,[]);
+	self.anime.addFrameScript(String.format("{0}-{1}",CharacterAction.ATTACK_START,CharacterDirection.UP),self.attackToHert,[]);
+	self.anime.addFrameScript(String.format("{0}-{1}",CharacterAction.ATTACK_START,CharacterDirection.LEFT),self.attackToHert,[]);
+	self.anime.addFrameScript(String.format("{0}-{1}",CharacterAction.ATTACK_START,CharacterDirection.RIGHT),self.attackToHert,[]);
 	
 	var img = self.data.currentSoldiers().img();
 	var loader = new LLoader();
@@ -66,6 +74,11 @@ BattleCharacterView.prototype.setAnimationLabel = function() {
 	anime.setLabel(String.format("{0}-{1}",CharacterAction.ATTACK,CharacterDirection.UP),1,0,1,false);
 	anime.setLabel(String.format("{0}-{1}",CharacterAction.ATTACK,CharacterDirection.LEFT),2,0,1,false);
 	anime.setLabel(String.format("{0}-{1}",CharacterAction.ATTACK,CharacterDirection.RIGHT),2,0,1,true);
+	
+	anime.setLabel(String.format("{0}-{1}",CharacterAction.ATTACK_START,CharacterDirection.DOWN),0,3,1,false);
+	anime.setLabel(String.format("{0}-{1}",CharacterAction.ATTACK_START,CharacterDirection.UP),1,3,1,false);
+	anime.setLabel(String.format("{0}-{1}",CharacterAction.ATTACK_START,CharacterDirection.LEFT),2,3,1,false);
+	anime.setLabel(String.format("{0}-{1}",CharacterAction.ATTACK_START,CharacterDirection.RIGHT),2,3,1,true);
 	//MOVE
 	anime.setLabel(String.format("{0}-{1}",CharacterAction.MOVE,CharacterDirection.DOWN),3,0,1,false);
 	anime.setLabel(String.format("{0}-{1}",CharacterAction.MOVE,CharacterDirection.UP),4,0,1,false);
@@ -137,40 +150,23 @@ BattleCharacterView.prototype.setActionDirection = function(action, direction) {
 BattleCharacterView.prototype.actionComplete = function(event){
 	var self = event.currentTarget.parent.parent;
 	switch(self.action){
-		case CharacterAction.ATTACK:
-			//self.dispatchEvent(BattleCharacterEvent.ATTACK_ACTION_COMPLETE);
-			break;
 		case CharacterAction.HERT:
-			self.dispatchEvent(BattleCharacterEvent.HERT_ACTION_COMPLETE);
-			break;
-	}
-};
-BattleCharacterView.prototype.actionCompleteStart = function(event){
-	var self = event.currentTarget.parent.parent;
-	switch(self.action){
-		case CharacterAction.ATTACK:
-			self.dispatchEvent(BattleCharacterEvent.ATTACK_ACTION_COMPLETE);
-			break;
-		case CharacterAction.HERT:
-			//self.dispatchEvent(BattleCharacterEvent.HERT_ACTION_COMPLETE);
+			self.dispatchEvent(BattleCharacterActionEvent.HERT_ACTION_COMPLETE);
 			break;
 	}
 };
 BattleCharacterView.prototype.setRoad = function(list){
 	var self = this;
 	self.callParent("setRoad",arguments);
-	self.mode = BattleCharacterEvent.MOVING;
-	self.dispatchEvent(BattleCharacterEvent.MOVING);
+	self.mode = CharacterMode.MOVING;
 };
 BattleCharacterView.prototype.setRangeAttack = function(){
 	var self = this;
 	LMvc.BattleController.view.roadLayer.setRangeAttack(self);
-	self.mode = BattleCharacterEvent.WAIT_ATTACK;
-	self.dispatchEvent(BattleCharacterEvent.WAIT_ATTACK);
+	self.mode = CharacterMode.WAIT_ATTACK;
 };
 BattleCharacterView.prototype.saveShowMoveRoadObject = function(roadList) {
 	var self = this;
-	self.mode = BattleCharacterEvent.SHOW_MOVE_ROAD;
 	self.showMoveRoadObject = {x:self.x,y:self.y,action:self.action,direction:self.direction,roadList:roadList};
 };
 BattleCharacterView.prototype.returnShowMoveRoadObject = function() {

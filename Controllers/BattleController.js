@@ -102,7 +102,7 @@ BattleController.prototype.mapMouseUp = function(event){
 		self.notClickOnRoadLayer(event);
 		return;
 	}
-	if(BattleController.ctrlChara.mode == BattleCharacterEvent.WAIT_ATTACK){
+	if(BattleController.ctrlChara.mode == CharacterMode.WAIT_ATTACK){
 		self.physicalAttack(event);
 		return;
 	}
@@ -122,9 +122,7 @@ BattleController.prototype.mapMouseDown = function(event){
 };
 BattleController.prototype.physicalAttack = function(event){
 	var self = event.currentTarget.parent.controller;
-	console.log("BattleController.prototype.physicalAttack ",self);
 	var chara = self.view.charaLayer.getCharacterFromCoordinate(event.selfX,event.selfY);
-	console.log("chara",chara);
 	if(!chara || chara.belong != CharacterConfig.BELONG_ENEMY){
 		return;
 	}
@@ -133,8 +131,12 @@ BattleController.prototype.physicalAttack = function(event){
 };
 BattleController.prototype.clickOnRoadLayer = function(event){
 	var self = event.currentTarget.parent.controller;
+	if(BattleController.ctrlChara.belong != CharacterConfig.BELONG_SELF){
+		Toast.makeText(String.format(Language.get("can_not_operating"), Language.get(BattleController.ctrlChara.belong))).show();
+		return;
+	}
 	var chara = self.view.charaLayer.getCharacterFromCoordinate(event.selfX,event.selfY);
-	if(chara){
+	if(chara && chara.id() != BattleController.ctrlChara.id()){
 		return;
 	}
 	chara = BattleController.ctrlChara;
@@ -148,6 +150,7 @@ BattleController.prototype.clickOnRoadLayer = function(event){
 	}
 };
 BattleController.prototype.notClickOnRoadLayer = function(event){
+	console.log("BattleController.prototype.notClickOnRoadLayer ",BattleController.ctrlChara.mode);
 	var self = event.currentTarget.parent.controller;
 	switch(BattleController.ctrlChara.mode){
 		case BattleCharacterEvent.SHOW_MOVE_ROAD:
@@ -163,15 +166,17 @@ BattleController.prototype.notClickOnRoadLayer = function(event){
 BattleController.prototype.characterClick = function(cx,cy){
 	var self = this;
 	var chara = self.view.charaLayer.getCharacterFromCoordinate(cx,cy);
+	BattleController.ctrlChara = chara;
 	switch(chara.belong){
 		case CharacterConfig.BELONG_SELF:
-			BattleController.ctrlChara = chara;
 			BattleController.ctrlChara.AI.setEvent();
 			self.clickSelfCharacter(chara);
 			break;
 		case CharacterConfig.BELONG_FRIEND:
+			self.clickOtherCharacter(chara);
 			break;
 		case CharacterConfig.BELONG_ENEMY:
+			self.clickOtherCharacter(chara);
 			break;
 	}
 };
@@ -179,7 +184,15 @@ BattleController.prototype.clickSelfCharacter = function(chara){
 	var self = this;
 	chara.toStatic(false);
 	var path = self.query.makePath(chara);
-	self.view.roadLayer.setSelfMoveRoads(path);
+	self.view.roadLayer.setMoveRoads(path, chara.belong);
 	self.view.roadLayer.addRangeAttack(chara);
+	chara.mode = CharacterMode.SHOW_MOVE_ROAD;
 	BattleController.ctrlChara.saveShowMoveRoadObject();
+};
+BattleController.prototype.clickOtherCharacter = function(chara){
+	var self = this;
+	var path = self.query.makePath(chara);
+	self.view.roadLayer.setMoveRoads(path, chara.belong);
+	self.view.roadLayer.addRangeAttack(chara);
+	chara.mode = CharacterMode.SHOW_MOVE_ROAD;
 };

@@ -71,6 +71,14 @@ LogoView.prototype.showMenu=function(){
 	buttonSetting.y = menuY;
 	menuLayer.addChild(buttonSetting);
 	
+	menuY += menuHeight;
+	var buttonTest = getButton("测试",200);
+	buttonTest.y = menuY;
+	menuLayer.addChild(buttonTest);
+	buttonTest.addEventListener(LMouseEvent.MOUSE_UP, function(){
+		self.controller.loadTest();
+	});
+	
 	menuY += menuHeight * 2;
 	menuLayer.y = LGlobal.height - menuY;
 	

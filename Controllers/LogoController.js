@@ -71,6 +71,21 @@ LogoController.prototype.chapterLoadComplete=function(){
 
 
 
+//TODO::削除予定
+LogoController.prototype.loadTest = function(){
+	var self = this;
+	LMvc.keepLoading(true);
+	LMvc.changeLoading(TranslucentLoading);
+	self.loadMvc("Test",self.testLoadComplete);
+};
+LogoController.prototype.testLoadComplete=function(){
+	var self = this;
+	self.view.visible = false;
+	var test = new TestController();
+	LMvc.stageLayer.addChild(test.view);
+};
+
+//TODO::削除予定
 LogoController.prototype.toLogin = function(nameText, passText){
 	var self = this;
 	LRequestUserLogin({"name":nameText,"pass":passText},self.loginCallback.bind(self));

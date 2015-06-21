@@ -4,19 +4,20 @@ function BattleRoadView(controller){
 	var map = self.model.map;
 	self.blueData = new LBitmapData(LMvc.datalist["rect"],0,0,self.model.stepWidth,self.model.stepHeight);
 	self.redData = new LBitmapData(LMvc.datalist["rect"],self.model.stepWidth,0,self.model.stepWidth,self.model.stepHeight);
+	self.greenData = new LBitmapData(LMvc.datalist["rect"],self.model.stepWidth*4,0,self.model.stepWidth,self.model.stepHeight);
 	self.redRange = new LBitmapData(LMvc.datalist["rect"],self.model.stepWidth*2,0,self.model.stepWidth,self.model.stepHeight);
+	self.blueRange = new LBitmapData(LMvc.datalist["rect"],self.model.stepWidth*3,0,self.model.stepWidth,self.model.stepHeight);
 	var bitmapData = new LBitmapData(null,0,0,map.width,map.height,LBitmapData.DATA_CANVAS);
 	self.bitmap = new LBitmap(bitmapData);
 	self.addChild(self.bitmap);
 	self.addEventListener(LEvent.ENTER_FRAME, self.onframe);
 	self.clear();
 }
-BattleRoadView.prototype.setSelfMoveRoads = function(nodes){
+BattleRoadView.prototype.setMoveRoads = function(nodes,belong){
 	var self = this;
 	self.clear();
-	self.belong = CharacterConfig.BELONG_SELF;
 	self.roadList = nodes;
-	self.setRoads(nodes, self.blueData);
+	self.setRoads(nodes, belong == CharacterConfig.BELONG_SELF ? self.blueData : self.greenData);
 };
 BattleRoadView.prototype.setRangeAttack = function(chara){
 	var self = this,solider,ranges,range,x,y,nodes = [];

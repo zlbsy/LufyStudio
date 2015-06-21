@@ -2,6 +2,7 @@ var CharacterAction = {
 	STAND:"stand",
 	MOVE:"move",
 	ATTACK:"attack",
+	ATTACK_START:"attack_start",
 	BLOCK:"block",
 	HERT:"hert",
 	WAKE:"wake",
@@ -26,3 +27,10 @@ var CharacterConfig = {
 	BELONG_ENEMY : "belong_enemy",
 	BELONG_FRIEND : "belong_friend"
 };
+var CharacterMode = {
+	SHOW_MOVE_ROAD : "showMoveRoad",
+	WAIT_ATTACK : "waitAttack",
+	MOVING : "moving",
+	END_ACTION : "endAction"
+};
+

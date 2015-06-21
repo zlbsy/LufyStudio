@@ -24,6 +24,11 @@ Language.data = {
 	"tab_status":"状态",
 	"tab_properties":"属性",
 	
+	"can_not_operating":"不可操作{0}",
+	"belong_self":"我军",
+	"belong_enemy":"敌军",
+	"belong_friend":"友军",
+	
 	"menu":"菜单",
 	"operating_end":"操作结束",
 	"game_save":"保存进度",

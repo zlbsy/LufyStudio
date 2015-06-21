@@ -29,11 +29,11 @@ function getButton(text,width,img){
 	bitmapWin.addChild(textLabel);
 	return new LButton(getBitmap(bitmapWin));
 }
-function getTranslucentBitmap(){
+function getTranslucentBitmap(width,height){
 	var backgroundData = new LBitmapData(LMvc.datalist["translucent"]);
 	var background = new LBitmap(backgroundData);
-	background.scaleX = LGlobal.width / backgroundData.width;
-	background.scaleY = LGlobal.height / backgroundData.height;
+	background.scaleX = (width ? width : LGlobal.width) / backgroundData.width;
+	background.scaleY = (height ? height : LGlobal.height) / backgroundData.height;
 	return background;
 }
 /**

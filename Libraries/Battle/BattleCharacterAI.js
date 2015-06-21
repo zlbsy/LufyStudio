@@ -5,7 +5,7 @@ function BattleCharacterAI(chara) {
 BattleCharacterAI.prototype.setEvent = function() {
 	var self = this;
 	self.chara.removeAllEventListener();
-	self.chara.addEventListener(BattleCharacterEvent.MOVE_COMPLETE,function(event){
+	self.chara.addEventListener(CharacterActionEvent.MOVE_COMPLETE,function(event){
 		BattleSelectMenuController.instance().show();
 	});
 };
@@ -16,16 +16,16 @@ BattleCharacterAI.prototype.physicalAttack = function(target) {
 	var direction = self.getDirectionFromTarget(target);
 	
 	self.chara.setActionDirection(CharacterAction.ATTACK, direction);
-	self.chara.addEventListener(BattleCharacterEvent.ATTACK_ACTION_COMPLETE,self.attackActionComplete);
+	self.chara.addEventListener(BattleCharacterActionEvent.ATTACK_ACTION_COMPLETE,self.attackActionComplete);
 };
 BattleCharacterAI.prototype.attackActionComplete = function(event) {
 	var chara = event.currentTarget;
 	var self = chara.AI;
-	chara.removeEventListener(BattleCharacterEvent.ATTACK_ACTION_COMPLETE,self.attackActionComplete);
+	chara.removeEventListener(BattleCharacterActionEvent.ATTACK_ACTION_COMPLETE,self.attackActionComplete);
 	chara.changeAction(CharacterAction.STAND);
 	self.target.toStatic(false);
 	self.target.changeAction(CharacterAction.HERT);
-	self.target.addEventListener(BattleCharacterEvent.HERT_ACTION_COMPLETE,self.target.AI.hertActionComplete);
+	self.target.addEventListener(BattleCharacterActionEvent.HERT_ACTION_COMPLETE,self.target.AI.hertActionComplete);
 };
 BattleCharacterAI.prototype.hertActionComplete = function(event) {
 	var chara = event.currentTarget;
