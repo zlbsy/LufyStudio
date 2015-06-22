@@ -1,20 +1,28 @@
 function BattleCharacterStatusView(controller, characterModel, belong){
 	var self = this;
 	LExtends(self,LView,[controller]);
-	self.set(characterModel, belong);
+	self.characterModel = characterModel;
+	self.belong = belong;
+	self.set();
 };
-BattleCharacterStatusView.prototype.set=function(characterModel, belong){
+BattleCharacterStatusView.HP = "HP";
+BattleCharacterStatusView.MP = "MP";
+BattleCharacterStatusView.SP = "SP";
+BattleCharacterStatusView.prototype.set=function(){
 	var self = this;
-	self.showCharacterStatus(characterModel, belong);
+	self.showCharacterStatus();
 };
-BattleCharacterStatusView.prototype.showCharacterStatus=function(characterModel, belong){
+BattleCharacterStatusView.prototype.showCharacterStatus=function(){
 	var self = this;
-	console.log("showCharacterStatus");
+	//alert("showCharacterStatus");
+	var statusLayer = new LSprite();
+	
+	var characterModel = self.characterModel, belong = self.belong;
 	var face = characterModel.face();
 	self.addChild(face);
 	
 	var layer = new LSprite();
-	self.addChild(layer);
+	
 	
 	var background = getTranslucentBitmap(195,107);
 	layer.addChild(background);
@@ -29,19 +37,25 @@ BattleCharacterStatusView.prototype.showCharacterStatus=function(characterModel,
 	soldier.y = 5;
 	layer.addChild(soldier);
 	
-	var hpStatus = self.getCharacterStatusChild(TestView.HP);
+	var hpStatus = new LSprite();
 	hpStatus.x = 10;
 	hpStatus.y = 30;
+	self.getCharacterStatusChild(BattleCharacterStatusView.HP, true, hpStatus);
+	
 	layer.addChild(hpStatus);
 	
-	var mpStatus = self.getCharacterStatusChild(TestView.MP);
+	var mpStatus = new LSprite();
 	mpStatus.x = 10;
 	mpStatus.y = 50;
+	self.getCharacterStatusChild(BattleCharacterStatusView.MP, true, mpStatus);
+	
 	layer.addChild(mpStatus);
 	
-	var spStatus = self.getCharacterStatusChild(TestView.SP);
+	var spStatus = new LSprite();
 	spStatus.x = 10;
 	spStatus.y = 70;
+	self.getCharacterStatusChild(BattleCharacterStatusView.SP, true, spStatus);
+	
 	layer.addChild(spStatus);
 	//belong
 	var lblBelong;
@@ -61,44 +75,62 @@ BattleCharacterStatusView.prototype.showCharacterStatus=function(characterModel,
 	lblTerrain.y = 88;
 	layer.addChild(lblTerrain);
 	
+	layer = getBitmap(layer);
+	
 	layer.y = 315 - layer.getHeight();
+	self.addChild(layer);
 };
-BattleCharacterStatusView.prototype.getCharacterStatusChild=function(mode){
-	var layer = new LSprite();
+BattleCharacterStatusView.prototype.getCharacterStatusChild=function(mode,isStatic,layer){
+	var self = this;
+//	var layer = new LSprite();
 	var bar_size = 150;
-	var icon, frontBar, label;
+	var icon, frontBar, label, value, maxValue, currentValue;
+	//alert(self.characterModel.troops);
 	switch(mode){
-		case TestView.HP:
+		case BattleCharacterStatusView.HP:
 			icon = "icon_hert";
 			frontBar = "red_bar";
 			label = "兵力";
+			maxValue = self.characterModel.maxTroops();
+			currentValue = self.characterModel.troops();
 			break;
-		case TestView.MP:
+		case BattleCharacterStatusView.MP:
 			icon = "yellow_ball";
 			frontBar = "yellow_bar";
 			label = "策略";
+			maxValue = self.characterModel.maxTroops();
+			currentValue = self.characterModel.troops();
 			break;
-		case TestView.SP:
+		case BattleCharacterStatusView.SP:
 			icon = "orange_ball";
 			frontBar = "orange_bar";
 			label = "体力";
+			maxValue = self.characterModel.maxTroops();
+			currentValue = self.characterModel.troops();
 			break;
 	}
-	var hertIcon = new LBitmap(new LBitmapData(LMvc.datalist[icon]));
+	var iconBitmapData = new LBitmapData(LMvc.datalist[icon]);
+	var hertIcon = new LBitmap(iconBitmapData);
 	hertIcon.scaleX = hertIcon.scaleY = 16 / hertIcon.getHeight();
 	layer.addChild(hertIcon);
 	var hpBack = new LPanel(new LBitmapData(LMvc.datalist["blue_bar"]),bar_size + 4,14);
 	hpBack.x = hertIcon.x + 20;
 	hpBack.y = hertIcon.y;
 	layer.addChild(hpBack);
-	var hpSize = bar_size * 0.6;
-	var hpIcon = new LPanel(new LBitmapData(LMvc.datalist[frontBar]),hpSize,10);
+	value = currentValue / maxValue;
+	value = value < 0.001 ? 0.001 : value;
+	var hpSize = bar_size * value;
+	var showSize = hpSize < iconBitmapData.width ? iconBitmapData.width : hpSize;
+	var hpIcon = new LPanel(new LBitmapData(LMvc.datalist[frontBar]),showSize,10);
+	if(hpSize < iconBitmapData.width){
+		hpIcon.scaleX = hpSize / showSize;
+	}
 	hpIcon.x = hpBack.x + bar_size - hpSize + 2;
 	hpIcon.y = hertIcon.y + 2;
 	layer.addChild(hpIcon);
-	var lblHp = getStrokeLabel(String.format("{0} {1}/{2} ",label,600,1000),14,"#FFFFFF","#000000",1);
+	var lblHp = getStrokeLabel(String.format("{0} {1}/{2} ",label,self.characterModel.troops(),self.characterModel.maxTroops()),14,"#FFFFFF","#000000",1);
 	lblHp.x = hertIcon.x + 15 + bar_size - lblHp.getWidth();
 	lblHp.y = hpBack.y + hpBack.getHeight() - lblHp.getHeight() - 5;
 	layer.addChild(lblHp);
-	return layer;
+//	return layer;
 };
