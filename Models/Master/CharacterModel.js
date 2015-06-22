@@ -2,6 +2,9 @@ function CharacterModel(controller, data) {
 	var self = this;
 	base(self, MyModel, [controller]);
 	self.data = data;
+	if(!self.data.maxPhysicalFitness){
+		self.data.physicalFitness = self.data.maxPhysicalFitness = 100;
+	}
 }
 CharacterModel.list = [];
 CharacterModel.setChara=function(list){
@@ -24,6 +27,12 @@ CharacterModel.getChara=function(chara_id){
 };
 CharacterModel.prototype.id = function() {
 	return this.data.id;
+};
+CharacterModel.prototype.physicalFitness = function(){
+	return this.data.physicalFitness;
+};
+CharacterModel.prototype.maxPhysicalFitness = function(){
+	return this.data.maxPhysicalFitness;
 };
 CharacterModel.prototype.name = function() {
 	return Language.getCharacter("character_"+this.data.id);
