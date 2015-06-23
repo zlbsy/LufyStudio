@@ -22,11 +22,11 @@ BattleController.prototype.configLoad=function(){
 BattleController.prototype.libraryLoad=function(){
 	var self = this;
 	//self.load.library(["sousou/character/LSouSouMember","sousou/character/LSouSouCharacter","sousou/character/LSouSouCharacterAI","sousou/Arms","character/Action","character/Character","character/Face","LStarQuery","window/WindowPanel","BitmapSprite","LSouSouSQuery"],self.helperLoad);
-	self.load.library(["LStarQuery","Battle/BattleQuery","Battle/BattleCharacterAI"],self.helperLoad);
+	self.load.library(["Num","LStarQuery","Battle/BattleQuery","Battle/BattleCharacterAI"],self.helperLoad);
 };
 BattleController.prototype.helperLoad=function(){
 	var self = this;
-	self.load.helper(["Talk"],self.modelLoad);
+	self.load.helper(["Talk","Hert"],self.modelLoad);
 };
 BattleController.prototype.modelLoad=function(){
 	var self = this;
@@ -61,7 +61,7 @@ BattleController.prototype.init = function(){
 	
 	self.addOurCharacter(1,CharacterAction.MOVE,CharacterDirection.DOWN,5,5);
 	self.addOurCharacter(2,CharacterAction.MOVE,CharacterDirection.UP,6,8);
-	self.addEnemyCharacter(3,CharacterAction.MOVE,CharacterDirection.LEFT,3,2);
+	self.addEnemyCharacter(3,CharacterAction.MOVE,CharacterDirection.LEFT,3,5);
 	self.addFriendCharacter(4,CharacterAction.MOVE,CharacterDirection.RIGHT,1,7);
 };
 BattleController.prototype.addOurCharacter=function(index,action,direction,x,y,callback){
@@ -136,12 +136,22 @@ BattleController.prototype.clickOnRoadLayer = function(event){
 		return;
 	}
 	var chara = self.view.charaLayer.getCharacterFromCoordinate(event.selfX,event.selfY);
-	if(chara && chara.id() != BattleController.ctrlChara.id()){
+	console.log(chara);
+	if(chara){
+		console.log("chara.data.id() = " + chara.data.id());
+		console.log("BattleController.ctrlChara.data.id() = " + BattleController.ctrlChara.data.id());
+	}
+	if(chara){
+		if(chara.data.id() == BattleController.ctrlChara.data.id()){
+			self.view.roadLayer.clear();
+			BattleController.ctrlChara.dispatchEvent(CharacterActionEvent.MOVE_COMPLETE);
+		}
 		return;
 	}
 	chara = BattleController.ctrlChara;
 		
 	var coordinate = chara.getTo();
+	console.log("coordinate=",coordinate);
 	var fx = coordinate[0] , fy = coordinate[1];
 	var returnList = self.query.queryPath(new LPoint(fx,fy),new LPoint(event.selfX/self.model.stepWidth >>> 0,event.selfY/self.model.stepHeight >>> 0));
 	if(returnList.length > 0){
@@ -153,13 +163,13 @@ BattleController.prototype.notClickOnRoadLayer = function(event){
 	console.log("BattleController.prototype.notClickOnRoadLayer ",BattleController.ctrlChara.mode);
 	var self = event.currentTarget.parent.controller;
 	switch(BattleController.ctrlChara.mode){
-		case BattleCharacterEvent.SHOW_MOVE_ROAD:
+		case CharacterMode.SHOW_MOVE_ROAD:
 			self.view.roadLayer.clear();
 			BattleController.ctrlChara.removeAllEventListener();
 			break;
-		case BattleCharacterEvent.WAIT_ATTACK:
+		case CharacterMode.WAIT_ATTACK:
 			self.view.roadLayer.clear();
-			BattleController.ctrlChara.dispatchEvent(BattleCharacterEvent.MOVE_COMPLETE);
+			BattleController.ctrlChara.dispatchEvent(CharacterActionEvent.MOVE_COMPLETE);
 			break;
 	}
 };

@@ -174,5 +174,5 @@ BattleCharacterView.prototype.returnShowMoveRoadObject = function() {
 	self.setCoordinate(self.showMoveRoadObject.x,self.showMoveRoadObject.y);
 	self.setActionDirection(self.action,self.direction);
 	LMvc.BattleController.clickSelfCharacter(self);
-	self.dispatchEvent(BattleCharacterEvent.SHOW_MOVE_ROAD);
+	//self.dispatchEvent(BattleCharacterEvent.SHOW_MOVE_ROAD);
 };

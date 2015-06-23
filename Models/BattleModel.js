@@ -38,6 +38,9 @@ BattleModel.prototype.getImages=function(){
 	list.push({name:"rect",path:LMvc.IMG_PATH+"battle/rect.png"});
 	list.push({name:"character-s-default",path:LMvc.IMG_PATH+"character/s/default.png"});
 	list.push({name:"img-small",path:LMvc.IMG_PATH+"smap/" + self.map["img-small"]});
+	for(var i=0;i<10;i++){
+		list.push({name:"num-1-"+i,path:LMvc.IMG_PATH+"num/1/num_" +i+".png"});
+	}
 	return list;
 };
 BattleModel.prototype.setMapFiles=function(){

@@ -24,6 +24,15 @@ BattleCharacterAI.prototype.attackActionComplete = function(event) {
 	chara.removeEventListener(BattleCharacterActionEvent.ATTACK_ACTION_COMPLETE,self.attackActionComplete);
 	chara.changeAction(CharacterAction.STAND);
 	self.target.toStatic(false);
+	var num = new Num(Num.MIDDLE,1,20);
+	num.setValue(123);
+	num.x = self.target.x;
+	num.y = self.target.y;
+	chara.controller.view.baseLayer.addChild(num);
+	LTweenLite.to(num,0.5,{y:num.y - 20,alpha:0,onComplete:function(obj){
+		obj.remove();
+	}});
+	
 	self.target.changeAction(CharacterAction.HERT);
 	self.target.addEventListener(BattleCharacterActionEvent.HERT_ACTION_COMPLETE,self.target.AI.hertActionComplete);
 };
@@ -32,6 +41,10 @@ BattleCharacterAI.prototype.hertActionComplete = function(event) {
 	var self = chara.AI;
 	chara.changeAction(CharacterAction.STAND);
 	self.chara.toStatic(true);
+	var v = new BattleCharacterStatusView(self.controller,{characterModel:chara,belong:CharacterConfig.BELONG_SELF,changeType:self.changeComboBox.value,changeValue:self.changeValue.text});
+	v.x = 50;
+	v.y = 100;
+	chara.controller.view.baseLayer.addChild(v);
 };
 BattleCharacterAI.prototype.getDirectionFromTarget = function() {
 	var self = this, direction = self.chara.direction;
