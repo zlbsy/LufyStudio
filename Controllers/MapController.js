@@ -77,6 +77,9 @@ MapController.prototype.cityLoadComplete=function(){
 MapController.prototype.returnToCity=function(cityId){
 	var self = this;
 	LTweenLite.removeAll();
+	LMvc.MapController.view.areaLayer.childList.forEach(function(child){
+		child.alpha = 1;
+	});
 	LMvc.MapController.view.visible = false;
 	LMvc.CityController.view.visible = true;
 	if(!cityId){

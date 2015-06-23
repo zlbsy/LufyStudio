@@ -46,6 +46,7 @@ CityController.prototype.gotoMap=function(){
 	self.view.remove();
 	LMvc.CityController = null;
 	LMvc.MapController.view.visible = true;
+	LMvc.MapController.view.changeMode(MapController.MODE_MAP);
 };
 CityController.prototype.toSelectMap=function(eventType){
 	var self = this;
@@ -60,6 +61,7 @@ CityController.prototype.toSelectMap=function(eventType){
     		.to(child,1,{alpha:1});
 		}
 	});
+	LMvc.MapController.view.changeMode(MapController.MODE_CHARACTER_MOVE);
 };
 CityController.prototype.gotoBattle=function(){
 	var self = this;
