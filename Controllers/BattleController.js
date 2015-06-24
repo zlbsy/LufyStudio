@@ -26,7 +26,7 @@ BattleController.prototype.libraryLoad=function(){
 };
 BattleController.prototype.helperLoad=function(){
 	var self = this;
-	self.load.helper(["Talk","Hert"],self.modelLoad);
+	self.load.helper(["Talk","Hert","BattleHelper"],self.modelLoad);
 };
 BattleController.prototype.modelLoad=function(){
 	var self = this;
@@ -34,7 +34,7 @@ BattleController.prototype.modelLoad=function(){
 };
 BattleController.prototype.viewLoad=function(){
 	var self = this;
-	self.load.view(["Battle/Background","Battle/BattleMiniPreview","Battle/BattleMap","Battle/BattleCharacterLayer","Common/Character","Battle/BattleCharacter","Battle/BattleRoad"],self.addMap);
+	self.load.view(["Battle/Background","Battle/BattleMiniPreview","Battle/BattleMap","Battle/BattleCharacterLayer","Common/Character","Battle/BattleCharacter","Battle/BattleRoad","Battle/BattleCharacterStatus"],self.addMap);
 };
 BattleController.prototype.addMap=function(){
 	var self = this;
@@ -59,6 +59,10 @@ BattleController.prototype.init = function(){
 	self.dispatchEvent(LEvent.COMPLETE);
 	self.dispatchEvent(LController.NOTIFY);
 	
+	CharacterModel.getChara(1).data.troops = CharacterModel.getChara(1).maxTroops();
+	CharacterModel.getChara(2).data.troops = CharacterModel.getChara(2).maxTroops();
+	CharacterModel.getChara(3).data.troops = CharacterModel.getChara(3).maxTroops();
+	CharacterModel.getChara(4).data.troops = CharacterModel.getChara(4).maxTroops();
 	self.addOurCharacter(1,CharacterAction.MOVE,CharacterDirection.DOWN,5,5);
 	self.addOurCharacter(2,CharacterAction.MOVE,CharacterDirection.UP,6,8);
 	self.addEnemyCharacter(3,CharacterAction.MOVE,CharacterDirection.LEFT,3,5);

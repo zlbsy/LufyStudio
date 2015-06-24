@@ -38,6 +38,18 @@ BattleModel.prototype.getImages=function(){
 	list.push({name:"rect",path:LMvc.IMG_PATH+"battle/rect.png"});
 	list.push({name:"character-s-default",path:LMvc.IMG_PATH+"character/s/default.png"});
 	list.push({name:"img-small",path:LMvc.IMG_PATH+"smap/" + self.map["img-small"]});
+	
+	list.push({name:"red_bar",path:LMvc.IMG_PATH+"icon/red_bar.png"});
+	list.push({name:"blue_bar",path:LMvc.IMG_PATH+"icon/blue_bar.png"});
+	list.push({name:"yellow_bar",path:LMvc.IMG_PATH+"icon/yellow_bar.png"});
+	list.push({name:"orange_bar",path:LMvc.IMG_PATH+"icon/orange_bar.png"});
+	list.push({name:"icon_hert",path:LMvc.IMG_PATH+"icon/hert.png"});
+	list.push({name:"yellow_ball",path:LMvc.IMG_PATH+"icon/yellow_ball.png"});
+	list.push({name:"orange_ball",path:LMvc.IMG_PATH+"icon/orange_ball.png"});
+	list.push({name:"orange_ball",path:LMvc.IMG_PATH+"icon/orange_ball.png"});
+	list.push({name:"icon-armor",path:LMvc.IMG_PATH+"icon/armor.png"});
+	list.push({name:"icon-weapon",path:LMvc.IMG_PATH+"icon/weapon.png"});
+	
 	for(var i=0;i<10;i++){
 		list.push({name:"num-1-"+i,path:LMvc.IMG_PATH+"num/1/num_" +i+".png"});
 	}

@@ -28,18 +28,36 @@ BattleCharacterView.getAnimationData = function(){
 };
 BattleCharacterView.prototype.getBitmapData = function() {
 	var self = this;
+	var rowIndex = self.anime.rowIndex, colIndex = self.anime.colIndex;
+	var key = rowIndex+"_"+colIndex, grayKey = key + "_gray";
+	var resultBitmapData;
+	if(self.mode == CharacterMode.END_ACTION){
+		if(self.bitmapDatas[grayKey]){
+			return self.bitmapDatas[grayKey];
+		}
+	}
 	if(self.direction == CharacterDirection.RIGHT){
-		var rowIndex = self.anime.rowIndex, colIndex = self.anime.colIndex;
-		var key = rowIndex+"_"+colIndex;
 		if(!self.bitmapDatas[key]){
 			var bitmapData = self.anime.bitmap.bitmapData.clone();
 			self.bitmapDatas[key] = new LBitmapData(null,0,0,bitmapData.width,bitmapData.height,LBitmapData.DATA_CANVAS);
 			self.bitmapDatas[key].draw(bitmapData,new LMatrix(-1).translate(bitmapData.width,0));
 		}
-		return self.bitmapDatas[key];
+		resultBitmapData = self.bitmapDatas[key];
 	}else{
-		return self.anime.bitmap.bitmapData;
+		resultBitmapData = self.anime.bitmap.bitmapData;
 	}
+	if(self.mode == CharacterMode.END_ACTION){
+		self.bitmapDatas[grayKey] = new LBitmapData(null,0,0,resultBitmapData.width,resultBitmapData.height,LBitmapData.DATA_CANVAS);
+		self.bitmapDatas[grayKey].copyPixels(resultBitmapData,new LRectangle(0, 0, resultBitmapData.width, resultBitmapData.height), new LPoint(0,0));
+		var img = self.bitmapDatas[grayKey].getPixels(new LRectangle(0, 0, resultBitmapData.width, resultBitmapData.height));
+		for (var i = 0, d = img.data; i < d.length; i+=4) {
+			var g = d[i] * 0.2126 + d[i+1] * 0.7152 + d[i+2] * 0.0722;
+			d[i] = d[i+1] = d[i+2] = g;
+		}
+		self.bitmapDatas[grayKey].setPixels(new LRectangle(0, 0, resultBitmapData.width, resultBitmapData.height),img);
+		resultBitmapData = self.bitmapDatas[grayKey];
+	}
+	return resultBitmapData;
 };
 BattleCharacterView.prototype.attackToHert = function(anime) {
 	var self = anime.parent.parent;
@@ -174,5 +192,4 @@ BattleCharacterView.prototype.returnShowMoveRoadObject = function() {
 	self.setCoordinate(self.showMoveRoadObject.x,self.showMoveRoadObject.y);
 	self.setActionDirection(self.action,self.direction);
 	LMvc.BattleController.clickSelfCharacter(self);
-	//self.dispatchEvent(BattleCharacterEvent.SHOW_MOVE_ROAD);
 };

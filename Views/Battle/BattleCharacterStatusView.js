@@ -2,11 +2,12 @@ function BattleCharacterStatusView(controller, params){
 	var self = this;
 	LExtends(self,LView,[controller]);
 	console.log("params",params);
-	self.characterModel = params.characterModel;
+	self.character = params.character;
 	self.belong = params.belong;
 	self.changeType = params.changeType;
 	self.changeValue = params.changeValue;
 	self.set();
+	self.setPosition(params.character);
 };
 BattleCharacterStatusView.HP = "HP";
 BattleCharacterStatusView.MP = "MP";
@@ -21,7 +22,7 @@ BattleCharacterStatusView.prototype.showCharacterStatus=function(){
 	var self = this;
 	self.statusLayer = new LSprite();
 	
-	var characterModel = self.characterModel, belong = self.belong;
+	var characterModel = self.character.data, belong = self.belong;
 	var face = characterModel.face();
 	self.addChild(face);
 	
@@ -124,29 +125,29 @@ BattleCharacterStatusView.prototype.getCharacterStatusChild=function(mode,isDyna
 			icon = "icon_hert";
 			frontBar = "red_bar";
 			label = "兵力";
-			maxValue = self.characterModel.maxTroops();
-			currentValue = self.characterModel.troops();
+			maxValue = self.character.data.maxTroops();
+			currentValue = self.character.data.troops();
 			break;
 		case BattleCharacterStatusView.MP:
 			icon = "yellow_ball";
 			frontBar = "yellow_bar";
 			label = "策略";
-			maxValue = self.characterModel.maxTroops();
-			currentValue = self.characterModel.troops();
+			maxValue = self.character.data.maxTroops();
+			currentValue = self.character.data.troops();
 			break;
 		case BattleCharacterStatusView.SP:
 			icon = "orange_ball";
 			frontBar = "orange_bar";
 			label = "体力";
-			maxValue = self.characterModel.maxPhysicalFitness();
-			currentValue = self.characterModel.physicalFitness();
+			maxValue = self.character.data.maxPhysicalFitness();
+			currentValue = self.character.data.physicalFitness();
 			break;
 		case BattleCharacterStatusView.EXP:
 			icon = "orange_ball";
 			frontBar = "orange_bar";
 			label = "经验";
-			maxValue = self.characterModel.maxTroops();
-			currentValue = self.characterModel.troops();
+			maxValue = self.character.data.maxTroops();
+			currentValue = self.character.data.troops();
 			break;
 	}
 	var iconBitmapData = new LBitmapData(LMvc.datalist[icon]);
@@ -189,13 +190,24 @@ BattleCharacterStatusView.prototype.getCharacterStatusChild=function(mode,isDyna
 		self.barIcon = barIcon;
 		self.formatLabel = label;
 		self.label = lblBar;
-		LTweenLite.to(self,0.5,{currentValue:self.currentValue + parseInt(self.changeValue),onUpdate:self.onUpdate,onComplete:self.onUpdate});
+		LTweenLite.to(self,0.5,{currentValue:self.currentValue + parseInt(self.changeValue),onUpdate:self.onUpdate,onComplete:self.onComplete});
 	}
 };
 BattleCharacterStatusView.prototype.onUpdate=function(event){
-	event.target.setPosition();
+	event.target.setStatus();
 };
-BattleCharacterStatusView.prototype.setPosition=function(){
+BattleCharacterStatusView.prototype.onComplete=function(event){
+	var self = event.target;
+	self.setStatus();
+	LTweenLite.to(self,0.2,{alpha:0,onComplete:self.deleteSelf});
+};
+BattleCharacterStatusView.prototype.deleteSelf=function(event){
+	var self = event.target;
+	var character = self.character;
+	self.remove();
+	character.dispatchEvent(BattleCharacterActionEvent.COUNTER_ATTACK);
+};
+BattleCharacterStatusView.prototype.setStatus=function(){
 	var self = this;
 	if(self.currentValue > self.maxValue){
 		self.currentValue = self.maxValue;
@@ -209,3 +221,20 @@ BattleCharacterStatusView.prototype.setPosition=function(){
 	self.label.text = String.format("{0} {1}/{2} ",self.formatLabel,self.currentValue>>0,self.maxValue);
 	self.label.x = self.textEndPosition - self.label.getWidth();
 };
+BattleCharacterStatusView.prototype.setPosition=function(character){
+	var self = this, w = self.getWidth(), h = self.getHeight();
+	self.x = character.x - w * 0.5;
+	self.y = character.y - h * 0.5;
+	var root = self.getRootCoordinate();
+	if(root.x < 0){
+		self.x -= root.x;
+	}else if(root.x + w > LGlobal.width){
+		self.x -= (root.x + w - LGlobal.width);
+	}
+	if(root.y < 0){
+		self.y -= root.y;
+	}else if(root.y + h > LGlobal.height){
+		self.y -= (root.y + h - LGlobal.height);
+	}
+};
+

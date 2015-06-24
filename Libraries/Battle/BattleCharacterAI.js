@@ -11,9 +11,9 @@ BattleCharacterAI.prototype.setEvent = function() {
 };
 BattleCharacterAI.prototype.physicalAttack = function(target) {
 	var self = this;
-	console.log("LSouSouCharacterAI.prototype.physicalAttack");
 	self.target = target;
-	var direction = self.getDirectionFromTarget(target);
+	console.log("LSouSouCharacterAI.prototype.physicalAttack "+self.chara.data.id() + ", target="+target.data.id());
+	var direction = getDirectionFromTarget(self.chara, target);
 	
 	self.chara.setActionDirection(CharacterAction.ATTACK, direction);
 	self.chara.addEventListener(BattleCharacterActionEvent.ATTACK_ACTION_COMPLETE,self.attackActionComplete);
@@ -39,34 +39,32 @@ BattleCharacterAI.prototype.attackActionComplete = function(event) {
 BattleCharacterAI.prototype.hertActionComplete = function(event) {
 	var chara = event.currentTarget;
 	var self = chara.AI;
+	chara.removeEventListener(BattleCharacterActionEvent.HERT_ACTION_COMPLETE,self.hertActionComplete);
 	chara.changeAction(CharacterAction.STAND);
-	self.chara.toStatic(true);
-	var v = new BattleCharacterStatusView(self.controller,{characterModel:chara,belong:CharacterConfig.BELONG_SELF,changeType:self.changeComboBox.value,changeValue:self.changeValue.text});
-	v.x = 50;
-	v.y = 100;
-	chara.controller.view.baseLayer.addChild(v);
+	var statusView = new BattleCharacterStatusView(self.controller,{character:chara,belong:chara.belong,changeType:"HP",changeValue:-100});
+	chara.addEventListener(BattleCharacterActionEvent.COUNTER_ATTACK,self.counterAttack);
+	chara.controller.view.baseLayer.addChild(statusView);
 };
-BattleCharacterAI.prototype.getDirectionFromTarget = function() {
-	var self = this, direction = self.chara.direction;
-	var coordinate = self.chara.getTo();
-	var coordinateTo = self.target.getTo();
-	var angle = Math.atan2(coordinateTo[1] - coordinate[1],coordinateTo[0] - coordinate[0])*180/Math.PI + 180;
-	if(angle < 22.5 || angle > 337.5){
-		direction = CharacterDirection.LEFT;
-	}else if(angle > 22.5 && angle < 67.5){
-		direction = CharacterDirection.LEFT_UP;
-	}else if(angle > 67.5 && angle < 112.5){
-		direction = CharacterDirection.UP;
-	}else if(angle > 112.5 && angle < 157.5){
-		direction = CharacterDirection.RIGHT_UP;
-	}else if(angle > 157.5 && angle < 202.5){
-		direction = CharacterDirection.RIGHT;
-	}else if(angle > 202.5 && angle < 247.5){
-		direction = CharacterDirection.RIGHT_DOWN;
-	}else if(angle > 247.5 && angle < 292.5){
-		direction = CharacterDirection.DOWN;
+BattleCharacterAI.prototype.counterAttack = function(event) {
+	var chara = event.currentTarget;
+	var self = chara.AI;
+	chara.removeEventListener(BattleCharacterActionEvent.COUNTER_ATTACK,self.counterAttack);
+	if(chara.data.id() != BattleController.ctrlChara.data.id()){
+		self.physicalAttack(BattleController.ctrlChara);
 	}else{
-		direction = CharacterDirection.LEFT_DOWN;
+		//TODO::
+		console.log("can not counterAttack");
+		BattleController.ctrlChara.AI.endAction();
 	}
-	return direction;
+};
+BattleCharacterAI.prototype.endAction = function() {
+	var self = this, chara = self.chara, target = chara.target;
+	target.target = null;
+	target.removeAllEventListener();
+	target.toStatic(true);
+	chara.target = null;
+	chara.removeAllEventListener();
+	chara.changeAction(CharacterAction.STAND);
+	chara.mode = CharacterMode.END_ACTION;
+	chara.toStatic(true);
 };
