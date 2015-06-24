@@ -56,7 +56,7 @@ BattleSelectMenuView.prototype.setMenu=function(){
 	
 	var layer = new LSprite(), menuY = 10, menuWidth = 120, menuHeight = 50;
 	
-	var win = new LPanel(new LBitmapData(LMvc.datalist["win05"]),menuWidth + menuY*2,menuHeight * 6 + menuY*3);
+	var win = new LPanel(new LBitmapData(LMvc.datalist["win05"]),menuWidth + menuY*2,menuHeight * 5 + menuY*3);
 	var winBitmap = getBitmap(win);
 	self.mainLayer.addChild(winBitmap);
 	
@@ -71,39 +71,49 @@ BattleSelectMenuView.prototype.setMenu=function(){
 	var menuButton = getIconButton("battle-menu",new LRectangle(35,0,35,35),"策略",menuWidth);
 	menuButton.y = menuY;
 	layer.addChild(menuButton);
-	menuButton.addEventListener(LMouseEvent.MOUSE_UP, self.onclick);
+	menuButton.addEventListener(LMouseEvent.MOUSE_UP, self.clickMagicSelect);
 	
 	menuY += menuHeight;
 	var menuButton = getIconButton("battle-menu",new LRectangle(70,0,35,35),"单挑",menuWidth);
 	menuButton.y = menuY;
 	layer.addChild(menuButton);
-	menuButton.addEventListener(LMouseEvent.MOUSE_UP, self.clickSingle);
+	menuButton.addEventListener(LMouseEvent.MOUSE_UP, self.clickSingleCombat);
 	
 	menuY += menuHeight;
 	var menuButton = getIconButton("battle-menu",new LRectangle(105,0,35,35),"物品",menuWidth);
 	menuButton.y = menuY;
 	layer.addChild(menuButton);
 	menuButton.addEventListener(LMouseEvent.MOUSE_UP, self.onclick);
-	
+	/*
 	menuY += menuHeight;
 	var menuButton = getIconButton("battle-menu",new LRectangle(140,0,35,35),Language.get("技能"),menuWidth);
 	menuButton.y = menuY;
 	layer.addChild(menuButton);
 	menuButton.addEventListener(LMouseEvent.MOUSE_UP, self.onclick);
-	
+	*/
 	menuY += menuHeight;
 	var menuButton = getIconButton("battle-menu",new LRectangle(175,0,35,35),Language.get("待命"),menuWidth);
 	menuButton.y = menuY;
 	layer.addChild(menuButton);
-	menuButton.addEventListener(LMouseEvent.MOUSE_UP, self.onclick);
+	menuButton.addEventListener(LMouseEvent.MOUSE_UP, self.clickStandby);
 };
 BattleSelectMenuView.prototype.clickAttack=function(event){
 	var self = event.currentTarget.parent.parent.parent;
 	self.closeSelectMenu();
 	self.controller.dispatchEvent(BattleSelectMenuEvent.ATTACK);
-}
-BattleSelectMenuView.prototype.clickSingle=function(event){
+};
+BattleSelectMenuView.prototype.clickMagicSelect=function(event){
 	var self = event.currentTarget.parent.parent.parent;
 	self.closeSelectMenu();
-	self.controller.dispatchEvent(BattleSelectMenuEvent.ATTACK);
-}
+	self.controller.dispatchEvent(BattleSelectMenuEvent.MAGIC_SELECT);
+};
+BattleSelectMenuView.prototype.clickSingleCombat=function(event){
+	var self = event.currentTarget.parent.parent.parent;
+	self.closeSelectMenu();
+	self.controller.dispatchEvent(BattleSelectMenuEvent.SINGLE_COMBAT);
+};
+BattleSelectMenuView.prototype.clickStandby=function(event){
+	var self = event.currentTarget.parent.parent.parent;
+	self.closeSelectMenu();
+	self.controller.dispatchEvent(BattleSelectMenuEvent.STANDBY);
+};

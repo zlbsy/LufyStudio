@@ -32,6 +32,10 @@ BattleCharacterActionEvent.COUNTER_ATTACK = "counterAttack";
 
 var BattleSelectMenuEvent = {};
 BattleSelectMenuEvent.ATTACK = "attack";
+BattleSelectMenuEvent.MAGIC_SELECT = "magic_select";
+BattleSelectMenuEvent.MAGIC_ATTACK = "magic_attack";
+BattleSelectMenuEvent.SINGLE_COMBAT = "single_combat";
+BattleSelectMenuEvent.STANDBY = "standby";
 BattleSelectMenuEvent.CANCEL = "cancel";
 BattleSelectMenuEvent.SELECT_MENU_SHOW = "select_menu_show";
 BattleSelectMenuEvent.SELECT_MENU_HIDDEN = "select_menu_hidden";

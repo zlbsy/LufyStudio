@@ -59,9 +59,11 @@ BattleCharacterAI.prototype.counterAttack = function(event) {
 };
 BattleCharacterAI.prototype.endAction = function() {
 	var self = this, chara = self.chara, target = chara.target;
-	target.target = null;
-	target.removeAllEventListener();
-	target.toStatic(true);
+	if(target){
+		target.target = null;
+		target.removeAllEventListener();
+		target.toStatic(true);
+	}
 	chara.target = null;
 	chara.removeAllEventListener();
 	chara.changeAction(CharacterAction.STAND);

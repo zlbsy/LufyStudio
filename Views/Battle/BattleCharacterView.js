@@ -4,10 +4,10 @@ function BattleCharacterView(controller, id, w, h) {
 	self.step = self.moveStep = 4;
 	self.layer.x = self.layer.y = -8;
 	self.belong = null;
-	self.bitmapDatas = {};
 	self.AI = new BattleCharacterAI(self);
 	self.addShape(LShape.RECT,[0,0,BattleCharacterSize.width,BattleCharacterSize.height]);
 }
+BattleCharacterView.cacheBitmapDatas = {};
 BattleCharacterView.DEFAULT_IMG = "character-s-default";
 BattleCharacterView.getAnimationData = function(){
 	if(!BattleCharacterView._animationData){
@@ -29,33 +29,28 @@ BattleCharacterView.getAnimationData = function(){
 BattleCharacterView.prototype.getBitmapData = function() {
 	var self = this;
 	var rowIndex = self.anime.rowIndex, colIndex = self.anime.colIndex;
-	var key = rowIndex+"_"+colIndex, grayKey = key + "_gray";
+	var key = self.data.currentSoldiers().img() + "_" + rowIndex+"_"+colIndex, endKey = key + "_end";
 	var resultBitmapData;
 	if(self.mode == CharacterMode.END_ACTION){
-		if(self.bitmapDatas[grayKey]){
-			return self.bitmapDatas[grayKey];
+		if(BattleCharacterView.cacheBitmapDatas[endKey]){
+			return BattleCharacterView.cacheBitmapDatas[endKey];
 		}
 	}
 	if(self.direction == CharacterDirection.RIGHT){
-		if(!self.bitmapDatas[key]){
+		if(!BattleCharacterView.cacheBitmapDatas[key]){
 			var bitmapData = self.anime.bitmap.bitmapData.clone();
-			self.bitmapDatas[key] = new LBitmapData(null,0,0,bitmapData.width,bitmapData.height,LBitmapData.DATA_CANVAS);
-			self.bitmapDatas[key].draw(bitmapData,new LMatrix(-1).translate(bitmapData.width,0));
+			BattleCharacterView.cacheBitmapDatas[key] = new LBitmapData(null,0,0,bitmapData.width,bitmapData.height,LBitmapData.DATA_CANVAS);
+			BattleCharacterView.cacheBitmapDatas[key].draw(bitmapData,new LMatrix(-1).translate(bitmapData.width,0));
 		}
-		resultBitmapData = self.bitmapDatas[key];
+		resultBitmapData = BattleCharacterView.cacheBitmapDatas[key];
 	}else{
 		resultBitmapData = self.anime.bitmap.bitmapData;
 	}
 	if(self.mode == CharacterMode.END_ACTION){
-		self.bitmapDatas[grayKey] = new LBitmapData(null,0,0,resultBitmapData.width,resultBitmapData.height,LBitmapData.DATA_CANVAS);
-		self.bitmapDatas[grayKey].copyPixels(resultBitmapData,new LRectangle(0, 0, resultBitmapData.width, resultBitmapData.height), new LPoint(0,0));
-		var img = self.bitmapDatas[grayKey].getPixels(new LRectangle(0, 0, resultBitmapData.width, resultBitmapData.height));
-		for (var i = 0, d = img.data; i < d.length; i+=4) {
-			var g = d[i] * 0.2126 + d[i+1] * 0.7152 + d[i+2] * 0.0722;
-			d[i] = d[i+1] = d[i+2] = g;
-		}
-		self.bitmapDatas[grayKey].setPixels(new LRectangle(0, 0, resultBitmapData.width, resultBitmapData.height),img);
-		resultBitmapData = self.bitmapDatas[grayKey];
+		BattleCharacterView.cacheBitmapDatas[endKey] = new LBitmapData(null,0,0,resultBitmapData.width,resultBitmapData.height,LBitmapData.DATA_CANVAS);
+		BattleCharacterView.cacheBitmapDatas[endKey].copyPixels(resultBitmapData,new LRectangle(0, 0, resultBitmapData.width, resultBitmapData.height), new LPoint(0,0));
+	    BattleCharacterView.cacheBitmapDatas[endKey].colorTransform(new LRectangle(0, 0, resultBitmapData.width, resultBitmapData.height), new LColorTransform(0.4, 0.4, 0.4, 1, 0, 0, 0, 0));
+		resultBitmapData = BattleCharacterView.cacheBitmapDatas[endKey];
 	}
 	return resultBitmapData;
 };

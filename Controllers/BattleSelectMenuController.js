@@ -4,7 +4,8 @@ function BattleSelectMenuController(){
 BattleSelectMenuController.prototype.construct=function(){
 	var self = this;
 	self.addEventListener(BattleSelectMenuEvent.ATTACK,self.attack);
-	self.addEventListener(BattleSelectMenuEvent.SINGLE,self.attack);
+	self.addEventListener(BattleSelectMenuEvent.SINGLE_COMBAT,self.singleCombat);
+	self.addEventListener(BattleSelectMenuEvent.STANDBY,self.standby);
 	self.addEventListener(BattleSelectMenuEvent.CANCEL,self.cancel);
 };
 BattleSelectMenuController.instance = function(){
@@ -31,4 +32,10 @@ BattleSelectMenuController.prototype.attack = function(event){
 };
 BattleSelectMenuController.prototype.cancel = function(event){
 	BattleController.ctrlChara.returnShowMoveRoadObject();
+};
+BattleSelectMenuController.prototype.singleCombat = function(event){
+	
+};
+BattleSelectMenuController.prototype.standby = function(event){
+	BattleController.ctrlChara.AI.endAction();
 };
