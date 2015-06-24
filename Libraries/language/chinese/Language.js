@@ -24,6 +24,7 @@ Language.data = {
 	"tab_status":"状态",
 	"tab_properties":"属性",
 	
+	"action_end_error":"行动已结束！",
 	"can_not_operating":"不可操作{0}",
 	"belong_self":"我军",
 	"belong_enemy":"敌军",

@@ -77,7 +77,7 @@ BattleSelectMenuView.prototype.setMenu=function(){
 	var menuButton = getIconButton("battle-menu",new LRectangle(70,0,35,35),"单挑",menuWidth);
 	menuButton.y = menuY;
 	layer.addChild(menuButton);
-	menuButton.addEventListener(LMouseEvent.MOUSE_UP, self.onclick);
+	menuButton.addEventListener(LMouseEvent.MOUSE_UP, self.clickSingle);
 	
 	menuY += menuHeight;
 	var menuButton = getIconButton("battle-menu",new LRectangle(105,0,35,35),"物品",menuWidth);
@@ -98,6 +98,11 @@ BattleSelectMenuView.prototype.setMenu=function(){
 	menuButton.addEventListener(LMouseEvent.MOUSE_UP, self.onclick);
 };
 BattleSelectMenuView.prototype.clickAttack=function(event){
+	var self = event.currentTarget.parent.parent.parent;
+	self.closeSelectMenu();
+	self.controller.dispatchEvent(BattleSelectMenuEvent.ATTACK);
+}
+BattleSelectMenuView.prototype.clickSingle=function(event){
 	var self = event.currentTarget.parent.parent.parent;
 	self.closeSelectMenu();
 	self.controller.dispatchEvent(BattleSelectMenuEvent.ATTACK);

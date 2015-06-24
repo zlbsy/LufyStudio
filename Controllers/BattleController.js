@@ -138,13 +138,11 @@ BattleController.prototype.clickOnRoadLayer = function(event){
 	if(BattleController.ctrlChara.belong != CharacterConfig.BELONG_SELF){
 		Toast.makeText(String.format(Language.get("can_not_operating"), Language.get(BattleController.ctrlChara.belong))).show();
 		return;
+	}else if(BattleController.ctrlChara.mode == CharacterMode.END_ACTION){
+		Toast.makeText(Language.get("action_end_error")).show();	
+		return;
 	}
 	var chara = self.view.charaLayer.getCharacterFromCoordinate(event.selfX,event.selfY);
-	console.log(chara);
-	if(chara){
-		console.log("chara.data.id() = " + chara.data.id());
-		console.log("BattleController.ctrlChara.data.id() = " + BattleController.ctrlChara.data.id());
-	}
 	if(chara){
 		if(chara.data.id() == BattleController.ctrlChara.data.id()){
 			self.view.roadLayer.clear();
@@ -155,7 +153,6 @@ BattleController.prototype.clickOnRoadLayer = function(event){
 	chara = BattleController.ctrlChara;
 		
 	var coordinate = chara.getTo();
-	console.log("coordinate=",coordinate);
 	var fx = coordinate[0] , fy = coordinate[1];
 	var returnList = self.query.queryPath(new LPoint(fx,fy),new LPoint(event.selfX/self.model.stepWidth >>> 0,event.selfY/self.model.stepHeight >>> 0));
 	if(returnList.length > 0){
@@ -167,14 +164,14 @@ BattleController.prototype.notClickOnRoadLayer = function(event){
 	console.log("BattleController.prototype.notClickOnRoadLayer ",BattleController.ctrlChara.mode);
 	var self = event.currentTarget.parent.controller;
 	switch(BattleController.ctrlChara.mode){
-		case CharacterMode.SHOW_MOVE_ROAD:
-			self.view.roadLayer.clear();
-			BattleController.ctrlChara.removeAllEventListener();
-			break;
 		case CharacterMode.WAIT_ATTACK:
 			self.view.roadLayer.clear();
 			BattleController.ctrlChara.dispatchEvent(CharacterActionEvent.MOVE_COMPLETE);
 			break;
+		case CharacterMode.SHOW_MOVE_ROAD:
+		default:
+			self.view.roadLayer.clear();
+			BattleController.ctrlChara.removeAllEventListener();
 	}
 };
 BattleController.prototype.characterClick = function(cx,cy){
@@ -196,10 +193,14 @@ BattleController.prototype.characterClick = function(cx,cy){
 };
 BattleController.prototype.clickSelfCharacter = function(chara){
 	var self = this;
-	chara.toStatic(false);
+	
 	var path = self.query.makePath(chara);
 	self.view.roadLayer.setMoveRoads(path, chara.belong);
 	self.view.roadLayer.addRangeAttack(chara);
+	if(chara.mode == CharacterMode.END_ACTION){
+		return;
+	}
+	chara.toStatic(false);
 	chara.mode = CharacterMode.SHOW_MOVE_ROAD;
 	BattleController.ctrlChara.saveShowMoveRoadObject();
 };
