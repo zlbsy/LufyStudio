@@ -30,7 +30,7 @@ BattleQuery.prototype.makePath = function(chara){
 	self.setStart();
 	self._enemyCost = {};
 	var thisChara;
-	if(chara.belong == CharacterConfig.BELONG_SELF || chara.belong == CharacterConfig.BELONG_FRIEND){
+	if(chara.belong == Belong.SELF || chara.belong == Belong.FRIEND){
 		for(var i=0;i<LMvc.BattleController.model.enemyList.length;i++){
 			thisChara = LMvc.BattleController.model.enemyList[i];
 			if(thisChara.visible){
@@ -41,7 +41,7 @@ BattleQuery.prototype.makePath = function(chara){
 				self.setPathAll(thisChara.locationX() , (thisChara.locationY() + 1) , -1);
 			}
 		}
-	}else if(chara.belong == CharacterConfig.BELONG_ENEMY){
+	}else if(chara.belong == Belong.ENEMY){
 		for(var i=0;i<LMvc.BattleController.model.ourList.length;i++){
 			thisChara = LMvc.BattleController.model.ourList[i];
 			if(thisChara.visible){

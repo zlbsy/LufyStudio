@@ -61,6 +61,21 @@ CharacterModel.prototype.maxTroops = function(value) {
 	//TODO::
 	return 1000;
 };
+CharacterModel.prototype.level = function() {
+	return 10;
+};
+CharacterModel.prototype.strategies = function() {
+	var self = this;
+	var strategies = self.currentSoldiers().strategy();
+	var datas = [];
+	for(var i=0,l=strategies.length;i<l;i++){
+		var child = strategies[i];
+		if(child.level() < self.level()){
+			datas.push(child);
+		}
+	}
+	return datas;
+};
 CharacterModel.prototype.identity = function(value) {
 	var self = this;
 	var seignior = self.seignior();

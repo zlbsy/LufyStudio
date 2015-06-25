@@ -22,11 +22,12 @@ var CharacterDirection = {
 var BattleCharacterSize = {
 	width:48,height:48
 };
+/*
 var CharacterConfig = {
 	BELONG_SELF : "belong_self",
 	BELONG_ENEMY : "belong_enemy",
 	BELONG_FRIEND : "belong_friend"
-};
+};*/
 var CharacterMode = {
 	SHOW_MOVE_ROAD : "showMoveRoad",
 	WAIT_ATTACK : "waitAttack",

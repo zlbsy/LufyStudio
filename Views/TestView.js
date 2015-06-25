@@ -60,9 +60,12 @@ TestView.prototype.init=function(){
 	self.statusLayer = new LSprite();
 	self.addChild(self.statusLayer);
 };
-TestView.prototype.showCharacterStatusChange=function(event){
+TestView.prototype.showStrategy=function(event){
 	var self = this;
-	
+	self.statusLayer.removeAllChild();
+	var chara = CharacterModel.getChara(1);
+	var view = new StrategyView(self.controller, chara);
+	self.statusLayer.addChild(view);
 };
 TestView.prototype.showCharacterStatusChange=function(event){
 	var self = this;

@@ -1,7 +1,7 @@
 function StrategyChildView(controller,strategyModel){
 	var self = this;
 	base(self,LView,[controller]);
-	self.soldierModel = soldierModel;
+	self.strategyModel = strategyModel;
 	self.set();
 	self.addShape(LShape.RECT,[0,0,415,48]);
 }

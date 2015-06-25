@@ -8,7 +8,11 @@ TestController.prototype.construct=function(){
 };
 TestController.prototype.configLoad=function(){
 	var self = this;
-	self.load.config(["Character","characterList","Soldiers","Strategy"],self.libraryLoad);
+	self.load.config(["Character","characterList","Belong"],self.configLoad2);
+};
+TestController.prototype.configLoad2=function(){
+	var self = this;
+	self.load.config(["Soldiers","Strategy","Arms","CharacterListType","ArmListType","BattleMap"],self.libraryLoad);
 };
 TestController.prototype.libraryLoad=function(){
 	var self = this;

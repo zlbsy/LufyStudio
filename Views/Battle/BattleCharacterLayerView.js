@@ -37,7 +37,7 @@ BattleCharacterLayerView.prototype.getCharacterFromCoordinate=function(x,y){
 BattleCharacterLayerView.prototype.addOurCharacter=function(id,action,direction,x,y,callback){
 	var self = this;
 	var chara = self.addCharaLayer(id,action,direction,x,y);
-	chara.belong = CharacterConfig.BELONG_SELF;
+	chara.belong = Belong.SELF;
 	chara.changeAction(CharacterAction.MOVE);
 	self.model.ourList.push(chara);
 	if(typeof callback == "function")callback();
@@ -45,7 +45,7 @@ BattleCharacterLayerView.prototype.addOurCharacter=function(id,action,direction,
 BattleCharacterLayerView.prototype.addEnemyCharacter=function(index,action,direction,x,y,isHide,ai,callback){
 	var self = this;
 	var chara = self.addCharaLayer(index,action,direction,x,y);
-	chara.belong = CharacterConfig.BELONG_ENEMY;
+	chara.belong = Belong.ENEMY;
 	chara.changeAction(CharacterAction.MOVE);
 	self.model.enemyList.push(chara);
 	if(typeof callback == "function")callback();
@@ -53,7 +53,7 @@ BattleCharacterLayerView.prototype.addEnemyCharacter=function(index,action,direc
 BattleCharacterLayerView.prototype.addFriendCharacter=function(index,action,direction,x,y,isHide,ai,callback){
 	var self = this;
 	var chara = self.addCharaLayer(index,action,direction,x,y);
-	chara.belong = CharacterConfig.BELONG_FRIEND;
+	chara.belong = Belong.FRIEND;
 	chara.changeAction(CharacterAction.MOVE);
 	self.model.friendList.push(chara);
 	if(typeof callback == "function")callback();

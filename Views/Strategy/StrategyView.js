@@ -3,23 +3,29 @@ function StrategyView(controller, characterModel, size) {
 	base(self, LView, [controller]);
 	self.characterModel = characterModel;
 	self.size = size;
+	if(!self.size){
+		self.size = new LPoint(300,200);
+	}
 	//self.getsoldierListData();
 	self.layerInit();
-	
+	console.log("StrategyView run");
 	self.setStrategyList();
 }
 StrategyView.prototype.setStrategyList = function() {
-	var self = this;return;
+	var self = this;
 	self.strategyListLayer.removeAllChild();
-	var strategyList = self.characterModel.allStrategys();
+	var strategyList = self.characterModel.strategies();
 	var backLayer = new LSprite();
 	var index = 0;
 	for (var i = 0, l = strategyList.length; i < l; i++) {
 		var strategy = strategyList[i];
+		var child = new StrategyChildView(self.controller, strategy);
+		child.y = 50 * index++;
+		backLayer.addChild(child);
+		continue;
 		var strategyList = soldier.strategy();
 		for(var j = 0;j<strategyList.length;j++){
 			var strategyChild = strategyList[j];
-			//TODO::条件
 			var child = new StrategyChildView(self.controller, strategyChild);
 			child.y = 50 * index++;
 			backLayer.addChild(child);

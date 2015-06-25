@@ -1,5 +1,5 @@
 var Belong = {
-	SELF:"self",
-	FRIEND:"friend",
-	ENEMY:"enemy"
+	SELF:"belong_self",
+	FRIEND:"belong_friend",
+	ENEMY:"belong_enemy"
 };

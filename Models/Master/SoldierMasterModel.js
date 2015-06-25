@@ -76,7 +76,15 @@ SoldierMasterModel.prototype.rangeAttackTarget = function() {
 	return this.data.rangeAttackTarget;
 };
 SoldierMasterModel.prototype.strategy = function() {
-	return this.data.strategy;
+	var self = this;
+	if(!self._strategies){
+		self._strategies = [];
+		for(var i=0;i<self.data.strategy.length;i++){
+			var data = self.data.strategy[i];
+			self._strategies.push(new StrategyModel(null, data));
+		}
+	}
+	return self._strategies;
 };
 SoldierMasterModel.prototype.explanation = function() {
 	return Language.getSoldier(this.data.explanation);
