@@ -23,11 +23,6 @@ StrategyChildView.prototype.set=function(){
 	lblName.y = 5;
 	layer.addChild(lblName);
 	
-	var lblLevel = getStrokeLabel(String.format("熟练度:{0} ",self.soldierModel.proficiency()),25,"#FFFFFF","#000000",3);
-	lblLevel.x = lblName.x + 150;
-	lblLevel.y = lblName.y;
-	layer.addChild(lblLevel);
-	
 	self.layer.addChild(getBitmap(layer));
 	var icon = self.soldierModel.icon(new LPoint(width,height));
 	self.layer.addChild(icon);

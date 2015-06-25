@@ -8,7 +8,7 @@ TestController.prototype.construct=function(){
 };
 TestController.prototype.configLoad=function(){
 	var self = this;
-	self.load.config(["Character","characterList","Soldiers"],self.libraryLoad);
+	self.load.config(["Character","characterList","Soldiers","Strategy"],self.libraryLoad);
 };
 TestController.prototype.libraryLoad=function(){
 	var self = this;
@@ -17,13 +17,14 @@ TestController.prototype.libraryLoad=function(){
 };
 TestController.prototype.modelLoad=function(){
 	var self = this;
-	self.load.model(["Master/Character","Master/SoldierMaster","Master/Soldier"],self.viewLoad);
+	self.load.model(["Master/Character","Master/SoldierMaster","Master/Soldier","Master/StrategyMaster","Master/Strategy"],self.viewLoad);
 };
 TestController.prototype.viewLoad=function(){
 	var self = this;
 	CharacterModel.setChara(characterList);
 	SoldierMasterModel.setMaster(SoldierDatas);
-	self.load.view(["Battle/BattleCharacterStatus"],self.init);
+	StrategyMasterModel.setMaster(StrategyDatas);
+	self.load.view(["Battle/BattleCharacterStatus","Strategy/Strategy","Strategy/StrategyChild","Strategy/StrategyDetailed"],self.init);
 };
 TestController.prototype.getChapterData=function(){
 	var self = this;

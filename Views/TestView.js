@@ -50,8 +50,19 @@ TestView.prototype.init=function(){
 	layer.addChild(theTextField);
 	self.changeValue = theTextField;
 
+	
+	button01 = new LButtonSample1("策略测试");
+	button01.x = 10;
+	button01.y = 90;
+	layer.addChild(button01);
+	button01.addEventListener(LMouseEvent.MOUSE_UP,self.showStrategy.bind(self));
+	
 	self.statusLayer = new LSprite();
 	self.addChild(self.statusLayer);
+};
+TestView.prototype.showCharacterStatusChange=function(event){
+	var self = this;
+	
 };
 TestView.prototype.showCharacterStatusChange=function(event){
 	var self = this;

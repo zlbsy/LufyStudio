@@ -44,30 +44,6 @@ StrategyModel.prototype.explanation = function() {
 StrategyModel.prototype.image = function() {
 	return this.master().image();
 };
-StrategyModel.prototype.icon=function(size,anime){
-	var self = this;
-	if(!size){
-		size = new LPoint(100,100);
-	}
-	var imgIndex = self.data.img;
-	if(!imgIndex){
-		imgIndex = self.master().img();
-	}
-	var icon = new BitmapSprite(LMvc.IMG_PATH + "character/"+imgIndex+"/mov.png", [0,48*6,48,48],size);
-	if(anime){
-		icon.addEventListener(LEvent.COMPLETE, function(event){
-			var sprite = event.currentTarget;
-			var bitmap = sprite.getChildByName("bitmap");
-			var bitmapData = bitmap.bitmapData;
-			sprite.removeChild(bitmap);
-			var list = LGlobal.divideCoordinate(48, 96, 2, 1);
-			list = [[list[0][0],list[1][0]]];
-			var animation = new LAnimationTimeline(bitmapData,list);
-			animation.speed = 5;
-			sprite.addChild(animation);
-		});
-	}
-	var winPanel = new LPanel(new LBitmapData(LMvc.datalist["win06"]),size.x,size.y);
-	icon.addChild(getBitmap(winPanel));
-	return icon;
+StrategyModel.prototype.icon=function(size){
+	return this.master().icon(size);
 };
