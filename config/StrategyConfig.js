@@ -36,6 +36,11 @@ var StrategyType = {
 	Wind:2,//风
 	Warter:3//水
 };
+var StrategyEffectType = {
+	Attack:1,//攻击
+	Defense:2,//防御
+	Aid:3//辅助
+};
 var StrategyDatas = [
 	{id:1,name:"小火计",belong:Belong.ENEMY,type:StrategyType.Fire,image:"h1",
 	icon:"huo_sign",
