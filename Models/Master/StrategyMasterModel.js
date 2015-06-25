@@ -56,9 +56,9 @@ StrategyMasterModel.prototype.explanation = function() {
 StrategyMasterModel.prototype.image = function() {
 	return this.data.image;
 };
-StrategyMasterModel.prototype.icon=function(){
+StrategyMasterModel.prototype.icon=function(size){
 	var self = this;
-	var icon = new BitmapSprite(LMvc.IMG_PATH + "strategy/"+self.data.icon+".png", [0,48*6,48,48],size);
+	var icon = new BitmapSprite(LMvc.IMG_PATH + "strategy/"+self.data.icon+".png", null,size);
 	var winPanel = new LPanel(new LBitmapData(LMvc.datalist["win06"]),size.x,size.y);
 	icon.addChild(getBitmap(winPanel));
 	return icon;

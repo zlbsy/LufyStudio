@@ -3,7 +3,7 @@ function StrategyChildView(controller,strategyModel){
 	base(self,LView,[controller]);
 	self.strategyModel = strategyModel;
 	self.set();
-	self.addShape(LShape.RECT,[0,0,415,48]);
+	self.addShape(LShape.RECT,[0,0,360,48]);
 }
 StrategyChildView.prototype.layerInit=function(){
 	var self = this;
@@ -13,17 +13,17 @@ StrategyChildView.prototype.layerInit=function(){
 StrategyChildView.prototype.set=function(){
 	var self = this;
 	self.layerInit();
-	
 	var layer = new LSprite();
-	
+	console.log("self.strategyModel.name()="+self.strategyModel.name());
 	var width = 50, height = 50;
 	
-	var lblName = getStrokeLabel(self.soldierModel.name(),25,"#FFFFFF","#000000",3);
+	var lblName = getStrokeLabel(self.strategyModel.name(),20,"#FFFFFF","#000000",3);
 	lblName.x = width + 5;
 	lblName.y = 5;
 	layer.addChild(lblName);
+//	self.layer.addChild((layer));return;
+	self.layer.addChild(getBitmap(layer));console.log("over");
 	
-	self.layer.addChild(getBitmap(layer));
-	var icon = self.soldierModel.icon(new LPoint(width,height));
+	var icon = self.strategyModel.icon(new LPoint(50,50));
 	self.layer.addChild(icon);
-};
+}; 

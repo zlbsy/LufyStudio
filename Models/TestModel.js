@@ -27,5 +27,11 @@ TestModel.prototype.getImages=function(){
 	list.push({name:"orange_ball",path:LMvc.IMG_PATH+"icon/orange_ball.png"});
 	list.push({name:"icon-armor",path:LMvc.IMG_PATH+"icon/armor.png"});
 	list.push({name:"icon-weapon",path:LMvc.IMG_PATH+"icon/weapon.png"});
+	
+	list.push({name:"win02",path:LMvc.IMG_PATH+"win/win02.png"}),
+	list.push({name:"win03",path:LMvc.IMG_PATH+"win/win03.png"}),
+	list.push({name:"win04",path:LMvc.IMG_PATH+"win/win04.png"}),
+	list.push({name:"win05",path:LMvc.IMG_PATH+"win/win05.png"}),
+	list.push({name:"win06",path:LMvc.IMG_PATH+"win/win06.png"})
 	return list;
 };

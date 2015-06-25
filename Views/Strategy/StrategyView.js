@@ -4,7 +4,7 @@ function StrategyView(controller, characterModel, size) {
 	self.characterModel = characterModel;
 	self.size = size;
 	if(!self.size){
-		self.size = new LPoint(300,200);
+		self.size = new LPoint(400,300);
 	}
 	//self.getsoldierListData();
 	self.layerInit();
@@ -22,21 +22,18 @@ StrategyView.prototype.setStrategyList = function() {
 		var child = new StrategyChildView(self.controller, strategy);
 		child.y = 50 * index++;
 		backLayer.addChild(child);
-		continue;
-		var strategyList = soldier.strategy();
-		for(var j = 0;j<strategyList.length;j++){
-			var strategyChild = strategyList[j];
-			var child = new StrategyChildView(self.controller, strategyChild);
-			child.y = 50 * index++;
-			backLayer.addChild(child);
-		}
 	}
-	backLayer.graphics.drawRect(0, "#000000", [0, 0, self.size.x, 50 * soldierList.length]);
-	self.soldierListLayer.listLayer = backLayer;
+	
+	
+	backLayer.graphics.drawRect(0, "#000000", [0, 0, self.size.x - 40, 50 * strategyList.length]);
+	self.strategyListLayer.listLayer = backLayer;
+	
+	
 	var left = backLayer.graphics.startX(), right = left + backLayer.graphics.getWidth();
-	var sc = new LScrollbar(backLayer, self.size.x, self.size.y, 10);
-	//sc._showLayer.graphics.clear();
-	self.soldierListLayer.addChild(sc);
+	var sc = new LScrollbar(backLayer, self.size.x - 40, self.size.y - 110, 10);
+	sc._showLayer.graphics.clear();
+	
+	self.strategyListLayer.addChild(sc);
 	sc.excluding = true;
 	backLayer.addEventListener(LMouseEvent.MOUSE_DOWN, self.strategyClickDown);
 	backLayer.addEventListener(LMouseEvent.MOUSE_UP, self.strategyClickUp.bind(self));
@@ -46,9 +43,47 @@ StrategyView.prototype.layerInit = function() {
 
 	self.baseLayer = new LSprite();
 	self.addChild(self.baseLayer);
-
+	
+	var windowLayer = new LSprite();
+	windowLayer.addChild(getTranslucentBitmap());
+	self.baseLayer.addChild(windowLayer);
+	var backgroundData = new LBitmapData(LMvc.datalist["win05"]);
+	var panel = getBitmap(new LPanel(backgroundData,self.size.x,self.size.y));
+	panel.x = (LGlobal.width - panel.getWidth()) * 0.5;
+	panel.y = (LGlobal.height - panel.getHeight()) * 0.5;
+	windowLayer.addChild(panel);
+	var titleData = new LBitmapData(LMvc.datalist["win02"]);
+	var titlePanel = getBitmap(new LPanel(titleData,160,60));
+	titlePanel.x = (LGlobal.width - titlePanel.getWidth()) * 0.5;
+	titlePanel.y = panel.y - 25;
+	windowLayer.addChild(titlePanel);
+	
+	var title = getStrokeLabel("策略一览",20,"#FFFFFF","#000000",4);
+	title.x = (LGlobal.width - title.getWidth())*0.5;
+	title.y = titlePanel.y + 18;
+	windowLayer.addChild(title);
+	
+	var tabMenuLayer = new LSprite();
+	tabMenuLayer.x = panel.x;
+	tabMenuLayer.y = panel.y + 40;
+	windowLayer.addChild(tabMenuLayer);
+	var buttonExpedition = getButton("策略名",140);
+	buttonExpedition.x = 20;
+	tabMenuLayer.addChild(buttonExpedition);
+		
+	var buttonExpedition = getButton("效果",120);
+	buttonExpedition.x = 160;
+	tabMenuLayer.addChild(buttonExpedition);
+		
+	var buttonExpedition = getButton("MP",100);
+	buttonExpedition.x = 280;
+	tabMenuLayer.addChild(buttonExpedition);
+	
+	
 	self.strategyListLayer = new LSprite();
 	self.baseLayer.addChild(self.strategyListLayer);
+	self.strategyListLayer.x = (LGlobal.width - self.size.x)*0.5 + 20;
+	self.strategyListLayer.y = (LGlobal.height - self.size.y)*0.5 + 90;
 };
 StrategyView.prototype.updateView = function() {
 	var self = this;
