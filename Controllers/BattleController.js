@@ -36,7 +36,7 @@ BattleController.prototype.viewLoad=function(){
 	var self = this;
 	self.load.view(["Battle/Background","Battle/BattleMiniPreview","Battle/BattleMap","Common/Character",
 	"Battle/BattleCharacterLayer","Battle/BattleCharacter","Battle/BattleRoad","Battle/BattleCharacterStatus",
-	"Strategy/Strategy","Strategy/StrategyChild","Strategy/StrategyDetailed"],self.addMap);
+	"Strategy/Strategy","Strategy/StrategyChild"],self.addMap);
 };
 BattleController.prototype.addMap=function(){
 	var self = this;
@@ -135,6 +135,9 @@ BattleController.prototype.physicalAttack = function(event){
 	self.view.roadLayer.clear();
 	BattleController.ctrlChara.AI.physicalAttack(chara);
 };
+BattleController.prototype.clickStrategyRange = function(chara){
+	
+};
 BattleController.prototype.clickOnRoadLayer = function(event){
 	var self = event.currentTarget.parent.controller;
 	if(BattleController.ctrlChara.belong != Belong.SELF){
@@ -145,6 +148,10 @@ BattleController.prototype.clickOnRoadLayer = function(event){
 		return;
 	}
 	var chara = self.view.charaLayer.getCharacterFromCoordinate(event.selfX,event.selfY);
+	if(BattleController.ctrlChara.mode == CharacterMode.STRATEGY_SELECT){
+		self.clickStrategyRange(chara);
+		return;
+	}
 	if(chara){
 		if(chara.data.id() == BattleController.ctrlChara.data.id()){
 			self.view.roadLayer.clear();
@@ -169,6 +176,8 @@ BattleController.prototype.notClickOnRoadLayer = function(event){
 		case CharacterMode.WAIT_ATTACK:
 			self.view.roadLayer.clear();
 			BattleController.ctrlChara.dispatchEvent(CharacterActionEvent.MOVE_COMPLETE);
+			break;
+		case CharacterMode.STRATEGY_SELECT:
 			break;
 		case CharacterMode.SHOW_MOVE_ROAD:
 		default:

@@ -4,11 +4,9 @@ function StrategyView(controller, characterModel, size) {
 	self.characterModel = characterModel;
 	self.size = size;
 	if(!self.size){
-		self.size = new LPoint(400,300);
+		self.size = new LPoint(400,340);
 	}
-	//self.getsoldierListData();
 	self.layerInit();
-	console.log("StrategyView run");
 	self.setStrategyList();
 }
 StrategyView.prototype.setStrategyList = function() {
@@ -30,7 +28,7 @@ StrategyView.prototype.setStrategyList = function() {
 	
 	
 	var left = backLayer.graphics.startX(), right = left + backLayer.graphics.getWidth();
-	var sc = new LScrollbar(backLayer, self.size.x - 40, self.size.y - 110, 10);
+	var sc = new LScrollbar(backLayer, self.size.x - 40, self.size.y - 130, 10);
 	sc._showLayer.graphics.clear();
 	
 	self.strategyListLayer.addChild(sc);
@@ -44,80 +42,84 @@ StrategyView.prototype.layerInit = function() {
 	self.baseLayer = new LSprite();
 	self.addChild(self.baseLayer);
 	
+	self.setBackgroundLayer();
+	
+	self.strategyListLayer = new LSprite();
+	self.baseLayer.addChild(self.strategyListLayer);
+	self.strategyListLayer.x = (LGlobal.width - self.size.x)*0.5 + 20;
+	self.strategyListLayer.y = (LGlobal.height - self.size.y)*0.5 + 110;
+	
+	self.ctrlLayerInit();
+};
+StrategyView.prototype.setBackgroundLayer = function() {
+	var self = this;
 	var windowLayer = new LSprite();
 	windowLayer.addChild(getTranslucentBitmap());
-	self.baseLayer.addChild(windowLayer);
 	var backgroundData = new LBitmapData(LMvc.datalist["win05"]);
 	var panel = getBitmap(new LPanel(backgroundData,self.size.x,self.size.y));
 	panel.x = (LGlobal.width - panel.getWidth()) * 0.5;
 	panel.y = (LGlobal.height - panel.getHeight()) * 0.5;
 	windowLayer.addChild(panel);
-	var titleData = new LBitmapData(LMvc.datalist["win02"]);
-	var titlePanel = getBitmap(new LPanel(titleData,160,60));
-	titlePanel.x = (LGlobal.width - titlePanel.getWidth()) * 0.5;
-	titlePanel.y = panel.y - 25;
-	windowLayer.addChild(titlePanel);
+
+	var charaName = getStrokeLabel(self.characterModel.name(),20,"#FFFFFF","#000000",4);
+	charaName.x = panel.x + 30;
+	charaName.y = panel.y + 25;
+	windowLayer.addChild(charaName);
 	
-	var title = getStrokeLabel("策略一览",20,"#FFFFFF","#000000",4);
-	title.x = (LGlobal.width - title.getWidth())*0.5;
-	title.y = titlePanel.y + 18;
-	windowLayer.addChild(title);
+	var charaName = getStrokeLabel("MP "+self.characterModel.MP(),20,"#FFFFFF","#000000",4);
+	charaName.x = panel.x + 230;
+	charaName.y = panel.y + 25;
+	windowLayer.addChild(charaName);
 	
 	var tabMenuLayer = new LSprite();
 	tabMenuLayer.x = panel.x;
-	tabMenuLayer.y = panel.y + 40;
+	tabMenuLayer.y = panel.y + 60;
 	windowLayer.addChild(tabMenuLayer);
-	var buttonExpedition = getButton("策略名",140);
-	buttonExpedition.x = 20;
-	tabMenuLayer.addChild(buttonExpedition);
+	var tabButton = getButton("策略名",140);
+	tabButton.x = 20;
+	tabMenuLayer.addChild(tabButton);
 		
-	var buttonExpedition = getButton("效果",120);
-	buttonExpedition.x = 160;
-	tabMenuLayer.addChild(buttonExpedition);
+	var tabButton = getButton("效果",120);
+	tabButton.x = 160;
+	tabMenuLayer.addChild(tabButton);
 		
-	var buttonExpedition = getButton("MP",100);
-	buttonExpedition.x = 280;
-	tabMenuLayer.addChild(buttonExpedition);
+	var tabButton = getButton("MP",100);
+	tabButton.x = 280;
+	tabMenuLayer.addChild(tabButton);
 	
-	
-	self.strategyListLayer = new LSprite();
-	self.baseLayer.addChild(self.strategyListLayer);
-	self.strategyListLayer.x = (LGlobal.width - self.size.x)*0.5 + 20;
-	self.strategyListLayer.y = (LGlobal.height - self.size.y)*0.5 + 90;
-};
-StrategyView.prototype.updateView = function() {
-	var self = this;
-	self.setsoldierList();
+	self.baseLayer.addChild(getBitmap(windowLayer));
 };
 StrategyView.prototype.ctrlLayerInit = function() {
 	var self = this;
-	var returnBitmapData = new LBitmapData(LMvc.datalist["icon-return"]);
-	var returnBitmap = new LBitmap(returnBitmapData);
-	var returnButton = new LButton(returnBitmap);
-	returnButton.x = 20;
-	returnButton.y = LGlobal.height - returnBitmapData.height - 20;
-	self.ctrlLayer.addChild(returnButton);
-	returnButton.addEventListener(LMouseEvent.MOUSE_UP, self.controller.close.bind(self.controller));
+	var buttonClose = new LButton(new LBitmap(new LBitmapData(LMvc.datalist["close"])));
+	buttonClose.x = (LGlobal.width - self.size.x) * 0.5 + self.size.x - buttonClose.getWidth() * 0.7;
+	buttonClose.y = (LGlobal.height - self.size.y) * 0.5 - buttonClose.getHeight() * 0.3;
+	self.baseLayer.addChild(buttonClose);
+	buttonClose.addEventListener(LMouseEvent.MOUSE_UP, self.close);
+};
+StrategyView.prototype.close = function(event) {
+	var self = event.currentTarget.parent.parent;
+	self.dispatchEvent(StrategyListEvent.CLOSE);
+	self.remove();
 };
 StrategyView.prototype.strategyClickDown = function(event) {
-	var soldier = event.target;
-	soldier.offsetX = event.offsetX;
-	soldier.offsetY = event.offsetY;
+	var child = event.target;
+	child.offsetX = event.offsetX;
+	child.offsetY = event.offsetY;
 };
 StrategyView.prototype.strategyClickUp = function(event) {
-	if(event.target.constructor.name != "SoldiersChildView"){
+	if(event.target.constructor.name != "StrategyChildView"){
 		return;
 	}
-	var soldier = event.target, self = this;
-	if (soldier.offsetX && soldier.offsetY && Math.abs(soldier.offsetX - event.offsetX) < 5 && Math.abs(soldier.offsetY - event.offsetY) < 5) {
-		self.soldierDetailedDialog(soldier.soldierModel);
+	var child = event.target, self = this;
+	if (child.offsetX && child.offsetY && Math.abs(child.offsetX - event.offsetX) < 5 && Math.abs(child.offsetY - event.offsetY) < 5) {
+		self.strategySelect(child.strategyModel);
 	}
 };
-StrategyView.prototype.soldierDetailedDialog = function(soldierModel) {
+StrategyView.prototype.strategySelect = function(strategyModel) {
 	var self = this;
-	var soldierDetailed = new SoldierDetailedView(self.controller,soldierModel,self);
-	var obj = {title:soldierModel.name(),subWindow:soldierDetailed,width:400,height:480};
-	var windowLayer = ConfirmWindow(obj);
-		
-	LMvc.layer.addChild(windowLayer);
+	var e = new LEvent(StrategyListEvent.SELECT);
+	e.strategyModel = strategyModel;
+	self.dispatchEvent(e);
+	self.remove();
 };

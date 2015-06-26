@@ -8,7 +8,7 @@ TestController.prototype.construct=function(){
 };
 TestController.prototype.configLoad=function(){
 	var self = this;
-	self.load.config(["Character","characterList","Belong"],self.configLoad2);
+	self.load.config(["Character","characterList","Belong","Event"],self.configLoad2);
 };
 TestController.prototype.configLoad2=function(){
 	var self = this;

@@ -14,15 +14,31 @@ StrategyChildView.prototype.set=function(){
 	var self = this;
 	self.layerInit();
 	var layer = new LSprite();
-	console.log("self.strategyModel.name()="+self.strategyModel.name());
 	var width = 50, height = 50;
 	
 	var lblName = getStrokeLabel(self.strategyModel.name(),20,"#FFFFFF","#000000",3);
 	lblName.x = width + 5;
 	lblName.y = 5;
 	layer.addChild(lblName);
-//	self.layer.addChild((layer));return;
-	self.layer.addChild(getBitmap(layer));console.log("over");
+	
+	var effectType = (function(){
+		switch(self.strategyModel.effectType()){
+			case StrategyEffectType.Attack:
+				return "攻击";
+		}
+	})();
+	
+	var lblEffectType = getStrokeLabel(effectType,20,"#FFFFFF","#000000",3);
+	lblEffectType.x = lblName.x + 100;
+	lblEffectType.y = 5;
+	layer.addChild(lblEffectType);
+	
+	var lblMp = getStrokeLabel(self.strategyModel.cost(),20,"#FFFFFF","#000000",3);
+	lblMp.x = lblEffectType.x + 120;
+	lblMp.y = 5;
+	layer.addChild(lblMp);
+	
+	self.layer.addChild(getBitmap(layer));
 	
 	var icon = self.strategyModel.icon(new LPoint(50,50));
 	self.layer.addChild(icon);

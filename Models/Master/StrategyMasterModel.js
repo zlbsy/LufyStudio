@@ -32,6 +32,9 @@ StrategyMasterModel.prototype.id = function() {
 StrategyMasterModel.prototype.name = function() {
 	return this.data.name;
 };
+StrategyMasterModel.prototype.effectType = function() {
+	return this.data.effectType;
+};
 StrategyMasterModel.prototype.strategyType = function() {
 	return this.data.type;
 };

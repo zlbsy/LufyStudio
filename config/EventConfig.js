@@ -39,3 +39,7 @@ BattleSelectMenuEvent.STANDBY = "standby";
 BattleSelectMenuEvent.CANCEL = "cancel";
 BattleSelectMenuEvent.SELECT_MENU_SHOW = "select_menu_show";
 BattleSelectMenuEvent.SELECT_MENU_HIDDEN = "select_menu_hidden";
+
+var StrategyListEvent = {};
+StrategyListEvent.SELECT = "strategyListSelect";
+StrategyListEvent.CLOSE = "strategyListClose";

@@ -23,6 +23,9 @@ StrategyModel.prototype.cost = function() {
 StrategyModel.prototype.name = function() {
 	return this.master().name();
 };
+StrategyModel.prototype.effectType = function() {
+	return this.master().effectType();
+};
 StrategyModel.prototype.strategyType = function() {
 	return this.master().strategyType();
 };

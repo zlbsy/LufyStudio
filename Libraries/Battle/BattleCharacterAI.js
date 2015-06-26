@@ -70,3 +70,10 @@ BattleCharacterAI.prototype.endAction = function() {
 	chara.mode = CharacterMode.END_ACTION;
 	chara.toStatic(true);
 };
+BattleCharacterAI.prototype.strategySelect = function(strategyModel) {
+	var self = this;
+	console.log("BattleCharacterAI.prototype.strategySelect",strategyModel,strategyModel.rangeAttack());
+	LMvc.BattleController.view.roadLayer.setStrategyRoads(strategyModel.rangeAttack(),self.chara);
+	self.chara.mode = CharacterMode.STRATEGY_SELECT;
+};
+

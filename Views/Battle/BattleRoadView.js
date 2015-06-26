@@ -54,6 +54,18 @@ BattleRoadView.prototype.setRoads = function(nodes,data){
 		self.bitmap.bitmapData.copyPixels(data, new LRectangle(0, 0, self.model.stepWidth, self.model.stepHeight), new LPoint(x,y));
 	}
 };
+BattleRoadView.prototype.setStrategyRoads = function(nodes,chara){
+	var self = this,x,y;
+	self.clear();
+	self.strategyList = [];
+	x = chara.locationX();
+	y = chara.locationY();
+	for(var i=0,l=nodes.length;i<l;i++){
+		var node = nodes[i];
+		self.strategyList.push(new LPoint(x + node.x,y + node.y));
+	}
+	self.setRoads(self.strategyList, self.blueData);
+};
 BattleRoadView.prototype.clear = function(){
 	var self = this;
 	self.visible = false;

@@ -9,7 +9,7 @@ LogoController.prototype.construct=function(){
 };
 LogoController.prototype.configLoad=function(){
 	var self = this;
-	self.load.config(["Position"],self.helperLoad);
+	self.load.config(["Position","Belong"],self.helperLoad);
 };
 LogoController.prototype.helperLoad=function(){
 	var self = this;

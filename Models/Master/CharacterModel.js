@@ -61,6 +61,9 @@ CharacterModel.prototype.maxTroops = function(value) {
 	//TODO::
 	return 1000;
 };
+CharacterModel.prototype.MP = function() {return 20;
+	return this.data.mp;
+};
 CharacterModel.prototype.level = function() {
 	return 10;
 };

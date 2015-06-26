@@ -13,11 +13,11 @@ MapController.prototype.baseControllersLoad=function(){
 };
 MapController.prototype.configLoad=function(){
 	var self = this;
-	self.load.config(["characterList","Job","Items","Event"],self.modelLoad);
+	self.load.config(["characterList","Job","Items","Event","Strategy"],self.modelLoad);
 };
 MapController.prototype.modelLoad=function(){
 	var self = this;
-	self.load.model(["Master/Area","Master/Seignior","Master/Character","Master/ItemMaster","Items/Item"],self.libraryLoad);
+	self.load.model(["Master/Area","Master/Seignior","Master/Character","Master/ItemMaster","Items/Item","Master/StrategyMaster","Master/Strategy"],self.libraryLoad);
 };
 MapController.prototype.libraryLoad=function(){
 	var self = this;
@@ -36,6 +36,7 @@ MapController.prototype.getAreaData=function(){
 	var self = this;
 	CharacterModel.setChara(characterList);
 	ItemMasterModel.setMaster(ItemDatas);
+	StrategyMasterModel.setMaster(StrategyDatas);
 	
 	self.model.getAreaData(self.getImages);
 };

@@ -5,6 +5,7 @@ BattleSelectMenuController.prototype.construct=function(){
 	var self = this;
 	self.addEventListener(BattleSelectMenuEvent.ATTACK,self.attack);
 	self.addEventListener(BattleSelectMenuEvent.SINGLE_COMBAT,self.singleCombat);
+	self.addEventListener(BattleSelectMenuEvent.MAGIC_SELECT,self.magicSelect);
 	self.addEventListener(BattleSelectMenuEvent.STANDBY,self.standby);
 	self.addEventListener(BattleSelectMenuEvent.CANCEL,self.cancel);
 };
@@ -38,4 +39,16 @@ BattleSelectMenuController.prototype.singleCombat = function(event){
 };
 BattleSelectMenuController.prototype.standby = function(event){
 	BattleController.ctrlChara.AI.endAction();
+};
+BattleSelectMenuController.prototype.magicSelect = function(event){
+	var self = BattleSelectMenuController.instance();
+	var view = new StrategyView(null, BattleController.ctrlChara.data);
+	view.addEventListener(StrategyListEvent.CLOSE,function(){
+		self.show();
+	});
+	view.addEventListener(StrategyListEvent.SELECT,self.strategySelect);
+	LMvc.BattleController.view.parent.addChild(view);
+};
+BattleSelectMenuController.prototype.strategySelect = function(event){
+		BattleController.ctrlChara.AI.strategySelect(event.strategyModel);
 };
