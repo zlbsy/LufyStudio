@@ -9,6 +9,13 @@ BattleCharacterAI.prototype.setEvent = function() {
 		BattleSelectMenuController.instance().show();
 	});
 };
+BattleCharacterAI.prototype.magicAttack  function(target){
+	var self = this;
+	self.target = target;
+	var direction = getDirectionFromTarget(self.chara, target);
+	self.chara.setActionDirection(CharacterAction.MAGIC_ATTACK, direction);
+	
+};
 BattleCharacterAI.prototype.physicalAttack = function(target) {
 	var self = this;
 	self.target = target;
@@ -74,6 +81,7 @@ BattleCharacterAI.prototype.strategySelect = function(strategyModel) {
 	var self = this;
 	console.log("BattleCharacterAI.prototype.strategySelect",strategyModel,strategyModel.rangeAttack());
 	LMvc.BattleController.view.roadLayer.setStrategyRoads(strategyModel.rangeAttack(),self.chara);
+	self.chara.currentSelectStrategy = strategyModel;
 	self.chara.mode = CharacterMode.STRATEGY_SELECT;
 };
 

@@ -136,7 +136,18 @@ BattleController.prototype.physicalAttack = function(event){
 	BattleController.ctrlChara.AI.physicalAttack(chara);
 };
 BattleController.prototype.clickStrategyRange = function(chara){
+	var self = this;
+	if(!chara){
+		return;
+	}
+	if(!isSameBelong(BattleController.ctrlChara.currentSelectStrategy.belong(),chara.belong)){
+		//Todo::
+		Toast.makeText(String.format(Language.get("can_not_operating"), Language.get(BattleController.ctrlChara.belong))).show();
+		return;
 	
+	}
+	self.view.roadLayer.clear();
+	BattleController.ctrlChara.AI.magicAttack(chara);
 };
 BattleController.prototype.clickOnRoadLayer = function(event){
 	var self = event.currentTarget.parent.controller;

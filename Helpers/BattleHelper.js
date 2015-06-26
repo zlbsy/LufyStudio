@@ -25,3 +25,18 @@ function getDirectionFromTarget(chara, target){
 	}
 	return direction;
 };
+function isSameBelong(belong,targetBelong){
+	if(belong == Belong.ENEMY){
+		if(targetBelong == Belong.ENEMY){
+			return true;
+		}else{
+			return false;
+		}
+	}else{
+		if(targetBelong == Belong.ENEMY){
+			return false;
+		}else{
+			return true;
+		}
+	}
+}
