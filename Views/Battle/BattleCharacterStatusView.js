@@ -203,9 +203,10 @@ BattleCharacterStatusView.prototype.onComplete=function(event){
 };
 BattleCharacterStatusView.prototype.deleteSelf=function(event){
 	var self = event.target;
-	var character = self.character;
+	self.dispatchEvent(BattleCharacterStatusEvent.CHANGE_COMPLETE);
+	//var character = self.character;
 	self.remove();
-	character.dispatchEvent(BattleCharacterActionEvent.COUNTER_ATTACK);
+	//character.dispatchEvent(BattleCharacterActionEvent.COUNTER_ATTACK);
 };
 BattleCharacterStatusView.prototype.setStatus=function(){
 	var self = this;

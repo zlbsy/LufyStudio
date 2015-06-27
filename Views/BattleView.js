@@ -61,6 +61,9 @@ BattleView.prototype.layerInit=function(){
 	//人物层
 	self.charaLayer = new BattleCharacterLayerView(self.controller);
 	self.baseLayer.addChild(self.charaLayer);
+	//特效层
+	self.effectLayer = new LSprite();
+	self.baseLayer.addChild(self.effectLayer);
 	/*//遮挡层
 	self.buildLayer = new LSprite();
 	self.baseLayer.addChild(self.buildLayer);*/

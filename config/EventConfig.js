@@ -30,6 +30,9 @@ BattleCharacterActionEvent.HERT_ACTION_COMPLETE = "hertActionComplete";
 //反击
 BattleCharacterActionEvent.COUNTER_ATTACK = "counterAttack";
 
+var BattleCharacterStatusEvent = {};
+BattleCharacterStatusEvent.CHANGE_COMPLETE = "changeComplete";
+
 var BattleSelectMenuEvent = {};
 BattleSelectMenuEvent.ATTACK = "attack";
 BattleSelectMenuEvent.MAGIC_SELECT = "magic_select";

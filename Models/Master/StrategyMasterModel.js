@@ -57,11 +57,11 @@ StrategyMasterModel.prototype.explanation = function() {
 	return Language.getSoldier(this.data.explanation);
 };
 StrategyMasterModel.prototype.image = function() {
-	return this.data.image;
+	return LMvc.IMG_PATH + "strategy/effect/"+this.data.image+".png";
 };
 StrategyMasterModel.prototype.icon=function(size){
 	var self = this;
-	var icon = new BitmapSprite(LMvc.IMG_PATH + "strategy/"+self.data.icon+".png", null,size);
+	var icon = new BitmapSprite(LMvc.IMG_PATH + "strategy/icon/"+self.data.icon+".png", null,size);
 	var winPanel = new LPanel(new LBitmapData(LMvc.datalist["win06"]),size.x,size.y);
 	icon.addChild(getBitmap(winPanel));
 	return icon;

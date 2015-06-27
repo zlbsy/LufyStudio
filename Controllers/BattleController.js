@@ -36,7 +36,7 @@ BattleController.prototype.viewLoad=function(){
 	var self = this;
 	self.load.view(["Battle/Background","Battle/BattleMiniPreview","Battle/BattleMap","Common/Character",
 	"Battle/BattleCharacterLayer","Battle/BattleCharacter","Battle/BattleRoad","Battle/BattleCharacterStatus",
-	"Strategy/Strategy","Strategy/StrategyChild"],self.addMap);
+	"Strategy/Strategy","Strategy/StrategyChild","Battle/EffectStrategy"],self.addMap);
 };
 BattleController.prototype.addMap=function(){
 	var self = this;
@@ -199,6 +199,9 @@ BattleController.prototype.notClickOnRoadLayer = function(event){
 BattleController.prototype.characterClick = function(cx,cy){
 	var self = this;
 	var chara = self.view.charaLayer.getCharacterFromCoordinate(cx,cy);
+	if(!chara){
+		return;
+	}
 	BattleController.ctrlChara = chara;
 	switch(chara.belong){
 		case Belong.SELF:

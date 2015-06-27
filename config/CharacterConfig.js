@@ -7,7 +7,8 @@ var CharacterAction = {
 	HERT:"hert",
 	WAKE:"wake",
 	PANT:"pant",
-	LEVELUP:"levelup"
+	LEVELUP:"levelup",
+	MAGIC_ATTACK:"magic_attack"
 };
 var CharacterDirection = {
 	DOWN:"down",
