@@ -71,6 +71,10 @@ BattleView.prototype.layerInit=function(){
 	self.miniLayer = new BattleMiniPreviewView(self.controller);
 	self.addChild(self.miniLayer);
 	
+	var mainMenu = new BattleMainMenuView(null);
+	mainMenu.x = LGlobal.width - mainMenu.getWidth();
+	self.addChild(mainMenu);
+	
 	//Test code
 	self.buildLayer = new LSprite();
 	self.baseLayer.addChild(self.buildLayer);
@@ -93,10 +97,6 @@ BattleView.prototype.layerInit=function(){
 		c.stroke();
 	});
 	self.buildLayer.addChild(layer);
-	return;
-	var f = new FPS();
-	self.addChild(f);
-	
 };
 BattleView.prototype.onframe=function(event){
 	var self = event.currentTarget.controller;

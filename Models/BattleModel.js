@@ -49,6 +49,7 @@ BattleModel.prototype.getImages=function(){
 	list.push({name:"orange_ball",path:LMvc.IMG_PATH+"icon/orange_ball.png"});
 	list.push({name:"icon-armor",path:LMvc.IMG_PATH+"icon/armor.png"});
 	list.push({name:"icon-weapon",path:LMvc.IMG_PATH+"icon/weapon.png"});
+	list.push({name:"menu_line",path:LMvc.IMG_PATH+"component/menu_line.png"});
 	
 	for(var i=0;i<10;i++){
 		list.push({name:"num-1-"+i,path:LMvc.IMG_PATH+"num/1/num_" +i+".png"});

@@ -57,8 +57,22 @@ TestView.prototype.init=function(){
 	layer.addChild(button01);
 	button01.addEventListener(LMouseEvent.MOUSE_UP,self.showStrategy.bind(self));
 	
+	button01 = new LButtonSample1("战场主菜单");
+	button01.x = 100;
+	button01.y = 90;
+	layer.addChild(button01);
+	button01.addEventListener(LMouseEvent.MOUSE_UP,self.showBattleMap.bind(self));
+	
 	self.statusLayer = new LSprite();
 	self.addChild(self.statusLayer);
+};
+TestView.prototype.showBattleMap=function(event){
+	var self = this;
+	self.statusLayer.removeAllChild();
+	var buttonView = new BattleMainMenuView(null);
+	buttonView.x = 100;
+	buttonView.y = 150;
+	self.statusLayer.addChild(buttonView);
 };
 TestView.prototype.showStrategy=function(event){
 	var self = this;
