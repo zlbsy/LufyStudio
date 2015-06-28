@@ -1762,15 +1762,22 @@ LSGJBattleCharacterScript.analysis = function(value) {
 		case "SGJBattleCharacter.endAction":
 			LSGJBattleCharacterScript.endAction(value, start, end);
 			break;
+		case "SGJBattleCharacter.singleCombatStart":
+			LSGJBattleCharacterScript.singleCombatStart(value, start, end);
+			break;
 		default:
 			LGlobal.script.analysis();
 	}
 };
-
 LSGJBattleCharacterScript.endAction = function(value, start, end) {
 	var params = value.substring(start + 1, end).split(",");
 	var character = LMvc.BattleController.view.charaLayer.getCharacter(params[0],parseInt(params[1]));
 	character.AI.endAction();
+};
+LSGJBattleCharacterScript.singleCombatStart = function(value, start, end) {
+	var params = value.substring(start + 1, end).split(",");
+	var character = LMvc.BattleController.view.charaLayer.getCharacter(params[0],parseInt(params[1]));
+	character.AI.singleCombatStart();
 };
 /*
  *******************************************

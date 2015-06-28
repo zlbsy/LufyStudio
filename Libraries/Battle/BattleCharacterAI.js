@@ -39,16 +39,7 @@ BattleCharacterAI.prototype.singleCombat = function(target) {
 	target.changeDirection(directionTarget);
 	target.toStatic(true);
 	self.chara.changeDirection(direction);
-	var script;
-	//TODO::
-	if(false){
-	
-	}else{
-		script = "SGJTalk.show("+self.chara.data.id()+",0,"+Language.get("single_combat_ask")+");" + 
-		"SGJTalk.show("+self.target.data.id()+",0,"+Language.get("single_combat_answer_no")+");" + 
-		"SGJBattleCharacter.endAction("+self.chara.belong+","+self.chara.data.id()+");";
-	}
-	LGlobal.script.addScript(script);
+	singleCombatCheck(self.chara);
 };
 BattleCharacterAI.prototype.attackActionComplete = function(event) {
 	var chara = event.currentTarget;
@@ -113,9 +104,12 @@ BattleCharacterAI.prototype.endAction = function() {
 	chara.toStatic(true);
 	//TODO::check change battle belong mode
 };
+BattleCharacterAI.prototype.singleCombatStart = function() {
+	var self = this;
+	console.log("BattleCharacterAI.prototype.singleCombatStart");
+};
 BattleCharacterAI.prototype.strategySelect = function(strategyModel) {
 	var self = this;
-	console.log("BattleCharacterAI.prototype.strategySelect",strategyModel,strategyModel.rangeAttack());
 	LMvc.BattleController.view.roadLayer.setStrategyRoads(strategyModel.rangeAttack(),self.chara);
 	self.chara.currentSelectStrategy = strategyModel;
 	self.chara.mode = CharacterMode.STRATEGY_SELECT;

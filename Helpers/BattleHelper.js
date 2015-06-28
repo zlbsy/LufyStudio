@@ -40,3 +40,15 @@ function isSameBelong(belong,targetBelong){
 		}
 	}
 }
+function singleCombatCheck(chara){
+	var script = "SGJTalk.show(" + chara.data.id() + ",0," + String.format(Language.get("single_combat_ask"), chara.AI.target.data.name()) + ");";
+	//TODO::
+	if(true){
+		script += "SGJTalk.show(" + chara.AI.target.data.id() + ",0," + Language.get("single_combat_answer_ok") + ");" + 
+		"SGJBattleCharacter.singleCombatStart(" + chara.belong + "," + chara.data.id() + ");";
+	}else{
+		script += "SGJTalk.show(" + chara.AI.target.data.id() + ",0," + Language.get("single_combat_answer_no") + ");" + 
+		"SGJBattleCharacter.endAction(" + chara.belong + "," + chara.data.id() + ");";
+	}
+	LGlobal.script.addScript(script);
+}

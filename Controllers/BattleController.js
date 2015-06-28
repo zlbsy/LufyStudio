@@ -204,6 +204,7 @@ BattleController.prototype.notClickOnRoadLayer = function(event){
 		case CharacterMode.SHOW_MOVE_ROAD:
 		default:
 			BattleController.ctrlChara.removeAllEventListener();
+			BattleController.ctrlChara.toStatic(true);
 	}
 };
 BattleController.prototype.characterClick = function(cx,cy){
