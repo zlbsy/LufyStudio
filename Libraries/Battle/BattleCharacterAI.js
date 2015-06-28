@@ -39,11 +39,16 @@ BattleCharacterAI.prototype.singleCombat = function(target) {
 	target.changeDirection(directionTarget);
 	target.toStatic(true);
 	self.chara.changeDirection(direction);
-	LGlobal.script.addScript("SGJTalk.show(1,0,不跟我说话是因为看不起我吗？);");
-	console.log("addScript");
-	return;
-	self.chara.setActionDirection(CharacterAction.ATTACK, direction);
-	self.chara.addEventListener(BattleCharacterActionEvent.ATTACK_ACTION_COMPLETE,self.attackActionComplete);
+	var script;
+	//TODO::
+	if(false){
+	
+	}else{
+		script = "SGJTalk.show("+self.chara.data.id()+",0,"+Language.get("single_combat_ask")+");" + 
+		"SGJTalk.show("+self.target.data.id()+",0,"+Language.get("single_combat_answer_no")+");" + 
+		"SGJBattleCharacter.endAction("+self.chara.belong+","+self.chara.data.id()+");";
+	}
+	LGlobal.script.addScript(script);
 };
 BattleCharacterAI.prototype.attackActionComplete = function(event) {
 	var chara = event.currentTarget;
@@ -106,6 +111,7 @@ BattleCharacterAI.prototype.endAction = function() {
 	chara.changeAction(CharacterAction.STAND);
 	chara.mode = CharacterMode.END_ACTION;
 	chara.toStatic(true);
+	//TODO::check change battle belong mode
 };
 BattleCharacterAI.prototype.strategySelect = function(strategyModel) {
 	var self = this;

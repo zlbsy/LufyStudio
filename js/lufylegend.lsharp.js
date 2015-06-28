@@ -1719,17 +1719,9 @@ LScriptSGJ.analysis = function(childType, lineValue) {
 		case "SGJTalk":
 			LSGJTalkScript.analysis(lineValue);
 			break;
-		/*case "SouSouSMap":
-			start = lineValue.indexOf("(");
-			end = lineValue.indexOf(")");
-			params = lineValue.substring(start + 1, end).split(",");
-			if (params.length == 0 || parseInt(params[0]) <= 0) {
-				//敌军等级非固定设定 暂略
-			} else {
-				//敌军等级固定设定 暂略
-			}
-			LGlobal.script.scriptLayer.controller.sousouSMapLoad();
-			break;*/
+		case "SGJBattleCharacter":
+			LSGJBattleCharacterScript.analysis(lineValue);
+			break;
 		default:
 			LGlobal.script.analysis();
 	}
@@ -1742,7 +1734,6 @@ LSGJTalkScript = function() {
 LSGJTalkScript.analysis = function(value) {
 	var start = value.indexOf("(");
 	var end = value.indexOf(")");
-	console.log("LScriptSGJ.value.substr(0,start) " + value.substr(0,start));
 	switch(value.substr(0,start)) {
 		case "SGJTalk.show":
 			LSGJTalkScript.show(value, start, end);
@@ -1755,73 +1746,32 @@ LSGJTalkScript.show = function(value, start, end) {
 	var params = value.substring(start + 1, end).split(",");
 	Talk(params[0], params[1], params[2], function() {
 		LMvc.talkOver = true;
+		//TalkRemove();
 	});
 };
 /*
- * LSouSouSMapScript.js
+ * LSGJBattleCharacterScript.js
  **/
-/*
-LSouSouSMapScript = function() {
+
+LSGJBattleCharacterScript = function() {
 };
-LSouSouSMapScript.analysis = function() {
-	var script = LGlobal.script;
-	if (script.lineList.length == 0)
-		return;
-	var lineValue = LMath.trim(script.lineList.shift());
-	if (lineValue.length == 0) {
-		LSouSouSMapScript.analysis();
-		return;
-	}
-	trace("LSouSouSMapScript analysis lineValue = " + lineValue);
-	switch(lineValue) {
-		case "SouSouSMap.end()":
-			//暂略
-			return;
-		case "initialization.start":
-			LSouSouSMapScript.initialization();
+LSGJBattleCharacterScript.analysis = function(value) {
+	var start = value.indexOf("(");
+	var end = value.indexOf(")");
+	switch(value.substr(0,start)) {
+		case "SGJBattleCharacter.endAction":
+			LSGJBattleCharacterScript.endAction(value, start, end);
 			break;
 		default:
-			LSouSouSMapScript.analysis();
+			LGlobal.script.analysis();
 	}
 };
-LSouSouSMapScript.initialization = function() {
-	var script = LGlobal.script;
-	var lineValue = LMath.trim(script.lineList.shift());
-	trace("LSouSouSMapScript.initialization lineValue = " + lineValue);
-	if (lineValue.length == 0) {
-		LSouSouSMapScript.initialization();
-		return;
-	}
-	if (lineValue == "initialization.end") {
-		LSouSouSMapScript.analysis();
-		return;
-	}
-	var params, i;
-	var start = lineValue.indexOf("(");
-	var end = lineValue.indexOf(")");
-	switch(lineValue.substr(0,start)) {
-		case "addMap":
-			LSouSouObject.SouSouSMap.addMap(lineValue.substring(start + 1, end).split(","));
-			break;
-		case "SouSouSCharacter.addOur":
-			params = lineValue.substring(start + 1, end).split(",");
-			params.push(LSouSouSMapScript.initialization.bind(LGlobal.script));
-			LSouSouObject.SouSouSMap.addOurCharacter.apply(LSouSouObject.SouSouSMap, params);
-			break;
-		case "SouSouSCharacter.addEnemy":
-			params = lineValue.substring(start + 1, end).split(",");
-			params.push(LSouSouSMapScript.initialization.bind(LGlobal.script));
-			LSouSouObject.SouSouSMap.addEnemyCharacter.apply(LSouSouObject.SouSouSMap, params);
-			break;
-		case "SouSouSCharacter.addFriend":
-			params = lineValue.substring(start + 1, end).split(",");
-			params.push(LSouSouSMapScript.initialization.bind(LGlobal.script));
-			LSouSouObject.SouSouSMap.addFriendCharacter.apply(LSouSouObject.SouSouSMap, params);
-			break;
-		default:
-			LSouSouSMapScript.initialization();
-	}
-};*/
+
+LSGJBattleCharacterScript.endAction = function(value, start, end) {
+	var params = value.substring(start + 1, end).split(",");
+	var character = LMvc.BattleController.view.charaLayer.getCharacter(params[0],parseInt(params[1]));
+	character.AI.endAction();
+};
 /*
  *******************************************
  战棋游戏脚本 结束

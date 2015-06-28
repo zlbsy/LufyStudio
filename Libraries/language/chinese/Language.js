@@ -139,7 +139,9 @@ Language.data = {
 	"city_title":"{0}年{1}月  {2}  ({3})",
 	
 	"null":"无",
-	
+	"single_combat_ask":"敌将{0}敢与我大战三百回合吗？",
+	"single_combat_answer_ok":"那就让你做我的刀下鬼吧！",
+	"single_combat_answer_no":"你还不配和我交手!",
 	"gameover":"游戏结束"
 };
 Language.characterData = {

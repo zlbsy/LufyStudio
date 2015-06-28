@@ -12,6 +12,7 @@ function TalkRun(layer,y,index,faceindex,msg,callback){
 		LMvc.talkLayer.remove();
 	}
 	var talkLayer = new LSprite();
+	
 	talkLayer.y = y;
 	talkLayer.x = 50;
 	var model = CharacterModel.getChara(index);
@@ -39,12 +40,15 @@ function TalkRun(layer,y,index,faceindex,msg,callback){
 	msgText.color = "#FFFFFF";
 	msgText.width = 430;
 	msgText.setWordWrap(true,23);
-	msgText.speed = 2;
+	//msgText.speed = 4;
 	msgText.wind(callback);
 	talkLayer.addChild(msgText);
-	layer.addChild(talkLayer);
+	LMvc.layer.addChild(talkLayer);
 	LMvc.talkOver = false;
 	LMvc.talkLayer = talkLayer;
+	talkLayer.addShape(LShape.RECT,[-talkLayer.x,-talkLayer.y,LGlobal.width,LGlobal.height]);
+	talkLayer.addEventListener(LMouseEvent.MOUSE_DOWN, function(){});
+	talkLayer.addEventListener(LMouseEvent.MOUSE_UP, TalkRemove);
 }
 function TalkRemove(){
 	LMvc.talkLayer.remove();

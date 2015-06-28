@@ -34,6 +34,31 @@ BattleCharacterLayerView.prototype.getCharacterFromCoordinate=function(x,y){
 	}
 	return null;
 };
+BattleCharacterLayerView.prototype.getCharacter=function(belong,id){
+	var self = this;
+	switch(belong){
+		case Belong.SELF:
+			childList = self.model.ourList;
+			break;
+		case Belong.FRIEND:
+			childList = self.model.friendList;
+			break;
+		case Belong.ENEMY:
+			childList = self.model.enemyList;
+			break;
+	}
+	return self.getCharacterFromeList(childList,id);
+};
+BattleCharacterLayerView.prototype.getCharacterFromeList=function(childList,id){
+	var self = this,child;
+	for(var i=0,l=childList.length;i<l;i++){
+		child = childList[i];
+		if(child.data.id() == id){
+			return child;
+		}	
+	}
+	return null;
+};
 BattleCharacterLayerView.prototype.addOurCharacter=function(id,action,direction,x,y,callback){
 	var self = this;
 	var chara = self.addCharaLayer(id,action,direction,x,y);
