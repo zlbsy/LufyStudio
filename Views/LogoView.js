@@ -40,7 +40,6 @@ LogoView.prototype.showMenu=function(){
 	var self = this;
 	var menuHeight = 55;
 	var menuY = 0;
-	
 	var layer = new LSprite();
 	var title = getStrokeLabel("三国记",80,"#FFFFFF","#000000",4);
 	title.x = (LGlobal.width - title.getWidth())*0.5;

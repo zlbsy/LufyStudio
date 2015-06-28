@@ -98,20 +98,20 @@ BattleController.prototype.mapMouseUp = function(event){
 	event.currentTarget.stopDrag();
 	if(Math.abs(self.downX - event.offsetX) > 12 || Math.abs(self.downY - event.offsetY) > 12){
 		return;
-	}
-	
-	if(!self.view.roadLayer.visible){
+	}else if(!self.view.roadLayer.visible){
 		self.characterClick(event.selfX,event.selfY);
 		return;
-	}
-	if(!self.view.roadLayer.hitTestPoint(event.offsetX,event.offsetY)){
+	}else if(!self.view.roadLayer.hitTestPoint(event.offsetX,event.offsetY)){
 		self.notClickOnRoadLayer(event);
 		return;
-	}
-	if(BattleController.ctrlChara.mode == CharacterMode.WAIT_ATTACK){
+	}else if(BattleController.ctrlChara.mode == CharacterMode.WAIT_ATTACK){
 		self.physicalAttack(event);
 		return;
+	}else if(BattleController.ctrlChara.mode == CharacterMode.WAIT_SINGLE_COMBAT){
+		self.singleCombat(event);
+		return;
 	}
+	
 	self.clickOnRoadLayer(event);
 };
 BattleController.prototype.mapMouseDown = function(event){
@@ -119,12 +119,21 @@ BattleController.prototype.mapMouseDown = function(event){
 		return;
 	}
 	var self = event.currentTarget.parent.controller;
-	/*if(LSouSouObject.talkLayer || LSouSouObject.runMode){
+	/*if(LMvc.talkLayer){
 		return;
 	}*/
 	self.downX = event.offsetX;
 	self.downY = event.offsetY;
 	event.currentTarget.startDrag(event.touchPointID);
+};
+BattleController.prototype.singleCombat = function(event){
+	var self = event.currentTarget.parent.controller;
+	var chara = self.view.charaLayer.getCharacterFromCoordinate(event.selfX,event.selfY);
+	if(!chara || chara.belong != Belong.ENEMY){
+		return;
+	}
+	self.view.roadLayer.clear();
+	BattleController.ctrlChara.AI.singleCombat(chara);
 };
 BattleController.prototype.physicalAttack = function(event){
 	var self = event.currentTarget.parent.controller;
@@ -183,16 +192,17 @@ BattleController.prototype.clickOnRoadLayer = function(event){
 BattleController.prototype.notClickOnRoadLayer = function(event){
 	console.log("BattleController.prototype.notClickOnRoadLayer ",BattleController.ctrlChara.mode);
 	var self = event.currentTarget.parent.controller;
+	self.view.roadLayer.clear();
 	switch(BattleController.ctrlChara.mode){
 		case CharacterMode.WAIT_ATTACK:
-			self.view.roadLayer.clear();
+		case CharacterMode.WAIT_SINGLE_COMBAT:
 			BattleController.ctrlChara.dispatchEvent(CharacterActionEvent.MOVE_COMPLETE);
 			break;
 		case CharacterMode.STRATEGY_SELECT:
+			BattleSelectMenuController.instance().magicSelect();
 			break;
 		case CharacterMode.SHOW_MOVE_ROAD:
 		default:
-			self.view.roadLayer.clear();
 			BattleController.ctrlChara.removeAllEventListener();
 	}
 };

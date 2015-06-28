@@ -10,6 +10,8 @@ MapModel.prototype.getImages=function(){
 	var list = [];
 	list.push({name:"area-map-1",path:LMvc.IMG_PATH+"area/map-1.png"});
 	
+	list.push({name:"talkbox",path:LMvc.IMG_PATH+"common/talkbox.png"});
+	
 	list.push({name:"area-1",path:LMvc.IMG_PATH+"area/area-1.png"});
 	list.push({name:"flag-black",path:LMvc.IMG_PATH+"area/flag-black.png"});
 	list.push({name:"flag-blue",path:LMvc.IMG_PATH+"area/flag-blue.png"});

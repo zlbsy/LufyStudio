@@ -35,7 +35,7 @@ BattleSelectMenuController.prototype.cancel = function(event){
 	BattleController.ctrlChara.returnShowMoveRoadObject();
 };
 BattleSelectMenuController.prototype.singleCombat = function(event){
-	
+	BattleController.ctrlChara.setRangeSingleCombat();
 };
 BattleSelectMenuController.prototype.standby = function(event){
 	BattleController.ctrlChara.AI.endAction();

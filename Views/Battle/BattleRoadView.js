@@ -19,6 +19,17 @@ BattleRoadView.prototype.setMoveRoads = function(nodes,belong){
 	self.roadList = nodes;
 	self.setRoads(nodes, belong == Belong.SELF ? self.blueData : self.greenData);
 };
+BattleRoadView.prototype.setRangeSingleCombat = function(chara){
+	var self = this,solider,ranges,range,x,y,nodes = [];
+	x = chara.locationX();
+	y = chara.locationY();
+	ranges = [{x:0,y:1},{x:0,y:-1},{x:1,y:0},{x:-1,y:0}];	
+	for(var i=0;i<ranges.length;i++){
+		range = ranges[i];
+		nodes.push(new LPoint(x + range.x,y + range.y));
+	}
+	self.setRoads(nodes, self.redData);
+};
 BattleRoadView.prototype.setRangeAttack = function(chara){
 	var self = this,solider,ranges,range,x,y,nodes = [];
 	x = chara.locationX();

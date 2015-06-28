@@ -24,9 +24,24 @@ BattleCharacterAI.prototype.physicalAttack = function(target) {
 	var self = this;
 	self.target = target;
 	target.AI.attackTarget = self.chara;
-	console.log("LSouSouCharacterAI.prototype.physicalAttack "+self.chara.data.id() + ", target="+target.data.id());
 	var direction = getDirectionFromTarget(self.chara, target);
 	
+	self.chara.setActionDirection(CharacterAction.ATTACK, direction);
+	self.chara.addEventListener(BattleCharacterActionEvent.ATTACK_ACTION_COMPLETE,self.attackActionComplete);
+};
+BattleCharacterAI.prototype.singleCombat = function(target) {
+	var self = this;
+	self.target = target;
+	target.AI.attackTarget = self.chara;
+	var direction = getDirectionFromTarget(self.chara, target);
+	var directionTarget = getDirectionFromTarget(target, self.chara);
+	target.toStatic(false);
+	target.changeDirection(directionTarget);
+	target.toStatic(true);
+	self.chara.changeDirection(direction);
+	LGlobal.script.addScript("SGJTalk.show(1,0,不跟我说话是因为看不起我吗？);");
+	console.log("addScript");
+	return;
 	self.chara.setActionDirection(CharacterAction.ATTACK, direction);
 	self.chara.addEventListener(BattleCharacterActionEvent.ATTACK_ACTION_COMPLETE,self.attackActionComplete);
 };

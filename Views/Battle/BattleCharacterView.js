@@ -201,6 +201,11 @@ BattleCharacterView.prototype.setRangeAttack = function(){
 	LMvc.BattleController.view.roadLayer.setRangeAttack(self);
 	self.mode = CharacterMode.WAIT_ATTACK;
 };
+BattleCharacterView.prototype.setRangeSingleCombat = function(){
+	var self = this;
+	LMvc.BattleController.view.roadLayer.setRangeSingleCombat(self);
+	self.mode = CharacterMode.WAIT_SINGLE_COMBAT;
+};
 BattleCharacterView.prototype.saveShowMoveRoadObject = function(roadList) {
 	var self = this;
 	self.showMoveRoadObject = {x:self.x,y:self.y,action:self.action,direction:self.direction,roadList:roadList};

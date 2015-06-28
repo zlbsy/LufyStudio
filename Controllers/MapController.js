@@ -13,7 +13,11 @@ MapController.prototype.baseControllersLoad=function(){
 };
 MapController.prototype.configLoad=function(){
 	var self = this;
-	self.load.config(["characterList","Job","Items","Event","Strategy"],self.modelLoad);
+	self.load.config(["characterList","Job","Items","Event","Strategy"],self.helperLoad);
+};
+MapController.prototype.helperLoad=function(){
+	var self = this;
+	self.load.helper(["Talk"],self.modelLoad);
 };
 MapController.prototype.modelLoad=function(){
 	var self = this;

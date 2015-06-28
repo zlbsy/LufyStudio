@@ -56,10 +56,6 @@ BattleSelectMenuView.prototype.setMenu=function(){
 	
 	var layer = new LSprite(), menuY = 10, menuWidth = 120, menuHeight = 50;
 	
-	var win = new LPanel(new LBitmapData(LMvc.datalist["win05"]),menuWidth + menuY*2,menuHeight * 5 + menuY*3);
-	var winBitmap = getBitmap(win);
-	self.mainLayer.addChild(winBitmap);
-	
 	self.mainLayer.addChild(layer);
 	layer.x = menuY;
 	var menuButton = getIconButton("battle-menu",new LRectangle(0,0,35,35),"攻击",menuWidth);
@@ -78,24 +74,22 @@ BattleSelectMenuView.prototype.setMenu=function(){
 	menuButton.y = menuY;
 	layer.addChild(menuButton);
 	menuButton.addEventListener(LMouseEvent.MOUSE_UP, self.clickSingleCombat);
-	
+	/*
 	menuY += menuHeight;
 	var menuButton = getIconButton("battle-menu",new LRectangle(105,0,35,35),"物品",menuWidth);
 	menuButton.y = menuY;
 	layer.addChild(menuButton);
-	menuButton.addEventListener(LMouseEvent.MOUSE_UP, self.onclick);
-	/*
-	menuY += menuHeight;
-	var menuButton = getIconButton("battle-menu",new LRectangle(140,0,35,35),Language.get("技能"),menuWidth);
-	menuButton.y = menuY;
-	layer.addChild(menuButton);
-	menuButton.addEventListener(LMouseEvent.MOUSE_UP, self.onclick);
-	*/
+	menuButton.addEventListener(LMouseEvent.MOUSE_UP, self.clickItem);*/
+
 	menuY += menuHeight;
 	var menuButton = getIconButton("battle-menu",new LRectangle(175,0,35,35),Language.get("待命"),menuWidth);
 	menuButton.y = menuY;
 	layer.addChild(menuButton);
 	menuButton.addEventListener(LMouseEvent.MOUSE_UP, self.clickStandby);
+	
+	var win = new LPanel(new LBitmapData(LMvc.datalist["win05"]),menuWidth + 20, menuHeight * (((menuY - 10) / menuHeight >> 0) + 1) + 30);
+	var winBitmap = getBitmap(win);
+	self.mainLayer.addChildAt(winBitmap, 0);
 };
 BattleSelectMenuView.prototype.clickAttack=function(event){
 	var self = event.currentTarget.parent.parent.parent;
