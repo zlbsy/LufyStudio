@@ -12,7 +12,12 @@ SingleCombatController.prototype.construct=function(){
 };
 SingleCombatController.prototype.configLoad=function(){
 	var self = this;
-	self.load.config(["Character"],self.viewLoad);
+	self.load.config(["Character"],self.libraryLoad);
+};
+SingleCombatController.prototype.libraryLoad=function(){
+	var self = this;
+	var libraris = ["Face"];
+	self.load.library(libraris,self.viewLoad);
 };
 SingleCombatController.prototype.viewLoad=function(){
 	var self = this;

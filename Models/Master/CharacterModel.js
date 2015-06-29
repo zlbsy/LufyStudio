@@ -183,15 +183,12 @@ CharacterModel.prototype.face = function() {
 };
 CharacterModel.prototype.minFace = function(size) {
 	var self = this;
-	if(!self._minFace){
-		self._minFace = JSON.parse(this.data.minFace);
-	}
-	var face = new Face(LMvc.IMG_PATH + "face/" + this.data.faceImg + ".png", self._minFace);
+	var face = new Face(LMvc.IMG_PATH + "face/" + self.data.faceImg + ".png", self.data.minFace);
 	if ( typeof size == UNDEFINED) {
 		size = 100;
 	}
-	face.scaleX = size / self._minFace[2];
-	face.scaleY = size / self._minFace[3];
+	face.scaleX = size / self.data.minFace[2];
+	face.scaleY = size / self.data.minFace[3];
 	return face;
 };
 CharacterModel.prototype.minFaceRect = function() {

@@ -28,12 +28,14 @@ SingleCombatView.prototype.characterLayerInit=function(){
 	var self = this;
 	self.characterLayer = new LSprite();
 	self.backLayer.addChild(self.characterLayer);
-	console.log("self.characterLayerInit BattleCharacterSize="+BattleCharacterSize);
 	var currentCharacter = new SingleCombatCharacterView(null,self.controller.currentCharacterId,BattleCharacterSize.width,BattleCharacterSize.height);
 	currentCharacter.scaleX = currentCharacter.scaleY = 2;
 	self.characterLayer.addChild(currentCharacter);
 	currentCharacter.setCoordinate(LGlobal.width * 0.5 - 96,200 - 48);
 	currentCharacter.changeDirection(CharacterDirection.RIGHT);
+	console.log("self.characterLayerInit currentCharacter.data="+currentCharacter.data.minFace);
+	self.characterLayer.addChild(currentCharacter.data.minFace());
+	
 	
 	currentCharacter = new SingleCombatCharacterView(null,self.controller.targetCharacterId,BattleCharacterSize.width,BattleCharacterSize.height);
 	currentCharacter.scaleX = currentCharacter.scaleY = 2;
