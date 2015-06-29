@@ -11,6 +11,8 @@ SingleCombatView.prototype.init=function(){
 	self.addChild(self.backLayer);
 	
 	self.backLayerInit();
+	console.log("self.backLayerInit ok");
+	self.characterLayerInit();
 };
 SingleCombatView.prototype.backLayerInit=function(){
 	var self = this;
@@ -21,4 +23,21 @@ SingleCombatView.prototype.backLayerInit=function(){
 	bitmap.x = (LGlobal.width - bitmap.getWidth()) * 0.5;
 	bitmap.y = 200;
 	self.backLayer.addChild(bitmap);
+};
+SingleCombatView.prototype.characterLayerInit=function(){
+	var self = this;
+	self.characterLayer = new LSprite();
+	self.backLayer.addChild(self.characterLayer);
+	console.log("self.characterLayerInit BattleCharacterSize="+BattleCharacterSize);
+	var currentCharacter = new SingleCombatCharacterView(null,self.controller.currentCharacterId,BattleCharacterSize.width,BattleCharacterSize.height);
+	currentCharacter.scaleX = currentCharacter.scaleY = 2;
+	self.characterLayer.addChild(currentCharacter);
+	currentCharacter.setCoordinate(LGlobal.width * 0.5 - 96,200 - 48);
+	currentCharacter.changeDirection(CharacterDirection.RIGHT);
+	
+	currentCharacter = new SingleCombatCharacterView(null,self.controller.targetCharacterId,BattleCharacterSize.width,BattleCharacterSize.height);
+	currentCharacter.scaleX = currentCharacter.scaleY = 2;
+	self.characterLayer.addChild(currentCharacter);
+	currentCharacter.setCoordinate(LGlobal.width * 0.5,200 - 48);
+	currentCharacter.changeDirection(CharacterDirection.LEFT);
 };

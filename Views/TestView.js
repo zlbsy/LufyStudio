@@ -74,7 +74,7 @@ TestView.prototype.init=function(){
 };
 TestView.prototype.showSingleCombat=function(event){
 	var self = this;
-	var combat = new SingleCombatController();
+	var combat = new SingleCombatController(self.controller,1,2);
 	self.statusLayer.addChild(combat.view);
 };
 TestView.prototype.showBattleMap=function(event){
