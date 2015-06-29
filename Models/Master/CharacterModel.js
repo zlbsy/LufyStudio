@@ -186,7 +186,7 @@ CharacterModel.prototype.minFace = function(size) {
 	if(!self._minFace){
 		self._minFace = JSON.parse(this.data.minFace);
 	}
-	var face = new Face(self.id() < 50 ? LMvc.datalist["face-1"] : LMvc.IMG_PATH + "face/" + this.data.faceImg + ".png", self._minFace);
+	var face = new Face(LMvc.IMG_PATH + "face/" + this.data.faceImg + ".png", self._minFace);
 	if ( typeof size == UNDEFINED) {
 		size = 100;
 	}

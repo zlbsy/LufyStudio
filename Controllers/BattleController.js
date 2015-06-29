@@ -12,7 +12,7 @@ BattleController.prototype.construct=function(){
 };
 BattleController.prototype.mvcLoad=function(){
 	var self = this;
-	self.loadMvc(["BattleSelectMenu"],self.configLoad);
+	self.loadMvc(["BattleSelectMenu","SingleCombat"],self.configLoad);
 	//self.configLoad();
 };
 BattleController.prototype.configLoad=function(){

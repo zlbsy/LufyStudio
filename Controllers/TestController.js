@@ -4,7 +4,11 @@ function TestController(chapterSelectData){
 TestController.prototype.construct=function(){
 	var self = this;
 	var list = self.model.getImages();
-	self.load.image(list,self.configLoad);
+	self.load.image(list,self.mvcLoad);
+};
+TestController.prototype.mvcLoad=function(){
+	var self = this;
+	self.loadMvc(["BattleSelectMenu","SingleCombat"],self.configLoad);
 };
 TestController.prototype.configLoad=function(){
 	var self = this;
