@@ -21,7 +21,7 @@ SingleCombatController.prototype.libraryLoad=function(){
 };
 SingleCombatController.prototype.viewLoad=function(){
 	var self = this;
-	self.load.view(["Battle/SingleCombatCharacter","Common/Character","Battle/BattleCharacter"],self.init);
+	self.load.view(["Battle/SingleCombatCharacter","Common/StatusBar","Common/Character","Battle/BattleCharacter"],self.init);
 };
 SingleCombatController.prototype.init = function(){
 	var self = this;

@@ -34,11 +34,30 @@ SingleCombatView.prototype.characterLayerInit=function(){
 	currentCharacter.setCoordinate(LGlobal.width * 0.5 - 96,200 - 48);
 	currentCharacter.changeDirection(CharacterDirection.RIGHT);
 	console.log("self.characterLayerInit currentCharacter.data="+currentCharacter.data.minFace);
-	var win = new LPanel(new LBitmapData(LMvc.datalist["win05"]),110,150);
+	var win = new LPanel(new LBitmapData(LMvc.datalist["win05"]),130,130);
 	self.characterLayer.addChild(win);
 	var face = currentCharacter.data.minFace();
-	face.x = face.y = 5;
+	face.x = face.y = 15;
 	self.characterLayer.addChild(face);
+
+	var bar = new StatusBarView(self.controller);
+	bar.y = 110;
+	var obj = {maxValue:200,currentValue:150,name:"HP",icon:"icon_hert",frontBar:"red_bar",barSize:140};
+	bar.set(obj);
+	self.characterLayer.addChild(bar);
+
+	var bar = new StatusBarView(self.controller);
+	bar.y = 130;
+	var obj = {maxValue:200,currentValue:150,name:"怒气",icon:"icon_hert",frontBar:"orange_ball",barSize:140};
+	bar.set(obj);
+	self.characterLayer.addChild(bar);
+
+	var bar = new StatusBarView(self.controller);
+	bar.x = LGlobal.width - 150;
+	bar.y = 110;
+	var obj = {maxValue:200,currentValue:150,name:"HP",icon:"icon_hert",frontBar:"red_bar",barSize:140};
+	bar.set(obj);
+	self.characterLayer.addChild(bar);
 	
 	
 	currentCharacter = new SingleCombatCharacterView(null,self.controller.targetCharacterId,BattleCharacterSize.width,BattleCharacterSize.height);
