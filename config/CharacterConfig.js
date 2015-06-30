@@ -23,12 +23,11 @@ var CharacterDirection = {
 var BattleCharacterSize = {
 	width:48,height:48
 };
-/*
-var CharacterConfig = {
-	BELONG_SELF : "belong_self",
-	BELONG_ENEMY : "belong_enemy",
-	BELONG_FRIEND : "belong_friend"
-};*/
+var BattleCharacterStatusConfig = {};
+BattleCharacterStatusConfig.HP = "HP";
+BattleCharacterStatusConfig.MP = "MP";
+BattleCharacterStatusConfig.SP = "SP";
+BattleCharacterStatusConfig.EXP = "Exp";
 var CharacterMode = {
 	SHOW_MOVE_ROAD : "showMoveRoad",
 	STRATEGY_SELECT: "strategySelect",

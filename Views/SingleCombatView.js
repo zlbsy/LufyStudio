@@ -17,7 +17,7 @@ SingleCombatView.prototype.init=function(){
 SingleCombatView.prototype.backLayerInit=function(){
 	var self = this;
 	//TODO::background
-	
+	self.backLayer.addChild(getTranslucentBitmap());
 	var bitmapData = new LBitmapData(LMvc.datalist["singleCombatBackground"]);
 	var bitmap = new LBitmap(bitmapData);
 	bitmap.x = (LGlobal.width - bitmap.getWidth()) * 0.5;
@@ -34,7 +34,11 @@ SingleCombatView.prototype.characterLayerInit=function(){
 	currentCharacter.setCoordinate(LGlobal.width * 0.5 - 96,200 - 48);
 	currentCharacter.changeDirection(CharacterDirection.RIGHT);
 	console.log("self.characterLayerInit currentCharacter.data="+currentCharacter.data.minFace);
-	self.characterLayer.addChild(currentCharacter.data.minFace());
+	var win = new LPanel(new LBitmapData(LMvc.datalist["win05"]),110,150);
+	self.characterLayer.addChild(win);
+	var face = currentCharacter.data.minFace();
+	face.x = face.y = 5;
+	self.characterLayer.addChild(face);
 	
 	
 	currentCharacter = new SingleCombatCharacterView(null,self.controller.targetCharacterId,BattleCharacterSize.width,BattleCharacterSize.height);
