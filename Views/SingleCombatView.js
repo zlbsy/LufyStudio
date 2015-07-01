@@ -35,28 +35,6 @@ SingleCombatView.prototype.characterLayerInit=function(){
 	currentCharacter.setCoordinate(LGlobal.width * 0.5 - 96,230 - 48);
 	currentCharacter.changeDirection(CharacterDirection.RIGHT);
 	self.faceLayerInit(currentCharacter.data,true);
-	/*var win = new LPanel(new LBitmapData(LMvc.datalist["win05"]),220,130);
-	self.characterLayer.addChild(win);
-	var face = currentCharacter.data.minFace(100);
-	face.x = face.y = 15;
-	self.characterLayer.addChild(face);
-	
-	var name = getStrokeLabel(currentCharacter.data.name(),25,"#FFFFFF","#000000",4);
-	name.x = 120;
-	name.y = 15;
-	self.characterLayer.addChild(name);
-
-	var bar = new StatusBarView(self.controller);
-	bar.y = 130;
-	var obj = {maxValue:200,currentValue:150,name:"HP",icon:"icon_hert",frontBar:"red_bar",barSize:200};
-	bar.set(obj);
-	self.characterLayer.addChild(bar);
-
-	var bar = new StatusBarView(self.controller);
-	bar.y = 150;
-	var obj = {maxValue:200,currentValue:150,name:"怒气",icon:"orange_ball",frontBar:"red_bar",barSize:200};
-	bar.set(obj);
-	self.characterLayer.addChild(bar);*/
 	
 	
 	var targetCharacter = new SingleCombatCharacterView(null,self.controller.targetCharacterId,BattleCharacterSize.width,BattleCharacterSize.height);
@@ -65,32 +43,6 @@ SingleCombatView.prototype.characterLayerInit=function(){
 	targetCharacter.setCoordinate(LGlobal.width * 0.5,230 - 48);
 	targetCharacter.changeDirection(CharacterDirection.LEFT);
 	self.faceLayerInit(targetCharacter.data,false);
-/*	var win = new LPanel(new LBitmapData(LMvc.datalist["win05"]),220,130);
-	win.x = LGlobal.width - win.getWidth();
-	self.characterLayer.addChild(win);
-	var face = targetCharacter.data.minFace(100);
-	face.x = LGlobal.width - 100 - 15;
-	face.y = 15;
-	self.characterLayer.addChild(face);
-
-	var bar = new StatusBarView(self.controller);
-	bar.y = 130;
-	var obj = {maxValue:200,currentValue:150,name:"HP",icon:"icon_hert",frontBar:"red_bar",barSize:200};
-	bar.set(obj);
-	bar.x = LGlobal.width - bar.getWidth();
-	self.characterLayer.addChild(bar);
-
-	var bar = new StatusBarView(self.controller);
-	bar.y = 150;
-	var obj = {maxValue:200,currentValue:150,name:"怒气",icon:"orange_ball",frontBar:"red_bar",barSize:200};
-	bar.set(obj);
-	bar.x = LGlobal.width - bar.getWidth();
-	self.characterLayer.addChild(bar);
-	
-	var name = getStrokeLabel(targetCharacter.data.name(),25,"#FFFFFF","#000000",4);
-	name.x = face.x - name.getWidth() - 10;
-	name.y = 15;
-	self.characterLayer.addChild(name);*/
 };
 SingleCombatView.prototype.faceLayerInit=function(characterModel,isLeft){
 	var self = this;
@@ -119,7 +71,7 @@ SingleCombatView.prototype.faceLayerInit=function(characterModel,isLeft){
 	barHp.set(obj);
 	barHp.x = isLeft ? startPosition : LGlobal.width - barHp.getWidth() - startPosition;
 	self.characterLayer.addChild(barHp);
-return;
+
 	var barAngry = new StatusBarView(self.controller);
 	barAngry.x = barHp.x;
 	barAngry.y = barHp.y + barHp.getHeight();

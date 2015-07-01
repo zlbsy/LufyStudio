@@ -13,10 +13,10 @@ StatusBarView.prototype.set = function(obj){
 	self.barSize = obj.barSize;
 	//isDynamic
 	self.mainLayer = new LSprite();
-	self.addChild(self.mainLayer);
 	self.statusLayer = new LSprite();
 	self.addChild(self.statusLayer);
 	self.setCharacterStatus();
+	self.addChildAt(getBitmap(self.mainLayer), 0);
 };
 StatusBarView.prototype.setCharacterStatus=function(){
 	var self = this;
@@ -33,11 +33,12 @@ StatusBarView.prototype.setCharacterStatus=function(){
 	value = self.currentValue / self.maxValue;
 	value = value < 0.001 ? 0.001 : value;
 	var barSize = self.barSize * value;
-	var showSize = barSize < iconBitmapData.width ? iconBitmapData.width : barSize;
-	var barIcon = new LPanel(new LBitmapData(LMvc.datalist[self.frontBar]),showSize,10);
-	if(barSize < iconBitmapData.width){
+	//var showSize = barSize < iconBitmapData.width ? iconBitmapData.width : barSize;
+	var barIcon = getBitmap(new LPanel(new LBitmapData(LMvc.datalist[self.frontBar]),self.barSize,10));
+	/*if(barSize < iconBitmapData.width){
 		barIcon.scaleX = barSize / showSize;
-	}
+	}*/
+	barIcon.scaleX = value;
 	var barEndPosition = barBack.x + self.barSize + 2;
 	barIcon.x = barEndPosition - barSize;
 	barIcon.y = hertIcon.y + 2;
