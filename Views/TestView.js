@@ -7,6 +7,7 @@ TestView.prototype.construct=function(){
 TestView.prototype.init=function(){
 	var self = this;
 	var layer = new LSprite();
+	self.menuLayer = layer;
 	self.addChild(layer);
 	var button01 = new LButtonSample1("我方武将属性确认");
 	button01.x = 10;
@@ -74,6 +75,7 @@ TestView.prototype.init=function(){
 };
 TestView.prototype.showSingleCombat=function(event){
 	var self = this;
+	self.menuLayer.visible = false;
 	var combat = new SingleCombatController(self.controller,1,2);
 	self.statusLayer.addChild(combat.view);
 };
