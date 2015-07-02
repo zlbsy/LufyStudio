@@ -33,11 +33,7 @@ StatusBarView.prototype.setCharacterStatus=function(){
 	value = self.currentValue / self.maxValue;
 	value = value < 0.001 ? 0.001 : value;
 	var barSize = self.barSize * value;
-	//var showSize = barSize < iconBitmapData.width ? iconBitmapData.width : barSize;
 	var barIcon = getBitmap(new LPanel(new LBitmapData(LMvc.datalist[self.frontBar]),self.barSize,10));
-	/*if(barSize < iconBitmapData.width){
-		barIcon.scaleX = barSize / showSize;
-	}*/
 	barIcon.scaleX = value;
 	var barEndPosition = barBack.x + self.barSize + 2;
 	barIcon.x = barEndPosition - barSize;
@@ -48,15 +44,36 @@ StatusBarView.prototype.setCharacterStatus=function(){
 	lblBar.x = textEndPosition - lblBar.getWidth();
 	lblBar.y = barBack.y + barBack.getHeight() - lblBar.getHeight() - 5;
 	self.statusLayer.addChild(lblBar);
-	return;
-	if(isDynamic){
-		self.currentValue = currentValue;
-		self.maxValue = maxValue;
-		self.textEndPosition = textEndPosition;
-		self.barEndPosition = barEndPosition;
-		self.barIcon = barIcon;
-		self.formatLabel = label;
-		self.label = lblBar;
-		LTweenLite.to(self,0.5,{currentValue:self.currentValue + parseInt(self.changeValue),onUpdate:self.onUpdate,onComplete:self.onComplete});
+	self.textEndPosition = textEndPosition;
+	self.barEndPosition = barEndPosition;
+	self.barIcon = barIcon;
+	self.label = lblBar;
+};
+StatusBarView.prototype.onUpdate=function(event){
+	event.target.setStatus();
+};
+StatusBarView.prototype.onComplete=function(event){
+	var self = event.target;
+	self.setStatus();
+	self.dispatchEvent(LEvent.COMPLETE);
+};
+StatusBarView.prototype.changeValue=function(value){
+	var self = this;
+	LTweenLite.to(self,0.5,{currentValue:self.currentValue + value,onUpdate:self.onUpdate,onComplete:self.onComplete});
+};
+StatusBarView.prototype.setStatus=function(){
+	var self = this;
+	if(self.currentValue > self.maxValue){
+		self.currentValue = self.maxValue;
+	}else if(self.currentValue < 0){
+		self.currentValue = 0;
 	}
+	var value = self.currentValue / self.maxValue;
+	value = value < 0.001 ? 0.001 : value;
+	var barSize = self.barSize * value;
+	self.barIcon.scaleX = value;
+	self.barIcon.x = self.barEndPosition - barSize;
+	
+	self.label.text = String.format("{0} {1}/{2} ",self.name,self.currentValue>>0,self.maxValue);
+	self.label.x = self.textEndPosition - self.label.getWidth();
 };

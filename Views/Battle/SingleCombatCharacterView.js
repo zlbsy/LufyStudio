@@ -7,8 +7,9 @@ function SingleCombatCharacterView(controller, id, w, h) {
 	//self.AI = new BattleCharacterAI(self);
 	//self.addShape(LShape.RECT,[0,0,BattleCharacterSize.width,BattleCharacterSize.height]);
 }
-SingleCombatCharacterView.prototype.test = function(){
-	
+SingleCombatCharacterView.prototype.moveTo = function(x,y){
+	var self = this;
+	self.setRoad({x:x,y:y});
 };
 SingleCombatCharacterView.prototype.toStatic = function(value){
 	var self = this;
