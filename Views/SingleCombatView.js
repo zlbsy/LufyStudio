@@ -15,6 +15,10 @@ SingleCombatView.prototype.init=function(){
 	self.backLayerInit();
 	self.characterLayerInit();
 	
+	var vsBitmap = new LBitmap(new LBitmapData(LMvc.datalist["battle-vs"]));
+	vsBitmap.x = (LGlobal.width - vsBitmap.getWidth()) * 0.5;
+	self.backLayer.addChild(vsBitmap);
+	
 	self.addChildAt(getBitmap(self.backLayer),0);
 	
 	self.ctrlLayer = new LSprite();
@@ -83,8 +87,25 @@ SingleCombatView.prototype.onButtonSelect=function(event){
 		if(self.selectedButtons >= 2){
 			return;
 		}
-		LTweenLite.to(button,0.2,{x:self.leftCharacter.x + 8,y:self.leftCharacter.y - self.ctrlLayer.y + 96 + self.selectedButtons*50});
+		LTweenLite.to(button,0.2,{x:self.leftCharacter.x + 8,y:self.leftCharacter.y - self.ctrlLayer.y + 96 + self.selectedButtons*50, onComplete:self.buttonMoveComplete});
 		self.selectedButtons++;
+	}
+};
+SingleCombatView.prototype.buttonMoveComplete=function(event){
+	var self = event.target.parent.parent;
+	if(self.selectedButtons == 2){
+		console.log("start");
+		var list = LGlobal.divideCoordinate(5760, 72, 1, 12);
+	    var data = new LBitmapData(LMvc.datalist["big_attack_1"], 0, 0, 480, 72);
+	    var anime = new LAnimationTimeline(data, list);
+	    anime.speed = 2;
+	    self.addChild(anime);
+	    
+	    var data = new LBitmapData(LMvc.datalist["big_attack_2"], 0, 0, 480, 72);
+	    var anime = new LAnimationTimeline(data, list);
+	    anime.y = 120;
+	    anime.speed = 2;
+	    self.addChild(anime);
 	}
 };
 SingleCombatView.prototype.tweenButton=function(button){

@@ -39,7 +39,7 @@ StatusBarView.prototype.setCharacterStatus=function(){
 	barIcon.x = barEndPosition - barSize;
 	barIcon.y = hertIcon.y + 2;
 	self.statusLayer.addChild(barIcon);
-	var lblBar = getStrokeLabel(String.format("{0} {1}/{2} ",self.name,self.currentValue,self.maxValue),14,"#FFFFFF","#000000",1);
+	var lblBar = getStrokeLabel(String.format("{0} {1}/{2} ",self.name,self.currentValue,self.maxValue),14,"#FFFFFF","#000000",3);
 	var textEndPosition = hertIcon.x + 15 + self.barSize;
 	lblBar.x = textEndPosition - lblBar.getWidth();
 	lblBar.y = barBack.y + barBack.getHeight() - lblBar.getHeight() - 5;
