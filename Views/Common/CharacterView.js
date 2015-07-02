@@ -108,7 +108,9 @@ CharacterView.prototype.checkCoordinate = function(controller,initFlag){
 			if(initFlag){
 				continue;
 			}
-			ScriptFunction.analysis("Call."+obj.fun + "();");
+			if(ScriptFunction){
+				ScriptFunction.analysis("Call."+obj.fun + "();");
+			}
 		}else if(self.coordinateRects[obj.fun]){
 			self.coordinateRects[obj.fun]= null;
 		}
@@ -132,8 +134,10 @@ CharacterView.prototype.move = function(){
 			self.x = self.to.x;
 			self.y = self.to.y;
 			self.changeAction(CharacterAction.STAND);
-			if(controller.mapMove)controller.mapMove();
-			self.checkCoordinate(controller);
+			if(controller){
+				if(controller.mapMove)controller.mapMove();
+				self.checkCoordinate(controller);
+			}
 			self.dispatchEvent(CharacterActionEvent.MOVE_COMPLETE);
 			return;
 		}
@@ -150,7 +154,7 @@ CharacterView.prototype.move = function(){
 		
 	}
 	self.setMoveDirection(mx,my);
-	if(controller.mapMove)controller.mapMove();
+	if(controller && controller.mapMove)controller.mapMove();
 };
 CharacterView.prototype.onframe = function(event){
 	var self = event.currentTarget.parent;

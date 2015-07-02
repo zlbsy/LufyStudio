@@ -1,6 +1,7 @@
 function SingleCombatView(controller){
 	var self = this;
 	base(self,LView,[controller]);
+	self.selectedButtons = 0;
 }
 SingleCombatView.prototype.construct=function(){
 	this.controller.addEventListener(LEvent.COMPLETE, this.init.bind(this));
@@ -17,6 +18,7 @@ SingleCombatView.prototype.init=function(){
 	self.addChildAt(getBitmap(self.backLayer),0);
 	
 	self.ctrlLayer = new LSprite();
+	self.ctrlLayer.y = LGlobal.height - 100;
 	self.addChild(self.ctrlLayer);
 	
 	self.startSingleCombat();
@@ -61,11 +63,53 @@ SingleCombatView.prototype.characterLayerInit=function(){
 };
 SingleCombatView.prototype.addCtrlButton=function(){
 	var self = this;
-	
+	if(self.ctrlLayer.numChildren >= 6){
+		return;
+	}
+	var child = getButton(Language.get("重连击"),80);
+	child.x = LGlobal.width;
+	self.ctrlLayer.addChild(child);
+	child.addEventListener(LMouseEvent.MOUSE_UP,self.onButtonSelect);
+	self.tweenButton(child);
+};
+SingleCombatView.prototype.onButtonSelect=function(event){
+	var button = event.currentTarget;
+	var self = button.parent.parent;
+	if(button.y < 0){
+		var index = self.ctrlLayer.getChildIndex(button);
+		LTweenLite.to(button,0.4 - index * 0.05,{x:index * 80, y:0});
+		self.selectedButtons--;
+	}else{
+		if(self.selectedButtons >= 2){
+			return;
+		}
+		LTweenLite.to(button,0.2,{x:self.leftCharacter.x + 8,y:self.leftCharacter.y - self.ctrlLayer.y + 96 + self.selectedButtons*50});
+		self.selectedButtons++;
+	}
+};
+SingleCombatView.prototype.tweenButton=function(button){
+	var self = this;
+	var index = self.ctrlLayer.getChildIndex(button);
+	LTweenLite.to(button,0.4 - index * 0.05,{x:index * 80,onComplete:self.addCtrlButton.bind(self)});
 };
 SingleCombatView.prototype.startSingleCombat=function(event){
 	var self = this;
+	var obj = [{x:0,y:20,tx:LGlobal.width},{x:0,y:150,tx:LGlobal.width},{x:100,y:20,tx:-LGlobal.width},{x:100,y:150,tx:-LGlobal.width}];
+	obj.forEach(function(child){
+		var cloud = new LBitmap(new LBitmapData(LMvc.datalist["domestic_clouds"]));
+		cloud.x = child.x;
+		cloud.y = child.y;
+		self.addChild(cloud);
+		LTweenLite.to(cloud,2,{x:child.tx,onComplete:function(s){
+			s.remove();
+		}});
+	});
 	self.leftCharacter.moveTo(LGlobal.width * 0.5 - 96,230 - 48);
+	self.rightCharacter.moveTo(LGlobal.width * 0.5,230 - 48);
+	self.leftCharacter.alpha = 0;
+	self.rightCharacter.alpha = 0;
+	LTweenLite.to(self.leftCharacter,1,{alpha:1});
+	LTweenLite.to(self.rightCharacter,1,{alpha:1,onComplete:self.addCtrlButton.bind(self)});
 };
 SingleCombatView.prototype.faceLayerInit=function(characterModel,isLeft){
 	var self = this;
