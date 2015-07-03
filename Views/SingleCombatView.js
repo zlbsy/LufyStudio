@@ -29,10 +29,11 @@ SingleCombatView.prototype.init=function(){
 };
 SingleCombatView.prototype.backLayerInit=function(){
 	var self = this;
-	//TODO::background
-	self.backLayer.addChild(getTranslucentBitmap());
-	var bitmapData = new LBitmapData(LMvc.datalist["singleCombatBackground"]);
+	var bitmapData = new LBitmapData(LMvc.datalist["singleCombatBackground"],0,0,LGlobal.width,LGlobal.height);
 	var bitmap = new LBitmap(bitmapData);
+	self.backLayer.addChild(bitmap);
+	bitmapData = new LBitmapData(LMvc.datalist["singleCombatForeground"]);
+	bitmap = new LBitmap(bitmapData);
 	bitmap.x = (LGlobal.width - bitmap.getWidth()) * 0.5;
 	bitmap.y = 210;
 	self.backLayer.addChild(bitmap);
@@ -87,12 +88,13 @@ SingleCombatView.prototype.onButtonSelect=function(event){
 			return;
 		}
 		self.leftCharacter.selectedButtons.push(button);
-		LTweenLite.to(button,0.2,{x:self.leftCharacter.x + 8,y:self.leftCharacter.y - self.ctrlLayer.y + 96 + self.selectedButtons*50, onComplete:self.buttonMoveComplete});
+		LTweenLite.to(button,0.2,{x:self.leftCharacter.x + 8,y:self.leftCharacter.y - self.ctrlLayer.y + 96 + self.leftCharacter.selectedButtons.length*50, onComplete:self.buttonMoveComplete});
 		
 	}
 };
 SingleCombatView.prototype.buttonMoveComplete=function(event){
 	var self = event.target.parent.parent;
+	console.log("self.leftCharacter.selectedButtons.length=",self.leftCharacter.selectedButtons.length);
 	if(self.leftCharacter.selectedButtons.length == 2){
 		console.log("start");
 		return;
