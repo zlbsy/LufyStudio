@@ -67,16 +67,13 @@ SingleCombatView.prototype.characterLayerInit=function(){
 };
 SingleCombatView.prototype.addCtrlButton=function(){
 	var self = this;
-	if(self.leftCharacter.commands.length >= 6){
-		return;
+	for(var i = 0;i<self.leftCharacter.maxCommand;i++){
+		var child = getButton(Language.get(self.leftCharacter.commands[i]),80);
+		child.x = LGlobal.width;
+		self.ctrlLayer.addChild(child);
+		child.addEventListener(LMouseEvent.MOUSE_UP,self.onButtonSelect);
+		LTweenLite.to(child,0.4 - i * 0.05,{x:i * 80});
 	}
-	var command = getSingleCombatCommand(self.leftCharacter.commands,self.leftAngryView.value,self.leftCharacter.data.force());
-	self.leftCharacter.commands.push(command);
-	var child = getButton(Language.get(command),80);
-	child.x = LGlobal.width;
-	self.ctrlLayer.addChild(child);
-	child.addEventListener(LMouseEvent.MOUSE_UP,self.onButtonSelect);
-	self.tweenButton(child);
 };
 SingleCombatView.prototype.onButtonSelect=function(event){
 	var button = event.currentTarget;
@@ -84,19 +81,21 @@ SingleCombatView.prototype.onButtonSelect=function(event){
 	if(button.y < 0){
 		var index = self.ctrlLayer.getChildIndex(button);
 		LTweenLite.to(button,0.4 - index * 0.05,{x:index * 80, y:0});
-		self.selectedButtons--;
+		self.leftCharacter.selectedButtons.length -= 1;
 	}else{
-		if(self.selectedButtons >= 2){
+		if(self.leftCharacter.selectedButtons.length >= 2){
 			return;
 		}
+		self.leftCharacter.selectedButtons.push(button);
 		LTweenLite.to(button,0.2,{x:self.leftCharacter.x + 8,y:self.leftCharacter.y - self.ctrlLayer.y + 96 + self.selectedButtons*50, onComplete:self.buttonMoveComplete});
-		self.selectedButtons++;
+		
 	}
 };
 SingleCombatView.prototype.buttonMoveComplete=function(event){
 	var self = event.target.parent.parent;
-	if(self.selectedButtons == 2){
+	if(self.leftCharacter.selectedButtons.length == 2){
 		console.log("start");
+		return;
 		var list = LGlobal.divideCoordinate(5760, 72, 1, 12);
 	    var data = new LBitmapData(LMvc.datalist["big_attack_1"], 0, 0, 480, 72);
 	    var anime = new LAnimationTimeline(data, list);

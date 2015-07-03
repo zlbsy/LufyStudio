@@ -27,7 +27,9 @@ function getButton(text,width,img){
 	textLabel.x = (width - textLabel.getWidth()) * 0.5;
 	textLabel.y = (50 - textLabel.getHeight()) * 0.5;
 	bitmapWin.addChild(textLabel);
-	return new LButton(getBitmap(bitmapWin));
+	var btn = new LButton(getBitmap(bitmapWin));
+	btn.text = text;
+	return btn;
 }
 function getTranslucentBitmap(width,height){
 	var backgroundData = new LBitmapData(LMvc.datalist["translucent"]);
