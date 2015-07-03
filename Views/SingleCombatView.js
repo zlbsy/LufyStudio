@@ -67,10 +67,12 @@ SingleCombatView.prototype.characterLayerInit=function(){
 };
 SingleCombatView.prototype.addCtrlButton=function(){
 	var self = this;
-	if(self.ctrlLayer.numChildren >= 6){
+	if(self.leftCharacter.commands.length >= 6){
 		return;
 	}
-	var child = getButton(Language.get("重连击"),80);
+	var command = getSingleCombatCommand(self.leftCharacter.commands,self.leftAngryView.value,self.leftCharacter.data.force());
+	self.leftCharacter.commands.push(command);
+	var child = getButton(Language.get(command),80);
 	child.x = LGlobal.width;
 	self.ctrlLayer.addChild(child);
 	child.addEventListener(LMouseEvent.MOUSE_UP,self.onButtonSelect);

@@ -24,6 +24,15 @@ Language.data = {
 	"tab_status":"状态",
 	"tab_properties":"属性",
 	
+	"single_command_attack":"轻击",
+	"single_command_double_attack":"连击",
+	"single_command_big_attack":"重击",
+	"single_command_defence":"防御",
+	"single_command_dodge":"躲闪",
+	"single_command_charge":"集气",
+	"single_command_backstroke_attack":"回马",
+	"single_command_special_attack":"怒击",
+	
 	"action_end_error":"行动已结束！",
 	"can_not_operating":"不可操作{0}",
 	"belong_self":"我军",
