@@ -1,7 +1,7 @@
 function SingleCombatView(controller){
 	var self = this;
 	base(self,LView,[controller]);
-	self.selectedButtons = 0;
+	self.characterY = 230 - 48;
 }
 SingleCombatView.prototype.construct=function(){
 	this.controller.addEventListener(LEvent.COMPLETE, this.init.bind(this));
@@ -25,6 +25,10 @@ SingleCombatView.prototype.init=function(){
 	self.ctrlLayer.y = LGlobal.height - 100;
 	self.addChild(self.ctrlLayer);
 	
+	self.commandLayer = new LSprite();
+	//self.commandLayer.y = self.characterY - self.ctrlLayer.y + 96 + i*50;
+	self.addChild(self.commandLayer);
+	
 	self.startSingleCombat();
 };
 SingleCombatView.prototype.backLayerInit=function(){
@@ -44,14 +48,14 @@ SingleCombatView.prototype.characterLayerInit=function(){
 	var currentCharacter = new SingleCombatCharacterView(null,self.controller.currentCharacterId,BattleCharacterSize.width,BattleCharacterSize.height);
 	currentCharacter.scaleX = currentCharacter.scaleY = 2;
 	self.characterLayer.addChild(currentCharacter);
-	currentCharacter.setCoordinate(LGlobal.width * 0.5 - 96 - 96,230 - 48);
+	currentCharacter.setCoordinate(LGlobal.width * 0.5 - 96 - 96,self.characterY);
 	currentCharacter.changeDirection(CharacterDirection.RIGHT);
 	self.faceLayerInit(currentCharacter.data,true);
 	
 	var targetCharacter = new SingleCombatCharacterView(null,self.controller.targetCharacterId,BattleCharacterSize.width,BattleCharacterSize.height);
 	targetCharacter.scaleX = targetCharacter.scaleY = 2;
 	self.characterLayer.addChild(targetCharacter);
-	targetCharacter.setCoordinate(LGlobal.width * 0.5 + 96,230 - 48);
+	targetCharacter.setCoordinate(LGlobal.width * 0.5 + 96,self.characterY);
 	targetCharacter.changeDirection(CharacterDirection.LEFT);
 	self.faceLayerInit(targetCharacter.data,false);
 	
@@ -82,21 +86,48 @@ SingleCombatView.prototype.onButtonSelect=function(event){
 	if(button.y < 0){
 		var index = self.ctrlLayer.getChildIndex(button);
 		LTweenLite.to(button,0.4 - index * 0.05,{x:index * 80, y:0});
-		self.leftCharacter.selectedButtons.length -= 1;
+		index = self.leftCharacter.selectedButtons.findIndex(function(child){
+			return child.objectIndex == button.objectIndex;
+		});
+		self.leftCharacter.selectedButtons.splice(index,1);
 	}else{
 		if(self.leftCharacter.selectedButtons.length >= 2){
 			return;
 		}
 		self.leftCharacter.selectedButtons.push(button);
-		LTweenLite.to(button,0.2,{x:self.leftCharacter.x + 8,y:self.leftCharacter.y - self.ctrlLayer.y + 96 + self.leftCharacter.selectedButtons.length*50, onComplete:self.buttonMoveComplete});
-		
+		for(var i = 0;i<self.leftCharacter.selectedButtons.length;i++){
+			button = self.leftCharacter.selectedButtons[i];
+			var completeEvent = self.buttonMoveComplete;
+			if(i == 0){
+				completeEvent = null;
+			}
+			LTweenLite.to(button,0.2,{x:self.leftCharacter.x + 8,y:self.characterY - self.ctrlLayer.y + 96 + i*50, onComplete:completeEvent});
+		}
 	}
 };
 SingleCombatView.prototype.buttonMoveComplete=function(event){
 	var self = event.target.parent.parent;
-	console.log("self.leftCharacter.selectedButtons.length=",self.leftCharacter.selectedButtons.length);
-	if(self.leftCharacter.selectedButtons.length == 2){
-		console.log("start");
+	if(self.leftCharacter.selectedButtons.length < 2){
+		return;
+	}
+	console.log("start");
+	LGlobal.destroy = false;
+	for(var i = self.ctrlLayer.numChildren - 1;i>=0;i--){
+		var child = self.ctrlLayer.childList[i];
+		if(child.y < 0){
+			child.die();
+			self.ctrlLayer.removeChild(child);
+			child.y += self.ctrlLayer.y;
+			self.commandLayer.addChild(child);
+			continue;
+		}
+		LTweenLite.to(child,0.4 - i * 0.05,{x:LGlobal.width});
+	}
+	LGlobal.destroy = true;
+	self.rightCharacter.toSelectCommand();
+	/*
+		var effect = new SpecialEffectView(self.controller);
+		self.addChild(effect);
 		return;
 		var list = LGlobal.divideCoordinate(5760, 72, 1, 12);
 	    var data = new LBitmapData(LMvc.datalist["big_attack_1"], 0, 0, 480, 72);
@@ -108,8 +139,8 @@ SingleCombatView.prototype.buttonMoveComplete=function(event){
 	    var anime = new LAnimationTimeline(data, list);
 	    anime.y = 120;
 	    anime.speed = 2;
-	    self.addChild(anime);
-	}
+	self.addChild(anime);*/
+	
 };
 SingleCombatView.prototype.tweenButton=function(button){
 	var self = this;
