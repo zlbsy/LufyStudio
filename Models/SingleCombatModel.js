@@ -13,6 +13,7 @@ SingleCombatModel.prototype.getImages=function(){
 	list.push({name:"domestic_clouds",path:LMvc.IMG_PATH+"common/domestic_clouds.png"});
 	list.push({name:"battle-vs",path:LMvc.IMG_PATH+"battle/vs.png"});
 	list.push({name:"big_attack_1",path:LMvc.IMG_PATH+"battle/big_attack_1.gif"});
-	list.push({name:"big_attack_2",path:LMvc.IMG_PATH+"battle/big_attack_2.png"});
+	list.push({name:"single_talk_background",path:LMvc.IMG_PATH+"battle/talk_background.png"});
+	list.push({name:"single_talk_arrow",path:LMvc.IMG_PATH+"battle/talk_arrow.png"});
 	return list;
 };
