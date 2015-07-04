@@ -6,7 +6,11 @@ TestView.prototype.construct=function(){
 };
 TestView.prototype.init=function(){
 	var self = this;
+	var win = new LPanel(new LBitmapData(LMvc.datalist["win05"]),LGlobal.width,LGlobal.height);
+	self.addChild(getBitmap(win));
+	
 	var layer = new LSprite();
+	
 	self.menuLayer = layer;
 	self.addChild(layer);
 	var button01 = new LButtonSample1("我方武将属性确认");
@@ -69,9 +73,29 @@ TestView.prototype.init=function(){
 	button01.y = 90;
 	layer.addChild(button01);
 	button01.addEventListener(LMouseEvent.MOUSE_UP,self.showSingleCombat.bind(self));
+	button01 = new LButtonSample1("单挑talk测试");
+	button01.x = 300;
+	button01.y = 90;
+	layer.addChild(button01);
+	button01.addEventListener(LMouseEvent.MOUSE_UP,self.SingleCombatTalk.bind(self));
 	
 	self.statusLayer = new LSprite();
 	self.addChild(self.statusLayer);
+};
+TestView.prototype.SingleCombatTalk = function(event){
+	var self = this;
+	//alert("SingleCombatTalkView");
+	self.menuLayer.visible = false;
+	//alert(typeof SingleCombatTalkView);
+	var talk = new SingleCombatTalkView(self.controller,"单挑talk测试单挑talk测试",true);
+	talk.x = 50;
+	talk.y = 150;
+	self.statusLayer.addChild(talk);
+	talk = new SingleCombatTalkView(self.controller,"单挑talk测试单挑talk测试",false);
+	talk.x = 50;
+	talk.y = 250;
+	self.statusLayer.addChild(talk);
+	
 };
 TestView.prototype.showSingleCombat=function(event){
 	var self = this;

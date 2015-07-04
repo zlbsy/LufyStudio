@@ -1,32 +1,32 @@
-function SingleCombatTalkView(controller, id, w, h) {
+function SingleCombatTalkView(controller, text, isLeft) {
 	var self = this;
-	LExtends(self, BattleCharacterView, [controller, id, w, h]);
-	self.commands = [];
-	self.selectedCommands = [];
-	self.selectedButtons = [];
-	self.maxCommand = getSingleCombatCommandCount(self.data.force());
-	self.setCommands();
+	LExtends(self, LView, [controller]);
+	self.set(text, isLeft);
+	self.run();
 }
-SingleCombatTalkView.prototype.moveTo = function(x,y){
+SingleCombatTalkView.prototype.set = function(text, isLeft){
 	var self = this;
-	self.setRoad([{x:x/BattleCharacterSize.width,y:y/BattleCharacterSize.height}]);
-};
-SingleCombatTalkView.prototype.toStatic = function(value){
-	//覆盖父类处理
-};
-SingleCombatTalkView.prototype.setCommands=function(){
-	var self = this, command;
-	while(self.commands.length < self.maxCommand){
-		command = getSingleCombatCommand(self.commands,self.angry,self.data.force());
-		self.commands.push(command);
+	var label = getStrokeLabel(text,12,"#FFFFFF","#000000",2); 
+	var win = new LPanel(new LBitmapData(LMvc.datalist["single_talk_background"]),label.getWidth() + 20,30);
+	var arrow = new LBitmap(new LBitmapData(LMvc.datalist["single_talk_arrow"]));
+	
+	arrow.x = 50;
+	arrow.y = 27;
+	if(!isLeft){
+		arrow.scaleX = -1;
+		arrow.x = win.getWidth() - arrow.getWidth() - 25;
 	}
+	win.addChild(arrow);
+	label.x = 10;
+	label.y = 7;
+	win.addChild(label);
+	self.addChild(getBitmap(win));
 };
-SingleCombatTalkView.prototype.toSelectCommand=function(){
+SingleCombatTalkView.prototype.run = function(){
 	var self = this;
-	while(self.selectedCommands.length < 2){
-		var index = self.commands.length * Math.random() >> 0;
-		var command = self.commands[i];
-		self.commands.splice(index, 1);
-		self.selectedCommands.push(command);
-	}
+	LTweenLite.to(self,0.3,{alpha:0,delay:1,onComplete:self.runComplete});
+};
+SingleCombatTalkView.prototype.runComplete = function(event){
+	var self = event.target;
+	self.remove();
 };

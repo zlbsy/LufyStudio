@@ -33,6 +33,8 @@ TestModel.prototype.getImages=function(){
 	list.push({name:"win04",path:LMvc.IMG_PATH+"win/win04.png"});
 	list.push({name:"win05",path:LMvc.IMG_PATH+"win/win05.png"});
 	list.push({name:"win06",path:LMvc.IMG_PATH+"win/win06.png"});
+	list.push({name:"single_talk_background",path:LMvc.IMG_PATH+"battle/talk_background.png"});
+	list.push({name:"single_talk_arrow",path:LMvc.IMG_PATH+"battle/talk_arrow.png"});
 	
 	return list;
 };

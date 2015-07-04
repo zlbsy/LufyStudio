@@ -159,12 +159,24 @@ SingleCombatView.prototype.startSingleCombat=function(event){
 			s.remove();
 		}});
 	});
-	self.leftCharacter.moveTo(LGlobal.width * 0.5 - 96,230 - 48);
-	self.rightCharacter.moveTo(LGlobal.width * 0.5,230 - 48);
+	
+	
 	self.leftCharacter.alpha = 0;
 	self.rightCharacter.alpha = 0;
-	LTweenLite.to(self.leftCharacter,1,{alpha:1});
-	LTweenLite.to(self.rightCharacter,1,{alpha:1,onComplete:self.addCtrlButton.bind(self)});
+	LTweenLite.to(self.leftCharacter,1,{alpha:1,onStart:function(){
+		self.leftCharacter.moveTo(LGlobal.width * 0.5 - 96,230 - 48);
+		var talk = new SingleCombatTalkView(self.controller,"单挑talk测试单挑talk测试",true);
+		talk.x = self.leftCharacter.x + 48;
+		talk.y = self.leftCharacter.y + 5;
+		self.addChild(talk);
+	}});
+	LTweenLite.to(self.rightCharacter,1,{alpha:1,delay:1,onComplete:self.addCtrlButton.bind(self),onStart:function(){
+		self.rightCharacter.moveTo(LGlobal.width * 0.5,230 - 48);
+		var talk = new SingleCombatTalkView(self.controller,"单挑talk测试单挑talk测试",true);
+		talk.x = self.rightCharacter.x + 48;
+		talk.y = self.rightCharacter.y + 5;
+		self.addChild(talk);
+	}});
 };
 SingleCombatView.prototype.faceLayerInit=function(characterModel,isLeft){
 	var self = this;
