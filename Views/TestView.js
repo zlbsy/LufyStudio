@@ -100,6 +100,12 @@ TestView.prototype.SingleCombatTalk = function(event){
 TestView.prototype.showSingleCombat=function(event){
 	var self = this;
 	self.menuLayer.visible = false;
+	var chara = CharacterModel.getChara(1);
+	chara.maxHP(100);
+	chara.HP(100);
+	chara = CharacterModel.getChara(2);
+	chara.maxHP(100);
+	chara.HP(100);
 	var combat = new SingleCombatController(self.controller,1,2);
 	self.statusLayer.addChild(combat.view);
 };

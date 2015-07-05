@@ -1,7 +1,9 @@
 function SingleCombatView(controller){
 	var self = this;
 	base(self,LView,[controller]);
-	self.characterY = 230 - 48;
+	self.characterY = 270 - 48;
+	self.leftCharacterX = LGlobal.width * 0.5 - 96;
+	self.rightCharacterX = LGlobal.width * 0.5;
 }
 SingleCombatView.prototype.construct=function(){
 	this.controller.addEventListener(LEvent.COMPLETE, this.init.bind(this));
@@ -39,28 +41,32 @@ SingleCombatView.prototype.backLayerInit=function(){
 	bitmapData = new LBitmapData(LMvc.datalist["singleCombatForeground"]);
 	bitmap = new LBitmap(bitmapData);
 	bitmap.x = (LGlobal.width - bitmap.getWidth()) * 0.5;
-	bitmap.y = 210;
+	bitmap.y = 250;
 	self.backLayer.addChild(bitmap);
 };
 SingleCombatView.prototype.characterLayerInit=function(){
 	var self = this;
 	
-	var currentCharacter = new SingleCombatCharacterView(null,self.controller.currentCharacterId,BattleCharacterSize.width,BattleCharacterSize.height);
+	var currentCharacter = new SingleCombatCharacterView(self.controller, self.controller.currentCharacterId, BattleCharacterSize.width, BattleCharacterSize.height, true);
 	currentCharacter.scaleX = currentCharacter.scaleY = 2;
 	self.characterLayer.addChild(currentCharacter);
-	currentCharacter.setCoordinate(LGlobal.width * 0.5 - 96 - 96,self.characterY);
+	currentCharacter.setCoordinate(self.leftCharacterX - 96,self.characterY);
 	currentCharacter.changeDirection(CharacterDirection.RIGHT);
-	self.faceLayerInit(currentCharacter.data,true);
 	
-	var targetCharacter = new SingleCombatCharacterView(null,self.controller.targetCharacterId,BattleCharacterSize.width,BattleCharacterSize.height);
+	var targetCharacter = new SingleCombatCharacterView(self.controller, self.controller.targetCharacterId, BattleCharacterSize.width, BattleCharacterSize.height, false);
 	targetCharacter.scaleX = targetCharacter.scaleY = 2;
 	self.characterLayer.addChild(targetCharacter);
-	targetCharacter.setCoordinate(LGlobal.width * 0.5 + 96,self.characterY);
+	targetCharacter.setCoordinate(self.rightCharacterX + 96,self.characterY);
 	targetCharacter.changeDirection(CharacterDirection.LEFT);
-	self.faceLayerInit(targetCharacter.data,false);
 	
 	self.leftCharacter = currentCharacter;
 	self.rightCharacter = targetCharacter;
+	self.leftCharacter.targetCharacter = self.rightCharacter;
+	self.rightCharacter.targetCharacter = self.leftCharacter;
+	
+	self.faceLayerInit(currentCharacter.data,true);
+	self.faceLayerInit(targetCharacter.data,false);
+	
 	/*
 	var button01 = new LButtonSample1("单挑测试");
 	button01.x = 200;
@@ -118,34 +124,59 @@ SingleCombatView.prototype.buttonMoveComplete=function(event){
 			child.die();
 			self.ctrlLayer.removeChild(child);
 			child.y += self.ctrlLayer.y;
+			child.commandIndex = i;
 			self.commandLayer.addChild(child);
 			continue;
 		}
-		LTweenLite.to(child,0.4 - i * 0.05,{x:LGlobal.width});
+		LTweenLite.to(child,0.4 - i * 0.05,{x:LGlobal.width,onComplete:child.remove.bind(child)});
 	}
 	LGlobal.destroy = true;
+	self.commandLayer.childList.sort(function(a,b){return a.y - b.y;});
+	self.leftCharacter.toSelectCommand(self.commandLayer.getChildAt(0).commandIndex);
+	self.leftCharacter.toSelectCommand(self.commandLayer.getChildAt(1).commandIndex);
 	self.rightCharacter.toSelectCommand();
-	/*
-		var effect = new SpecialEffectView(self.controller);
-		self.addChild(effect);
-		return;
-		var list = LGlobal.divideCoordinate(5760, 72, 1, 12);
-	    var data = new LBitmapData(LMvc.datalist["big_attack_1"], 0, 0, 480, 72);
-	    var anime = new LAnimationTimeline(data, list);
-	    anime.speed = 2;
-	    self.addChild(anime);
-	    
-	    var data = new LBitmapData(LMvc.datalist["big_attack_2"], 0, 0, 480, 72);
-	    var anime = new LAnimationTimeline(data, list);
-	    anime.y = 120;
-	    anime.speed = 2;
-	self.addChild(anime);*/
-	
+	self.executeIndex = 0;
+	for(var i = 0;i<self.rightCharacter.selectedCommands.length;i++){
+		var child = getButton(Language.get(self.rightCharacter.selectedCommands[i]),80);
+		child.x = LGlobal.width;
+		//child.x = self.commandLayer.getChildAt(i).x + 96;
+		child.y = self.commandLayer.getChildAt(i).y;
+		self.commandLayer.addChild(child);
+		self.rightCharacter.selectedButtons.push(child);
+		child.die();
+		LTweenLite.to(child,0.2,{x:self.commandLayer.getChildAt(i).x + 96,onComplete:i==0?null:self.execute});
+		//child.alpha = 0;
+		//LTweenLite.to(child,0.2,{alpha:1});
+	}
+	console.log("selectedCommands",self.leftCharacter.selectedCommands,self.rightCharacter.selectedCommands);
+	/*var effect = new SpecialEffectView(self.controller);self.addChild(effect);*/
 };
-SingleCombatView.prototype.tweenButton=function(button){
-	var self = this;
-	var index = self.ctrlLayer.getChildIndex(button);
-	LTweenLite.to(button,0.4 - index * 0.05,{x:index * 80,onComplete:self.addCtrlButton.bind(self)});
+SingleCombatView.prototype.execute=function(event){
+	var commandChild = event.target;
+	var self = commandChild.parent.parent;
+	self.leftCharacter.showRunningCommand(self.executeIndex);
+	self.rightCharacter.showRunningCommand(self.executeIndex);
+	singleCombatCommandExecute(self.leftCharacter,self.rightCharacter);
+};
+SingleCombatView.prototype.characterDebut=function(event){
+	var character = event.target;
+	var self = character.parent.parent;
+	character.getDebutTalk();
+	character.changeAction(CharacterAction.ATTACK);
+	character.addEventListener(LEvent.COMPLETE, self.characterDebutComplete);
+};
+SingleCombatView.prototype.characterDebutComplete=function(event){
+	var character = event.currentTarget;
+	var self = character.parent.parent;
+	character.removeEventListener(LEvent.COMPLETE, self.characterDebutComplete);
+	if(character.isLeft){
+		return;
+	}
+	self.leftCharacter.anime.play();
+	self.rightCharacter.anime.play();
+	self.leftCharacter.moveTo(LGlobal.width * 0.5 - 96, self.leftCharacter.y);
+	self.rightCharacter.moveTo(LGlobal.width * 0.5, self.rightCharacter.y);
+	self.addCtrlButton();
 };
 SingleCombatView.prototype.startSingleCombat=function(event){
 	var self = this;
@@ -155,28 +186,12 @@ SingleCombatView.prototype.startSingleCombat=function(event){
 		cloud.x = child.x;
 		cloud.y = child.y;
 		self.addChild(cloud);
-		LTweenLite.to(cloud,2,{x:child.tx,onComplete:function(s){
-			s.remove();
-		}});
+		LTweenLite.to(cloud,2,{x:child.tx,onComplete:function(s){s.remove();}});
 	});
-	
-	
 	self.leftCharacter.alpha = 0;
 	self.rightCharacter.alpha = 0;
-	LTweenLite.to(self.leftCharacter,1,{alpha:1,onStart:function(){
-		self.leftCharacter.moveTo(LGlobal.width * 0.5 - 96,230 - 48);
-		var talk = new SingleCombatTalkView(self.controller,"单挑talk测试单挑talk测试",true);
-		talk.x = self.leftCharacter.x + 48;
-		talk.y = self.leftCharacter.y + 5;
-		self.addChild(talk);
-	}});
-	LTweenLite.to(self.rightCharacter,1,{alpha:1,delay:1,onComplete:self.addCtrlButton.bind(self),onStart:function(){
-		self.rightCharacter.moveTo(LGlobal.width * 0.5,230 - 48);
-		var talk = new SingleCombatTalkView(self.controller,"单挑talk测试单挑talk测试",true);
-		talk.x = self.rightCharacter.x + 48;
-		talk.y = self.rightCharacter.y + 5;
-		self.addChild(talk);
-	}});
+	LTweenLite.to(self.leftCharacter,1,{alpha:1,delay:1,onComplete:self.characterDebut});
+	LTweenLite.to(self.rightCharacter,1,{alpha:1,delay:2,onComplete:self.characterDebut});
 };
 SingleCombatView.prototype.faceLayerInit=function(characterModel,isLeft){
 	var self = this;
@@ -193,7 +208,7 @@ SingleCombatView.prototype.faceLayerInit=function(characterModel,isLeft){
 	name.x = isLeft ? face.x + faceSize + startPosition * 0.5: win.x + startPosition;
 	name.y = startPosition;
 	self.backLayer.addChild(name);
-	var formatForce = "武力 : {0}";
+	var formatForce = Language.get("force") + " : {0}";
 	var force = getStrokeLabel(String.format(formatForce, characterModel.force()),18,"#FFFFFF","#000000",2);
 	force.x = name.x;
 	force.y = name.y + name.getHeight() + startPosition;
@@ -201,7 +216,7 @@ SingleCombatView.prototype.faceLayerInit=function(characterModel,isLeft){
 
 	var barHp = new StatusBarView(self.controller);
 	barHp.y = face.y + faceSize;
-	var obj = {maxValue:100,currentValue:100,name:"HP",icon:"icon_hert",frontBar:"red_bar",barSize:170};
+	var obj = {maxValue:characterModel.maxHP(),currentValue:characterModel.HP(),name:"HP",icon:"icon_hert",frontBar:"red_bar",barSize:170};
 	barHp.set(obj);
 	barHp.x = isLeft ? startPosition : LGlobal.width - barHp.getWidth() - startPosition;
 	self.characterLayer.addChild(barHp);
@@ -209,14 +224,18 @@ SingleCombatView.prototype.faceLayerInit=function(characterModel,isLeft){
 	var barAngry = new StatusBarView(self.controller);
 	barAngry.x = barHp.x;
 	barAngry.y = barHp.y + barHp.getHeight();
-	var obj = {maxValue:100,currentValue:0,name:"怒气",icon:"orange_ball",frontBar:"orange_bar",barSize:170};
+	var obj = {maxValue:100,currentValue:0,name:Language.get("sc_angry"),icon:"orange_ball",frontBar:"orange_bar",barSize:170};
 	barAngry.set(obj);
 	self.characterLayer.addChild(barAngry);
 	if(isLeft){
-		self.leftHpView = barHp;
-		self.leftAngryView = barAngry;
+		self.leftCharacter.barHp = barHp;
+		self.leftCharacter.barAngry = barAngry;
+		//self.leftHpView = barHp;
+		//self.leftAngryView = barAngry;
 	}else{
-		self.rightHpView = barHp;
-		self.rightAngryView = barAngry;
+		self.rightCharacter.barHp = barHp;
+		self.rightCharacter.barAngry = barAngry;
+		//self.rightHpView = barHp;
+		//self.rightAngryView = barAngry;
 	}
 };

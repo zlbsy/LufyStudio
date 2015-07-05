@@ -6,21 +6,26 @@ function SingleCombatTalkView(controller, text, isLeft) {
 }
 SingleCombatTalkView.prototype.set = function(text, isLeft){
 	var self = this;
-	var label = getStrokeLabel(text,12,"#FFFFFF","#000000",2); 
-	var win = new LPanel(new LBitmapData(LMvc.datalist["single_talk_background"]),label.getWidth() + 20,30);
+	var label = getStrokeLabel(text,16,"#FFFFFF","#000000",2);
+	var win = new LPanel(new LBitmapData(LMvc.datalist["single_talk_background"]),label.getWidth() + 20,label.getHeight() + 10);
 	var arrow = new LBitmap(new LBitmapData(LMvc.datalist["single_talk_arrow"]));
 	
-	arrow.x = 50;
-	arrow.y = 27;
+	arrow.x = label.getWidth() + 20 - arrow.getWidth() - 48;
+	arrow.y = label.getHeight() + 7;
 	if(!isLeft){
 		arrow.scaleX = -1;
-		arrow.x = win.getWidth() - arrow.getWidth() - 25;
+		arrow.x = 48;
 	}
 	win.addChild(arrow);
 	label.x = 10;
-	label.y = 7;
+	label.y = 5;
 	win.addChild(label);
-	self.addChild(getBitmap(win));
+	var bitmap = getBitmap(win);
+	bitmap.x = 98-(label.getWidth() + 20);
+	if(!isLeft){
+		bitmap.x = 0;
+	}
+	self.addChild(bitmap);
 };
 SingleCombatTalkView.prototype.run = function(){
 	var self = this;

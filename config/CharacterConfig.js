@@ -1,13 +1,43 @@
 var CharacterAction = {
+	/**
+	 * 站立
+	 **/
 	STAND:"stand",
+	/**
+	 * 移动
+	 **/
 	MOVE:"move",
+	/**
+	 * 攻击
+	 **/
 	ATTACK:"attack",
+	/**
+	 * 攻击开始
+	 **/
 	ATTACK_START:"attack_start",
+	/**
+	 * 挡格
+	 **/
 	BLOCK:"block",
+	/**
+	 * 受伤
+	 **/
 	HERT:"hert",
+	/**
+	 * 觉醒
+	 **/
 	WAKE:"wake",
+	/**
+	 * 喘气
+	 **/
 	PANT:"pant",
+	/**
+	 * 升级
+	 **/
 	LEVELUP:"levelup",
+	/**
+	 * 法攻
+	 **/
 	MAGIC_ATTACK:"magic_attack"
 };
 var CharacterDirection = {
@@ -37,3 +67,6 @@ var CharacterMode = {
 	END_ACTION : "endAction"
 };
 
+var SingleCombatCharacterConfig = {};
+SingleCombatCharacterConfig.INIT = "init";
+SingleCombatCharacterConfig.START = "start";

@@ -11,6 +11,7 @@ SingleCombatModel.prototype.getImages=function(){
 	list.push({name:"singleCombatForeground",path:LMvc.IMG_PATH+"background/singleCombatForeground.png"});
 	list.push({name:"character-s-default",path:LMvc.IMG_PATH+"character/s/default.png"});
 	list.push({name:"domestic_clouds",path:LMvc.IMG_PATH+"common/domestic_clouds.png"});
+	list.push({name:"common-light",path:LMvc.IMG_PATH+"common/light.png"});
 	list.push({name:"battle-vs",path:LMvc.IMG_PATH+"battle/vs.png"});
 	list.push({name:"big_attack_1",path:LMvc.IMG_PATH+"battle/big_attack_1.gif"});
 	list.push({name:"single_talk_background",path:LMvc.IMG_PATH+"battle/talk_background.png"});

@@ -61,6 +61,18 @@ CharacterModel.prototype.maxTroops = function(value) {
 	//TODO::
 	return 1000;
 };
+CharacterModel.prototype.maxHP = function(value) {
+	if(typeof value != UNDEFINED){
+		this.data.maxHp = value;
+	}
+	return this.data.maxHp;
+};
+CharacterModel.prototype.HP = function(value) {
+	if(typeof value != UNDEFINED){
+		this.data.hp = value;
+	}
+	return this.data.hp;
+};
 CharacterModel.prototype.MP = function() {return 20;
 	return this.data.mp;
 };

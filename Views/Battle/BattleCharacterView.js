@@ -4,7 +4,7 @@ function BattleCharacterView(controller, id, w, h) {
 	self.step = self.moveStep = 4;
 	self.layer.x = self.layer.y = -8;
 	self.belong = null;
-	if(typeof BattleCharacterAI != UNDEFINED){
+	if(controller.constructor.name == "BattleController"){
 		self.AI = new BattleCharacterAI(self);
 	}
 	self.addShape(LShape.RECT,[0,0,BattleCharacterSize.width,BattleCharacterSize.height]);
@@ -12,34 +12,32 @@ function BattleCharacterView(controller, id, w, h) {
 BattleCharacterView.cacheBitmapDatas = {};
 BattleCharacterView.DEFAULT_IMG = "character-s-default";
 BattleCharacterView.getAnimationData = function(){
-	if(!BattleCharacterView._animationData){
-		// 1792 x 64
-		var list = LGlobal.divideCoordinate(1792, 64, 1, 28);
-		BattleCharacterView._animationData = [
-			[list[0][0],list[0][1],list[0][2],list[0][3],list[0][3]],//ATTACK 0
-			[list[0][4],list[0][5],list[0][6],list[0][7],list[0][7]],//ATTACK 1
-			[list[0][8],list[0][9],list[0][10],list[0][11],list[0][11]],//ATTACK 2
-			[list[0][12],list[0][13]],//MOVE 3
-			[list[0][14],list[0][15]],//MOVE 4
-			[list[0][16],list[0][17]],//MOVE 5
-			[list[0][18]],//STAND 6
-			[list[0][19]],//STAND 7
-			[list[0][20]],//STAND 8
-			[list[0][21],list[0][22]],//PANT 9
-			[list[0][23]],//BLOCK 10
-			[list[0][24]],//BLOCK 11
-			[list[0][25]],//BLOCK 12
-			[list[0][26]],//HERT 13
-			[list[0][27]],//WAKE 14
-			[list[0][18],list[0][23],list[0][18],list[0][23],list[0][27],list[0][27],list[0][27]],//LEVELUP 15
-			[list[0][19],list[0][24],list[0][19],list[0][24],list[0][27],list[0][27],list[0][27]],//LEVELUP 16
-			[list[0][20],list[0][25],list[0][20],list[0][25],list[0][27],list[0][27],list[0][27]],//LEVELUP 17
-			[list[0][0]],//MAGIC_ATTACK 18
-			[list[0][4]],//MAGIC_ATTACK 19
-			[list[0][8]],//MAGIC_ATTACK 20
-		];
-	}
-	return BattleCharacterView._animationData;
+	// 1792 x 64
+	var list = LGlobal.divideCoordinate(1792, 64, 1, 28);
+	var data = [
+		[list[0][0],list[0][1],list[0][2],list[0][3],list[0][3]],//ATTACK 0
+		[list[0][4],list[0][5],list[0][6],list[0][7],list[0][7]],//ATTACK 1
+		[list[0][8],list[0][9],list[0][10],list[0][11],list[0][11]],//ATTACK 2
+		[list[0][12],list[0][13]],//MOVE 3
+		[list[0][14],list[0][15]],//MOVE 4
+		[list[0][16],list[0][17]],//MOVE 5
+		[list[0][18]],//STAND 6
+		[list[0][19]],//STAND 7
+		[list[0][20]],//STAND 8
+		[list[0][21],list[0][22]],//PANT 9
+		[list[0][23]],//BLOCK 10
+		[list[0][24]],//BLOCK 11
+		[list[0][25]],//BLOCK 12
+		[list[0][26]],//HERT 13
+		[list[0][27]],//WAKE 14
+		[list[0][18],list[0][23],list[0][18],list[0][23],list[0][27],list[0][27],list[0][27]],//LEVELUP 15
+		[list[0][19],list[0][24],list[0][19],list[0][24],list[0][27],list[0][27],list[0][27]],//LEVELUP 16
+		[list[0][20],list[0][25],list[0][20],list[0][25],list[0][27],list[0][27],list[0][27]],//LEVELUP 17
+		[list[0][0]],//MAGIC_ATTACK 18
+		[list[0][4]],//MAGIC_ATTACK 19
+		[list[0][8]],//MAGIC_ATTACK 20
+	];
+	return data;
 };
 BattleCharacterView.prototype.getBitmapData = function() {
 	var self = this;

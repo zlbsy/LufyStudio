@@ -30,7 +30,7 @@ Language.data = {
 	"single_command_defence":"防御",
 	"single_command_dodge":"躲闪",
 	"single_command_charge":"集气",
-	"single_command_backstroke_attack":"回马",
+	"single_command_backstroke_attack":"诈败",
 	"single_command_special_attack":"怒击",
 	
 	"action_end_error":"行动已结束！",
@@ -83,6 +83,7 @@ Language.data = {
 	"intelligence":"智力",
 	"agility":"敏捷",
 	"luck":"运气",
+	"sc_angry":"怒气",
 	
 	"attack":"攻击",
 	"spirit":"策略",
