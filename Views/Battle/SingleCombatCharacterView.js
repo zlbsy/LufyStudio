@@ -19,12 +19,13 @@ SingleCombatCharacterView.prototype.toStatic = function(value){
 };
 SingleCombatCharacterView.prototype.setCommands=function(){
 	var self = this, command;
+	self.selectedButtons.length = 0;
 	while(self.commands.length < self.maxCommand){
 		command = getSingleCombatCommand(self.commands,self.angry,self.data.force());
 		if(self.isLeft){
-			command = SingleCombatCommand.ATTACK;
+			command = SingleCombatCommand.BIG_ATTACK;
 		}else{
-			command = SingleCombatCommand.BACKSTROKE_ATTACK;
+			command = SingleCombatCommand.SPECIAL_ATTACK;
 		}
 		self.commands.push(command);
 	}
@@ -55,9 +56,12 @@ SingleCombatCharacterView.prototype.actionComplete = function(event){
 				self.singleMode = SingleCombatCharacterConfig.START;
 			}else if(self.singleMode == SingleCombatCharacterConfig.START && self.currentCommand == SingleCombatCommand.DOUBLE_ATTACK && self.attackCount++ == 0){
 				self.changeAction(CharacterAction.ATTACK);
+			}else if(self.singleMode == SingleCombatCharacterConfig.START && self.currentCommand == SingleCombatCommand.BACKSTROKE_ATTACK){
+				self.changeAction(CharacterAction.STAND);
+				LGlobal.script.analysis();
 			}else if(self.singleMode == SingleCombatCharacterConfig.START){
 				self.changeAction(CharacterAction.STAND);
-				//LGlobal.script.analysis();
+				checkSingleCombatCommandEnd();
 			}
 			break;
 		case CharacterAction.HERT:
@@ -65,13 +69,15 @@ SingleCombatCharacterView.prototype.actionComplete = function(event){
 				self.changeAction(CharacterAction.ATTACK);
 			}else{
 				self.changeAction(CharacterAction.STAND);
+				checkSingleCombatCommandEnd();
 			}
 			break;
 		case CharacterAction.BLOCK:
-			if(self.targetCharacter.currentCommand == SingleCombatCommand.ATTACK || (self.targetCharacter.currentCommand == SingleCombatCommand.DOUBLE_ATTACK && self.attackCount > 0)){
+			if(self.targetCharacter.currentCommand == SingleCombatCommand.ATTACK || (self.targetCharacter.currentCommand == SingleCombatCommand.DOUBLE_ATTACK && self.targetCharacter.attackCount > 0)){
 				self.changeAction(CharacterAction.ATTACK);
 			}else{
 				self.changeAction(CharacterAction.STAND);
+				checkSingleCombatCommandEnd();
 			}
 			break;
 	}
@@ -80,14 +86,6 @@ SingleCombatCharacterView.prototype.attackActionComplete = function(event){
 	var self = event.currentTarget;
 	//console.log("S ",self.data.name(),self.anime.colIndex,self.anime.isMirror,self.currentCommand);
 	singleCombatAttackActionComplete(self, self.targetCharacter);
-};
-SingleCombatCharacterView.prototype.getDebutTalk = function(){
-	var self = this;
-	var talks = ["让你见识一下{0}的厉害！", "听过{0}的大名吗！", "在下{0}讨教敌将高招！"];
-	var talkLabel = new SingleCombatTalkView(self.controller,String.format(talks[Math.random() * talks.length >> 0],self.data.name()),self.isLeft);
-	talkLabel.x = self.x + (self.isLeft ? 90 : -90);
-	talkLabel.y = self.y - 30;
-	self.parent.parent.addChild(talkLabel);
 };
 SingleCombatCharacterView.prototype.showLight = function(){
 	var self = this;
@@ -149,65 +147,49 @@ SingleCombatCharacterView.prototype.commandExecute = function(){
 			break;
 	}
 };
-SingleCombatCharacterView.prototype.dodge = function(){
+SingleCombatCharacterView.prototype.clearCommand = function(){
 	var self = this;
-	var currentX = self.x;
-	if(self.isLeft){
-		self.setCoordinate(self.x - BattleCharacterSize.width, self.y);
+	if(self.currentCommand == SingleCombatCommand.CHARGE){
+		self.barAngry.changeValue(10 + 20);
 	}else{
-		self.setCoordinate(self.x + BattleCharacterSize.width, self.y);
+		self.barAngry.changeValue(10);
 	}
-	self.addEventListener(CharacterActionEvent.MOVE_COMPLETE,self.dodgeActionComplete);
-	self.moveTo(currentX, self.y);
-};
-SingleCombatCharacterView.prototype.dodgeActionComplete = function(event){
-	var self = event.currentTarget;
-	self.removeEventListener(CharacterActionEvent.MOVE_COMPLETE,self.dodgeActionComplete);
-	self.changeAction(CharacterAction.ATTACK);
 };
 SingleCombatCharacterView.prototype.changeHp = function(value){
 	this.barHp.changeValue(-value);
 	this.barAngry.changeValue(value);
 };
+SingleCombatCharacterView.prototype.addDodgeScript = function(toAttack){
+	var self = this;
+	var script = "SGJSingleCombat.dodge("+self.data.id()+");";
+	script += "SGJSingleCombat.moveTo("+self.data.id()+",relative,forward,"+BattleCharacterSize.width+");";
+	if(toAttack){
+		script += "SGJSingleCombat.changeAction("+self.data.id()+","+CharacterAction.ATTACK+",1);";
+	}
+	LGlobal.script.addScript(script);
+};
 SingleCombatCharacterView.prototype.addBackstrokeScript = function(){
 	var self = this;
 	var script = "SGJSingleCombat.dodge("+self.data.id()+");";
 	script += "SGJSingleCombat.talk("+self.data.id()+","+SingleCombatTalkMode.BACK+");";
-	script += "SGJSingleCombat.moveTo("+self.data.id()+",relative,backwards,"+BattleCharacterSize.width+");";
+	script += "SGJSingleCombat.moveTo("+self.data.id()+",relative,backward,"+BattleCharacterSize.width+");";
 	script += "SGJSingleCombat.talk("+self.targetCharacter.data.id()+","+SingleCombatTalkMode.ZHUI+");";
 	script += "SGJSingleCombat.moveTo("+self.targetCharacter.data.id()+",relative,forward,"+(BattleCharacterSize.width*2)+");";
 	script += "SGJSingleCombat.talk("+self.data.id()+","+SingleCombatTalkMode.BACK_ATTACK+");";
 	script += "SGJSingleCombat.changeDirection("+self.data.id()+",forward);";
-	script += "SGJSingleCombat.changeAction("+self.data.id()+","+CharacterAction.ATTACK+");";
+	script += "SGJSingleCombat.changeAction("+self.data.id()+","+CharacterAction.ATTACK+",1);";
+	script += "Wait.time(0.5);";
 	script += "SGJSingleCombat.moveTo("+self.targetCharacter.data.id()+",absolute,"+self.targetCharacter.startPosition()+");";
 	script += "SGJSingleCombat.changeDirection("+self.targetCharacter.data.id()+",forward);";
 	script += "SGJSingleCombat.moveTo("+self.data.id()+",absolute,"+self.startPosition()+");";
 	script += "SGJSingleCombat.changeDirection("+self.data.id()+",forward);";
+	script += "SGJSingleCombat.checkCommandEnd();";
 	LGlobal.script.addScript(script);
 };
 SingleCombatCharacterView.prototype.startPosition = function(){
 	return this.isLeft ? LMvc.SingleCombatController.view.leftCharacterX : LMvc.SingleCombatController.view.rightCharacterX;
 };
-SingleCombatCharacterView.prototype.backstroke = function(){
-	var self = this, toX;
-	if(self.isLeft){
-		toX = self.x - BattleCharacterSize.width*2;
-		self.setCoordinate(self.x - BattleCharacterSize.width, self.y);
-	}else{
-		toX = self.x + BattleCharacterSize.width*2;
-		self.setCoordinate(self.x + BattleCharacterSize.width, self.y);
-	}
-	self.backstrokeTalk();
-	self.addEventListener(CharacterActionEvent.MOVE_COMPLETE,self.dodgeActionComplete);
-	self.moveTo(toX, self.y);
-	//self.moveTo(currentX, self.y);
-};
-SingleCombatCharacterView.prototype.backstrokeTalk = function(){
-	var self = this;
-	var talks = ["好厉害，还是撤退吧！", "三十六计走为上！", "我认输了！"];
-	var talkLabel = new SingleCombatTalkView(self.controller,talks[Math.random() * talks.length >> 0],self.isLeft);
-	talkLabel.x = self.x;
-	talkLabel.y = self.y - 30;
-	self.parent.parent.addChild(talkLabel);
+SingleCombatCharacterView.prototype.getDebutTalk = function(){
+	LGlobal.script.addScript("SGJSingleCombat.talk("+this.data.id()+","+SingleCombatTalkMode.DEBUT+");");
 };
 

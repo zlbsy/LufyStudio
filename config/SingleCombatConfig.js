@@ -9,3 +9,9 @@ var SingleCombatCommand = {
 	SPECIAL_ATTACK:"single_command_special_attack",//全力一击 8
 };
 var RandomSingleCombatCommands = [SingleCombatCommand.ATTACK, SingleCombatCommand.DOUBLE_ATTACK, SingleCombatCommand.BIG_ATTACK, SingleCombatCommand.DEFENCE, SingleCombatCommand.DODGE, SingleCombatCommand.CHARGE];
+
+SingleCombatTalkMode = {};
+SingleCombatTalkMode.DEBUT = "Debut";
+SingleCombatTalkMode.BACK = "Back";
+SingleCombatTalkMode.ZHUI = "Zhui";
+SingleCombatTalkMode.BACK_ATTACK = "Back_attack";

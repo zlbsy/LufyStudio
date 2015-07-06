@@ -126,7 +126,7 @@ function singleCombatCommandCheckAttack(currentCharacter, targetCharacter) {
 		case SingleCombatCommand.DODGE:
 			//TODO::抡空音效
 			console.log("抡空音效");
-			targetCharacter.dodge();
+			targetCharacter.addDodgeScript(true);
 			break;
 		case SingleCombatCommand.CHARGE:
 			//TODO::轻伤音效
@@ -163,6 +163,7 @@ function singleCombatCommandCheckDouBleAttack(currentCharacter, targetCharacter)
 			//TODO::轻伤音效
 			console.log("轻伤音效");
 			targetCharacter.changeAction(CharacterAction.HERT);
+			singleCombatHert(currentCharacter, targetCharacter);
 			break;
 		case SingleCombatCommand.DEFENCE:
 			//TODO::挡格音效
@@ -170,16 +171,28 @@ function singleCombatCommandCheckDouBleAttack(currentCharacter, targetCharacter)
 			targetCharacter.changeAction(CharacterAction.BLOCK);
 			break;
 		case SingleCombatCommand.DODGE:
-			//TODO::抡空音效
-			console.log("抡空音效");
+			if(currentCharacter.attackCount == 0){
+				//TODO::抡空音效
+				console.log("抡空音效");
+				targetCharacter.addDodgeScript(false);
+			}else{
+				//TODO::轻伤音效
+				console.log("轻伤音效");
+				targetCharacter.changeAction(CharacterAction.HERT);
+				singleCombatHert(currentCharacter, targetCharacter);
+			}
 			break;
 		case SingleCombatCommand.CHARGE:
 			//TODO::轻伤音效
 			console.log("轻伤音效");
+			targetCharacter.changeAction(CharacterAction.HERT);
+			singleCombatHert(currentCharacter, targetCharacter);
 			break;
 		case SingleCombatCommand.BACKSTROKE_ATTACK:
+			currentCharacter.attackCount++;
+			targetCharacter.addBackstrokeScript();
+			break;
 		case SingleCombatCommand.SPECIAL_ATTACK:
-			console.log("XXXXX");
 			break;
 	}
 }
@@ -254,11 +267,32 @@ function singleCombatCommandSpecialAttack(currentCharacter, targetCharacter) {
 			break;
 	}
 }
-SingleCombatTalkMode = {};
-SingleCombatTalkMode.DEBUT = "Debut";
-SingleCombatTalkMode.BACK = "Back";
-SingleCombatTalkMode.ZHUI = "Zhui";
-SingleCombatTalkMode.BACK_ATTACK = "Back_attack";
+function checkSingleCombatCommandEnd(){
+	var character = LMvc.SingleCombatController.view.characterLayer.childList.find(function(child){
+		return child.constructor.name == "SingleCombatCharacterView" && child.action != CharacterAction.STAND;
+	});
+	if(character){
+		return;
+	}
+	var view = LMvc.SingleCombatController.view;
+	if(view.executeIndex < 2){
+		setTimeout(view.execute,1000);
+	}else{
+		setTimeout(function(){
+			LTweenLite.to(view.commandLayer,0.2,{alpha:0,onComplete:function(e){
+				var layer = e.target;
+				layer.die();
+				layer.removeAllChild();
+				layer.alpha = 1;
+			}});
+			view.leftCharacter.setCommands();
+			view.rightCharacter.setCommands();
+			view.leftCharacter.clearCommand();
+			view.rightCharacter.clearCommand();
+			view.addCtrlButton();
+		},1000);
+	}
+}
 function getSingleCombatTalk(characterModel, mode){
 	var talks;
 	switch(mode){

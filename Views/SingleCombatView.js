@@ -66,15 +66,6 @@ SingleCombatView.prototype.characterLayerInit=function(){
 	
 	self.faceLayerInit(currentCharacter.data,true);
 	self.faceLayerInit(targetCharacter.data,false);
-	
-	/*
-	var button01 = new LButtonSample1("单挑测试");
-	button01.x = 200;
-	button01.y = 490;
-	self.addChild(button01);
-	button01.addEventListener(LMouseEvent.MOUSE_UP,self.showSingleCombat.bind(self));
-	self.leftHpView.changeValue(-20);
-	*/
 };
 SingleCombatView.prototype.addCtrlButton=function(){
 	var self = this;
@@ -152,10 +143,10 @@ SingleCombatView.prototype.buttonMoveComplete=function(event){
 	/*var effect = new SpecialEffectView(self.controller);self.addChild(effect);*/
 };
 SingleCombatView.prototype.execute=function(event){
-	var commandChild = event.target;
-	var self = commandChild.parent.parent;
+	var self = LMvc.SingleCombatController.view;
 	self.leftCharacter.showRunningCommand(self.executeIndex);
 	self.rightCharacter.showRunningCommand(self.executeIndex);
+	self.executeIndex++;
 	singleCombatCommandExecute(self.leftCharacter,self.rightCharacter);
 };
 SingleCombatView.prototype.characterDebut=function(event){

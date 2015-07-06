@@ -1177,10 +1177,11 @@ ScriptWait.analysis = function(value) {
 			break;
 		case "Wait.time":
 			//脚本暂停一段时间
+			var params = value.substring(start + 1, end).split(",");
 			ScriptWait.timeId = setTimeout(function() {
 				ScriptWait.timeId = null;
 				LGlobal.script.analysis();
-			}, 1000);
+			}, parseFloat(params[0])/1000);
 			break;
 		case "Wait.clickOver":
 			//结束等待点击脚本（Wait.click）
@@ -1808,9 +1809,16 @@ LSGJSingleCombatScript.analysis = function(value) {
 		case "SGJSingleCombat.changeAction":
 			LSGJSingleCombatScript.changeAction(value, start, end);
 			break;
+		case "SGJSingleCombat.checkCommandEnd":
+			LSGJSingleCombatScript.checkCommandEnd(value, start, end);
+			break;
 		default:
 			LGlobal.script.analysis();
 	}
+};
+LSGJSingleCombatScript.checkCommandEnd = function(value, start, end) {
+	checkSingleCombatCommandEnd();
+	LGlobal.script.analysis();
 };
 LSGJSingleCombatScript.dodge = function(value, start, end) {
 	//params:charaId
@@ -1857,13 +1865,15 @@ LSGJSingleCombatScript.changeDirection = function(value, start, end) {
 	LGlobal.script.analysis();
 };
 LSGJSingleCombatScript.changeAction = function(value, start, end) {
-	//params:charaId,action
+	//params:charaId,action,wait
 	var params = value.substring(start + 1, end).split(",");
 	var character = LMvc.SingleCombatController.view.characterLayer.childList.find(function(child){
 		return child.constructor.name == "SingleCombatCharacterView" && child.data.id() == parseInt(params[0]);
 	});
 	character.changeAction(params[1]);
-	LGlobal.script.analysis();
+	if(parseInt(params[2]) == 0){
+		LGlobal.script.analysis();
+	}
 };
 LSGJSingleCombatScript.moveComplete = function(event) {
 	event.currentTarget.addEventListener(CharacterActionEvent.MOVE_COMPLETE,LSGJSingleCombatScript.moveComplete);
@@ -1884,7 +1894,7 @@ LSGJSingleCombatScript.moveTo = function(value, start, end) {
 	}
 };
 LSGJSingleCombatScript.moveToAbsolute = function(character,coordinate) {
-	
+		character.moveTo(coordinate, character.y);
 };
 LSGJSingleCombatScript.moveToRelative = function(character,direction,distance) {
 	if(character.isLeft){
