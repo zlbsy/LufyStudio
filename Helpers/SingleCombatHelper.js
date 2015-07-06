@@ -135,7 +135,7 @@ function singleCombatCommandCheckAttack(currentCharacter, targetCharacter) {
 			singleCombatHert(currentCharacter, targetCharacter);
 			break;
 		case SingleCombatCommand.BACKSTROKE_ATTACK:
-			targetCharacter.backstroke();
+			targetCharacter.addBackstrokeScript();
 			break;
 		case SingleCombatCommand.SPECIAL_ATTACK:
 			break;

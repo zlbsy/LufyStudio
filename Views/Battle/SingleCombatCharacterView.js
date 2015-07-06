@@ -168,6 +168,13 @@ SingleCombatCharacterView.prototype.changeHp = function(value){
 	this.barHp.changeValue(-value);
 	this.barAngry.changeValue(value);
 };
+SingleCombatCharacterView.prototype.addBackstrokeScript = function(){
+	var self = this;
+	var script = "SGJSingleCombat.dodge("+self.data.id()+");";
+	script += "SGJSingleCombat.moveTo("+self.data.id()+",relative,backwards,"+BattleCharacterSize.width+");";
+	script += "SGJSingleCombat.talk("+self.data.id()+",relative,backwards,"+BattleCharacterSize.width+");";
+	LGlobal.script.addScript(script);
+};
 SingleCombatCharacterView.prototype.backstroke = function(){
 	var self = this, toX;
 	if(self.isLeft){
