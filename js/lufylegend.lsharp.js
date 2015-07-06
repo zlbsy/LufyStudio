@@ -1802,6 +1802,12 @@ LSGJSingleCombatScript.analysis = function(value) {
 		case "SGJSingleCombat.talk":
 			LSGJSingleCombatScript.talk(value, start, end);
 			break;
+		case "SGJSingleCombat.changeDirection":
+			LSGJSingleCombatScript.changeDirection(value, start, end);
+			break;
+		case "SGJSingleCombat.changeAction":
+			LSGJSingleCombatScript.changeAction(value, start, end);
+			break;
 		default:
 			LGlobal.script.analysis();
 	}
@@ -1821,17 +1827,46 @@ LSGJSingleCombatScript.dodge = function(value, start, end) {
 	LGlobal.script.analysis();
 };
 LSGJSingleCombatScript.talk = function(value, start, end) {
-	//params:charaId
+	//params:charaId,mode
 	var params = value.substring(start + 1, end).split(",");
 	var character = LMvc.SingleCombatController.view.characterLayer.childList.find(function(child){
 		return child.constructor.name == "SingleCombatCharacterView" && child.data.id() == parseInt(params[0]);
 	});
-	var talks = ["好厉害，还是撤退吧！", "三十六计走为上！", "我认输了！"];
-	var talkLabel = new SingleCombatTalkView(self.controller,talks[Math.random() * talks.length >> 0],self.isLeft);
-	talkLabel.x = self.x;
-	talkLabel.y = self.y - 30;
-	self.parent.parent.addChild(talkLabel);
+	var message = getSingleCombatTalk(character.data,params[1]);
+	var talkLabel = new SingleCombatTalkView(self.controller,message,character.isLeft);
+	talkLabel.x = character.x;
+	if(params[1] == SingleCombatTalkMode.DEBUT){
+		talkLabel.x = character.x + (character.isLeft ? 90 : -90);
+	}
+	talkLabel.y = character.y - 30;
+	LMvc.SingleCombatController.view.addChild(talkLabel);
 	
+	LGlobal.script.analysis();
+};
+LSGJSingleCombatScript.changeDirection = function(value, start, end) {
+	//params:charaId,direction(forward,backwards)
+	var params = value.substring(start + 1, end).split(",");
+	var character = LMvc.SingleCombatController.view.characterLayer.childList.find(function(child){
+		return child.constructor.name == "SingleCombatCharacterView" && child.data.id() == parseInt(params[0]);
+	});
+	if(character.isLeft){
+		character.changeDirection(params[1] == "forward" ? CharacterDirection.RIGHT : CharacterDirection.LEFT);
+	}else{
+		character.changeDirection(params[1] == "forward" ? CharacterDirection.LEFT : CharacterDirection.RIGHT);
+	}
+	LGlobal.script.analysis();
+};
+LSGJSingleCombatScript.changeAction = function(value, start, end) {
+	//params:charaId,action
+	var params = value.substring(start + 1, end).split(",");
+	var character = LMvc.SingleCombatController.view.characterLayer.childList.find(function(child){
+		return child.constructor.name == "SingleCombatCharacterView" && child.data.id() == parseInt(params[0]);
+	});
+	character.changeAction(params[1]);
+	LGlobal.script.analysis();
+};
+LSGJSingleCombatScript.moveComplete = function(event) {
+	event.currentTarget.addEventListener(CharacterActionEvent.MOVE_COMPLETE,LSGJSingleCombatScript.moveComplete);
 	LGlobal.script.analysis();
 };
 LSGJSingleCombatScript.moveTo = function(value, start, end) {
@@ -1841,6 +1876,7 @@ LSGJSingleCombatScript.moveTo = function(value, start, end) {
 	var character = LMvc.SingleCombatController.view.characterLayer.childList.find(function(child){
 		return child.constructor.name == "SingleCombatCharacterView" && child.data.id() == parseInt(params[0]);
 	});
+	character.addEventListener(CharacterActionEvent.MOVE_COMPLETE,LSGJSingleCombatScript.moveComplete);
 	if(params[1] == "absolute"){
 		LSGJSingleCombatScript.moveToAbsolute(character,parseInt(params[2]));
 	}else{

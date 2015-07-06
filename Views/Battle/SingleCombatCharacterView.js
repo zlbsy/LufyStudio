@@ -57,6 +57,7 @@ SingleCombatCharacterView.prototype.actionComplete = function(event){
 				self.changeAction(CharacterAction.ATTACK);
 			}else if(self.singleMode == SingleCombatCharacterConfig.START){
 				self.changeAction(CharacterAction.STAND);
+				//LGlobal.script.analysis();
 			}
 			break;
 		case CharacterAction.HERT:
@@ -171,9 +172,21 @@ SingleCombatCharacterView.prototype.changeHp = function(value){
 SingleCombatCharacterView.prototype.addBackstrokeScript = function(){
 	var self = this;
 	var script = "SGJSingleCombat.dodge("+self.data.id()+");";
+	script += "SGJSingleCombat.talk("+self.data.id()+","+SingleCombatTalkMode.BACK+");";
 	script += "SGJSingleCombat.moveTo("+self.data.id()+",relative,backwards,"+BattleCharacterSize.width+");";
-	script += "SGJSingleCombat.talk("+self.data.id()+",relative,backwards,"+BattleCharacterSize.width+");";
+	script += "SGJSingleCombat.talk("+self.targetCharacter.data.id()+","+SingleCombatTalkMode.ZHUI+");";
+	script += "SGJSingleCombat.moveTo("+self.targetCharacter.data.id()+",relative,forward,"+(BattleCharacterSize.width*2)+");";
+	script += "SGJSingleCombat.talk("+self.data.id()+","+SingleCombatTalkMode.BACK_ATTACK+");";
+	script += "SGJSingleCombat.changeDirection("+self.data.id()+",forward);";
+	script += "SGJSingleCombat.changeAction("+self.data.id()+","+CharacterAction.ATTACK+");";
+	script += "SGJSingleCombat.moveTo("+self.targetCharacter.data.id()+",absolute,"+self.targetCharacter.startPosition()+");";
+	script += "SGJSingleCombat.changeDirection("+self.targetCharacter.data.id()+",forward);";
+	script += "SGJSingleCombat.moveTo("+self.data.id()+",absolute,"+self.startPosition()+");";
+	script += "SGJSingleCombat.changeDirection("+self.data.id()+",forward);";
 	LGlobal.script.addScript(script);
+};
+SingleCombatCharacterView.prototype.startPosition = function(){
+	return this.isLeft ? LMvc.SingleCombatController.view.leftCharacterX : LMvc.SingleCombatController.view.rightCharacterX;
 };
 SingleCombatCharacterView.prototype.backstroke = function(){
 	var self = this, toX;

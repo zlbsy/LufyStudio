@@ -254,3 +254,26 @@ function singleCombatCommandSpecialAttack(currentCharacter, targetCharacter) {
 			break;
 	}
 }
+SingleCombatTalkMode = {};
+SingleCombatTalkMode.DEBUT = "Debut";
+SingleCombatTalkMode.BACK = "Back";
+SingleCombatTalkMode.ZHUI = "Zhui";
+SingleCombatTalkMode.BACK_ATTACK = "Back_attack";
+function getSingleCombatTalk(characterModel, mode){
+	var talks;
+	switch(mode){
+		case SingleCombatTalkMode.DEBUT:
+			talks = ["让你见识一下{0}的厉害！", "听过{0}的大名吗！", "在下{0}讨教敌将高招！"];
+			return String.format(talks[Math.random() * talks.length >> 0],characterModel.name());
+		case SingleCombatTalkMode.BACK:
+			talks = ["好厉害，还是撤退吧！", "三十六计走为上！", "我认输了！"];
+			break;
+		case SingleCombatTalkMode.ZHUI:
+			talks = ["休想逃跑!", "留下你的脑袋！"];
+			break;
+		case SingleCombatTalkMode.BACK_ATTACK:
+			talks = ["你上当了！", "你太笨了！", "有勇无谋之辈！"];
+			break;
+	}
+	return talks[Math.random() * talks.length >> 0];
+}
