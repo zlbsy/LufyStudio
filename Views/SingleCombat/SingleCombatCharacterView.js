@@ -2,6 +2,7 @@ function SingleCombatCharacterView(controller, id, w, h, isLeft) {
 	var self = this;
 	LExtends(self, BattleCharacterView, [controller, id, w, h]);
 	self.isLeft = isLeft;
+	self.addAngry = 10;
 	self.commands = [];
 	self.selectedCommands = [];
 	self.selectedButtons = [];
@@ -19,9 +20,13 @@ SingleCombatCharacterView.prototype.toStatic = function(value){
 };
 SingleCombatCharacterView.prototype.setCommands=function(){
 	var self = this, command, oldCommand;
+	if(self.barAngry){
+		self.barAngry.changeValue(self.addAngry);
+		self.addAngry = 10;
+	}
 	for(var i=0;i<self.selectedCommands.length;i++){
 		oldCommand = self.selectedCommands[0];
-		command = getSingleCombatCommand(self.commands,self.barAngry.currentValue,self.data.force(),oldCommand);
+		command = getSingleCombatCommand(self.commands,self.barAngry.value,self.data.force(),oldCommand);
 		self.commands.push(command);
 	}
 	while(self.commands.length < self.maxCommand){
@@ -38,24 +43,21 @@ SingleCombatCharacterView.prototype.clearCommand = function(){
 	var self = this;
 	self.selectedCommands.length = 0;
 	self.selectedButtons.length = 0;
-	if(self.currentCommand == SingleCombatCommand.CHARGE){
-		self.barAngry.changeValue(10 + 20);
-	}else{
-		self.barAngry.changeValue(10);
-	}
 	self.currentCommand = null;
 };
-SingleCombatCharacterView.prototype.toSelectCommand=function(index){
+SingleCombatCharacterView.prototype.toSelectCommand=function(command){
 	var self = this;
-	if(typeof index != UNDEFINED){
-		var command = self.commands[index];
+	if(typeof command != UNDEFINED){
+		var index = self.commands.findIndex(function(child){
+			return child == command;
+		});
 		self.commands.splice(index, 1);
 		self.selectedCommands.push(command);
 		return;
 	}
 	while(self.selectedCommands.length < 2){
 		var index = self.commands.length * Math.random() >> 0;
-		var command = self.commands[index];
+		command = self.commands[index];
 		self.commands.splice(index, 1);
 		self.selectedCommands.push(command);
 	}
@@ -140,6 +142,7 @@ SingleCombatCharacterView.prototype.showRunningCommand = function(index){
 	self.selectedButtons.forEach(function(child){
 		child.alpha = 0.5;
 	});
+	console.log("showRunningCommand index="+index);
 	self.selectedButtons[index].alpha = 1;
 	self.currentCommand = self.selectedCommands[index];
 };
@@ -165,7 +168,9 @@ SingleCombatCharacterView.prototype.commandExecute = function(){
 				|| self.targetCharacter.currentCommand == SingleCombatCommand.CHARGE || self.targetCharacter.currentCommand == SingleCombatCommand.BACKSTROKE_ATTACK)){
 					checkSingleCombatCommandEnd();
 			}
-			if(self.currentCommand == SingleCombatCommand.BACKSTROKE_ATTACK){
+			if(self.currentCommand == SingleCombatCommand.CHARGE){
+				self.addAngry += 20;
+			}else if(self.currentCommand == SingleCombatCommand.BACKSTROKE_ATTACK){
 				self.barAngry.changeValue(-80);
 			}
 			break;

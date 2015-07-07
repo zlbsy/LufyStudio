@@ -59,15 +59,16 @@ StatusBarView.prototype.onComplete=function(event){
 };
 StatusBarView.prototype.changeValue=function(value){
 	var self = this;
-	LTweenLite.to(self,0.5,{currentValue:self.currentValue + value,onUpdate:self.onUpdate,onComplete:self.onComplete});
+	self.value = self.currentValue + value;
+	if(self.value > self.maxValue){
+		self.value = self.maxValue;
+	}else if(self.value < 0){
+		self.value = 0;
+	}
+	LTweenLite.to(self,0.5,{currentValue:self.value,onUpdate:self.onUpdate,onComplete:self.onComplete});
 };
 StatusBarView.prototype.setStatus=function(){
 	var self = this;
-	if(self.currentValue > self.maxValue){
-		self.currentValue = self.maxValue;
-	}else if(self.currentValue < 0){
-		self.currentValue = 0;
-	}
 	var value = self.currentValue / self.maxValue;
 	value = value < 0.001 ? 0.001 : value;
 	var barSize = self.barSize * value;

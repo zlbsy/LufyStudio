@@ -34,6 +34,12 @@ CharacterModel.prototype.physicalFitness = function(){
 CharacterModel.prototype.maxPhysicalFitness = function(){
 	return this.data.maxPhysicalFitness;
 };
+CharacterModel.prototype.disposition = function(){
+	return this.data.disposition;
+};
+CharacterModel.prototype.dispositionLabel = function(){
+	return Language.get("disposition_"+this.data.disposition);
+};
 CharacterModel.prototype.name = function() {
 	return Language.getCharacter("character_"+this.data.id);
 };

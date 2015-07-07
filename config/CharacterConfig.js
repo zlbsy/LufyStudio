@@ -50,6 +50,12 @@ var CharacterDirection = {
 	LEFT_UP:"left_up",
 	RIGHT_UP:"right_up"
 };
+var CharacterDisposition = {
+	TIMID:0,
+	CALM:1,
+	BRAVE:2,
+	RECKLESS:3
+};
 var BattleCharacterSize = {
 	width:48,height:48
 };

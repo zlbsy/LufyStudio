@@ -72,6 +72,7 @@ SingleCombatView.prototype.addCtrlButton=function(){
 	self.commandEnd = false;
 	for(var i = 0;i<self.leftCharacter.maxCommand;i++){
 		var child = getButton(Language.get(self.leftCharacter.commands[i]),80);
+		child.name = self.leftCharacter.commands[i];
 		child.x = LGlobal.width;
 		self.ctrlLayer.addChild(child);
 		child.addEventListener(LMouseEvent.MOUSE_UP,self.onButtonSelect);
@@ -118,15 +119,14 @@ SingleCombatView.prototype.buttonMoveComplete=function(event){
 			self.ctrlLayer.removeChild(child);
 			child.y += self.ctrlLayer.y;
 			self.commandLayer.addChild(child);
-			self.leftCharacter.toSelectCommand(i);
 			continue;
 		}
 		LTweenLite.to(child,0.4 - i * 0.05,{x:LGlobal.width,onComplete:child.remove.bind(child)});
 	}
 	LGlobal.destroy = true;
 	self.commandLayer.childList.sort(function(a,b){return a.y - b.y;});
-/*	self.leftCharacter.toSelectCommand(self.commandLayer.getChildAt(0).commandIndex);
-	self.leftCharacter.toSelectCommand(self.commandLayer.getChildAt(1).commandIndex);*/
+	self.leftCharacter.toSelectCommand(self.commandLayer.getChildAt(0).name);
+	self.leftCharacter.toSelectCommand(self.commandLayer.getChildAt(1).name);
 	self.rightCharacter.toSelectCommand();
 	self.executeIndex = 0;
 	for(var i = 0;i<self.rightCharacter.selectedCommands.length;i++){
@@ -207,7 +207,18 @@ SingleCombatView.prototype.faceLayerInit=function(characterModel,isLeft){
 	force.x = name.x;
 	force.y = name.y + name.getHeight() + startPosition;
 	self.backLayer.addChild(force);
+	
+	var disposition = getStrokeLabel(Language.get("disposition"),20,"#FFFFFF","#000000",2);
+	disposition.x = name.x;
+	disposition.y = name.y + 30;
+	self.backLayer.addChild(disposition);
+	var formatForce = Language.get("force") + " : {0}";
+	var dispositionLabel = getStrokeLabel(characterModel.dispositionLabel(),18,"#FFFFFF","#000000",2);
+	dispositionLabel.x = force.x;
+	dispositionLabel.y = force.y + 30;
+	self.backLayer.addChild(dispositionLabel);
 
+	return Language.get("disposition_"+this.data.disposition);
 	var barHp = new StatusBarView(self.controller);
 	barHp.y = face.y + faceSize;
 	var obj = {maxValue:characterModel.maxHP(),currentValue:characterModel.HP(),name:"HP",icon:"icon_hert",frontBar:"red_bar",barSize:170};
