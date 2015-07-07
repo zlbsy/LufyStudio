@@ -18,17 +18,32 @@ SingleCombatCharacterView.prototype.toStatic = function(value){
 	//覆盖父类处理
 };
 SingleCombatCharacterView.prototype.setCommands=function(){
-	var self = this, command;
-	self.selectedButtons.length = 0;
+	var self = this, command, oldCommand;
+	for(var i=0;i<self.selectedCommands.length;i++){
+		oldCommand = self.selectedCommands[0];
+		command = getSingleCombatCommand(self.commands,self.angry,self.data.force(),oldCommand);
+		self.commands.push(command);
+	}
 	while(self.commands.length < self.maxCommand){
 		command = getSingleCombatCommand(self.commands,self.angry,self.data.force());
 		if(self.isLeft){
-			command = SingleCombatCommand.BIG_ATTACK;
-		}else{
 			command = SingleCombatCommand.SPECIAL_ATTACK;
+		}else{
+			command = SingleCombatCommand.BACKSTROKE_ATTACK;
 		}
 		self.commands.push(command);
 	}
+};
+SingleCombatCharacterView.prototype.clearCommand = function(){
+	var self = this;
+	self.selectedCommands.length = 0;
+	self.selectedButtons.length = 0;
+	if(self.currentCommand == SingleCombatCommand.CHARGE){
+		self.barAngry.changeValue(10 + 20);
+	}else{
+		self.barAngry.changeValue(10);
+	}
+	self.currentCommand = null;
 };
 SingleCombatCharacterView.prototype.toSelectCommand=function(index){
 	var self = this;
@@ -142,17 +157,18 @@ SingleCombatCharacterView.prototype.commandExecute = function(){
 			self.showLight();
 			self.changeAction(CharacterAction.ATTACK);
 			break;
+		case SingleCombatCommand.DEFENCE:
+		case SingleCombatCommand.DODGE:
+		case SingleCombatCommand.CHARGE:
+		case SingleCombatCommand.BACKSTROKE_ATTACK:
+			if(self.targetCharacter.currentCommand == SingleCombatCommand.DEFENCE || self.targetCharacter.currentCommand == SingleCombatCommand.DODGE 
+				|| self.targetCharacter.currentCommand == SingleCombatCommand.CHARGE || self.targetCharacter.currentCommand == SingleCombatCommand.BACKSTROKE_ATTACK){
+					checkSingleCombatCommandEnd();
+				}
+			break;
 		case SingleCombatCommand.SPECIAL_ATTACK:
 			self.showLight();
 			break;
-	}
-};
-SingleCombatCharacterView.prototype.clearCommand = function(){
-	var self = this;
-	if(self.currentCommand == SingleCombatCommand.CHARGE){
-		self.barAngry.changeValue(10 + 20);
-	}else{
-		self.barAngry.changeValue(10);
 	}
 };
 SingleCombatCharacterView.prototype.changeHp = function(value){
@@ -173,7 +189,7 @@ SingleCombatCharacterView.prototype.addBackstrokeScript = function(){
 	var script = "SGJSingleCombat.dodge("+self.data.id()+");";
 	script += "SGJSingleCombat.talk("+self.data.id()+","+SingleCombatTalkMode.BACK+");";
 	script += "SGJSingleCombat.moveTo("+self.data.id()+",relative,backward,"+BattleCharacterSize.width+");";
-	script += "SGJSingleCombat.talk("+self.targetCharacter.data.id()+","+SingleCombatTalkMode.ZHUI+");";
+	script += "SGJSingleCombat.talk("+self.targetCharacter.data.id()+","+SingleCombatTalkMode.PURSUIT+");";
 	script += "SGJSingleCombat.moveTo("+self.targetCharacter.data.id()+",relative,forward,"+(BattleCharacterSize.width*2)+");";
 	script += "SGJSingleCombat.talk("+self.data.id()+","+SingleCombatTalkMode.BACK_ATTACK+");";
 	script += "SGJSingleCombat.changeDirection("+self.data.id()+",forward);";

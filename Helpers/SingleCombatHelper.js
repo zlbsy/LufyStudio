@@ -9,27 +9,52 @@ function getSingleCombatCommandCount(force){
 		return 3;
 	}
 }
-function getSingleCombatCommand(commands, angry, force) {
-	var specialIndex;
+function getSingleCombatCommand(commands, angry, force, oldCommand) {
+	var specialIndex,backstrokeIndex;
 	if(angry == 100){
 		specialIndex = commands.findIndex(function(child){
-			return child == SingleCombatCommand.BACKSTROKE_ATTACK || child == SingleCombatCommand.SPECIAL_ATTACK;
+			return child == SingleCombatCommand.SPECIAL_ATTACK;
 		});
 		if(specialIndex < 0){
-			return getSpecialSingleCombatCommand(force);
+			return SingleCombatCommand.SPECIAL_ATTACK;
 		}
+		if(force >= 90){
+			backstrokeIndex = commands.findIndex(function(child){
+				return child == SingleCombatCommand.BACKSTROKE_ATTACK;
+			});
+			if(backstrokeIndex < 0 && Math.random() > 0.5){
+				return SingleCombatCommand.BACKSTROKE_ATTACK;
+			}
+		}
+	}
+	if(oldCommand){
+		return getSingleCombatCommandFromOldCommand(oldCommand);
 	}
 	var index = Math.random() * RandomSingleCombatCommands.length >> 0;
 	return RandomSingleCombatCommands[index];
 }
-function getSpecialSingleCombatCommand(force) {
-	if(force < 90){
-		return SingleCombatCommand.BACKSTROKE_ATTACK;
+/*
+轻连重防躲集绝
+重轻连重连轻随
+集躲防集放躲机*/
+function getSingleCombatCommandFromOldCommand(oldCommand) {
+	switch(oldCommand){
+		case SingleCombatCommand.ATTACK:
+			return Math.random() > 0.5 ? SingleCombatCommand.BIG_ATTACK : SingleCombatCommand.CHARGE;
+		case SingleCombatCommand.DOUBLE_ATTACK:
+			return Math.random() > 0.5 ? SingleCombatCommand.ATTACK : SingleCombatCommand.DODGE;
+		case SingleCombatCommand.BIG_ATTACK:
+			return Math.random() > 0.5 ? SingleCombatCommand.DOUBLE_ATTACK : SingleCombatCommand.DEFENCE;
+		case SingleCombatCommand.DEFENCE:
+			return Math.random() > 0.5 ? SingleCombatCommand.BIG_ATTACK : SingleCombatCommand.DOUBLE_ATTACK;
+		case SingleCombatCommand.DODGE:
+			return Math.random() > 0.5 ? SingleCombatCommand.DOUBLE_ATTACK : SingleCombatCommand.DEFENCE;
+		case SingleCombatCommand.CHARGE:
+			return Math.random() > 0.5 ? SingleCombatCommand.ATTACK : SingleCombatCommand.DODGE;
+		case SingleCombatCommand.BACKSTROKE_ATTACK:
+		case SingleCombatCommand.SPECIAL_ATTACK:
+			return RandomSingleCombatCommands[Math.random() * RandomSingleCombatCommands.length >> 0];
 	}
-	if(Math.random() > 0.5){
-		return SingleCombatCommand.BACKSTROKE_ATTACK;
-	}
-	return SingleCombatCommand.SPECIAL_ATTACK;
 }
 function singleCombatCommandExecute(leftCharacter, rightCharacter) {
 	leftCharacter.commandExecute();
@@ -205,26 +230,32 @@ function singleCombatCommandBigAttack(currentCharacter, targetCharacter) {
 			break;
 		case SingleCombatCommand.BIG_ATTACK:
 			if(currentCharacter.isLeft){
-				//TODO::挡格音效
-				console.log("挡格音效");
+				//TODO::重挡格音效
+				console.log("重挡格音效");
 			}
 			break;
 		case SingleCombatCommand.DEFENCE:
 			//TODO::挡格音效
 			console.log("挡格音效");
 			targetCharacter.changeAction(CharacterAction.BLOCK);
+			singleCombatHert(currentCharacter, targetCharacter);
 			break;
 		case SingleCombatCommand.DODGE:
-			//TODO::抡空音效
-			console.log("抡空音效");
+			//TODO::重伤音效
+			console.log("重伤音效");
+			targetCharacter.changeAction(CharacterAction.HERT);
+			singleCombatHert(currentCharacter, targetCharacter);
 			break;
 		case SingleCombatCommand.CHARGE:
-			//TODO::轻伤音效
-			console.log("轻伤音效");
+			//TODO::重伤音效
+			console.log("重伤音效");
+			targetCharacter.changeAction(CharacterAction.HERT);
+			singleCombatHert(currentCharacter, targetCharacter);
 			break;
 		case SingleCombatCommand.BACKSTROKE_ATTACK:
+			targetCharacter.addBackstrokeScript();
+			break;
 		case SingleCombatCommand.SPECIAL_ATTACK:
-			console.log("XXXXX");
 			break;
 	}
 }
@@ -252,8 +283,13 @@ function singleCombatCommandSpecialAttack(currentCharacter, targetCharacter) {
 			singleCombatHert(currentCharacter, targetCharacter);
 			break;
 		case SingleCombatCommand.DODGE:
-			//TODO::抡空音效
-			console.log("抡空音效");
+			if(Math.random() > 0.5){
+				//TODO::抡空音效
+				console.log("抡空音效");
+			}else{
+				targetCharacter.changeAction(CharacterAction.HERT);
+				singleCombatHert(currentCharacter, targetCharacter);
+			}
 			break;
 		case SingleCombatCommand.CHARGE:
 			console.log("重伤音效");
@@ -261,6 +297,7 @@ function singleCombatCommandSpecialAttack(currentCharacter, targetCharacter) {
 			singleCombatHert(currentCharacter, targetCharacter);
 			break;
 		case SingleCombatCommand.BACKSTROKE_ATTACK:
+			targetCharacter.addBackstrokeScript();
 			break;
 		case SingleCombatCommand.SPECIAL_ATTACK:
 			console.log("重挡格音效");
@@ -269,7 +306,7 @@ function singleCombatCommandSpecialAttack(currentCharacter, targetCharacter) {
 }
 function checkSingleCombatCommandEnd(){
 	var character = LMvc.SingleCombatController.view.characterLayer.childList.find(function(child){
-		return child.constructor.name == "SingleCombatCharacterView" && child.action != CharacterAction.STAND;
+		return child.constructor.name == "SingleCombatCharacterView" && (child.action != CharacterAction.STAND || child.filters);
 	});
 	if(character){
 		return;
@@ -294,20 +331,19 @@ function checkSingleCombatCommandEnd(){
 	}
 }
 function getSingleCombatTalk(characterModel, mode){
-	var talks;
+	var length;
 	switch(mode){
 		case SingleCombatTalkMode.DEBUT:
-			talks = ["让你见识一下{0}的厉害！", "听过{0}的大名吗！", "在下{0}讨教敌将高招！"];
-			return String.format(talks[Math.random() * talks.length >> 0],characterModel.name());
+			return String.format(Language.getSingleCombat(SingleCombatTalkMode.DEBUT + (Math.random() * 4 >> 0)),characterModel.name());
 		case SingleCombatTalkMode.BACK:
-			talks = ["好厉害，还是撤退吧！", "三十六计走为上！", "我认输了！"];
+			length = 4;
 			break;
-		case SingleCombatTalkMode.ZHUI:
-			talks = ["休想逃跑!", "留下你的脑袋！"];
+		case SingleCombatTalkMode.PURSUIT:
+			length = 2;
 			break;
 		case SingleCombatTalkMode.BACK_ATTACK:
-			talks = ["你上当了！", "你太笨了！", "有勇无谋之辈！"];
+			length = 3;
 			break;
 	}
-	return talks[Math.random() * talks.length >> 0];
+	return Language.getSingleCombat(mode + (Math.random() * length >>> 0));
 }

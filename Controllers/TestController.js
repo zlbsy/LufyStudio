@@ -32,7 +32,7 @@ TestController.prototype.viewLoad=function(){
 	CharacterModel.setChara(characterList);
 	SoldierMasterModel.setMaster(SoldierDatas);
 	StrategyMasterModel.setMaster(StrategyDatas);
-	self.load.view(["Battle/BattleCharacterStatus","Strategy/Strategy","Strategy/StrategyChild","Strategy/StrategyDetailed","Battle/BattleMainMenu","Battle/SingleCombatTalk"],self.init);
+	self.load.view(["Battle/BattleCharacterStatus","Strategy/Strategy","Strategy/StrategyChild","Strategy/StrategyDetailed","Battle/BattleMainMenu","SingleCombat/SingleCombatTalk"],self.init);
 };
 TestController.prototype.getChapterData=function(){
 	var self = this;

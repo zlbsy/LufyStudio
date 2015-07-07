@@ -25,7 +25,7 @@ SingleCombatController.prototype.libraryLoad=function(){
 };
 SingleCombatController.prototype.viewLoad=function(){
 	var self = this;
-	self.load.view(["Battle/SingleCombatCharacter","Common/StatusBar","Common/Character","Battle/BattleCharacter","Common/SpecialEffect"],self.init);
+	self.load.view(["SingleCombat/SingleCombatTalk","SingleCombat/SingleCombatCharacter","Common/StatusBar","Common/Character","Battle/BattleCharacter","Common/SpecialEffect"],self.init);
 };
 SingleCombatController.prototype.init = function(){
 	var self = this;

@@ -13,5 +13,5 @@ var RandomSingleCombatCommands = [SingleCombatCommand.ATTACK, SingleCombatComman
 SingleCombatTalkMode = {};
 SingleCombatTalkMode.DEBUT = "Debut";
 SingleCombatTalkMode.BACK = "Back";
-SingleCombatTalkMode.ZHUI = "Zhui";
+SingleCombatTalkMode.PURSUIT = "Pursuit";
 SingleCombatTalkMode.BACK_ATTACK = "Back_attack";

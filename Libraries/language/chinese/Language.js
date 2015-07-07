@@ -13,6 +13,9 @@ Language.getCharacter = function(key){
 Language.getSoldier = function(key){
 	return Language.soldierData[key];
 };
+Language.getSingleCombat = function(key){
+	return Language.singleCombatData[key];
+};
 Language.data = {
 	"return":"返回",
 	"execute":"执行",
@@ -241,4 +244,19 @@ Language.cityData = {
 };
 Language.soldierData = {
 	"explanation_yx":"万能型部队，万能型部队，万能型部队，万能型部队，万能型部队，万能型部队，万能型部队"
+};
+Language.singleCombatData = {
+	"Debut0":"做我{0}的刀下鬼吧！",
+	"Debut1":"让你见识一下{0}的厉害！",
+	"Debut2":"听过{0}的大名吗！",
+	"Debut3":"在下{0}讨教敌将高招！",
+	"Back0":"好厉害，还是撤退吧！",
+	"Back1":"三十六计走为上！",
+	"Back2":"我认输了！",
+	"Back3":"算你狠，我可不想死！",
+	"Pursuit0":"休想逃跑！",
+	"Pursuit1":"留下你的脑袋！",
+	"Back_attack0":"你上当了！",
+	"Back_attack1":"你太笨了！",
+	"Back_attack2":"有勇无谋之辈！"
 };
