@@ -69,6 +69,7 @@ SingleCombatView.prototype.characterLayerInit=function(){
 };
 SingleCombatView.prototype.addCtrlButton=function(){
 	var self = this;
+	self.commandEnd = false;
 	for(var i = 0;i<self.leftCharacter.maxCommand;i++){
 		var child = getButton(Language.get(self.leftCharacter.commands[i]),80);
 		child.x = LGlobal.width;
@@ -76,6 +77,7 @@ SingleCombatView.prototype.addCtrlButton=function(){
 		child.addEventListener(LMouseEvent.MOUSE_UP,self.onButtonSelect);
 		LTweenLite.to(child,0.4 - i * 0.05,{x:i * 80});
 	}
+	//alert(self.ctrlLayer.numChildren);
 };
 SingleCombatView.prototype.onButtonSelect=function(event){
 	var button = event.currentTarget;
@@ -115,16 +117,16 @@ SingleCombatView.prototype.buttonMoveComplete=function(event){
 			child.die();
 			self.ctrlLayer.removeChild(child);
 			child.y += self.ctrlLayer.y;
-			child.commandIndex = i;
 			self.commandLayer.addChild(child);
+			self.leftCharacter.toSelectCommand(i);
 			continue;
 		}
 		LTweenLite.to(child,0.4 - i * 0.05,{x:LGlobal.width,onComplete:child.remove.bind(child)});
 	}
 	LGlobal.destroy = true;
 	self.commandLayer.childList.sort(function(a,b){return a.y - b.y;});
-	self.leftCharacter.toSelectCommand(self.commandLayer.getChildAt(0).commandIndex);
-	self.leftCharacter.toSelectCommand(self.commandLayer.getChildAt(1).commandIndex);
+/*	self.leftCharacter.toSelectCommand(self.commandLayer.getChildAt(0).commandIndex);
+	self.leftCharacter.toSelectCommand(self.commandLayer.getChildAt(1).commandIndex);*/
 	self.rightCharacter.toSelectCommand();
 	self.executeIndex = 0;
 	for(var i = 0;i<self.rightCharacter.selectedCommands.length;i++){
@@ -144,6 +146,7 @@ SingleCombatView.prototype.buttonMoveComplete=function(event){
 };
 SingleCombatView.prototype.execute=function(event){
 	var self = LMvc.SingleCombatController.view;
+	self.commandEnd = false;
 	self.leftCharacter.showRunningCommand(self.executeIndex);
 	self.rightCharacter.showRunningCommand(self.executeIndex);
 	self.executeIndex++;

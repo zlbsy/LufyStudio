@@ -305,13 +305,17 @@ function singleCombatCommandSpecialAttack(currentCharacter, targetCharacter) {
 	}
 }
 function checkSingleCombatCommandEnd(){
-	var character = LMvc.SingleCombatController.view.characterLayer.childList.find(function(child){
+	var view = LMvc.SingleCombatController.view;
+	if(view.commandEnd){
+		return;
+	}
+	var character = view.characterLayer.childList.find(function(child){
 		return child.constructor.name == "SingleCombatCharacterView" && (child.action != CharacterAction.STAND || child.filters);
 	});
 	if(character){
 		return;
 	}
-	var view = LMvc.SingleCombatController.view;
+	view.commandEnd = true;
 	if(view.executeIndex < 2){
 		setTimeout(view.execute,1000);
 	}else{
