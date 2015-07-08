@@ -146,10 +146,12 @@ CharacterListChildView.prototype.setBasicProperties = function() {
 	name.x = 60 + 2;
 	name.y = 5;
 	layer.addChild(name);
-	var name = getStrokeLabel(self.cityModel.name(), 18, "#FFFFFF", "#000000", 4);
-	name.x = 60 * 2 + 2;
-	name.y = 5;
-	layer.addChild(name);
+	if(self.cityModel){
+		var name = getStrokeLabel(self.cityModel.name(), 18, "#FFFFFF", "#000000", 4);
+		name.x = 60 * 2 + 2;
+		name.y = 5;
+		layer.addChild(name);
+	}
 	var name = getStrokeLabel( seignior ? self.charaModel.loyalty() : "--", 18, "#FFFFFF", "#000000", 4);
 	name.x = 60 * 3 + 2;
 	name.y = 5;

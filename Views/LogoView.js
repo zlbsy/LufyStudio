@@ -64,27 +64,47 @@ LogoView.prototype.showMenu=function(){
 	var buttonRead = getButton("读取进度",200);
 	buttonRead.y = menuY;
 	menuLayer.addChild(buttonRead);
+	buttonRead.addEventListener(LMouseEvent.MOUSE_UP, self.readGame.bind(self));
 	
 	menuY += menuHeight;
 	var buttonSetting = getButton("环境设定",200);
 	buttonSetting.y = menuY;
 	menuLayer.addChild(buttonSetting);
+	buttonSetting.addEventListener(LMouseEvent.MOUSE_UP, self.settingGame.bind(self));
 	
 	menuY += menuHeight;
-	var buttonTest = getButton("测试",200);
+	var buttonTest = getButton("单挑测试",200);
 	buttonTest.y = menuY;
 	menuLayer.addChild(buttonTest);
-	buttonTest.addEventListener(LMouseEvent.MOUSE_UP, function(){
-		self.controller.loadTest();
-	});
+	buttonTest.addEventListener(LMouseEvent.MOUSE_UP, self.testStart.bind(self));
 	
 	menuY += menuHeight * 2;
 	menuLayer.y = LGlobal.height - menuY;
 	
 	self.topMenuLayer = menuLayer;
 };
+LogoView.prototype.testStart=function(event){
+	var self = this;
+	self.controller.loadTest();
+};
+LogoView.prototype.readGame=function(event){
+	this.testDialog();
+};
+LogoView.prototype.settingGame=function(event){
+	this.testDialog();
+};
+LogoView.prototype.testDialog=function(){
+	LMessageBox.show({
+			title:"错误",
+			message:"无法操作，请选择单挑测试！",
+			width:300,
+			height:150
+		});
+};
 LogoView.prototype.loadChapterList=function(event){
 	var self = this;
+	self.testDialog();
+	return;
 	self.topMenuLayer.mouseChildren = false;
 	self.controller.loadChapterList();
 };

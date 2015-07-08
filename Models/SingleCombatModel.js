@@ -16,5 +16,7 @@ SingleCombatModel.prototype.getImages=function(){
 	list.push({name:"big_attack_1",path:LMvc.IMG_PATH+"battle/big_attack_1.gif"});
 	list.push({name:"single_talk_background",path:LMvc.IMG_PATH+"battle/talk_background.png"});
 	list.push({name:"single_talk_arrow",path:LMvc.IMG_PATH+"battle/talk_arrow.png"});
+	list.push({name:"close",path:LMvc.IMG_PATH+"component/close.png"});
+	list.push({name:"ok",path:LMvc.IMG_PATH+"component/ok.png"});
 	return list;
 };

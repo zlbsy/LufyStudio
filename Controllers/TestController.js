@@ -1,18 +1,22 @@
-function TestController(chapterSelectData){
+function TestController(){
 	base(this,MyController,[]);
 }
 TestController.prototype.construct=function(){
 	var self = this;
 	var list = self.model.getImages();
-	self.load.image(list,self.mvcLoad);
+	self.load.image(list,self.baseControllersLoad);
+};
+TestController.prototype.baseControllersLoad=function(){
+	var self = this;
+	self.load.controller(["OpenCharacterList"],self.mvcLoad);
 };
 TestController.prototype.mvcLoad=function(){
 	var self = this;
-	self.loadMvc(["BattleSelectMenu","SingleCombat"],self.configLoad);
+	self.loadMvc(["BattleSelectMenu","SingleCombat","CharacterList"],self.configLoad);
 };
 TestController.prototype.configLoad=function(){
 	var self = this;
-	self.load.config(["Character","characterList","Belong","Event"],self.configLoad2);
+	self.load.config(["Character","characterList","Belong","Job","Event"],self.configLoad2);
 };
 TestController.prototype.configLoad2=function(){
 	var self = this;
@@ -41,8 +45,20 @@ TestController.prototype.getChapterData=function(){
 TestController.prototype.init=function(){
 	var self = this;
 	
+	LMvc.TestController = self;
 	self.dispatchEvent(LEvent.COMPLETE);
 	self.dispatchEvent(LController.NOTIFY);
 	
 	LMvc.keepLoading(false);
+};
+
+TestController.prototype.showSingleCombatArena=function(){
+	var self = this;
+	LMvc.keepLoading(true);
+	self.loadMvc("SingleCombatArena",self.singleCombatArenaLoadComplete);
+};
+TestController.prototype.singleCombatArenaLoadComplete=function(){
+	var self = this;
+	var singleCombatArena = new SingleCombatArenaController();
+	self.view.parent.addChild(singleCombatArena.view);
 };

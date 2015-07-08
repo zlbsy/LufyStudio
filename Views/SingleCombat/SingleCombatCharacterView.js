@@ -2,6 +2,7 @@ function SingleCombatCharacterView(controller, id, w, h, isLeft) {
 	var self = this;
 	LExtends(self, BattleCharacterView, [controller, id, w, h]);
 	self.isLeft = isLeft;
+	self.isFail = false;
 	self.addAngry = 10;
 	self.commands = [];
 	self.selectedCommands = [];
@@ -64,6 +65,10 @@ SingleCombatCharacterView.prototype.toSelectCommand=function(command){
 };
 SingleCombatCharacterView.prototype.actionComplete = function(event){
 	var self = event.currentTarget.parent.parent;
+	if(self.isFail || self.targetCharacter.isFail){
+		self.changeAction(CharacterAction.STAND);
+		return;
+	}
 	switch(self.action){
 		case CharacterAction.ATTACK:
 			console.log("self.singleMode="+self.singleMode + ",self.attackCount="+self.attackCount);
@@ -181,8 +186,25 @@ SingleCombatCharacterView.prototype.commandExecute = function(){
 	}
 };
 SingleCombatCharacterView.prototype.changeHp = function(value){
-	this.barHp.changeValue(-value);
-	this.barAngry.changeValue(value);
+	var self = this;
+	self.barHp.changeValue(-value);
+	self.barAngry.changeValue(value);
+	if(self.barHp.value == 0 && !self.isFail){
+		self.isFail = true;
+		self.barHp.addEventListener(LEvent.COMPLETE,self.fail.bind(self));
+	}
+};
+SingleCombatCharacterView.prototype.fail = function(event){
+	var self = this, obj;
+	var view = LMvc.SingleCombatController.view;
+	var arena = LMvc.SingleCombatArenaController;
+	if(self.isLeft){
+		obj = {title:Language.get("最终战绩"),message:String.format("连胜次数:{0}",arena.getValue("killedEnemyList").length),width:300,height:240,okEvent:view.restart};
+	}else{
+		obj = {title:Language.get("战斗胜利"),message:String.format("已经连胜了{0}场，要继续挑战吗？",arena.getValue("killedEnemyList").length + 1),width:300,height:240,okEvent:view.keepUp,cancelEvent:view.restart};
+	}
+	var windowLayer = ConfirmWindow(obj);
+	LMvc.SingleCombatController.view.addChild(windowLayer);
 };
 SingleCombatCharacterView.prototype.addDodgeScript = function(toAttack){
 	var self = this;

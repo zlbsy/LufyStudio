@@ -79,8 +79,18 @@ TestView.prototype.init=function(){
 	layer.addChild(button01);
 	button01.addEventListener(LMouseEvent.MOUSE_UP,self.SingleCombatTalk.bind(self));
 	
+	button01 = new LButtonSample1("单挑模式测试");
+	button01.x = 200;
+	button01.y = 120;
+	layer.addChild(button01);
+	button01.addEventListener(LMouseEvent.MOUSE_UP,self.showSingleCombatArena.bind(self));
+	
 	self.statusLayer = new LSprite();
 	self.addChild(self.statusLayer);
+};
+TestView.prototype.showSingleCombatArena=function(event){
+	var self = this;
+	self.controller.showSingleCombatArena();
 };
 TestView.prototype.SingleCombatTalk = function(event){
 	var self = this;

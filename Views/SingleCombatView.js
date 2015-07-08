@@ -208,17 +208,12 @@ SingleCombatView.prototype.faceLayerInit=function(characterModel,isLeft){
 	force.y = name.y + name.getHeight() + startPosition;
 	self.backLayer.addChild(force);
 	
-	var disposition = getStrokeLabel(Language.get("disposition"),20,"#FFFFFF","#000000",2);
-	disposition.x = name.x;
-	disposition.y = name.y + 30;
-	self.backLayer.addChild(disposition);
-	var formatForce = Language.get("force") + " : {0}";
-	var dispositionLabel = getStrokeLabel(characterModel.dispositionLabel(),18,"#FFFFFF","#000000",2);
+	var formatForce = Language.get("disposition") + " : {0}";
+	var dispositionLabel = getStrokeLabel(String.format(formatForce, characterModel.dispositionLabel()),18,"#FFFFFF","#000000",2);
 	dispositionLabel.x = force.x;
 	dispositionLabel.y = force.y + 30;
 	self.backLayer.addChild(dispositionLabel);
 
-	return Language.get("disposition_"+this.data.disposition);
 	var barHp = new StatusBarView(self.controller);
 	barHp.y = face.y + faceSize;
 	var obj = {maxValue:characterModel.maxHP(),currentValue:characterModel.HP(),name:"HP",icon:"icon_hert",frontBar:"red_bar",barSize:170};
@@ -235,12 +230,14 @@ SingleCombatView.prototype.faceLayerInit=function(characterModel,isLeft){
 	if(isLeft){
 		self.leftCharacter.barHp = barHp;
 		self.leftCharacter.barAngry = barAngry;
-		//self.leftHpView = barHp;
-		//self.leftAngryView = barAngry;
 	}else{
 		self.rightCharacter.barHp = barHp;
 		self.rightCharacter.barAngry = barAngry;
-		//self.rightHpView = barHp;
-		//self.rightAngryView = barAngry;
 	}
+};
+SingleCombatView.prototype.keepUp = function(){
+	LMvc.SingleCombatArenaController.view.keepUp();
+};
+SingleCombatView.prototype.restart = function(){
+	LMvc.SingleCombatArenaController.view.restart();
 };

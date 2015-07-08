@@ -18,10 +18,17 @@ CharacterListView.prototype.init=function(){
 CharacterListView.prototype.listInit=function(){
 	var self = this;
 	var cityModel = self.controller.getValue("cityData");
-	var generals = cityModel.generals();
+	var generals;
+	if(cityModel){
+		generals = cityModel.generals();
+		self.overageMoney = cityModel.money();
+	}else{
+		generals = CharacterModel.list;
+		self.overageMoney = 0;
+	}
 	self.selectedCount = 0;
-	self.overageMoney = cityModel.money();
 	self.usedMoney = 0;
+		
 	var title = getStrokeLabel("",30,"#FFFFFF","#000000",4);
 	title.x = 15;
 	title.y = 10;
@@ -47,6 +54,10 @@ CharacterListView.prototype.listInit=function(){
 	title.text = Language.get(self.controller.characterListType);
 	var buttonLabel = null, showMoney = false;
 	switch(self.controller.characterListType){
+		case CharacterListType.TEST:
+			buttonLabel = "execute";
+			self.dataList = generals;
+			break;
 		case CharacterListType.CHARACTER_LIST:
 			self.dataList = generals.concat(cityModel.outOfOffice());
 			break;
@@ -136,6 +147,7 @@ CharacterListView.prototype.onClickExecuteButton=function(event){
 };
 CharacterListView.prototype.selectExecute=function(){
 	var self = this;
+	var characterListType = self.controller.characterListType;
 	var characterList = [];
 	self.listChildLayer.childList.forEach(function(child){
 		if(child.constructor.name !== "CharacterListChildView" || !child.checkbox.checked){
@@ -144,6 +156,9 @@ CharacterListView.prototype.selectExecute=function(){
 		characterList.push(child.charaModel);
 	});
 	self.controller.fromController.closeCharacterList({characterList : characterList, usedMoney : self.usedMoney, characterListType : self.controller.characterListType});
+	if(characterListType == CharacterListType.TEST){
+		return;
+	}
 	LMvc.CityController.dispatchEvent(LController.NOTIFY_ALL);
 };
 CharacterListView.prototype.getCutoverButton=function(name){
@@ -317,6 +332,9 @@ CharacterListView.prototype.characterClickUp = function(event) {
 		return;
 	}
 	var self = this;
+	if(self.controller.characterListType == CharacterListType.TEST){
+		return;
+	}
 	var chara = event.target;
 	if (chara.offsetX && chara.offsetY && 
 		Math.abs(chara.offsetX - event.offsetX) < 5 && 
