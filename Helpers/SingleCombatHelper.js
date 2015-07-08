@@ -286,6 +286,7 @@ function singleCombatCommandSpecialAttack(currentCharacter, targetCharacter) {
 			if(Math.random() > 0.5){
 				//TODO::抡空音效
 				console.log("抡空音效");
+				targetCharacter.addDodgeScript(false);
 			}else{
 				targetCharacter.changeAction(CharacterAction.HERT);
 				singleCombatHert(currentCharacter, targetCharacter);

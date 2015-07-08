@@ -30,7 +30,17 @@ SingleCombatArenaView.prototype.closeCharacterList=function(event){
 	}
 	var selectCharacterId = event.characterList[0].id();
 	self.controller.setValue("selectCharacterId",selectCharacterId);
-	self.restart();
+	var enemyList = [];
+	var killedEnemyList = [];
+	CharacterModel.list.forEach(function(child){
+		if(child.id() == selectCharacterId){
+			return;
+		}
+		enemyList.push(child.id());
+	});
+	self.controller.setValue("enemyList",enemyList);
+	self.controller.setValue("killedEnemyList",killedEnemyList);
+	self.singleCombatStart();
 	self.contentLayer.visible = false;
 	return true;
 };
@@ -60,16 +70,6 @@ SingleCombatArenaView.prototype.keepUp=function(){
 };
 SingleCombatArenaView.prototype.restart=function(){
 	var self = this;
-	var selectCharacterId = self.controller.getValue("selectCharacterId");
-	var enemyList = [];
-	var killedEnemyList = [];
-	CharacterModel.list.forEach(function(child){
-		if(child.id() == selectCharacterId){
-			return;
-		}
-		enemyList.push(child.id());
-	});
-	self.controller.setValue("enemyList",enemyList);
-	self.controller.setValue("killedEnemyList",killedEnemyList);
-	self.singleCombatStart();
+	self.arenaLayer.removeAllChild();
+	self.contentLayer.visible = true;
 };

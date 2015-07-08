@@ -94,6 +94,17 @@ SingleCombatView.prototype.onButtonSelect=function(event){
 		if(self.leftCharacter.selectedButtons.length >= 2){
 			return;
 		}
+		if(button.name == SingleCombatCommand.BACKSTROKE_ATTACK || button.name == SingleCombatCommand.SPECIAL_ATTACK){
+			var specialIndex = self.leftCharacter.selectedButtons.findIndex(function(child){
+				return child.name == SingleCombatCommand.BACKSTROKE_ATTACK || child.name == SingleCombatCommand.SPECIAL_ATTACK;
+			});
+			if(specialIndex >= 0){
+				obj = {title:Language.get("提示"),message:"怒击和诈败不可同时使用!",width:300,height:240};
+				var windowLayer = ConfirmWindow(obj);
+				self.addChild(windowLayer);
+				return;
+			}
+		}
 		self.leftCharacter.selectedButtons.push(button);
 		for(var i = 0;i<self.leftCharacter.selectedButtons.length;i++){
 			button = self.leftCharacter.selectedButtons[i];
