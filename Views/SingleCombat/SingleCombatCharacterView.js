@@ -56,8 +56,17 @@ SingleCombatCharacterView.prototype.toSelectCommand=function(command){
 		self.selectedCommands.push(command);
 		return;
 	}
+	
 	while(self.selectedCommands.length < 2){
-		var index = self.commands.length * Math.random() >> 0;
+		var index;
+		var selectCommand = selectSingleCombatCommand(self.commands, self.selectedCommands, self.data);
+		if(selectCommand){
+			index = self.commands.findIndex(function(child){
+				return child == selectCommand;
+			});
+		}else{
+			index = self.commands.length * Math.random() >> 0;
+		}
 		command = self.commands[index];
 		self.commands.splice(index, 1);
 		self.selectedCommands.push(command);
@@ -183,6 +192,15 @@ SingleCombatCharacterView.prototype.commandExecute = function(){
 			self.barAngry.changeValue(-100);
 			self.showLight();
 			break;
+	}
+	if(self.currentCommand != SingleCombatCommand.BACKSTROKE_ATTACK && self.currentCommand != SingleCombatCommand.SPECIAL_ATTACK){
+		return;
+	}
+	var index = self.commands.findIndex(function(child){
+		return child == SingleCombatCommand.BACKSTROKE_ATTACK || child == SingleCombatCommand.SPECIAL_ATTACK;
+	});
+	if(index >= 0){
+		self.commands.splice(index, 1);
 	}
 };
 SingleCombatCharacterView.prototype.changeHp = function(value){

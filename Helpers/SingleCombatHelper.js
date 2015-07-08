@@ -9,6 +9,50 @@ function getSingleCombatCommandCount(force){
 		return 3;
 	}
 }
+/*
+	obj[SingleCombatCommand.ATTACK] = 5;
+	obj[SingleCombatCommand.DOUBLE_ATTACK] = 3;
+	obj[SingleCombatCommand.BIG_ATTACK] = 1;
+	obj[SingleCombatCommand.DEFENCE] = 10;
+	obj[SingleCombatCommand.DODGE] = 10;
+	obj[SingleCombatCommand.CHARGE] = 3;
+	obj[SingleCombatCommand.BACKSTROKE_ATTACK] = 40;
+	obj[SingleCombatCommand.SPECIAL_ATTACK] = 20;
+	data[CharacterDisposition.TIMID] = obj;*/
+function selectSingleCombatCommand(commands, selectedCommands, characterModel){
+	var commandProbability = SingleCombatCommandProbability[characterModel.disposition()];
+	var canSelectCommand = [], commandCount = 0;
+	for(var key in commandProbability){
+		//console.log("key : "+key+"="+commandProbability[key]);
+		var index = commands.findIndex(function(child){
+			//console.log(child+"=="+key);
+			return child == key;
+		});
+		if(index < 0){
+			continue;
+		}
+		if(key == SingleCombatCommand.BACKSTROKE_ATTACK || key == SingleCombatCommand.SPECIAL_ATTACK){
+			var index2 = selectedCommands.findIndex(function(child){
+				return child == SingleCombatCommand.BACKSTROKE_ATTACK || child == SingleCombatCommand.SPECIAL_ATTACK;
+			});
+			if(index2 >= 0){
+				continue;
+			}
+		}
+		canSelectCommand.push(key);
+		commandCount += commandProbability[key];
+	}
+	var randomIndex = Math.random() * commandCount;
+	commandCount = 0;
+	for(var i=0;i<canSelectCommand.length;i++){
+		var key = canSelectCommand[i];
+		commandCount += commandProbability[key];
+		if(randomIndex < commandCount){
+			return key;
+		}
+	}
+	return null;
+}
 function getSingleCombatCommand(commands, angry, force, oldCommand) {
 	var specialIndex,backstrokeIndex;
 	if(angry == 100){
@@ -33,10 +77,6 @@ function getSingleCombatCommand(commands, angry, force, oldCommand) {
 	var index = Math.random() * RandomSingleCombatCommands.length >> 0;
 	return RandomSingleCombatCommands[index];
 }
-/*
-轻连重防躲集绝
-重轻连重连轻随
-集躲防集放躲机*/
 function getSingleCombatCommandFromOldCommand(oldCommand) {
 	switch(oldCommand){
 		case SingleCombatCommand.ATTACK:
@@ -86,7 +126,6 @@ function singleCombatHert(leftCharacter, rightCharacter) {
 		hertValue *= 0.5;
 	}
 	hertValue = hertValue >>> 0;
-	console.log("hert>>>",rightCharacter.data.name(),value,hertValue);
 	rightCharacter.changeHp(hertValue);
 }
 function singleCombatAttackActionComplete(currentCharacter, targetCharacter) {
@@ -96,7 +135,7 @@ function singleCombatAttackActionComplete(currentCharacter, targetCharacter) {
 			singleCombatCommandCheckAttack(currentCharacter, targetCharacter);
 			break;
 		case SingleCombatCommand.DOUBLE_ATTACK:
-			singleCombatCommandCheckDouBleAttack(currentCharacter, targetCharacter);
+			singleCombatCommandCheckDoubleAttack(currentCharacter, targetCharacter);
 			break;
 		case SingleCombatCommand.BIG_ATTACK:
 			singleCombatCommandBigAttack(currentCharacter, targetCharacter);
@@ -122,7 +161,6 @@ function singleCombatAttackActionComplete(currentCharacter, targetCharacter) {
 	}
 }
 function singleCombatCommandCheckAttack(currentCharacter, targetCharacter) {
-	console.log("attack" , targetCharacter.currentCommand);
 	switch(targetCharacter.currentCommand){
 		case SingleCombatCommand.ATTACK:
 			if(currentCharacter.isLeft){
@@ -166,8 +204,7 @@ function singleCombatCommandCheckAttack(currentCharacter, targetCharacter) {
 			break;
 	}
 }
-function singleCombatCommandCheckDouBleAttack(currentCharacter, targetCharacter) {
-	console.log("doubleattack" , targetCharacter.currentCommand,targetCharacter.action);
+function singleCombatCommandCheckDoubleAttack(currentCharacter, targetCharacter) {
 	switch(targetCharacter.currentCommand){
 		case SingleCombatCommand.ATTACK:
 			if(targetCharacter.action == CharacterAction.ATTACK){
@@ -222,7 +259,6 @@ function singleCombatCommandCheckDouBleAttack(currentCharacter, targetCharacter)
 	}
 }
 function singleCombatCommandBigAttack(currentCharacter, targetCharacter) {
-	console.log("bigattack" , targetCharacter.currentCommand,targetCharacter.action);
 	switch(targetCharacter.currentCommand){
 		case SingleCombatCommand.ATTACK:
 			break;
@@ -260,7 +296,6 @@ function singleCombatCommandBigAttack(currentCharacter, targetCharacter) {
 	}
 }
 function singleCombatCommandSpecialAttack(currentCharacter, targetCharacter) {
-	console.log("special" , targetCharacter.currentCommand,targetCharacter.action);
 	switch(targetCharacter.currentCommand){
 		case SingleCombatCommand.ATTACK:
 			console.log("重伤音效");
@@ -278,8 +313,8 @@ function singleCombatCommandSpecialAttack(currentCharacter, targetCharacter) {
 			singleCombatHert(currentCharacter, targetCharacter);
 			break;
 		case SingleCombatCommand.DEFENCE:
-			console.log("重伤音效");
-			targetCharacter.changeAction(CharacterAction.HERT);
+			console.log("重挡格音效");
+			targetCharacter.changeAction(CharacterAction.BLOCK);
 			singleCombatHert(currentCharacter, targetCharacter);
 			break;
 		case SingleCombatCommand.DODGE:
@@ -301,7 +336,9 @@ function singleCombatCommandSpecialAttack(currentCharacter, targetCharacter) {
 			targetCharacter.addBackstrokeScript();
 			break;
 		case SingleCombatCommand.SPECIAL_ATTACK:
-			console.log("重挡格音效");
+			if(currentCharacter.isLeft){
+				console.log("重挡格音效");
+			}
 			break;
 	}
 }
