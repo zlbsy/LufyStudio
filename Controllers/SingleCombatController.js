@@ -1,7 +1,7 @@
-function SingleCombatController(fromacontroller, currentCharacterId, targetCharacterId){
+function SingleCombatController(fromController, currentCharacterId, targetCharacterId){
 	var self = this;
 	base(self,MyController,[]);
-	self.fromacontroller = fromacontroller;
+	self.fromController = fromController;
 	self.currentCharacterId = currentCharacterId;
 	self.targetCharacterId = targetCharacterId;
 }
@@ -32,6 +32,7 @@ SingleCombatController.prototype.init = function(){
 	var self = this;
 	LMvc.keepLoading(false);
 	LMvc.SingleCombatController = self;
+	self.fromController.view.visible = false;
 	self.dispatchEvent(LEvent.COMPLETE);
 	self.dispatchEvent(LController.NOTIFY);
 };

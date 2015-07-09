@@ -89,6 +89,7 @@ CharacterView.prototype.getValue = function(v1,v2){
 	if(v1 == v2)return 0;
 	return v1 < v2 ? 1 : -1;
 };
+/*
 CharacterView.prototype.checkCoordinate = function(controller,initFlag){
 	var self = this;
 	var model=controller.model,i,obj,rect,rects = model.atRect,coor;
@@ -115,7 +116,7 @@ CharacterView.prototype.checkCoordinate = function(controller,initFlag){
 			self.coordinateRects[obj.fun]= null;
 		}
 	}
-};
+};*/
 CharacterView.prototype.move = function(){
 	var self = this,controller=self.parent.parent.parent.controller;
 	if(self.x == self.to.x && self.y == self.to.y)return;
@@ -136,7 +137,7 @@ CharacterView.prototype.move = function(){
 			self.changeAction(CharacterAction.STAND);
 			if(controller){
 				if(controller.mapMove)controller.mapMove();
-				self.checkCoordinate(controller);
+				//self.checkCoordinate(controller);
 			}
 			self.dispatchEvent(CharacterActionEvent.MOVE_COMPLETE);
 			return;
@@ -149,7 +150,7 @@ CharacterView.prototype.move = function(){
 		}
 		if(self.roads.length > 0){
 			self.setTo();
-			self.checkCoordinate(controller);
+			//self.checkCoordinate(controller);
 		}
 		
 	}

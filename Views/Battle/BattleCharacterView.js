@@ -213,6 +213,6 @@ BattleCharacterView.prototype.saveShowMoveRoadObject = function(roadList) {
 BattleCharacterView.prototype.returnShowMoveRoadObject = function() {
 	var self = this;
 	self.setCoordinate(self.showMoveRoadObject.x,self.showMoveRoadObject.y);
-	self.setActionDirection(self.action,self.direction);
+	self.setActionDirection(self.showMoveRoadObject.action,self.showMoveRoadObject.direction);
 	LMvc.BattleController.clickSelfCharacter(self);
 };
