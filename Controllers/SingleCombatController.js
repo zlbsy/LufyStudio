@@ -1,6 +1,7 @@
 function SingleCombatController(fromacontroller, currentCharacterId, targetCharacterId){
 	var self = this;
 	base(self,MyController,[]);
+	self.fromacontroller = fromacontroller;
 	self.currentCharacterId = currentCharacterId;
 	self.targetCharacterId = targetCharacterId;
 }

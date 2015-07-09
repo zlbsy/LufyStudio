@@ -212,12 +212,20 @@ SingleCombatCharacterView.prototype.changeHp = function(value){
 		self.barHp.addEventListener(LEvent.COMPLETE,self.fail.bind(self));
 	}
 };
+SingleCombatCharacterView.prototype.singleCombatEnd = function(event){
+	var self = this, obj;
+	
+};
 SingleCombatCharacterView.prototype.fail = function(event){
 	var self = this, obj;
+	if(self.controller.fromController.constructor.name == "BattleController"){
+		self.singleCombatEnd();
+		return;
+	}
 	var view = LMvc.SingleCombatController.view;
 	var arena = LMvc.SingleCombatArenaController;
-	if(self.isLeft){
-		obj = {title:Language.get("最终战绩"),message:String.format("连胜次数:{0}",arena.getValue("killedEnemyList").length),width:300,height:240,okEvent:view.restart};
+	if(self.isLeft || arena.getValue("enemyList").length == 0){
+		obj = {title:Language.get("最终战绩"),message:String.format("连胜次数:{0}",arena.getValue("killedEnemyList").length + (arena.getValue("enemyList").length == 0 ? 1 : 0)),width:300,height:240,okEvent:view.restart};
 	}else{
 		obj = {title:Language.get("战斗胜利"),message:String.format("已经连胜了{0}场，要继续挑战吗？",arena.getValue("killedEnemyList").length + 1),width:300,height:240,okEvent:view.keepUp,cancelEvent:view.restart};
 	}
@@ -230,6 +238,8 @@ SingleCombatCharacterView.prototype.addDodgeScript = function(toAttack){
 	script += "SGJSingleCombat.moveTo("+self.data.id()+",relative,forward,"+BattleCharacterSize.width+");";
 	if(toAttack){
 		script += "SGJSingleCombat.changeAction("+self.data.id()+","+CharacterAction.ATTACK+",1);";
+	}else{
+		script += "SGJSingleCombat.checkCommandEnd();";
 	}
 	LGlobal.script.addScript(script);
 };

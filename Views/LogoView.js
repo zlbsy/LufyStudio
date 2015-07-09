@@ -103,8 +103,6 @@ LogoView.prototype.testDialog=function(){
 };
 LogoView.prototype.loadChapterList=function(event){
 	var self = this;
-	self.testDialog();
-	return;
 	self.topMenuLayer.mouseChildren = false;
 	self.controller.loadChapterList();
 };

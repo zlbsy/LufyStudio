@@ -63,6 +63,7 @@ Language.data = {
 	"dialog_expedition_select_confirm":"要对{0}发动攻击吗？",
 	"dialog_expedition_select_leader":"请选择主将！",
 	"dialog_select_leader_error":"只能选一个主将！",
+	"dialog_select_onlyone_error":"只能选一个武将！",
 	"select_leader":"选择主将",
 	"dialog_remove_equipment_confirm":"要解除装备{0}吗？",
 	"dialog_select_seignior_confirm":"选择{0}吗？",

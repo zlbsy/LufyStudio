@@ -39,7 +39,7 @@ BattleCharacterAI.prototype.singleCombat = function(target) {
 	target.changeDirection(directionTarget);
 	target.toStatic(true);
 	self.chara.changeDirection(direction);
-	singleCombatCheck(self.chara);
+	battleSingleCombatCheck(self.chara);
 };
 BattleCharacterAI.prototype.attackActionComplete = function(event) {
 	var chara = event.currentTarget;
@@ -107,6 +107,7 @@ BattleCharacterAI.prototype.endAction = function() {
 BattleCharacterAI.prototype.singleCombatStart = function() {
 	var self = this;
 	console.log("BattleCharacterAI.prototype.singleCombatStart");
+	LMvc.BattleController.loadSingleCombat();
 };
 BattleCharacterAI.prototype.strategySelect = function(strategyModel) {
 	var self = this;

@@ -23,7 +23,7 @@ SingleCombatArenaView.prototype.addCharacterListView=function(characterListView)
 SingleCombatArenaView.prototype.closeCharacterList=function(event){
 	var self = event.currentTarget.view;
 	if(event.characterList.length > 1){
-		var obj = {title:Language.get("confirm"),message:Language.get("dialog_select_leader_error"),height:200,okEvent:null};
+		var obj = {title:Language.get("confirm"),message:Language.get("dialog_select_onlyone_error"),height:200,okEvent:null};
 		var windowLayer = ConfirmWindow(obj);
 		LMvc.layer.addChild(windowLayer);
 		return false;

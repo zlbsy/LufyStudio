@@ -40,7 +40,7 @@ function isSameBelong(belong,targetBelong){
 		}
 	}
 }
-function singleCombatCheck(chara){
+function battleSingleCombatCheck(chara){
 	var script = "SGJTalk.show(" + chara.data.id() + ",0," + String.format(Language.get("single_combat_ask"), chara.AI.target.data.name()) + ");";
 	//TODO::
 	if(true){

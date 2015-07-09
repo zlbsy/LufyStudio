@@ -65,6 +65,14 @@ BattleController.prototype.init = function(){
 	CharacterModel.getChara(2).data.troops = CharacterModel.getChara(2).maxTroops();
 	CharacterModel.getChara(3).data.troops = CharacterModel.getChara(3).maxTroops();
 	CharacterModel.getChara(4).data.troops = CharacterModel.getChara(4).maxTroops();
+	CharacterModel.getChara(1).maxHP(100);
+	CharacterModel.getChara(1).HP(100);
+	CharacterModel.getChara(2).maxHP(100);
+	CharacterModel.getChara(2).HP(100);
+	CharacterModel.getChara(3).maxHP(100);
+	CharacterModel.getChara(3).HP(100);
+	CharacterModel.getChara(4).maxHP(100);
+	CharacterModel.getChara(4).HP(100);
 	self.addOurCharacter(1,CharacterAction.MOVE,CharacterDirection.DOWN,5,5);
 	self.addOurCharacter(2,CharacterAction.MOVE,CharacterDirection.UP,6,8);
 	self.addEnemyCharacter(3,CharacterAction.MOVE,CharacterDirection.LEFT,3,5);
@@ -246,4 +254,16 @@ BattleController.prototype.clickOtherCharacter = function(chara){
 	self.view.roadLayer.setMoveRoads(path, chara.belong);
 	self.view.roadLayer.addRangeAttack(chara);
 	chara.mode = CharacterMode.SHOW_MOVE_ROAD;
+};
+
+BattleController.prototype.loadSingleCombat = function(){
+	var self = this;
+	LMvc.keepLoading(true);
+	LMvc.changeLoading(TranslucentLoading);
+	self.loadMvc("SingleCombat",self.loadSingleCombatComplete);
+};
+BattleController.prototype.loadSingleCombatComplete=function(){
+	var self = this;
+	var singleCombat = new SingleCombatController(self,BattleController.ctrlChara.data.id(),BattleController.ctrlChara.AI.target.data.id());
+	LMvc.stageLayer.addChild(singleCombat.view);
 };
