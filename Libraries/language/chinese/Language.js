@@ -47,6 +47,9 @@ Language.data = {
 	"belong_self":"我军",
 	"belong_enemy":"敌军",
 	"belong_friend":"友军",
+	"belong_self_action":"我军行动",
+	"belong_enemy_action":"敌军行动",
+	"belong_friend_action":"友军行动",
 	
 	"menu":"菜单",
 	"operating_end":"操作结束",

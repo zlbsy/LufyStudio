@@ -2,7 +2,9 @@ function BattleView(){
 	LExtends(this,LView,[]);
 }
 BattleView.prototype.construct=function(){
-	this.controller.addEventListener(LEvent.COMPLETE, this.init.bind(this));
+	var self = this;
+	self.controller.addEventListener(LEvent.COMPLETE, self.init.bind(self));
+	self.controller.addEventListener(BattleBout.SHOW, self.boutShow);
 };
 BattleView.prototype.init=function(){
 	var self = this;
@@ -15,6 +17,14 @@ BattleView.prototype.init=function(){
 	self.miniLayer.addEventListener(LMouseEvent.MOUSE_DOWN, self.miniLayerStartDrag);
 	self.miniLayer.addEventListener(LMouseEvent.MOUSE_UP, self.miniLayerStopDrag);
 	self.addEventListener(LEvent.ENTER_FRAME, self.onframe);
+};
+BattleView.prototype.boutShow = function(event){
+	var self = event.currentTarget.view;
+	self.controller.setValue("currentBelong", event.belong);
+	var boutLabel = getLabelWindow(Language.get(String.format("{0}_action",event.belong)), 50, 340, 100);
+	boutLabel.x = (LGlobal.width - boutLabel.getWidth()) * 0.5;
+	boutLabel.y = (LGlobal.height - boutLabel.getHeight()) * 0.5;
+	self.addChild(boutLabel);
 };
 BattleView.prototype.miniLayerStartDrag = function(event){
 	event.currentTarget.startDrag(event.touchPointID);

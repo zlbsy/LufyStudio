@@ -14,3 +14,14 @@ function getStrokeLabel(txt,size,color,lineColor,lineWidth,type){
 	}
 	return label;
 }
+function getLabelWindow(text,size,width,height,img){
+	if(typeof img == UNDEFINED){
+		img = "win05";
+	}
+	var bitmapWin = new LPanel(new LBitmapData(LMvc.datalist[img]),width,height);
+	var textLabel = getStrokeLabel(text,size,"#FFFFFF","#000000",3);
+	textLabel.x = (width - textLabel.getWidth()) * 0.5;
+	textLabel.y = (height - textLabel.getHeight()) * 0.5;
+	bitmapWin.addChild(textLabel);
+	return getBitmap(bitmapWin);
+}

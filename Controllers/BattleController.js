@@ -77,6 +77,10 @@ BattleController.prototype.init = function(){
 	self.addOurCharacter(2,CharacterAction.MOVE,CharacterDirection.UP,6,8);
 	self.addEnemyCharacter(3,CharacterAction.MOVE,CharacterDirection.LEFT,3,5);
 	self.addFriendCharacter(4,CharacterAction.MOVE,CharacterDirection.RIGHT,1,7);
+	
+	var e = new LEvent(BattleBout.SHOW);
+	e.belong = Belong.SELF;
+	self.dispatchEvent(e);
 };
 BattleController.prototype.addOurCharacter=function(index,action,direction,x,y,callback){
 	this.view.charaLayer.addOurCharacter(index,action,direction,x,y,callback);
