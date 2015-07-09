@@ -1,7 +1,8 @@
 function BattleController(battleData, fromController){
-	console.log("BattleController -- start --");
-	base(this,MyController,[]);
-	this.fromController = fromController;
+	var self = this;
+	base(self,MyController,[]);
+	self.fromController = fromController;
+	self.setValue("bout", 0);
 }
 BattleController.prototype.construct=function(){
 	var self = this;
