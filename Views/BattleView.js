@@ -84,8 +84,8 @@ BattleView.prototype.layerInit=function(){
 	self.miniLayer = new BattleMiniPreviewView(self.controller);
 	self.addChild(self.miniLayer);
 	
-	var mainMenu = new BattleMainMenuView(null);
-	mainMenu.x = LGlobal.width - mainMenu.getWidth();
+	var mainMenu = new BattleMainMenuView(self.controller);
+	mainMenu.mainLayer.x = LGlobal.width - mainMenu.getWidth();
 	self.addChild(mainMenu);
 	
 	//Test code
