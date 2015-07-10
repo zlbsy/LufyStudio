@@ -80,13 +80,34 @@ TestView.prototype.init=function(){
 	button01.addEventListener(LMouseEvent.MOUSE_UP,self.SingleCombatTalk.bind(self));
 	
 	button01 = new LButtonSample1("单挑模式测试");
-	button01.x = 200;
-	button01.y = 120;
+	button01.x = 10;
+	button01.y = 130;
 	layer.addChild(button01);
 	button01.addEventListener(LMouseEvent.MOUSE_UP,self.showSingleCombatArena.bind(self));
 	
+	button01 = new LButtonSample1("我军回合测试");
+	button01.x = 130;
+	button01.y = 130;
+	layer.addChild(button01);
+	button01.addEventListener(LMouseEvent.MOUSE_UP,self.showSelfBout.bind(self));
+	button01 = new LButtonSample1("敌军回合测试");
+	button01.x = 250;
+	button01.y = 130;
+	layer.addChild(button01);
+	button01.addEventListener(LMouseEvent.MOUSE_UP,self.showEnemyBout.bind(self));
+	
 	self.statusLayer = new LSprite();
 	self.addChild(self.statusLayer);
+};
+TestView.prototype.showSelfBout=function(event){
+	var self = this;
+	var boutView = new BattleBoutView(self.controller,Belong.SELF);
+	self.statusLayer.addChild(boutView);
+};
+TestView.prototype.showEnemyBout=function(event){
+	var self = this;
+	var boutView = new BattleBoutView(self.controller,Belong.ENEMY);
+	self.statusLayer.addChild(boutView);
 };
 TestView.prototype.showSingleCombatArena=function(event){
 	var self = this;
