@@ -22,8 +22,9 @@ BattleCharacterEvent.HERT_ACTION_COMPLETE = "hertActionComplete";*/
 var CharacterActionEvent = {};
 CharacterActionEvent.MOVE_COMPLETE = "moveComplete";
 
-var BattleBout = {};
-BattleBout.SHOW = "bout_show";
+var BattleBoutEvent = {};
+BattleBoutEvent.SHOW = "bout_show";
+BattleBoutEvent.END = "bout_end";
 
 var BattleCharacterActionEvent = {};
 //攻击动作结束

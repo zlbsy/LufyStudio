@@ -65,6 +65,7 @@ BattleCharacterStatusConfig.MP = "MP";
 BattleCharacterStatusConfig.SP = "SP";
 BattleCharacterStatusConfig.EXP = "Exp";
 var CharacterMode = {
+	NONE : "none",
 	SHOW_MOVE_ROAD : "showMoveRoad",
 	STRATEGY_SELECT: "strategySelect",
 	WAIT_ATTACK : "waitAttack",

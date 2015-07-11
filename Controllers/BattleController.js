@@ -77,9 +77,22 @@ BattleController.prototype.init = function(){
 	self.addOurCharacter(2,CharacterAction.MOVE,CharacterDirection.UP,6,8);
 	self.addEnemyCharacter(3,CharacterAction.MOVE,CharacterDirection.LEFT,3,5);
 	self.addFriendCharacter(4,CharacterAction.MOVE,CharacterDirection.RIGHT,1,7);
-	
-	var e = new LEvent(BattleBout.SHOW);
-	e.belong = Belong.SELF;
+	self.boutNotify(Belong.SELF);
+};
+BattleController.prototype.boutEnd=function(){
+	var self = this;
+	var e = new LEvent(BattleBoutEvent.END);
+	e.belong = self.getValue("belong");
+	self.dispatchEvent(e);
+	if(e.belong == Belong.SELF){
+		self.boutNotify(Belong.FRIEND);
+	}
+};
+BattleController.prototype.boutNotify=function(belong){
+	var self = this;
+	var e = new LEvent(BattleBoutEvent.SHOW);
+	self.setValue("belong", belong);
+	e.belong = belong;
 	self.dispatchEvent(e);
 };
 BattleController.prototype.addOurCharacter=function(index,action,direction,x,y,callback){

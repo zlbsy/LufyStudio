@@ -8,6 +8,7 @@ function BattleCharacterView(controller, id, w, h) {
 		self.AI = new BattleCharacterAI(self);
 	}
 	self.addShape(LShape.RECT,[0,0,BattleCharacterSize.width,BattleCharacterSize.height]);
+	self.mode = CharacterMode.NONE;
 }
 BattleCharacterView.cacheBitmapDatas = {};
 BattleCharacterView.DEFAULT_IMG = "character-s-default";

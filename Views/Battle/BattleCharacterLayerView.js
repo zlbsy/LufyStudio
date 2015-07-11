@@ -8,6 +8,29 @@ function BattleCharacterLayerView(controller) {
 	}
 	*/
 	//self.addEventListener(LEvent.ENTER_FRAME, self.onframe);
+	self.controller.addEventListener(BattleBoutEvent.END, self.charactersBoutEnd);
+};
+BattleCharacterLayerView.prototype.charactersBoutEnd = function(event) {
+	var controller = event.currentTarget;
+	var self = controller.view.charaLayer;
+	var childList = self.getCharactersFromBelong(event.belong);
+	for(var i=0,l=childList.length;i<l;i++){
+		child = childList[i];
+		child.mode = CharacterMode.NONE;
+		child.toStatic(false);
+		child.changeAction(CharacterAction.MOVE);
+		child.toStatic(true);
+	}
+};
+BattleCharacterLayerView.prototype.getCharactersFromBelong = function(belong) {
+	var self = this;
+	if(belong == Belong.SELF){
+		return self.model.ourList;
+	}else if(belong == Belong.FRIEND){
+		return self.model.friendList;
+	}else if(belong == Belong.ENEMY){
+		return self.model.enemyList;
+	}
 };
 BattleCharacterLayerView.prototype.onframe = function(event) {
 	var self = event.currentTarget, child, x, y, stepWidth = self.model.stepWidth, stepHeight = self.model.stepHeight;
@@ -36,17 +59,7 @@ BattleCharacterLayerView.prototype.getCharacterFromCoordinate=function(x,y){
 };
 BattleCharacterLayerView.prototype.getCharacter=function(belong,id){
 	var self = this;
-	switch(belong){
-		case Belong.SELF:
-			childList = self.model.ourList;
-			break;
-		case Belong.FRIEND:
-			childList = self.model.friendList;
-			break;
-		case Belong.ENEMY:
-			childList = self.model.enemyList;
-			break;
-	}
+	var childList = self.getCharactersFromBelong(event.belong);
 	return self.getCharacterFromeList(childList,id);
 };
 BattleCharacterLayerView.prototype.getCharacterFromeList=function(childList,id){

@@ -16,8 +16,13 @@ BattleMainMenuView.prototype.init = function(){
 };
 BattleMainMenuView.prototype.onClickDown = function(event){
 	var button = event.currentTarget;
+	var self = button.parent;
+	if(self.menuLayer && self.menuLayer.visible){
+		return;
+	}
 	button.offsetX = event.offsetX;
 	button.offsetY = event.offsetY;
+	
 	event.currentTarget.startDrag(event.touchPointID);
 };
 BattleMainMenuView.prototype.onClickUp = function(event){
@@ -80,7 +85,7 @@ BattleMainMenuView.prototype.setMenu=function(){
 	var menuButton = getButton(Language.get("回合结束"),menuWidth);
 	menuButton.y = menuY;
 	layer.addChild(menuButton);
-	//menuButton.addEventListener(LMouseEvent.MOUSE_UP, self.clickStandby);
+	menuButton.addEventListener(LMouseEvent.MOUSE_UP, self.boutEnd);
 	
 	var win = new LPanel(new LBitmapData(LMvc.datalist["win05"]),menuWidth + 20, menuHeight * (((menuY - 10) / menuHeight >> 0) + 1) + 30);
 	var winBitmap = getBitmap(win);
@@ -104,4 +109,9 @@ BattleMainMenuView.prototype.showOrHideMiniMap=function(event){
 	var self = event.currentTarget.parent.parent.parent;
 	var miniLayer = self.controller.view.miniLayer;
 	miniLayer.visible = !miniLayer.visible;
+};
+BattleMainMenuView.prototype.boutEnd=function(event){
+	var self = event.currentTarget.parent.parent.parent;
+	self.controller.boutEnd();
+	self.menuLayer.visible = false;
 };

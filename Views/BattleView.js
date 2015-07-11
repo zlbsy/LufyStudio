@@ -4,7 +4,7 @@ function BattleView(){
 BattleView.prototype.construct=function(){
 	var self = this;
 	self.controller.addEventListener(LEvent.COMPLETE, self.init.bind(self));
-	self.controller.addEventListener(BattleBout.SHOW, self.boutShow);
+	self.controller.addEventListener(BattleBoutEvent.SHOW, self.boutShow);
 };
 BattleView.prototype.init=function(){
 	var self = this;
