@@ -24,12 +24,20 @@ BattleCharacterLayerView.prototype.charactersBoutEnd = function(event) {
 };
 BattleCharacterLayerView.prototype.getCharactersFromBelong = function(belong) {
 	var self = this;
+	var childList,characters = [];
 	if(belong == Belong.SELF){
-		return self.model.ourList;
+		childList = self.model.ourList;
 	}else if(belong == Belong.FRIEND){
-		return self.model.friendList;
+		childList = self.model.friendList;
 	}else if(belong == Belong.ENEMY){
-		return self.model.enemyList;
+		childList = self.model.enemyList;
+	}
+	for(var i=0,l=childList.length;i<l;i++){
+		child = childList[i];
+		if(child.data.hp() == 0){
+			continue;
+		}
+		characters.push(child);
 	}
 };
 BattleCharacterLayerView.prototype.onframe = function(event) {

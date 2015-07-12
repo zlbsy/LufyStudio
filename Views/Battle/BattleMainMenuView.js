@@ -5,6 +5,7 @@ function BattleMainMenuView(controller){
 }
 BattleMainMenuView.prototype.init = function(){
 	var self = this;
+	self.miniMapVisible = true;
 	var mainLayer = new LSprite();
 	self.addChild(mainLayer);
 	var mainMenu = self.getMainMenu();
@@ -17,11 +18,11 @@ BattleMainMenuView.prototype.init = function(){
 BattleMainMenuView.prototype.onClickDown = function(event){
 	var button = event.currentTarget;
 	var self = button.parent;
+	button.offsetX = event.offsetX;
+	button.offsetY = event.offsetY;
 	if(self.menuLayer && self.menuLayer.visible){
 		return;
 	}
-	button.offsetX = event.offsetX;
-	button.offsetY = event.offsetY;
 	
 	event.currentTarget.startDrag(event.touchPointID);
 };
@@ -34,13 +35,13 @@ BattleMainMenuView.prototype.onClickUp = function(event){
 	var self = button.parent;
 	if(self.menuLayer){
 		self.menuLayer.visible = !self.menuLayer.visible;
+		self.miniMapVisible = self.menuLayer.visible;
 		if(self.menuLayer.visible){
 			self.setMenuPosition();
 		}
 	}else{
 		self.setMenu();
 	}
-	console.log("click menu");
 };
 BattleMainMenuView.prototype.getMainMenu = function(){
 	var self = this;
@@ -57,7 +58,7 @@ BattleMainMenuView.prototype.getMainMenu = function(){
 BattleMainMenuView.prototype.setMenu=function(){
 	var self = this;
 	var menuLayer = new LSprite();
-	self.addChild(menuLayer);
+	self.addChildAt(menuLayer, 0);
 	self.menuLayer = menuLayer;
 	
 	var layer = new LSprite(), menuY = 10, menuWidth = 120, menuHeight = 50;

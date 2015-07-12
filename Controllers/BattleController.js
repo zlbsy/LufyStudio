@@ -82,16 +82,20 @@ BattleController.prototype.init = function(){
 BattleController.prototype.boutEnd=function(){
 	var self = this;
 	var e = new LEvent(BattleBoutEvent.END);
-	e.belong = self.getValue("belong");
+	e.belong = self.getValue("currentBelong");
 	self.dispatchEvent(e);
 	if(e.belong == Belong.SELF){
-		self.boutNotify(Belong.FRIEND);
+		var childList = self.view.charaLayer.getCharactersFromBelong(Belong.FRIEND);
+		self.boutNotify(childList.length > 0 ? Belong.FRIEND : Belong.ENEMY);
+	}else if(e.belong == Belong.FRIEND){
+		self.boutNotify(Belong.ENEMY);
+	}else{
+		self.boutNotify(Belong.SELF);
 	}
 };
 BattleController.prototype.boutNotify=function(belong){
 	var self = this;
 	var e = new LEvent(BattleBoutEvent.SHOW);
-	self.setValue("belong", belong);
 	e.belong = belong;
 	self.dispatchEvent(e);
 };
@@ -116,6 +120,9 @@ BattleController.prototype.mapMouseUp = function(event){
 	var self = event.currentTarget.parent.controller;
 	event.currentTarget.stopDrag();
 	if(Math.abs(self.downX - event.offsetX) > 12 || Math.abs(self.downY - event.offsetY) > 12){
+		return;
+	}
+	if(self.getValue("currentBelong") != Belong.SELF){
 		return;
 	}
 	if(!self.view.roadLayer.visible){

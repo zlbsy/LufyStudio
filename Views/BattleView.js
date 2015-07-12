@@ -23,6 +23,13 @@ BattleView.prototype.boutShow = function(event){
 	self.controller.setValue("currentBelong", event.belong);
 	var boutView = new BattleBoutView(self.controller,event.belong);
 	self.addChild(boutView);
+	if(event.belong == Belong.SELF){
+		self.mainMenu.visible = true;
+		self.miniLayer.visible = self.mainMenu.miniMapVisible;
+	}else{
+		self.mainMenu.visible = false;
+		self.miniLayer.visible = false;
+	}
 };
 BattleView.prototype.miniLayerStartDrag = function(event){
 	event.currentTarget.startDrag(event.touchPointID);
@@ -79,9 +86,9 @@ BattleView.prototype.layerInit=function(){
 	self.miniLayer = new BattleMiniPreviewView(self.controller);
 	self.addChild(self.miniLayer);
 	
-	var mainMenu = new BattleMainMenuView(self.controller);
-	mainMenu.mainLayer.x = LGlobal.width - mainMenu.getWidth();
-	self.addChild(mainMenu);
+	self.mainMenu = new BattleMainMenuView(self.controller);
+	self.mainMenu.mainLayer.x = LGlobal.width - self.mainMenu.getWidth();
+	self.addChild(self.mainMenu);
 	
 	//Test code
 	self.buildLayer = new LSprite();
