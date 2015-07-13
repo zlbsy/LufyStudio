@@ -90,6 +90,7 @@ BattleView.prototype.layerInit=function(){
 	self.mainMenu.mainLayer.x = LGlobal.width - self.mainMenu.getWidth();
 	self.addChild(self.mainMenu);
 	
+	return;
 	//Test code
 	self.buildLayer = new LSprite();
 	self.baseLayer.addChild(self.buildLayer);

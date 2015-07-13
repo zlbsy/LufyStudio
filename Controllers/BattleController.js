@@ -84,6 +84,7 @@ BattleController.prototype.boutEnd=function(){
 	var e = new LEvent(BattleBoutEvent.END);
 	e.belong = self.getValue("currentBelong");
 	self.dispatchEvent(e);
+	
 	if(e.belong == Belong.SELF){
 		var childList = self.view.charaLayer.getCharactersFromBelong(Belong.FRIEND);
 		self.boutNotify(childList.length > 0 ? Belong.FRIEND : Belong.ENEMY);

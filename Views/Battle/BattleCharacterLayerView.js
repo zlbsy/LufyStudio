@@ -22,6 +22,18 @@ BattleCharacterLayerView.prototype.charactersBoutEnd = function(event) {
 		child.toStatic(true);
 	}
 };
+BattleCharacterLayerView.prototype.isHasActiveCharacter=function(belong){
+	var self = this;
+	var childList = self.getCharactersFromBelong(belong);
+	for(var i=0,l=childList.length;i<l;i++){
+		child = childList[i];
+		if(child.mode == CharacterMode.END_ACTION){
+			continue;
+		}
+		return true;
+	}
+	return false;
+};
 BattleCharacterLayerView.prototype.getCharactersFromBelong = function(belong) {
 	var self = this;
 	var childList,characters = [];
@@ -34,11 +46,12 @@ BattleCharacterLayerView.prototype.getCharactersFromBelong = function(belong) {
 	}
 	for(var i=0,l=childList.length;i<l;i++){
 		child = childList[i];
-		if(child.data.hp() == 0){
+		if(child.data.troops() == 0){
 			continue;
 		}
 		characters.push(child);
 	}
+	return characters;
 };
 BattleCharacterLayerView.prototype.onframe = function(event) {
 	var self = event.currentTarget, child, x, y, stepWidth = self.model.stepWidth, stepHeight = self.model.stepHeight;
