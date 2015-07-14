@@ -69,6 +69,10 @@ CharacterView.prototype.setCoordinate = function(x,y){
 	self.x = self.to.x = x;
 	self.y = self.to.y = y;
 };
+CharacterView.prototype.onCoordinate = function(x,y){
+	var self = this;
+	return (x/self.w >>> 0) == self.locationX() && (y/self.h >>> 0) == self.locationY();
+};
 CharacterView.prototype.locationX = function(){
 	return this.x/this.w >>> 0;
 };

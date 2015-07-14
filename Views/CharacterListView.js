@@ -2,6 +2,7 @@ function CharacterListView(){
 	base(this,LView,[]);
 }
 CharacterListView.prototype.construct=function(){
+	this.sortValue = 1;
 	this.controller.addEventListener(LEvent.COMPLETE, this.init.bind(this));
 };
 CharacterListView.CUTOVER_BASIC = "basic_properties";
@@ -265,7 +266,24 @@ CharacterListView.prototype.setAbilityTab=function(){
 		button.x = 60 * i;
 		self.abilityTab.addChild(button);
 	}
+	self.abilityTab.addEventListener(LMouseEvent.MOUSE_UP, self.onClickAbilityTabButton);
 	self.abilityTab.visible = false;
+};
+CharacterListView.prototype.onClickAbilityTabButton=function(event){
+	var self = event.currentTarget.parent.parent.parent;
+	if(self.sortType == event.target.name){
+		self.sortValue *= -1;
+	}
+	self.sortType = event.target.name;
+	if(event.target.name == "force"){
+		self.listChildLayer.childList = self.listChildLayer.childList.sort(function(a,b){
+			return self.sortValue*(a.charaModel.force() - b.charaModel.force());
+		});
+		for(var i=0,l=self.listChildLayer.numChildren;i<l;i++){
+			var childLayer = self.listChildLayer.childList[i];
+			childLayer.y = 50 * i;
+		}
+	}
 };
 CharacterListView.prototype.setArmTab=function(){
 	var self = this;

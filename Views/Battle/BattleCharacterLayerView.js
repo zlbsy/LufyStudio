@@ -71,7 +71,7 @@ BattleCharacterLayerView.prototype.getCharacterFromCoordinate=function(x,y){
 	var childList = self.childList,child;
 	for(var i=0,l=childList.length;i<l;i++){
 		child = childList[i];
-		if(!child.hitTestPoint(x,y)){
+		if(!child.onCoordinate(x,y)){
 			continue;
 		}
 		return child;
