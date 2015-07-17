@@ -72,6 +72,30 @@ BattleCharacterView.prototype.attackToHert = function(anime) {
 	var self = anime.parent.parent;
 	self.dispatchEvent(BattleCharacterActionEvent.ATTACK_ACTION_COMPLETE);
 };
+BattleCharacterView.prototype.attackAngry = function(anime) {
+	var self = anime.parent.parent;
+	if(!self.isAngry){
+		return;
+	}
+	self.isAngry = false;
+	anime.stop();
+	self.filterValue = 1;
+	var shadow = new LDropShadowFilter(0,0,"#FFFF00",self.filterValue);
+	self.filters = [shadow];
+	var func = function(event){
+		var obj = event.target;
+		obj.filters[0].shadowBlur = obj.filterValue;
+	};
+	LTweenLite.to(self,0.2,{filterValue:15,onUpdate:func}).
+	to(self,0.2,{filterValue:1,onUpdate:func}).
+	to(self,0.2,{filterValue:15,onUpdate:func}).
+	to(self,0.2,{filterValue:1,onUpdate:func,onComplete:self.showLightComplete});
+};
+BattleCharacterView.prototype.showLightComplete = function(event){
+	var self = event.target;
+	self.filters = null;
+	self.anime.play();
+};
 BattleCharacterView.prototype.addAnimation = function() {
 	var self = this;
 	var bitmapData = new LBitmapData(LMvc.datalist[BattleCharacterView.DEFAULT_IMG]);
@@ -86,6 +110,10 @@ BattleCharacterView.prototype.addAnimation = function() {
 	self.anime.addFrameScript(String.format("{0}-{1}",CharacterAction.ATTACK_START,CharacterDirection.UP),self.attackToHert,[]);
 	self.anime.addFrameScript(String.format("{0}-{1}",CharacterAction.ATTACK_START,CharacterDirection.LEFT),self.attackToHert,[]);
 	self.anime.addFrameScript(String.format("{0}-{1}",CharacterAction.ATTACK_START,CharacterDirection.RIGHT),self.attackToHert,[]);
+	self.anime.addFrameScript(String.format("{0}-{1}",CharacterAction.ATTACK,CharacterDirection.DOWN),self.attackAngry,[]);
+	self.anime.addFrameScript(String.format("{0}-{1}",CharacterAction.ATTACK,CharacterDirection.UP),self.attackAngry,[]);
+	self.anime.addFrameScript(String.format("{0}-{1}",CharacterAction.ATTACK,CharacterDirection.LEFT),self.attackAngry,[]);
+	self.anime.addFrameScript(String.format("{0}-{1}",CharacterAction.ATTACK,CharacterDirection.RIGHT),self.attackAngry,[]);
 	
 	var img = self.data.currentSoldiers().img();
 	var loader = new LLoader();
@@ -180,7 +208,9 @@ BattleCharacterView.prototype.setActionDirection = function(action, direction) {
 	}
 	self.anime._send_complete = false;
 	var label = action + "-" + direction;
+	
 	self.anime.gotoAndPlay(label);
+	
 	self.action = action;
 	self.direction = direction;
 };

@@ -253,6 +253,7 @@ CharacterListView.prototype.setBasicTab=function(){
 		button.x = 60 * i;
 		self.basicTab.addChild(button);
 	}
+	self.basicTab.addEventListener(LMouseEvent.MOUSE_UP, self.onClickSortButton);
 };
 CharacterListView.prototype.setAbilityTab=function(){
 	var self = this;
@@ -266,23 +267,28 @@ CharacterListView.prototype.setAbilityTab=function(){
 		button.x = 60 * i;
 		self.abilityTab.addChild(button);
 	}
-	self.abilityTab.addEventListener(LMouseEvent.MOUSE_UP, self.onClickAbilityTabButton);
+	self.abilityTab.addEventListener(LMouseEvent.MOUSE_UP, self.onClickSortButton);
 	self.abilityTab.visible = false;
 };
-CharacterListView.prototype.onClickAbilityTabButton=function(event){
+CharacterListView.prototype.onClickSortButton=function(event){
 	var self = event.currentTarget.parent.parent.parent;
 	if(self.sortType == event.target.name){
 		self.sortValue *= -1;
 	}
 	self.sortType = event.target.name;
-	if(event.target.name == "force"){
-		self.listChildLayer.childList = self.listChildLayer.childList.sort(function(a,b){
-			return self.sortValue*(a.charaModel.force() - b.charaModel.force());
-		});
-		for(var i=0,l=self.listChildLayer.numChildren;i<l;i++){
-			var childLayer = self.listChildLayer.childList[i];
-			childLayer.y = 50 * i;
-		}
+	switch(event.target.name){
+		case "city":
+		break
+		default:
+			self.listChildLayer.childList = self.listChildLayer.childList.sort(function(a,b){
+				var va = a.charaModel[self.sortType]();
+				var vb = b.charaModel[self.sortType]();
+				return self.sortValue*((typeof va == "number" ? va : 0) - (typeof vb == "number" ? vb : 0));
+			});
+	}
+	for(var i=0,l=self.listChildLayer.numChildren;i<l;i++){
+		var childLayer = self.listChildLayer.childList[i];
+		childLayer.y = 50 * i;
 	}
 };
 CharacterListView.prototype.setArmTab=function(){

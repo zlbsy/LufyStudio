@@ -1,6 +1,7 @@
 function BattleCharacterAI(chara) {
 	var self = this;
 	self.chara = chara;
+	self.herts = null;
 }
 BattleCharacterAI.prototype.setEvent = function() {
 	var self = this;
@@ -11,7 +12,7 @@ BattleCharacterAI.prototype.setEvent = function() {
 };
 BattleCharacterAI.prototype.magicAttack = function(target){
 	var self = this;
-	self.target = target;
+	self.attackTarget = target;
 	target.AI.attackTarget = self.chara;
 	var direction = getDirectionFromTarget(self.chara, target);
 	self.chara.setActionDirection(CharacterAction.MAGIC_ATTACK, direction);
@@ -22,16 +23,23 @@ BattleCharacterAI.prototype.magicAttack = function(target){
 };
 BattleCharacterAI.prototype.physicalAttack = function(target) {
 	var self = this;
-	self.target = target;
+	self.attackTarget = target;
 	target.AI.attackTarget = self.chara;
 	var direction = getDirectionFromTarget(self.chara, target);
-	
+	if(self.herts === null){
+		if(self.chara.data.id() == BattleController.ctrlChara.data.id()){
+			self.herts = [80,70];
+		}else{
+			self.herts = [60];
+		}	
+	}
+	self.chara.isAngry = true;
 	self.chara.setActionDirection(CharacterAction.ATTACK, direction);
 	self.chara.addEventListener(BattleCharacterActionEvent.ATTACK_ACTION_COMPLETE,self.attackActionComplete);
 };
 BattleCharacterAI.prototype.singleCombat = function(target) {
 	var self = this;
-	self.target = target;
+	self.attackTarget = target;
 	target.AI.attackTarget = self.chara;
 	var direction = getDirectionFromTarget(self.chara, target);
 	var directionTarget = getDirectionFromTarget(target, self.chara);
@@ -46,19 +54,20 @@ BattleCharacterAI.prototype.attackActionComplete = function(event) {
 	var self = chara.AI;
 	chara.removeEventListener(BattleCharacterActionEvent.ATTACK_ACTION_COMPLETE,self.attackActionComplete);
 	chara.changeAction(chara.data.id() == BattleController.ctrlChara.data.id() ? CharacterAction.STAND : CharacterAction.MOVE);
-	self.target.toStatic(false);
+	self.attackTarget.toStatic(false);
 	var num = new Num(Num.MIDDLE,1,20);
 	//TODO::
-	num.setValue(123);
-	num.x = self.target.x;
-	num.y = self.target.y;
+	num.setValue(self.herts[0]);
+	self.herts.shift();
+	num.x = self.attackTarget.x;
+	num.y = self.attackTarget.y;
 	chara.controller.view.baseLayer.addChild(num);
 	LTweenLite.to(num,0.5,{y:num.y - 20,alpha:0,onComplete:function(obj){
 		obj.remove();
 	}});
 	
-	self.target.changeAction(CharacterAction.HERT);
-	self.target.addEventListener(BattleCharacterActionEvent.HERT_ACTION_COMPLETE,self.target.AI.hertActionComplete);
+	self.attackTarget.changeAction(CharacterAction.HERT);
+	self.attackTarget.addEventListener(BattleCharacterActionEvent.HERT_ACTION_COMPLETE,self.attackTarget.AI.hertActionComplete);
 };
 BattleCharacterAI.prototype.hertActionComplete = function(event) {
 	var chara = event.currentTarget;
@@ -79,25 +88,39 @@ BattleCharacterAI.prototype.plusExp = function(event) {
 	chara.controller.view.baseLayer.addChild(statusView);
 };
 BattleCharacterAI.prototype.counterAttack = function(event) {
-	var chara = event.currentTarget.character.AI.target;
+	var attackChatacter = event.currentTarget.character;
+	var chara = attackChatacter.AI.attackTarget;
 	var self = chara.AI;
 	//chara.removeEventListener(BattleCharacterActionEvent.COUNTER_ATTACK,self.counterAttack);
+	if(attackChatacter.AI.herts && attackChatacter.AI.herts.length > 0){
+		attackChatacter.AI.physicalAttack(chara);
+		return;
+	}
+	
 	if(chara.data.id() != BattleController.ctrlChara.data.id()){
 		self.physicalAttack(BattleController.ctrlChara);
 	}else{
 		//TODO::
 		console.log("can not counterAttack");
+		if(self.herts.length > 0){
+			self.physicalAttack(self.attackTarget);
+			return;
+		}
+		self.herts = null;
 		BattleController.ctrlChara.AI.endAction();
 	}
 };
 BattleCharacterAI.prototype.endAction = function() {
-	var self = this, chara = self.chara, target = chara.target;
+	var self = this, chara = self.chara, target = self.attackTarget;
+	
 	if(target){
-		target.target = null;
+		target.AI.attackTarget = null;
+		target.AI.herts = null;
 		target.removeAllEventListener();
 		target.toStatic(true);
 	}
-	chara.target = null;
+	self.attackTarget = null;
+	self.herts = null;
 	chara.removeAllEventListener();
 	chara.changeAction(CharacterAction.STAND);
 	chara.mode = CharacterMode.END_ACTION;
