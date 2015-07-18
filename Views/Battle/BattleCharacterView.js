@@ -79,6 +79,13 @@ BattleCharacterView.prototype.attackAngry = function(anime) {
 	}
 	self.isAngry = false;
 	anime.stop();
+	
+	var script = "SGJTalk.show(" + self.data.id() + ",0," + self.data.angryTalk() + ");";
+	script += "SGJBattleCharacter.attackAngryExec(" + self.belong + ","+ self.data.id() + ");";
+	LGlobal.script.addScript(script);
+};
+BattleCharacterView.prototype.attackAngryExec = function(){
+	var self = this;
 	self.filterValue = 1;
 	var shadow = new LDropShadowFilter(0,0,"#FFFF00",self.filterValue);
 	self.filters = [shadow];

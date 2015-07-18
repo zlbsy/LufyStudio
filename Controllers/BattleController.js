@@ -60,23 +60,17 @@ BattleController.prototype.init = function(){
 	console.log("BattleController.prototype.init -- start --");
 	self.dispatchEvent(LEvent.COMPLETE);
 	self.dispatchEvent(LController.NOTIFY);
-	
-	CharacterModel.getChara(1).data.troops = CharacterModel.getChara(1).maxTroops();
-	CharacterModel.getChara(2).data.troops = CharacterModel.getChara(2).maxTroops();
-	CharacterModel.getChara(3).data.troops = CharacterModel.getChara(3).maxTroops();
-	CharacterModel.getChara(4).data.troops = CharacterModel.getChara(4).maxTroops();
-	CharacterModel.getChara(1).maxHP(100);
-	CharacterModel.getChara(1).HP(100);
-	CharacterModel.getChara(2).maxHP(100);
-	CharacterModel.getChara(2).HP(100);
-	CharacterModel.getChara(3).maxHP(100);
-	CharacterModel.getChara(3).HP(100);
-	CharacterModel.getChara(4).maxHP(100);
-	CharacterModel.getChara(4).HP(100);
+	for(var i = 1;i<16;i++){
+		CharacterModel.getChara(i).data.troops = CharacterModel.getChara(i).maxTroops();
+		CharacterModel.getChara(i).maxHP(100);
+		CharacterModel.getChara(i).HP(100);
+	}
 	self.addOurCharacter(1,CharacterAction.MOVE,CharacterDirection.DOWN,5,5);
-	self.addOurCharacter(2,CharacterAction.MOVE,CharacterDirection.UP,6,8);
-	self.addEnemyCharacter(3,CharacterAction.MOVE,CharacterDirection.LEFT,3,5);
-	self.addFriendCharacter(4,CharacterAction.MOVE,CharacterDirection.RIGHT,1,7);
+	self.addOurCharacter(2,CharacterAction.MOVE,CharacterDirection.UP,4,4);
+	self.addOurCharacter(3,CharacterAction.MOVE,CharacterDirection.LEFT,3,3);
+	self.addEnemyCharacter(4,CharacterAction.MOVE,CharacterDirection.LEFT,3,4);
+	self.addEnemyCharacter(5,CharacterAction.MOVE,CharacterDirection.LEFT,2,5);
+	self.addFriendCharacter(6,CharacterAction.MOVE,CharacterDirection.RIGHT,1,7);
 	self.boutNotify(Belong.SELF);
 };
 BattleController.prototype.boutEnd=function(){

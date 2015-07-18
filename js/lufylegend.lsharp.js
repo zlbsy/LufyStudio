@@ -1769,6 +1769,9 @@ LSGJBattleCharacterScript.analysis = function(value) {
 		case "SGJBattleCharacter.singleCombatStart":
 			LSGJBattleCharacterScript.singleCombatStart(value, start, end);
 			break;
+		case "SGJBattleCharacter.attackAngryExec":
+			LSGJBattleCharacterScript.attackAngryExec(value, start, end);
+			break;
 		default:
 			LGlobal.script.analysis();
 	}
@@ -1783,7 +1786,11 @@ LSGJBattleCharacterScript.singleCombatStart = function(value, start, end) {
 	var character = LMvc.BattleController.view.charaLayer.getCharacter(params[0],parseInt(params[1]));
 	character.AI.singleCombatStart();
 };
-
+LSGJBattleCharacterScript.attackAngryExec = function(value, start, end) {
+	var params = value.substring(start + 1, end).split(",");
+	var character = LMvc.BattleController.view.charaLayer.getCharacter(params[0],parseInt(params[1]));
+	character.attackAngryExec();
+};
 /*
  * LSGJSingleCombatScript.js
  **/

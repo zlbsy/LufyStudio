@@ -80,7 +80,7 @@ BattleCharacterLayerView.prototype.getCharacterFromCoordinate=function(x,y){
 };
 BattleCharacterLayerView.prototype.getCharacter=function(belong,id){
 	var self = this;
-	var childList = self.getCharactersFromBelong(event.belong);
+	var childList = self.getCharactersFromBelong(belong);
 	return self.getCharacterFromeList(childList,id);
 };
 BattleCharacterLayerView.prototype.getCharacterFromeList=function(childList,id){

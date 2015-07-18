@@ -6,6 +6,7 @@ function CharacterModel(controller, data) {
 		self.data.physicalFitness = self.data.maxPhysicalFitness = 100;
 	}
 }
+CharacterModel.commonAngryTalks = ["angry_talk_0_0","angry_talk_0_1","angry_talk_0_2"];
 CharacterModel.list = [];
 CharacterModel.setChara=function(list){
 	var self = this;
@@ -230,6 +231,12 @@ CharacterModel.prototype.luck = function() {
 CharacterModel.prototype.currentSoldiers = function() {
 	var soldiers = this.soldiers();
 	return soldiers[0];
+};
+CharacterModel.prototype.angryTalk = function() {
+	var self = this, index, list;
+	list = (self.data.angryTalks && self.data.angryTalks.length) ? self.data.angryTalks : CharacterModel.commonAngryTalks;
+	index = Math.random()*list.length >>> 0;
+	return Language.getAngryTalk(list[index]);
 };
 CharacterModel.prototype.soldiers = function() {
 	var self = this;

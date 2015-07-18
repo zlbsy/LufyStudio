@@ -34,6 +34,7 @@ BattleCharacterAI.prototype.physicalAttack = function(target) {
 		}	
 	}
 	self.chara.isAngry = true;
+	
 	self.chara.setActionDirection(CharacterAction.ATTACK, direction);
 	self.chara.addEventListener(BattleCharacterActionEvent.ATTACK_ACTION_COMPLETE,self.attackActionComplete);
 };
