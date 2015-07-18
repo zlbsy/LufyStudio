@@ -5,16 +5,19 @@ Language.get = function(key){
 	return Language.data[key] || key;
 };
 Language.getCity = function(key){
-	return Language.cityData[key];
+	return Language.cityData[key] || key;
 };
 Language.getCharacter = function(key){
-	return Language.characterData[key];
+	return Language.characterData[key] || key;
 };
 Language.getSoldier = function(key){
-	return Language.soldierData[key];
+	return Language.soldierData[key] || key;
 };
 Language.getSingleCombat = function(key){
-	return Language.singleCombatData[key];
+	return Language.singleCombatData[key] || key;
+};
+Language.getAngryTalk = function(key){
+	return Language.angryTalkData[key] || key;
 };
 Language.data = {
 	"disposition":"性格",
@@ -269,4 +272,12 @@ Language.singleCombatData = {
 	"Back_attack0":"你上当了！",
 	"Back_attack1":"你太笨了！",
 	"Back_attack2":"有勇无谋之辈！"
+};
+Language.angryTalkData = {
+	"angry_talk_0_0":"啊啊啊啊啊啊啊……",
+	"angry_talk_0_1":"哦哦哦哦哦哦哦……",
+	"angry_talk_0_2":"呀呀呀呀呀呀呀……",
+	"angry_talk_1_0":"这是万民的愤怒!",
+	"angry_talk_1_1":"吃我双剑吧!",
+	"angry_talk_1_2":"为了复兴汉室!"
 };
