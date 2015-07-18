@@ -1,6 +1,6 @@
 /**
 * lufylegend
-* @version 1.9.9
+* @version 1.9.10
 * @Explain lufylegend是一个HTML5开源引擎，利用它可以快速方便的进行HTML5的开发
 * @author lufy(lufy_legend)
 * @blog http://blog.csdn.net/lufy_Legend
@@ -200,9 +200,23 @@ var LMouseEventContainer = (function () {
 				s.addMouseDblEvent(o, f);
 			}
 		},
-		hasEvent : function (o, list) {
+		hasEventListener : function(o, t, f){
+			var s = this, list;
+			if (t == LMouseEvent.MOUSE_DOWN) {
+				list = s.mouseDownContainer;
+			} else if (t == LMouseEvent.MOUSE_UP) {
+				list = s.mouseUpContainer;
+			} else if (t == LMouseEvent.MOUSE_OVER) {
+				list = s.mouseOverContainer;
+			} else if (t == LMouseEvent.MOUSE_OUT) {
+				list = s.mouseOutContainer;
+			} else if (t == LMouseEvent.MOUSE_MOVE) {
+				list = s.mouseMoveContainer;
+			} else {
+				list = s.mouseDblContainer;
+			}
 			for (var i = 0, l = list.length; i < l; i++) {
-				if (list[i].container.objectIndex === o.objectIndex) {
+				if (list[i].container.objectIndex === o.objectIndex && (!f || list[i].listener == f)) {
 					return true;
 				}
 			}
@@ -479,7 +493,14 @@ var LGlobal = ( function () {
 	LGlobal.left = 0;
 	LGlobal.window = window;
 	(function (n) {
-		LGlobal.isFirefox = (n.toLowerCase().indexOf('firefox') >= 0);
+		LGlobal.isOldFirefox = (function(un){
+			var i = un.toLowerCase().indexOf('firefox');
+			if (i < 0) {
+				return false;
+			}
+			var v = un.substring(i + 8, un.length);
+			return parseFloat(v) < 39.0;
+		})(n);
 		if (n.indexOf(OS_IPHONE) > 0) {
 			LGlobal.os = OS_IPHONE;
 			LGlobal.canTouch = true;
@@ -602,8 +623,16 @@ var LGlobal = ( function () {
 				LGlobal.stage.baseRemoveEvent(type, listener);
 			}
 		};
+		LGlobal.innerWidth = window.innerWidth;
+		LGlobal.innerHeight = window.innerHeight;
+		LEvent.addEventListener(LGlobal.window, "blur", function(){
+			LGlobal.stage.dispatchEvent(new LEvent(LFocusEvent.FOCUS_OUT));
+		});
 	};
 	LGlobal.ll_touchStart = function (event) {
+		LGlobal._outStageCheckCount = 1;
+		LGlobal.IS_MOUSE_DOWN = true;
+		LGlobal.stage.dispatchEvent(new LEvent(LFocusEvent.FOCUS_IN));
 		if (LGlobal.inputBox.style.display != NONE) {
 			LGlobal.inputTextField._ll_getValue();
 		}
@@ -627,7 +656,6 @@ var LGlobal = ( function () {
 			LGlobal.mouseEvent(eve, LMouseEvent.DOUBLE_CLICK);
 			LGlobal.ll_clicks = 0;
 		}
-		LGlobal.IS_MOUSE_DOWN = true;
 		if (LGlobal.mouseJoint_start) {
 			LGlobal.mouseJoint_start(eve);
 		}
@@ -648,6 +676,7 @@ var LGlobal = ( function () {
 	};
 	LGlobal.ll_touchEnd = function (event) {
 		var e, eve, k, i, l, h;
+		LGlobal.IS_MOUSE_DOWN = false;
 		if (LMultitouch.inputMode == LMultitouchInputMode.TOUCH_POINT) {
 			for (k in LMultitouch.touchs) {
 				e = LMultitouch.touchs[k];
@@ -670,11 +699,11 @@ var LGlobal = ( function () {
 		}
 		LGlobal.mouseEvent(eve, LMouseEvent.MOUSE_UP);
 		LGlobal.touchHandler(event);
-		LGlobal.IS_MOUSE_DOWN = false;
 		LGlobal.buttonStatusEvent = null;
 		if (LGlobal.mouseJoint_end) {
 			LGlobal.mouseJoint_end();
 		}
+		LGlobal.stage.dispatchEvent(new LEvent(LFocusEvent.FOCUS_OUT));
 	};
 	LGlobal.ll_touchMove = function (e) {
 		var cX, cY, eve, l, ll = e.touches.length;
@@ -696,6 +725,11 @@ var LGlobal = ( function () {
 			}
 			LGlobal.buttonStatusEvent = eve;
 			LMultitouch.touchs["touch" + eve.touchPointID] = eve;
+			if(eve.offsetX <= 0 || eve.offsetX >= LGlobal.innerWidth || eve.offsetX >= LGlobal.width || eve.offsetY <= 0 || eve.offsetY >= LGlobal.innerHeight || eve.offsetY >= LGlobal.height){
+				LGlobal._outStageCheckCount = 0;
+			}else{
+				LGlobal._outStageCheckCount = 1;
+			}
 			LGlobal.mouseEvent(eve, LMouseEvent.MOUSE_MOVE);
 		}
 		LGlobal.touchHandler(e);
@@ -742,6 +776,17 @@ var LGlobal = ( function () {
 		mouseX = LGlobal.offsetX = event.offsetX;
 		mouseY = LGlobal.offsetY = event.offsetY;
 		LGlobal.cursor = "default";
+		if(mouseX <= 0 || mouseX >= LGlobal.innerWidth || mouseX >= LGlobal.width || mouseY <= 0 || mouseY >= LGlobal.innerHeight || mouseY >= LGlobal.height){
+			if(LGlobal._outStageCheckCount){
+				LGlobal._outStageCheckCount = 0;
+				LGlobal.stage.dispatchEvent(new LEvent(LFocusEvent.FOCUS_OUT));
+			}
+		}else{
+			if(!LGlobal._outStageCheckCount){
+				LGlobal._outStageCheckCount = 1;
+				LGlobal.stage.dispatchEvent(new LEvent(LFocusEvent.FOCUS_IN));
+			}
+		}
 		LGlobal.mouseEvent(event, LMouseEvent.MOUSE_MOVE);
 		document.body.style.cursor = LGlobal.cursor;
 		if (LGlobal.mouseJoint_move) {
@@ -776,12 +821,12 @@ var LGlobal = ( function () {
 	LGlobal.touchHandler = function (e) {
 		if (LGlobal.stopPropagation) {
 			e.stopPropagation();
+			if (e.stopImmediatePropagation) {
+				e.stopImmediatePropagation();
+			}
 		}
 		if (LGlobal.preventDefault) {
 			e.preventDefault();
-		}
-		if (e.stopImmediatePropagation) {
-			e.stopImmediatePropagation();
 		}
 		return e;
 	};
@@ -889,6 +934,13 @@ var LGlobal = ( function () {
 	LGlobal.onShow = function () {
 		if (LGlobal.canvas == null) {
 			return;
+		}
+		if(LGlobal._outStageCheckCount <= 0){
+			LGlobal._outStageCheckCount--;
+			if(LGlobal._outStageCheckCount < -2){
+				LGlobal.stage.dispatchEvent(new LEvent(LFocusEvent.FOCUS_OUT));
+				LGlobal._outStageCheckCount = 1;
+			}
 		}
 		if (LGlobal.fpsStatus) {
 			LGlobal.fpsStatus.reset();
@@ -1096,6 +1148,8 @@ var LGlobal = ( function () {
 	};
 	LGlobal.resize = function (canvasW, canvasH) {
 		var w, h, t = 0, l = 0, ww = window.innerWidth, wh = window.innerHeight;
+		LGlobal.innerWidth = ww;
+		LGlobal.innerHeight = wh;
 		if (canvasW) {
 			w = canvasW;
 		}
@@ -1165,7 +1219,7 @@ var LGlobal = ( function () {
 		}
 		LGlobal.canvasObj.style.marginTop = t + "px";
 		LGlobal.canvasObj.style.marginLeft = l + "px";
-		if (LGlobal.isFirefox) {
+		if (LGlobal.isOldFirefox) {
 			LGlobal.left = parseInt(LGlobal.canvasObj.style.marginLeft);
 			LGlobal.top = parseInt(LGlobal.canvasObj.style.marginTop);
 		}
@@ -1355,6 +1409,16 @@ if (!String.format) {
 	    });
 	};
 }
+if (Function.prototype.name === undefined && Object.defineProperty !== undefined) {
+	Object.defineProperty(Function.prototype, 'name', {
+		get:function() {
+			var funcNameRegex = /function\s([^(]{1,})\(/;
+			var results = (funcNameRegex).exec((this).toString());
+			return (results && results.length > 1) ? results[1].trim() : "";
+		},
+		set:function(value) {}
+	});
+}
 function trace() {
 	if (!LGlobal.traceDebug) return;
 	var t = document.getElementById("traceObject"), i;
@@ -1396,19 +1460,28 @@ function init (s, c, w, h, f, t) {
 		}
 		LGlobal.startTimer = (new Date()).getTime();
 	};
-	if (t != null && t == LEvent.INIT) {
-		LGlobal.frameRate = setInterval(function () {
-			LGlobal.onShow();
-		}, s);
+	var loop;
+	if(typeof s == "function"){
 		LGlobal.setCanvas(c, w, h);
 		_f();
+		loop = function(){
+			s(loop);
+			LGlobal.onShow();
+		}
 	}else{
-		LEvent.addEventListener(window, "load", function () {
+		loop = function(){
 			LGlobal.frameRate = setInterval(function () {
 				LGlobal.onShow();
 			}, s);
 			LGlobal.setCanvas(c, w, h);
 			_f();
+		};
+	}
+	if (t != null && t == LEvent.INIT) {
+		loop();
+	}else{
+		LEvent.addEventListener(window, "load", function () {
+			loop();
 		});
 	}
 }
@@ -1749,7 +1822,7 @@ var LEventDispatcher = (function () {
 				if (!s._eventList[i]) {
 					continue;
 				}
-				if (type == s._eventList[i].type && s._eventList[i].listener == listener) {
+				if (type == s._eventList[i].type && (!listener || s._eventList[i].listener == listener)) {
 					s._eventList.splice(i, 1);
 					return;
 				}
@@ -1828,6 +1901,7 @@ var LDisplayObject = (function () {
 		s.blendMode = null;
 		s.filters = null;
 		s.transform = new LTransform();
+		s.parent = null;
 	}
 	var p = {
 		_createCanvas:function(){
@@ -2157,15 +2231,18 @@ var LInteractiveObject = (function() {
 				LMouseEventContainer.removeMouseEvent(s, LMouseEvent.MOUSE_OUT);
 			}
 		},
-		hasEventListener : function(type) {
+		hasEventListener : function(type, listener) {
 			var s = this, i, length;
+			if (LMouseEventContainer.container[type]) {
+				return LMouseEventContainer.hasEventListener(s, type, listener);
+			}
 			if (type.indexOf("mouse") >= 0 || type.indexOf("touch") >= 0 || type == LMouseEvent.DOUBLE_CLICK) {
 				length = s.mouseList.length;
 				for ( i = 0; i < length; i++) {
 					if (!s.mouseList[i]) {
 						continue;
 					}
-					if (type == s.mouseList[i].type) {
+					if (type == s.mouseList[i].type && (!listener || s.mouseList[i].listener == listener)) {
 						return true;
 					}
 				}
@@ -2242,7 +2319,7 @@ var LDisplayObjectContainer = (function () {
 			return c[i];
 		},
 		getChildByName : function (n) {
-			var s  = this, c = s.childList;
+			var s  = this, c = s.childList, i, l;
 			for (i = 0, l = c.length; i < l; i++) {
 				if (!c[i]) {
 					continue;
@@ -2408,7 +2485,12 @@ var LWebAudio = (function () {
 	}
 	LWebAudio.container = [];
 	LWebAudio.containerCount = 0;
-	LWebAudio.audioTag = new Audio();
+	try {
+		LWebAudio.audioTag = new Audio();
+	} catch (e) {
+		console.warn( "ReferenceError: Can't find variable: Audio");
+		LWebAudio.audioTag = {canPlayType : function () { return false; }};
+	}
 	LWebAudio._context = null;
 	var p = {
 		getWebAudio : function () {
@@ -2796,12 +2878,17 @@ var LSound = (function () {
 	function LSound (u) {
 		var s = this;
 		s.type = "LSound";
-		s._type="audio";
+		s._type = "audio";
 		if (LSound.webAudioEnabled && LGlobal.webAudio) {
 			LExtends(s, LWebAudio, []);
 		} else {
 			LExtends(s, LMedia, []);
-			s.data = new Audio();
+			try {
+				s.data = new Audio();
+			} catch (e) {
+				console.warn( "ReferenceError: Can't find variable: Audio");
+				s.data = {};
+			}
 			s.data.loop = false;
 			s.data.autoplay = false;
 		}
@@ -2939,7 +3026,7 @@ var LPoint = (function () {
 			return LPoint.distance2(this.x, this.y, 0, 0);
 		},
 		add : function (v) {
-			return LPoint(this.x + v.x, this.y + v.y);
+			return new LPoint(this.x + v.x, this.y + v.y);
 		},
 		clone : function () {
 			return new LPoint(this.x, this.y);
@@ -3776,6 +3863,7 @@ var LSprite = (function () {
 		s.box2dBody = null;
 		s.shapes = new Array();
 		s.dragRange = null;
+		s.useCursor = null;
 	}
 	var p = {
 		setRotate : function (angle) {
@@ -3997,6 +4085,9 @@ var LSprite = (function () {
 			}
 			on = s.ismouseon(e, cd);
 			if (on) {
+				if(LGlobal.os == OS_PC && s.useCursor && type == LMouseEvent.MOUSE_MOVE){
+					LGlobal.cursor = s.useCursor;
+				}
 				if (type == LMouseEvent.MOUSE_MOVE && !s.ll_mousein) {
 					s.ll_mousein = true;
 					if (s._mevent(LMouseEvent.MOUSE_OVER)) {
@@ -4208,12 +4299,12 @@ var LButton = (function () {
 		s.upState.visible = true;
 		s.buttonMode = true;
 		s.staticMode = false;
-		s._ll_cursorEnabled = true;
 		s.setState(LButton.STATE_ENABLE);
 		if (LMouseEventContainer.container[LMouseEvent.MOUSE_MOVE]) {
 			LMouseEventContainer.pushButton(s);
 		}
 		s.addEventListener(LMouseEvent.MOUSE_DOWN, s.ll_modeDown);
+		s.setCursorEnabled(true);
 	}
 	LButton.STATE_DISABLE = "disable";
 	LButton.STATE_ENABLE = "enable";
@@ -4324,9 +4415,6 @@ var LButton = (function () {
 			s.upState.visible = false;
 			s.downState.visible = false;
 			s.overState.visible = true;
-			if (LGlobal.os == OS_PC && s._ll_cursorEnabled && s.parent) {
-				LGlobal.cursor = "pointer";
-			}
 		},
 		ll_modeOut : function (e){
 			var s = e.clickTarget;
@@ -4349,7 +4437,7 @@ var LButton = (function () {
 			s.upState.visible = true;
 		},
 		setCursorEnabled : function (value) {
-			this._ll_cursorEnabled = value;
+			this.useCursor = value ? "pointer" : null;
 		},
 		clone : function () {
 			var s = this;
@@ -5505,6 +5593,7 @@ var LAnimation = (function() {
 			}
 			if (changed) {
 				s._ll_stepIndex = 0;
+				s._send_complete = false;
 			}
 		},
 		getAction : function() {
@@ -5658,15 +5747,15 @@ var LAnimationTimeline = (function() {
 		},
 		gotoAndPlay : function(name) {
 			var s = this, l = s.ll_labelList[name];
+			s.play();
 			s.setAction(l.rowIndex, l.colIndex, l.mode, l.isMirror);
 			s.onframe();
-			s.play();
 		},
 		gotoAndStop : function(name) {
 			var s = this, l = s.ll_labelList[name];
+			s.stop();
 			s.setAction(l.rowIndex, l.colIndex, l.mode, l.isMirror);
 			s.onframe();
-			s.stop();
 		},
 		addFrameScript : function(name, func, params) {
 			var l = this.ll_labelList[name];
@@ -5697,11 +5786,11 @@ var LAnimationTimeline = (function() {
 	return LAnimationTimeline;
 })(); 
 var LLoadManage = (function () {
-	function LoadManage(){
+	function LLoadManage(){
 		this.llname="ll.file.";
 		this.llload="ll.load.";
 	}
-	LoadManage.prototype = {
+	LLoadManage.prototype = {
 		load : function (l, u, c) {
 			var s = this;
 			if (!l || l.length == 0) {
@@ -5795,7 +5884,11 @@ var LLoadManage = (function () {
 			return u + (u.indexOf('?') >= 0 ? '&' : '?') + 't=' + (new Date()).getTime();
 		}
 	};
-	return new LoadManage();
+	LLoadManage.load = function(l, u, c){
+		var loadObj = new LLoadManage();
+		loadObj.load(l, u, c);
+	};
+	return LLoadManage;
 })();
 var LEasing = {
 	None : {
@@ -6075,6 +6168,11 @@ var LTweenLite = (function () {
 			s.active = s.duration == 0 && s.delay == 0;
 			s.varsto = {};
 			s.varsfrom = {};
+			s.varsDiff = {};
+			s.varsListIndex = {};
+			s.varsListCurr = {};
+			s.varsListTo = {};
+			s.varsListLength = {};
 			s.stop = false;
 			if (typeof(s.vars.ease) != "function") {
 				s.vars.ease = LEasing.None.easeIn;
@@ -6094,8 +6192,25 @@ var LTweenLite = (function () {
 				delete s.vars.onStart;
 			}
 			for (k in s.vars) {
+				if (k == "coordinate" && Array.isArray(s.vars[k])) {
+					var diff = 0, curr = {x:s.target.x,y:s.target.y};
+					for (var i = 0, l = s.vars[k].length; i < l; i++) {
+						var p = s.vars[k][i];
+						diff += LPoint.distance(p,curr);
+						curr = p;
+					}
+					s.varsListIndex[k] = 0;
+					s.varsListCurr[k] = 0;
+					s.varsListTo[k] = diff;
+					s.varsto[k] = s.vars[k];
+					s.varsfrom[k] = {x:s.target.x,y:s.target.y};
+					continue;
+				} else if (typeof s.vars[k] != "number") {
+					continue;
+				}
 				s.varsto[k] = s.vars[k];
 				s.varsfrom[k] = s.target[k];
+				s.varsDiff[k] = s.vars[k] - s.target[k];
 			}
 		},
 		pause : function () {
@@ -6121,15 +6236,33 @@ var LTweenLite = (function () {
 					return;
 				}
 			}
-			for (tweentype in s.varsto) {
-				if (tweentype == "tweenTimeline") {
+			for (k in s.varsto) {
+				if (typeof s.varsListTo[k] != UNDEFINED){
+					var curr = s.ease(type_timer ? etime : s.currentTime, 0, s.varsListTo[k], s.duration);
+					if(curr > s.varsListTo[k]){
+						curr = s.varsListTo[k];
+					}
+					var c = s.varsListIndex[k] > 0 ? s.vars[k][s.varsListIndex[k] - 1] : s.varsfrom[k];
+					var v = s.vars[k][s.varsListIndex[k]];
+					var d = LPoint.distance(c,v);
+					while(s.varsListCurr[k] + d < curr){
+						s.varsListCurr[k] += d;
+						c = v;
+						s.varsListIndex[k]++;
+						v = s.vars[k][s.varsListIndex[k]];
+						d = LPoint.distance(c,v);
+					}
+					s.target.x = c.x;
+					s.target.y = c.y;
+					if(d != 0 && v.x - c.x != 0){
+						s.target.x += (v.x - c.x)*(curr - s.varsListCurr[k])/d;
+					}
+					if(d != 0 && v.y - c.y != 0){
+						s.target.y += (v.y - c.y)*(curr - s.varsListCurr[k])/d;
+					}
 					continue;
 				}
-				if (type_timer) {
-					s.target[tweentype] = s.ease(etime, s.varsfrom[tweentype], s.varsto[tweentype] - s.varsfrom[tweentype], s.duration);
-				} else {
-					s.target[tweentype] = s.ease(s.currentTime, s.varsfrom[tweentype], s.varsto[tweentype] - s.varsfrom[tweentype], s.duration);
-				}
+				s.target[k] = s.ease(type_timer ? etime : s.currentTime, s.varsfrom[k], s.varsDiff[k], s.duration);
 			}
 			if (s.onStart) {
 				s._dispatchEvent(s.onStart);
@@ -6143,6 +6276,12 @@ var LTweenLite = (function () {
 			}
 			if (e) {
 				for (tweentype in s.varsto) {
+					if (typeof s.varsListTo[tweentype] != UNDEFINED){
+						var p = s.varsto[tweentype][s.vars[tweentype].length - 1];
+						s.target.x = p.x;
+						s.target.y = p.y;
+						continue;
+					}
 					s.target[tweentype] = s.varsto[tweentype];
 				}
 				if (s.onComplete) {
@@ -6467,7 +6606,7 @@ var FPS = (function () {
 		f = LGlobal.fpsStatus;
 		s.fps[1].text = "DisplayObject : " + f.c + "/" + f.b; 
 		s.fps[2].text = "Draw image : " + f.a; 
-		s.fps[3].text = "Drwa graphics : " + f.d; 
+		s.fps[3].text = "Draw graphics : " + f.d; 
 		s.fps[4].text = "Draw text : " + f.e; 
 		s.fpsTime = t;
 		s.fpsCount = 0;
@@ -7767,6 +7906,7 @@ var LTransition = (function() {
 			g.clear();
 			if (self.trans.dimension) {
 				g.add(function() {
+					c.beginPath();
 					c.save();
 					c.rect(0, 0, self.width, self.child.getHeight());
 					c.rect(self.child.getWidth() - self.width, 0, self.width, self.child.getHeight());
@@ -7774,6 +7914,7 @@ var LTransition = (function() {
 				});
 			} else {
 				g.add(function() {
+					c.beginPath();
 					c.save();
 					c.rect(0, 0, self.child.getWidth(), self.height);
 					c.rect(0, self.child.getHeight() - self.height, self.child.getWidth(), self.height);
@@ -8020,6 +8161,7 @@ var LTransition = (function() {
 			var self = this, g = self.child.mask, c = LGlobal.canvas, list;
 			g.clear();
 			g.add(function() {
+				c.beginPath();
 				c.save();
 				for (var i = 0; i < self.index; i++) {
 					list = self.list[i];
