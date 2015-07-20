@@ -292,3 +292,14 @@ CharacterModel.prototype.equipOff = function(itemId) {
 		}
 	}
 };
+CharacterModel.prototype.groupSkill = function() {
+	var self = this;
+	if(!self.data.groupSkill){
+		return null;
+	}
+	var groupSkill = GroupSkillModel.getMaster(self.data.groupSkill);
+	if(Math.random() > groupSkill.p()/100){
+		return null;
+	}
+	return groupSkill;
+};

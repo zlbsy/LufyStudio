@@ -26,6 +26,7 @@ BattleCharacterAI.prototype.physicalAttack = function(target) {
 	self.attackTarget = target;
 	target.AI.attackTarget = self.chara;
 	var direction = getDirectionFromTarget(self.chara, target);
+	//TODO::groupSkill
 	if(self.herts === null){
 		if(self.chara.data.id() == BattleController.ctrlChara.data.id()){
 			self.herts = [80,70];

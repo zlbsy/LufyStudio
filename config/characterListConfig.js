@@ -14,11 +14,11 @@
 * */
 var characterList = [
 	{id:1,name:"刘备",faceImg:6,minFace:[0,23,151,151],disposition:0,disposition:0,skills:1,force:78,intelligence:76,command:72,agility:74,luck:100,compatibility:75,
-		soldiers:[{id:1,proficiency:"B",img:1},{id:2,proficiency:"D",img:1}],angryTalks:["angry_talk_1_0","angry_talk_1_1","angry_talk_1_2"],groupSkill:{group:[2,3],p:20,talks:[{id:1,talk:"云长!益德!"},{id:2,talk:""},{id:3,talk:""}]}},
+		soldiers:[{id:1,proficiency:"B",img:1},{id:2,proficiency:"D",img:1}],angryTalks:["angry_talk_1_0","angry_talk_1_1","angry_talk_1_2"],groupSkill:1},
 	{id:2,name:"关羽",faceImg:7,minFace:[15,67,100,100],disposition:2,skills:2,force:96,intelligence:90,command:98,agility:68,luck:62,compatibility:75,
-		soldiers:[{id:1,proficiency:"B",img:2},{id:2,proficiency:"A",img:1}]},
+		soldiers:[{id:1,proficiency:"B",img:2},{id:2,proficiency:"A",img:1}],groupSkill:1},
 	{id:3,name:"张飞",faceImg:8,minFace:[19,69,100,100],disposition:3,skills:0,force:99,intelligence:90,command:98,agility:68,luck:62,compatibility:75,
-		soldiers:[{id:1,proficiency:"B",img:3},{id:2,proficiency:"A",img:1}]},
+		soldiers:[{id:1,proficiency:"B",img:3},{id:2,proficiency:"A",img:1}],groupSkill:1},
 	{id:4,name:"赵云",faceImg:1000,minFace:[0,23,151,151],disposition:1,skills:0,force:98,intelligence:90,command:98,agility:68,luck:62,compatibility:75,
 		soldiers:[{id:1,proficiency:"B",img:4},{id:2,proficiency:"A",img:1}]},
 	{id:5,name:"马超",faceImg:1000,minFace:[0,23,151,151],disposition:3,skills:0,force:97,intelligence:90,command:98,agility:68,luck:62,compatibility:75,

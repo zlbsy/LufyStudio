@@ -19,6 +19,9 @@ Language.getSingleCombat = function(key){
 Language.getAngryTalk = function(key){
 	return Language.angryTalkData[key] || key;
 };
+Language.getSkillName = function(key){
+	return Language.skillNameData[key] || key;
+};
 Language.data = {
 	"disposition":"性格",
 	"disposition_0":"胆小",
@@ -280,4 +283,7 @@ Language.angryTalkData = {
 	"angry_talk_1_0":"这是万民的愤怒!",
 	"angry_talk_1_1":"吃我双剑吧!",
 	"angry_talk_1_2":"为了复兴汉室!"
+};
+Language.skillNameData = {
+	"group_1":"桃园情谊!"
 };
