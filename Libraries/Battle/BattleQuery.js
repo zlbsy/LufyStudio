@@ -6,11 +6,11 @@ function BattleQuery(map){
 	self._map = [];
 	self._w = map[0].length;
 	self._h = map.length;
-        for (var y=0; y<self._h; y++) {
+	for (var y=0; y<self._h; y++) {
 		self._map.push([]);
-	        for (var x=0; x<self._w; x++) {
+		for (var x=0; x<self._w; x++) {
 			self._map[y].push(new MapNode(x,y,map[y][x]));
-	        }
+		}
 	}
 }
 BattleQuery.prototype.setPathAll = function(px,py,value){

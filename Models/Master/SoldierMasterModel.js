@@ -50,8 +50,20 @@ SoldierMasterModel.prototype.property = function() {
 SoldierMasterModel.prototype.equipment = function() {
 	return this.data.equipment;
 };
-SoldierMasterModel.prototype.restrain = function() {
-	return this.data.restrain;
+SoldierMasterModel.prototype.restrain = function(restrainId) {
+	if(!self._restrain){
+		self._restrain = [];
+		for(var i=0;i<self.data.restrain.length;i++){
+			var child = self.data.restrain[i];
+			self._restrain[child.id] = child;
+		}
+	}
+	var restrainData = self._restrain[restrainId];
+	if(!restrainData){
+		restrainData = {"id": 1, "value": 100};
+		self._restrain[restrainId] = restrainData;
+	}
+	return restrainData;
 };
 SoldierMasterModel.prototype.terrain = function(terrainId) {
 	var self = this;
@@ -64,7 +76,7 @@ SoldierMasterModel.prototype.terrain = function(terrainId) {
 	}
 	var terrainData = self._terrains[terrainId];
 	if(!terrainData){
-		terrainData = {"id": 1, "value": 110, "moveCost": 1};//{"addition":100,"cost":1};
+		terrainData = {"id": 1, "value": 100, "moveCost": 1};
 		self._terrains[terrainId] = terrainData;
 	}
 	return terrainData;

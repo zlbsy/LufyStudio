@@ -128,9 +128,9 @@ function getHitrateStrategy(attCharaModel,hertCharaModel){
  法术攻击的伤害值计算<br>
  X代表攻击方的精神力，Y代表被攻击方的精神力，Lv表示攻击方的等级。R表示伤害值<br>
  if (x'>y')<br>
- r=Lv+25+(X'-Y')/2;<br>
+ r=Lv+25+(X'-Y')/3;<br>
  else<br>
- r=Lv+25-(Y'-X')/2<br>
+ r=Lv+25-(Y'-X')/3<br>
  然后再根据兵种相克和宝物进行修正
  **************************************************************/
 function getHertStrategyValue(attCharaModel,hertCharaModel){
@@ -164,50 +164,32 @@ function getHertStrategyValue(attCharaModel,hertCharaModel){
  **************************************************************/
 function getHertValue(attCharaModel,hertCharaModel){
 	var r;
+	var attCharaModel = attChara.data;
+	var hertCharaModel = hertChara.data;
 	//得到攻击方的攻击力和等级
 	var attLv =  attCharaModel.lv();
 	var attAttack = attCharaModel.attack();// + parseInt(attChara.statusArray[LSouSouCharacterS.STATUS_ATTACK][2]);
 	//得到防御方的防御力
 	var hertDefense = hertCharaModel.defense();// + int(hertChara.statusArray[LSouSouCharacterS.STATUS_DEFENSE][2]);
-	//计算攻击方所在地形
-	var attTerrain:String = "Terrain" + LSouSouObject.sMap.mapData[attChara.locationY][attChara.locationX];
-			//计算防御方所在地形
-			var hertTerrain:String = "Terrain" + LSouSouObject.sMap.mapData[hertChara.locationY][hertChara.locationX];
-			//根据地形修正攻击和防御力
-			var attAttackAddition:int;
-			if(LSouSouObject.arms["Arms" + attChara.arms].Terrain[attTerrain] == null || LSouSouObject.arms["Arms" + attChara.arms].Terrain[attTerrain].length > 0){
-				attAttackAddition = attAttack;
-			}else{
-				attAttackAddition = int((int(LSouSouObject.arms["Arms" + attChara.arms].Terrain[attTerrain].@Addition)/100) * attAttack);
-			}
-			
-			var hertDefenseAddition:int;
-			if(LSouSouObject.arms["Arms" + hertChara.arms].Terrain[hertTerrain] == null || LSouSouObject.arms["Arms" + hertChara.arms].Terrain[hertTerrain].length > 0){
-				hertDefenseAddition = hertDefense;
-			}else{
-				hertDefenseAddition = int((int(LSouSouObject.arms["Arms" + hertChara.arms].Terrain[hertTerrain].@Addition)/100) * hertDefense);
-			}
-			trace("attAttackAddition = " + attAttackAddition,"hertDefenseAddition = " + hertDefenseAddition);
-			
-			//物理攻击的伤害值计算
-			if(attAttackAddition > hertDefenseAddition){
-				r = attLv + 25 + (attAttackAddition - hertDefenseAddition)/2;
-			}else{
-				r = attLv + 25 - (hertDefenseAddition - attAttackAddition)/2;
-			}
-			//兵种相克
-			if(LSouSouObject.arms["Arms" + attChara.arms].Restrain["list" + hertChara.arms].toString().length>0){
-				r = Math.floor((int(LSouSouObject.arms["Arms" + attChara.arms].Restrain["list" + hertChara.arms])/100) * r);
-			}
-			r = int((110-Math.random()*20)*r/100);
-			/******************************
-			 //宝物修正
-			 ******************************/
-			/*
-			//反击75%伤害
-			if(Ctrl.BACK_ATTACK){
-				r = Math.floor(r*0.75);
-			}
-			*/
-			return r;
-		}
+	//地形修正
+	var map = LMvc.BattleController.model.map.data;
+	var attAttackAddition = attAttack * attCharaModel.currentSoldiers().terrain(map[attChara.locationY()][hertChara.locationX()].value).value * 0.01;
+	var hertDefenseAddition = hertDefense * hertCharaModel.currentSoldiers().terrain(map[hertChara.locationY()][hertChara.locationX()].value).value * 0.01;
+	console.log("attAttackAddition = " + attAttackAddition,"hertDefenseAddition = " + hertDefenseAddition);
+	//物理攻击的伤害值计算
+	if(attAttackAddition > hertDefenseAddition){
+		r = attLv + 25 + (attAttackAddition - hertDefenseAddition)/2;
+	}else{
+		r = attLv + 25 - (hertDefenseAddition - attAttackAddition)/2;
+	}
+	//兵种相克
+	r = r * attCharaModel.currentSoldiers().restrain(hertCharaModel.currentSoldiers().id()).value * 0.01;
+	//随即系数
+	r = (11 - Math.random() * 2) * 0.1 * r;
+	if(r < 1){
+		r = 1;
+	}
+	r = r >>> 0;
+	//TODO:: 宝物修正
+	return r;
+}

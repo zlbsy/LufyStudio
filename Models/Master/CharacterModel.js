@@ -6,8 +6,38 @@ function CharacterModel(controller, data) {
 		self.data.physicalFitness = self.data.maxPhysicalFitness = 100;
 	}
 }
-CharacterModel.commonAngryTalks = ["angry_talk_0_0","angry_talk_0_1","angry_talk_0_2"];
 CharacterModel.list = [];
+CharacterModel.commonAngryTalks = ["angry_talk_0_0","angry_talk_0_1","angry_talk_0_2"];
+CharacterModel.upValue = function(type, value) {
+	if (type == "S") {
+		if (value < 50) {
+			return 1;
+		} else if (value < 70) {
+			return 2;
+		} else if (value < 90) {
+			return 3;
+		}else{
+			return 4;
+		}
+	} else if (type == "A") {
+		if (value < 50) {
+			return 1;
+		} else if (value < 70) {
+			return 2;
+		} else {
+			return 3;
+		}
+	} else if (type == "B") {
+		if (value < 50) {
+			return 1;
+		} else {
+			return value >= 90 ? 3 : 2;
+		}
+	} else if (type == "C") {
+		return value >= 70 ? 2 : 1;
+	}
+	return 0;
+};
 CharacterModel.setChara=function(list){
 	var self = this;
 	for(var i=0,l=list.length;i<l;i++){
@@ -26,10 +56,27 @@ CharacterModel.getChara=function(chara_id){
 	}
 	return null;
 };
+CharacterModel.prototype.calculation = function() {
+	var self = this;
+	var property = self.currentSoldiers().property();
+	self.data.attack = self.force() * 0.5 + CharacterModel.upValue(property.attack, self.force()) * self.lv();
+	self.data.spirit = self.intelligence() * 0.5 + CharacterModel.upValue(property.spirit, self.intelligence()) * self.lv();
+	self.data.defense = self.command() * 0.5 + CharacterModel.upValue(property.defense, self.command()) * self.lv();
+	self.data.breakout = self.agility() * 0.5 + CharacterModel.upValue(property.breakout, self.agility()) * self.lv();
+	self.data.morale = self.luck() * 0.5 + CharacterModel.upValue(property.morale, self.luck()) * self.lv();
+	self.data.maxTroops = self.initTroops() + property.troops * self.lv();
+	self.data.maxStrategy = self.initStrategy() + property.strategy * self.lv();
+};
+CharacterModel.prototype.initStrategy = function() {
+	return this.data.initStrategy;
+};
+CharacterModel.prototype.initTroops = function() {
+	return this.data.initTroops;
+};
 CharacterModel.prototype.id = function() {
 	return this.data.id;
 };
-CharacterModel.prototype.physicalFitness = function(){
+CharacterModel.prototype.physicalFitness = function(){//体力
 	return this.data.physicalFitness;
 };
 CharacterModel.prototype.maxPhysicalFitness = function(){
@@ -37,6 +84,21 @@ CharacterModel.prototype.maxPhysicalFitness = function(){
 };
 CharacterModel.prototype.disposition = function(){
 	return this.data.disposition;
+};
+CharacterModel.prototype.attack = function(){
+	return this.data.attack;
+};
+CharacterModel.prototype.spirit = function(){
+	return this.data.spirit;
+};
+CharacterModel.prototype.defense = function(){
+	return this.data.defense;
+};
+CharacterModel.prototype.breakout = function(){
+	return this.data.breakout;
+};
+CharacterModel.prototype.morale = function(){
+	return this.data.morale;
 };
 CharacterModel.prototype.dispositionLabel = function(){
 	return Language.get("disposition_"+this.data.disposition);
@@ -82,6 +144,9 @@ CharacterModel.prototype.HP = function(value) {
 };
 CharacterModel.prototype.MP = function() {return 20;
 	return this.data.mp;
+};
+CharacterModel.prototype.lv = function() {
+	return this.level();
 };
 CharacterModel.prototype.level = function() {
 	return 10;
