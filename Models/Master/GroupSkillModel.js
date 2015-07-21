@@ -6,19 +6,19 @@ function GroupSkillModel(controller, data) {
 }
 GroupSkillModel.master = [];
 GroupSkillModel.setMaster=function(list){
-	if(GroupSkillsModel.master.length > 0){
+	if(GroupSkillModel.master.length > 0){
 		return;
 	}
 	var self = this;
 	for(var i=0,l=list.length;i<l;i++){
-		var child = new GroupSkillsModel(null,list[i]);
-		GroupSkillsModel.master.push(child);
+		var child = new GroupSkillModel(null,list[i]);
+		GroupSkillModel.master.push(child);
 	}
 };
 GroupSkillModel.getMaster=function(id){
 	var self = this;
-	for(var i=0,l=GroupSkillsModel.master.length;i<l;i++){
-		var child = GroupSkillsModel.master[i];
+	for(var i=0,l=GroupSkillModel.master.length;i<l;i++){
+		var child = GroupSkillModel.master[i];
 		if(child.id() != id){
 			continue;
 		}
@@ -27,8 +27,14 @@ GroupSkillModel.getMaster=function(id){
 	return null;
 };
 GroupSkillModel.prototype.id=function(){
-	return this.data.id();
+	return this.data.id;
 };
 GroupSkillModel.prototype.name=function(){
 	return Language.getSkillName("group_"+this.data.id);
+};
+GroupSkillModel.prototype.probability=function(){
+	return this.data.probability;
+};
+GroupSkillModel.prototype.group=function(){
+	return this.data.group;
 };

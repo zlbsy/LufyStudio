@@ -34,7 +34,15 @@
 var StrategyType = {
 	Fire:1,//火
 	Wind:2,//风
-	Warter:3//水
+	Warter:3,//水
+	Earth:4,//地
+	Aid:5,//升降能力
+	Poison:6,//毒
+	Fixed:7,//定身
+	Chaos:8,//混乱
+	BanIncantation:9,//禁咒
+	Wake:10,//觉醒
+	Supply:11//补给
 };
 var StrategyEffectType = {
 	Attack:1,//攻击

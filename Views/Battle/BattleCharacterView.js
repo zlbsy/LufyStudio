@@ -72,24 +72,37 @@ BattleCharacterView.prototype.attackToHert = function(anime) {
 	var self = anime.parent.parent;
 	self.dispatchEvent(BattleCharacterActionEvent.ATTACK_ACTION_COMPLETE);
 };
-BattleCharacterView.prototype.attackSPCheck = function(anime) {
+BattleCharacterView.prototype.attackSpecialCheck = function(anime) {
 	var self = anime.parent.parent;
+	console.log("self.isAngry",self.isAngry);
+	console.log("self.groupSkill",self.groupSkill);
 	if(self.isAngry){
 		self.attackAngry();
 	}else if(self.groupSkill){
-		self.groupSkillExec()
+		self.groupSkillExec();
 	}
 };
 BattleCharacterView.prototype.groupSkillExec = function() {
-
-};
-BattleCharacterView.prototype.attackAngry = function(anime) {
-	var self = anime.parent.parent;
-	if(!self.isAngry){
-		return;
+	var self = this;
+	console.log("self.groupSkill.group",self.groupSkill.group());
+	self.anime.stop();
+	var group = self.groupSkill.group();
+	var script = "";
+	script += "SGJTalk.show(" + self.data.id() + ",0," + Language.getSkillName(String.format("group_{0}", self.groupSkill.id())) + ");";
+	for (var i = 0; i < group.length; i++) {
+		if(i == self.data.id()){
+			continue;
+		}
+		script += "SGJTalk.show(" + group[i] + ",0," + Language.groupSkillTalk() + ");";
 	}
+	script += "SGJBattleCharacter.attackAngryExec(" + self.belong + ","+ self.data.id() + ");";
+	LGlobal.script.addScript(script);
+	self.groupSkill = null;
+};
+BattleCharacterView.prototype.attackAngry = function() {
+	var self = this;
 	self.isAngry = false;
-	anime.stop();
+	self.anime.stop();
 	
 	var script = "SGJTalk.show(" + self.data.id() + ",0," + self.data.angryTalk() + ");";
 	script += "SGJBattleCharacter.attackAngryExec(" + self.belong + ","+ self.data.id() + ");";
@@ -128,10 +141,10 @@ BattleCharacterView.prototype.addAnimation = function() {
 	self.anime.addFrameScript(String.format("{0}-{1}",CharacterAction.ATTACK_START,CharacterDirection.UP),self.attackToHert,[]);
 	self.anime.addFrameScript(String.format("{0}-{1}",CharacterAction.ATTACK_START,CharacterDirection.LEFT),self.attackToHert,[]);
 	self.anime.addFrameScript(String.format("{0}-{1}",CharacterAction.ATTACK_START,CharacterDirection.RIGHT),self.attackToHert,[]);
-	self.anime.addFrameScript(String.format("{0}-{1}",CharacterAction.ATTACK,CharacterDirection.DOWN),self.attackAngry,[]);
-	self.anime.addFrameScript(String.format("{0}-{1}",CharacterAction.ATTACK,CharacterDirection.UP),self.attackAngry,[]);
-	self.anime.addFrameScript(String.format("{0}-{1}",CharacterAction.ATTACK,CharacterDirection.LEFT),self.attackAngry,[]);
-	self.anime.addFrameScript(String.format("{0}-{1}",CharacterAction.ATTACK,CharacterDirection.RIGHT),self.attackAngry,[]);
+	self.anime.addFrameScript(String.format("{0}-{1}",CharacterAction.ATTACK,CharacterDirection.DOWN),self.attackSpecialCheck,[]);
+	self.anime.addFrameScript(String.format("{0}-{1}",CharacterAction.ATTACK,CharacterDirection.UP),self.attackSpecialCheck,[]);
+	self.anime.addFrameScript(String.format("{0}-{1}",CharacterAction.ATTACK,CharacterDirection.LEFT),self.attackSpecialCheck,[]);
+	self.anime.addFrameScript(String.format("{0}-{1}",CharacterAction.ATTACK,CharacterDirection.RIGHT),self.attackSpecialCheck,[]);
 	
 	var img = self.data.currentSoldiers().img();
 	var loader = new LLoader();

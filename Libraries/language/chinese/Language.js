@@ -22,6 +22,10 @@ Language.getAngryTalk = function(key){
 Language.getSkillName = function(key){
 	return Language.skillNameData[key] || key;
 };
+Language.groupSkillTalk = function(){
+	var index = Math.random() * Language.groupSkillTalkData.length >>> 0;
+	return Language.groupSkillTalkData[index];
+};
 Language.data = {
 	"disposition":"性格",
 	"disposition_0":"胆小",
@@ -287,3 +291,9 @@ Language.angryTalkData = {
 Language.skillNameData = {
 	"group_1":"桃园情谊!"
 };
+Language.groupSkillTalkData = [
+	"痛快，一起上!",
+	"开始攻击!",
+	"看我的!",
+	"哈哈，我来了!"
+];

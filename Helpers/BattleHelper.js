@@ -53,8 +53,46 @@ function battleSingleCombatCheck(chara){
 	LGlobal.script.addScript(script);
 }
 function battleCanGroupSkill(chara){
-	return true;
+	var groupSkill = chara.data.groupSkill();
+	var group = groupSkill.group();
+	for(var i=0;i<group.length;i++){
+		var charaId = group[i];
+		if(charaId == chara.data.id()){
+			continue;
+		}
+		if(!battleCanAttack(chara.belong, charaId, chara.AI.attackTarget)){
+			return null;
+		}
+	}
+	return groupSkill;
 }
-function battleCanAttack(chara, targerChara){
-	return true;
+function battleCanAttack(charaBelong, charaId, targerChara){
+	var chara = LMvc.BattleController.view.charaLayer.getCharacter(charaBelong, charaId);
+	if(chara == null){
+		var belong;
+		if(charaBelong == Belong.SELF){
+			belong = Belong.FRIEND;
+		}else if(charaBelong == Belong.FRIEND){
+			belong = Belong.SELF;
+		}else{
+			return false;
+		}
+		chara = LMvc.BattleController.view.charaLayer.getCharacter(belong, charaId);
+	}
+	if(chara == null){
+		return false;
+	}
+	return battleCharaInRangeAttack(chara, targerChara);
+}
+function battleCharaInRangeAttack(chara, targerChara){
+	var relativelyX = targerChara.locationX() - chara.locationX();
+	var relativelyY = targerChara.locationY() - chara.locationY();
+	var rangeAttack = chara.data.currentSoldiers().rangeAttack();
+	for(var i=0;i<rangeAttack.length;i++){
+		var range = rangeAttack[i];
+		if(range.x == relativelyX && range.y == relativelyY){
+			return true;
+		}
+	}
+	return false;
 }
