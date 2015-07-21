@@ -26,15 +26,23 @@ BattleCharacterAI.prototype.physicalAttack = function(target) {
 	self.attackTarget = target;
 	target.AI.attackTarget = self.chara;
 	var direction = getDirectionFromTarget(self.chara, target);
-	//TODO::groupSkill
+	
 	if(self.herts === null){
 		if(self.chara.data.id() == BattleController.ctrlChara.data.id()){
 			self.herts = [80,70];
+			var groupSkill = battleCanGroupSkill(self.chara);
+			if(groupSkill){
+				self.chara.groupSkill = groupSkill;
+				self.herts[0] *= 1.5;
+			}
 		}else{
 			self.herts = [60];
 		}	
 	}
-	self.chara.isAngry = true;
+	if(!self.chara.groupSkill){
+		self.chara.isAngry = true;
+		self.herts[0] *= 1.2;
+	}
 	
 	self.chara.setActionDirection(CharacterAction.ATTACK, direction);
 	self.chara.addEventListener(BattleCharacterActionEvent.ATTACK_ACTION_COMPLETE,self.attackActionComplete);

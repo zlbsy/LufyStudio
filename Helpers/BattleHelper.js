@@ -52,3 +52,9 @@ function battleSingleCombatCheck(chara){
 	}
 	LGlobal.script.addScript(script);
 }
+function battleCanGroupSkill(chara){
+	return true;
+}
+function battleCanAttack(chara, targerChara){
+	return true;
+}
