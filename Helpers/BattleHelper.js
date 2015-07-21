@@ -54,6 +54,9 @@ function battleSingleCombatCheck(chara){
 }
 function battleCanGroupSkill(chara){
 	var groupSkill = chara.data.groupSkill();
+	if(!groupSkill){
+		return null;
+	}
 	var group = groupSkill.group();
 	for(var i=0;i<group.length;i++){
 		var charaId = group[i];

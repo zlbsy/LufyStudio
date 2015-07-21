@@ -31,6 +31,7 @@ EffectStrategyView.prototype.toHertTarget = function(anime){
 	anime.removeFrameScript("effect");
 	var target = self.currentCharacter.AI.target;
 	target.toStatic(false);
+	var strategyType = self.currentCharacter.currentSelectStrategy.strategyType();
 	target.changeAction(CharacterAction.HERT);
 	
 	var num = new Num(Num.MIDDLE,1,20);

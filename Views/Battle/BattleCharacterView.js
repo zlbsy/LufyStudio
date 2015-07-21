@@ -90,7 +90,7 @@ BattleCharacterView.prototype.groupSkillExec = function() {
 	var script = "";
 	script += "SGJTalk.show(" + self.data.id() + ",0," + Language.getSkillName(String.format("group_{0}", self.groupSkill.id())) + ");";
 	for (var i = 0; i < group.length; i++) {
-		if(i == self.data.id()){
+		if(group[i] == self.data.id()){
 			continue;
 		}
 		script += "SGJTalk.show(" + group[i] + ",0," + Language.groupSkillTalk() + ");";

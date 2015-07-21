@@ -66,7 +66,7 @@ var StrategyDatas = [
 	rangeAttackTarget:[{x:0,y:0}],
 	explanation:""
 	},
-	{id:3,name:"小风计2",belong:Belong.ENEMY,type:StrategyType.Fire,effectType:StrategyEffectType.Attack,image:"feng-1",
+	{id:3,name:"混乱",belong:Belong.ENEMY,type:StrategyType.Chaos,effectType:StrategyEffectType.Attack,image:"feng-1",
 	icon:"feng_sign",
 	cost:6,
 	hert:0.8,
