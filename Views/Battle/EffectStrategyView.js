@@ -20,16 +20,16 @@ EffectStrategyView.prototype.loadData = function(event){
 	var startPosition = (BattleCharacterSize.width - data.width) * 0.5;
 	var anime = new LAnimationTimeline(new LBitmapData(data), [arr]);
 	anime.setLabel("effect", 0, arr.length * 0.3 >> 0, 1, false);
-	anime.addFrameScript("effect",self.toHertTarget,[]);
+	anime.addFrameScript("effect",self.becomeEffective,[]);
 	anime.addEventListener(LEvent.COMPLETE, self.removeSelf);
 	anime.x = anime.y = startPosition;
 	anime.speed = 1;
 	self.addChild(anime);
 };
-EffectStrategyView.prototype.toHertTarget = function(anime){
+EffectStrategyView.prototype.becomeEffective = function(anime){
 	var self = anime.parent;
 	anime.removeFrameScript("effect");
-	var target = self.currentCharacter.AI.target;
+	var target = self.currentCharacter.AI.attackTarget;
 	target.toStatic(false);
 	var strategyType = self.currentCharacter.currentSelectStrategy.strategyType();
 	target.changeAction(CharacterAction.HERT);
@@ -45,9 +45,11 @@ EffectStrategyView.prototype.toHertTarget = function(anime){
 	}});
 };
 EffectStrategyView.prototype.removeSelf = function(event){
-	var self = event.currentTarget.parent;
+	var anime = event.currentTarget;
+	var self = anime.parent;
+	anime.stop();
 	var chara = self.currentCharacter;
-	var target = chara.AI.target;
+	var target = chara.AI.attackTarget;
 	target.changeAction(CharacterAction.MOVE);
 	
 	chara.changeAction(CharacterAction.STAND);
