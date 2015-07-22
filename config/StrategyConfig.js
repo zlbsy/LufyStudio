@@ -66,7 +66,7 @@ var StrategyDatas = [
 	rangeAttackTarget:[{x:0,y:0}],
 	explanation:""
 	},
-	{id:3,name:"混乱",belong:Belong.ENEMY,type:StrategyType.Chaos,effectType:StrategyEffectType.Attack,image:"chaos-1",
+	{id:3,name:"混乱",belong:Belong.ENEMY,type:StrategyType.Chaos,effectType:StrategyEffectType.Status,image:"chaos-1",
 	icon:"chaos_sign",
 	cost:6,
 	hert:0.8,
@@ -74,7 +74,7 @@ var StrategyDatas = [
 	rangeAttackTarget:[{x:0,y:0}],
 	explanation:""
 	},
-	{id:4,name:"小风计3",belong:Belong.ENEMY,type:StrategyType.Fire,effectType:StrategyEffectType.Attack,image:"feng-1",
+	{id:4,name:"定身",belong:Belong.ENEMY,type:StrategyType.Fixed,effectType:StrategyEffectType.Status,image:"feng-1",
 	icon:"feng_sign",
 	cost:6,
 	hert:0.8,
