@@ -46,7 +46,7 @@ var StrategyType = {
 };
 var StrategyEffectType = {
 	Attack:1,//攻击
-	Defense:2,//防御
+	Status:2,//防御
 	Aid:3//辅助
 };
 var StrategyDatas = [

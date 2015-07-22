@@ -2,6 +2,9 @@ function CharacterStatusView(controller){
 	var self = this;
 	LExtends(self,LView,[controller]);
 	self.status = [];
+	var bitmaoData = new LBitmapData(LMvc.datalist["yellow_ball"]);
+	self.bitmap = new LBitmap(bitmaoData);
+	self.addChild(self.bitmap);
 }
 CharacterStatusView.prototype.addStatus = function(mode){
 	var self = this;

@@ -31,9 +31,26 @@ EffectStrategyView.prototype.becomeEffective = function(anime){
 	anime.removeFrameScript("effect");
 	var target = self.currentCharacter.AI.attackTarget;
 	target.toStatic(false);
-	var strategyType = self.currentCharacter.currentSelectStrategy.strategyType();
-	target.changeAction(CharacterAction.HERT);
 	
+	self.effectType = self.currentCharacter.currentSelectStrategy.effectType();
+	if(self.effectType == StrategyEffectType.Attack){
+		 self.toAttack();
+	}else if(self.effectType == StrategyEffectType.Status){
+		 self.toChangeStatus();
+	}
+	
+};
+EffectStrategyView.prototype.toChangeStatus = function(){
+	var self = this;
+	var target = self.currentCharacter.AI.attackTarget;
+	target.changeAction(CharacterAction.HERT);
+	var strategyType = self.currentCharacter.currentSelectStrategy.strategyType();
+	target.status.addStatus(strategyType);
+};
+EffectStrategyView.prototype.toAttack = function(){
+	var self = this;
+	var target = self.currentCharacter.AI.attackTarget;
+	target.changeAction(CharacterAction.HERT);
 	var num = new Num(Num.MIDDLE,1,20);
 	//TODO::
 	num.setValue(123);
@@ -51,13 +68,13 @@ EffectStrategyView.prototype.removeSelf = function(event){
 	var chara = self.currentCharacter;
 	var target = chara.AI.attackTarget;
 	target.changeAction(CharacterAction.MOVE);
-	
 	chara.changeAction(CharacterAction.STAND);
-	var statusView = new BattleCharacterStatusView(LMvc.BattleController,{character:target,belong:target.belong,changeType:"HP",changeValue:-100});
+	if(self.effectType == StrategyEffectType.Attack){
+		var statusView = new BattleCharacterStatusView(LMvc.BattleController,{character:target,belong:target.belong,changeType:"HP",changeValue:-100});
 	statusView.addEventListener(BattleCharacterStatusEvent.CHANGE_COMPLETE,function(){
-		chara.AI.endAction();
-	});
-	chara.controller.view.baseLayer.addChild(statusView);
-	
+			chara.AI.endAction();
+		});
+		chara.controller.view.baseLayer.addChild(statusView);
+	}
 	self.remove();
 };
