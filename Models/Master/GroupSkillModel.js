@@ -35,6 +35,9 @@ GroupSkillModel.prototype.name=function(){
 GroupSkillModel.prototype.probability=function(){
 	return this.data.probability;
 };
+GroupSkillModel.prototype.correctionFactor=function(){
+	return this.data.correctionFactor;
+};
 GroupSkillModel.prototype.group=function(){
 	return this.data.group;
 };

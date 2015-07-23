@@ -36,7 +36,10 @@ var StrategyType = {
 	Wind:2,//风
 	Warter:3,//水
 	Earth:4,//地
-	Aid:5,//升降能力
+	AttackUp:3,//攻击上升
+	AttackDown:3,//攻击下降
+	AttackUp:3,//攻击上升
+	AttackUp:3,//攻击上升
 	Poison:6,//毒
 	Fixed:7,//定身
 	Chaos:8,//混乱
@@ -47,7 +50,7 @@ var StrategyType = {
 var StrategyEffectType = {
 	Attack:1,//攻击
 	Status:2,//防御
-	Aid:3//辅助
+	Aid:5//升降能力
 };
 var StrategyDatas = [
 	{id:1,name:"小火计",belong:Belong.ENEMY,type:StrategyType.Fire,effectType:StrategyEffectType.Attack,image:"h1",

@@ -26,22 +26,26 @@ BattleCharacterAI.prototype.physicalAttack = function(target) {
 	self.attackTarget = target;
 	target.AI.attackTarget = self.chara;
 	var direction = getDirectionFromTarget(self.chara, target);
-	
 	if(self.herts === null){
 		if(self.chara.data.id() == BattleController.ctrlChara.data.id()){
-			self.herts = [80,70];
+			var doubleAtt = calculateDoubleAtt(self.chara.data, target.data);
+			var length = doubleAtt ? 2 : 1;
+			self.herts = [];
+			for(var i=0;i<length;i++){
+				self.herts.push(calculateHertValue(self.chara, target, 1));
+			}
 			var groupSkill = battleCanGroupSkill(self.chara);
 			if(groupSkill){
 				self.chara.groupSkill = groupSkill;
-				self.herts[0] *= 1.5;
+				self.herts[0] = self.herts[0] * groupSkill.correctionFactor() >>> 0;
 			}
 		}else{
-			self.herts = [60];
+			self.herts = [calculateHertValue(self.chara, target, 0.75)];
 		}	
 	}
-	if(!self.chara.groupSkill){
+	if(!self.chara.groupSkill && calculateFatalAtt(self.chara.data, target.data)){
 		self.chara.isAngry = true;
-		self.herts[0] *= 1.2;
+		self.herts[0] = self.herts[0] * 1.25 >>> 0;
 	}
 	
 	self.chara.setActionDirection(CharacterAction.ATTACK, direction);
@@ -65,19 +69,33 @@ BattleCharacterAI.prototype.attackActionComplete = function(event) {
 	chara.removeEventListener(BattleCharacterActionEvent.ATTACK_ACTION_COMPLETE,self.attackActionComplete);
 	chara.changeAction(chara.data.id() == BattleController.ctrlChara.data.id() ? CharacterAction.STAND : CharacterAction.MOVE);
 	self.attackTarget.toStatic(false);
-	var num = new Num(Num.MIDDLE,1,20);
-	//TODO::
-	num.setValue(self.herts[0]);
-	self.herts.shift();
-	num.x = self.attackTarget.x;
-	num.y = self.attackTarget.y;
-	chara.controller.view.baseLayer.addChild(num);
-	LTweenLite.to(num,0.5,{y:num.y - 20,alpha:0,onComplete:function(obj){
-		obj.remove();
-	}});
-	
-	self.attackTarget.changeAction(CharacterAction.HERT);
-	self.attackTarget.addEventListener(BattleCharacterActionEvent.HERT_ACTION_COMPLETE,self.attackTarget.AI.hertActionComplete);
+	var hitrate = calculateHitrate(chara,self.attackTarget);
+	if(hitrate){
+		var num = new Num(Num.MIDDLE,1,20);
+		num.setValue(self.herts[0]);
+		self.herts.shift();
+		num.x = self.attackTarget.x;
+		num.y = self.attackTarget.y;
+		chara.controller.view.baseLayer.addChild(num);
+		LTweenLite.to(num,0.5,{y:num.y - 20,alpha:0,onComplete:function(obj){
+			obj.remove();
+		}});
+		self.attackTarget.changeAction(CharacterAction.HERT);
+		self.attackTarget.addEventListener(BattleCharacterActionEvent.HERT_ACTION_COMPLETE,self.attackTarget.AI.hertActionComplete);
+	}else{
+		self.attackTarget.changeAction(CharacterAction.BLOCK);
+		self.attackTarget.addEventListener(BattleCharacterActionEvent.BLOCK_ACTION_COMPLETE,self.attackTarget.AI.blockActionComplete);
+	}
+};
+BattleCharacterAI.prototype.blockActionComplete = function(event) {
+	var chara = event.currentTarget;
+	var self = chara.AI;
+	chara.removeEventListener(BattleCharacterActionEvent.BLOCK_ACTION_COMPLETE,self.hertActionComplete);
+	chara.changeAction(CharacterAction.STAND);
+	var statusView = new BattleCharacterStatusView(self.controller,{character:chara,belong:chara.belong,changeType:BattleCharacterStatusView.HP,changeValue:-100});
+	statusView.addEventListener(BattleCharacterStatusEvent.CHANGE_COMPLETE,self.plusExp);
+	//chara.addEventListener(BattleCharacterActionEvent.COUNTER_ATTACK,self.counterAttack);
+	chara.controller.view.baseLayer.addChild(statusView);
 };
 BattleCharacterAI.prototype.hertActionComplete = function(event) {
 	var chara = event.currentTarget;

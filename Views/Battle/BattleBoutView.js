@@ -20,28 +20,17 @@ BattleBoutView.prototype.set=function(belong){
 	LTweenLite.to(belongLayer,1,{x:LGlobal.width * 0.5,ease:Elastic.easeOut}) 
 	.to(belongLayer,1,{delay:0.5,x:LGlobal.width * 1.5,ease:Quint.easeOut,onComplete:function(){
     	self.remove();
-    }});  
-    return;
-	belongLayer.scaleX = 0.1;
-	belongLayer.scaleY = 0.1;
-	LTweenLite.to(belongLayer,1,{scaleX:1,scaleY:1,ease:Elastic.easeOut,onComplete:function(){
-    	self.remove();
-    }});  
-    return;
-	belongLayer.alpha = 0;
-	belongLayer.scaleX = 2;
-	belongLayer.scaleY = 2;
-	LTweenLite.to(belongLayer,0.5,{alpha:1,scaleX:1.6,scaleY:1.6})  
-    .to(belongLayer,1,{scaleX:1,scaleY:1,ease:Elastic.easeOut,onComplete:function(){
-    	self.remove();
-    }});  
+    }}); 
 };
 BattleBoutView.prototype.setBout=function(){
 	var self = this;
 	var boutLayer = new LSprite();
 	boutLayer.x = LGlobal.width * 1.5;
 	boutLayer.y = LGlobal.height * 0.5 + 40;
-	var boutLabel = getLabelWindow("第1回合", 30, 200, 60);
+	var bout = self.controller.getValue("bout");
+	bout++;
+	self.controller.setValue("bout",bout);
+	var boutLabel = getLabelWindow(String.format("第{0}回合",bout), 30, 200, 60);
 	boutLabel.x = -boutLabel.getWidth() * 0.5;
 	boutLabel.y = -boutLabel.getHeight() * 0.5;
 	boutLayer.addChild(boutLabel);

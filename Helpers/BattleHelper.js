@@ -99,3 +99,9 @@ function battleCharaInRangeAttack(chara, targerChara){
 	}
 	return false;
 }
+function battleCharacterStatusUpdate(belong){
+	var charas = LMvc.BattleController.view.charaLayer.getCharactersFromBelong(belong);
+	for(var i=0,l=charas.length;i<l;i++){
+		charas[i].status.removeStatus();
+	}
+}

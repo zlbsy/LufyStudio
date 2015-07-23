@@ -50,6 +50,12 @@ SoldierMasterModel.prototype.property = function() {
 SoldierMasterModel.prototype.equipment = function() {
 	return this.data.equipment;
 };
+SoldierMasterModel.prototype.strategyHert = function() {
+	if(!this.data.strategyHert){
+		this.data.strategyHert = 1;
+	}
+	return this.data.strategyHert;
+};
 SoldierMasterModel.prototype.restrain = function(restrainId) {
 	if(!self._restrain){
 		self._restrain = [];

@@ -19,6 +19,7 @@ var EnlistSetting = {
 	rangeAttack:攻击距离,
 	rangeAttackTarget:攻击范围,
 	strategy:策略[{id:策略id,lv:需要等级}],
+	strategyHert:策略伤害系数
 	explanation:详解
 	}*/
 var SoldierDatas = [
@@ -30,6 +31,7 @@ var SoldierDatas = [
 	rangeAttack:[{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0}],
 	rangeAttackTarget:[{x:0,y:0}],
 	strategy:[{id:2,lv:0},{id:3,lv:0},{id:4,lv:0},{id:5,lv:0},{id:6,lv:0},{id:7,lv:0},{id:8,lv:0},{id:9,lv:0},{id:10,lv:0}],
+	strategyHert:1,
 	explanation:"explanation_yx",img:1,enlistPrice:500,
 	next:[{id:2,lv:20}]
 	},
@@ -41,6 +43,7 @@ var SoldierDatas = [
 	rangeAttack:[{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0}],
 	rangeAttackTarget:[{x:0,y:0}],
 	strategy:[{id:2,lv:0},{id:3,lv:3}],
+	strategyHert:1,
 	explanation:"explanation_yx",img:1,enlistPrice:500,
 	next:[{id:3,lv:40}]
 	},
@@ -52,6 +55,7 @@ var SoldierDatas = [
 	rangeAttack:[{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0}],
 	rangeAttackTarget:[{x:0,y:0}],
 	strategy:[{id:2,lv:0},{id:3,lv:3}],
+	strategyHert:1,
 	explanation:"explanation_yx"
 	},
 	{id:4,name:"轻步兵",type:SoldierType.Physical,moveType:MoveType.CAVALRY,movePower:5,
@@ -62,6 +66,7 @@ var SoldierDatas = [
 	rangeAttack:[{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0}],
 	rangeAttackTarget:[{x:0,y:0}],
 	strategy:[{id:2,lv:0},{id:3,lv:3}],
+	strategyHert:1,
 	explanation:"explanation_yx",img:1,enlistPrice:500,
 	next:[{id:5,lv:20}]
 	},
@@ -73,6 +78,7 @@ var SoldierDatas = [
 	rangeAttack:[{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0}],
 	rangeAttackTarget:[{x:0,y:0}],
 	strategy:[{id:2,lv:0},{id:3,lv:3}],
+	strategyHert:1,
 	explanation:"explanation_yx",img:1,enlistPrice:500,
 	next:[{id:6,lv:40}]
 	},
