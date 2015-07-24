@@ -6406,6 +6406,62 @@ var LTweenLite = (function () {
 	LGlobal.childList.push(tween);
 	return tween;
 })();
+/*
+delay:Number — 计时器事件间的延迟（以毫秒为单位）。建议 delay 不要低于 20 毫秒。计时器频率不得超过 60 帧/秒，这意味着低于 16.6 毫秒的延迟可导致出现运行时问题。
+ 
+repeatCount:int (default = 0) — 指定重复次数。如果为零，则计时器将持续不断重复运行，最长可运行 24.86 天 (int.MAX_VALUE + 1)。如果不为 0，则将运行计时器，运行次数为指定的次数，然后停止。
+
+var myTimer:Timer = new Timer(delay, repeat);
+myTimer.start(); 
+myTimer.addEventListener(TimerEvent.TIMER, timerHandler);
+myTimer.addEventListener(TimerEvent.TIMER_COMPLETE, completeHandler);
+reset()
+stop()
+*/
+var LTimer = (function () {
+	function LTimer(delay, repeat) {
+		var s = this;
+		LExtends (s, LObject, []);
+		s.type = "LTimer";
+		s.delay = delay;
+		s.repeat = repeat ? repeat : int.MAX_VALUE;
+	}
+	p = {
+		start : function(){
+			this.ll_stop = false;
+		},
+		stop : function(){
+			this.ll_stop = true;
+		},
+		reset : function(){
+			var s = this;
+			s.currentTime = 0;
+			s.count = 0;
+			//s.duration *= 1000;
+			s.currentTime -= s.delay * 1000;
+			s.stop();
+		},
+		ll_show : function(){
+			var s = this;
+			if(s.ll_stop || s.count >= s.repeat){
+				return;
+			}
+			s.currentTime += LGlobal.speed;
+			if (s.currentTime < s.duration) {
+				return;
+			}
+			s.dispatchEvent(TimerEvent.TIMER);
+			s.count++;
+			if(s.count >= s.repeat){
+				s.dispatchEvent(TimerEvent.TIMER_COMPLETE);
+			}
+		}
+	}; 
+	for (var k in p) {
+		LTimer.prototype[k] = p[k];
+	}
+	return LTimer;
+})();
 var LAjax = (function () {
 	function LAjax () {
 		this.responseType = null;
