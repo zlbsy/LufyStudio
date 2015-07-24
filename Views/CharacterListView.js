@@ -278,7 +278,7 @@ CharacterListView.prototype.onClickSortButton=function(event){
 	self.sortType = event.target.name;
 	switch(event.target.name){
 		case "city":
-		break
+			break;
 		default:
 			self.listChildLayer.childList = self.listChildLayer.childList.sort(function(a,b){
 				var va = a.charaModel[self.sortType]();
