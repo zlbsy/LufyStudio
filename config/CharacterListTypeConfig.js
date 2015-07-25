@@ -12,4 +12,6 @@ CharacterListType.CHARACTER_HIRE = "generals_hire";//派谁去登用
 CharacterListType.EXPEDITION = "expedition";//出征
 CharacterListType.SELECT_LEADER = "select_leader";//出征
 
+CharacterListType.BATTLE_SINGLE = "battle_single";//出征
+
 CharacterListType.TEST = "test";

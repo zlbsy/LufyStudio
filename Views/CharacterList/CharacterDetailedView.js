@@ -51,6 +51,7 @@ CharacterDetailedView.prototype.set=function(characterModel){
 	self.faceH = faceH;
 	self.characterModel = characterModel;
 	self.layerInit();
+	//alert("CharacterDetailedView.prototype.set");
 	var win = new LPanel(new LBitmapData(LMvc.datalist["win05"]),faceW + 10,faceH + 10);
 	win.x = (LGlobal.width - faceW - 10) * 0.5;
 	win.y = 10;

@@ -62,7 +62,15 @@ BattleController.prototype.showCharacterDetailed = function(){
 	}
 	self.view.baseLayer.stopDrag();
 	self.draging = false;
-	console.log(chara);
+	self.currentCharacter = chara;
+	self.loadMvc(["CharacterList"],self.showCharacterDetailedView);
+};
+BattleController.prototype.showCharacterDetailedView=function(){
+	var self = this;
+	//var chara = self.currentCharacter;
+	//self.currentCharacter = null;
+	var charaList = new CharacterListController(CharacterListType.BATTLE_SINGLE, self);
+	self.view.parent.addChild(charaList.view);
 };
 BattleController.prototype.init = function(){
 	var self = this;

@@ -14,7 +14,15 @@ CharacterListView.prototype.init=function(){
 	self.addChild(self.listLayer);
 	self.charaDetailedLayer = new LSprite();
 	self.addChild(self.charaDetailedLayer);
-	self.listInit();
+	switch(self.controller.characterListType){
+		case CharacterListType.BATTLE_SINGLE:
+			var chara = self.controller.fromController.currentCharacter;
+			//alert("BATTLE_SINGLE = "+chara);
+			self.showCharacterDetailed(chara.data);
+			break;
+		default:
+			self.listInit();
+	}
 };
 CharacterListView.prototype.listInit=function(){
 	var self = this;
@@ -371,6 +379,9 @@ CharacterListView.prototype.showCharacterDetailed=function(characterModel){
 	var self = this;
 	var characterDetailed = new CharacterDetailedView(self.controller, characterModel);
 	self.charaDetailedLayer.addChild(characterDetailed);
+	if(!self.listChildLayer){
+		return;
+	}
 	self.listChildLayer.visible = false;
 };
 CharacterListView.prototype.showCharacterList=function(){
