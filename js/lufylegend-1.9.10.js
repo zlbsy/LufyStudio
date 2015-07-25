@@ -6411,13 +6411,16 @@ delay:Number — 计时器事件间的延迟（以毫秒为单位）。建议 de
  
 repeatCount:int (default = 0) — 指定重复次数。如果为零，则计时器将持续不断重复运行，最长可运行 24.86 天 (int.MAX_VALUE + 1)。如果不为 0，则将运行计时器，运行次数为指定的次数，然后停止。
 
-var myTimer:Timer = new Timer(delay, repeat);
+var myTimer = new LTimer(2, 4);
 myTimer.start(); 
-myTimer.addEventListener(TimerEvent.TIMER, timerHandler);
-myTimer.addEventListener(TimerEvent.TIMER_COMPLETE, completeHandler);
+myTimer.addEventListener(LTimerEvent.TIMER, function(){console.log("timer");});
+myTimer.addEventListener(LTimerEvent.TIMER_COMPLETE, function(){console.log("timerComplete");});
 reset()
 stop()
 */
+var LTimerEvent = function (){throw "LTimerEvent cannot be instantiated";};
+LTimerEvent.TIMER = "timer";
+LTimerEvent.TIMER_COMPLETE = "timerComplete";
 var LTimer = (function () {
 	function LTimer(delay, repeat) {
 		var s = this;
@@ -6426,7 +6429,37 @@ var LTimer = (function () {
 		s.delay = delay;
 		s.repeatCount = repeat ? repeat : int.MAX_VALUE;
 		s.reset();
+		LTimer.TimerManager.add(s);
 	}
+	LTimer.TimerManager = (function(){
+		function TimerManager(){
+			this.childList = [];
+		}
+		TimerManager.prototype = {
+			ll_show : function(){
+				var s = this, d;
+				for(var i = 0;i<s.childList.length;i++){
+					d = s.childList[i];
+					if(d){
+						d.ll_show();
+					}
+				}
+			},
+			add : function(child){
+				this.childList.push(child);
+			},
+			remove : function(d){
+				var s  = this, c = s.childList, i, l;
+				for (i = 0, l = c.length; i < l; i++) {
+					if (d.objectIndex == c[i].objectIndex) {
+						s.childList.splice(i, 1);
+						break;
+					}
+				}
+			}
+		};
+		return new TimerManager();
+	})();
 	p = {
 		start : function(){
 			this.ll_stop = false;
@@ -6440,6 +6473,9 @@ var LTimer = (function () {
 			s.currentCount = 0;
 			s.stop();
 		},
+		destroy : function(){
+			LTimer.TimerManager.remove(this);
+		},
 		ll_show : function(){
 			var s = this;
 			if(s.ll_stop || s.currentCount >= s.repeat){
@@ -6451,15 +6487,16 @@ var LTimer = (function () {
 			}
 			s.currentTime = 0;
 			s.currentCount++;
-			s.dispatchEvent(TimerEvent.TIMER);
+			s.dispatchEvent(LTimerEvent.TIMER);
 			if(s.currentCount >= s.repeatCount){
-				s.dispatchEvent(TimerEvent.TIMER_COMPLETE);
+				s.dispatchEvent(LTimerEvent.TIMER_COMPLETE);
 			}
 		}
-	}; 
+	};
 	for (var k in p) {
 		LTimer.prototype[k] = p[k];
 	}
+	LGlobal.childList.push(LTimer.TimerManager);
 	return LTimer;
 })();
 var LAjax = (function () {
