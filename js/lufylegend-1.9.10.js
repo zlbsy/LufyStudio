@@ -6421,10 +6421,11 @@ stop()
 var LTimer = (function () {
 	function LTimer(delay, repeat) {
 		var s = this;
-		LExtends (s, LObject, []);
+		LExtends (s, LEventDispatcher, []);
 		s.type = "LTimer";
 		s.delay = delay;
-		s.repeat = repeat ? repeat : int.MAX_VALUE;
+		s.repeatCount = repeat ? repeat : int.MAX_VALUE;
+		s.reset();
 	}
 	p = {
 		start : function(){
@@ -6436,23 +6437,22 @@ var LTimer = (function () {
 		reset : function(){
 			var s = this;
 			s.currentTime = 0;
-			s.count = 0;
-			//s.duration *= 1000;
-			s.currentTime -= s.delay * 1000;
+			s.currentCount = 0;
 			s.stop();
 		},
 		ll_show : function(){
 			var s = this;
-			if(s.ll_stop || s.count >= s.repeat){
+			if(s.ll_stop || s.currentCount >= s.repeat){
 				return;
 			}
 			s.currentTime += LGlobal.speed;
-			if (s.currentTime < s.duration) {
+			if (s.currentTime < s.delay) {
 				return;
 			}
+			s.currentTime = 0;
+			s.currentCount++;
 			s.dispatchEvent(TimerEvent.TIMER);
-			s.count++;
-			if(s.count >= s.repeat){
+			if(s.currentCount >= s.repeatCount){
 				s.dispatchEvent(TimerEvent.TIMER_COMPLETE);
 			}
 		}
