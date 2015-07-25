@@ -48,6 +48,22 @@ BattleController.prototype.globalFilesLoad = function(){
 	var list = self.model.getImages();
 	self.load.image(list,self.init);
 };
+BattleController.prototype.showCharacterDetailed = function(){
+	var self = LMvc.BattleController;
+	if(self == null){
+		return;
+	}
+	if(Math.abs(self.downX - mouseX) > 12 || Math.abs(self.downY - mouseY) > 12){
+		return;
+	}
+	var chara = self.view.charaLayer.getCharacterFromCoordinate(self.downX, self.downY);
+	if(!chara){
+		return;
+	}
+	self.view.baseLayer.stopDrag();
+	self.draging = false;
+	console.log(chara);
+};
 BattleController.prototype.init = function(){
 	var self = this;
 	SoldierMasterModel.setMaster(SoldierDatas);
@@ -59,6 +75,12 @@ BattleController.prototype.init = function(){
 	LMvc.CityController = null;
 	LMvc.BattleController = self;
 	console.log("BattleController.prototype.init -- start --");
+	if(!BattleController.timer){
+		BattleController.timer = new LTimer(1000, 1);
+	}
+	BattleController.timer.removeAllEventListener();
+	BattleController.timer.addEventListener(LTimerEvent.TIMER, self.showCharacterDetailed);
+
 	self.dispatchEvent(LEvent.COMPLETE);
 	self.dispatchEvent(LController.NOTIFY);
 	for(var i = 1;i<16;i++){
@@ -114,7 +136,12 @@ BattleController.prototype.mapMouseUp = function(event){
 		return;
 	}
 	var self = event.currentTarget.parent.controller;
+	if(!self.draging){
+		return;
+	}
+	self.draging = false;
 	event.currentTarget.stopDrag();
+	BattleController.timer.stop();
 	if(Math.abs(self.downX - event.offsetX) > 12 || Math.abs(self.downY - event.offsetY) > 12){
 		return;
 	}
@@ -141,6 +168,9 @@ BattleController.prototype.mapMouseDown = function(event){
 	self.downX = event.offsetX;
 	self.downY = event.offsetY;
 	event.currentTarget.startDrag(event.touchPointID);
+	self.draging = true;
+	BattleController.timer.reset();
+	BattleController.timer.start();
 };
 BattleController.prototype.singleCombat = function(event){
 	var self = event.currentTarget.parent.controller;

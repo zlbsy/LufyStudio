@@ -6478,7 +6478,7 @@ var LTimer = (function () {
 		},
 		ll_show : function(){
 			var s = this;
-			if(s.ll_stop || s.currentCount >= s.repeat){
+			if(s.ll_stop || s.currentCount >= s.repeatCount){
 				return;
 			}
 			s.currentTime += LGlobal.speed;
