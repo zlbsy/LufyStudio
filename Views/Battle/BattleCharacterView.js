@@ -6,7 +6,7 @@ function BattleCharacterView(controller, id, w, h) {
 	self.belong = null;
 	if(controller.constructor.name == "BattleController"){
 		self.AI = new BattleCharacterAI(self);
-		self.status = new CharacterStatusView(null);
+		self.status = new CharacterStatusIconView(null);
 		self.addChild(self.status);
 	}
 	self.addShape(LShape.RECT,[0,0,BattleCharacterSize.width,BattleCharacterSize.height]);

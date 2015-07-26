@@ -387,5 +387,10 @@ CharacterListView.prototype.showCharacterDetailed=function(characterModel){
 CharacterListView.prototype.showCharacterList=function(){
 	var self = this;
 	self.charaDetailedLayer.removeAllChild();
+	switch(self.controller.characterListType){
+		case CharacterListType.BATTLE_SINGLE:
+		self.remove();
+		return;
+	}
 	self.listChildLayer.visible = true;
 };

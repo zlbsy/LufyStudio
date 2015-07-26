@@ -36,7 +36,8 @@ BattleController.prototype.viewLoad=function(){
 	var self = this;
 	self.load.view(["Battle/Background","Battle/BattleMiniPreview","Battle/BattleMap","Common/Character",
 	"Battle/BattleCharacterLayer","Battle/BattleCharacter","Battle/BattleRoad","Battle/BattleCharacterStatus",
-	"Strategy/Strategy","Strategy/StrategyChild","Battle/EffectStrategy","Battle/BattleMainMenu","Battle/BattleBout","Battle/CharacterStatus"],self.addMap);
+	"Strategy/Strategy","Strategy/StrategyChild","Battle/EffectStrategy","Battle/BattleMainMenu","Battle/BattleBout",
+	"Battle/CharacterStatusIcon"],self.addMap);
 };
 BattleController.prototype.addMap=function(){
 	var self = this;
@@ -173,6 +174,9 @@ BattleController.prototype.mapMouseDown = function(event){
 		return;
 	}
 	var self = event.currentTarget.parent.controller;
+	if(self.getValue("currentBelong") != Belong.SELF){
+		return;
+	}
 	self.downX = event.offsetX;
 	self.downY = event.offsetY;
 	event.currentTarget.startDrag(event.touchPointID);

@@ -1,4 +1,4 @@
-function CharacterStatusView(controller){
+function CharacterStatusIconView(controller){
 	var self = this;
 	LExtends(self,LView,[controller]);
 	self.status = [];
@@ -16,7 +16,7 @@ function CharacterStatusView(controller){
 	self.index = 0;
 	self.addEventListener(LEvent.ENTER_FRAME,self.onframe);
 }
-CharacterStatusView.prototype.onframe = function(event){
+CharacterStatusIconView.prototype.onframe = function(event){
 	var self = event.currentTarget;
 	if(self.status.length == 0 || self.speedIndex++ < self.speed){
 		return;
@@ -28,7 +28,7 @@ CharacterStatusView.prototype.onframe = function(event){
 	var status = self.status[self.index++];
 	self.bitmap.bitmapData.setCoordinate(self.statusPositions[status.mode] * 16, 0);
 };
-CharacterStatusView.prototype.addStatus = function(mode){
+CharacterStatusIconView.prototype.addStatus = function(mode){
 	var self = this;
 	//{mode:??,p:0.1}
 	for(var i = 0;i<self.status.length;i++){
@@ -44,7 +44,7 @@ CharacterStatusView.prototype.addStatus = function(mode){
 	self.bitmap.bitmapData.setCoordinate(self.statusPositions[mode] * 16, 0);
 	self.bitmap.visible = true;
 };
-CharacterStatusView.prototype.removeStatus = function(){
+CharacterStatusIconView.prototype.removeStatus = function(){
 	var self = this;
 	if(self.status.length == 0){
 		return;
@@ -61,7 +61,7 @@ CharacterStatusView.prototype.removeStatus = function(){
 		self.bitmap.visible = false;
 	}
 };
-CharacterStatusView.prototype.hasStatus = function(mode){
+CharacterStatusIconView.prototype.hasStatus = function(mode){
 	var status = this.status.find(function(child){
 		return child.mode == mode;
 	});
