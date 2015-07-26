@@ -36,10 +36,10 @@ var StrategyType = {
 	Wind:2,//风
 	Warter:3,//水
 	Earth:4,//地
-	AttackUp:3,//攻击上升
-	AttackDown:3,//攻击下降
-	AttackUp:3,//攻击上升
-	AttackUp:3,//攻击上升
+	AttackUp:5,//攻击上升
+	AttackDown:6,//攻击下降
+	DefenseUp:7,//攻击上升
+	AttackUp:8,//攻击上升
 	Poison:6,//毒
 	Fixed:7,//定身
 	Chaos:8,//混乱
