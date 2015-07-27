@@ -2,6 +2,7 @@ function CharacterStatusIconView(controller){
 	var self = this;
 	LExtends(self,LView,[controller]);
 	self.status = [];
+	self.aidStatus = [];
 	self.statusPositions = {};
 	self.statusPositions[StrategyType.Chaos] = 0;
 	self.statusPositions[StrategyType.Poison] = 1;
@@ -28,42 +29,87 @@ CharacterStatusIconView.prototype.onframe = function(event){
 	var status = self.status[self.index++];
 	self.bitmap.bitmapData.setCoordinate(self.statusPositions[status.mode] * 16, 0);
 };
-CharacterStatusIconView.prototype.addStatus = function(mode){
-	var self = this;
+CharacterStatusIconView.prototype.addStatus = function(mode,value){
+	var self = this, status, isAid = false;
+	if(typeof self.statusPositions[mode] == UNDEFINED){
+		status = self.aidStatus;
+		isAid = true;
+	}else{
+		status = self.status;
+	}
 	//{mode:??,p:0.1}
-	for(var i = 0;i<self.status.length;i++){
-		var child = self.status[i];
+	for(var i = 0;i<status.length;i++){
+		var child = status[i];
 		if(child.mode == mode){
-			child.p = 0.1;
-			self.index = i;
-			self.speedIndex = self.speed;
+			self.updateStatus(child, isAid, value, i);
 			return;
 		}
 	}
-	self.status.push({mode:mode,p:0.1});
-	self.bitmap.bitmapData.setCoordinate(self.statusPositions[mode] * 16, 0);
-	self.bitmap.visible = true;
-};
-CharacterStatusIconView.prototype.removeStatus = function(){
-	var self = this;
-	if(self.status.length == 0){
+	status.push({mode:mode, p:0.1, value:value});
+	if(isAid){
 		return;
 	}
-	for(var i = self.status.length-1;i>=0;i--){
+	self.bitmap.bitmapData.setCoordinate(self.statusPositions[mode] * 16, 0);
+	self.bitmap.visible = true;
+	self.index = status.length - 1;
+	self.speedIndex = self.speed;
+};
+CharacterStatusIconView.prototype.updateStatus = function(child, isAid, value, index){
+	var self = this;
+	child.p = 0.1;
+	if(!isAid){
+		self.index = index;
+		self.speedIndex = self.speed;
+		return;
+	}
+	if(child.value != value){
+		self.aidStatus.splice(index, 1)
+	}
+};
+CharacterStatusIconView.prototype.removeStatus = function(status){
+	var self = this;
+	if(!status){
+		self.removeStatus(self.status);
+		self.removeStatus(self.aidStatus);
+		if(self.status.length == 0){
+			self.bitmap.visible = false;
+		}
+		return;
+	}
+	if(status.length == 0){
+		return;
+	}
+	for(var i = status.length-1;i>=0;i--){
 		var child = self.status[i];
 		if(Math.random() < child.p){
-			self.status.splice(i, 1);
+			status.splice(i, 1);
 		}else{
 			child.p += (child.p < 0.5 ? 0.1 : 0);
 		}
 	}
-	if(self.status.length == 0){
-		self.bitmap.visible = false;
-	}
 };
 CharacterStatusIconView.prototype.hasStatus = function(mode){
-	var status = this.status.find(function(child){
+	var self = this;
+	if(typeof self.statusPositions[mode] == UNDEFINED){
+		status = self.aidStatus;
+	}else{
+		status = self.status;
+	}
+	var status = status.find(function(child){
 		return child.mode == mode;
 	});
 	return status != null;
+};
+CharacterStatusIconView.prototype.statusLabel = function(){
+	var self = this, label = [];
+	for(var i = 0;i<self.status.length;i++){
+		label.push(Language.get(self.status[i])); 
+	}
+	for(var i = 0;i<self.aidStatus.length;i++){
+		label.push(Language.get(self.aidStatus[i])); 
+	}
+	if(label.length == 0){
+		return "";
+	}
+	return label.join(",");
 };

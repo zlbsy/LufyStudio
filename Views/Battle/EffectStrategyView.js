@@ -37,10 +37,19 @@ EffectStrategyView.prototype.becomeEffective = function(anime){
 		 self.toAttack();
 	}else if(self.effectType == StrategyEffectType.Status){
 		 self.toChangeStatus();
+	}else if(self.effectType == StrategyEffectType.Aid){
+		 self.toChangeAidStatus();
 	}
 	
 };
 EffectStrategyView.prototype.toChangeStatus = function(){
+	var self = this;
+	var target = self.currentCharacter.AI.attackTarget;
+	target.changeAction(CharacterAction.HERT);
+	var strategyType = self.currentCharacter.currentSelectStrategy.strategyType();
+	target.status.addStatus(strategyType);
+};
+EffectStrategyView.prototype.toChangeAidStatus = function(){
 	var self = this;
 	var target = self.currentCharacter.AI.attackTarget;
 	target.changeAction(CharacterAction.HERT);

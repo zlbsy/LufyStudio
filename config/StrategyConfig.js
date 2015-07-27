@@ -36,21 +36,22 @@ var StrategyType = {
 	Wind:2,//风
 	Warter:3,//水
 	Earth:4,//地
-	AttackUp:5,//攻击上升
-	AttackDown:6,//攻击下降
-	DefenseUp:7,//攻击上升
-	AttackUp:8,//攻击上升
-	Poison:6,//毒
-	Fixed:7,//定身
-	Chaos:8,//混乱
-	BanIncantation:9,//禁咒
-	Wake:10,//觉醒
-	Supply:11//补给
+	AttackAid:5,//攻击变化
+	DefenseAid:6,//防御变化
+	ApiritAid:7,//精神变化
+	BreakoutAid:8,//暴发变化
+	MoraleAid:9,//士气变化
+	Poison:10,//毒
+	Fixed:11,//定身
+	Chaos:12,//混乱
+	BanIncantation:13,//禁咒
+	Wake:14,//觉醒
+	Supply:15//补给
 };
 var StrategyEffectType = {
 	Attack:1,//攻击
-	Status:2,//防御
-	Aid:5//升降能力
+	Status:2,//异常状态
+	Aid:3//升降能力
 };
 var StrategyDatas = [
 	{id:1,name:"小火计",belong:Belong.ENEMY,type:StrategyType.Fire,effectType:StrategyEffectType.Attack,image:"h1",
@@ -85,7 +86,7 @@ var StrategyDatas = [
 	rangeAttackTarget:[{x:0,y:0}],
 	explanation:""
 	},
-	{id:5,name:"小风计4",belong:Belong.ENEMY,type:StrategyType.Fire,effectType:StrategyEffectType.Attack,image:"feng-1",
+	{id:5,name:"加攻",belong:Belong.ENEMY,type:StrategyType.AttackAid,effectType:StrategyEffectType.Aid,image:"feng-1",
 	icon:"feng_sign",
 	cost:6,
 	hert:0.8,
