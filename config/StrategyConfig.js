@@ -48,6 +48,11 @@ var StrategyType = {
 	Wake:14,//觉醒
 	Supply:15//补给
 };
+var StrategyTypeToString = {};
+for(var key in StrategyType){
+	StrategyTypeToString[StrategyType[key]] = "status_" + key;
+}
+
 var StrategyEffectType = {
 	Attack:1,//攻击
 	Status:2,//异常状态
@@ -86,19 +91,19 @@ var StrategyDatas = [
 	rangeAttackTarget:[{x:0,y:0}],
 	explanation:""
 	},
-	{id:5,name:"加攻",belong:Belong.ENEMY,type:StrategyType.AttackAid,effectType:StrategyEffectType.Aid,image:"feng-1",
+	{id:5,name:"加攻",belong:Belong.SELF,type:StrategyType.AttackAid,effectType:StrategyEffectType.Aid,image:"feng-1",
 	icon:"feng_sign",
 	cost:6,
-	hert:0.8,
-	rangeAttack:[{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0}],
+	hert:0.2,
+	rangeAttack:[{x:0,y:-1},{x:0,y:-2},{x:0,y:-3},{x:0,y:1},{x:0,y:2},{x:0,y:3},{x:-1,y:0},{x:-2,y:0},{x:-3,y:0},{x:1,y:0},{x:2,y:0},{x:3,y:0}],
 	rangeAttackTarget:[{x:0,y:0}],
 	explanation:""
 	},
-	{id:6,name:"小风计5",belong:Belong.ENEMY,type:StrategyType.Fire,effectType:StrategyEffectType.Attack,image:"feng-1",
+	{id:6,name:"降攻",belong:Belong.ENEMY,type:StrategyType.AttackAid,effectType:StrategyEffectType.Aid,image:"feng-1",
 	icon:"feng_sign",
 	cost:6,
-	hert:0.8,
-	rangeAttack:[{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0}],
+	hert:-0.2,
+	rangeAttack:[{x:0,y:-1},{x:0,y:-2},{x:0,y:-3},{x:0,y:1},{x:0,y:2},{x:0,y:3},{x:-1,y:0},{x:-2,y:0},{x:-3,y:0},{x:1,y:0},{x:2,y:0},{x:3,y:0}],
 	rangeAttackTarget:[{x:0,y:0}],
 	explanation:""
 	},

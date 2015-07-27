@@ -63,7 +63,7 @@ CharacterStatusIconView.prototype.updateStatus = function(child, isAid, value, i
 		return;
 	}
 	if(child.value != value){
-		self.aidStatus.splice(index, 1)
+		self.aidStatus.splice(index, 1);
 	}
 };
 CharacterStatusIconView.prototype.removeStatus = function(status){
@@ -101,15 +101,16 @@ CharacterStatusIconView.prototype.hasStatus = function(mode){
 	return status != null;
 };
 CharacterStatusIconView.prototype.statusLabel = function(){
-	var self = this, label = [];
+	var self = this, label = [], child;
 	for(var i = 0;i<self.status.length;i++){
-		label.push(Language.get(self.status[i])); 
+		label.push(Language.get(StrategyTypeToString[self.status[i].mode])); 
 	}
 	for(var i = 0;i<self.aidStatus.length;i++){
-		label.push(Language.get(self.aidStatus[i])); 
+		child = self.aidStatus[i];
+		label.push(Language.get(StrategyTypeToString[child.mode] + "_" + (child.value > 0 ? "up" : "down"))); 
 	}
 	if(label.length == 0){
-		return "";
+		return Language.get("null");
 	}
 	return label.join(",");
 };

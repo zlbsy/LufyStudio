@@ -47,14 +47,14 @@ EffectStrategyView.prototype.toChangeStatus = function(){
 	var target = self.currentCharacter.AI.attackTarget;
 	target.changeAction(CharacterAction.HERT);
 	var strategyType = self.currentCharacter.currentSelectStrategy.strategyType();
-	target.status.addStatus(strategyType);
+	target.status.addStatus(strategyType, self.currentCharacter.currentSelectStrategy.hert());
 };
 EffectStrategyView.prototype.toChangeAidStatus = function(){
 	var self = this;
 	var target = self.currentCharacter.AI.attackTarget;
 	target.changeAction(CharacterAction.HERT);
 	var strategyType = self.currentCharacter.currentSelectStrategy.strategyType();
-	target.status.addStatus(strategyType);
+	target.status.addStatus(strategyType, self.currentCharacter.currentSelectStrategy.hert());
 };
 EffectStrategyView.prototype.toAttack = function(){
 	var self = this;

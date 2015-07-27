@@ -18,7 +18,7 @@ CharacterListView.prototype.init=function(){
 		case CharacterListType.BATTLE_SINGLE:
 			var chara = self.controller.fromController.currentCharacter;
 			//alert("BATTLE_SINGLE = "+chara);
-			self.showCharacterDetailed(chara.data);
+			self.showCharacterDetailed(chara);
 			break;
 		default:
 			self.listInit();
@@ -375,9 +375,9 @@ CharacterListView.prototype.characterClickUp = function(event) {
 		self.showCharacterDetailed(chara.charaModel);
 	}
 };
-CharacterListView.prototype.showCharacterDetailed=function(characterModel){
+CharacterListView.prototype.showCharacterDetailed=function(param){
 	var self = this;
-	var characterDetailed = new CharacterDetailedView(self.controller, characterModel);
+	var characterDetailed = new CharacterDetailedView(self.controller, param);
 	self.charaDetailedLayer.addChild(characterDetailed);
 	if(!self.listChildLayer){
 		return;

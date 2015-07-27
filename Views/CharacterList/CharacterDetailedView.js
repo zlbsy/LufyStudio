@@ -1,6 +1,13 @@
-function CharacterDetailedView(controller,characterModel){
+function CharacterDetailedView(controller,param){
 	var self = this;
 	base(self,LView,[controller]);
+	var characterModel;
+	if(param.constructor.name == "CharacterModel"){
+		characterModel = param;
+	}else if(param.constructor.name == "BattleCharacterView"){
+		self.character = param;
+		characterModel = param.data;
+	}
 	console.log("CharacterDetailedView",characterModel);
 	self.nowTab = CharacterDetailedView.TAB_STATUS;
 	self.set(characterModel);
@@ -203,13 +210,14 @@ CharacterDetailedView.prototype.showStatus=function(){
 	var statusLayer = new LSprite();
 	var txtHeight = 25, startY = -txtHeight + 5, startX = 5;
 	var labels = ["belong","identity","city","loyalty","status"];
+	
  	var seignior = self.characterModel.seignior();
 	var datas = [
 	seignior ? seignior.name() : Language.get("nothing"),
 	self.characterModel.identity(),
 	self.characterModel.city().name(),
 	seignior ? self.characterModel.loyalty() : "--",
-	self.characterModel.jobLabel()
+	self.character ? self.character.status.statusLabel() : self.characterModel.jobLabel()
 	];
 	for(var i=0;i<labels.length;i++){
 		startY += txtHeight;
