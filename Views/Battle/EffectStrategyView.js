@@ -57,9 +57,19 @@ EffectStrategyView.prototype.toChangeStatus = function(){
 EffectStrategyView.prototype.toChangeAidStatus = function(){
 	var self = this;
 	var target = self.currentCharacter.AI.attackTarget;
-	target.changeAction(CharacterAction.HERT);
-	var strategyType = self.currentCharacter.currentSelectStrategy.strategyType();
-	target.status.addStatus(strategyType, self.currentCharacter.currentSelectStrategy.hert());
+	var currentSelectStrategy = self.currentCharacter.currentSelectStrategy;
+	if(currentSelectStrategy.belong() == Belong.SELF){
+		target.changeAction(CharacterAction.WAKE);
+		target.status.addStatus(currentSelectStrategy.strategyType(), currentSelectStrategy.hert());
+		return;
+	}
+	var hitrate = calculateHitrateStrategy(self.currentCharacter, target);
+	if(hitrate){
+		target.changeAction(CharacterAction.HERT);
+		target.status.addStatus(currentSelectStrategy.strategyType(), currentSelectStrategy.hert());
+	}else{
+		target.changeAction(CharacterAction.BLOCK);
+	}
 };
 EffectStrategyView.prototype.toAttack = function(){
 	var self = this, tweenObj;
@@ -68,8 +78,8 @@ EffectStrategyView.prototype.toAttack = function(){
 	if(hitrate){
 		target.changeAction(CharacterAction.HERT);
 		tweenObj = new Num(Num.MIDDLE,1,20);
-		//TODO::
-		tweenObj.setValue(123);
+		var hertValue = calculateHertStrategyValue(self.currentCharacter, target, self.currentCharacter.currentSelectStrategy);
+		tweenObj.setValue(hertValue);
 		tweenObj.x = target.x;
 	}else{
 		target.changeAction(CharacterAction.BLOCK);

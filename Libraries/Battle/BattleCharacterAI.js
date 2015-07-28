@@ -68,7 +68,7 @@ BattleCharacterAI.prototype.attackActionComplete = function(event) {
 	var self = chara.AI;
 	chara.removeEventListener(BattleCharacterActionEvent.ATTACK_ACTION_COMPLETE,self.attackActionComplete);
 	chara.changeAction(chara.data.id() == BattleController.ctrlChara.data.id() ? CharacterAction.STAND : CharacterAction.MOVE);
-	self.attackTarget.toStatic(false);alert("attackActionComplete");
+	self.attackTarget.toStatic(false);
 	var hitrate = calculateHitrate(chara,self.attackTarget);
 	if(hitrate || true){
 		var num = new Num(Num.MIDDLE,1,20);

@@ -89,6 +89,9 @@ CharacterStatusIconView.prototype.removeStatus = function(status){
 	}
 };
 CharacterStatusIconView.prototype.hasStatus = function(mode){
+	return this.getStatus(mode) != null;
+};
+CharacterStatusIconView.prototype.getStatus = function(mode){
 	var self = this;
 	if(typeof self.statusPositions[mode] == UNDEFINED){
 		status = self.aidStatus;
@@ -98,7 +101,7 @@ CharacterStatusIconView.prototype.hasStatus = function(mode){
 	var status = status.find(function(child){
 		return child.mode == mode;
 	});
-	return status != null;
+	return status;
 };
 CharacterStatusIconView.prototype.statusLabel = function(){
 	var self = this, label = [], child;

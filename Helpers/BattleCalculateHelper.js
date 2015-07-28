@@ -79,7 +79,15 @@ function calculateHitrate(attChara,hertChara){
 	var r;
 	//得到双方的爆发力
 	var attBreakout = attCharaModel.breakout();
+	var BreakoutAid = attChara.status.getStatus(StrategyType.BreakoutAid);
+	if(BreakoutAid){
+		attBreakout *= (1 + BreakoutAid.value);
+	}
 	var hertBreakout = hertCharaModel.breakout();
+	BreakoutAid = hertChara.status.getStatus(StrategyType.BreakoutAid);
+	if(BreakoutAid){
+		hertBreakout *= (1 + BreakoutAid.value);
+	}
 	if(attBreakout > 2*hertBreakout){
 		r = 100;
 	}else if(attBreakout > hertBreakout){
@@ -116,8 +124,30 @@ function calculateHitrateStrategy(attChara,hertChara){
 	var hertCharaModel = hertChara.data;
 	var r;
 	//得到双方的精神力与运气之和
-	var attX = attCharaModel.spirit() + attCharaModel.morale();
-	var hertY = hertCharaModel.spirit() + hertCharaModel.morale();
+	var attSpirit = attCharaModel.spirit();
+	var ApiritAid = attChara.status.getStatus(StrategyType.ApiritAid);
+	if(ApiritAid){
+		attSpirit *= (1 + ApiritAid.value);
+	}
+	var attMorale = attCharaModel.morale();
+	var MoraleAid = attChara.status.getStatus(StrategyType.MoraleAid);
+	if(MoraleAid){
+		attMorale *= (1 + MoraleAid.value);
+	}
+	var attX = attSpirit + attMorale;
+	
+	var hertSpirit = hertCharaModel.spirit();
+	ApiritAid = hertChara.status.getStatus(StrategyType.ApiritAid);
+	if(ApiritAid){
+		hertSpirit *= (1 + ApiritAid.value);
+	}
+	var hertMorale = hertCharaModel.morale();
+	MoraleAid = hertChara.status.getStatus(StrategyType.MoraleAid);
+	if(MoraleAid){
+		hertMorale *= (1 + MoraleAid.value);
+	}
+	var hertY = hertSpirit + hertMorale;
+	
 	if(attX > 2*hertY){
 		r = 100;
 	}else if(attX > hertY){
@@ -138,13 +168,25 @@ function calculateHitrateStrategy(attChara,hertChara){
  r=Lv+25+(X'-Y')/3;<br>
  然后再根据兵种相克和宝物进行修正
  **************************************************************/
-function calculateHertStrategyValue(attCharaModel,hertCharaModel,currentSelectStrategy){
+function calculateHertStrategyValue(attChara,hertChara,currentSelectStrategy){
 	var r;
+	var attCharaModel = attChara.data;
+	var hertCharaModel = hertChara.data;
 	//得到攻击方的精神力和等级
 	var attLv =  attCharaModel.lv();
 	var attAttack = attCharaModel.spirit();
+	//精神变化
+	var ApiritAid = attChara.status.getStatus(StrategyType.ApiritAid);
+	if(ApiritAid){
+		attAttack *= (1 + ApiritAid.value);
+	}
 	//得到防御方的精神力
-	var hertDefense = hertCharaModel.spirit();	
+	var hertDefense = hertCharaModel.spirit();
+	//精神变化
+	ApiritAid = hertChara.status.getStatus(StrategyType.ApiritAid);
+	if(ApiritAid){
+		hertDefense *= (1 + ApiritAid.value);
+	}
 	//法术攻击的伤害值计算
 	r = attLv + 25 + (attAttack - hertDefense)/3;
 	//法术系数加成
@@ -171,13 +213,19 @@ function calculateHertValue(attChara,hertChara,correctionFactor){
 	var hertCharaModel = hertChara.data;
 	//得到攻击方的攻击力和等级
 	var attLv =  attCharaModel.lv();
-	var attAttack = attCharaModel.attack();// + parseInt(attChara.statusArray[LSouSouCharacterS.STATUS_ATTACK][2]);
-	//攻击加强
-	if(attChara.status.hasStatus(StrategyType.Chaos)){
-		//return true;
+	var attAttack = attCharaModel.attack();
+	//攻击变化
+	var AttackAid = attChara.status.getStatus(StrategyType.AttackAid);
+	if(AttackAid){
+		attAttack *= (1 + AttackAid.value);
 	}
 	//得到防御方的防御力
-	var hertDefense = hertCharaModel.defense();// + int(hertChara.statusArray[LSouSouCharacterS.STATUS_DEFENSE][2]);
+	var hertDefense = hertCharaModel.defense();
+	//防御变化
+	var DefenseAid = hertChara.status.getStatus(StrategyType.DefenseAid);
+	if(DefenseAid){
+		hertDefense *= (1 + DefenseAid.value);
+	}
 	//地形修正
 	var map = LMvc.BattleController.model.map.data;
 	var attAttackAddition = attAttack * attCharaModel.currentSoldiers().terrain(map[attChara.locationY()][hertChara.locationX()].value).value * 0.01;

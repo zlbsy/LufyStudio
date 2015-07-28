@@ -26,6 +26,9 @@ SoldierModel.prototype.readyQuantity = function(value) {
 	}
 	return this.data.readyQuantity;
 };
+SoldierModel.prototype.strategyHert = function() {
+	return this.master().strategyHert();
+};
 SoldierModel.prototype.quantity = function(value) {
 	return this.data.quantity;
 };

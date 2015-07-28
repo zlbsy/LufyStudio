@@ -57,6 +57,7 @@ SoldierMasterModel.prototype.strategyHert = function() {
 	return this.data.strategyHert;
 };
 SoldierMasterModel.prototype.restrain = function(restrainId) {
+	var self = this;
 	if(!self._restrain){
 		self._restrain = [];
 		for(var i=0;i<self.data.restrain.length;i++){
