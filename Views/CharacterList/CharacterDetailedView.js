@@ -73,6 +73,12 @@ CharacterDetailedView.prototype.set=function(characterModel){
 	name.x = face.x + 10;
 	name.y = face.y + 10;
 	self.layer.addChild(name);
+	if(self.character){
+		var belongLabel = getStrokeLabel(Language.get(self.character.belong), 20, "#FFFFFF", "#000000", 4);
+		belongLabel.x = name.x;
+		belongLabel.y = name.y + name.getHeight()+ 10;
+		self.layer.addChild(belongLabel);
+	}
 	
 	self.TabShow(self.nowTab);
 	self.ctrlLayerInit();

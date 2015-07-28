@@ -68,10 +68,11 @@ BattleCharacterAI.prototype.attackActionComplete = function(event) {
 	var self = chara.AI;
 	chara.removeEventListener(BattleCharacterActionEvent.ATTACK_ACTION_COMPLETE,self.attackActionComplete);
 	chara.changeAction(chara.data.id() == BattleController.ctrlChara.data.id() ? CharacterAction.STAND : CharacterAction.MOVE);
-	self.attackTarget.toStatic(false);
+	self.attackTarget.toStatic(false);alert("attackActionComplete");
 	var hitrate = calculateHitrate(chara,self.attackTarget);
-	if(hitrate){
+	if(hitrate || true){
 		var num = new Num(Num.MIDDLE,1,20);
+		self.attackTarget.hertValue = self.herts[0];
 		num.setValue(self.herts[0]);
 		self.herts.shift();
 		num.x = self.attackTarget.x;
@@ -102,7 +103,7 @@ BattleCharacterAI.prototype.hertActionComplete = function(event) {
 	var self = chara.AI;
 	chara.removeEventListener(BattleCharacterActionEvent.HERT_ACTION_COMPLETE,self.hertActionComplete);
 	chara.changeAction(CharacterAction.STAND);
-	var statusView = new BattleCharacterStatusView(self.controller,{character:chara,belong:chara.belong,changeType:BattleCharacterStatusView.HP,changeValue:-100});
+	var statusView = new BattleCharacterStatusView(self.controller,{character:chara,belong:chara.belong,changeType:BattleCharacterStatusView.HP,changeValue:-chara.hertValue});
 	statusView.addEventListener(BattleCharacterStatusEvent.CHANGE_COMPLETE,self.plusExp);
 	//chara.addEventListener(BattleCharacterActionEvent.COUNTER_ATTACK,self.counterAttack);
 	chara.controller.view.baseLayer.addChild(statusView);

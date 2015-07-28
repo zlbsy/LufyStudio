@@ -62,16 +62,23 @@ EffectStrategyView.prototype.toChangeAidStatus = function(){
 	target.status.addStatus(strategyType, self.currentCharacter.currentSelectStrategy.hert());
 };
 EffectStrategyView.prototype.toAttack = function(){
-	var self = this;
+	var self = this, tweenObj;
 	var target = self.currentCharacter.AI.attackTarget;
-	target.changeAction(CharacterAction.HERT);
-	var num = new Num(Num.MIDDLE,1,20);
-	//TODO::
-	num.setValue(123);
-	num.x = target.x;
-	num.y = target.y;
-	target.controller.view.baseLayer.addChild(num);
-	LTweenLite.to(num,0.5,{y:num.y - 20,alpha:0,onComplete:function(obj){
+	var hitrate = calculateHitrateStrategy(self.currentCharacter, target);
+	if(hitrate){
+		target.changeAction(CharacterAction.HERT);
+		tweenObj = new Num(Num.MIDDLE,1,20);
+		//TODO::
+		tweenObj.setValue(123);
+		tweenObj.x = target.x;
+	}else{
+		target.changeAction(CharacterAction.BLOCK);
+		tweenObj = getStrokeLabel("MISS",22,"#FFFFFF","#000000",2);
+		tweenObj.x = target.x + (BattleCharacterSize.width - tweenObj.getWidth()) * 0.5;
+	}
+	tweenObj.y = target.y;
+	target.controller.view.baseLayer.addChild(tweenObj);
+	LTweenLite.to(tweenObj,0.5,{y:tweenObj.y - 20,alpha:0,onComplete:function(obj){
 		obj.remove();
 	}});
 };
