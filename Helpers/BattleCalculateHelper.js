@@ -115,7 +115,7 @@ function calculateHitrateStrategy(attChara,hertChara){
 	var attCharaModel = attChara.data;
 	var hertCharaModel = hertChara.data;
 	var r;
-	//得到双方的爆发力
+	//得到双方的精神力与运气之和
 	var attX = attCharaModel.spirit() + attCharaModel.morale();
 	var hertY = hertCharaModel.spirit() + hertCharaModel.morale();
 	if(attX > 2*hertY){

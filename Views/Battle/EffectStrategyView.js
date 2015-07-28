@@ -45,9 +45,14 @@ EffectStrategyView.prototype.becomeEffective = function(anime){
 EffectStrategyView.prototype.toChangeStatus = function(){
 	var self = this;
 	var target = self.currentCharacter.AI.attackTarget;
-	target.changeAction(CharacterAction.HERT);
-	var strategyType = self.currentCharacter.currentSelectStrategy.strategyType();
-	target.status.addStatus(strategyType, self.currentCharacter.currentSelectStrategy.hert());
+	var currentSelectStrategy = self.currentCharacter.currentSelectStrategy;
+	var hitrate = calculateHitrateStrategy(self.currentCharacter, target);
+	if(hitrate){
+		target.changeAction(CharacterAction.HERT);
+		target.status.addStatus(currentSelectStrategy.strategyType(), currentSelectStrategy.hert());
+	}else{
+		target.changeAction(CharacterAction.BLOCK);
+	}
 };
 EffectStrategyView.prototype.toChangeAidStatus = function(){
 	var self = this;
@@ -80,10 +85,14 @@ EffectStrategyView.prototype.removeSelf = function(event){
 	chara.changeAction(CharacterAction.STAND);
 	if(self.effectType == StrategyEffectType.Attack){
 		var statusView = new BattleCharacterStatusView(LMvc.BattleController,{character:target,belong:target.belong,changeType:"HP",changeValue:-100});
-	statusView.addEventListener(BattleCharacterStatusEvent.CHANGE_COMPLETE,function(){
+		statusView.addEventListener(BattleCharacterStatusEvent.CHANGE_COMPLETE,function(){
 			chara.AI.endAction();
 		});
 		chara.controller.view.baseLayer.addChild(statusView);
+	}else if(self.effectType == StrategyEffectType.Status){
+		chara.AI.endAction();
+	}else if(self.effectType == StrategyEffectType.Aid){
+		chara.AI.endAction();
 	}
 	self.remove();
 };
