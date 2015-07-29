@@ -79,6 +79,10 @@ BattleView.prototype.layerInit=function(){
 	//特效层
 	self.effectLayer = new LSprite();
 	self.baseLayer.addChild(self.effectLayer);
+	//天气层
+	self.weatherLayer = new BattleWeatherView();
+	self.addChild(self.weatherLayer);
+	self.weatherLayer.show(BattleWeatherView.RAIN);
 	/*//遮挡层
 	self.buildLayer = new LSprite();
 	self.baseLayer.addChild(self.buildLayer);*/
