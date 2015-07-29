@@ -1,7 +1,10 @@
-function getBitmap(displayObject){
+function getBitmapData(displayObject){
 	var bitmapData = new LBitmapData(null,0,0,displayObject.getWidth(),displayObject.getHeight(),LBitmapData.DATA_CANVAS);
 	bitmapData.draw(displayObject);
-	return new LBitmap(bitmapData);
+	return bitmapData;
+}
+function getBitmap(displayObject){
+	return new LBitmap(getBitmapData(displayObject));
 }
 function getIconButton(icon, rect, text,width,img){
 	if(typeof img == UNDEFINED){
