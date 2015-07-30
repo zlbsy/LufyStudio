@@ -38,7 +38,11 @@ StrategyView.prototype.setStrategyList = function() {
 };
 StrategyView.prototype.layerInit = function() {
 	var self = this;
-
+	var translucentLayer = new LSprite();
+	translucentLayer.addShape(LShape.RECT,[0,0,LGlobal.width,LGlobal.height]);
+	self.addChild(translucentLayer);
+	translucentLayer.addEventListener(LMouseEvent.MOUSE_DOWN, self.onclick);
+	translucentLayer.addEventListener(LMouseEvent.MOUSE_UP, self.cancel);
 	self.baseLayer = new LSprite();
 	self.addChild(self.baseLayer);
 	
@@ -53,6 +57,7 @@ StrategyView.prototype.layerInit = function() {
 };
 StrategyView.prototype.setBackgroundLayer = function() {
 	var self = this;
+	
 	var windowLayer = new LSprite();
 	windowLayer.addChild(getTranslucentBitmap());
 	var backgroundData = new LBitmapData(LMvc.datalist["win05"]);
@@ -118,6 +123,11 @@ StrategyView.prototype.strategyClickUp = function(event) {
 };
 StrategyView.prototype.strategySelect = function(strategyModel) {
 	var self = this;
+	var weathers = strategyModel.weathers();
+	if(weathers && weathers.length > 0 && weathers.indexOf(LMvc.BattleController.view.weatherLayer.currentWeather.weather) < 0){
+		Toast.makeText(Language.get("无法在此天气使用!")).show();
+		return;
+	}
 	var e = new LEvent(StrategyListEvent.SELECT);
 	e.strategyModel = strategyModel;
 	self.dispatchEvent(e);

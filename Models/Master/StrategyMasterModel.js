@@ -44,6 +44,12 @@ StrategyMasterModel.prototype.belong = function() {
 StrategyMasterModel.prototype.hert = function() {
 	return this.data.hert;
 };
+StrategyMasterModel.prototype.weathers = function() {
+	return this.data.weathers;
+};
+StrategyMasterModel.prototype.terrains = function() {
+	return this.data.terrains;
+};
 StrategyMasterModel.prototype.rangeAttack = function() {
 	return this.data.rangeAttack;
 };

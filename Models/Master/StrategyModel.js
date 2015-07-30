@@ -29,6 +29,12 @@ StrategyModel.prototype.effectType = function() {
 StrategyModel.prototype.strategyType = function() {
 	return this.master().strategyType();
 };
+StrategyModel.prototype.weathers = function() {
+	return this.master().weathers();
+};
+StrategyModel.prototype.terrains = function() {
+	return this.master().terrains();
+};
 StrategyModel.prototype.hert = function() {
 	return this.master().hert();
 };

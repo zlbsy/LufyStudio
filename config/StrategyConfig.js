@@ -65,6 +65,8 @@ var StrategyDatas = [
 	hert:0.8,
 	rangeAttack:[{x:0,y:-1},{x:0,y:-2},{x:0,y:-3},{x:0,y:1},{x:0,y:2},{x:0,y:3},{x:-1,y:0},{x:-2,y:0},{x:-3,y:0},{x:1,y:0},{x:2,y:0},{x:3,y:0}],
 	rangeAttackTarget:[{x:0,y:0}],
+	weathers:[],
+	terrains:[],
 	explanation:""
 	},
 	{id:2,name:"小风计1",belong:Belong.ENEMY,type:StrategyType.Fire,effectType:StrategyEffectType.Attack,image:"feng-1",
@@ -107,15 +109,16 @@ var StrategyDatas = [
 	rangeAttackTarget:[{x:0,y:0}],
 	explanation:""
 	},
-	{id:7,name:"小风计6",belong:Belong.ENEMY,type:StrategyType.Fire,effectType:StrategyEffectType.Attack,image:"feng-1",
+	{id:7,name:"小火计6",belong:Belong.ENEMY,type:StrategyType.Fire,effectType:StrategyEffectType.Attack,image:"feng-1",
 	icon:"feng_sign",
 	cost:6,
 	hert:0.8,
 	rangeAttack:[{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0}],
 	rangeAttackTarget:[{x:0,y:0}],
+	weathers:["spring"],
 	explanation:""
 	},
-	{id:8,name:"小风计9",belong:Belong.ENEMY,type:StrategyType.Fire,effectType:StrategyEffectType.Attack,image:"feng-1",
+	{id:8,name:"小水计9",belong:Belong.ENEMY,type:StrategyType.Fire,effectType:StrategyEffectType.Attack,image:"feng-1",
 	icon:"feng_sign",
 	cost:6,
 	hert:0.8,

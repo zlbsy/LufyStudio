@@ -18,7 +18,7 @@ BattleController.prototype.mvcLoad=function(){
 };
 BattleController.prototype.configLoad=function(){
 	var self = this;
-	self.load.config(["Soldiers","Character","GroupSkills"],self.libraryLoad);
+	self.load.config(["Soldiers","Character","GroupSkills","BattleWeather","Terrain"],self.libraryLoad);
 };
 BattleController.prototype.libraryLoad=function(){
 	var self = this;
@@ -159,7 +159,11 @@ BattleController.prototype.mapMouseUp = function(event){
 		return;
 	}
 	if(!self.view.roadLayer.visible){
-		self.characterClick(event.selfX,event.selfY);
+		var onChara = self.characterClick(event.selfX,event.selfY);
+		if(onChara){
+			return;
+		}
+		alert("clickmap");
 	}else if(!self.view.roadLayer.hitTestPoint(event.offsetX,event.offsetY)){
 		self.notClickOnRoadLayer(event);
 	}else if(BattleController.ctrlChara.mode == CharacterMode.WAIT_ATTACK){
@@ -210,7 +214,7 @@ BattleController.prototype.clickStrategyRange = function(chara){
 	}
 	if(!isSameBelong(BattleController.ctrlChara.currentSelectStrategy.belong(),chara.belong)){
 		//Todo::
-		Toast.makeText(String.format(Language.get("can_not_operating"), Language.get(BattleController.ctrlChara.belong))).show();
+		Toast.makeText(String.format(Language.get("不可对{0}使用!"), Language.get(BattleController.ctrlChara.belong))).show();
 		return;
 	
 	}
@@ -270,7 +274,7 @@ BattleController.prototype.characterClick = function(cx,cy){
 	var self = this;
 	var chara = self.view.charaLayer.getCharacterFromCoordinate(cx,cy);
 	if(!chara){
-		return;
+		return false;
 	}
 	BattleController.ctrlChara = chara;
 	switch(chara.belong){
@@ -285,6 +289,7 @@ BattleController.prototype.characterClick = function(cx,cy){
 			self.clickOtherCharacter(chara);
 			break;
 	}
+	return true;
 };
 BattleController.prototype.clickSelfCharacter = function(chara){
 	var self = this;
