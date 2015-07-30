@@ -68,16 +68,25 @@ BattleMapView.prototype.characterIn = function(chara){
 		return false;
 	}
 	var bitmapData = self.datas[0];
-	bitmapData.copyPixels(chara.getBitmapData(),new LRectangle(8,8,48,48),new LPoint(chara.x,chara.y));
+	bitmapData.copyPixels(chara.getBitmapData(),new LRectangle(8,8,BattleCharacterSize.width,BattleCharacterSize.height),new LPoint(chara.x,chara.y));
 	chara.anime.onframe();
 	bitmapData = self.datas[1];
-	bitmapData.copyPixels(chara.getBitmapData(),new LRectangle(8,8,48,48),new LPoint(chara.x,chara.y));
+	bitmapData.copyPixels(chara.getBitmapData(),new LRectangle(8,8,BattleCharacterSize.width,BattleCharacterSize.height),new LPoint(chara.x,chara.y));
 	return true;
 };
 BattleMapView.prototype.characterOut = function(chara){
 	var self = this;
 	var bitmapData = self.datas[0];
-	bitmapData.copyPixels(self.bitmapData,new LRectangle(chara.x,chara.y,48,48),new LPoint(chara.x,chara.y));
+	bitmapData.copyPixels(self.bitmapData,new LRectangle(chara.x,chara.y,BattleCharacterSize.width,BattleCharacterSize.height),new LPoint(chara.x,chara.y));
 	bitmapData = self.datas[1];
-	bitmapData.copyPixels(self.bitmapData,new LRectangle(chara.x,chara.y,48,48),new LPoint(chara.x,chara.y));
+	bitmapData.copyPixels(self.bitmapData,new LRectangle(chara.x,chara.y,BattleCharacterSize.width,BattleCharacterSize.height),new LPoint(chara.x,chara.y));
+};
+BattleCharacterLayerView.prototype.showTerrain=function(x,y){
+	var self = this;
+	var locationX = x / BattleCharacterSize.width >>> 0;
+	var locationY = y / BattleCharacterSize.height >>> 0;
+	var sX = locationX * BattleCharacterSize.width;
+	var sY = locationY * BattleCharacterSize.height;
+	
+	return null;
 };

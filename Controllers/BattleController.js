@@ -18,7 +18,7 @@ BattleController.prototype.mvcLoad=function(){
 };
 BattleController.prototype.configLoad=function(){
 	var self = this;
-	self.load.config(["Soldiers","Character","GroupSkills","BattleWeather","Terrain"],self.libraryLoad);
+	self.load.config(["Soldiers","Character","GroupSkills"],self.libraryLoad);
 };
 BattleController.prototype.libraryLoad=function(){
 	var self = this;
@@ -163,7 +163,7 @@ BattleController.prototype.mapMouseUp = function(event){
 		if(onChara){
 			return;
 		}
-		alert("clickmap");
+		self.view.mapLayer.showTerrain(event.selfX,event.selfY);
 	}else if(!self.view.roadLayer.hitTestPoint(event.offsetX,event.offsetY)){
 		self.notClickOnRoadLayer(event);
 	}else if(BattleController.ctrlChara.mode == CharacterMode.WAIT_ATTACK){

@@ -36,13 +36,14 @@ StrategyView.prototype.setStrategyList = function() {
 	backLayer.addEventListener(LMouseEvent.MOUSE_DOWN, self.strategyClickDown);
 	backLayer.addEventListener(LMouseEvent.MOUSE_UP, self.strategyClickUp.bind(self));
 };
+StrategyView.prototype.onclick = function() {};
 StrategyView.prototype.layerInit = function() {
 	var self = this;
 	var translucentLayer = new LSprite();
 	translucentLayer.addShape(LShape.RECT,[0,0,LGlobal.width,LGlobal.height]);
 	self.addChild(translucentLayer);
 	translucentLayer.addEventListener(LMouseEvent.MOUSE_DOWN, self.onclick);
-	translucentLayer.addEventListener(LMouseEvent.MOUSE_UP, self.cancel);
+	translucentLayer.addEventListener(LMouseEvent.MOUSE_UP, self.onclick);
 	self.baseLayer = new LSprite();
 	self.addChild(self.baseLayer);
 	
