@@ -76,9 +76,14 @@ BattleView.prototype.layerInit=function(){
 	//人物层
 	self.charaLayer = new BattleCharacterLayerView(self.controller);
 	self.baseLayer.addChild(self.charaLayer);
+	
 	//特效层
 	self.effectLayer = new LSprite();
 	self.baseLayer.addChild(self.effectLayer);
+	//地形预览层
+	self.terrainWindow = new BattleTerrainView(self.controller);
+	self.addChild(self.terrainWindow);
+	self.terrainWindow.visible = false;
 	//天气层
 	self.weatherLayer = new BattleWeatherView();
 	self.addChild(self.weatherLayer);
