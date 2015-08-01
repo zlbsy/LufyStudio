@@ -18,7 +18,7 @@ BattleController.prototype.mvcLoad=function(){
 };
 BattleController.prototype.configLoad=function(){
 	var self = this;
-	self.load.config(["Soldiers","Character","GroupSkills"],self.libraryLoad);
+	self.load.config(["Soldiers","Character","GroupSkills","Terrain"],self.libraryLoad);
 };
 BattleController.prototype.libraryLoad=function(){
 	var self = this;
@@ -30,7 +30,7 @@ BattleController.prototype.helperLoad=function(){
 };
 BattleController.prototype.modelLoad=function(){
 	var self = this;
-	self.load.model(["Master/SoldierMaster","Master/Soldier","Master/GroupSkill"],self.viewLoad);
+	self.load.model(["Master/SoldierMaster","Master/Soldier","Master/TerrainMaster","Master/GroupSkill"],self.viewLoad);
 };
 BattleController.prototype.viewLoad=function(){
 	var self = this;
@@ -75,6 +75,7 @@ BattleController.prototype.showCharacterDetailedView=function(){
 };
 BattleController.prototype.init = function(){
 	var self = this;
+	TerrainMasterModel.setMaster(TerrainConfig);
 	SoldierMasterModel.setMaster(SoldierDatas);
 	GroupSkillModel.setMaster(GroupSkillsData);
 	self.queryInit();

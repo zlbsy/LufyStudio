@@ -87,5 +87,7 @@ BattleMapView.prototype.showTerrain=function(x,y){
 	var locationY = y / BattleCharacterSize.height >>> 0;
 	var sX = locationX * BattleCharacterSize.width;
 	var sY = locationY * BattleCharacterSize.height;
-	self.controller.view.terrainWindow.show(sX,sY);
+	
+	var data = self.model.map.data[locationY][locationX];
+	self.controller.view.terrainWindow.show(sX,sY,data);
 };
