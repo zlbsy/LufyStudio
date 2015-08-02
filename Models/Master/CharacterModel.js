@@ -369,3 +369,17 @@ CharacterModel.prototype.groupSkill = function() {
 	}
 	return groupSkill;
 };
+CharacterModel.prototype.skill = function(type) {
+	var self = this;
+	if(!self.data.skill){
+		return null;
+	}
+	var skill = SkillMasterModel.getMaster(self.data.skill);
+	if(type && skill.skillType() != type){
+		return null;
+	}
+	if(type && Math.random() > skill.probability()/100){
+		return null;
+	}
+	return skill;
+};

@@ -5,11 +5,21 @@
  如果2<=Sa/Sd<=3，那么H=20+80*（Sa/Sd-2）；
  如果Sa/Sd>=3，那么H=100；
  *********************************************/
-function calculateDoubleAtt(attCharaModel,hertCharaModel){
+function calculateDoubleAtt(attChara,hertChara){
+	var attCharaModel = attChara.data;
+	var hertCharaModel = hertChara.data;
 	var h;
 	//得到双方的爆发力
 	var attBreakout = attCharaModel.breakout();
+	var BreakoutAid = attChara.status.getStatus(StrategyType.BreakoutAid);
+	if(BreakoutAid){
+		attBreakout *= (1 + BreakoutAid.value);
+	}
 	var hertBreakout = hertCharaModel.breakout();
+	BreakoutAid = hertChara.status.getStatus(StrategyType.BreakoutAid);
+	if(BreakoutAid){
+		hertBreakout *= (1 + BreakoutAid.value);
+	}
 	var rate = attBreakout/hertBreakout;
 	if(rate < 1){
 		h = 1;
@@ -32,11 +42,22 @@ function calculateDoubleAtt(attCharaModel,hertCharaModel){
  如果2<=Sa/Sd<=3，那么H=20+80*（Sa/Sd-2）；
  如果Sa/Sd>=3，那么H=100；
  *********************************************/
-function calculateFatalAtt(attCharaModel,hertCharaModel){
+function calculateFatalAtt(attChara,hertChara){
+	var attCharaModel = attChara.data;
+	var hertCharaModel = hertChara.data;
+	var h;
 	var h;
 	//得到双方的士气
 	var attMorale = attCharaModel.morale();
+	var MoraleAid = attChara.status.getStatus(StrategyType.MoraleAid);
+	if(MoraleAid){
+		attMorale *= (1 + MoraleAid.value);
+	}
 	var hertMorale = hertCharaModel.morale();
+	MoraleAid = hertChara.status.getStatus(StrategyType.MoraleAid);
+	if(MoraleAid){
+		hertMorale *= (1 + MoraleAid.value);
+	}
 	var rate = attMorale/hertMorale;
 	if(rate < 1){
 		h = 1;

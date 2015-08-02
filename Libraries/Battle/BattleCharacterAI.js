@@ -28,9 +28,13 @@ BattleCharacterAI.prototype.physicalAttack = function(target) {
 	var direction = getDirectionFromTarget(self.chara, target);
 	if(self.herts === null){
 		if(self.chara.data.id() == BattleController.ctrlChara.data.id()){
-			var doubleAtt = calculateDoubleAtt(self.chara.data, target.data);
-			var length = doubleAtt ? 2 : 1;
 			self.herts = [];
+			var skill = self.chara.data.skill(SkillType.ATTACK);
+			if(skill){
+				
+			}
+			var doubleAtt = calculateDoubleAtt(self.chara, target);
+			var length = doubleAtt ? 2 : 1;
 			for(var i=0;i<length;i++){
 				self.herts.push(calculateHertValue(self.chara, target, 1));
 			}
@@ -43,7 +47,7 @@ BattleCharacterAI.prototype.physicalAttack = function(target) {
 			self.herts = [calculateHertValue(self.chara, target, 0.75)];
 		}	
 	}
-	if(!self.chara.groupSkill && calculateFatalAtt(self.chara.data, target.data)){
+	if(!self.chara.groupSkill && calculateFatalAtt(self.chara, target)){
 		self.chara.isAngry = true;
 		self.herts[0] = self.herts[0] * 1.25 >>> 0;
 	}

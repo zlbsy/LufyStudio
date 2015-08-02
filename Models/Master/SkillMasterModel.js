@@ -3,6 +3,7 @@ function SkillMasterModel(controller, data) {
 	base(self, MyModel, [controller]);
 	self.type = "SkillMasterModel";
 	self.data = data;
+	alert("SkillMasterModel");
 }
 SkillMasterModel.master = [];
 SkillMasterModel.setMaster=function(list){

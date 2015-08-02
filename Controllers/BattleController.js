@@ -76,6 +76,7 @@ BattleController.prototype.showCharacterDetailedView=function(){
 BattleController.prototype.init = function(){
 	var self = this;
 	TerrainMasterModel.setMaster(TerrainConfig);
+	SkillMasterModel.setMaster(SkillsData);
 	SoldierMasterModel.setMaster(SoldierDatas);
 	GroupSkillModel.setMaster(GroupSkillsData);
 	self.queryInit();
