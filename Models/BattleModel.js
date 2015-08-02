@@ -39,6 +39,7 @@ BattleModel.prototype.getImages=function(){
 	list.push({name:"character-s-default",path:LMvc.IMG_PATH+"character/s/default.png"});
 	list.push({name:"img-small",path:LMvc.IMG_PATH+"smap/" + self.map["img-small"]});
 	
+	list.push({name:"icon_strategy",path:LMvc.IMG_PATH+"icon/strategy.png"});
 	list.push({name:"red_bar",path:LMvc.IMG_PATH+"icon/red_bar.png"});
 	list.push({name:"blue_bar",path:LMvc.IMG_PATH+"icon/blue_bar.png"});
 	list.push({name:"yellow_bar",path:LMvc.IMG_PATH+"icon/yellow_bar.png"});

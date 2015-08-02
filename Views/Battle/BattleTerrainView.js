@@ -5,7 +5,8 @@ function BattleTerrainView(controller){
 }
 BattleTerrainView.prototype.init = function(){
 	var self = this;
-	var background = new LPanel(new LBitmapData(LMvc.datalist["win03"]),160,100);
+	var background = new LSprite();
+	background.addChild(getTranslucentBitmap(160,100));
 	self.addChild(background);
 	self.bitmap = new LBitmap(new LBitmapData("#ffffff",0,0,BattleCharacterSize.width,BattleCharacterSize.height,LBitmapData.DATA_CANVAS));
 	self.bitmap.x = self.bitmap.y = 10;
@@ -23,10 +24,10 @@ BattleTerrainView.prototype.init = function(){
 	self.commentLabel = lblComment;
 	
 	var bitmapStrategys = [
-		new LBitmap(new LBitmapData(LMvc.datalist["rect"],0,0,30,30)),
-		new LBitmap(new LBitmapData(LMvc.datalist["rect"],30,0,30,30)),
-		new LBitmap(new LBitmapData(LMvc.datalist["rect"],60,0,30,30)),
-		new LBitmap(new LBitmapData(LMvc.datalist["rect"],90,0,30,30))
+		new LBitmap(new LBitmapData(LMvc.datalist["icon_strategy"],0,0,30,30)),
+		new LBitmap(new LBitmapData(LMvc.datalist["icon_strategy"],30,0,30,30)),
+		new LBitmap(new LBitmapData(LMvc.datalist["icon_strategy"],60,0,30,30)),
+		new LBitmap(new LBitmapData(LMvc.datalist["icon_strategy"],90,0,30,30))
 	];
 	for(var i = 0;i < bitmapStrategys.length;i++){
 		var bitmap = bitmapStrategys[i];
@@ -34,6 +35,7 @@ BattleTerrainView.prototype.init = function(){
 		bitmap.y = self.bitmap.y + self.bitmap.getHeight() + 5;
 		self.addChild(bitmap);
 	}
+	self.bitmapStrategys = bitmapStrategys;
 };
 BattleTerrainView.prototype.show = function(sx,sy,terrainId){
 	var self = this;
@@ -43,7 +45,10 @@ BattleTerrainView.prototype.show = function(sx,sy,terrainId){
 	var terrainModel = TerrainMasterModel.getMaster(terrainId);
 	self.nameLabel.text = terrainModel.name();
 	var strategy = terrainModel.strategy();
-	
+	for(var i=0;i<strategy.length;i++){
+		//self.bitmapStrategys[i].alpha = strategy[i] ? 1 : 0.3;
+		self.setChildIndex(self.bitmapStrategys[i], strategy[i] ? self.numChildren - 1 : 0);
+	}
 	var comment = terrainModel.comment();
 	self.commentLabel.visible = comment ? true:false;
 	if(self.commentLabel.visible){
