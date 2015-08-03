@@ -26,7 +26,7 @@ BattleController.prototype.libraryLoad=function(){
 };
 BattleController.prototype.helperLoad=function(){
 	var self = this;
-	self.load.helper(["Talk","Hert","BattleHelper","BattleCalculateHelper"],self.modelLoad);
+	self.load.helper(["Talk","Hert","BattleHelper","BattleCalculateHelper","SkillCalculateHelper"],self.modelLoad);
 };
 BattleController.prototype.modelLoad=function(){
 	var self = this;

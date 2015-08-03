@@ -33,21 +33,24 @@ SkillMasterModel.prototype.name = function() {
 SkillMasterModel.prototype.explanation = function() {
 	return Language.get("skill_explanation_"+this.data.id);
 };
-SkillMasterModel.prototype.five = function() {
-	return this.data.five;
+SkillMasterModel.prototype.mainType = function() {
+	return this.data.type;
 };
-SkillMasterModel.prototype.icon=function(size, level){
-	var self = this;
-	if(!size){
-		size = new LPoint(100,100);
-	}
-	if(!level){
-		level = 0;
-	}
-	var layer = new LSprite();
-	var icon = level > 0 ? new BitmapSprite(LMvc.IMG_PATH + "skill/" + this.id() + ".png", null,size) : new LSprite();
-	layer.addChild(icon);
-	var winPanel = new LPanel(new LBitmapData(LMvc.datalist["win06"]),size.x,size.y);
-	layer.addChild(getBitmap(winPanel));
-	return layer;
+SkillMasterModel.prototype.subType = function() {
+	return this.data.subType;
+};
+SkillMasterModel.prototype.attacks = function() {
+	return this.data.attacks;
+};
+SkillMasterModel.prototype.probability = function() {
+	return this.data.probability;
+};
+SkillMasterModel.prototype.herts = function() {
+	return this.data.herts;
+};
+SkillMasterModel.prototype.aids = function() {
+	return this.data.probability;
+};
+SkillMasterModel.prototype.aids = function() {
+	return this.data.probability;
 };

@@ -29,14 +29,15 @@ BattleCharacterAI.prototype.physicalAttack = function(target) {
 	if(self.herts === null){
 		if(self.chara.data.id() == BattleController.ctrlChara.data.id()){
 			self.herts = [];
+			var hertValue = calculateHertValue(self.chara, target, 1);
 			var skill = self.chara.data.skill(SkillType.ATTACK);
 			if(skill){
-				
+				//skillCalculateAttack();
 			}
 			var doubleAtt = calculateDoubleAtt(self.chara, target);
 			var length = doubleAtt ? 2 : 1;
 			for(var i=0;i<length;i++){
-				self.herts.push(calculateHertValue(self.chara, target, 1));
+				self.herts.push(hertValue);
 			}
 			var groupSkill = battleCanGroupSkill(self.chara);
 			if(groupSkill){
