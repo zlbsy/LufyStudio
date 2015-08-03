@@ -22,7 +22,7 @@ BattleController.prototype.configLoad=function(){
 };
 BattleController.prototype.libraryLoad=function(){
 	var self = this;
-	self.load.library(["Num","LStarQuery","Battle/BattleQuery","Battle/BattleCharacterAI"],self.helperLoad);
+	self.load.library(["Num","LStarQuery","Battle/BattleQuery","Battle/BattleCharacterAI","Battle/HertParams"],self.helperLoad);
 };
 BattleController.prototype.helperLoad=function(){
 	var self = this;
@@ -30,7 +30,7 @@ BattleController.prototype.helperLoad=function(){
 };
 BattleController.prototype.modelLoad=function(){
 	var self = this;
-	self.load.model(["Master/SoldierMaster","Master/Soldier","Master/TerrainMaster","Master/GroupSkill"],self.viewLoad);
+	self.load.model(["Master/SoldierMaster","Master/Soldier","Master/TerrainMaster","Master/GroupSkill","Master/SkillMaster"],self.viewLoad);
 };
 BattleController.prototype.viewLoad=function(){
 	var self = this;

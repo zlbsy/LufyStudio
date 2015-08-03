@@ -37,20 +37,22 @@ BattleCharacterAI.prototype.physicalAttack = function(target) {
 			var doubleAtt = calculateDoubleAtt(self.chara, target);
 			var length = doubleAtt ? 2 : 1;
 			for(var i=0;i<length;i++){
-				self.herts.push(hertValue);
+				var hertParams = new HertParams(hertValue);
+				self.herts.push(hertParams);
 			}
 			var groupSkill = battleCanGroupSkill(self.chara);
 			if(groupSkill){
 				self.chara.groupSkill = groupSkill;
-				self.herts[0] = self.herts[0] * groupSkill.correctionFactor() >>> 0;
+				self.herts[0].value = self.herts[0].value * groupSkill.correctionFactor() >>> 0;
 			}
 		}else{
-			self.herts = [calculateHertValue(self.chara, target, 0.75)];
+			var hertValue = calculateHertValue(self.chara, target, 0.75);
+			self.herts = [new HertParams(hertValue)];
 		}	
 	}
 	if(!self.chara.groupSkill && calculateFatalAtt(self.chara, target)){
 		self.chara.isAngry = true;
-		self.herts[0] = self.herts[0] * 1.25 >>> 0;
+		self.herts[0].value = self.herts[0].value * 1.25 >>> 0;
 	}
 	
 	self.chara.setActionDirection(CharacterAction.ATTACK, direction);
@@ -77,8 +79,8 @@ BattleCharacterAI.prototype.attackActionComplete = function(event) {
 	var hitrate = calculateHitrate(chara,self.attackTarget);
 	if(hitrate || true){
 		var num = new Num(Num.MIDDLE,1,20);
-		self.attackTarget.hertValue = self.herts[0];
-		num.setValue(self.herts[0]);
+		self.attackTarget.hertValue = self.herts[0].value;
+		num.setValue(self.herts[0].value);
 		self.herts.shift();
 		num.x = self.attackTarget.x;
 		num.y = self.attackTarget.y;
