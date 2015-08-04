@@ -37,7 +37,20 @@ BattleCharacterAI.prototype.physicalAttack = function(target) {
 			var doubleAtt = calculateDoubleAtt(self.chara, target);
 			var length = doubleAtt ? 2 : 1;
 			for(var i=0;i<length;i++){
-				var hertParams = new HertParams(hertValue);
+				var hertParams = new HertParams();
+				hertParams.push(target,hertValue);
+				var rangeAttackTarget = self.chara.data.currentSoldiers().rangeAttackTarget();
+				for(var i = 0;i<rangeAttackTarget.length;i++){
+					var range = rangeAttackTarget[i];
+					if(range[0] == 0 && range[1] == 0){
+						continue;
+					}
+					var chara = LMvc.BattleController.view.charaLayer.getCharacterFromLocation(target.locationX(), target.locationY());
+					if(!chara || isSameBelong(chara,self.chara)){
+						continue;
+					}
+					hertParams.push(chara,calculateHertValue(self.chara, chara, 1));
+				}
 				self.herts.push(hertParams);
 			}
 			var groupSkill = battleCanGroupSkill(self.chara);
@@ -77,7 +90,9 @@ BattleCharacterAI.prototype.attackActionComplete = function(event) {
 	chara.changeAction(chara.data.id() == BattleController.ctrlChara.data.id() ? CharacterAction.STAND : CharacterAction.MOVE);
 	self.attackTarget.toStatic(false);
 	var hitrate = calculateHitrate(chara,self.attackTarget);
-	if(hitrate || true){
+	var hertParams = self.herts[0];
+	for()
+	if(hitrate){
 		var num = new Num(Num.MIDDLE,1,20);
 		self.attackTarget.hertValue = self.herts[0].value;
 		num.setValue(self.herts[0].value);

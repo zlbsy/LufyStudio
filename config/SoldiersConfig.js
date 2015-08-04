@@ -29,7 +29,7 @@ var SoldierDatas = [
 	restrain:[{id:2,value:110},{id:3,value:80}],
 	terrain:[{id:1,value:110,moveCost:1},{id:2,value:80,moveCost:2},{id:4,value:100,moveCost:255}],
 	rangeAttack:[{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0}],
-	rangeAttackTarget:[{x:0,y:0}],
+	rangeAttackTarget:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],
 	strategy:[{id:2,lv:0},{id:3,lv:0},{id:4,lv:0},{id:5,lv:0},{id:6,lv:0},{id:7,lv:0},{id:8,lv:0},{id:9,lv:0},{id:10,lv:0}],
 	strategyHert:1,
 	explanation:"explanation_yx",img:1,enlistPrice:500,

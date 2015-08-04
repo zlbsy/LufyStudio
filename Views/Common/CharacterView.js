@@ -70,8 +70,11 @@ CharacterView.prototype.setCoordinate = function(x,y){
 	self.y = self.to.y = y;
 };
 CharacterView.prototype.onCoordinate = function(x,y){
+	return this.onLocation(x/this.w >>> 0, y/this.h >>> 0);
+};
+CharacterView.prototype.onLocation = function(x,y){
 	var self = this;
-	return (x/self.w >>> 0) == self.locationX() && (y/self.h >>> 0) == self.locationY();
+	return x == self.locationX() && y == self.locationY();
 };
 CharacterView.prototype.locationX = function(){
 	return this.x/this.w >>> 0;

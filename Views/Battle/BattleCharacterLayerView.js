@@ -67,11 +67,14 @@ BattleCharacterLayerView.prototype.onframe = function(event) {
 	}
 };
 BattleCharacterLayerView.prototype.getCharacterFromCoordinate=function(x,y){
+	return this.getCharacterFromLocation(x/BattleCharacterSize.width >>> 0,y/BattleCharacterSize.height >>> 0);
+};
+BattleCharacterLayerView.prototype.getCharacterFromLocation=function(locationX,locationY){
 	var self = this;
 	var childList = self.childList,child;
 	for(var i=0,l=childList.length;i<l;i++){
 		child = childList[i];
-		if(!child.onCoordinate(x,y)){
+		if(!child.onLocation(locationX,locationY)){
 			continue;
 		}
 		return child;

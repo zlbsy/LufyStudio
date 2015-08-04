@@ -3,10 +3,6 @@ function HertParams(value){
 	self.value = value;
 	self.list = [];
 }
-HertParams.prototype.push = function(chara,){
-	
-};
-HertParams.prototype.oncomplete = function(event){
-	
-	
+HertParams.prototype.push = function(chara, hertValue){
+	this.list.push({chara:chara, hertValue:hertValue});
 };
