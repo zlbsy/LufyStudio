@@ -405,6 +405,7 @@ ScriptText.label = function(value, start, end) {
 ScriptText.labelChange = function(value, start, end) {
 	var script = LGlobal.script, i;
 	var lArr = value.substring(start + 1, end).split(",");
+	var layer, label, i;
 	var nameStr = lArr[0];
 	var textStr = lArr[1];
 	var textList = script.scriptArray.textList[nameStr];

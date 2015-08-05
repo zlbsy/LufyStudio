@@ -1,6 +1,5 @@
-function HertParams(value){
+function HertParams(){
 	var self = this;
-	self.value = value;
 	self.list = [];
 }
 HertParams.prototype.push = function(chara, hertValue){

@@ -42,16 +42,18 @@ BattleCharacterAI.prototype.physicalAttack = function(target) {
 				var rangeAttackTarget = self.chara.data.currentSoldiers().rangeAttackTarget();
 				for(var i = 0;i<rangeAttackTarget.length;i++){
 					var range = rangeAttackTarget[i];
-					if(range[0] == 0 && range[1] == 0){
+					if(range.x == 0 && range.y == 0){
 						continue;
 					}
-					var chara = LMvc.BattleController.view.charaLayer.getCharacterFromLocation(target.locationX(), target.locationY());
-					if(!chara || isSameBelong(chara,self.chara)){
+					var chara = LMvc.BattleController.view.charaLayer.getCharacterFromLocation(target.locationX()+range.x, target.locationY()+range.y);
+					
+					if(!chara || isSameBelong(chara.belong,self.chara.belong)){
 						continue;
 					}
 					hertParams.push(chara,calculateHertValue(self.chara, chara, 1));
 				}
 				self.herts.push(hertParams);
+				//alert("self.herts.push(hertParams)="+hertParams.list.length);
 			}
 			var groupSkill = battleCanGroupSkill(self.chara);
 			if(groupSkill){
@@ -60,7 +62,9 @@ BattleCharacterAI.prototype.physicalAttack = function(target) {
 			}
 		}else{
 			var hertValue = calculateHertValue(self.chara, target, 0.75);
-			self.herts = [new HertParams(hertValue)];
+			var hertParams = new HertParams();
+			hertParams.push(target,hertValue);
+			self.herts = [hertParams];
 		}	
 	}
 	if(!self.chara.groupSkill && calculateFatalAtt(self.chara, target)){
@@ -88,10 +92,36 @@ BattleCharacterAI.prototype.attackActionComplete = function(event) {
 	var self = chara.AI;
 	chara.removeEventListener(BattleCharacterActionEvent.ATTACK_ACTION_COMPLETE,self.attackActionComplete);
 	chara.changeAction(chara.data.id() == BattleController.ctrlChara.data.id() ? CharacterAction.STAND : CharacterAction.MOVE);
-	self.attackTarget.toStatic(false);
-	var hitrate = calculateHitrate(chara,self.attackTarget);
+	
+	 
 	var hertParams = self.herts[0];
-	for()
+	self.herts.shift();
+	//alert("hertParams.list.length="+hertParams.list.length);
+	for(var i = 0;i<hertParams.list.length;i++){
+		var obj = hertParams.list[i];
+		obj.chara.toStatic(false);
+		var hitrate = calculateHitrate(chara,obj.chara);
+		if(hitrate){
+		
+		var num = new Num(Num.MIDDLE,1,20);
+		obj.chara.hertValue = obj.hertValue;
+		num.setValue(obj.hertValue);
+		
+		num.x = obj.chara.x;
+		num.y = obj.chara.y;
+		chara.controller.view.baseLayer.addChild(num);
+		LTweenLite.to(num,0.5,{y:num.y - 20,alpha:0,onComplete:function(obj){
+			obj.remove();
+		}});
+		obj.chara.changeAction(CharacterAction.HERT);
+		obj.chara.addEventListener(BattleCharacterActionEvent.HERT_ACTION_COMPLETE,self.attackTarget.AI.hertActionComplete);
+	}else{
+		obj.chara.changeAction(CharacterAction.BLOCK);
+		obj.chara.addEventListener(BattleCharacterActionEvent.BLOCK_ACTION_COMPLETE,self.attackTarget.AI.blockActionComplete);
+	}
+	
+	}
+	return;
 	if(hitrate){
 		var num = new Num(Num.MIDDLE,1,20);
 		self.attackTarget.hertValue = self.herts[0].value;
