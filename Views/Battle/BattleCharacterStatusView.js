@@ -190,7 +190,7 @@ BattleCharacterStatusView.prototype.getCharacterStatusChild=function(mode,isDyna
 		self.barIcon = barIcon;
 		self.formatLabel = label;
 		self.label = lblBar;
-		LTweenLite.to(self,0.5,{currentValue:self.currentValue + parseInt(self.changeValue),onUpdate:self.onUpdate,onComplete:self.onComplete});
+		LTweenLite.to(self,BattleCharacterStatusConfig.SHOW_TIME,{currentValue:self.currentValue + parseInt(self.changeValue),onUpdate:self.onUpdate,onComplete:self.onComplete});
 	}
 };
 BattleCharacterStatusView.prototype.onUpdate=function(event){
@@ -199,7 +199,7 @@ BattleCharacterStatusView.prototype.onUpdate=function(event){
 BattleCharacterStatusView.prototype.onComplete=function(event){
 	var self = event.target;
 	self.setStatus();
-	LTweenLite.to(self,0.2,{alpha:0,onComplete:self.deleteSelf});
+	LTweenLite.to(self,BattleCharacterStatusConfig.FADE_TIME,{alpha:0,onComplete:self.deleteSelf});
 };
 BattleCharacterStatusView.prototype.deleteSelf=function(event){
 	var self = event.target;
