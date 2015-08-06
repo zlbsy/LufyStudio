@@ -97,29 +97,30 @@ BattleCharacterAI.prototype.attackActionComplete = function(event) {
 	var hertParams = self.herts[0];
 	self.herts.shift();
 	//alert("hertParams.list.length="+hertParams.list.length);
-	for(var i = 0;i<hertParams.list.length;i++){
+	for(var i = 0,l = hertParams.list.length;i<l;i++){
 		var obj = hertParams.list[i];
 		obj.chara.toStatic(false);
+		obj.chara.hertIndex = l - i;
 		var hitrate = calculateHitrate(chara,obj.chara);
 		if(hitrate){
 		
-		var num = new Num(Num.MIDDLE,1,20);
-		obj.chara.hertValue = obj.hertValue;
-		num.setValue(obj.hertValue);
+			var num = new Num(Num.MIDDLE,1,20);
+			obj.chara.hertValue = obj.hertValue;
+			num.setValue(obj.hertValue);
 		
-		num.x = obj.chara.x;
-		num.y = obj.chara.y;
-		chara.controller.view.baseLayer.addChild(num);
-		LTweenLite.to(num,0.5,{y:num.y - 20,alpha:0,onComplete:function(obj){
-			obj.remove();
-		}});
-		obj.chara.changeAction(CharacterAction.HERT);
-		obj.chara.addEventListener(BattleCharacterActionEvent.HERT_ACTION_COMPLETE,self.attackTarget.AI.hertActionComplete);
-	}else{
-		obj.chara.changeAction(CharacterAction.BLOCK);
-		obj.chara.addEventListener(BattleCharacterActionEvent.BLOCK_ACTION_COMPLETE,self.attackTarget.AI.blockActionComplete);
-	}
-	
+			num.x = obj.chara.x;
+			num.y = obj.chara.y;
+			chara.controller.view.baseLayer.addChild(num);
+			LTweenLite.to(num,0.5,{y:num.y - 20,alpha:0,onComplete:function(obj){
+				obj.remove();
+			}});
+		
+			obj.chara.changeAction(CharacterAction.HERT);
+			obj.chara.addEventListener(BattleCharacterActionEvent.HERT_ACTION_COMPLETE,self.attackTarget.AI.hertActionComplete);
+		}else{
+			obj.chara.changeAction(CharacterAction.BLOCK);
+			obj.chara.addEventListener(BattleCharacterActionEvent.BLOCK_ACTION_COMPLETE,self.attackTarget.AI.blockActionComplete);
+		}
 	}
 	return;
 	if(hitrate){
@@ -145,20 +146,35 @@ BattleCharacterAI.prototype.blockActionComplete = function(event) {
 	var self = chara.AI;
 	chara.removeEventListener(BattleCharacterActionEvent.BLOCK_ACTION_COMPLETE,self.hertActionComplete);
 	chara.changeAction(CharacterAction.STAND);
+	var stepTime = BattleCharacterStatusConfig.FADE_TIME + BattleCharacterStatusConfig.SHOW_TIME;
+	LTweenLite.to(chara,chara.hertIndex * stepTime,{onComplete:function(e){
+			var chara = e.target;
 	var statusView = new BattleCharacterStatusView(self.controller,{character:chara,belong:chara.belong,changeType:BattleCharacterStatusView.HP,changeValue:-100});
-	statusView.addEventListener(BattleCharacterStatusEvent.CHANGE_COMPLETE,self.plusExp);
-	//chara.addEventListener(BattleCharacterActionEvent.COUNTER_ATTACK,self.counterAttack);
 	chara.controller.view.baseLayer.addChild(statusView);
+	if(!chara.AI.attackTarget){
+		return;
+	}
+	statusView.addEventListener(BattleCharacterStatusEvent.CHANGE_COMPLETE,chara.AI.plusExp);
+	}});
 };
 BattleCharacterAI.prototype.hertActionComplete = function(event) {
 	var chara = event.currentTarget;
 	var self = chara.AI;
+	//BattleCharacterStatusConfig.FADE_TIME = 0.2;
+	//BattleCharacterStatusConfig.SHOW_TIME = 0.5;
+	var stepTime = BattleCharacterStatusConfig.FADE_TIME + BattleCharacterStatusConfig.SHOW_TIME;
 	chara.removeEventListener(BattleCharacterActionEvent.HERT_ACTION_COMPLETE,self.hertActionComplete);
 	chara.changeAction(CharacterAction.STAND);
+	LTweenLite.to(chara,chara.hertIndex * stepTime,{onComplete:function(e){
+			var chara = e.target;
+		
 	var statusView = new BattleCharacterStatusView(self.controller,{character:chara,belong:chara.belong,changeType:BattleCharacterStatusView.HP,changeValue:-chara.hertValue});
-	statusView.addEventListener(BattleCharacterStatusEvent.CHANGE_COMPLETE,self.plusExp);
-	//chara.addEventListener(BattleCharacterActionEvent.COUNTER_ATTACK,self.counterAttack);
 	chara.controller.view.baseLayer.addChild(statusView);
+	if(!chara.AI.attackTarget){
+		return;
+	}
+	statusView.addEventListener(BattleCharacterStatusEvent.CHANGE_COMPLETE,chara.AI.plusExp);
+	}});
 };
 BattleCharacterAI.prototype.plusExp = function(event) {
 	var chara = event.currentTarget.character;
