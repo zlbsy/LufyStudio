@@ -12,10 +12,32 @@ BattleCharacterAI.prototype.setEvent = function() {
 };
 BattleCharacterAI.prototype.magicAttack = function(target){
 	var self = this;
+	if(!self.chara.currentSelectStrategy.imageCache()){
+		self.chara.currentSelectStrategy.strategyImageLoad(self,self.magicAttack,[target]);
+		return;
+	}
+	
 	self.attackTarget = target;
 	target.AI.attackTarget = self.chara;
 	var direction = getDirectionFromTarget(self.chara, target);
 	self.chara.setActionDirection(CharacterAction.MAGIC_ATTACK, direction);
+	var currentSelectStrategy = self.chara.currentSelectStrategy;
+	var rangeAttackTarget = currentSelectStrategy.rangeAttackTarget();
+	//self.effectType = currentSelectStrategy.effectType();
+	//var hertParams = new HertParams();
+	//hertParams.push(target,calculateHertStrategyValue(self.currentCharacter, target, currentSelectStrategy));
+	for(var i = 0;i<rangeAttackTarget.length;i++){
+		var range = rangeAttackTarget[i];
+		var chara = LMvc.BattleController.view.charaLayer.getCharacterFromLocation(target.locationX()+range.x, target.locationY()+range.y);
+		if(!chara || isSameBelong(chara.belong,self.chara.belong)){
+			continue;
+		}
+		var effectView = new EffectStrategyView(null, self.chara, chara);
+		effectView.x = chara.x;
+		effectView.y = chara.y;
+		LMvc.BattleController.view.effectLayer.addChild(effectView);
+	}
+	return;
 	var effectView = new EffectStrategyView(null, self.chara);
 	effectView.x = target.x;
 	effectView.y = target.y;

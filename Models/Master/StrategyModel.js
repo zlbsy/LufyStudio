@@ -56,6 +56,36 @@ StrategyModel.prototype.explanation = function() {
 StrategyModel.prototype.image = function() {
 	return this.master().image();
 };
+StrategyModel.prototype.imageCache = function(cache) {
+	return this.master().imageCache(cache);
+};
 StrategyModel.prototype.icon=function(size){
 	return this.master().icon(size);
+};
+StrategyModel.prototype.strategyImageLoad = function(target,callback,params){
+	var self = this;
+	if(self.imageCache()){
+		callback.apply(target);
+		return;
+	}
+	self.target = target;
+	self.callback = callback;
+	self.params = params;
+	var loader = new LLoader();
+	loader.parent = self;
+	loader.addEventListener(LEvent.COMPLETE, self.loadData);
+	loader.load(self.image(), "bitmapData");
+	LMvc.keepLoading(true);
+}
+StrategyModel.prototype.loadData = function(event){
+	var self = event.currentTarget.parent;
+	var callback = self.callback;
+	var target = self.target;
+	var params = self.params;
+	self.target = null;
+	self.callback = null;
+	self.params = null;
+	LMvc.keepLoading(false);
+	self.imageCache(event.target);
+	callback.apply(target,params);
 };

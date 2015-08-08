@@ -129,8 +129,36 @@ StrategyView.prototype.strategySelect = function(strategyModel) {
 		Toast.makeText(Language.get("无法在此天气使用!")).show();
 		return;
 	}
+	/*self.strategyModel = strategyModel;
+	self.dispatchSelectEvent();
+	return;*/
 	var e = new LEvent(StrategyListEvent.SELECT);
 	e.strategyModel = strategyModel;
+	self.dispatchEvent(e);
+	self.remove();
+};
+StrategyView.prototype.strategyImageLoad = function(){
+	var self = this;
+	if(self.strategyMode.imageCache()){
+		self.dispatchSelectEvent();
+		return;
+	}
+	var loader = new LLoader();
+	loader.parent = self;
+	loader.addEventListener(LEvent.COMPLETE, self.loadData);
+	loader.load(self.strategyMode.image(), "bitmapData");
+	LMvc.keepLoading(true);
+}
+StrategyView.prototype.loadData = function(event){
+	var self = event.currentTarget.parent;
+	LMvc.keepLoading(false);
+	self.strategyMode.imageCache(event.target);
+	self.dispatchSelectEvent();
+};
+StrategyView.prototype.dispatchSelectEvent = function(){
+	var self = this;
+	var e = new LEvent(StrategyListEvent.SELECT);
+	e.strategyModel = self.strategyMode;
 	self.dispatchEvent(e);
 	self.remove();
 };

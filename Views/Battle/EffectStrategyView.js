@@ -1,17 +1,13 @@
-function EffectStrategyView(controller, chara){
+function EffectStrategyView(controller, chara, target){
 	var self = this;
 	LExtends(self,LView,[controller]);
 	self.currentCharacter = chara;
-	var loader = new LLoader();
-	loader.parent = self;
-	loader.addEventListener(LEvent.COMPLETE, self.loadData);
-	loader.load(chara.currentSelectStrategy.image(), "bitmapData");
-	LMvc.keepLoading(true);
+	self.currentTarget = target;
+	self.init();
 }
-EffectStrategyView.prototype.loadData = function(event){
-	var self = event.currentTarget.parent;
-	LMvc.keepLoading(false);
-	var data = event.target;
+EffectStrategyView.prototype.init = function(){
+	var self = this;
+	var data = self.currentCharacter.currentSelectStrategy.imageCache();
 	var list = LGlobal.divideCoordinate(data.width,data.height, data.height/data.width, 1);
 	var arr = [];
 	for(var i=0,l=list.length;i<l;i++){
@@ -28,7 +24,7 @@ EffectStrategyView.prototype.loadData = function(event){
 };
 EffectStrategyView.prototype.becomeEffective = function(anime){
 	var self = anime.parent;
-	anime.removeFrameScript("effect");
+	anime.removeFrameScript("effect");return;
 	var target = self.currentCharacter.AI.attackTarget;
 	//target.toStatic(false);
 	var currentSelectStrategy = self.currentCharacter.currentSelectStrategy;
@@ -122,7 +118,7 @@ EffectStrategyView.prototype.toAttack = function(){
 EffectStrategyView.prototype.removeSelf = function(event){
 	var anime = event.currentTarget;
 	var self = anime.parent;
-	anime.stop();
+	anime.stop();return;
 	//self.currentCharacter.AI.endAction();
 	self.currentCharacter.changeAction(CharacterAction.STAND);
 	var stepTime = BattleCharacterStatusConfig.FADE_TIME + BattleCharacterStatusConfig.SHOW_TIME;

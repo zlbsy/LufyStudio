@@ -72,3 +72,10 @@ StrategyMasterModel.prototype.icon=function(size){
 	icon.addChild(getBitmap(winPanel));
 	return icon;
 };
+StrategyMasterModel.prototype.imageCache = function(cache) {
+	var self = this;
+	if(typeof cache != UNDEFINED){
+		self._imageCache = cache;
+	}
+	return self._imageCache;
+};
