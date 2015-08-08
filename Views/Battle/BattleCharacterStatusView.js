@@ -1,7 +1,7 @@
 function BattleCharacterStatusView(controller, params){
 	var self = this;
 	LExtends(self,LView,[controller]);
-	console.log("params",params);
+	console.error("params",params);
 	self.character = params.character;
 	self.belong = params.belong;
 	self.changeType = params.changeType;
