@@ -31,6 +31,8 @@ var BattleCharacterActionEvent = {};
 BattleCharacterActionEvent.ATTACK_ACTION_COMPLETE = "attackActionComplete";
 //被攻击动作结束
 BattleCharacterActionEvent.HERT_ACTION_COMPLETE = "hertActionComplete";
+//档格动作结束
+BattleCharacterActionEvent.BLOCK_ACTION_COMPLETE = "blockActionComplete";
 //反击
 BattleCharacterActionEvent.COUNTER_ATTACK = "counterAttack";
 

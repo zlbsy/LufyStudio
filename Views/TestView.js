@@ -174,7 +174,7 @@ TestView.prototype.showSelfCharacterStatus=function(event){
 	self.statusLayer.removeAllChild();
 	var chara = CharacterModel.getChara(1);
 	chara.data.troops = 400;
-	var v = new BattleCharacterStatusView(self.controller,{characterModel:chara,belong:CharacterConfig.BELONG_SELF});
+	var v = new BattleCharacterStatusView(self.controller,{characterModel:chara,belong:Belong.SELF});
 	v.x = 50;
 	v.y = 100;
 	self.statusLayer.addChild(v);
@@ -183,7 +183,7 @@ TestView.prototype.showFriendCharacterStatus=function(event){
 	var self = this;
 	self.statusLayer.removeAllChild();
 	var chara = CharacterModel.getChara(1);
-	var v = new BattleCharacterStatusView(self.controller,{characterModel:chara,belong:CharacterConfig.BELONG_FRIEND});
+	var v = new BattleCharacterStatusView(self.controller,{characterModel:chara,belong:Belong.FRIEND});
 	v.x = 50;
 	v.y = 100;
 	self.statusLayer.addChild(v);
@@ -192,7 +192,7 @@ TestView.prototype.showEnemyCharacterStatus=function(event){
 	var self = this;
 	self.statusLayer.removeAllChild();
 	var chara = CharacterModel.getChara(1);
-	var v = new BattleCharacterStatusView(self.controller,{characterModel:chara,belong:CharacterConfig.BELONG_ENEMY});
+	var v = new BattleCharacterStatusView(self.controller,{characterModel:chara,belong:Belong.ENEMY});
 	v.x = 50;
 	v.y = 100;
 	self.statusLayer.addChild(v);

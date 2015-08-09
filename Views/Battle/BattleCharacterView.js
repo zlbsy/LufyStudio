@@ -28,10 +28,10 @@ BattleCharacterView.getAnimationData = function(){
 		[list[0][19]],//STAND 7
 		[list[0][20]],//STAND 8
 		[list[0][21],list[0][22]],//PANT 9
-		[list[0][23]],//BLOCK 10
-		[list[0][24]],//BLOCK 11
-		[list[0][25]],//BLOCK 12
-		[list[0][26]],//HERT 13
+		[list[0][23],list[0][23]],//BLOCK 10
+		[list[0][24],list[0][24]],//BLOCK 11
+		[list[0][25],list[0][25]],//BLOCK 12
+		[list[0][26],list[0][26]],//HERT 13
 		[list[0][27]],//WAKE 14
 		[list[0][18],list[0][23],list[0][18],list[0][23],list[0][27],list[0][27],list[0][27]],//LEVELUP 15
 		[list[0][19],list[0][24],list[0][19],list[0][24],list[0][27],list[0][27],list[0][27]],//LEVELUP 16
@@ -256,6 +256,9 @@ BattleCharacterView.prototype.actionComplete = function(event){
 	switch(self.action){
 		case CharacterAction.HERT:
 			self.dispatchEvent(BattleCharacterActionEvent.HERT_ACTION_COMPLETE);
+			break;
+		case CharacterAction.BLOCK:
+			self.dispatchEvent(BattleCharacterActionEvent.BLOCK_ACTION_COMPLETE);
 			break;
 	}
 };

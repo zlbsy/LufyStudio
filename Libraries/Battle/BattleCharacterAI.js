@@ -149,19 +149,19 @@ BattleCharacterAI.prototype.attackActionComplete = function(event) {
 			}});
 		
 			obj.chara.changeAction(CharacterAction.HERT);
-			obj.chara.addEventListener(BattleCharacterActionEvent.HERT_ACTION_COMPLETE,self.attackTarget.AI.hertActionComplete);
+			obj.chara.addEventListener(BattleCharacterActionEvent.HERT_ACTION_COMPLETE,obj.chara.AI.hertActionComplete);
 		}else{
 			obj.chara.changeAction(CharacterAction.BLOCK);
-			obj.chara.addEventListener(BattleCharacterActionEvent.BLOCK_ACTION_COMPLETE,self.attackTarget.AI.blockActionComplete);
+			obj.chara.addEventListener(BattleCharacterActionEvent.BLOCK_ACTION_COMPLETE,obj.chara.AI.blockActionComplete);
 		}
 	}
 };
 BattleCharacterAI.prototype.blockActionComplete = function(event) {
 	var chara = event.currentTarget;
 	var self = chara.AI;
+	var stepTime = BattleCharacterStatusConfig.FADE_TIME + BattleCharacterStatusConfig.SHOW_TIME;
 	chara.removeEventListener(BattleCharacterActionEvent.BLOCK_ACTION_COMPLETE,self.hertActionComplete);
 	chara.changeAction(CharacterAction.STAND);
-	var stepTime = BattleCharacterStatusConfig.FADE_TIME + BattleCharacterStatusConfig.SHOW_TIME;
 	LTweenLite.to(chara,chara.hertIndex * stepTime,{onComplete:function(e){
 		var chara = e.target;
 		var statusView = new BattleCharacterStatusView(self.controller,{character:chara,belong:chara.belong,changeType:BattleCharacterStatusView.HP,changeValue:-100});
