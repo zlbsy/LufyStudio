@@ -375,7 +375,7 @@ CharacterModel.prototype.skill = function(type) {
 		return null;
 	}
 	var skill = SkillMasterModel.getMaster(self.data.skill);
-	if(type && skill.skillType() != type){
+	if(type && skill.mainType() != type){
 		return null;
 	}
 	if(type && Math.random() > skill.probability()/100){

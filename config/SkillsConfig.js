@@ -37,8 +37,8 @@ var SkillSubType = {
 	 
 };
 var SkillsData = [
-{id:1,name:"雷霆怒击",type:SkillType.ATTACK,subType:SkillType.ATTACK_COUNT,attacks:[1,0.75,0.5],probability:20},
+{id:1,name:"雷霆怒击",type:SkillType.ATTACK,subType:SkillSubType.ATTACK_COUNT,attacks:[1,0.75,0.5],probability:100},
 {id:2,name:"万众一心",type:SkillType.HERT,herts:[0],probability:20},
-{id:3,name:"隔山打牛",type:SkillType.ATTACK,subType:SkillType.ATTACK_RECT,attacks:[1,0.5,0.25],probability:20},
-{id:4,name:"天下无双",type:SkillType.ATTACK,subType:[SkillType.ATTACK_COUNT,SkillType.ENEMY_AID],attacks:[1,1],aids:[[StrategyType.DefenseAid],[StrategyType.DefenseAid]],probability:100},
+{id:3,name:"隔山打牛",type:SkillType.ATTACK,subType:SkillSubType.ATTACK_RECT,attacks:[1,0.5,0.25],probability:20},
+{id:4,name:"天下无双",type:SkillType.ATTACK,subType:[SkillSubType.ATTACK_COUNT,SkillSubType.ENEMY_AID],attacks:[1,1],aids:[[StrategyType.DefenseAid],[StrategyType.DefenseAid]],probability:100},
 ];

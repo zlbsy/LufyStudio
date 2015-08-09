@@ -47,19 +47,24 @@ BattleCharacterAI.prototype.physicalAttack = function(target) {
 	self.attackTarget = target;
 	target.AI.attackTarget = self.chara;
 	var direction = getDirectionFromTarget(self.chara, target);
+	var skill;
 	if(self.herts === null){
 		if(self.chara.data.id() == BattleController.ctrlChara.data.id()){
 			self.herts = [];
 			var hertValue = calculateHertValue(self.chara, target, 1);
-			var skill = self.chara.data.skill(SkillType.ATTACK);
-			if(skill){
-				//skillCalculateAttack();
+			var hertValues = [];
+			skill = self.chara.data.skill(SkillType.ATTACK);
+			
+			if(skill && skill.subType() == SkillSubType.ATTACK_COUNT){
+				hertValues = skill.attacks();
+			}else{
+				var doubleAtt = calculateDoubleAtt(self.chara, target);
+				hertValues = doubleAtt ? [1,1] : [1];
 			}
-			var doubleAtt = calculateDoubleAtt(self.chara, target);
-			var length = doubleAtt ? 2 : 1;
-			for(var i=0;i<length;i++){
+			for(var j=0;j<hertValues.length;j++){
 				var hertParams = new HertParams();
-				hertParams.push(target,hertValue);
+				var value = hertValue*hertValues[j]>>>0;
+				hertParams.push(target, value > 1 ? value : 1);
 				var rangeAttackTarget = self.chara.data.currentSoldiers().rangeAttackTarget();
 				for(var i = 0;i<rangeAttackTarget.length;i++){
 					var range = rangeAttackTarget[i];
@@ -91,8 +96,20 @@ BattleCharacterAI.prototype.physicalAttack = function(target) {
 		self.chara.isAngry = true;
 		self.herts[0].value = self.herts[0].value * 1.25 >>> 0;
 	}
-	
-	self.chara.setActionDirection(CharacterAction.ATTACK, direction);
+	self.chara.changeDirection(direction);
+	if(skill){
+		var specialEffect = new SpecialEffectView();
+		specialEffect.addEventListener(LEvent.COMPLETE, function(){
+			self.physicalAttackStart();
+		});
+		LMvc.BattleController.view.addChild(specialEffect);
+	}else{
+		self.physicalAttackStart();
+	}
+};
+BattleCharacterAI.prototype.physicalAttackStart = function() {
+	var self = this;
+	self.chara.changeAction(CharacterAction.ATTACK);
 	self.chara.addEventListener(BattleCharacterActionEvent.ATTACK_ACTION_COMPLETE,self.attackActionComplete);
 };
 BattleCharacterAI.prototype.singleCombat = function(target) {

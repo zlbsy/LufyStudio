@@ -34,7 +34,7 @@ BattleController.prototype.modelLoad=function(){
 };
 BattleController.prototype.viewLoad=function(){
 	var self = this;
-	self.load.view(["Battle/Background","Battle/BattleMiniPreview","Battle/BattleMap","Common/Character",
+	self.load.view(["Battle/Background","Battle/BattleMiniPreview","Battle/BattleMap","Common/Character","Common/SpecialEffect",
 	"Battle/BattleCharacterLayer","Battle/BattleCharacter","Battle/BattleRoad","Battle/BattleCharacterStatus",
 	"Strategy/Strategy","Strategy/StrategyChild","Battle/EffectStrategy","Battle/BattleMainMenu","Battle/BattleBout",
 	"Battle/CharacterStatusIcon","Battle/BattleWeather","Battle/BattleTerrain"],self.addMap);
