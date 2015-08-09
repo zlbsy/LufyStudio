@@ -218,13 +218,17 @@ BattleCharacterView.prototype.loadSOver = function(event){
 BattleCharacterView.prototype.toStatic = function(value){
 	var self = this;
 	if(value){
-		var result = self.controller.view.mapLayer.characterIn(self);
-		if(result){
-			self.anime.visible = false;
+		if(self.anime.visible){
+			var result = self.controller.view.mapLayer.characterIn(self);
+			if(result){
+				self.anime.visible = false;
+			}
 		}
 	}else{
-		self.controller.view.mapLayer.characterOut(self);
-		self.anime.visible = true;
+		if(!self.anime.visible){
+			self.controller.view.mapLayer.characterOut(self);
+			self.anime.visible = true;
+		}
 	}
 };
 BattleCharacterView.prototype.onframe = function(event){

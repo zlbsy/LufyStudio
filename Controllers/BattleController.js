@@ -144,7 +144,7 @@ BattleController.prototype.queryInit=function(){
 	self.query = new BattleQuery(self.model.map.data);
 };
 BattleController.prototype.mapMouseUp = function(event){
-	if(BattleSelectMenuController.instance().view.visible){
+	if(LMvc.running || BattleSelectMenuController.instance().view.visible){
 		return;
 	}
 	var self = event.currentTarget.parent.controller;
@@ -177,7 +177,7 @@ BattleController.prototype.mapMouseUp = function(event){
 	}
 };
 BattleController.prototype.mapMouseDown = function(event){
-	if(BattleSelectMenuController.instance().view.visible){
+	if(LMvc.running || BattleSelectMenuController.instance().view.visible){
 		return;
 	}
 	var self = event.currentTarget.parent.controller;
