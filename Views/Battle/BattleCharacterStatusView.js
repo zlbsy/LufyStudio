@@ -32,27 +32,27 @@ BattleCharacterStatusView.prototype.showCharacterStatus=function(){
 	var hpStatus = new LSprite();
 	hpStatus.x = 10;
 	hpStatus.y = setH;
-	self.getCharacterStatusChild(BattleCharacterStatusView.HP, self.changeType == BattleCharacterStatusView.HP, hpStatus);
+	self.getCharacterStatusChild(BattleCharacterStatusConfig.HP, self.changeType == BattleCharacterStatusConfig.HP, hpStatus);
 	layer.addChild(hpStatus);
 	setH += 20;
 	var mpStatus = new LSprite();
 	mpStatus.x = 10;
 	mpStatus.y = setH;
-	self.getCharacterStatusChild(BattleCharacterStatusView.MP, self.changeType == BattleCharacterStatusView.MP, mpStatus);
+	self.getCharacterStatusChild(BattleCharacterStatusConfig.MP, self.changeType == BattleCharacterStatusConfig.MP, mpStatus);
 	layer.addChild(mpStatus);
 	setH += 20;
 	var spStatus = new LSprite();
 	spStatus.x = 10;
 	spStatus.y = setH;
-	self.getCharacterStatusChild(BattleCharacterStatusView.SP, self.changeType == BattleCharacterStatusView.SP, spStatus);
+	self.getCharacterStatusChild(BattleCharacterStatusConfig.SP, self.changeType == BattleCharacterStatusConfig.SP, spStatus);
 	layer.addChild(spStatus);
 	
-	if(self.changeType == BattleCharacterStatusView.EXP){
+	if(self.changeType == BattleCharacterStatusConfig.EXP){
 		setH += 20;
 		var expStatus = new LSprite();
 		expStatus.x = 10;
 		expStatus.y = setH;
-		self.getCharacterStatusChild(BattleCharacterStatusView.EXP, true, expStatus);
+		self.getCharacterStatusChild(BattleCharacterStatusConfig.EXP, true, expStatus);
 		layer.addChild(expStatus);
 	}
 	var background = getTranslucentBitmap(195,(self.changeType ? 50 : 47) + 20 * layer.numChildren);
@@ -120,28 +120,28 @@ BattleCharacterStatusView.prototype.getCharacterStatusChild=function(mode,isDyna
 	var self = this;
 	var icon, frontBar, label, value, maxValue, currentValue;
 	switch(mode){
-		case BattleCharacterStatusView.HP:
+		case BattleCharacterStatusConfig.HP:
 			icon = "icon_hert";
 			frontBar = "red_bar";
 			label = "兵力";
 			maxValue = self.character.data.maxTroops();
 			currentValue = self.character.data.troops();
 			break;
-		case BattleCharacterStatusView.MP:
+		case BattleCharacterStatusConfig.MP:
 			icon = "yellow_ball";
 			frontBar = "yellow_bar";
 			label = "策略";
 			maxValue = self.character.data.maxTroops();
 			currentValue = self.character.data.troops();
 			break;
-		case BattleCharacterStatusView.SP:
+		case BattleCharacterStatusConfig.SP:
 			icon = "orange_ball";
 			frontBar = "orange_bar";
 			label = "体力";
 			maxValue = self.character.data.maxPhysicalFitness();
 			currentValue = self.character.data.physicalFitness();
 			break;
-		case BattleCharacterStatusView.EXP:
+		case BattleCharacterStatusConfig.EXP:
 			icon = "orange_ball";
 			frontBar = "orange_bar";
 			label = "经验";
