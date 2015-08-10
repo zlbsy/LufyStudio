@@ -51,10 +51,10 @@ var CharacterDirection = {
 	RIGHT_UP:"right_up"
 };
 var CharacterDisposition = {
-	TIMID:0,
-	CALM:1,
-	BRAVE:2,
-	RECKLESS:3
+	TIMID:0,//胆小
+	CALM:1,//冷静
+	BRAVE:2,//勇敢
+	RECKLESS:3//鲁莽
 };
 var BattleCharacterSize = {
 	width:48,height:48

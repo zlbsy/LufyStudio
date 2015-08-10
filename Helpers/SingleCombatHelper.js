@@ -9,16 +9,6 @@ function getSingleCombatCommandCount(force){
 		return 3;
 	}
 }
-/*
-	obj[SingleCombatCommand.ATTACK] = 5;
-	obj[SingleCombatCommand.DOUBLE_ATTACK] = 3;
-	obj[SingleCombatCommand.BIG_ATTACK] = 1;
-	obj[SingleCombatCommand.DEFENCE] = 10;
-	obj[SingleCombatCommand.DODGE] = 10;
-	obj[SingleCombatCommand.CHARGE] = 3;
-	obj[SingleCombatCommand.BACKSTROKE_ATTACK] = 40;
-	obj[SingleCombatCommand.SPECIAL_ATTACK] = 20;
-	data[CharacterDisposition.TIMID] = obj;*/
 function selectSingleCombatCommand(commands, selectedCommands, characterModel){
 	var commandProbability = SingleCombatCommandProbability[characterModel.disposition()];
 	var canSelectCommand = [], commandCount = 0;

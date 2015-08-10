@@ -40,15 +40,70 @@ function isSameBelong(belong,targetBelong){
 		}
 	}
 }
-function battleSingleCombatCheck(chara){
-	var script = "SGJTalk.show(" + chara.data.id() + ",0," + String.format(Language.get("single_combat_ask"), chara.AI.attackTarget.data.name()) + ");";
-	//TODO::
-	if(true){
-		script += "SGJTalk.show(" + chara.AI.attackTarget.data.id() + ",0," + Language.get("single_combat_answer_ok") + ");" + 
-		"SGJBattleCharacter.singleCombatStart(" + chara.belong + "," + chara.data.id() + ");";
+/*
+var CharacterDisposition = {
+	TIMID:0,//胆小
+	CALM:1,//冷静
+	BRAVE:2,//勇敢
+	RECKLESS:3//鲁莽
+};*/
+function battleSingleCombatCheck(attChara){
+	var hertChara = chara.AI.attackTarget;
+	var attCharaModel = attChara.data;
+	var hertCharaModel = hertChara.data;
+	var script = "SGJTalk.show(" + attCharaModel.id() + ",0," + String.format(Language.get("single_combat_ask"), hertCharaModel.name()) + ");";
+	var disposition = hertCharaModel.disposition();
+	var forceDifference = hertCharaModel.force() - attCharaModel.force();
+	var result = false;
+	//对方混乱
+	if(hertChara.status.hasStatus(StrategyType.Chaos)){
+		switch(disposition){
+			case CharacterDisposition.TIMID:
+				if(forceDifference > 10){
+					result = true;
+				}else{
+					
+				}
+				break;
+			case CharacterDisposition.CALM:
+				if(forceDifference > 0){
+					result = true;
+				}else{
+					
+				}
+				break;
+			case CharacterDisposition.BRAVE:
+			case CharacterDisposition.RECKLESS:
+				result = true;
+				break;
+		}
 	}else{
-		script += "SGJTalk.show(" + chara.AI.attackTarget.data.id() + ",0," + Language.get("single_combat_answer_no") + ");" + 
-		"SGJBattleCharacter.endAction(" + chara.belong + "," + chara.data.id() + ");";
+		switch(disposition){
+			case CharacterDisposition.TIMID:
+				forceDifference -= 20;
+				break;
+			case CharacterDisposition.CALM:
+				forceDifference -= 5;
+				break;
+			case CharacterDisposition.BRAVE:
+				forceDifference += 5;
+				break;
+			case CharacterDisposition.RECKLESS:
+				forceDifference += 20;
+				break;
+		}
+		if(forceDifference > 20){
+			result = true;
+		}else{
+			
+		}
+	}
+	if(result){
+		script += "SGJTalk.show(" + hertCharaModel.id() + ",0," + Language.get("single_combat_answer_ok") + ");" + 
+		"SGJBattleCharacter.singleCombatStart(" + attChara.belong + "," + attCharaModel.id() + ");";
+	}else{
+		script += "SGJTalk.show(" + hertCharaModel.id() + ",0," + Language.get("single_combat_answer_no") + ");" + 
+		"SGJBattleCharacter.endAction(" + attChara.belong + "," + attCharaModel.id() + ");";
 	}
 	LGlobal.script.addScript(script);
 }
