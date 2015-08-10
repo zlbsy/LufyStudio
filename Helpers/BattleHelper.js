@@ -40,15 +40,8 @@ function isSameBelong(belong,targetBelong){
 		}
 	}
 }
-/*
-var CharacterDisposition = {
-	TIMID:0,//胆小
-	CALM:1,//冷静
-	BRAVE:2,//勇敢
-	RECKLESS:3//鲁莽
-};*/
 function battleSingleCombatCheck(attChara){
-	var hertChara = chara.AI.attackTarget;
+	var hertChara = attChara.AI.attackTarget;
 	var attCharaModel = attChara.data;
 	var hertCharaModel = hertChara.data;
 	var script = "SGJTalk.show(" + attCharaModel.id() + ",0," + String.format(Language.get("single_combat_ask"), hertCharaModel.name()) + ");";
@@ -61,15 +54,15 @@ function battleSingleCombatCheck(attChara){
 			case CharacterDisposition.TIMID:
 				if(forceDifference > 10){
 					result = true;
-				}else{
-					
+				}else if(forceDifference >= 0 && Math.random()*12 < forceDifference){
+					result = true;
 				}
 				break;
 			case CharacterDisposition.CALM:
 				if(forceDifference > 0){
 					result = true;
-				}else{
-					
+				}else if(forceDifference >= -10 && Math.random()*12 < forceDifference + 10){
+					result = true;
 				}
 				break;
 			case CharacterDisposition.BRAVE:
@@ -94,8 +87,8 @@ function battleSingleCombatCheck(attChara){
 		}
 		if(forceDifference > 20){
 			result = true;
-		}else{
-			
+		}else if(forceDifference >= -20 && Math.random()*50 < forceDifference + 20){
+			result = true;
 		}
 	}
 	if(result){

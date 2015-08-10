@@ -189,7 +189,11 @@ BattleCharacterStatusView.prototype.getCharacterStatusChild=function(mode,isDyna
 		self.barIcon = barIcon;
 		self.formatLabel = label;
 		self.label = lblBar;
-		LTweenLite.to(self,BattleCharacterStatusConfig.SHOW_TIME,{currentValue:self.currentValue + parseInt(self.changeValue),onUpdate:self.onUpdate,onComplete:self.onComplete});
+		if(self.treen){
+			LTweenLite.to(self,BattleCharacterStatusConfig.SHOW_TIME,{currentValue:self.currentValue + parseInt(self.changeValue),onUpdate:self.onUpdate});
+		}else{
+			self.treen = LTweenLite.to(self,BattleCharacterStatusConfig.SHOW_TIME,{currentValue:self.currentValue + parseInt(self.changeValue),onUpdate:self.onUpdate,onComplete:self.onComplete});
+		}
 	}
 };
 BattleCharacterStatusView.prototype.onUpdate=function(event){
@@ -197,6 +201,7 @@ BattleCharacterStatusView.prototype.onUpdate=function(event){
 };
 BattleCharacterStatusView.prototype.onComplete=function(event){
 	var self = event.target;
+	self.treen = null;
 	self.setStatus();
 	LTweenLite.to(self,BattleCharacterStatusConfig.FADE_TIME,{alpha:0,onComplete:self.deleteSelf});
 };

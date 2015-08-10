@@ -22,7 +22,7 @@ var characterList = [
 		soldiers:[{id:1,proficiency:"B",img:3},{id:2,proficiency:"A",img:1}],groupSkill:1},
 	{id:4,name:"赵云",faceImg:1000,minFace:[0,23,151,151],disposition:1,skills:0,force:98,intelligence:90,command:98,agility:68,luck:62,compatibility:75,initTroops:100,initStrategy:20,
 		soldiers:[{id:1,proficiency:"B",img:4},{id:2,proficiency:"A",img:1}]},
-	{id:5,name:"马超",faceImg:1000,minFace:[0,23,151,151],disposition:3,skills:0,force:97,intelligence:90,command:98,agility:68,luck:62,compatibility:75,initTroops:100,initStrategy:20,
+	{id:5,name:"马超",faceImg:1000,minFace:[0,23,151,151],disposition:3,skills:0,force:57,intelligence:90,command:98,agility:68,luck:62,compatibility:75,initTroops:100,initStrategy:20,
 		soldiers:[{id:1,proficiency:"B",img:5},{id:2,proficiency:"A",img:1}]},
 	{id:6,name:"黄忠",faceImg:1000,minFace:[0,23,151,151],disposition:2,skills:0,force:94,intelligence:90,command:98,agility:68,luck:62,compatibility:75,initTroops:100,initStrategy:20,
 		soldiers:[{id:1,proficiency:"B",img:6},{id:2,proficiency:"A",img:1}]},
