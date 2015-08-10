@@ -322,6 +322,6 @@ BattleController.prototype.loadSingleCombat = function(){
 };
 BattleController.prototype.loadSingleCombatComplete=function(){
 	var self = this;
-	var singleCombat = new SingleCombatController(self,BattleController.ctrlChara.data.id(),BattleController.ctrlChara.AI.target.data.id());
+	var singleCombat = new SingleCombatController(self,BattleController.ctrlChara.data.id(),BattleController.ctrlChara.AI.attackTarget.data.id());
 	LMvc.stageLayer.addChild(singleCombat.view);
 };
