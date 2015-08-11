@@ -95,7 +95,7 @@ BattleController.prototype.init = function(){
 	self.dispatchEvent(LEvent.COMPLETE);
 	self.dispatchEvent(LController.NOTIFY);
 	for(var i = 1;i<16;i++){
-		CharacterModel.getChara(i).data.troops = CharacterModel.getChara(i).maxTroops();
+		CharacterModel.getChara(i).data.troops = CharacterModel.getChara(i).maxTroops() - 50;
 		CharacterModel.getChara(i).maxHP(100);
 		CharacterModel.getChara(i).HP(100);
 		CharacterModel.getChara(i).calculation();
@@ -322,6 +322,6 @@ BattleController.prototype.loadSingleCombat = function(){
 };
 BattleController.prototype.loadSingleCombatComplete=function(){
 	var self = this;
-	var singleCombat = new SingleCombatController(self,BattleController.ctrlChara.data.id(),BattleController.ctrlChara.AI.attackTarget.data.id());
+	var singleCombat = new SingleCombatController(self,BattleController.ctrlChara.data.id(),BattleController.ctrlChara.AI.target.data.id());
 	LMvc.stageLayer.addChild(singleCombat.view);
 };

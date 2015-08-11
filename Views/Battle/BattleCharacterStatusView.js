@@ -23,6 +23,7 @@ BattleCharacterStatusView.prototype.startTween=function(){
 BattleCharacterStatusView.prototype.showCharacterStatus=function(){
 	var self = this;
 	self.statusLayer = new LSprite();
+	self.statusTextLayer = new LSprite();
 	
 	var characterModel = self.character.data, belong = self.belong;
 	var face = characterModel.face();
@@ -58,7 +59,7 @@ BattleCharacterStatusView.prototype.showCharacterStatus=function(){
 		self.getCharacterStatusChild(BattleCharacterStatusConfig.EXP, expStatus);
 		layer.addChild(expStatus);
 	}
-	var background = getTranslucentBitmap(195,(self.changeType ? 50 : 47) + 20 * layer.numChildren);
+	var background = getTranslucentBitmap(195,50 + 20 * layer.numChildren);
 	layer.addChildAt(background,0);
 	var name = getStrokeLabel(characterModel.name(),14,"#FFFFFF","#FF8C00",1);
 	name.x = 5;
@@ -72,7 +73,6 @@ BattleCharacterStatusView.prototype.showCharacterStatus=function(){
 	
 	setH += 18;
 	
-	//if(self.changeType){
 	var weaponStatus = new LSprite();
 	weaponStatus.x = 10;
 	weaponStatus.y = setH;
@@ -82,61 +82,26 @@ BattleCharacterStatusView.prototype.showCharacterStatus=function(){
 	var armorStatus = new LSprite();
 	armorStatus.x = 130;
 	armorStatus.y = setH;
-	self.getCharacterTextStatusChild(BattleCharacterStatusConfig.EXP_WEAPON, armorStatus);
+	self.getCharacterTextStatusChild(BattleCharacterStatusConfig.EXP_ARMOR, armorStatus);
 	layer.addChild(armorStatus);
-	/*
-	var bitmapWeapon = new LBitmap(new LBitmapData(LMvc.datalist["icon-weapon"]));
-	bitmapWeapon.scaleX = bitmapWeapon.scaleY = 20/bitmapWeapon.getHeight();
-	bitmapWeapon.x = 10;
-	bitmapWeapon.y = setH;
-	layer.addChild(bitmapWeapon);
-	var weapon = equipments.find(function(child){
-		return child.position() == PositionConfig.Hand;
-	});
-	var soldier = getStrokeLabel(weapon?weapon.exp():"x",14,"#FFFFFF","#000000",1);
-	soldier.x = 40;
-	soldier.y = setH;
-	layer.addChild(soldier);
-		
-		var bitmapArmor = new LBitmap(new LBitmapData(LMvc.datalist["icon-armor"]));
-		bitmapArmor.scaleX = bitmapArmor.scaleY = 20/bitmapArmor.getHeight();
-		bitmapArmor.x = 130;
-		bitmapArmor.y = setH;
-		layer.addChild(bitmapArmor);
-		var soldier = getStrokeLabel("99",14,"#FFFFFF","#000000",1);
-		soldier.x = 160;
-		soldier.y = setH;
-		layer.addChild(soldier);*/
-	/*}else{
-		var lblBelong;
-		if(belong == CharacterConfig.BELONG_SELF){
-			lblBelong = getStrokeLabel("我军",14,"#FF0000","#000000",1);
-		}else if(belong == CharacterConfig.BELONG_ENEMY){
-			lblBelong = getStrokeLabel("敌军",14,"#0000FF","#000000",1);
-		}else if(belong == CharacterConfig.BELONG_FRIEND){
-			lblBelong = getStrokeLabel("友军",14,"#FF8C00","#000000",1);
-		}
-		lblBelong.x = 10;
-		lblBelong.y = setH;
-		layer.addChild(lblBelong);
-		
-		var lblTerrain = getStrokeLabel("树林 90%",14,"#FFFFFF","#000000",1);
-		lblTerrain.x = background.getWidth() - lblTerrain.getWidth() - 20;
-		lblTerrain.y = setH;
-		layer.addChild(lblTerrain);
-	}*/
 	
 	layer = getBitmap(layer);
 	
 	layer.y = 315 - layer.getHeight();
 	self.addChild(layer);
-	
-	self.statusLayer.x += layer.x;
-	self.statusLayer.y += layer.y;
-	self.addChild(self.statusLayer);
+	if(self.statusLayer.numChildren > 0){
+		self.statusLayer.x += layer.x;
+		self.statusLayer.y += layer.y;
+		self.addChild(self.statusLayer);
+	}
+	if(self.statusTextLayer.numChildren > 0){
+		self.statusTextLayer.x += layer.x;
+		self.statusTextLayer.y += layer.y;
+		self.addChild(self.statusTextLayer);
+	}
 };
 BattleCharacterStatusView.prototype.getCharacterTextStatusChild=function(mode,layer){
-	var self = this,item,equipment;
+	var self = this,item,equipment,statusLayer;
 	var statusObject = self.get(mode);
 	var equipments = self.character.data.equipments();
 	switch(mode){
@@ -154,14 +119,39 @@ BattleCharacterStatusView.prototype.getCharacterTextStatusChild=function(mode,la
 		break;
 	}
 	item.scaleX = item.scaleY = 20/item.getHeight();
-	layer.addChild(item);
+	if(statusObject){
+		statusLayer = self.statusTextLayer;
+		statusLayer.x = layer.x;
+		statusLayer.y = layer.y;
+	}else{
+		statusLayer = layer;
+	}
+	statusLayer.addChild(item);
 	var lblExp = getStrokeLabel(equipment?equipment.exp():"x",14,"#FFFFFF","#000000",1);
 	lblExp.x = 30;
-	layer.addChild(lblExp);
+	if(statusObject){
+		statusLayer.addChild(lblExp);
+	}else{
+		statusLayer.addChild(lblExp);
+		return;
+	}
+	var changeObject = {};
+	if(equipment){
+		changeObject.text = equipment.exp() + parseInt(statusObject.value);
+		changeObject.onUpdate=function(e){
+			e.target.text = (lblExp.text >>> 0);
+		};
+	}
+	if(!self.treen){
+		changeObject.onComplete=function(){
+			self.onComplete();
+		};
+	}
+	LTweenLite.to(lblExp,BattleCharacterStatusConfig.SHOW_TIME,changeObject);
 };
 BattleCharacterStatusView.prototype.getCharacterStatusChild=function(mode,layer){
 	var self = this;
-	var icon, frontBar, label, value, maxValue, currentValue;
+	var icon, frontBar, label, value, maxValue, currentValue,statusLayer;
 	var statusObject = self.get(mode);
 	switch(mode){
 		case BattleCharacterStatusConfig.HP:
@@ -233,18 +223,14 @@ BattleCharacterStatusView.prototype.getCharacterStatusChild=function(mode,layer)
 		self.barIcon = barIcon;
 		self.formatLabel = label;
 		self.label = lblBar;
-		if(self.treen){
-			LTweenLite.to(self,BattleCharacterStatusConfig.SHOW_TIME,{currentValue:self.currentValue + parseInt(self.changeValue),onUpdate:self.onUpdate});
-		}else{
-			self.treen = LTweenLite.to(self,BattleCharacterStatusConfig.SHOW_TIME,{currentValue:self.currentValue + parseInt(self.changeValue),onUpdate:self.onUpdate,onComplete:self.onComplete});
-		}
+		self.treen = LTweenLite.to(self,BattleCharacterStatusConfig.SHOW_TIME,{currentValue:self.currentValue + parseInt(statusObject.value),onUpdate:self.onUpdate,onComplete:self.onComplete});
 	}
 };
 BattleCharacterStatusView.prototype.onUpdate=function(event){
 	event.target.setStatus();
 };
 BattleCharacterStatusView.prototype.onComplete=function(event){
-	var self = event.target;
+	var self = event ? event.target : this;
 	self.treen = null;
 	self.setStatus();
 	LTweenLite.to(self,BattleCharacterStatusConfig.FADE_TIME,{alpha:0,onComplete:self.deleteSelf});
@@ -252,12 +238,13 @@ BattleCharacterStatusView.prototype.onComplete=function(event){
 BattleCharacterStatusView.prototype.deleteSelf=function(event){
 	var self = event.target;
 	self.dispatchEvent(BattleCharacterStatusEvent.CHANGE_COMPLETE);
-	//var character = self.character;
 	self.remove();
-	//character.dispatchEvent(BattleCharacterActionEvent.COUNTER_ATTACK);
 };
 BattleCharacterStatusView.prototype.setStatus=function(){
 	var self = this;
+	if(!self.barIcon){
+		return;
+	}
 	if(self.currentValue > self.maxValue){
 		self.currentValue = self.maxValue;
 	}

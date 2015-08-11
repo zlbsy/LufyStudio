@@ -165,7 +165,7 @@ BattleCharacterAI.prototype.blockActionComplete = function(event) {
 	LTweenLite.to(chara,chara.hertIndex * stepTime,{onComplete:function(e){
 		var chara = e.target;
 		var statusView = new BattleCharacterStatusView(self.controller,chara);
-		statusView.push(BattleCharacterStatusConfig.HP, - 100);
+		statusView.push(BattleCharacterStatusConfig.EXP_ARMOR, 20);
 		chara.controller.view.baseLayer.addChild(statusView);
 		statusView.startTween();
 		if(!chara.AI.attackTarget){
@@ -204,6 +204,7 @@ BattleCharacterAI.prototype.plusExp = function(event) {
 	var attackTarget = chara.AI.attackTarget;
 	var statusView = new BattleCharacterStatusView(chara.controller,attackTarget);
 	statusView.push(BattleCharacterStatusConfig.EXP, 30);
+	statusView.push(BattleCharacterStatusConfig.EXP_WEAPON, 20);
 	statusView.addEventListener(BattleCharacterStatusEvent.CHANGE_COMPLETE,attackTarget.currentSelectStrategy ? self.counterMagicAttack : self.counterAttack);
 	chara.controller.view.baseLayer.addChild(statusView);
 	statusView.startTween();
