@@ -1,21 +1,19 @@
-function BattleCharacterStatusView(controller, params){
+function BattleCharacterStatusView(controller, character, belong){
 	var self = this;
 	LExtends(self,LView,[controller]);
-	self.character = params.character;
-	self.belong = params.belong;
-	self.changeType = params.changeType;
-	self.changeValue = params.changeValue;
-	self.set();
-	self.setPosition(params.character);
+	self.character = character;
+	self.belong = belong;
+	self.datas = [];
 };
-BattleCharacterStatusView.HP = "HP";
-BattleCharacterStatusView.MP = "MP";
-BattleCharacterStatusView.SP = "SP";
-BattleCharacterStatusView.EXP = "Exp";
 BattleCharacterStatusView.BAR_SIZE = 150;
-BattleCharacterStatusView.prototype.set=function(){
+BattleCharacterStatusView.prototype.push=function(mode,value){
+	var self = this;
+	self.datas.push({mode:mod,value:value});
+};
+BattleCharacterStatusView.prototype.startTween=function(){
 	var self = this;
 	self.showCharacterStatus();
+	self.setPosition(self.character);
 };
 BattleCharacterStatusView.prototype.showCharacterStatus=function(){
 	var self = this;
@@ -68,16 +66,26 @@ BattleCharacterStatusView.prototype.showCharacterStatus=function(){
 	layer.addChild(soldier);
 	
 	setH += 18;
-	if(self.changeType){
-		var bitmapWeapon = new LBitmap(new LBitmapData(LMvc.datalist["icon-weapon"]));
-		bitmapWeapon.scaleX = bitmapWeapon.scaleY = 20/bitmapWeapon.getHeight();
-		bitmapWeapon.x = 10;
-		bitmapWeapon.y = setH;
-		layer.addChild(bitmapWeapon);
-		var soldier = getStrokeLabel("76",14,"#FFFFFF","#000000",1);
-		soldier.x = 40;
-		soldier.y = setH;
-		layer.addChild(soldier);
+	
+	//if(self.changeType){
+	var weaponStatus = new LSprite();
+	weaponStatus.x = 10;
+	weaponStatus.y = setH;
+	self.getCharacterTextStatusChild(BattleCharacterStatusConfig.EXP_WEAPON, weaponStatus);
+		layer.addChild(expStatus);
+	
+	var bitmapWeapon = new LBitmap(new LBitmapData(LMvc.datalist["icon-weapon"]));
+	bitmapWeapon.scaleX = bitmapWeapon.scaleY = 20/bitmapWeapon.getHeight();
+	bitmapWeapon.x = 10;
+	bitmapWeapon.y = setH;
+	layer.addChild(bitmapWeapon);
+	var weapon = equipments.find(function(child){
+		return child.position() == PositionConfig.Hand;
+	});
+	var soldier = getStrokeLabel(weapon?weapon.exp():"x",14,"#FFFFFF","#000000",1);
+	soldier.x = 40;
+	soldier.y = setH;
+	layer.addChild(soldier);
 		
 		var bitmapArmor = new LBitmap(new LBitmapData(LMvc.datalist["icon-armor"]));
 		bitmapArmor.scaleX = bitmapArmor.scaleY = 20/bitmapArmor.getHeight();
@@ -88,7 +96,7 @@ BattleCharacterStatusView.prototype.showCharacterStatus=function(){
 		soldier.x = 160;
 		soldier.y = setH;
 		layer.addChild(soldier);
-	}else{
+	/*}else{
 		var lblBelong;
 		if(belong == CharacterConfig.BELONG_SELF){
 			lblBelong = getStrokeLabel("我军",14,"#FF0000","#000000",1);
@@ -105,7 +113,7 @@ BattleCharacterStatusView.prototype.showCharacterStatus=function(){
 		lblTerrain.x = background.getWidth() - lblTerrain.getWidth() - 20;
 		lblTerrain.y = setH;
 		layer.addChild(lblTerrain);
-	}
+	}*/
 	
 	layer = getBitmap(layer);
 	
@@ -116,9 +124,23 @@ BattleCharacterStatusView.prototype.showCharacterStatus=function(){
 	self.statusLayer.y += layer.y;
 	self.addChild(self.statusLayer);
 };
-BattleCharacterStatusView.prototype.getCharacterStatusChild=function(mode,isDynamic,layer){
+BattleCharacterStatusView.prototype.getCharacterTextStatusChild=function(mode,isDynamic,layer){
+	var self = this,item;
+	var equipments = self.character.data.equipments();
+	switch(mode){
+		case BattleCharacterStatusConfig.EXP_WEAPON:
+		item = equipments.find(function(child){
+			return child.position() == PositionConfig.Hand;
+		});
+		break;
+		case BattleCharacterStatusConfig.EXP_ARMOR:
+		break;
+	}
+};
+BattleCharacterStatusView.prototype.getCharacterStatusChild=function(mode,layer){
 	var self = this;
 	var icon, frontBar, label, value, maxValue, currentValue;
+	var isDynamic = (self.changeType.indexOf(mode) >= 0);
 	switch(mode){
 		case BattleCharacterStatusConfig.HP:
 			icon = "icon_hert";

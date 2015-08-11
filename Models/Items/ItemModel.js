@@ -2,6 +2,9 @@ function ItemModel(controller,data){
 	var self = this;
 	base(self,MyModel,[controller]);
 	self.data = data;
+	if(!self.data.exp){
+		self.data.exp = 0;
+	}
 }
 ItemModel.prototype.master=function(){
 	var self = this;
@@ -15,6 +18,9 @@ ItemModel.prototype.id = function(){
 };
 ItemModel.prototype.lv = function(){
 	return this.data.lv;
+};
+ItemModel.prototype.exp = function(){
+	return this.data.exp;
 };
 ItemModel.prototype.count = function(){
 	return this.data.cnt;

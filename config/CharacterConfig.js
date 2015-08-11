@@ -66,6 +66,8 @@ BattleCharacterStatusConfig.HP = "HP";
 BattleCharacterStatusConfig.MP = "MP";
 BattleCharacterStatusConfig.SP = "SP";
 BattleCharacterStatusConfig.EXP = "Exp";
+BattleCharacterStatusConfig.EXP_WEAPON = "ExpWeapon";
+BattleCharacterStatusConfig.EXP_ARMOR = "ExpArmor";
 var CharacterMode = {
 	NONE : "none",
 	SHOW_MOVE_ROAD : "showMoveRoad",
