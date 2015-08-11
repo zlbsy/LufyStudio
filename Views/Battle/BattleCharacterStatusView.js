@@ -1,14 +1,19 @@
-function BattleCharacterStatusView(controller, character, belong){
+function BattleCharacterStatusView(controller, character){
 	var self = this;
 	LExtends(self,LView,[controller]);
 	self.character = character;
-	self.belong = belong;
+	self.belong = character.belong;
 	self.datas = [];
 };
 BattleCharacterStatusView.BAR_SIZE = 150;
 BattleCharacterStatusView.prototype.push=function(mode,value){
 	var self = this;
-	self.datas.push({mode:mod,value:value});
+	self.datas.push({mode:mode,value:value});
+};
+BattleCharacterStatusView.prototype.get=function(mode){
+	return this.datas.find(function(child){
+		return child.mode == mode;
+	});
 };
 BattleCharacterStatusView.prototype.startTween=function(){
 	var self = this;
@@ -30,27 +35,27 @@ BattleCharacterStatusView.prototype.showCharacterStatus=function(){
 	var hpStatus = new LSprite();
 	hpStatus.x = 10;
 	hpStatus.y = setH;
-	self.getCharacterStatusChild(BattleCharacterStatusConfig.HP, self.changeType == BattleCharacterStatusConfig.HP, hpStatus);
+	self.getCharacterStatusChild(BattleCharacterStatusConfig.HP, hpStatus);
 	layer.addChild(hpStatus);
 	setH += 20;
 	var mpStatus = new LSprite();
 	mpStatus.x = 10;
 	mpStatus.y = setH;
-	self.getCharacterStatusChild(BattleCharacterStatusConfig.MP, self.changeType == BattleCharacterStatusConfig.MP, mpStatus);
+	self.getCharacterStatusChild(BattleCharacterStatusConfig.MP, mpStatus);
 	layer.addChild(mpStatus);
 	setH += 20;
 	var spStatus = new LSprite();
 	spStatus.x = 10;
 	spStatus.y = setH;
-	self.getCharacterStatusChild(BattleCharacterStatusConfig.SP, self.changeType == BattleCharacterStatusConfig.SP, spStatus);
+	self.getCharacterStatusChild(BattleCharacterStatusConfig.SP, spStatus);
 	layer.addChild(spStatus);
 	
-	if(self.changeType == BattleCharacterStatusConfig.EXP){
+	if(self.get(BattleCharacterStatusConfig.EXP)){
 		setH += 20;
 		var expStatus = new LSprite();
 		expStatus.x = 10;
 		expStatus.y = setH;
-		self.getCharacterStatusChild(BattleCharacterStatusConfig.EXP, true, expStatus);
+		self.getCharacterStatusChild(BattleCharacterStatusConfig.EXP, expStatus);
 		layer.addChild(expStatus);
 	}
 	var background = getTranslucentBitmap(195,(self.changeType ? 50 : 47) + 20 * layer.numChildren);
@@ -72,8 +77,14 @@ BattleCharacterStatusView.prototype.showCharacterStatus=function(){
 	weaponStatus.x = 10;
 	weaponStatus.y = setH;
 	self.getCharacterTextStatusChild(BattleCharacterStatusConfig.EXP_WEAPON, weaponStatus);
-		layer.addChild(expStatus);
+	layer.addChild(weaponStatus);
 	
+	var armorStatus = new LSprite();
+	armorStatus.x = 130;
+	armorStatus.y = setH;
+	self.getCharacterTextStatusChild(BattleCharacterStatusConfig.EXP_WEAPON, armorStatus);
+	layer.addChild(armorStatus);
+	/*
 	var bitmapWeapon = new LBitmap(new LBitmapData(LMvc.datalist["icon-weapon"]));
 	bitmapWeapon.scaleX = bitmapWeapon.scaleY = 20/bitmapWeapon.getHeight();
 	bitmapWeapon.x = 10;
@@ -95,7 +106,7 @@ BattleCharacterStatusView.prototype.showCharacterStatus=function(){
 		var soldier = getStrokeLabel("99",14,"#FFFFFF","#000000",1);
 		soldier.x = 160;
 		soldier.y = setH;
-		layer.addChild(soldier);
+		layer.addChild(soldier);*/
 	/*}else{
 		var lblBelong;
 		if(belong == CharacterConfig.BELONG_SELF){
@@ -124,23 +135,34 @@ BattleCharacterStatusView.prototype.showCharacterStatus=function(){
 	self.statusLayer.y += layer.y;
 	self.addChild(self.statusLayer);
 };
-BattleCharacterStatusView.prototype.getCharacterTextStatusChild=function(mode,isDynamic,layer){
-	var self = this,item;
+BattleCharacterStatusView.prototype.getCharacterTextStatusChild=function(mode,layer){
+	var self = this,item,equipment;
+	var statusObject = self.get(mode);
 	var equipments = self.character.data.equipments();
 	switch(mode){
 		case BattleCharacterStatusConfig.EXP_WEAPON:
-		item = equipments.find(function(child){
+		item = new LBitmap(new LBitmapData(LMvc.datalist["icon-weapon"]));
+		equipment = equipments.find(function(child){
 			return child.position() == PositionConfig.Hand;
 		});
 		break;
 		case BattleCharacterStatusConfig.EXP_ARMOR:
+		item = new LBitmap(new LBitmapData(LMvc.datalist["icon-armor"]));
+		equipment = equipments.find(function(child){
+			return child.position() == PositionConfig.Body;
+		});
 		break;
 	}
+	item.scaleX = item.scaleY = 20/item.getHeight();
+	layer.addChild(item);
+	var lblExp = getStrokeLabel(equipment?equipment.exp():"x",14,"#FFFFFF","#000000",1);
+	lblExp.x = 30;
+	layer.addChild(lblExp);
 };
 BattleCharacterStatusView.prototype.getCharacterStatusChild=function(mode,layer){
 	var self = this;
 	var icon, frontBar, label, value, maxValue, currentValue;
-	var isDynamic = (self.changeType.indexOf(mode) >= 0);
+	var statusObject = self.get(mode);
 	switch(mode){
 		case BattleCharacterStatusConfig.HP:
 			icon = "icon_hert";
@@ -179,7 +201,7 @@ BattleCharacterStatusView.prototype.getCharacterStatusChild=function(mode,layer)
 	barBack.x = hertIcon.x + 20;
 	barBack.y = hertIcon.y;
 	layer.addChild(barBack);
-	if(isDynamic){
+	if(statusObject){
 		statusLayer = self.statusLayer;
 		statusLayer.x = layer.x;
 		statusLayer.y = layer.y;
@@ -203,7 +225,7 @@ BattleCharacterStatusView.prototype.getCharacterStatusChild=function(mode,layer)
 	lblBar.x = textEndPosition - lblBar.getWidth();
 	lblBar.y = barBack.y + barBack.getHeight() - lblBar.getHeight() - 5;
 	statusLayer.addChild(lblBar);
-	if(isDynamic){
+	if(statusObject){
 		self.currentValue = currentValue;
 		self.maxValue = maxValue;
 		self.textEndPosition = textEndPosition;

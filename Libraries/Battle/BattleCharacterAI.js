@@ -164,8 +164,10 @@ BattleCharacterAI.prototype.blockActionComplete = function(event) {
 	chara.changeAction(CharacterAction.STAND);
 	LTweenLite.to(chara,chara.hertIndex * stepTime,{onComplete:function(e){
 		var chara = e.target;
-		var statusView = new BattleCharacterStatusView(self.controller,{character:chara,belong:chara.belong,changeType:BattleCharacterStatusView.HP,changeValue:-100});
+		var statusView = new BattleCharacterStatusView(self.controller,chara);
+		statusView.push(BattleCharacterStatusConfig.HP, - 100);
 		chara.controller.view.baseLayer.addChild(statusView);
+		statusView.startTween();
 		if(!chara.AI.attackTarget){
 			return;
 		}
@@ -180,8 +182,10 @@ BattleCharacterAI.prototype.hertActionComplete = function(event) {
 	chara.changeAction(CharacterAction.STAND);
 	LTweenLite.to(chara,chara.hertIndex * stepTime,{onComplete:function(e){
 		var chara = e.target;
-		var statusView = new BattleCharacterStatusView(self.controller,{character:chara,belong:chara.belong,changeType:BattleCharacterStatusView.HP,changeValue:-chara.hertValue});
+		var statusView = new BattleCharacterStatusView(self.controller,chara);
+		statusView.push(BattleCharacterStatusConfig.HP, -chara.hertValue);
 		chara.controller.view.baseLayer.addChild(statusView);
+		statusView.startTween();
 		if(!chara.AI.attackTarget){
 			return;
 		}
@@ -198,9 +202,11 @@ BattleCharacterAI.prototype.plusExp = function(event) {
 		self = chara.AI;
 	}
 	var attackTarget = chara.AI.attackTarget;
-	var statusView = new BattleCharacterStatusView(chara.AI.controller,{character:attackTarget,belong:attackTarget.belong,changeType:BattleCharacterStatusView.EXP,changeValue:30});
+	var statusView = new BattleCharacterStatusView(chara.controller,attackTarget);
+	statusView.push(BattleCharacterStatusConfig.EXP, 30);
 	statusView.addEventListener(BattleCharacterStatusEvent.CHANGE_COMPLETE,attackTarget.currentSelectStrategy ? self.counterMagicAttack : self.counterAttack);
 	chara.controller.view.baseLayer.addChild(statusView);
+	statusView.startTween();
 };
 BattleCharacterAI.prototype.counterAttack = function(event) {
 	var attackChatacter = event.currentTarget.character;
