@@ -96,7 +96,7 @@ EffectStrategyView.prototype.removeSelf = function(event){
 	if(self.effectType == StrategyEffectType.Attack){
 		LTweenLite.to(self.currentTargetCharacter, self.currentTargetCharacter.hertIndex * stepTime,
 		{onComplete:function(e){
-			var statusView = new BattleCharacterStatusView(self.controller,chara);
+			var statusView = new BattleCharacterStatusView(self.controller,e.target);
 			statusView.push(BattleCharacterStatusConfig.HP, -e.target.hertValue);
 			e.target.controller.view.baseLayer.addChild(statusView);
 			statusView.startTween();

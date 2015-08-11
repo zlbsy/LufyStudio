@@ -204,6 +204,9 @@ BattleCharacterAI.prototype.plusExp = function(event) {
 	var attackTarget = chara.AI.attackTarget;
 	var statusView = new BattleCharacterStatusView(chara.controller,attackTarget);
 	statusView.push(BattleCharacterStatusConfig.EXP, 30);
+	if(chara.currentSelectStrategy){
+		
+	}
 	statusView.push(BattleCharacterStatusConfig.EXP_WEAPON, 20);
 	statusView.addEventListener(BattleCharacterStatusEvent.CHANGE_COMPLETE,attackTarget.currentSelectStrategy ? self.counterMagicAttack : self.counterAttack);
 	chara.controller.view.baseLayer.addChild(statusView);
