@@ -38,14 +38,20 @@ SkillMasterModel.prototype.mainType = function() {
 SkillMasterModel.prototype.subType = function() {
 	return this.data.subType;
 };
+SkillMasterModel.prototype.isSubType = function(subType) {
+	return this.data.subType.indexOf(subType) >= 0;
+};
 SkillMasterModel.prototype.attacks = function() {
 	return this.data.attacks;
+};
+SkillMasterModel.prototype.rects = function() {
+	return this.data.rects;
 };
 SkillMasterModel.prototype.probability = function() {
 	return this.data.probability;
 };
-SkillMasterModel.prototype.herts = function() {
-	return this.data.herts;
+SkillMasterModel.prototype.hert = function() {
+	return this.data.hert;
 };
 SkillMasterModel.prototype.aids = function() {
 	return this.data.probability;

@@ -55,7 +55,7 @@ BattleCharacterAI.prototype.physicalAttack = function(target) {
 			var hertValues = [];
 			skill = self.chara.data.skill(SkillType.ATTACK);
 			
-			if(skill && skill.subType() == SkillSubType.ATTACK_COUNT){
+			if(skill && skill.isSubType(SkillSubType.ATTACK_COUNT)){
 				hertValues = skill.attacks();
 			}else{
 				var doubleAtt = calculateDoubleAtt(self.chara, target);
@@ -65,7 +65,12 @@ BattleCharacterAI.prototype.physicalAttack = function(target) {
 				var hertParams = new HertParams();
 				var value = hertValue*hertValues[j]>>>0;
 				hertParams.push(target, value > 1 ? value : 1);
-				var rangeAttackTarget = self.chara.data.currentSoldiers().rangeAttackTarget();
+				var rangeAttackTarget;
+				if(skill && skill.isSubType(SkillSubType.ATTACK_RECT)){
+					rangeAttackTarget = skill.rects();
+				}else{
+					rangeAttackTarget = self.chara.data.currentSoldiers().rangeAttackTarget();
+				}
 				for(var i = 0;i<rangeAttackTarget.length;i++){
 					var range = rangeAttackTarget[i];
 					if(range.x == 0 && range.y == 0){
@@ -138,6 +143,17 @@ BattleCharacterAI.prototype.attackActionComplete = function(event) {
 		obj.chara.hertIndex = l - i;
 		var hitrate = calculateHitrate(chara,obj.chara);
 		if(hitrate){
+			var skill = obj.chara.data.skill(SkillType.HERT);
+			if(skill && skill.isSubType(SkillSubType.HERT_MINUS)){
+				var tweenObj = getStrokeLabel(skill.name(),22,"#FFFFFF","#000000",2);
+				tweenObj.x = obj.chara.x + (BattleCharacterSize.width - tweenObj.getWidth()) * 0.5;
+				tweenObj.y = obj.chara.y - tweenObj.getHeight();
+				chara.controller.view.baseLayer.addChild(tweenObj);
+				LTweenLite.to(tweenObj,0.5,{y:tweenObj.y - 20,alpha:0,onComplete:function(obj){
+					obj.remove();
+				}});
+				obj.hertValue *= skill.hert();
+			}
 			var num = new Num(Num.MIDDLE,1,20);
 			obj.chara.hertValue = obj.hertValue;
 			num.setValue(obj.hertValue);
@@ -243,6 +259,7 @@ BattleCharacterAI.prototype.endAction = function() {
 	var self = this, chara = self.chara, target = self.attackTarget;
 	
 	if(target){
+		target.currentSelectStrategy = null;
 		target.AI.attackTarget = null;
 		target.AI.herts = null;
 		target.removeAllEventListener();
@@ -253,6 +270,7 @@ BattleCharacterAI.prototype.endAction = function() {
 	chara.removeAllEventListener();
 	chara.changeAction(CharacterAction.STAND);
 	chara.mode = CharacterMode.END_ACTION;
+	chara.currentSelectStrategy = null;
 	chara.toStatic(true);
 	LMvc.running = false;
 	console.log("check",LMvc.BattleController.view.charaLayer.isHasActiveCharacter(chara.belong));
