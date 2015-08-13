@@ -162,7 +162,6 @@ BattleCharacterAI.prototype.attackActionComplete = function(event) {
 		var obj = hertParams.list[i];
 		obj.chara.toStatic(false);
 		obj.chara.hertIndex = l - i;
-		console.log("obj.aids=",obj.aids,chara.data.name(),obj.chara.data.name());
 		var hitrate = calculateHitrate(chara,obj.chara);
 		if(hitrate){
 			var skill = obj.chara.data.skill(SkillType.HERT);
@@ -187,7 +186,8 @@ BattleCharacterAI.prototype.attackActionComplete = function(event) {
 			}});
 			if(obj.aids && obj.aids.length > 0){
 				for(var j = 0;j<obj.aids.length;j++){
-					obj.chara.status.addStatus(obj.aids[j], 0);
+					var strategy = StrategyMasterModel.getMaster(obj.aids[j]);
+					obj.chara.status.addStatus(strategy.strategyType(), strategy.hert());
 				}
 			}
 			obj.chara.changeAction(CharacterAction.HERT);

@@ -90,7 +90,7 @@ function calculateFatalAtt(attChara,hertChara){
  再考虑宝物的加成<br>
  最后，不同的法术还会有具体的权重系数，比如还要乘以1.5、0.9等等。
  *********************************************/
-function calculateHitrate(attChara,hertChara){return false;
+function calculateHitrate(attChara,hertChara){
 	//对方混乱
 	if(hertChara.status.hasStatus(StrategyType.Chaos)){
 		return true;
