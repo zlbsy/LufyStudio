@@ -54,8 +54,11 @@ SkillMasterModel.prototype.hert = function() {
 	return this.data.hert;
 };
 SkillMasterModel.prototype.aids = function() {
-	return this.data.probability;
+	return this.data.aids;
 };
-SkillMasterModel.prototype.aids = function() {
-	return this.data.probability;
+SkillMasterModel.prototype.aidCount = function() {
+	return this.data.aidCount;
+};
+SkillMasterModel.prototype.aidRects = function() {
+	return this.data.aidRects;
 };

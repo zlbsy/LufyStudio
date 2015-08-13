@@ -153,3 +153,35 @@ function battleCharacterStatusUpdate(belong){
 		charas[i].status.removeStatus();
 	}
 }
+function battleCanAttackCharacter(attChara, hertChara){
+	if(attChara.status.hasStatus(StrategyType.Chaos)){
+		return false;
+	}
+	var rangeAttack = attChara.data.currentSoldiers().rangeAttack();
+	for(var i=0,l=rangeAttack.length;i<l;i++){
+		var range = rangeAttack[i];
+		if(hertChara.onLocation(attChara.locationX()+range.x, attChara.locationY()+range.y)){
+			return true;
+		}
+	}
+	return false;
+}
+if (!Array.getRandomArrays){
+	Array.getRandomArrays = function(list,num){
+		var result = [], length = list.length < num ? list.length : num;
+		while (result.length < length){
+			var i = Math.random() * list.length >>> 0;
+			var index = result.findIndex(function(child){
+				return child == i;
+			});
+			if(index >= 0){
+				continue;
+			}
+			result.push(i);
+		}
+		for(var i=0;i<result.length;i++){
+			result[i] = list[result[i]];
+		}
+		return result;
+	};
+}

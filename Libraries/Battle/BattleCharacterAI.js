@@ -85,6 +85,27 @@ BattleCharacterAI.prototype.physicalAttack = function(target) {
 				}
 				self.herts.push(hertParams);
 			}
+			hertParams = self.herts[0];
+			if(skill && skill.isSubType(SkillSubType.ENEMY_AID)){
+				var aids = skill.aids();
+				var aidCount = skill.aidCount();
+				var aidRects = skill.aidRects();
+				for(var i=0;i<aidRects.length;i++){
+					var range = aidRects[i];
+					var hertParamObj = hertParams.list.find(function(child){
+						return child.chara.onLocation(target.locationX()+range.x, target.locationY()+range.y);
+					});
+					if(!hertParamObj){
+						var chara = LMvc.BattleController.view.charaLayer.getCharacterFromLocation(target.locationX()+range.x, target.locationY()+range.y);
+						if(!chara || isSameBelong(chara.belong,self.chara.belong)){
+							continue;
+						}
+						hertParams.push(chara,0);
+						hertParamObj = hertParams.list[hertParams.list.length - 1];
+					}
+					hertParamObj.aids = Array.getRandomArrays(aids,aidCount);
+				}
+			}
 			var groupSkill = battleCanGroupSkill(self.chara);
 			if(groupSkill){
 				self.chara.groupSkill = groupSkill;
@@ -141,6 +162,7 @@ BattleCharacterAI.prototype.attackActionComplete = function(event) {
 		var obj = hertParams.list[i];
 		obj.chara.toStatic(false);
 		obj.chara.hertIndex = l - i;
+		console.log("obj.aids=",obj.aids,chara.data.name(),obj.chara.data.name());
 		var hitrate = calculateHitrate(chara,obj.chara);
 		if(hitrate){
 			var skill = obj.chara.data.skill(SkillType.HERT);
@@ -163,7 +185,11 @@ BattleCharacterAI.prototype.attackActionComplete = function(event) {
 			LTweenLite.to(num,0.5,{y:num.y - 20,alpha:0,onComplete:function(obj){
 				obj.remove();
 			}});
-		
+			if(obj.aids && obj.aids.length > 0){
+				for(var j = 0;j<obj.aids.length;j++){
+					obj.chara.status.addStatus(obj.aids[j], 0);
+				}
+			}
 			obj.chara.changeAction(CharacterAction.HERT);
 			obj.chara.addEventListener(BattleCharacterActionEvent.HERT_ACTION_COMPLETE,obj.chara.AI.hertActionComplete);
 		}else{
@@ -238,15 +264,19 @@ BattleCharacterAI.prototype.counterAttack = function(event) {
 	}
 	
 	if(chara.data.id() != BattleController.ctrlChara.data.id()){
-		self.physicalAttack(BattleController.ctrlChara);
-	}else{
-		if(self.herts.length > 0){
-			self.physicalAttack(self.attackTarget);
+		if(battleCanAttackCharacter(chara, attackChatacter)){
+			self.physicalAttack(BattleController.ctrlChara);
 			return;
 		}
-		self.herts = null;
-		BattleController.ctrlChara.AI.endAction();
+		self = attackChatacter.AI;
 	}
+	if(self.herts.length > 0){
+		self.physicalAttack(self.attackTarget);
+		return;
+	}
+	self.herts = null;
+	BattleController.ctrlChara.AI.endAction();
+	
 };
 BattleCharacterAI.prototype.counterMagicAttack = function(event) {
 	var attackChatacter = event.currentTarget.character;
