@@ -190,6 +190,7 @@ Language.data = {
 	"skill_name_2":"万众一心",
 	"skill_name_3":"隔山打牛",
 	"skill_name_4":"天下无双",
+	"skill_name_5":"愈战愈勇",
 	
 	"null":"无",
 	"single_combat_ask":"敌将{0}敢与我大战三百回合吗？",

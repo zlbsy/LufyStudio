@@ -14,7 +14,7 @@
 * soldiers：初始可带兵种［{id:兵种ID,proficiency:熟练度,img:兵种形象ID}］(熟练度 : 精通S，熟练A，普通B，略懂C，不会D) 用兵符升级 D+1=C,C+2=B,B+3=A,A+4=S
 * */
 var characterList = [
-	{id:1,name:"刘备",faceImg:6,minFace:[0,23,151,151],disposition:0,disposition:0,skill:4,force:78,intelligence:76,command:72,agility:74,luck:100,compatibility:75,initTroops:100,initStrategy:20,
+	{id:1,name:"刘备",faceImg:6,minFace:[0,23,151,151],disposition:0,disposition:0,skill:5,force:78,intelligence:76,command:72,agility:74,luck:100,compatibility:75,initTroops:100,initStrategy:20,
 		soldiers:[{id:1,proficiency:"B",img:1},{id:2,proficiency:"D",img:1}],angryTalks:["angry_talk_1_0","angry_talk_1_1","angry_talk_1_2"],groupSkill:1},
 	{id:2,name:"关羽",faceImg:7,minFace:[15,67,100,100],disposition:2,skill:3,force:96,intelligence:90,command:98,agility:68,luck:62,compatibility:75,initTroops:100,initStrategy:20,
 		soldiers:[{id:2,proficiency:"A",img:2},{id:1,proficiency:"B",img:2},],groupSkill:1},

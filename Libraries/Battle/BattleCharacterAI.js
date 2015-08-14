@@ -155,7 +155,22 @@ BattleCharacterAI.prototype.attackActionComplete = function(event) {
 	var self = chara.AI;
 	chara.removeEventListener(BattleCharacterActionEvent.ATTACK_ACTION_COMPLETE,self.attackActionComplete);
 	chara.changeAction(chara.data.id() == BattleController.ctrlChara.data.id() ? CharacterAction.STAND : CharacterAction.MOVE);
-	
+	var skill = chara.data.skill(SkillType.ATTACK_END);
+	if(skill && skill.isSubType(SkillSubType.SELF_AID)){
+		var tweenObj = getStrokeLabel(skill.name(),22,"#FFFFFF","#000000",2);
+		tweenObj.x = chara.x + (BattleCharacterSize.width - tweenObj.getWidth()) * 0.5;
+			tweenObj.y = chara.y + tweenObj.getHeight();
+			chara.controller.view.baseLayer.addChild(tweenObj);
+			LTweenLite.to(tweenObj,0.5,{y:tweenObj.y - 20,alpha:0,onComplete:function(obj){
+				obj.remove();
+			}});
+			var aids = Array.getRandomArrays(skill.aids(),skill.aidCount());
+			for(var j = 0;j<aids.length;j++){
+				var strategy = StrategyMasterModel.getMaster(aids[j]);
+				chara.status.addStatus(strategy.strategyType(), strategy.hert());
+			}
+			
+	}
 	var hertParams = self.herts[0];
 	self.herts.shift();
 	for(var i = 0,l = hertParams.list.length;i<l;i++){
@@ -164,11 +179,11 @@ BattleCharacterAI.prototype.attackActionComplete = function(event) {
 		obj.chara.hertIndex = l - i;
 		var hitrate = calculateHitrate(chara,obj.chara);
 		if(hitrate){
-			var skill = obj.chara.data.skill(SkillType.HERT);
+			skill = obj.chara.data.skill(SkillType.HERT);
 			if(skill && skill.isSubType(SkillSubType.HERT_MINUS)){
 				var tweenObj = getStrokeLabel(skill.name(),22,"#FFFFFF","#000000",2);
 				tweenObj.x = obj.chara.x + (BattleCharacterSize.width - tweenObj.getWidth()) * 0.5;
-				tweenObj.y = obj.chara.y - tweenObj.getHeight();
+				tweenObj.y = obj.chara.y;// - tweenObj.getHeight();
 				chara.controller.view.baseLayer.addChild(tweenObj);
 				LTweenLite.to(tweenObj,0.5,{y:tweenObj.y - 20,alpha:0,onComplete:function(obj){
 					obj.remove();
