@@ -135,3 +135,41 @@ BattleCharacterLayerView.prototype.addCharaLayer=function(index,action,direction
 	chara.setActionDirection(action,direction);
 	return chara;
 };
+BattleCharacterLayerView.prototype.boutSkillRun=function(belong,callback){
+	var self = this;
+	var charas = self.getCharactersFromBelong(belong);
+	for(var index = 0,l = charas.length;index<l;index++){
+		var chara = charas[index];
+		var skill = chara.data.skill(SkillType.BOUT_START);
+		if(!skill || !skill.isSubType(SkillSubType.SELF_AID)){
+			continue;
+		}
+		var tweenObj = getStrokeLabel(skill.name(),22,"#FFFFFF","#000000",2);
+		if(callback){
+			tweenObj.callback = callback;
+			callback = null;
+		}
+		tweenObj.x = chara.x + (BattleCharacterSize.width - tweenObj.getWidth()) * 0.5;
+		tweenObj.y = chara.y;
+		chara.controller.view.baseLayer.addChild(tweenObj);
+		LTweenLite.to(tweenObj,0.5,{y:tweenObj.y - 20,alpha:0,onComplete:function(obj){
+			obj.remove();
+			if(obj.callback){
+				obj.callback();
+			}
+		}});
+		var aids = Array.getRandomArrays(skill.aids(),skill.aidCount());
+		var aidRects = skill.aidRects();
+		for(var i=0;i<aidRects.length;i++){
+			var range = aidRects[i];
+			var targetChara = self.getCharacterFromLocation(chara.locationX()+range.x, chara.locationY()+range.y);
+			if(!targetChara || !isSameBelong(targetChara.belong,chara.belong)){
+				continue;
+			}
+			for(var j = 0;j<aids.length;j++){
+				var strategy = StrategyMasterModel.getMaster(aids[j]);
+				targetChara.status.addStatus(strategy.strategyType(), strategy.hert());
+			}
+		}
+	}
+};

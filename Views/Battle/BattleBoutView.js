@@ -13,14 +13,13 @@ BattleBoutView.prototype.set=function(belong){
 	belongLabel.y = -belongLabel.getHeight() * 0.5;
 	belongLayer.addChild(belongLabel);
 	self.addChild(belongLayer);
+	self.belong = belong;
 	if(belong == Belong.SELF){
 		belongLayer.y = LGlobal.height * 0.5 - 40;
 		self.setBout();
 	}
 	LTweenLite.to(belongLayer,1,{x:LGlobal.width * 0.5,ease:Elastic.easeOut}) 
-	.to(belongLayer,1,{delay:0.5,x:LGlobal.width * 1.5,ease:Quint.easeOut,onComplete:function(){
-    	self.remove();
-    }}); 
+	.to(belongLayer,1,{delay:0.5,x:LGlobal.width * 1.5,ease:Quint.easeOut,onComplete:self.removeSelf}); 
 };
 BattleBoutView.prototype.setBout=function(){
 	var self = this;
@@ -37,4 +36,12 @@ BattleBoutView.prototype.setBout=function(){
 	self.addChild(boutLayer);
 	LTweenLite.to(boutLayer,1,{x:LGlobal.width * 0.5,ease:Elastic.easeOut}) 
 	.to(boutLayer,1,{delay:0.5,x:-LGlobal.width * 0.5,ease:Quint.easeOut});  
+};
+BattleBoutView.prototype.removeSelf=function(event){
+	var self = event.target.parent;
+	var view = self.parent;
+	var belong = self.belong;
+	view.charaLayer.boutSkillRun(belong, function(){
+		self.remove();
+	});
 };
