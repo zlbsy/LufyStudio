@@ -151,20 +151,20 @@ BattleCharacterAI.prototype.singleCombat = function(target) {
 	battleSingleCombatCheck(self.chara);
 };
 BattleCharacterAI.prototype.attackActionComplete = function(event) {
-	var chara = event.currentTarget;
+	var chara = event.currentTarget,selfSkill,skill;
 	var self = chara.AI;
 	chara.removeEventListener(BattleCharacterActionEvent.ATTACK_ACTION_COMPLETE,self.attackActionComplete);
 	chara.changeAction(chara.data.id() == BattleController.ctrlChara.data.id() ? CharacterAction.STAND : CharacterAction.MOVE);
-	var skill = chara.data.skill(SkillType.ATTACK_END);
-	if(skill && skill.isSubType(SkillSubType.SELF_AID)){
-		var tweenObj = getStrokeLabel(skill.name(),22,"#FFFFFF","#000000",2);
+	selfSkill = chara.data.skill(SkillType.ATTACK_END);
+	if(selfSkill && selfSkill.isSubType(SkillSubType.SELF_AID)){
+		var tweenObj = getStrokeLabel(selfSkill.name(),22,"#FFFFFF","#000000",2);
 		tweenObj.x = chara.x + (BattleCharacterSize.width - tweenObj.getWidth()) * 0.5;
 			tweenObj.y = chara.y + tweenObj.getHeight();
 			chara.controller.view.baseLayer.addChild(tweenObj);
-			LTweenLite.to(tweenObj,0.5,{y:tweenObj.y - 20,alpha:0,onComplete:function(obj){
-				obj.remove();
+			LTweenLite.to(tweenObj,0.5,{y:tweenObj.y - 20,alpha:0,onComplete:function(e){
+				e.target.remove();
 			}});
-			var aids = Array.getRandomArrays(skill.aids(),skill.aidCount());
+			var aids = Array.getRandomArrays(selfSkill.aids(),selfSkill.aidCount());
 			for(var j = 0;j<aids.length;j++){
 				var strategy = StrategyMasterModel.getMaster(aids[j]);
 				chara.status.addStatus(strategy.strategyType(), strategy.hert());
@@ -190,6 +190,17 @@ BattleCharacterAI.prototype.attackActionComplete = function(event) {
 				}});
 				obj.hertValue *= skill.hert();
 			}
+			if(i == 0 && selfSkill && selfSkill.isSubType(SkillSubType.VAMPIRE)){
+				var changeHp = obj.hertValue * selfSkill.vampire();
+				var tweenObj = getStrokeLabel(String.format("{0} 兵力+{1}",selfSkill.name(),changeHp),12,"#FF0000","#000000",2);
+				tweenObj.x = chara.x + (BattleCharacterSize.width - tweenObj.getWidth()) * 0.5;
+				tweenObj.y = chara.y;
+				chara.controller.view.baseLayer.addChild(tweenObj);
+				LTweenLite.to(tweenObj,1.5,{y:tweenObj.y - 20,alpha:0,onComplete:function(e){
+					e.target.remove();
+				}});
+				
+			}
 			var num = new Num(Num.MIDDLE,1,20);
 			obj.chara.hertValue = obj.hertValue;
 			num.setValue(obj.hertValue);
@@ -202,6 +213,9 @@ BattleCharacterAI.prototype.attackActionComplete = function(event) {
 			if(obj.aids && obj.aids.length > 0){
 				for(var j = 0;j<obj.aids.length;j++){
 					var strategy = StrategyMasterModel.getMaster(obj.aids[j]);
+					if(strategy.canChangeStatus() && obj.chara.hasSkill(SkillSubType.WAKE)){
+						continue;
+					}
 					obj.chara.status.addStatus(strategy.strategyType(), strategy.hert());
 				}
 			}
@@ -261,9 +275,6 @@ BattleCharacterAI.prototype.plusExp = function(event) {
 	var attackTarget = chara.AI.attackTarget;
 	var statusView = new BattleCharacterStatusView(chara.controller,attackTarget);
 	statusView.push(BattleCharacterStatusConfig.EXP, 30);
-	if(chara.currentSelectStrategy){
-		
-	}
 	statusView.push(BattleCharacterStatusConfig.EXP_WEAPON, 20);
 	statusView.addEventListener(BattleCharacterStatusEvent.CHANGE_COMPLETE,attackTarget.currentSelectStrategy ? self.counterMagicAttack : self.counterAttack);
 	chara.controller.view.baseLayer.addChild(statusView);

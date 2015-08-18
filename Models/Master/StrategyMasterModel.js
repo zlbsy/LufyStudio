@@ -38,6 +38,12 @@ StrategyMasterModel.prototype.effectType = function() {
 StrategyMasterModel.prototype.strategyType = function() {
 	return this.data.type;
 };
+StrategyMasterModel.prototype.canChangeStatus = function() {
+	return this.data.effectType == StrategyEffectType.Status;
+};
+StrategyMasterModel.prototype.canAidStatus = function() {
+	return this.data.effectType == StrategyEffectType.Aid;
+};
 StrategyMasterModel.prototype.belong = function() {
 	return this.data.belong;
 };

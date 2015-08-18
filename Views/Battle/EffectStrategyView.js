@@ -36,9 +36,13 @@ EffectStrategyView.prototype.becomeEffective = function(anime){
 	}
 };
 EffectStrategyView.prototype.toChangeStatus = function(){
-	var self = this;
+	var self = this, hitrate;
 	var currentSelectStrategy = self.currentCharacter.currentSelectStrategy;
-	var hitrate = calculateHitrateStrategy(self.currentCharacter, self.currentTargetCharacter);
+	if(self.currentTargetCharacter.hasSkill(SkillSubType.WAKE)){
+		hitrate = false;
+	}else{
+		hitrate = calculateHitrateStrategy(self.currentCharacter, self.currentTargetCharacter);
+	}
 	if(hitrate){
 		self.currentTargetCharacter.changeAction(CharacterAction.HERT);
 		self.currentTargetCharacter.status.addStatus(currentSelectStrategy.strategyType(), currentSelectStrategy.hert());

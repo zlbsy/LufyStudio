@@ -383,3 +383,14 @@ CharacterModel.prototype.skill = function(type) {
 	}
 	return skill;
 };
+CharacterModel.prototype.hasSkill = function(subType) {
+	var self = this;
+	if(!self.data.skill){
+		return false;
+	}
+	var skill = SkillMasterModel.getMaster(self.data.skill);
+	if(subType && skill.isSubType(subType)){
+		return true;
+	}
+	return false;
+};
