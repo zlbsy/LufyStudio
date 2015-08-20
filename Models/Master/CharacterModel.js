@@ -66,6 +66,15 @@ CharacterModel.prototype.calculation = function() {
 	self.data.morale = self.luck() * 0.5 + CharacterModel.upValue(property.morale, self.luck()) * self.lv();
 	self.data.maxTroops = self.initTroops() + property.troops * self.lv();
 	self.data.maxStrategy = self.initStrategy() + property.strategy * self.lv();
+	var skill = self.skill(SkillType.CREATE);
+	self.data.moveQiang = (skill && skill.isSubType(SkillSubType.MOVE_QIANG));
+	self.data.moveElu = (skill && skill.isSubType(SkillSubType.MOVE_ELU));
+};
+CharacterModel.prototype.moveElu = function() {
+	return this.data.moveElu;
+};
+CharacterModel.prototype.moveQiang = function() {
+	return this.data.moveQiang;
 };
 CharacterModel.prototype.initStrategy = function() {
 	return this.data.initStrategy;

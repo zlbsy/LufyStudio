@@ -33,34 +33,46 @@ BattleQuery.prototype.makePath = function(chara){
 	if(chara.belong == Belong.SELF || chara.belong == Belong.FRIEND){
 		for(var i=0;i<LMvc.BattleController.model.enemyList.length;i++){
 			thisChara = LMvc.BattleController.model.enemyList[i];
-			if(thisChara.visible){
-				self._enemyCost[thisChara.locationX() + "-" + thisChara.locationY()] = 255;
-				self.setPathAll((thisChara.locationX() - 1) , thisChara.locationY() , -1);
-				self.setPathAll((thisChara.locationX() + 1) , thisChara.locationY() , -1);
-				self.setPathAll(thisChara.locationX() , (thisChara.locationY() - 1) , -1);
-				self.setPathAll(thisChara.locationX() , (thisChara.locationY() + 1) , -1);
+			if(!thisChara.visible){
+				continue;
 			}
+			self._enemyCost[thisChara.locationX() + "-" + thisChara.locationY()] = 255;
+			if(chara.data.moveQiang()){
+				continue;
+			}
+			self.setPathAll((thisChara.locationX() - 1) , thisChara.locationY() , -1);
+			self.setPathAll((thisChara.locationX() + 1) , thisChara.locationY() , -1);
+			self.setPathAll(thisChara.locationX() , (thisChara.locationY() - 1) , -1);
+			self.setPathAll(thisChara.locationX() , (thisChara.locationY() + 1) , -1);
 		}
 	}else if(chara.belong == Belong.ENEMY){
 		for(var i=0;i<LMvc.BattleController.model.ourList.length;i++){
 			thisChara = LMvc.BattleController.model.ourList[i];
-			if(thisChara.visible){
-				self._enemyCost[thisChara.locationX() + "-" + thisChara.locationY()] = 255;
-				self.setPathAll((thisChara.locationX() - 1) , thisChara.locationY() , -1);
-				self.setPathAll((thisChara.locationX() + 1) , thisChara.locationY() , -1);
-				self.setPathAll(thisChara.locationX() , (thisChara.locationY() - 1) , -1);
-				self.setPathAll(thisChara.locationX() , (thisChara.locationY() + 1) , -1);
+			if(!thisChara.visible){
+				continue;
 			}
+			self._enemyCost[thisChara.locationX() + "-" + thisChara.locationY()] = 255;
+			if(chara.data.moveQiang()){
+				continue;
+			}
+			self.setPathAll((thisChara.locationX() - 1) , thisChara.locationY() , -1);
+			self.setPathAll((thisChara.locationX() + 1) , thisChara.locationY() , -1);
+			self.setPathAll(thisChara.locationX() , (thisChara.locationY() - 1) , -1);
+			self.setPathAll(thisChara.locationX() , (thisChara.locationY() + 1) , -1);
 		}
 		for(var i=0;i<LMvc.BattleController.model.friendList.length;i++){
 			thisChara = LMvc.BattleController.model.friendList[i];
-			if(thisChara.visible){
-				self._enemyCost[thisChara.locationX() + "-" + thisChara.locationY()] = 255;
-				self.setPathAll((thisChara.locationX() - 1) , thisChara.locationY() , -1);
-				self.setPathAll((thisChara.locationX() + 1) , thisChara.locationY() , -1);
-				self.setPathAll(thisChara.locationX() , (thisChara.locationY() - 1) , -1);
-				self.setPathAll(thisChara.locationX() , (thisChara.locationY() + 1) , -1);
+			if(!thisChara.visible){
+				continue;
 			}
+			self._enemyCost[thisChara.locationX() + "-" + thisChara.locationY()] = 255;
+			if(chara.data.moveQiang()){
+				continue;
+			}
+			self.setPathAll((thisChara.locationX() - 1) , thisChara.locationY() , -1);
+			self.setPathAll((thisChara.locationX() + 1) , thisChara.locationY() , -1);
+			self.setPathAll(thisChara.locationX() , (thisChara.locationY() - 1) , -1);
+			self.setPathAll(thisChara.locationX() , (thisChara.locationY() + 1) , -1);
 		}
 	}
 	self._starPoint = self._map[chara.locationY()][chara.locationX()];

@@ -104,7 +104,7 @@ BattleController.prototype.init = function(){
 	self.addOurCharacter(2,CharacterAction.MOVE,CharacterDirection.UP,4,4);
 	self.addOurCharacter(3,CharacterAction.MOVE,CharacterDirection.LEFT,3,3);
 	self.addEnemyCharacter(4,CharacterAction.MOVE,CharacterDirection.LEFT,3,4);
-	self.addEnemyCharacter(5,CharacterAction.MOVE,CharacterDirection.LEFT,2,5);
+	self.addEnemyCharacter(5,CharacterAction.MOVE,CharacterDirection.LEFT,4,6);
 	self.addFriendCharacter(6,CharacterAction.MOVE,CharacterDirection.RIGHT,1,7);
 	self.boutNotify(Belong.SELF);
 };
