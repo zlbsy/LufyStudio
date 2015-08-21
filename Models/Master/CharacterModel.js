@@ -67,14 +67,14 @@ CharacterModel.prototype.calculation = function() {
 	self.data.maxTroops = self.initTroops() + property.troops * self.lv();
 	self.data.maxStrategy = self.initStrategy() + property.strategy * self.lv();
 	var skill = self.skill(SkillType.CREATE);
-	self.data.moveQiang = (skill && skill.isSubType(SkillSubType.MOVE_QIANG));
-	self.data.moveElu = (skill && skill.isSubType(SkillSubType.MOVE_ELU));
+	self.data.moveAssault = (skill && skill.isSubType(SkillSubType.MOVE_ASSAULT));
+	self.data.moveKnow = (skill && skill.isSubType(SkillSubType.MOVE_KNOW));
 };
-CharacterModel.prototype.moveElu = function() {
-	return this.data.moveElu;
+CharacterModel.prototype.moveKnow = function() {
+	return this.data.moveKnow;
 };
-CharacterModel.prototype.moveQiang = function() {
-	return this.data.moveQiang;
+CharacterModel.prototype.moveAssault = function() {
+	return this.data.moveAssault;
 };
 CharacterModel.prototype.initStrategy = function() {
 	return this.data.initStrategy;
