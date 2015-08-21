@@ -25,6 +25,7 @@ BattleQuery.prototype.setPathAll = function(px,py,value){
 BattleQuery.prototype.makePath = function(chara){
 	var self = this;
 	self._chara = chara;
+	self.moveKnow = chara.data.moveKnow();
 	self._path = [];
 	var isOver = false;
 	self.setStart();
@@ -37,7 +38,7 @@ BattleQuery.prototype.makePath = function(chara){
 				continue;
 			}
 			self._enemyCost[thisChara.locationX() + "-" + thisChara.locationY()] = 255;
-			if(chara.data.moveQiang()){
+			if(chara.data.moveAssault()){
 				continue;
 			}
 			self.setPathAll((thisChara.locationX() - 1) , thisChara.locationY() , -1);
@@ -52,7 +53,7 @@ BattleQuery.prototype.makePath = function(chara){
 				continue;
 			}
 			self._enemyCost[thisChara.locationX() + "-" + thisChara.locationY()] = 255;
-			if(chara.data.moveQiang()){
+			if(chara.data.moveAssault()){
 				continue;
 			}
 			self.setPathAll((thisChara.locationX() - 1) , thisChara.locationY() , -1);
@@ -66,7 +67,7 @@ BattleQuery.prototype.makePath = function(chara){
 				continue;
 			}
 			self._enemyCost[thisChara.locationX() + "-" + thisChara.locationY()] = 255;
-			if(chara.data.moveQiang()){
+			if(chara.data.moveAssault()){
 				continue;
 			}
 			self.setPathAll((thisChara.locationX() - 1) , thisChara.locationY() , -1);
