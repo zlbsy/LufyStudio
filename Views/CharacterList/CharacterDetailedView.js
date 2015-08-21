@@ -130,7 +130,7 @@ CharacterDetailedView.prototype.TabShow=function(tab){
 			self.showArms();
 			break;
 		case CharacterDetailedView.TAB_PROPERTIES:
-			//self.showLineups();
+			self.showProperties();
 			break;
 		case CharacterDetailedView.TAB_STATUS:
 			self.showStatus();
@@ -358,7 +358,67 @@ CharacterDetailedView.prototype.showStatus=function(){
 	sc.y = 50;
 	self.tabLayer.addChild(sc);
 };
-
+CharacterDetailedView.prototype.showProperties=function(){
+	var self = this;
+	/*	"attack":"攻击",
+	"spirit":"策略",
+	"defense":"防御",
+	"breakout":"爆发",
+	"morale":"士气",
+	"movePower":"移动力",*/
+	var statusLayer = new LSprite();
+	var txtHeight = 25, startY = -txtHeight + 5, startRightY = startY,startX = 5;
+	var labels = ["force","command","intelligence","agility","luck","体力"];
+	var labelsRight = ["troops","MP","attack","spirit","defense","breakout","morale","movePower"];
+ 	var seignior = self.characterModel.seignior();
+	var datas = [
+	self.characterModel.force(),
+	self.characterModel.command(),
+	self.characterModel.intelligence(),
+	self.characterModel.agility(),
+	self.characterModel.luck()
+	];
+	for(var i=0;i<labels.length;i++){
+		startY += txtHeight;
+		var lblLeft = getStrokeLabel(String.format("{0} : {1}",Language.get(labels[i]), datas[i]),20,"#FFFFFF","#000000",4);
+		lblLeft.x = startX;
+		lblLeft.y = startY;
+		statusLayer.addChild(lblLeft);
+	}
+	startX = 140;
+	for(var i=0;i<labelsRight.length;i++){
+		startRightY += txtHeight;
+		var lblRight = getStrokeLabel(Language.get(labelsRight[i]),20,"#FFFFFF","#000000",4);
+		lblRight.x = startX;
+		lblRight.y = startRightY;
+		statusLayer.addChild(lblRight);
+		var bar = new StatusBarView(self.controller);
+		/*self.maxValue = obj.maxValue;
+	self.currentValue = obj.currentValue;
+	//label
+	self.name = obj.name;
+	self.icon = obj.icon;
+	self.frontBar = obj.frontBar;
+	self.barSize = obj.barSize;*/
+		bar.set({maxValue:100,currentValue:60,name:Language.get(labelsRight[i]),
+		icon:"icon_hert",
+		frontBar:"red_bar",
+		barSize:200});
+		bar.x = startX + 50;
+		bar.y = startRightY;
+		statusLayer.addChild(bar);
+	}
+	startY += txtHeight;
+	startRightY += txtHeight;
+	statusLayer.graphics.drawRect(0, "#000000", [0, 0, LGlobal.width - 50, startY > startRightY ? startY : startRightY]);
+	var statusBitmap = getBitmap(statusLayer);
+	var backLayer = new LSprite();
+	backLayer.addChild(statusBitmap);
+	var sc = new LScrollbar(backLayer, LGlobal.width - 50, LGlobal.height - self.tabLayer.y - 70, 10);
+	sc.x = 10;
+	sc.y = 50;
+	self.tabLayer.addChild(sc);
+};
 CharacterDetailedView.prototype.ctrlLayerInit=function(){
 	var self = this;
 	

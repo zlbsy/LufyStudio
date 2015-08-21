@@ -34,7 +34,7 @@ BattleController.prototype.modelLoad=function(){
 };
 BattleController.prototype.viewLoad=function(){
 	var self = this;
-	self.load.view(["Battle/Background","Battle/BattleMiniPreview","Battle/BattleMap","Common/Character","Common/SpecialEffect",
+	self.load.view(["Battle/Background","Battle/BattleMiniPreview","Battle/BattleMap","Common/Character","Common/SpecialEffect","Common/StatusBar",
 	"Battle/BattleCharacterLayer","Battle/BattleCharacter","Battle/BattleRoad","Battle/BattleCharacterStatus",
 	"Strategy/Strategy","Strategy/StrategyChild","Battle/EffectStrategy","Battle/BattleMainMenu","Battle/BattleBout",
 	"Battle/CharacterStatusIcon","Battle/BattleWeather","Battle/BattleTerrain"],self.addMap);
@@ -95,10 +95,10 @@ BattleController.prototype.init = function(){
 	self.dispatchEvent(LEvent.COMPLETE);
 	self.dispatchEvent(LController.NOTIFY);
 	for(var i = 1;i<16;i++){
-		CharacterModel.getChara(i).data.troops = CharacterModel.getChara(i).maxTroops() - 50;
-		CharacterModel.getChara(i).maxHP(100);
-		CharacterModel.getChara(i).HP(100);
-		CharacterModel.getChara(i).calculation();
+		//CharacterModel.getChara(i).data.troops = CharacterModel.getChara(i).maxTroops() - 50;
+		//CharacterModel.getChara(i).maxHP(100);
+		//CharacterModel.getChara(i).HP(100);
+		CharacterModel.getChara(i).calculation(true);
 	}
 	self.addOurCharacter(1,CharacterAction.MOVE,CharacterDirection.DOWN,5,5);
 	self.addOurCharacter(2,CharacterAction.MOVE,CharacterDirection.UP,4,4);

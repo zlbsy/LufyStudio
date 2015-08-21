@@ -56,7 +56,7 @@ CharacterModel.getChara=function(chara_id){
 	}
 	return null;
 };
-CharacterModel.prototype.calculation = function() {
+CharacterModel.prototype.calculation = function(init) {
 	var self = this;
 	var property = self.currentSoldiers().property();
 	self.data.attack = self.force() * 0.5 + CharacterModel.upValue(property.attack, self.force()) * self.lv();
@@ -66,6 +66,14 @@ CharacterModel.prototype.calculation = function() {
 	self.data.morale = self.luck() * 0.5 + CharacterModel.upValue(property.morale, self.luck()) * self.lv();
 	self.data.maxTroops = self.initTroops() + property.troops * self.lv();
 	self.data.maxStrategy = self.initStrategy() + property.strategy * self.lv();
+	if(init){
+		self.maxTroops(init);
+		self.maxHP(init);
+		self.maxMP(init);
+		self.data.troops = self.maxTroops();
+		self.data.hp = self.maxHP();
+		self.data.mp = self.maxMP();
+	}
 	var skill = self.skill(SkillType.CREATE);
 	self.data.moveAssault = (skill && skill.isSubType(SkillSubType.MOVE_ASSAULT));
 	self.data.moveKnow = (skill && skill.isSubType(SkillSubType.MOVE_KNOW));
@@ -135,24 +143,34 @@ CharacterModel.prototype.troops = function(value) {
 	}
 	return typeof this.data.troops == UNDEFINED ? 0 : this.data.troops;
 };
-CharacterModel.prototype.maxTroops = function(value) {
-	//TODO::
-	return 1000;
-};
-CharacterModel.prototype.maxHP = function(value) {
-	if(typeof value != UNDEFINED){
-		this.data.maxHp = value;
-	}
-	return this.data.maxHp;
-};
 CharacterModel.prototype.HP = function(value) {
 	if(typeof value != UNDEFINED){
 		this.data.hp = value;
 	}
 	return this.data.hp;
 };
-CharacterModel.prototype.MP = function() {return 20;
+CharacterModel.prototype.MP = function(value) {
+	if(typeof value != UNDEFINED){
+		this.data.mp = value;
+	}
 	return this.data.mp;
+};
+CharacterModel.prototype.maxTroops = function(init) {
+	var self = this;
+	if(init){
+		self.data._maxTroops = self.data.initTroops + self.currentSoldiers().property().troops * self.level();
+	}
+	return self.data._maxTroops;
+};
+CharacterModel.prototype.maxHP = function() {
+	return 100;
+};
+CharacterModel.prototype.maxMP = function(init) {
+	var self = this;
+	if(init){
+		self.data._maxStrategy = self.data.initStrategy + self.currentSoldiers().property().strategy * self.level();
+	}
+	return self.data._maxStrategy;
 };
 CharacterModel.prototype.lv = function() {
 	return this.level();

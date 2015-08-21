@@ -101,7 +101,10 @@ BattleQuery.prototype.loopPath = function(thisPoint){
 		if(!checkPoint.moveLong)checkPoint.moveLong = 0;
 		if(checkPoint.isChecked && checkPoint.moveLong >= thisPoint.moveLong)continue;
 		var soldier = self._chara.data.currentSoldiers();
-		var cost = self.moveKnow ? 1 : soldier.terrain(self._map[checkPoint.y][checkPoint.x].value).moveCost;
+		var cost = soldier.terrain(self._map[checkPoint.y][checkPoint.x].value).moveCost;
+		if(self.moveKnow && cost < 100){
+			cost = 1;
+		}
 		cost += self._enemyCost[checkPoint.x + "-" + checkPoint.y] != null && self._enemyCost[checkPoint.x + "-" + checkPoint.y] != "all" ? self._enemyCost[checkPoint.x + "-" + checkPoint.y]:0;
 		checkPoint.moveLong = thisPoint.moveLong - cost;
 		if (self._enemyCost[checkPoint.x + "-" + checkPoint.y] == "all" && checkPoint.moveLong > 1)checkPoint.moveLong = 1;
