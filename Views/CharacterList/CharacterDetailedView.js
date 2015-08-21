@@ -232,124 +232,8 @@ CharacterDetailedView.prototype.showStatus=function(){
 		lblCost.y = startY;
 		statusLayer.addChild(lblCost);
 	}
-	/*
-	startY += txtHeight;
-	var lblCost = getStrokeLabel(String.format("{0} : {1}",Language.get("cost"), self.characterModel.cost()),20,"#FFFFFF","#000000",4);
-	lblCost.x = startX;
-	lblCost.y = startY;
-	statusLayer.addChild(lblCost);
-	startY += txtHeight;
-	var lblHp = getStrokeLabel(String.format("{0} : {1}","HP", self.characterModel.maxHp()),20,"#FFFFFF","#000000",4);
-	lblHp.x = startX;
-	lblHp.y = startY;
-	statusLayer.addChild(lblHp);
-	
-	startY += txtHeight;
-	var lblAttack = getStrokeLabel(String.format("{0} : {1}",Language.get("attack"), self.characterModel.attack()),20,"#FFFFFF","#000000",4);
-	lblAttack.x = startX;
-	lblAttack.y = startY;
-	statusLayer.addChild(lblAttack);
-	
-	startY += txtHeight;
-	var lblMagicAttack = getStrokeLabel(String.format("{0} : {1}",Language.get("magicAttack"), self.characterModel.magicAttack()),20,"#FFFFFF","#000000",4);
-	lblMagicAttack.x = startX;
-	lblMagicAttack.y = startY;
-	statusLayer.addChild(lblMagicAttack);
-	
-	startY += txtHeight;
-	var lblDefense = getStrokeLabel(String.format("{0} : {1}",Language.get("defense"), self.characterModel.defense()),20,"#FFFFFF","#000000",4);
-	lblDefense.x = startX;
-	lblDefense.y = startY;
-	statusLayer.addChild(lblDefense);
-	
-	startY += txtHeight;
-	var lblMagicDefense = getStrokeLabel(String.format("{0} : {1}",Language.get("magicDefense"), self.characterModel.magicDefense()),20,"#FFFFFF","#000000",4);
-	lblMagicDefense.x = startX;
-	lblMagicDefense.y = startY;
-	statusLayer.addChild(lblMagicDefense);
-	
-	startY += txtHeight;
-	var lblBreakout = getStrokeLabel(String.format("{0} : {1}",Language.get("breakout"), self.characterModel.breakout()),20,"#FFFFFF","#000000",4);
-	lblBreakout.x = startX;
-	lblBreakout.y = startY;
-	statusLayer.addChild(lblBreakout);
-	
-	startY += txtHeight;
-	var lblDodge = getStrokeLabel(String.format("{0} : {1}",Language.get("dodge"), self.characterModel.dodge()),20,"#FFFFFF","#000000",4);
-	lblDodge.x = startX;
-	lblDodge.y = startY;
-	statusLayer.addChild(lblDodge);
-	
-	startY += txtHeight;
-	var lblSpeed = getStrokeLabel(String.format("{0} : {1}",Language.get("speed"), self.characterModel.speed()),20,"#FFFFFF","#000000",4);
-	lblSpeed.x = startX;
-	lblSpeed.y = startY;
-	statusLayer.addChild(lblSpeed);
-	
-	startY += txtHeight;
-	var lblForce = getStrokeLabel(String.format("{0} : {1}",Language.get("force"), self.characterModel.growing().force()),20,"#FFFFFF","#000000",4);
-	lblForce.x = startX;
-	lblForce.y = startY;
-	statusLayer.addChild(lblForce);
-	
-	startY += txtHeight;
-	var lblStrategy = getStrokeLabel(String.format("{0} : {1}",Language.get("strategy"), self.characterModel.growing().strategy()),20,"#FFFFFF","#000000",4);
-	lblStrategy.x = startX;
-	lblStrategy.y = startY;
-	statusLayer.addChild(lblStrategy);
-	
-	startY += txtHeight;
-	var lblCommand = getStrokeLabel(String.format("{0} : {1}",Language.get("command"), self.characterModel.growing().command()),20,"#FFFFFF","#000000",4);
-	lblCommand.x = startX;
-	lblCommand.y = startY;
-	statusLayer.addChild(lblCommand);
-	
-	startY += txtHeight;
-	var lblIntelligence = getStrokeLabel(String.format("{0} : {1}",Language.get("intelligence"), self.characterModel.growing().intelligence()),20,"#FFFFFF","#000000",4);
-	lblIntelligence.x = startX;
-	lblIntelligence.y = startY;
-	statusLayer.addChild(lblIntelligence);
-	
-	startY += txtHeight;
-	var lblAgility = getStrokeLabel(String.format("{0} : {1}",Language.get("agility"), self.characterModel.growing().agility()),20,"#FFFFFF","#000000",4);
-	lblAgility.x = startX;
-	lblAgility.y = startY;
-	statusLayer.addChild(lblAgility);
-	*/
 	startY += txtHeight;
 	statusLayer.graphics.drawRect(0, "#000000", [0, 0, LGlobal.width - 50, startY]);
-	/*
-	var center = new LPoint(280, 145);
-	var angle = 360 / labels.length;
-	var middleR = 110;
-	var bigR = 130;
-	var smallList = [];
-	var middleList = [];
-	var bigList = [];
-	var maxStatus = 100;
-	for(var i=0;i<labels.length;i++){
-		var rotate = (180-angle * i) * Math.PI / 180;
-		var x = Math.floor(center.x - bigR*Math.cos(rotate+Math.PI*0.5));
-		var y = Math.floor(center.y + bigR*Math.sin(rotate+Math.PI*0.5));
-		var text = getStrokeLabel(Language.get(labels[i]),18,"#FFFFFF","#000000",2);
-		text.x = x - text.getWidth() * 0.5;
-		text.y = y - text.getHeight() * 0.5;
-		statusLayer.addChild(text);
-		
-		var x = Math.floor(center.x - middleR*Math.cos(rotate+Math.PI*0.5));
-		var y = Math.floor(center.y + middleR*Math.sin(rotate+Math.PI*0.5));
-		middleList.push([x, y]);
-		statusLayer.graphics.drawLine(2, "#000000", [center.x, center.y, x, y]);
-		
-		var smallR = middleR * datas[i] / maxStatus;
-		var x = Math.floor(center.x - smallR*Math.cos(rotate+Math.PI*0.5));
-		var y = Math.floor(center.y + smallR*Math.sin(rotate+Math.PI*0.5));
-		smallList.push([x, y]);
-	}
-	statusLayer.graphics.drawVertices(2, "#ff0000", smallList);
-	statusLayer.graphics.drawVertices(1, "#000000", middleList);
-	statusLayer.graphics.drawRect(1, "#000000", [middleList[0][0], middleList[0][1], 5, 5]);
-	*/
 	var statusBitmap = getBitmap(statusLayer);
 	var backLayer = new LSprite();
 	backLayer.addChild(statusBitmap);
@@ -367,16 +251,29 @@ CharacterDetailedView.prototype.showProperties=function(){
 	"morale":"士气",
 	"movePower":"移动力",*/
 	var statusLayer = new LSprite();
-	var txtHeight = 25, startY = -txtHeight + 5, startRightY = startY,startX = 5;
-	var labels = ["force","command","intelligence","agility","luck","体力"];
-	var labelsRight = ["troops","MP","attack","spirit","defense","breakout","morale","movePower"];
+	var txtHeight = 25, startY = -txtHeight + 10, startRightY = startY,startX = 5;
+	var labels = ["tab_arms","force","command","intelligence","agility","luck"];
+	var labelsRight = ["troops","MP","physicalFitness","attack","spirit","defense","breakout","morale","movePower"];
  	var seignior = self.characterModel.seignior();
 	var datas = [
+	self.characterModel.currentSoldiers().name(),
 	self.characterModel.force(),
 	self.characterModel.command(),
 	self.characterModel.intelligence(),
 	self.characterModel.agility(),
-	self.characterModel.luck()
+	self.characterModel.luck(),
+	self.characterModel.currentSoldiers().movePower()
+	];
+	var datasRight = [
+	[self.characterModel.troops(),self.characterModel.maxTroops()],
+	[self.characterModel.MP(),self.characterModel.maxMP()],
+	[self.characterModel.physicalFitness(),self.characterModel.maxPhysicalFitness()],
+	[self.characterModel.attack(),self.characterModel.attack()],
+	[self.characterModel.spirit(),self.characterModel.spirit()],
+	[self.characterModel.defense(),self.characterModel.defense()],
+	[self.characterModel.breakout(),self.characterModel.breakout()],
+	[self.characterModel.morale(),self.characterModel.morale()],
+	[self.characterModel.currentSoldiers().movePower(),self.characterModel.currentSoldiers().movePower()],
 	];
 	for(var i=0;i<labels.length;i++){
 		startY += txtHeight;
@@ -385,32 +282,23 @@ CharacterDetailedView.prototype.showProperties=function(){
 		lblLeft.y = startY;
 		statusLayer.addChild(lblLeft);
 	}
-	startX = 140;
+	startX = 180;
 	for(var i=0;i<labelsRight.length;i++){
 		startRightY += txtHeight;
-		var lblRight = getStrokeLabel(Language.get(labelsRight[i]),20,"#FFFFFF","#000000",4);
-		lblRight.x = startX;
-		lblRight.y = startRightY;
-		statusLayer.addChild(lblRight);
+		var obj = datasRight[i];
 		var bar = new StatusBarView(self.controller);
-		/*self.maxValue = obj.maxValue;
-	self.currentValue = obj.currentValue;
-	//label
-	self.name = obj.name;
-	self.icon = obj.icon;
-	self.frontBar = obj.frontBar;
-	self.barSize = obj.barSize;*/
 		bar.set({maxValue:100,currentValue:60,name:Language.get(labelsRight[i]),
 		icon:"icon_hert",
 		frontBar:"red_bar",
 		barSize:200});
-		bar.x = startX + 50;
+		bar.x = startX;
 		bar.y = startRightY;
 		statusLayer.addChild(bar);
 	}
 	startY += txtHeight;
 	startRightY += txtHeight;
-	statusLayer.graphics.drawRect(0, "#000000", [0, 0, LGlobal.width - 50, startY > startRightY ? startY : startRightY]);
+	var height = startY > startRightY ? startY : startRightY;
+	statusLayer.graphics.drawRect(0, "#000000", [0, 0, LGlobal.width - 50, height]);
 	var statusBitmap = getBitmap(statusLayer);
 	var backLayer = new LSprite();
 	backLayer.addChild(statusBitmap);

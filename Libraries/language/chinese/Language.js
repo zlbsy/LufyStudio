@@ -129,6 +129,7 @@ Language.data = {
 	"breakout":"爆发",
 	"morale":"士气",
 	"movePower":"移动力",
+	"physicalFitness":"体力",
 	
 	"monarch":"君主",
 	"general":"一般",
