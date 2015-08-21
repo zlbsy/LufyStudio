@@ -56,11 +56,11 @@ var SkillSubType = {
 	/**
 	 * 突击(移动时无视敌军阻挡)
 	 **/
-	MOVE_QIANG:"move_qiang",
+	MOVE_ASSAULT:"move_assault",
 	/**
 	 * 恶路(移动时无视地形)
 	 **/
-	MOVE_ELU:"move_elu",
+	MOVE_KNOW:"move_know",
 };
 var SkillsData = [
 {id:1,name:"雷霆怒击(张飞)",type:SkillType.ATTACK,subType:[SkillSubType.ATTACK_COUNT],attacks:[1,1,1],probability:50,explanation:"{probability}几率连续攻击三次。"},
@@ -93,7 +93,7 @@ var SkillsData = [
 {id:27,name:"灵敏(魏延)",type:SkillType.BOUT_START,subType:[SkillSubType.SELF_AID],aids:[5],aidCount:1,aidRects:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],probability:40,explanation:"{probability}几率攻击结束时提升自身爆发力。"},
 {id:28,name:"猛攻(姜维)",type:SkillType.BOUT_START,subType:[SkillSubType.SELF_AID],aids:[5],aidCount:1,aidRects:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],probability:30,explanation:"{probability}几率回合开始时提升自身及周围友军的攻击力。"},
 {id:29,name:"坚固(邓艾)",type:SkillType.BOUT_START,subType:[SkillSubType.SELF_AID],aids:[5],aidCount:1,aidRects:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],probability:30,explanation:"{probability}几率回合开始时提升自身及周围友军的防御力。"},
-{id:30,name:"暗行(吕蒙)",type:SkillType.CREATE,subType:[SkillSubType.MOVE_QIANG,SkillSubType.MOVE_ALL],aids:[5],aidCount:1,aidRects:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],probability:100,explanation:"无视地形和敌军阻挡进行移动。"},
+{id:30,name:"暗行(吕蒙)",type:SkillType.CREATE,subType:[SkillSubType.MOVE_KNOW],aids:[5],aidCount:1,aidRects:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],probability:100,explanation:"无视地形和敌军阻挡进行移动。"},
 {id:31,name:"劫营(甘宁)",type:SkillType.BOUT_START,subType:[SkillSubType.SELF_AID],aids:[5],aidCount:1,aidRects:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],probability:100,explanation:"从敌人背后或侧面攻击时攻击有加成,不包括斜角攻击。"},
 {id:32,name:"乱射(太史慈)",type:SkillType.BOUT_START,subType:[SkillSubType.SELF_AID],aids:[5],aidCount:1,aidRects:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],probability:30,explanation:"{probability}几率使用弓箭类兵种攻击时,使攻击波及到目标敌人相邻的敌军。"},
 {id:33,name:"破弩(徐晃)",type:SkillType.BOUT_START,subType:[SkillSubType.SELF_AID],aids:[5],aidCount:1,aidRects:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],probability:100,explanation:"无视弓兵类兵种的克制效果。"},
