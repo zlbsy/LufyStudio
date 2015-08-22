@@ -3,6 +3,9 @@ function BattleMapView(controller){
 	LExtends(self,LView,[controller]);
 	self.loadMapComplete = false;
 	self.staticCharacters = [];
+	self.wakeRoads = {};
+	self.wakeRoads[Belong.SELF] = [];
+	self.wakeRoads[Belong.ENEMY] = [];
 	self.speed = BattleMapConfig.SPEED;
 	self._speed = 0;
 };
@@ -37,14 +40,6 @@ BattleMapView.prototype.setBig = function(event){
 		child.toStatic(true);
 	});
 	self.staticCharacters.length = 0;
-	/*
-	self.controller.view.charaLayer.childList.forEach(function(chara){
-		self.characterIn(chara);
-	});
-	console.log(self.controller.view.charaLayer);
-	self.controller.view.charaLayer.visible=false;
-	for(var i=50;i<60;i++)
-	self.characterOut(self.controller.view.charaLayer.childList[i]);*/
 };
 BattleMapView.prototype.onframe = function(event){
 	var self = event.currentTarget;
@@ -90,4 +85,45 @@ BattleMapView.prototype.showTerrain=function(x,y){
 	
 	var data = self.model.map.data[locationY][locationX];
 	self.controller.view.terrainWindow.show(sX,sY,data);
+};
+BattleMapView.prototype.wakeRoadsClear=function(belong){
+	this.wakeRoads[belong].length = 0;
+};
+BattleMapView.prototype.setWakeRoad=function(belong,x,y){
+	var self = this;
+	if(belong == Belong.FRIEND){
+		belong = Belong.SELF;
+	}
+	this.wakeRoads[belong].push([x,y]);
+};
+BattleMapView.prototype.setWakeRoads=function(belong,rects,x,y){
+	var self = this, obj;
+	if(typeof x == UNDEFINED){
+		for(var i = 0,l = rects.length;i < l; i++){
+			obj = rects[i];
+			self.setWakeRoad(belong, obj[0], obj[1]);
+		}
+	}else{
+		for(var i = 0,l = rects.length;i < l; i++){
+			obj = rects[i];
+			self.setWakeRoad(belong, obj[0] + x, obj[1] + y);
+		}
+	}
+};
+BattleMapView.prototype.isWakeRoad=function(belong,x,y){
+	var self = this, obj;
+	if(belong == Belong.FRIEND){
+		belong = Belong.SELF;
+	}
+	var rects = self.wakeRoads[belong];
+	for(var i = 0,l = rects.length;i < l; i++){
+		obj = rects[i];
+		if(obj[0] == x && obj[1] == y){
+			return true;
+		}
+	}
+	return false;
+};
+BattleMapView.prototype.isOnWakeRoad=function(chara){
+	return this.isWakeRoad(chara.belong,chara.locationX(),chara.locationY());
 };

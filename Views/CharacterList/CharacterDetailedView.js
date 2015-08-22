@@ -265,15 +265,15 @@ CharacterDetailedView.prototype.showProperties=function(){
 	self.characterModel.currentSoldiers().movePower()
 	];
 	var datasRight = [
-	[self.characterModel.troops(),self.characterModel.maxTroops()],
-	[self.characterModel.MP(),self.characterModel.maxMP()],
-	[self.characterModel.physicalFitness(),self.characterModel.maxPhysicalFitness()],
-	[self.characterModel.attack(),self.characterModel.attack()],
-	[self.characterModel.spirit(),self.characterModel.spirit()],
-	[self.characterModel.defense(),self.characterModel.defense()],
-	[self.characterModel.breakout(),self.characterModel.breakout()],
-	[self.characterModel.morale(),self.characterModel.morale()],
-	[self.characterModel.currentSoldiers().movePower(),self.characterModel.currentSoldiers().movePower()],
+	[self.characterModel.troops(),self.characterModel.maxTroops(),2000],
+	[self.characterModel.MP(),self.characterModel.maxMP(),1000],
+	[self.characterModel.physicalFitness(),self.characterModel.maxPhysicalFitness(),100],
+	[self.characterModel.attack(),self.characterModel.attack(),1000],
+	[self.characterModel.spirit(),self.characterModel.spirit(),1000],
+	[self.characterModel.defense(),self.characterModel.defense(),1000],
+	[self.characterModel.breakout(),self.characterModel.breakout(),1000],
+	[self.characterModel.morale(),self.characterModel.morale(),1000],
+	[self.characterModel.currentSoldiers().movePower(),self.characterModel.currentSoldiers().movePower(),10],
 	];
 	for(var i=0;i<labels.length;i++){
 		startY += txtHeight;
@@ -287,7 +287,7 @@ CharacterDetailedView.prototype.showProperties=function(){
 		startRightY += txtHeight;
 		var obj = datasRight[i];
 		var bar = new StatusBarView(self.controller);
-		bar.set({maxValue:100,currentValue:60,name:Language.get(labelsRight[i]),
+		bar.set({maxValue:obj[2],currentValue:obj[0],normalValue:obj[1],name:Language.get(labelsRight[i]),
 		icon:"icon_hert",
 		frontBar:"red_bar",
 		barSize:200});
