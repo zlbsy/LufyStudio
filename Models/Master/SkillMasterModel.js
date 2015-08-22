@@ -62,6 +62,9 @@ SkillMasterModel.prototype.aidCount = function() {
 SkillMasterModel.prototype.aidRects = function() {
 	return this.data.aidRects;
 };
+SkillMasterModel.prototype.wakeRects = function() {
+	return this.data.wakeRects;
+};
 SkillMasterModel.prototype.vampire = function() {
 	return this.data.vampire;
 };

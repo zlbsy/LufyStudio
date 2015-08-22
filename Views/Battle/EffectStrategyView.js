@@ -38,7 +38,8 @@ EffectStrategyView.prototype.becomeEffective = function(anime){
 EffectStrategyView.prototype.toChangeStatus = function(){
 	var self = this, hitrate;
 	var currentSelectStrategy = self.currentCharacter.currentSelectStrategy;
-	if(self.currentTargetCharacter.hasSkill(SkillSubType.WAKE)){
+	var mapLayer = controller.view.mapLayer;
+	if(mapLayer.isOnWakeRoad(self.currentTargetCharacter)){
 		hitrate = false;
 	}else{
 		hitrate = calculateHitrateStrategy(self.currentCharacter, self.currentTargetCharacter);

@@ -157,14 +157,17 @@ BattleCharacterAI.prototype.attackActionComplete = function(event) {
 	chara.changeAction(chara.data.id() == BattleController.ctrlChara.data.id() ? CharacterAction.STAND : CharacterAction.MOVE);
 	selfSkill = chara.data.skill(SkillType.ATTACK_END);
 	if(selfSkill && selfSkill.isSubType(SkillSubType.SELF_AID)){
-		var tweenObj = getStrokeLabel(selfSkill.name(),22,"#FFFFFF","#000000",2);
+		var tweenObj = getStrokeLabel(selfSkill.name(),22,"#FFFFFF","#000000",2); 
 		tweenObj.x = chara.x + (BattleCharacterSize.width - tweenObj.getWidth()) * 0.5;
 			tweenObj.y = chara.y + tweenObj.getHeight();
 			chara.controller.view.baseLayer.addChild(tweenObj);
 			LTweenLite.to(tweenObj,0.5,{y:tweenObj.y - 20,alpha:0,onComplete:function(e){
 				e.target.remove();
 			}});
+			
 			var aids = Array.getRandomArrays(selfSkill.aids(),selfSkill.aidCount());
+			/*
+	if(mapLayer.isWakeRoad(self.currentTargetCharacter.belong,self.currentTargetCharacter.locationX(),self.currentTargetCharacter.locationY())){*/
 			for(var j = 0;j<aids.length;j++){
 				var strategy = StrategyMasterModel.getMaster(aids[j]);
 				chara.status.addStatus(strategy.strategyType(), strategy.hert());
@@ -173,6 +176,7 @@ BattleCharacterAI.prototype.attackActionComplete = function(event) {
 	}
 	var hertParams = self.herts[0];
 	self.herts.shift();
+	var mapLayer = controller.view.mapLayer;
 	for(var i = 0,l = hertParams.list.length;i<l;i++){
 		var obj = hertParams.list[i];
 		obj.chara.toStatic(false);
@@ -213,7 +217,7 @@ BattleCharacterAI.prototype.attackActionComplete = function(event) {
 			if(obj.aids && obj.aids.length > 0){
 				for(var j = 0;j<obj.aids.length;j++){
 					var strategy = StrategyMasterModel.getMaster(obj.aids[j]);
-					if(strategy.canChangeStatus() && obj.chara.hasSkill(SkillSubType.WAKE)){
+					if(strategy.canChangeStatus() && mapLayer.isOnWakeRoad(obj.chara)){
 						continue;
 					}
 					obj.chara.status.addStatus(strategy.strategyType(), strategy.hert());
