@@ -93,7 +93,7 @@ EffectStrategyView.prototype.removeSelf = function(event){
 	var self = anime.parent;
 	anime.stop();
 	if(self.currentTargetCharacter.AI.attackTarget){
-		self.currentCharacter.changeAction(self.currentTargetCharacter.data.isHertTroops()?CharacterAction.HERT:CharacterAction.STAND);
+		self.currentCharacter.changeAction(self.currentTargetCharacter.data.isPantTroops()?CharacterAction.PANT:CharacterAction.STAND);
 	}
 	var stepTime = BattleCharacterStatusConfig.FADE_TIME + BattleCharacterStatusConfig.SHOW_TIME;
 	self.currentTargetCharacter.changeAction(CharacterAction.MOVE);

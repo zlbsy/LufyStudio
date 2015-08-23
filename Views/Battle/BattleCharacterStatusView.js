@@ -160,7 +160,9 @@ BattleCharacterStatusView.prototype.getCharacterStatusChild=function(mode,layer)
 			label = "兵力";
 			maxValue = self.character.data.maxTroops();
 			currentValue = self.character.data.troops();
-			self.character.data.troops(currentValue, statusObject.value);
+			if(statusObject){
+				self.character.data.troops(currentValue + statusObject.value);
+			}
 			break;
 		case BattleCharacterStatusConfig.MP:
 			icon = "yellow_ball";
@@ -168,7 +170,9 @@ BattleCharacterStatusView.prototype.getCharacterStatusChild=function(mode,layer)
 			label = "策略";
 			maxValue = self.character.data.maxMP();
 			currentValue = self.character.data.MP();
-			self.character.data.MP(currentValue, statusObject.value);
+			if(statusObject){
+				self.character.data.MP(currentValue + statusObject.value);
+			}
 			break;
 		case BattleCharacterStatusConfig.SP:
 			icon = "orange_ball";
@@ -176,6 +180,9 @@ BattleCharacterStatusView.prototype.getCharacterStatusChild=function(mode,layer)
 			label = "体力";
 			maxValue = self.character.data.maxPhysicalFitness();
 			currentValue = self.character.data.physicalFitness();
+			if(statusObject){
+				self.character.data.physicalFitness(currentValue + statusObject.value);
+			}
 			break;
 		case BattleCharacterStatusConfig.EXP:
 			icon = "orange_ball";
@@ -183,6 +190,9 @@ BattleCharacterStatusView.prototype.getCharacterStatusChild=function(mode,layer)
 			label = "经验";
 			maxValue = self.character.data.exp();
 			currentValue = self.character.data.maxExp();
+			if(statusObject){
+				self.character.data.exp(currentValue + statusObject.value);
+			}
 			break;
 	}
 	var iconBitmapData = new LBitmapData(LMvc.datalist[icon]);

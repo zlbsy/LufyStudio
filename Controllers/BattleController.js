@@ -99,7 +99,7 @@ BattleController.prototype.init = function(){
 		//CharacterModel.getChara(i).maxHP(100);
 		//CharacterModel.getChara(i).HP(100);
 		CharacterModel.getChara(i).calculation(true);
-	}
+	}CharacterModel.getChara(5).troops(50);CharacterModel.getChara(1).troops(40);
 	self.addOurCharacter(1,CharacterAction.MOVE,CharacterDirection.DOWN,5,5);
 	self.addOurCharacter(2,CharacterAction.MOVE,CharacterDirection.UP,4,4);
 	self.addOurCharacter(3,CharacterAction.MOVE,CharacterDirection.LEFT,3,3);

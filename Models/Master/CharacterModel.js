@@ -6,7 +6,7 @@ function CharacterModel(controller, data) {
 		self.data.physicalFitness = self.data.maxPhysicalFitness = 100;
 	}
 }
-CharacterModel.HERT_PROBABILITY = 0.2;
+CharacterModel.PANT_PROBABILITY = 0.2;
 CharacterModel.list = [];
 CharacterModel.commonAngryTalks = ["angry_talk_0_0","angry_talk_0_1","angry_talk_0_2"];
 CharacterModel.upValue = function(type, value) {
@@ -138,6 +138,12 @@ CharacterModel.prototype.seignior = function(chara_id) {
 	}
 	return CharacterModel.getChara(self.data.seignior_id);
 };
+CharacterModel.prototype.exp = function(value){
+	return this._dataValue("exp", value, 0);
+};
+CharacterModel.prototype.maxExp = function(value){
+	return this._dataValue("maxExp", value, 100);
+};
 CharacterModel.prototype.wounded = function(value){//伤兵
 	return this._dataValue("wounded", value, 0);
 };
@@ -150,8 +156,8 @@ CharacterModel.prototype.HP = function(value) {
 CharacterModel.prototype.MP = function(value) {
 	return this._dataValue("mp", value);
 };
-CharacterModel.prototype.isHertTroops = function() {
-	return this.troops() < this.maxTroops() * CharacterModel.HERT_PROBABILITY;
+CharacterModel.prototype.isPantTroops = function() {
+	return this.troops() < this.maxTroops() * CharacterModel.PANT_PROBABILITY;
 };
 CharacterModel.prototype.maxTroops = function(init) {
 	var self = this;

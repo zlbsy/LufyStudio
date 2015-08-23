@@ -45,6 +45,9 @@ BattleCharacterView.getAnimationData = function(){
 BattleCharacterView.prototype.getBitmapData = function() {
 	var self = this;
 	var rowIndex = self.anime.rowIndex, colIndex = self.anime.colIndex;
+	if(self.mode == CharacterMode.END_ACTION){
+		colIndex = 0;
+	}
 	var key = self.data.currentSoldiers().img() + "_" + rowIndex+"_"+colIndex, endKey = key + "_end";
 	var resultBitmapData;
 	if(self.mode == CharacterMode.END_ACTION){
