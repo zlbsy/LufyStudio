@@ -236,7 +236,7 @@ BattleCharacterAI.prototype.blockActionComplete = function(event) {
 	var self = chara.AI;
 	var stepTime = BattleCharacterStatusConfig.FADE_TIME + BattleCharacterStatusConfig.SHOW_TIME;
 	chara.removeEventListener(BattleCharacterActionEvent.BLOCK_ACTION_COMPLETE,self.hertActionComplete);
-	chara.changeAction(CharacterAction.STAND);
+	chara.changeAction(chara.data.isHertTroops()?CharacterAction.HERT:CharacterAction.STAND);
 	LTweenLite.to(chara,chara.hertIndex * stepTime,{onComplete:function(e){
 		var chara = e.target;
 		var statusView = new BattleCharacterStatusView(self.controller,chara);
@@ -254,7 +254,7 @@ BattleCharacterAI.prototype.hertActionComplete = function(event) {
 	var self = chara.AI;
 	var stepTime = BattleCharacterStatusConfig.FADE_TIME + BattleCharacterStatusConfig.SHOW_TIME;
 	chara.removeEventListener(BattleCharacterActionEvent.HERT_ACTION_COMPLETE,self.hertActionComplete);
-	chara.changeAction(CharacterAction.STAND);
+	chara.changeAction(chara.data.isHertTroops()?CharacterAction.HERT:CharacterAction.STAND);
 	LTweenLite.to(chara,chara.hertIndex * stepTime,{onComplete:function(e){
 		var chara = e.target;
 		var statusView = new BattleCharacterStatusView(self.controller,chara);
@@ -328,7 +328,7 @@ BattleCharacterAI.prototype.endAction = function() {
 	self.attackTarget = null;
 	self.herts = null;
 	chara.removeAllEventListener();
-	chara.changeAction(CharacterAction.STAND);
+	chara.changeAction(chara.data.isHertTroops()?CharacterAction.HERT:CharacterAction.STAND);
 	chara.mode = CharacterMode.END_ACTION;
 	chara.currentSelectStrategy = null;
 	chara.toStatic(true);
