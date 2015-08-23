@@ -76,6 +76,8 @@ Language.data = {
 	"belong_enemy_action":"敌军行动",
 	"belong_friend_action":"友军行动",
 	
+	"strategy_weather_error":"无法在此天气使用!",
+	
 	"menu":"菜单",
 	"operating_end":"操作结束",
 	"game_save":"保存进度",
@@ -115,6 +117,7 @@ Language.data = {
 	"identity":"身份",
 	"city":"城池",
 	"status":"状态",
+	"effect":"效果",
 	
 	"force":"武力",
 	"command":"统率",

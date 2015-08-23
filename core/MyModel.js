@@ -7,6 +7,12 @@ function MyModel(controller){
 MyModel.prototype.textTutorialStep = 1;
 MyModel.prototype.construct=function(){
 };
+MyModel.prototype._dataValue = function(name, value, defaultValue){
+	if(typeof value != UNDEFINED){
+		this.data[name] = value;
+	}
+	return typeof this.data[name] == UNDEFINED ? defaultValue : this.data[name];
+};
 MyModel.prototype.post=function(url,params,callback){
 	var self = this;
 	console.log(self.API_URL+url,params);

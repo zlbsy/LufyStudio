@@ -137,23 +137,17 @@ CharacterModel.prototype.seignior = function(chara_id) {
 	}
 	return CharacterModel.getChara(self.data.seignior_id);
 };
+CharacterModel.prototype.wounded = function(value){//伤兵
+	return this._dataValue("wounded", value, 0);
+};
 CharacterModel.prototype.troops = function(value) {
-	if(typeof value != UNDEFINED){
-		this.data.troops = value;
-	}
-	return typeof this.data.troops == UNDEFINED ? 0 : this.data.troops;
+	return this._dataValue("troops", value);
 };
 CharacterModel.prototype.HP = function(value) {
-	if(typeof value != UNDEFINED){
-		this.data.hp = value;
-	}
-	return this.data.hp;
+	return this._dataValue("hp", value);
 };
 CharacterModel.prototype.MP = function(value) {
-	if(typeof value != UNDEFINED){
-		this.data.mp = value;
-	}
-	return this.data.mp;
+	return this._dataValue("mp", value);
 };
 CharacterModel.prototype.maxTroops = function(init) {
 	var self = this;
@@ -205,12 +199,7 @@ CharacterModel.prototype.identity = function(value) {
 	return Language.get(identity);
 };
 CharacterModel.prototype.loyalty = function(value) {
-	var self = this;
-	if(typeof value != UNDEFINED){
-		self.data.loyalty = value;
-		return;
-	}
-	return self.data.loyalty;
+	return this._dataValue("loyalty", value);
 };
 CharacterModel.prototype.jobLabel = function() {
 	var self = this;
@@ -240,15 +229,7 @@ CharacterModel.prototype.hire = function(id) {
 	}
 };
 CharacterModel.prototype.job = function(value) {
-	var self = this;
-	if(typeof value != UNDEFINED){
-		self.data.job = value;
-		return;
-	}
-	if(!self.data.job){
-		return Job.IDLE;
-	}
-	return self.data.job;
+	return this._dataValue("job", value, Job.IDLE);
 };
 CharacterModel.prototype.moveTo = function(cityId) {
 	var self = this;
@@ -268,23 +249,14 @@ CharacterModel.prototype.moveTo = function(cityId) {
 CharacterModel.prototype.targetCity = function() {
 	return this.data.targetCity;
 };
-CharacterModel.prototype.cityId = function(cityId) {
-	if(typeof cityId == UNDEFINED){
-		return this.data.cityId;
-	}else{
-		this.data.cityId = cityId;
-	}
+CharacterModel.prototype.cityId = function(value) {
+	return this._dataValue("cityId", value);
 };
 CharacterModel.prototype.city = function() {
 	return AreaModel.getArea(this.data.cityId);
 };
 CharacterModel.prototype.content = function(value) {
-	var self = this;
-	if(typeof value != UNDEFINED){
-		self.data.content = value;
-		return;
-	}
-	return self.data.content;
+	return this._dataValue("content", value);
 };
 CharacterModel.prototype.faceImg = function() {
 	return this.data.faceImg;

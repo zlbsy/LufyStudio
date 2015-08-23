@@ -164,6 +164,9 @@ CharacterDetailedView.prototype.showEquipment=function(){
 		icon.y = self.face.y + coordinate.y - self.tabLayer.y;
 		self.tabLayer.addChild(icon);
 	}
+	if(LMvc.BattleController){
+		return;
+	}
 	var equipmentsView = new EquipmentsView(self.controller, "equipment", new LPoint(LGlobal.width - 50, LGlobal.height - self.tabLayer.y - 80));
 	equipmentsView.x = 10;
 	equipmentsView.y = 50;
@@ -198,7 +201,7 @@ CharacterDetailedView.prototype.removeEquipmentRun=function(event){
 };
 CharacterDetailedView.prototype.showStrategy=function(){
 	var self = this;
-	var strategyView = new StrategyView(self.controller, self.characterModel, new LPoint(LGlobal.width - 50, LGlobal.height - self.tabLayer.y - 80));
+	var strategyView = new StrategyView(self.controller, self.characterModel, new LPoint(LGlobal.width - 50, LGlobal.height - self.tabLayer.y - 80),self);
 	strategyView.x = 10;
 	strategyView.y = 50;
 	self.tabLayer.addChild(strategyView);
@@ -265,7 +268,7 @@ CharacterDetailedView.prototype.showProperties=function(){
 	self.characterModel.currentSoldiers().movePower()
 	];
 	var datasRight = [
-	[self.characterModel.troops(),self.characterModel.maxTroops(),2000],
+	[String.format("{0}({1})",self.characterModel.troops(),self.characterModel.wounded()),self.characterModel.maxTroops(),2000],
 	[self.characterModel.MP(),self.characterModel.maxMP(),1000],
 	[self.characterModel.physicalFitness(),self.characterModel.maxPhysicalFitness(),100],
 	[self.characterModel.attack(),self.characterModel.attack(),1000],

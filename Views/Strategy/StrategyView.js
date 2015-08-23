@@ -1,4 +1,4 @@
-function StrategyView(controller, characterModel, size) {
+function StrategyView(controller, characterModel, size, fromView) {
 	var self = this;
 	base(self, LView, [controller]);
 	self.characterModel = characterModel;
@@ -6,6 +6,7 @@ function StrategyView(controller, characterModel, size) {
 	if(!self.size){
 		self.size = new LPoint(400,340);
 	}
+	self.fromCharacterDetailed = (fromView && fromView.constructor.name == "CharacterDetailedView");
 	self.layerInit();
 	self.setStrategyList();
 }
@@ -23,42 +24,54 @@ StrategyView.prototype.setStrategyList = function() {
 	}
 	
 	
-	backLayer.graphics.drawRect(0, "#000000", [0, 0, self.size.x - 40, 50 * strategyList.length]);
+	backLayer.graphics.drawRect(0, "#000000", [0, 0, self.size.x - (self.fromCharacterDetailed?0:40), 50 * strategyList.length]);
 	self.strategyListLayer.listLayer = backLayer;
 	
 	
 	var left = backLayer.graphics.startX(), right = left + backLayer.graphics.getWidth();
-	var sc = new LScrollbar(backLayer, self.size.x - 40, self.size.y - 130, 10);
+	var sc;
+	if(self.fromCharacterDetailed){
+		sc = new LScrollbar(backLayer, self.size.x, self.size.y, 10);
+	}else{
+		sc = new LScrollbar(backLayer, self.size.x - 40, self.size.y - 130, 10);
+	}
 	sc._showLayer.graphics.clear();
 	
 	self.strategyListLayer.addChild(sc);
 	sc.excluding = true;
+	if(self.fromCharacterDetailed){
+		return;
+	}
 	backLayer.addEventListener(LMouseEvent.MOUSE_DOWN, self.strategyClickDown);
 	backLayer.addEventListener(LMouseEvent.MOUSE_UP, self.strategyClickUp.bind(self));
 };
 StrategyView.prototype.onclick = function() {};
 StrategyView.prototype.layerInit = function() {
 	var self = this;
-	var translucentLayer = new LSprite();
-	translucentLayer.addShape(LShape.RECT,[0,0,LGlobal.width,LGlobal.height]);
-	self.addChild(translucentLayer);
-	translucentLayer.addEventListener(LMouseEvent.MOUSE_DOWN, self.onclick);
-	translucentLayer.addEventListener(LMouseEvent.MOUSE_UP, self.onclick);
+	if(!self.fromCharacterDetailed){
+		var translucentLayer = new LSprite();
+		translucentLayer.addShape(LShape.RECT,[0,0,LGlobal.width,LGlobal.height]);
+		self.addChild(translucentLayer);
+		translucentLayer.addEventListener(LMouseEvent.MOUSE_DOWN, self.onclick);
+		translucentLayer.addEventListener(LMouseEvent.MOUSE_UP, self.onclick);
+	}
 	self.baseLayer = new LSprite();
 	self.addChild(self.baseLayer);
-	
 	self.setBackgroundLayer();
-	
 	self.strategyListLayer = new LSprite();
 	self.baseLayer.addChild(self.strategyListLayer);
+	if(self.fromCharacterDetailed){
+		return;
+	}
 	self.strategyListLayer.x = (LGlobal.width - self.size.x)*0.5 + 20;
 	self.strategyListLayer.y = (LGlobal.height - self.size.y)*0.5 + 110;
-	
 	self.ctrlLayerInit();
 };
 StrategyView.prototype.setBackgroundLayer = function() {
 	var self = this;
-	
+	if(self.fromCharacterDetailed){
+		return;
+	}
 	var windowLayer = new LSprite();
 	windowLayer.addChild(getTranslucentBitmap());
 	var backgroundData = new LBitmapData(LMvc.datalist["win05"]);
@@ -81,11 +94,11 @@ StrategyView.prototype.setBackgroundLayer = function() {
 	tabMenuLayer.x = panel.x;
 	tabMenuLayer.y = panel.y + 60;
 	windowLayer.addChild(tabMenuLayer);
-	var tabButton = getButton("策略名",140);
+	var tabButton = getButton(Language.get("spirit"),140);
 	tabButton.x = 20;
 	tabMenuLayer.addChild(tabButton);
 		
-	var tabButton = getButton("效果",120);
+	var tabButton = getButton(Language.get("effect"),120);
 	tabButton.x = 160;
 	tabMenuLayer.addChild(tabButton);
 		
@@ -126,7 +139,7 @@ StrategyView.prototype.strategySelect = function(strategyModel) {
 	var self = this;
 	var weathers = strategyModel.weathers();
 	if(weathers && weathers.length > 0 && weathers.indexOf(LMvc.BattleController.view.weatherLayer.currentWeather.weather) < 0){
-		Toast.makeText(Language.get("无法在此天气使用!")).show();
+		Toast.makeText(Language.get("strategy_weather_error")).show();
 		return;
 	}
 	/*self.strategyModel = strategyModel;
@@ -148,7 +161,7 @@ StrategyView.prototype.strategyImageLoad = function(){
 	loader.addEventListener(LEvent.COMPLETE, self.loadData);
 	loader.load(self.strategyMode.image(), "bitmapData");
 	LMvc.keepLoading(true);
-}
+};
 StrategyView.prototype.loadData = function(event){
 	var self = event.currentTarget.parent;
 	LMvc.keepLoading(false);
