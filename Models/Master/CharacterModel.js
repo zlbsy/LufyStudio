@@ -6,6 +6,7 @@ function CharacterModel(controller, data) {
 		self.data.physicalFitness = self.data.maxPhysicalFitness = 100;
 	}
 }
+CharacterModel.HERT_PROBABILITY = 0.2;
 CharacterModel.list = [];
 CharacterModel.commonAngryTalks = ["angry_talk_0_0","angry_talk_0_1","angry_talk_0_2"];
 CharacterModel.upValue = function(type, value) {
@@ -148,6 +149,9 @@ CharacterModel.prototype.HP = function(value) {
 };
 CharacterModel.prototype.MP = function(value) {
 	return this._dataValue("mp", value);
+};
+CharacterModel.prototype.isHertTroops = function() {
+	return this.troops() < this.maxTroops() * CharacterModel.HERT_PROBABILITY;
 };
 CharacterModel.prototype.maxTroops = function(init) {
 	var self = this;
