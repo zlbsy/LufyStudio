@@ -33,7 +33,7 @@ BattleCharacterLayerView.prototype.isHasActiveCharacter=function(belong){
 	var childList = self.getCharactersFromBelong(belong);
 	for(var i=0,l=childList.length;i<l;i++){
 		child = childList[i];
-		if(child.mode == CharacterMode.END_ACTION){
+		if(child.mode == CharacterMode.END_ACTION || child.status.hasStatus(StrategyType.Chaos)){
 			continue;
 		}
 		return true;
