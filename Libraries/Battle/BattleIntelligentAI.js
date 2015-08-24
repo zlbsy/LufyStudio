@@ -50,8 +50,9 @@ BattleIntelligentAI.prototype.run = function() {
 };
 BattleIntelligentAI.prototype.moveRoadsShow = function() {
 	var self = this;
-	if(self.chara.status.hasStatus(StrategyType.Chaos)){
-		
+	var roads = [];
+	if(!self.chara.status.hasStatus(StrategyType.Fixed)){
+		var path = self.query.makePath(chara);
 	}
 	
 };
