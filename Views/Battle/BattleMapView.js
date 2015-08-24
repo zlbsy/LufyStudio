@@ -83,8 +83,11 @@ BattleMapView.prototype.showTerrain=function(x,y){
 	var sX = locationX * BattleCharacterSize.width;
 	var sY = locationY * BattleCharacterSize.height;
 	
-	var data = self.model.map.data[locationY][locationX];
+	var data = self.getTerrainData(locationY,locationX);
 	self.controller.view.terrainWindow.show(sX,sY,data);
+};
+BattleMapView.prototype.getTerrainData=function(locationX,locationY){
+	return this.model.map.data[locationY][locationX];
 };
 BattleMapView.prototype.wakeRoadsClear=function(belong){
 	this.wakeRoads[belong].length = 0;

@@ -6,6 +6,7 @@ function BattleCharacterView(controller, id, w, h) {
 	self.belong = null;
 	if(controller.constructor.name == "BattleController"){
 		self.AI = new BattleCharacterAI(self);
+		self.inteAI = new BattleIntelligentAI(self);
 		self.status = new CharacterStatusIconView(null);
 		self.addChild(self.status);
 	}

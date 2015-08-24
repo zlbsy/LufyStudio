@@ -22,7 +22,7 @@ BattleController.prototype.configLoad=function(){
 };
 BattleController.prototype.libraryLoad=function(){
 	var self = this;
-	self.load.library(["Num","LStarQuery","Battle/BattleQuery","Battle/BattleCharacterAI","Battle/HertParams"],self.helperLoad);
+	self.load.library(["Num","LStarQuery","Battle/BattleQuery","Battle/BattleCharacterAI","Battle/BattleIntelligentAI","Battle/HertParams"],self.helperLoad);
 };
 BattleController.prototype.helperLoad=function(){
 	var self = this;

@@ -49,3 +49,6 @@ TerrainMasterModel.prototype.strategy = function() {
 TerrainMasterModel.prototype.comment = function() {
 	return this.data.comment;
 };
+TerrainMasterModel.prototype.sortValue = function() {
+	return this.data.sortValue;
+};

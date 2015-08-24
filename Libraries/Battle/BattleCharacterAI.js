@@ -336,10 +336,14 @@ BattleCharacterAI.prototype.endAction = function() {
 	if(!LMvc.BattleController.view.charaLayer.isHasActiveCharacter(chara.belong)){
 		if(chara.belong == Belong.SELF){
 			var obj = {title:Language.get("确认"),message:Language.get("结束本回合吗？"),width:300,height:200,okEvent:self.boutEnd,cancelEvent:null};
-		var windowLayer = ConfirmWindow(obj);
-		LMvc.layer.addChild(windowLayer);
+			var windowLayer = ConfirmWindow(obj);
+			LMvc.layer.addChild(windowLayer);
+		}else{
+			self.boutEnd();
 		}
-	}	
+	}else{
+		BattleIntelligentAI.execute();
+	}
 };
 BattleCharacterAI.prototype.boutEnd = function(event) {
 	event.currentTarget.parent.remove();

@@ -43,5 +43,6 @@ BattleBoutView.prototype.removeSelf=function(event){
 	var belong = self.belong;
 	view.charaLayer.boutSkillRun(belong, function(){
 		self.remove();
+		BattleIntelligentAI.execute();
 	});
 };
