@@ -87,7 +87,7 @@ BattleController.prototype.init = function(){
 	LMvc.BattleController = self;
 	console.log("BattleController.prototype.init -- start --");
 	if(!BattleController.timer){
-		BattleController.timer = new LTimer(0, 1);
+		BattleController.timer = new LTimer(1000, 1);
 	}
 	BattleController.timer.removeAllEventListener();
 	BattleController.timer.addEventListener(LTimerEvent.TIMER, self.showCharacterDetailed);

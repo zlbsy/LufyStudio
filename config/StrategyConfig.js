@@ -56,7 +56,9 @@ for(var key in StrategyType){
 var StrategyEffectType = {
 	Attack:1,//攻击
 	Status:2,//异常状态
-	Aid:3//升降能力
+	Aid:3,//升降能力
+	Wake:4,//觉醒
+	Supply:5//补给
 };
 var StrategyDatas = [
 	{id:1,name:"小火计",belong:Belong.ENEMY,type:StrategyType.Fire,effectType:StrategyEffectType.Attack,image:"h1",
@@ -109,37 +111,38 @@ var StrategyDatas = [
 	rangeAttackTarget:[{x:0,y:0}],
 	explanation:""
 	},
-	{id:7,name:"小火计6",belong:Belong.ENEMY,type:StrategyType.Fire,effectType:StrategyEffectType.Attack,image:"feng-1",
+	{id:7,name:"小回复",belong:Belong.SELF,type:StrategyType.Supply,effectType:StrategyEffectType.Supply,image:"feng-1",
 	icon:"feng_sign",
+	cost:6,
+	troops:50,
+	wounded:0,
+	rangeAttack:[{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0}],
+	rangeAttackTarget:[{x:0,y:0}],
+	explanation:""
+	},
+	{id:8,name:"小治疗",belong:Belong.SELF,type:StrategyType.Supply,effectType:StrategyEffectType.Supply,image:"feng-1",
+	icon:"feng_sign",
+	cost:6,
+	troops:0,
+	wounded:50,
+	rangeAttack:[{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0}],
+	rangeAttackTarget:[{x:0,y:0}],
+	explanation:""
+	},
+	{id:9,name:"觉醒",belong:Belong.SELF,type:StrategyType.Wake,effectType:StrategyEffectType.Wake,image:"feng-1",
+	icon:"feng_sign",
+	cost:6,
+	rangeAttack:[{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0}],
+	rangeAttackTarget:[{x:0,y:0}],
+	explanation:""
+	},
+	{id:10,name:"小火计",belong:Belong.ENEMY,type:StrategyType.Fire,effectType:StrategyEffectType.Attack,image:"feng-1",
+	icon:"huo_sign",
 	cost:6,
 	hert:0.8,
 	rangeAttack:[{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0}],
 	rangeAttackTarget:[{x:0,y:0}],
 	weathers:["spring"],
-	explanation:""
-	},
-	{id:8,name:"小水计9",belong:Belong.ENEMY,type:StrategyType.Fire,effectType:StrategyEffectType.Attack,image:"feng-1",
-	icon:"feng_sign",
-	cost:6,
-	hert:0.8,
-	rangeAttack:[{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0}],
-	rangeAttackTarget:[{x:0,y:0}],
-	explanation:""
-	},
-	{id:9,name:"小风计7",belong:Belong.ENEMY,type:StrategyType.Fire,effectType:StrategyEffectType.Attack,image:"feng-1",
-	icon:"feng_sign",
-	cost:6,
-	hert:0.8,
-	rangeAttack:[{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0}],
-	rangeAttackTarget:[{x:0,y:0}],
-	explanation:""
-	},
-	{id:10,name:"小风计8",belong:Belong.ENEMY,type:StrategyType.Fire,effectType:StrategyEffectType.Attack,image:"feng-1",
-	icon:"feng_sign",
-	cost:6,
-	hert:0.8,
-	rangeAttack:[{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0}],
-	rangeAttackTarget:[{x:0,y:0}],
 	explanation:""
 	}
 ];

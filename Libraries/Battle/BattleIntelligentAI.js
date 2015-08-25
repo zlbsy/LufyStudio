@@ -3,7 +3,7 @@ function BattleIntelligentAI(chara) {
 	self.chara = chara;
 	self.herts = null;
 	if(!BattleIntelligentAI.timer){
-		BattleIntelligentAI.timer = new LTimer(0, 0.05);
+		BattleIntelligentAI.timer = new LTimer(LGlobal.speed, 1);
 		BattleIntelligentAI.timer.addEventListener(LTimerEvent.TIMER, BattleIntelligentAI.continue);
 	}
 }

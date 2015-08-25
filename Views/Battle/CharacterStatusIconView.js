@@ -66,6 +66,9 @@ CharacterStatusIconView.prototype.updateStatus = function(child, isAid, value, i
 		self.aidStatus.splice(index, 1);
 	}
 };
+CharacterStatusIconView.prototype.wake = function(){
+	this.status.length = 0;
+};
 CharacterStatusIconView.prototype.removeStatus = function(status){
 	var self = this;
 	if(!status){

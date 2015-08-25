@@ -33,11 +33,37 @@ EffectStrategyView.prototype.becomeEffective = function(anime){
 		self.toChangeStatus();
 	}else if(self.effectType == StrategyEffectType.Aid){
 		self.toChangeAidStatus();
+	}else if(self.effectType == StrategyEffectType.Wake){
+		self.toChangeStatus();
+	}else if(self.effectType == StrategyEffectType.Supply){
+		self.toSupply();
+	}
+};
+EffectStrategyView.prototype.toSupply = function(){
+	var self = this;
+	var currentSelectStrategy = self.currentCharacter.currentSelectStrategy;
+	self.currentTargetCharacter.changeAction(CharacterAction.WAKE);
+	if(currentSelectStrategy.belong() == Belong.SELF){
+		
+		self.currentTargetCharacter.status.addStatus(currentSelectStrategy.strategyType(), currentSelectStrategy.hert());
+		return;
+	}
+	var hitrate = calculateHitrateStrategy(self.currentCharacter, self.currentTargetCharacter);
+	if(hitrate){
+		self.currentTargetCharacter.changeAction(CharacterAction.HERT);
+		self.currentTargetCharacter.status.addStatus(currentSelectStrategy.strategyType(), currentSelectStrategy.hert());
+	}else{
+		self.currentTargetCharacter.changeAction(CharacterAction.BLOCK);
 	}
 };
 EffectStrategyView.prototype.toChangeStatus = function(){
 	var self = this, hitrate;
 	var currentSelectStrategy = self.currentCharacter.currentSelectStrategy;
+	if(currentSelectStrategy.belong() == Belong.SELF && self.effectType == StrategyEffectType.Wake){
+		self.currentTargetCharacter.changeAction(CharacterAction.WAKE);
+		self.currentTargetCharacter.status.wake();
+		return;
+	}
 	var mapLayer = controller.view.mapLayer;
 	if(mapLayer.isOnWakeRoad(self.currentTargetCharacter)){
 		hitrate = false;
