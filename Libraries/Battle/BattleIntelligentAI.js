@@ -4,7 +4,7 @@ function BattleIntelligentAI(chara) {
 	self.herts = null;
 	if(!BattleIntelligentAI.timer){
 		BattleIntelligentAI.timer = new LTimer(LGlobal.speed, 1);
-		BattleIntelligentAI.timer.addEventListener(LTimerEvent.TIMER, BattleIntelligentAI.continue);
+		BattleIntelligentAI.timer.addEventListener(LTimerEvent.TIMER, BattleIntelligentAI.continueExecute);
 	}
 }
 BattleIntelligentAI.ADD_HP = "addHp";
@@ -46,7 +46,7 @@ BattleIntelligentAI.execute = function() {
 		}
 	}
 	if(BattleIntelligentAI.ownPantCharacters.length > 1){
-		BattleIntelligentAI.ownPantCharacters = BattleIntelligentAI.ownPantCharacters.sort(function(a,b){return a.z - b.z;}); 
+		BattleIntelligentAI.ownPantCharacters = BattleIntelligentAI.ownPantCharacters.sort(function(a,b){return Math.random() > 0.5 ? 1: -1;}); 
 	}
 	if(currentBelong == Belong.ENEMY){
 		BattleIntelligentAI.targetCharacters = LMvc.BattleController.view.charaLayer.getCharactersFromBelong(Belong.SELF);
@@ -66,7 +66,7 @@ BattleIntelligentAI.execute = function() {
 	BattleController.ctrlChara = chatacters[Math.random()*chatacters.length >>> 0];
 	BattleController.ctrlChara.inteAI.run();
 };
-BattleIntelligentAI.continue = function(){
+BattleIntelligentAI.continueExecute = function(){
 	BattleController.ctrlChara.inteAI.run();
 };
 

@@ -1,5 +1,6 @@
 function BattleCharacterAI(chara) {
 	var self = this;
+	base(self,LObject,[]);
 	self.chara = chara;
 	self.herts = null;
 }
@@ -16,9 +17,11 @@ BattleCharacterAI.prototype.magicAttack = function(target){
 		self.chara.currentSelectStrategy.strategyImageLoad(self,self.magicAttack,[target]);
 		return;
 	}
+	console.log("magicAttack",self.chara.data.name(),target.data.name());
 	LMvc.running = true;
 	self.attackTarget = target;
 	target.AI.attackTarget = self.chara;
+	console.log("target.AI.attackTarget" ,target.AI.attackTarget);
 	var direction = getDirectionFromTarget(self.chara, target);
 	self.chara.setActionDirection(CharacterAction.MAGIC_ATTACK, direction);
 	var currentSelectStrategy = self.chara.currentSelectStrategy;
@@ -27,7 +30,8 @@ BattleCharacterAI.prototype.magicAttack = function(target){
 	for(var i = 0;i<rangeAttackTarget.length;i++){
 		var range = rangeAttackTarget[i];
 		var chara = LMvc.BattleController.view.charaLayer.getCharacterFromLocation(target.locationX()+range.x, target.locationY()+range.y);
-		if(!chara || isSameBelong(chara.belong,self.chara.belong)){
+		if(!chara || (currentSelectStrategy.belong() == Belong.ENEMY && isSameBelong(chara.belong,self.chara.belong)) 
+			|| (currentSelectStrategy.belong() == Belong.SELF && !isSameBelong(chara.belong,self.chara.belong))){
 			continue;
 		}
 		charas.push(chara);
@@ -284,7 +288,12 @@ BattleCharacterAI.prototype.plusExp = function(event) {
 };
 BattleCharacterAI.prototype.counterAttack = function(event) {
 	var attackChatacter = event.currentTarget.character;
+	console.error("counterAttack" ,attackChatacter.data.name(),attackChatacter.AI);
 	var chara = attackChatacter.AI.attackTarget;
+	console.log("chara" ,chara);
+	if(!chara){
+		return;
+	}
 	var self = chara.AI;
 	if(attackChatacter.AI.herts && attackChatacter.AI.herts.length > 0){
 		attackChatacter.AI.physicalAttack(chara);
@@ -314,6 +323,7 @@ BattleCharacterAI.prototype.counterMagicAttack = function(event) {
 	BattleController.ctrlChara.AI.endAction();
 };
 BattleCharacterAI.prototype.endAction = function() {
+	console.error("endAction");
 	var self = this, chara = self.chara, target = self.attackTarget;
 	
 	if(target){

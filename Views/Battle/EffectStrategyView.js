@@ -3,6 +3,7 @@ function EffectStrategyView(controller, chara, target){
 	LExtends(self,LView,[controller]);
 	self.currentCharacter = chara;
 	self.currentTargetCharacter = target;
+	console.log("EffectStrategyView="+self.currentTargetCharacter.data.name());
 	self.init();
 }
 EffectStrategyView.prototype.init = function(){
@@ -64,7 +65,7 @@ EffectStrategyView.prototype.toChangeStatus = function(){
 		self.currentTargetCharacter.status.wake();
 		return;
 	}
-	var mapLayer = controller.view.mapLayer;
+	var mapLayer = LMvc.BattleController.view.mapLayer;
 	if(mapLayer.isOnWakeRoad(self.currentTargetCharacter)){
 		hitrate = false;
 	}else{
