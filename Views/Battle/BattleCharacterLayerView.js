@@ -22,7 +22,7 @@ BattleCharacterLayerView.prototype.charactersBoutEnd = function(event) {
 		child.toStatic(false);
 		child.changeAction(CharacterAction.MOVE);
 		child.toStatic(true);
-		if(child.hasSkill(SkillSubType.WAKE)){
+		if(child.data.hasSkill(SkillSubType.WAKE)){
 			var skill = child.data.skill();
 			mapLayer.setWakeRoads(event.belong,skill.wakeRects(),child.locationX(),child.locationY());
 		}
@@ -177,5 +177,8 @@ BattleCharacterLayerView.prototype.boutSkillRun=function(belong,callback){
 				targetChara.status.addStatus(strategy.strategyType(), strategy.hert());
 			}
 		}
+	}
+	if(callback){
+		callback();
 	}
 };
