@@ -331,7 +331,7 @@ BattleCharacterAI.prototype.counterMagicAttack = function(event) {
 BattleCharacterAI.prototype.endAction = function() {
 	var self = this, chara = self.chara, target = chara.AI.attackTarget;
 	console.error("endAction",chara.data.name());
-	if(target){
+	if(target && target.objectIndex != chara.objectIndex){
 		target.currentSelectStrategy = null;
 		target.AI.attackTarget = null;
 		target.AI.herts = null;

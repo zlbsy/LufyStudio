@@ -151,7 +151,10 @@ EffectStrategyView.prototype.removeSelf = function(event){
 			}
 			statusView.addEventListener(BattleCharacterStatusEvent.CHANGE_COMPLETE,LMvc.currentAttackCharacter.AI.plusExp);
 		}});
-	}else if(self.effectType == StrategyEffectType.Status && isCurrentAttackTarget(self.currentTargetCharacter)){
+	}else if(isCurrentAttackTarget(self.currentTargetCharacter)){
+		LMvc.currentAttackCharacter.AI.plusExp();
+	}
+	/*else if(self.effectType == StrategyEffectType.Status && isCurrentAttackTarget(self.currentTargetCharacter)){
 		LMvc.currentAttackCharacter.AI.plusExp();
 	}else if(self.effectType == StrategyEffectType.Aid && isCurrentAttackTarget(self.currentTargetCharacter)){
 		LMvc.currentAttackCharacter.AI.plusExp();
@@ -159,6 +162,6 @@ EffectStrategyView.prototype.removeSelf = function(event){
 		LMvc.currentAttackCharacter.AI.plusExp();
 	}else if(self.effectType == StrategyEffectType.Supply && isCurrentAttackTarget(self.currentTargetCharacter)){
 		LMvc.currentAttackCharacter.AI.plusExp();
-	}
+	}*/
 	self.remove();
 };
