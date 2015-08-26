@@ -29,6 +29,12 @@ StrategyMasterModel.getMaster=function(id){
 StrategyMasterModel.prototype.id = function() {
 	return this.data.id;
 };
+StrategyMasterModel.prototype.troops = function() {
+	return this.data.troops;
+};
+StrategyMasterModel.prototype.wounded = function() {
+	return this.data.wounded;
+};
 StrategyMasterModel.prototype.name = function() {
 	return this.data.name;
 };

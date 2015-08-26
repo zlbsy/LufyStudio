@@ -44,18 +44,20 @@ EffectStrategyView.prototype.toSupply = function(){
 	var self = this;
 	var currentSelectStrategy = self.currentCharacter.currentSelectStrategy;
 	self.currentTargetCharacter.changeAction(CharacterAction.WAKE);
-	if(currentSelectStrategy.belong() == Belong.SELF){
-		
-		self.currentTargetCharacter.status.addStatus(currentSelectStrategy.strategyType(), currentSelectStrategy.hert());
-		return;
+	var troopsAdd = currentSelectStrategy.troops();
+	var woundedAdd = currentSelectStrategy.wounded();
+	var wounded = self.currentTargetCharacter.data.wounded();
+	if(woundedAdd > wounded){
+		woundedAdd = wounded;
 	}
-	var hitrate = calculateHitrateStrategy(self.currentCharacter, self.currentTargetCharacter);
-	if(hitrate){
-		self.currentTargetCharacter.changeAction(CharacterAction.HERT);
-		self.currentTargetCharacter.status.addStatus(currentSelectStrategy.strategyType(), currentSelectStrategy.hert());
-	}else{
-		self.currentTargetCharacter.changeAction(CharacterAction.BLOCK);
+	if(woundedAdd > 0){
+		self.currentTargetCharacter.data.wounded(wounded - woundedAdd);
+		troopsAdd += woundedAdd;
 	}
+	var troops = self.currentTargetCharacter.data.troops();
+	var maxTroops = self.currentTargetCharacter.data.maxTroops();
+	var troopsValue = troops + twoopsAdd > maxTroops ? maxTroops : troops + troopsAdd;
+	self.currentTargetCharacter.data.troops(troopsValue);
 };
 EffectStrategyView.prototype.toChangeStatus = function(){
 	var self = this, hitrate;

@@ -38,6 +38,12 @@ StrategyModel.prototype.terrains = function() {
 StrategyModel.prototype.hert = function() {
 	return this.master().hert();
 };
+StrategyModel.prototype.troops = function() {
+	return this.master().troops();
+};
+StrategyModel.prototype.wounded = function() {
+	return this.master().wounded();
+};
 StrategyModel.prototype.belong = function() {
 	return this.master().belong();
 };
