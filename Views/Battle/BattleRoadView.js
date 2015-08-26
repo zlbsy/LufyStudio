@@ -65,12 +65,15 @@ BattleRoadView.prototype.setRoads = function(nodes,data){
 		self.bitmap.bitmapData.copyPixels(data, new LRectangle(0, 0, self.model.stepWidth, self.model.stepHeight), new LPoint(x,y));
 	}
 };
-BattleRoadView.prototype.setStrategyRoads = function(nodes,chara){
+BattleRoadView.prototype.setStrategyRoads = function(nodes,chara,addSelf){
 	var self = this,x,y;
 	self.clear();
 	self.strategyList = [];
 	x = chara.locationX();
 	y = chara.locationY();
+	if(addSelf){
+		self.strategyList.push(new LPoint(x,y));
+	}
 	for(var i=0,l=nodes.length;i<l;i++){
 		var node = nodes[i];
 		self.strategyList.push(new LPoint(x + node.x,y + node.y));
