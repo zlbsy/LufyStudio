@@ -55,8 +55,12 @@ EffectStrategyView.prototype.toSupply = function(){
 		troopsAdd += woundedAdd;
 	}
 	var troops = self.currentTargetCharacter.data.troops();
+	console.log("troops="+troops);
 	var maxTroops = self.currentTargetCharacter.data.maxTroops();
-	var troopsValue = troops + twoopsAdd > maxTroops ? maxTroops : troops + troopsAdd;
+	console.log("maxTroops="+maxTroops);
+	console.log("troopsAdd="+troopsAdd);
+	console.log(troops+","+troopsAdd+","+maxTroops);
+	var troopsValue = troops + troopsAdd > maxTroops ? maxTroops : troops + troopsAdd;
 	self.currentTargetCharacter.data.troops(troopsValue);
 };
 EffectStrategyView.prototype.toChangeStatus = function(){
@@ -150,6 +154,10 @@ EffectStrategyView.prototype.removeSelf = function(event){
 	}else if(self.effectType == StrategyEffectType.Status && isCurrentAttackTarget(self.currentTargetCharacter)){
 		LMvc.currentAttackCharacter.AI.plusExp();
 	}else if(self.effectType == StrategyEffectType.Aid && isCurrentAttackTarget(self.currentTargetCharacter)){
+		LMvc.currentAttackCharacter.AI.plusExp();
+	}else if(self.effectType == StrategyEffectType.Wake && isCurrentAttackTarget(self.currentTargetCharacter)){
+		LMvc.currentAttackCharacter.AI.plusExp();
+	}else if(self.effectType == StrategyEffectType.Supply && isCurrentAttackTarget(self.currentTargetCharacter)){
 		LMvc.currentAttackCharacter.AI.plusExp();
 	}
 	self.remove();

@@ -77,6 +77,7 @@ Language.data = {
 	"belong_friend_action":"友军行动",
 	
 	"strategy_weather_error":"无法在此天气使用!",
+	"ctrl_Chaos_error":"混乱中!",
 	
 	"menu":"菜单",
 	"operating_end":"操作结束",

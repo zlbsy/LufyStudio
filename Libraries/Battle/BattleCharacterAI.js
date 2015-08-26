@@ -371,7 +371,7 @@ BattleCharacterAI.prototype.singleCombatStart = function() {
 };
 BattleCharacterAI.prototype.strategySelect = function(strategyModel) {
 	var self = this;
-	LMvc.BattleController.view.roadLayer.setStrategyRoads(strategyModel.rangeAttack(),self.chara);
+	LMvc.BattleController.view.roadLayer.setStrategyRoads(strategyModel.rangeAttack(),self.chara,strategyModel.belong() == Belong.SELF);
 	self.chara.currentSelectStrategy = strategyModel;
 	self.chara.mode = CharacterMode.STRATEGY_SELECT;
 };

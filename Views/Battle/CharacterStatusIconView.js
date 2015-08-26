@@ -68,6 +68,7 @@ CharacterStatusIconView.prototype.updateStatus = function(child, isAid, value, i
 };
 CharacterStatusIconView.prototype.wake = function(){
 	this.status.length = 0;
+	this.bitmap.visible = false;
 };
 CharacterStatusIconView.prototype.removeStatus = function(status){
 	var self = this;

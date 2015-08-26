@@ -99,7 +99,11 @@ BattleController.prototype.init = function(){
 		//CharacterModel.getChara(i).maxHP(100);
 		//CharacterModel.getChara(i).HP(100);
 		CharacterModel.getChara(i).calculation(true);
-	}CharacterModel.getChara(5).troops(50);CharacterModel.getChara(1).troops(40);
+		CharacterModel.getChara(i).troops(CharacterModel.getChara(i).troops() - 40);
+	}
+	CharacterModel.getChara(2).troops(30);
+	CharacterModel.getChara(2).wounded(70);
+	
 	self.addOurCharacter(1,CharacterAction.MOVE,CharacterDirection.DOWN,5,5);
 	self.addOurCharacter(2,CharacterAction.MOVE,CharacterDirection.UP,4,4);
 	self.addOurCharacter(3,CharacterAction.MOVE,CharacterDirection.LEFT,3,3);
@@ -107,6 +111,7 @@ BattleController.prototype.init = function(){
 	self.addEnemyCharacter(5,CharacterAction.MOVE,CharacterDirection.LEFT,4,6);
 	self.addFriendCharacter(6,CharacterAction.MOVE,CharacterDirection.RIGHT,1,7);
 	self.boutNotify(Belong.SELF);
+	self.view.charaLayer.getCharacter(Belong.SELF,2).status.addStatus(StrategyType.Chaos, 0);
 };
 BattleController.prototype.boutEnd=function(){
 	var self = this;
@@ -228,6 +233,9 @@ BattleController.prototype.clickOnRoadLayer = function(event){
 	if(BattleController.ctrlChara.belong != Belong.SELF){
 		Toast.makeText(String.format(Language.get("can_not_operating"), Language.get(BattleController.ctrlChara.belong))).show();
 		return;
+	}else if(BattleController.ctrlChara.status.hasStatus(StrategyType.Chaos)){
+		Toast.makeText(Language.get("ctrl_Chaos_error")).show();
+		return;
 	}else if(BattleController.ctrlChara.mode == CharacterMode.END_ACTION){
 		Toast.makeText(Language.get("action_end_error")).show();	
 		return;
@@ -237,6 +245,7 @@ BattleController.prototype.clickOnRoadLayer = function(event){
 		self.clickStrategyRange(chara);
 		return;
 	}
+	
 	if(chara){
 		if(chara.data.id() == BattleController.ctrlChara.data.id()){
 			self.view.roadLayer.clear();
