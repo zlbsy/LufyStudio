@@ -29,6 +29,12 @@ function getDirectionFromTarget(chara, target){
 	}
 	return direction;
 };
+function isCurrentAttackCharacter(chara){
+	return chara.objectIndex == LMvc.currentAttackCharacter.objectIndex;
+}
+function isCurrentAttackTarget(chara){
+	return chara.objectIndex == LMvc.currentAttackTarget.objectIndex;
+}
 function isSameBelong(belong,targetBelong){
 	if(belong == Belong.ENEMY){
 		if(targetBelong == Belong.ENEMY){
@@ -104,7 +110,7 @@ function battleSingleCombatCheck(attChara){
 	}
 	LGlobal.script.addScript(script);
 }
-function battleCanGroupSkill(chara){
+function battleCanGroupSkill(chara, targerChara){
 	var groupSkill = chara.data.groupSkill();
 	if(!groupSkill){
 		return null;
@@ -115,7 +121,7 @@ function battleCanGroupSkill(chara){
 		if(charaId == chara.data.id()){
 			continue;
 		}
-		if(!battleCanAttack(chara.belong, charaId, chara.AI.attackTarget)){
+		if(!battleCanAttack(chara.belong, charaId, targerChara)){
 			return null;
 		}
 	}
