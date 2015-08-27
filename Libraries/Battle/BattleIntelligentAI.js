@@ -1,7 +1,7 @@
 function BattleIntelligentAI(chara) {
 	var self = this;
 	self.chara = chara;
-	self.herts = null;
+	self.strategyRange = [];
 	if(!BattleIntelligentAI.timer){
 		BattleIntelligentAI.timer = new LTimer(LGlobal.speed, 1);
 		BattleIntelligentAI.timer.addEventListener(LTimerEvent.TIMER, BattleIntelligentAI.continueExecute);
@@ -16,6 +16,7 @@ BattleIntelligentAI.ownCharacters = null;
 BattleIntelligentAI.ownPantCharacters = null;
 BattleIntelligentAI.targetCharacters = null;
 BattleIntelligentAI.targetPantCharacters = null;
+BattleIntelligentAI.strategyList = null;
 
 BattleIntelligentAI.execute = function() {
 	var self = this;
@@ -24,12 +25,18 @@ BattleIntelligentAI.execute = function() {
 		return;
 	}
 	var chatacters = [];
-	var charas = LMvc.BattleController.view.charaLayer.getCharactersFromBelong(currentBelong);
-	BattleIntelligentAI.ownCharacters = charas;
+	var charas = [], chara;
+	BattleIntelligentAI.ownCharacters = LMvc.BattleController.view.charaLayer.getCharactersFromBelong(currentBelong);
+	if(currentBelong == Belong.SELF){
+		charas = LMvc.BattleController.view.charaLayer.getCharactersFromBelong(Belong.FRIEND);
+	}else if(currentBelong == Belong.FRIEND){
+		charas = LMvc.BattleController.view.charaLayer.getCharactersFromBelong(Belong.SELF);
+	}
+	charas = BattleIntelligentAI.ownCharacters.concat(charas);
 	BattleIntelligentAI.ownPantCharacters = [];
 	var sortValue = 0;
 	for(var i = 0;i<charas.length;i++){
-		var chara = charas[i];
+		chara = charas[i];
 		if(chara.data.isPantTroops()){
 			BattleIntelligentAI.ownPantCharacters.push(chara);
 		}
@@ -58,13 +65,17 @@ BattleIntelligentAI.execute = function() {
 	BattleIntelligentAI.targetPantCharacters = [];
 	charas = BattleIntelligentAI.targetCharacters;
 	for(var i = 0;i<charas.length;i++){
-		var chara = charas[i];
+		chara = charas[i];
 		if(chara.data.isPantTroops()){
 			BattleIntelligentAI.targetPantCharacters.push(chara);
 		}
 	}
-	BattleController.ctrlChara = chatacters[Math.random()*chatacters.length >>> 0];
-	BattleController.ctrlChara.inteAI.run();
+	chara = chatacters[Math.random()*chatacters.length >>> 0];
+	BattleController.ctrlChara = chara;
+	BattleIntelligentAI.strategyList = chara.data.strategies();
+	chara.inteAI.locationX = chara.locationX();
+	chara.inteAI.locationY = chara.locationY();
+	chara.inteAI.run();
 };
 BattleIntelligentAI.continueExecute = function(){
 	BattleController.ctrlChara.inteAI.run();
@@ -90,7 +101,7 @@ BattleIntelligentAI.prototype.run = function() {
 	BattleIntelligentAI.timer.start();
 };
 BattleIntelligentAI.prototype.moveRoadsShow = function() {
-	var self = this, chara = BattleController.ctrlChara;
+	var self = this, chara = self.chara;
 	var path = [];
 	if(!self.chara.status.hasStatus(StrategyType.Fixed)){
 		path = LMvc.BattleController.query.makePath(chara);
@@ -101,7 +112,7 @@ BattleIntelligentAI.prototype.moveRoadsShow = function() {
 	chara.mode = CharacterMode.SHOW_MOVE_ROAD;
 };
 BattleIntelligentAI.prototype.useStrategy = function() {
-	var self = this, chara = BattleController.ctrlChara;
+	var self = this, chara = self.chara;
 	switch(self.strategyFlag){
 		case BattleIntelligentAI.ADD_HP:
 			self.useAddHpStrategy();
@@ -117,8 +128,66 @@ BattleIntelligentAI.prototype.useStrategy = function() {
 			break;
 	}
 };
+BattleIntelligentAI.prototype.setStrategyRange = function(strategy) {
+	var self = this, chara = self.chara;
+	var rangeAttack = strategy.rangeAttack();
+	var roadList = LMvc.BattleController.view.roadLayer.roadList;
+	self.strategyRange[strategy.id()] = [];
+	for(var i=0,l=roadList.length;i<l;i++){
+		var node = roadList[i];
+		for(var j=0;j<rangeAttack.length;j++){
+			
+		}
+	}
+};
+BattleIntelligentAI.prototype.getCanUseStrategy = function(target,type, node) {
+	var self = this, chara = self.chara;
+	var strategyList = BattleIntelligentAI.strategyList;
+	for (var i = 0, l = strategyList.length; i < l; i++) {
+		var strategy = strategyList[i];
+		if(!self.strategyRange[strategy.id()]){
+			
+		}
+		var rangeAttack = strategy.rangeAttack(strategy);
+		
+	}
+	
+};
+BattleIntelligentAI.prototype.getNestNode = function(target) {
+	var self = this, chara = self.chara;
+	var roadList = LMvc.BattleController.view.roadLayer.roadList;
+	var node, length = 10000, sLength;
+	var lX = target.locationX();
+	var lY = target.locationY();
+	for (var i = 0, l = roadList.length; i < l; i++) {
+		var child = roadList[i];
+		var cLength = Math.abs(child.x - lX) + Math.abs(child.y - lY);
+		if(cLength > length){
+			continue;
+		}else if(cLength == length){
+			var l2 = Math.abs(child.x - self.locationX) + Math.abs(child.y - self.locationY);
+			if(l2 >= sLength){
+				continue;
+			}else{
+				sLength = l2;
+			}
+		}
+		length = cLength;
+		if(!sLength){
+			sLength = Math.abs(child.x - self.locationX) + Math.abs(child.y - self.locationY);
+		}
+		node = child;
+	}
+	return node;
+};
 BattleIntelligentAI.prototype.useAddHpStrategy = function() {
-	var self = this, chara = BattleController.ctrlChara;
+	var self = this, chara = self.chara, strategy;
+	for(var i = 0,l = BattleIntelligentAI.ownPantCharacters.length;i<l;i++){
+		var child = BattleIntelligentAI.ownPantCharacters[i];
+		var node = self.getNestNode();
+		strategy = self.getCanUseStrategy(child,StrategyEffectType.Supply,node);
+		
+	}
 	if(false){
 		
 		return;
@@ -126,7 +195,7 @@ BattleIntelligentAI.prototype.useAddHpStrategy = function() {
 	self.strategyFlag = BattleIntelligentAI.RESTORE_STATE;
 };
 BattleIntelligentAI.prototype.useRestoreStateStrategy = function() {
-	var self = this, chara = BattleController.ctrlChara;
+	var self = this, chara = self.chara;
 	if(false){
 		
 		return;
@@ -134,7 +203,7 @@ BattleIntelligentAI.prototype.useRestoreStateStrategy = function() {
 	self.strategyFlag = BattleIntelligentAI.DOWN_STATUS;
 };
 BattleIntelligentAI.prototype.useDownStatusStrategy = function() {
-	var self = this, chara = BattleController.ctrlChara;
+	var self = this, chara = self.chara;
 	if(false){
 		
 		return;
@@ -142,7 +211,7 @@ BattleIntelligentAI.prototype.useDownStatusStrategy = function() {
 	self.strategyFlag = BattleIntelligentAI.HERT;
 };
 BattleIntelligentAI.prototype.useHertStrategy = function() {
-	var self = this, chara = BattleController.ctrlChara;
+	var self = this, chara = self.chara;
 	if(false){
 		
 		return;
