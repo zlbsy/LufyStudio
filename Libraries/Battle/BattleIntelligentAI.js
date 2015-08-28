@@ -26,20 +26,10 @@ BattleIntelligentAI.execute = function() {
 	}
 	var chatacters = [];
 	var charas = [], chara;
-	BattleIntelligentAI.ownCharacters = LMvc.BattleController.view.charaLayer.getCharactersFromBelong(currentBelong);
-	if(currentBelong == Belong.SELF){
-		charas = LMvc.BattleController.view.charaLayer.getCharactersFromBelong(Belong.FRIEND);
-	}else if(currentBelong == Belong.FRIEND){
-		charas = LMvc.BattleController.view.charaLayer.getCharactersFromBelong(Belong.SELF);
-	}
-	charas = BattleIntelligentAI.ownCharacters.concat(charas);
-	BattleIntelligentAI.ownPantCharacters = [];
+	charas = LMvc.BattleController.view.charaLayer.getCharactersFromBelong(currentBelong);
 	var sortValue = 0;
 	for(var i = 0;i<charas.length;i++){
 		chara = charas[i];
-		if(chara.data.isPantTroops()){
-			BattleIntelligentAI.ownPantCharacters.push(chara);
-		}
 		if(chara.mode == CharacterMode.END_ACTION){
 			continue;
 		}
@@ -50,6 +40,20 @@ BattleIntelligentAI.execute = function() {
 		}else if(sortValue < terrain.sortValue()){
 			chatacters = [chara];
 			sortValue = terrain.sortValue();
+		}
+	}
+	BattleIntelligentAI.ownCharacters = charas;
+	if(currentBelong == Belong.FRIEND){
+		charas = LMvc.BattleController.view.charaLayer.getCharactersFromBelong(Belong.SELF);
+	}
+	charas = BattleIntelligentAI.ownCharacters.concat(charas);
+	BattleIntelligentAI.ownCharacters = charas;
+	BattleIntelligentAI.ownPantCharacters = [];
+	var sortValue = 0;
+	for(var i = 0;i<charas.length;i++){
+		chara = charas[i];
+		if(chara.data.isPantTroops()){
+			BattleIntelligentAI.ownPantCharacters.push(chara);
 		}
 	}
 	if(BattleIntelligentAI.ownPantCharacters.length > 1){
@@ -70,8 +74,9 @@ BattleIntelligentAI.execute = function() {
 			BattleIntelligentAI.targetPantCharacters.push(chara);
 		}
 	}
-	chara = chatacters[Math.random()*chatacters.length >>> 0];
+	chara = chatacters[0];
 	BattleController.ctrlChara = chara;
+	console.log("ctrlChara",chara.data.name());
 	BattleIntelligentAI.strategyList = chara.data.strategies();
 	chara.inteAI.locationX = chara.locationX();
 	chara.inteAI.locationY = chara.locationY();
@@ -146,10 +151,10 @@ BattleIntelligentAI.prototype.getCanUseStrategy = function(target,type, node) {
 	for (var i = 0, l = strategyList.length; i < l; i++) {
 		var strategy = strategyList[i];
 		if(!self.strategyRange[strategy.id()]){
-			
+			//self.setStrategyRange();
 		}
-		var rangeAttack = strategy.rangeAttack(strategy);
-		
+		var rangeAttack = strategy.rangeAttack();
+		console.log("rangeAttack=" + rangeAttack);
 	}
 	
 };
@@ -184,8 +189,10 @@ BattleIntelligentAI.prototype.useAddHpStrategy = function() {
 	var self = this, chara = self.chara, strategy;
 	for(var i = 0,l = BattleIntelligentAI.ownPantCharacters.length;i<l;i++){
 		var child = BattleIntelligentAI.ownPantCharacters[i];
-		var node = self.getNestNode();
+		var node = self.getNestNode(child);
+		console.log("node",node);
 		strategy = self.getCanUseStrategy(child,StrategyEffectType.Supply,node);
+		console.log("strategy",strategy);
 		
 	}
 	if(false){

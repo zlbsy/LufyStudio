@@ -101,7 +101,7 @@ BattleController.prototype.init = function(){
 		CharacterModel.getChara(i).calculation(true);
 		CharacterModel.getChara(i).troops(CharacterModel.getChara(i).troops() - 40);
 	}
-	CharacterModel.getChara(2).troops(30);
+	CharacterModel.getChara(2).troops(10);
 	CharacterModel.getChara(2).wounded(70);
 	
 	self.addOurCharacter(1,CharacterAction.MOVE,CharacterDirection.DOWN,5,5);
@@ -109,7 +109,7 @@ BattleController.prototype.init = function(){
 	self.addOurCharacter(3,CharacterAction.MOVE,CharacterDirection.LEFT,3,3);
 	self.addEnemyCharacter(4,CharacterAction.MOVE,CharacterDirection.LEFT,3,4);
 	self.addEnemyCharacter(5,CharacterAction.MOVE,CharacterDirection.LEFT,4,6);
-	self.addFriendCharacter(6,CharacterAction.MOVE,CharacterDirection.RIGHT,1,7);
+	self.addFriendCharacter(6,CharacterAction.MOVE,CharacterDirection.RIGHT,7,5);
 	self.boutNotify(Belong.SELF);
 	self.view.charaLayer.getCharacter(Belong.SELF,2).status.addStatus(StrategyType.Chaos, 0);
 };
