@@ -90,6 +90,9 @@ BattleMapView.prototype.getTerrainData=function(locationX,locationY){
 	return this.model.map.data[locationY][locationX];
 };
 BattleMapView.prototype.wakeRoadsClear=function(belong){
+	if(belong == Belong.FRIEND){
+		return;
+	}
 	this.wakeRoads[belong].length = 0;
 };
 BattleMapView.prototype.setWakeRoad=function(belong,x,y){

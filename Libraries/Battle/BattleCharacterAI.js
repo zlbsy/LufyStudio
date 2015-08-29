@@ -361,7 +361,9 @@ BattleCharacterAI.prototype.endAction = function() {
 	}
 };
 BattleCharacterAI.prototype.boutEnd = function(event) {
-	event.currentTarget.parent.remove();
+	if(event){
+		event.currentTarget.parent.remove();
+	}
 	LMvc.BattleController.boutEnd();
 };
 BattleCharacterAI.prototype.singleCombatStart = function() {

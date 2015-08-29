@@ -70,6 +70,9 @@ CharacterStatusIconView.prototype.wake = function(){
 	this.status.length = 0;
 	this.bitmap.visible = false;
 };
+CharacterStatusIconView.prototype.needWake = function(){
+	return this.status.length > 0;
+};
 CharacterStatusIconView.prototype.removeStatus = function(status){
 	var self = this;
 	if(!status){
