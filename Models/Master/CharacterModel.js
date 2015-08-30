@@ -9,6 +9,7 @@ function CharacterModel(controller, data) {
 CharacterModel.PANT_PROBABILITY = 0.2;
 CharacterModel.list = [];
 CharacterModel.commonAngryTalks = ["angry_talk_0_0","angry_talk_0_1","angry_talk_0_2"];
+CharacterModel.commonDieTalks = ["die_talk_0_0","die_talk_0_1","die_talk_0_2"];
 CharacterModel.upValue = function(type, value) {
 	if (type == "S") {
 		if (value < 50) {
@@ -305,6 +306,12 @@ CharacterModel.prototype.luck = function() {
 CharacterModel.prototype.currentSoldiers = function() {
 	var soldiers = this.soldiers();
 	return soldiers[0];
+};
+CharacterModel.prototype.dieTalk = function() {
+	var self = this, index, list;
+	list = (self.data.dieTalks && self.data.dieTalks.length) ? self.data.dieTalks : CharacterModel.commonDieTalks;
+	index = Math.random()*list.length >>> 0;
+	return Language.getDieTalk(list[index]);
 };
 CharacterModel.prototype.angryTalk = function() {
 	var self = this, index, list;

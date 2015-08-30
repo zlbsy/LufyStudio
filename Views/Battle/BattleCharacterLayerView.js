@@ -40,9 +40,12 @@ BattleCharacterLayerView.prototype.isHasActiveCharacter=function(belong){
 	}
 	return false;
 };
-BattleCharacterLayerView.prototype.getCharactersFromBelong = function(belong) {
+BattleCharacterLayerView.prototype.getDieCharacter = function(belong) {
 	var self = this;
-	var childList,characters = [];
+	if(!belong){
+		return self.getDieCharacter(Belong.SELF) || self.getDieCharacter(Belong.FRIEND) || self.getDieCharacter(Belong.ENEMY);
+	}
+	var childList;
 	if(belong == Belong.SELF){
 		childList = self.model.ourList;
 	}else if(belong == Belong.FRIEND){
@@ -53,6 +56,24 @@ BattleCharacterLayerView.prototype.getCharactersFromBelong = function(belong) {
 	for(var i=0,l=childList.length;i<l;i++){
 		child = childList[i];
 		if(child.data.troops() == 0){
+			return child;
+		}
+	}
+	return null;
+};
+BattleCharacterLayerView.prototype.getCharactersFromBelong = function(belong,isAll) {
+	var self = this;
+	var childList,characters = [];
+	if(belong == Belong.SELF){
+		childList = self.model.ourList;
+	}else if(belong == Belong.FRIEND){
+		childList = self.model.friendList;
+	}else if(belong == Belong.ENEMY){
+		childList = self.model.enemyList;
+	}
+	for(var i=0,l=childList.length;i<l;i++){
+		var child = childList[i];
+		if(child.data.troops() == 0 && !isAll){
 			continue;
 		}
 		characters.push(child);
@@ -87,9 +108,9 @@ BattleCharacterLayerView.prototype.getCharacterFromLocation=function(locationX,l
 	}
 	return null;
 };
-BattleCharacterLayerView.prototype.getCharacter=function(belong,id){
+BattleCharacterLayerView.prototype.getCharacter=function(belong,id,isAll){
 	var self = this;
-	var childList = self.getCharactersFromBelong(belong);
+	var childList = self.getCharactersFromBelong(belong,isAll);
 	return self.getCharacterFromeList(childList,id);
 };
 BattleCharacterLayerView.prototype.getCharacterFromeList=function(childList,id){

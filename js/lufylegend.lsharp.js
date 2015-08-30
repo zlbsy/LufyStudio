@@ -405,7 +405,6 @@ ScriptText.label = function(value, start, end) {
 ScriptText.labelChange = function(value, start, end) {
 	var script = LGlobal.script, i;
 	var lArr = value.substring(start + 1, end).split(",");
-	var layer, label, i;
 	var nameStr = lArr[0];
 	var textStr = lArr[1];
 	var textList = script.scriptArray.textList[nameStr];
@@ -1773,6 +1772,9 @@ LSGJBattleCharacterScript.analysis = function(value) {
 		case "SGJBattleCharacter.attackAngryExec":
 			LSGJBattleCharacterScript.attackAngryExec(value, start, end);
 			break;
+		case "SGJBattleCharacter.characterToDie":
+			LSGJBattleCharacterScript.characterToDie(value, start, end);
+			break;
 		default:
 			LGlobal.script.analysis();
 	}
@@ -1791,6 +1793,19 @@ LSGJBattleCharacterScript.attackAngryExec = function(value, start, end) {
 	var params = value.substring(start + 1, end).split(",");
 	var character = LMvc.BattleController.view.charaLayer.getCharacter(params[0],parseInt(params[1]));
 	character.attackAngryExec();
+};
+LSGJBattleCharacterScript.characterToDie = function(value, start, end) {
+	var params = value.substring(start + 1, end).split(",");
+	var character = LMvc.BattleController.view.charaLayer.getCharacter(params[0],parseInt(params[1]),true);
+	LTweenLite.to(character,0.5,{alpha:0})
+		.to(character,0.5,{alpha:1})
+		.to(character,0.5,{alpha:0})
+		.to(character,0.5,{alpha:1})
+		.to(character,0.5,{alpha:0})
+		.to(character,0.5,{alpha:1,onComplete:function(obj){
+			obj.remove();
+			obj.AI.checkBoutEnd();
+		}});
 };
 /*
  * LSGJSingleCombatScript.js

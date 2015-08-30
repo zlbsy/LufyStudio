@@ -73,6 +73,7 @@ var CharacterMode = {
 	SHOW_MOVE_ROAD : "showMoveRoad",
 	STRATEGY_SELECT: "strategySelect",
 	WAIT_ATTACK : "waitAttack",
+	ATTACK : "attack",
 	WAIT_SINGLE_COMBAT:"waitSingleCombat",
 	MOVING : "moving",
 	END_ACTION : "endAction"

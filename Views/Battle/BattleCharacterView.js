@@ -249,6 +249,7 @@ BattleCharacterView.prototype.setActionDirection = function(action, direction) {
 	}
 	self.anime._send_complete = false;
 	var label = action + "-" + direction;
+	
 	self.anime.gotoAndPlay(label);
 	
 	self.action = action;
