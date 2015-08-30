@@ -117,11 +117,11 @@ BattleIntelligentAI.prototype.run = function() {
 		case CharacterMode.WAIT_ATTACK:
 			self.findPhysicalAttackTarget();
 			break;
-		case CharacterMode.END_MOVE:
-			self.chara.AI.endAction();
-			return;
 		case CharacterMode.TO_MOVE:
 			self.findMoveTarget();
+			break;
+		case CharacterMode.END_MOVE:
+			self.chara.AI.endAction();
 			return;
 		case CharacterMode.ATTACK:
 			self.physicalAttack();
@@ -316,6 +316,7 @@ BattleIntelligentAI.prototype.moveStart = function() {
 	var self = this, chara = self.chara;
 	console.log("moveStart");
 	var returnList = LMvc.BattleController.query.queryPath(new LPoint(self.locationX, self.locationY),new LPoint(self.targetNode.x,self.targetNode.y));
+	console.log("returnList=",returnList);
 	if(returnList.length > 0){
 		LMvc.BattleController.view.roadLayer.clear();
 		self.chara.addEventListener(CharacterActionEvent.MOVE_COMPLETE,self.run);
@@ -558,7 +559,12 @@ BattleIntelligentAI.prototype.findMoveTarget = function(target) {
 	for(var i = 0,l = BattleIntelligentAI.targetCharacters.length;i<l;i++){
 		var child = BattleIntelligentAI.targetCharacters[i];
 		lX = child.locationX(), lY = child.locationY();
-		var currentDistance = Math.abs(self.locationX - lX) + Math.abs(self.locationY - lY);
+		LMvc.BattleController.query.checkDistance = true;
+		var roads = LMvc.BattleController.query.queryPath(new LPoint(self.locationX, self.locationY),new LPoint(lX,lY));
+		LMvc.BattleController.query.checkDistance = false;
+		//var currentDistance = Math.abs(self.locationX - lX) + Math.abs(self.locationY - lY);
+		var currentDistance = roads.length;
+		console.log("findMoveTarget currentDistance="+currentDistance);
 		if(currentDistance < distance){
 			distance = currentDistance;
 			targetX = lX;
@@ -567,6 +573,7 @@ BattleIntelligentAI.prototype.findMoveTarget = function(target) {
 	}
 	self.targetNode = new LPoint(targetX, targetY);
 	self.chara.mode = CharacterMode.MOVING;
+	console.log("findMoveTarget end");
 };
 /*
 //没有可以攻击到的人，随机确立目标 obj.nodeparent空

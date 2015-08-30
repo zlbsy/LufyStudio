@@ -3,6 +3,7 @@ function BattleQuery(map){
 	base(self,LObject,[]);
 	base(self,LStarQuery,[]);
 	self.queryType = 1;
+	self.checkDistance = false;
 	self._map = [];
 	self._w = map[0].length;
 	self._h = map.length;
@@ -123,7 +124,13 @@ BattleQuery.prototype.setStart = function(){
 };
 /*判断是否可通过*/
 BattleQuery.prototype.isWay = function(checkPoint,thisPoint){
-	if (this._map[checkPoint.y][checkPoint.x].isRoad) return true;
+	var self = this;
+	if(self.checkDistance){
+		var soldier = BattleController.ctrlChara.data.currentSoldiers();
+		var cost = soldier.terrain(self._map[checkPoint.y][checkPoint.x].value).moveCost;
+		return cost < 100;
+	}
+	if (self._map[checkPoint.y][checkPoint.x].isRoad) return true;
 	return false;
 };
 function MapNode(_x,_y,_v){
