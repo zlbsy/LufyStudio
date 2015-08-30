@@ -117,6 +117,12 @@ BattleIntelligentAI.prototype.run = function() {
 		case CharacterMode.WAIT_ATTACK:
 			self.findPhysicalAttackTarget();
 			break;
+		case CharacterMode.END_MOVE:
+			self.chara.AI.endAction();
+			return;
+		case CharacterMode.TO_MOVE:
+			self.findMoveTarget();
+			return;
 		case CharacterMode.ATTACK:
 			self.physicalAttack();
 			return;
@@ -315,6 +321,10 @@ BattleIntelligentAI.prototype.moveStart = function() {
 		self.chara.addEventListener(CharacterActionEvent.MOVE_COMPLETE,self.run);
 		self.chara.setRoad(returnList);//move
 	}
+	if(!self.target){
+		self.chara.mode = CharacterMode.END_MOVE;
+		return;
+	}
 	if(self.chara.currentSelectStrategy){
 		self.chara.mode = CharacterMode.STRATEGY_SELECT;
 	}else{
@@ -477,7 +487,7 @@ BattleIntelligentAI.prototype.findPhysicalOther = function() {
 		}
 	}
 	if(targets.length == 0){
-		self.physicalFlag = BattleIntelligentAI.PHYSICAL_OTHER;
+		self.chara.mode = CharacterMode.TO_MOVE;
 		return;
 	}
 	var target = targets[(targets.length * Math.random()) >>> 0];
@@ -540,4 +550,74 @@ BattleIntelligentAI.prototype.getPhysicalNodeTarget = function(target) {
 	}
 	return node;
 };
+BattleIntelligentAI.prototype.findMoveTarget = function(target) {
+	var self = this, chara = self.chara;
+	console.log("findMoveTarget");
+	//没有可以攻击到的人，向最近目标移动
+	var distance = 100000, lX, lY, targetX, targetY;
+	for(var i = 0,l = BattleIntelligentAI.targetCharacters.length;i<l;i++){
+		var child = BattleIntelligentAI.targetCharacters[i];
+		lX = child.locationX(), lY = child.locationY();
+		var currentDistance = Math.abs(self.locationX - lX) + Math.abs(self.locationY - lY);
+		if(currentDistance < distance){
+			distance = currentDistance;
+			targetX = lX;
+			targetY = lY;
+		}
+	}
+	self.targetNode = new LPoint(targetX, targetY);
+	self.chara.mode = CharacterMode.MOVING;
+};
+/*
+//没有可以攻击到的人，随机确立目标 obj.nodeparent空
+				var objDistance:int = 100000000;
+				var objDx:int = 0;
+				var objDy:int = 0;
+				var objx:int = 0;
+				var objy:int = 0;
+				var objDxy:int = 0;
+				var dis:Array;
+				var selectindex:int = 0;
+				var selectdis:Array;
+				var setarr:Array;
+				for(i=0;i<targetArray.length;i++){
+					obj = targetArray[i];
+					charas = obj.charas;
+					dis = LSouSouObject.sStarQuery.path(
+						new LCoordinate(LSouSouObject.charaSNow.locationX,LSouSouObject.charaSNow.locationY),
+						new LCoordinate(charas.locationX,charas.locationY),
+						LSouSouObject.charaSNow
+					);
+					objDxy = dis.length;
+					if(objDxy < objDistance){
+						selectindex = i;
+						selectdis = dis;
+						objDistance = objDxy;
+					}
+				}
+				obj = targetArray[selectindex];
+				objDistance = 0;
+				objDxy = 0;
+				obj.mx = LSouSouObject.charaSNow.locationX;
+				obj.my = LSouSouObject.charaSNow.locationY;
+				for each(node in LSouSouObject.sMap.roadList){
+					if(_charalist[node.x + "," +node.y])continue;
+					if(setarr == null){
+						setarr = new Array();
+						for(j=0;j<selectdis.length;j++){
+							node2 = selectdis[j];
+							setarr[node2.x + "," +node2.y] = j;
+						}
+					}
+					if(setarr[node.x + "," +node.y] == null)continue;
+					objDistance = setarr[node.x + "," +node.y];
+					
+					if(objDxy < objDistance){
+						obj.mx = node.x;
+						obj.my = node.y;
+						objDistance = objDxy;
+					}
+				}
+				return obj;
 
+*/

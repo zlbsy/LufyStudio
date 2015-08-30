@@ -110,7 +110,7 @@ BattleController.prototype.init = function(){
 	self.addOurCharacter(3,CharacterAction.MOVE,CharacterDirection.LEFT,3,3);
 	self.addEnemyCharacter(4,CharacterAction.MOVE,CharacterDirection.LEFT,3,4);
 	self.addEnemyCharacter(5,CharacterAction.MOVE,CharacterDirection.LEFT,4,6);
-	self.addFriendCharacter(6,CharacterAction.MOVE,CharacterDirection.RIGHT,7,5);
+	self.addFriendCharacter(6,CharacterAction.MOVE,CharacterDirection.RIGHT,0,12);
 	self.boutNotify(Belong.SELF);
 	//self.view.charaLayer.getCharacter(Belong.SELF,2).status.addStatus(StrategyType.Chaos, 0);
 };

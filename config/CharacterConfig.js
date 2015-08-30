@@ -76,6 +76,8 @@ var CharacterMode = {
 	ATTACK : "attack",
 	WAIT_SINGLE_COMBAT:"waitSingleCombat",
 	MOVING : "moving",
+	TO_MOVE : "toMove",
+	END_MOVE : "endMove",
 	END_ACTION : "endAction"
 };
 
