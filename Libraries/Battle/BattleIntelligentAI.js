@@ -1,6 +1,7 @@
 function BattleIntelligentAI(chara) {
 	var self = this;
 	self.chara = chara;
+	self.init();
 	if(!BattleIntelligentAI.timer){
 		BattleIntelligentAI.timer = new LTimer(LGlobal.speed, 1);
 		BattleIntelligentAI.timer.addEventListener(LTimerEvent.TIMER, BattleIntelligentAI.continueExecute);
@@ -11,6 +12,8 @@ BattleIntelligentAI.WAKE = "wake";
 BattleIntelligentAI.RESTORE_STATE = "restoreState";
 BattleIntelligentAI.DOWN_STATUS = "downStatus";
 BattleIntelligentAI.HERT = "hert";
+BattleIntelligentAI.PHYSICAL_PANT = "physicalPant";
+BattleIntelligentAI.PHYSICAL_OTHER = "physicalOther";
 
 BattleIntelligentAI.ownCharacters = null;
 BattleIntelligentAI.ownPantCharacters = null;
@@ -87,6 +90,19 @@ BattleIntelligentAI.continueExecute = function(){
 	BattleController.ctrlChara.inteAI.run();
 };
 
+BattleIntelligentAI.prototype.init = function(){
+	var self = this;
+	self.strategyFlag = BattleIntelligentAI.ADD_HP;
+	self.physicalFlag = BattleIntelligentAI.PHYSICAL_PANT;
+	self.target = null;
+	self.targetNode = null;
+	self.roadList = null;
+	BattleIntelligentAI.ownCharacters = null;
+	BattleIntelligentAI.ownPantCharacters = null;
+	BattleIntelligentAI.targetCharacters = null;
+	BattleIntelligentAI.targetPantCharacters = null;
+	BattleIntelligentAI.strategyList = null;
+};
 BattleIntelligentAI.prototype.run = function() {
 	var self = BattleController.ctrlChara.inteAI;
 	switch(self.chara.mode){
@@ -103,7 +119,7 @@ BattleIntelligentAI.prototype.run = function() {
 			break;
 		case CharacterMode.ATTACK:
 			self.physicalAttack();
-			break;
+			return;
 		case CharacterMode.MOVING:
 			self.moveStart();
 			return;
@@ -133,7 +149,6 @@ BattleIntelligentAI.prototype.moveRoadsShow = function() {
 	}
 	view.roadLayer.setMoveRoads(path, self.chara.belong);
 	view.roadLayer.addRangeAttack(self.chara);
-	self.strategyFlag = BattleIntelligentAI.ADD_HP;
 	self.chara.mode = CharacterMode.SHOW_MOVE_ROAD;
 	
 };
@@ -413,12 +428,13 @@ BattleIntelligentAI.prototype.useHertStrategy = function() {
 };
 BattleIntelligentAI.prototype.findPhysicalAttackTarget = function() {
 	var self = this, chara = self.chara;
+	console.log("self.physicalFlag = " + self.physicalFlag);
 	switch(self.physicalFlag){
 		case BattleIntelligentAI.PHYSICAL_PANT:
 			self.findPhysicalPant();
 			break;
 		case BattleIntelligentAI.PHYSICAL_OTHER:
-			
+			self.findPhysicalOther();
 			break;
 	}
 };
@@ -432,7 +448,11 @@ BattleIntelligentAI.prototype.findPhysicalPant = function() {
 		if(can){
 			console.log("findPhysicalPant",child);
 			targets.push(child);
-		}	
+		}
+	}
+	if(targets.length == 0){
+		self.physicalFlag = BattleIntelligentAI.PHYSICAL_OTHER;
+		return;
 	}
 	var target = targets[(targets.length * Math.random()) >>> 0];
 	node = self.getPhysicalNodeTarget(target);
@@ -453,9 +473,19 @@ BattleIntelligentAI.prototype.findPhysicalOther = function() {
 		var can = self.canAttackTarget(child,node);
 		if(can){
 			console.log("findPhysicalOther",child);
-			targets.push({target:child,strategy:strategy});
-		}	
+			targets.push(child);
+		}
 	}
+	if(targets.length == 0){
+		self.physicalFlag = BattleIntelligentAI.PHYSICAL_OTHER;
+		return;
+	}
+	var target = targets[(targets.length * Math.random()) >>> 0];
+	node = self.getPhysicalNodeTarget(target);
+	console.log("To : node="+node);
+	self.target = target;
+	self.targetNode = node;
+	self.chara.mode = CharacterMode.MOVING;
 };
 BattleIntelligentAI.prototype.canAttackTarget = function(target, node) {
 	var self = this, chara = self.chara;

@@ -55,6 +55,7 @@ BattleCharacterAI.prototype.physicalAttack = function(target) {
 	//target.AI.attackTarget = self.chara;
 	var direction = getDirectionFromTarget(self.chara, target);
 	var skill;
+	var rangeAttackTarget;
 	if(self.herts === null){
 		if(self.chara.data.id() == BattleController.ctrlChara.data.id()){
 			self.herts = [];
@@ -72,7 +73,6 @@ BattleCharacterAI.prototype.physicalAttack = function(target) {
 				var hertParams = new HertParams();
 				var value = hertValue*hertValues[j]>>>0;
 				hertParams.push(target, value > 1 ? value : 1);
-				var rangeAttackTarget;
 				if(skill && skill.isSubType(SkillSubType.ATTACK_RECT)){
 					rangeAttackTarget = skill.rects();
 				}else{
@@ -119,9 +119,22 @@ BattleCharacterAI.prototype.physicalAttack = function(target) {
 				self.herts[0].value = self.herts[0].value * groupSkill.correctionFactor() >>> 0;
 			}
 		}else{
-			var hertValue = calculateHertValue(self.chara, target, 0.75);
+			//var hertValue = calculateHertValue(self.chara, target, 0.75);
 			var hertParams = new HertParams();
-			hertParams.push(target,hertValue);
+			rangeAttackTarget = self.chara.data.currentSoldiers().rangeAttackTarget();
+			hertParams.push(target,calculateHertValue(self.chara, target, 0.75));
+			for(var i = 0;i<rangeAttackTarget.length;i++){
+				var range = rangeAttackTarget[i];
+				if(range.x == 0 && range.y == 0){
+					continue;
+				}
+				var chara = LMvc.BattleController.view.charaLayer.getCharacterFromLocation(target.locationX()+range.x, target.locationY()+range.y);
+					
+				if(!chara || isSameBelong(chara.belong,self.chara.belong)){
+					continue;
+				}
+				hertParams.push(chara,calculateHertValue(self.chara, chara, 0.75));
+			}
 			self.herts = [hertParams];
 		}	
 	}
@@ -241,7 +254,11 @@ BattleCharacterAI.prototype.blockActionComplete = function(event) {
 	var self = chara.AI;
 	var stepTime = BattleCharacterStatusConfig.FADE_TIME + BattleCharacterStatusConfig.SHOW_TIME;
 	chara.removeEventListener(BattleCharacterActionEvent.BLOCK_ACTION_COMPLETE,self.hertActionComplete);
-	chara.changeAction(chara.data.isPantTroops()?CharacterAction.PANT:CharacterAction.STAND);
+	if(chara.mode == CharacterMode.END_ACTION){
+		chara.changeAction(chara.data.isPantTroops()?CharacterAction.PANT:CharacterAction.STAND);
+	}else{
+		chara.changeAction(chara.data.isPantTroops()?CharacterAction.PANT:CharacterAction.MOVE);
+	}
 	LTweenLite.to(chara,chara.hertIndex * stepTime,{onComplete:function(e){
 		var chara = e.target;
 		var statusView = new BattleCharacterStatusView(self.controller,chara);
@@ -260,7 +277,11 @@ BattleCharacterAI.prototype.hertActionComplete = function(event) {
 	var self = chara.AI;
 	var stepTime = BattleCharacterStatusConfig.FADE_TIME + BattleCharacterStatusConfig.SHOW_TIME;
 	chara.removeEventListener(BattleCharacterActionEvent.HERT_ACTION_COMPLETE,self.hertActionComplete);
-	chara.changeAction(chara.data.isPantTroops()?CharacterAction.PANT:CharacterAction.STAND);
+	if(chara.mode == CharacterMode.END_ACTION){
+		chara.changeAction(chara.data.isPantTroops()?CharacterAction.PANT:CharacterAction.STAND);
+	}else{
+		chara.changeAction(chara.data.isPantTroops()?CharacterAction.PANT:CharacterAction.MOVE);
+	}
 	LTweenLite.to(chara,chara.hertIndex * stepTime,{onComplete:function(e){
 		var chara = e.target;
 		var statusView = new BattleCharacterStatusView(self.controller,chara);
@@ -269,6 +290,7 @@ BattleCharacterAI.prototype.hertActionComplete = function(event) {
 		statusView.startTween();
 		//if(!chara.AI.attackTarget){
 		if(!isCurrentAttackTarget(chara)){
+			chara.toStatic(true);
 			return;
 		}
 		statusView.addEventListener(BattleCharacterStatusEvent.CHANGE_COMPLETE,LMvc.currentAttackCharacter.AI.plusExp);
@@ -345,6 +367,7 @@ BattleCharacterAI.prototype.endAction = function() {
 	chara.mode = CharacterMode.END_ACTION;
 	chara.currentSelectStrategy = null;
 	chara.toStatic(true);
+	chara.inteAI.init();
 	LMvc.running = false;
 	console.log("check",LMvc.BattleController.view.charaLayer.isHasActiveCharacter(chara.belong));
 	//TODO::check change battle belong mode
