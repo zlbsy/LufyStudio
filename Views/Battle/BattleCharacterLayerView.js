@@ -147,6 +147,26 @@ BattleCharacterLayerView.prototype.addFriendCharacter=function(index,action,dire
 	self.model.friendList.push(chara);
 	if(typeof callback == "function")callback();
 };
+BattleCharacterLayerView.prototype.removeCharacter=function(belong,id){
+	var self = this;
+	var childList;
+	if(belong == Belong.SELF){
+		childList = self.model.ourList;
+	}else if(belong == Belong.FRIEND){
+		childList = self.model.friendList;
+	}else if(belong == Belong.ENEMY){
+		childList = self.model.enemyList;
+	}
+	for(var i=0,l=childList.length;i<l;i++){
+		child = childList[i];
+		if(child.data.id() != id){
+			continue;
+		}
+		childList.splice(i,1);
+		child.remove();
+		break;
+	}
+};
 /**
  * 添加人物
  * */

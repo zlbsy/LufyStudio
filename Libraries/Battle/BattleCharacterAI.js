@@ -222,7 +222,7 @@ BattleCharacterAI.prototype.attackActionComplete = function(event) {
 				
 			}
 			var num = new Num(Num.MIDDLE,1,20);
-			obj.chara.hertValue = obj.hertValue;
+			obj.chara.hertValue = obj.hertValue > obj.chara.data.troops() ? obj.chara.data.troops() : obj.hertValue;
 			num.setValue(obj.hertValue);
 			num.x = obj.chara.x;
 			num.y = obj.chara.y;
@@ -315,7 +315,7 @@ BattleCharacterAI.prototype.counterAttack = function(event) {
 	}
 	if(attackChatacter.data.id() == BattleController.ctrlChara.data.id()){
 		var chara = LMvc.currentAttackTarget;
-		if(battleCanAttackCharacter(chara, attackChatacter)){
+		if(chara.data.troops() > 0 && battleCanAttackCharacter(chara, attackChatacter)){
 			chara.AI.physicalAttack(attackChatacter);
 			return;
 		}
@@ -352,8 +352,8 @@ BattleCharacterAI.prototype.endBoutCheck = function() {
 	var chara = BattleController.ctrlChara, self = chara.AI;
 	var dieChara = LMvc.BattleController.view.charaLayer.getDieCharacter(chara.belong) || LMvc.BattleController.view.charaLayer.getDieCharacter();
 	if(dieChara){
-		var script = "SGJTalk.show(" + self.data.id() + ",0," + self.data.dieTalk() + ");";
-		script += "SGJBattleCharacter.characterToDie(" + self.belong + ","+ self.data.id() + ");";
+		var script = "SGJTalk.show(" + dieChara.data.id() + ",0," + dieChara.data.dieTalk() + ");";
+		script += "SGJBattleCharacter.characterToDie(" + dieChara.belong + ","+ dieChara.data.id() + ");";
 		LGlobal.script.addScript(script);
 		return;
 	}

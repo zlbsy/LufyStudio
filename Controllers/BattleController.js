@@ -101,8 +101,9 @@ BattleController.prototype.init = function(){
 		CharacterModel.getChara(i).calculation(true);
 		CharacterModel.getChara(i).troops(CharacterModel.getChara(i).troops() - 40);
 	}
-	CharacterModel.getChara(2).troops(50);
+	CharacterModel.getChara(2).troops(80);
 	CharacterModel.getChara(2).wounded(70);
+	CharacterModel.getChara(4).troops(10);
 	
 	self.addOurCharacter(1,CharacterAction.MOVE,CharacterDirection.DOWN,5,5);
 	self.addOurCharacter(2,CharacterAction.MOVE,CharacterDirection.UP,4,4);

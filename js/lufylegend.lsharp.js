@@ -1797,14 +1797,15 @@ LSGJBattleCharacterScript.attackAngryExec = function(value, start, end) {
 LSGJBattleCharacterScript.characterToDie = function(value, start, end) {
 	var params = value.substring(start + 1, end).split(",");
 	var character = LMvc.BattleController.view.charaLayer.getCharacter(params[0],parseInt(params[1]),true);
-	LTweenLite.to(character,0.5,{alpha:0})
-		.to(character,0.5,{alpha:1})
-		.to(character,0.5,{alpha:0})
-		.to(character,0.5,{alpha:1})
-		.to(character,0.5,{alpha:0})
-		.to(character,0.5,{alpha:1,onComplete:function(obj){
-			obj.remove();
-			obj.AI.checkBoutEnd();
+	character.toStatic(false);
+	LTweenLite.to(character,0.2,{alpha:0})
+		.to(character,0.2,{alpha:1})
+		.to(character,0.2,{alpha:0})
+		.to(character,0.2,{alpha:1})
+		.to(character,0.2,{alpha:0})
+		.to(character,0.2,{alpha:1,onComplete:function(obj){
+			LMvc.BattleController.view.charaLayer.removeCharacter(obj.belong,obj.data.id());
+			obj.AI.endBoutCheck();
 		}});
 };
 /*
