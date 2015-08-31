@@ -1805,7 +1805,8 @@ LSGJBattleCharacterScript.characterToDie = function(value, start, end) {
 		.to(character,0.2,{alpha:0})
 		.to(character,0.2,{alpha:1,onComplete:function(obj){
 			LMvc.BattleController.view.charaLayer.removeCharacter(obj.belong,obj.data.id());
-			obj.AI.endBoutCheck();
+			battleEndCheck(obj.belong);
+			//obj.AI.endBoutCheck();
 		}});
 };
 /*

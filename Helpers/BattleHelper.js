@@ -176,6 +176,28 @@ function battleCanAttackCharacter(attChara, hertChara){
 	}
 	return false;
 }
+function battleEndCheck(belong){
+	var charas = LMvc.BattleController.view.charaLayer.getCharactersFromBelong(belong);
+	if(charas.length == 0){
+		if(belong == Belong.SELF){
+			//战斗失败
+		}else if(belong == Belong.ENEMY){
+			//战斗胜利
+		}
+		return;
+	}else{
+		//判断主将是否撤退
+		var chara = charas.find(function(child){
+			return child.isLeader;
+		});
+		if(!chara){
+			//换主将
+			//battleEndCheck(belong);
+			//return;
+		}
+	}
+	BattleController.ctrlChara.AI.endBoutCheck();
+}
 if (!Array.getRandomArrays){
 	Array.getRandomArrays = function(list,num){
 		var result = [], length = list.length < num ? list.length : num;

@@ -97,7 +97,8 @@ SoldierModel.prototype.icon=function(size,anime){
 	if(!imgIndex){
 		imgIndex = self.master().img();
 	}
-	var icon = new BitmapSprite(LMvc.IMG_PATH + "character/"+imgIndex+"/mov.png", [0,48*6,48,48],size);
+	var icon = new BitmapSprite(LMvc.IMG_PATH + "character/s/"+imgIndex+".png", [64*12,0,64,64],size);
+	//return icon;
 	if(anime){
 		icon.addEventListener(LEvent.COMPLETE, function(event){
 			var sprite = event.currentTarget;
@@ -105,9 +106,11 @@ SoldierModel.prototype.icon=function(size,anime){
 			var bitmapData = bitmap.bitmapData;
 			sprite.removeChild(bitmap);
 			var list = LGlobal.divideCoordinate(48, 96, 2, 1);
-			list = [[list[0][0],list[1][0]]];
+			list = [[{x : 64*12, y : 0, width : 64, height : 64, sx : 0, sy : 0},{x : 64*13, y : 0, width : 64, height : 64, sx : 0, sy : 0}]];
 			var animation = new LAnimationTimeline(bitmapData,list);
 			animation.speed = 5;
+			animation.scaleX = bitmap.scaleX;
+			animation.scaleY = bitmap.scaleY;
 			sprite.addChild(animation);
 		});
 	}

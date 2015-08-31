@@ -50,10 +50,10 @@ BuildOfficialView.prototype.onClickExpeditionButton=function(event){
 	var self = this;
 	
 	//TODO::
-	self.controller.gotoBattle();
-	/*
+	//self.controller.gotoBattle();
+	
 	self.controller.addEventListener(LCityEvent.SELECT_CITY, self.expeditionSelectCharacter);
-	self.controller.toSelectMap(CharacterListType.EXPEDITION);*/
+	self.controller.toSelectMap(CharacterListType.EXPEDITION);
 };
 BuildOfficialView.prototype.expeditionSelectCharacter=function(event){
 	var controller = event.currentTarget;
