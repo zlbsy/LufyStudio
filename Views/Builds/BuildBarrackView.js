@@ -12,22 +12,22 @@ BuildBarrackView.prototype.showMenu=function(){
 	buttonEnlist.y = menuY;
 	layer.addChild(buttonEnlist);
 	buttonEnlist.addEventListener(LMouseEvent.MOUSE_UP, self.onClickEnlistButton);
-	
+	/*
 	menuY += menuHeight;
 	var buttonArmyList = getButton(Language.get("arm_list"),200);
 	buttonArmyList.y = menuY;
 	layer.addChild(buttonArmyList);
-	buttonArmyList.addEventListener(LMouseEvent.MOUSE_UP, self.onClickArmyListButton);
+	buttonArmyList.addEventListener(LMouseEvent.MOUSE_UP, self.onClickArmyListButton);*/
 	
 	menuY += menuHeight;
 	var buttonTraining = getButton(Language.get("training"),200);
 	buttonTraining.y = menuY;
 	layer.addChild(buttonTraining);
-	
+	/*
 	menuY += menuHeight;
 	var buttonStrengthen = getButton(Language.get("strengthen"),200);
 	buttonStrengthen.y = menuY;
-	layer.addChild(buttonStrengthen);
+	layer.addChild(buttonStrengthen);*/
 	
 	return layer;
 };
@@ -72,6 +72,8 @@ BuildBarrackView.prototype.onClickArmyListButton=function(event){
 };
 BuildBarrackView.prototype.onClickEnlistButton=function(event){
 	var self = event.currentTarget.parent.parent.parent;
+	//self.controller.loadCharacterList(CharacterListType.ENLIST,self);
+	//return;
 	self.controller.addEventListener(ArmListEvent.SHOW, self.hideArmBuild);
 	self.controller.addEventListener(ArmListEvent.CLOSE, self.showArmBuild);
 	var armListLayer = new LSprite();

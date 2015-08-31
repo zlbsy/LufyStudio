@@ -19,12 +19,13 @@ LMvc.areaData = {
 			technology : 100,
 			police : 70,
 			city_defense : 1000,
-			troops : [
+			troops : 14000,
+			/*troops : [
 				{id:1,quantity:4000,learned:1},
 				{id:2,quantity:2000,learned:1},
 				{id:4,quantity:4000,learned:1},
 				{id:7,quantity:2000,learned:1}
-			],
+			],*/
 			items : [
 				{item_id:4,lv:1},
 				{item_id:5,lv:2},
@@ -72,10 +73,10 @@ LMvc.areaData = {
 			technology : 100,
 			police : 70,
 			city_defense : 1000,
-			troops : [
+			troops : 9000,/*[
 				{id:4,quantity:4000},
 				{id:5,quantity:5000}
-			],
+			],*/
 			generals:[
 				{chara_id:4,lv:3,feat:166,loyalty:50},
 				{chara_id:5,lv:3,feat:166,loyalty:50},
@@ -95,10 +96,10 @@ LMvc.areaData = {
 		areas : [{
 			area_id : 12,
 			money : 2000,
-			troops : [
+			troops : 8000,/*[
 				{id:6,quantity:4000},
 				{id:7,quantity:5000}
-			],
+			],*/
 			generals:[
 				{chara_id:6,lv:3,feat:166,loyalty:50},
 				{chara_id:7,lv:3,feat:166,loyalty:50}
@@ -116,6 +117,7 @@ LMvc.areaData = {
 		areas : [{
 			area_id : 3,
 			money : 3300,
+			troops : 7000,
 			generals:[
 				{chara_id:10,lv:3,feat:166,loyalty:50}
 			],

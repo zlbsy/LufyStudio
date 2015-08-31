@@ -18,6 +18,8 @@ ArmListView.prototype.init=function(){
 };
 ArmListView.prototype.listInit=function(){
 	var self = this;
+	self.toSelectCharacter();
+	return;
 	var cityModel = self.controller.getValue("cityData");
 	
 	var title = getStrokeLabel("",30,"#FFFFFF","#000000",4);

@@ -98,7 +98,7 @@ AreaModel.prototype.setSeignor = function(seignior,areaData){
 			}
 			this.data[key] = items;
 			continue;
-		}else if(key == "troops"){
+		/*}else if(key == "troops"){
 			var troops = areaData[key];
 			for(var j=0;j<troops.length;j++){
 				var troopIndex = this.data.troops.findIndex(function(child){
@@ -112,7 +112,7 @@ AreaModel.prototype.setSeignor = function(seignior,areaData){
 					this.data.troops.push(troops[j]);
 				}
 			}
-			continue;
+			continue;*/
 		}else if(key == "generals"){
 			var generals = [];
 			for(var i=0,l=areaData[key].length;i<l;i++){
@@ -282,13 +282,16 @@ AreaModel.prototype.generalsSum=function(){
 	return this.data.generals.length;
 };
 AreaModel.prototype.troopsSum=function(){
-	var troopsSum = 0;
+	/*var troopsSum = 0;
 	for(var i=0;i<this.data.troops.length;i++){
 		troopsSum += this.data.troops[i].quantity;
-	}
-	return LString.numberFormat(troopsSum,3);
+	}*/
+	return LString.numberFormat(this.troops(),3);
 };
-AreaModel.prototype.troops=function(id, value){
+AreaModel.prototype.troops=function(value){
+	return this._dataValue("troops", value, 0);
+};
+/*AreaModel.prototype.troops=function(id, value){
 	var self = this;
 	var troops = [];
 	for(var i=0;i<self.data.troops.length;i++){
@@ -309,7 +312,7 @@ AreaModel.prototype.troops=function(id, value){
 		return {};
 	}
 	return troops;
-};
+};*/
 AreaModel.prototype.agriculture=function(value){
 	if(typeof value != UNDEFINED){
 		this.plus("agriculture",value);
