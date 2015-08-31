@@ -138,7 +138,7 @@ LStarQuery.prototype = {
 	},
 	/*开始寻路*/
 	queryPath:function (star,end){
-		var self = this;console.log(star,end,self._map);
+		var self = this;//console.log(star,end,self._map);
 		self._path = [];
 		if(end.x >= self._map[0].length)end.x = self._map[0].length - 2;
 		if(end.y >= self._map.length)end.y = self._map.length - 2;

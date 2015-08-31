@@ -144,7 +144,6 @@ BattleIntelligentAI.prototype.moveRoadsShow = function() {
 		path = LMvc.BattleController.query.makePath(self.chara);
 	}
 	self.roadList = [];
-	//var roadList = path;
 	for(var i = 0,l=path.length;i<l;i++){
 		var node = path[i];
 		var chara = view.charaLayer.getCharacterFromLocation(node.x,node.y);
@@ -203,7 +202,6 @@ BattleIntelligentAI.prototype.getCanUseStrategy = function(target,type, node) {
 		var rangeAttack = strategy.rangeAttack();
 		for(var j=0,jl=rangeAttack.length;j<jl;j++){
 			var child = rangeAttack[j];
-			//console.log((child.x+node.x)+"=="+lX+"&&"+(child.y+node.y)+"=="+lY);
 			if(child.x + node.x == lX && child.y + node.y == lY){
 				//TODO::获取最大优先级的策略
 				return strategy;
@@ -513,7 +511,6 @@ BattleIntelligentAI.prototype.canAttackTarget = function(target, node) {
 };
 BattleIntelligentAI.prototype.getPhysicalNodeTarget = function(target) {
 	var self = this, chara = self.chara;
-	console.log("getPhysicalNodeTarget",target);
 	var roadList = self.roadList;
 	var range, rangeAttack = chara.data.currentSoldiers().rangeAttack(), jl = rangeAttack.length;
 	var node, length = 10000, sLength;
@@ -551,80 +548,37 @@ BattleIntelligentAI.prototype.getPhysicalNodeTarget = function(target) {
 	}
 	return node;
 };
-BattleIntelligentAI.prototype.findMoveTarget = function(target) {
+BattleIntelligentAI.prototype.findMoveTarget = function() {
 	var self = this, chara = self.chara;
-	console.log("findMoveTarget");
 	//没有可以攻击到的人，向最近目标移动
-	var distance = 100000, lX, lY, targetX, targetY;
+	var distance = 100000, lX, lY, targetX, targetY,targetRoads;
 	for(var i = 0,l = BattleIntelligentAI.targetCharacters.length;i<l;i++){
 		var child = BattleIntelligentAI.targetCharacters[i];
 		lX = child.locationX(), lY = child.locationY();
 		LMvc.BattleController.query.checkDistance = true;
 		var roads = LMvc.BattleController.query.queryPath(new LPoint(self.locationX, self.locationY),new LPoint(lX,lY));
 		LMvc.BattleController.query.checkDistance = false;
-		//var currentDistance = Math.abs(self.locationX - lX) + Math.abs(self.locationY - lY);
 		var currentDistance = roads.length;
-		console.log("findMoveTarget currentDistance="+currentDistance);
 		if(currentDistance < distance){
 			distance = currentDistance;
-			targetX = lX;
-			targetY = lY;
+			targetRoads = roads;
+		}
+	}
+	for(var i = 0,l=targetRoads.length;i<l;i++){
+		var node = targetRoads[i];
+		if(!LMvc.BattleController.view.roadLayer.roadList.find(function(child){
+			return child.x == node.x && child.y == node.y;
+		})){
+			break;
+		}
+		if(self.roadList.find(function(child){
+			return child.x == node.x && child.y == node.y;
+		})){
+			targetX = node.x;
+			targetY = node.y;
 		}
 	}
 	self.targetNode = new LPoint(targetX, targetY);
 	self.chara.mode = CharacterMode.MOVING;
-	console.log("findMoveTarget end");
 };
-/*
-//没有可以攻击到的人，随机确立目标 obj.nodeparent空
-				var objDistance:int = 100000000;
-				var objDx:int = 0;
-				var objDy:int = 0;
-				var objx:int = 0;
-				var objy:int = 0;
-				var objDxy:int = 0;
-				var dis:Array;
-				var selectindex:int = 0;
-				var selectdis:Array;
-				var setarr:Array;
-				for(i=0;i<targetArray.length;i++){
-					obj = targetArray[i];
-					charas = obj.charas;
-					dis = LSouSouObject.sStarQuery.path(
-						new LCoordinate(LSouSouObject.charaSNow.locationX,LSouSouObject.charaSNow.locationY),
-						new LCoordinate(charas.locationX,charas.locationY),
-						LSouSouObject.charaSNow
-					);
-					objDxy = dis.length;
-					if(objDxy < objDistance){
-						selectindex = i;
-						selectdis = dis;
-						objDistance = objDxy;
-					}
-				}
-				obj = targetArray[selectindex];
-				objDistance = 0;
-				objDxy = 0;
-				obj.mx = LSouSouObject.charaSNow.locationX;
-				obj.my = LSouSouObject.charaSNow.locationY;
-				for each(node in LSouSouObject.sMap.roadList){
-					if(_charalist[node.x + "," +node.y])continue;
-					if(setarr == null){
-						setarr = new Array();
-						for(j=0;j<selectdis.length;j++){
-							node2 = selectdis[j];
-							setarr[node2.x + "," +node2.y] = j;
-						}
-					}
-					if(setarr[node.x + "," +node.y] == null)continue;
-					objDistance = setarr[node.x + "," +node.y];
-					
-					if(objDxy < objDistance){
-						obj.mx = node.x;
-						obj.my = node.y;
-						objDistance = objDxy;
-					}
-				}
-				return obj;
 
-*/
