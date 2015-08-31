@@ -1,10 +1,10 @@
-function ArmDetailedView(controller, soldierModel){
+function ArmDetailedView(controller){
 	var self = this;
 	base(self,LView,[controller]);
 	//self.soldierData = soldierData;
 	//self.soldierModel = new SoldierModel(null,soldierData);
 	//console.error("ArmDetailedView",soldierModel);
-	self.soldierModel = soldierModel;
+	//self.soldierModel = soldierModel;
 	self.set();
 }
 ArmDetailedView.prototype.setArmEnlist=function(){
@@ -14,7 +14,7 @@ ArmDetailedView.prototype.setArmEnlist=function(){
 	var layer = new LSprite();
 	
 	var width = 48, height = 48;
-	var icon = soldierModel.icon(new LPoint(width,height), true);
+	/*var icon = soldierModel.icon(new LPoint(width,height), true);
 	//icon.x = 50;
 	//icon.y = 20;
 	layer.addChild(icon);
@@ -22,14 +22,17 @@ ArmDetailedView.prototype.setArmEnlist=function(){
 	var name = getStrokeLabel(soldierModel.name(), 20, "#FFFFFF", "#000000", 4);
 	name.x = icon.x + icon.getWidth() + 10;
 	name.y = icon.y + 5;
-	layer.addChild(name);
+	layer.addChild(name);*/
 	
-	var quantity = getStrokeLabel(String.format("{0}人",soldierModel.quantity()), 20, "#FFFFFF", "#000000", 4);
-	quantity.x = name.x + name.getWidth() + 50;
-	quantity.y = name.y;
+	var quantity = getStrokeLabel(String.format("{0}人",90), 20, "#FFFFFF", "#000000", 4);
+	//quantity.x = name.x + name.getWidth() + 50;
+	//quantity.y = name.y;
+	quantity.x = 50;
+	quantity.y = 20;
 	layer.addChild(quantity);
 	
-	self.enlistPrice = soldierModel.enlistPrice();
+	//self.enlistPrice = soldierModel.enlistPrice();
+	self.enlistPrice = 100;
 	
 	var enlistConfrim = getStrokeLabel("要招募多少士兵？", 20, "#FFFFFF", "#000000", 4);
 	enlistConfrim.x = 50;

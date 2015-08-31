@@ -167,7 +167,8 @@ ArmListView.prototype.troopsSelect=function(event){
 ArmListView.prototype.showArmDetailed=function(soldierModel){
 	var self = this;
 	//console.error("ArmListView.prototype.showArmDetailed"+self.controller.armListType,ArmListType.EXPEDITION,soldierData);
-	var armDetailed = new ArmDetailedView(self.controller, soldierModel);
+	//var armDetailed = new ArmDetailedView(self.controller, soldierModel);
+	var armDetailed = new ArmDetailedView(self.controller);
 	if(self.controller.armListType == ArmListType.EXPEDITION){
 		var title = soldierModel.name();
 		var obj = {title:title,subWindow:armDetailed,width:400,height:250,okEvent:self.troopsSelect.bind(this),cancelEvent:null};
@@ -224,8 +225,9 @@ ArmListView.prototype.characterListClose=function(event){
 	self.controller.setValue("selectCharacters",event.characterList);
 	self.characterListLayer.removeChildAt(self.characterListLayer.numChildren - 1);
 	self.listLayer.visible = true;
-	var soldierData = self.dataList.find(function(child){
+	/*var soldierData = self.dataList.find(function(child){
 		return child.id = self.enlistArmId;
 	});
-	self.showArmDetailed(new SoldierModel(null, soldierData));
+	self.showArmDetailed(new SoldierModel(null, soldierData));*/
+	self.showArmDetailed();
 };
