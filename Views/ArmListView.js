@@ -166,20 +166,25 @@ ArmListView.prototype.troopsSelect=function(event){
 };
 ArmListView.prototype.showArmDetailed=function(soldierModel){
 	var self = this;
+	console.log("self.controller.armListType="+self.controller.armListType);
 	//console.error("ArmListView.prototype.showArmDetailed"+self.controller.armListType,ArmListType.EXPEDITION,soldierData);
 	//var armDetailed = new ArmDetailedView(self.controller, soldierModel);
 	var armDetailed = new ArmDetailedView(self.controller);
 	if(self.controller.armListType == ArmListType.EXPEDITION){
 		var title = soldierModel.name();
-		var obj = {title:title,subWindow:armDetailed,width:400,height:250,okEvent:self.troopsSelect.bind(this),cancelEvent:null};
+		var obj = {title:title,subWindow:armDetailed,width:400,height:250,okEvent:self.troopsSelect.bind(this),cancelEvent:self.cancelDetailed};
 		var windowLayer = ConfirmWindow(obj);
 		LMvc.layer.addChild(windowLayer);
 	}else{
-		var obj = {title:Language.get("enlist"),subWindow:armDetailed,width:400,height:480,okEvent:self.enlist,cancelEvent:null};
+		var obj = {title:Language.get("enlist"),subWindow:armDetailed,width:400,height:480,okEvent:self.enlist,cancelEvent:self.cancelDetailed};
 		var windowLayer = ConfirmWindow(obj);
 		//LMvc.layer.addChild(windowLayer);
 		self.armDetailedLayer.addChild(windowLayer);
 	}
+};
+ArmListView.prototype.cancelDetailed=function(event){
+	var self = event.currentTarget.parent.parent.parent;
+	self.toSelectCharacter();
 };
 ArmListView.prototype.enlist=function(event){console.log("ArmListView.prototype.enlist");
 	var self = event.currentTarget.parent.parent.parent;
@@ -205,6 +210,7 @@ ArmListView.prototype.enlist=function(event){console.log("ArmListView.prototype.
 	}
 	self.armDetailedLayer.removeAllChild();
 	self.doEnlist = true;
+	self.onClickCloseButton();
 };
 ArmListView.prototype.toSelectCharacter=function(){
 	var self = this;
@@ -219,15 +225,20 @@ ArmListView.prototype.characterListShow=function(event){
 };
 ArmListView.prototype.characterListClose=function(event){
 	
-	console.log("ArmListView.prototype.characterListClose",event);
+	console.log("ArmListView.prototype.characterListClose",event,event.subEventType);
 	var self = event.currentTarget.view;
-	console.log("ArmListView.prototype.characterListClose"+self.controller.armListType);
+	var subEventType = event.subEventType;
+	if(subEventType == "return"){
+		self.onClickCloseButton();
+		return;
+	}
 	self.controller.setValue("selectCharacters",event.characterList);
 	self.characterListLayer.removeChildAt(self.characterListLayer.numChildren - 1);
-	self.listLayer.visible = true;
+	//self.listLayer.visible = true;
 	/*var soldierData = self.dataList.find(function(child){
 		return child.id = self.enlistArmId;
 	});
 	self.showArmDetailed(new SoldierModel(null, soldierData));*/
 	self.showArmDetailed();
+	//self.onClickCloseButton();
 };
