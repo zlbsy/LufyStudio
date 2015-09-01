@@ -19,11 +19,61 @@ and open the template in the editor.
     <body style="margin:0px 0px 0px 0px;padding:0px 0px 0px 0px;font-size: 0;">
         <div id="mvclegend">loading</div>
         <script>
+        trace = function() {
+	if (!LGlobal.traceDebug) return;
+	var t = document.getElementById("traceObject"), i;
+	if (trace.arguments.length > 0 && t == null) {
+		var d = document.createElement("DIV");
+		d.position=0;
+		d.style.position = "absolute";
+		document.body.appendChild(d);
+		t = document.createElement("TEXTAREA");
+		t.id = "traceObject";
+		t.style.width = (window.innerWidth*0.5) + "px";
+		t.style.height = "200px";
+		var b = document.createElement("BUTTON");
+		b.style.width = (window.innerWidth*0.25) + "px";
+		b.innerHTML="Hide";
+		d.appendChild(b);
+		LEvent.addEventListener(b,LGlobal.mobile ? "touchstart":"click", function(e){
+			t.style.display = (t.style.display == "none" ? "":"none");
+		});
+		b = document.createElement("BUTTON");
+		b.style.width = (window.innerWidth*0.25) + "px";
+		b.innerHTML="position";
+		d.appendChild(b);
+		var f = function(e){
+			d.position++;
+			if(d.position == 0){
+				d.style.top = "5px";
+				d.style.left = "5px";
+			}else if(d.position == 1){
+				d.style.top = (window.innerHeight - parseInt(t.style.height)) + "px";
+				d.style.left = "5px";
+			}else if(d.position == 2){
+				d.style.top = "5px";
+				d.style.left = (window.innerWidth - parseInt(t.style.width)) + "px";
+			}else{
+				d.style.top = (window.innerHeight - parseInt(t.style.height)) + "px";
+				d.style.left = (window.innerWidth - parseInt(t.style.width)) + "px";
+				d.position = -1;
+			}
+		};
+		f();
+		LEvent.addEventListener(b,LGlobal.mobile ? "touchstart":"click", f);
+		d.appendChild(document.createElement("BR"));
+		d.appendChild(t);
+	}
+	for (i = 0; i < trace.arguments.length; i++) {
+		t.value = t.value + trace.arguments[i] + "\r\n";
+		t.scrollTop = t.scrollHeight;
+	}
+};
         if(LGlobal.mobile){
         	var protocol = location.protocol;
 			if (protocol == "http:" || protocol == "https:") {
 			}else{
-				//console.log = trace;
+				console.log = trace;
 				//console.log=function(){};
 			}
 		}
@@ -32,6 +82,7 @@ and open the template in the editor.
         init(1000/30,"mvclegend",480,800,main);
 		function main(){
 			LGlobal.setDebug(true);
+			console.log = trace;
 			if(LGlobal.mobile){
 				LGlobal.width = 480;
 				LGlobal.height = 480*window.innerHeight/window.innerWidth;
@@ -70,7 +121,7 @@ and open the template in the editor.
 					loadingLayer = null;
 					
 					LMvc.init();
-					
+					trace("start");
 					//return;
 					var fps = new FPS();
 					LTweenLiteTimeline.to(fps,5,{alpha:0,loop:true}).to(fps,5,{alpha:1});
