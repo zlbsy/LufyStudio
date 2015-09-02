@@ -36,14 +36,14 @@ CharacterExpeditionView.prototype.set=function(){
 	
 	var width = 48, height = 48;
 	
+	self.currentTroops = self.characterModel.troops();
 	var cityModel = self.controller.getValue("cityData");
 	var soldiers = cityModel.soldiers();
-	self.canUseTroops = cityModel.troops();
+	self.canUseTroops = cityModel.troops() + self.currentTroops;
 	/*self.troopsList = [];
 	for(var i=0;i<troopsList.length;i++){
 		self.troopsList.push({id:troopsList[i].id,quantity:troopsList[i].quantity});
 	}*/
-	self.currentTroops = self.characterModel.troops();
 	console.log("self.currentTroops="+self.currentTroops);
 	var currentSoldierModel = self.characterModel.currentSoldiers();
 	self.currentSoldierModel = currentSoldierModel;
