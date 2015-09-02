@@ -2,6 +2,7 @@ function BattleController(battleData, fromController){
 	var self = this;
 	base(self,MyController,[]);
 	self.fromController = fromController;
+	self.battleData = battleData;
 	self.setValue("bout", 0);
 }
 BattleController.prototype.construct=function(){

@@ -156,14 +156,17 @@ BuildOfficialView.prototype.expeditionReady=function(){
 };
 BuildOfficialView.prototype.expeditionReadyComplete=function(event){
 	var windowLayer = event.currentTarget.parent;
+	console.log("windowLayer="+windowLayer);
 	var self = windowLayer.parent;
 	var readyView = windowLayer.childList.find(function(child){
 		return child.constructor.name == "ExpeditionReadyView";
 	});
+	console.log("readyView="+readyView);
 	var data = readyView.getData();
+	console.log("data="+data);
 	data.expeditionCharacterList = self.controller.getValue("expeditionCharacterList");
 	data.expeditionLeader = self.controller.getValue("expeditionLeader");
-	console.log("expeditionReadyComplete",data,expeditionCharacterList,expeditionLeader);
+	console.log("expeditionReadyComplete",data.expeditionCharacterList,data.expeditionLeader);
 	windowLayer.remove();
 	self.controller.setValue("battleData",data);
 	self.controller.gotoBattle();

@@ -28,6 +28,8 @@ ChapterModel.prototype.getChapterData=function(callback){
 ChapterModel.prototype.getChapterDataComplete=function(event){
 	var self = this;
 	self.controller.setValue("title",LMvc.chapterData.title);
+	self.controller.setValue("year",LMvc.chapterData.year);
+	self.controller.setValue("month",LMvc.chapterData.month);
 	self.controller.setValue("icon",LMvc.chapterData.icon);
 	self.controller.setValue("seigniors",LMvc.chapterData.seigniors);
 	var callback = self.callback;
