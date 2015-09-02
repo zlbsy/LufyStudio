@@ -32,8 +32,8 @@ SoldierMasterModel.prototype.id = function() {
 SoldierMasterModel.prototype.name = function() {
 	return this.data.name;
 };
-SoldierMasterModel.prototype.enlistPrice = function() {
-	return this.data.enlistPrice;
+SoldierMasterModel.prototype.technology = function() {
+	return this.data.technology;
 };
 SoldierMasterModel.prototype.soldierType = function() {
 	return this.data.type;

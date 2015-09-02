@@ -20,7 +20,7 @@ BattleCharacterLayerView.prototype.charactersBoutEnd = function(event) {
 		child = childList[i];
 		child.mode = CharacterMode.NONE;
 		child.toStatic(false);
-		child.changeAction(CharacterAction.MOVE);
+		child.changeAction(child.data.isPantTroops()?CharacterAction.PANT:CharacterAction.MOVE);
 		child.toStatic(true);
 		if(child.data.hasSkill(SkillSubType.WAKE)){
 			var skill = child.data.skill();

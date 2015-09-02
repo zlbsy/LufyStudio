@@ -9,7 +9,8 @@ var MoveType = {
 };
 var EnlistSetting = {
 	ENLIST_FROM:500,
-	ENLIST_TO:1000
+	ENLIST_TO:1000,
+	ENLIST_PRICE:500
 };
 /* {id:1,name:"兵种名",type:SoldierType,movetype:MoveType,movePower:移动力,
 	property:兵种属性,
@@ -32,7 +33,7 @@ var SoldierDatas = [
 	rangeAttackTarget:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],
 	strategy:[{id:2,lv:0},{id:3,lv:0},{id:4,lv:0},{id:5,lv:0},{id:6,lv:0},{id:7,lv:0},{id:8,lv:0},{id:9,lv:0},{id:10,lv:0}],
 	strategyHert:1,
-	explanation:"explanation_jj",img:1,enlistPrice:500,
+	explanation:"explanation_jj",img:1,technology:500,
 	next:[{id:2,lv:20}]
 	},
 	{id:2,name:"诸侯",type:SoldierType.Physical,moveType:MoveType.CAVALRY,movePower:6,
@@ -44,7 +45,7 @@ var SoldierDatas = [
 	rangeAttackTarget:[{x:0,y:0}],
 	strategy:[{id:2,lv:0},{id:3,lv:3}],
 	strategyHert:1,
-	explanation:"explanation_zh",img:1,enlistPrice:500,
+	explanation:"explanation_zh",img:1,technology:500,
 	next:[{id:3,lv:40}]
 	},
 	{id:3,name:"君王",type:SoldierType.Physical,moveType:MoveType.CAVALRY,movePower:7,
@@ -67,7 +68,7 @@ var SoldierDatas = [
 	rangeAttackTarget:[{x:0,y:0}],
 	strategy:[{id:2,lv:0},{id:3,lv:3}],
 	strategyHert:1,
-	explanation:"explanation_yx",img:1,enlistPrice:500,
+	explanation:"explanation_yx",img:1,technology:500,
 	next:[{id:5,lv:20}]
 	},
 	{id:5,name:"重步兵",type:SoldierType.Physical,moveType:MoveType.CAVALRY,movePower:4,
@@ -79,7 +80,7 @@ var SoldierDatas = [
 	rangeAttackTarget:[{x:0,y:0}],
 	strategy:[{id:2,lv:0},{id:3,lv:3}],
 	strategyHert:1,
-	explanation:"explanation_yx",img:1,enlistPrice:500,
+	explanation:"explanation_yx",img:1,technology:500,
 	next:[{id:6,lv:40}]
 	},
 	{id:6,name:"近卫兵",type:SoldierType.Physical,moveType:MoveType.CAVALRY,movePower:5,
@@ -100,7 +101,7 @@ var SoldierDatas = [
 	rangeAttack:[{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0}],
 	rangeAttackTarget:[{x:0,y:0}],
 	strategy:[{id:2,lv:0},{id:3,lv:3}],
-	explanation:"explanation_yx",img:1,enlistPrice:500,
+	explanation:"explanation_yx",img:1,technology:500,
 	next:[{id:7,lv:20}]
 	},
 	{id:8,name:"重骑兵",type:SoldierType.Physical,moveType:MoveType.CAVALRY,movePower:6,
@@ -111,7 +112,7 @@ var SoldierDatas = [
 	rangeAttack:[{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0}],
 	rangeAttackTarget:[{x:0,y:0}],
 	strategy:[{id:2,lv:0},{id:3,lv:3}],
-	explanation:"explanation_yx",img:1,enlistPrice:500,
+	explanation:"explanation_yx",img:1,technology:500,
 	next:[{id:8,lv:40}]
 	},
 	{id:9,name:"亲卫队",type:SoldierType.Physical,moveType:MoveType.CAVALRY,movePower:7,
@@ -132,7 +133,7 @@ var SoldierDatas = [
 	rangeAttack:[{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0}],
 	rangeAttackTarget:[{x:0,y:0}],
 	strategy:[{id:2,lv:0},{id:3,lv:3}],
-	explanation:"explanation_yx",img:1,enlistPrice:500,
+	explanation:"explanation_yx",img:1,technology:500,
 	next:[{id:7,lv:20}]
 	},
 	{id:11,name:"弩兵",type:SoldierType.Physical,moveType:MoveType.CAVALRY,movePower:5,
@@ -143,7 +144,7 @@ var SoldierDatas = [
 	rangeAttack:[{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0}],
 	rangeAttackTarget:[{x:0,y:0}],
 	strategy:[{id:2,lv:0},{id:3,lv:3}],
-	explanation:"explanation_yx",img:1,enlistPrice:500,
+	explanation:"explanation_yx",img:1,technology:500,
 	next:[{id:8,lv:40}]
 	},
 	{id:12,name:"连弩兵",type:SoldierType.Physical,moveType:MoveType.CAVALRY,movePower:5,
@@ -164,7 +165,7 @@ var SoldierDatas = [
 	rangeAttack:[{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0}],
 	rangeAttackTarget:[{x:0,y:0}],
 	strategy:[{id:2,lv:0},{id:3,lv:3}],
-	explanation:"explanation_yx",img:1,enlistPrice:500,
+	explanation:"explanation_yx",img:1,technology:500,
 	next:[{id:7,lv:20}]
 	},
 	{id:14,name:"弩骑兵",type:SoldierType.Physical,moveType:MoveType.CAVALRY,movePower:5,
@@ -175,7 +176,7 @@ var SoldierDatas = [
 	rangeAttack:[{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0}],
 	rangeAttackTarget:[{x:0,y:0}],
 	strategy:[{id:2,lv:0},{id:3,lv:3}],
-	explanation:"explanation_yx",img:1,enlistPrice:500,
+	explanation:"explanation_yx",img:1,technology:500,
 	next:[{id:8,lv:40}]
 	},
 	{id:15,name:"连弩骑兵",type:SoldierType.Physical,moveType:MoveType.CAVALRY,movePower:5,
@@ -196,7 +197,7 @@ var SoldierDatas = [
 	rangeAttack:[{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0}],
 	rangeAttackTarget:[{x:0,y:0}],
 	strategy:[{id:2,lv:0},{id:3,lv:3}],
-	explanation:"explanation_yx",img:1,enlistPrice:500,
+	explanation:"explanation_yx",img:1,technology:500,
 	next:[{id:7,lv:20}]
 	},
 	{id:17,name:"重炮车",type:SoldierType.Physical,moveType:MoveType.CAVALRY,movePower:5,
@@ -207,7 +208,7 @@ var SoldierDatas = [
 	rangeAttack:[{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0}],
 	rangeAttackTarget:[{x:0,y:0}],
 	strategy:[{id:2,lv:0},{id:3,lv:3}],
-	explanation:"explanation_yx",img:1,enlistPrice:500,
+	explanation:"explanation_yx",img:1,technology:500,
 	next:[{id:8,lv:40}]
 	},
 	{id:18,name:"霹雳车",type:SoldierType.Physical,moveType:MoveType.CAVALRY,movePower:5,
@@ -228,7 +229,7 @@ var SoldierDatas = [
 	rangeAttack:[{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0}],
 	rangeAttackTarget:[{x:0,y:0}],
 	strategy:[{id:2,lv:0},{id:3,lv:3}],
-	explanation:"explanation_yx",img:1,enlistPrice:500,
+	explanation:"explanation_yx",img:1,technology:500,
 	next:[{id:7,lv:20}]
 	},
 	{id:20,name:"拳士",type:SoldierType.Physical,moveType:MoveType.CAVALRY,movePower:5,
@@ -239,7 +240,7 @@ var SoldierDatas = [
 	rangeAttack:[{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0}],
 	rangeAttackTarget:[{x:0,y:0}],
 	strategy:[{id:2,lv:0},{id:3,lv:3}],
-	explanation:"explanation_yx",img:1,enlistPrice:500,
+	explanation:"explanation_yx",img:1,technology:500,
 	next:[{id:8,lv:40}]
 	},
 	{id:21,name:"拳圣",type:SoldierType.Physical,moveType:MoveType.CAVALRY,movePower:5,
@@ -260,7 +261,7 @@ var SoldierDatas = [
 	rangeAttack:[{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0}],
 	rangeAttackTarget:[{x:0,y:0}],
 	strategy:[{id:2,lv:0},{id:3,lv:3}],
-	explanation:"explanation_yx",img:1,enlistPrice:500,
+	explanation:"explanation_yx",img:1,technology:500,
 	next:[{id:7,lv:20}]
 	},
 	{id:23,name:"义贼",type:SoldierType.Physical,moveType:MoveType.CAVALRY,movePower:5,
@@ -271,7 +272,7 @@ var SoldierDatas = [
 	rangeAttack:[{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0}],
 	rangeAttackTarget:[{x:0,y:0}],
 	strategy:[{id:2,lv:0},{id:3,lv:3}],
-	explanation:"explanation_yx",img:1,enlistPrice:500,
+	explanation:"explanation_yx",img:1,technology:500,
 	next:[{id:8,lv:40}]
 	},
 	{id:24,name:"豪杰",type:SoldierType.Physical,moveType:MoveType.CAVALRY,movePower:5,
@@ -292,7 +293,7 @@ var SoldierDatas = [
 	rangeAttack:[{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0}],
 	rangeAttackTarget:[{x:0,y:0}],
 	strategy:[{id:2,lv:0},{id:3,lv:3}],
-	explanation:"explanation_yx",img:1,enlistPrice:500,
+	explanation:"explanation_yx",img:1,technology:500,
 	next:[{id:7,lv:20}]
 	},
 	{id:26,name:"参谋",type:SoldierType.Physical,moveType:MoveType.CAVALRY,movePower:5,
@@ -303,7 +304,7 @@ var SoldierDatas = [
 	rangeAttack:[{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0}],
 	rangeAttackTarget:[{x:0,y:0}],
 	strategy:[{id:2,lv:0},{id:3,lv:3}],
-	explanation:"explanation_yx",img:1,enlistPrice:500,
+	explanation:"explanation_yx",img:1,technology:500,
 	next:[{id:8,lv:40}]
 	},
 	{id:27,name:"军师",type:SoldierType.Physical,moveType:MoveType.CAVALRY,movePower:5,
@@ -324,7 +325,7 @@ var SoldierDatas = [
 	rangeAttack:[{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0}],
 	rangeAttackTarget:[{x:0,y:0}],
 	strategy:[{id:2,lv:0},{id:3,lv:3}],
-	explanation:"explanation_yx",img:1,enlistPrice:500,
+	explanation:"explanation_yx",img:1,technology:500,
 	next:[{id:7,lv:20}]
 	},
 	{id:29,name:"方术士",type:SoldierType.Physical,moveType:MoveType.CAVALRY,movePower:5,
@@ -335,7 +336,7 @@ var SoldierDatas = [
 	rangeAttack:[{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0}],
 	rangeAttackTarget:[{x:0,y:0}],
 	strategy:[{id:2,lv:0},{id:3,lv:3}],
-	explanation:"explanation_yx",img:1,enlistPrice:500,
+	explanation:"explanation_yx",img:1,technology:500,
 	next:[{id:8,lv:40}]
 	},
 	{id:30,name:"仙术士",type:SoldierType.Physical,moveType:MoveType.CAVALRY,movePower:5,
@@ -356,7 +357,7 @@ var SoldierDatas = [
 	rangeAttack:[{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0}],
 	rangeAttackTarget:[{x:0,y:0}],
 	strategy:[{id:2,lv:0},{id:3,lv:3}],
-	explanation:"explanation_yx",img:1,enlistPrice:500,
+	explanation:"explanation_yx",img:1,technology:500,
 	next:[{id:7,lv:20}]
 	},
 	{id:32,name:"幻术士",type:SoldierType.Physical,moveType:MoveType.CAVALRY,movePower:5,
@@ -367,7 +368,7 @@ var SoldierDatas = [
 	rangeAttack:[{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0}],
 	rangeAttackTarget:[{x:0,y:0}],
 	strategy:[{id:2,lv:0},{id:3,lv:3}],
-	explanation:"explanation_yx",img:1,enlistPrice:500,
+	explanation:"explanation_yx",img:1,technology:500,
 	next:[{id:8,lv:40}]
 	},
 	{id:33,name:"妖术士",type:SoldierType.Physical,moveType:MoveType.CAVALRY,movePower:5,
@@ -388,7 +389,7 @@ var SoldierDatas = [
 	rangeAttack:[{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0}],
 	rangeAttackTarget:[{x:0,y:0}],
 	strategy:[{id:2,lv:0},{id:3,lv:3}],
-	explanation:"explanation_yx",img:1,enlistPrice:500,
+	explanation:"explanation_yx",img:1,technology:500,
 	next:[{id:7,lv:20}]
 	},
 	{id:35,name:"骑马参谋",type:SoldierType.Physical,moveType:MoveType.CAVALRY,movePower:5,
@@ -399,7 +400,7 @@ var SoldierDatas = [
 	rangeAttack:[{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0}],
 	rangeAttackTarget:[{x:0,y:0}],
 	strategy:[{id:2,lv:0},{id:3,lv:3}],
-	explanation:"explanation_yx",img:1,enlistPrice:500,
+	explanation:"explanation_yx",img:1,technology:500,
 	next:[{id:8,lv:40}]
 	},
 	{id:36,name:"骑马军师",type:SoldierType.Physical,moveType:MoveType.CAVALRY,movePower:5,
@@ -420,7 +421,7 @@ var SoldierDatas = [
 	rangeAttack:[{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0}],
 	rangeAttackTarget:[{x:0,y:0}],
 	strategy:[{id:2,lv:0},{id:3,lv:3}],
-	explanation:"explanation_yx",img:1,enlistPrice:500,
+	explanation:"explanation_yx",img:1,technology:500,
 	next:[{id:7,lv:20}]
 	},
 	{id:38,name:"舞姬",type:SoldierType.Physical,moveType:MoveType.CAVALRY,movePower:5,
@@ -431,7 +432,7 @@ var SoldierDatas = [
 	rangeAttack:[{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0}],
 	rangeAttackTarget:[{x:0,y:0}],
 	strategy:[{id:2,lv:0},{id:3,lv:3}],
-	explanation:"explanation_yx",img:1,enlistPrice:500,
+	explanation:"explanation_yx",img:1,technology:500,
 	next:[{id:8,lv:40}]
 	},
 	{id:39,name:"巫女",type:SoldierType.Physical,moveType:MoveType.CAVALRY,movePower:5,
@@ -452,7 +453,7 @@ var SoldierDatas = [
 	rangeAttack:[{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0}],
 	rangeAttackTarget:[{x:0,y:0}],
 	strategy:[{id:2,lv:0},{id:3,lv:3}],
-	explanation:"explanation_yx",img:1,enlistPrice:500,
+	explanation:"explanation_yx",img:1,technology:500,
 	next:[{id:7,lv:20}]
 	},
 	{id:41,name:"都督",type:SoldierType.Physical,moveType:MoveType.CAVALRY,movePower:5,
@@ -463,7 +464,7 @@ var SoldierDatas = [
 	rangeAttack:[{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0}],
 	rangeAttackTarget:[{x:0,y:0}],
 	strategy:[{id:2,lv:0},{id:3,lv:3}],
-	explanation:"explanation_yx",img:1,enlistPrice:500,
+	explanation:"explanation_yx",img:1,technology:500,
 	next:[{id:8,lv:40}]
 	},
 	{id:42,name:"咒术士",type:SoldierType.Physical,moveType:MoveType.CAVALRY,movePower:5,
@@ -484,7 +485,7 @@ var SoldierDatas = [
 	rangeAttack:[{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0}],
 	rangeAttackTarget:[{x:0,y:0}],
 	strategy:[{id:2,lv:0},{id:3,lv:3}],
-	explanation:"explanation_yx",img:1,enlistPrice:500,
+	explanation:"explanation_yx",img:1,technology:500,
 	next:[{id:7,lv:20}]
 	},
 	{id:44,name:"驯熊师",type:SoldierType.Physical,moveType:MoveType.CAVALRY,movePower:5,
@@ -495,7 +496,7 @@ var SoldierDatas = [
 	rangeAttack:[{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0}],
 	rangeAttackTarget:[{x:0,y:0}],
 	strategy:[{id:2,lv:0},{id:3,lv:3}],
-	explanation:"explanation_yx",img:1,enlistPrice:500,
+	explanation:"explanation_yx",img:1,technology:500,
 	next:[{id:8,lv:40}]
 	},
 	{id:45,name:"驯虎师",type:SoldierType.Physical,moveType:MoveType.CAVALRY,movePower:5,
@@ -516,7 +517,7 @@ var SoldierDatas = [
 	rangeAttack:[{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0}],
 	rangeAttackTarget:[{x:0,y:0}],
 	strategy:[{id:2,lv:0},{id:3,lv:3}],
-	explanation:"explanation_yx",img:1,enlistPrice:500,
+	explanation:"explanation_yx",img:1,technology:500,
 	next:[{id:7,lv:20}]
 	},
 	{id:47,name:"白虎步兵",type:SoldierType.Physical,moveType:MoveType.CAVALRY,movePower:5,
@@ -527,7 +528,7 @@ var SoldierDatas = [
 	rangeAttack:[{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0}],
 	rangeAttackTarget:[{x:0,y:0}],
 	strategy:[{id:2,lv:0},{id:3,lv:3}],
-	explanation:"explanation_yx",img:1,enlistPrice:500,
+	explanation:"explanation_yx",img:1,technology:500,
 	next:[{id:8,lv:40}]
 	},
 	{id:48,name:"玄武弩兵",type:SoldierType.Physical,moveType:MoveType.CAVALRY,movePower:5,
@@ -548,7 +549,7 @@ var SoldierDatas = [
 	rangeAttack:[{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0}],
 	rangeAttackTarget:[{x:0,y:0}],
 	strategy:[{id:2,lv:0},{id:3,lv:3}],
-	explanation:"explanation_yx",img:1,enlistPrice:500,
+	explanation:"explanation_yx",img:1,technology:500,
 	next:[{id:7,lv:20}]
 	},
 ];

@@ -149,7 +149,7 @@ CharacterModel.prototype.wounded = function(value){//伤兵
 	return this._dataValue("wounded", value, 0);
 };
 CharacterModel.prototype.troops = function(value) {
-	return this._dataValue("troops", value);
+	return this._dataValue("troops", value,0);
 };
 CharacterModel.prototype.HP = function(value) {
 	return this._dataValue("hp", value);
@@ -162,7 +162,7 @@ CharacterModel.prototype.isPantTroops = function() {
 };
 CharacterModel.prototype.maxTroops = function(init) {
 	var self = this;
-	if(init){
+	if(init || !self.data._maxTroops){
 		self.data._maxTroops = self.data.initTroops + self.currentSoldiers().property().troops * self.level();
 	}
 	return self.data._maxTroops;
@@ -219,13 +219,13 @@ CharacterModel.prototype.jobLabel = function() {
 	}
 	return Language.get(self.data.job);
 };
-CharacterModel.prototype.enlist = function(enlistArmId, enlistCount) {
+CharacterModel.prototype.enlist = function(enlistCount) {
 	var self = this;
-	if(typeof enlistArmId == UNDEFINED){
+	if(typeof enlistCount == UNDEFINED){
 		enlistRun(self,self.data.targetEnlist);
 		self.data.targetEnlist = null;
 	}else{
-		self.data.targetEnlist = {id:enlistArmId,quantity:enlistCount};
+		self.data.targetEnlist = {quantity:enlistCount};
 		self.job(Job.ENLIST);
 	}
 };

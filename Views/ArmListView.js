@@ -206,7 +206,7 @@ ArmListView.prototype.enlist=function(event){console.log("ArmListView.prototype.
 	var singleEnlistCount = (enlistCount / selectCharacters.length) >> 0;
 	for(var i=0;i<selectCharacters.length;i++){
 		var charaModel = selectCharacters[i];
-		charaModel.enlist(self.enlistArmId,singleEnlistCount);
+		charaModel.enlist(singleEnlistCount);
 	}
 	self.armDetailedLayer.removeAllChild();
 	self.doEnlist = true;

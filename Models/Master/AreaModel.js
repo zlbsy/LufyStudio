@@ -330,6 +330,18 @@ AreaModel.prototype.business=function(value){
 AreaModel.prototype.position=function(){
 	return this.data.position;
 };
+AreaModel.prototype.soldiers=function(){
+	var self = this;
+	var list = [];
+	for(var i=0,l=SoldierMasterModel.master.length;i<l;i++){
+		var soldier = SoldierMasterModel.master[i];
+		if(soldier.technology() > self.technology()){
+			continue;
+		}
+		list.push(soldier);
+	}
+	return list;
+};
 AreaModel.prototype.generals=function(job){
 	var self = this;
 	if(job){

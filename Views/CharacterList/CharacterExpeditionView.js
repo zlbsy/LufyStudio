@@ -29,7 +29,7 @@ CharacterExpeditionView.prototype.set=function(){
 	var rangeBackground = getBitmap(new LPanel(new LBitmapData(LMvc.datalist["win04"]),170,40));
 	var rangeSelect = new LBitmap(new LBitmapData(LMvc.datalist["range"]));
 	
-	var soldiers = self.characterModel.soldiers();
+	//var soldiers = self.characterModel.soldiers();
 	
 	var layer = new LSprite();
 	self.addChild(layer);
@@ -37,19 +37,20 @@ CharacterExpeditionView.prototype.set=function(){
 	var width = 48, height = 48;
 	
 	var cityModel = self.controller.getValue("cityData");
+	var soldiers = cityModel.soldiers();
 	var troopsList = cityModel.troops();
-	self.troopsList = [];
+	/*self.troopsList = [];
 	for(var i=0;i<troopsList.length;i++){
 		self.troopsList.push({id:troopsList[i].id,quantity:troopsList[i].quantity});
-	}
+	}*/
 	var currentTroops = self.characterModel.troops();
 	
-	var currentSoldierModel = soldiers[0];
+	var currentSoldierModel = self.characterModel.currentSoldier();
 	self.currentSoldierModel = currentSoldierModel;
-	var currentTroopsIndex = self.troopsList.findIndex(function(child){
+	/*var currentTroopsIndex = self.troopsList.findIndex(function(child){
 		return child.id == currentSoldierModel.id();
 	});
-	self.troopsList[currentTroopsIndex].quantity += currentTroops;
+	self.troopsList[currentTroopsIndex].quantity += currentTroops;*/
 	
 	self.currentTroopsIndex = 0;
 	var icon = currentSoldierModel.icon(new LPoint(width,height), true);
@@ -82,10 +83,10 @@ CharacterExpeditionView.prototype.set=function(){
 	layer.addChild(canUseTroopsLabel);
 	self.canUseTroopsLabel = canUseTroopsLabel;
 	self.setSoldier();
-	Troops = self.troopsList.find(function(child){
+	currentTroops = self.troopsList.find(function(child){
 		return child.id == currentSoldierModel.id();
 	});
-	r.setValue(currentTroops*100/self.maxTroops);
+	//.setValue(currentTroops*100/self.maxTroops);
 };
 CharacterExpeditionView.prototype.onchangeSoldier=function(event){
 	var soldierComboBox = event.currentTarget;

@@ -41,8 +41,8 @@ SoldierModel.prototype.name = function() {
 SoldierModel.prototype.troops = function(charaModel) {
 	return 900;
 };
-SoldierModel.prototype.enlistPrice = function() {
-	return this.master().enlistPrice();
+SoldierModel.prototype.technology = function() {
+	return this.master().technology();
 };
 SoldierModel.prototype.soldierType = function() {
 	return this.master().soldierType();

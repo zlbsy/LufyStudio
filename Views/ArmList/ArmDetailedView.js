@@ -10,7 +10,7 @@ function ArmDetailedView(controller){
 ArmDetailedView.prototype.setArmEnlist=function(){
 	var self = this;
 	var soldierModel = self.soldierModel;
-	
+	var cityModel = self.controller.fromController.getValue("cityData");
 	var layer = new LSprite();
 	
 	var width = 48, height = 48;
@@ -24,7 +24,7 @@ ArmDetailedView.prototype.setArmEnlist=function(){
 	name.y = icon.y + 5;
 	layer.addChild(name);*/
 	
-	var quantity = getStrokeLabel(String.format("{0}人",90), 20, "#FFFFFF", "#000000", 4);
+	var quantity = getStrokeLabel(String.format("{0} 兵力 : {1}人",cityModel.name(),cityModel.troops()), 20, "#FFFFFF", "#000000", 4);
 	//quantity.x = name.x + name.getWidth() + 50;
 	//quantity.y = name.y;
 	quantity.x = 50;
@@ -32,7 +32,7 @@ ArmDetailedView.prototype.setArmEnlist=function(){
 	layer.addChild(quantity);
 	
 	//self.enlistPrice = soldierModel.enlistPrice();
-	self.enlistPrice = 100;
+	self.enlistPrice = EnlistSetting.ENLIST_PRICE;
 	
 	var enlistConfrim = getStrokeLabel("要招募多少士兵？", 20, "#FFFFFF", "#000000", 4);
 	enlistConfrim.x = 50;
