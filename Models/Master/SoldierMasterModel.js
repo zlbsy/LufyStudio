@@ -114,3 +114,6 @@ SoldierMasterModel.prototype.next = function() {
 SoldierMasterModel.prototype.img=function(){
 	return this.data.img;
 };
+SoldierMasterModel.prototype.maxTroops = function(charaModel) {
+	return charaModel.initTroops() + this.property().troops * charaModel.lv();
+};

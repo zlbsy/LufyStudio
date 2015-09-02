@@ -82,7 +82,7 @@ and open the template in the editor.
         init(1000/30,"mvclegend",480,800,main);
 		function main(){
 			LGlobal.setDebug(true);
-			console.log = trace;
+			//console.log = trace;
 			if(LGlobal.mobile){
 				LGlobal.width = 480;
 				LGlobal.height = 480*window.innerHeight/window.innerWidth;
@@ -121,7 +121,6 @@ and open the template in the editor.
 					loadingLayer = null;
 					
 					LMvc.init();
-					trace("start");
 					//return;
 					var fps = new FPS();
 					LTweenLiteTimeline.to(fps,5,{alpha:0,loop:true}).to(fps,5,{alpha:1});

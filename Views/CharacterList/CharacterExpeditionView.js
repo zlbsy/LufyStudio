@@ -38,24 +38,26 @@ CharacterExpeditionView.prototype.set=function(){
 	
 	var cityModel = self.controller.getValue("cityData");
 	var soldiers = cityModel.soldiers();
-	var troopsList = cityModel.troops();
+	self.canUseTroops = cityModel.troops();
 	/*self.troopsList = [];
 	for(var i=0;i<troopsList.length;i++){
 		self.troopsList.push({id:troopsList[i].id,quantity:troopsList[i].quantity});
 	}*/
-	var currentTroops = self.characterModel.troops();
-	
-	var currentSoldierModel = self.characterModel.currentSoldier();
+	self.currentTroops = self.characterModel.troops();
+	console.log("self.currentTroops="+self.currentTroops);
+	var currentSoldierModel = self.characterModel.currentSoldiers();
 	self.currentSoldierModel = currentSoldierModel;
 	/*var currentTroopsIndex = self.troopsList.findIndex(function(child){
 		return child.id == currentSoldierModel.id();
 	});
 	self.troopsList[currentTroopsIndex].quantity += currentTroops;*/
 	
-	self.currentTroopsIndex = 0;
+	self.currentTroopsIndex = soldiers.findIndex(function(child){
+		return child.id() == self.currentSoldierModel.id();
+	});
 	var icon = currentSoldierModel.icon(new LPoint(width,height), true);
 	layer.addChild(icon);
-	self.maxTroops = self.currentSoldierModel.troops(self.characterModel);
+	self.maxTroops = self.currentSoldierModel.maxTroops(self.characterModel);
 	var com = new LComboBox(16,"#000000","Arial",panel,bitmapOff,bitmapOn);
 	for(var i=0;i<soldiers.length;i++){
 		var soldierModel = soldiers[i];
@@ -63,9 +65,8 @@ CharacterExpeditionView.prototype.set=function(){
 	}
 	com.y = 55;
 	layer.addChild(com);
-	com.addEventListener(LComboBox.ON_CHANGE,self.onchangeSoldier);
-	
-	var troopLabel = getStrokeLabel( "", 18, "#FFFFFF", "#000000", 4);
+	com.setValue(self.currentTroopsIndex);
+	var troopLabel = getStrokeLabel( self.currentTroops, 18, "#FFFFFF", "#000000", 4);
 	troopLabel.x = 150;
 	troopLabel.y = 10;
 	layer.addChild(troopLabel);
@@ -74,19 +75,17 @@ CharacterExpeditionView.prototype.set=function(){
 	r.x = 150;
 	r.y = 50;
 	layer.addChild(r);
-	r.addEventListener(LRange.ON_CHANGE,self.onchangeTroop);
+	r.setValue(self.currentTroops * 100 / self.maxTroops);
 	self.troopRange = r;
 
-	var canUseTroopsLabel = getStrokeLabel( "", 18, "#FFFFFF", "#000000", 4);
+	var canUseTroopsLabel = getStrokeLabel( self.canUseTroops, 18, "#FFFFFF", "#000000", 4);
 	canUseTroopsLabel.x = 10;
 	canUseTroopsLabel.y = 120;
 	layer.addChild(canUseTroopsLabel);
 	self.canUseTroopsLabel = canUseTroopsLabel;
-	self.setSoldier();
-	currentTroops = self.troopsList.find(function(child){
-		return child.id == currentSoldierModel.id();
-	});
-	//.setValue(currentTroops*100/self.maxTroops);
+	self.setTroops();
+	r.addEventListener(LRange.ON_CHANGE,self.onchangeTroop);
+	com.addEventListener(LComboBox.ON_CHANGE,self.onchangeSoldier);
 };
 CharacterExpeditionView.prototype.onchangeSoldier=function(event){
 	var soldierComboBox = event.currentTarget;
@@ -96,15 +95,11 @@ CharacterExpeditionView.prototype.onchangeSoldier=function(event){
 };
 CharacterExpeditionView.prototype.setSoldier=function(){
 	var self = this;
-	var soldiers = self.characterModel.soldiers();
+	var cityModel = self.controller.getValue("cityData");
+	var soldiers = cityModel.soldiers();
 	var currentSoldierModel = soldiers[self.currentTroopsIndex];
-	
-	var currentTroops = self.troopsList.find(function(child){
-		return child.id == currentSoldierModel.id();
-	});
-	self.canUseTroops = currentTroops.quantity;
 	self.currentSoldierModel = currentSoldierModel;
-	self.maxTroops = self.currentSoldierModel.troops(self.characterModel);
+	self.maxTroops = self.currentSoldierModel.maxTroops(self.characterModel);
 	self.troopRange.setValue(0); 
 	self.setTroops();
 };
@@ -115,12 +110,18 @@ CharacterExpeditionView.prototype.onchangeTroop=function(event){
 };
 CharacterExpeditionView.prototype.setTroops=function(){
 	var self = this;
-	var troop = (self.maxTroops * self.troopRange.value * 0.01) >> 0;
-	self.troopLabel.text = String.format("{0}：{1}/{2}","兵力",troop,self.maxTroops);
-	self.canUseTroopsLabel.text = String.format("城内可用兵力：{0}", self.canUseTroops - troop);
+	self.currentTroops = (self.maxTroops * self.troopRange.value * 0.01) >> 0;
+	self.troopLabel.text = String.format("{0}：{1}/{2}","兵力",self.currentTroops,self.maxTroops);
+	self.canUseTroopsLabel.text = String.format("城内可用兵力：{0}", self.canUseTroops - self.currentTroops);
 };
 CharacterExpeditionView.prototype.apply=function(){
 	var self = this;
+	var cityModel = self.controller.getValue("cityData");
+	var troops = cityModel.troops() + self.characterModel.troops();
+	self.characterModel.currentSoldiers(self.currentSoldierModel.id());
+	cityModel.troops(troops - self.currentTroops);
+	self.characterModel.troops(self.currentTroops);
+	/*
 	var troop = (self.maxTroops * self.troopRange.value * 0.01) >> 0;
 	self.characterModel.troops(troop);
 	var soldiers = self.characterModel.soldiers();
@@ -135,5 +136,5 @@ CharacterExpeditionView.prototype.apply=function(){
 		}else{
 			troops[i].quantity = self.troopsList[i].quantity;
 		}
-	}
+	}*/
 };

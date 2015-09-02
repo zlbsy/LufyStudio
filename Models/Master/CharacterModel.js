@@ -303,8 +303,21 @@ CharacterModel.prototype.agility = function() {
 CharacterModel.prototype.luck = function() {
 	return this.data.luck;
 };
-CharacterModel.prototype.currentSoldiers = function() {
+CharacterModel.prototype.currentSoldiers = function(id) {
 	var soldiers = this.soldiers();
+	if(typeof id != UNDEFINED){
+		var soldier;
+		var soldierIndex = soldiers.find(function(child){
+			return child.id() == id;
+		});
+		if(soldierIndex >= 0){
+			soldier = soldiers.splice(soldierIndex,1);
+		}else{
+			soldier = SoldierModel.createModel(id);
+		}
+		soldiers.unshift(soldier);
+		return;
+	}
 	return soldiers[0];
 };
 CharacterModel.prototype.dieTalk = function() {

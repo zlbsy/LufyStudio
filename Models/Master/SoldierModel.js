@@ -4,6 +4,9 @@ function SoldierModel(controller, data) {
 	self.type = "SoldierModel";
 	self.data = data;
 }
+SoldierModel.createModel = function(id){
+	return new SoldierModel(null,{id:id,proficiency:"B"});
+};
 SoldierModel.prototype.master=function(){
 	var self = this;
 	if(!self._master){
@@ -38,8 +41,8 @@ SoldierModel.prototype.proficiency = function() {
 SoldierModel.prototype.name = function() {
 	return this.master().name();
 };
-SoldierModel.prototype.troops = function(charaModel) {
-	return 900;
+SoldierModel.prototype.maxTroops = function(charaModel) {
+	return this.master().maxTroops(charaModel);
 };
 SoldierModel.prototype.technology = function() {
 	return this.master().technology();
