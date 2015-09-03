@@ -101,6 +101,7 @@ BuildOfficialView.prototype.selectComplete=function(event){
 	}else if(event.characterListType == CharacterListType.EXPEDITION){
 		console.log("BuildOfficialView.prototype.selectComplete CharacterListType.EXPEDITION " , event.characterList);
 		self.controller.setValue("expeditionCharacterList", event.characterList);
+		self.controller.setValue("toCityId", cityId);
 	}else if(event.characterListType == CharacterListType.SELECT_LEADER){
 		if(event.characterList.length > 1){
 			var obj = {title:Language.get("confirm"),message:Language.get("dialog_select_leader_error"),height:200,okEvent:null};
@@ -129,6 +130,8 @@ BuildOfficialView.prototype.showBuild=function(event){
 			var expeditionCharacterList = self.controller.getValue("expeditionCharacterList");
 			var cityData = self.controller.getValue("cityData");
 			troopsFromCharactersToCity(expeditionCharacterList, cityData);
+			self.controller.setValue("expeditionCharacterList", null);
+			self.controller.setValue("toCityId", null);
 			self.controller.dispatchEvent(LController.NOTIFY_ALL);
 		}else if(event.characterListType == CharacterListType.SELECT_LEADER){
 			self.controller.loadCharacterList(CharacterListType.EXPEDITION,self);

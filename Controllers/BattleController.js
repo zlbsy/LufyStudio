@@ -95,6 +95,18 @@ BattleController.prototype.init = function(){
 
 	self.dispatchEvent(LEvent.COMPLETE);
 	self.dispatchEvent(LController.NOTIFY);
+	var enemyCharas;
+	if(self.battleData.fromCity.seigniorCharaId() == LMvc.selectSeignorId){
+		//enemyCharas = getEnemiesFromCity(self.battleData.toCity);
+		enemyCharas = [6,7,8];
+	}else{
+		enemyCharas = self.battleData.expeditionEnemyCharacterList;
+	}
+	for(var i = 0;i<enemyCharas.length;i++){
+		var charaId = enemyCharas[i];
+		CharacterModel.getChara(charaId).calculation(true);
+		self.addEnemyCharacter(charaId);
+	}
 	/*for(var i = 0;i<self.battleData.expeditionCharacterList.length;i++){
 		var chara = self.battleData.expeditionCharacterList[i];
 		chara.calculation(true);
@@ -184,7 +196,7 @@ BattleController.prototype.mapMouseUp = function(event){
 	if(Math.abs(self.downX - event.offsetX) > 12 || Math.abs(self.downY - event.offsetY) > 12){
 		return;
 	}
-	if(self.getValue("currentBelong") != Belong.SELF){
+	if(self.getValue("currentBelong") && self.getValue("currentBelong") != Belong.SELF){
 		return;
 	}
 	if(!self.view.roadLayer.visible){
@@ -208,7 +220,7 @@ BattleController.prototype.mapMouseDown = function(event){
 		return;
 	}
 	var self = event.currentTarget.parent.controller;
-	if(self.getValue("currentBelong") != Belong.SELF){
+	if(self.getValue("currentBelong") && self.getValue("currentBelong") != Belong.SELF){
 		return;
 	}
 	self.downX = event.offsetX;
@@ -252,7 +264,10 @@ BattleController.prototype.clickStrategyRange = function(chara){
 };
 BattleController.prototype.clickOnRoadLayer = function(event){
 	var self = event.currentTarget.parent.controller;
-	if(BattleController.ctrlChara.belong != Belong.SELF){
+	if(!self.getValue("currentBelong")){
+		Toast.makeText("现在无法移动!").show();
+		return;
+	}else if(BattleController.ctrlChara.belong != Belong.SELF){
 		Toast.makeText(String.format(Language.get("can_not_operating"), Language.get(BattleController.ctrlChara.belong))).show();
 		return;
 	}else if(BattleController.ctrlChara.status.hasStatus(StrategyType.Chaos)){

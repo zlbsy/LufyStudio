@@ -166,6 +166,9 @@ AreaModel.prototype.setSeignor = function(seignior,areaData){
 		this.data[key] = areaData[key];
 	}
 };
+AreaModel.prototype.seigniorCharaId=function(){
+	return this.data.seignior_chara_id;
+};
 AreaModel.prototype.seignior_chara_id=function(){
 	return this.data.seignior_chara_id;
 };

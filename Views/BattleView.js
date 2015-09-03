@@ -87,6 +87,7 @@ BattleView.prototype.layerInit=function(){
 	//天气层
 	self.weatherLayer = new BattleWeatherView();
 	self.addChild(self.weatherLayer);
+	//TODO::
 	self.weatherLayer.show(BattleWeatherConfig.SNOW);
 	/*//遮挡层
 	self.buildLayer = new LSprite();
@@ -94,11 +95,12 @@ BattleView.prototype.layerInit=function(){
 	//预览层
 	self.miniLayer = new BattleMiniPreviewView(self.controller);
 	self.addChild(self.miniLayer);
+	self.miniLayer.visible = false;
 	
 	self.mainMenu = new BattleMainMenuView(self.controller);
 	self.mainMenu.mainLayer.x = LGlobal.width - self.mainMenu.getWidth();
 	self.addChild(self.mainMenu);
-	
+	self.mainMenu.visible = false;
 	return;
 	//Test code
 	self.buildLayer = new LSprite();
