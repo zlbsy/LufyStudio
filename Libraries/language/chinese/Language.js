@@ -205,6 +205,8 @@ Language.data = {
 	"single_combat_ask":"敌将{0}敢与我大战三百回合吗？",
 	"single_combat_answer_ok":"那就让你做我的刀下鬼吧！",
 	"single_combat_answer_no":"你还不配和我交手!",
+	
+	"leader_change_talk":"糟糕!因为主将撤退,军队一盘散沙,能力都下降了。那就由我暂代主将来指挥战斗吧！",
 	"gameover":"游戏结束"
 };
 Language.characterData = {

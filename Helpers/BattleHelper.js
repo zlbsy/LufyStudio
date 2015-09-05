@@ -180,9 +180,9 @@ function battleEndCheck(belong){
 	var charas = LMvc.BattleController.view.charaLayer.getCharactersFromBelong(belong);
 	if(charas.length == 0){
 		if(belong == Belong.SELF){
-			//战斗失败
+			//TODO::战斗失败
 		}else if(belong == Belong.ENEMY){
-			//战斗胜利
+			//TODO::战斗胜利
 		}
 		return;
 	}else{
@@ -191,15 +191,34 @@ function battleEndCheck(belong){
 			return child.isLeader;
 		});
 		if(!chara){
+			//无主将，全员能力随机降低一项
+			for(var i = 0,l=charas.length;i<l;i++){
+				charas[i].status.downloadAidStatusRandom();
+			}
 			//换主将
-			//battleEndCheck(belong);
-			//return;
+			if(belong == Belong.SELF || belong == Belong.ENEMY){
+				var list = getStrangerCharacters(charas);
+				chara = list[0].general;
+				chara.isLeader = true;
+				script = "SGJTalk.show(" + chara.data.id() + ",0," + Language.get("leader_change_talk") + ");";
+				LGlobal.script.addScript(script);
+				//TODO::对话结束后执行battleEndCheck(belong);
+				//battleEndCheck(belong);
+				return;
+			}
 		}
 	}
 	BattleController.ctrlChara.AI.endBoutCheck();
 }
 function getDefenseEnemiesFromCity(city){
-	var generals = city.generals();
+	var generals = city.generals(),result = [];
+	var list = getStrangerCharacters(generals);
+	for(var i=0,l=list.length < BattleMapConfig.DefenseQuantity ? list.length : BattleMapConfig.DefenseQuantity;i<l;i++){
+		result.push(list[i].general);
+	}
+	return result;
+}
+function getStrangerCharacters(generals){
 	var list = [],result = [];
 	for(var i=0,l=generals.length;i<l;i++){
 		var child = generals[i];
@@ -211,10 +230,7 @@ function getDefenseEnemiesFromCity(city){
 		list.push({general:child,value:value});
 	}
 	list = list.sort(function(a,b){return a.value - b.value;});
-	for(var i=0,l=list.length < BattleMapConfig.DefenseQuantity ? list.length : BattleMapConfig.DefenseQuantity;i<l;i++){
-		result.push(list[i].general);
-	}
-	return result;
+	return list;
 }
 if (!Array.getRandomArrays){
 	Array.getRandomArrays = function(list,num){

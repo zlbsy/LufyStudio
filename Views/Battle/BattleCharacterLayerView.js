@@ -117,7 +117,10 @@ BattleCharacterLayerView.prototype.addOurCharacterOnClick=function(locationX,loc
 	if(self.model.ourList.length == self.controller.battleData.expeditionCharacterList.length){
 		self.charasPositionsLayer.remove();
 		self.charasPositionsLayer = null;
-		self.getCharacter(Belong.SELF, self.controller.battleData.expeditionLeader.id()).leader = true;
+		console.log("leader="+self.controller.battleData.expeditionLeader);
+		console.log("leader id="+self.controller.battleData.expeditionLeader.id());
+		console.log("get leader="+self.getCharacter(Belong.SELF, self.controller.battleData.expeditionLeader.id()));
+		self.getCharacter(Belong.SELF, self.controller.battleData.expeditionLeader.id()).isLeader = true;
 		self.controller.boutNotify(Belong.SELF);
 	}else{
 		
