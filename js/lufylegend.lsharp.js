@@ -1775,9 +1775,16 @@ LSGJBattleCharacterScript.analysis = function(value) {
 		case "SGJBattleCharacter.characterToDie":
 			LSGJBattleCharacterScript.characterToDie(value, start, end);
 			break;
+		case "SGJBattleCharacter.battleEndCheck":
+			LSGJBattleCharacterScript.battleEndCheck(value, start, end);
+			break;
 		default:
 			LGlobal.script.analysis();
 	}
+};
+LSGJBattleCharacterScript.battleEndCheck = function(value, start, end) {
+	var params = value.substring(start + 1, end).split(",");
+	battleEndCheck(params[0]);
 };
 LSGJBattleCharacterScript.endAction = function(value, start, end) {
 	var params = value.substring(start + 1, end).split(",");

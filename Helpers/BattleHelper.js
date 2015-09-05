@@ -197,13 +197,12 @@ function battleEndCheck(belong){
 			}
 			//换主将
 			if(belong == Belong.SELF || belong == Belong.ENEMY){
-				var list = getStrangerCharacters(charas);
+				var list = getPowerfulCharacters(charas);
 				chara = list[0].general;
 				chara.isLeader = true;
 				script = "SGJTalk.show(" + chara.data.id() + ",0," + Language.get("leader_change_talk") + ");";
+				script += "SGJBattleCharacter.battleEndCheck("+belong+");";
 				LGlobal.script.addScript(script);
-				//TODO::对话结束后执行battleEndCheck(belong);
-				//battleEndCheck(belong);
 				return;
 			}
 		}
@@ -212,13 +211,13 @@ function battleEndCheck(belong){
 }
 function getDefenseEnemiesFromCity(city){
 	var generals = city.generals(),result = [];
-	var list = getStrangerCharacters(generals);
+	var list = getPowerfulCharacters(generals);
 	for(var i=0,l=list.length < BattleMapConfig.DefenseQuantity ? list.length : BattleMapConfig.DefenseQuantity;i<l;i++){
 		result.push(list[i].general);
 	}
 	return result;
 }
-function getStrangerCharacters(generals){
+function getPowerfulCharacters(generals){
 	var list = [],result = [];
 	for(var i=0,l=generals.length;i<l;i++){
 		var child = generals[i];
