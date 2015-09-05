@@ -291,3 +291,20 @@ BattleCharacterView.prototype.returnShowMoveRoadObject = function() {
 	self.setActionDirection(self.showMoveRoadObject.action,self.showMoveRoadObject.direction);
 	LMvc.BattleController.clickSelfCharacter(self);
 };
+BattleCharacterView.prototype.toDie = function(isSingleCombat) {
+	var self = this;
+	var talkMsg;
+	if(isSingleCombat || calculateHitrateBuhuo(self)){
+		if(self.belong == Belong.ENEMY){
+			LMvc.BattleController.model.selfBuhuo.push(self.data.id());
+		}else{
+			LMvc.BattleController.model.enemyBuhuo.push(self.data.id());
+		}
+		talkMsg = self.data.buhuoTalk();
+	}else{
+		talkMsg = self.data.dieTalk();
+	}
+	var script = "SGJTalk.show(" + self.data.id() + ",0," + talkMsg + ");";
+	script += "SGJBattleCharacter.characterToDie(" + self.belong + ","+ self.data.id() + ");";
+	LGlobal.script.addScript(script);
+};

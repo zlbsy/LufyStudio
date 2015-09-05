@@ -352,21 +352,19 @@ BattleCharacterAI.prototype.endBoutCheck = function() {
 	var chara = BattleController.ctrlChara, self = chara.AI;
 	var dieChara = LMvc.BattleController.view.charaLayer.getDieCharacter(chara.belong) || LMvc.BattleController.view.charaLayer.getDieCharacter();
 	if(dieChara){
-		var script = "SGJTalk.show(" + dieChara.data.id() + ",0," + dieChara.data.dieTalk() + ");";
-		script += "SGJBattleCharacter.characterToDie(" + dieChara.belong + ","+ dieChara.data.id() + ");";
-		LGlobal.script.addScript(script);
+		dieChara.toDie();
 		return;
 	}
-	if(!LMvc.BattleController.view.charaLayer.isHasActiveCharacter(chara.belong)){
-		if(chara.belong == Belong.SELF){
-			var obj = {title:Language.get("确认"),message:Language.get("结束本回合吗？"),width:300,height:200,okEvent:self.boutEnd,cancelEvent:null};
-			var windowLayer = ConfirmWindow(obj);
-			LMvc.layer.addChild(windowLayer);
-		}else{
-			self.boutEnd();
-		}
-	}else{
+	if(LMvc.BattleController.view.charaLayer.isHasActiveCharacter(chara.belong)){
 		BattleIntelligentAI.execute();
+		return;
+	}
+	if(chara.belong == Belong.SELF){
+		var obj = {title:Language.get("确认"),message:Language.get("结束本回合吗？"),width:300,height:200,okEvent:self.boutEnd,cancelEvent:null};
+		var windowLayer = ConfirmWindow(obj);
+		LMvc.layer.addChild(windowLayer);
+	}else{
+		self.boutEnd();
 	}
 };
 BattleCharacterAI.prototype.boutEnd = function(event) {
