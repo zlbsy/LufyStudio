@@ -58,7 +58,7 @@ BattleController.prototype.showCharacterDetailed = function(){
 	if(Math.abs(self.downX - mouseX) > 12 || Math.abs(self.downY - mouseY) > 12){
 		return;
 	}
-	var chara = self.view.charaLayer.getCharacterFromCoordinate(self.downX, self.downY);
+	var chara = self.view.charaLayer.getCharacterFromCoordinate(self.selfX, self.selfY);
 	if(!chara){
 		return;
 	}
@@ -96,16 +96,27 @@ BattleController.prototype.init = function(){
 	self.dispatchEvent(LEvent.COMPLETE);
 	self.dispatchEvent(LController.NOTIFY);
 	var enemyCharas;
+	var enemyPositions;
+	var selfPositions;
 	if(self.battleData.fromCity.seigniorCharaId() == LMvc.selectSeignorId){
-		//enemyCharas = getEnemiesFromCity(self.battleData.toCity);
-		enemyCharas = [6,7,8];
+		enemyCharas = getDefenseEnemiesFromCity(self.battleData.toCity);
+		enemyPositions = self.model.map.charas;
+		selfPositions = self.model.map.enemys;
 	}else{
 		enemyCharas = self.battleData.expeditionEnemyCharacterList;
+		enemyPositions = self.model.map.enemys;
+		selfPositions = self.model.map.charas;
 	}
+	console.log("enemyCharas",enemyCharas);
 	for(var i = 0;i<enemyCharas.length;i++){
-		var charaId = enemyCharas[i];
+		var charaObjs = enemyPositions[i];
+		var charaId = enemyCharas[i].id();
 		CharacterModel.getChara(charaId).calculation(true);
-		self.addEnemyCharacter(charaId);
+		self.addEnemyCharacter(charaId,charaObjs.direction,charaObjs.x,charaObjs.y);
+	}
+	for(var i=0,l=selfPositions.length;i<l;i++){
+		var charaObjs = selfPositions[i];
+		self.view.charaLayer.addCharacterPosition(charaObjs.direction,charaObjs.x,charaObjs.y);
 	}
 	/*for(var i = 0;i<self.battleData.expeditionCharacterList.length;i++){
 		var chara = self.battleData.expeditionCharacterList[i];
@@ -156,26 +167,17 @@ BattleController.prototype.boutNotify=function(belong){
 	e.belong = belong;
 	self.dispatchEvent(e);
 };
-BattleController.prototype.addOurCharacter=function(index){
+BattleController.prototype.addOurCharacter=function(index,direction,x,y){
 	var self = this;
-	var action = CharacterAction.MOVE;
-	var direction = CharacterDirection.DOWN;
-	var point = new LPoint(1,2);
-	self.view.charaLayer.addOurCharacter(index,action,direction,point.x,point.y);
+	self.view.charaLayer.addOurCharacter(index,CharacterAction.MOVE,direction,x,y);
 };
-BattleController.prototype.addEnemyCharacter=function(index){
+BattleController.prototype.addEnemyCharacter=function(index,direction,x,y){
 	var self = this;
-	var action = CharacterAction.MOVE;
-	var direction = CharacterDirection.DOWN;
-	var point = new LPoint(1,2);
-	self.view.charaLayer.addEnemyCharacter(index,action,direction,point.x,point.y);
+	self.view.charaLayer.addEnemyCharacter(index,CharacterAction.MOVE,direction,x,y);
 };
-BattleController.prototype.addFriendCharacter=function(index){
+BattleController.prototype.addFriendCharacter=function(index,direction,x,y){
 	var self = this;
-	var action = CharacterAction.MOVE;
-	var direction = CharacterDirection.DOWN;
-	var point = new LPoint(1,2);
-	self.view.charaLayer.addFriendCharacter(index,action,direction,point.x,point.y);
+	self.view.charaLayer.addFriendCharacter(index,CharacterAction.MOVE,direction,x,y);
 };
 BattleController.prototype.queryInit=function(){
 	var self = this;
@@ -225,6 +227,8 @@ BattleController.prototype.mapMouseDown = function(event){
 	}
 	self.downX = event.offsetX;
 	self.downY = event.offsetY;
+	self.selfX = event.selfX;
+	self.selfY = event.selfY;
 	event.currentTarget.startDrag(event.touchPointID);
 	self.draging = true;
 	BattleController.timer.reset();

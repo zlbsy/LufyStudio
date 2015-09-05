@@ -1,6 +1,11 @@
 function BattleCharacterLayerView(controller) {
 	var self = this;
 	LExtends(self, LView, [controller]);
+	self.charasPositionsLayer = new LSprite();
+	self.addChild(self.charasPositionsLayer);
+	LTweenLite.to(self.charasPositionsLayer,1,{alpha:0.3,loop:true})
+    .to(self.charasPositionsLayer,1,{alpha:1});
+	self.charasPositions = [];
 	/*for(var i = 0;i<15;i++){
 		for(var j=0;j<12;j++){
 		self.addCharaLayer(1,CharacterAction.MOVE,CharacterDirection.DOWN,i,j);
@@ -96,8 +101,35 @@ BattleCharacterLayerView.prototype.onframe = function(event) {
 BattleCharacterLayerView.prototype.getCharacterFromCoordinate=function(x,y){
 	return this.getCharacterFromLocation(x/BattleCharacterSize.width >>> 0,y/BattleCharacterSize.height >>> 0);
 };
+BattleCharacterLayerView.prototype.addOurCharacterOnClick=function(locationX,locationY){
+	var self = this;
+	var childList = self.charasPositionsLayer.childList,child;
+	for(var i=0,l=childList.length;i<l;i++){
+		child = childList[i];
+		if(child.cx != locationX || child.cy != locationY){
+			continue;
+		}
+		var id = self.controller.battleData.expeditionCharacterList[self.model.ourList.length].id();
+		self.addOurCharacter(id,CharacterAction.MOVE,child.direction,locationX,locationY);
+		child.remove();
+		break;
+	}
+	if(self.model.ourList.length == self.controller.battleData.expeditionCharacterList.length){
+		self.charasPositionsLayer.remove();
+		self.charasPositionsLayer = null;
+		self.getCharacter(Belong.SELF, self.controller.battleData.expeditionLeader.id()).leader = true;
+		self.controller.boutNotify(Belong.SELF);
+	}else{
+		
+	}
+};
 BattleCharacterLayerView.prototype.getCharacterFromLocation=function(locationX,locationY){
 	var self = this;
+	if(self.charasPositionsLayer){
+		self.addOurCharacterOnClick(locationX,locationY);
+		return null;
+	}
+	console.log("getCharacterFromLocation",locationX,locationY);
 	var childList = self.childList,child;
 	for(var i=0,l=childList.length;i<l;i++){
 		child = childList[i];
@@ -122,6 +154,21 @@ BattleCharacterLayerView.prototype.getCharacterFromeList=function(childList,id){
 		}	
 	}
 	return null;
+};
+BattleCharacterLayerView.prototype.addCharacterPosition=function(direction,x,y){
+	var self = this;
+	var positionLayer = new LSprite();
+	var bitmap = new LBitmap(new LBitmapData(LMvc.datalist["light"]));
+	bitmap.x = (BattleCharacterSize.width - bitmap.getWidth()) * 0.5;
+	bitmap.y = (BattleCharacterSize.height - bitmap.getHeight()) * 0.5;
+	positionLayer.addChild(bitmap);
+	self.charasPositionsLayer.addChild(positionLayer);
+	//self.charasPositions.push(positionLayer);
+	positionLayer.direction = direction;
+	positionLayer.x = x * BattleCharacterSize.width;
+	positionLayer.y = y * BattleCharacterSize.height;
+	positionLayer.cx = x;
+	positionLayer.cy = y;
 };
 BattleCharacterLayerView.prototype.addOurCharacter=function(id,action,direction,x,y,callback){
 	var self = this;

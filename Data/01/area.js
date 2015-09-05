@@ -48,12 +48,7 @@ LMvc.areaData = {
 				{chara_id:20,lv:3,feat:166,loyalty:50},
 				{chara_id:21,lv:3,feat:166,loyalty:50},
 				{chara_id:22,lv:3,feat:166,loyalty:50},
-				{chara_id:23,lv:3,feat:166,loyalty:50},
-				{chara_id:24,lv:3,feat:166,loyalty:50},
-				{chara_id:25,lv:3,feat:166,loyalty:50},
-				{chara_id:26,lv:3,feat:166,loyalty:50},
-				{chara_id:27,lv:3,feat:166,loyalty:50},
-				{chara_id:28,lv:3,feat:166,loyalty:50}
+				{chara_id:23,lv:3,feat:166,loyalty:50}
 			],
 			out_of_offices:[
 				{chara_id:8,lv:1,feat:0},
@@ -119,7 +114,11 @@ LMvc.areaData = {
 			money : 3300,
 			troops : 7000,
 			generals:[
-				{chara_id:10,lv:3,feat:166,loyalty:50}
+				{chara_id:24,lv:3,feat:166,loyalty:50},
+				{chara_id:25,lv:3,feat:166,loyalty:50},
+				{chara_id:26,lv:3,feat:166,loyalty:50},
+				{chara_id:27,lv:3,feat:166,loyalty:50},
+				{chara_id:28,lv:3,feat:166,loyalty:50}
 			],
 			out_of_offices:[
 			],

@@ -198,6 +198,24 @@ function battleEndCheck(belong){
 	}
 	BattleController.ctrlChara.AI.endBoutCheck();
 }
+function getDefenseEnemiesFromCity(city){
+	var generals = city.generals();
+	var list = [],result = [];
+	for(var i=0,l=generals.length;i<l;i++){
+		var child = generals[i];
+		var value = child.force() + child.intelligence() + child.agility() + child.luck() + child.command();
+		value += value * child.lv() * 0.1;
+		console.log("child="+child);
+		value += child.maxProficiencySoldier().proficiency() * 0.1;
+		value += child.skill() > 0 ? 100 : 0;
+		list.push({general:child,value:value});
+	}
+	list = list.sort(function(a,b){return a.value - b.value;});
+	for(var i=0,l=list.length < BattleMapConfig.DefenseQuantity ? list.length : BattleMapConfig.DefenseQuantity;i<l;i++){
+		result.push(list[i].general);
+	}
+	return result;
+}
 if (!Array.getRandomArrays){
 	Array.getRandomArrays = function(list,num){
 		var result = [], length = list.length < num ? list.length : num;

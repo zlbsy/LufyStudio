@@ -82,7 +82,7 @@ StrategyModel.prototype.strategyImageLoad = function(target,callback,params){
 	loader.addEventListener(LEvent.COMPLETE, self.loadData);
 	loader.load(self.image(), "bitmapData");
 	LMvc.keepLoading(true);
-}
+};
 StrategyModel.prototype.loadData = function(event){
 	var self = event.currentTarget.parent;
 	var callback = self.callback;

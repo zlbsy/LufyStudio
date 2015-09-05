@@ -303,6 +303,18 @@ CharacterModel.prototype.agility = function() {
 CharacterModel.prototype.luck = function() {
 	return this.data.luck;
 };
+CharacterModel.prototype.maxProficiencySoldier = function() {
+	var soldiers = this.soldiers();
+	var proficiency = 0, soldier;
+	for(var i=0,l=soldiers.length;i<l;i++){
+		var child = soldiers[i];
+		if(proficiency < child.proficiency()){
+			proficiency = child.proficiency();
+			soldier = child;
+		}
+	}
+	return soldier;
+};
 CharacterModel.prototype.currentSoldiers = function(id) {
 	var soldiers = this.soldiers();
 	if(typeof id != UNDEFINED){
