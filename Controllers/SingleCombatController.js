@@ -36,3 +36,9 @@ SingleCombatController.prototype.init = function(){
 	self.dispatchEvent(LEvent.COMPLETE);
 	self.dispatchEvent(LController.NOTIFY);
 };
+SingleCombatController.prototype.over = function(){
+	var self = this;
+	self.fromController.view.visible = true;
+	LMvc.SingleCombatController = null;
+	self.view.remove();
+};

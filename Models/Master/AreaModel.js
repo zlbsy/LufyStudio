@@ -284,6 +284,9 @@ AreaModel.prototype.outOfOfficeSum=function(){
 AreaModel.prototype.generalsSum=function(){
 	return this.data.generals.length;
 };
+AreaModel.prototype.captiveSum=function(){
+	return this.data.captives.length;
+};
 AreaModel.prototype.troopsSum=function(){
 	/*var troopsSum = 0;
 	for(var i=0;i<this.data.troops.length;i++){

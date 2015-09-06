@@ -4,8 +4,8 @@ function BattleModel(){
 BattleModel.prototype.construct=function(){
 	var self = this;
 	self.map = null;
-	self.selfBuhuo = [];
-	self.enemyBuhuo = [];
+	self.selfCaptive = [];
+	self.enemyCaptive = [];
 	self.ourList = [];
 	self.enemyList = [];
 	self.friendList = [];

@@ -162,6 +162,7 @@ SingleCombatCharacterView.prototype.showRunningCommand = function(index){
 };
 SingleCombatCharacterView.prototype.commandExecute = function(){
 	var self = this;
+	//TODO::Bug:怒击对连击失败
 	switch(self.currentCommand){
 		case SingleCombatCommand.ATTACK:
 			self.changeAction(CharacterAction.ATTACK);
@@ -214,7 +215,11 @@ SingleCombatCharacterView.prototype.changeHp = function(value){
 };
 SingleCombatCharacterView.prototype.singleCombatEnd = function(event){
 	var self = this, obj;
-	
+	console.log("singleCombatEnd");
+	var dieChara = LMvc.BattleController.view.charaLayer.getCharacter(null,self.data.id())
+	self.controller.over();
+	dieChara.data.troops(0);
+	dieChara.toDie(true);
 };
 SingleCombatCharacterView.prototype.fail = function(event){
 	var self = this, obj;

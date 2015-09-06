@@ -266,6 +266,6 @@ function calculateHertValue(attChara,hertChara,correctionFactor){
 	r = r >>> 0;
 	return r;
 }
-function calculateHitrateBuhuo(chara){
+function calculateHitrateCaptive(chara){
 	
 }

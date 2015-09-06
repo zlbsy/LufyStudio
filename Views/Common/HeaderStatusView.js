@@ -41,7 +41,7 @@ HeaderStatusView.prototype.set=function(){
 	
 	self.setStatus(Language.get("generals"), cityModel.generalsSum(), self.stepMiniWidth * 2 + 5 + 20, self.stepHeight * 2, self.stepMiniWidth - 20);
 	self.setStatus(Language.get("out_of_office"), cityModel.outOfOfficeSum(), self.stepMiniWidth * 2 + 5 + 20, self.stepHeight * 3, self.stepMiniWidth - 20);
-	self.setStatus("俘虏", 0, self.stepMiniWidth * 2 + 5 + 20, self.stepHeight * 4, self.stepMiniWidth - 20);
+	self.setStatus(Language.get("captive"), cityModel.captiveSum(), self.stepMiniWidth * 2 + 5 + 20, self.stepHeight * 4, self.stepMiniWidth - 20);
 	
 	self.setStatus(Language.get("population"), cityModel.population(), self.stepMiniWidth * 3 + 5, self.stepHeight * 2, self.stepWidth);
 	self.setStatus(Language.get("money"), cityModel.moneyLabel(), self.stepMiniWidth * 3 + 5, self.stepHeight * 3, self.stepWidth);

@@ -22,6 +22,9 @@ Language.getAngryTalk = function(key){
 Language.getDieTalk = function(key){
 	return Language.dieTalkData[key] || key;
 };
+Language.getUnderArrestTalk = function(key){
+	return Language.underArrestTalkData[key] || key;
+};
 Language.getSkillName = function(key){
 	return Language.skillNameData[key] || key;
 };
@@ -144,6 +147,7 @@ Language.data = {
 	"seignior":"势力",
 	"prefecture":"太守",
 	"generals":"武将",
+	"captive":"俘虏",
 	"business":"商业",
 	"agriculture":"农业",
 	"technology":"技术",
@@ -376,6 +380,11 @@ Language.dieTalkData = {
 	"die_talk_1_0":"这是万民的愤怒!",
 	"die_talk_1_1":"吃我双剑吧!",
 	"die_talk_1_2":"为了复兴汉室!"
+};
+Language.underArrestTalkData = {
+	"under_arrest_talk_0_0":"竟然被抓了，真是太丢人了!",
+	"under_arrest_talk_0_1":"哎呀！放开我!",
+	"under_arrest_talk_0_2":"糟糕了!"
 };
 Language.skillNameData = {
 	"group_1":"桃园情谊!"

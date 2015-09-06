@@ -30,6 +30,7 @@ CharacterStatusIconView.prototype.onframe = function(event){
 	self.bitmap.bitmapData.setCoordinate(self.statusPositions[status.mode] * 16, 0);
 };
 CharacterStatusIconView.prototype.downloadAidStatusRandom = function(){
+	var self = this;
 	var aids =[StrategyType.AttackAid,StrategyType.DefenseAid,StrategyType.ApiritAid,StrategyType.BreakoutAid,StrategyType.MoraleAid];
 	var mode = aids[aids.length * Math.random() >>> 0];
 	self.addStatus(mode,-0.2);

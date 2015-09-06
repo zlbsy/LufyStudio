@@ -294,13 +294,13 @@ BattleCharacterView.prototype.returnShowMoveRoadObject = function() {
 BattleCharacterView.prototype.toDie = function(isSingleCombat) {
 	var self = this;
 	var talkMsg;
-	if(isSingleCombat || calculateHitrateBuhuo(self)){
+	if(isSingleCombat || calculateHitrateCaptive(self)){
 		if(self.belong == Belong.ENEMY){
-			LMvc.BattleController.model.selfBuhuo.push(self.data.id());
+			LMvc.BattleController.model.selfCaptive.push(self.data.id());
 		}else{
-			LMvc.BattleController.model.enemyBuhuo.push(self.data.id());
+			LMvc.BattleController.model.enemyCaptive.push(self.data.id());
 		}
-		talkMsg = self.data.buhuoTalk();
+		talkMsg = self.data.underArrestTalk();
 	}else{
 		talkMsg = self.data.dieTalk();
 	}

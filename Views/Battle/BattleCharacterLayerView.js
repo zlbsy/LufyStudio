@@ -146,6 +146,9 @@ BattleCharacterLayerView.prototype.getCharacterFromLocation=function(locationX,l
 };
 BattleCharacterLayerView.prototype.getCharacter=function(belong,id,isAll){
 	var self = this;
+	if(!belong){
+		return self.getCharacter(Belong.SELF,id,isAll) || self.getCharacter(Belong.FRIEND,id,isAll) || self.getCharacter(Belong.ENEMY,id,isAll);
+	}
 	var childList = self.getCharactersFromBelong(belong,isAll);
 	return self.getCharacterFromeList(childList,id);
 };
