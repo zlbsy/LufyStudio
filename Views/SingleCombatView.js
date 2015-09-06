@@ -224,7 +224,8 @@ SingleCombatView.prototype.faceLayerInit=function(characterModel,isLeft){
 	dispositionLabel.x = force.x;
 	dispositionLabel.y = force.y + 30;
 	self.backLayer.addChild(dispositionLabel);
-
+	console.log("characterModel.maxHP()="+characterModel.maxHP());
+	console.log("characterModel.HP()="+characterModel.HP());
 	var barHp = new StatusBarView(self.controller);
 	barHp.y = face.y + faceSize;
 	var obj = {maxValue:characterModel.maxHP(),currentValue:characterModel.HP(),name:"HP",icon:"icon_hert",frontBar:"red_bar",barSize:170};

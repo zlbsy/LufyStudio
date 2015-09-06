@@ -167,7 +167,7 @@ CharacterModel.prototype.maxTroops = function(init) {
 	}
 	return self.data._maxTroops;
 };
-CharacterModel.prototype.maxHP = function() {
+CharacterModel.prototype.maxHP = function(init) {
 	return 100;
 };
 CharacterModel.prototype.maxMP = function(init) {

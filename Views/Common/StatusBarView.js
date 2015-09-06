@@ -7,6 +7,9 @@ StatusBarView.prototype.set = function(obj){
 	self.maxValue = obj.maxValue;
 	self.currentValue = obj.currentValue;
 	self.normalValue = obj.normalValue;
+	if(typeof self.normalValue == UNDEFINED){
+		self.normalValue = self.maxValue;
+	}
 	//label
 	self.name = obj.name;
 	self.icon = obj.icon;

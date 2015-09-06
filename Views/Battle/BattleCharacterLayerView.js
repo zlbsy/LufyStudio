@@ -110,6 +110,7 @@ BattleCharacterLayerView.prototype.addOurCharacterOnClick=function(locationX,loc
 			continue;
 		}
 		var id = self.controller.battleData.expeditionCharacterList[self.model.ourList.length].id();
+		CharacterModel.getChara(id).calculation(true);
 		self.addOurCharacter(id,CharacterAction.MOVE,child.direction,locationX,locationY);
 		child.remove();
 		break;

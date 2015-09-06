@@ -101,6 +101,8 @@ function battleSingleCombatCheck(attChara){
 			result = true;
 		}
 	}
+	//TODO::
+	result = true;
 	if(result){
 		script += "SGJTalk.show(" + hertCharaModel.id() + ",0," + Language.get("single_combat_answer_ok") + ");" + 
 		"SGJBattleCharacter.singleCombatStart(" + attChara.belong + "," + attCharaModel.id() + ");";
