@@ -118,6 +118,12 @@ BattleController.prototype.init = function(){
 		var charaObjs = selfPositions[i];
 		self.view.charaLayer.addCharacterPosition(charaObjs.direction,charaObjs.x,charaObjs.y);
 	}
+	if(self.battleData.fromCity.seigniorCharaId() == LMvc.selectSeignorId){
+		for(var i = 0;i<enemyCharas.length;i++){
+			var charaId = enemyCharas[i].id();
+			
+		}
+	}
 	/*for(var i = 0;i<self.battleData.expeditionCharacterList.length;i++){
 		var chara = self.battleData.expeditionCharacterList[i];
 		chara.calculation(true);
