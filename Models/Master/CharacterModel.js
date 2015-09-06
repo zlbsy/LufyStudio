@@ -73,7 +73,7 @@ CharacterModel.prototype.calculation = function(init) {
 		self.maxTroops(init);
 		self.maxHP(init);
 		self.maxMP(init);
-		self.data.troops = self.maxTroops();
+		//self.data.troops = self.maxTroops();
 		self.data.hp = self.maxHP();
 		self.data.mp = self.maxMP();
 	}

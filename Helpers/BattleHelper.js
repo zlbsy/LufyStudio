@@ -223,11 +223,16 @@ function getPowerfulCharacters(generals){
 	var list = [],result = [];
 	for(var i=0,l=generals.length;i<l;i++){
 		var child = generals[i];
-		var value = child.force() + child.intelligence() + child.agility() + child.luck() + child.command();
-		value += value * child.lv() * 0.1;
-		console.log("child="+child);
-		value += child.maxProficiencySoldier().proficiency() * 0.1;
-		value += child.skill() > 0 ? 100 : 0;
+		var data;
+		if(child.constructor.name == "BattleCharacterView"){
+			data = child.data;
+		}else{
+			data = child;
+		}
+		var value = data.force() + data.intelligence() + data.agility() + data.luck() + data.command();
+		value += value * data.lv() * 0.1;
+		value += data.maxProficiencySoldier().proficiency() * 0.1;
+		value += data.skill() > 0 ? 100 : 0;
 		list.push({general:child,value:value});
 	}
 	list = list.sort(function(a,b){return a.value - b.value;});
