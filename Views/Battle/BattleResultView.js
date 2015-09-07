@@ -3,8 +3,18 @@ function BattleResultView(controller, result){
 	LExtends(self,LView,[controller]);
 	self.backInit();
 	if(result){
+		if(controller.battleData.fromCity.seigniorCharaId() == LMvc.selectSeignorId){
+			//self change city
+		}else{
+			//nothing
+		}
 		self.showWin();
 	}else{
+		if(controller.battleData.fromCity.seigniorCharaId() == LMvc.selectSeignorId){
+			//nothing
+		}else{
+			//enemy change city
+		}
 		self.showFail();
 	}
 };
@@ -29,5 +39,39 @@ BattleResultView.prototype.showFail=function(){
 	title.x = (LGlobal.width - title.getWidth())*0.5;
 	title.y = 20;
 	self.addChild(title);
-	
+	/*self.model.enemyCaptive.push(3);
+	self.model.selfCaptive.push(1);*/
+	self.enemyCaptiveFail();
+};
+BattleResultView.prototype.enemyCaptiveFail=function(){
+	var self = this;
+	if(self.model.enemyCaptive.length == 0){
+		self.selfCaptiveFail();
+		return;
+	}
+	var chara = self.model.enemyCaptive[0];
+	self.model.enemyCaptive.splice(0, 1);
+	if(characterTouxiang(seigniorId, chara)){
+		
+	}else if(characterKill(leaderId, chara)){
+		
+	}else if(characterShifang(leaderId, chara)){
+		
+	}else{
+		
+	}
+};
+BattleResultView.prototype.selfCaptiveFail=function(){
+	var self = this;
+	if(self.model.selfCaptive.length == 0){
+		self.cityFail();
+		return;
+	}
+};
+BattleResultView.prototype.cityFail=function(){
+	var self = this;
+	if(self.model.enemyCaptive.length == 0){
+		self.selfCaptiveFail();
+		return;
+	}
 };

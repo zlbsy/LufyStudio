@@ -105,6 +105,7 @@ BattleView.prototype.layerInit=function(){
 	self.model.enemyCaptive.push(1);
 	self.model.enemyCaptive.push(2);
 	self.model.enemyCaptive.push(3);
+	self.model.selfCaptive.push(1);
 	var r = new BattleResultView(self.controller, false);
 	self.addChild(r);
 	return;
