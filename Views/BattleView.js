@@ -101,6 +101,12 @@ BattleView.prototype.layerInit=function(){
 	self.mainMenu.mainLayer.x = LGlobal.width - self.mainMenu.getWidth();
 	self.addChild(self.mainMenu);
 	self.mainMenu.visible = false;
+	
+	self.model.enemyCaptive.push(1);
+	self.model.enemyCaptive.push(2);
+	self.model.enemyCaptive.push(3);
+	var r = new BattleResultView(self.controller, false);
+	self.addChild(r);
 	return;
 	//Test code
 	self.buildLayer = new LSprite();

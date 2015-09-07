@@ -181,15 +181,13 @@ function battleCanAttackCharacter(attChara, hertChara){
 function battleEndCheck(belong){
 	var charas = LMvc.BattleController.view.charaLayer.getCharactersFromBelong(belong);
 	if(charas.length == 0){
-		var resultView = new BattleResultView();
-		if(belong == Belong.SELF){
-			//TODO::战斗失败
-			
-		}else if(belong == Belong.ENEMY){
-			//TODO::战斗胜利
+		var result;
+		if(belong == Belong.FRIEND){
+			BattleController.ctrlChara.AI.endBoutCheck();
+			return;
 		}
+		var resultView = new BattleResultView(LMvc.BattleController,belong == Belong.ENEMY);
 		LMvc.BattleController.view.addChild(resultView);
-		return;
 	}else{
 		//判断主将是否撤退
 		var chara = charas.find(function(child){
@@ -211,8 +209,8 @@ function battleEndCheck(belong){
 				return;
 			}
 		}
+		BattleController.ctrlChara.AI.endBoutCheck();
 	}
-	BattleController.ctrlChara.AI.endBoutCheck();
 }
 function getDefenseEnemiesFromCity(city){
 	var generals = city.generals(),result = [];

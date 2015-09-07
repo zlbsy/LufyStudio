@@ -47,7 +47,8 @@ function getTranslucentBitmap(width,height){
 function ConfirmWindow(obj){
 	console.log("ConfirmWindow",obj);
 	var windowLayer = new LSprite();
-	windowLayer.addChild(getTranslucentBitmap());
+	var windowBackgrond = getTranslucentBitmap();
+	windowLayer.addChild(windowBackgrond);
 	windowLayer.addEventListener(LMouseEvent.MOUSE_DOWN, function(){});
 	windowLayer.addEventListener(LMouseEvent.MOUSE_UP, function(){});
 	windowLayer.addEventListener(LMouseEvent.MOUSE_MOVE, function(){});
@@ -108,6 +109,5 @@ function ConfirmWindow(obj){
 	okPanel.addEventListener(LMouseEvent.MOUSE_UP, obj.okEvent?obj.okEvent:function(event){
 		event.currentTarget.parent.remove();
 	});
-	
 	return windowLayer;
 }
