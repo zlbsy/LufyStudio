@@ -99,8 +99,17 @@ BuildOfficialView.prototype.selectComplete=function(event){
 			child.moveTo(cityId);
 		});
 	}else if(event.characterListType == CharacterListType.EXPEDITION){
-		console.log("BuildOfficialView.prototype.selectComplete CharacterListType.EXPEDITION " , event.characterList);
-		self.controller.setValue("expeditionCharacterList", event.characterList);
+		var characterList = event.characterList;
+		for(var i = 0,l = characterList.length;i<l;i++){
+			if(characterList[i].troops() > 0){
+				continue;
+			}
+			var obj = {title:Language.get("confirm"),message:String.format(Language.get("dialog_character_troops_error"),characterList[i].name()),height:200,okEvent:null};
+			var windowLayer = ConfirmWindow(obj);
+			LMvc.layer.addChild(windowLayer);
+			return false;
+		}
+		self.controller.setValue("expeditionCharacterList", characterList);
 		self.controller.setValue("toCityId", cityId);
 	}else if(event.characterListType == CharacterListType.SELECT_LEADER){
 		if(event.characterList.length > 1){

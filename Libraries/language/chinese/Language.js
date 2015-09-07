@@ -92,6 +92,7 @@ Language.data = {
 	"return_top":"回主页面",
 	"confirm":"确认",
 	"dialog_select_generals":"请选择武将！",
+	"dialog_character_troops_error":"{0}没有分配士兵!",
 	"dialog_no_money":"金钱不够！",
 	"dialog_error_hire_more":"一次只能录用一个在野武将！",
 	"dialog_move_generals_confirm":"要移动到{0}吗？",

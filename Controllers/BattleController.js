@@ -38,7 +38,7 @@ BattleController.prototype.viewLoad=function(){
 	self.load.view(["Battle/Background","Battle/BattleMiniPreview","Battle/BattleMap","Common/Character","Common/SpecialEffect","Common/StatusBar",
 	"Battle/BattleCharacterLayer","Battle/BattleCharacter","Battle/BattleRoad","Battle/BattleCharacterStatus",
 	"Strategy/Strategy","Strategy/StrategyChild","Battle/EffectStrategy","Battle/BattleMainMenu","Battle/BattleBout",
-	"Battle/CharacterStatusIcon","Battle/BattleWeather","Battle/BattleTerrain"],self.addMap);
+	"Battle/CharacterStatusIcon","Battle/BattleWeather","Battle/BattleTerrain","Battle/BattleResult"],self.addMap);
 };
 BattleController.prototype.addMap=function(){
 	var self = this;
@@ -102,6 +102,24 @@ BattleController.prototype.init = function(){
 		enemyCharas = getDefenseEnemiesFromCity(self.battleData.toCity);
 		enemyPositions = self.model.map.charas;
 		selfPositions = self.model.map.enemys;
+		var sumTroops = self.battleData.toCity.troops();
+		for(var i = 0;i<enemyCharas.length;i++){
+			var charaId = enemyCharas[i].id();
+			var chara = CharacterModel.getChara(charaId);
+			var maxTroop = chara.maxTroops();
+			if(maxTroop > sumTroops){
+				maxTroop = sumTroops
+			}
+			chara.troops(maxTroop);
+			sumTroops -= maxTroop;
+			self.battleData.toCity.troops(sumTroops);
+			if(sumTroops > 0 || i == enemyCharas.length - 1){
+				continue;
+			}
+			//TODO::
+			enemyCharas = enemyCharas.splice(0, i + 1);
+			break;
+		}
 	}else{
 		enemyCharas = self.battleData.expeditionEnemyCharacterList;
 		enemyPositions = self.model.map.enemys;
@@ -114,16 +132,12 @@ BattleController.prototype.init = function(){
 		CharacterModel.getChara(charaId).calculation(true);
 		self.addEnemyCharacter(charaId,charaObjs.direction,charaObjs.x,charaObjs.y);
 	}
+	
 	for(var i=0,l=selfPositions.length;i<l;i++){
 		var charaObjs = selfPositions[i];
 		self.view.charaLayer.addCharacterPosition(charaObjs.direction,charaObjs.x,charaObjs.y);
 	}
-	if(self.battleData.fromCity.seigniorCharaId() == LMvc.selectSeignorId){
-		for(var i = 0;i<enemyCharas.length;i++){
-			var charaId = enemyCharas[i].id();
-			
-		}
-	}
+	
 	/*for(var i = 0;i<self.battleData.expeditionCharacterList.length;i++){
 		var chara = self.battleData.expeditionCharacterList[i];
 		chara.calculation(true);

@@ -181,11 +181,14 @@ function battleCanAttackCharacter(attChara, hertChara){
 function battleEndCheck(belong){
 	var charas = LMvc.BattleController.view.charaLayer.getCharactersFromBelong(belong);
 	if(charas.length == 0){
+		var resultView = new BattleResultView();
 		if(belong == Belong.SELF){
 			//TODO::战斗失败
+			
 		}else if(belong == Belong.ENEMY){
 			//TODO::战斗胜利
 		}
+		LMvc.BattleController.view.addChild(resultView);
 		return;
 	}else{
 		//判断主将是否撤退
