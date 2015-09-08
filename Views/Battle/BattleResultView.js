@@ -2,6 +2,7 @@ function BattleResultView(controller, result){
 	var self = this;
 	LExtends(self,LView,[controller]);
 	self.backInit();
+	self.result = result;
 	if(result){
 		if(controller.battleData.fromCity.seigniorCharaId() == LMvc.selectSeignorId){
 			//self change city
@@ -33,9 +34,11 @@ BattleResultView.prototype.backInit=function(){
 };
 BattleResultView.prototype.showWin=function(){
 	var self = this;
-	var belongLayer = new LSprite();
-	LTweenLite.to(belongLayer,1,{x:LGlobal.width * 0.5,ease:Elastic.easeOut}) 
-	.to(belongLayer,1,{delay:0.5,x:LGlobal.width * 1.5,ease:Quint.easeOut,onComplete:self.removeSelf}); 
+	var title = getStrokeLabel("战斗胜利",50,"#CCCCCC","#000000",4);
+	title.x = (LGlobal.width - title.getWidth())*0.5;
+	title.y = 20;
+	self.addChild(title);
+	self.enemyCaptiveFail();
 };
 BattleResultView.prototype.showFail=function(){
 	var self = this;
@@ -43,8 +46,6 @@ BattleResultView.prototype.showFail=function(){
 	title.x = (LGlobal.width - title.getWidth())*0.5;
 	title.y = 20;
 	self.addChild(title);
-	/*self.model.enemyCaptive.push(3);
-	self.model.selfCaptive.push(1);*/
 	self.enemyCaptiveFail();
 };
 BattleResultView.prototype.enemyCaptiveFail=function(){
@@ -66,25 +67,27 @@ BattleResultView.prototype.enemyCaptiveFail=function(){
 	}else if(calculateHitrateRelease(leaderId, charaModel)){//释放
 		
 	}else{//俘虏
-		self.enemyCaptiveShow(charaModel);
+		self.confirmShow(charaModel,String.format("{0}被敌军俘虏了!",charaModel.name()));
 	}
 };
-BattleResultView.prototype.enemyCaptiveShow=function(charaModel){
+BattleResultView.prototype.confirmShow=function(charaModel,message){
 	var self = this;
-	console.log("enemyCaptiveShow:"+charaModel);
 	var layer = new LSprite();
 	self.addChild(layer);
 	var windowData = new LBitmapData(LMvc.datalist["win05"]);
 	var windowPanel = getBitmap(new LPanel(windowData,340,230));
 	layer.addChild(windowPanel);
-	var msg = getStrokeLabel(String.format("{0}被敌军俘虏了!",charaModel.name()),20,"#CCCCCC","#000000",4);
+	if(charaModel){
+		var face = charaModel.minFace();
+		face.x = (windowPanel.getWidth() - 100) * 0.5;
+		face.y = 50;
+		layer.addChild(face);
+	}
+	var msg = getStrokeLabel(message,20,"#CCCCCC","#000000",4);
 	msg.x = (windowPanel.getWidth() - msg.getWidth())*0.5;
 	msg.y = 20;
 	layer.addChild(msg);
-	var face = charaModel.minFace();
-	face.x = (windowPanel.getWidth() - 100) * 0.5;
-	face.y = 50;
-	layer.addChild(face);
+	
 	layer.x = (LGlobal.width - windowPanel.getWidth()) * 0.5;
 	layer.y = (LGlobal.height - windowPanel.getHeight()) * 0.5;
 	layer.y = LGlobal.height;
@@ -92,7 +95,20 @@ BattleResultView.prototype.enemyCaptiveShow=function(charaModel){
 	btnOk.x = (windowPanel.getWidth() - btnOk.getWidth())*0.5;
 	btnOk.y = 160;
 	layer.addChild(btnOk);
-	LTweenLite.to(layer,0.4,{y:(LGlobal.height - windowPanel.getHeight()) * 0.5}) 
+	btnOk.addEventListener(LMouseEvent.MOUSE_UP, self.captiveHidden);
+	LTweenLite.to(layer,0.3,{y:(LGlobal.height - windowPanel.getHeight()) * 0.5}) 
+};
+BattleResultView.prototype.captiveHidden=function(event){
+	LTweenLite.to(event.currentTarget.parent,0.3,{y:LGlobal.height,onComplete:function(e){
+		var layer = e.target;
+		var self = layer.parent;
+		layer.remove();
+		if(self.result){
+			self.showWin();
+		}else{
+			self.showFail();
+		}
+	}}) 
 };
 BattleResultView.prototype.selfCaptiveFail=function(){
 	var self = this;
@@ -100,11 +116,10 @@ BattleResultView.prototype.selfCaptiveFail=function(){
 		self.cityFail();
 		return;
 	}
+	self.model.selfCaptive.length = 0;
+	self.confirmShow(null,"我军俘虏的敌将也被救回去了!");
 };
 BattleResultView.prototype.cityFail=function(){
 	var self = this;
-	if(self.model.enemyCaptive.length == 0){
-		self.selfCaptiveFail();
-		return;
-	}
+	console.log("OVER");
 };
