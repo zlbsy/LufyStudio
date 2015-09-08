@@ -51,13 +51,13 @@ BattleResultView.prototype.enemyCaptiveFail=function(){
 	}
 	var chara = self.model.enemyCaptive[0];
 	self.model.enemyCaptive.splice(0, 1);
-	if(characterTouxiang(seigniorId, chara)){
+	if(calculateHitrateSurrender(seigniorId, chara)){//投降
 		
-	}else if(characterKill(leaderId, chara)){
+	}else if(calculateHitrateBehead(leaderId, chara)){//斩首
 		
-	}else if(characterShifang(leaderId, chara)){
+	}else if(calculateHitrateRelease(leaderId, chara)){//释放
 		
-	}else{
+	}else{//俘虏
 		
 	}
 };

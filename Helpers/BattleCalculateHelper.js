@@ -266,6 +266,28 @@ function calculateHertValue(attChara,hertChara,correctionFactor){
 	r = r >>> 0;
 	return r;
 }
+/**
+ * 俘虏概率
+ */
 function calculateHitrateCaptive(chara){
 	
 }
+/**
+ * 投降概率
+ */
+function calculateHitrateSurrender(){
+	return false;
+}
+/**
+ * 斩首概率
+ */
+function calculateHitrateBehead(){
+	return false;
+}
+/**
+ * 释放概率
+ */
+function calculateHitrateRelease(){
+	
+}
+
