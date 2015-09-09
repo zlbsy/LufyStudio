@@ -1,7 +1,7 @@
 function BattleResultView(controller, result){
 	var self = this;
 	LExtends(self,LView,[controller]);
-	console.log("BattleResultView");
+	self.name = "BattleResult";
 	self.backInit();
 	self.result = result;
 	if(result){
@@ -42,9 +42,11 @@ BattleResultView.prototype.showWin=function(){
 	self.addChild(title);
 	self.selfCaptiveWin();
 };
-BattleResultView.prototype.selfCaptiveWin=function(){
+BattleResultView.prototype.selfCaptiveWin=function(count){
 	var self = this;
-	console.log("selfCaptiveWin:"+self.model.selfCaptive.length);
+	if(!count){
+		count = 0;
+	}
 	if(self.model.selfCaptive.length == 0){
 		self.enemyCaptiveWin();
 		return;
@@ -52,7 +54,16 @@ BattleResultView.prototype.selfCaptiveWin=function(){
 	var charaId = self.model.selfCaptive[0];
 	var charaModel = CharacterModel.getChara(charaId);
 	//self.model.selfCaptive.splice(0, 1);
-	self.confirmShow(charaModel,String.format("俘虏了敌将{0}!",charaModel.name()),0);
+	self.confirmShow(charaModel,String.format("俘虏了敌将{0}!",charaModel.name()),count);
+};
+BattleResultView.prototype.enemyCaptiveWin=function(){
+	var self = this;
+	if(self.model.enemyCaptive.length == 0){
+		self.cityWin();
+		return;
+	}
+	self.model.enemyCaptive.length = 0;
+	self.confirmShow(null,"被敌军俘虏的将领也被救回来了!");
 };
 BattleResultView.prototype.showFail=function(){
 	var self = this;
@@ -105,7 +116,7 @@ BattleResultView.prototype.confirmShow=function(charaModel,message,count){
 	layer.x = (LGlobal.width - windowPanel.getWidth()) * 0.5;
 	layer.y = (LGlobal.height - windowPanel.getHeight()) * 0.5;
 	layer.y = LGlobal.height;
-	if(self.result){
+	if(charaModel && self.result){
 		var btnCaptive = getButton(count == 0 ? "招降" : "俘虏",100);
 		btnCaptive.x = (windowPanel.getWidth() - 100)*0.5 - 110;
 		btnCaptive.y = 160;
@@ -115,13 +126,15 @@ BattleResultView.prototype.confirmShow=function(charaModel,message,count){
 		var btnRelease = getButton("释放",100);
 		btnRelease.x = (windowPanel.getWidth() - 100)*0.5;
 		btnRelease.y = 160;
+		btnRelease.name = "Release";
 		layer.addChild(btnRelease);
-		btnRelease.addEventListener(LMouseEvent.MOUSE_UP, self.confirmHidden);
+		btnRelease.addEventListener(LMouseEvent.MOUSE_UP, self.captiveCheck);
 		var btnBehead = getButton("斩首",100);
 		btnBehead.x = (windowPanel.getWidth() - 100)*0.5 + 110;
 		btnBehead.y = 160;
+		btnBehead.name = "Behead";
 		layer.addChild(btnBehead);
-		btnBehead.addEventListener(LMouseEvent.MOUSE_UP, self.confirmHidden);
+		btnBehead.addEventListener(LMouseEvent.MOUSE_UP, self.captiveCheck);
 	}else{
 		var btnOk = getButton("OK",100);
 		btnOk.x = (windowPanel.getWidth() - btnOk.getWidth())*0.5;
@@ -141,26 +154,31 @@ BattleResultView.prototype.captiveCheck=function(event){
 		var self = layer.parent;
 		var name = layer.name;
 		layer.remove();
-		self.captiveCheck(name);
+		self.captiveCheckRun(name);
 	}}) 
 };
-BattleResultView.prototype.captiveCheck=function(name){
+BattleResultView.prototype.captiveCheckRun=function(name){
 	var self = this;
 	var charaId = self.model.selfCaptive[0];
 	var charaModel = CharacterModel.getChara(charaId);
-	if(name == "Surrender" && calculateHitrateSurrender(LMvc.selectSeignorId, charaModel)){//投降
-		
-	}
-	LTweenLite.to(event.currentTarget.parent,0.3,{y:LGlobal.height,onComplete:function(e){
-		var layer = e.target;
-		var self = layer.parent;
-		layer.remove();
-		if(self.result){
-			self.showWin();
+	if(name == "Surrender"){//投降
+		if(calculateHitrateSurrender(LMvc.selectSeignorId, charaModel)){
+			
 		}else{
-			self.showFail();
+			var script = "SGJTalk.show(" + charaModel.id() + ",0,少废话!忠臣不事二主!);";
+			script += "SGJBattleResult.selfCaptiveWin(1);";
+			LGlobal.script.addScript(script);
 		}
-	}}) 
+	}else if(name == "Captive"){//俘虏
+		self.model.selfCaptive.splice(0, 1);
+		self.selfCaptiveWin();
+	}else if(name == "Release"){//释放
+		self.model.selfCaptive.splice(0, 1);
+		self.selfCaptiveWin();
+	}else if(name == "Behead"){//斩首
+		self.model.selfCaptive.splice(0, 1);
+		self.selfCaptiveWin();
+	}
 };
 BattleResultView.prototype.confirmHidden=function(event){
 	LTweenLite.to(event.currentTarget.parent,0.3,{y:LGlobal.height,onComplete:function(e){
@@ -185,5 +203,9 @@ BattleResultView.prototype.selfCaptiveFail=function(){
 };
 BattleResultView.prototype.cityFail=function(){
 	var self = this;
-	console.log("OVER");
+	console.log("OVER fail");
+};
+BattleResultView.prototype.cityWin=function(){
+	var self = this;
+	console.log("OVER win");
 };

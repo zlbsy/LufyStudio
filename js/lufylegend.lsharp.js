@@ -1726,9 +1726,33 @@ LScriptSGJ.analysis = function(childType, lineValue) {
 		case "SGJSingleCombat":
 			LSGJSingleCombatScript.analysis(lineValue);
 			break;
+		case "SGJBattleResult":
+			LSGJBattleResultScript.analysis(lineValue);
+			break;
 		default:
 			LGlobal.script.analysis();
 	}
+};
+/*
+ * LSGJBattleResultScript.js
+ **/
+LSGJBattleResultScript = function() {
+};
+LSGJBattleResultScript.analysis = function(value) {
+	var start = value.indexOf("(");
+	var end = value.indexOf(")");
+	switch(value.substr(0,start)) {
+		case "SGJBattleResult.selfCaptiveWin":
+			LSGJBattleResultScript.selfCaptiveWin(value, start, end);
+			break;
+		default:
+			LGlobal.script.analysis();
+	}
+};
+LSGJBattleResultScript.selfCaptiveWin = function(value, start, end) {
+	var params = value.substring(start + 1, end).split(",");
+	var resultView = LMvc.BattleController.view.getChildByName("BattleResult");
+	resultView.selfCaptiveWin(parseInt(params[0]));
 };
 /*
  * LSGJTalkScript.js
