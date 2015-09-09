@@ -270,7 +270,7 @@ function calculateHertValue(attChara,hertChara,correctionFactor){
  * 俘虏概率
  */
 function calculateHitrateCaptive(chara){
-	
+	return false;
 }
 /**
  * 投降概率
@@ -288,6 +288,6 @@ function calculateHitrateBehead(){
  * 释放概率
  */
 function calculateHitrateRelease(){
-	
+	return false;
 }
 
