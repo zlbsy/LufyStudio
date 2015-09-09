@@ -8,6 +8,30 @@ function BattleResultView(controller, result){
 		if(controller.battleData.fromCity.seigniorCharaId() == LMvc.selectSeignorId){
 			//self change city
 			console.log("self change city");
+			var city = controller.battleData.toCity;
+			var generals = city.generals();
+			var neighbors = city.neighbor();
+			var neighbor = neighbors[neighbors.length*Math.random() >>> 0];
+			self.neighbor = neighbor;
+			for(var i=0,l=generals.length;i<l;i++){
+				var chara = generals[i];
+				if(self.model.selfCaptive.find(function(child){
+					return child == chara.id();
+				})){
+					continue;
+				}
+				chara.moveTo(neighbor);
+				chara.moveTo();
+			}
+			generals.splice(0, generals.length);
+			self.targetSeigniorCharaId = city.seigniorCharaId();
+			city.seigniorCharaId(LMvc.selectSeignorId);
+			generals = controller.battleData.expeditionCharacterList;
+			for(var i=0,l=generals.length;i<l;i++){
+				var chara = generals[i];
+				chara.moveTo(city.id());
+				chara.moveTo();
+			}
 		}else{
 			//nothing
 			console.log("nothing");
@@ -20,6 +44,7 @@ function BattleResultView(controller, result){
 		}else{
 			//enemy change city
 			console.log("enemy change city");
+			controller.battleData.toCity.seigniorCharaId(controller.battleData.fromCity.seigniorCharaId());
 		}
 		self.showFail();
 	}

@@ -166,11 +166,11 @@ AreaModel.prototype.setSeignor = function(seignior,areaData){
 		this.data[key] = areaData[key];
 	}
 };
-AreaModel.prototype.seigniorCharaId=function(){
-	return this.data.seignior_chara_id;
+AreaModel.prototype.seigniorCharaId=function(seigniorCharaId){
+	return this._dataValue("seignior_chara_id", seigniorCharaId, 0);
 };
 AreaModel.prototype.seignior_chara_id=function(){
-	return this.data.seignior_chara_id;
+	return this.seigniorCharaId();
 };
 AreaModel.prototype.prefecture=function(){
 	return this.data.prefecture;
