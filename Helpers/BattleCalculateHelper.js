@@ -270,6 +270,17 @@ function calculateHertValue(attChara,hertChara,correctionFactor){
  * 俘虏概率
  */
 function calculateHitrateCaptive(chara){
+	var positions = [[-1,-1],[0,-1],[1,-1],[-1,0],[1,0],[-1,1],[0,1],[1,1]];
+	var locationX = chara.locationX();
+	var locationY = chara.locationY();
+	var charaLayer = LMvc.BattleController.view.charaLayer;
+	for(var i=0,l=positions.length;i<l;i++){
+		var position = positions[i];
+		var child = charaLayer.getCharacterFromLocation(locationX+position[0],locationY+position[1]);
+		if(!child){
+			continue;
+		}
+	}
 	return false;
 }
 /**
