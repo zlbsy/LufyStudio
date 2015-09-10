@@ -46,7 +46,9 @@ var StrategyType = {
 	Chaos:12,//混乱
 	BanIncantation:13,//禁咒
 	Wake:14,//觉醒
-	Supply:15//补给
+	Supply:15,//补给
+	Taopao:16,//血路
+	Buhuo:17//捕获
 };
 var StrategyTypeToString = {};
 for(var key in StrategyType){
@@ -58,7 +60,9 @@ var StrategyEffectType = {
 	Status:2,//异常状态
 	Aid:3,//升降能力
 	Wake:4,//觉醒
-	Supply:5//补给
+	Supply:5,//补给
+	Taopao:6,//血路
+	Buhuo:7//捕获
 };
 var StrategyDatas = [
 	{id:1,name:"小火计",belong:Belong.ENEMY,type:StrategyType.Fire,effectType:StrategyEffectType.Attack,image:"h1",

@@ -270,6 +270,10 @@ function calculateHertValue(attChara,hertChara,correctionFactor){
  * 俘虏概率
  */
 function calculateHitrateCaptive(chara){
+	if(chara.data.hasSkill(StrategyEffectType.Taopao)){
+		return false;
+	}
+	var addRate = false;
 	var positions = [[-1,-1],[0,-1],[1,-1],[-1,0],[1,0],[-1,1],[0,1],[1,1]];
 	var locationX = chara.locationX();
 	var locationY = chara.locationY();
@@ -280,25 +284,50 @@ function calculateHitrateCaptive(chara){
 		if(!child){
 			continue;
 		}
+		if(isSameBelong(child.belong, chara.belong) && child.data.hasSkill(StrategyEffectType.Taopao)){
+			return false;
+		}
+		if(!isSameBelong(child.belong, chara.belong) && child.data.hasSkill(StrategyEffectType.Buhuo)){
+			addRate = true;
+		}
 	}
-	return false;
+	return Math.random() < 0.1*(addRate?2:1);
 }
 /**
  * 投降概率
  */
-function calculateHitrateSurrender(){
+function calculateHitrateSurrender(seignorId, charaModel){
+	
 	return false;
 }
 /**
  * 斩首概率
  */
-function calculateHitrateBehead(){
-	return false;
+function calculateHitrateBehead(leaderId, charaModel){
+	if(Math.random() > 0.1){
+		return false;
+	}
+	var sum = 150;
+	var leader = CharacterModel.getChara(leaderId);
+	var compatibility = Math.abs(leader.compatibility() - charaModel.compatibility());
+	if(compatibility > sum){
+		compatibility = sum;
+	}
+	return Math.random() < compatibility/sum;
 }
 /**
  * 释放概率
  */
-function calculateHitrateRelease(){
-	return false;
+function calculateHitrateRelease(leaderId, charaModel){
+	if(Math.random() > 0.2){
+		return false;
+	}
+	var sum = 150;
+	var leader = CharacterModel.getChara(leaderId);
+	var compatibility = Math.abs(leader.compatibility() - charaModel.compatibility());
+	if(compatibility > sum){
+		compatibility = sum;
+	}
+	return Math.random() > compatibility/sum;;
 }
 
