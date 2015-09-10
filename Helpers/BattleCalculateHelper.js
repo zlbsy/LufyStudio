@@ -270,7 +270,7 @@ function calculateHertValue(attChara,hertChara,correctionFactor){
  * 俘虏概率
  */
 function calculateHitrateCaptive(chara){
-	if(chara.data.hasSkill(StrategyEffectType.Taopao)){
+	if(chara.data.hasSkill(StrategyEffectType.Flee)){
 		return false;
 	}
 	var addRate = false;
@@ -284,10 +284,10 @@ function calculateHitrateCaptive(chara){
 		if(!child){
 			continue;
 		}
-		if(isSameBelong(child.belong, chara.belong) && child.data.hasSkill(StrategyEffectType.Taopao)){
+		if(isSameBelong(child.belong, chara.belong) && child.data.hasSkill(StrategyEffectType.Flee)){
 			return false;
 		}
-		if(!isSameBelong(child.belong, chara.belong) && child.data.hasSkill(StrategyEffectType.Buhuo)){
+		if(!isSameBelong(child.belong, chara.belong) && child.data.hasSkill(StrategyEffectType.Capture)){
 			addRate = true;
 		}
 	}
@@ -298,6 +298,7 @@ function calculateHitrateCaptive(chara){
  */
 function calculateHitrateSurrender(seignorId, charaModel){
 	
+	var seignor = CharacterModel.getChara(seignorId);
 	return false;
 }
 /**
