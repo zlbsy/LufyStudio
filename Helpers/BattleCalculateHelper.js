@@ -297,9 +297,18 @@ function calculateHitrateCaptive(chara){
  * 投降概率
  */
 function calculateHitrateSurrender(seignorId, charaModel){
-	
-	var seignor = CharacterModel.getChara(seignorId);
-	return false;
+	var maxPersonalLoyalty = 15;
+	var personalLoyalty = charaModel.personalLoyalty();
+	var maxLoyalty = 80;
+	if(maxPersonalLoyalty == personalLoyalty){
+		maxLoyalty = 1;
+	}
+	var surrebderLoyalty = maxLoyalty*personalLoyalty/maxPersonalLoyalty;
+	var loyalty = charaModel.loyalty();
+	if(surrebderLoyalty >= loyalty){
+		return false;
+	}
+	return true;
 }
 /**
  * 斩首概率
@@ -308,7 +317,7 @@ function calculateHitrateBehead(leaderId, charaModel){
 	if(Math.random() > 0.1){
 		return false;
 	}
-	var sum = 150;
+	var sum = 75;
 	var leader = CharacterModel.getChara(leaderId);
 	var compatibility = Math.abs(leader.compatibility() - charaModel.compatibility());
 	if(compatibility > sum){
@@ -323,7 +332,7 @@ function calculateHitrateRelease(leaderId, charaModel){
 	if(Math.random() > 0.2){
 		return false;
 	}
-	var sum = 150;
+	var sum = 75;
 	var leader = CharacterModel.getChara(leaderId);
 	var compatibility = Math.abs(leader.compatibility() - charaModel.compatibility());
 	if(compatibility > sum){

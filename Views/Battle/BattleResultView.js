@@ -98,6 +98,9 @@ BattleResultView.prototype.showFail=function(){
 	self.addChild(title);
 	self.enemyCaptiveFail();
 };
+BattleResultView.prototype.surrender=function(seigniorId, charaModel){
+
+};
 BattleResultView.prototype.enemyCaptiveFail=function(){
 	var self = this;
 	console.log("enemyCaptiveFail:"+self.model.enemyCaptive.length);
@@ -111,7 +114,7 @@ BattleResultView.prototype.enemyCaptiveFail=function(){
 	var seigniorId = self.controller.battleData.toCity.seigniorCharaId();
 	var leaderId = self.enemyLeader;
 	if(calculateHitrateSurrender(seigniorId, charaModel)){//投降
-		
+		self.surrender(seigniorId, charaModel);
 	}else if(calculateHitrateBehead(leaderId, charaModel)){//斩首
 		
 	}else if(calculateHitrateRelease(leaderId, charaModel)){//释放
