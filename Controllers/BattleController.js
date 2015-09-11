@@ -126,6 +126,7 @@ BattleController.prototype.init = function(){
 		selfPositions = self.model.map.charas;
 	}
 	console.log("enemyCharas",enemyCharas);
+	self.battleData.expeditionEnemyCharacterList = enemyCharas;
 	for(var i = 0;i<enemyCharas.length;i++){
 		var charaObjs = enemyPositions[i];
 		var charaId = enemyCharas[i].id();

@@ -103,11 +103,13 @@ BattleView.prototype.layerInit=function(){
 	self.mainMenu.visible = false;
 	
 	//TODO::
+	self.model.enemyCaptive.push(1);
 	self.model.enemyCaptive.push(2);
+	self.model.enemyCaptive.push(3);
 	self.model.selfCaptive.push(24);
 	self.model.selfCaptive.push(25);
 	self.model.selfCaptive.push(26);
-	var r = new BattleResultView(self.controller, true);
+	var r = new BattleResultView(self.controller, false);
 	self.addChild(r);
 	return;
 	//Test code

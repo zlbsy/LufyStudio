@@ -4,8 +4,13 @@ function BattleResultView(controller, result){
 	self.name = "BattleResult";
 	self.backInit();
 	self.result = result;
+	var from = self.controller.battleData.fromCity;
+	self.controller.battleData.fromCity = self.controller.battleData.toCity;
+	self.controller.battleData.toCity = from;
 	if(result){
+		self.winSeigniorId = LMvc.selectSeignorId;
 		if(controller.battleData.fromCity.seigniorCharaId() == LMvc.selectSeignorId){
+			self.failSeigniorId = controller.battleData.toCity.seigniorCharaId();
 			//self change city
 			console.log("self change city");
 			var city = controller.battleData.toCity;
@@ -33,19 +38,22 @@ function BattleResultView(controller, result){
 				chara.moveTo();
 			}
 		}else{
+			self.failSeigniorId = controller.battleData.fromCity.seigniorCharaId();
 			//nothing
 			console.log("nothing");
 		}
 		self.showWin();
 	}else{
+		self.failSeigniorId = LMvc.selectSeignorId;
 		if(controller.battleData.fromCity.seigniorCharaId() == LMvc.selectSeignorId){
+			self.winSeigniorId = controller.battleData.toCity.seigniorCharaId();
 			//nothing
 			console.log("nothing");
 			self.showFail();
 		}else{
 			//enemy change city
 			console.log("enemy change city");
-			//controller.battleData.toCity.seigniorCharaId(controller.battleData.fromCity.seigniorCharaId());
+			self.winSeigniorId = controller.battleData.fromCity.seigniorCharaId();
 			self.selectMoveCity();
 		}
 	}
@@ -68,8 +76,39 @@ BattleResultView.prototype.selectMoveCity=function(){
 };
 BattleResultView.prototype.selectMoveCityRun=function(event){
 	var btnMove = event.currentTarget;
-	var self = btnMove.parent.parent;
-	
+	btnMove.parent.cityId = btnMove.cityId;
+	LTweenLite.to(btnMove.parent,0.3,{y:LGlobal.height,onComplete:function(e){
+		var layer = e.target;
+		var self = layer.parent;
+		var cityId = layer.cityId;
+		console.log("cityId="+cityId);
+		var city = self.controller.battleData.toCity;
+		console.log("city="+city.name());
+		var generals = city.generals();
+		//var neighbor = AreaModel.getArea(cityId);
+		console.log("generals.length="+generals.length);
+		for(var i=0,l=generals.length;i<l;i++){
+			var chara = generals[i];
+			console.log("chara="+chara.name());
+			if(self.model.enemyCaptive.find(function(child){
+				return child == chara.id();
+			})){
+				continue;
+			}
+			chara.moveTo(cityId);
+			chara.moveTo();
+		}
+		generals.splice(0, generals.length);
+		city.seigniorCharaId(self.winSeigniorId);
+		generals = self.controller.battleData.expeditionEnemyCharacterList;
+		for(var i=0,l=generals.length;i<l;i++){
+			var chara = generals[i];
+			chara.moveTo(city.id());
+			chara.moveTo();
+		}
+		layer.remove();
+		self.showFail();
+	}});
 };
 BattleResultView.prototype.showWin=function(){
 	var self = this;
@@ -210,6 +249,9 @@ BattleResultView.prototype.confirmShow=function(param,message,count){
 			var neighbors = self.controller.battleData.toCity.neighbor();
 			for(var i=0,l=neighbors.length;i<l;i++){
 				var neighbor = AreaModel.getArea(neighbors[i]);
+				if(neighbor.seigniorCharaId() != LMvc.selectSeignorId){
+					continue;
+				}
 				var btnMoveTo = getButton(neighbor.name(),100);
 				btnMoveTo.x = windowPanel.getWidth()*0.5 - 120 + (i % 2)*140;
 				btnMoveTo.y = 60 + (i/2 >> 0)*50;
