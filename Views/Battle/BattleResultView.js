@@ -41,12 +41,13 @@ function BattleResultView(controller, result){
 		if(controller.battleData.fromCity.seigniorCharaId() == LMvc.selectSeignorId){
 			//nothing
 			console.log("nothing");
+			self.showFail();
 		}else{
 			//enemy change city
 			console.log("enemy change city");
-			controller.battleData.toCity.seigniorCharaId(controller.battleData.fromCity.seigniorCharaId());
+			//controller.battleData.toCity.seigniorCharaId(controller.battleData.fromCity.seigniorCharaId());
+			self.selectMoveCity();
 		}
-		self.showFail();
 	}
 };
 BattleResultView.prototype.backInit=function(){
@@ -57,6 +58,18 @@ BattleResultView.prototype.backInit=function(){
 	windowLayer.addEventListener(LMouseEvent.MOUSE_DOWN, function(){});
 	windowLayer.addEventListener(LMouseEvent.MOUSE_UP, function(){});
 	windowLayer.addEventListener(LMouseEvent.MOUSE_MOVE, function(){});
+};
+BattleResultView.prototype.selectMoveCity=function(){
+	var self = this;
+	var city = self.controller.battleData.toCity;
+	var fromSeigniorCharaId = self.controller.battleData.fromCity.seigniorCharaId();
+	var fromSeignior = CharacterModel.getChara(fromSeigniorCharaId);
+	self.confirmShow("MoveCity",String.format(city.generals().length > self.model.enemyCaptive.length ? "{0}被{1}军占领了，撤往哪里？" : "{0}被{1}军占领了!",city.name(),fromSeignior.name()));
+};
+BattleResultView.prototype.selectMoveCityRun=function(event){
+	var btnMove = event.currentTarget;
+	var self = btnMove.parent.parent;
+	
 };
 BattleResultView.prototype.showWin=function(){
 	var self = this;
@@ -99,7 +112,31 @@ BattleResultView.prototype.showFail=function(){
 	self.enemyCaptiveFail();
 };
 BattleResultView.prototype.surrender=function(seigniorId, charaModel){
-
+	var self = this;
+	var city = self.controller.battleData.toCity;
+	charaModel.moveTo(city.id());
+	charaModel.moveTo();
+	charaModel.seignior(seigniorId);
+};
+BattleResultView.prototype.behead=function(charaModel){
+	var self = this,city;
+	if(self.result){
+		if(self.controller.battleData.fromCity.seigniorCharaId() == LMvc.selectSeignorId){
+			return;
+		}else{
+			city = self.controller.battleData.fromCity;
+		}
+	}else{
+		if(self.controller.battleData.fromCity.seigniorCharaId() == LMvc.selectSeignorId){
+			city = self.controller.battleData.toCity;
+		}else{
+			city = self.controller.battleData.fromCity;
+		}
+	}
+	var city = self.controller.battleData.toCity;
+	charaModel.moveTo(city.id());
+	charaModel.moveTo();
+	charaModel.seignior(seigniorId);
 };
 BattleResultView.prototype.enemyCaptiveFail=function(){
 	var self = this;
@@ -123,8 +160,14 @@ BattleResultView.prototype.enemyCaptiveFail=function(){
 		self.confirmShow(charaModel,String.format("{0}被敌军俘虏了!",charaModel.name()));
 	}
 };
-BattleResultView.prototype.confirmShow=function(charaModel,message,count){
+BattleResultView.prototype.confirmShow=function(param,message,count){
 	var self = this;
+	var charaModel,type;
+	if(param.constructor.name == "CharacterModel"){
+		charaModel = param;
+	}else{
+		type = param;
+	}
 	var layer = new LSprite();
 	self.addChild(layer);
 	var windowData = new LBitmapData(LMvc.datalist["win05"]);
@@ -163,6 +206,17 @@ BattleResultView.prototype.confirmShow=function(charaModel,message,count){
 		btnBehead.name = "Behead";
 		layer.addChild(btnBehead);
 		btnBehead.addEventListener(LMouseEvent.MOUSE_UP, self.captiveCheck);
+	}else if(type == "MoveCity" && self.controller.battleData.toCity.generals().length > self.model.enemyCaptive.length){
+			var neighbors = self.controller.battleData.toCity.neighbor();
+			for(var i=0,l=neighbors.length;i<l;i++){
+				var neighbor = AreaModel.getArea(neighbors[i]);
+				var btnMoveTo = getButton(neighbor.name(),100);
+				btnMoveTo.x = windowPanel.getWidth()*0.5 - 120 + (i % 2)*140;
+				btnMoveTo.y = 60 + (i/2 >> 0)*50;
+				btnMoveTo.cityId = neighbor.id();
+				layer.addChild(btnMoveTo);
+				btnMoveTo.addEventListener(LMouseEvent.MOUSE_UP, self.selectMoveCityRun);
+			}
 	}else{
 		var btnOk = getButton("OK",100);
 		btnOk.x = (windowPanel.getWidth() - btnOk.getWidth())*0.5;
