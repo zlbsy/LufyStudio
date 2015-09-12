@@ -5,9 +5,9 @@ function BattleResultView(controller, result){
 	self.backInit();
 	self.result = result;
 	//TODO:test code
-	var from = self.controller.battleData.fromCity;
-	self.controller.battleData.fromCity = self.controller.battleData.toCity;
-	self.controller.battleData.toCity = from;
+	//var from = self.controller.battleData.fromCity;
+	//self.controller.battleData.fromCity = self.controller.battleData.toCity;
+	//self.controller.battleData.toCity = from;
 	self.model.enemyList[0].isLeader = true;
 	//TODO:test code end
 	
@@ -24,9 +24,10 @@ function BattleResultView(controller, result){
 			var generals = city.generals();
 			var neighbors = city.neighbor();
 			var neighbor = neighbors[neighbors.length*Math.random() >>> 0];
-			self.neighbor = neighbor;
-			for(var i=0,l=generals.length;i<l;i++){
-				var chara = generals[i];
+			self.retreatCityId = neighbor;
+			var moveCharas = generals.slice();
+			for(var i=0,l=moveCharas.length;i<l;i++){
+				var chara = moveCharas[i];
 				if(self.model.selfCaptive.find(function(child){
 					return child == chara.id();
 				})){
@@ -38,7 +39,7 @@ function BattleResultView(controller, result){
 			generals.splice(0, generals.length);
 			self.targetSeigniorCharaId = city.seigniorCharaId();
 			city.seigniorCharaId(LMvc.selectSeignorId);
-			generals = controller.battleData.expeditionCharacterList;
+			generals = controller.battleData.expeditionCharacterList.slice();
 			for(var i=0,l=generals.length;i<l;i++){
 				var chara = generals[i];
 				chara.moveTo(city.id());
@@ -205,8 +206,10 @@ BattleResultView.prototype.enemyCaptiveFail=function(){
 	}else if(calculateHitrateBehead(leaderId, charaModel)){//斩首
 		self.confirmShow(charaModel,String.format("{0}被敌军斩首了!",charaModel.name()));
 	}else if(calculateHitrateRelease(leaderId, charaModel)){//释放
-		charaModel.moveTo(self.retreatCityId);
-		charaModel.moveTo();
+		if(self.controller.battleData.toCity.seigniorCharaId() == LMvc.selectSeignorId){
+			charaModel.moveTo(self.retreatCityId);
+			charaModel.moveTo();
+		}
 		self.confirmShow(charaModel,String.format("{0}被敌军释放了!",charaModel.name()));
 	}else{//俘虏
 		self.controller.battleData.toCity.addCaptives(charaModel);
@@ -284,33 +287,46 @@ BattleResultView.prototype.confirmShow=function(param,message,count){
 	LTweenLite.to(layer,0.3,{y:(LGlobal.height - windowPanel.getHeight()) * 0.5}) 
 };
 BattleResultView.prototype.captiveCheck=function(event){
+	console.log("captiveCheck");
 	var btn = event.currentTarget;
 	var layer = btn.parent;
 	layer.name = btn.name;
 	LTweenLite.to(layer,0.3,{y:LGlobal.height,onComplete:function(e){
 		var layer = e.target;
+		console.log("layer="+layer);
 		var self = layer.parent;
+		console.log("self="+self);
 		var name = layer.name;
+		console.log("name="+name);
 		layer.remove();
 		self.captiveCheckRun(name);
 	}}) 
 };
 BattleResultView.prototype.captiveCheckRun=function(name){
 	var self = this;
+	console.log("captiveCheckRun="+name);
 	var charaId = self.model.selfCaptive[0];
 	var charaModel = CharacterModel.getChara(charaId);
+	var script;
 	if(name == "Surrender"){//投降
 		if(calculateHitrateSurrender(LMvc.selectSeignorId, charaModel)){
-			
+			self.surrender(seigniorId, charaModel);
+			script = "SGJTalk.show(" + charaModel.id() + ",0,愿效犬马之力!);";
+			script += "SGJBattleResult.selfCaptiveWin();";
 		}else{
-			var script = "SGJTalk.show(" + charaModel.id() + ",0,少废话!忠臣不事二主!);";
+			script = "SGJTalk.show(" + charaModel.id() + ",0,少废话!忠臣不事二主!);";
 			script += "SGJBattleResult.selfCaptiveWin(1);";
-			LGlobal.script.addScript(script);
 		}
+		LGlobal.script.addScript(script);
 	}else if(name == "Captive"){//俘虏
+		self.controller.battleData.toCity.addCaptives(charaModel);
 		self.model.selfCaptive.splice(0, 1);
 		self.selfCaptiveWin();
 	}else if(name == "Release"){//释放
+		if(self.controller.battleData.fromCity.seigniorCharaId() == LMvc.selectSeignorId){
+			charaModel.moveTo(self.retreatCityId);
+			charaModel.moveTo();
+		}
 		self.model.selfCaptive.splice(0, 1);
 		self.selfCaptiveWin();
 	}else if(name == "Behead"){//斩首
@@ -351,5 +367,9 @@ BattleResultView.prototype.cityFail=function(){
 BattleResultView.prototype.cityWin=function(){
 	var self = this;
 	console.log("OVER win");
-	
+	var cityId = self.controller.battleData.toCity.id();
+	self.controller.view.remove();
+	LMvc.MapController.view.visible = true;
+	LMvc.MapController.view.changeMode(MapController.MODE_MAP);
+	LMvc.MapController.view.resetAreaIcon(cityId);
 };

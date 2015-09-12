@@ -150,6 +150,6 @@ BattleView.prototype.updateView = function(){
 	self.model.selfCaptive.push(24);
 	self.model.selfCaptive.push(25);
 	self.model.selfCaptive.push(26);
-	var r = new BattleResultView(self.controller, false);
+	var r = new BattleResultView(self.controller, true);
 	self.addChild(r);
 };
