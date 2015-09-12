@@ -287,6 +287,18 @@ AreaModel.prototype.generalsSum=function(){
 AreaModel.prototype.captiveSum=function(){
 	return this.data.captives.length;
 };
+AreaModel.prototype.addCaptives = function(param){
+	var self = this, chara;
+	if(typeof param == "number"){
+		chara = CharacterModel.getChara(param);
+	}else{
+		chara = param;
+	}
+	self.data.captives.push(chara);
+};
+AreaModel.prototype.captives=function(){
+	return this.data.captives;
+};
 AreaModel.prototype.troopsSum=function(){
 	/*var troopsSum = 0;
 	for(var i=0;i<this.data.troops.length;i++){

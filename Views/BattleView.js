@@ -101,16 +101,6 @@ BattleView.prototype.layerInit=function(){
 	self.mainMenu.mainLayer.x = LGlobal.width - self.mainMenu.getWidth();
 	self.addChild(self.mainMenu);
 	self.mainMenu.visible = false;
-	
-	//TODO::
-	self.model.enemyCaptive.push(1);
-	self.model.enemyCaptive.push(2);
-	self.model.enemyCaptive.push(3);
-	self.model.selfCaptive.push(24);
-	self.model.selfCaptive.push(25);
-	self.model.selfCaptive.push(26);
-	var r = new BattleResultView(self.controller, false);
-	self.addChild(r);
 	return;
 	//Test code
 	self.buildLayer = new LSprite();
@@ -149,4 +139,17 @@ BattleView.prototype.onframe=function(event){
 	}else if(baseLayer.y < LGlobal.height - map.height){
 		baseLayer.y = LGlobal.height - map.height;
 	}
+};
+BattleView.prototype.updateView = function(){
+	var self = this;
+	
+	//TODO::
+	self.model.enemyCaptive.push(1);
+	self.model.enemyCaptive.push(2);
+	self.model.enemyCaptive.push(3);
+	self.model.selfCaptive.push(24);
+	self.model.selfCaptive.push(25);
+	self.model.selfCaptive.push(26);
+	var r = new BattleResultView(self.controller, false);
+	self.addChild(r);
 };

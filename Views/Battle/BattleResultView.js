@@ -80,22 +80,27 @@ BattleResultView.prototype.selectMoveCityRun=function(event){
 	LTweenLite.to(btnMove.parent,0.3,{y:LGlobal.height,onComplete:function(e){
 		var layer = e.target;
 		var self = layer.parent;
-		var cityId = layer.cityId;
+		self.retreatCityId = layer.cityId;
 		console.log("cityId="+cityId);
 		var city = self.controller.battleData.toCity;
 		console.log("city="+city.name());
 		var generals = city.generals();
 		//var neighbor = AreaModel.getArea(cityId);
-		console.log("generals.length="+generals.length);
+		var moveCharas = [];
 		for(var i=0,l=generals.length;i<l;i++){
 			var chara = generals[i];
-			console.log("chara="+chara.name());
+			console.log("chara="+chara);
+			console.log("chara.name="+chara.name());
 			if(self.model.enemyCaptive.find(function(child){
 				return child == chara.id();
 			})){
 				continue;
 			}
-			chara.moveTo(cityId);
+			moveCharas.push(chara);
+		}
+		for(var i=0,l=moveCharas.length;i<l;i++){
+			var chara = moveCharas[i];
+			chara.moveTo(self.retreatCityId);
 			chara.moveTo();
 		}
 		generals.splice(0, generals.length);
@@ -190,19 +195,27 @@ BattleResultView.prototype.enemyCaptiveFail=function(){
 	var seigniorId = self.controller.battleData.toCity.seigniorCharaId();
 	var leaderId = self.enemyLeader;
 	if(calculateHitrateSurrender(seigniorId, charaModel)){//投降
+		console.log("投降");
 		self.surrender(seigniorId, charaModel);
+		self.confirmShow(charaModel,String.format("{0}投降了敌军!",charaModel.name()));
 	}else if(calculateHitrateBehead(leaderId, charaModel)){//斩首
-		
+		console.log("斩首");
+		self.confirmShow(charaModel,String.format("{0}被敌军斩首了!",charaModel.name()));
 	}else if(calculateHitrateRelease(leaderId, charaModel)){//释放
-		
+		console.log("释放");
+		charaModel.moveTo(self.retreatCityId);
+		charaModel.moveTo();
+		self.confirmShow(charaModel,String.format("{0}被敌军释放了!",charaModel.name()));
 	}else{//俘虏
+		console.log("俘虏");
+		self.controller.battleData.toCity.addCaptives(charaModel);
 		self.confirmShow(charaModel,String.format("{0}被敌军俘虏了!",charaModel.name()));
 	}
 };
 BattleResultView.prototype.confirmShow=function(param,message,count){
 	var self = this;
 	var charaModel,type;
-	if(param.constructor.name == "CharacterModel"){
+	if(param && param.constructor.name == "CharacterModel"){
 		charaModel = param;
 	}else{
 		type = param;

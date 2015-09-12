@@ -299,16 +299,19 @@ function calculateHitrateCaptive(chara){
 function calculateHitrateSurrender(seignorId, charaModel){
 	var maxPersonalLoyalty = 15;
 	var personalLoyalty = charaModel.personalLoyalty();
+	console.log(charaModel.name() + ",personalLoyalty="+personalLoyalty);
 	var maxLoyalty = 80;
 	if(maxPersonalLoyalty == personalLoyalty){
 		maxLoyalty = 1;
 	}
+	console.log("maxLoyalty="+maxLoyalty);
 	var surrebderLoyalty = maxLoyalty*personalLoyalty/maxPersonalLoyalty;
 	var loyalty = charaModel.loyalty();
+	console.log("surrebderLoyalty="+surrebderLoyalty  + ",loyalty="+loyalty);
 	if(surrebderLoyalty >= loyalty){
-		return false;
+		return true;
 	}
-	return true;
+	return false;
 }
 /**
  * 斩首概率

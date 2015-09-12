@@ -94,11 +94,14 @@ BattleController.prototype.init = function(){
 	BattleController.timer.addEventListener(LTimerEvent.TIMER, self.showCharacterDetailed);
 
 	self.dispatchEvent(LEvent.COMPLETE);
-	self.dispatchEvent(LController.NOTIFY);
+	
 	var enemyCharas;
 	var enemyPositions;
 	var selfPositions;
+	console.log("seigniorCharaId",self.battleData.fromCity.seigniorCharaId());
+	console.log("LMvc.selectSeignorId",LMvc.selectSeignorId);
 	if(self.battleData.fromCity.seigniorCharaId() == LMvc.selectSeignorId){
+	console.log("self.battleData.toCity",self.battleData.toCity);
 		enemyCharas = getDefenseEnemiesFromCity(self.battleData.toCity);
 		enemyPositions = self.model.map.charas;
 		selfPositions = self.model.map.enemys;
@@ -108,7 +111,7 @@ BattleController.prototype.init = function(){
 			var chara = CharacterModel.getChara(charaId);
 			var maxTroop = chara.maxTroops();
 			if(maxTroop > sumTroops){
-				maxTroop = sumTroops
+				maxTroop = sumTroops;
 			}
 			chara.troops(maxTroop);
 			sumTroops -= maxTroop;
@@ -139,6 +142,7 @@ BattleController.prototype.init = function(){
 		self.view.charaLayer.addCharacterPosition(charaObjs.direction,charaObjs.x,charaObjs.y);
 	}
 	
+	self.dispatchEvent(LController.NOTIFY);
 	/*for(var i = 0;i<self.battleData.expeditionCharacterList.length;i++){
 		var chara = self.battleData.expeditionCharacterList[i];
 		chara.calculation(true);

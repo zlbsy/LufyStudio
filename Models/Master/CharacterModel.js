@@ -96,6 +96,9 @@ CharacterModel.prototype.initTroops = function() {
 CharacterModel.prototype.id = function() {
 	return this.data.id;
 };
+CharacterModel.prototype.personalLoyalty = function() {
+	return this.data.personalLoyalty;
+};
 CharacterModel.prototype.physicalFitness = function(){//体力
 	return this.data.physicalFitness;
 };

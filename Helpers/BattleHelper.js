@@ -215,6 +215,7 @@ function battleEndCheck(belong){
 function getDefenseEnemiesFromCity(city){
 	var generals = city.generals(),result = [];
 	var list = getPowerfulCharacters(generals);
+	console.log("getDefenseEnemiesFromCity list:",list);
 	for(var i=0,l=list.length < BattleMapConfig.DefenseQuantity ? list.length : BattleMapConfig.DefenseQuantity;i<l;i++){
 		result.push(list[i].general);
 	}
@@ -222,6 +223,7 @@ function getDefenseEnemiesFromCity(city){
 }
 function getPowerfulCharacters(generals){
 	var list = [],result = [];
+	console.log("getPowerfulCharacters generals:",generals);
 	for(var i=0,l=generals.length;i<l;i++){
 		var child = generals[i];
 		var data;
