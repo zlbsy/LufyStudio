@@ -28,6 +28,9 @@ SeigniorModel.getSeignior=function(chara_id){
 SeigniorModel.prototype.chara_id = function(){
 	return this.data.chara_id;
 };
+SeigniorModel.prototype.color = function(){
+	return this.data.color;
+};
 /**
  * 城池
  **/

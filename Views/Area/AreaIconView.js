@@ -98,39 +98,13 @@ AreaIconView.prototype.set=function(){
 	self.layer = new LSprite();
 	self.addChild(self.layer);
 	
-	/*var bitmapData = new LBitmapData(LMvc.datalist["area-"+self.areaStatus.img()]);
-	self.iconWidth = bitmapData.width * 0.5;
-	bitmapData.setProperties(0, 0, self.iconWidth, bitmapData.height);
-	var bitmap = new LBitmap(bitmapData);
-	self.icon = bitmap;
-	self.layer.addChild(bitmap);*/
-	
 	self.icon = self.areaStatus.icon();
 	self.width = self.icon.getWidth();
 	self.height = self.icon.getHeight();
 	self.layer.addChild(self.icon);
-	
-	/*
-	var name = new LTextField();
-	name.text = self.areaStatus.name();
-	name.size = 25;
-	name.color = "#FFFFFF";
-	name.lineColor = "#000000";
-	name.stroke = true;
-	name.lineWidth = 4;
-	name.x = (self.icon.getWidth() - name.getWidth())*0.5;
-	name.y = self.icon.getHeight() - name.getHeight();
-	self.layer.addChild(name);*/
-	return;
-	self.lock = new LBitmap(new LBitmapData(LMvc.datalist["lock"]));
-	//self.lock.scaleX = self.lock.scaleY = 0.5;
-	self.lock.x = (self.getWidth() - self.lock.getWidth()) * 0.5;
-	self.lock.y = (self.getHeight() - self.lock.getHeight()) * 0.5;
-	self.addChild(self.lock);
-	self.setLock(self.areaStatus.lock());
 };
-AreaIconView.prototype.setLock = function(value){
+AreaIconView.prototype.resetIcon = function(){
 	var self = this;
-	self.lock.visible = value;
-	self.icon.bitmapData.setCoordinate(value ? self.areaStatus.master().iconWidth() : 0, 0);
+	self.layer.remove();
+	self.set();
 };

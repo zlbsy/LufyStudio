@@ -3,9 +3,6 @@ function AreaModel(controller, data) {
 	base(self, MyModel, [controller]);
 	self.type = "AreaModel";
 	self.data = self.copyProperty(data);
-	if(typeof self.data.color == UNDEFINED){
-		self.data.color = "white";
-	}
 	if(typeof self.data.money == UNDEFINED){
 		self.data.money = 0;
 	}
@@ -85,7 +82,6 @@ AreaModel.prototype.addGenerals = function(param){
 };
 AreaModel.prototype.setSeignor = function(seignior,areaData){
 	this.data.seignior_chara_id = seignior.chara_id;
-	this.data.color = seignior.color;
 	for(var key in areaData){
 		if(typeof areaData[key] == "function"){
 			continue;
@@ -98,34 +94,12 @@ AreaModel.prototype.setSeignor = function(seignior,areaData){
 			}
 			this.data[key] = items;
 			continue;
-		/*}else if(key == "troops"){
-			var troops = areaData[key];
-			for(var j=0;j<troops.length;j++){
-				var troopIndex = this.data.troops.findIndex(function(child){
-					return child.id == troops[j].id;
-				});
-				if(troopIndex >= 0){
-					var troop = this.data.troops[troopIndex];
-					troop.quantity = troops[j].quantity;
-					troop.learned = troops[j].learned;
-				}else{
-					this.data.troops.push(troops[j]);
-				}
-			}
-			continue;*/
 		}else if(key == "generals"){
 			var generals = [];
 			for(var i=0,l=areaData[key].length;i<l;i++){
 				var charaData = areaData[key][i];
 				var chara = CharacterModel.getChara(charaData.chara_id);
 				chara.seignior(seignior.chara_id);
-				/*var identity = "general";
-				if(charaData.chara_id == seignior.chara_id){
-					identity = "monarch";
-				}else if(charaData.chara_id == areaData.prefecture){
-					identity = "prefecture";
-				}
-				chara.identity(identity);*/
 				chara.loyalty(charaData.loyalty);
 				chara.cityId(areaData.area_id);
 				if(charaData.equipments){
@@ -140,7 +114,6 @@ AreaModel.prototype.setSeignor = function(seignior,areaData){
 			for(var i=0,l=areaData[key].length;i<l;i++){
 				var charaData = areaData[key][i];
 				var chara = CharacterModel.getChara(charaData.chara_id);
-				//chara.identity("out_of_office");
 				chara.cityId(areaData.area_id);
 				if(charaData.equipments){
 					chara.equip(charaData.equipments);
@@ -176,17 +149,22 @@ AreaModel.prototype.prefecture=function(){
 	return this.data.prefecture;
 };
 AreaModel.prototype.color = function(){
-	return this.data.color;
+	var self = this;
+	if(!self.seigniorCharaId()){
+		return "white";
+	}
+	return SeigniorModel.getSeignior(self.seigniorCharaId()).color();
 };
 AreaModel.prototype.neighbor = function(){
 	return this.data.neighbor;
 };
 AreaModel.prototype.flag = function(){
 	var self = this;
-	if(self.data.color == "white"){
+	var color = self.color();
+	if(color == "white"){
 		return null;
 	}
-	var bitmapData = new LBitmapData(LMvc.datalist["flag-"+self.color()]);
+	var bitmapData = new LBitmapData(LMvc.datalist["flag-"+color]);
 	return new LBitmap(bitmapData);
 };
 AreaModel.prototype.icon=function(){

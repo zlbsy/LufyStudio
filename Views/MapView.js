@@ -127,3 +127,12 @@ MapView.prototype.ctrlLayerInit=function(){
 	self.ctrlLayer.addChild(buttonClose);
 	self.changeMode(MapController.MODE_MAP);
 };
+MapView.prototype.resetAreaIcon=function(cityId){
+	var self = this;
+	var area = self.areaLayer.childList.find(function(child){
+		return child.areaStatus.id() == cityId;
+	});
+	if(area != null){
+		area.resetIcon();
+	}
+};
