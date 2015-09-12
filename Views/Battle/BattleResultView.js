@@ -76,36 +76,34 @@ BattleResultView.prototype.selectMoveCity=function(){
 };
 BattleResultView.prototype.selectMoveCityRun=function(event){
 	var btnMove = event.currentTarget;
+	console.log("btnMove="+btnMove);
 	btnMove.parent.cityId = btnMove.cityId;
+	console.log("btnMove.parent.cityId="+btnMove.parent.cityId);
 	LTweenLite.to(btnMove.parent,0.3,{y:LGlobal.height,onComplete:function(e){
 		var layer = e.target;
+		console.log("layer="+layer);
 		var self = layer.parent;
+		console.log("self="+self);
 		self.retreatCityId = layer.cityId;
-		console.log("cityId="+cityId);
 		var city = self.controller.battleData.toCity;
-		console.log("city="+city.name());
+		console.log("city="+city);
 		var generals = city.generals();
 		//var neighbor = AreaModel.getArea(cityId);
-		var moveCharas = [];
-		for(var i=0,l=generals.length;i<l;i++){
-			var chara = generals[i];
-			console.log("chara="+chara);
+		var moveCharas = generals.slice();
+		for(var i=0,l=moveCharas.length;i<l;i++){
+			var chara = moveCharas[i];
 			console.log("chara.name="+chara.name());
 			if(self.model.enemyCaptive.find(function(child){
 				return child == chara.id();
 			})){
 				continue;
 			}
-			moveCharas.push(chara);
-		}
-		for(var i=0,l=moveCharas.length;i<l;i++){
-			var chara = moveCharas[i];
 			chara.moveTo(self.retreatCityId);
 			chara.moveTo();
 		}
 		generals.splice(0, generals.length);
 		city.seigniorCharaId(self.winSeigniorId);
-		generals = self.controller.battleData.expeditionEnemyCharacterList;
+		generals = self.controller.battleData.expeditionEnemyCharacterList.slice();
 		for(var i=0,l=generals.length;i<l;i++){
 			var chara = generals[i];
 			chara.moveTo(city.id());
@@ -341,8 +339,12 @@ BattleResultView.prototype.selfCaptiveFail=function(){
 BattleResultView.prototype.cityFail=function(){
 	var self = this;
 	console.log("OVER fail");
+	self.controller.view.remove();
+	LMvc.MapController.view.visible = true;
+	LMvc.MapController.view.changeMode(MapController.MODE_MAP);
 };
 BattleResultView.prototype.cityWin=function(){
 	var self = this;
 	console.log("OVER win");
+	
 };
