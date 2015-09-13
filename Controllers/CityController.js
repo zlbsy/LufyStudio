@@ -75,5 +75,5 @@ CityController.prototype.battleLoadComplete=function(){
 	battleData.fromCity = self.getValue("cityData");
 	battleData.toCity = AreaModel.getArea(self.getValue("toCityId"));
 	var battle = new BattleController(battleData, self);
-	self.view.parent.addChild(battle);
+	LMvc.stageLayer.addChild(battle);
 };

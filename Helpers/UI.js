@@ -34,6 +34,17 @@ function getButton(text,width,img){
 	btn.text = text;
 	return btn;
 }
+function getTranslucentMask(){
+	var layer = new LSprite();
+	var windowBackgrond = getTranslucentBitmap();
+	layer.addChild(windowBackgrond);
+	layer.addEventListener(LMouseEvent.MOUSE_DOWN, function(){});
+	layer.addEventListener(LMouseEvent.MOUSE_UP, function(){});
+	layer.addEventListener(LMouseEvent.MOUSE_MOVE, function(){});
+	layer.addEventListener(LMouseEvent.MOUSE_OVER, function(){});
+	layer.addEventListener(LMouseEvent.MOUSE_OUT, function(){});
+	return layer;
+}
 function getTranslucentBitmap(width,height){
 	var backgroundData = new LBitmapData(LMvc.datalist["translucent"]);
 	var background = new LBitmap(backgroundData);
@@ -46,14 +57,14 @@ function getTranslucentBitmap(width,height){
  */
 function ConfirmWindow(obj){
 	console.log("ConfirmWindow",obj);
-	var windowLayer = new LSprite();
-	var windowBackgrond = getTranslucentBitmap();
+	var windowLayer = getTranslucentMask();
+	/*var windowBackgrond = getTranslucentBitmap();
 	windowLayer.addChild(windowBackgrond);
 	windowLayer.addEventListener(LMouseEvent.MOUSE_DOWN, function(){});
 	windowLayer.addEventListener(LMouseEvent.MOUSE_UP, function(){});
 	windowLayer.addEventListener(LMouseEvent.MOUSE_MOVE, function(){});
 	windowLayer.addEventListener(LMouseEvent.MOUSE_OVER, function(){});
-	windowLayer.addEventListener(LMouseEvent.MOUSE_OUT, function(){});
+	windowLayer.addEventListener(LMouseEvent.MOUSE_OUT, function(){});*/
 	
 	var backgroundData = new LBitmapData(LMvc.datalist["win05"]);
 	if(!obj.width){

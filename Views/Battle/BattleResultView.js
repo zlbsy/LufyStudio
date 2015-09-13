@@ -24,30 +24,6 @@ function BattleResultView(controller, result){
 			var neighbors = city.neighbor();
 			self.retreatCityId = neighbors[neighbors.length*Math.random() >>> 0];
 			self.cityChange(self.model.selfCaptive, self.controller.battleData.expeditionCharacterList);
-			/*var generals = city.generals();
-			var neighbors = city.neighbor();
-			var neighbor = neighbors[neighbors.length*Math.random() >>> 0];
-			self.retreatCityId = neighbor;
-			var moveCharas = generals.slice();
-			for(var i=0,l=moveCharas.length;i<l;i++){
-				var chara = moveCharas[i];
-				if(self.model.selfCaptive.find(function(child){
-					return child == chara.id();
-				})){
-					continue;
-				}
-				chara.moveTo(neighbor);
-				chara.moveTo();
-			}
-			generals.splice(0, generals.length);
-			self.targetSeigniorCharaId = city.seigniorCharaId();
-			city.seigniorCharaId(LMvc.selectSeignorId);
-			generals = controller.battleData.expeditionCharacterList.slice();
-			for(var i=0,l=generals.length;i<l;i++){
-				var chara = generals[i];
-				chara.moveTo(city.id());
-				chara.moveTo();
-			}*/
 		}else{
 			self.failSeigniorId = controller.battleData.fromCity.seigniorCharaId();
 			//nothing
@@ -123,27 +99,6 @@ BattleResultView.prototype.selectMoveCityRun=function(event){
 		var self = layer.parent;
 		self.retreatCityId = layer.cityId;
 		self.cityChange(self.model.enemyCaptive, self.controller.battleData.expeditionEnemyCharacterList);
-		/*var city = self.controller.battleData.toCity;
-		var generals = city.generals();
-		var moveCharas = generals.slice();
-		for(var i=0,l=moveCharas.length;i<l;i++){
-			var chara = moveCharas[i];
-			if(self.model.enemyCaptive.find(function(child){
-				return child == chara.id();
-			})){
-				continue;
-			}
-			chara.moveTo(self.retreatCityId);
-			chara.moveTo();
-		}
-		generals.splice(0, generals.length);
-		city.seigniorCharaId(self.winSeigniorId);
-		generals = self.controller.battleData.expeditionEnemyCharacterList.slice();
-		for(var i=0,l=generals.length;i<l;i++){
-			var chara = generals[i];
-			chara.moveTo(city.id());
-			chara.moveTo();
-		}*/
 		layer.remove();
 		self.enemyCaptiveFail();
 	}});
@@ -395,6 +350,5 @@ BattleResultView.prototype.showMap=function(){
 	LMvc.MapController.view.visible = true;
 	LMvc.MapController.view.changeMode(MapController.MODE_MAP);
 	LMvc.MapController.view.resetAreaIcon(cityId);
-	LMvc.MapController.checkSeignior(self.failSeigniorId);return;
-	
+	LMvc.MapController.checkSeigniorFail(self.failSeigniorId);
 };

@@ -50,9 +50,9 @@ SeigniorModel.prototype.areas = function(){
 SeigniorModel.prototype.addCity = function(area){
 	this.data.areas.push(area);
 };
-SeigniorModel.prototype.removeCity = function(area){
+SeigniorModel.prototype.removeCity = function(areaId){
 	var index = this.data.areas.findIndex(function(child){
-		return child.id() == area.id();
+		return child.id() == areaId;
 	});
 	this.data.areas.splice(index, 1);
 };

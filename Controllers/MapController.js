@@ -95,11 +95,29 @@ MapController.prototype.returnToCity=function(cityId){
     console.log("LMvc.CityController._eventList",LMvc.CityController._eventList);
 	LMvc.CityController.dispatchEvent(event);
 };
-MapController.prototype.checkSeignior=function(seigniorId){
+MapController.prototype.checkSeigniorFail=function(seigniorId){
 	var self = this;
 	var seignior = SeigniorModel.getSeignior(seigniorId);
 	if(seignior.areas().length > 0){
 		return;
 	}
+	self.removeSeigniorId = seigniorId;
 	SeigniorModel.removeSeignior(seigniorId);
+	self.load.view(["Seignior/Perish"],self.seigniorPerish);
+};
+MapController.prototype.seigniorPerish=function(){
+	var self = this;
+	var charaId = self.removeSeigniorId;
+	self.removeSeigniorId = null;
+	var perishView = new PerishView(self,charaId);
+	self.view.addChild(perishView);
+};
+MapController.prototype.checkSeigniorWin=function(){
+	var self = this;
+	for(var i=0,l=SeigniorModel.list.length;i<l;i++){
+		var seignior = SeigniorModel.list[i];
+		if(seignior.chara_id() == LMvc.selectSeignorId){
+			
+		}
+	}
 };
