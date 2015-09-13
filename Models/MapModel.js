@@ -42,10 +42,13 @@ MapModel.prototype.getAreaDataComplete=function(){
 	for(var i=0,l=data.seigniors.length;i<l;i++){
 		var seignior = data.seigniors[i];
 		var areas = seignior.areas;
+		var areaList = [];
 		areas.forEach(function(child){
 			var area = AreaModel.getArea(child.area_id);
 			area.setSeignor(seignior,child);
+			areaList.push(area);
 		});
+		seignior.areas = areaList;
 	}
 	var callback = self.callback;
 	delete self.callback;

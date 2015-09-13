@@ -25,6 +25,16 @@ SeigniorModel.getSeignior=function(chara_id){
 	}
 	return null;
 };
+SeigniorModel.removeSeignior = function(seigniorId){
+	var self = this;
+	for(var i=0,l=SeigniorModel.list.length;i<l;i++){
+		var seignior = SeigniorModel.list[i];
+		if(seignior.chara_id() == seigniorId){
+			SeigniorModel.list.splice(i, 1);
+			break;
+		}
+	}
+};
 SeigniorModel.prototype.chara_id = function(){
 	return this.data.chara_id;
 };
@@ -36,6 +46,15 @@ SeigniorModel.prototype.color = function(){
  **/
 SeigniorModel.prototype.areas = function(){
 	return this.data.areas;
+};
+SeigniorModel.prototype.addCity = function(area){
+	this.data.areas.push(area);
+};
+SeigniorModel.prototype.removeCity = function(area){
+	var index = this.data.areas.findIndex(function(child){
+		return child.id() == area.id();
+	});
+	this.data.areas.splice(index, 1);
 };
 /**
  * 武将

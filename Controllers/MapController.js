@@ -95,3 +95,11 @@ MapController.prototype.returnToCity=function(cityId){
     console.log("LMvc.CityController._eventList",LMvc.CityController._eventList);
 	LMvc.CityController.dispatchEvent(event);
 };
+MapController.prototype.checkSeignior=function(seigniorId){
+	var self = this;
+	var seignior = SeigniorModel.getSeignior(seigniorId);
+	if(seignior.areas().length > 0){
+		return;
+	}
+	SeigniorModel.removeSeignior(seigniorId);
+};
