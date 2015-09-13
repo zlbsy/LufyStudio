@@ -21,7 +21,10 @@ function BattleResultView(controller, result){
 			//self change city
 			console.log("self change city");
 			var city = controller.battleData.toCity;
-			var generals = city.generals();
+			var neighbors = city.neighbor();
+			self.retreatCityId = neighbors[neighbors.length*Math.random() >>> 0];
+			self.cityChange(self.model.selfCaptive, self.controller.battleData.expeditionCharacterList);
+			/*var generals = city.generals();
 			var neighbors = city.neighbor();
 			var neighbor = neighbors[neighbors.length*Math.random() >>> 0];
 			self.retreatCityId = neighbor;
@@ -44,7 +47,7 @@ function BattleResultView(controller, result){
 				var chara = generals[i];
 				chara.moveTo(city.id());
 				chara.moveTo();
-			}
+			}*/
 		}else{
 			self.failSeigniorId = controller.battleData.fromCity.seigniorCharaId();
 			//nothing
@@ -84,25 +87,43 @@ BattleResultView.prototype.selectMoveCity=function(){
 	var fromSeignior = CharacterModel.getChara(fromSeigniorCharaId);
 	self.confirmShow("MoveCity",String.format(city.generals().length > self.model.enemyCaptive.length ? "{0}被{1}军占领了，撤往哪里？" : "{0}被{1}军占领了!",city.name(),fromSeignior.name()));
 };
+BattleResultView.prototype.cityChange=function(captiveList, expeditionList){
+	var self = this;
+	var city = self.controller.battleData.toCity;
+	var generals = city.generals();
+	var moveCharas = generals.slice();
+	for(var i=0,l=moveCharas.length;i<l;i++){
+		var chara = moveCharas[i];
+		if(captiveList.find(function(child){
+			return child == chara.id();
+		})){
+			continue;
+		}
+		chara.moveTo(self.retreatCityId);
+		chara.moveTo();
+	}
+	generals.splice(0, generals.length);
+	city.seigniorCharaId(self.winSeigniorId);
+	generals = expeditionList.slice();
+	for(var i=0,l=generals.length;i<l;i++){
+		var chara = generals[i];
+		chara.moveTo(city.id());
+		chara.moveTo();
+	}
+};
 BattleResultView.prototype.selectMoveCityRun=function(event){
 	var btnMove = event.currentTarget;
-	console.log("btnMove="+btnMove);
 	btnMove.parent.cityId = btnMove.cityId;
-	console.log("btnMove.parent.cityId="+btnMove.parent.cityId);
 	LTweenLite.to(btnMove.parent,0.3,{y:LGlobal.height,onComplete:function(e){
 		var layer = e.target;
-		console.log("layer="+layer);
 		var self = layer.parent;
-		console.log("self="+self);
 		self.retreatCityId = layer.cityId;
-		var city = self.controller.battleData.toCity;
-		console.log("city="+city);
+		self.cityChange(self.model.enemyCaptive, self.controller.battleData.expeditionEnemyCharacterList);
+		/*var city = self.controller.battleData.toCity;
 		var generals = city.generals();
-		//var neighbor = AreaModel.getArea(cityId);
 		var moveCharas = generals.slice();
 		for(var i=0,l=moveCharas.length;i<l;i++){
 			var chara = moveCharas[i];
-			console.log("chara.name="+chara.name());
 			if(self.model.enemyCaptive.find(function(child){
 				return child == chara.id();
 			})){
@@ -118,7 +139,7 @@ BattleResultView.prototype.selectMoveCityRun=function(event){
 			var chara = generals[i];
 			chara.moveTo(city.id());
 			chara.moveTo();
-		}
+		}*/
 		layer.remove();
 		self.enemyCaptiveFail();
 	}});
@@ -263,19 +284,19 @@ BattleResultView.prototype.confirmShow=function(param,message,count){
 		layer.addChild(btnBehead);
 		btnBehead.addEventListener(LMouseEvent.MOUSE_UP, self.captiveCheck);
 	}else if(type == "MoveCity" && self.controller.battleData.toCity.generals().length > self.model.enemyCaptive.length){
-			var neighbors = self.controller.battleData.toCity.neighbor();
-			for(var i=0,l=neighbors.length;i<l;i++){
-				var neighbor = AreaModel.getArea(neighbors[i]);
-				if(neighbor.seigniorCharaId() != LMvc.selectSeignorId){
-					continue;
-				}
-				var btnMoveTo = getButton(neighbor.name(),100);
-				btnMoveTo.x = windowPanel.getWidth()*0.5 - 120 + (i % 2)*140;
-				btnMoveTo.y = 60 + (i/2 >> 0)*50;
-				btnMoveTo.cityId = neighbor.id();
-				layer.addChild(btnMoveTo);
-				btnMoveTo.addEventListener(LMouseEvent.MOUSE_UP, self.selectMoveCityRun);
+		var neighbors = self.controller.battleData.toCity.neighbor();
+		for(var i=0,l=neighbors.length;i<l;i++){
+			var neighbor = AreaModel.getArea(neighbors[i]);
+			if(neighbor.seigniorCharaId() != LMvc.selectSeignorId){
+				continue;
 			}
+			var btnMoveTo = getButton(neighbor.name(),100);
+			btnMoveTo.x = windowPanel.getWidth()*0.5 - 120 + (i % 2)*140;
+			btnMoveTo.y = 60 + (i/2 >> 0)*50;
+			btnMoveTo.cityId = neighbor.id();
+			layer.addChild(btnMoveTo);
+			btnMoveTo.addEventListener(LMouseEvent.MOUSE_UP, self.selectMoveCityRun);
+		}
 	}else{
 		var btnOk = getButton("OK",100);
 		btnOk.x = (windowPanel.getWidth() - btnOk.getWidth())*0.5;
@@ -284,7 +305,7 @@ BattleResultView.prototype.confirmShow=function(param,message,count){
 		btnOk.addEventListener(LMouseEvent.MOUSE_UP, self.confirmHidden);
 	}
 	
-	LTweenLite.to(layer,0.3,{y:(LGlobal.height - windowPanel.getHeight()) * 0.5}) 
+	LTweenLite.to(layer,0.3,{y:(LGlobal.height - windowPanel.getHeight()) * 0.5});
 };
 BattleResultView.prototype.captiveCheck=function(event){
 	console.log("captiveCheck");
@@ -293,14 +314,11 @@ BattleResultView.prototype.captiveCheck=function(event){
 	layer.name = btn.name;
 	LTweenLite.to(layer,0.3,{y:LGlobal.height,onComplete:function(e){
 		var layer = e.target;
-		console.log("layer="+layer);
 		var self = layer.parent;
-		console.log("self="+self);
 		var name = layer.name;
-		console.log("name="+name);
 		layer.remove();
 		self.captiveCheckRun(name);
-	}}) 
+	}});
 };
 BattleResultView.prototype.captiveCheckRun=function(name){
 	var self = this;
@@ -310,9 +328,10 @@ BattleResultView.prototype.captiveCheckRun=function(name){
 	var script;
 	if(name == "Surrender"){//投降
 		if(calculateHitrateSurrender(LMvc.selectSeignorId, charaModel)){
-			self.surrender(seigniorId, charaModel);
+			self.surrender(LMvc.selectSeignorId, charaModel);
 			script = "SGJTalk.show(" + charaModel.id() + ",0,愿效犬马之力!);";
 			script += "SGJBattleResult.selfCaptiveWin();";
+			self.model.selfCaptive.splice(0, 1);
 		}else{
 			script = "SGJTalk.show(" + charaModel.id() + ",0,少废话!忠臣不事二主!);";
 			script += "SGJBattleResult.selfCaptiveWin(1);";
