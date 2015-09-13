@@ -8,12 +8,10 @@ function BattleResultView(controller, result){
 	//var from = self.controller.battleData.fromCity;
 	//self.controller.battleData.fromCity = self.controller.battleData.toCity;
 	//self.controller.battleData.toCity = from;
-	self.model.enemyList[0].isLeader = true;
+	//self.model.enemyList[0].isLeader = true;
 	//TODO:test code end
+		
 	
-	self.enemyLeader = self.model.enemyList.find(function(child){
-		return child.isLeader;
-	});
 	if(result){
 		self.winSeigniorId = LMvc.selectSeignorId;
 		if(controller.battleData.fromCity.seigniorCharaId() == LMvc.selectSeignorId){
@@ -32,6 +30,9 @@ function BattleResultView(controller, result){
 		self.showWin();
 		self.selfCaptiveWin();
 	}else{
+		self.enemyLeader = self.model.enemyList.find(function(child){
+			return child.isLeader;
+		});
 		self.showFail();
 		self.failSeigniorId = LMvc.selectSeignorId;
 		if(controller.battleData.fromCity.seigniorCharaId() == LMvc.selectSeignorId){
@@ -79,9 +80,11 @@ BattleResultView.prototype.cityChange=function(captiveList, expeditionList){
 		chara.moveTo();
 	}
 	generals.splice(0, generals.length);
-	var seigniorFail = SeigniorModel.getSeignior(self.failSeigniorId);
+	if(self.failSeigniorId){
+		var seigniorFail = SeigniorModel.getSeignior(self.failSeigniorId);
+		seigniorFail.removeCity(city.id());
+	}
 	var seigniorWin = SeigniorModel.getSeignior(self.winSeigniorId);
-	seigniorFail.removeCity(city.id());
 	seigniorWin.addCity(city.id());
 	city.seigniorCharaId(self.winSeigniorId);
 	generals = expeditionList.slice();
@@ -336,12 +339,44 @@ BattleResultView.prototype.selfCaptiveFail=function(){
 BattleResultView.prototype.cityFail=function(){
 	var self = this;
 	console.log("OVER fail");
-	self.showMap();
+	if(!self.end){
+		self.end = true;
+		var message;
+		var seignior = CharacterModel.getChara(self.winSeigniorId);
+		var cityName = self.controller.battleData.toCity.name();
+		if(self.controller.battleData.fromCity.seigniorCharaId() == LMvc.selectSeignorId){
+			message = String.format("我军攻占{0}军的{1}失败了!",seignior.name(),cityName);
+		}else{
+			message = String.format("我军的{0}被{1}军攻占了!",cityName,seignior.name());
+		}
+		self.confirmShow(null,message);
+	}else{
+		self.showMap();
+	}
 };
 BattleResultView.prototype.cityWin=function(){
 	var self = this;
 	console.log("OVER win");
-	self.showMap();
+	if(!self.end){
+		self.end = true;
+		var message;
+		
+		var cityName = self.controller.battleData.toCity.name();
+		if(self.controller.battleData.fromCity.seigniorCharaId() == LMvc.selectSeignorId){
+			if(!self.failSeigniorId){
+				message = String.format("我军攻占了{0}!",cityName);
+			}else{
+				var seignior = CharacterModel.getChara(self.failSeigniorId);
+				message = String.format("我军攻占了{0}军的{1}!",seignior.name(),cityName);
+			}
+		}else{
+			var seignior = CharacterModel.getChara(self.failSeigniorId);
+			message = String.format("我军在{0}击退了{1}军的进攻!",cityName,seignior.name());
+		}
+		self.confirmShow(null,message);
+	}else{
+		self.showMap();
+	}
 };
 BattleResultView.prototype.showMap=function(){
 	var self = this;
@@ -350,5 +385,9 @@ BattleResultView.prototype.showMap=function(){
 	LMvc.MapController.view.visible = true;
 	LMvc.MapController.view.changeMode(MapController.MODE_MAP);
 	LMvc.MapController.view.resetAreaIcon(cityId);
-	LMvc.MapController.checkSeigniorFail(self.failSeigniorId);
+	if(self.failSeigniorId){
+		LMvc.MapController.checkSeigniorFail(self.failSeigniorId);
+	}else{
+		LMvc.MapController.checkSeigniorWin();
+	}
 };

@@ -11,6 +11,13 @@ BattleView.prototype.init=function(){
 	self.layerInit();
 	self.mapLayerInit();
 	//self.buildLayerInit();
+	var battleData = self.controller.battleData;
+	var city = battleData.toCity;
+	if(city.seigniorCharaId() == 0 || city.troops() == 0 || city.generals() == 0){
+		self.showResult(battleData.fromCity.seigniorCharaId() == LMvc.selectSeignorId);
+		return;
+	}
+	
 	//地图点击事件
 	self.baseLayer.addEventListener(LMouseEvent.MOUSE_DOWN, self.controller.mapMouseDown);
 	self.baseLayer.addEventListener(LMouseEvent.MOUSE_UP, self.controller.mapMouseUp);
@@ -150,6 +157,10 @@ BattleView.prototype.updateView = function(){
 	self.model.selfCaptive.push(24);
 	self.model.selfCaptive.push(25);
 	self.model.selfCaptive.push(26);
-	var r = new BattleResultView(self.controller, true);
+	self.showResult(true);
+};
+BattleView.prototype.showResult = function(result){
+	var self = this;
+	var r = new BattleResultView(self.controller, result);
 	self.addChild(r);
 };

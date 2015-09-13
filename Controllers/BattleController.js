@@ -94,14 +94,14 @@ BattleController.prototype.init = function(){
 	BattleController.timer.addEventListener(LTimerEvent.TIMER, self.showCharacterDetailed);
 
 	self.dispatchEvent(LEvent.COMPLETE);
-	
+	if(self.battleData.toCity.seigniorCharaId() == 0 || self.battleData.toCity.troops() == 0 || 
+		self.battleData.toCity.generals() == 0){
+		return;
+	}
 	var enemyCharas;
 	var enemyPositions;
 	var selfPositions;
-	console.log("seigniorCharaId",self.battleData.fromCity.seigniorCharaId());
-	console.log("LMvc.selectSeignorId",LMvc.selectSeignorId);
 	if(self.battleData.fromCity.seigniorCharaId() == LMvc.selectSeignorId){
-	console.log("self.battleData.toCity",self.battleData.toCity);
 		enemyCharas = getDefenseEnemiesFromCity(self.battleData.toCity);
 		enemyPositions = self.model.map.charas;
 		selfPositions = self.model.map.enemys;
