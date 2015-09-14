@@ -1,6 +1,9 @@
 function ExpeditionReadyView(controller){
 	var self = this;
 	base(self,LView,[controller]);
+	self.selectFood = 0;
+	self.selectMoney = 0;
+	self.selectTroops = 0;
 	self.set();
 }
 ExpeditionReadyView.prototype.set=function(img,name){
@@ -105,11 +108,7 @@ ExpeditionReadyView.prototype.getData=function(event){
 	var cityModel = self.controller.getValue("cityData");
 	var troops = cityModel.troops();
 	cityModel.troops(troops - obj.troops);
-	/*for(var i=0;i<troops.length;i++){
-		readyArms.push({id:troops[i].id,quantity:troops[i].readyQuantity});
-		troops[i].quantity -= troops[i].readyQuantity;
-		troops[i].readyQuantity = 0;
-	}
-	obj.readyArms = readyArms;*/
+	cityModel.food(-obj.food);
+	cityModel.money(-obj.money);
 	return obj;
 };
