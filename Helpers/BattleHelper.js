@@ -241,6 +241,18 @@ function getPowerfulCharacters(generals){
 	list = list.sort(function(a,b){return a.value - b.value;});
 	return list;
 }
+function battleFoodCheck(belong){
+	
+	if(belong == Belong.SELF){
+		
+	}else if(belong == Belong.ENEMY){
+		
+	}
+var script = "SGJTalk.show(" + chara.data.id() + ",0," + Language.get("leader_change_talk") + ");";
+				script += "SGJBattleCharacter.battleEndCheck("+belong+");";
+				LGlobal.script.addScript(script);
+	
+}
 if (!Array.getRandomArrays){
 	Array.getRandomArrays = function(list,num){
 		var result = [], length = list.length < num ? list.length : num;

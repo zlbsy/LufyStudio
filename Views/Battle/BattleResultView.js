@@ -448,6 +448,9 @@ BattleResultView.prototype.showMap=function(){
 	LMvc.MapController.view.visible = true;
 	LMvc.MapController.view.changeMode(MapController.MODE_MAP);
 	LMvc.MapController.view.resetAreaIcon(cityId);
+	if(self.retreatCityId){
+		LMvc.MapController.view.resetAreaIcon(self.retreatCityId);
+	}
 	if(self.failSeigniorId){
 		LMvc.MapController.checkSeigniorFail(self.failSeigniorId);
 	}else{
