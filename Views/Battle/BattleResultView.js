@@ -45,6 +45,17 @@ function BattleResultView(controller, result){
 					self.expeditionMove(city, self.retreatCity);
 				}
 				self.cityChange(self.model.selfCaptive, battleData.expeditionCharacterList);
+				//敌方太守
+				if(self.retreatCity && self.retreatCity.prefecture() <= 0){
+					var enemyCharas = getDefenseEnemiesFromCity(self.retreatCity);
+					self.retreatCity.prefecture(enemyCharas[0].id());
+				}
+				//己方太守
+				var selfCharas = LMvc.BattleController.view.charaLayer.getCharactersFromBelong(Belong.SELF);
+				var chara = selfCharas.find(function(child){
+					return child.isLeader;
+				});
+				city.prefecture(chara.data.id());
 			}
 		}else{
 			self.failSeigniorId = controller.battleData.fromCity.seigniorCharaId();

@@ -215,6 +215,18 @@ function battleEndCheck(belong){
 function getDefenseEnemiesFromCity(city){
 	var generals = city.generals(),result = [];
 	var list = getPowerfulCharacters(generals);
+	var index = list.findIndex(function(child){
+		return child.general.id() == city.seigniorCharaId();
+	});
+	if(index < 0){
+		index = list.findIndex(function(child){
+			return child.general.id() == city.prefecture();
+		});
+	}
+	if(index >= 0){
+		var chara = list.splice(index,1)[0];
+		list.unshift(chara);
+	}
 	console.log("getDefenseEnemiesFromCity list:",list);
 	for(var i=0,l=list.length < BattleMapConfig.DefenseQuantity ? list.length : BattleMapConfig.DefenseQuantity;i<l;i++){
 		result.push(list[i].general);
@@ -242,16 +254,44 @@ function getPowerfulCharacters(generals){
 	return list;
 }
 function battleFoodCheck(belong){
-	
-	if(belong == Belong.SELF){
-		
-	}else if(belong == Belong.ENEMY){
-		
+	var battleData = LMvc.BattleController.battleData;
+	var charas = LMvc.BattleController.view.charaLayer.getCharactersFromBelong(belong);
+	var needFood = 0;
+	for(var i=0,l=charas.length;i<l;i++){
+		needFood += charas[i].data.troops();
 	}
-var script = "SGJTalk.show(" + chara.data.id() + ",0," + Language.get("leader_change_talk") + ");";
-				script += "SGJBattleCharacter.battleEndCheck("+belong+");";
-				LGlobal.script.addScript(script);
+	var cityFood = (belong == Belong.SELF && battleData.fromCity.seigniorCharaId() != LMvc.selectSeignorId) || 
+		(belong == Belong.ENEMY && battleData.fromCity.seigniorCharaId() == LMvc.selectSeignorId);
+	if(cityFood){
+		console.log("cityFood ",battleData.toCity.food() +">"+ needFood);
+		if(battleData.toCity.food() > needFood){
+			battleData.toCity.food(-needFood);
+			return true;
+		}
+		battleData.toCity.food(-battleData.toCity.food());
+	}else{
+		needFood += (battleData.troops * 0.5 >>> 0);
+		console.log("food ",battleData.food +">"+ needFood);
+		if(battleData.food > needFood){
+			battleData.food -= needFood;
+			return true;
+		}
+		battleData.food = 0;
+	}
 	
+	charas.forEach(function(child){
+		child.status.downloadAidStatusRandom();
+	});
+	var chara;
+	for(var i=0,l=charas.length;i<l;i++){
+		if(charas[i].isLeader){
+			chara = charas[i];
+			break;
+		}
+	}
+	var script = "SGJTalk.show(" + chara.data.id() + ",0,糟糕！没有兵粮了，士兵的战斗力开始下降了。);";
+	script += "SGJBattleCharacter.boutSkillRun("+belong+");";
+	LGlobal.script.addScript(script);
 }
 if (!Array.getRandomArrays){
 	Array.getRandomArrays = function(list,num){

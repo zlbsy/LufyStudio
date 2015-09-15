@@ -103,6 +103,7 @@ BattleController.prototype.init = function(){
 	var selfPositions;
 	if(self.battleData.fromCity.seigniorCharaId() == LMvc.selectSeignorId){
 		enemyCharas = getDefenseEnemiesFromCity(self.battleData.toCity);
+		enemyCharas[0].isLeader = true;
 		enemyPositions = self.model.map.charas;
 		selfPositions = self.model.map.enemys;
 		var sumTroops = self.battleData.toCity.troops();
@@ -142,7 +143,9 @@ BattleController.prototype.init = function(){
 		self.view.charaLayer.addCharacterPosition(charaObjs.direction,charaObjs.x,charaObjs.y);
 	}
 	
-	self.dispatchEvent(LController.NOTIFY);
+	//self.dispatchEvent(LController.NOTIFY);
+	
+	
 	/*for(var i = 0;i<self.battleData.expeditionCharacterList.length;i++){
 		var chara = self.battleData.expeditionCharacterList[i];
 		chara.calculation(true);

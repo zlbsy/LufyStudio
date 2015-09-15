@@ -1802,9 +1802,16 @@ LSGJBattleCharacterScript.analysis = function(value) {
 		case "SGJBattleCharacter.battleEndCheck":
 			LSGJBattleCharacterScript.battleEndCheck(value, start, end);
 			break;
+		case "SGJBattleCharacter.boutSkillRun":
+			LSGJBattleCharacterScript.boutSkillRun(value, start, end);
+			break;
 		default:
 			LGlobal.script.analysis();
 	}
+};
+LSGJBattleCharacterScript.boutSkillRun = function(value, start, end) {
+	var params = value.substring(start + 1, end).split(",");
+	LMvc.BattleController.view.charaLayer.boutSkillRun(params[0], BattleIntelligentAI.execute);
 };
 LSGJBattleCharacterScript.battleEndCheck = function(value, start, end) {
 	var params = value.substring(start + 1, end).split(",");

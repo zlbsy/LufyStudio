@@ -145,8 +145,8 @@ AreaModel.prototype.seigniorCharaId=function(seigniorCharaId){
 AreaModel.prototype.seignior_chara_id=function(){
 	return this.seigniorCharaId();
 };
-AreaModel.prototype.prefecture=function(){
-	return this.data.prefecture;
+AreaModel.prototype.prefecture=function(value){
+	return this._dataValue("prefecture", value, 0);
 };
 AreaModel.prototype.color = function(){
 	var self = this;
