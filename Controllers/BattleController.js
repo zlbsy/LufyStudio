@@ -93,11 +93,14 @@ BattleController.prototype.init = function(){
 	BattleController.timer.removeAllEventListener();
 	BattleController.timer.addEventListener(LTimerEvent.TIMER, self.showCharacterDetailed);
 
-	self.dispatchEvent(LEvent.COMPLETE);
+	
 	if(self.battleData.toCity.seigniorCharaId() == 0 || self.battleData.toCity.troops() == 0 || 
-		self.battleData.toCity.generals() == 0){
+		self.battleData.toCity.generalsSum() == 0){
+		self.noBattle = true;
+		self.dispatchEvent(LEvent.COMPLETE);
 		return;
 	}
+	self.dispatchEvent(LEvent.COMPLETE);
 	var enemyCharas;
 	var enemyPositions;
 	var selfPositions;

@@ -19,7 +19,7 @@ function BattleResultView(controller, result){
 			//self change city
 			console.log("self change city");
 			var city = battleData.toCity;
-			if(city.seigniorCharaId() > 0){
+			if(city.seigniorCharaId() > 0 && city.generalsSum() > self.model.selfCaptive.length){
 				var neighbors = city.neighbor();
 				var enemyCitys = [];
 				var canMoveCitys = [];
@@ -44,19 +44,28 @@ function BattleResultView(controller, result){
 					self.retreatCityId = self.retreatCity.id();
 					self.expeditionMove(city, self.retreatCity);
 				}
-				self.cityChange(self.model.selfCaptive, battleData.expeditionCharacterList);
-				//敌方太守
-				if(self.retreatCity && self.retreatCity.prefecture() <= 0){
-					var enemyCharas = getDefenseEnemiesFromCity(self.retreatCity);
-					self.retreatCity.prefecture(enemyCharas[0].id());
-				}
-				//己方太守
-				var selfCharas = LMvc.BattleController.view.charaLayer.getCharactersFromBelong(Belong.SELF);
+			}
+			console.log("cityChange start");
+			self.cityChange(self.model.selfCaptive, battleData.expeditionCharacterList);
+			console.log("cityChange over");
+			//敌方太守
+			if(self.retreatCity){
+				var enemyCharas = getDefenseEnemiesFromCity(self.retreatCity);
+				self.retreatCity.prefecture(enemyCharas[0].id());
+			}
+			console.log("敌方太守 over");
+			//己方太守
+			if(self.controller.noBattle){
+				city.prefecture(battleData.expeditionLeader.id());
+			}else{
+				var selfCharas = self.controller.view.charaLayer.getCharactersFromBelong(Belong.SELF);
 				var chara = selfCharas.find(function(child){
 					return child.isLeader;
 				});
+				console.log("chara="+chara);
 				city.prefecture(chara.data.id());
 			}
+			console.log("己方太守 over");
 		}else{
 			self.failSeigniorId = controller.battleData.fromCity.seigniorCharaId();
 			//nothing
