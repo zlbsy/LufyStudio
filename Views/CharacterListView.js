@@ -347,7 +347,7 @@ CharacterListView.prototype.showList=function(){
 	}
 	self.listChildLayer.graphics.drawRect(0, "#000000", [0, 0, LGlobal.width - 30, scHeight]);
 	var sc = new LScrollbar(self.listChildLayer, LGlobal.width - 20, listHeight - 30, 10, false);
-	sc._showLayer.graphics.clear();
+	//sc._showLayer.graphics.clear();
 	sc.y = 15;
 	self.contentLayer.addChild(sc);
 	sc.excluding = true;
