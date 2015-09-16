@@ -22,7 +22,11 @@ var SkillType = {
 	/**
 	 * 数据生成时
 	 **/
-	CREATE:"create"
+	CREATE:"create",
+	/**
+	 * 特定时刻，被动调用
+	 **/
+	NULL:"null"
 };
 var SkillSubType = {
 	/**
@@ -61,6 +65,30 @@ var SkillSubType = {
 	 * 恶路(移动时无视地形)
 	 **/
 	MOVE_KNOW:"move_know",
+	/**
+	 * 节约(兵粮消耗减半)
+	 **/
+	THRIFT:"thrift",
+	/**
+	 * 商业
+	 **/
+	BUSINESS:"business",
+	/**
+	 * 农业
+	 **/
+	AGRICULTURE:"agriculture",
+	/**
+	 * 技术
+	 **/
+	TECHNOLOGY:"technology",
+	/**
+	 * 治安
+	 **/
+	POLICE:"police",
+	/**
+	 * 招募
+	 **/
+	ENLIST:"enlist",
 };
 var SkillsData = [
 {id:1,name:"雷霆怒击(张飞)",type:SkillType.ATTACK,subType:[SkillSubType.ATTACK_COUNT],attacks:[1,1,1],probability:50,explanation:"{probability}几率连续攻击三次。"},
@@ -107,11 +135,11 @@ var SkillsData = [
 {id:41,name:"逆击(华雄)",type:SkillType.BOUT_START,subType:[SkillSubType.SELF_AID],aids:[5],aidCount:1,aidRects:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],probability:100,explanation:"{probability}几率反击两次。"},
 {id:42,name:"大喝(关兴)",type:SkillType.BOUT_START,subType:[SkillSubType.SELF_AID],aids:[5],aidCount:1,aidRects:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],probability:100,explanation:"{probability}几率1.5倍暴击，大喝的强大气势令敌军无法反击。"},
 {id:43,name:"冲锋(张苞)",type:SkillType.BOUT_START,subType:[SkillSubType.SELF_AID],aids:[5],aidCount:1,aidRects:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],probability:100,explanation:"{probability}几率1.5倍暴击，附带穿透效果。"},
-{id:44,name:"节粮(马良)",type:SkillType.BOUT_START,subType:[SkillSubType.SELF_AID],aids:[5],aidCount:1,aidRects:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],probability:100,explanation:"战斗中兵粮消耗减半。"},
-{id:45,name:"商业(糜竺)",type:SkillType.BOUT_START,subType:[SkillSubType.SELF_AID],aids:[5],aidCount:1,aidRects:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],probability:100,explanation:"内政商业加成。"},
-{id:46,name:"技术(伊籍)",type:SkillType.BOUT_START,subType:[SkillSubType.SELF_AID],aids:[5],aidCount:1,aidRects:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],probability:100,explanation:"内政技术加成。"},
-{id:47,name:"农业(简雍)",type:SkillType.BOUT_START,subType:[SkillSubType.SELF_AID],aids:[5],aidCount:1,aidRects:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],probability:100,explanation:"内政农业加成。"},
-{id:48,name:"征兵(陈到)",type:SkillType.BOUT_START,subType:[SkillSubType.SELF_AID],aids:[5],aidCount:1,aidRects:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],probability:100,explanation:"内政征兵加成。"},
+{id:44,name:"节粮(马良)",type:SkillType.NULL,subType:[SkillSubType.THRIFT],explanation:"粮食消耗减半。"},
+{id:45,name:"商业(糜竺)",type:SkillType.NULL,subType:[SkillSubType.BUSINESS],explanation:"内政商业加成。"},
+{id:46,name:"技术(伊籍)",type:SkillType.NULL,subType:[SkillSubType.TECHNOLOGY],explanation:"内政技术加成。"},
+{id:47,name:"农业(简雍)",type:SkillType.NULL,subType:[SkillSubType.AGRICULTURE],explanation:"内政农业加成。"},
+{id:48,name:"征兵(陈到)",type:SkillType.NULL,subType:[SkillSubType.ENLIST],explanation:"内政征兵加成。"},
 {id:49,name:"顽强(周泰)",type:SkillType.BOUT_START,subType:[SkillSubType.SELF_AID],aids:[5],aidCount:1,aidRects:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],probability:100,explanation:"士兵越少防御越高。"},
 {id:50,name:"死战(凌统)",type:SkillType.BOUT_START,subType:[SkillSubType.SELF_AID],aids:[5],aidCount:1,aidRects:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],probability:100,explanation:"士兵越少攻击越高。"},
 {id:51,name:"顺势(程普)",type:SkillType.BOUT_START,subType:[SkillSubType.SELF_AID],aids:[5],aidCount:1,aidRects:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],probability:30,explanation:"致命一击发动时有几率将攻击提高一倍。"},
@@ -130,4 +158,5 @@ var SkillsData = [
 {id:64,name:"借力(蔡文姬)",type:SkillType.BOUT_START,subType:[SkillSubType.SELF_AID],aids:[5],aidCount:1,aidRects:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],probability:30,explanation:"有几率在反击时借用对方的攻击力。"},
 {id:65,name:"熟路(吕凯)",type:SkillType.BOUT_START,subType:[SkillSubType.SELF_AID],aids:[5],aidCount:1,aidRects:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],probability:30,explanation:"所有地形消耗1点移动力。"},
 {id:66,name:"反客为主(孙坚)",type:SkillType.BOUT_START,subType:[SkillSubType.SELF_AID],aids:[5],aidCount:1,aidRects:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],probability:30,explanation:"几率反击时给予敌军主动攻击的伤害值。"},
+{id:67,name:"治安(刘封)",type:SkillType.NULL,subType:[SkillSubType.POLICE],explanation:"内政治安加成。"},
 ];

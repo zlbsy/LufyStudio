@@ -257,12 +257,18 @@ function battleFoodCheck(belong){
 	var battleData = LMvc.BattleController.battleData;
 	var charas = LMvc.BattleController.view.charaLayer.getCharactersFromBelong(belong);
 	var needFood = 0;
+	var thrift = 1;
 	for(var i=0,l=charas.length;i<l;i++){
-		needFood += charas[i].data.troops();
+		var charaModel = charas[i].data;
+		needFood += charaModel.troops();
+		if(charaModel.hasSkill(SkillSubType.THRIFT)){
+			thrift = 0.5;
+		}
 	}
 	var cityFood = (belong == Belong.SELF && battleData.fromCity.seigniorCharaId() != LMvc.selectSeignorId) || 
 		(belong == Belong.ENEMY && battleData.fromCity.seigniorCharaId() == LMvc.selectSeignorId);
 	if(cityFood){
+		needFood = (needFood * thrift >>> 0);
 		console.log("cityFood ",battleData.toCity.food() +">"+ needFood);
 		if(battleData.toCity.food() > needFood){
 			battleData.toCity.food(-needFood);
@@ -270,7 +276,8 @@ function battleFoodCheck(belong){
 		}
 		battleData.toCity.food(-battleData.toCity.food());
 	}else{
-		needFood += (battleData.troops * 0.5 >>> 0);
+		needFood += (battleData.troops * 0.5);
+		needFood = (needFood * thrift >>> 0);
 		console.log("food ",battleData.food +">"+ needFood);
 		if(battleData.food > needFood){
 			battleData.food -= needFood;
