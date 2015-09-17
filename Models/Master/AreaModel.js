@@ -200,7 +200,7 @@ AreaModel.prototype.size=function(){
 	return ["小","中","大","巨"][this.data.level - 1];
 };
 AreaModel.prototype.level=function(){
-	return this.data.level;
+	return this._plusData("level",value);
 };
 AreaModel.prototype.plus=function(key, value, min, max){
 	if(typeof min == UNDEFINED){
@@ -216,42 +216,39 @@ AreaModel.prototype.plus=function(key, value, min, max){
 		this.data[key] = max;
 	}
 };
+AreaModel.prototype._plusData=function(name,value){
+	if(typeof value != UNDEFINED){
+		this.plus(name,value);
+		return;
+	}
+	return this.data[name] >>> 0;
+};
 AreaModel.prototype.moneyLabel=function(value){
 	return LString.numberFormat(this.data.money,3);
 };
 AreaModel.prototype.money=function(value){
-	if(typeof value != UNDEFINED){
-		this.plus("money",value);
-		return;
-	}
-	return this.data.money;
+	return this._plusData("money",value);
 };
 AreaModel.prototype.foodLabel=function(){
 	return LString.numberFormat(this.data.food,3);
 };
 AreaModel.prototype.food=function(value){
-	if(typeof value != UNDEFINED){
-		this.plus("food",value);
-		return;
-	}
-	return this.data.food;
+	return this._plusData("food",value);
 };
-AreaModel.prototype.technology=function(value){
-	if(typeof value != UNDEFINED){
-		this.plus("technology",value);
-		return;
-	}
+AreaModel.prototype.technologyLabel=function(){
 	return LString.numberFormat(this.data.technology,3);
 };
-AreaModel.prototype.population=function(){
+AreaModel.prototype.technology=function(value){
+	return this._plusData("technology",value);
+};
+AreaModel.prototype.populationLabel=function(){
 	return LString.numberFormat(this.data.population,3);
 };
+AreaModel.prototype.population=function(){
+	return this._plusData("population",value);
+};
 AreaModel.prototype.police=function(value){
-	if(typeof value != UNDEFINED){
-		this.plus("police",value, 0, 100);
-		return;
-	}
-	return this.data.police >> 0;
+	return this._plusData("police",value);
 };
 AreaModel.prototype.city_defense=function(){
 	return LString.numberFormat(this.data.city_defense,3);
@@ -278,50 +275,16 @@ AreaModel.prototype.captives=function(){
 	return this.data.captives;
 };
 AreaModel.prototype.troopsSum=function(){
-	/*var troopsSum = 0;
-	for(var i=0;i<this.data.troops.length;i++){
-		troopsSum += this.data.troops[i].quantity;
-	}*/
 	return LString.numberFormat(this.troops(),3);
 };
 AreaModel.prototype.troops=function(value){
 	return this._dataValue("troops", value, 0);
 };
-/*AreaModel.prototype.troops=function(id, value){
-	var self = this;
-	var troops = [];
-	for(var i=0;i<self.data.troops.length;i++){
-		var troop = self.data.troops[i];
-		if(typeof id != UNDEFINED && troop.id == id){
-			if(typeof value == UNDEFINED){
-				return troop;
-			}else{
-				self.data.troops[i] = value;
-				return;
-			}
-		}
-		if(troop.learned){
-			troops.push(troop);
-		}
-	}
-	if(typeof id != UNDEFINED){
-		return {};
-	}
-	return troops;
-};*/
 AreaModel.prototype.agriculture=function(value){
-	if(typeof value != UNDEFINED){
-		this.plus("agriculture",value);
-		return;
-	}
-	return this.data.agriculture >> 0;
+	return this._plusData("agriculture",value);
 };
 AreaModel.prototype.business=function(value){
-	if(typeof value != UNDEFINED){
-		this.plus("business",value);
-		return;
-	}
-	return this.data.business >> 0;
+	return this._plusData("business",value);
 };
 AreaModel.prototype.position=function(){
 	return this.data.position;

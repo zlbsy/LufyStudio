@@ -15,8 +15,8 @@ ChapterModel.prototype.getImages=function(){
 		{name:"close",path:LMvc.IMG_PATH+"component/close.png"},
 		{name:"ok",path:LMvc.IMG_PATH+"component/ok.png"},
 		{name:"arrow",path:LMvc.IMG_PATH+"icon/arrow.png"},
-		{name:"common-black",path:LMvc.IMG_PATH+"common/black.png"},
-		{name:"icon-return",path:LMvc.IMG_PATH+"icon/return.png"}
+		{name:"common-black",path:LMvc.IMG_PATH+"common/black.png"}//,
+		//{name:"icon-return",path:LMvc.IMG_PATH+"icon/return.png"}
 	];
 	return list;
 };

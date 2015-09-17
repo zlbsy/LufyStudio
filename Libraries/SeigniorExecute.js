@@ -25,9 +25,11 @@ SeigniorExecute.prototype.areaGainRun=function(area){
 	var self = this;
 	//TODO::自然灾害
 	//金钱
-	area.money();
+	area.money(area.business());
 	//粮食
+	area.food(area.agriculture());
 	//人口
+	area.population(area.business() + area.agriculture());
 };
 SeigniorExecute.prototype.areaJobRun=function(area){
 	var self = this, chara, job;

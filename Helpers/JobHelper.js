@@ -49,7 +49,8 @@ function agricultureRun(characterModel){
 	console.log("agricultureRun : ",characterModel.id());
 	var value01 = getJobResult(characterModel.intelligence(),JobCoefficient.AGRICULTURE);
 	var value02 = getJobResult(characterModel.agility(),JobCoefficient.AGRICULTURE);
-	characterModel.city().agriculture(value01 + value02);
+	var value = (value01 + value02) * (characterModel.hasSkill(SkillSubType.AGRICULTURE) ? 1.5 : 1);
+	characterModel.city().agriculture(value >>> 0);
 	characterModel.job(Job.IDLE);
 }
 function businessRun(characterModel){
@@ -57,7 +58,8 @@ function businessRun(characterModel){
 	console.log("businessRun : ",characterModel.id());
 	var value01 = getJobResult(characterModel.intelligence(),JobCoefficient.BUSINESS);
 	var value02 = getJobResult(characterModel.luck(),JobCoefficient.BUSINESS);
-	characterModel.city().business(value01 + value02);
+	var value = (value01 + value02) * (characterModel.hasSkill(SkillSubType.BUSINESS) ? 1.5 : 1);
+	characterModel.city().business(value >>> 0);
 	characterModel.job(Job.IDLE);
 }
 function policeRun(characterModel){
@@ -65,7 +67,8 @@ function policeRun(characterModel){
 	console.log("policeRun : ",characterModel.id());
 	var value01 = getJobResult(characterModel.force(),JobCoefficient.POLICE);
 	var value02 = getJobResult(characterModel.agility(),JobCoefficient.POLICE);
-	characterModel.city().police(value01 + value02);
+	var value = (value01 + value02) * (characterModel.hasSkill(SkillSubType.POLICE) ? 1.5 : 1);
+	characterModel.city().police(value >>> 0);
 	characterModel.job(Job.IDLE);
 }
 function technologyRun(characterModel){
@@ -73,7 +76,8 @@ function technologyRun(characterModel){
 	console.log("technologyRun : ",characterModel.id());
 	var value01 = getJobResult(characterModel.intelligence(),JobCoefficient.TECHNOLOGY);
 	var value02 = getJobResult(characterModel.command(),JobCoefficient.TECHNOLOGY);
-	characterModel.city().technology(value01 + value02);
+	var value = (value01 + value02) * (characterModel.hasSkill(SkillSubType.TECHNOLOGY) ? 1.5 : 1);
+	characterModel.city().technology(value >>> 0);
 	characterModel.job(Job.IDLE);
 }
 function enlistRun(characterModel, targetEnlist){
@@ -83,7 +87,8 @@ function enlistRun(characterModel, targetEnlist){
 	var troop = area.troops();
 	var value01 = getJobResult(characterModel.luck(),JobCoefficient.ENLIST);
 	var value02 = getJobResult(characterModel.command(),JobCoefficient.ENLIST);
-	var quantity = (targetEnlist.quantity * (value01 + value02) / JobCoefficient.NORMAL) >> 0;
+	var value = (value01 + value02) * (characterModel.hasSkill(SkillSubType.POLICE) ? 1.5 : 1);
+	var quantity = (targetEnlist.quantity * value / JobCoefficient.NORMAL) >> 0;
 	troop += quantity;
 	area.troops(troop);
 	characterModel.job(Job.IDLE);

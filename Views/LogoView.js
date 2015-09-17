@@ -48,7 +48,7 @@ LogoView.prototype.showMenu=function(){
 	title.filters = [shadow];
 	layer.addChild(title);
 	
-	layer.graphics.drawRect(0,"#000000",[0,0,layer.getWidth() * 1.2,layer.getHeight()]);
+	layer.graphics.drawRect(0,"#000000",[0,0,layer.getWidth() * 1.2,layer.getHeight()*1.2]);
 	self.addChild(getBitmap(layer));
 	
 	var menuLayer = new LSprite();
