@@ -150,7 +150,7 @@ function spyRun(characterModel, cityId){
 		num = neighbors.length;
 	}
 	neighbors = Array.getRandomArrays(neighbors, num);
-	for(var i = 0,i<neighbors.length;i++){
+	for(var i = 0;i<neighbors.length;i++){
 		seignior.addSpyCity(neighbors[i]);
 	}
 }
