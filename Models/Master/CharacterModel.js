@@ -132,6 +132,9 @@ CharacterModel.prototype.name = function() {
 CharacterModel.prototype.compatibility = function() {
 	return this.data.compatibility;
 };
+CharacterModel.prototype.seigniorId = function(value){
+	return this._dataValue("seignior_id", value, 0);
+};
 CharacterModel.prototype.seignior = function(chara_id) {
 	var self = this;
 	if(typeof chara_id != UNDEFINED){
@@ -259,6 +262,16 @@ CharacterModel.prototype.moveTo = function(cityId) {
 	}else{
 		self.data.targetCity = cityId;
 		self.job(Job.MOVE);
+	}
+};
+CharacterModel.prototype.spy = function(id) {
+	var self = this;
+	if(typeof id == UNDEFINED){
+		spyRun(self,self.data.targetSpyId);
+		self.data.targetSpyId = null;
+	}else{
+		self.data.targetSpyId = id;
+		self.job(Job.SPY);
 	}
 };
 CharacterModel.prototype.targetCity = function() {

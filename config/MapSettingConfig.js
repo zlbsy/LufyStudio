@@ -6,9 +6,6 @@
 	"monety":"金钱",
 	"food":"兵粮",
 	"troops":"兵力",
-	troops : [
-				
-			],
 */
 var MapSetting = [
 	{id:1,position:{x:210,y:310},neighbor:[2],level:1,maxLevel:3,business:0,agriculture:0,technology:0,police:50, food : 1000, population : 40000,troops:0,generals:[],captives:[],out_of_offices:[],not_debut:[], city_defense : 1000},

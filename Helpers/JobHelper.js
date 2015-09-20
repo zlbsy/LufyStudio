@@ -12,6 +12,8 @@ function characterListType2JobType(characterListType) {
 			return Job.ENLIST;
 		case CharacterListType.HIRE:
 			return Job.HIRE;
+		case CharacterListType.CHARACTER_SPY:
+			return Job.SPY;
 	}
 	console.error("Can't change to jobType");
 	return Job.IDLE;
@@ -26,6 +28,8 @@ function getJobPrice(jobType) {
 			return JobPrice.POLICE;
 		case Job.TECHNOLOGY:
 			return JobPrice.TECHNOLOGY;
+		case Job.SPY:
+			return JobPrice.SPY;
 	}
 	console.error("Can't get JobPrice");
 	return 0;
@@ -38,26 +42,43 @@ var JobCoefficient = {
 	POLICE:1,
 	TECHNOLOGY:1,
 };
-	//修补：武力+统率
-	//谍报：武力+运气*/
+//外交:智力+运气
+//谍报：武力+运气
+修补：武力+统率
+商业：智力+敏捷
+农业：智力+武力
+治安：武力+敏捷
+技术：智力+统率
+招募：运气+统率
+录用：运气+相性
+	*/
 function getJobResult(realValue,coefficient){
 	var value = (JobCoefficient.NORMAL + realValue) * coefficient;
 	return value;
 }
+function repairRun(characterModel){
+	//修补：武力+统率
+	console.log("repairRun : ",characterModel.id());
+	var value01 = getJobResult(characterModel.force(),JobCoefficient.REPAIR);
+	var value02 = getJobResult(characterModel.command(),JobCoefficient.REPAIR);
+	var value = (value01 + value02) * (characterModel.hasSkill(SkillSubType.AGRICULTURE) ? 1.5 : 1);
+	characterModel.city().cityDefense(value >>> 0);
+	characterModel.job(Job.IDLE);
+}
 function agricultureRun(characterModel){
-	//农业：智力+敏捷
+	//农业：智力+武力
 	console.log("agricultureRun : ",characterModel.id());
 	var value01 = getJobResult(characterModel.intelligence(),JobCoefficient.AGRICULTURE);
-	var value02 = getJobResult(characterModel.agility(),JobCoefficient.AGRICULTURE);
+	var value02 = getJobResult(characterModel.force(),JobCoefficient.AGRICULTURE);
 	var value = (value01 + value02) * (characterModel.hasSkill(SkillSubType.AGRICULTURE) ? 1.5 : 1);
 	characterModel.city().agriculture(value >>> 0);
 	characterModel.job(Job.IDLE);
 }
 function businessRun(characterModel){
-	//商业：智力+运气
+	//商业：智力+敏捷
 	console.log("businessRun : ",characterModel.id());
 	var value01 = getJobResult(characterModel.intelligence(),JobCoefficient.BUSINESS);
-	var value02 = getJobResult(characterModel.luck(),JobCoefficient.BUSINESS);
+	var value02 = getJobResult(characterModel.agility(),JobCoefficient.BUSINESS);
 	var value = (value01 + value02) * (characterModel.hasSkill(SkillSubType.BUSINESS) ? 1.5 : 1);
 	characterModel.city().business(value >>> 0);
 	characterModel.job(Job.IDLE);
@@ -92,6 +113,46 @@ function enlistRun(characterModel, targetEnlist){
 	troop += quantity;
 	area.troops(troop);
 	characterModel.job(Job.IDLE);
+}
+function spyRun(characterModel, cityId){
+	//谍报：武力+运气
+	console.log("spyRun : ",characterModel.id());
+	var area = AreaModel.getArea(cityId);
+	characterModel.job(Job.IDLE);
+	if(characterModel.seigniorId() == area.seigniorCharaId()){
+		//TODO::失败:己方城池
+		console.log("spyRun : 失败 null");
+		return;
+	}
+	var seignior;
+	var spyValue = characterModel.force() + characterModel.luck();
+	if(spyValue<JobCoefficient.SPY){
+		if(spyValue < Math.random()*JobCoefficient.SPY){
+			return;
+		}
+		seignior = characterModel.seignior();
+		seignior.addSpyCity(cityId);
+		return;
+	}
+	var num = (spyValue / JobCoefficient.SPY) >>> 0;
+	seignior = seignior || characterModel.seignior();
+	seignior.addSpyCity(cityId);
+	num -= 1;
+	spyValue = spyValue % JobCoefficient.SPY;
+	if(spyValue>JobCoefficient.SPY || spyValue > Math.random()*JobCoefficient.SPY){
+		num += 1;
+	}
+	if(num = 0){
+		return;
+	}
+	var neighbors = city.neighbor();
+	if(num > neighbors.length){
+		num = neighbors.length;
+	}
+	neighbors = Array.getRandomArrays(neighbors, num);
+	for(var i = 0,i<neighbors.length;i++){
+		seignior.addSpyCity(neighbors[i]);
+	}
 }
 function hireRun(characterModel, hireCharacterId){
 	//录用：运气+相性

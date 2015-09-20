@@ -35,7 +35,7 @@ HeaderStatusView.prototype.set=function(){
 	self.setStatus(Language.get("agriculture"), cityModel.agriculture(), self.stepMiniWidth * 0 + 5, self.stepHeight * 3, self.stepMiniWidth);
 	self.setStatus(Language.get("technology"), cityModel.technology(), self.stepMiniWidth  * 0+ 5, self.stepHeight * 4, self.stepMiniWidth);
 	
-	self.setStatus(Language.get("city_defense"), cityModel.city_defense(), self.stepMiniWidth * 1 + 5, self.stepHeight * 2, self.stepMiniWidth + 20);
+	self.setStatus(Language.get("city_defense"), cityModel.cityDefenseLabel(), self.stepMiniWidth * 1 + 5, self.stepHeight * 2, self.stepMiniWidth + 20);
 	self.setStatus(Language.get("troops"), cityModel.troopsSum(), self.stepMiniWidth * 1 + 5, self.stepHeight * 3, self.stepMiniWidth + 20);
 	self.setStatus(Language.get("police"), cityModel.police(), self.stepMiniWidth * 1 + 5, self.stepHeight * 4, self.stepMiniWidth + 20);
 	
@@ -43,7 +43,7 @@ HeaderStatusView.prototype.set=function(){
 	self.setStatus(Language.get("out_of_office"), cityModel.outOfOfficeSum(), self.stepMiniWidth * 2 + 5 + 20, self.stepHeight * 3, self.stepMiniWidth - 20);
 	self.setStatus(Language.get("captive"), cityModel.captiveSum(), self.stepMiniWidth * 2 + 5 + 20, self.stepHeight * 4, self.stepMiniWidth - 20);
 	
-	self.setStatus(Language.get("population"), cityModel.population(), self.stepMiniWidth * 3 + 5, self.stepHeight * 2, self.stepWidth);
+	self.setStatus(Language.get("population"), cityModel.populationLabel(), self.stepMiniWidth * 3 + 5, self.stepHeight * 2, self.stepWidth);
 	self.setStatus(Language.get("money"), cityModel.moneyLabel(), self.stepMiniWidth * 3 + 5, self.stepHeight * 3, self.stepWidth);
 	self.setStatus(Language.get("food"), cityModel.foodLabel(), self.stepMiniWidth * 3 + 5, self.stepHeight * 4, self.stepWidth);
 };

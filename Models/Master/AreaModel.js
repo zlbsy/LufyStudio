@@ -197,9 +197,9 @@ AreaModel.prototype.iconWidth=function(w){
 	}
 };
 AreaModel.prototype.size=function(){
-	return ["小","中","大","巨"][this.data.level - 1];
+	return ["微","小","中","大","巨"][this.data.level - 1];
 };
-AreaModel.prototype.level=function(){
+AreaModel.prototype.level=function(value){
 	return this._plusData("level",value);
 };
 AreaModel.prototype.plus=function(key, value, min, max){
@@ -216,9 +216,9 @@ AreaModel.prototype.plus=function(key, value, min, max){
 		this.data[key] = max;
 	}
 };
-AreaModel.prototype._plusData=function(name,value){
+AreaModel.prototype._plusData=function(name, value, min, max){
 	if(typeof value != UNDEFINED){
-		this.plus(name,value);
+		this.plus(name,value, min, max);
 		return;
 	}
 	return this.data[name] >>> 0;
@@ -244,14 +244,17 @@ AreaModel.prototype.technology=function(value){
 AreaModel.prototype.populationLabel=function(){
 	return LString.numberFormat(this.data.population,3);
 };
-AreaModel.prototype.population=function(){
+AreaModel.prototype.population=function(value){
 	return this._plusData("population",value);
 };
 AreaModel.prototype.police=function(value){
 	return this._plusData("police",value);
 };
-AreaModel.prototype.city_defense=function(){
+AreaModel.prototype.cityDefenseLabel=function(){
 	return LString.numberFormat(this.data.city_defense,3);
+};
+AreaModel.prototype.cityDefense=function(value){
+	return this._plusData("city_defense",value);
 };
 AreaModel.prototype.outOfOfficeSum=function(){
 	return this.data.out_of_offices.length;

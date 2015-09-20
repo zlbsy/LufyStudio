@@ -36,6 +36,9 @@ AreaIconView.prototype.onUp=function(event){
 				case CharacterListType.CHARACTER_MOVE:
 					errorMessage = "dialog_move_generals_error";
 					break;
+				case CharacterListType.CHARACTER_SPY:
+					errorMessage = "dialog_spy_generals_error";
+					break;
 				case CharacterListType.EXPEDITION:
 					errorMessage = "dialog_expedition_select_error";
 					break;
@@ -48,6 +51,17 @@ AreaIconView.prototype.onUp=function(event){
 				}else{
 					obj = {title:Language.get("confirm"),
 					message:String.format(Language.get("dialog_move_generals_confirm"),self.areaStatus.name()),
+					height:240,
+					okEvent:function(event){
+						self.selectCityComplete(event);
+					},cancelEvent:null};
+				}
+			}else if(LMvc.CityController.eventType == CharacterListType.CHARACTER_SPY){
+				if(cityData.seignior_chara_id() == self.areaStatus.seignior_chara_id()){
+					obj = {title:Language.get("confirm"),message:Language.get(errorMessage),height:240};
+				}else{
+					obj = {title:Language.get("confirm"),
+					message:String.format(Language.get("dialog_spy_generals_confirm"),self.areaStatus.name()),
 					height:240,
 					okEvent:function(event){
 						self.selectCityComplete(event);
@@ -97,7 +111,6 @@ AreaIconView.prototype.set=function(){
 	
 	self.layer = new LSprite();
 	self.addChild(self.layer);
-	
 	self.icon = self.areaStatus.icon();
 	self.width = self.icon.getWidth();
 	self.height = self.icon.getHeight();

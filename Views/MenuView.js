@@ -67,7 +67,7 @@ MenuView.prototype.hide=function(event){
 };
 MenuView.prototype.onClickOperatingEnd=function(event){
 	event.currentTarget.parent.parent.parent.hide();
-	SeigniorExecute.start();
+	SeigniorExecute.run();
 };
 MenuView.prototype.onClickGameSave=function(event){
 };

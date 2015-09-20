@@ -1,25 +1,51 @@
 function SeigniorExecute(){
 	var self = this;
-};
-SeigniorExecute.start = function(){
-	if(!SeigniorExecute.Instance){
-		SeigniorExecute.Instance = new SeigniorExecute();
+	self.seigniorIndex = 0;
+	self.areaIndex = 0;
+	if(!self.timer){
+		self.timer = new LTimer(LGlobal.speed, 1);
 	}
-	SeigniorExecute.Instance.run();
+	self.timer.addEventListener(LTimerEvent.TIMER, SeigniorExecute.run);
+
 };
-SeigniorExecute.prototype.run=function(){
-	var self = this;
-	self.maskShow();
-	for(var i=0;i<SeigniorModel.list.length;i++){
-		var seigniorModel = SeigniorModel.list[i];
-		self.areasRun(seigniorModel.chara_id());
+SeigniorExecute.Instance = function(){
+	if(!SeigniorExecute._Instance){
+		SeigniorExecute._Instance = new SeigniorExecute();
+	}
+	return SeigniorExecute._Instance;
+};
+SeigniorExecute.run=function(){
+	var self = SeigniorExecute.Instance();
+	if(!self.backLayer){
+		self.maskShow();
+		var month = LMvc.chapterController.getValue("month");
+		var year = LMvc.chapterController.getValue("year");
+		if(++month > 12){
+			year++;
+			month = 1;
+		}
+		LMvc.chapterController.setValue("month",month);
+		LMvc.chapterController.setValue("year",year);
+	}
+	console.log("self.seigniorIndex="+self.seigniorIndex);
+	if(self.seigniorIndex < SeigniorModel.list.length){
+		var seigniorModel = SeigniorModel.list[self.seigniorIndex];
+		self.areasRun(seigniorModel);
+		return;
 	}
 	self.maskHide();
+	self.seigniorIndex = 0;
 };
 SeigniorExecute.prototype.areaRun=function(area){
 	var self = this;
+	self.areaIndex++;
 	self.areaGainRun(area);
-	self.areaJobRun(area);
+	var stop = self.areaJobRun(area);
+	if(stop){
+		return;
+	}
+	self.timer.reset();
+	self.timer.start();
 };
 SeigniorExecute.prototype.areaGainRun=function(area){
 	var self = this;
@@ -30,6 +56,7 @@ SeigniorExecute.prototype.areaGainRun=function(area){
 	area.food(area.agriculture());
 	//人口
 	area.population(area.business() + area.agriculture());
+	console.log("areaGainRun over");
 };
 SeigniorExecute.prototype.areaJobRun=function(area){
 	var self = this, chara, job;
@@ -64,7 +91,7 @@ SeigniorExecute.prototype.areaJobRun=function(area){
 		}
 	}
 	if(list.length == 0){
-		return;
+		return false;
 	}
 	for(var i=0;i<list.length;i++){
 		chara = list[i];
@@ -75,24 +102,33 @@ SeigniorExecute.prototype.areaJobRun=function(area){
 				break;
 		}
 	}
+	return false;
 };
-SeigniorExecute.prototype.areasRun=function(chara_id){
+SeigniorExecute.prototype.areasRun=function(seigniorModel){
 	var self = this;
-	for(var i=0;i<AreaModel.list.length;i++){
-		var areaModel = AreaModel.list[i];
-		if(areaModel.seignior_chara_id() == chara_id){
-			self.areaRun(areaModel);
-		}
+	if(self.areaIndex == 0){
+		seigniorModel.checkSpyCitys();
 	}
+	var areas = seigniorModel.areas();
+	if(self.areaIndex < areas.length){
+		var areaModel = areas[self.areaIndex];
+		self.areaRun(areaModel);
+		return;
+	}
+	self.areaIndex = 0;
+	self.seigniorIndex++;
+	SeigniorExecute.run();
 };
 SeigniorExecute.prototype.maskShow=function(){
 	var self = this;
-	self.backLayer = new LSprite();
-	self.backLayer.addChild(getBitmap(new LPanel(new LBitmapData(LMvc.datalist["translucent"]),LGlobal.width, LGlobal.height)));
-	self.backLayer.addEventListener(LMouseEvent.MOUSE_UP, function(){});
-	self.backLayer.addEventListener(LMouseEvent.MOUSE_DOWN, function(){});
+	if(self.backLayer){
+		return;
+	}
+	self.backLayer = getTranslucentMask();
 	LMvc.MapController.view.parent.addChild(self.backLayer);
 };
 SeigniorExecute.prototype.maskHide=function(){
-	this.backLayer.remove();
+	var self = this;
+	self.backLayer.remove();
+	self.backLayer = null;
 };

@@ -10,8 +10,8 @@ CharacterListType.ENLIST = "enlist";//征兵
 CharacterListType.HIRE = "hire";//登用
 CharacterListType.CHARACTER_HIRE = "generals_hire";//派谁去登用
 CharacterListType.EXPEDITION = "expedition";//出征
-CharacterListType.SELECT_LEADER = "select_leader";//出征
+CharacterListType.SELECT_LEADER = "select_leader";//出征主将
 
-CharacterListType.BATTLE_SINGLE = "battle_single";//出征
-
+CharacterListType.BATTLE_SINGLE = "battle_single";//选择单挑出战
+CharacterListType.CHARACTER_SPY = "generals_spy";//谍报
 CharacterListType.TEST = "test";

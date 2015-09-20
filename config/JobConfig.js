@@ -1,12 +1,14 @@
 var Job = {
 	IDLE:"idle",
 	MOVE:"move",
+	REPAIR:"repair",
 	AGRICULTURE:"agriculture",
 	BUSINESS:"business",
 	POLICE:"police",
 	TECHNOLOGY:"technology",
 	ENLIST:"enlist",
 	HIRE:"hire",
+	SPY:"spy",
 	END:"end"
 };
 var JobPrice = {
@@ -14,13 +16,24 @@ var JobPrice = {
 	BUSINESS:500,
 	POLICE:500,
 	TECHNOLOGY:500,
+	REPAIR:500,
+	SPY:500,
 };
 var JobCoefficient = {
 	NORMAL:90,
+	REPAIR:1,
 	AGRICULTURE:1,
 	BUSINESS:1,
 	POLICE:1,
 	TECHNOLOGY:1,
+	SPY:75,
 	ENLIST:0.25,
 	COMPATIBILITY:75
+};
+var JobMax = {
+	AGRICULTURE:[3000,4000,5000,6000,7000],
+	BUSINESS:[3000,4000,5000,6000,7000],
+	POLICE:[3000,4000,5000,6000,7000],
+	TECHNOLOGY:[3000,4000,5000,6000,7000],
+	REPAIR:[3000,4000,5000,6000,7000],
 };

@@ -3,7 +3,7 @@ function SeigniorModel(controller, data) {
 	base(self, MyModel, [controller]);
 	self.type = "StageMasterModel";
 	self.data = data;
-	
+	self.data.spyAreas = self.data.spyAreas || [];
 }
 
 SeigniorModel.list = [];
@@ -46,6 +46,27 @@ SeigniorModel.prototype.color = function(){
  **/
 SeigniorModel.prototype.areas = function(){
 	return this.data.areas;
+};
+SeigniorModel.prototype.addSpyCity = function(cityId){
+	var self = this;
+	var max = 5;
+	var city = self.data.spyAreas.find(function(child){
+		return child.id == cityId;
+	});
+	if(city){
+		city.month = max;
+	}else{
+		self.data.spyAreas.push({id:cityId,month:max});
+	}
+};
+SeigniorModel.prototype.checkSpyCitys = function(){
+	var self = this;
+	for(var i = self.data.spyAreas.length - 1;i>=0;i++){
+		var city = self.data.spyAreas[i];
+		if(--city.month == 0){
+			this.data.spyAreas.splice(i, 1);
+		}
+	}
 };
 SeigniorModel.prototype.addCity = function(area){
 	this.data.areas.push(area);

@@ -131,6 +131,10 @@ CharacterListView.prototype.onChangeChildSelect=function(event){
 	if(!self.lblMoney){
 		return;
 	}
+	console.log("self.controller.characterListType="+self.controller.characterListType);
+	console.log("characterListType2JobType=");
+	console.log(""+characterListType2JobType);
+	console.log("getJobPrice="+characterListType2JobType(self.controller.characterListType));	console.log("getJobPrice="+getJobPrice(characterListType2JobType(self.controller.characterListType)));
 	var cityModel = self.controller.getValue("cityData");
 	var usedMoney = getJobPrice(characterListType2JobType(self.controller.characterListType)) * self.selectedCount;
 	var overageMoney = cityModel.money() - usedMoney;

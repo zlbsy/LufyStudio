@@ -114,13 +114,20 @@ ChapterView.prototype.okEvent=function(event){
 };
 ChapterView.prototype.ctrlLayerInit=function(){
 	var self = this;
-	var returnBitmapData = new LBitmapData(LMvc.datalist["icon-return"]);
+	/*var returnBitmapData = new LBitmapData(LMvc.datalist["icon-return"]);
 	var returnBitmap = new LBitmap(returnBitmapData);
 	var returnButton = new LButton(returnBitmap);
 	returnButton.x = 20;
 	returnButton.y = LGlobal.height - returnBitmapData.height - 20;
 	self.ctrlLayer.addChild(returnButton);
-	returnButton.addEventListener(LMouseEvent.MOUSE_UP,self.returnToChapterMenu.bind(self));
+	*/
+	var bitmapClose = new LBitmap(new LBitmapData(LMvc.datalist["close"]));
+	var buttonClose = new LButton(bitmapClose);
+	buttonClose.x = LGlobal.width - bitmapClose.getWidth() - 5;
+	buttonClose.y = 5;
+	
+	self.ctrlLayer.addChild(buttonClose);
+	buttonClose.addEventListener(LMouseEvent.MOUSE_UP,self.returnToChapterMenu.bind(self));
 };
 ChapterView.prototype.returnToChapterMenu=function(event){
 	var self = this;

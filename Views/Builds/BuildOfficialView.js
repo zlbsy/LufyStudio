@@ -29,9 +29,16 @@ BuildOfficialView.prototype.showMenu=function(){
 		buttonGeneralsMove.addEventListener(LMouseEvent.MOUSE_UP, self.onClickGeneralsMoveButton.bind(self));
 		
 		menuY += menuHeight;
-		var buttonIntelligence = getButton(Language.get("intelligence"),200);
-		buttonIntelligence.y = menuY;
-		layer.addChild(buttonIntelligence);
+		var buttonGeneralsMove = getButton(Language.get("transport"),200);
+		buttonGeneralsMove.y = menuY;
+		layer.addChild(buttonGeneralsMove);
+		buttonGeneralsMove.addEventListener(LMouseEvent.MOUSE_UP, self.onClickGeneralsMoveButton.bind(self));
+		
+		menuY += menuHeight;
+		var buttonSpy = getButton(Language.get("spy"),200);
+		buttonSpy.y = menuY;
+		layer.addChild(buttonSpy);
+		buttonSpy.addEventListener(LMouseEvent.MOUSE_UP, self.onClickSpyButton.bind(self));
 		
 		menuY += menuHeight;
 		var buttonDiplomacy = getButton(Language.get("diplomacy"),200);
@@ -64,6 +71,11 @@ BuildOfficialView.prototype.expeditionSelectCharacter=function(event){
 	controller.removeEventListener(LCityEvent.SELECT_CITY, self.moveToCity);
 	controller.loadCharacterList(CharacterListType.EXPEDITION,self);
 };
+BuildOfficialView.prototype.onClickSpyButton=function(event){
+	var self = this;
+	self.controller.addEventListener(LCityEvent.SELECT_CITY, self.spySelectCharacter);
+	self.controller.toSelectMap(CharacterListType.CHARACTER_SPY);
+};
 BuildOfficialView.prototype.onClickGeneralsListButton=function(event){
 	var self = this;
 	self.controller.loadCharacterList(CharacterListType.CHARACTER_LIST,self);
@@ -75,6 +87,16 @@ BuildOfficialView.prototype.onClickGeneralsMoveButton=function(event){
 	
 	//self.controller.loadCharacterList(CharacterListType.CHARACTER_MOVE,self);
 };
+BuildOfficialView.prototype.spySelectCharacter=function(event){
+	var controller = event.currentTarget;
+	var self = controller.view.contentLayer.childList.find(function(child){
+		return child.constructor.name == "BuildOfficialView";
+	});
+	self.controller.setValue("cityId", event.cityId);
+	console.log("spy event.cityId = " + event.cityId);
+	controller.removeEventListener(LCityEvent.SELECT_CITY, self.spySelectCharacter);
+	controller.loadCharacterList(CharacterListType.CHARACTER_SPY,self);
+};
 BuildOfficialView.prototype.moveSelectCharacter=function(event){
 	var controller = event.currentTarget;
 	var self = controller.view.contentLayer.childList.find(function(child){
@@ -82,7 +104,7 @@ BuildOfficialView.prototype.moveSelectCharacter=function(event){
 	});
 	self.controller.setValue("cityId", event.cityId);
 	console.log("event.cityId = " + event.cityId);
-	controller.removeEventListener(LCityEvent.SELECT_CITY, self.moveToCity);
+	controller.removeEventListener(LCityEvent.SELECT_CITY, self.moveSelectCharacter);
 	controller.loadCharacterList(CharacterListType.CHARACTER_MOVE,self);
 };
 BuildOfficialView.prototype.selectComplete=function(event){
@@ -97,6 +119,10 @@ BuildOfficialView.prototype.selectComplete=function(event){
 	if(event.characterListType == CharacterListType.CHARACTER_MOVE){
 		event.characterList.forEach(function(child){
 			child.moveTo(cityId);
+		});
+	}else if(event.characterListType == CharacterListType.CHARACTER_SPY){
+		event.characterList.forEach(function(child){
+			child.spy(cityId);
 		});
 	}else if(event.characterListType == CharacterListType.EXPEDITION){
 		var characterList = event.characterList;
