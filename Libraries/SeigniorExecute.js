@@ -27,7 +27,7 @@ SeigniorExecute.run=function(){
 		LMvc.chapterController.setValue("month",month);
 		LMvc.chapterController.setValue("year",year);
 	}
-	console.log("self.seigniorIndex="+self.seigniorIndex);
+	console.log("self.seigniorIndex="+self.seigniorIndex+"<"+SeigniorModel.list.length);
 	if(self.seigniorIndex < SeigniorModel.list.length){
 		var seigniorModel = SeigniorModel.list[self.seigniorIndex];
 		self.areasRun(seigniorModel);
@@ -35,6 +35,7 @@ SeigniorExecute.run=function(){
 	}
 	self.maskHide();
 	self.seigniorIndex = 0;
+	self.areaIndex = 0;
 };
 SeigniorExecute.prototype.areaRun=function(area){
 	var self = this;
@@ -82,6 +83,18 @@ SeigniorExecute.prototype.areaJobRun=function(area){
 			case Job.TECHNOLOGY:
 				technologyRun(chara);
 				break;
+			case Job.REPAIR:
+				repairRun(chara);
+				break;
+			case Job.ACCESS:
+				accessRun(chara);
+				break;
+			case Job.EXPLORE_BUSINESS:
+				exploreBusinessRun(chara);
+				break;
+			case Job.EXPLORE_AGRICULTURE:
+				exploreAgricultureRun(chara);
+				break;
 			case Job.ENLIST:
 				chara.enlist();
 				break;
@@ -90,6 +103,9 @@ SeigniorExecute.prototype.areaJobRun=function(area){
 				break;
 			case Job.SPY:
 				chara.spy();
+				break;
+			case Job.TRANSPORT:
+				chara.transport();
 				break;
 		}
 	}
@@ -109,9 +125,11 @@ SeigniorExecute.prototype.areaJobRun=function(area){
 };
 SeigniorExecute.prototype.areasRun=function(seigniorModel){
 	var self = this;
+	console.log("self.areaIndex="+self.areaIndex);
 	if(self.areaIndex == 0){
 		seigniorModel.checkSpyCitys();
 	}
+	console.log("seigniorModel.checkSpyCitys over");
 	var areas = seigniorModel.areas();
 	if(self.areaIndex < areas.length){
 		var areaModel = areas[self.areaIndex];

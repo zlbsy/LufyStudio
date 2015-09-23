@@ -38,7 +38,7 @@ CharacterListChildView.prototype.hitTestPoint = function(offsetX,offsetY) {
 	if(self.controller.characterListType == CharacterListType.EXPEDITION && self.armProperties.visible){
 		if(offsetX > 370){
 			var characterExpedition = new CharacterExpeditionView(self.controller, self.charaModel);
-			var obj = {title:Language.get("分配"),subWindow:characterExpedition,width:400,height:320,okEvent:self.updateArmProperties.bind(self),cancelEvent:null};
+			var obj = {title:Language.get("distribute"),subWindow:characterExpedition,width:400,height:320,okEvent:self.updateArmProperties.bind(self),cancelEvent:null};//分配
 			var windowLayer = ConfirmWindow(obj);
 			self.controller.view.addChild(windowLayer);
 			return false;
@@ -123,7 +123,7 @@ CharacterListChildView.prototype.setArmProperties = function() {
 	panel.x = 200;
 	panel.y = 0;
 	layer.addChild(panel);
-	var name = getStrokeLabel("分配", 18, "#FFFFFF", "#000000", 4);
+	var name = getStrokeLabel("distribute", 18, "#FFFFFF", "#000000", 4);
 	name.x = (panel.getWidth() - name.getWidth())*0.5;
 	name.y = (panel.getHeight() - name.getHeight())*0.5;;
 	panel.addChild(name);
@@ -137,11 +137,13 @@ CharacterListChildView.prototype.setBasicProperties = function() {
 	var self = this;
 	var layer = new LSprite();
 	layer.graphics.drawRect(0, "#ff0000", [0, 0, LGlobal.width - 200, 50]);
-	var seignior = self.charaModel.seignior();
-	var name = getStrokeLabel( seignior ? seignior.name() : Language.get("nothing"), 18, "#FFFFFF", "#000000", 4);
+
+	var seigniorId = self.charaModel.seigniorId();
+	var name = getStrokeLabel( seigniorId>0 ? CharacterModel.getChara(seigniorId).name() : Language.get("nothing"), 18, "#FFFFFF", "#000000", 4);
 	name.x = 2;
 	name.y = 5;
 	layer.addChild(name);
+	
 	var name = getStrokeLabel(self.charaModel.identity(), 18, "#FFFFFF", "#000000", 4);
 	name.x = 60 + 2;
 	name.y = 5;
@@ -152,10 +154,11 @@ CharacterListChildView.prototype.setBasicProperties = function() {
 		name.y = 5;
 		layer.addChild(name);
 	}
-	var name = getStrokeLabel( seignior ? self.charaModel.loyalty() : "--", 18, "#FFFFFF", "#000000", 4);
+	var name = getStrokeLabel( seigniorId>0 ? self.charaModel.loyalty() : "--", 18, "#FFFFFF", "#000000", 4);
 	name.x = 60 * 3 + 2;
 	name.y = 5;
 	layer.addChild(name);
+
 	var name = getStrokeLabel(self.charaModel.jobLabel(), 18, "#FFFFFF", "#000000", 4);
 	name.x = 60 * 4;
 	name.y = 5;

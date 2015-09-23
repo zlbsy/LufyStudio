@@ -61,12 +61,15 @@ SeigniorModel.prototype.addSpyCity = function(cityId){
 };
 SeigniorModel.prototype.checkSpyCitys = function(){
 	var self = this;
-	for(var i = self.data.spyAreas.length - 1;i>=0;i++){
+	console.log("self.data.spyAreas.length="+self.data.spyAreas.length);
+	for(var i = self.data.spyAreas.length - 1;i>=0;i--){
 		var city = self.data.spyAreas[i];
-		if(--city.month == 0){
-			this.data.spyAreas.splice(i, 1);
+		city.month -= 1;
+		if(city.month == 0){
+			self.data.spyAreas.splice(i, 1);
 		}
 	}
+	console.log("checkSpyCitys="+self.data.spyAreas.length);
 };
 SeigniorModel.prototype.isSpyCity = function(id){
 	return this.data.spyAreas.findIndex(function(child){

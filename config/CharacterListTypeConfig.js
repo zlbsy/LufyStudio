@@ -8,10 +8,15 @@ CharacterListType.POLICE = "police";//治安
 CharacterListType.TECHNOLOGY = "technology";//技术
 CharacterListType.ENLIST = "enlist";//征兵
 CharacterListType.HIRE = "hire";//登用
+CharacterListType.REPAIR = "repair";//修补
+CharacterListType.ACCESS = "access";//访问
 CharacterListType.CHARACTER_HIRE = "generals_hire";//派谁去登用
 CharacterListType.EXPEDITION = "expedition";//出征
 CharacterListType.SELECT_LEADER = "select_leader";//出征主将
 
 CharacterListType.BATTLE_SINGLE = "battle_single";//选择单挑出战
 CharacterListType.CHARACTER_SPY = "generals_spy";//谍报
+CharacterListType.TRANSPORT = "transport";//输送物资
+CharacterListType.EXPLORE_AGRICULTURE = "explore_agriculture";//农地探索
+CharacterListType.EXPLORE_BUSINESS = "explore_business";//市场探索
 CharacterListType.TEST = "test";

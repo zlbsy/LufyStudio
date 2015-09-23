@@ -220,12 +220,12 @@ CharacterDetailedView.prototype.showStatus=function(){
 	var txtHeight = 25, startY = -txtHeight + 5, startX = 5;
 	var labels = ["belong","identity","city","loyalty","status"];
 	
- 	var seignior = self.characterModel.seignior();
+ 	var seigniorId = self.characterModel.seigniorId();
 	var datas = [
-	seignior ? seignior.name() : Language.get("nothing"),
+	seigniorId > 0 ? CharacterModel.getChara(seigniorId).name() : Language.get("nothing"),
 	self.characterModel.identity(),
 	self.characterModel.city().name(),
-	seignior ? self.characterModel.loyalty() : "--",
+	seigniorId > 0 ? self.characterModel.loyalty() : "--",
 	self.character ? self.character.status.statusLabel() : self.characterModel.jobLabel()
 	];
 	for(var i=0;i<labels.length;i++){
@@ -257,7 +257,7 @@ CharacterDetailedView.prototype.showProperties=function(){
 	var txtHeight = 25, startY = -txtHeight + 10, startRightY = startY,startX = 5;
 	var labels = ["tab_arms","force","command","intelligence","agility","luck"];
 	var labelsRight = ["troops","MP","physicalFitness","attack","spirit","defense","breakout","morale","movePower"];
- 	var seignior = self.characterModel.seignior();
+ 	
 	var datas = [
 	self.characterModel.currentSoldiers().name(),
 	self.characterModel.force(),

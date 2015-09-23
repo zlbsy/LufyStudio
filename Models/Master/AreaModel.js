@@ -99,7 +99,7 @@ AreaModel.prototype.setSeignor = function(seignior,areaData){
 			for(var i=0,l=areaData[key].length;i<l;i++){
 				var charaData = areaData[key][i];
 				var chara = CharacterModel.getChara(charaData.chara_id);
-				chara.seignior(seignior.chara_id);
+				chara.seigniorId(seignior.chara_id);
 				chara.loyalty(charaData.loyalty);
 				chara.cityId(areaData.area_id);
 				if(charaData.equipments){

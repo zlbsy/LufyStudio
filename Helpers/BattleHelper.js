@@ -300,22 +300,3 @@ function battleFoodCheck(belong){
 	script += "SGJBattleCharacter.boutSkillRun("+belong+");";
 	LGlobal.script.addScript(script);
 }
-if (!Array.getRandomArrays){
-	Array.getRandomArrays = function(list,num){
-		var result = [], length = list.length < num ? list.length : num;
-		while (result.length < length){
-			var i = Math.random() * list.length >>> 0;
-			var index = result.findIndex(function(child){
-				return child == i;
-			});
-			if(index >= 0){
-				continue;
-			}
-			result.push(i);
-		}
-		for(var i=0;i<result.length;i++){
-			result[i] = list[result[i]];
-		}
-		return result;
-	};
-}

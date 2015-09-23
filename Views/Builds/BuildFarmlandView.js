@@ -17,10 +17,15 @@ BuildFarmlandView.prototype.showMenu=function(){
 	var buttonExplore = getButton(Language.get("explore"),200);
 	buttonExplore.y = menuY;
 	layer.addChild(buttonExplore);
+	buttonExplore.addEventListener(LMouseEvent.MOUSE_UP, self.onClickExploreButton);
 	
 	return layer;
 };
 BuildFarmlandView.prototype.onClickAgricultureButton=function(event){
 	var self = event.currentTarget.parent.parent.parent;
 	self.controller.loadCharacterList(CharacterListType.AGRICULTURE,self);
+};
+BuildFarmlandView.prototype.onClickExploreButton=function(event){
+	var self = event.currentTarget.parent.parent.parent;
+	self.controller.loadCharacterList(CharacterListType.EXPLORE_AGRICULTURE,self);
 };

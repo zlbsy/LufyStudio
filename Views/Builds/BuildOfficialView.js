@@ -32,7 +32,7 @@ BuildOfficialView.prototype.showMenu=function(){
 		var buttonGeneralsMove = getButton(Language.get("transport"),200);
 		buttonGeneralsMove.y = menuY;
 		layer.addChild(buttonGeneralsMove);
-		buttonGeneralsMove.addEventListener(LMouseEvent.MOUSE_UP, self.onClickGeneralsMoveButton.bind(self));
+		buttonGeneralsMove.addEventListener(LMouseEvent.MOUSE_UP, self.onClickTransportButton.bind(self));
 		
 		menuY += menuHeight;
 		var buttonSpy = getButton(Language.get("spy"),200);
@@ -53,12 +53,28 @@ BuildOfficialView.prototype.showMenu=function(){
 	
 	return layer;
 };
+BuildOfficialView.prototype.onClickTransportButton=function(event){
+	var self = this;
+	self.characterListType = CharacterListType.TRANSPORT;
+	self.controller.addEventListener(LCityEvent.SELECT_CITY, self.transportSelectCharacter);
+	self.controller.toSelectMap(CharacterListType.TRANSPORT);
+};
+BuildOfficialView.prototype.transportSelectCharacter=function(event){
+	var controller = event.currentTarget;
+	var self = controller.view.contentLayer.childList.find(function(child){
+		return child.constructor.name == "BuildOfficialView";
+	});
+	self.controller.setValue("cityId", event.cityId);
+	console.log("event.cityId = " + event.cityId);
+	controller.removeEventListener(LCityEvent.SELECT_CITY, self.transportSelectCharacter);
+	controller.loadCharacterList(CharacterListType.TRANSPORT,self);
+};
 BuildOfficialView.prototype.onClickExpeditionButton=function(event){
 	var self = this;
 	
 	//TODO::
 	//self.controller.gotoBattle();
-	
+	self.characterListType = CharacterListType.EXPEDITION;
 	self.controller.addEventListener(LCityEvent.SELECT_CITY, self.expeditionSelectCharacter);
 	self.controller.toSelectMap(CharacterListType.EXPEDITION);
 };
@@ -112,15 +128,16 @@ BuildOfficialView.prototype.selectComplete=function(event){
 	console.log("BuildOfficialView.prototype.selectComplete event = " , event);
 	var characterList = event.characterList;
 	var cityId = self.controller.getValue("cityId");
-	self.controller.setValue("cityId", null);
 	if(!characterList){
 		return true;
 	}
 	if(event.characterListType == CharacterListType.CHARACTER_MOVE){
+		self.controller.setValue("cityId", null);
 		event.characterList.forEach(function(child){
 			child.moveTo(cityId);
 		});
 	}else if(event.characterListType == CharacterListType.CHARACTER_SPY){
+		self.controller.setValue("cityId", null);
 		event.characterList.forEach(function(child){
 			child.spy(cityId);
 		});
@@ -136,7 +153,6 @@ BuildOfficialView.prototype.selectComplete=function(event){
 			return false;
 		}
 		self.controller.setValue("expeditionCharacterList", characterList);
-		self.controller.setValue("toCityId", cityId);
 	}else if(event.characterListType == CharacterListType.SELECT_LEADER){
 		if(event.characterList.length > 1){
 			var obj = {title:Language.get("confirm"),message:Language.get("dialog_select_leader_error"),height:200,okEvent:null};
@@ -145,6 +161,18 @@ BuildOfficialView.prototype.selectComplete=function(event){
 			return false;
 		}else{
 			self.controller.setValue("expeditionLeader",event.characterList[0]);
+			self.controller.setValue("toCityId", cityId);
+			return true;
+		}
+	}else if(event.characterListType == CharacterListType.TRANSPORT){
+		
+		if(event.characterList.length > 1){
+			var obj = {title:Language.get("confirm"),message:Language.get("dialog_select_onlyone_error"),height:200,okEvent:null};
+			var windowLayer = ConfirmWindow(obj);
+			LMvc.layer.addChild(windowLayer);
+			return false;
+		}else{
+			self.controller.setValue("transportCharacter", event.characterList[0]);
 			return true;
 		}
 	}
@@ -178,19 +206,25 @@ BuildOfficialView.prototype.showBuild=function(event){
 	}
 	if(event.characterListType == CharacterListType.EXPEDITION){
 		self.controller.loadCharacterList(CharacterListType.SELECT_LEADER,self);
-	}else if(event.characterListType == CharacterListType.SELECT_LEADER){
+	}else if(event.characterListType == CharacterListType.SELECT_LEADER || event.characterListType == CharacterListType.TRANSPORT){
 		self.load.view(["Builds/ExpeditionReady"],self.expeditionReady);
 	}
 };
 BuildOfficialView.prototype.expeditionReady=function(){
 	var self = this;
-	console.log("BuildOfficialView.prototype.expeditionReady",self);
+	console.log("BuildOfficialView.prototype.expeditionReady cityId=",self.controller.getValue("cityId"));
 	var readyView = new ExpeditionReadyView(self.controller);
 	//self.addChild(readyView);
-	var obj = {title:Language.get("备战军资"),subWindow:readyView,width:480,height:540,okEvent:self.expeditionReadyComplete,cancelEvent:null};
+	var obj = {title:Language.get(self.characterListType == CharacterListType.EXPEDITION ? "备战军资" : "transport"),subWindow:readyView,width:480,height:540,okEvent:self.expeditionReadyComplete,cancelEvent:self.expeditionCancel};
 	var windowLayer = ConfirmWindow(obj);
 	self.addChild(windowLayer);
 	self.menuLayer.visible = false;
+};
+BuildOfficialView.prototype.expeditionCancel=function(event){
+	var windowLayer = event.currentTarget.parent;
+	var self = windowLayer.parent;
+	windowLayer.remove();
+	self.menuLayer.visible = true;
 };
 BuildOfficialView.prototype.expeditionReadyComplete=function(event){
 	var windowLayer = event.currentTarget.parent;
@@ -202,10 +236,19 @@ BuildOfficialView.prototype.expeditionReadyComplete=function(event){
 	console.log("readyView="+readyView);
 	var data = readyView.getData();
 	console.log("data="+data);
-	data.expeditionCharacterList = self.controller.getValue("expeditionCharacterList");
-	data.expeditionLeader = self.controller.getValue("expeditionLeader");
-	console.log("expeditionReadyComplete",data.expeditionCharacterList,data.expeditionLeader);
-	windowLayer.remove();
-	self.controller.setValue("battleData",data);
-	self.controller.gotoBattle();
+	if(self.characterListType == CharacterListType.EXPEDITION){
+		data.expeditionCharacterList = self.controller.getValue("expeditionCharacterList");
+		data.expeditionLeader = self.controller.getValue("expeditionLeader");
+		console.log("expeditionReadyComplete",data.expeditionCharacterList,data.expeditionLeader);
+		windowLayer.remove();
+		self.controller.setValue("battleData",data);
+		self.controller.gotoBattle();
+	}else if(self.characterListType == CharacterListType.TRANSPORT){
+		var characterModel = self.controller.getValue("transportCharacter");
+		windowLayer.remove();
+		data.cityId = self.controller.getValue("cityId");
+		characterModel.transport(data);
+		self.controller.dispatchEvent(LController.NOTIFY_ALL);
+		self.menuLayer.visible = true;
+	}
 };

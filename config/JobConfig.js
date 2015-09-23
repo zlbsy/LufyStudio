@@ -9,6 +9,10 @@ var Job = {
 	ENLIST:"enlist",
 	HIRE:"hire",
 	SPY:"spy",
+	ACCESS:"access",
+	EXPLORE_AGRICULTURE:"explore_agriculture",
+	EXPLORE_BUSINESS:"explore_business",
+	TRANSPORT : "transport_job",
 	END:"end"
 };
 var JobPrice = {

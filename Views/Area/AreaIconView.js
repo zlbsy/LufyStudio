@@ -42,6 +42,9 @@ AreaIconView.prototype.onUp=function(event){
 				case CharacterListType.EXPEDITION:
 					errorMessage = "dialog_expedition_select_error";
 					break;
+				case CharacterListType.TRANSPORT:
+					errorMessage = "dialog_transport_select_error";
+					break;
 			}
 			if(neighbor.indexOf(self.areaStatus.id()) < 0 || LMvc.cityId == self.areaStatus.id()){
 				obj = {title:Language.get("confirm"),message:Language.get(errorMessage),height:240};
@@ -73,6 +76,17 @@ AreaIconView.prototype.onUp=function(event){
 				}else{
 					obj = {title:Language.get("confirm"),
 					message:String.format(Language.get("dialog_expedition_select_confirm"),self.areaStatus.name()),
+					height:240,
+					okEvent:function(event){
+						self.selectCityComplete(event);
+					},cancelEvent:null};
+				}
+			}else if(LMvc.CityController.eventType == CharacterListType.TRANSPORT){
+				if(cityData.seignior_chara_id() != self.areaStatus.seignior_chara_id()){
+					obj = {title:Language.get("confirm"),message:Language.get(errorMessage),height:240};
+				}else{
+					obj = {title:Language.get("confirm"),
+					message:String.format(Language.get("dialog_transport_select_confirm"),self.areaStatus.name()),
 					height:240,
 					okEvent:function(event){
 						self.selectCityComplete(event);

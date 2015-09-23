@@ -12,6 +12,14 @@ function characterListType2JobType(characterListType) {
 			return Job.ENLIST;
 		case CharacterListType.HIRE:
 			return Job.HIRE;
+		case CharacterListType.REPAIR:
+			return Job.REPAIR;
+		case CharacterListType.ACCESS:
+			return Job.ACCESS;
+		case CharacterListType.EXPLORE_AGRICULTURE:
+			return Job.EXPLORE_AGRICULTURE;
+		case CharacterListType.EXPLORE_BUSINESS:
+			return Job.EXPLORE_BUSINESS;
 		case CharacterListType.CHARACTER_SPY:
 			return Job.SPY;
 	}
@@ -25,6 +33,8 @@ function getJobPrice(jobType) {
 		case Job.BUSINESS:
 			return JobPrice.BUSINESS;
 		case Job.POLICE:
+			return JobPrice.REPAIR;
+		case Job.REPAIR:
 			return JobPrice.POLICE;
 		case Job.TECHNOLOGY:
 			return JobPrice.TECHNOLOGY;
@@ -43,7 +53,7 @@ var JobCoefficient = {
 	TECHNOLOGY:1,
 };
 //外交:智力+运气
-//谍报：武力+运气
+谍报：武力+运气
 修补：武力+统率
 商业：智力+敏捷
 农业：智力+武力
@@ -51,10 +61,41 @@ var JobCoefficient = {
 技术：智力+统率
 招募：运气+统率
 录用：运气+相性
-	*/
+*/
 function getJobResult(realValue,coefficient){
 	var value = (JobCoefficient.NORMAL + realValue) * coefficient;
 	return value;
+}
+function accessRun(characterModel){
+	//访问
+	console.log("accessRun : ",characterModel.id());
+	characterModel.job(Job.IDLE);
+	var cityModel = characterModel.city();
+	
+}
+function exploreAgricultureRun(characterModel){
+	//农地探索
+	console.log("exploreAgricultureRun : ",characterModel.id());
+	characterModel.job(Job.IDLE);
+	var cityModel = characterModel.city();
+	
+}
+function exploreBusinessRun(characterModel){
+	//市场探索
+	console.log("exploreBusinessRun : ",characterModel.id());
+	characterModel.job(Job.IDLE);
+	var cityModel = characterModel.city();
+	
+}
+function transportRun(characterModel, transportData){
+	//运输物资
+	console.log("transportRun : ",characterModel.id());
+	characterModel.job(Job.IDLE);
+	var cityModel = AreaModel.getArea(transportData.cityId);
+	var troops = cityModel.troops();
+	cityModel.troops(troops + transportData.troops);
+	cityModel.food(transportData.food);
+	cityModel.money(transportData.money);
 }
 function repairRun(characterModel){
 	//修补：武力+统率
@@ -108,9 +149,11 @@ function enlistRun(characterModel, targetEnlist){
 	var troop = area.troops();
 	var value01 = getJobResult(characterModel.luck(),JobCoefficient.ENLIST);
 	var value02 = getJobResult(characterModel.command(),JobCoefficient.ENLIST);
-	var value = (value01 + value02) * (characterModel.hasSkill(SkillSubType.POLICE) ? 1.5 : 1);
+	console.log("SkillSubType="+SkillSubType+","+SkillSubType.ENLIST);
+	var value = (value01 + value02) * (characterModel.hasSkill(SkillSubType.ENLIST) ? 1.5 : 1);
 	var quantity = (targetEnlist.quantity * value / JobCoefficient.NORMAL) >> 0;
 	troop += quantity;
+	console.log("troop="+troop);
 	area.troops(troop);
 	characterModel.job(Job.IDLE);
 }
@@ -151,14 +194,27 @@ function spyRun(characterModel, cityId){
 	if(num = 0){
 		return;
 	}
-	var neighbors = city.neighbor();
-	if(num > neighbors.length){
-		num = neighbors.length;
+	var neighbors = area.neighbor();
+	console.log("spyRun : neighbors="+neighbors.length);
+	var citys = [];
+	for(var i=0;i<neighbors.length;i++){
+		var child = AreaModel.getArea(neighbors[i]);
+		if(child.seigniorCharaId() == characterModel.seigniorId()){
+			continue;
+		}
+		citys.push(neighbors[i]);
 	}
-	neighbors = Array.getRandomArrays(neighbors, num);
-	console.log("spyRun : neighbors="+neighbors);
-	for(var i = 0;i<neighbors.length;i++){
-		seignior.addSpyCity(neighbors[i]);
+	console.log("spyRun : citys="+citys.length);
+	if(citys.length == 0){
+		return;
+	}
+	if(num > citys.length){
+		num = citys.length;
+	}
+	citys = Array.getRandomArrays(citys, num);
+	console.log("spyRun : neighbors="+citys);
+	for(var i = 0;i<citys.length;i++){
+		seignior.addSpyCity(citys[i]);
 	}
 }
 function hireRun(characterModel, hireCharacterId){
@@ -195,7 +251,7 @@ function hireRun(characterModel, hireCharacterId){
 		console.log("hireRun : 失败 " + rand + " > " + percentage + " = " + (rand > percentage));
 		return;
 	}
-	hireCharacter.seignior(characterModel.seignior().id());
+	hireCharacter.seigniorId(characterModel.seigniorId());
 	var loyalty = 100 * percentage >> 0;
 	hireCharacter.loyalty(loyalty > 100 ? 100 : loyalty);
 	outOfOffice.splice(hireCharacterIndex, 1);

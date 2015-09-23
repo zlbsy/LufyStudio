@@ -74,13 +74,6 @@ CharacterListView.prototype.listInit=function(){
 			buttonLabel = "hire";
 			self.dataList = cityModel.outOfOffice();
 			break;
-		/*case CharacterListType.EXPEDITION:
-			buttonLabel = "expedition";
-			self.dataList = cityModel.generals(Job.IDLE);
-			for(var i=0;i<self.dataList.length;i++){
-				self.dataList[i].troops(0);
-			}
-			break;*/
 		case CharacterListType.SELECT_LEADER:
 			buttonLabel = "execute";
 			self.dataList = self.controller.fromController.getValue("expeditionCharacterList");
@@ -97,6 +90,10 @@ CharacterListView.prototype.listInit=function(){
 				case CharacterListType.ENLIST:
 				case CharacterListType.CHARACTER_HIRE:
 				case CharacterListType.EXPEDITION:
+				case CharacterListType.TRANSPORT:
+				case CharacterListType.ACCESS:
+				case CharacterListType.EXPLORE_AGRICULTURE:
+				case CharacterListType.EXPLORE_BUSINESS:
 					showMoney = false;
 					break;
 			}
@@ -131,10 +128,6 @@ CharacterListView.prototype.onChangeChildSelect=function(event){
 	if(!self.lblMoney){
 		return;
 	}
-	console.log("self.controller.characterListType="+self.controller.characterListType);
-	console.log("characterListType2JobType=");
-	console.log(""+characterListType2JobType);
-	console.log("getJobPrice="+characterListType2JobType(self.controller.characterListType));	console.log("getJobPrice="+getJobPrice(characterListType2JobType(self.controller.characterListType)));
 	var cityModel = self.controller.getValue("cityData");
 	var usedMoney = getJobPrice(characterListType2JobType(self.controller.characterListType)) * self.selectedCount;
 	var overageMoney = cityModel.money() - usedMoney;

@@ -137,8 +137,8 @@ CharacterModel.prototype.seigniorId = function(value){
 };
 CharacterModel.prototype.seignior = function(chara_id) {
 	var self = this;
-	alert("seignior changed");
-	console.error("seignior changed");
+	alert("seignior changed:"+chara_id);
+	console.error("seignior changed:"+chara_id);
 	/*if(typeof chara_id != UNDEFINED){
 		self.data.seignior_id = chara_id;
 		return;
@@ -206,12 +206,12 @@ CharacterModel.prototype.strategies = function() {
 };
 CharacterModel.prototype.identity = function(value) {
 	var self = this;
-	var seignior = self.seignior();
-	if(!seignior){
+	var seigniorId = self.seigniorId();
+	if(seigniorId <= 0){
 		return Language.get("out_of_office");
 	}
 	var identity = "general";
-	if(self.id() == self.seignior().id()){
+	if(self.id() == seigniorId){
 		identity = "monarch";
 	}else if(self.id() == self.city().prefecture()){
 		identity = "prefecture";
@@ -250,6 +250,18 @@ CharacterModel.prototype.hire = function(id) {
 };
 CharacterModel.prototype.job = function(value) {
 	return this._dataValue("job", value, Job.IDLE);
+};
+//运输物资
+CharacterModel.prototype.transport = function(data) {
+	var self = this;
+	if(typeof data == UNDEFINED){
+		transportRun(self,self.data.transportData);
+		self.data.transportData = null;
+		self.job(Job.IDLE);
+	}else{
+		self.data.transportData = data;
+		self.job(Job.TRANSPORT);
+	}
 };
 CharacterModel.prototype.moveTo = function(cityId) {
 	var self = this;
@@ -451,9 +463,11 @@ CharacterModel.prototype.skill = function(type) {
 };
 CharacterModel.prototype.hasSkill = function(subType) {
 	var self = this;
+	console.log("self.data.skill="+self.data.skill);
 	if(!self.data.skill){
 		return false;
 	}
+	console.log("SkillMasterModel="+(typeof SkillMasterModel));
 	var skill = SkillMasterModel.getMaster(self.data.skill);
 	if(subType && skill.isSubType(subType)){
 		return true;

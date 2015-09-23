@@ -17,10 +17,15 @@ BuildMarketView.prototype.showMenu=function(){
 	var buttonExplore = getButton(Language.get("explore"),200);
 	buttonExplore.y = menuY;
 	layer.addChild(buttonExplore);
+	buttonExplore.addEventListener(LMouseEvent.MOUSE_UP, self.onClickExploreButton);
 	
 	return layer;
 };
 BuildMarketView.prototype.onClickBusinessButton=function(event){
 	var self = event.currentTarget.parent.parent.parent;
 	self.controller.loadCharacterList(CharacterListType.BUSINESS,self);
+};
+BuildMarketView.prototype.onClickExploreButton=function(event){
+	var self = event.currentTarget.parent.parent.parent;
+	self.controller.loadCharacterList(CharacterListType.EXPLORE_BUSINESS,self);
 };

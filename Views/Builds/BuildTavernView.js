@@ -11,6 +11,7 @@ BuildTavernView.prototype.showMenu=function(){
 	var buttonAccess = getButton(Language.get("access"),200);
 	buttonAccess.y = menuY;
 	layer.addChild(buttonAccess);
+	buttonAccess.addEventListener(LMouseEvent.MOUSE_UP, self.onClickAccessButton);
 	
 	menuY += menuHeight;
 	var buttonHire = getButton(Language.get("hire"),200);
@@ -19,6 +20,10 @@ BuildTavernView.prototype.showMenu=function(){
 	buttonHire.addEventListener(LMouseEvent.MOUSE_UP, self.onClickHireButton);
 	
 	return layer;
+};
+BuildTavernView.prototype.onClickAccessButton=function(event){
+	var self = event.currentTarget.parent.parent.parent;
+	self.controller.loadCharacterList(CharacterListType.ACCESS,self);
 };
 BuildTavernView.prototype.onClickHireButton=function(event){
 	var self = event.currentTarget.parent.parent.parent;
@@ -58,6 +63,8 @@ BuildTavernView.prototype.selectComplete=function(event){
 		event.characterList.forEach(function(child){
 			child.hire(hireCharacter.id());
 		});
+	}else if(event.characterListType == CharacterListType.ACCESS){
+		return self.callParent("selectComplete",arguments);
 	}
 	return true;
 };

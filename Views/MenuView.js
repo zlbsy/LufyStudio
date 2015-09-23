@@ -66,12 +66,30 @@ MenuView.prototype.hide=function(event){
 	MenuController.instance().hide();
 };
 MenuView.prototype.onClickOperatingEnd=function(event){
-	event.currentTarget.parent.parent.parent.hide();
-	SeigniorExecute.run();
+	var self = event.currentTarget.parent.parent.parent;
+	console.log("self="+self);
+	self.hide();
+	if(typeof SkillMasterModel == UNDEFINED){
+		self.loadSeigniorExecute();
+	}else{
+		SeigniorExecute.run();
+	}
 };
 MenuView.prototype.onClickGameSave=function(event){
 };
 MenuView.prototype.onClickGameRead=function(event){
 };
 MenuView.prototype.onClickReturnTop=function(event){
+};
+MenuView.prototype.loadSeigniorExecute=function(){
+	var self = this;
+	if(!self.load){
+		self.load = new LMvcLoader(self);
+	}
+	self.load.model(["Master/SkillMaster"],self.seigniorExecute);
+};
+MenuView.prototype.seigniorExecute=function(){
+	var self = this;
+	SkillMasterModel.setMaster(SkillsData);
+	SeigniorExecute.run();
 };
