@@ -68,6 +68,11 @@ SeigniorModel.prototype.checkSpyCitys = function(){
 		}
 	}
 };
+SeigniorModel.prototype.isSpyCity = function(id){
+	return this.data.spyAreas.findIndex(function(child){
+		return child.id == id;
+	}) >= 0;
+};
 SeigniorModel.prototype.addCity = function(area){
 	this.data.areas.push(area);
 };

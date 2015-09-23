@@ -116,7 +116,7 @@ function enlistRun(characterModel, targetEnlist){
 }
 function spyRun(characterModel, cityId){
 	//谍报：武力+运气
-	console.log("spyRun : ",characterModel.id());
+	console.log("spyRun : "+characterModel.name()+","+cityId);
 	var area = AreaModel.getArea(cityId);
 	characterModel.job(Job.IDLE);
 	if(characterModel.seigniorId() == area.seigniorCharaId()){
@@ -124,10 +124,12 @@ function spyRun(characterModel, cityId){
 		console.log("spyRun : 失败 null");
 		return;
 	}
+	console.log("spyValue count");
 	var seignior;
 	var spyValue = characterModel.force() + characterModel.luck();
 	if(spyValue<JobCoefficient.SPY){
 		if(spyValue < Math.random()*JobCoefficient.SPY){
+			console.log("spyRun : 失败 能力不够");
 			return;
 		}
 		seignior = characterModel.seignior();
@@ -135,13 +137,17 @@ function spyRun(characterModel, cityId){
 		return;
 	}
 	var num = (spyValue / JobCoefficient.SPY) >>> 0;
+	console.log("spyRun : num="+num);
 	seignior = seignior || characterModel.seignior();
+	console.log("spyRun : seignior="+seignior);
 	seignior.addSpyCity(cityId);
 	num -= 1;
+	console.log("spyRun : num="+num);
 	spyValue = spyValue % JobCoefficient.SPY;
 	if(spyValue>JobCoefficient.SPY || spyValue > Math.random()*JobCoefficient.SPY){
 		num += 1;
 	}
+	console.log("spyRun : num2="+num);
 	if(num = 0){
 		return;
 	}
@@ -150,6 +156,7 @@ function spyRun(characterModel, cityId){
 		num = neighbors.length;
 	}
 	neighbors = Array.getRandomArrays(neighbors, num);
+	console.log("spyRun : neighbors="+neighbors);
 	for(var i = 0;i<neighbors.length;i++){
 		seignior.addSpyCity(neighbors[i]);
 	}

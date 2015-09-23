@@ -45,6 +45,10 @@ CityView.prototype.onBuildClick=function(event){
 		return;
 	}
 	var self = this, build;
+	if(event.target.alpha != 1){
+		return;
+	}
+	
 	switch(event.target.name){
 		case "official":
 			build = new BuildOfficialView(self.controller);
@@ -73,19 +77,22 @@ CityView.prototype.onBuildClick=function(event){
 CityView.prototype.buildLayerInit=function(){
 	var self = this;
 	self.buildLayer.addEventListener(LMouseEvent.MOUSE_UP, self.onBuildClick.bind(self));
-	
+	var alpha = self.controller.getValue("selfCity") ? 1 : 0.5;
 	var official = new BuildView(self.controller,"main-official","official");
 	official.x = (LGlobal.width - official.width)*0.5;
 	official.y = (LGlobal.height - official.height) * 0.6;
+	official.alpha = self.controller.getValue("cityFree") ? 1 : 0.5;
 	self.buildLayer.addChild(official);
 	
 	var tavern = new BuildView(self.controller,"main-tavern","tavern");
 	tavern.y = LGlobal.height - tavern.height - 160;
+	tavern.alpha = alpha;
 	self.buildLayer.addChild(tavern);
 	
 	var market = new BuildView(self.controller,"main-tavern","market");
 	market.x = LGlobal.width - market.width;
 	market.y = 150;
+	market.alpha = alpha;
 	self.buildLayer.addChild(market);
 	
 	var citygate = new BuildView(self.controller,"main-citygate","citygate");
@@ -95,16 +102,19 @@ CityView.prototype.buildLayerInit=function(){
 	var barrack = new BuildView(self.controller,"main-tavern","barrack");
 	barrack.x = (LGlobal.width - barrack.width) * 0.7;
 	barrack.y = LGlobal.height - barrack.height - 5;
+	barrack.alpha = alpha;
 	self.buildLayer.addChild(barrack);
 	
 	var farmland = new BuildView(self.controller,"main-tavern","farmland");
 	farmland.x = LGlobal.width - farmland.width;
 	farmland.y = 300;
+	farmland.alpha = alpha;
 	self.buildLayer.addChild(farmland);
 	
 	var institute = new BuildView(self.controller,"main-tavern","institute");
 	institute.x = 50;
 	institute.y = 150;
+	institute.alpha = alpha;
 	self.buildLayer.addChild(institute);
 	
 	//var bitmapOfficial = new BuildOfficialView(self.controller);

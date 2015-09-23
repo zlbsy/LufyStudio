@@ -34,7 +34,9 @@ CityController.prototype.init=function(){
 	
 	var cityData = AreaModel.getArea(LMvc.cityId);
 	self.setValue("cityData",cityData);
-	
+	var cityFree = cityData.seigniorCharaId() == LMvc.selectSeignorId || SeigniorModel.getSeignior(LMvc.selectSeignorId).isSpyCity(LMvc.cityId);
+	self.setValue("cityFree",cityFree);
+	self.setValue("selfCity",cityData.seigniorCharaId() == LMvc.selectSeignorId);
 	LMvc.keepLoading(false);
 	LMvc.CityController = self;
 	LMvc.MapController.view.visible = false;

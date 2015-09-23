@@ -9,8 +9,8 @@ function BuildOfficialView(controller){
 }
 BuildOfficialView.prototype.showMenu=function(){
 	var self = this, layer = new LSprite(), menuY = 0, menuHeight = 55;
-	var cityModel = self.controller.getValue("cityData");
-	if(LMvc.selectSeignorId == cityModel.seignior_chara_id()){
+	//var cityModel = self.controller.getValue("cityData");
+	if(self.controller.getValue("selfCity")){
 		var buttonExpedition = getButton(Language.get("expedition"),200);
 		buttonExpedition.y = menuY;
 		layer.addChild(buttonExpedition);

@@ -137,14 +137,16 @@ CharacterModel.prototype.seigniorId = function(value){
 };
 CharacterModel.prototype.seignior = function(chara_id) {
 	var self = this;
-	if(typeof chara_id != UNDEFINED){
+	alert("seignior changed");
+	console.error("seignior changed");
+	/*if(typeof chara_id != UNDEFINED){
 		self.data.seignior_id = chara_id;
 		return;
-	}
+	}*/
 	if(!self.data.seignior_id){
 		return null;
 	}
-	return CharacterModel.getChara(self.data.seignior_id);
+	return SeigniorModel.getSeignior(self.data.seignior_id);
 };
 CharacterModel.prototype.exp = function(value){
 	return this._dataValue("exp", value, 0);

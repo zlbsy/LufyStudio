@@ -4,6 +4,7 @@ function BuildCitygateView(controller){
 }
 BuildCitygateView.prototype.showMenu=function(){
 	var self = this, layer = new LSprite(), menuY = 0, menuHeight = 55;
+	if(self.controller.getValue("selfCity")){
 	var buttonPolice = getButton(Language.get("police"),200);
 	buttonPolice.y = menuY;
 	layer.addChild(buttonPolice);
@@ -15,6 +16,7 @@ BuildCitygateView.prototype.showMenu=function(){
 	layer.addChild(buttonRepair);
 	
 	menuY += menuHeight;
+	}
 	var buttonMap = getButton(Language.get("big_map"),200);
 	buttonMap.y = menuY;
 	layer.addChild(buttonMap);

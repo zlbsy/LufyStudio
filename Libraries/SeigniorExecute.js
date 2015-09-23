@@ -88,6 +88,9 @@ SeigniorExecute.prototype.areaJobRun=function(area){
 			case Job.HIRE:
 				chara.hire();
 				break;
+			case Job.SPY:
+				chara.spy();
+				break;
 		}
 	}
 	if(list.length == 0){
