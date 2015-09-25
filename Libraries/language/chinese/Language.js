@@ -193,6 +193,7 @@ Language.data = {
 	"out_of_office":"在野",
 	
 	"loyalty":"忠诚度",
+	"feat":"功绩",
 	
 	"market":"市场",
 	"official":"官府",
@@ -201,6 +202,8 @@ Language.data = {
 	"institute":"太学院",
 	"tavern":"酒馆",
 	"citygate":"城门",
+	"redeem":"赎回俘虏",
+	"stop_battle":"停战协议",
 	
 	"idle":"空闲",
 	"move":"移动",

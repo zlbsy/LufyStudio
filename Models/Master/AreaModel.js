@@ -122,18 +122,19 @@ AreaModel.prototype.setSeignor = function(seignior,areaData){
 			}
 			this.data[key] = out_of_offices;
 			continue;
-		}else if(key == "not_debut"){
-			var not_debut = [];
+		}else if(key == "items_farmland"){
+			var items_farmland = this.data[key] || [];
 			for(var i=0,l=areaData[key].length;i<l;i++){
-				var charaData = areaData[key][i];
-				var chara = CharacterModel.getChara(charaData.chara_id);
-				if(charaData.equipments){
-					chara.equip(charaData.equipments);
-				}
-				//TODO::加入登场信息
-				not_debut.push(chara);
+				items_farmland.push(areaData[key][i]);
 			}
-			this.data[key] = not_debut;
+			this.data[key] = items_farmland;
+			continue;
+		}else if(key == "items_market"){
+			var items_market = this.data[key] || [];
+			for(var i=0,l=areaData[key].length;i<l;i++){
+				items_market.push(areaData[key][i]);
+			}
+			this.data[key] = items_market;
 			continue;
 		}
 		this.data[key] = areaData[key];
@@ -144,6 +145,12 @@ AreaModel.prototype.seigniorCharaId=function(seigniorCharaId){
 };
 AreaModel.prototype.seignior_chara_id=function(){
 	return this.seigniorCharaId();
+};
+AreaModel.prototype.itemsFarmland=function(value){
+	return this._dataValue("items_farmland", value, []);
+};
+AreaModel.prototype.itemsMarket=function(value){
+	return this._dataValue("items_market", value, []);
 };
 AreaModel.prototype.prefecture=function(value){
 	return this._dataValue("prefecture", value, 0);
@@ -320,6 +327,23 @@ AreaModel.prototype.generals=function(job){
 };
 AreaModel.prototype.outOfOffice=function(){
 	return this.data.out_of_offices;
+};
+AreaModel.prototype.notDebut=function(){
+	var notDebut = this.data.not_debut;
+	var charas = [];
+	if(!notDebut || notDebut.length == 0){
+		return charas;
+	}
+	var month = LMvc.chapterController.getValue("month");
+	var year = LMvc.chapterController.getValue("year");
+	for(var i = 0, l = notDebut.length;i<l;i++){
+		var child = notDebut[i];
+		//console.log(child.year +"<="+ year +"&&"+ child.month +"<="+ month);
+		if(child.year <= year && child.month <= month){
+			charas.push(child.chara_id);
+		}
+	}
+	return charas;
 };
 AreaModel.prototype.items = function(){
 	if(!this.data.items){

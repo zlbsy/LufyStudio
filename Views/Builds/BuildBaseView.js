@@ -3,6 +3,7 @@ function BuildBaseView(controller, buildName){
 	self.isBuildBaseView = true;
 	base(self,LView,[controller]);
 	self.setBackground();
+	self.buildName = buildName;
 	var build = controller.view.buildLayer.childList.find(function(child){
 		return child.name == buildName;
 	});

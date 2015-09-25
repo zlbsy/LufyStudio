@@ -44,6 +44,7 @@ BuildOfficialView.prototype.showMenu=function(){
 		var buttonDiplomacy = getButton(Language.get("diplomacy"),200);
 		buttonDiplomacy.y = menuY;
 		layer.addChild(buttonDiplomacy);
+		buttonDiplomacy.addEventListener(LMouseEvent.MOUSE_UP, self.onClickDiplomacyButton.bind(self));
 	}else{
 		var buttonGeneralsList = getButton(Language.get("generals_list"),200);
 		buttonGeneralsList.y = menuY;
@@ -52,6 +53,35 @@ BuildOfficialView.prototype.showMenu=function(){
 	}
 	
 	return layer;
+};
+BuildOfficialView.prototype.onClickDiplomacyButton=function(event){
+	var self = this, menuY = 0, menuHeight = 55;
+	self.menuLayer.removeAllChild();
+	var menuLayer = new LSprite();
+	var buttonRedeem = getButton(Language.get("redeem"),200);
+	buttonRedeem.y = menuY;
+	menuLayer.addChild(buttonRedeem);
+	buttonRedeem.addEventListener(LMouseEvent.MOUSE_UP, self.onClickRedeemButton.bind(self));
+		
+	menuY += menuHeight;
+	var buttonStopBattle = getButton(Language.get("stop_battle"),200);
+	buttonStopBattle.y = menuY;
+	menuLayer.addChild(buttonStopBattle);
+	buttonStopBattle.addEventListener(LMouseEvent.MOUSE_UP, self.onClickStopBattleButton.bind(self));
+	self.menuLayer.addChild(menuLayer);
+	
+	var build = self.controller.view.buildLayer.childList.find(function(child){
+		return child.name == self.buildName;
+	});
+	self.setMenuPosition(build, menuLayer);
+};
+BuildOfficialView.prototype.onClickRedeemButton=function(event){
+	var self = this;
+	
+};
+BuildOfficialView.prototype.onClickStopBattleButton=function(event){
+	var self = this;
+	
 };
 BuildOfficialView.prototype.onClickTransportButton=function(event){
 	var self = this;
@@ -71,8 +101,7 @@ BuildOfficialView.prototype.transportSelectCharacter=function(event){
 };
 BuildOfficialView.prototype.onClickExpeditionButton=function(event){
 	var self = this;
-	
-	//TODO::
+	//TODO::Testcode
 	//self.controller.gotoBattle();
 	self.characterListType = CharacterListType.EXPEDITION;
 	self.controller.addEventListener(LCityEvent.SELECT_CITY, self.expeditionSelectCharacter);
@@ -100,8 +129,6 @@ BuildOfficialView.prototype.onClickGeneralsMoveButton=function(event){
 	var self = this;
 	self.controller.addEventListener(LCityEvent.SELECT_CITY, self.moveSelectCharacter);
 	self.controller.toSelectMap(CharacterListType.CHARACTER_MOVE);
-	
-	//self.controller.loadCharacterList(CharacterListType.CHARACTER_MOVE,self);
 };
 BuildOfficialView.prototype.spySelectCharacter=function(event){
 	var controller = event.currentTarget;
@@ -212,7 +239,6 @@ BuildOfficialView.prototype.showBuild=function(event){
 };
 BuildOfficialView.prototype.expeditionReady=function(){
 	var self = this;
-	console.log("BuildOfficialView.prototype.expeditionReady cityId=",self.controller.getValue("cityId"));
 	var readyView = new ExpeditionReadyView(self.controller);
 	//self.addChild(readyView);
 	var obj = {title:Language.get(self.characterListType == CharacterListType.EXPEDITION ? "备战军资" : "transport"),subWindow:readyView,width:480,height:540,okEvent:self.expeditionReadyComplete,cancelEvent:self.expeditionCancel};
@@ -228,18 +254,14 @@ BuildOfficialView.prototype.expeditionCancel=function(event){
 };
 BuildOfficialView.prototype.expeditionReadyComplete=function(event){
 	var windowLayer = event.currentTarget.parent;
-	console.log("windowLayer="+windowLayer);
 	var self = windowLayer.parent;
 	var readyView = windowLayer.childList.find(function(child){
 		return child.constructor.name == "ExpeditionReadyView";
 	});
-	console.log("readyView="+readyView);
 	var data = readyView.getData();
-	console.log("data="+data);
 	if(self.characterListType == CharacterListType.EXPEDITION){
 		data.expeditionCharacterList = self.controller.getValue("expeditionCharacterList");
 		data.expeditionLeader = self.controller.getValue("expeditionLeader");
-		console.log("expeditionReadyComplete",data.expeditionCharacterList,data.expeditionLeader);
 		windowLayer.remove();
 		self.controller.setValue("battleData",data);
 		self.controller.gotoBattle();

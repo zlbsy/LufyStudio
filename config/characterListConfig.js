@@ -31,7 +31,7 @@ var characterList = [
 		soldiers:[{id:1,proficiency:500,img:6},{id:2,proficiency:700,img:1}]},
 	{id:8,name:"曹操",faceImg:1000,minFace:[0,23,151,151],disposition:1,skills:0,force:82,intelligence:90,command:98,agility:68,luck:62,compatibility:75,initTroops:100,initStrategy:20,personalLoyalty:10,
 		soldiers:[{id:1,proficiency:500,img:6},{id:2,proficiency:700,img:1}]},
-	{id:9,name:"许褚",faceImg:1000,minFace:[0,23,151,151],disposition:3,skills:0,force:96,intelligence:90,command:98,agility:68,luck:62,compatibility:75,initTroops:100,initStrategy:20,personalLoyalty:10,
+	{id:9,name:"许褚",faceImg:1000,minFace:[0,23,151,151],disposition:3,skills:0,force:96,intelligence:90,command:98,agility:68,luck:62,compatibility:1,initTroops:100,initStrategy:20,personalLoyalty:10,
 		soldiers:[{id:1,proficiency:500,img:6},{id:2,proficiency:700,img:1}]},
 	{id:10,name:"典卫",faceImg:1000,minFace:[0,23,151,151],disposition:3,skills:0,force:97,intelligence:90,command:98,agility:68,luck:62,compatibility:75,initTroops:100,initStrategy:20,personalLoyalty:10,
 		soldiers:[{id:1,proficiency:500,img:6},{id:2,proficiency:700,img:1}]},

@@ -26,6 +26,12 @@ LMvc.areaData = {
 				{id:4,quantity:4000,learned:1},
 				{id:7,quantity:2000,learned:1}
 			],*/
+			items_farmland:[
+				{item_id:4,proportion:10,quantity:1000},
+			],
+			items_market:[
+				{item_id:5,proportion:10,quantity:1000},
+			],
 			items : [
 				{item_id:4,lv:1},
 				{item_id:5,lv:2},
@@ -55,7 +61,7 @@ LMvc.areaData = {
 				{chara_id:29,lv:1,feat:0}
 			],
 			not_debut:[
-				{chara_id:9,lv:1,feat:0}
+				{chara_id:9,lv:1,feat:0,year:184,month:1}
 			]
 		},{
 			area_id : 1,

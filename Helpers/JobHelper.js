@@ -53,6 +53,9 @@ var JobCoefficient = {
 	TECHNOLOGY:1,
 };
 //外交:智力+运气
+访问：智力+统率+运气
+//农地探索：智力+武力+运气
+//市场探索：智力+敏捷+运气
 谍报：武力+运气
 修补：武力+统率
 商业：智力+敏捷
@@ -67,25 +70,110 @@ function getJobResult(realValue,coefficient){
 	return value;
 }
 function accessRun(characterModel){
-	//访问
+	//访问：智力+统率+运气
 	console.log("accessRun : ",characterModel.id());
 	characterModel.job(Job.IDLE);
-	var cityModel = characterModel.city();
+	var value01 = getJobResult(characterModel.intelligence(),JobCoefficient.ACCESS);
+	var value02 = getJobResult(characterModel.command(),JobCoefficient.ACCESS);
+	var value03 = getJobResult(characterModel.luck(),JobCoefficient.ACCESS);
+	var value = value01 + value02 + value03;
+	var rand = Math.random();
 	
+	if(rand > value){
+		console.log("accessRun : 失败 能力不够");
+		return;
+	}
+	var cityModel = characterModel.city();
+	var notDebut = cityModel.notDebut();
+	if(notDebut.length == 0){
+		console.log("accessRun : 失败");
+		return;
+	}
+	var charaId = notDebut[notDebut.length*Math.random() >>> 0];
+	
+	var targetModel = CharacterModel.getChara(charaId);
+	var area = characterModel.city();
+	var outOfOffice = area.outOfOffice();
+	outOfOffice.push(targetModel);
+	hireRun2(characterModel, targetModel,area);
+}
+function exploreItems(items){
+	if(items.length == 0){
+		return -1;
+	}
+	var proportionSum = 0;
+	for(var i=0,l=items.length;i<l;i++){
+		proportionSum += items[i].proportion;
+	}
+	var proportion = Math.random() * proportionSum;
+	proportionSum = 0;
+	for(var i=0,l=items.length;i<l;i++){
+		proportionSum += items[i].proportion;
+		if(proportionSum >= proportion){
+			return i;
+		}
+	}
+	return -1;
 }
 function exploreAgricultureRun(characterModel){
-	//农地探索
+	//农地探索：智力+武力+运气
 	console.log("exploreAgricultureRun : ",characterModel.id());
 	characterModel.job(Job.IDLE);
-	var cityModel = characterModel.city();
+	var value01 = getJobResult(characterModel.intelligence(),JobCoefficient.EXPLORE_AGRICULTURE);
+	var value02 = getJobResult(characterModel.force(),JobCoefficient.EXPLORE_AGRICULTURE);
+	var value03 = getJobResult(characterModel.luck(),JobCoefficient.EXPLORE_AGRICULTURE);
+	var value = value01 + value02 + value03;
+	var rand = Math.random();
 	
+	if(rand > value){
+		console.log("exploreAgricultureRun : 失败 能力不够");
+		return;
+	}
+	var cityModel = characterModel.city();
+	var items = cityModel.itemsFarmland();
+	var index = exploreItems(items);
+	if(index < 0){
+		console.log("exploreAgricultureRun : 失败");
+		return;
+	}
+	var itemId = items[index].item_id;
+	items[index].quantity -= 1;
+	if(items[index].quantity == 0){
+		items.splice(index, 1);
+	}
+	cityModel.itemsFarmland(items);
+	var item = new ItemModel(null,{item_id:itemId});
+	cityModel.addItem(item);
 }
 function exploreBusinessRun(characterModel){
-	//市场探索
+	//市场探索：智力+敏捷+运气
 	console.log("exploreBusinessRun : ",characterModel.id());
 	characterModel.job(Job.IDLE);
-	var cityModel = characterModel.city();
+	var value01 = getJobResult(characterModel.intelligence(),JobCoefficient.EXPLORE_BUSINESS);
+	var value02 = getJobResult(characterModel.agility(),JobCoefficient.EXPLORE_BUSINESS);
+	var value03 = getJobResult(characterModel.luck(),JobCoefficient.EXPLORE_BUSINESS);
+	var value = value01 + value02 + value03;
+	var rand = Math.random();
 	
+	if(rand > value){
+		console.log("exploreBusinessRun : 失败 能力不够");
+		return;
+	}
+	var cityModel = characterModel.city();
+	var items = cityModel.itemsMarket();
+	var index = exploreItems(items);
+	if(index < 0){
+		console.log("exploreBusinessRun : 失败");
+		return;
+	}
+	var itemId = items[index].item_id;
+	items[index].quantity -= 1;
+	if(items[index].quantity == 0){
+		items.splice(index, 1);
+	}
+	cityModel.itemsFarmland(items);
+	var item = new ItemModel(null,{item_id:itemId});
+	cityModel.addItem(item);
 }
 function transportRun(characterModel, transportData){
 	//运输物资
@@ -231,11 +319,16 @@ function hireRun(characterModel, hireCharacterId){
 		console.log("hireRun : 失败 null");
 		return;
 	}
-	var compatibility;
-	var hireCharacter = outOfOffice[hireCharacterIndex];
+	//var hireCharacter = outOfOffice[hireCharacterIndex];
 	var hireCharacter = CharacterModel.getChara(hireCharacterId);
+	hireRun2(characterModel, hireCharacter, area);
+}
+function hireRun2(characterModel, hireCharacter,area){
+	var compatibility;
 	var percentage = (JobCoefficient.NORMAL + characterModel.luck()) * 0.5 / JobCoefficient.NORMAL;
-	compatibility = Math.abs(characterModel.seignior().compatibility() - hireCharacter.compatibility());
+	var seigniorId = characterModel.seigniorId();
+	var seigniorChara = CharacterModel.getChara(seigniorId);
+	compatibility = Math.abs(seigniorChara.compatibility() - hireCharacter.compatibility());
 	if(compatibility > JobCoefficient.COMPATIBILITY){
 		compatibility -= JobCoefficient.COMPATIBILITY;
 	}
@@ -254,9 +347,14 @@ function hireRun(characterModel, hireCharacterId){
 	hireCharacter.seigniorId(characterModel.seigniorId());
 	var loyalty = 100 * percentage >> 0;
 	hireCharacter.loyalty(loyalty > 100 ? 100 : loyalty);
+	var outOfOffice = area.outOfOffice();
+	var hireCharacterIndex = outOfOffice.findIndex(function(child){
+		return child.id() == hireCharacter.id();
+	});
+	
 	outOfOffice.splice(hireCharacterIndex, 1);
+	hireCharacter.cityId(characterModel.cityId());
 	var generals = area.generals();
 	generals.push(hireCharacter);
-	console.log("hireRun : 成功");
 }
 
