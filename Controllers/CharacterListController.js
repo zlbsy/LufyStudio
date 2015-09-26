@@ -2,6 +2,7 @@ function CharacterListController(characterListType,fromController, characterList
 	var self = this;
 	self.characterListType = characterListType;
 	self.fromController = fromController;
+	self.characterList = characterList;
 	base(self,MyController,[]);
 }
 CharacterListController.prototype.construct=function(){

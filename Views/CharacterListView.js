@@ -80,7 +80,9 @@ CharacterListView.prototype.listInit=function(){
 			Toast.makeText(Language.get("dialog_expedition_select_leader")).show();
 			break;
 		case CharacterListType.CAPTIVE:
-			self.dataList = SeignorModel.getSeignior(LMvc.selectSeignorId).getCaptivedList();
+			self.dataList = self.controller.characterList;
+			buttonLabel = "redeem";
+			break;
 		default:
 			buttonLabel = "execute";
 			showMoney = true;
@@ -327,6 +329,7 @@ CharacterListView.prototype.showList=function(){
 	var cityModel = self.controller.getValue("cityData");
 	self.listChildLayer = new LSprite();
 	var scHeight = 0;
+	console.log("showList self.dataList = ", self.dataList);
 	for(var i=0,l=self.dataList.length;i<l;i++){
 		var charaModel = self.dataList[i];
 		var childLayer = new CharacterListChildView(self.controller,charaModel,cityModel,self);

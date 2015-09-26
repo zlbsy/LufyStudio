@@ -133,7 +133,6 @@ AreaModel.prototype.setSeignor = function(seignior,areaData){
 				chara.cityId(areaData.area_id);
 				captives.push(chara);
 			}
-			alert("captives="+captives);
 			this.data[key] = captives;
 			continue;
 		}else if(key == "items_farmland"){
