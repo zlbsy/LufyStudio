@@ -3,16 +3,20 @@ function OpenCharacterListController(){
 	base(self,MyController,[]);
 }
 OpenCharacterListController.prototype.construct=function(){};
-OpenCharacterListController.prototype.loadCharacterList = function(type){
+OpenCharacterListController.prototype.loadCharacterList = function(type, characterList){
 	var self = this;
 	LMvc.keepLoading(true);
 	LMvc.changeLoading(TranslucentLoading);
 	self.characterListType = type;
+	if(Array.isArray(characterList)){
+		self.characterList = characterList;
+	}
 	self.loadMvc("CharacterList",self.showCharacterList);
 };
 OpenCharacterListController.prototype.showCharacterList=function(){
 	var self = this;
-	var characterList = new CharacterListController(self.characterListType,self);
+	var characterList = new CharacterListController(self.characterListType,self,self.characterList);
+	self.characterList = null;
 	self.view.addCharacterListView(characterList.view);
 	self.dispatchEvent(CharacterListEvent.SHOW);
 };

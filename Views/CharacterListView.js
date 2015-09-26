@@ -79,6 +79,8 @@ CharacterListView.prototype.listInit=function(){
 			self.dataList = self.controller.fromController.getValue("expeditionCharacterList");
 			Toast.makeText(Language.get("dialog_expedition_select_leader")).show();
 			break;
+		case CharacterListType.CAPTIVE:
+			self.dataList = SeignorModel.getSeignior(LMvc.selectSeignorId).getCaptivedList();
 		default:
 			buttonLabel = "execute";
 			showMoney = true;
@@ -221,13 +223,6 @@ CharacterListView.prototype.onClickCloseButton=function(event){
 	if(self.controller.characterListType == CharacterListType.CHARACTER_HIRE){
 		fromController.hireCharacter = null;
 	}
-	//var cityModel = self.controller.getValue("cityData");
-	//var troops = cityModel.troops();
-	/*self.listChildLayer.childList.forEach(function(child){
-		if(child.constructor.name !== "CharacterListChildView"){
-			return;
-		}
-	});*/
 	self.controller.closeCharacterList({subEventType:"return"});
 };
 CharacterListView.prototype.showTabMenu=function(){

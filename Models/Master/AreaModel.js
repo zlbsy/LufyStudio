@@ -122,6 +122,20 @@ AreaModel.prototype.setSeignor = function(seignior,areaData){
 			}
 			this.data[key] = out_of_offices;
 			continue;
+		}else if(key == "captives"){
+			//{chara_id:?,seignior_id:?,loyalty:?}
+			var captives = [];
+			for(var i=0,l=areaData[key].length;i<l;i++){
+				var charaData = areaData[key][i];
+				var chara = CharacterModel.getChara(charaData.chara_id);
+				chara.seigniorId(charaData.seignior_id);
+				chara.loyalty(charaData.loyalty);
+				chara.cityId(areaData.area_id);
+				captives.push(chara);
+			}
+			alert("captives="+captives);
+			this.data[key] = captives;
+			continue;
 		}else if(key == "items_farmland"){
 			var items_farmland = this.data[key] || [];
 			for(var i=0,l=areaData[key].length;i<l;i++){
@@ -281,8 +295,19 @@ AreaModel.prototype.addCaptives = function(param){
 	}
 	self.data.captives.push(chara);
 };
-AreaModel.prototype.captives=function(){
-	return this.data.captives;
+AreaModel.prototype.captives=function(seigniorId){
+	var self = this;
+	if(typeof seigniorId == UNDEFINED){
+		return self.data.captives;
+	}
+	var list = [];
+	for(var i=0,l=self.data.captives.length;i<l;i++){
+		var characterModel = self.data.captives[i];
+		if(characterModel.seigniorId() == seigniorId){
+			list.push(characterModel);
+		}
+	}
+	return list;
 };
 AreaModel.prototype.troopsSum=function(){
 	return LString.numberFormat(this.troops(),3);

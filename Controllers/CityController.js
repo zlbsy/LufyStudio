@@ -27,7 +27,7 @@ CityController.prototype.libraryLoad=function(){
 CityController.prototype.viewLoad=function(){
 	var self = this;
 	self.load.view(["Builds/Build","Builds/BuildBase","Builds/BuildMarket","Builds/BuildBarrack","Builds/BuildCitygate",
-	"Builds/BuildOfficial","Builds/BuildFarmland","Builds/BuildTavern","Builds/BuildInstitute","Common/HeaderStatus"],self.init);
+	"Builds/BuildOfficial","Builds/BuildFarmland","Builds/BuildTavern","Builds/BuildInstitute","Builds/BuildDiplomacy","Common/HeaderStatus"],self.init);
 };
 CityController.prototype.init=function(){
 	var self = this;

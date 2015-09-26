@@ -1,4 +1,4 @@
-function CharacterListController(characterListType,fromController){
+function CharacterListController(characterListType,fromController, characterList){
 	var self = this;
 	self.characterListType = characterListType;
 	self.fromController = fromController;

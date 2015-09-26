@@ -19,4 +19,6 @@ CharacterListType.CHARACTER_SPY = "generals_spy";//谍报
 CharacterListType.TRANSPORT = "transport";//输送物资
 CharacterListType.EXPLORE_AGRICULTURE = "explore_agriculture";//农地探索
 CharacterListType.EXPLORE_BUSINESS = "explore_business";//市场探索
+CharacterListType.CAPTIVE = "captive";//"俘虏"
+CharacterListType.REDEEM = "redeem";//赎回俘虏
 CharacterListType.TEST = "test";

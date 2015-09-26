@@ -85,6 +85,23 @@ SeigniorModel.prototype.removeCity = function(areaId){
 	});
 	this.data.areas.splice(index, 1);
 };
+SeigniorModel.prototype.getCaptivedList = function(){
+	var self = this;
+	var captives = [];
+	for(var i=0,l=SeigniorModel.list.length;i<l;i++){
+		var seignior = SeigniorModel.list[i];
+		if(seignior.chara_id() == self.chara_id()){
+			continue;
+		}
+		var citys = seignior.areas();
+		for(var j = 0, ll = citys.length; j<ll;j++){
+			var city = citys[j];
+			var characters = city.captives(self.chara_id());
+			captives = captives.concat(characters);
+		}
+	}
+	return captives;
+};
 /**
  * 武将
  **/
