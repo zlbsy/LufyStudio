@@ -13,6 +13,7 @@ var Job = {
 	EXPLORE_AGRICULTURE:"explore_agriculture",
 	EXPLORE_BUSINESS:"explore_business",
 	TRANSPORT : "transport_job",
+	DIPLOMACY_REDEEM:"diplomacy_redeem",
 	END:"end"
 };
 var JobPrice = {

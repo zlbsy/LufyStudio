@@ -177,6 +177,7 @@ Language.data = {
 	"transport":"输送物资",
 	"transport_job":"输送",
 	"diplomacy":"外交",
+	"diplomacy_redeem":"外交",
 	"access":"访问",
 	"hire":"登用",
 	"explore":"探索",

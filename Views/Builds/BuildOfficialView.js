@@ -56,8 +56,9 @@ BuildOfficialView.prototype.showMenu=function(){
 BuildOfficialView.prototype.onClickDiplomacyButton=function(event){
 	var self = this;
 	var parent = self.parent;
-	var buildDiplomacy = new BuildDiplomacyView(self.controller);
+	var controller = self.controller;
 	self.remove();
+	var buildDiplomacy = new BuildDiplomacyView(controller);
 	parent.addChild(buildDiplomacy);
 };
 BuildOfficialView.prototype.onClickTransportButton=function(event){

@@ -28,6 +28,7 @@ BuildDiplomacyView.prototype.onClickRedeemButton=function(event){
 			LMvc.layer.addChild(windowLayer);
 		return;
 	}
+	self.characterListType = CharacterListType.REDEEM;
 	self.controller.loadCharacterList(CharacterListType.CAPTIVE,captivedList);
 };
 BuildDiplomacyView.prototype.onClickStopBattleButton=function(event){
@@ -131,18 +132,18 @@ BuildDiplomacyView.prototype.selectComplete=function(event){
 			return false;
 		}
 		self.controller.setValue("expeditionCharacterList", characterList);
-	}else if(event.characterListType == CharacterListType.SELECT_LEADER){
+	}else if(event.characterListType == CharacterListType.REDEEM){
 		if(event.characterList.length > 1){
-			var obj = {title:Language.get("confirm"),message:Language.get("dialog_select_leader_error"),height:200,okEvent:null};
+			var obj = {title:Language.get("confirm"),message:Language.get("dialog_select_onlyone_error"),height:200,okEvent:null};
 			var windowLayer = ConfirmWindow(obj);
 			LMvc.layer.addChild(windowLayer);
 			return false;
 		}else{
-			self.controller.setValue("expeditionLeader",event.characterList[0]);
-			self.controller.setValue("toCityId", cityId);
+			self.controller.setValue("redeemCharacterId", event.characterList[0]);
+			//event.characterList[0].redeem(self.controller.getValue("captiveCharacterId"));
 			return true;
 		}
-	}else if(event.characterListType == CharacterListType.TRANSPORT){
+	}else if(event.characterListType == CharacterListType.CAPTIVE){
 		
 		if(event.characterList.length > 1){
 			var obj = {title:Language.get("confirm"),message:Language.get("dialog_select_onlyone_error"),height:200,okEvent:null};
@@ -150,7 +151,7 @@ BuildDiplomacyView.prototype.selectComplete=function(event){
 			LMvc.layer.addChild(windowLayer);
 			return false;
 		}else{
-			self.controller.setValue("transportCharacter", event.characterList[0]);
+			self.controller.setValue("captiveCharacterId", event.characterList[0].id());
 			return true;
 		}
 	}
@@ -182,17 +183,16 @@ BuildDiplomacyView.prototype.showBuild=function(event){
 	if(!self.load){
 		self.load = new LMvcLoader(self);
 	}
-	if(event.characterListType == CharacterListType.EXPEDITION){
-		self.controller.loadCharacterList(CharacterListType.SELECT_LEADER,self);
-	}else if(event.characterListType == CharacterListType.SELECT_LEADER || event.characterListType == CharacterListType.TRANSPORT){
+	if(event.characterListType == CharacterListType.CAPTIVE){
+		self.controller.loadCharacterList(CharacterListType.REDEEM,self);
+	}else if(event.characterListType == CharacterListType.REDEEM){
 		self.load.view(["Builds/ExpeditionReady"],self.expeditionReady);
 	}
 };
 BuildDiplomacyView.prototype.expeditionReady=function(){
 	var self = this;
 	var readyView = new ExpeditionReadyView(self.controller);
-	//self.addChild(readyView);
-	var obj = {title:Language.get(self.characterListType == CharacterListType.EXPEDITION ? "备战军资" : "transport"),subWindow:readyView,width:480,height:540,okEvent:self.expeditionReadyComplete,cancelEvent:self.expeditionCancel};
+	var obj = {title:Language.get(self.characterListType == CharacterListType.REDEEM ? "赎金" : "transport"),subWindow:readyView,width:480,height:540,okEvent:self.expeditionReadyComplete,cancelEvent:self.expeditionCancel};
 	var windowLayer = ConfirmWindow(obj);
 	self.addChild(windowLayer);
 	self.menuLayer.visible = false;

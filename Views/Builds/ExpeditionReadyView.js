@@ -56,7 +56,7 @@ ExpeditionReadyView.prototype.set=function(img,name){
 	troopsLayer.x = 10;
 	troopsLayer.y = 200;
 	layer.addChild(troopsLayer);
-	var troopsLabel = getStrokeLabel("arm_expedition", 18, "#FFFFFF", "#000000", 4);
+	var troopsLabel = getStrokeLabel(Language.get("arm_expedition"), 18, "#FFFFFF", "#000000", 4);
 	troopsLabel.x = 10;
 	troopsLayer.addChild(troopsLabel);
 	self.troopsSum = cityModel.troops();

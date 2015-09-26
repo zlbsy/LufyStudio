@@ -238,6 +238,16 @@ CharacterModel.prototype.enlist = function(enlistCount) {
 		self.job(Job.ENLIST);
 	}
 };
+CharacterModel.prototype.redeem = function(id) {
+	var self = this;
+	if(typeof id == UNDEFINED){
+		redeemRun(self,self.data.targetRedeemId);
+		self.data.targetRedeemId = null;
+	}else{
+		self.data.targetRedeemId = id;
+		self.job(Job.DIPLOMACY_REDEEM);
+	}
+};
 CharacterModel.prototype.hire = function(id) {
 	var self = this;
 	if(typeof id == UNDEFINED){

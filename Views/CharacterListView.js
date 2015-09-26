@@ -98,6 +98,7 @@ CharacterListView.prototype.listInit=function(){
 				case CharacterListType.ACCESS:
 				case CharacterListType.EXPLORE_AGRICULTURE:
 				case CharacterListType.EXPLORE_BUSINESS:
+				case CharacterListType.REDEEM:
 					showMoney = false;
 					break;
 			}
