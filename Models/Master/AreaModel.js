@@ -294,6 +294,16 @@ AreaModel.prototype.addCaptives = function(param){
 	}
 	self.data.captives.push(chara);
 };
+AreaModel.prototype.removeCaptives = function(charaId){
+	var self = this;
+	for(var i=0,l=self.data.captives.length;i<l;i++){
+		var characterModel = self.data.captives[i];
+		if(characterModel.id() == charaId){
+			self.data.captives.splice(i, 1);
+			break;
+		}
+	}
+};
 AreaModel.prototype.captives=function(seigniorId){
 	var self = this;
 	if(typeof seigniorId == UNDEFINED){

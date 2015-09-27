@@ -178,6 +178,7 @@ Language.data = {
 	"transport_job":"输送",
 	"diplomacy":"外交",
 	"diplomacy_redeem":"外交",
+	"diplomacy_stop_battle":"外交",
 	"access":"访问",
 	"hire":"登用",
 	"explore":"探索",
@@ -205,6 +206,9 @@ Language.data = {
 	"citygate":"城门",
 	"redeem":"赎回俘虏",
 	"stop_battle":"停战协议",
+	"diplomacy_message":"带多少金钱？",
+	"select_seignior":"选择势力",
+	//"ransom":"赎金",
 	
 	"idle":"空闲",
 	"move":"移动",

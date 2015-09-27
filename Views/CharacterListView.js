@@ -68,7 +68,7 @@ CharacterListView.prototype.listInit=function(){
 			self.dataList = generals;
 			break;
 		case CharacterListType.CHARACTER_LIST:
-			self.dataList = generals.concat(cityModel.outOfOffice());
+			self.dataList = generals.concat(cityModel.outOfOffice()).concat(cityModel.captives());
 			break;
 		case CharacterListType.HIRE:
 			buttonLabel = "hire";
@@ -82,6 +82,10 @@ CharacterListView.prototype.listInit=function(){
 		case CharacterListType.CAPTIVE:
 			self.dataList = self.controller.characterList;
 			buttonLabel = "redeem";
+			break;
+		case CharacterListType.STOP_BATTLE:
+			self.dataList = self.controller.characterList;
+			buttonLabel = "select_seignior";
 			break;
 		default:
 			buttonLabel = "execute";
@@ -99,6 +103,7 @@ CharacterListView.prototype.listInit=function(){
 				case CharacterListType.EXPLORE_AGRICULTURE:
 				case CharacterListType.EXPLORE_BUSINESS:
 				case CharacterListType.REDEEM:
+				case CharacterListType.STOP_BATTLE_CHARACTER:
 					showMoney = false;
 					break;
 			}

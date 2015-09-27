@@ -16,7 +16,7 @@ ExpeditionReadyView.prototype.set=function(img,name){
 	var foodLayer = new LSprite();
 	foodLayer.x = 10;
 	layer.addChild(foodLayer);
-	var foodLabel = getStrokeLabel("粮食", 18, "#FFFFFF", "#000000", 4);
+	var foodLabel = getStrokeLabel(Language.get("food"), 18, "#FFFFFF", "#000000", 4);
 	foodLabel.x = 10;
 	foodLayer.addChild(foodLabel);
 	self.foodSum = cityModel.food();
@@ -36,7 +36,7 @@ ExpeditionReadyView.prototype.set=function(img,name){
 	moneyLayer.x = 10;
 	moneyLayer.y = 100;
 	layer.addChild(moneyLayer);
-	var moneyLabel = getStrokeLabel("金钱", 18, "#FFFFFF", "#000000", 4);
+	var moneyLabel = getStrokeLabel(Language.get("money"), 18, "#FFFFFF", "#000000", 4);
 	moneyLabel.x = 10;
 	moneyLayer.addChild(moneyLabel);
 	self.moneySum = cityModel.money();

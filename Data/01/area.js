@@ -11,7 +11,7 @@ LMvc.areaData = {
 		areas : [{
 			area_id : 2,
 			prefecture : 1,
-			money : 3000,
+			money : 30000,
 			food : 2000,
 			population : 40000,
 			business : 300,
@@ -20,12 +20,6 @@ LMvc.areaData = {
 			police : 70,
 			city_defense : 1000,
 			troops : 14000,
-			/*troops : [
-				{id:1,quantity:4000,learned:1},
-				{id:2,quantity:2000,learned:1},
-				{id:4,quantity:4000,learned:1},
-				{id:7,quantity:2000,learned:1}
-			],*/
 			items_farmland:[
 				{item_id:4,proportion:10,quantity:1000},
 			],
@@ -54,7 +48,7 @@ LMvc.areaData = {
 				{chara_id:20,lv:3,feat:166,loyalty:50},
 				{chara_id:21,lv:3,feat:166,loyalty:50},
 				{chara_id:22,lv:3,feat:166,loyalty:50},
-				{chara_id:23,lv:3,feat:166,loyalty:50}
+				//{chara_id:23,lv:3,feat:166,loyalty:50}
 			],
 			out_of_offices:[
 				{chara_id:8,lv:1,feat:0},
@@ -62,6 +56,9 @@ LMvc.areaData = {
 			],
 			not_debut:[
 				{chara_id:9,lv:1,feat:0,year:184,month:1}
+			],
+			captives:[
+				{chara_id:23,seignior_id:2,feat:166,loyalty:50},
 			]
 		},{
 			area_id : 1,
@@ -74,10 +71,7 @@ LMvc.areaData = {
 			technology : 100,
 			police : 70,
 			city_defense : 1000,
-			troops : 9000,/*[
-				{id:4,quantity:4000},
-				{id:5,quantity:5000}
-			],*/
+			troops : 9000,
 			generals:[
 				{chara_id:4,lv:3,feat:166,loyalty:50},
 				{chara_id:5,lv:3,feat:166,loyalty:50},
@@ -99,10 +93,7 @@ LMvc.areaData = {
 		areas : [{
 			area_id : 12,
 			money : 2000,
-			troops : 8000,/*[
-				{id:6,quantity:4000},
-				{id:7,quantity:5000}
-			],*/
+			troops : 8000,
 			generals:[
 				{chara_id:6,lv:3,feat:166,loyalty:50},
 				{chara_id:7,lv:3,feat:166,loyalty:50}

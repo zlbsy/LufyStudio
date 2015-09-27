@@ -95,6 +95,12 @@ SeigniorExecute.prototype.areaJobRun=function(area){
 			case Job.EXPLORE_AGRICULTURE:
 				exploreAgricultureRun(chara);
 				break;
+			case Job.DIPLOMACY_REDEEM:
+				chara.redeem();
+				break;
+			case Job.DIPLOMACY_STOP_BATTLE:
+				chara.stopBattle();
+				break;
 			case Job.ENLIST:
 				chara.enlist();
 				break;
@@ -128,8 +134,8 @@ SeigniorExecute.prototype.areasRun=function(seigniorModel){
 	console.log("self.areaIndex="+self.areaIndex);
 	if(self.areaIndex == 0){
 		seigniorModel.checkSpyCitys();
+		seigniorModel.checkStopBattleSeigniors();
 	}
-	console.log("seigniorModel.checkSpyCitys over");
 	var areas = seigniorModel.areas();
 	if(self.areaIndex < areas.length){
 		var areaModel = areas[self.areaIndex];

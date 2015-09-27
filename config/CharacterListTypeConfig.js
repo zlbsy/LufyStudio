@@ -21,4 +21,6 @@ CharacterListType.EXPLORE_AGRICULTURE = "explore_agriculture";//农地探索
 CharacterListType.EXPLORE_BUSINESS = "explore_business";//市场探索
 CharacterListType.CAPTIVE = "captive";//"俘虏"
 CharacterListType.REDEEM = "redeem";//赎回俘虏
+CharacterListType.STOP_BATTLE = "stop_battle";//停战
+CharacterListType.STOP_BATTLE_CHARACTER = "stop_battle_character";//停战执行
 CharacterListType.TEST = "test";

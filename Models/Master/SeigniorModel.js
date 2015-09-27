@@ -4,6 +4,7 @@ function SeigniorModel(controller, data) {
 	self.type = "StageMasterModel";
 	self.data = data;
 	self.data.spyAreas = self.data.spyAreas || [];
+	self.data.stopBattleSeigniors = self.data.stopBattleSeigniors || [];
 }
 
 SeigniorModel.list = [];
@@ -24,6 +25,18 @@ SeigniorModel.getSeignior=function(chara_id){
 		return seignior;
 	}
 	return null;
+};
+SeigniorModel.getSeigniors=function(seignior_id){
+	var self = this;
+	var characters = [];
+	for(var i=0,l=SeigniorModel.list.length;i<l;i++){
+		var seignior = SeigniorModel.list[i];
+		if(seignior.chara_id() == seignior_id){
+			continue;
+		}
+		characters.push(CharacterModel.getChara(seignior.chara_id()));
+	}
+	return characters;
 };
 SeigniorModel.removeSeignior = function(seigniorId){
 	var self = this;
@@ -73,6 +86,33 @@ SeigniorModel.prototype.checkSpyCitys = function(){
 };
 SeigniorModel.prototype.isSpyCity = function(id){
 	return this.data.spyAreas.findIndex(function(child){
+		return child.id == id;
+	}) >= 0;
+};
+SeigniorModel.prototype.stopBattle = function(id){
+	var self = this;
+	var max = 6;
+	var seignior = self.data.stopBattleSeigniors.find(function(child){
+		return child.id == id;
+	});
+	if(seignior){
+		seignior.month = max;
+	}else{
+		self.data.stopBattleSeigniors.push({id:id,month:max});
+	}
+};
+SeigniorModel.prototype.checkStopBattleSeigniors = function(){
+	var self = this;
+	for(var i = self.data.stopBattleSeigniors.length - 1;i>=0;i--){
+		var city = self.data.stopBattleSeigniors[i];
+		city.month -= 1;
+		if(city.month == 0){
+			self.data.stopBattleSeigniors.splice(i, 1);
+		}
+	}
+};
+SeigniorModel.prototype.isStopBattle = function(id){
+	return this.data.stopBattleSeigniors.findIndex(function(child){
 		return child.id == id;
 	}) >= 0;
 };

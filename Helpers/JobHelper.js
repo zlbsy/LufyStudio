@@ -45,17 +45,10 @@ function getJobPrice(jobType) {
 	return 0;
 }
 /*
-var JobCoefficient = {
-	NORMAL:90,
-	AGRICULTURE:1,
-	BUSINESS:1,
-	POLICE:1,
-	TECHNOLOGY:1,
-};
-//外交:智力+运气
+外交:智力+运气
 访问：智力+统率+运气
-//农地探索：智力+武力+运气
-//市场探索：智力+敏捷+运气
+农地探索：智力+武力+运气
+市场探索：智力+敏捷+运气
 谍报：武力+运气
 修补：武力+统率
 商业：智力+敏捷
@@ -68,6 +61,41 @@ var JobCoefficient = {
 function getJobResult(realValue,coefficient){
 	var value = (JobCoefficient.NORMAL + realValue) * coefficient;
 	return value;
+}
+function redeemRun(characterModel, data){
+	//赎回俘虏:智力+运气
+	console.log("redeemRun : ",characterModel.id());
+	characterModel.job(Job.IDLE);
+	var value01 = getJobResult(characterModel.force(),JobCoefficient.DIPLOMACY);
+	var value02 = getJobResult(characterModel.luck(),JobCoefficient.DIPLOMACY);
+	var value = value01 + value02;
+	var targetCharacter = CharacterModel.getChara(data.chara_id);
+	var sum = (targetCharacter.force() + characterModel.intelligence() + characterModel.command() + characterModel.agility() + characterModel.luck()) * JobCoefficient.REDEEM;
+	sum += (sum * targetCharacter.skillCoefficient() * 0.1);
+	if(data.money/sum + value < 100){
+		console.log("redeemRun : 失败");
+		return;
+	}
+	var targetCity = targetCharacter.city();
+	targetCharacter.moveTo(characterModel.id());
+	targetCharacter.moveTo();
+	targetCity.removeCaptives(data.chara_id);
+}
+function stopBattleRun(characterModel, data){
+	//停战协议:智力+运气
+	console.log("stopBattleRun : ",characterModel.id());
+	characterModel.job(Job.IDLE);
+	var value01 = getJobResult(characterModel.force(),JobCoefficient.DIPLOMACY);
+	var value02 = getJobResult(characterModel.luck(),JobCoefficient.DIPLOMACY);
+	var value = value01 + value02;
+	var sum = (11 - SeigniorModel.list.length) * JobCoefficient.STOP_BATTLE;
+	if(data.money/sum + value < 100){
+		console.log("stopBattleRun : 失败");
+		return;
+	}
+	var seignior = characterModel.seignior();
+	seignior.stopBattle(data.chara_id);
+	SeigniorModel.getSeignior(data.chara_id).stopBattle(seignior.chara_id());
 }
 function accessRun(characterModel){
 	//访问：智力+统率+运气
@@ -237,11 +265,9 @@ function enlistRun(characterModel, targetEnlist){
 	var troop = area.troops();
 	var value01 = getJobResult(characterModel.luck(),JobCoefficient.ENLIST);
 	var value02 = getJobResult(characterModel.command(),JobCoefficient.ENLIST);
-	console.log("SkillSubType="+SkillSubType+","+SkillSubType.ENLIST);
 	var value = (value01 + value02) * (characterModel.hasSkill(SkillSubType.ENLIST) ? 1.5 : 1);
 	var quantity = (targetEnlist.quantity * value / JobCoefficient.NORMAL) >> 0;
 	troop += quantity;
-	console.log("troop="+troop);
 	area.troops(troop);
 	characterModel.job(Job.IDLE);
 }
@@ -255,7 +281,6 @@ function spyRun(characterModel, cityId){
 		console.log("spyRun : 失败 null");
 		return;
 	}
-	console.log("spyValue count");
 	var seignior;
 	var spyValue = characterModel.force() + characterModel.luck();
 	if(spyValue<JobCoefficient.SPY){
@@ -268,22 +293,17 @@ function spyRun(characterModel, cityId){
 		return;
 	}
 	var num = (spyValue / JobCoefficient.SPY) >>> 0;
-	console.log("spyRun : num="+num);
 	seignior = seignior || characterModel.seignior();
-	console.log("spyRun : seignior="+seignior);
 	seignior.addSpyCity(cityId);
 	num -= 1;
-	console.log("spyRun : num="+num);
 	spyValue = spyValue % JobCoefficient.SPY;
 	if(spyValue>JobCoefficient.SPY || spyValue > Math.random()*JobCoefficient.SPY){
 		num += 1;
 	}
-	console.log("spyRun : num2="+num);
 	if(num = 0){
 		return;
 	}
 	var neighbors = area.neighbor();
-	console.log("spyRun : neighbors="+neighbors.length);
 	var citys = [];
 	for(var i=0;i<neighbors.length;i++){
 		var child = AreaModel.getArea(neighbors[i]);
@@ -292,7 +312,6 @@ function spyRun(characterModel, cityId){
 		}
 		citys.push(neighbors[i]);
 	}
-	console.log("spyRun : citys="+citys.length);
 	if(citys.length == 0){
 		return;
 	}
@@ -300,7 +319,6 @@ function spyRun(characterModel, cityId){
 		num = citys.length;
 	}
 	citys = Array.getRandomArrays(citys, num);
-	console.log("spyRun : neighbors="+citys);
 	for(var i = 0;i<citys.length;i++){
 		seignior.addSpyCity(citys[i]);
 	}

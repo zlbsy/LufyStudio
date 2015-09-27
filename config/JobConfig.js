@@ -14,6 +14,7 @@ var Job = {
 	EXPLORE_BUSINESS:"explore_business",
 	TRANSPORT : "transport_job",
 	DIPLOMACY_REDEEM:"diplomacy_redeem",
+	DIPLOMACY_STOP_BATTLE:"diplomacy_stop_battle",
 	END:"end"
 };
 var JobPrice = {
@@ -36,6 +37,9 @@ var JobCoefficient = {
 	ACCESS:75,
 	EXPLORE_AGRICULTURE:75,
 	EXPLORE_BUSINESS:75,
+	DIPLOMACY:0.15,
+	REDEEM:0.5,
+	STOP_BATTLE:350,
 	COMPATIBILITY:75
 };
 var JobMax = {

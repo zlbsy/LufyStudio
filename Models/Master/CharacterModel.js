@@ -215,6 +215,8 @@ CharacterModel.prototype.identity = function(value) {
 		identity = "monarch";
 	}else if(self.id() == self.city().prefecture()){
 		identity = "prefecture";
+	}else if(self.seigniorId() != self.city().seigniorCharaId()){
+		identity = "captive";
 	}
 	return Language.get(identity);
 };
@@ -238,14 +240,24 @@ CharacterModel.prototype.enlist = function(enlistCount) {
 		self.job(Job.ENLIST);
 	}
 };
-CharacterModel.prototype.redeem = function(id) {
+CharacterModel.prototype.redeem = function(id, money) {
 	var self = this;
 	if(typeof id == UNDEFINED){
-		redeemRun(self,self.data.targetRedeemId);
-		self.data.targetRedeemId = null;
+		redeemRun(self,self.data.targetRedeem);
+		self.data.targetRedeem = null;
 	}else{
-		self.data.targetRedeemId = id;
+		self.data.targetRedeem = {chara_id:id, money:money};
 		self.job(Job.DIPLOMACY_REDEEM);
+	}
+};
+CharacterModel.prototype.stopBattle = function(id, money) {
+	var self = this;
+	if(typeof id == UNDEFINED){
+		stopBattleRun(self,self.data.targetStopBattle);
+		self.data.targetStopBattle = null;
+	}else{
+		self.data.targetStopBattle = {chara_id:id, money:money};
+		self.job(Job.DIPLOMACY_STOP_BATTLE);
 	}
 };
 CharacterModel.prototype.hire = function(id) {
@@ -456,6 +468,9 @@ CharacterModel.prototype.groupSkill = function() {
 		return null;
 	}
 	return groupSkill;
+};
+CharacterModel.prototype.skillCoefficient = function() {
+	return (this.data.skill ? 1 : 0) + (this.data.groupSkill ? 1 : 0);
 };
 CharacterModel.prototype.skill = function(type) {
 	var self = this;
