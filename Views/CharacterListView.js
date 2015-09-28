@@ -104,6 +104,7 @@ CharacterListView.prototype.listInit=function(){
 				case CharacterListType.EXPLORE_BUSINESS:
 				case CharacterListType.REDEEM:
 				case CharacterListType.STOP_BATTLE_CHARACTER:
+				case CharacterListType.TRAINING:
 					showMoney = false;
 					break;
 			}
@@ -323,6 +324,7 @@ CharacterListView.prototype.showList=function(){
 			break;
 		case CharacterListType.CHARACTER_MOVE:
 		case CharacterListType.ENLIST:
+		case CharacterListType.TRAINING:
 			minusHeight = 70;
 			break;
 		default:
