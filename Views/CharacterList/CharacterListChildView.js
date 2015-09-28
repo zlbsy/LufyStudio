@@ -123,7 +123,7 @@ CharacterListChildView.prototype.setArmProperties = function() {
 	panel.x = 200;
 	panel.y = 0;
 	layer.addChild(panel);
-	var name = getStrokeLabel("distribute", 18, "#FFFFFF", "#000000", 4);
+	var name = getStrokeLabel(Language.get("distribute"), 18, "#FFFFFF", "#000000", 4);
 	name.x = (panel.getWidth() - name.getWidth())*0.5;
 	name.y = (panel.getHeight() - name.getHeight())*0.5;;
 	panel.addChild(name);

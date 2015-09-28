@@ -40,7 +40,7 @@ BuildDiplomacyView.prototype.onClickStopBattleButton=function(event){
 };
 BuildDiplomacyView.prototype.selectComplete=function(event){
 	var self = this;
-	console.log("BuildOfficialView.prototype.selectComplete event = " , event);
+	console.log("BuildDiplomacyView.prototype.selectComplete event = " , event);
 	var characterList = event.characterList;
 	if(!characterList){
 		return true;
