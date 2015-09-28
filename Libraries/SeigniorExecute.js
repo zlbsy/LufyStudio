@@ -101,6 +101,9 @@ SeigniorExecute.prototype.areaJobRun=function(area){
 			case Job.DIPLOMACY_STOP_BATTLE:
 				chara.stopBattle();
 				break;
+			case Job.TRAINING:
+				chara.training();
+				break;
 			case Job.ENLIST:
 				chara.enlist();
 				break;

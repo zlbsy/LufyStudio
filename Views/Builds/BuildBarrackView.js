@@ -1,6 +1,6 @@
 /**
  * 兵营
- * 招募，训练，强化等
+ * 招募，训练
  */
 function BuildBarrackView(controller){
 	var self = this;
@@ -49,24 +49,47 @@ BuildBarrackView.prototype.showSoldiers=function(){
 	var cityModel = self.controller.getValue("cityData");
 	var soldiers = cityModel.soldiers();
 	var layer = new LSprite();
+	var msg = getStrokeLabel(Language.get("dialog_training_confirm"),16,"#FFFFFF","#000000",4);
+	layer.addChild(msg);
+	layer.name = "SubWindow";
 	var panel = new LPanel(new LBitmapData(LMvc.datalist["win01"]),110,40);
 	var bitmapOn = new LBitmap(new LBitmapData(LMvc.datalist["combobox_arraw"]));
 	var bitmapOff = new LBitmap(new LBitmapData(LMvc.datalist["combobox_arraw"]));
 	var com = new LComboBox(16,"#000000","Arial",panel,bitmapOff,bitmapOn);
 	for(var i=0;i<soldiers.length;i++){
-	/*console.error("showSoldiers i="+i);
-	com.setChild({label:"aaa",value:i});
-	continue;*/
 		var soldierModel = soldiers[i];
 		var proficiency = 200;
-		var label = String.format("{0} 熟练度({1})", soldierModel.name(), proficiency);
+		var label = String.format("{0} {1}({2})", soldierModel.name(), Language.get("proficiency"),proficiency);
 		com.setChild({label:label,value:i});
 	}
-	com.x = 40;
 	com.y = 55;
 	layer.addChild(com);
-	LMvc.layer.addChild(layer);
-	console.error("showSoldiers soldiers.length="+soldiers.length);
+	var obj = {title:Language.get("confirm"),subWindow:layer,height:300,okEvent:self.selectSoldier,cancelEvent:null};
+			var windowLayer = ConfirmWindow(obj);
+	var contentLayer = self.controller.view.contentLayer;
+	var characterListLayer = contentLayer.getChildAt(contentLayer.numChildren - 1);
+	characterListLayer.addChild(windowLayer);
+};
+BuildBarrackView.prototype.selectSoldier=function(event){
+	var windowObj = event.currentTarget.parent;
+	var characterListLayer = windowObj.parent;
+	var contentLayer = characterListLayer.parent;
+	var self = contentLayer.childList.find(function(child){
+		return child.isBuildBaseView;
+	});
+	var layer = windowObj.getChildByName("SubWindow");
+	var com = layer.getChildAt(1);
+	var index = com.value;
+	var selectCharacter = self.controller.getValue("selectCharacter");
+	var cityModel = self.controller.getValue("cityData");
+	var soldiers = cityModel.soldiers();
+	var soldier = soldiers[index];
+	console.log("soldier="+soldier);
+	selectCharacter.training(soldier.id());
+	cityModel.money(-JobPrice.TRAINING);
+	self.controller.closeCharacterList({characterListType : null});
+	LMvc.CityController.dispatchEvent(LController.NOTIFY_ALL);
+	console.log("soldier.id()="+soldier.id());
 };
 /*
 BuildBarrackView.prototype.showBuild=function(event){

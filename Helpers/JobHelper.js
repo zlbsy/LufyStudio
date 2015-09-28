@@ -62,6 +62,9 @@ function getJobResult(realValue,coefficient){
 	var value = (JobCoefficient.NORMAL + realValue) * coefficient;
 	return value;
 }
+function trainingRun(characterModel, soldierId){
+	var soldier = characterModel.soldiers(soldierId);
+}
 function redeemRun(characterModel, data){
 	//赎回俘虏:智力+运气
 	console.log("redeemRun : ",characterModel.id());

@@ -250,6 +250,16 @@ CharacterModel.prototype.redeem = function(id, money) {
 		self.job(Job.DIPLOMACY_REDEEM);
 	}
 };
+CharacterModel.prototype.training = function(id) {
+	var self = this;
+	if(typeof id == UNDEFINED){
+		trainingRun(self,self.data.trainingSoldierId);
+		self.data.trainingSoldierId = null;
+	}else{
+		self.data.trainingSoldierId = id;
+		self.job(Job.TRAINING);
+	}
+};
 CharacterModel.prototype.stopBattle = function(id, money) {
 	var self = this;
 	if(typeof id == UNDEFINED){

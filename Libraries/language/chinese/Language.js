@@ -109,6 +109,7 @@ Language.data = {
 	"select_leader":"选择主将",
 	"dialog_remove_equipment_confirm":"要解除装备{0}吗？",
 	"dialog_select_seignior_confirm":"选择{0}吗？",
+	"dialog_training_confirm":"训练哪个兵种？",
 	"name":"姓名",
 	"distribute":"分配",
 	"proficiency":"熟练度",

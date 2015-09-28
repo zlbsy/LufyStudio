@@ -13,6 +13,7 @@ var Job = {
 	EXPLORE_AGRICULTURE:"explore_agriculture",
 	EXPLORE_BUSINESS:"explore_business",
 	TRANSPORT : "transport_job",
+	TRAINING : "training",
 	DIPLOMACY_REDEEM:"diplomacy_redeem",
 	DIPLOMACY_STOP_BATTLE:"diplomacy_stop_battle",
 	END:"end"
@@ -24,6 +25,7 @@ var JobPrice = {
 	TECHNOLOGY:500,
 	REPAIR:500,
 	SPY:500,
+	TRAINING:500
 };
 var JobCoefficient = {
 	NORMAL:90,
