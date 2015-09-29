@@ -95,6 +95,9 @@ SeigniorExecute.prototype.areaJobRun=function(area){
 			case Job.EXPLORE_AGRICULTURE:
 				exploreAgricultureRun(chara);
 				break;
+			case Job.LEVEL_UP:
+				levelUpCityRun(chara);
+				break;
 			case Job.DIPLOMACY_REDEEM:
 				chara.redeem();
 				break;

@@ -222,6 +222,9 @@ AreaModel.prototype.size=function(){
 AreaModel.prototype.level=function(value){
 	return this._plusData("level",value);
 };
+AreaModel.prototype.maxLevel=function(){
+	return this.data.maxLevel;
+};
 AreaModel.prototype.plus=function(key, value, min, max){
 	if(typeof min == UNDEFINED){
 		min = 0;

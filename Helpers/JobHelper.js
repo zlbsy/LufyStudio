@@ -22,6 +22,8 @@ function characterListType2JobType(characterListType) {
 			return Job.EXPLORE_BUSINESS;
 		case CharacterListType.CHARACTER_SPY:
 			return Job.SPY;
+		case CharacterListType.LEVEL_UP:
+			return Job.LEVEL_UP;
 	}
 	console.error("Can't change to jobType");
 	return Job.IDLE;
@@ -40,6 +42,8 @@ function getJobPrice(jobType) {
 			return JobPrice.TECHNOLOGY;
 		case Job.SPY:
 			return JobPrice.SPY;
+		case Job.LEVEL_UP:
+			return JobPrice.LEVEL_UP;
 	}
 	console.error("Can't get JobPrice");
 	return 0;
@@ -64,6 +68,12 @@ function getJobResult(realValue,coefficient){
 }
 function trainingRun(characterModel, soldierId){
 	var soldier = characterModel.soldiers(soldierId);
+}
+function levelUpCityRun(characterModel){
+	var city = characterModel.city();
+	city.level(1);
+	characterModel.job(Job.IDLE);
+	LMvc.MapController.view.resetAreaIcon(city.id());
 }
 function redeemRun(characterModel, data){
 	//赎回俘虏:智力+运气

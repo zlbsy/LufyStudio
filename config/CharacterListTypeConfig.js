@@ -24,4 +24,5 @@ CharacterListType.REDEEM = "redeem";//赎回俘虏
 CharacterListType.STOP_BATTLE = "stop_battle";//停战
 CharacterListType.STOP_BATTLE_CHARACTER = "stop_battle_character";//停战执行
 CharacterListType.TRAINING = "training";//训练
+CharacterListType.LEVEL_UP = "levelUp";//升级
 CharacterListType.TEST = "test";

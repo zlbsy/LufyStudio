@@ -11,7 +11,8 @@ LMvc.areaData = {
 		areas : [{
 			area_id : 2,
 			prefecture : 1,
-			money : 30000,
+			money : 300000,
+			level : 1,
 			food : 2000,
 			population : 40000,
 			business : 300,

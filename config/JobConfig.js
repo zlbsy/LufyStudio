@@ -16,6 +16,7 @@ var Job = {
 	TRAINING : "training",
 	DIPLOMACY_REDEEM:"diplomacy_redeem",
 	DIPLOMACY_STOP_BATTLE:"diplomacy_stop_battle",
+	LEVEL_UP:"levelUp",
 	END:"end"
 };
 var JobPrice = {
@@ -25,6 +26,7 @@ var JobPrice = {
 	TECHNOLOGY:500,
 	REPAIR:500,
 	SPY:500,
+	LEVEL_UP:50000,
 	TRAINING:500
 };
 var JobCoefficient = {

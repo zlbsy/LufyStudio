@@ -110,6 +110,7 @@ Language.data = {
 	"dialog_remove_equipment_confirm":"要解除装备{0}吗？",
 	"dialog_select_seignior_confirm":"选择{0}吗？",
 	"dialog_training_confirm":"训练哪个兵种？",
+	"dialog_city_level_error":"该城池已经无法升级。",
 	"name":"姓名",
 	"distribute":"分配",
 	"proficiency":"熟练度",
@@ -197,7 +198,8 @@ Language.data = {
 	
 	"loyalty":"忠诚度",
 	"feat":"功绩",
-	
+	"levelUpCity":"升级城池",
+	"levelUp":"升级",
 	"market":"市场",
 	"official":"官府",
 	"barrack":"兵营",
