@@ -67,7 +67,18 @@ function getJobResult(realValue,coefficient){
 	return value;
 }
 function trainingRun(characterModel, soldierId){
-	var soldier = characterModel.soldiers(soldierId);
+	var soldier = characterModel.soldiers().find(function(child){
+		return child.id() == soldierId;
+	});
+	var proficiency = soldier.proficiency();
+	var proficiencyPlus;
+	if(proficiency + JobCoefficient.TRAINING < TrainingSetting.MAX){
+		proficiencyPlus = JobCoefficient.TRAINING;
+	}else{
+		proficiencyPlus = TrainingSetting.MAX - proficiency;
+	}
+	soldier.proficiency(proficiency + proficiencyPlus);
+	characterModel.job(Job.IDLE);
 }
 function levelUpCityRun(characterModel){
 	var city = characterModel.city();

@@ -111,6 +111,7 @@ Language.data = {
 	"dialog_select_seignior_confirm":"选择{0}吗？",
 	"dialog_training_confirm":"训练哪个兵种？",
 	"dialog_city_level_error":"该城池已经无法升级。",
+	"dialog_proficiency_max_error":"已经达到训练的极限了。",
 	"name":"姓名",
 	"distribute":"分配",
 	"proficiency":"熟练度",

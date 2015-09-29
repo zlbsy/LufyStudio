@@ -35,8 +35,8 @@ SoldierModel.prototype.strategyHert = function() {
 SoldierModel.prototype.quantity = function(value) {
 	return this.data.quantity;
 };
-SoldierModel.prototype.proficiency = function() {
-	return this.data.proficiency;
+SoldierModel.prototype.proficiency = function(value) {
+	return this._dataValue("proficiency",value,0);
 };
 SoldierModel.prototype.name = function() {
 	return this.master().name();

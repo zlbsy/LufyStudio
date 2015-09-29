@@ -47,7 +47,8 @@ BuildBarrackView.prototype.selectComplete=function(event){
 BuildBarrackView.prototype.showSoldiers=function(){
 	var self = this;
 	var cityModel = self.controller.getValue("cityData");
-	var soldiers = cityModel.soldiers();
+	var selectCharacter = self.controller.getValue("selectCharacter");
+	var soldiers = selectCharacter.soldiers();
 	var layer = new LSprite();
 	var msg = getStrokeLabel(Language.get("dialog_training_confirm"),16,"#FFFFFF","#000000",4);
 	layer.addChild(msg);
@@ -65,7 +66,7 @@ BuildBarrackView.prototype.showSoldiers=function(){
 	com.y = 55;
 	layer.addChild(com);
 	var obj = {title:Language.get("confirm"),subWindow:layer,height:300,okEvent:self.selectSoldier,cancelEvent:null};
-			var windowLayer = ConfirmWindow(obj);
+	var windowLayer = ConfirmWindow(obj);
 	var contentLayer = self.controller.view.contentLayer;
 	var characterListLayer = contentLayer.getChildAt(contentLayer.numChildren - 1);
 	characterListLayer.addChild(windowLayer);
@@ -82,8 +83,14 @@ BuildBarrackView.prototype.selectSoldier=function(event){
 	var index = com.value;
 	var selectCharacter = self.controller.getValue("selectCharacter");
 	var cityModel = self.controller.getValue("cityData");
-	var soldiers = cityModel.soldiers();
+	var soldiers = selectCharacter.soldiers();
 	var soldier = soldiers[index];
+	if(soldier.proficiency() >= TrainingSetting.MAX){
+		var obj = {title:Language.get("confirm"),message:Language.get("dialog_proficiency_max_error"),height:200,okEvent:null};
+		var windowLayer = ConfirmWindow(obj);
+		LMvc.layer.addChild(windowLayer);
+		return;
+	}
 	console.log("soldier="+soldier);
 	selectCharacter.training(soldier.id());
 	cityModel.money(-JobPrice.TRAINING);

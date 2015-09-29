@@ -8,9 +8,13 @@ var MoveType = {
 	CAVALRY:1//骑兵
 };
 var EnlistSetting = {
-	ENLIST_FROM:500,
-	ENLIST_TO:1000,
-	ENLIST_PRICE:500
+	ENLIST_FROM:500,//征兵范围
+	ENLIST_TO:1000,//征兵范围
+	ENLIST_PRICE:500,//征兵价格
+	
+};
+var TrainingSetting = {
+	MAX:500//训练最大熟练度
 };
 /* {id:1,name:"兵种名",type:SoldierType,movetype:MoveType,movePower:移动力,
 	property:兵种属性,
