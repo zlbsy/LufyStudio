@@ -1,6 +1,6 @@
 /**
 * lufylegend
-* @version 1.9.10
+* @version 1.9.11
 * @Explain lufylegend是一个HTML5开源引擎，利用它可以快速方便的进行HTML5的开发
 * @author lufy(lufy_legend)
 * @blog http://blog.csdn.net/lufy_Legend
@@ -32,6 +32,7 @@ LEvent.INIT = "init";
 LEvent.COMPLETE = "complete";
 LEvent.ENTER_FRAME = "enter_frame";
 LEvent.WINDOW_RESIZE = "resize";
+LEvent.WINDOW_ORIENTATIONCHANGE = "orientationchange";
 LEvent.SOUND_COMPLETE = "sound_complete";
 LEvent.END_CONTACT = "endContact";
 LEvent.PRE_SOLVE = "preSolve";
@@ -82,6 +83,9 @@ LMultitouchInputMode.TOUCH_POINT = "touchPoint";
 var LMultitouch = function () {throw "LMultitouch cannot be instantiated";};
 LMultitouch.inputMode = "none";
 LMultitouch.touchs = [];
+var LTimerEvent = function (){throw "LTimerEvent cannot be instantiated";};
+LTimerEvent.TIMER = "timer";
+LTimerEvent.TIMER_COMPLETE = "timerComplete";
 var LTextEvent = function () {throw "LTextEvent cannot be instantiated";};
 LTextEvent.TEXT_INPUT = "textInput";
 LTextEvent.WIND_COMPLETE = "windComplete";
@@ -600,12 +604,18 @@ var LGlobal = ( function () {
 		LGlobal.stage.baseAddEvent = LGlobal.stage.addEventListener;
 		LGlobal.stage.baseRemoveEvent = LGlobal.stage.removeEventListener;
 		LGlobal.stage.addEventListener = function (type, listener) {
-			if (type == LEvent.WINDOW_RESIZE) {
-				LGlobal.stage.onresizeListener = listener;
-				LGlobal.stage.onresize = function (e) {
-					LGlobal.stage.onresizeEvent = e;
-				};
-				LEvent.addEventListener(LGlobal.window, type,LGlobal.stage.onresize);
+			if (type == LEvent.WINDOW_RESIZE || type == LEvent.WINDOW_ORIENTATIONCHANGE) {
+				if(type == LEvent.WINDOW_RESIZE){
+					LGlobal.stage.onresizeListener = listener;
+				}else{
+					LGlobal.stage.onorientationchangeListener = listener;
+				}
+				if(!LGlobal.stage.onresize){
+					LGlobal.stage.onresize = function (e) {
+						LGlobal.stage.onresizeEvent = e;
+					};
+					LEvent.addEventListener(LGlobal.window, type,LGlobal.stage.onresize);
+				}
 			} else if (type == LKeyboardEvent.KEY_DOWN || type == LKeyboardEvent.KEY_UP || type == LKeyboardEvent.KEY_PRESS) {
 				LEvent.addEventListener(LGlobal.window, type, listener);
 			} else {
@@ -613,10 +623,20 @@ var LGlobal = ( function () {
 			}
 		};
 		LGlobal.stage.removeEventListener = function (type, listener) {
-			if (type == LEvent.WINDOW_RESIZE) {
+			if (type == LEvent.WINDOW_RESIZE || type == LEvent.WINDOW_ORIENTATIONCHANGE) {
+				if(type == LEvent.WINDOW_RESIZE){
+					delete LGlobal.stage.onresizeListener;
+					if(LGlobal.stage.onorientationchangeListener){
+						return;
+					}
+				}else{
+					delete LGlobal.stage.onorientationchangeListener;
+					if(LGlobal.stage.onresizeListener){
+						return;
+					}
+				}
 				LEvent.removeEventListener(LGlobal.window, LEvent.WINDOW_RESIZE, LGlobal.stage.onresize);
 				delete LGlobal.stage.onresize;
-				delete LGlobal.stage.onresizeListener;
 			} else if (type == LKeyboardEvent.KEY_DOWN || type == LKeyboardEvent.KEY_UP || type == LKeyboardEvent.KEY_PRESS) {
 				LEvent.removeEventListener(LGlobal.window, type, listener);
 			} else {
@@ -851,9 +871,9 @@ var LGlobal = ( function () {
 			if (LGlobal.canTouch && s.ll_touchPointID != e.touchPointID) {
 				continue;
 			}
-			c = s.getAbsoluteScale();
-			s.x = s.ll_dragStartX + (e.offsetX - s.ll_dragMX) * s.scaleX / c.scaleX;
-			s.y = s.ll_dragStartY + (e.offsetY - s.ll_dragMY) * s.scaleY / c.scaleY;
+			c = s.parent.globalToLocal(new LPoint(e.offsetX - s.ll_dragMX + s.ll_dragGlobalPoint.x, e.offsetY - s.ll_dragMY + s.ll_dragGlobalPoint.y));
+			s.x = c.x;
+			s.y = c.y;
 			if (s.dragRange) {
 				if (s.x < s.dragRange.left) {
 					s.x = s.dragRange.left;
@@ -946,7 +966,12 @@ var LGlobal = ( function () {
 			LGlobal.fpsStatus.reset();
 		}
 		if (LGlobal.stage.onresizeEvent) {
-			LGlobal.stage.onresizeListener(LGlobal.stage.onresizeEvent);
+			if(LGlobal.stage.onresizeListener){
+				LGlobal.stage.onresizeListener(LGlobal.stage.onresizeEvent);
+			}
+			if(LGlobal.stage.onorientationchangeListener){
+				LGlobal.stage.onorientationchangeListener({orientation:(window.innerWidth > window.innerHeight ? LANDSCAPE : PORTRAIT)});
+			}
 			delete LGlobal.stage.onresizeEvent;
 		}
 		if (LGlobal.forceRefresh) {
@@ -1423,13 +1448,46 @@ function trace() {
 	if (!LGlobal.traceDebug) return;
 	var t = document.getElementById("traceObject"), i;
 	if (trace.arguments.length > 0 && t == null) {
+		var d = document.createElement("DIV");
+		d.position=0;
+		d.style.position = "absolute";
+		document.body.appendChild(d);
 		t = document.createElement("TEXTAREA");
 		t.id = "traceObject";
-		t.style.position = "absolute";
-		t.style.top = (LGlobal.height + 20) + "px";
-		t.style.width = LGlobal.width + "px";
+		t.style.width = (window.innerWidth*0.5) + "px";
 		t.style.height = "200px";
-		document.body.appendChild(t);
+		var b = document.createElement("BUTTON");
+		b.style.width = (window.innerWidth*0.25) + "px";
+		b.innerHTML="Hide";
+		d.appendChild(b);
+		LEvent.addEventListener(b,LGlobal.mobile ? "touchstart":"click", function(e){
+			t.style.display = (t.style.display == "none" ? "":"none");
+		});
+		b = document.createElement("BUTTON");
+		b.style.width = (window.innerWidth*0.25) + "px";
+		b.innerHTML="position";
+		d.appendChild(b);
+		var f = function(e){
+			d.position++;
+			if(d.position == 0){
+				d.style.top = "5px";
+				d.style.left = "5px";
+			}else if(d.position == 1){
+				d.style.top = (window.innerHeight - 20 - parseInt(t.style.height)) + "px";
+				d.style.left = "5px";
+			}else if(d.position == 2){
+				d.style.top = "5px";
+				d.style.left = (window.innerWidth - parseInt(t.style.width)) + "px";
+			}else{
+				d.style.top = (window.innerHeight - 20 - parseInt(t.style.height)) + "px";
+				d.style.left = (window.innerWidth - parseInt(t.style.width)) + "px";
+				d.position = -1;
+			}
+		};
+		f();
+		LEvent.addEventListener(b,LGlobal.mobile ? "touchstart":"click", f);
+		d.appendChild(document.createElement("BR"));
+		d.appendChild(t);
 	}
 	for (i = 0; i < trace.arguments.length; i++) {
 		t.value = t.value + trace.arguments[i] + "\r\n";
@@ -1573,6 +1631,86 @@ var LObject = (function () {
 		}
 	};
 	return LObject;
+})();
+var LTimer = (function () {
+	function LTimer(delay, repeat) {
+		var s = this;
+		LExtends (s, LEventDispatcher, []);
+		s.type = "LTimer";
+		s.delay = delay;
+		s.repeatCount = repeat ? repeat : int.MAX_VALUE;
+		s.running = false;
+		s.currentCount = 0;
+		s.reset();
+		LTimer.TimerManager.add(s);
+	}
+	LTimer.TimerManager = (function(){
+		function TimerManager(){
+			this.childList = [];
+		}
+		TimerManager.prototype = {
+			ll_show : function(){
+				var s = this, d;
+				for(var i = 0;i<s.childList.length;i++){
+					d = s.childList[i];
+					if(d){
+						d.ll_show();
+					}
+				}
+			},
+			add : function(child){
+				this.childList.push(child);
+			},
+			remove : function(d){
+				var s  = this, c = s.childList, i, l;
+				for (i = 0, l = c.length; i < l; i++) {
+					if (d.objectIndex == c[i].objectIndex) {
+						s.childList.splice(i, 1);
+						break;
+					}
+				}
+			}
+		};
+		return new TimerManager();
+	})();
+	p = {
+		start : function(){
+			this.running = true;
+		},
+		stop : function(){
+			this.running = false;
+		},
+		reset : function(){
+			var s = this;
+			s.currentTime = 0;
+			s.currentCount = 0;
+			s.stop();
+		},
+		destroy : function(){
+			LTimer.TimerManager.remove(this);
+		},
+		ll_show : function(){
+			var s = this;
+			if(!s.running || s.currentCount >= s.repeatCount){
+				return;
+			}
+			s.currentTime += LGlobal.speed;
+			if (s.currentTime < s.delay) {
+				return;
+			}
+			s.currentTime = 0;
+			s.currentCount++;
+			s.dispatchEvent(LTimerEvent.TIMER);
+			if(s.currentCount >= s.repeatCount){
+				s.dispatchEvent(LTimerEvent.TIMER_COMPLETE);
+			}
+		}
+	};
+	for (var k in p) {
+		LTimer.prototype[k] = p[k];
+	}
+	LGlobal.childList.push(LTimer.TimerManager);
+	return LTimer;
 })();
 var LColorTransform = (function () {
 	function LColorTransform (redMultiplier, greenMultiplier, blueMultiplier, alphaMultiplier, redOffset, greenOffset, blueOffset, alphaOffset) {
@@ -1926,7 +2064,7 @@ var LDisplayObject = (function () {
 				c.globalCompositeOperation = s.blendMode;
 			}
 			if (s.filters) {
-				s._ll_setShadow();
+				s._ll_setFilters();
 			}
 			s._rotateReady();
 			if (s.mask != null && s.mask.ll_show) {
@@ -1949,7 +2087,11 @@ var LDisplayObject = (function () {
 					LGlobal.fpsStatus.transform++;
 				}
 			}
-			s._ll_show(c);
+			if(s._ll_cacheAsBitmap){
+				s._ll_cacheAsBitmap._ll_show();
+			}else{
+				s._ll_show(c);
+			}
 			c.restore();
 			if (LGlobal.box2d != null && typeof s._ll_loopframe == "function") {
 				s._ll_loopframe();
@@ -1968,15 +2110,19 @@ var LDisplayObject = (function () {
 		_rotateReady : function () {},
 		_showReady : function (c) {},
 		_ll_show : function (c) {},
-		_ll_setShadow : function () {
+		_ll_setFilters : function () {
 			var s = this, f = s.filters, i, l;
 			if (!f) {
 				return;
 			}
 			for (i = 0, l = f.length; i < l; i++) {
-				f[i].ll_show();
+				f[i].ll_show(s);
 			}
 		},
+		startX : function(){return 0;},
+		startY : function(){return 0;},
+		getWidth : function(){return 1;},
+		getHeight : function(){return 1;},
 		_transformRotate : function () {
 			var s = this, c;
 			if (s.rotate == 0) {
@@ -2029,18 +2175,19 @@ var LDisplayObject = (function () {
 			return {scaleX : sX, scaleY : sY};
 		},
 		getRootCoordinate : function () {
-			var s = this, sx, sy, p;
-			sx=s.x;
-			sy=s.y;
-			p = s.parent;
-			while (p && p != "root") {
-				sx *= p.scaleX;
-				sy *= p.scaleY;
-				sx += p.x;
-				sy += p.y;
-				p = p.parent;
-			}
-			return new LPoint(sx,sy);
+			return this.localToGlobal(new LPoint(0,0));
+		},
+		localToGlobal : function (point) {
+			var s = this, x, y, p;
+			m = s.getRootMatrix();
+			p = m.toArray([point.x, point.y, 1]);
+			return new LPoint(p[0], p[1]);
+		},
+		globalToLocal : function (point) {
+			var s = this, x, y, p;
+			m = s.getLocalMatrix();
+			p = m.toArray([point.x, point.y, 1]);
+			return new LPoint(p[0], p[1]);
 		},
 		getBounds : function (d) {
 			if (typeof d == UNDEFINED) {
@@ -2061,15 +2208,29 @@ var LDisplayObject = (function () {
 			}
 			return new LRectangle(x, y, w, h);
 		},
-		getDataCanvas : function () {
+		cacheAsBitmap : function (value) {
+			var s = this;
+			if(!value){
+				s._ll_cacheAsBitmap = null;
+				return;
+			}
+			var sx = s.x - s.startX(), sy = s.y - s.startY();
+			var data = s.getDataCanvas(sx, sy, s.getWidth(), s.getHeight());
+			var b = new LBitmapData(data, 0, 0, null, null, LBitmapData.DATA_CANVAS);
+			var cache = new LBitmap(b);
+			cache.x = -sx;
+			cache.y = -sy;
+			s._ll_cacheAsBitmap = cache;
+		},
+		getDataCanvas : function (x,y,w,h) {
 			var s = this, _o, o, _c, c, _x, _y;
 			s._createCanvas();
 			o = LGlobal.canvasObj;
 			c = LGlobal.canvas;
 			_o = s._canvas;
 			_c = s._context;
-			s.width = s.getWidth();
-			s.height = s.getHeight();
+			s.width = w || s.getWidth();
+			s.height = h || s.getHeight();
 			_o.width = s.width;
 			_o.height = s.height;
 			_c.clearRect(0, 0, s.width, s.height);
@@ -2077,7 +2238,8 @@ var LDisplayObject = (function () {
 			LGlobal.canvas = s._context;
 			_x = s.x;
 			_y = s.y;
-			s.x = s.y = 0;
+			s.x = x || 0;
+			s.y = y || 0;
 			s.ll_show();
 			s.x = _x;
 			s.y = _y;
@@ -2150,6 +2312,26 @@ var LDisplayObject = (function () {
 					m.translate(parent.x, parent.y);
 				}
 				parent = parent.parent;
+			}
+			return m;
+		},
+		getLocalMatrix : function () {
+			var parent = this, m = new LMatrix(), list = [];
+			while (parent && parent != "root") {
+				list.push(parent);
+				parent = parent.parent;
+			}
+			for (var i = list.length - 1; i >= 0; i--) {
+				parent = list[i];
+				if (parent.x != 0 || parent.y != 0) {
+					m.translate(-parent.x, -parent.y);
+				}
+				if (parent.rotate != 0) {
+					m.rotate(-parent.rotate);
+				}
+				if (parent.scaleX != 1 || parent.scaleY != 1) {
+					m.scale(1/parent.scaleX, 1/parent.scaleY);
+				}
 			}
 			return m;
 		},
@@ -3892,13 +4074,12 @@ var LSprite = (function () {
 			s._ll_debugShape();
 		},
 		startDrag : function (touchPointID) {
-			var s = this, r, c;
+			var s = this;
 			if (s.ll_dragStart) {
 				return;
 			}
 			s.ll_touchPointID = touchPointID;
-			s.ll_dragStartX = s.x;
-			s.ll_dragStartY = s.y;
+			s.ll_dragGlobalPoint = s.parent.localToGlobal(new LPoint(s.x, s.y));
 			s.ll_dragMX = mouseX;
 			s.ll_dragMY = mouseY;
 			s.ll_dragStart = true;
@@ -5287,6 +5468,12 @@ var LBitmapData = (function() {
 			s._setDataType(s._dataType);
 			s._data = null;
 		},
+		applyFilter : function(sourceBitmapData, sourceRect, destPoint, filter) {
+			var s = this;
+			var r = s._context.getImageData(s.x + sourceRect.x, s.y + sourceRect.y, sourceRect.width, sourceRect.height);
+			var data = filter.filter(r,sourceRect.width);
+			s.putPixels(new LRectangle(destPoint.x, destPoint.y, sourceRect.width, sourceRect.height), data);
+		},
 		getPixel : function(x, y, colorType) {
 			var s = this, i, d;
 			x = x >> 0;
@@ -5495,10 +5682,40 @@ var LBitmapData = (function() {
 	}
 	return LBitmapData;
 })(); 
+var LBitmapFilter = (function () {
+	function LBitmapFilter () {
+		var s = this;
+		LExtends(s, LObject, []);
+		s.type = "LBitmapFilter";
+	}
+	LBitmapFilter.prototype.ll_show = function (displayObject) {
+		var s = this;
+		if(s.cacheMaking){
+			return;
+		}
+		var c = LGlobal.canvas, d = displayObject, bitmapData;
+		if(d.constructor.name == "LBitmap"){
+			bitmapData = d.bitmapData;
+		}else{
+			if(!d._ll_cacheAsBitmap){
+				s.cacheMaking = true;
+				d.cacheAsBitmap(true);
+				s.cacheMaking = false;
+			}
+			bitmapData = d._ll_cacheAsBitmap.bitmapData;
+		}
+		if(s.bitmapDataIndex === bitmapData.objectIndex){
+			return;
+		}
+		s.bitmapDataIndex = bitmapData.objectIndex;
+		bitmapData.applyFilter(bitmapData, new LRectangle(0,0,bitmapData.width,bitmapData.height), new LPoint(0,0), s);
+	};
+	return LBitmapFilter;
+})();
 var LDropShadowFilter = (function () {
 	function LDropShadowFilter (distance, angle, color, blur) {
 		var s = this;
-		LExtends(s, LObject, []);
+		LExtends(s, LBitmapFilter, []);
 		s.type = "LDropShadowFilter";
 		s.distance = distance ? distance : 0;
 		s.angle = angle ? angle : 0;
@@ -5539,6 +5756,90 @@ var LDropShadowFilter = (function () {
 		LDropShadowFilter.prototype[k] = p[k];
 	}
 	return LDropShadowFilter;
+})();
+var LColorMatrixFilter = (function () {
+	function LColorMatrixFilter (matrix) {
+		var s = this;
+		LExtends(s, LBitmapFilter, []);
+		s.type = "LColorMatrixFilter";
+		s.matrix = matrix;
+	}
+	var p = {
+		filter : function(olddata, w){
+			var s = this, c = LGlobal.canvas;
+			var oldpx = olddata.data;
+			var newdata = c.createImageData(olddata);
+			var newpx = newdata.data;
+			var len = newpx.length;
+			var a = s.matrix;
+			for (var i = 0; i < len; i+=4) {
+				newpx[i] = (a[0]  * oldpx[i]) + (a[1]  * oldpx[i+1]) + (a[2]  * oldpx[i+2]) + (a[3]  * oldpx[i+3]) + a[4];
+				newpx[i+1] = (a[5]  * oldpx[i]) + (a[6]  * oldpx[i+1]) + (a[7]  * oldpx[i+2]) + (a[8]  * oldpx[i+3]) + a[9];
+				newpx[i+2] = (a[10]  * oldpx[i]) + (a[11]  * oldpx[i+1]) + (a[12]  * oldpx[i+2]) + (a[13]  * oldpx[i+3]) + a[14];
+				newpx[i+3] = (a[15]  * oldpx[i]) + (a[16]  * oldpx[i+1]) + (a[17]  * oldpx[i+2]) + (a[18]  * oldpx[i+3]) + a[19];
+			}
+			return newdata;
+		}
+	};
+	for (var k in p) {
+		LColorMatrixFilter.prototype[k] = p[k];
+	}
+	return LColorMatrixFilter;
+})();
+var LConvolutionFilter = (function () {
+	function LConvolutionFilter (matrixX, matrixY, matrix, divisor, bias, preserveAlpha, clamp, color, alpha) {
+		var s = this;
+		LExtends(s, LBitmapFilter, []);
+		s.type = "LConvolutionFilter";
+		s.matrixX = matrixX ? matrixX : 0;
+		s.matrixY = matrixY ? matrixY : 0;
+		s.matrix = matrix;
+		if (!divisor) {
+			divisor = matrix.reduce(function(a, b) {return a + b;}) || 1;
+		}
+		s.divisor = divisor;
+		s.bias = bias ? bias : 0;
+	}
+	var p = {
+		filter : function(olddata, w){
+			var s = this, c = LGlobal.canvas;
+			var oldpx = olddata.data;
+			var newdata = c.createImageData(olddata);
+			var newpx = newdata.data;
+			var len = newpx.length;
+			for (var i = 0; i < len; i++) {
+				if ((i + 1) % 4 === 0) {
+					newpx[i] = oldpx[i];
+					continue;
+				}
+				res = 0;
+				var these = [
+					oldpx[i - w * 4 - 4] || oldpx[i],
+					oldpx[i - w * 4]     || oldpx[i],
+					oldpx[i - w * 4 + 4] || oldpx[i],
+					oldpx[i - 4]         || oldpx[i],
+					oldpx[i],
+					oldpx[i + 4]         || oldpx[i],
+					oldpx[i + w * 4 - 4] || oldpx[i],
+					oldpx[i + w * 4]     || oldpx[i],
+					oldpx[i + w * 4 + 4] || oldpx[i]
+				];
+				for (var j = 0; j < 9; j++) {
+					res += these[j] * s.matrix[j];
+				}
+				res /= s.divisor;
+				if (s.bias) {
+					res += s.bias;
+				}
+				newpx[i] = res;
+			}
+			return newdata;
+		}
+	};
+	for (var k in p) {
+		LConvolutionFilter.prototype[k] = p[k];
+	}
+	return LConvolutionFilter;
 })();
 var LAnimation = (function() {
 	function LAnimation(layer, data, list) {
@@ -5747,15 +6048,15 @@ var LAnimationTimeline = (function() {
 		},
 		gotoAndPlay : function(name) {
 			var s = this, l = s.ll_labelList[name];
-			s.play();
 			s.setAction(l.rowIndex, l.colIndex, l.mode, l.isMirror);
 			s.onframe();
+			s.play();
 		},
 		gotoAndStop : function(name) {
 			var s = this, l = s.ll_labelList[name];
-			s.stop();
 			s.setAction(l.rowIndex, l.colIndex, l.mode, l.isMirror);
 			s.onframe();
+			s.stop();
 		},
 		addFrameScript : function(name, func, params) {
 			var l = this.ll_labelList[name];
@@ -6406,99 +6707,6 @@ var LTweenLite = (function () {
 	LGlobal.childList.push(tween);
 	return tween;
 })();
-/*
-delay:Number — 计时器事件间的延迟（以毫秒为单位）。建议 delay 不要低于 20 毫秒。计时器频率不得超过 60 帧/秒，这意味着低于 16.6 毫秒的延迟可导致出现运行时问题。
- 
-repeatCount:int (default = 0) — 指定重复次数。如果为零，则计时器将持续不断重复运行，最长可运行 24.86 天 (int.MAX_VALUE + 1)。如果不为 0，则将运行计时器，运行次数为指定的次数，然后停止。
-
-var myTimer = new LTimer(2, 4);
-myTimer.start(); 
-myTimer.addEventListener(LTimerEvent.TIMER, function(){console.log("timer");});
-myTimer.addEventListener(LTimerEvent.TIMER_COMPLETE, function(){console.log("timerComplete");});
-reset()
-stop()
-*/
-var LTimerEvent = function (){throw "LTimerEvent cannot be instantiated";};
-LTimerEvent.TIMER = "timer";
-LTimerEvent.TIMER_COMPLETE = "timerComplete";
-var LTimer = (function () {
-	function LTimer(delay, repeat) {
-		var s = this;
-		LExtends (s, LEventDispatcher, []);
-		s.type = "LTimer";
-		s.delay = delay;
-		s.repeatCount = repeat ? repeat : int.MAX_VALUE;
-		s.reset();
-		LTimer.TimerManager.add(s);
-	}
-	LTimer.TimerManager = (function(){
-		function TimerManager(){
-			this.childList = [];
-		}
-		TimerManager.prototype = {
-			ll_show : function(){
-				var s = this, d;
-				for(var i = 0;i<s.childList.length;i++){
-					d = s.childList[i];
-					if(d){
-						d.ll_show();
-					}
-				}
-			},
-			add : function(child){
-				this.childList.push(child);
-			},
-			remove : function(d){
-				var s  = this, c = s.childList, i, l;
-				for (i = 0, l = c.length; i < l; i++) {
-					if (d.objectIndex == c[i].objectIndex) {
-						s.childList.splice(i, 1);
-						break;
-					}
-				}
-			}
-		};
-		return new TimerManager();
-	})();
-	p = {
-		start : function(){
-			this.ll_stop = false;
-		},
-		stop : function(){
-			this.ll_stop = true;
-		},
-		reset : function(){
-			var s = this;
-			s.currentTime = 0;
-			s.currentCount = 0;
-			s.stop();
-		},
-		destroy : function(){
-			LTimer.TimerManager.remove(this);
-		},
-		ll_show : function(){
-			var s = this;
-			if(s.ll_stop || s.currentCount >= s.repeatCount){
-				return;
-			}
-			s.currentTime += LGlobal.speed;
-			if (s.currentTime < s.delay) {
-				return;
-			}
-			s.currentTime = 0;
-			s.currentCount++;
-			s.dispatchEvent(LTimerEvent.TIMER);
-			if(s.currentCount >= s.repeatCount){
-				s.dispatchEvent(LTimerEvent.TIMER_COMPLETE);
-			}
-		}
-	};
-	for (var k in p) {
-		LTimer.prototype[k] = p[k];
-	}
-	LGlobal.childList.push(LTimer.TimerManager);
-	return LTimer;
-})();
 var LAjax = (function () {
 	function LAjax () {
 		this.responseType = null;
@@ -6695,7 +6903,7 @@ var FPS = (function () {
 		s.fpsCount++;
 		t = (new Date()).getTime();
 		if(t - s.fpsTime < 1000)return;
-		s.fps[0].text = "FPS : " + Math.round(s.fpsCount*10000 / (t-s.fpsTime))/10; 
+		s.fps[0].text = "FPS : " + Math.round(s.fpsCount*10000 / (t-s.fpsTime))/10;
 		f = LGlobal.fpsStatus;
 		s.fps[1].text = "DisplayObject : " + f.c + "/" + f.b; 
 		s.fps[2].text = "Draw image : " + f.a; 
