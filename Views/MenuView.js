@@ -90,7 +90,11 @@ MenuView.prototype.loadSeigniorExecute=function(){
 };
 MenuView.prototype.loadSeigniorExecuteConfig=function(){
 	var self = this;
-	self.load.config(["CharacterListType","Skills"],self.seigniorExecute);
+	self.load.config(["CharacterListType","Skills"],self.loadSeigniorExecuteHelper);
+};
+MenuView.prototype.loadSeigniorExecuteHelper=function(){
+	var self = this;
+	self.load.helper(["JobHelper","JobAIHelper"],self.seigniorExecute);
 };
 MenuView.prototype.seigniorExecute=function(){
 	var self = this;

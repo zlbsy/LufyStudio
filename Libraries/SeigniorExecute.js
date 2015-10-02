@@ -14,6 +14,9 @@ SeigniorExecute.Instance = function(){
 	}
 	return SeigniorExecute._Instance;
 };
+SeigniorExecute.close = function(){
+	SeigniorExecute.Instance().maskHide();
+};
 SeigniorExecute.run=function(){
 	var self = SeigniorExecute.Instance();
 	if(!self.backLayer){
@@ -137,6 +140,8 @@ SeigniorExecute.prototype.areaJobRun=function(area){
 			case Job.TRANSPORT:
 				chara.transport();
 				break;
+			default:
+				chara.job(Job.IDLE);
 		}
 	}
 	if(list.length == 0){
@@ -173,7 +178,6 @@ SeigniorExecute.prototype.areasRun=function(seigniorModel){
 	SeigniorExecute.run();
 };
 SeigniorExecute.prototype.areasAIRun=function(seigniorModel){
-	return true;
 	var self = this;
 	console.log("self.areaAIIndex="+self.areaAIIndex);
 	if(self.areaAIIndex == 0){
@@ -190,7 +194,30 @@ SeigniorExecute.prototype.areasAIRun=function(seigniorModel){
 };
 SeigniorExecute.prototype.areaAIRun=function(areaModel){
 	var self = this;
+	//判断是否有未执行任务人员
+	var charas = getIdleCharacter(areaModel);
+	if(charas.length == 0){
+		self.areaAIIndex++;
+		return;
+	}
+	//是否需要征兵
+	var needEnlistFlag = needToEnlist(areaModel);
+	if(needEnlistFlag){
+		var canEnlishFlag = canToEnlish(areaModel);
+		if(canEnlishFlag){
+			
+			return;
+		}
+	}
+	//判断是否有可攻击的城池
+	var citys = getCanBattleCitys(areaModel);
+	if(citys && citys.length > 0){
+		
+		return;
+	}
 	
+	//如果有剩余无法分配工作的人员(金钱不够等),则直接跳过
+	self.areaAIIndex++;
 };
 SeigniorExecute.prototype.maskShow=function(){
 	var self = this;
@@ -203,6 +230,11 @@ SeigniorExecute.prototype.maskShow=function(){
 	self.backLayer.addChild(maskLayer);
 	self.msgView = new MessageView();
 	self.backLayer.addChild(self.msgView);
+	var buttonOK = getButton(Language.get("OK"),200);
+	buttonOK.x = (self.msgView.getWidth() - 200) * 0.5;
+	buttonOK.y = self.msgView.getHeight();
+	self.backLayer.addChild(buttonOK);
+	buttonOK.addEventListener(LMouseEvent.MOUSE_UP, SeigniorExecute.close);
 	LMvc.MapController.view.parent.addChild(self.backLayer);
 };
 SeigniorExecute.prototype.maskHide=function(){
