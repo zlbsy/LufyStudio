@@ -51,6 +51,13 @@ SeigniorModel.removeSeignior = function(seigniorId){
 SeigniorModel.prototype.chara_id = function(){
 	return this.data.chara_id;
 };
+SeigniorModel.prototype.character = function(){
+	var self = this;
+	if(!self.data._chara || self.data._chara.id() != self.data.chara_id){
+		self.data._chara = CharacterModel.getChara(self.data.chara_id);
+	}
+	return self.data._chara;
+};
 SeigniorModel.prototype.color = function(){
 	return this.data.color;
 };

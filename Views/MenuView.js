@@ -86,7 +86,11 @@ MenuView.prototype.loadSeigniorExecute=function(){
 	if(!self.load){
 		self.load = new LMvcLoader(self);
 	}
-	self.load.model(["Master/SkillMaster"],self.seigniorExecute);
+	self.load.model(["Master/SkillMaster"],self.loadSeigniorExecuteConfig);
+};
+MenuView.prototype.loadSeigniorExecuteConfig=function(){
+	var self = this;
+	self.load.config(["CharacterListType","Skills"],self.seigniorExecute);
 };
 MenuView.prototype.seigniorExecute=function(){
 	var self = this;

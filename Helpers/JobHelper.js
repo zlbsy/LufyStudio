@@ -85,6 +85,7 @@ function levelUpCityRun(characterModel){
 	city.level(1);
 	characterModel.job(Job.IDLE);
 	LMvc.MapController.view.resetAreaIcon(city.id());
+	SeigniorExecute.addMessage(String.format("{0}升级成为了{1}!",city.name(),city.size()));
 }
 function redeemRun(characterModel, data){
 	//赎回俘虏:智力+运气
@@ -98,12 +99,16 @@ function redeemRun(characterModel, data){
 	sum += (sum * targetCharacter.skillCoefficient() * 0.1);
 	if(data.money/sum + value < 100){
 		console.log("redeemRun : 失败");
+		SeigniorExecute.addMessage(String.format("{0}赎回俘虏失败了!",characterModel.name()));
 		return;
 	}
+	var city = characterModel.city();
 	var targetCity = targetCharacter.city();
-	targetCharacter.moveTo(characterModel.id());
+	targetCharacter.moveTo(city.id());
 	targetCharacter.moveTo();
 	targetCity.removeCaptives(data.chara_id);
+	SeigniorExecute.addMessage(String.format("{0}执行赎回俘虏的任务成功了!",characterModel.name()));
+	SeigniorExecute.addMessage(String.format("{0}回到了{1}!",targetCharacter.name(),city.name()));
 }
 function stopBattleRun(characterModel, data){
 	//停战协议:智力+运气
@@ -115,11 +120,13 @@ function stopBattleRun(characterModel, data){
 	var sum = (11 - SeigniorModel.list.length) * JobCoefficient.STOP_BATTLE;
 	if(data.money/sum + value < 100){
 		console.log("stopBattleRun : 失败");
+		SeigniorExecute.addMessage(String.format("{0}执行停战协议的任务失败了!",characterModel.name()));
 		return;
 	}
 	var seignior = characterModel.seignior();
 	seignior.stopBattle(data.chara_id);
 	SeigniorModel.getSeignior(data.chara_id).stopBattle(seignior.chara_id());
+	SeigniorExecute.addMessage(String.format("{0}执行停战协议的任务成功了!",characterModel.name()));
 }
 function accessRun(characterModel){
 	//访问：智力+统率+运气
@@ -133,12 +140,14 @@ function accessRun(characterModel){
 	
 	if(rand > value){
 		console.log("accessRun : 失败 能力不够");
+		SeigniorExecute.addMessage(String.format("{0}进行访问,但是没有发现人才!",characterModel.name()));
 		return;
 	}
 	var cityModel = characterModel.city();
 	var notDebut = cityModel.notDebut();
 	if(notDebut.length == 0){
 		console.log("accessRun : 失败");
+		SeigniorExecute.addMessage(String.format("{0}进行访问,但是没有发现人才!",characterModel.name()));
 		return;
 	}
 	var charaId = notDebut[notDebut.length*Math.random() >>> 0];
@@ -147,6 +156,7 @@ function accessRun(characterModel){
 	var area = characterModel.city();
 	var outOfOffice = area.outOfOffice();
 	outOfOffice.push(targetModel);
+	SeigniorExecute.addMessage(String.format("{0}进行访问,发现了人才[{1}]!",characterModel.name(),targetModel.name()));
 	hireRun2(characterModel, targetModel,area);
 }
 function exploreItems(items){
@@ -179,6 +189,7 @@ function exploreAgricultureRun(characterModel){
 	
 	if(rand > value){
 		console.log("exploreAgricultureRun : 失败 能力不够");
+		SeigniorExecute.addMessage(String.format("{0}在农地进行探索,但是没有任何发现。",characterModel.name()));
 		return;
 	}
 	var cityModel = characterModel.city();
@@ -186,6 +197,7 @@ function exploreAgricultureRun(characterModel){
 	var index = exploreItems(items);
 	if(index < 0){
 		console.log("exploreAgricultureRun : 失败");
+		SeigniorExecute.addMessage(String.format("{0}在农地进行探索,但是没有任何发现。",characterModel.name()));
 		return;
 	}
 	var itemId = items[index].item_id;
@@ -196,6 +208,7 @@ function exploreAgricultureRun(characterModel){
 	cityModel.itemsFarmland(items);
 	var item = new ItemModel(null,{item_id:itemId});
 	cityModel.addItem(item);
+	SeigniorExecute.addMessage(String.format("{0}在农地进行探索,发现了[{1}]",characterModel.name(),item.name()));
 }
 function exploreBusinessRun(characterModel){
 	//市场探索：智力+敏捷+运气
@@ -209,6 +222,7 @@ function exploreBusinessRun(characterModel){
 	
 	if(rand > value){
 		console.log("exploreBusinessRun : 失败 能力不够");
+		SeigniorExecute.addMessage(String.format("{0}在市场进行探索,但是没有任何发现。",characterModel.name()));
 		return;
 	}
 	var cityModel = characterModel.city();
@@ -216,6 +230,7 @@ function exploreBusinessRun(characterModel){
 	var index = exploreItems(items);
 	if(index < 0){
 		console.log("exploreBusinessRun : 失败");
+		SeigniorExecute.addMessage(String.format("{0}在市场进行探索,但是没有任何发现。",characterModel.name()));
 		return;
 	}
 	var itemId = items[index].item_id;
@@ -226,6 +241,7 @@ function exploreBusinessRun(characterModel){
 	cityModel.itemsFarmland(items);
 	var item = new ItemModel(null,{item_id:itemId});
 	cityModel.addItem(item);
+	SeigniorExecute.addMessage(String.format("{0}在市场进行探索,发现了[{1}]",characterModel.name(),item.name()));
 }
 function transportRun(characterModel, transportData){
 	//运输物资
@@ -310,6 +326,7 @@ function spyRun(characterModel, cityId){
 	if(spyValue<JobCoefficient.SPY){
 		if(spyValue < Math.random()*JobCoefficient.SPY){
 			console.log("spyRun : 失败 能力不够");
+			SeigniorExecute.addMessage(String.format("{0}在{1}的谍报任务失败了。",characterModel.name(),area.name()));
 			return;
 		}
 		seignior = characterModel.seignior();
@@ -319,6 +336,7 @@ function spyRun(characterModel, cityId){
 	var num = (spyValue / JobCoefficient.SPY) >>> 0;
 	seignior = seignior || characterModel.seignior();
 	seignior.addSpyCity(cityId);
+	SeigniorExecute.addMessage(String.format("{0}在{1}的谍报任务成功了。",characterModel.name(),area.name()));
 	num -= 1;
 	spyValue = spyValue % JobCoefficient.SPY;
 	if(spyValue>JobCoefficient.SPY || spyValue > Math.random()*JobCoefficient.SPY){
@@ -359,6 +377,7 @@ function hireRun(characterModel, hireCharacterId){
 	if(hireCharacterIndex < 0){
 		//TODO::失败
 		console.log("hireRun : 失败 null");
+		SeigniorExecute.addMessage(String.format("{0}录用失败了。",characterModel.name()));
 		return;
 	}
 	//var hireCharacter = outOfOffice[hireCharacterIndex];
@@ -384,6 +403,7 @@ function hireRun2(characterModel, hireCharacter,area){
 	if(rand > percentage){
 		//TODO::失败
 		console.log("hireRun : 失败 " + rand + " > " + percentage + " = " + (rand > percentage));
+		SeigniorExecute.addMessage(String.format("{0}拒绝了{1}的邀请，录用失败了。",hireCharacter.name(),characterModel.name()));
 		return;
 	}
 	hireCharacter.seigniorId(characterModel.seigniorId());
@@ -398,5 +418,6 @@ function hireRun2(characterModel, hireCharacter,area){
 	hireCharacter.cityId(characterModel.cityId());
 	var generals = area.generals();
 	generals.push(hireCharacter);
+	SeigniorExecute.addMessage(String.format("{0}成功说服了{1}，{2}加入我军!",characterModel.name(),hireCharacter.name(),hireCharacter.name()));
 }
 
