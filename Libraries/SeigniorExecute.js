@@ -37,6 +37,9 @@ SeigniorExecute.run=function(){
 			SeigniorModel.list.unshift(deleteModels[0]);
 		}
 	}
+	if(self.stop || jobAiEvent()){
+		return;
+	}
 	console.log("self.seigniorIndex="+self.seigniorIndex+"<"+SeigniorModel.list.length);
 	if(self.seigniorIndex < SeigniorModel.list.length){
 		var seigniorModel = SeigniorModel.list[self.seigniorIndex];
@@ -195,17 +198,17 @@ SeigniorExecute.prototype.areasAIRun=function(seigniorModel){
 SeigniorExecute.prototype.areaAIRun=function(areaModel){
 	var self = this;
 	//判断是否有未执行任务人员
-	var charas = getIdleCharacter(areaModel);
-	if(charas.length == 0){
+	var characters = getIdleCharacters(areaModel);
+	if(characters.length == 0){
 		self.areaAIIndex++;
 		return;
 	}
 	//是否需要征兵
-	var needEnlistFlag = needToEnlist(areaModel);
+	var needEnlistFlag = jobAiNeedToEnlist(areaModel);
 	if(needEnlistFlag){
-		var canEnlishFlag = canToEnlish(areaModel);
+		var canEnlishFlag = jobAiCanToEnlish(areaModel);
 		if(canEnlishFlag){
-			
+			jobAiToEnlish(areaModel,characters);
 			return;
 		}
 	}
@@ -215,7 +218,22 @@ SeigniorExecute.prototype.areaAIRun=function(areaModel){
 		
 		return;
 	}
-	
+	//外交
+	jobAiDiplomacy(areaModel,characters);
+	//武将移动
+	jobAiGeneralMove(areaModel,characters);
+	//输送物资
+	jobAiTransport(areaModel,characters);
+	//谍报
+	jobAiSpy(areaModel,characters);
+	//酒馆
+	jobAiTavern(areaModel,characters);
+	//太学院
+	jobAiInstitute(areaModel,characters);
+	//农地
+	jobAiFarmland(areaModel,characters);
+	//市场
+	jobAiAgriculture(areaModel,characters);
 	//如果有剩余无法分配工作的人员(金钱不够等),则直接跳过
 	self.areaAIIndex++;
 };

@@ -149,7 +149,7 @@ Language.data = {
 	"morale":"士气",
 	"movePower":"移动力",
 	"physicalFitness":"体力",
-	
+	"all_seignior":"全势力一览",
 	"monarch":"君主",
 	"general":"一般",
 	"nothing":"无",

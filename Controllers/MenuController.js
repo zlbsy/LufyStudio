@@ -22,3 +22,13 @@ MenuController.prototype.hide=function(){
 	var self = this;
 	self.view.visible = false;
 };
+MenuController.prototype.loadSeigniorList=function(){
+	var self = this;
+	LMvc.keepLoading(true);
+	self.loadMvc("SeigniorList",self.showSeigniorList);
+};
+MenuController.prototype.showArmList=function(){
+	var self = this;
+	var seigniorList = new SeigniorListController();
+	LMvc.layer.addChild(seigniorList.view);
+};

@@ -10,11 +10,6 @@ MenuView.prototype.init=function(){
 	
 	var layer = new LSprite(), menuY = 20, menuHeight = 55;
 	
-	var win = new LPanel(new LBitmapData(LMvc.datalist["win05"]),240,menuHeight * 6 + 40);
-	var winBitmap = getBitmap(win);
-	self.mainLayer.x = LGlobal.width - winBitmap.getWidth();
-	self.mainLayer.addChild(winBitmap);
-	
 	self.mainLayer.addChild(layer);
 	layer.x = 20;
 	var buttonOperatingEnd = getButton(Language.get("operating_end"),200);
@@ -35,6 +30,12 @@ MenuView.prototype.init=function(){
 	buttonGameRead.addEventListener(LMouseEvent.MOUSE_UP, self.onClickGameRead);
 	
 	menuY += menuHeight;
+	var buttonAllSeignior = getButton(Language.get("all_seignior"),200);
+	buttonAllSeignior.y = menuY;
+	layer.addChild(buttonAllSeignior);
+	buttonAllSeignior.addEventListener(LMouseEvent.MOUSE_UP, self.onClickAllSeignior);
+	
+	menuY += menuHeight;
 	var buttonGameRead = getButton(Language.get("宝物图鉴"),200);
 	buttonGameRead.y = menuY;
 	layer.addChild(buttonGameRead);
@@ -51,6 +52,12 @@ MenuView.prototype.init=function(){
 	buttonReturnTop.y = menuY;
 	layer.addChild(buttonReturnTop);
 	buttonReturnTop.addEventListener(LMouseEvent.MOUSE_UP, self.onClickReturnTop);
+	
+	var win = new LPanel(new LBitmapData(LMvc.datalist["win05"]),240,menuY + menuHeight + 20);
+	var winBitmap = getBitmap(win);
+	self.mainLayer.x = LGlobal.width - winBitmap.getWidth();
+	self.mainLayer.addChildAt(winBitmap,0);
+	
 };
 MenuView.prototype.layerInit=function(){
 	var self = this;
@@ -61,6 +68,9 @@ MenuView.prototype.layerInit=function(){
 	self.addChild(self.backLayer);
 	self.mainLayer = new LSprite();
 	self.addChild(self.mainLayer);
+	if(!self.load){
+		self.load = new LMvcLoader(self);
+	}
 };
 MenuView.prototype.hide=function(event){
 	MenuController.instance().hide();
@@ -75,6 +85,11 @@ MenuView.prototype.onClickOperatingEnd=function(event){
 		SeigniorExecute.run();
 	}
 };
+MenuView.prototype.onClickAllSeignior=function(event){
+	var self = event.currentTarget.parent.parent.parent;
+	self.hide();
+	self.controller.loadSeigniorList();
+};
 MenuView.prototype.onClickGameSave=function(event){
 };
 MenuView.prototype.onClickGameRead=function(event){
@@ -83,9 +98,6 @@ MenuView.prototype.onClickReturnTop=function(event){
 };
 MenuView.prototype.loadSeigniorExecute=function(){
 	var self = this;
-	if(!self.load){
-		self.load = new LMvcLoader(self);
-	}
 	self.load.model(["Master/SkillMaster"],self.loadSeigniorExecuteConfig);
 };
 MenuView.prototype.loadSeigniorExecuteConfig=function(){
