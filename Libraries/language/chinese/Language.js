@@ -213,7 +213,8 @@ Language.data = {
 	"diplomacy_message":"带多少金钱？",
 	"select_seignior":"选择势力",
 	//"ransom":"赎金",
-	
+	"stamp_list":"宝物图鉴",
+	"event_list":"事件一览",
 	"idle":"空闲",
 	"move":"移动",
 	"end":"结束",

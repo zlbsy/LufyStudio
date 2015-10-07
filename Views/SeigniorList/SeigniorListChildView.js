@@ -62,38 +62,50 @@ SeigniorListChildView.prototype.onframe=function(event){
 };
 SeigniorListChildView.prototype.set=function(){
 	var self = this;
-	//var chapter = new BitmapSprite(self.chapterStatus.img());
-	/*var chapter = self.chapterStatus.master().img();
-	chapter.x = 40;
-	chapter.y = (LGlobal.height - 400) * 0.5;
-	self.layer.addChild(chapter);
-	*/
-	var face = self.seigniorModel.character().minFace();
+	var faceSize = 100;
+	var character = self.seigniorModel.character();
+	var layer = new LSprite();
+	layer.x = 40;
+	var win = new LPanel(new LBitmapData(LMvc.datalist["win05"]),400,160);
+	layer.addChild(win);
+	var name = getStrokeLabel(character.name(),22,"#000000","#CCCCCC",1);
+	name.x = 10 + (faceSize - name.getWidth()) * 0.5;
+	name.y = 10 + faceSize + 5;
+	win.addChild(name);
+	
+	var city_count_label = getStrokeLabel("城池",20,"#000000","#CCCCCC",1);
+	city_count_label.x = 10 + faceSize + 5;
+	city_count_label.y = 10;
+	win.addChild(city_count_label);
+	var city_count = getStrokeLabel(self.seigniorModel.areas().length,20,"#000000","#CCCCCC",1);
+	city_count.x = city_count_label.x;
+	city_count.y = 37;
+	win.addChild(city_count);
+	
+	var general_count_label = getStrokeLabel("武将",20,"#000000","#CCCCCC",1);
+	general_count_label.x = 10 + faceSize + 5;
+	general_count_label.y = 72;
+	win.addChild(general_count_label);
+	var general_count = getStrokeLabel(self.seigniorModel.generalsCount(),20,"#000000","#CCCCCC",1);
+	general_count.x = general_count_label.x;
+	general_count.y = 99;
+	win.addChild(general_count);
+	
+	var colorLabel = getStrokeLabel("势力颜色",20,"#000000","#CCCCCC",1);
+	colorLabel.x = 300;
+	colorLabel.y = 10;
+	win.addChild(colorLabel);
+	var colorSprite = new LShape();
+	colorSprite.graphics.drawRect(0, "#000000", [0, 0, colorLabel.getWidth(), 20],true,self.seigniorModel.color());
+	colorSprite.x = colorLabel.x;
+	colorSprite.y = 37;
+	win.addChild(colorSprite);
+	
+	layer.cacheAsBitmap(true);
+	self.layer.addChild(layer);
+	
+	var face = character.minFace(faceSize);
 	face.x = 50;
 	face.y = 10;
 	self.layer.addChild(face);
-	var layer = new LSprite();
-	layer.x = 40;
-	var bitmapWin = new LPanel(new LBitmapData(LMvc.datalist["win04"]),400,160);
-	layer.addChild(bitmapWin);
-	/*
-	var txtChapter = getStrokeLabel("第" + (self.chapterStatus.index() + 1) + "章 " + self.chapterStatus.master().name()
-		,30,"#FFFFFF","#CCCCCC",1);
-	txtChapter.x = (bitmapWin.getWidth() - txtChapter.getWidth()) * 0.5;
-	//txtChapter.y = chapter.y;
-	//txtChapter.y = - txtChapter.getHeight() - 5;
-	bitmapWin.y = txtChapter.getHeight();
-	layer.addChild(txtChapter);
-	
-	layer = getBitmap(layer);
-	layer.x = chapter.x;
-	layer.y = chapter.y - txtChapter.getHeight() + 5;
-	*/
-	self.layer.addChild(layer);
-	return;
-	var txtChapter = getStrokeLabel("第" + self.chapterStatus.id() + "章 " + self.chapterStatus.name()
-		,30,"#FFFFFF","#CCCCCC",1);
-	txtChapter.x = (LGlobal.width - txtChapter.getWidth()) * 0.5;
-	txtChapter.y = chapter.y - txtChapter.getHeight() - 5;
-	self.layer.addChild(txtChapter);
 };

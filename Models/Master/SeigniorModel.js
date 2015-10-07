@@ -61,6 +61,14 @@ SeigniorModel.prototype.character = function(){
 SeigniorModel.prototype.color = function(){
 	return this.data.color;
 };
+SeigniorModel.prototype.color2 = function(){
+	switch(this.data.color){
+		case "red":
+			return "#ff0000";
+		default:
+			return "#fffff0";
+	}
+};
 /**
  * 城池
  **/
@@ -152,6 +160,11 @@ SeigniorModel.prototype.getCaptivedList = function(){
 /**
  * 武将
  **/
-SeigniorModel.prototype.generals = function(){
-	return this.data.generals;
+SeigniorModel.prototype.generalsCount = function(){
+	var areas = this.data.areas;
+	var count = 0;
+	areas.forEach(function(city){
+		count += city.generals().length;
+	});
+	return count;
 };

@@ -28,7 +28,7 @@ MenuView.prototype.init=function(){
 	buttonGameRead.y = menuY;
 	layer.addChild(buttonGameRead);
 	buttonGameRead.addEventListener(LMouseEvent.MOUSE_UP, self.onClickGameRead);
-	
+
 	menuY += menuHeight;
 	var buttonAllSeignior = getButton(Language.get("all_seignior"),200);
 	buttonAllSeignior.y = menuY;
@@ -36,16 +36,16 @@ MenuView.prototype.init=function(){
 	buttonAllSeignior.addEventListener(LMouseEvent.MOUSE_UP, self.onClickAllSeignior);
 	
 	menuY += menuHeight;
-	var buttonGameRead = getButton(Language.get("宝物图鉴"),200);
-	buttonGameRead.y = menuY;
-	layer.addChild(buttonGameRead);
-	buttonGameRead.addEventListener(LMouseEvent.MOUSE_UP, self.onClickGameRead);
+	var buttonStampList = getButton(Language.get("stamp_list"),200);
+	buttonStampList.y = menuY;
+	layer.addChild(buttonStampList);
+	buttonStampList.addEventListener(LMouseEvent.MOUSE_UP, self.onClickStampList);
 	
 	menuY += menuHeight;
-	var buttonGameRead = getButton(Language.get("事件一览"),200);
-	buttonGameRead.y = menuY;
-	layer.addChild(buttonGameRead);
-	buttonGameRead.addEventListener(LMouseEvent.MOUSE_UP, self.onClickGameRead);
+	var buttonEventList = getButton(Language.get("event_list"),200);
+	buttonEventList.y = menuY;
+	layer.addChild(buttonEventList);
+	buttonStampList.addEventListener(LMouseEvent.MOUSE_UP, self.onClickEventList);
 	
 	menuY += menuHeight;
 	var buttonReturnTop = getButton(Language.get("return_top"),200);
@@ -90,6 +90,10 @@ MenuView.prototype.onClickAllSeignior=function(event){
 	self.hide();
 	self.controller.loadSeigniorList();
 };
+MenuView.prototype.onClickEventList=function(event){
+};
+MenuView.prototype.onClickStampList=function(event){
+};
 MenuView.prototype.onClickGameSave=function(event){
 };
 MenuView.prototype.onClickGameRead=function(event){
@@ -102,7 +106,7 @@ MenuView.prototype.loadSeigniorExecute=function(){
 };
 MenuView.prototype.loadSeigniorExecuteConfig=function(){
 	var self = this;
-	self.load.config(["CharacterListType","Skills"],self.loadSeigniorExecuteHelper);
+	self.load.config(["CharacterListType","Skills","EventList"],self.loadSeigniorExecuteHelper);
 };
 MenuView.prototype.loadSeigniorExecuteHelper=function(){
 	var self = this;

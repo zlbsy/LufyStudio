@@ -1729,9 +1729,32 @@ LScriptSGJ.analysis = function(childType, lineValue) {
 		case "SGJBattleResult":
 			LSGJBattleResultScript.analysis(lineValue);
 			break;
+		case "SGJJobHelper":
+			LSGJJobHelperScript.analysis(lineValue);
+			break;
 		default:
 			LGlobal.script.analysis();
 	}
+};
+/*
+ * LSGJJobHelperScript.js
+ **/
+LSGJJobHelperScript = function() {
+};
+LSGJJobHelperScript.analysis = function(value) {
+	var start = value.indexOf("(");
+	var end = value.indexOf(")");
+	switch(value.substr(0,start)) {
+		case "LSGJJobHelperScript.dispatchEventListResult":
+			LSGJJobHelperScript.dispatchEventListResult(value, start, end);
+			break;
+		default:
+			LGlobal.script.analysis();
+	}
+};
+LSGJJobHelperScript.dispatchEventListResult = function(value, start, end) {
+	var params = value.substring(start + 1, end).split(",");
+	dispatchEventListResult(parseInt(params[0]));
 };
 /*
  * LSGJBattleResultScript.js

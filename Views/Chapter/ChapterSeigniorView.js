@@ -22,6 +22,11 @@ ChapterSeigniorView.prototype.set=function(){
 	var faceSize = 100, winSize = 160;
 	
 	var win = new LPanel(new LBitmapData(LMvc.datalist["win05"]),winSize,150);
+	var shape = new LShape();
+	shape.x = 5;
+	shape.y = faceSize + 5;
+	shape.graphics.drawRect(0, "#000000", [0, 0, faceSize, 25],true,self.data.color);
+	win.addChild(shape);
 	
 	var name = getStrokeLabel(self.data.name,22,"#000000","#CCCCCC",1);
 	name.x = (faceSize - name.getWidth()) * 0.5;
@@ -46,7 +51,7 @@ ChapterSeigniorView.prototype.set=function(){
 	general_count.y = 99;
 	win.addChild(general_count);
 	
-	win.graphics.drawRect(0, "#000000", [20, 135, 120, 10],true,self.data.color);
+	
 	
 	self.layer.addChild(getBitmap(win));
 	
