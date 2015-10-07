@@ -27,7 +27,7 @@ MenuController.prototype.loadSeigniorList=function(){
 	LMvc.keepLoading(true);
 	self.loadMvc("SeigniorList",self.showSeigniorList);
 };
-MenuController.prototype.showArmList=function(){
+MenuController.prototype.showSeigniorList=function(){
 	var self = this;
 	var seigniorList = new SeigniorListController();
 	LMvc.layer.addChild(seigniorList.view);

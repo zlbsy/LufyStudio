@@ -52,6 +52,13 @@ function getTranslucentBitmap(width,height){
 	background.scaleY = (height ? height : LGlobal.height) / backgroundData.height;
 	return background;
 }
+function getBlackBitmap(width,height){
+	var backgroundData = new LBitmapData(LMvc.datalist["common-black"]);
+	var background = new LBitmap(backgroundData);
+	background.scaleX = (width ? width : LGlobal.width) / backgroundData.width;
+	background.scaleY = (height ? height : LGlobal.height) / backgroundData.height;
+	return background;
+}
 /**
  *title,message,okEvent,cancelEvent 
  */
