@@ -32,3 +32,23 @@ MenuController.prototype.showSeigniorList=function(){
 	var seigniorList = new SeigniorListController();
 	LMvc.layer.addChild(seigniorList.view);
 };
+MenuController.prototype.loadEventList=function(){
+	var self = this;
+	LMvc.keepLoading(true);
+	self.loadMvc("EventList",self.showEventList);
+};
+MenuController.prototype.showEventList=function(){
+	var self = this;
+	var eventListController = new EventListController();
+	LMvc.layer.addChild(eventListController.view);
+};
+MenuController.prototype.loadItemList=function(){
+	var self = this;
+	LMvc.keepLoading(true);
+	self.loadMvc("ItemList",self.showItemList);
+};
+MenuController.prototype.showItemList=function(){
+	var self = this;
+	var itemListController = new ItemListController();
+	LMvc.layer.addChild(itemListController.view);
+};

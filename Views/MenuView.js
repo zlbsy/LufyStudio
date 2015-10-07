@@ -77,7 +77,6 @@ MenuView.prototype.hide=function(event){
 };
 MenuView.prototype.onClickOperatingEnd=function(event){
 	var self = event.currentTarget.parent.parent.parent;
-	console.log("self="+self);
 	self.hide();
 	if(typeof SkillMasterModel == UNDEFINED){
 		self.loadSeigniorExecute();
@@ -91,8 +90,14 @@ MenuView.prototype.onClickAllSeignior=function(event){
 	self.controller.loadSeigniorList();
 };
 MenuView.prototype.onClickEventList=function(event){
+	var self = event.currentTarget.parent.parent.parent;
+	self.hide();
+	self.controller.loadEventList();
 };
 MenuView.prototype.onClickStampList=function(event){
+	var self = event.currentTarget.parent.parent.parent;
+	self.hide();
+	self.controller.loadItemList();
 };
 MenuView.prototype.onClickGameSave=function(event){
 };

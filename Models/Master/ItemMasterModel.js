@@ -31,13 +31,10 @@ ItemMasterModel.prototype.setData = function(){
 };
 ItemMasterModel.prototype.initEquipmentData = function(){
 	var self = this;
-	var params = ["attack","spirit","defense","breakout","morale","troops","MP"];
+	var params = ["force","intelligence","command","agility","luck","attack","spirit","defense","breakout","morale","troops","MP"];
 	for(var i=0;i<params.length;i++){
-		if(typeof self.data.init[params[i]] == UNDEFINED){
-			self.data.init[params[i]] = 0;
-		}
-		if(typeof self.data.add[params[i]] == UNDEFINED){
-			self.data.add[params[i]] = 0;
+		if(typeof self.data[params[i]] == UNDEFINED){
+			self.data[params[i]] = 0;
 		}
 	}
 };

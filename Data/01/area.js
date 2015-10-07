@@ -36,9 +36,9 @@ LMvc.areaData = {
 				{item_id:5,lv:5}
 			],
 			generals:[
-				{chara_id:1,lv:3,feat:817,loyalty:100,equipments:[{item_id:4,lv:2}]},
-				{chara_id:2,lv:3,feat:166,loyalty:50,equipments:[{item_id:5,lv:1}]},
-				{chara_id:3,lv:3,feat:166,loyalty:50,equipments:[{item_id:6,lv:3}]},
+				{chara_id:1,lv:3,feat:817,loyalty:100,equipments:[{item_id:4}]},
+				{chara_id:2,lv:3,feat:166,loyalty:50,equipments:[{item_id:5}]},
+				{chara_id:3,lv:3,feat:166,loyalty:50,equipments:[{item_id:6}]},
 				{chara_id:13,lv:3,feat:166,loyalty:50},
 				{chara_id:14,lv:3,feat:166,loyalty:50},
 				{chara_id:15,lv:3,feat:166,loyalty:50},
