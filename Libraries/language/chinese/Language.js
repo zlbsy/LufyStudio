@@ -273,7 +273,7 @@ Language.cityData = {
 	"city_4":"安定",
 	"city_5":"梓橦",
 	"city_6":"成都",
-	"city_7":"江洲",
+	"city_7":"江州",
 	"city_8":"建宁",
 	"city_9":"南蛮",
 	"city_10":"交趾",
