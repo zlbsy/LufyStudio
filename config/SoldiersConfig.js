@@ -9,9 +9,7 @@ var MoveType = {
 };
 var EnlistSetting = {
 	ENLIST_FROM:500,//征兵范围
-	ENLIST_TO:1000,//征兵范围
-	ENLIST_PRICE:500,//征兵价格
-	
+	ENLIST_TO:1000//征兵范围
 };
 var TrainingSetting = {
 	MAX:500//训练最大熟练度

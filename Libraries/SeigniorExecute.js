@@ -205,9 +205,9 @@ SeigniorExecute.prototype.areaAIRun=function(areaModel){
 	}
 	//是否需要征兵
 	var needEnlistFlag = jobAiNeedToEnlist(areaModel);
-	if(needEnlistFlag){
-		var canEnlishFlag = jobAiCanToEnlish(areaModel);
-		if(canEnlishFlag){
+	var canEnlish = jobAiCanToEnlish(areaModel);
+	if(needEnlistFlag == AiEnlistFlag.Must || needEnlistFlag == AiEnlistFlag.Need){
+		if(canEnlish){
 			jobAiToEnlish(areaModel,characters);
 			return;
 		}

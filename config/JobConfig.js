@@ -27,7 +27,8 @@ var JobPrice = {
 	REPAIR:500,
 	SPY:500,
 	LEVEL_UP:50000,
-	TRAINING:500
+	TRAINING:500,
+	ENLIST:500,//征兵价格
 };
 var JobCoefficient = {
 	NORMAL:90,

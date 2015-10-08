@@ -16,13 +16,18 @@ function getIdleCharacters(areaModel){
 	return charas;
 }
 AiEnlistFlag = {
+	None:0,
 	Must:1,
-	Can:2
+	Need:2,
+	Battle:3,
+	MustResource:4,
+	NeedResource:5,
+	BattleResource:6,
+	Free:7
 };
 function jobAiNeedToEnlist(areaModel){
-	return false;
 	if(areaModel.troops() >= areaModel.maxTroops()){
-		return 0;
+		return AiEnlistFlag.Node;
 	}
 	var charas = getDefenseEnemiesFromCity(areaModel);
 	var minToops = 0;
@@ -30,28 +35,34 @@ function jobAiNeedToEnlist(areaModel){
 		var chara = charas[i];
 		minToops += chara.maxTroops();
 	}
-	if(areaModel.troops() < minToops){
+	if(areaModel.troops() < minToops){ 
 		return AiEnlistFlag.Must ;
 	}
 	if(areaModel.agriculture() < areaModel.maxAgriculture()*0.3 || areaModel.business() < areaModel.maxBusiness()*0.3 || areaModel.cityDefense() < areaModel.maxCityDefense()*0.3){
-		return 0;
+		return AiEnlistFlag.MustResource;
 	}
 	if(areaModel.troops() < minToops * 2){
-		return 9;
+		return AiEnlistFlag.Need;
 	}
 	if(areaModel.agriculture() < areaModel.maxAgriculture()*0.6 || areaModel.business() < areaModel.maxBusiness()*0.6 || areaModel.cityDefense() < areaModel.maxCityDefense()*0.6){
-		return 0;
+		return AiEnlistFlag.NeedResource;
 	}
 	if(areaModel.troops() < minToops * 3){
-		return 8;
+		return AiEnlistFlag.Battle;
 	}
 	if(areaModel.agriculture() < areaModel.maxAgriculture() || areaModel.business() < areaModel.maxBusiness() || areaModel.cityDefense() < areaModel.maxCityDefense()){
-		return false;
+		return AiEnlistFlag.BattleResource;
 	}
-	return 1;
+	return AiEnlistFlag.Free;
 }
 function jobAiCanToEnlish(areaModel){
-	return false;
+	if(areaModel.population() <= areaModel.minPopulation()){
+		return false;
+	}
+	if(areaModel.money() < JobPrice.ENLIST){
+		return false;
+	}
+	return true;
 }
 function jobAiToEnlish(areaModel,characters){
 	if(characters.length == 0){

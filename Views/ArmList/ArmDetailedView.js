@@ -32,7 +32,7 @@ ArmDetailedView.prototype.setArmEnlist=function(){
 	layer.addChild(quantity);
 	
 	//self.enlistPrice = soldierModel.enlistPrice();
-	self.enlistPrice = EnlistSetting.ENLIST_PRICE;
+	self.enlistPrice = JobPrice.ENLIST;
 	
 	var enlistConfrim = getStrokeLabel("要招募多少士兵？", 20, "#FFFFFF", "#000000", 4);
 	enlistConfrim.x = 50;
