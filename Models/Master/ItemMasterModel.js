@@ -23,6 +23,18 @@ ItemMasterModel.getMaster=function(item_id){
 	}
 	return null;
 };
+ItemMasterModel.getStamps=function(){
+	var self = this;
+	var stamps = [];
+	for(var i=0,l=ItemMasterModel.master.length;i<l;i++){
+		var item = ItemMasterModel.master[i];
+		if(!item.stamp()){
+			continue;
+		}
+		stamps.push(item);
+	}
+	return stamps;
+};
 ItemMasterModel.prototype.setData = function(){
 	var self = this;
 	if(self.data.type == ItemType.EQUIPMENT){
@@ -44,6 +56,9 @@ ItemMasterModel.prototype.id = function(){
 ItemMasterModel.prototype.name = function(){return this.data.name;
 	console.log("this.data.name = ",this.data.name);
 	return Language.get(this.data.name);
+};
+ItemMasterModel.prototype.stamp = function(){
+	return this.data.stamp ? true : false;
 };
 ItemMasterModel.prototype.itemType = function(){
 	return this.data.type;

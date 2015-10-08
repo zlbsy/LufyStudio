@@ -1,11 +1,9 @@
-function ItemListChildView(controller, seigniorModel) {
+function ItemListChildView(controller, itemModel) {
 	var self = this;
 	base(self, LView, [controller]);
-	self.seigniorModel = seigniorModel;
-	self.y = LGlobal.height - 160;
+	self.itemModel = itemModel;
 	self.layer = new LSprite();
 	self.addChild(self.layer);
-	
 	self.addEventListener(LEvent.ENTER_FRAME, self.onframe);
 	
 	self.addEventListener(LMouseEvent.MOUSE_DOWN, self.onDown);
@@ -63,11 +61,15 @@ ItemListChildView.prototype.onframe=function(event){
 ItemListChildView.prototype.set=function(){
 	var self = this;
 	var faceSize = 100;
-	var character = self.seigniorModel.character();
+	//var character = self.seigniorModel.character();
 	var layer = new LSprite();
 	layer.x = 40;
 	var win = new LPanel(new LBitmapData(LMvc.datalist["win05"]),400,160);
 	layer.addChild(win);
+	layer.cacheAsBitmap(true);
+	self.layer.addChild(layer);
+	return;
+	/*
 	var name = getStrokeLabel(character.name(),22,"#000000","#CCCCCC",1);
 	name.x = 10 + (faceSize - name.getWidth()) * 0.5;
 	name.y = 10 + faceSize + 5;
@@ -107,5 +109,5 @@ ItemListChildView.prototype.set=function(){
 	var face = character.minFace(faceSize);
 	face.x = 50;
 	face.y = 10;
-	self.layer.addChild(face);
+	self.layer.addChild(face);*/
 };

@@ -8,7 +8,6 @@ ItemListView.prototype.init=function(){
 	var self = this;
 	var windowBackgrond = getBlackBitmap();
 	self.addChild(windowBackgrond);
-	self.mapLayerInit();
 	
 	self.listLayer = new LSprite();
 	self.addChild(self.listLayer);
@@ -17,8 +16,6 @@ ItemListView.prototype.init=function(){
 	self.ctrlLayer = new LSprite();
 	self.addChild(self.ctrlLayer);
 	self.ctrlLayerInit();
-	
-	self.updateMap();
 };
 ItemListView.prototype.onClickCloseButton=function(event){
 	var self = event.currentTarget.parent.parent;
@@ -26,82 +23,16 @@ ItemListView.prototype.onClickCloseButton=function(event){
 	self.mapData = null;
 	self.controller.close();
 };
-ItemListView.prototype.updateMap=function(){
-	var self = this;
-	var index = Math.floor((-self.listLayer.x) / LGlobal.width);
-	self.mapData.bitmapData.copyPixels(self.areaMap,new LRectangle(0,0,self.areaMap.width,self.areaMap.height),new LPoint(0,0));
-	var seigniorModel = SeigniorModel.list[index];
-	var size = 20;
-	var citys = seigniorModel.areas();
-	for(var i=0,l=citys.length;i<l;i++){
-		var city = citys[i];
-		var color = seigniorModel.color2();
-		var colorData = new LBitmapData(color,0,0,size,size,LBitmapData.DATA_CANVAS);
-		self.mapData.bitmapData.copyPixels(colorData,new LRectangle(0,0,colorData.width,colorData.height),new LPoint(city.position().x*self.mapScaleX-2,city.position().y*self.mapScaleY-2));
-	}
-};
 ItemListView.prototype.listLayerInit=function(){
 	var self = this;
-	var seigniors = SeigniorModel.list;
-	for(var i=0,l=seigniors.length;i<l;i++){
-		var seigniorModel = seigniors[i];
-		var seigniorChild = new SeigniorListChildView(self.controller,seigniorModel);
-		seigniorChild.x = LGlobal.width * i;
-		self.listLayer.addChild(seigniorChild);
+	var stamps = ItemMasterModel.getStamps();
+	for(var i=0,l=stamps.length;i<l;i++){
+		var itemModel = stamps[i];
+		var child = new ItemListChildView(self.controller,itemModel);
+		child.x = LGlobal.width * i;
+		self.listLayer.addChild(child);
 	}
-	self.listLayer.dragRange = new LRectangle(-LGlobal.width * seigniors.length,0,LGlobal.width * (seigniors.length + 1),0);
-};
-ItemListView.prototype.mapLayerInit=function(){
-	var self = this;
-	self.mapLayer = new LSprite();
-	self.addChild(self.mapLayer);
-	var bitmapData = new LBitmapData(LMvc.datalist["area-map-1"],null,null,null,null,LBitmapData.DATA_CANVAS);
-	self.areaMap = new LBitmapData(null,0,0,400,240,LBitmapData.DATA_CANVAS);
-	self.mapScaleX = self.areaMap.width/bitmapData.width;
-	self.mapScaleY = self.areaMap.height/bitmapData.height;
-	var matrix = new LMatrix();
-	matrix.scale(self.mapScaleX, self.mapScaleY);
-	self.areaMap.draw(bitmapData, matrix);
-	for(var i=0,l=AreaModel.list.length;i<l;i++){
-		var city = AreaModel.list[i];
-		var size = 14;
-		var colorData = new LBitmapData("#ffffff",0,0,size,size,LBitmapData.DATA_CANVAS);
-		self.areaMap.copyPixels(colorData,new LRectangle(0,0,colorData.width,colorData.height),new LPoint(city.position().x*self.mapScaleX,city.position().y*self.mapScaleY));
-	}
-	var seigniors = SeigniorModel.list;
-	for(var i=0,l=seigniors.length;i<l;i++){
-		var seigniorModel = seigniors[i];
-		var size = 14;
-		var citys = seigniorModel.areas();
-		for(var j=0,ll=citys.length;j<ll;j++){
-			var city = citys[j];
-			var color = seigniorModel.color2();
-			var colorData = new LBitmapData(color,0,0,size,size,LBitmapData.DATA_CANVAS);
-			self.areaMap.copyPixels(colorData,new LRectangle(0,0,colorData.width,colorData.height),new LPoint(city.position().x*self.mapScaleX,city.position().y*self.mapScaleY));
-		}
-	}
-	
-	var mapBitmapData = new LBitmapData(null,0,0,400,240,LBitmapData.DATA_CANVAS);
-	self.mapData = new LBitmap(mapBitmapData);
-	
-	var layer = new LSprite();
-	var bitmapWin = new LPanel(new LBitmapData(LMvc.datalist["win01"]),420,260,20,30,23,24);
-	layer.addChild(bitmapWin);
-	
-	var title = Language.get("all_seignior");
-	var txtmap = getStrokeLabel(title,30,"#FFFFFF","#CCCCCC",1);
-	txtmap.x = (bitmapWin.getWidth() - txtmap.getWidth()) * 0.5;
-	bitmapWin.y = txtmap.getHeight();
-	layer.addChild(txtmap);
-	
-	layer = getBitmap(layer);
-	layer.x = (LGlobal.width - layer.getWidth()) * 0.5;
-	layer.y = 30;
-	self.mapLayer.addChild(layer);
-	
-	self.mapData.x = layer.x + 10;
-	self.mapData.y = layer.y + bitmapWin.y + 10;
-	self.mapLayer.addChild(self.mapData);
+	self.listLayer.dragRange = new LRectangle(-LGlobal.width * stamps.length,0,LGlobal.width * (stamps.length + 1),0);
 };
 ItemListView.prototype.ctrlLayerInit=function(){
 	var self = this;
@@ -189,5 +120,4 @@ ItemListView.prototype.moveComplete=function(event){
 	var listLayer = event.target;
 	listLayer.isMoving = false;
 	var self = listLayer.parent;
-	self.updateMap();
 };
