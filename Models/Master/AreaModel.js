@@ -27,6 +27,64 @@ AreaModel.getArea=function(area_id){
 	}
 	return null;
 };
+AreaModel.getPowerfulCharacters = function(generals){
+	var list = [],result = [];
+	console.log("AreaModel.getPowerfulCharacters:",generals);
+	for(var i=0,l=generals.length;i<l;i++){
+		var child = generals[i];
+		var data;
+		if(child.constructor.name == "BattleCharacterView"){
+			data = child.data;
+		}else{
+			data = child;
+		}
+		var value = data.force() + data.intelligence() + data.agility() + data.luck() + data.command();
+		value += value * data.lv() * 0.1;
+		value += data.maxProficiencySoldier().proficiency() * 0.1;
+		value += data.skill() > 0 ? 100 : 0;
+		list.push({general:child,value:value});
+	}
+	list = list.sort(function(a,b){return a.value - b.value;});
+	return list;
+}
+AreaModel.prototype.getDefenseEnemiesAndPowerful = function(){
+	var city = this;
+	var generals = city.generals(),result = [];
+	var list = AreaModel.getPowerfulCharacters(generals);
+	var index = list.findIndex(function(child){
+		return child.general.id() == city.seigniorCharaId();
+	});
+	if(index < 0){
+		index = list.findIndex(function(child){
+			return child.general.id() == city.prefecture();
+		});
+	}
+	if(index >= 0){
+		var chara = list.splice(index,1)[0];
+		list.unshift(chara);
+	}
+	return list;
+}
+AreaModel.prototype.getDefenseEnemies = function(){
+	var self = this;
+	var result = [];
+	var list = self.getDefenseEnemiesAndPowerful();
+	console.log("getDefenseEnemies list:",list);
+	for(var i=0,l=list.length < BattleMapConfig.DefenseQuantity ? list.length : BattleMapConfig.DefenseQuantity;i<l;i++){
+		result.push(list[i].general);
+	}
+	return result;
+}
+AreaModel.prototype.powerful = function(){
+	var self = this;
+	var power = [];
+	var list = self.getDefenseEnemiesAndPowerful();
+	console.log("powerful list:",list);
+	for(var i=0,l=list.length < BattleMapConfig.DefenseQuantity ? list.length : BattleMapConfig.DefenseQuantity;i<l;i++){
+		power += list[i].value;
+	}
+	return power;
+}
 AreaModel.prototype.copyProperty = function(data){
 	var self = this;
 	if(self.isBasicType(data)){

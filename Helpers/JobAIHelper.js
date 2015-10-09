@@ -1,8 +1,44 @@
 function jobAiEvent(){
 	return false;
 }
-function getCanBattleCitys(areaModel){
-	return [];
+function getWeakBattleCity(areaModel){
+	//最弱城池
+	var neighbors = areaModel.neighbor();
+	var enemyCitys = [];
+	for(var i = 0;i < neighbors.length;i++){
+		var child = AreaModel.getArea(neighbors[i]);
+		if(child.seigniorCharaId() != areaModel.seigniorCharaId()){
+			enemyCitys.push(child);
+		}
+	}
+	if(enemyCitys.length == 0){
+		return null;
+	}
+	enemyCitys = enemyCitys.sort(function(a,b){return a.powerful() - b.powerful();});
+	return null;
+}
+function getCanBattleCity(areaModel,characters,enlistFlag){
+	if(enlistFlag == AiEnlistFlag.Must || enlistFlag == AiEnlistFlag.MustResource){
+		return null;
+	}
+	var weakCity = getWeakBattleCity(areaModel);
+	if(!weakCity){
+		return null;
+	}
+	var generals = getPowerfulCharacters(characters);
+	var needFood = 0;
+	for(var i=0,l=generals.length;i<l && i<5;i++){
+		var charaModel = generals[i];
+		needFood += charaModel.maxTroops();
+	}
+	if(areaModel.food() < needFood){
+		return null;
+	}
+	
+	if(enlistFlag == AiEnlistFlag.Need || enlistFlag == AiEnlistFlag.NeedResource){
+		return null;
+	}
+	return null;
 }
 function getIdleCharacters(areaModel){
 	var charas = [];

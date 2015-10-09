@@ -213,8 +213,8 @@ SeigniorExecute.prototype.areaAIRun=function(areaModel){
 		}
 	}
 	//判断是否有可攻击的城池
-	var citys = getCanBattleCitys(areaModel);
-	if(citys && citys.length > 0){
+	var city = getCanBattleCity(areaModel, characters, needEnlistFlag);
+	if(city){
 		
 		return;
 	}
