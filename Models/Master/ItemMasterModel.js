@@ -54,8 +54,7 @@ ItemMasterModel.prototype.id = function(){
 	return this.data.id;
 };
 ItemMasterModel.prototype.name = function(){return this.data.name;
-	console.log("this.data.name = ",this.data.name);
-	return Language.get(this.data.name);
+	return Language.getItem("item_name_"+this.data.id);
 };
 ItemMasterModel.prototype.stamp = function(){
 	return this.data.stamp ? true : false;
@@ -66,18 +65,51 @@ ItemMasterModel.prototype.itemType = function(){
 ItemMasterModel.prototype.position = function(){
 	return this.data.position;
 };
+ItemMasterModel.prototype.params = function(){
+	var self = this, keys = ["force","intelligence","command","agility","luck","attack","defense","breakout","morale","spirit"];
+	var result = [];
+	for(var i=0,l=keys.length;i<l;i++){
+		if(this.data[keys[i]]){
+			result.push(keys[i]);
+		}
+	}
+	return result;
+};
+ItemMasterModel.prototype.getParam = function(key){
+	return this.data[key];
+};
 ItemMasterModel.prototype.attack = function(){
-	return this.data.attack;
+	return this.data.attack?this.data.attack:0;
 };
-ItemMasterModel.prototype.add = function(){
-	return this.data.add;
+ItemMasterModel.prototype.defense = function(){
+	return this.data.defense?this.data.defense:0;
 };
-
-ItemMasterModel.prototype.price = function(){
-	return this.data.price;
+ItemMasterModel.prototype.breakout = function(){
+	return this.data.breakout?this.data.breakout:0;
+};
+ItemMasterModel.prototype.morale = function(){
+	return this.data.morale?this.data.morale:0;
+};
+ItemMasterModel.prototype.spirit = function(){
+	return this.data.spirit?this.data.spirit:0;
+};
+ItemMasterModel.prototype.force = function(){
+	return this.data.force?this.data.force:0;
+};
+ItemMasterModel.prototype.intelligence = function(){
+	return this.data.intelligence?this.data.intelligence:0;
+};
+ItemMasterModel.prototype.command = function(){
+	return this.data.command?this.data.command:0;
+};
+ItemMasterModel.prototype.agility = function(){
+	return this.data.agility?this.data.agility:0;
+};
+ItemMasterModel.prototype.luck = function(){
+	return this.data.luck?this.data.luck:0;
 };
 ItemMasterModel.prototype.explanation = function(){
-	return Language.get(this.data.explanation);
+	return Language.getItem("item_explanation_" + this.data.id);
 };
 ItemMasterModel.prototype.icon=function(size){
 	var self = this;

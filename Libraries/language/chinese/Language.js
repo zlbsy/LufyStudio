@@ -4,6 +4,9 @@ function Language(){
 Language.get = function(key){
 	return Language.data[key] || key;
 };
+Language.getItem = function(key){
+	return Language.itemData[key] || key;
+};
 Language.getCity = function(key){
 	return Language.cityData[key] || key;
 };
@@ -120,10 +123,7 @@ Language.data = {
 	"speed":"速度",
 	"dodge":"躲闪",
 	"strategy":"谋略",
-	
-	"equipment_name_1":"木剑",
-	"equipment_name_2":"布帽",
-	"equipment_name_3":"布衣",
+
 	
 	"label_equip":"装备",
 	"label_use":"使用",
@@ -235,6 +235,12 @@ Language.data = {
 	
 	"leader_change_talk":"糟糕!因为主将撤退，军队一盘散沙，能力都下降了。那就由我暂代主将来指挥战斗吧！",
 	"gameover":"游戏结束"
+};
+Language.itemData = {
+	"item_name_1":"木剑",
+	"item_name_2":"布帽",
+	"item_name_3":"布衣",
+	"item_explanation_18":"测试测试测试测试测试，测试测试测试测试测试测试测试，测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试",
 };
 Language.characterData = {
 	"character_1":"刘备",
