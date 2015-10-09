@@ -2,9 +2,6 @@ function ItemModel(controller,data){
 	var self = this;
 	base(self,MyModel,[controller]);
 	self.data = data;
-	if(!self.data.exp){
-		self.data.exp = 0;
-	}
 }
 ItemModel.prototype.master=function(){
 	var self = this;
@@ -32,7 +29,7 @@ ItemModel.prototype.itemType = function(){
 	return this.master().itemType();
 };
 ItemModel.prototype.attack = function(){
-	return this.master().init().attack + this.lv() * this.master().add().attack;
+	return this.master().attack();
 };
 ItemModel.prototype.spirit = function(){
 	return this.master().init().spirit + this.lv() * this.master().add().spirit;

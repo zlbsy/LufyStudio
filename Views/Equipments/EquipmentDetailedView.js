@@ -128,14 +128,14 @@ EquipmentDetailedView.prototype.sale=function(event){
 EquipmentDetailedView.prototype.showCondition=function(){
 	var self = this;
 	var layer = new LSprite();
-	var lblLevel = getStrokeLabel("等级：" + self.itemModel.lv(),20,"#FFFFFF","#000000",4);
+	var lblLevel = getStrokeLabel("等级：" /*+ self.itemModel.lv()*/,20,"#FFFFFF","#000000",4);
 	layer.addChild(lblLevel);
 	return layer;
 };
 EquipmentDetailedView.prototype.showAddition=function(){
 	var self = this;
 	var layer = new LSprite();
-	var lblLevel = getStrokeLabel("攻击：" + self.itemModel.attack(),20,"#FFFFFF","#000000",4);
+	var lblLevel = getStrokeLabel("攻击：" /*+ self.itemModel.attack()*/,20,"#FFFFFF","#000000",4);
 	layer.addChild(lblLevel);
 	return layer;
 };

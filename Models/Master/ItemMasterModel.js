@@ -66,8 +66,8 @@ ItemMasterModel.prototype.itemType = function(){
 ItemMasterModel.prototype.position = function(){
 	return this.data.position;
 };
-ItemMasterModel.prototype.init = function(){
-	return this.data.init;
+ItemMasterModel.prototype.attack = function(){
+	return this.data.attack;
 };
 ItemMasterModel.prototype.add = function(){
 	return this.data.add;

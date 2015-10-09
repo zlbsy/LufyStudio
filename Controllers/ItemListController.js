@@ -4,7 +4,12 @@ function ItemListController(){
 }
 ItemListController.prototype.construct=function(){
 	var self = this;
-	self.load.view(["ItemList/ItemListChild"],self.init);
+	var list = self.model.getImages();
+	self.load.image(list,self.viewLoad);
+};
+ItemListController.prototype.viewLoad=function(){
+	var self = this;
+	self.load.view(["ItemList/ItemListChild","Equipments/EquipmentDetailed"],self.init);
 };
 ItemListController.prototype.init=function(){
 	var self = this;
