@@ -31,16 +31,14 @@ EventListView.prototype.onClickCloseButton=function(event){
 };
 EventListView.prototype.listLayerInit=function(){
 	var self = this;
-	var stamps = ItemMasterModel.getStamps();
 	var backLayer = new LSprite();
-	for(var i=0,l=stamps.length;i<l;i++){
-		var itemModel = stamps[i];
-		var child = new ItemListChildView(self.controller, itemModel);
-		child.x = 110 * (i % 4);
-		child.y = 110 * (i / 4 >>> 0);
+	var bitmapData = new LBitmapData(null,0,0,430, 110 * ((EventListConfig.length / 2 >>> 0) + 1) - 10,LBitmapData.DATA_CANVAS);
+	backLayer.addChild(new LBitmap(bitmapData));
+	for(var i=0,l=EventListConfig.length;i<l;i++){
+		var eventObject = EventListConfig[i];
+		var child = new EventListChildView(self.controller, eventObject, bitmapData, 220 * (i % 2), 110 * (i / 2 >>> 0));
 		backLayer.addChild(child);
 	}
-	backLayer.graphics.drawRect(0, "#000000", [0, 0, 430, 110 * ((stamps.length / 4 >>> 0) + 1) - 10]);
 	
 	self.listLayer.listLayer = backLayer;
 	var left = backLayer.graphics.startX(), right = left + backLayer.graphics.getWidth();

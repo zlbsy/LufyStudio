@@ -1,11 +1,14 @@
-function EventListChildView(controller, itemModel) {
+function EventListChildView(controller, eventObject, bitmapData, x, y) {
 	var self = this;
 	base(self, LView, [controller]);
-	self.itemModel = itemModel;
-	self.lock = !LPlugin.stampIsOpen(itemModel.id());
+	self.eventObject = eventObject;
+	self.parentBitmapData = bitmapData;
+	self.x = x;
+	self.y = y;
+	self.lock = !LPlugin.eventIsOpen(eventObject.id);
 	self.set();
 	if(self.lock){
-		self.toBitmap();
+		self.toBitmap(bitmapData);
 	}
 }
 EventListChildView.prototype.layerInit=function(){
@@ -26,21 +29,26 @@ EventListChildView.prototype.toBitmap=function(){
 	var layer = self.layer.getChildAt(0);
 	layer.visible = true;
 	layer.cacheAsBitmap(true);
+	var bitmap = layer._ll_cacheAsBitmap;
+	self.parentBitmapData.copyPixels(bitmap.bitmapData,new LRectangle(0, 0, bitmap.getWidth(), bitmap.getHeight()), new LPoint(self.x,self.y));
+	self.layer.remove();
 };
 EventListChildView.prototype.set=function(){
 	var self = this;
 	self.layerInit();
 	self.loadCompleteCount = 0;
 	
-	var width = 100, height = 100;
+	var width = 200, height = 100;
+	self.addShape(LShape.RECT,[0,0,width,height]);
 	var layer = new LSprite();
 	layer.visible = false;
 	self.layer.addChild(layer);
 	
 	var icon;
 	if(self.lock){
-		var winPanel = new LPanel(new LBitmapData(LMvc.datalist["win06"]),width,height);
+		var winPanel = new LPanel(new LBitmapData(LMvc.datalist["win05"]),width,height);
 		layer.addChild(winPanel);
+		layer.addChild(getTranslucentBitmap(width,height));
 		icon = new LBitmap(new LBitmapData(LMvc.datalist["lock"]));
 		icon.x = (width - icon.getWidth())*0.5;
 		icon.y = (height - icon.getHeight())*0.5;

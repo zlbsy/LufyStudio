@@ -33,14 +33,13 @@ ItemListView.prototype.listLayerInit=function(){
 	var self = this;
 	var stamps = ItemMasterModel.getStamps();
 	var backLayer = new LSprite();
+	var bitmapData = new LBitmapData(null,0,0,430, 110 * ((stamps.length / 4 >>> 0) + 1) - 10,LBitmapData.DATA_CANVAS);
+	backLayer.addChild(new LBitmap(bitmapData));
 	for(var i=0,l=stamps.length;i<l;i++){
 		var itemModel = stamps[i];
-		var child = new ItemListChildView(self.controller, itemModel);
-		child.x = 110 * (i % 4);
-		child.y = 110 * (i / 4 >>> 0);
+		var child = new ItemListChildView(self.controller, itemModel, bitmapData, 110 * (i % 4), 110 * (i / 4 >>> 0));
 		backLayer.addChild(child);
 	}
-	backLayer.graphics.drawRect(0, "#000000", [0, 0, 430, 110 * ((stamps.length / 4 >>> 0) + 1) - 10]);
 	
 	self.listLayer.listLayer = backLayer;
 	var left = backLayer.graphics.startX(), right = left + backLayer.graphics.getWidth();

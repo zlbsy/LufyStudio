@@ -21,6 +21,13 @@ LPlugin.openStamp = function(key){
 	LPlugin.stamps()[key] = 1;
 	LPlugin.SetData(LPlugin.KEY_STAMP_LIST, LPlugin.stamps());
 };
+LPlugin.eventIsOpen = function(key){
+	return LPlugin.events()[key] ? true : false;
+};
+LPlugin.openEvent = function(key){
+	LPlugin.events()[key] = 1;
+	LPlugin.SetData(LPlugin.KEY_EVENT_LIST, LPlugin.events());
+};
 LPlugin.SetData = function(key,data){
 	window.localStorage.setItem(key, JSON.stringify(data));
 };

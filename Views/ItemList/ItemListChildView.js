@@ -1,11 +1,14 @@
-function ItemListChildView(controller, itemModel) {
+function ItemListChildView(controller, itemModel, bitmapData, x, y) {
 	var self = this;
 	base(self, LView, [controller]);
 	self.itemModel = itemModel;
+	self.parentBitmapData = bitmapData;
+	self.x = x;
+	self.y = y;
 	self.lock = !LPlugin.stampIsOpen(itemModel.id());
 	self.set();
 	if(self.lock){
-		self.toBitmap();
+		self.toBitmap(bitmapData);
 	}
 }
 ItemListChildView.prototype.layerInit=function(){
@@ -26,6 +29,9 @@ ItemListChildView.prototype.toBitmap=function(){
 	var layer = self.layer.getChildAt(0);
 	layer.visible = true;
 	layer.cacheAsBitmap(true);
+	var bitmap = layer._ll_cacheAsBitmap;
+	self.parentBitmapData.copyPixels(bitmap.bitmapData,new LRectangle(0, 0, bitmap.getWidth(), bitmap.getHeight()), new LPoint(self.x,self.y));
+	self.layer.remove();
 };
 ItemListChildView.prototype.set=function(){
 	var self = this;
@@ -33,6 +39,7 @@ ItemListChildView.prototype.set=function(){
 	self.loadCompleteCount = 0;
 	
 	var width = 100, height = 100;
+	self.addShape(LShape.RECT,[0,0,width,height]);
 	var layer = new LSprite();
 	layer.visible = false;
 	self.layer.addChild(layer);
