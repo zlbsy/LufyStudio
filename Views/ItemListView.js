@@ -32,7 +32,6 @@ ItemListView.prototype.onClickCloseButton=function(event){
 ItemListView.prototype.listLayerInit=function(){
 	var self = this;
 	var stamps = ItemMasterModel.getStamps();
-	console.log("stamps",stamps);
 	var backLayer = new LSprite();
 	for(var i=0,l=stamps.length;i<l;i++){
 		var itemModel = stamps[i];
@@ -71,8 +70,8 @@ ItemListView.prototype.stampClickUp = function(event) {
 		return;
 	}
 	if (stamp.offsetX && stamp.offsetY && Math.abs(stamp.offsetX - event.offsetX) < 5 && Math.abs(stamp.offsetY - event.offsetY) < 5) {
-		console.log("stamp=",stamp);
-		var equipmentDetailed = new EquipmentDetailedView(self.controller,stamp.itemModel,self);
+		var itemModel = new ItemModel(null,{item_id:stamp.itemModel.id()});
+		var equipmentDetailed = new EquipmentDetailedView(self.controller,itemModel,self);
 		self.addChild(equipmentDetailed);
 	}
 };

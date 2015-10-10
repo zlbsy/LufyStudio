@@ -13,14 +13,8 @@ ItemModel.prototype.master=function(){
 ItemModel.prototype.id = function(){
 	return this.data.item_id;
 };
-ItemModel.prototype.lv = function(){
-	return this.data.lv;
-};
-ItemModel.prototype.exp = function(){
-	return this.data.exp;
-};
 ItemModel.prototype.count = function(){
-	return this.data.cnt;
+	return this.data.count;
 };
 ItemModel.prototype.name = function(){
 	return this.master().name();
@@ -28,26 +22,44 @@ ItemModel.prototype.name = function(){
 ItemModel.prototype.itemType = function(){
 	return this.master().itemType();
 };
+ItemModel.prototype.params = function(){
+	return this.master().params();
+};
+ItemModel.prototype.getParam = function(key){
+	return this.master().getParam(key);
+};
 ItemModel.prototype.attack = function(){
 	return this.master().attack();
 };
 ItemModel.prototype.spirit = function(){
-	return this.master().init().spirit + this.lv() * this.master().add().spirit;
+	return this.master().spirit();
 };
 ItemModel.prototype.defense = function(){
-	return this.master().init().defense + this.lv() * this.master().add().defense;
+	return this.master().defense();
 };
 ItemModel.prototype.breakout = function(){
-	return this.master().init().breakout + this.lv() * this.master().add().breakout;
+	return this.master().breakout();
 };
 ItemModel.prototype.morale = function(){
-	return this.master().init().morale + this.lv() * this.master().add().morale;
+	return this.master().morale();
 };
 ItemModel.prototype.troops = function(){
-	return this.master().init().troops + this.lv() * this.master().add().troops;
+	return this.master().troops();
 };
-ItemModel.prototype.price = function(){
-	return this.master().price();
+ItemModel.prototype.force = function(){
+	return this.master().force();
+};
+ItemModel.prototype.intelligence = function(){
+	return this.master().intelligence();
+};
+ItemModel.prototype.command = function(){
+	return this.master().command();
+};
+ItemModel.prototype.agility = function(){
+	return this.master().agility();
+};
+ItemModel.prototype.luck = function(){
+	return this.master().luck();
 };
 ItemModel.prototype.position = function(){
 	return this.master().position();
@@ -55,39 +67,6 @@ ItemModel.prototype.position = function(){
 ItemModel.prototype.explanation = function(){
 	return this.master().explanation();
 };
-/*效果*/
-ItemModel.prototype.effect = function(){
-	var self = this;
-	var out = "";
-	if(self.troops() != 0){
-		out += String.format("{0} : {1}\n",Language.get("troops"), self.troops());
-	}
-	if(self.attack() != 0){
-		out += String.format("{0} : {1}\n",Language.get("attack"), self.attack());
-	}
-	if(self.spirit() != 0){
-		out += String.format("{0} : {1}\n",Language.get("spirit"), self.spirit());
-	}
-	if(self.defense() != 0){
-		out += String.format("{0} : {1}\n",Language.get("defense"), self.defense());
-	}
-	if(self.breakout() != 0){
-		out += String.format("{0} : {1}\n",Language.get("breakout"), self.breakout());
-	}
-	if(self.morale() != 0){
-		out += String.format("{0} : {1}\n",Language.get("morale"), self.morale());
-	}
-	return out;
-};
 ItemModel.prototype.icon=function(size){
 	return this.master().icon(size);
-	if(!size){
-		size = new LPoint(100,100);
-	}
-	var icon = this.master().icon(size);
-	var lblCount = getStrokeLabel(this.count(),25,"#FFFFFF","#000000",3);
-	lblCount.x = size.x - 5 - lblCount.getWidth();
-	lblCount.y = 5;
-	icon.addChild(lblCount);
-	return icon;
 };

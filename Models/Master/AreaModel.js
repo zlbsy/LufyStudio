@@ -46,7 +46,7 @@ AreaModel.getPowerfulCharacters = function(generals){
 	}
 	list = list.sort(function(a,b){return a.value - b.value;});
 	return list;
-}
+};
 AreaModel.prototype.getDefenseEnemiesAndPowerful = function(){
 	var city = this;
 	var generals = city.generals(),result = [];
@@ -64,7 +64,7 @@ AreaModel.prototype.getDefenseEnemiesAndPowerful = function(){
 		list.unshift(chara);
 	}
 	return list;
-}
+};
 AreaModel.prototype.getDefenseEnemies = function(){
 	var self = this;
 	var result = [];
@@ -74,7 +74,7 @@ AreaModel.prototype.getDefenseEnemies = function(){
 		result.push(list[i].general);
 	}
 	return result;
-}
+};
 AreaModel.prototype.powerful = function(){
 	var self = this;
 	var power = [];
@@ -84,7 +84,7 @@ AreaModel.prototype.powerful = function(){
 		power += list[i].value;
 	}
 	return power;
-}
+};
 AreaModel.prototype.copyProperty = function(data){
 	var self = this;
 	if(self.isBasicType(data)){
@@ -447,14 +447,17 @@ AreaModel.prototype.items = function(){
 	return this.data.items;
 };
 AreaModel.prototype.addItem = function(item){
-	var self = this;
+	var self = this;console.error("addItem",item);
 	var items = self.items();
 	items.push(item);
 };
 AreaModel.prototype.removeItem = function(item){
 	var self = this;
 	var items = self.items();
+	console.error("removeItem",item);
+	console.error("items",items);
 	for(var i=0;i<items.length;i++){
+		console.error("items[i].objectIndex",items[i].objectIndex+",item.objectIndex="+item.objectIndex);
 		if(items[i].objectIndex == item.objectIndex){
 			items.splice(i,1);
 			break;
