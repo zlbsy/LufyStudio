@@ -66,7 +66,7 @@ ItemListView.prototype.stampClickUp = function(event) {
 	}
 	var self = this;
 	var stamp = event.target;
-	if(self.clickIndex != stamp.objectIndex){
+	if(self.clickIndex != stamp.objectIndex || stamp.lock){
 		return;
 	}
 	if (stamp.offsetX && stamp.offsetY && Math.abs(stamp.offsetX - event.offsetX) < 5 && Math.abs(stamp.offsetY - event.offsetY) < 5) {
