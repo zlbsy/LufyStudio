@@ -2,7 +2,7 @@ function ItemListChildView(controller, itemModel) {
 	var self = this;
 	base(self, LView, [controller]);
 	self.itemModel = itemModel;
-	self.lock = itemModel.id() % 3 == 0;
+	self.lock = !LPlugin.stampIsOpen(itemModel.id());
 	self.set();
 	if(self.lock){
 		self.toBitmap();
@@ -25,9 +25,7 @@ ItemListChildView.prototype.toBitmap=function(){
 	var self = this;
 	var layer = self.layer.getChildAt(0);
 	layer.visible = true;
-	var bitmap = getBitmap(layer);
-	layer.remove();
-	self.layer.addChildAt(bitmap, 0);
+	layer.cacheAsBitmap(true);
 };
 ItemListChildView.prototype.set=function(){
 	var self = this;

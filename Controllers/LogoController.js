@@ -17,7 +17,11 @@ LogoController.prototype.helperLoad=function(){
 };
 LogoController.prototype.libraryLoad=function(){
 	var self = this;
-	self.load.library(["TranslucentLoading","BitmapSprite"],self.modelLoad);
+	var list = ["TranslucentLoading","BitmapSprite"];
+	if(typeof LPlugin == UNDEFINED){
+		list.push("LPlugin");
+	}
+	self.load.library(list,self.modelLoad);
 };
 LogoController.prototype.modelLoad=function(){
 	var self = this;
@@ -34,6 +38,11 @@ LogoController.prototype.startAnimation=function(){
 LogoController.prototype.checkAuth=function(obj){
 	var self = obj.parent.controller;
 	//console.log("self.dispatchEvent(LController.NOTIFY)");
+	//test
+	LPlugin.openStamp(17);
+	LPlugin.openStamp(18);
+	LPlugin.openStamp(19);
+	
 	self.dispatchEvent(LController.NOTIFY);
 };
 LogoController.prototype.loadChapterList = function(){
