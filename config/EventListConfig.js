@@ -13,7 +13,7 @@ var EventListConfig = [
 		],
 		citys:[]
 	},
-	stript:"Data/Event/tyjy.txt",
+	script:"Data/Event/tyjy.txt",
 	result:[]
 },
 {
@@ -32,7 +32,7 @@ var EventListConfig = [
 			{id:25,seignior:1},
 		]
 	},
-	stript:"Data/Event/sgml1.txt",
+	script:"Data/Event/sgml1.txt",
 	result:[]
 },
 {
@@ -51,7 +51,7 @@ var EventListConfig = [
 			{id:25,seignior:1},
 		]
 	},
-	stript:"Data/Event/sgml2.txt",
+	script:"Data/Event/sgml2.txt",
 	result:[]
 },
 {
@@ -70,7 +70,7 @@ var EventListConfig = [
 			{id:25,seignior:1},
 		]
 	},
-	stript:"Data/Event/sgml3.txt",
+	script:"Data/Event/sgml3.txt",
 	result:[
 		{id:4,seignior:1,city:25},
 	]
@@ -91,7 +91,7 @@ var EventListConfig = [
 			{id:25,seignior:1},
 		]
 	},
-	stript:"Data/Event/sgml3.txt",
+	script:"Data/Event/sgml3.txt",
 	result:[
 		{id:4,seignior:1,city:25},
 	]
@@ -112,7 +112,7 @@ var EventListConfig = [
 			{id:25,seignior:1},
 		]
 	},
-	stript:"Data/Event/sgml3.txt",
+	script:"Data/Event/sgml3.txt",
 	result:[
 		{id:4,seignior:1,city:25},
 	]
@@ -133,7 +133,7 @@ var EventListConfig = [
 			{id:25,seignior:1},
 		]
 	},
-	stript:"Data/Event/sgml3.txt",
+	script:"Data/Event/sgml3.txt",
 	result:[
 		{id:4,seignior:1,city:25},
 	]
@@ -154,7 +154,7 @@ var EventListConfig = [
 			{id:25,seignior:1},
 		]
 	},
-	stript:"Data/Event/sgml3.txt",
+	script:"Data/Event/sgml3.txt",
 	result:[
 		{id:4,seignior:1,city:25},
 	]
@@ -175,7 +175,7 @@ var EventListConfig = [
 			{id:25,seignior:1},
 		]
 	},
-	stript:"Data/Event/sgml3.txt",
+	script:"Data/Event/sgml3.txt",
 	result:[
 		{id:4,seignior:1,city:25},
 	]
@@ -196,7 +196,7 @@ var EventListConfig = [
 			{id:25,seignior:1},
 		]
 	},
-	stript:"Data/Event/sgml3.txt",
+	script:"Data/Event/sgml3.txt",
 	result:[
 		{id:4,seignior:1,city:25},
 	]
@@ -217,7 +217,7 @@ var EventListConfig = [
 			{id:25,seignior:1},
 		]
 	},
-	stript:"Data/Event/sgml3.txt",
+	script:"Data/Event/sgml3.txt",
 	result:[
 		{id:4,seignior:1,city:25},
 	]
@@ -238,7 +238,7 @@ var EventListConfig = [
 			{id:25,seignior:1},
 		]
 	},
-	stript:"Data/Event/sgml3.txt",
+	script:"Data/Event/sgml3.txt",
 	result:[
 		{id:4,seignior:1,city:25},
 	]
@@ -259,7 +259,7 @@ var EventListConfig = [
 			{id:25,seignior:1},
 		]
 	},
-	stript:"Data/Event/sgml3.txt",
+	script:"Data/Event/sgml3.txt",
 	result:[
 		{id:4,seignior:1,city:25},
 	]

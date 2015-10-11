@@ -33,6 +33,12 @@ ItemListChildView.prototype.toBitmap=function(){
 	self.parentBitmapData.copyPixels(bitmap.bitmapData,new LRectangle(0, 0, bitmap.getWidth(), bitmap.getHeight()), new LPoint(self.x,self.y));
 	self.layer.remove();
 };
+ItemListChildView.prototype.getWidth=function(){
+	return 100;
+};
+ItemListChildView.prototype.getHeight=function(){
+	return 100;
+};
 ItemListChildView.prototype.set=function(){
 	var self = this;
 	self.layerInit();

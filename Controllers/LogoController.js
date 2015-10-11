@@ -42,6 +42,9 @@ LogoController.prototype.checkAuth=function(obj){
 	LPlugin.openStamp(17);
 	LPlugin.openStamp(18);
 	LPlugin.openStamp(19);
+	LPlugin.openEvent(1);
+	LPlugin.openEvent(2);
+	LPlugin.openEvent(3);
 	
 	self.dispatchEvent(LController.NOTIFY);
 };

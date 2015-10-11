@@ -1,0 +1,5 @@
+RPGMap.start();
+initialization.start;
+addMap(r02.rmap);
+RPGCharacter.add(1,stand,left_up,19,14,true);
+initialization.end;

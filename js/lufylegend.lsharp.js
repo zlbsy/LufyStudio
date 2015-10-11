@@ -4,6 +4,7 @@
 function LScript(scriptLayer, value) {
 	var self = this;
 	LGlobal.script = self;
+	console.error(scriptLayer);
 	self.scriptLayer = scriptLayer;
 	scriptLayer.graphics.drawRect(0, "#000", [0, 0, LGlobal.width, LGlobal.height]);
 	self.scriptArray = new LScriptArray();
@@ -125,6 +126,8 @@ LScript.prototype = {
 					ScriptIF.getIF(lineValue);
 				} else if (lineValue.indexOf("function") >= 0) {
 					ScriptFunction.setFunction(lineValue);
+				} else if(lineValue.indexOf("RPG") == 0){
+					LScriptRPG.analysis(sarr[0],lineValue);
 				} else if (lineValue.indexOf("SGJ") == 0) {
 					LScriptSGJ.analysis(sarr[0], lineValue);
 				} else {
@@ -898,7 +901,7 @@ ScriptLayer.removeLayer = function(value, start, end) {
 	parent.removeChild(layer);
 	script.scriptArray.layerList[nameStr] = null;
 	script.analysis();
-}
+};
 ScriptLayer.clearLayer = function(value, start, end) {
 	var nameStr = LMath.trim(value.substring(start + 1, end));
 	var script = LGlobal.script;
@@ -1278,7 +1281,8 @@ LScriptRPG.analysis = function(childType, lineValue) {
 	end = lineValue.indexOf(")");
 	switch(childType) {
 		case "RPGMap":
-			LGlobal.script.scriptLayer.controller.mapLoad();
+			LMvc.EventListController.eventMapLoad();
+			/*LGlobal.script.scriptLayer.controller.mapLoad();*/
 			break;
 		case "RPGTalk":
 			LRPGTalkScript.analysis(lineValue);

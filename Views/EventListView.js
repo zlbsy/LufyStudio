@@ -32,11 +32,11 @@ EventListView.prototype.onClickCloseButton=function(event){
 EventListView.prototype.listLayerInit=function(){
 	var self = this;
 	var backLayer = new LSprite();
-	var bitmapData = new LBitmapData(null,0,0,430, 110 * ((EventListConfig.length / 2 >>> 0) + 1) - 10,LBitmapData.DATA_CANVAS);
+	var bitmapData = new LBitmapData(null,0,0,430, 120 * ((EventListConfig.length / 2 >>> 0) + 1) - 10,LBitmapData.DATA_CANVAS);
 	backLayer.addChild(new LBitmap(bitmapData));
 	for(var i=0,l=EventListConfig.length;i<l;i++){
 		var eventObject = EventListConfig[i];
-		var child = new EventListChildView(self.controller, eventObject, bitmapData, 220 * (i % 2), 110 * (i / 2 >>> 0));
+		var child = new EventListChildView(self.controller, eventObject, bitmapData, 220 * (i % 2), 120 * (i / 2 >>> 0));
 		backLayer.addChild(child);
 	}
 	
@@ -59,7 +59,7 @@ EventListView.prototype.stampClickDown = function(event) {
 	stamp.offsetY = event.offsetY;
 };
 EventListView.prototype.stampClickUp = function(event) {
-	if(event.target.constructor.name != "ItemListChildView"){
+	if(event.target.constructor.name != "EventListChildView"){
 		return;
 	}
 	var self = this;
@@ -68,9 +68,9 @@ EventListView.prototype.stampClickUp = function(event) {
 		return;
 	}
 	if (stamp.offsetX && stamp.offsetY && Math.abs(stamp.offsetX - event.offsetX) < 5 && Math.abs(stamp.offsetY - event.offsetY) < 5) {
-		var itemModel = new ItemModel(null,{item_id:stamp.itemModel.id()});
-		var equipmentDetailed = new EquipmentDetailedView(self.controller,itemModel,self);
-		self.addChild(equipmentDetailed);
+		var script = "Load.script("+stamp.eventObject.script+");";
+		console.log(script);
+		LGlobal.script.addScript(script);
 	}
 };
 EventListView.prototype.ctrlLayerInit=function(){
