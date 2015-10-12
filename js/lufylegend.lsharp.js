@@ -4,7 +4,6 @@
 function LScript(scriptLayer, value) {
 	var self = this;
 	LGlobal.script = self;
-	console.error(scriptLayer);
 	self.scriptLayer = scriptLayer;
 	scriptLayer.graphics.drawRect(0, "#000", [0, 0, LGlobal.width, LGlobal.height]);
 	self.scriptArray = new LScriptArray();
@@ -1324,7 +1323,7 @@ LRPGBattleScript.analysis = function(value) {
 	switch(value.substr(0,start)) {
 		case "RPGBattle.start":
 			var params = value.substring(start + 1, end).split(",");
-			LRPGObject.RPGMap.showBattle.apply(LRPGObject.RPGMap, params);
+			LMvc.EventMapController.showBattle.apply(LMvc.EventMapController, params);
 			break;
 		default:
 			LGlobal.script.analysis();
@@ -1368,8 +1367,8 @@ LRPGItemScript.analysis = function(value) {
 };
 LRPGItemScript.add = function(value, start, end) {
 	var params = value.substring(start + 1, end).split(",");
-	if (LRPGObject.RPGMap) {
-		LRPGObject.RPGMap.addItem.apply(LRPGObject.RPGMap, params);
+	if (LMvc.EventMapController) {
+		LMvc.EventMapController.addItem.apply(LMvc.EventMapController, params);
 	}
 	LGlobal.script.analysis();
 };
@@ -1471,25 +1470,25 @@ LRPGMapScript.analysis = function() {
 	switch(lineValue) {
 		case "RPGMap.end()":
 			setTimeout(function() {
-				var i, l, childs = LRPGObject.RPGMap.view.charaLayer.childList;
+				var i, l, childs = LMvc.EventMapController.view.charaLayer.childList;
 				for ( i = 0, l = childs.length; i < l; i++) {
 					if ( typeof childs[i].checkCoordinate == "function") {
-						childs[i].checkCoordinate(LRPGObject.RPGMap, true);
+						childs[i].checkCoordinate(LMvc.EventMapController, true);
 					}
 				}
-				if (LRPGObject.RPGMap.view.hero && script.scriptArray.varList["x"] && script.scriptArray.varList["y"]) {
-					LRPGObject.RPGMap.view.hero.setCoordinate(parseInt(script.scriptArray.varList["x"]) * LRPGObject.RPGMap.view.hero.w, parseInt(script.scriptArray.varList["y"]) * LRPGObject.RPGMap.view.hero.h);
+				if (LMvc.EventMapController.view.hero && script.scriptArray.varList["x"] && script.scriptArray.varList["y"]) {
+					LMvc.EventMapController.view.hero.setCoordinate(parseInt(script.scriptArray.varList["x"]) * LMvc.EventMapController.view.hero.w, parseInt(script.scriptArray.varList["y"]) * LMvc.EventMapController.view.hero.h);
 					delete script.scriptArray.varList["x"];
 					delete script.scriptArray.varList["y"];
 					if (script.scriptArray.varList["action"] && script.scriptArray.varList["direction"]) {
-						LRPGObject.RPGMap.view.hero.setActionDirection(script.scriptArray.varList["action"], script.scriptArray.varList["direction"]);
+						LMvc.EventMapController.view.hero.setActionDirection(script.scriptArray.varList["action"], script.scriptArray.varList["direction"]);
 						delete script.scriptArray.varList["action"];
 						delete script.scriptArray.varList["direction"];
 					}
 
 				}
-				LRPGObject.RPGMap.mapMove();
-				LRPGObject.RPGMap.initOver = true;
+				LMvc.EventMapController.mapMove();
+				LMvc.EventMapController.initOver = true;
 				LGlobal.script.analysis();
 			}, 100);
 			return;
@@ -1524,7 +1523,7 @@ LRPGMapScript.loop = function() {
 	switch(lineValue.substr(0,start)) {
 		case "RPGCharacter.atCoordinate":
 			params = lineValue.substring(start + 1, end).split(",");
-			LRPGObject.RPGMap.addCoordinateCheck.apply(LRPGObject.RPGMap, params);
+			LMvc.EventMapController.addCoordinateCheck.apply(LMvc.EventMapController, params);
 			LRPGMapScript.loop();
 			break;
 		default:
@@ -1565,12 +1564,12 @@ LRPGMapScript.initialization = function() {
 	switch(lineValue.substr(0,start)) {
 		case "addMap":
 			params = lineValue.substring(start + 1, end).split(",");
-			LRPGObject.RPGMap.addMap.apply(LRPGObject.RPGMap, params);
+			LMvc.EventMapController.addMap.apply(LMvc.EventMapController, params);
 			break;
 		case "RPGCharacter.add":
 			params = lineValue.substring(start + 1, end).split(",");
 			params.push(LRPGMapScript.initialization.bind(LGlobal.script));
-			LRPGObject.RPGMap.addCharacter.apply(LRPGObject.RPGMap, params);
+			LMvc.EventMapController.addCharacter.apply(LMvc.EventMapController, params);
 			break;
 		default:
 			LRPGMapScript.initialization();
@@ -1587,7 +1586,7 @@ LRPGRunMode.analysis = function(value) {
 	var params = value.substring(start + 1, end).split(",");
 	switch(value.substr(0,start)) {
 		case "RPGRunMode.set":
-			LRPGObject.runMode = (parseInt(params[0]) == 1);
+			LRPGRunMode.runMode = (parseInt(params[0]) == 1);
 			LGlobal.script.analysis();
 			break;
 		default:
@@ -1621,12 +1620,12 @@ LRPGCharacter.analysis = function(value) {
 		case "RPGCharacter.add":
 			params = value.substring(start + 1, end).split(",");
 			params.push(LGlobal.script.analysis.bind(LGlobal.script));
-			LRPGObject.RPGMap.addCharacter.apply(LRPGObject.RPGMap, params);
+			LMvc.EventMapController.addCharacter.apply(LMvc.EventMapController, params);
 			break;
 		case "RPGCharacter.remove":
 			params = value.substring(start + 1, end).split(",");
 			params.push(LGlobal.script.analysis.bind(LGlobal.script));
-			LRPGObject.RPGMap.removeCharacter.apply(LRPGObject.RPGMap, params);
+			LMvc.EventMapController.removeCharacter.apply(LMvc.EventMapController, params);
 			break;
 		default:
 			LGlobal.script.analysis();
@@ -1642,7 +1641,7 @@ LRPGCharacter.changeAction = function(value, start, end) {
 		wait = (parseInt(params.pop()) == 1);
 	}
 	params.push(LRPGCharacter.getActionCallback(wait));
-	LRPGObject.RPGMap.setActionDirection.apply(LRPGObject.RPGMap, params);
+	LMvc.EventMapController.setActionDirection.apply(LMvc.EventMapController, params);
 };
 LRPGCharacter.getActionCallback = function(wait) {
 	var lineValue, callback = LGlobal.script.analysis.bind(LGlobal.script);
@@ -1679,7 +1678,7 @@ LRPGCharacter.moveToCharacter = function(value, start, end) {
 		wait = (parseInt(params.pop()) == 1);
 	}
 	//params:index,index2,x,y
-	LRPGObject.RPGMap.characterMoveToCharacter.call(LRPGObject.RPGMap, params[0], parseInt(params[1]), parseInt(params[2]), parseInt(params[3]), LRPGCharacter.getMoveCallback(wait));
+	LMvc.EventMapController.characterMoveToCharacter.call(LMvc.EventMapController, params[0], parseInt(params[1]), parseInt(params[2]), parseInt(params[3]), LRPGCharacter.getMoveCallback(wait));
 };
 LRPGCharacter.move = function(value, start, end) {
 	var params = value.substring(start + 1, end).split(","), wait;
@@ -1689,7 +1688,7 @@ LRPGCharacter.move = function(value, start, end) {
 		wait = (parseInt(params.pop()) == 1);
 	}
 	//params:index,x,y
-	LRPGObject.RPGMap.characterMove.call(LRPGObject.RPGMap, params[0], parseInt(params[1]), parseInt(params[2]), LRPGCharacter.getMoveCallback(wait));
+	LMvc.EventMapController.characterMove.call(LMvc.EventMapController, params[0], parseInt(params[1]), parseInt(params[2]), LRPGCharacter.getMoveCallback(wait));
 };
 LRPGCharacter.moveTo = function(value, start, end) {
 	var params = value.substring(start + 1, end).split(","), wait;
@@ -1699,7 +1698,7 @@ LRPGCharacter.moveTo = function(value, start, end) {
 		wait = (parseInt(params.pop()) == 1);
 	}
 	//params:index,x,y
-	LRPGObject.RPGMap.characterMoveTo.call(LRPGObject.RPGMap, params[0], parseInt(params[1]), parseInt(params[2]), LRPGCharacter.getMoveCallback(wait));
+	LMvc.EventMapController.characterMoveTo.call(LMvc.EventMapController, params[0], parseInt(params[1]), parseInt(params[2]), LRPGCharacter.getMoveCallback(wait));
 };
 /*
  *******************************************

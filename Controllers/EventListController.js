@@ -18,7 +18,7 @@ EventListController.prototype.viewLoad=function(){
 EventListController.prototype.init=function(){
 	var self = this;
 	LMvc.keepLoading(false);
-	LMvc.EventListController = this;
+	LMvc.EventListController = self;
 	self.dispatchEvent(LEvent.COMPLETE);
 	self.dispatchEvent(LController.NOTIFY);
 	LMvc.MapController.view.visible = false;
@@ -34,7 +34,7 @@ EventListController.prototype.eventMapLoad=function(){
 };
 EventListController.prototype.eventMapComplete=function(){
 	var self = this;
-	self.view.visible = false;return;
+	self.view.visible = false;
 	var map = new EventMapController();
 	LMvc.layer.addChild(map.view);
 };

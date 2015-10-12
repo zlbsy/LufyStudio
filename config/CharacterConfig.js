@@ -84,3 +84,6 @@ var CharacterMode = {
 var SingleCombatCharacterConfig = {};
 SingleCombatCharacterConfig.INIT = "init";
 SingleCombatCharacterConfig.START = "start";
+var RPGCharacterConfig = {
+	SPEED : 4
+};

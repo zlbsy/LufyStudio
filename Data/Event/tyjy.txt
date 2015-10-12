@@ -1,5 +1,9 @@
 RPGMap.start();
 initialization.start;
-addMap(r02.rmap);
-RPGCharacter.add(1,stand,left_up,19,14,true);
+addMap(r01.rmap);
+RPGCharacter.add(1,stand,left_up,9,8,true);
 initialization.end;
+RPGMap.end();
+RPGRunMode.set(1);
+RPGCharacter.moveTo(1,9,11);
+RPGRunMode.set(0);

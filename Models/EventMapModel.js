@@ -3,54 +3,62 @@ function EventMapModel(){
 }
 EventMapModel.prototype.construct=function(){
 	var self = this;
-	self.areas = [];
+	self.map = null;
+	self.atRect = [];
+};
+EventMapModel.prototype.loadMapFile=function(mapPath){
+	var self = this;
+	//开始读取战场地图文件
+	var urlloader = new LURLLoader();
+	urlloader.parent = self;
+	urlloader.addEventListener(LEvent.COMPLETE,self.loadMapFileOver);
+	urlloader.load("./Data/Event/maps/"+mapPath+(LGlobal.traceDebug?("?"+(new Date()).getTime()):""),"text");
+};
+EventMapModel.prototype.loadMapFileOver=function(event){
+	var self = event.currentTarget.parent;
+	//保存战场地图文件内容
+	self.map = JSON.parse(event.target);
+	
+	var grids = self.map.data;
+	self.stepWidth = self.map.width/grids[0].length;
+	self.stepHeight = self.map.height/grids.length;
+	
+	self.controller.loadMapFileOver();
+};
+EventMapModel.prototype.addCoordinateCheck=function(index,startX,startY,endX,endY,funName){
+	var self = this;
+	var child = {
+		"index":index,
+		"rect":new LRectangle(
+			parseInt(startX),
+			parseInt(startY),
+			parseInt(endX)-parseInt(startX),
+			parseInt(endY)-parseInt(startY)
+		),
+		"fun":funName
+	};
+	self.atRect.push(child);
 };
 EventMapModel.prototype.getImages=function(){
 	var self = this;
 	var list = [];
-	list.push({name:"area-map-1",path:LMvc.IMG_PATH+"area/map-1.png"});
+	list.push({name:"character-r-default",path:LMvc.IMG_PATH+"character/r/default.png"});
+	for(var i=0;i<self.map.imgs.length;i++){
+		for(var j=0;j<self.map.imgs[i].length;j++){
+			var imgObj = self.map.imgs[i][j];
+			list.push({name:imgObj.img,path:LMvc.IMG_PATH+"rmap/"+imgObj.path});
+		}
+	}
 	
-	list.push({name:"talkbox",path:LMvc.IMG_PATH+"common/talkbox.png"});
-	
-	list.push({name:"area-1",path:LMvc.IMG_PATH+"area/area-1.png"});
-	list.push({name:"flag-black",path:LMvc.IMG_PATH+"area/flag-black.png"});
-	list.push({name:"flag-blue",path:LMvc.IMG_PATH+"area/flag-blue.png"});
-	list.push({name:"flag-brown",path:LMvc.IMG_PATH+"area/flag-brown.png"});
-	list.push({name:"flag-darkgoldenrod",path:LMvc.IMG_PATH+"area/flag-darkgoldenrod.png"});
-	list.push({name:"flag-darkviolet",path:LMvc.IMG_PATH+"area/flag-darkviolet.png"});
-	list.push({name:"flag-green",path:LMvc.IMG_PATH+"area/flag-green.png"});
-	list.push({name:"flag-greenyellow",path:LMvc.IMG_PATH+"area/flag-greenyellow.png"});
-	list.push({name:"flag-orange",path:LMvc.IMG_PATH+"area/flag-orange.png"});
-	list.push({name:"flag-pink",path:LMvc.IMG_PATH+"area/flag-pink.png"});
-	list.push({name:"flag-red",path:LMvc.IMG_PATH+"area/flag-red.png"});
-	list.push({name:"flag-teal",path:LMvc.IMG_PATH+"area/flag-teal.png"});
-	list.push({name:"flag-yellow",path:LMvc.IMG_PATH+"area/flag-yellow.png"});
-	
-	list.push({name:"checkbox-background",path:LMvc.IMG_PATH+"component/checkbox-background.png"});
-	
+	for(var i=0;self.map.builds && i<self.map.builds.length;i++){
+		for(var j=0;j<self.map.builds[i].length;j++){
+			var imgObj = self.map.builds[i][j];
+			list.push({name:imgObj.img,path:LMvc.IMG_PATH+"rmap/"+imgObj.path});
+		}
+	}
 	return list;
 };
-EventMapModel.prototype.getAreaData=function(callback){
-	var self = this;
-	self.callback = callback;
-	LLoadManage.load( [{path:"./Data/"+LMvc.dataFolder+"/area.js",type:"js"}],null,self.getAreaDataComplete.bind(self));
-};
-EventMapModel.prototype.getAreaDataComplete=function(){
-	var self = this;
-	var data = LMvc.areaData;
-	SeigniorModel.setSeignior(data.seigniors);
-	for(var i=0,l=data.seigniors.length;i<l;i++){
-		var seignior = data.seigniors[i];
-		var areas = seignior.areas;
-		var areaList = [];
-		areas.forEach(function(child){
-			var area = AreaModel.getArea(child.area_id);
-			area.setSeignor(seignior,child);
-			areaList.push(area);
-		});
-		seignior.areas = areaList;
-	}
-	var callback = self.callback;
-	delete self.callback;
-	callback.apply(self.controller,[]);
+EventMapModel.prototype.setMapFiles=function(){
+	this.map = LMvc.mapdata;
+	delete LMvc.mapdata;
 };

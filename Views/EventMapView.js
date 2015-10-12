@@ -10,21 +10,21 @@ EventMapView.prototype.init=function(){
 	self.mapLayerInit();
 	self.gridLayerInit();
 	self.buildLayerInit();
-	self.menuLayerInit();
-	self.testCtrlLayerInit();
+	//self.menuLayerInit();
+	//self.testCtrlLayerInit();
 	
 	self.controller.queryInit();
 };
 EventMapView.prototype.menuLayerInit=function(){
 	var self = this;
-	
+	/*
 	var openmenuButton = GetButton(LMvc.datalist["openmenu"],null,0);
 	openmenuButton.x = LGlobal.width - openmenuButton.getWidth();
 	openmenuButton.y = 0;
 	self.addChild(openmenuButton);
 	openmenuButton.addEventListener(LMouseEvent.MOUSE_UP, function(){
 		self.controller.openmenuClick();
-	});
+	});*/
 };
 /**
  * 建筑层实现
@@ -51,9 +51,10 @@ EventMapView.prototype.addCharaLayer=function(index,action,direction,x,y,ishero)
 	var map = self.model.map;
 	var grids = map.data;
 	var stepWidth = map.width/grids[0].length;
-	var stepHeight = map.height/grids.length;
+	//var stepHeight = map.height/grids.length;
+	var stepHeight = stepWidth * 2 / 3;
 	
-	var chara = new Character(index,stepWidth,stepHeight,action,direction);
+	var chara = new RPGCharacterView(self.controller,index,stepWidth,stepHeight,action,direction);
 	//chara.setActionDirection(action,direction);
 	chara.setCoordinate(parseInt(x)*stepWidth,parseInt(y)*stepHeight);
 	self.charaLayer.addChild(chara);
@@ -133,7 +134,8 @@ EventMapView.prototype.gridLayerInit=function(){
 	var map = self.model.map;
 	var grids = map.data;
 	var stepWidth = map.width/grids[0].length;
-	var stepHeight = map.height/grids.length;
+	//var stepHeight = map.height/grids.length;
+	var stepHeight = stepWidth * 2 / 3;
 	self.controller.stepWidth = stepWidth;
 	self.controller.stepHeight = stepHeight;
     self.gridLayer.graphics.add(function (){
@@ -173,7 +175,7 @@ EventMapView.prototype.layerInit=function(){
 	self.baseLayer.addChild(self.mapLayer);
 	//网格层
 	self.gridLayer = new LSprite();
-	self.gridLayer.visible = false;
+	//self.gridLayer.visible = false;
 	self.baseLayer.addChild(self.gridLayer);
 	//人物层
 	self.charaLayer = new LSprite();
