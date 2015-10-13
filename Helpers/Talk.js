@@ -14,7 +14,7 @@ function TalkRun(layer,y,index,faceindex,msg,callback){
 	var talkLayer = new LSprite();
 	
 	talkLayer.y = y;
-	talkLayer.x = 50;
+	//talkLayer.x = 50;
 	var model = CharacterModel.getChara(index);
 	var face = model.face();
 	face.x = 200;

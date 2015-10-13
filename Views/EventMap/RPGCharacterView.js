@@ -2,11 +2,21 @@ function RPGCharacterView(controller, id, w, h,action,direction) {
 	var self = this;
 	LExtends(self, CharacterView, [controller, id, w, h]);
 	self.step = self.moveStep = 4;
-	self.layer.x = self.layer.y = -8;
+	//self.layer.x = self.layer.y = -8;
 	self.belong = null;
 	//self.addShape(LShape.RECT,[0,0,BattleCharacterSize.width,BattleCharacterSize.height]);
 	self.addShape(LShape.RECT,[0,0,48,64]);
 	self.mode = CharacterMode.NONE;
+	self.directionList = {
+		"-1,-1":CharacterDirection.LEFT,
+		"-1,0":CharacterDirection.LEFT,
+		"-1,1":CharacterDirection.DOWN,
+		"0,-1":CharacterDirection.UP,
+		"0,1":CharacterDirection.DOWN,
+		"1,-1":CharacterDirection.UP,
+		"1,0":CharacterDirection.RIGHT,
+		"1,1":CharacterDirection.RIGHT
+	};
 }
 RPGCharacterView.cacheBitmapDatas = {};
 RPGCharacterView.DEFAULT_IMG = "character-s-default";
@@ -53,13 +63,13 @@ RPGCharacterView.prototype.setAnimationLabel = function() {
 	//STAND
 	anime.setLabel(String.format("{0}-{1}",CharacterAction.STAND,CharacterDirection.DOWN),0,0,1,false);
 	anime.setLabel(String.format("{0}-{1}",CharacterAction.STAND,CharacterDirection.UP),1,0,1,false);
-	anime.setLabel(String.format("{0}-{1}",CharacterAction.STAND,CharacterDirection.LEFT),0,0,1,true);
-	anime.setLabel(String.format("{0}-{1}",CharacterAction.STAND,CharacterDirection.RIGHT),1,0,1,true);
+	anime.setLabel(String.format("{0}-{1}",CharacterAction.STAND,CharacterDirection.RIGHT),0,0,1,true);
+	anime.setLabel(String.format("{0}-{1}",CharacterAction.STAND,CharacterDirection.LEFT),1,0,1,true);
 	//MOVE
 	anime.setLabel(String.format("{0}-{1}",CharacterAction.MOVE,CharacterDirection.DOWN),2,0,1,false);
 	anime.setLabel(String.format("{0}-{1}",CharacterAction.MOVE,CharacterDirection.UP),3,0,1,false);
-	anime.setLabel(String.format("{0}-{1}",CharacterAction.MOVE,CharacterDirection.LEFT),2,0,1,true);
-	anime.setLabel(String.format("{0}-{1}",CharacterAction.MOVE,CharacterDirection.RIGHT),3,0,1,true);
+	anime.setLabel(String.format("{0}-{1}",CharacterAction.MOVE,CharacterDirection.RIGHT),2,0,1,true);
+	anime.setLabel(String.format("{0}-{1}",CharacterAction.MOVE,CharacterDirection.LEFT),3,0,1,true);
 	/*
 	//STAND
 	anime.setLabel(String.format("{0}-{1}",CharacterAction.STAND,CharacterDirection.DOWN),6,0,1,false);
@@ -138,6 +148,7 @@ RPGCharacterView.prototype.actionComplete = function(event){
 			self.dispatchEvent(BattleCharacterActionEvent.BLOCK_ACTION_COMPLETE);
 			break;
 	}*/
+	self.dispatchEvent(LEvent.COMPLETE);
 };
 RPGCharacterView.prototype.setRoad = function(list){
 	var self = this;

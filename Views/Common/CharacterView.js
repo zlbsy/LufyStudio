@@ -13,9 +13,9 @@ function CharacterView(controller,id,w,h){
 	self.w = w;
 	self.h = h;
 	self.step = self.moveStep = 2;
-	self.moveBevelStep = self.moveStep*Math.sin(45*Math.PI/180);
+	//self.moveBevelStep = self.moveStep*Math.sin(45*Math.PI/180);
+	self.moveBevelStep = self.moveStep*Math.sqrt(w*w + h*h)/w;
 	self.moveBevelStep = (self.moveBevelStep*100 >>> 0)/100;
-
 	
 	self.directionList = {
 		"-1,-1":CharacterDirection.LEFT_UP,
@@ -135,7 +135,7 @@ CharacterView.prototype.move = function(){
 	}
 	var mx = self.getValue(self.x , self.to.x),my = self.getValue(self.y , self.to.y);
 	self.x += self.step*mx;
-	self.y += self.step*my;
+	self.y += self.step*my*self.h/self.w;
 	var cx = self.getValue(self.x , self.to.x),cy = self.getValue(self.y , self.to.y);
 	if(mx != cx || my != cy){
 		if(self.roads.length == 0){

@@ -15,7 +15,7 @@ function getWeakBattleCity(areaModel){
 		return null;
 	}
 	enemyCitys = enemyCitys.sort(function(a,b){return a.powerful() - b.powerful();});
-	return null;
+	return enemyCitys[0];
 }
 function getCanBattleCity(areaModel,characters,enlistFlag){
 	if(enlistFlag == AiEnlistFlag.Must || enlistFlag == AiEnlistFlag.MustResource){
@@ -104,6 +104,16 @@ function jobAiToEnlish(areaModel,characters){
 	if(characters.length == 0){
 		return;
 	}
+	if(areaModel.money() < JobPrice.ENLIST){
+		return false;
+	}
+	//self.enlistPrice * enlistCount / EnlistSetting.ENLIST_FROM >>> 0;
+	var character = characters.shift();
+	var cost = JobPrice.ENLIST * EnlistSetting.ENLIST_TO / EnlistSetting.ENLIST_FROM >>> 0;
+	if(areaModel.money() < cost){
+		cost = JobPrice.ENLIST * EnlistSetting.ENLIST_TO / EnlistSetting.ENLIST_FROM >>> 0;
+	}
+	
 }
 function jobAiSpy(areaModel,characters){
 	if(characters.length == 0){

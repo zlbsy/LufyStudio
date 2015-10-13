@@ -195,6 +195,13 @@ SeigniorExecute.prototype.areasAIRun=function(seigniorModel){
 	self.areaAIIndex = 0;
 	return true;
 };
+SeigniorExecute.prototype.jobNumberOfCharacter=function(characters){
+	var length = (2+characters.length) / 3 >>> 0;
+	length = length < 2 ? 2 : length;
+	length = length > 5 ? 5 : length;
+	length = length > characters.length ? characters.length : length;
+	return length;
+};
 SeigniorExecute.prototype.areaAIRun=function(areaModel){
 	var self = this;
 	//判断是否有未执行任务人员
@@ -208,7 +215,13 @@ SeigniorExecute.prototype.areaAIRun=function(areaModel){
 	var canEnlish = jobAiCanToEnlish(areaModel);
 	if(needEnlistFlag == AiEnlistFlag.Must || needEnlistFlag == AiEnlistFlag.Need){
 		if(canEnlish){
-			jobAiToEnlish(areaModel,characters);
+			characters = characters.sort(function(a,b){
+				return a.luck() + a.command() - (b.luck() + b.command());
+			});
+			var length = self.jobNumberOfCharacter(characters);
+			while(length-- > 0){
+				jobAiToEnlish(areaModel,characters);
+			}
 			return;
 		}
 	}

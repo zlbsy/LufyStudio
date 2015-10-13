@@ -1,9 +1,14 @@
 RPGMap.start();
 initialization.start;
 addMap(r01.rmap);
-RPGCharacter.add(1,stand,left_up,9,8,true);
+RPGCharacter.add(1,stand,left_up,9,9,true);
 initialization.end;
 RPGMap.end();
 RPGRunMode.set(1);
-RPGCharacter.moveTo(1,9,11);
+RPGCharacter.moveTo(1,7,11);
+SGJTalk.show(1,0,糟糕！没有兵粮了，士兵的战斗力开始下降了。);
+RPGCharacter.moveTo(1,5,9);
+RPGCharacter.changeAction(1,stand,down,0,0);
+RPGCharacter.changeAction(1,move,down,0,0);
+RPGCharacter.changeAction(1,stand,down,0,0);
 RPGRunMode.set(0);

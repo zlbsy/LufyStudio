@@ -172,27 +172,32 @@ EventMapController.prototype.setActionDirection = function(chara,action,directio
 			direction = CharacterDirection.LEFT;
 		}else if(angle > 22.5 && angle <= 67.5){
 			direction = CharacterDirection.LEFT_UP;
+			direction = CharacterDirection.LEFT;
 		}else if(angle > 67.5 && angle <= 112.5){
 			direction = CharacterDirection.UP;
 		}else if(angle > 112.5 && angle <= 157.5){
 			direction = CharacterDirection.RIGHT_UP;
+			direction = CharacterDirection.UP;
 		}else if(angle > 157.5 && angle <= 202.5){
 			direction = CharacterDirection.RIGHT;
 		}else if(angle > 202.5 && angle <= 247.5){
 			direction = CharacterDirection.RIGHT_DOWN;
+			direction = CharacterDirection.RIGHT;
 		}else if(angle > 247.5 && angle <= 292.5){
 			direction = CharacterDirection.DOWN;
 		}else{
 			direction = CharacterDirection.LEFT_DOWN;
+			direction = CharacterDirection.DOWN;
 		}
 	}
 	chara.setActionDirection(action,direction);
+	console.log("loop="+loop);
 	if(callback){
 		if(loop){
 			callback();
 		}else{
 			var fun = function(){
-				chara.actionObject.anime.stop();
+				chara.anime.stop();
 				chara.removeEventListener(LEvent.COMPLETE,fun);
 				callback();
 			};
