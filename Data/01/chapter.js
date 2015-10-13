@@ -1,8 +1,9 @@
 LMvc.chapterData = {
 	title:"黄巾之乱",
 	icon:1,
-	year:194,
-	month:2,
+	year:184,
+	month:1,
+	eventList:[],
 	seigniors:[
 		{chara_id:1,name:"刘备",faceImg:6,minFace:[0,23,151,151], general_count:6, city_count:1,color:"#FF0000"},
 		{chara_id:2,name:"关羽",faceImg:7,minFace:[15,67,100,100], general_count:16, city_count:3,color:"#00FF00"},

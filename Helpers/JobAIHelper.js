@@ -1,4 +1,47 @@
 function jobAiEvent(){
+	var month = LMvc.chapterController.getValue("month");
+	var year = LMvc.chapterController.getValue("year");
+	for(var i=0,l=EventListConfig.length;i<l;i++){
+		var eventObject = EventListConfig[i];
+		var condition = eventObject.condition;
+		if(LMvc.chapterData.eventList.indexOf(eventObject.id) >= 0){
+			continue;
+		}
+		if(!(condition.from.year <= year && condition.from.month <= month && condition.to.year >= year && condition.to.month >= month)){
+			continue;
+		}
+		if(!condition.seignior || LMvc.selectSeignorId != condition.seignior){
+			continue;
+		}
+		var general = condition.generals.find(function(child){
+			var chara = CharacterModel.getChara(child.id);
+			if(chara.seigniorId() != child.seignior){
+				return true;
+			}
+			if(child.city && chara.cityId() != child.city){
+				return true;
+			}
+			return false;
+		});
+		if(general){
+			continue;
+		}
+		var city = condition.citys.find(function(child){
+			var area = AreaModel.getArea(child.id);
+			return area.seigniorCharaId() != child.seignior;
+		});
+		if(city){
+			continue;
+		}
+		if(!LPlugin.eventIsOpen(eventObject.id)){
+			LPlugin.openEvent(eventObject.id);
+		}
+		LMvc.chapterData.eventList.push(eventObject.id);
+		var script = "Load.script("+eventObject.script+");";
+		console.log(script);
+		LGlobal.script.addScript(script);
+		return true;
+	}
 	return false;
 }
 function getWeakBattleCity(areaModel){

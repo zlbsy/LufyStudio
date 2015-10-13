@@ -107,6 +107,10 @@ MenuView.prototype.onClickReturnTop=function(event){
 };
 MenuView.prototype.loadSeigniorExecute=function(){
 	var self = this;
+	self.loadMvc("EventMap",self.loadSeigniorExecuteLoadSkill);
+};
+MenuView.prototype.loadSeigniorExecuteLoadSkill=function(){
+	var self = this;
 	self.load.model(["Master/SkillMaster"],self.loadSeigniorExecuteConfig);
 };
 MenuView.prototype.loadSeigniorExecuteConfig=function(){

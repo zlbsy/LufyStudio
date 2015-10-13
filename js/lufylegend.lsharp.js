@@ -1280,7 +1280,12 @@ LScriptRPG.analysis = function(childType, lineValue) {
 	end = lineValue.indexOf(")");
 	switch(childType) {
 		case "RPGMap":
-			LMvc.EventListController.eventMapLoad();
+			if(typeof EventMapController){
+				var map = new EventMapController();
+				LMvc.layer.addChild(map.view);
+			}else{
+				LMvc.EventListController.eventMapLoad();
+			}
 			/*LGlobal.script.scriptLayer.controller.mapLoad();*/
 			break;
 		case "RPGTalk":
