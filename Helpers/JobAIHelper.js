@@ -109,9 +109,19 @@ function jobAiToEnlish(areaModel,characters){
 	}
 	//self.enlistPrice * enlistCount / EnlistSetting.ENLIST_FROM >>> 0;
 	var character = characters.shift();
+	var num = EnlistSetting.ENLIST_TO - EnlistSetting.ENLIST_FROM;
 	var cost = JobPrice.ENLIST * EnlistSetting.ENLIST_TO / EnlistSetting.ENLIST_FROM >>> 0;
 	if(areaModel.money() < cost){
-		cost = JobPrice.ENLIST * EnlistSetting.ENLIST_TO / EnlistSetting.ENLIST_FROM >>> 0;
+		num = (EnlistSetting.ENLIST_TO - EnlistSetting.ENLIST_FROM)*0.7;
+		cost = JobPrice.ENLIST * (EnlistSetting.ENLIST_FROM + num) / EnlistSetting.ENLIST_FROM >>> 0;
+	}
+	if(areaModel.money() < cost){
+		num = (EnlistSetting.ENLIST_TO - EnlistSetting.ENLIST_FROM)*0.3;
+		cost = JobPrice.ENLIST * (EnlistSetting.ENLIST_FROM + num) / EnlistSetting.ENLIST_FROM >>> 0;
+	}
+	if(areaModel.money() < cost){
+		num = 0;
+		cost = JobPrice.ENLIST;
 	}
 	
 }
