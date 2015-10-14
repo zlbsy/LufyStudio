@@ -69,6 +69,10 @@ function getCanBattleCity(areaModel,characters,enlistFlag){
 	if(!weakCity){
 		return null;
 	}
+	var weakCityGeneralCount = weakCity.generalsSum();
+	if(areaModel.generalsSum() < BattleMapConfig.AttackQuantity && characters.length < weakCityGeneralCount){
+		return null;
+	}
 	var generals = getPowerfulCharacters(characters);
 	var needFood = 0;
 	for(var i=0,l=generals.length;i<l && i<5;i++){
@@ -79,9 +83,7 @@ function getCanBattleCity(areaModel,characters,enlistFlag){
 		return null;
 	}
 	
-	if(enlistFlag == AiEnlistFlag.Need || enlistFlag == AiEnlistFlag.NeedResource){
-		return null;
-	}
+	
 	return null;
 }
 function getIdleCharacters(areaModel){
@@ -149,7 +151,7 @@ function jobAiToEnlish(areaModel,characters){
 		return;
 	}
 	if(areaModel.money() < JobPrice.ENLIST){
-		return false;
+		return;
 	}
 	//self.enlistPrice * enlistCount / EnlistSetting.ENLIST_FROM >>> 0;
 	var character = characters.shift();
@@ -167,7 +169,8 @@ function jobAiToEnlish(areaModel,characters){
 		num = 0;
 		cost = JobPrice.ENLIST;
 	}
-	
+	areaModel.money(-cost);
+	character.enlist(EnlistSetting.ENLIST_FROM + num);
 }
 function jobAiSpy(areaModel,characters){
 	if(characters.length == 0){

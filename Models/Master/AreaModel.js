@@ -7,7 +7,7 @@ function AreaModel(controller, data) {
 		self.data.money = 0;
 	}
 }
-
+AreaModel.troopsList = [10000,20000,30000,40000,50000];
 AreaModel.list = [];
 AreaModel.setArea=function(list){
 	var self = this;
@@ -80,8 +80,15 @@ AreaModel.prototype.powerful = function(){
 	var power = [];
 	var list = self.getDefenseEnemiesAndPowerful();
 	console.log("powerful list:",list);
+	var needTroops = 0;
 	for(var i=0,l=list.length < BattleMapConfig.DefenseQuantity ? list.length : BattleMapConfig.DefenseQuantity;i<l;i++){
 		power += list[i].value;
+		needTroops += list[i].general.maxTroops();
+	}
+	needTroops *= 2;
+	var nowTroops = self.troops();
+	if(nowTroops < needTroops){
+		power = power * nowTroops / needTroops;
 	}
 	return power;
 };
@@ -384,6 +391,9 @@ AreaModel.prototype.troopsSum=function(){
 };
 AreaModel.prototype.troops=function(value){
 	return this._dataValue("troops", value, 0);
+};
+AreaModel.prototype.maxTroops=function(value){
+	return AreaModel.troopsList[this.level()-1];
 };
 AreaModel.prototype.agriculture=function(value){
 	return this._plusData("agriculture",value);
