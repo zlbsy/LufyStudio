@@ -33,6 +33,16 @@ EventMapController.prototype.viewComplete=function(){
 	LMvc.EventMapController = self;
 	LRPGMapScript.analysis();
 };
+EventMapController.prototype.close=function(){
+	var self = this;
+	if(SeigniorExecute.running){
+		LMvc.MapController.view.visible = true;
+		SeigniorExecute.run();
+	}else{
+		LMvc.EventListController.view.visible = true;
+	}
+	self.view.remove();
+};
 EventMapController.prototype.addMap=function(mapPath){
 	var self = this;
 	self.model.loadMapFile(mapPath,self.loadMapFileOver);

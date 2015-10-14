@@ -40,6 +40,7 @@ function jobAiEvent(){
 		var script = "Load.script("+eventObject.script+");";
 		console.log(script);
 		LGlobal.script.addScript(script);
+		LMvc.MapController.view.visible = false;
 		return true;
 	}
 	return false;

@@ -1280,13 +1280,15 @@ LScriptRPG.analysis = function(childType, lineValue) {
 	end = lineValue.indexOf(")");
 	switch(childType) {
 		case "RPGMap":
-			if(typeof EventMapController){
+			if(SeigniorExecute.running){
 				var map = new EventMapController();
 				LMvc.layer.addChild(map.view);
 			}else{
 				LMvc.EventListController.eventMapLoad();
 			}
-			/*LGlobal.script.scriptLayer.controller.mapLoad();*/
+			break;
+		case "RPGMapClose":
+			LMvc.EventMapController.close();
 			break;
 		case "RPGTalk":
 			LRPGTalkScript.analysis(lineValue);

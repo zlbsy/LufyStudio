@@ -8,6 +8,7 @@ function SeigniorExecute(){
 	self.timer.addEventListener(LTimerEvent.TIMER, SeigniorExecute.run);
 
 };
+SeigniorExecute.running = false;
 SeigniorExecute.Instance = function(){
 	if(!SeigniorExecute._Instance){
 		SeigniorExecute._Instance = new SeigniorExecute();
@@ -20,6 +21,7 @@ SeigniorExecute.close = function(){
 SeigniorExecute.run=function(){
 	var self = SeigniorExecute.Instance();
 	if(!self.backLayer){
+		SeigniorExecute.running = true;
 		self.maskShow();
 		var month = LMvc.chapterController.getValue("month");
 		var year = LMvc.chapterController.getValue("year");
@@ -55,6 +57,7 @@ SeigniorExecute.run=function(){
 	//self.maskHide();
 	self.seigniorIndex = 0;
 	self.areaIndex = 0;
+	SeigniorExecute.running = false;
 };
 SeigniorExecute.prototype.areaRun=function(area){
 	var self = this;

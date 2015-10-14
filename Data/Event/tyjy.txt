@@ -12,3 +12,4 @@ RPGCharacter.changeAction(1,stand,down,0,0);
 RPGCharacter.changeAction(1,move,down,0,0);
 RPGCharacter.changeAction(1,stand,down,0,0);
 RPGRunMode.set(0);
+RPGMapClose;
