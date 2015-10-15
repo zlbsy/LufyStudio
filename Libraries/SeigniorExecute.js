@@ -231,7 +231,7 @@ SeigniorExecute.prototype.areaAIRun=function(areaModel){
 	//判断是否有可攻击的城池
 	var city = getCanBattleCity(areaModel, characters, needEnlistFlag);
 	if(city){
-		
+		jobAiToBattle(areaModel, characters, city);
 		return;
 	}
 	//外交

@@ -45,8 +45,8 @@ function jobAiEvent(){
 	}
 	return false;
 }
+/*检索战力最弱城池*/
 function getWeakBattleCity(areaModel){
-	//最弱城池
 	var neighbors = areaModel.neighbor();
 	var enemyCitys = [];
 	for(var i = 0;i < neighbors.length;i++){
@@ -61,30 +61,35 @@ function getWeakBattleCity(areaModel){
 	enemyCitys = enemyCitys.sort(function(a,b){return a.powerful() - b.powerful();});
 	return enemyCitys[0];
 }
+/*检索可攻击城池*/
 function getCanBattleCity(areaModel,characters,enlistFlag){
 	if(enlistFlag == AiEnlistFlag.Must || enlistFlag == AiEnlistFlag.MustResource){
 		return null;
+	}
+	var generalCount = areaModel.generalsSum();
+	if(characters.length < BattleMapConfig.DetachmentQuantity || generalCount < BattleMapConfig.DetachmentQuantity * 2 || generalCount - BattleMapConfig.DetachmentQuantity > characters.length){
+		return;
 	}
 	var weakCity = getWeakBattleCity(areaModel);
 	if(!weakCity){
 		return null;
 	}
 	var weakCityGeneralCount = weakCity.generalsSum();
-	if(areaModel.generalsSum() < BattleMapConfig.AttackQuantity && characters.length < weakCityGeneralCount){
+	weakCityGeneralCount = weakCityGeneralCount > BattleMapConfig.DefenseQuantity ? BattleMapConfig.DefenseQuantity : weakCityGeneralCount;
+	if(characters.length < weakCityGeneralCount * 0.5){
 		return null;
 	}
 	var generals = getPowerfulCharacters(characters);
 	var needFood = 0;
-	for(var i=0,l=generals.length;i<l && i<5;i++){
+	for(var i=0,l=generals.length;i<l && i<BattleMapConfig.AttackQuantity;i++){
 		var charaModel = generals[i];
 		needFood += charaModel.maxTroops();
 	}
-	if(areaModel.food() < needFood){
+	if(areaModel.food() < needFood * 20){
 		return null;
 	}
 	
-	
-	return null;
+	return weakCity;
 }
 function getIdleCharacters(areaModel){
 	var charas = [];
@@ -96,6 +101,53 @@ function getIdleCharacters(areaModel){
 		}
 	}
 	return charas;
+}
+/*出战准备*/
+function jobAiToBattle(areaModel,characters,targetCity){
+	var attackQuantity = BattleMapConfig.AttackQuantity;
+	var generalCount = areaModel.generalsSum();
+	if(generalCount - attackQuantity < BattleMapConfig.DetachmentQuantity){
+		attackQuantity = generalCount - BattleMapConfig.DetachmentQuantity;
+	}
+	if(characters.length < attackQuantity){
+		attackQuantity = characters.length;
+	}
+	var generals = getPowerfulCharacters(characters);
+	var data = {};
+	data.expeditionCharacterList = [];
+	var sumTroops = 0;
+	for(var i = 0;i<attackQuantity;i++){
+		var general = generals[i];
+		var index = characters.findIndex(function(child){
+			return child.id() == general.id();
+		});
+		characters.splice(index, 1);
+		data.expeditionCharacterList.push(general);
+		if(i == 0){
+			data.expeditionLeader = general;
+		}
+		var maxTroops = general.maxTroops();
+		sumTroops += maxTroops;
+		general.troops(maxTroops);
+	}
+	data.troops = sumTroops;
+	sumTroops = sumTroops + data.troops;
+	data.money = areaModel.money() * 0.2;
+	data.food = sumTroops * 10;
+	areaModel.food(-data.food);
+	areaModel.money(-data.money);
+	areaModel.troops(areaModel.troops() - sumTroops);
+	data.cityId = targetCity.id();
+	if(targetCity.seigniorCharaId() == LMvc.selectSeignorId){
+		SeigniorExecute.Instance().stop = true;
+		//TODO::进入战斗
+		return;
+	}
+	jobAiBattleExecute(areaModel,data,targetCity);
+}
+/*AI之间自动战斗*/
+function jobAiBattleExecute(areaModel,data,targetCity){
+	
 }
 AiEnlistFlag = {
 	None:0,
