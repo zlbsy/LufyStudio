@@ -35,13 +35,13 @@ EventMapController.prototype.viewComplete=function(){
 };
 EventMapController.prototype.close=function(){
 	var self = this;
+	self.view.remove();
 	if(SeigniorExecute.running){
 		LMvc.MapController.view.visible = true;
 		SeigniorExecute.run();
 	}else{
 		LMvc.EventListController.view.visible = true;
 	}
-	self.view.remove();
 };
 EventMapController.prototype.addMap=function(mapPath){
 	var self = this;

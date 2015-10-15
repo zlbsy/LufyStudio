@@ -111,11 +111,11 @@ MenuView.prototype.loadSeigniorExecute=function(){
 };
 MenuView.prototype.loadSeigniorExecuteLoadSkill=function(){
 	var self = this;
-	self.load.model(["Master/SkillMaster"],self.loadSeigniorExecuteConfig);
+	self.load.model(["Master/SkillMaster","Master/SoldierMaster","Master/Soldier","Master/StrategyMaster","Master/Strategy"],self.loadSeigniorExecuteConfig);
 };
 MenuView.prototype.loadSeigniorExecuteConfig=function(){
 	var self = this;
-	self.load.config(["CharacterListType","Skills","EventList"],self.loadSeigniorExecuteHelper);
+	self.load.config(["CharacterListType","Skills","EventList","BattleMap","Soldiers","Strategy"],self.loadSeigniorExecuteHelper);
 };
 MenuView.prototype.loadSeigniorExecuteHelper=function(){
 	var self = this;
@@ -123,6 +123,8 @@ MenuView.prototype.loadSeigniorExecuteHelper=function(){
 };
 MenuView.prototype.seigniorExecute=function(){
 	var self = this;
+	StrategyMasterModel.setMaster(StrategyDatas);
+	SoldierMasterModel.setMaster(SoldierDatas);
 	SkillMasterModel.setMaster(SkillsData);
 	SeigniorExecute.run();
 };

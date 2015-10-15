@@ -8,6 +8,9 @@ function AreaModel(controller, data) {
 	}
 }
 AreaModel.troopsList = [10000,20000,30000,40000,50000];
+AreaModel.agricultureList = [10000,20000,30000,40000,50000];
+AreaModel.businessList = [10000,20000,30000,40000,50000];
+AreaModel.populationList = [[100000,200000],[100000,200000],[100000,200000],[100000,200000],[100000,200000]];
 AreaModel.list = [];
 AreaModel.setArea=function(list){
 	var self = this;
@@ -392,14 +395,26 @@ AreaModel.prototype.troopsSum=function(){
 AreaModel.prototype.troops=function(value){
 	return this._dataValue("troops", value, 0);
 };
-AreaModel.prototype.maxTroops=function(value){
+AreaModel.prototype.maxTroops=function(){
 	return AreaModel.troopsList[this.level()-1];
 };
 AreaModel.prototype.agriculture=function(value){
 	return this._plusData("agriculture",value);
 };
+AreaModel.prototype.maxAgriculture=function(){
+	return AreaModel.agricultureList[this.level()-1];
+};
 AreaModel.prototype.business=function(value){
 	return this._plusData("business",value);
+};
+AreaModel.prototype.maxBusiness=function(){
+	return AreaModel.businessList[this.level()-1];
+};
+AreaModel.prototype.minPopulation=function(){
+	return AreaModel.populationList[this.level()-1][0];
+};
+AreaModel.prototype.maxPopulation=function(){
+	return AreaModel.populationList[this.level()-1][1];
 };
 AreaModel.prototype.position=function(){
 	return this.data.position;

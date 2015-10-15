@@ -249,7 +249,7 @@ SeigniorExecute.prototype.areaAIRun=function(areaModel){
 	//农地
 	jobAiFarmland(areaModel,characters);
 	//市场
-	jobAiAgriculture(areaModel,characters);
+	jobAiMarket(areaModel,characters);
 	//如果有剩余无法分配工作的人员(金钱不够等),则直接跳过
 	self.areaAIIndex++;
 };
