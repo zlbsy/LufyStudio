@@ -22,6 +22,8 @@ SeigniorExecute.run=function(){
 	var self = SeigniorExecute.Instance();
 	if(!self.backLayer){
 		SeigniorExecute.running = true;
+		self.seigniors = [];
+		self.citys = [];
 		self.maskShow();
 		var month = LMvc.chapterController.getValue("month");
 		var year = LMvc.chapterController.getValue("year");
@@ -45,6 +47,10 @@ SeigniorExecute.run=function(){
 	console.log("self.seigniorIndex="+self.seigniorIndex+"<"+SeigniorModel.list.length);
 	if(self.seigniorIndex < SeigniorModel.list.length){
 		var seigniorModel = SeigniorModel.list[self.seigniorIndex];
+		if(self.seigniors.indexOf(self.seigniorIndex) < 0){
+			self.seigniors.push(self.seigniorIndex);
+			self.msgView.add(seigniorModel.character().name() + "势力行动!");
+		}
 		if(seigniorModel.chara_id() != LMvc.selectSeignorId){
 			var aiOver = self.areasAIRun(seigniorModel);
 			if(!aiOver){
@@ -168,7 +174,6 @@ SeigniorExecute.prototype.areasRun=function(seigniorModel){
 	var self = this;
 	console.log("self.areaIndex="+self.areaIndex);
 	if(self.areaIndex == 0){
-		self.msgView.add(seigniorModel.character().name() + "势力行动!");
 		seigniorModel.checkSpyCitys();
 		seigniorModel.checkStopBattleSeigniors();
 	}
@@ -180,6 +185,7 @@ SeigniorExecute.prototype.areasRun=function(seigniorModel){
 		return;
 	}
 	self.areaIndex = 0;
+	self.areaAIIndex = 0;
 	self.seigniorIndex++;
 	SeigniorExecute.run();
 };
@@ -195,7 +201,7 @@ SeigniorExecute.prototype.areasAIRun=function(seigniorModel){
 		self.areaAIRun(areaModel);
 		return false;
 	}
-	self.areaAIIndex = 0;
+	
 	return true;
 };
 SeigniorExecute.prototype.jobNumberOfCharacter=function(characters){
@@ -205,12 +211,30 @@ SeigniorExecute.prototype.jobNumberOfCharacter=function(characters){
 	length = length > characters.length ? characters.length : length;
 	return length;
 };
+SeigniorExecute.prototype.jobAiFunction=function(areaModel, characters, func){
+	var self = this;
+	var length = self.jobNumberOfCharacter(characters);
+	while(length-- > 0){
+		func(areaModel,characters);
+	}
+};
+SeigniorExecute.prototype.areaMessage=function(areaModel,key){
+	var self = this;
+	if(self.citys.indexOf(areaModel.id()) >= 0){
+		return;
+	}
+	self.citys.push(areaModel.id());
+	self.msgView.add(String.format(key,areaModel.name()));
+};
 SeigniorExecute.prototype.areaAIRun=function(areaModel){
 	var self = this;
 	//判断是否有未执行任务人员
 	var characters = getIdleCharacters(areaModel);
+	self.msgView.add("characters.length:"+characters.length);
 	if(characters.length == 0){
 		self.areaAIIndex++;
+		self.timer.reset();
+		self.timer.start();
 		return;
 	}
 	//是否需要征兵
@@ -218,13 +242,11 @@ SeigniorExecute.prototype.areaAIRun=function(areaModel){
 	var canEnlish = jobAiCanToEnlish(areaModel);
 	if(needEnlistFlag == AiEnlistFlag.Must || needEnlistFlag == AiEnlistFlag.Need){
 		if(canEnlish){
+			self.areaMessage(areaModel,"{0}在招募士兵!");
 			characters = characters.sort(function(a,b){
 				return a.luck() + a.command() - (b.luck() + b.command());
 			});
-			var length = self.jobNumberOfCharacter(characters);
-			while(length-- > 0){
-				jobAiToEnlish(areaModel,characters);
-			}
+			self.jobAiFunction(areaModel,characters,jobAiToEnlish);
 			return;
 		}
 	}
@@ -235,7 +257,7 @@ SeigniorExecute.prototype.areaAIRun=function(areaModel){
 		return;
 	}
 	//外交
-	jobAiDiplomacy(areaModel,characters);
+	self.jobAiFunction(areaModel,characters,jobAiDiplomacy);
 	//武将移动
 	jobAiGeneralMove(areaModel,characters);
 	//输送物资
@@ -244,14 +266,18 @@ SeigniorExecute.prototype.areaAIRun=function(areaModel){
 	jobAiSpy(areaModel,characters);
 	//酒馆
 	jobAiTavern(areaModel,characters);
+	
+	self.areaMessage(areaModel,"{0}在发展内政!");
 	//太学院
-	jobAiInstitute(areaModel,characters);
+	self.jobAiFunction(areaModel,characters,jobAiInstitute);
 	//农地
-	jobAiFarmland(areaModel,characters);
+	self.jobAiFunction(areaModel,characters,jobAiFarmland);
 	//市场
-	jobAiMarket(areaModel,characters);
+	self.jobAiFunction(areaModel,characters,jobAiMarket);
 	//如果有剩余无法分配工作的人员(金钱不够等),则直接跳过
 	self.areaAIIndex++;
+	self.timer.reset();
+	self.timer.start();
 };
 SeigniorExecute.prototype.maskShow=function(){
 	var self = this;

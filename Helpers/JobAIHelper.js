@@ -141,13 +141,18 @@ function jobAiToBattle(areaModel,characters,targetCity){
 	if(targetCity.seigniorCharaId() == LMvc.selectSeignorId){
 		SeigniorExecute.Instance().stop = true;
 		//TODO::进入战斗
+		var attackSeignior = areaModel.seignior();
+		SeigniorExecute.Instance().msgView.add(String.format("{0}的{1}向{2}的{3}发起进攻了!",attackSeignior.character().name(),areaModel.name(),"我军",targetCity.name()));
+		
 		return;
 	}
 	jobAiBattleExecute(areaModel,data,targetCity);
 }
 /*AI之间自动战斗*/
 function jobAiBattleExecute(areaModel,data,targetCity){
-	
+	var attackSeignior = areaModel.seignior();
+	var defSeignior = targetCity.seignior();
+	SeigniorExecute.Instance().msgView.add(String.format("{0}的{1}向{2}的{3}发起进攻了!",attackSeignior.character().name(),areaModel.name(),defSeignior.character().name(),targetCity.name()));
 }
 AiEnlistFlag = {
 	None:0,
@@ -205,6 +210,8 @@ function jobAiToEnlish(areaModel,characters){
 	if(areaModel.money() < JobPrice.ENLIST){
 		return;
 	}
+	SeigniorExecute.Instance().msgView.add("jobAiToEnlish");
+		
 	//self.enlistPrice * enlistCount / EnlistSetting.ENLIST_FROM >>> 0;
 	var character = characters.shift();
 	var num = EnlistSetting.ENLIST_TO - EnlistSetting.ENLIST_FROM;
@@ -228,39 +235,48 @@ function jobAiSpy(areaModel,characters){
 	if(characters.length == 0){
 		return;
 	}
+	SeigniorExecute.Instance().msgView.add("jobAiSpy");
 }
 function jobAiFarmland(areaModel,characters){
 	if(characters.length == 0){
 		return;
 	}
+	SeigniorExecute.Instance().msgView.add("jobAiFarmland");
 }
 function jobAiDiplomacy(areaModel,characters){
 	if(characters.length == 0){
 		return;
 	}
+	SeigniorExecute.Instance().msgView.add("jobAiDiplomacy");
 }
 function jobAiGeneralMove(areaModel,characters){
 	if(characters.length == 0){
 		return;
 	}
+	SeigniorExecute.Instance().msgView.add("jobAiGeneralMove");
 }
 function jobAiTransport(areaModel,characters){
 	if(characters.length == 0){
 		return;
 	}
+	SeigniorExecute.Instance().msgView.add("jobAiTransport");
 }
 function jobAiTavern(areaModel,characters){
 	if(characters.length == 0){
 		return;
 	}
+	SeigniorExecute.Instance().areaMessage(areaModel,"{0}在招贤纳士!");
+	SeigniorExecute.Instance().msgView.add("jobAiTavern");
 }
 function jobAiInstitute(areaModel,characters){
 	if(characters.length == 0){
 		return;
 	}
+	SeigniorExecute.Instance().msgView.add("jobAiInstitute");
 }
 function jobAiMarket(areaModel,characters){
 	if(characters.length == 0){
 		return;
 	}
+	SeigniorExecute.Instance().msgView.add("jobAiMarket");
 }

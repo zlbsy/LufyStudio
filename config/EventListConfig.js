@@ -3,8 +3,8 @@ var EventListConfig = [
 	id:1,
 	name:"桃园结义",
 	condition:{
-		from:{year:184,month:2},
-		to:{year:184,month:2},
+		from:{year:195,month:2},
+		to:{year:195,month:2},
 		seignior:1,
 		generals:[
 			{id:1,seignior:1},
