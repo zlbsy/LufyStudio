@@ -237,11 +237,17 @@ function jobAiSpy(areaModel,characters){
 	}
 	SeigniorExecute.Instance().msgView.add("jobAiSpy");
 }
-function jobAiFarmland(areaModel,characters){
+function jobAiFarmland(areaModel,characters){//农业
 	if(characters.length == 0){
 		return;
 	}
+	if(areaModel.money() < JobPrice.AGRICULTURE){
+		return;
+	}
 	SeigniorExecute.Instance().msgView.add("jobAiFarmland");
+	var character = characters.shift();
+	character.job(Job.AGRICULTURE);
+	areaModel.money(-JobPrice.AGRICULTURE);
 }
 function jobAiDiplomacy(areaModel,characters){
 	if(characters.length == 0){
@@ -265,18 +271,31 @@ function jobAiTavern(areaModel,characters){
 	if(characters.length == 0){
 		return;
 	}
+	
 	SeigniorExecute.Instance().areaMessage(areaModel,"{0}在招贤纳士!");
 	SeigniorExecute.Instance().msgView.add("jobAiTavern");
 }
-function jobAiInstitute(areaModel,characters){
+function jobAiInstitute(areaModel,characters){//技术
 	if(characters.length == 0){
+		return;
+	}
+	if(areaModel.money() < JobPrice.TECHNOLOGY){
 		return;
 	}
 	SeigniorExecute.Instance().msgView.add("jobAiInstitute");
+	var character = characters.shift();
+	character.job(Job.TECHNOLOGY);
+	areaModel.money(-JobPrice.TECHNOLOGY);
 }
-function jobAiMarket(areaModel,characters){
+function jobAiMarket(areaModel,characters){//商业
 	if(characters.length == 0){
 		return;
 	}
+	if(areaModel.money() < JobPrice.BUSINESS){
+		return;
+	}
 	SeigniorExecute.Instance().msgView.add("jobAiMarket");
+	var character = characters.shift();
+	character.job(Job.BUSINESS);
+	areaModel.money(-JobPrice.BUSINESS);
 }

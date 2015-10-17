@@ -211,11 +211,26 @@ SeigniorExecute.prototype.jobNumberOfCharacter=function(characters){
 	length = length > characters.length ? characters.length : length;
 	return length;
 };
-SeigniorExecute.prototype.jobAiFunction=function(areaModel, characters, func){
+SeigniorExecute.prototype.jobAiFunction=function(areaModel, characters, func,params){
 	var self = this;
 	var length = self.jobNumberOfCharacter(characters);
+	if(length == 0){
+		return;
+	}
+	if(params && params.length > 0){
+		self.characters = self.characters.sort(function(a,b){
+			var avalue = 0;
+			var bvalue = 0;
+			for(var i = 0;i<params.length;i++){
+				var k = params[i];
+				avalue += a[k]();
+				bvalue += b[k]();
+			}
+			return avalue - bvalue;
+		});
+	}
 	while(length-- > 0){
-		func(areaModel,characters);
+		func(areaModel,self.characters);
 	}
 };
 SeigniorExecute.prototype.areaMessage=function(areaModel,key){
@@ -229,9 +244,9 @@ SeigniorExecute.prototype.areaMessage=function(areaModel,key){
 SeigniorExecute.prototype.areaAIRun=function(areaModel){
 	var self = this;
 	//判断是否有未执行任务人员
-	var characters = getIdleCharacters(areaModel);
-	self.msgView.add("characters.length:"+characters.length);
-	if(characters.length == 0){
+	self.characters = getIdleCharacters(areaModel);
+	self.msgView.add("characters.length:"+self.characters.length);
+	if(self.characters.length == 0){
 		self.areaAIIndex++;
 		self.timer.reset();
 		self.timer.start();
@@ -242,38 +257,35 @@ SeigniorExecute.prototype.areaAIRun=function(areaModel){
 	var canEnlish = jobAiCanToEnlish(areaModel);
 	if(needEnlistFlag == AiEnlistFlag.Must || needEnlistFlag == AiEnlistFlag.Need){
 		if(canEnlish){
-			self.areaMessage(areaModel,"{0}在招募士兵!");
-			characters = characters.sort(function(a,b){
-				return a.luck() + a.command() - (b.luck() + b.command());
-			});
-			self.jobAiFunction(areaModel,characters,jobAiToEnlish);
+			self.areaMessage(areaModel,"{0}在招兵买马!");
+			self.jobAiFunction(areaModel,self.characters,jobAiToEnlish,["luck","command"]);
 			return;
 		}
 	}
 	//判断是否有可攻击的城池
-	var city = getCanBattleCity(areaModel, characters, needEnlistFlag);
+	var city = getCanBattleCity(areaModel, self.characters, needEnlistFlag);
 	if(city){
-		jobAiToBattle(areaModel, characters, city);
+		jobAiToBattle(areaModel, self.characters, city);
 		return;
 	}
 	//外交
-	self.jobAiFunction(areaModel,characters,jobAiDiplomacy);
+	self.jobAiFunction(areaModel,self.characters,jobAiDiplomacy);
 	//武将移动
-	jobAiGeneralMove(areaModel,characters);
+	jobAiGeneralMove(areaModel,self.characters);
 	//输送物资
-	jobAiTransport(areaModel,characters);
+	jobAiTransport(areaModel,self.characters);
 	//谍报
-	jobAiSpy(areaModel,characters);
+	jobAiSpy(areaModel,self.characters);
 	//酒馆
-	jobAiTavern(areaModel,characters);
+	jobAiTavern(areaModel,self.characters);
 	
 	self.areaMessage(areaModel,"{0}在发展内政!");
 	//太学院
-	self.jobAiFunction(areaModel,characters,jobAiInstitute);
+	self.jobAiFunction(areaModel,self.characters,jobAiInstitute,["intelligence","command"]);
 	//农地
-	self.jobAiFunction(areaModel,characters,jobAiFarmland);
+	self.jobAiFunction(areaModel,self.characters,jobAiFarmland,["intelligence","force"]);
 	//市场
-	self.jobAiFunction(areaModel,characters,jobAiMarket);
+	self.jobAiFunction(areaModel,self.characters,jobAiMarket,["intelligence","agility"]);
 	//如果有剩余无法分配工作的人员(金钱不够等),则直接跳过
 	self.areaAIIndex++;
 	self.timer.reset();
