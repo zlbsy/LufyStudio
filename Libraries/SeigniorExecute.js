@@ -254,6 +254,8 @@ SeigniorExecute.prototype.areaAIRun=function(areaModel){
 	}
 	//是否需要征兵
 	var needEnlistFlag = jobAiNeedToEnlist(areaModel);
+	//治安
+	
 	var canEnlish = jobAiCanToEnlish(areaModel);
 	if(needEnlistFlag == AiEnlistFlag.Must || needEnlistFlag == AiEnlistFlag.Need){
 		if(canEnlish){
@@ -277,15 +279,55 @@ SeigniorExecute.prototype.areaAIRun=function(areaModel){
 	//谍报
 	jobAiSpy(areaModel,self.characters);
 	//酒馆
-	jobAiTavern(areaModel,self.characters);
+	var toTavern = !(
+	(
+		needEnlistFlag == AiEnlistFlag.Must || 
+		needEnlistFlag == AiEnlistFlag.Need || 
+		needEnlistFlag == AiEnlistFlag.MustResource || 
+		needEnlistFlag == AiEnlistFlag.NeedResource
+	) || 
+	(
+		(needEnlistFlag == AiEnlistFlag.Battle || needEnlistFlag == AiEnlistFlag.BattleResource) && Math.random() > 0.2) 
+	) || 
+	(
+		(needEnlistFlag == AiEnlistFlag.Free || needEnlistFlag == AiEnlistFlag.None) && Math.random() > 0.5)
+	));
+	if(toTavern){
+		if(areaModel.outOfOffice().length > 0){
+			self.jobAiFunction(areaModel,self.characters,jobAiTavern,["luck"]);//录用
+		}else{
+			self.jobAiFunction(areaModel,self.characters,jobAiAccess,["intelligence","command","luck"]);//访问
+		}
+	}
 	
 	self.areaMessage(areaModel,"{0}在发展内政!");
-	//太学院
-	self.jobAiFunction(areaModel,self.characters,jobAiInstitute,["intelligence","command"]);
-	//农地
-	self.jobAiFunction(areaModel,self.characters,jobAiFarmland,["intelligence","force"]);
-	//市场
-	self.jobAiFunction(areaModel,self.characters,jobAiMarket,["intelligence","agility"]);
+	var toInterior = 
+	needEnlistFlag == AiEnlistFlag.Must || 
+	needEnlistFlag == AiEnlistFlag.Need || 
+	needEnlistFlag == AiEnlistFlag.MustResource || 
+	needEnlistFlag == AiEnlistFlag.NeedResource || 
+	(
+		(needEnlistFlag == AiEnlistFlag.Battle || needEnlistFlag == AiEnlistFlag.BattleResource) && Math.random() > 0.2) 
+	) || 
+	(
+		needEnlistFlag == AiEnlistFlag.Free && Math.random() > 0.5
+	);
+	if(toInterior){
+		//太学院
+		self.jobAiFunction(areaModel,self.characters,jobAiInstitute,["intelligence","command"]);
+		//农地
+		self.jobAiFunction(areaModel,self.characters,jobAiFarmland,["intelligence","force"]);
+		//市场
+		self.jobAiFunction(areaModel,self.characters,jobAiMarket,["intelligence","agility"]);
+	}else{
+		if(Math.random() > 0.5){
+			//农地探索
+			self.jobAiFunction(areaModel,self.characters,jobAiFarmlandExplore,["intelligence","force","luck"]);
+		}else{
+			//市场探索
+			self.jobAiFunction(areaModel,self.characters,jobAiMarketExplore,["intelligence","agility","luck"]);
+		}
+	}
 	//如果有剩余无法分配工作的人员(金钱不够等),则直接跳过
 	self.areaAIIndex++;
 	self.timer.reset();

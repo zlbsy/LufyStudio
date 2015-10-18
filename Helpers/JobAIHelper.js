@@ -155,14 +155,14 @@ function jobAiBattleExecute(areaModel,data,targetCity){
 	SeigniorExecute.Instance().msgView.add(String.format("{0}的{1}向{2}的{3}发起进攻了!",attackSeignior.character().name(),areaModel.name(),defSeignior.character().name(),targetCity.name()));
 }
 AiEnlistFlag = {
-	None:0,
-	Must:1,
-	Need:2,
-	Battle:3,
-	MustResource:4,
-	NeedResource:5,
-	BattleResource:6,
-	Free:7
+	None:0,//爆满
+	Must:1,//必须征兵
+	Need:2,//需要征兵
+	Battle:3,//战斗准备征兵
+	MustResource:4,//物资极缺
+	NeedResource:5,//物资短缺
+	BattleResource:6,//战斗准备物资
+	Free:7//充足
 };
 function jobAiNeedToEnlist(areaModel){
 	if(areaModel.troops() >= areaModel.maxTroops()){
@@ -231,7 +231,7 @@ function jobAiToEnlish(areaModel,characters){
 	areaModel.money(-cost);
 	character.enlist(EnlistSetting.ENLIST_FROM + num);
 }
-function jobAiSpy(areaModel,characters){
+function jobAiSpy(areaModel,characters){//谍报
 	if(characters.length == 0){
 		return;
 	}
@@ -249,31 +249,54 @@ function jobAiFarmland(areaModel,characters){//农业
 	character.job(Job.AGRICULTURE);
 	areaModel.money(-JobPrice.AGRICULTURE);
 }
-function jobAiDiplomacy(areaModel,characters){
+function jobAiFarmlandExplore(areaModel,characters){//农地探索
+	if(characters.length == 0){
+		return;
+	}
+	SeigniorExecute.Instance().msgView.add("jobAiFarmlandExplore");
+	var character = characters.shift();
+	character.job(Job.EXPLORE_AGRICULTURE);
+}
+function jobAiDiplomacy(areaModel,characters){//外交
 	if(characters.length == 0){
 		return;
 	}
 	SeigniorExecute.Instance().msgView.add("jobAiDiplomacy");
 }
-function jobAiGeneralMove(areaModel,characters){
+function jobAiGeneralMove(areaModel,characters){//武将移动
 	if(characters.length == 0){
 		return;
 	}
 	SeigniorExecute.Instance().msgView.add("jobAiGeneralMove");
 }
-function jobAiTransport(areaModel,characters){
+function jobAiTransport(areaModel,characters){//运输物资
 	if(characters.length == 0){
 		return;
 	}
 	SeigniorExecute.Instance().msgView.add("jobAiTransport");
 }
-function jobAiTavern(areaModel,characters){
+function jobAiTavern(areaModel,characters){//录用
 	if(characters.length == 0){
 		return;
 	}
-	
 	SeigniorExecute.Instance().areaMessage(areaModel,"{0}在招贤纳士!");
 	SeigniorExecute.Instance().msgView.add("jobAiTavern");
+	var outOfOfficeCharas = areaModel.outOfOffice();
+	if(outOfOfficeCharas.length == 0){
+		return;
+	}
+	var character = characters.shift();
+	var hireCharacterIndex = Math.random()*outOfOfficeCharas.length >>> 0;
+	character.hire(outOfOfficeCharas[hireCharacterIndex].id());
+}
+function jobAiAccess(areaModel,characters){//访问
+	if(characters.length == 0){
+		return;
+	}
+	SeigniorExecute.Instance().areaMessage(areaModel,"{0}在招贤纳士!");
+	SeigniorExecute.Instance().msgView.add("jobAiAccess");
+	var character = characters.shift();
+	character.job(Job.ACCESS);
 }
 function jobAiInstitute(areaModel,characters){//技术
 	if(characters.length == 0){
@@ -298,4 +321,12 @@ function jobAiMarket(areaModel,characters){//商业
 	var character = characters.shift();
 	character.job(Job.BUSINESS);
 	areaModel.money(-JobPrice.BUSINESS);
+}
+function jobAiMarketExplore(areaModel,characters){//市场探索
+	if(characters.length == 0){
+		return;
+	}
+	SeigniorExecute.Instance().msgView.add("jobAiMarketExplore");
+	var character = characters.shift();
+	character.job(Job.EXPLORE_BUSINESS);
 }
