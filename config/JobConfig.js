@@ -55,3 +55,14 @@ var JobMax = {
 	TECHNOLOGY:[3000,4000,5000,6000,7000],
 	REPAIR:[3000,4000,5000,6000,7000],
 };
+
+var AiEnlistFlag = {
+	None:0,//爆满
+	Must:1,//必须征兵
+	Need:2,//需要征兵
+	Battle:3,//战斗准备征兵
+	MustResource:4,//物资极缺
+	NeedResource:5,//物资短缺
+	BattleResource:6,//战斗准备物资
+	Free:7//充足
+};

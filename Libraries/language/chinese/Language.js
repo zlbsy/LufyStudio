@@ -123,7 +123,10 @@ Language.data = {
 	"speed":"速度",
 	"dodge":"躲闪",
 	"strategy":"谋略",
-
+	
+	"release":"释放",
+	"recruit":"招降",
+	"behead":"斩首",
 	
 	"label_equip":"装备",
 	"label_use":"使用",
@@ -280,7 +283,7 @@ Language.cityData = {
 	"city_4":"安定",
 	"city_5":"梓橦",
 	"city_6":"成都",
-	"city_7":"江州",
+	"city_7":"江洲",
 	"city_8":"建宁",
 	"city_9":"南蛮",
 	"city_10":"交趾",

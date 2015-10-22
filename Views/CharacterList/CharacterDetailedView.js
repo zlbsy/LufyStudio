@@ -240,19 +240,97 @@ CharacterDetailedView.prototype.showStatus=function(){
 	var statusBitmap = getBitmap(statusLayer);
 	var backLayer = new LSprite();
 	backLayer.addChild(statusBitmap);
+	if(!self.character && self.characterModel.job() == Job.IDLE && self.characterModel.seigniorId() > 0 && self.characterModel.seigniorId() != self.characterModel.city().seigniorCharaId()){
+		var btnRecruit = getButton(Language.get("recruit"),200);//招降
+		if(charaModel.job() == Job.END){
+			btnRecruit.alpha = 0.4;
+		}
+		btnRecruit.x = LGlobal.width - 260
+		btnRecruit.y = 5;
+		backLayer.addChild(btnRecruit);
+		btnRecruit.addEventListener(LMouseEvent.MOUSE_UP,self.clickRecruit);
+		var btnRelease = getButton(Language.get("release"),200);//释放
+		btnRelease.x = LGlobal.width - 260
+		btnRelease.y = 55;
+		backLayer.addChild(btnRelease);
+		btnRelease.addEventListener(LMouseEvent.MOUSE_UP,self.clickRelease);
+		var btnBehead = getButton(Language.get("behead"),200);//斩首
+		btnBehead.x = LGlobal.width - 260
+		btnBehead.y = 105;
+		backLayer.addChild(btnBehead);
+		btnBehead.addEventListener(LMouseEvent.MOUSE_UP,self.clickBehead);
+	}
+	
 	var sc = new LScrollbar(backLayer, LGlobal.width - 50, LGlobal.height - self.tabLayer.y - 70, 10);
 	sc.x = 10;
 	sc.y = 50;
 	self.tabLayer.addChild(sc);
 };
+CharacterDetailedView.prototype.clickRecruit=function(event){
+	var btnRecruit = event.currentTarget;
+	var self = btnRecruit.parent.parent.parent.parent.parent;
+	var charaModel = self.characterModel;
+	charaModel.job(Job.END);
+	btnRecruit.alpha = 0.4;
+	var script;
+	if(calculateHitrateSurrender(LMvc.selectSeignorId, charaModel)){
+		var cityData = self.controller.getValue("cityData");
+		charaModel.seigniorId(LMvc.selectSeignorId);
+		cityData.removeCaptives(charaModel.id());
+		cityData.addGenerals(charaModel);
+		var characterChildView = self.getCharacterChildView();
+		characterChildView.set(charaModel);
+		self.changeCharacter(0);
+		script = "SGJTalk.show(" + charaModel.id() + ",0,愿效犬马之力!);";
+		script += "SGJBattleResult.selfCaptiveWin();";
+	}else{
+		script = "SGJTalk.show(" + charaModel.id() + ",0,少废话!忠臣不事二主!);";
+		script += "SGJBattleResult.selfCaptiveWin(1);";
+	}
+	LGlobal.script.addScript(script);
+};
+CharacterDetailedView.prototype.clickRelease=function(event){
+	var self = event.currentTarget.parent.parent.parent.parent.parent;
+	var charaModel = self.characterModel;
+	var cityData = self.controller.getValue("cityData");
+	cityData.removeCaptives(charaModel.id());
+	var targetSeignior = charaModel.seignior();
+	var areas = targetSeignior.areas();
+	var city = areas[areas.length * Math.random() >>> 0];
+	charaModel.moveTo(city.id());
+	charaModel.moveTo();
+	var characterChildView = self.getCharacterChildView();
+	characterChildView.delete();
+	self.closeCharacterDetailed();
+	var obj = {title:Language.get("confirm"),message:String.format(Language.get("武将{0}被释放了"), charaModel.name()),height:200,okEvent:null};
+			var windowLayer = ConfirmWindow(obj);
+			LMvc.layer.addChild(windowLayer);
+};
+CharacterDetailedView.prototype.clickBehead=function(event){
+	var self = event.currentTarget.parent.parent.parent.parent.parent;
+	var charaModel = self.characterModel;
+	var cityData = self.controller.getValue("cityData");
+	cityData.removeCaptives(charaModel.id());
+	var characterChildView = self.getCharacterChildView();
+	characterChildView.delete();
+	self.closeCharacterDetailed();
+	var obj = {title:Language.get("confirm"),message:String.format(Language.get("武将{0}被斩首了"), charaModel.name()),height:200,okEvent:null};
+			var windowLayer = ConfirmWindow(obj);
+			LMvc.layer.addChild(windowLayer);
+};
+CharacterDetailedView.prototype.getCharacterChildView=function(){
+	var self = this;
+	var scrollbar = self.controller.view.contentLayer.childList.find(function(child){
+		return child.constructor.name == "LScrollbar";
+	});
+	var characterChildView = scrollbar._showObject.childList.find(function(child){
+		return child.charaModel && child.charaModel.id() == self.characterModel.id();
+	});
+	return characterChildView;
+};
 CharacterDetailedView.prototype.showProperties=function(){
 	var self = this;
-	/*	"attack":"攻击",
-	"spirit":"策略",
-	"defense":"防御",
-	"breakout":"爆发",
-	"morale":"士气",
-	"movePower":"移动力",*/
+	/*	"attack":"攻击","spirit":"策略","defense":"防御","breakout":"爆发","morale":"士气","movePower":"移动力",*/
 	var statusLayer = new LSprite();
 	var txtHeight = 25, startY = -txtHeight + 10, startRightY = startY,startX = 5;
 	var labels = ["tab_arms","force","command","intelligence","agility","luck"];

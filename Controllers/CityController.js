@@ -16,7 +16,7 @@ CityController.prototype.modelLoad=function(){
 };
 CityController.prototype.helperLoad=function(){
 	var self = this;
-	self.load.helper(["Label","Troops"],self.libraryLoad);
+	self.load.helper(["Label","Troops","CommonHelper"],self.libraryLoad);
 };
 CityController.prototype.libraryLoad=function(){
 	var self = this;

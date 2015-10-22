@@ -50,6 +50,10 @@ SeigniorExecute.run=function(){
 		if(self.seigniors.indexOf(self.seigniorIndex) < 0){
 			self.seigniors.push(self.seigniorIndex);
 			self.msgView.add(seigniorModel.character().name() + "势力行动!");
+			if(seigniorModel.chara_id() != LMvc.selectSeignorId){
+				jobAiSetCityCharactersNeed(seigniorModel);
+				return;
+			}
 		}
 		if(seigniorModel.chara_id() != LMvc.selectSeignorId){
 			var aiOver = self.areasAIRun(seigniorModel);
@@ -255,14 +259,26 @@ SeigniorExecute.prototype.areaAIRun=function(areaModel){
 	//是否需要征兵
 	var needEnlistFlag = jobAiNeedToEnlist(areaModel);
 	//治安
-	
+	var police = areaModel.police();
+	var toPolice = police < 70 || (police < 80 && Math.random() < 0.5) || (police < 90 && Math.random() < 0.3) || (police < 100 && Math.random() < 0.1);
+	if(toPolice){
+		self.jobAiFunction(areaModel,self.characters,jobAiPolice,["force","agility"]);//治安
+	}
 	var canEnlish = jobAiCanToEnlish(areaModel);
 	if(needEnlistFlag == AiEnlistFlag.Must || needEnlistFlag == AiEnlistFlag.Need){
 		if(canEnlish){
 			self.areaMessage(areaModel,"{0}在招兵买马!");
 			self.jobAiFunction(areaModel,self.characters,jobAiToEnlish,["luck","command"]);
-			return;
 		}
+	}
+	//修补
+	if(areaModel.cityDefense() < areaModel.cityMaxDefense() && !(
+		needEnlistFlag == AiEnlistFlag.Must || 
+		needEnlistFlag == AiEnlistFlag.Need || 
+		needEnlistFlag == AiEnlistFlag.MustResource || 
+		needEnlistFlag == AiEnlistFlag.NeedResource
+		) && Math.random() > 0.5){
+		self.jobAiFunction(areaModel,self.characters,jobAiRepair,["force","command"]);//修补
 	}
 	//判断是否有可攻击的城池
 	var city = getCanBattleCity(areaModel, self.characters, needEnlistFlag);
@@ -276,8 +292,12 @@ SeigniorExecute.prototype.areaAIRun=function(areaModel){
 	jobAiGeneralMove(areaModel,self.characters);
 	//输送物资
 	jobAiTransport(areaModel,self.characters);
-	//谍报
-	jobAiSpy(areaModel,self.characters);
+	//俘虏处理
+	if(captiveSum > 0){
+		
+	}
+	//TODO::ai免谍报
+	//jobAiSpy(areaModel,self.characters);
 	//酒馆
 	var toTavern = !(
 	(
@@ -287,10 +307,10 @@ SeigniorExecute.prototype.areaAIRun=function(areaModel){
 		needEnlistFlag == AiEnlistFlag.NeedResource
 	) || 
 	(
-		(needEnlistFlag == AiEnlistFlag.Battle || needEnlistFlag == AiEnlistFlag.BattleResource) && Math.random() > 0.2) 
+		(needEnlistFlag == AiEnlistFlag.Battle || needEnlistFlag == AiEnlistFlag.BattleResource) && Math.random() > 0.2
 	) || 
 	(
-		(needEnlistFlag == AiEnlistFlag.Free || needEnlistFlag == AiEnlistFlag.None) && Math.random() > 0.5)
+		(needEnlistFlag == AiEnlistFlag.Free || needEnlistFlag == AiEnlistFlag.None) && Math.random() > 0.5
 	));
 	if(toTavern){
 		if(areaModel.outOfOffice().length > 0){
@@ -300,14 +320,13 @@ SeigniorExecute.prototype.areaAIRun=function(areaModel){
 		}
 	}
 	
-	self.areaMessage(areaModel,"{0}在发展内政!");
 	var toInterior = 
 	needEnlistFlag == AiEnlistFlag.Must || 
 	needEnlistFlag == AiEnlistFlag.Need || 
 	needEnlistFlag == AiEnlistFlag.MustResource || 
 	needEnlistFlag == AiEnlistFlag.NeedResource || 
 	(
-		(needEnlistFlag == AiEnlistFlag.Battle || needEnlistFlag == AiEnlistFlag.BattleResource) && Math.random() > 0.2) 
+		(needEnlistFlag == AiEnlistFlag.Battle || needEnlistFlag == AiEnlistFlag.BattleResource) && Math.random() > 0.2
 	) || 
 	(
 		needEnlistFlag == AiEnlistFlag.Free && Math.random() > 0.5

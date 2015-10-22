@@ -1,17 +1,23 @@
 function CharacterListChildView(controller, charaModel, cityModel, parentView) {
 	var self = this;
 	base(self, LView, [controller]);
-	self.charaModel = charaModel;
 	self.cityModel = cityModel;
 	self.parentView = parentView;
-	self.set();
+	self.set(charaModel);
 }
 
-CharacterListChildView.prototype.set = function() {
+CharacterListChildView.prototype.set = function(charaModel) {
 	var self = this;
+	self.charaModel = charaModel;
+	self.removeAllChild();
 	self.setCheckBox();
 	self.setStatus();
 };
+CharacterListChildView.prototype.delete = function(charaModel) {
+	var self = this;
+	//var mask = getTranslucentBitmap(420, 50);
+	self.alpha = 0.4;
+}
 CharacterListChildView.prototype.setCheckBox = function() {
 	var self = this;
 	switch(self.controller.characterListType) {
@@ -35,6 +41,9 @@ CharacterListChildView.prototype.onChangeSelect = function(event) {
 };
 CharacterListChildView.prototype.hitTestPoint = function(offsetX,offsetY) {
 	var self = this;
+	if(self.alpha < 1){
+		return false;
+	}
 	if(self.controller.characterListType == CharacterListType.EXPEDITION && self.armProperties.visible){
 		if(offsetX > 370){
 			var characterExpedition = new CharacterExpeditionView(self.controller, self.charaModel);

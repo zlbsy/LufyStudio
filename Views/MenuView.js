@@ -119,7 +119,7 @@ MenuView.prototype.loadSeigniorExecuteConfig=function(){
 };
 MenuView.prototype.loadSeigniorExecuteHelper=function(){
 	var self = this;
-	self.load.helper(["JobHelper","JobAIHelper","BattleHelper"],self.seigniorExecute);
+	self.load.helper(["JobHelper","JobAIHelper","BattleHelper","CommonHelper"],self.seigniorExecute);
 };
 MenuView.prototype.seigniorExecute=function(){
 	var self = this;
