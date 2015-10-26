@@ -91,7 +91,7 @@ function redeemRun(characterModel, data){
 	//赎回俘虏:智力+运气
 	console.log("redeemRun : ",characterModel.id());
 	characterModel.job(Job.IDLE);
-	var value01 = getJobResult(characterModel.force(),JobCoefficient.DIPLOMACY);
+	var value01 = getJobResult(characterModel.intelligence(),JobCoefficient.DIPLOMACY);
 	var value02 = getJobResult(characterModel.luck(),JobCoefficient.DIPLOMACY);
 	var value = value01 + value02;
 	var targetCharacter = CharacterModel.getChara(data.chara_id);
@@ -114,7 +114,7 @@ function stopBattleRun(characterModel, data){
 	//停战协议:智力+运气
 	console.log("stopBattleRun : ",characterModel.id());
 	characterModel.job(Job.IDLE);
-	var value01 = getJobResult(characterModel.force(),JobCoefficient.DIPLOMACY);
+	var value01 = getJobResult(characterModel.intelligence(),JobCoefficient.DIPLOMACY);
 	var value02 = getJobResult(characterModel.luck(),JobCoefficient.DIPLOMACY);
 	var value = value01 + value02;
 	var sum = (11 - SeigniorModel.list.length) * JobCoefficient.STOP_BATTLE;

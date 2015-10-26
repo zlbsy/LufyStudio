@@ -114,6 +114,8 @@ function jobAiToBattle(areaModel,characters,targetCity){
 	}
 	var generals = getPowerfulCharacters(characters);
 	var data = {};
+	data.fromCity = areaModel;
+	data.attackFlag = 1;
 	data.expeditionCharacterList = [];
 	var sumTroops = 0;
 	for(var i = 0;i<attackQuantity;i++){
@@ -138,12 +140,18 @@ function jobAiToBattle(areaModel,characters,targetCity){
 	areaModel.money(-data.money);
 	areaModel.troops(areaModel.troops() - sumTroops);
 	data.cityId = targetCity.id();
+	data.toCity = targetCity;
 	if(targetCity.seigniorCharaId() == LMvc.selectSeignorId){
 		SeigniorExecute.Instance().stop = true;
 		//TODO::进入战斗
 		var attackSeignior = areaModel.seignior();
-		SeigniorExecute.Instance().msgView.add(String.format("{0}的{1}向{2}的{3}发起进攻了!",attackSeignior.character().name(),areaModel.name(),"我军",targetCity.name()));
-		
+		var obj = {title:Language.get("confirm"),message:String.format(Language.get("{0}的{1}向{2}的{3}发起进攻了!"),attackSeignior.character().name(),areaModel.name(),"我军",targetCity.name()),height:200
+		,okEvent:function(event){
+			event.currentTarget.parent.remove();
+			
+		}};
+		var windowLayer = ConfirmWindow(obj);
+		LMvc.layer.addChild(windowLayer);
 		return;
 	}
 	jobAiBattleExecute(areaModel,data,targetCity);
@@ -153,6 +161,28 @@ function jobAiBattleExecute(areaModel,data,targetCity){
 	var attackSeignior = areaModel.seignior();
 	var defSeignior = targetCity.seignior();
 	SeigniorExecute.Instance().msgView.add(String.format("{0}的{1}向{2}的{3}发起进攻了!",attackSeignior.character().name(),areaModel.name(),defSeignior.character().name(),targetCity.name()));
+	var targetData = {};
+	var enemyCharas = getDefenseEnemiesFromCity(targetCity);
+	enemyCharas[0].isLeader = true;
+	var sumTroops = targetCity.troops();
+	for(var i = 0;i<enemyCharas.length;i++){
+		var charaId = enemyCharas[i].id();
+		var chara = CharacterModel.getChara(charaId);
+		var maxTroop = chara.maxTroops();
+		if(maxTroop > sumTroops){
+			maxTroop = sumTroops;
+		}
+		chara.troops(maxTroop);
+		sumTroops -= maxTroop;
+		targetCity.troops(sumTroops);
+		if(sumTroops > 0 || i == enemyCharas.length - 1){
+			continue;
+		}
+		enemyCharas = enemyCharas.splice(0, i + 1);
+		break;
+	}
+	targetData.expeditionCharacterList = enemyCharas;
+	BattleAIExecute.set(data, targetData);
 }
 function jobAiNeedToEnlist(areaModel){
 	if(areaModel.troops() >= areaModel.maxTroops()){
