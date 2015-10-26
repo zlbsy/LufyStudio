@@ -48,6 +48,24 @@ SeigniorModel.removeSeignior = function(seigniorId){
 		}
 	}
 };
+SeigniorModel.getCharactersIsCaptives = function(seigniorId){
+	var self = this;
+	var list = [];
+	for(var i=0,l=AreaModel.list.length;i<l;i++){
+		var area = AreaModel.list[i];
+		if(area.seigniorCharaId() == seigniorId){
+			continue;
+		}
+		var captives = area.captives();
+		for(var j=0,jl=captives.length;j<jl;j++){
+			var captive = captives[j];
+			if(captive.seigniorId() == seigniorId){
+				list.push(captive);
+			}
+		}
+	}
+	return list;
+};
 SeigniorModel.prototype.chara_id = function(){
 	return this.data.chara_id;
 };

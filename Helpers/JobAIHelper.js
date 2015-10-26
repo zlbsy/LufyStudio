@@ -216,18 +216,6 @@ function jobAiToEnlish(areaModel,characters){
 	areaModel.money(-cost);
 	character.enlist(EnlistSetting.ENLIST_FROM + num);
 }
-function jobAiSpy(areaModel,characters){//谍报
-	if(characters.length == 0){
-		return;
-	}
-	SeigniorExecute.Instance().msgView.add("jobAiSpy");
-}
-function jobAiDiplomacy(areaModel,characters){//外交
-	if(characters.length == 0){
-		return;
-	}
-	SeigniorExecute.Instance().msgView.add("jobAiDiplomacy");
-}
 function jobAiTavern(areaModel,characters){//录用
 	if(characters.length == 0){
 		return;
@@ -413,4 +401,80 @@ function jobAiTransport(areaModel,characters){//运输物资
 	var character = characters[index];
 	characters.splice(index, 1);
 	characterModel.transport(data);
+}
+function jobAiCaptives(areaModel){
+	var captives = areaModel.captives();
+	if(captives.length == 0){
+		return;
+	}
+	var seigniorId = areaModel.seigniorCharaId();
+	for(var i = captives.length - 1; i >= 0; i--){
+		var charaModel = captives[i];
+		jobAiCaptive(areaModel, seigniorId, charaModel);
+	}
+}
+function jobAiCaptive(areaModel, seigniorId, charaModel){
+	charaModel.job(Job.END);
+	if(calculateHitrateSurrender(seigniorId, charaModel)){//投降
+		if(charaModel.seigniorId() == LMvc.selectSeignorId){
+			SeigniorExecute.Instance().msgView.add(String.format("{0}投降了敌军!",charaModel.name()));
+		}
+		charaModel.seigniorId(seigniorId);
+		areaModel.removeCaptives(charaModel.id());
+		areaModel.addGenerals(charaModel);
+		return;
+	}
+	if(calculateHitrateRelease(leaderId, charaModel)){//释放
+		if(charaModel.seigniorId() == LMvc.selectSeignorId){
+			SeigniorExecute.Instance().msgView.add(String.format("{0}被敌军释放了!",charaModel.name()));
+		}
+		areaModel.removeCaptives(charaModel.id());
+		var areas = charaModel.seignior().areas();
+		var city = areas[areas.length * Math.random() >>> 0];
+		charaModel.moveTo(city.id());
+		charaModel.moveTo();
+		return;
+	}
+	if(calculateHitrateBehead(seigniorId, charaModel)){//斩首
+		if(charaModel.seigniorId() == LMvc.selectSeignorId){
+			SeigniorExecute.Instance().msgView.add(String.format("{0}被敌军斩首了!",charaModel.name()));
+		}
+		areaModel.removeCaptives(charaModel.id());
+	} 
+}
+function jobAiCaptivesRescue(areaModel,characters){//解救俘虏
+	if(characters.length == 0){
+		return;
+	}
+	SeigniorExecute.Instance().msgView.add("jobAiCaptivesRescue");
+	var captives = SeigniorModel.getCharactersIsCaptives(areaModel.seigniorCharaId());
+	var captive = captives[captives.length * Math.random() >>> 0];
+	var character = characters.shift();
+	var money = (captive.force() + captive.intelligence() + captive.command() + captive.agility() + captive.luck()) * JobCoefficient.REDEEM;
+	money += (money * captive.skillCoefficient() * 0.1);
+	if(areaModel.money() < money){
+		return false;
+	}
+	areaModel.money(-money);
+	var captiveArea = captive.area();
+	if(captiveArea.seigniorCharaId() == LMvc.selectSeignorId){
+		character.job(Job.End);
+		var obj = {title:Language.get("confirm"),message:String.format(Language.get("{0}的{1}想用金钱{2}赎回{3}，是否答应？"),captiveArea.seignior().name(),character.name(),money,captive.name()),height:200
+		,okEvent:function(event){
+			event.currentTarget.parent.remove();
+			areaModel.removeCaptives(character.id());
+			charaModel.moveTo(character.cityId());
+			charaModel.moveTo();
+			SeigniorExecute.run();
+		},cancelEvent:function(event){
+			event.currentTarget.parent.remove();
+			areaModel.money(money);
+			SeigniorExecute.run();
+		}};
+		var windowLayer = ConfirmWindow(obj);
+		LMvc.layer.addChild(windowLayer);
+		return true;
+	}
+	character.redeem(captive.id(), money);
+	return false;
 }

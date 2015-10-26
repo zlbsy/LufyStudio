@@ -215,9 +215,12 @@ SeigniorExecute.prototype.jobNumberOfCharacter=function(characters){
 	length = length > characters.length ? characters.length : length;
 	return length;
 };
-SeigniorExecute.prototype.jobAiFunction=function(areaModel, characters, func,params){
+SeigniorExecute.prototype.jobAiFunction=function(areaModel, characters, func,params,maxNum){
 	var self = this;
 	var length = self.jobNumberOfCharacter(characters);
+	if(maxNum && maxNum < length){
+		length = maxNum;
+	}
 	if(length == 0){
 		return;
 	}
@@ -232,6 +235,9 @@ SeigniorExecute.prototype.jobAiFunction=function(areaModel, characters, func,par
 			}
 			return avalue - bvalue;
 		});
+	}
+	if(maxNum == 1){
+		return func(areaModel,self.characters);
 	}
 	while(length-- > 0){
 		func(areaModel,self.characters);
@@ -249,13 +255,14 @@ SeigniorExecute.prototype.areaAIRun=function(areaModel){
 	var self = this;
 	//判断是否有未执行任务人员
 	self.characters = getIdleCharacters(areaModel);
-	self.msgView.add("characters.length:"+self.characters.length);
 	if(self.characters.length == 0){
 		self.areaAIIndex++;
 		self.timer.reset();
 		self.timer.start();
 		return;
 	}
+	//俘虏处理
+	jobAiCaptives(areaModel);
 	//是否需要征兵
 	var needEnlistFlag = jobAiNeedToEnlist(areaModel);
 	//治安
@@ -292,12 +299,10 @@ SeigniorExecute.prototype.areaAIRun=function(areaModel){
 	jobAiGeneralMove(areaModel,self.characters);
 	//输送物资
 	jobAiTransport(areaModel,self.characters);
-	//俘虏处理
-	if(captiveSum > 0){
-		
+	//解救俘虏
+	if(self.jobAiFunction(areaModel,self.characters,jobAiCaptivesRescue,["intelligence","luck"],1)){
+		return;
 	}
-	//TODO::ai免谍报
-	//jobAiSpy(areaModel,self.characters);
 	//酒馆
 	var toTavern = !(
 	(
