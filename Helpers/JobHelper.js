@@ -48,6 +48,9 @@ function getJobPrice(jobType) {
 	console.error("Can't get JobPrice");
 	return 0;
 }
+function getIdentity(value){
+	var identitis = ["在野","一般","太守"];
+}
 /*
 外交:智力+运气
 访问：智力+统率+运气
