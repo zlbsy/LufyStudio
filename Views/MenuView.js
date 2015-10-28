@@ -119,7 +119,11 @@ MenuView.prototype.loadSeigniorExecuteConfig=function(){
 };
 MenuView.prototype.loadSeigniorExecuteHelper=function(){
 	var self = this;
-	self.load.helper(["JobHelper","JobAIHelper","BattleHelper","CommonHelper"],self.seigniorExecute);
+	self.load.helper(["JobHelper","JobAIHelper","BattleHelper","BattleCalculateHelper","CommonHelper"],self.loadSeigniorExecuteLibrary);
+};
+MenuView.prototype.loadSeigniorExecuteLibrary=function(){
+	var self = this;
+	self.load.library(["Battle/HertParams"],self.seigniorExecute);
 };
 MenuView.prototype.seigniorExecute=function(){
 	var self = this;

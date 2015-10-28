@@ -109,7 +109,9 @@ BattleCharacterAI.prototype.physicalAttack = function(target) {
 						hertParams.push(chara,0);
 						hertParamObj = hertParams.list[hertParams.list.length - 1];
 					}
-					hertParamObj.aids = Array.getRandomArrays(aids,aidCount);
+					if(hertParamObj){
+						hertParamObj.aids = Array.getRandomArrays(aids,aidCount);
+					}
 				}
 			}
 			var groupSkill = battleCanGroupSkill(self.chara, target);

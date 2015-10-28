@@ -38,6 +38,7 @@ BattleAIExecute.run=function(){
 			self.currentChara = targetCharacters[self.targetIndex++];
 			characterExec(self.currentChara, self.targetData, self.attackData);
 		}
+		self.currentChara.herts = null;
 		self.currentChara = null;
 	}
 	self.timer.reset();
@@ -204,26 +205,58 @@ BattleAIExecute.prototype.physicalAttack = function(currentChara, targetChara) {
 					}else{
 						rangeAttackTarget = self.chara.data.currentSoldiers().rangeAttackTarget();
 				}
-				if(rangeAttackTarget.length > 0){
+				var rangeLength = (rangeAttackTarget.length / 4) >>> 0;
+				if(rangeLength){
 					var targetCharas = self.getTargetCharacters(currentChara);
-					for(var i = 0;i<rangeAttackTarget.length;i++){
+					for(var i = 0, l = targetCharas.length;i<rangeLength && i < l;i++){
 						if(Math.random() > 0.5){
 							continue;
 						}
-						
-						var chara = LMvc.BattleController.view.charaLayer.getCharacterFromLocation(target.locationX()+range.x, target.locationY()+range.y);
-						
-						if(!chara || isSameBelong(chara.belong,self.chara.belong)){
+						var chara = targetCharas[i];
+						if(currentChara.seigniorId() == chara.seigniorId()){
 							continue;
 						}
-						hertParams.push(chara,calculateHertValue(self.chara, chara, 1));
+						hertParams.push(chara,calculateHertValue(currentChara, chara, 1));
 					}
 				}
-				self.herts.push(hertParams);
+				currentChara.herts.push(hertParams);
+			}
+			hertParams = currentChara.herts[0];
+			if(skill && skill.isSubType(SkillSubType.ENEMY_AID)){
+				var aids = skill.aids();
+				var aidCount = skill.aidCount();
+				var hertParamObj = hertParams.list.find(function(child){
+					return child.chara.id() == targetChara.id();
+				});
+				if(hertParamObj){
+					hertParamObj.aids = Array.getRandomArrays(aids,aidCount);
+				}
+			}
+			var groupSkill = battleCanGroupSkill(currentChara, targetChara);
+			if(groupSkill){
+				currentChara.herts[0].value = currentChara.herts[0].value * groupSkill.correctionFactor() >>> 0;
 			}
 		}
 	}
 	var angry = calculateFatalAtt(currentChara, targetChara);
+}
+BattleAIExecute.prototype.battleCanGroupSkill = function(chara, targerChara){
+	var groupSkill = chara.data.groupSkill();
+	if(!groupSkill){
+		return null;
+	}
+	var group = groupSkill.group();
+	var selfCharas = self.getTargetCharacters(targerChara);
+	for(var i=0;i<group.length;i++){
+		var charaId = group[i];
+		var chara = selfCharas.find(function(child){
+			return child.id() == charaId;
+		});
+		if(!chara){
+			return null;
+		}
+	}
+	return groupSkill;
 }
 BattleAIExecute.prototype.physicalBackAttack = function(currentChara, targetChara) {
 	var self = this;
