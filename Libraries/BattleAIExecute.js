@@ -32,10 +32,13 @@ BattleAIExecute.run=function(){
 			rand = Math.random();
 		}
 		if(rand < 0.5){
-			characterExec(attackCharacters[self.attackIndex++], self.attackData, self.targetData);
+			self.currentChara = attackCharacters[self.attackIndex++];
+			characterExec(self.currentChara, self.attackData, self.targetData);
 		}else{
-			characterExec(targetCharacters[self.targetIndex++], self.targetData, self.attackData);
+			self.currentChara = targetCharacters[self.targetIndex++];
+			characterExec(self.currentChara, self.targetData, self.attackData);
 		}
+		self.currentChara = null;
 	}
 	self.timer.reset();
 	self.timer.start();
@@ -47,6 +50,9 @@ BattleAIExecute.prototype._set=function(attackData, targetData){
 	self.timer.reset();
 	self.timer.start();
 };
+BattleAIExecute.prototype.getTargetCharacters=function(chara){
+	return this.attackData.expeditionCharacterList[0].seigniorId() == chara.seigniorId() ? this.targetData.expeditionCharacterList : this.attackData.expeditionCharacterList;
+};
 BattleAIExecute.prototype.characterExec=function(currentCharacter, currentData, enemyData){
 	var self = this;
 	var currentCharacters = currentData.expeditionCharacterList;
@@ -55,7 +61,7 @@ BattleAIExecute.prototype.characterExec=function(currentCharacter, currentData, 
 	//有虚弱敌军->攻击
 	if(enemyPants.length > 0 && Math.random() > 0.8){
 		var targetChara = enemyPants[enemyPants.length*Math.random() >>> 0];
-		self.attackExec(currentCharacter, targetChara);
+		self.attackExec(currentCharacter, targetChara, true);
 		return;
 	}
 	//有虚弱友军->回复
@@ -67,20 +73,7 @@ BattleAIExecute.prototype.characterExec=function(currentCharacter, currentData, 
 		}
 	}
 	//有异常状态友军->觉醒
-	var strategys = [];
-	for(var i = 0,l = currentCharacters.length;i<l;i++){
-		var child = currentCharacters[i];
-		if(!child.status.needWake()){
-			continue;
-		}
-		node = self.getNestNode(child);
-		strategy = self.getCanUseStrategy(currentCharacter, child,StrategyEffectType.Wake,node);
-		if(strategy){
-			strategys.push({target:child,strategy:strategy});
-		}
-	}
-	if(strategys > 0){
-		var obj = strategys[(strategys.length * Math.random()) >>> 0];
+	if(self.toWake(currentCharacter,currentCharacters)){
 		return;
 	}
 	//加状态
@@ -93,28 +86,64 @@ BattleAIExecute.prototype.characterExec=function(currentCharacter, currentData, 
 	}
 	//攻击
 	var targetChara = enemyCharacters[enemyCharacters.length*Math.random() >>> 0];
-	self.attackExec(currentCharacter, targetChara);
+	self.attackExec(currentCharacter, targetChara, false);
 };
-BattleAIExecute.prototype.toChangeStatus = function(){
+BattleAIExecute.prototype.toWake = function(currentCharacter,currentCharacters){
 	var self = this, hitrate;
-	var currentSelectStrategy = self.currentCharacter.currentSelectStrategy;
-	if(currentSelectStrategy.belong() == Belong.SELF && self.effectType == StrategyEffectType.Wake){
-		self.currentTargetCharacter.changeAction(CharacterAction.WAKE);
-		self.currentTargetCharacter.status.wake();
-		return;
+	var strategys = [];
+	for(var i = 0,l = currentCharacters.length;i<l;i++){
+		var child = currentCharacters[i];
+		if(!child.status.needWake()){
+			continue;
+		}
+		strategy = self.getCanUseStrategy(currentCharacter, child,StrategyEffectType.Wake);
+		if(strategy){
+			strategys.push({target:child,strategy:strategy});
+		}
 	}
-	var mapLayer = LMvc.BattleController.view.mapLayer;
-	if(mapLayer.isOnWakeRoad(self.currentTargetCharacter)){
-		hitrate = false;
-	}else{
-		hitrate = calculateHitrateStrategy(self.currentCharacter, self.currentTargetCharacter);
+	if(strategys == 0){
+		return false;
 	}
-	if(hitrate){
-		self.currentTargetCharacter.changeAction(CharacterAction.HERT);
-		self.currentTargetCharacter.status.addStatus(currentSelectStrategy.strategyType(), currentSelectStrategy.hert());
-	}else{
-		self.currentTargetCharacter.changeAction(CharacterAction.BLOCK);
+	var obj = strategys[(strategys.length * Math.random()) >>> 0];
+	obj.target.status.wake();
+	return true;
+};
+BattleAIExecute.prototype.useHertStrategy = function(chara, target, attack) {
+	var self = this;
+	if((chara.currentSoldiers().soldierType() == SoldierType.Physical) || (chara.currentSoldiers().soldierType() == SoldierType.Comprehensive && Math.random() < 0.5)){
+		return false;
 	}
+	var strategy, strategys = [];
+	strategy = self.getCanUseStrategy(chara,target,StrategyEffectType.Attack);
+	if(strategy){
+		strategys.push(strategy);
+	}
+	if(!strategy || !attack){
+		strategy = self.getCanUseStrategy(chara,target,StrategyEffectType.Status);
+		if(strategy){
+			strategys.push(strategy);
+		}
+	}
+	
+	if(strategys.length == 0){
+		return false;
+	}
+	var hitrate = calculateHitrateStrategy(chara, target);
+	if(!hitrate){
+		return true;
+	}
+	var strategy = strategys[(strategys.length * Math.random()) >>> 0];
+	var effectType = strategy.strategyType();
+	var target = obj.target;
+	if(effectType == StrategyEffectType.Attack){
+		var hertValue = calculateHertStrategyValue(chara, target, strategy);
+		chara.troops(chara.troops() - hertValue);
+	}else if(effectType == StrategyEffectType.Status){
+		target.status.addStatus(effectType, strategy.hert());
+	}
+	
+	chara.MP(chara.MP() - obj.strategy.cost());
+	return true;
 };
 BattleAIExecute.prototype.useAidStrategy = function(chara, charas, strategyEffectType, strategyFlag) {
 	var self = this;
@@ -132,7 +161,6 @@ BattleAIExecute.prototype.useAidStrategy = function(chara, charas, strategyEffec
 	if(strategys.length == 0){
 		return false;
 	}
-	//TODO::判断可以使用策略的优先级
 	var obj = strategys[(strategys.length * Math.random()) >>> 0];
 	var target = obj.target;
 	var currentSelectStrategy = obj.strategy;
@@ -146,11 +174,63 @@ BattleAIExecute.prototype.useAidStrategy = function(chara, charas, strategyEffec
 	}
 	return true;
 };
-BattleAIExecute.prototype.attackExec=function(currentCharacter, targetChara){
+BattleAIExecute.prototype.attackExec=function(currentCharacter, targetChara, atttack){
 	var self = this;
-	
-	
+	if(self.useHertStrategy(currentCharacter, targetChara, atttack)){
+		return;
+	}
+	self.physicalAttack(currentCharacter, targetChara);
 };
+BattleAIExecute.prototype.physicalAttack = function(currentChara, targetChara) {
+	var self = this;
+	if(currentChara.herts == null){
+		if(currentChara.id() == self.currentChara.id()){
+			var hertValues;
+			currentChara.herts = [];
+			var hertValue = calculateHertValue(currentChara, targetChara, 1);
+			var skill = currentChara.skill(SkillType.ATTACK);
+			if(skill && skill.isSubType(SkillSubType.ATTACK_COUNT)){
+				hertValues = skill.attacks();
+			}else{
+				var doubleAtt = calculateDoubleAtt(currentChara, targetChara);
+				hertValues = doubleAtt ? [1,1] : [1];
+			}
+			for(var j=0;j<hertValues.length;j++){
+				var hertParams = new HertParams();
+				var value = hertValue*hertValues[j]>>>0;
+				hertParams.push(targetChara, value > 1 ? value : 1);
+				if(skill && skill.isSubType(SkillSubType.ATTACK_RECT)){
+						rangeAttackTarget = skill.rects();
+					}else{
+						rangeAttackTarget = self.chara.data.currentSoldiers().rangeAttackTarget();
+				}
+				if(rangeAttackTarget.length > 0){
+					var targetCharas = self.getTargetCharacters(currentChara);
+					for(var i = 0;i<rangeAttackTarget.length;i++){
+						if(Math.random() > 0.5){
+							continue;
+						}
+						
+						var chara = LMvc.BattleController.view.charaLayer.getCharacterFromLocation(target.locationX()+range.x, target.locationY()+range.y);
+						
+						if(!chara || isSameBelong(chara.belong,self.chara.belong)){
+							continue;
+						}
+						hertParams.push(chara,calculateHertValue(self.chara, chara, 1));
+					}
+				}
+				self.herts.push(hertParams);
+			}
+		}
+	}
+	var angry = calculateFatalAtt(currentChara, targetChara);
+}
+BattleAIExecute.prototype.physicalBackAttack = function(currentChara, targetChara) {
+	var self = this;
+	var hertValue = calculateHertValue(currentChara, targetChara, 1);
+	var doubleAtt = calculateDoubleAtt(currentChara, targetChara);
+	var angry = calculateFatalAtt(currentChara, targetChara);
+}
 BattleAIExecute.prototype.healExec=function(currentCharacter, targetChara){
 	var self = this;
 	
