@@ -371,7 +371,7 @@ CharacterModel.prototype.maxProficiencySoldier = function() {
 	var proficiency = 0, soldier;
 	for(var i=0,l=soldiers.length;i<l;i++){
 		var child = soldiers[i];
-		if(proficiency < child.proficiency()){
+		if(i == 0 || proficiency < child.proficiency()){
 			proficiency = child.proficiency();
 			soldier = child;
 		}

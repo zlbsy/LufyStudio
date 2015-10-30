@@ -308,17 +308,18 @@ function jobAiSetCityBattleDistance(seigniorModel){
 		area.battleDistance = 100;
 		area.aiWillComeNum = 0;
 	});
-	for(var i=0,l=areas.length;i<l;i++){
-		var area = areas[i];
+	console.log("jobAiSetCityBattleDistance areas:"+areas.length);
+	for(var j=0,l=areas.length;j<l;j++){
+		var area = areas[j];
 		if(area.battleDistanceCheckOver){
 			continue;
 		}
-		var neighbors = areaModel.neighbor();
+		var neighbors = area.neighbor();
 		var enemyNear = 0;
 		var neighborCitys = [];
 		for(var i = 0;i < neighbors.length;i++){
 			var child = AreaModel.getArea(neighbors[i]);
-			if(child.seigniorCharaId() != areaModel.seigniorCharaId()){
+			if(child.seigniorCharaId() != area.seigniorCharaId()){
 				enemyNear += 1;
 			}else{
 				neighborCitys.push(child);
@@ -336,6 +337,8 @@ function jobAiSetCityBattleDistance(seigniorModel){
 			}
 		}
 	}
+	SeigniorExecute.Instance().timer.reset();
+	SeigniorExecute.Instance().timer.start();
 }
 function jobAiGeneralMove(areaModel,characters){//武将移动
 	if(characters.length == 0){
@@ -373,8 +376,9 @@ function jobAiGeneralMove(areaModel,characters){//武将移动
 	}
 	var targetCity = citys[citys.length * Math.random() >>> 0];
 	var generals = getPowerfulCharacters(characters);
+	var charaId = generals[0].general.id();
 	var index = characters.findIndex(function(child){
-		return child.id() == generals[0].id();
+		return child.id() == charaId;
 	});
 	var character = characters[index];
 	characters.splice(index, 1);
@@ -474,10 +478,13 @@ function jobAiCaptive(areaModel, seigniorId, charaModel){
 }
 function jobAiCaptivesRescue(areaModel,characters){//解救俘虏
 	if(characters.length == 0){
-		return;
+		return false;
 	}
 	SeigniorExecute.Instance().msgView.add("jobAiCaptivesRescue");
 	var captives = SeigniorModel.getCharactersIsCaptives(areaModel.seigniorCharaId());
+	if(captives.length == 0){
+		return false;
+	}
 	var captive = captives[captives.length * Math.random() >>> 0];
 	var character = characters.shift();
 	var money = (captive.force() + captive.intelligence() + captive.command() + captive.agility() + captive.luck()) * JobCoefficient.REDEEM;

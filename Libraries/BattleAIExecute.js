@@ -42,9 +42,9 @@ BattleAIExecute.run=function(){
 		self.currentChara = null;
 	}
 	if(attackCharacters.length==0){
-		
+		console.log("ok");return;
 	}else if(targetCharacters.length==0){
-		
+		console.log("ng");return;
 	}
 	self.timer.reset();
 	self.timer.start();
@@ -53,6 +53,7 @@ BattleAIExecute.prototype._set=function(attackData, targetData){
 	var self = this;
 	var expeditionCharacterList = [];
 	attackData.expeditionCharacterList.forEach(function(child){
+		child.calculation(true);
 		expeditionCharacterList.push({data:child,belong:Belong.SELF,status:new BattleCharacterStatusView(null,child)});
 	});
 	attackData._characterList = attackData.expeditionCharacterList;
@@ -60,6 +61,7 @@ BattleAIExecute.prototype._set=function(attackData, targetData){
 	self.attackData = attackData;
 	expeditionCharacterList = [];
 	targetData.expeditionCharacterList.forEach(function(child){
+		child.calculation(true);
 		expeditionCharacterList.push({data:child,belong:Belong.ENEMY,status:new BattleCharacterStatusView(null,child)});
 	});
 	targetData._characterList = targetData.expeditionCharacterList;

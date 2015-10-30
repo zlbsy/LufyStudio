@@ -47,11 +47,17 @@ SeigniorExecute.run=function(){
 	console.log("self.seigniorIndex="+self.seigniorIndex+"<"+SeigniorModel.list.length);
 	if(self.seigniorIndex < SeigniorModel.list.length){
 		var seigniorModel = SeigniorModel.list[self.seigniorIndex];
+		if(seigniorModel.chara_id() == 0){
+			console.error("null seignior");
+			self.seigniorIndex++;
+			SeigniorExecute.run();
+			return;
+		}
 		if(self.seigniors.indexOf(self.seigniorIndex) < 0){
 			self.seigniors.push(self.seigniorIndex);
 			self.msgView.add(seigniorModel.character().name() + "势力行动!");
 			if(seigniorModel.chara_id() != LMvc.selectSeignorId){
-				jobAiSetCityCharactersNeed(seigniorModel);
+				jobAiSetCityBattleDistance(seigniorModel);
 				return;
 			}
 		}
@@ -217,6 +223,7 @@ SeigniorExecute.prototype.jobNumberOfCharacter=function(characters){
 };
 SeigniorExecute.prototype.jobAiFunction=function(areaModel, characters, func,params,maxNum){
 	var self = this;
+	console.log("jobAiFunction "+func.name);
 	var length = self.jobNumberOfCharacter(characters);
 	if(maxNum && maxNum < length){
 		length = maxNum;
@@ -261,16 +268,20 @@ SeigniorExecute.prototype.areaAIRun=function(areaModel){
 		self.timer.start();
 		return;
 	}
+	LGlobal.sleep(50);console.log("判断是否有未执行任务人员");
 	//俘虏处理
 	jobAiCaptives(areaModel);
+	LGlobal.sleep(50);console.log("俘虏处理");
 	//是否需要征兵
 	var needEnlistFlag = jobAiNeedToEnlist(areaModel);
+	LGlobal.sleep(50);console.log("是否需要征兵");
 	//治安
 	var police = areaModel.police();
 	var toPolice = police < 70 || (police < 80 && Math.random() < 0.5) || (police < 90 && Math.random() < 0.3) || (police < 100 && Math.random() < 0.1);
 	if(toPolice){
 		self.jobAiFunction(areaModel,self.characters,jobAiPolice,["force","agility"]);//治安
 	}
+	LGlobal.sleep(50);console.log("治安");
 	var canEnlish = jobAiCanToEnlish(areaModel);
 	if(needEnlistFlag == AiEnlistFlag.Must || needEnlistFlag == AiEnlistFlag.Need){
 		if(canEnlish){
@@ -278,6 +289,7 @@ SeigniorExecute.prototype.areaAIRun=function(areaModel){
 			self.jobAiFunction(areaModel,self.characters,jobAiToEnlish,["luck","command"]);
 		}
 	}
+	LGlobal.sleep(50);console.log("招兵买马");
 	//修补
 	if(areaModel.cityDefense() < areaModel.cityMaxDefense() && !(
 		needEnlistFlag == AiEnlistFlag.Must || 
@@ -287,20 +299,27 @@ SeigniorExecute.prototype.areaAIRun=function(areaModel){
 		) && Math.random() > 0.5){
 		self.jobAiFunction(areaModel,self.characters,jobAiRepair,["force","command"]);//修补
 	}
+	LGlobal.sleep(50);console.log("修补");
 	//判断是否有可攻击的城池
 	var city = getCanBattleCity(areaModel, self.characters, needEnlistFlag);
+	LGlobal.sleep(50);console.log("判断是否有可攻击的城池");
 	if(city){
 		jobAiToBattle(areaModel, self.characters, city);
+		LGlobal.sleep(50);console.log("jobAiToBattle");
 		return;
 	}
-	//外交
-	self.jobAiFunction(areaModel,self.characters,jobAiDiplomacy);
+	//TODO::外交
+	//self.jobAiFunction(areaModel,self.characters,jobAiDiplomacy);
+	//LGlobal.sleep(50);console.log("外交");
 	//武将移动
 	jobAiGeneralMove(areaModel,self.characters);
+	LGlobal.sleep(50);console.log("武将移动");
 	//输送物资
 	jobAiTransport(areaModel,self.characters);
+	LGlobal.sleep(50);console.log("输送物资");
 	//解救俘虏
 	if(self.jobAiFunction(areaModel,self.characters,jobAiCaptivesRescue,["intelligence","luck"],1)){
+		LGlobal.sleep(50);console.log("解救俘虏");
 		return;
 	}
 	//酒馆
@@ -324,6 +343,7 @@ SeigniorExecute.prototype.areaAIRun=function(areaModel){
 			self.jobAiFunction(areaModel,self.characters,jobAiAccess,["intelligence","command","luck"]);//访问
 		}
 	}
+	LGlobal.sleep(50);console.log("酒馆");
 	
 	var toInterior = 
 	needEnlistFlag == AiEnlistFlag.Must || 
@@ -336,6 +356,7 @@ SeigniorExecute.prototype.areaAIRun=function(areaModel){
 	(
 		needEnlistFlag == AiEnlistFlag.Free && Math.random() > 0.5
 	);
+	LGlobal.sleep(50);console.log("toInterior:"+toInterior);
 	if(toInterior){
 		//太学院
 		self.jobAiFunction(areaModel,self.characters,jobAiInstitute,["intelligence","command"]);
@@ -354,6 +375,7 @@ SeigniorExecute.prototype.areaAIRun=function(areaModel){
 	}
 	//如果有剩余无法分配工作的人员(金钱不够等),则直接跳过
 	self.areaAIIndex++;
+	LGlobal.sleep(50);console.log("self.areaAIIndex:"+self.areaAIIndex);
 	self.timer.reset();
 	self.timer.start();
 };

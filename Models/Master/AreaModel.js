@@ -347,6 +347,10 @@ AreaModel.prototype.cityDefenseLabel=function(){
 AreaModel.prototype.cityDefense=function(value){
 	return this._plusData("city_defense",value);
 };
+//TODO::
+AreaModel.prototype.cityMaxDefense=function(value){
+	return this._plusData("city_defense",value);
+};
 AreaModel.prototype.outOfOfficeSum=function(){
 	return this.data.out_of_offices.length;
 };
