@@ -12,7 +12,7 @@ BattleAIExecute.Instance = function(){
 	return BattleAIExecute._Instance;
 };
 BattleAIExecute.set = function(attackData, targetData){
-	BattleAIExecute.Instance()._set();
+	BattleAIExecute.Instance()._set(attackData, targetData);
 };
 BattleAIExecute.run=function(){
 	var self = BattleAIExecute.Instance();
@@ -41,18 +41,45 @@ BattleAIExecute.run=function(){
 		self.currentChara.herts = null;
 		self.currentChara = null;
 	}
+	if(attackCharacters.length==0){
+		
+	}else if(targetCharacters.length==0){
+		
+	}
 	self.timer.reset();
 	self.timer.start();
 };
 BattleAIExecute.prototype._set=function(attackData, targetData){
 	var self = this;
+	var expeditionCharacterList = [];
+	attackData.expeditionCharacterList.forEach(function(child){
+		expeditionCharacterList.push({data:child,belong:Belong.SELF,status:new BattleCharacterStatusView(null,child)});
+	});
+	attackData._characterList = attackData.expeditionCharacterList;
+	attackData.expeditionCharacterList = expeditionCharacterList;
 	self.attackData = attackData;
+	expeditionCharacterList = [];
+	targetData.expeditionCharacterList.forEach(function(child){
+		expeditionCharacterList.push({data:child,belong:Belong.ENEMY,status:new BattleCharacterStatusView(null,child)});
+	});
+	targetData._characterList = targetData.expeditionCharacterList;
+	targetData.expeditionCharacterList = expeditionCharacterList;
 	self.targetData = targetData;
 	self.timer.reset();
 	self.timer.start();
 };
 BattleAIExecute.prototype.getTargetCharacters=function(chara){
 	return this.attackData.expeditionCharacterList[0].seigniorId() == chara.seigniorId() ? this.targetData.expeditionCharacterList : this.attackData.expeditionCharacterList;
+};
+BattleAIExecute.prototype.removeChara = function(chara){
+	var self = this;
+	var charaList = self.attackData.expeditionCharacterList[0].seigniorId() == chara.seigniorId() ? self.attackData.expeditionCharacterList : self.targetData.expeditionCharacterList;
+	for(var i=0,l=charaList.length;i<l;i++){
+		if(charaList[i].id() == chara.id()){
+			charaList.splice(i, 1);
+			break;
+		}
+	}
 };
 BattleAIExecute.prototype.characterExec=function(currentCharacter, currentData, enemyData){
 	var self = this;
@@ -111,7 +138,7 @@ BattleAIExecute.prototype.toWake = function(currentCharacter,currentCharacters){
 };
 BattleAIExecute.prototype.useHertStrategy = function(chara, target, attack) {
 	var self = this;
-	if((chara.currentSoldiers().soldierType() == SoldierType.Physical) || (chara.currentSoldiers().soldierType() == SoldierType.Comprehensive && Math.random() < 0.5)){
+	if((chara.data.currentSoldiers().soldierType() == SoldierType.Physical) || (chara.data.currentSoldiers().soldierType() == SoldierType.Comprehensive && Math.random() < 0.5)){
 		return false;
 	}
 	var strategy, strategys = [];
@@ -136,14 +163,16 @@ BattleAIExecute.prototype.useHertStrategy = function(chara, target, attack) {
 	var strategy = strategys[(strategys.length * Math.random()) >>> 0];
 	var effectType = strategy.strategyType();
 	var target = obj.target;
+	chara.data.MP(chara.data.MP() - obj.strategy.cost());
 	if(effectType == StrategyEffectType.Attack){
 		var hertValue = calculateHertStrategyValue(chara, target, strategy);
-		chara.troops(chara.troops() - hertValue);
+		chara.data.troops(chara.data.troops() - hertValue);
+		if(chara.data.troops() == 0){
+			self.removeChara(chara);
+		}
 	}else if(effectType == StrategyEffectType.Status){
 		target.status.addStatus(effectType, strategy.hert());
 	}
-	
-	chara.MP(chara.MP() - obj.strategy.cost());
 	return true;
 };
 BattleAIExecute.prototype.useAidStrategy = function(chara, charas, strategyEffectType, strategyFlag) {
@@ -184,6 +213,7 @@ BattleAIExecute.prototype.attackExec=function(currentCharacter, targetChara, att
 };
 BattleAIExecute.prototype.physicalAttack = function(currentChara, targetChara) {
 	var self = this;
+	var groupSkill;
 	if(currentChara.herts == null){
 		if(currentChara.id() == self.currentChara.id()){
 			var hertValues;
@@ -213,7 +243,7 @@ BattleAIExecute.prototype.physicalAttack = function(currentChara, targetChara) {
 							continue;
 						}
 						var chara = targetCharas[i];
-						if(currentChara.seigniorId() == chara.seigniorId()){
+						if(targetChara.data.id() == chara.data.id() || currentChara.data.seigniorId() == chara.data.seigniorId()){
 							continue;
 						}
 						hertParams.push(chara,calculateHertValue(currentChara, chara, 1));
@@ -226,20 +256,97 @@ BattleAIExecute.prototype.physicalAttack = function(currentChara, targetChara) {
 				var aids = skill.aids();
 				var aidCount = skill.aidCount();
 				var hertParamObj = hertParams.list.find(function(child){
-					return child.chara.id() == targetChara.id();
+					return child.chara.data.id() == targetChara.data.id();
 				});
 				if(hertParamObj){
 					hertParamObj.aids = Array.getRandomArrays(aids,aidCount);
 				}
 			}
-			var groupSkill = battleCanGroupSkill(currentChara, targetChara);
+			groupSkill = self.battleCanGroupSkill(currentChara, targetChara);
 			if(groupSkill){
 				currentChara.herts[0].value = currentChara.herts[0].value * groupSkill.correctionFactor() >>> 0;
 			}
+		}else{
+			var hertParams = new HertParams();
+			rangeAttackTarget = self.chara.data.currentSoldiers().rangeAttackTarget();
+			hertParams.push(target,calculateHertValue(self.chara, target, 0.75));
+			var rangeLength = (rangeAttackTarget.length / 4) >>> 0;
+			if(rangeLength){
+				var targetCharas = self.getTargetCharacters(currentChara);
+				for(var i = 0, l = targetCharas.length;i<rangeLength && i < l;i++){
+					if(Math.random() > 0.5){
+						continue;
+					}
+					var chara = targetCharas[i];
+					if(targetChara.data.id() == chara.data.id() || currentChara.data.seigniorId() == chara.data.seigniorId()){
+						continue;
+					}
+					hertParams.push(chara,calculateHertValue(self.chara, chara, 0.75));
+				}
+			}
+			currentChara.herts = [hertParams];
 		}
 	}
-	var angry = calculateFatalAtt(currentChara, targetChara);
+	if(!groupSkill && calculateFatalAtt(currentChara, targetChara)){
+		currentChara.herts[0].value = currentChara.herts[0].value * 1.25 >>> 0;
+	}
+	
 }
+BattleAIExecute.prototype.physicalAttackStart = function(currentChara, targetChara){
+	var self = this;
+	var selfSkill = currentChara.skill(SkillType.ATTACK_END);
+	if(selfSkill && selfSkill.isSubType(SkillSubType.SELF_AID)){
+		var aids = Array.getRandomArrays(selfSkill.aids(),selfSkill.aidCount());
+		for(var j = 0;aids && j<aids.length;j++){
+			var strategy = StrategyMasterModel.getMaster(aids[j]);
+			currentChara.status.addStatus(strategy.strategyType(), strategy.hert());
+		}	
+	}
+	var hertParams = currentChara.herts[0];
+	currentChara.herts.shift();
+	for(var i = 0,l = hertParams.list.length;i<l;i++){
+		var obj = hertParams.list[i];
+		var hitrate = calculateHitrate(currentChara,obj.chara);
+		if(hitrate){
+			
+			continue;
+		}
+		skill = obj.chara.data.skill(SkillType.HERT);
+		if(skill && skill.isSubType(SkillSubType.HERT_MINUS)){
+			obj.hertValue *= skill.hert();
+		}
+		obj.chara.hertValue = obj.hertValue > obj.chara.data.troops() ? obj.chara.data.troops() : obj.hertValue;
+		obj.chara.data.troops(-obj.chara.hertValue);
+		if(obj.chara.data.troops() == 0){
+			self.removeChara(obj.chara);
+			continue;
+		}
+		if(!obj.aids || obj.aids.length == 0){
+			continue;
+		}
+		for(var j = 0;j<obj.aids.length;j++){
+			var strategy = StrategyMasterModel.getMaster(obj.aids[j]);
+			if(!strategy.canChangeStatus()){
+				continue;
+			}
+			obj.chara.status.addStatus(strategy.strategyType(), strategy.hert());
+		}
+	}
+	self.counterAttack(currentChara, targetChara);
+};
+BattleAIExecute.prototype.counterAttack = function(currentChara, targetChara) {
+	var self = this;
+	if(currentChara.herts && currentChara.herts.length > 0){
+		self.physicalAttack(currentChara, targetChara);
+		return;
+	}
+	if(currentChara.data.id() == self.currentChara.data.id()){
+		if(currentChara.data.troops() > 0){
+			self.physicalAttack(targetChara, currentChara);
+			return;
+		}
+	}
+};
 BattleAIExecute.prototype.battleCanGroupSkill = function(chara, targerChara){
 	var groupSkill = chara.data.groupSkill();
 	if(!groupSkill){
@@ -258,16 +365,28 @@ BattleAIExecute.prototype.battleCanGroupSkill = function(chara, targerChara){
 	}
 	return groupSkill;
 }
-BattleAIExecute.prototype.physicalBackAttack = function(currentChara, targetChara) {
-	var self = this;
-	var hertValue = calculateHertValue(currentChara, targetChara, 1);
-	var doubleAtt = calculateDoubleAtt(currentChara, targetChara);
-	var angry = calculateFatalAtt(currentChara, targetChara);
-}
 BattleAIExecute.prototype.healExec=function(currentCharacter, targetChara){
 	var self = this;
-	
-	
+	var strategy = self.getCanUseStrategy(currentCharacter,targetChara,StrategyEffectType.Supply);
+	if(!strategy){
+		return false;
+	}
+	var troopsAdd = strategy.troops();
+	var woundedAdd = strategy.wounded();
+	var wounded = targetChara.data.wounded();
+	if(woundedAdd > wounded){
+		woundedAdd = wounded;
+	}
+	if(woundedAdd > 0){
+		targetChara.data.wounded(wounded - woundedAdd);
+		troopsAdd += woundedAdd;
+	}
+	var troops = targetChara.data.troops();
+	var maxTroops = targetChara.data.maxTroops();
+	var troopsValue = troops + troopsAdd > maxTroops ? maxTroops : troops + troopsAdd;
+	targetChara.data.troops(troopsValue);
+	currentCharacter.data.MP(currentCharacter.data.MP() - strategy.cost());
+	return true;
 };
 BattleAIExecute.prototype.getPantCharacter=function(charas){
 	var pantList = [];
