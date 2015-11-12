@@ -217,7 +217,7 @@ BattleResultView.prototype.surrender=function(seigniorId, charaModel){
 	var city = self.controller.battleData.toCity;
 	charaModel.moveTo(city.id());
 	charaModel.moveTo();
-	charaModel.seignior(seigniorId);
+	charaModel.seigniorId(seigniorId);
 };
 BattleResultView.prototype.behead=function(charaModel){
 	var self = this,city;

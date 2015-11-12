@@ -20,6 +20,15 @@ BattleAIExecute.run=function(){
 	self.targetIndex = 0;
 	var attackCharacters = self.attackData.expeditionCharacterList;
 	var targetCharacters = self.targetData.expeditionCharacterList;
+	if(attackCharacters.length==0){
+		self.result(false);
+		SeigniorExecute.run();
+		return;
+	}else if(targetCharacters.length==0){
+		self.result(true);
+		SeigniorExecute.run();
+		return;
+	}
 	self.battleFoodCheck(attackCharacters, true, self.attackData);
 	self.battleFoodCheck(targetCharacters, false, self.attackData);
 	while(self.attackIndex < attackCharacters.length || self.targetIndex < targetCharacters.length){
@@ -41,13 +50,21 @@ BattleAIExecute.run=function(){
 		self.currentChara.herts = null;
 		self.currentChara = null;
 	}
-	if(attackCharacters.length==0){
-		console.log("ok");return;
-	}else if(targetCharacters.length==0){
-		console.log("ng");return;
-	}
 	self.timer.reset();
 	self.timer.start();
+};
+BattleAIExecute.prototype.result=function(isWin){
+	var self = this;
+	console.log("result isWin:"+isWin);
+	if(isWin){
+		SeigniorExecute.Instance().msgView.add(String.format("{0}攻占了{2}的{3}!",self.attackData.fromCity.seiginor().character().name(),self.attackData.toCity.seiginor().character().name(),self.attackData.toCity.name()));
+		self.attackData.toCity.food(self.attackData.food);
+		self.attackData.toCity.money(self.attackData.money);
+		self.attackData.toCity.troops(self.attackData.toCity.troops() + self.attackData.troops);
+	}else{
+		SeigniorExecute.Instance().msgView.add(String.format("{0}战败了!",self.attackData.fromCity.seiginor().character().name()));
+		
+	}
 };
 BattleAIExecute.prototype._set=function(attackData, targetData){
 	var self = this;
