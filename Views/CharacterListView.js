@@ -44,13 +44,13 @@ CharacterListView.prototype.listInit=function(){
 	self.listLayer.addChild(title);
 	
 	self.getCutoverButton(self.controller.characterListType == CharacterListType.EXPEDITION ? CharacterListView.CUTOVER_ARM : CharacterListView.CUTOVER_BASIC);
-	
-	var bitmapClose = new LBitmap(new LBitmapData(LMvc.datalist["close"]));
-	var buttonClose = new LButton(bitmapClose);
-	buttonClose.x = LGlobal.width - bitmapClose.getWidth() - 5;
-	self.listLayer.addChild(buttonClose);
-	buttonClose.addEventListener(LMouseEvent.MOUSE_UP, self.onClickCloseButton.bind(self));
-	
+	if(!SeigniorExecute.running || self.controller.characterListType != CharacterListType.EXPEDITION){
+		var bitmapClose = new LBitmap(new LBitmapData(LMvc.datalist["close"]));
+		var buttonClose = new LButton(bitmapClose);
+		buttonClose.x = LGlobal.width - bitmapClose.getWidth() - 5;
+		self.listLayer.addChild(buttonClose);
+		buttonClose.addEventListener(LMouseEvent.MOUSE_UP, self.onClickCloseButton.bind(self));
+	}
 	self.tabMenuLayer = new LSprite();
 	self.tabMenuLayer.y = 60;
 	self.listLayer.addChild(self.tabMenuLayer);
@@ -80,8 +80,9 @@ CharacterListView.prototype.listInit=function(){
 			Toast.makeText(Language.get("dialog_expedition_select_leader")).show();
 			break;
 		case CharacterListType.CAPTIVE:
-			self.dataList = self.controller.characterList;
 			buttonLabel = "redeem";
+		case CharacterListType.BATTLE_CHARACTER_LIST:
+			self.dataList = self.controller.characterList;
 			break;
 		case CharacterListType.STOP_BATTLE:
 			self.dataList = self.controller.characterList;
@@ -110,8 +111,11 @@ CharacterListView.prototype.listInit=function(){
 			}
 			break;
 	}
+	console.log("listInit datalist="+self.dataList);
+	console.log("listInit buttonLabel="+buttonLabel);
 	if(buttonLabel){
 		var button = getButton(Language.get(buttonLabel),200);
+		self.executeButton = button;
 		button.x = (LGlobal.width - 200) * 0.5;
 		button.y = LGlobal.height - button.getHeight() - 15;
 		self.addChild(button);
@@ -317,14 +321,18 @@ CharacterListView.prototype.setArmTab=function(){
 };
 CharacterListView.prototype.showList=function(){
 	var self = this;
+	console.log("showList run");
 	var listHeight = LGlobal.height - self.contentLayer.y;
 	var minusHeight = 0;
 	switch(self.controller.characterListType){
 		case CharacterListType.CHARACTER_LIST:
+		case CharacterListType.BATTLE_CHARACTER_LIST:
 			break;
 		case CharacterListType.CHARACTER_MOVE:
 		case CharacterListType.ENLIST:
 		case CharacterListType.TRAINING:
+		case CharacterListType.EXPEDITION:
+		case CharacterListType.SELECT_LEADER:
 			minusHeight = 70;
 			break;
 		default:
@@ -348,12 +356,14 @@ CharacterListView.prototype.showList=function(){
 		}
 		scHeight = childLayer.y + childLayer.getHeight();
 	}
+	console.log("showList self.dataList loop ove ");
 	self.listChildLayer.graphics.drawRect(0, "#000000", [0, 0, LGlobal.width - 30, scHeight]);
 	var sc = new LScrollbar(self.listChildLayer, LGlobal.width - 20, listHeight - 30, 10, false);
 	//sc._showLayer.graphics.clear();
 	sc.y = 15;
 	self.contentLayer.addChild(sc);
 	sc.excluding = true;
+	console.log("showList  ove ");
 	self.listChildLayer.addEventListener(LMouseEvent.MOUSE_DOWN, self.characterClickDown);
 	self.listChildLayer.addEventListener(LMouseEvent.MOUSE_UP, self.characterClickUp.bind(self));
 };
@@ -375,7 +385,7 @@ CharacterListView.prototype.characterClickUp = function(event) {
 		Math.abs(chara.offsetX - event.offsetX) < 5 && 
 		Math.abs(chara.offsetY - event.offsetY) < 5 &&
 		chara.hitTestPoint(event.offsetX, event.offsetY)) {
-		self.showCharacterDetailed(chara.charaModel);
+		self.showCharacterDetailed(chara.character?chara.character:chara.charaModel);
 	}
 };
 CharacterListView.prototype.showCharacterDetailed=function(param){
@@ -384,6 +394,9 @@ CharacterListView.prototype.showCharacterDetailed=function(param){
 	self.charaDetailedLayer.addChild(characterDetailed);
 	if(!self.listChildLayer){
 		return;
+	}
+	if(self.executeButton){
+		self.executeButton.visible = false;
 	}
 	self.listChildLayer.visible = false;
 };
@@ -394,6 +407,9 @@ CharacterListView.prototype.showCharacterList=function(){
 		case CharacterListType.BATTLE_SINGLE:
 		self.remove();
 		return;
+	}
+	if(self.executeButton){
+		self.executeButton.visible = true;
 	}
 	self.listChildLayer.visible = true;
 };

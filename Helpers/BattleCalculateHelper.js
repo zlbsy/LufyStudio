@@ -266,3 +266,23 @@ function calculateHertValue(attChara,hertChara,correctionFactor){
 	r = r >>> 0;
 	return r;
 }
+/*****************************************************************
+ 劫营特技的伤害加成值计算
+ **************************************************************/
+function calculateSkillSurpriseAmend(chara, target, attacks){
+	console.log("calculateSkillSurpriseAmend");
+	if(chara.locationX() != target.locationX() && chara.locationY() != target.locationY()){
+		return 1;
+	}
+	if(chara.direction == target.direction){
+		return attacks[0];
+	}
+	var no = (chara.direction == CharacterDirection.DOWN && chara.direction == CharacterDirection.UP) ||
+		(chara.direction == CharacterDirection.UP && chara.direction == CharacterDirection.DOWN) ||
+		(chara.direction == CharacterDirection.LEFT && chara.direction == CharacterDirection.RIGHT) ||
+		(chara.direction == CharacterDirection.RIGHT && chara.direction == CharacterDirection.LEFT);
+	if(no){
+		return 1;
+	}
+	return attacks[1];
+}

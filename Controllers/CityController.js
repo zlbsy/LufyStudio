@@ -1,4 +1,5 @@
-function CityController(){
+function CityController(initFunc){
+	this.initFunc = initFunc;
 	base(this,OpenCharacterListController,[]);
 }
 CityController.prototype.construct=function(){
@@ -42,6 +43,9 @@ CityController.prototype.init=function(){
 	LMvc.MapController.view.visible = false;
 	self.dispatchEvent(LEvent.COMPLETE);
 	self.dispatchEvent(LController.NOTIFY);
+	if(self.initFunc){
+		self.initFunc();
+	}
 };
 CityController.prototype.gotoMap=function(){
 	var self = this;
@@ -75,7 +79,12 @@ CityController.prototype.battleLoadComplete=function(){
 	var self = this;
 	var battleData = self.getValue("battleData");
 	battleData.fromCity = self.getValue("cityData");
-	battleData.toCity = AreaModel.getArea(self.getValue("toCityId"));
+	var toCity = self.getValue("toCity")
+	battleData.toCity = toCity?toCity:AreaModel.getArea(self.getValue("toCityId"));
+	battleData.expeditionEnemyData = self.getValue("expeditionEnemyData");
 	var battle = new BattleController(battleData, self);
+	console.log("cityData="+self.getValue("cityData"));
+	console.log("toCityId="+self.getValue("toCityId"));
+	console.log("expeditionEnemyData="+self.getValue("expeditionEnemyData"));
 	LMvc.stageLayer.addChild(battle);
 };

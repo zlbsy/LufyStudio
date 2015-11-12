@@ -74,13 +74,13 @@ BattleMainMenuView.prototype.setMenu=function(){
 	var menuButton = getButton("战况",menuWidth);
 	menuButton.y = menuY;
 	layer.addChild(menuButton);
-	//menuButton.addEventListener(LMouseEvent.MOUSE_UP, self.clickMagicSelect);
+	menuButton.addEventListener(LMouseEvent.MOUSE_UP, self.clickBattleField);
 	
 	menuY += menuHeight;
 	var menuButton = getButton("武将一览",menuWidth);
 	menuButton.y = menuY;
 	layer.addChild(menuButton);
-	//menuButton.addEventListener(LMouseEvent.MOUSE_UP, self.clickSingleCombat);
+	menuButton.addEventListener(LMouseEvent.MOUSE_UP, self.clickCharacterList);
 	
 	menuY += menuHeight;
 	var menuButton = getButton(Language.get("回合结束"),menuWidth);
@@ -115,4 +115,16 @@ BattleMainMenuView.prototype.boutEnd=function(event){
 	var self = event.currentTarget.parent.parent.parent;
 	self.controller.boutEnd();
 	self.menuLayer.visible = false;
+};
+BattleMainMenuView.prototype.clickCharacterList=function(event){
+	var self = event.currentTarget.parent.parent.parent;
+	self.menuLayer.visible = false;
+	var selfCharas = self.controller.view.charaLayer.getCharactersFromBelong(Belong.SELF);
+	var enemyCharas = self.controller.view.charaLayer.getCharactersFromBelong(Belong.ENEMY);
+	self.controller.loadCharacterList(CharacterListType.BATTLE_CHARACTER_LIST,selfCharas.concat(enemyCharas));
+};
+BattleMainMenuView.prototype.clickBattleField=function(event){
+	var self = event.currentTarget.parent.parent.parent;
+	self.menuLayer.visible = false;
+	self.controller.view.showBattleField();
 };

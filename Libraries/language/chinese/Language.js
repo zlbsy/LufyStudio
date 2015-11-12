@@ -28,8 +28,8 @@ Language.getDieTalk = function(key){
 Language.getUnderArrestTalk = function(key){
 	return Language.underArrestTalkData[key] || key;
 };
-Language.getSkillName = function(key){
-	return Language.skillNameData[key] || key;
+Language.getSkill = function(key){
+	return Language.skillData[key] || key;
 };
 Language.groupSkillTalk = function(){
 	var index = Math.random() * Language.groupSkillTalkData.length >>> 0;
@@ -87,7 +87,7 @@ Language.data = {
 	
 	"strategy_weather_error":"无法在此天气使用!",
 	"ctrl_Chaos_error":"混乱中!",
-	
+	"stunt":"特技",
 	"menu":"菜单",
 	"operating_end":"操作结束",
 	"game_save":"保存进度",
@@ -224,12 +224,6 @@ Language.data = {
 	
 	"city_title":"{0}年{1}月  {2}  ({3})",
 	
-	"skill_name_1":"雷霆怒击",
-	"skill_name_2":"万众一心",
-	"skill_name_3":"隔山打牛",
-	"skill_name_4":"天下无双",
-	"skill_name_5":"愈战愈勇",
-	"skill_name_9":"嗜血",
 	
 	"null":"无",
 	"single_combat_ask":"敌将{0}敢与我大战三百回合吗？",
@@ -388,8 +382,26 @@ Language.underArrestTalkData = {
 	"under_arrest_talk_0_1":"哎呀！放开我!",
 	"under_arrest_talk_0_2":"糟糕了!"
 };
-Language.skillNameData = {
-	"group_1":"桃园情谊!"
+Language.skillData = {
+	"group_1":"桃园情谊!",
+	
+	"skill_name_1":"雷霆怒击",
+	"skill_explanation_1":"连续攻击三次。",
+	"skill_name_2":"真龙之气",
+	"skill_explanation_2":"将受到的伤害减少为0。",
+	"skill_name_3":"隔山打牛",
+	"skill_explanation_3":"使攻击波及到目标敌人相邻的敌军。",
+	"skill_name_4":"天下无双",
+	"skill_explanation_4":"重击敌军两次，并且使得目标敌人相邻的敌军防御力降低。",
+	"skill_name_5":"愈战愈勇",
+	"skill_explanation_5":"在攻击结束时提升自身攻击力。",
+	"skill_name_6":"愈战愈坚",
+	"skill_explanation_6":"在攻击结束时提升自身防御力。",
+	"skill_name_7":"鼓舞",
+	"skill_explanation_7":"在回合开始时提升自身以及周围友军的士气。",
+	"skill_name_9":"嗜血",
+	"skill_name_31":"劫营",
+	"skill_explanation_31":"从敌人背后或侧面攻击时攻击有加成，不包括斜角攻击。",
 };
 Language.groupSkillTalkData = [
 	"痛快，一起上!",

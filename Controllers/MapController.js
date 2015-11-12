@@ -68,15 +68,17 @@ MapController.prototype.returnToChapter=function(event){
 	LMvc.changeLoading(Loading);
 	LMvc.keepLoading(false);
 };
-MapController.prototype.showCity=function(cityId){
+MapController.prototype.showCity=function(cityId, initFunc){
 	var self = this;
 	LMvc.cityId = cityId;
+	self.initFunc = initFunc;
 	LMvc.keepLoading(true);
 	self.loadMvc("City",self.cityLoadComplete);
 };
 MapController.prototype.cityLoadComplete=function(){
 	var self = this;
-	var city = new CityController();
+	var city = new CityController(self.initFunc);
+	self.initFunc = null;
 	self.view.parent.addChild(city.view);
 };
 MapController.prototype.returnToCity=function(cityId){

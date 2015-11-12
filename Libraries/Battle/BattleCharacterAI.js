@@ -68,6 +68,7 @@ BattleCharacterAI.prototype.physicalAttack = function(target) {
 				var doubleAtt = calculateDoubleAtt(self.chara, target);
 				hertValues = doubleAtt ? [1,1] : [1];
 			}
+			console.log("hertValues.length="+hertValues.length);
 			for(var j=0;j<hertValues.length;j++){
 				var hertParams = new HertParams();
 				var value = hertValue*hertValues[j]>>>0;
@@ -77,13 +78,13 @@ BattleCharacterAI.prototype.physicalAttack = function(target) {
 				}else{
 					rangeAttackTarget = self.chara.data.currentSoldiers().rangeAttackTarget();
 				}
+				console.log(j+"rangeAttackTarget.length="+rangeAttackTarget.length);
 				for(var i = 0;i<rangeAttackTarget.length;i++){
 					var range = rangeAttackTarget[i];
 					if(range.x == 0 && range.y == 0){
 						continue;
 					}
 					var chara = LMvc.BattleController.view.charaLayer.getCharacterFromLocation(target.locationX()+range.x, target.locationY()+range.y);
-					
 					if(!chara || isSameBelong(chara.belong,self.chara.belong)){
 						continue;
 					}
@@ -92,6 +93,7 @@ BattleCharacterAI.prototype.physicalAttack = function(target) {
 				self.herts.push(hertParams);
 			}
 			hertParams = self.herts[0];
+			
 			if(skill && skill.isSubType(SkillSubType.ENEMY_AID)){
 				var aids = skill.aids();
 				var aidCount = skill.aidCount();
@@ -114,10 +116,19 @@ BattleCharacterAI.prototype.physicalAttack = function(target) {
 					}
 				}
 			}
+			console.log("battleCanGroupSkill");
 			var groupSkill = battleCanGroupSkill(self.chara, target);
 			if(groupSkill){
 				self.chara.groupSkill = groupSkill;
+				var hertParamObj = 
 				self.herts[0].value = self.herts[0].value * groupSkill.correctionFactor() >>> 0;
+			}
+			if(skill && skill.isSubType(SkillSubType.SURPRISE)){
+				var amendValue = calculateSkillSurpriseAmend(self.chara, target, skill.attacks());
+				console.log("amendValue="+amendValue);
+				if(amendValue > 1){
+					hertParams.list[0].hertValue = hertParams.list[0].hertValue*amendValue>>>0;
+				}
 			}
 		}else{
 			var hertParams = new HertParams();
@@ -140,7 +151,9 @@ BattleCharacterAI.prototype.physicalAttack = function(target) {
 	}
 	if(!self.chara.groupSkill && calculateFatalAtt(self.chara, target)){
 		self.chara.isAngry = true;
-		self.herts[0].value = self.herts[0].value * 1.25 >>> 0;
+		//self.herts[0].value = self.herts[0].value * 1.25 >>> 0;
+		var hertParams = self.herts[0];
+		hertParams.list[0].hertValue = hertParams.list[0].hertValue*1.25 >>> 0;
 	}
 	self.chara.changeDirection(direction);
 	if(skill){
@@ -211,9 +224,10 @@ BattleCharacterAI.prototype.attackActionComplete = function(event) {
 					obj.remove();
 				}});
 				obj.hertValue *= skill.hert();
+				obj.hertValue = obj.hertValue >>> 0;
 			}
 			if(i == 0 && selfSkill && selfSkill.isSubType(SkillSubType.VAMPIRE)){
-				var changeHp = obj.hertValue * selfSkill.vampire();
+				var changeHp = obj.hertValue * selfSkill.vampire() >>> 0;
 				var tweenObj = getStrokeLabel(String.format("{0} 兵力+{1}",selfSkill.name(),changeHp),12,"#FF0000","#000000",2);
 				tweenObj.x = chara.x + (BattleCharacterSize.width - tweenObj.getWidth()) * 0.5;
 				tweenObj.y = chara.y;

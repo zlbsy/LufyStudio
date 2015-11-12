@@ -27,10 +27,10 @@ SkillMasterModel.prototype.id = function() {
 	return this.data.id;
 };
 SkillMasterModel.prototype.name = function() {
-	return Language.get("skill_name_"+this.data.id);
+	return Language.getSkill("skill_name_"+this.data.id);
 };
 SkillMasterModel.prototype.explanation = function() {
-	return Language.get("skill_explanation_"+this.data.id);
+	return Language.getSkill("skill_explanation_"+this.data.id);
 };
 SkillMasterModel.prototype.mainType = function() {
 	return this.data.type;

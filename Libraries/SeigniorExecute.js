@@ -15,7 +15,10 @@ SeigniorExecute.Instance = function(){
 	}
 	return SeigniorExecute._Instance;
 };
-SeigniorExecute.close = function(){
+SeigniorExecute.close = function(event){
+	if(event.currentTarget.alpha < 1){
+		return;
+	}
 	SeigniorExecute.Instance().maskHide();
 };
 SeigniorExecute.run=function(){
@@ -74,6 +77,11 @@ SeigniorExecute.run=function(){
 	self.seigniorIndex = 0;
 	self.areaIndex = 0;
 	SeigniorExecute.running = false;
+	var buttonOK = self.backLayer.childList.find(function(child){
+		return child.constructor.name == "LButton";
+	});
+	buttonOK.alpha = 1;
+	buttonOK.staticMode = false;
 };
 SeigniorExecute.prototype.areaRun=function(area){
 	var self = this;
@@ -268,20 +276,20 @@ SeigniorExecute.prototype.areaAIRun=function(areaModel){
 		self.timer.start();
 		return;
 	}
-	LGlobal.sleep(50);console.log("判断是否有未执行任务人员");
+	console.log("判断是否有未执行任务人员");
 	//俘虏处理
 	jobAiCaptives(areaModel);
-	LGlobal.sleep(50);console.log("俘虏处理");
+	console.log("俘虏处理");
 	//是否需要征兵
 	var needEnlistFlag = jobAiNeedToEnlist(areaModel);
-	LGlobal.sleep(50);console.log("是否需要征兵");
+	console.log("是否需要征兵");
 	//治安
 	var police = areaModel.police();
 	var toPolice = police < 70 || (police < 80 && Math.random() < 0.5) || (police < 90 && Math.random() < 0.3) || (police < 100 && Math.random() < 0.1);
 	if(toPolice){
 		self.jobAiFunction(areaModel,self.characters,jobAiPolice,["force","agility"]);//治安
 	}
-	LGlobal.sleep(50);console.log("治安");
+	console.log("治安");
 	var canEnlish = jobAiCanToEnlish(areaModel);
 	if(needEnlistFlag == AiEnlistFlag.Must || needEnlistFlag == AiEnlistFlag.Need){
 		if(canEnlish){
@@ -289,7 +297,7 @@ SeigniorExecute.prototype.areaAIRun=function(areaModel){
 			self.jobAiFunction(areaModel,self.characters,jobAiToEnlish,["luck","command"]);
 		}
 	}
-	LGlobal.sleep(50);console.log("招兵买马");
+	console.log("招兵买马");
 	//修补
 	if(areaModel.cityDefense() < areaModel.cityMaxDefense() && !(
 		needEnlistFlag == AiEnlistFlag.Must || 
@@ -299,13 +307,13 @@ SeigniorExecute.prototype.areaAIRun=function(areaModel){
 		) && Math.random() > 0.5){
 		self.jobAiFunction(areaModel,self.characters,jobAiRepair,["force","command"]);//修补
 	}
-	LGlobal.sleep(50);console.log("修补");
+	console.log("修补");
 	//判断是否有可攻击的城池
 	var city = getCanBattleCity(areaModel, self.characters, needEnlistFlag);
-	LGlobal.sleep(50);console.log("判断是否有可攻击的城池");
+	console.log("判断是否有可攻击的城池"+city);
 	if(city){
 		jobAiToBattle(areaModel, self.characters, city);
-		LGlobal.sleep(50);console.log("jobAiToBattle");
+		console.log("jobAiToBattle");
 		return;
 	}
 	//TODO::外交
@@ -313,13 +321,13 @@ SeigniorExecute.prototype.areaAIRun=function(areaModel){
 	//LGlobal.sleep(50);console.log("外交");
 	//武将移动
 	jobAiGeneralMove(areaModel,self.characters);
-	LGlobal.sleep(50);console.log("武将移动");
+	console.log("武将移动");
 	//输送物资
 	jobAiTransport(areaModel,self.characters);
-	LGlobal.sleep(50);console.log("输送物资");
+	console.log("输送物资");
 	//解救俘虏
 	if(self.jobAiFunction(areaModel,self.characters,jobAiCaptivesRescue,["intelligence","luck"],1)){
-		LGlobal.sleep(50);console.log("解救俘虏");
+		console.log("解救俘虏");
 		return;
 	}
 	//酒馆
@@ -343,7 +351,7 @@ SeigniorExecute.prototype.areaAIRun=function(areaModel){
 			self.jobAiFunction(areaModel,self.characters,jobAiAccess,["intelligence","command","luck"]);//访问
 		}
 	}
-	LGlobal.sleep(50);console.log("酒馆");
+	console.log("酒馆");
 	
 	var toInterior = 
 	needEnlistFlag == AiEnlistFlag.Must || 
@@ -356,14 +364,18 @@ SeigniorExecute.prototype.areaAIRun=function(areaModel){
 	(
 		needEnlistFlag == AiEnlistFlag.Free && Math.random() > 0.5
 	);
-	LGlobal.sleep(50);console.log("toInterior:"+toInterior);
+	console.log("toInterior:"+toInterior);
 	if(toInterior){
-		//太学院
-		self.jobAiFunction(areaModel,self.characters,jobAiInstitute,["intelligence","command"]);
-		//农地
-		self.jobAiFunction(areaModel,self.characters,jobAiFarmland,["intelligence","force"]);
-		//市场
-		self.jobAiFunction(areaModel,self.characters,jobAiMarket,["intelligence","agility"]);
+		var interiorList = [
+		{fun:jobAiInstitute,params:["intelligence","command"]},//太学院
+		{fun:jobAiFarmland,params:["intelligence","force"]},//农地
+		{fun:jobAiMarket,params:["intelligence","agility"]}//市场
+		];
+		interiorList = interiorList.sort(function(a,b){return Math.random() > 0.5 ? 1 : -1});
+		for(var i = 0;i<3;i++){
+			child = interiorList[i];
+			self.jobAiFunction(areaModel,self.characters,child.fun,child.params);
+		}
 	}else{
 		if(Math.random() > 0.5){
 			//农地探索
@@ -391,6 +403,8 @@ SeigniorExecute.prototype.maskShow=function(){
 	self.msgView = new MessageView();
 	self.backLayer.addChild(self.msgView);
 	var buttonOK = getButton(Language.get("OK"),200);
+	buttonOK.alpha = 0.5;
+	buttonOK.staticMode = true;
 	buttonOK.x = (self.msgView.getWidth() - 200) * 0.5;
 	buttonOK.y = self.msgView.getHeight();
 	self.backLayer.addChild(buttonOK);
