@@ -10,6 +10,8 @@ BattleModel.prototype.construct=function(){
 	self.enemyList = [];
 	self.friendList = [];
 	self.atRect = [];
+	self.selfMinusStrategyCharas = [];
+	self.enemyMinusStrategyCharas = [];
 };
 BattleModel.prototype.loadMapFile=function(mapPath,callback){
 	var self = this;
@@ -63,4 +65,27 @@ BattleModel.prototype.getImages=function(){
 BattleModel.prototype.setMapFiles=function(){
 	this.map = LMvc.mapdata;
 	delete LMvc.mapdata;
+};
+BattleModel.prototype.checkCreat=function(chara,belong){
+	var self = this;
+	var skill = chara.data.skill();
+	if(!skill){
+		return;
+	}
+	if(skill.isSubType(SkillSubType.STRATEGY_HERT_MINUS)){
+		var data = {chara:chara,skill:skill};
+		if(belong == Belong.SELF){
+			self.selfMinusStrategyCharas.push(data);
+		}else if(belong == Belong.ENEMY){
+			self.enemyMinusStrategyCharas.push(data);
+		}
+	}
+};
+BattleModel.prototype.getMinusStrategyCharas=function(belong){
+	var self = this;
+	if(belong == Belong.SELF){
+		return self.selfMinusStrategyCharas;
+	}else{
+		return self.enemyMinusStrategyCharas;
+	}
 };

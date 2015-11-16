@@ -189,7 +189,7 @@ function calculateHitrateStrategy(attChara,hertChara){
  r=Lv+25+(X'-Y')/3;<br>
  然后再根据兵种相克和宝物进行修正
  **************************************************************/
-function calculateHertStrategyValue(attChara,hertChara,currentSelectStrategy){
+function calculateHertStrategyValue(attChara,hertChara,currentSelectStrategy,correctionFactor){
 	var r;
 	var attCharaModel = attChara.data;
 	var hertCharaModel = hertChara.data;
@@ -212,6 +212,8 @@ function calculateHertStrategyValue(attChara,hertChara,currentSelectStrategy){
 	r = attLv + 25 + (attAttack - hertDefense)/3;
 	//法术系数加成
 	r = r * currentSelectStrategy.hert();
+	//特技等系数加成
+	r = r * correctionFactor;
 	//兵种伤害系数加成
 	r = r * attCharaModel.currentSoldiers().strategyHert();
 	//TODO:宝物加成
@@ -285,4 +287,39 @@ function calculateSkillSurpriseAmend(chara, target, attacks){
 		return 1;
 	}
 	return attacks[1];
+}
+/*****************************************************************
+ 特技的法术减免伤害加成值计算
+ **************************************************************/
+function calculateStrategyCharasCorrection(currentChara){
+	var strategyCharas = currentChara.model.getMinusStrategyCharas(currentChara.belong);
+	if(strategyCharas.length == 0){
+		return 1;
+	}
+	var hertCorrect = 1;
+	var locationX = currentChara.locationX();
+	var locationY = currentChara.locationY();
+	for(var i=0,l=strategyCharas.length;i<l;i++){
+		var obj = strategyCharas[i];
+		var chara = obj.chara;
+		var skill = obj.skill;
+		if(chara.data.troops() == 0 || skill.hert() > hertCorrect){
+			continue;
+		}
+		var x = chara.locationX();
+		var y = chara.locationY();
+		var minusRects = skill.minusRects();
+		if(minusRects.length == 0){
+			hertCorrect = skill.hert();
+			continue;
+		}
+		for(var i = 0;i<minusRects.length;i++){
+			var point = minusRects[i];
+			if(x + point.x == locationX && y + point.y == locationY){
+				hertCorrect = skill.hert();
+				break;
+			}
+		}
+	}
+	return hertCorrect;
 }

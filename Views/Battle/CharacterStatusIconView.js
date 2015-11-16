@@ -8,6 +8,7 @@ function CharacterStatusIconView(controller){
 	self.statusPositions[StrategyType.Poison] = 1;
 	self.statusPositions[StrategyType.Fixed] = 2;
 	self.statusPositions[StrategyType.BanIncantation] = 3;
+	self.statusPositions[StrategyType.Burn] = 4;
 	var bitmaoData = new LBitmapData(LMvc.datalist["battle_status"],0,0,16,16);
 	self.bitmap = new LBitmap(bitmaoData);
 	self.bitmap.visible = false;

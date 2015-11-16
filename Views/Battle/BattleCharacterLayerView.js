@@ -183,6 +183,7 @@ BattleCharacterLayerView.prototype.addOurCharacter=function(id,action,direction,
 	chara.belong = Belong.SELF;
 	chara.changeAction(CharacterAction.MOVE);
 	self.model.ourList.push(chara);
+	self.model.checkCreat(chara, chara.belong);
 	if(typeof callback == "function")callback();
 };
 BattleCharacterLayerView.prototype.addEnemyCharacter=function(index,action,direction,x,y,isHide,ai,callback){
@@ -191,6 +192,7 @@ BattleCharacterLayerView.prototype.addEnemyCharacter=function(index,action,direc
 	chara.belong = Belong.ENEMY;
 	chara.changeAction(CharacterAction.MOVE);
 	self.model.enemyList.push(chara);
+	self.model.checkCreat(chara, chara.belong);
 	if(typeof callback == "function")callback();
 };
 BattleCharacterLayerView.prototype.addFriendCharacter=function(index,action,direction,x,y,isHide,ai,callback){
@@ -199,6 +201,7 @@ BattleCharacterLayerView.prototype.addFriendCharacter=function(index,action,dire
 	chara.belong = Belong.FRIEND;
 	chara.changeAction(CharacterAction.MOVE);
 	self.model.friendList.push(chara);
+	self.model.checkCreat(chara, chara.belong);
 	if(typeof callback == "function")callback();
 };
 BattleCharacterLayerView.prototype.removeCharacter=function(belong,id){

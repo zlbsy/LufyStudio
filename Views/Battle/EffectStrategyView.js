@@ -1,8 +1,9 @@
-function EffectStrategyView(controller, chara, target){
+function EffectStrategyView(controller, chara, target, correctionFactor){
 	var self = this;
 	LExtends(self,LView,[controller]);
 	self.currentCharacter = chara;
 	self.currentTargetCharacter = target;
+	self.correctionFactor = correctionFactor;
 	console.log("EffectStrategyView="+self.currentTargetCharacter.data.name());
 	self.init();
 }
@@ -106,7 +107,7 @@ EffectStrategyView.prototype.toAttack = function(){
 	if(hitrate){
 		self.currentTargetCharacter.changeAction(CharacterAction.HERT);
 		tweenObj = new Num(Num.MIDDLE,1,20);
-		var hertValue = calculateHertStrategyValue(self.currentCharacter, self.currentTargetCharacter, self.currentCharacter.currentSelectStrategy);
+		var hertValue = calculateHertStrategyValue(self.currentCharacter, self.currentTargetCharacter, self.currentCharacter.currentSelectStrategy,self.correctionFactor);
 		self.currentTargetCharacter.hertValue = hertValue;
 		tweenObj.setValue(hertValue);
 		tweenObj.x = self.currentTargetCharacter.x;

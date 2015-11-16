@@ -44,6 +44,9 @@ SkillMasterModel.prototype.isSubType = function(subType) {
 SkillMasterModel.prototype.attacks = function() {
 	return this.data.attacks;
 };
+SkillMasterModel.prototype.strategyAttacks = function() {
+	return this.data.strategy_attacks;
+};
 SkillMasterModel.prototype.rects = function() {
 	return this.data.rects;
 };
@@ -65,6 +68,12 @@ SkillMasterModel.prototype.aidRects = function() {
 SkillMasterModel.prototype.wakeRects = function() {
 	return this.data.wakeRects;
 };
+SkillMasterModel.prototype.minusRects = function() {
+	return this.data.minusRects;
+};
 SkillMasterModel.prototype.vampire = function() {
 	return this.data.vampire;
+};
+SkillMasterModel.prototype.condition = function() {
+	return this.data.condition;
 };
