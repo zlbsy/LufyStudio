@@ -331,7 +331,23 @@ function calculateSpreadPoints(skill, ranges){
 	var speadRects = skill.speadRects();
 	var speadProbability = skill.speadProbability();
 	ranges.forEach(function(child){
-		
+		for(var i = 0; i < speadRects.length; i++){
+			var point = speadRects[i];
+			calculateSpreadPointsLoop(child.x + point.x, child.y + point.y, points, speadRects, speadProbability);
+		}
 	});
 	return points;
+}
+function calculateSpreadPointsLoop(x, y, points, speadRects, speadProbability){
+	if(points.findIndex(function(child){return child.x == x && child.y == y;}) >= 0){
+		return;
+	}
+	if(Math.random() > speadProbability*0.01){
+		return;
+	}
+	points.push({x:x,y:y});
+	for(var i = 0; i < speadRects.length; i++){
+		var point = speadRects[i];
+		calculateSpreadPointsLoop(x + point.x, y + point.y, points, speadRects, speadProbability);
+	}
 }

@@ -53,6 +53,7 @@ BattleCharacterAI.prototype.magicAttack = function(target){
 			var ranges;
 			if(j == 0 && skill && skill.isSubType(SkillSubType.SPREAD)){
 				ranges = calculateSpreadPoints(skill, rangeAttackTarget);
+				console.log(ranges);
 			}else{
 				ranges = rangeAttackTarget;
 			}

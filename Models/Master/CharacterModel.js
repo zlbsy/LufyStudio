@@ -473,7 +473,7 @@ CharacterModel.prototype.groupSkill = function() {
 		return null;
 	}
 	var groupSkill = GroupSkillModel.getMaster(self.data.groupSkill);
-	console.log("groupSkill.probability()/100 = " + (groupSkill.probability()/100));
+	console.log("groupSkill.probability()/100 = " + (groupSkill.probability()*0.01));
 	if(Math.random() > groupSkill.probability()/100){
 		return null;
 	}
@@ -491,7 +491,7 @@ CharacterModel.prototype.skill = function(type) {
 	if(type && skill.mainType() != type){
 		return null;
 	}
-	if(type && Math.random() > skill.probability()/100){
+	if(type && Math.random() > skill.probability()*0.01){
 		return null;
 	}
 	return skill;
