@@ -12,6 +12,10 @@ var SkillType = {
 	 **/
 	STRATEGY_ATTACK:"strategyAttack",
 	/**
+	 * 法术攻击结束时发动
+	 **/
+	STRATEGY_ATTACK_END:"strategyAttackEnd",
+	/**
 	 * 被攻击时发动,伤害减低
 	 **/
 	HERT:"hert",
@@ -70,6 +74,10 @@ var SkillSubType = {
 	 **/
 	VAMPIRE:"vampire",
 	/**
+	 * 蔓延
+	 **/
+	SPREAD:"spread",
+	/**
 	 * 劫营
 	 **/
 	SURPRISE:"surprise",
@@ -116,14 +124,14 @@ var SkillsData = [
 {id:7,name:"鼓舞(张辽,张任)",type:SkillType.BOUT_START,subType:[SkillSubType.SELF_AID],aids:[5],aidCount:1,aidRects:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],probability:100,explanation:"{probability}几率在回合开始时提升自身以及周围友军的士气。"},
 {id:8,name:"苍龙苏醒(赵云)",type:SkillType.ATTACK,subType:[SkillSubType.ENEMY_AID,SkillSubType.WAKE],aids:[2,4,6,8,10],aidCount:1,aidRects:[{x:0,y:0}],probability:50,explanation:"{probability}几率在攻击时使敌人降低一种能力，且自身及周围友军不会陷入任何不良状态。"},
 {id:9,name:"幻影(黄忠)",type:SkillType.ATTACK,subType:[SkillSubType.ENEMY_AID,SkillSubType.ATTACK_COUNT],attacks:[2],aids:[21],aidCount:1,aidRects:[{x:0,y:0}],probability:30,explanation:"{probability}几率给对方2倍攻击，且使对方陷入昏迷状态。"},
-{id:10,name:"噬血(马超)",type:SkillType.ATTACK_END,subType:[SkillSubType.VAMPIRE],vampire:0.5,aids:[5],aidCount:1,aidRects:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],probability:50,explanation:"{probability}几率给在物理攻击对方时将敌军兵力转换为己方兵力。"},
+{id:10,name:"噬血(马超)",type:SkillType.ATTACK_END,subType:[SkillSubType.VAMPIRE],vampire:0.5,probability:50,explanation:"{probability}几率给在物理攻击对方时将敌军兵力转换为己方兵力。"},
 {id:11,name:"神算(诸葛亮)",type:SkillType.STRATEGY_ATTACK,subType:[SkillSubType.STRATEGY_COUNT,SkillSubType.STRATEGY_HERT_MINUS],strategy_attacks:[1.5],hert:0.5,minusRects:[],probability:100,explanation:"法术攻击时必暴击，我军全员法术伤害减半。"},
-{id:12,name:"火神(周瑜)",type:SkillType.STRATEGY_ATTACK,subType:[SkillSubType.STRATEGY_COUNT,SkillSubType.ENEMY_AID],condition:{type:"StrategyType",value:StrategyType.Fire},aids:[25],aidCount:1,aidRects:[{x:0,y:0}],probability:100,explanation:"{probability}几率使用火系策略伤害加倍，且另对方进入燃烧状态。"},
+{id:12,name:"火神(周瑜)",type:SkillType.STRATEGY_ATTACK,subType:[SkillSubType.STRATEGY_COUNT,SkillSubType.ENEMY_AID],strategy_attacks:[2],condition:{type:"StrategyType",value:StrategyType.Fire},aids:[25],aidCount:1,aidRects:[{x:0,y:0}],probability:100,explanation:"{probability}几率使用火系策略伤害加倍，且另对方进入燃烧状态。"},
 {id:13,name:"医神(华佗)",type:SkillType.BOUT_START,subType:[SkillSubType.SELF_AID],aids:[5],aidCount:1,aidRects:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],probability:100,explanation:"{probability}几率对自身及相邻友军进行治疗。"},
-{id:14,name:"反间计(陆逊,陆抗)",type:SkillType.STRATEGY_ATTACK,subType:[SkillSubType.VAMPIRE],aids:[5],aidCount:1,aidRects:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],probability:60,explanation:"{probability}几率在法术攻击对方时将敌军兵力转换为己方兵力。"},
+{id:14,name:"反间计(陆逊,陆抗)",type:SkillType.STRATEGY_ATTACK_END,subType:[SkillSubType.VAMPIRE],vampire:0.5,probability:100,explanation:"{probability}几率在法术攻击对方时将敌军兵力转换为己方兵力。"},
 {id:15,name:"识破(司马懿)",type:SkillType.NULL,subType:[SkillSubType.STRATEGY_HERT_MINUS],hert:0.5,minusRects:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],probability:100,explanation:"{probability}几率令自身及相邻的友军受到的法术伤害减半。"},
 {id:16,name:"连珠(法正)",type:SkillType.STRATEGY_ATTACK,subType:[SkillSubType.STRATEGY_COUNT],strategy_attacks:[1,1],probability:100,explanation:"{probability}几率法术连击。"},
-{id:17,name:"连环计(庞统)",type:SkillType.BOUT_START,subType:[SkillSubType.SELF_AID],aids:[5],aidCount:1,aidRects:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],probability:50,explanation:"{probability}几率法术攻击时不断波及其他相邻的敌军。"},
+{id:17,name:"连环计(庞统)",type:SkillType.STRATEGY_ATTACK,subType:[SkillSubType.SPREAD],speadProbability:0.25,speadRects:[{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0}],probability:100,explanation:"{probability}几率法术攻击时不断蔓延到其他相邻的敌军。"},
 {id:18,name:"鬼策(贾诩)",type:SkillType.BOUT_START,subType:[SkillSubType.SELF_AID],aids:[5],aidCount:1,aidRects:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],probability:50,explanation:"{probability}几率1.5倍法术暴击，且降低敌军状态。"},
 {id:19,name:"鬼谋(郭嘉)",type:SkillType.BOUT_START,subType:[SkillSubType.SELF_AID],aids:[5],aidCount:1,aidRects:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],probability:50,explanation:"{probability}几率1.5倍法术暴击，且令敌军陷入不良状态。"},
 {id:20,name:"逆嗜血(许褚)",type:SkillType.BOUT_START,subType:[SkillSubType.SELF_AID],aids:[5],aidCount:1,aidRects:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],probability:30,explanation:"{probability}几率反击时将敌军兵力转化为自身兵力。"},

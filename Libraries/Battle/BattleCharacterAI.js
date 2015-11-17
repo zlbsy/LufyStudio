@@ -26,23 +26,22 @@ BattleCharacterAI.prototype.magicAttack = function(target){
 	var direction = getDirectionFromTarget(self.chara, target);
 	self.chara.setActionDirection(CharacterAction.MAGIC_ATTACK, direction);
 	var hertParams;
-	console.log("herts is null : "+(self.herts === null));
+	var skill;
 	if(self.herts === null){
 		self.herts = [];
 		var currentSelectStrategy = self.chara.currentSelectStrategy;
 		var rangeAttackTarget = currentSelectStrategy.rangeAttackTarget();
-		var skill;
 		skill = self.chara.data.skill(SkillType.STRATEGY_ATTACK);
-		var condition = skill.condition();
+		var condition = skill ? skill.condition() : null;
 		if(condition){
 			if(condition.type == "StrategyType"){
-				if(condition.value){
-				
+				if(condition.value != currentSelectStrategy.strategyType()){
+					skill = null;
 				}
 			}
 		}
 		var correctionFactor = 1;
-		var hertValues;
+		var hertValues, charas = [];
 		if(skill && skill.isSubType(SkillSubType.STRATEGY_COUNT)){
 			hertValues = skill.strategyAttacks();
 		}else{
@@ -51,15 +50,21 @@ BattleCharacterAI.prototype.magicAttack = function(target){
 		for(var j=0;j<hertValues.length;j++){
 			correctionFactor = hertValues[j];
 			hertParams = new HertParams();
-			for(var i = 0;i<rangeAttackTarget.length;i++){
-				var range = rangeAttackTarget[i];
+			var ranges;
+			if(j == 0 && skill && skill.isSubType(SkillSubType.SPREAD)){
+				ranges = calculateSpreadPoints(skill, rangeAttackTarget);
+			}else{
+				ranges = rangeAttackTarget;
+			}
+			for(var i = 0;i<ranges.length;i++){
+				var range = ranges[i];
 				var chara = LMvc.BattleController.view.charaLayer.getCharacterFromLocation(target.locationX()+range.x, target.locationY()+range.y);
 				if(!chara || (currentSelectStrategy.belong() == Belong.ENEMY && isSameBelong(chara.belong,self.chara.belong)) 
 					|| (currentSelectStrategy.belong() == Belong.SELF && !isSameBelong(chara.belong,self.chara.belong))){
 					continue;
 				}
 				hertParams.push(chara, correctionFactor*calculateStrategyCharasCorrection(chara));
-				//charas.push(chara);
+				charas.push(chara);
 			}
 			self.herts.push(hertParams);
 		}
@@ -75,13 +80,14 @@ BattleCharacterAI.prototype.magicAttack = function(target){
 			//groupSkill对话
 		}
 	}
+	skill = skill ? null : self.chara.data.skill(SkillType.STRATEGY_ATTACK_END);
 	hertParams = self.herts[0];
 	self.herts.shift();
 	for(var i = 0,l = hertParams.list.length;i<l;i++){
 		var obj = hertParams.list[i];
 		var chara = obj.chara;
 		chara.hertIndex = l - i;
-		var effectView = new EffectStrategyView(null, self.chara, chara, obj.hertValue);
+		var effectView = new EffectStrategyView(null, self.chara, chara, obj.hertValue, skill);
 		effectView.x = chara.x;
 		effectView.y = chara.y;
 		LMvc.BattleController.view.effectLayer.addChild(effectView);

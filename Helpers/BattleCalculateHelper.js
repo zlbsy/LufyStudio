@@ -323,3 +323,15 @@ function calculateStrategyCharasCorrection(currentChara){
 	}
 	return hertCorrect;
 }
+/*****************************************************************
+ 特技的法术蔓延范围计算
+ **************************************************************/
+function calculateSpreadPoints(skill, ranges){
+	var points = ranges.concat();
+	var speadRects = skill.speadRects();
+	var speadProbability = skill.speadProbability();
+	ranges.forEach(function(child){
+		
+	});
+	return points;
+}

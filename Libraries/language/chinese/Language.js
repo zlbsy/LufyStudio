@@ -409,10 +409,15 @@ Language.skillData = {
 	"skill_explanation_11":"法术攻击时必暴击，全队法术伤害减半。",
 	"skill_name_12":"火神",
 	"skill_explanation_12":"使用火系策略伤害加倍，且令对方进入燃烧状态。",
+	
+	"skill_name_14":"反间计",
+	"skill_explanation_14":"在法术攻击对方时将敌军兵力转换为己方兵力。",
 	"skill_name_15":"识破",
 	"skill_explanation_15":"令自身及相邻的友军受到的法术伤害减半。",
 	"skill_name_16":"连珠",
 	"skill_explanation_16":"法术连击。",
+	"skill_name_17":"连环计",
+	"skill_explanation_17":"法术攻击时不断蔓延到其他相邻的敌军。",
 	"skill_name_31":"劫营",
 	"skill_explanation_31":"从敌人背后或侧面攻击时攻击有加成，不包括斜角攻击。",
 };

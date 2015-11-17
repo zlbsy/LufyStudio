@@ -330,7 +330,7 @@ var StrategyDatas = [
 	terrains:[],
 	explanation:""
 	},
-	{id:34,name:"小风计1",belong:Belong.ENEMY,type:StrategyType.Fire,effectType:StrategyEffectType.Attack,image:"feng-1",
+	{id:34,name:"小风计1",belong:Belong.ENEMY,type:StrategyType.Wind,effectType:StrategyEffectType.Attack,image:"feng-1",
 	icon:"feng_sign",
 	cost:6,
 	hert:0.8,

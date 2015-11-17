@@ -77,3 +77,9 @@ SkillMasterModel.prototype.vampire = function() {
 SkillMasterModel.prototype.condition = function() {
 	return this.data.condition;
 };
+SkillMasterModel.prototype.speadRects = function() {
+	return this.data.speadRects;
+};
+SkillMasterModel.prototype.speadProbability = function() {
+	return this.data.speadProbability;
+};

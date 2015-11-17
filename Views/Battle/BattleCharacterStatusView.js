@@ -2,7 +2,7 @@ function BattleCharacterStatusView(controller, character){
 	var self = this;
 	LExtends(self,LView,[controller]);
 	self.character = character;
-	self.belong = character.belong;
+	 self.belong = character.belong;
 	self.datas = [];
 };
 BattleCharacterStatusView.BAR_SIZE = 150;
