@@ -330,6 +330,8 @@ function calculateSpreadPoints(skill, ranges){
 	var points = ranges.concat();
 	var speadRects = skill.speadRects();
 	var speadProbability = skill.speadProbability();
+	console.log("ranges:"+ranges);
+	console.log("speadRects:"+speadRects);
 	ranges.forEach(function(child){
 		for(var i = 0; i < speadRects.length; i++){
 			var point = speadRects[i];
@@ -339,10 +341,11 @@ function calculateSpreadPoints(skill, ranges){
 	return points;
 }
 function calculateSpreadPointsLoop(x, y, points, speadRects, speadProbability){
+	console.log("PointsLoop:"+x+","+y+":"+speadProbability);
 	if(points.findIndex(function(child){return child.x == x && child.y == y;}) >= 0){
 		return;
 	}
-	if(Math.random() > speadProbability*0.01){
+	if(Math.random() > speadProbability){
 		return;
 	}
 	points.push({x:x,y:y});

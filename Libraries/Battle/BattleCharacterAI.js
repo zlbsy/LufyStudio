@@ -53,7 +53,6 @@ BattleCharacterAI.prototype.magicAttack = function(target){
 			var ranges;
 			if(j == 0 && skill && skill.isSubType(SkillSubType.SPREAD)){
 				ranges = calculateSpreadPoints(skill, rangeAttackTarget);
-				console.log(ranges);
 			}else{
 				ranges = rangeAttackTarget;
 			}
@@ -81,7 +80,9 @@ BattleCharacterAI.prototype.magicAttack = function(target){
 			//groupSkill对话
 		}
 	}
-	skill = skill ? null : self.chara.data.skill(SkillType.STRATEGY_ATTACK_END);
+	if(!skill){
+		skill = self.chara.data.skill(SkillType.STRATEGY_ATTACK_END);
+	}
 	hertParams = self.herts[0];
 	self.herts.shift();
 	for(var i = 0,l = hertParams.list.length;i<l;i++){
@@ -115,6 +116,9 @@ BattleCharacterAI.prototype.physicalAttack = function(target) {
 			}else{
 				var doubleAtt = calculateDoubleAtt(self.chara, target);
 				hertValues = doubleAtt ? [1,1] : [1];
+			}
+			if(skill && skill.isSubType(SkillSubType.AMBUSH)){
+				var ambush = calculateAmbush();
 			}
 			console.log("hertValues.length="+hertValues.length);
 			for(var j=0;j<hertValues.length;j++){
@@ -238,7 +242,11 @@ BattleCharacterAI.prototype.attackActionComplete = function(event) {
 	var self = chara.AI;
 	chara.removeEventListener(BattleCharacterActionEvent.ATTACK_ACTION_COMPLETE,self.attackActionComplete);
 	chara.changeAction(chara.data.isPantTroops()?CharacterAction.PANT:(chara.data.id() == BattleController.ctrlChara.data.id() ? CharacterAction.STAND : CharacterAction.MOVE));
-	selfSkill = chara.data.skill(SkillType.ATTACK_END);
+	if(chara.data.id() == BattleController.ctrlChara.data.id()){
+		selfSkill = chara.data.skill(SkillType.ATTACK_END);
+	}else{
+		selfSkill = chara.data.skill(SkillType.BACK_ATTACK_END);
+	}
 	if(selfSkill && selfSkill.isSubType(SkillSubType.SELF_AID)){
 		var tweenObj = getStrokeLabel(selfSkill.name(),22,"#FFFFFF","#000000",2); 
 		tweenObj.x = chara.x + (BattleCharacterSize.width - tweenObj.getWidth()) * 0.5;
@@ -275,6 +283,16 @@ BattleCharacterAI.prototype.attackActionComplete = function(event) {
 				}});
 				obj.hertValue *= skill.hert();
 				obj.hertValue = obj.hertValue >>> 0;
+			}else if(skill && skill.isSubType(SkillSubType.BOUNCE)){
+				var changeHp = obj.hertValue * skill.bounce() >>> 0;
+				chara.data.troops(chara.data.troops() - changeHp);
+				var tweenObj = getStrokeLabel(String.format("-{0}",changeHp),12,"#FF0000","#000000",2);
+				tweenObj.x = chara.x + (BattleCharacterSize.width - tweenObj.getWidth()) * 0.5;
+				tweenObj.y = chara.y + 10;
+				chara.controller.view.baseLayer.addChild(tweenObj);
+				LTweenLite.to(tweenObj,1.5,{y:tweenObj.y - 20,alpha:0,onComplete:function(e){
+					e.target.remove();
+				}});
 			}
 			if(i == 0 && selfSkill && selfSkill.isSubType(SkillSubType.VAMPIRE)){
 				var changeHp = obj.hertValue * selfSkill.vampire() >>> 0;
@@ -283,7 +301,7 @@ BattleCharacterAI.prototype.attackActionComplete = function(event) {
 				tweenObj.x = chara.x + (BattleCharacterSize.width - tweenObj.getWidth()) * 0.5;
 				tweenObj.y = chara.y;
 				chara.controller.view.baseLayer.addChild(tweenObj);
-				LTweenLite.to(tweenObj,1.5,{y:tweenObj.y - 20,alpha:0,onComplete:function(e){
+				LTweenLite.to(tweenObj,1.5,{y:tweenObj.y + 20,alpha:0,onComplete:function(e){
 					e.target.remove();
 				}});
 				

@@ -74,6 +74,12 @@ SkillMasterModel.prototype.minusRects = function() {
 SkillMasterModel.prototype.vampire = function() {
 	return this.data.vampire;
 };
+SkillMasterModel.prototype.ambush = function() {
+	return this.data.ambush;
+};
+SkillMasterModel.prototype.bounce = function() {
+	return this.data.bounce;
+};
 SkillMasterModel.prototype.condition = function() {
 	return this.data.condition;
 };

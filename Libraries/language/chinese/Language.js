@@ -418,6 +418,17 @@ Language.skillData = {
 	"skill_explanation_16":"法术连击。",
 	"skill_name_17":"连环计",
 	"skill_explanation_17":"法术攻击时不断蔓延到其他相邻的敌军。",
+	"skill_name_18":"鬼策",
+	"skill_explanation_18":"1.5倍法术暴击，且降低敌军能力。",
+	"skill_name_19":"鬼谋",
+	"skill_explanation_19":"1.5倍法术暴击，且令敌军陷入不良状态。",
+	"skill_name_20":"逆嗜血",
+	"skill_explanation_20":"反击时将敌军兵力转化为自身兵力。",
+	"skill_name_21":"反弹",
+	"skill_explanation_21":"被攻击时令敌军也受到一定程度伤害。",
+	
+	"skill_name_23":"十面埋伏",
+	"skill_explanation_23":"在使用法术攻击敌军时，如果攻击目标的周围有友军存在，可以借助友军的力量提高法术伤害，友军越多，加成越多。",
 	"skill_name_31":"劫营",
 	"skill_explanation_31":"从敌人背后或侧面攻击时攻击有加成，不包括斜角攻击。",
 };
