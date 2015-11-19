@@ -429,6 +429,12 @@ Language.skillData = {
 	
 	"skill_name_23":"十面埋伏",
 	"skill_explanation_23":"在使用法术攻击敌军时，如果攻击目标的周围有友军存在，可以借助友军的力量提高法术伤害，友军越多，加成越多。",
+	"skill_name_24":"决胜",
+	"skill_explanation_24":"在使用法术攻击敌军时2倍暴击，且不消化MP。",
+	"skill_name_25":"摆尾",
+	"skill_explanation_25":"使用法术攻击时附带穿透效果。",
+	"skill_name_26":"毒箭",
+	"skill_explanation_26":"在使用弓箭类兵种攻击时令敌军中毒。",
 	"skill_name_31":"劫营",
 	"skill_explanation_31":"从敌人背后或侧面攻击时攻击有加成，不包括斜角攻击。",
 };

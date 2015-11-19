@@ -94,6 +94,10 @@ var SkillSubType = {
 	 **/
 	AMBUSH:"ambush",
 	/**
+	 * 穿透
+	 **/
+	PENETRATE:"penetrate",
+	/**
 	 * 突击(移动时无视敌军阻挡)
 	 **/
 	MOVE_ASSAULT:"move_assault",
@@ -105,6 +109,10 @@ var SkillSubType = {
 	 * 节约(兵粮消耗减半)
 	 **/
 	THRIFT:"thrift",
+	/**
+	 * 节约MP
+	 **/
+	THRIFT_MP:"thrift_mp",
 	/**
 	 * 商业
 	 **/
@@ -149,10 +157,10 @@ var SkillsData = [
 {id:20,name:"逆嗜血(许褚)",type:SkillType.BACK_ATTACK_END,subType:[SkillSubType.VAMPIRE],vampire:0.5,probability:30,explanation:"{probability}几率反击时将敌军兵力转化为自身兵力。"},
 {id:21,name:"反弹(典韦)",type:SkillType.HERT,subType:[SkillSubType.BOUNCE],bounce:0.5,probability:100,explanation:"{probability}几率被攻击时令敌军也受到一定程度伤害。"},
 {id:22,name:"血路(廖化)",type:SkillType.BOUT_START,subType:[SkillSubType.SELF_AID],aids:[5],aidCount:1,aidRects:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],probability:100,explanation:"降低自身及周围被俘虏概率。"},
-{id:23,name:"十面埋伏(程昱)",type:SkillType.STRATEGY_ATTACK,subType:[SkillSubType.AMBUSH],ambush:0.2,probability:100,explanation:"{probability}几率在使用法术攻击敌军时，如果攻击目标的周围有友军存在，可以借助友军的力量提高法术伤害，友军越多，加成越多。"},
-{id:24,name:"决胜(荀彧)",type:SkillType.STRATEGY_ATTACK,subType:[SkillSubType.SELF_AID],aids:[5],aidCount:1,aidRects:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],probability:40,explanation:"{probability}几率在使用法术攻击敌军时2倍暴击，且不消化MP。"},
-{id:25,name:"仿效(荀攸)",type:SkillType.BOUT_START,subType:[SkillSubType.SELF_AID],aids:[5],aidCount:1,aidRects:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],probability:100,explanation:"可以模仿周围友军的计策。"},
-{id:26,name:"毒箭(夏侯渊)",type:SkillType.BOUT_START,subType:[SkillSubType.SELF_AID],aids:[5],aidCount:1,aidRects:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],probability:30,explanation:"{probability}几率在使用弓箭类兵种攻击时令敌军中毒。"},
+{id:23,name:"十面埋伏(程昱)",type:SkillType.STRATEGY_ATTACK,subType:[SkillSubType.AMBUSH],ambush:0.2,ambushRects:[{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],probability:100,explanation:"{probability}几率在使用法术攻击敌军时，如果攻击目标的周围有友军存在，可以借助友军的力量提高法术伤害，友军越多，加成越多。"},
+{id:24,name:"决胜(荀彧)",type:SkillType.STRATEGY_ATTACK,subType:[SkillSubType.STRATEGY_COUNT,SkillSubType.THRIFT_MP],strategy_attacks:[2],aidCount:1,thrift:1,probability:100,explanation:"{probability}几率在使用法术攻击敌军时2倍暴击，且不消化MP。"},
+{id:25,name:"摆尾(荀攸)",type:SkillType.STRATEGY_ATTACK,subType:[SkillSubType.PENETRATE],probability:100,explanation:"使用法术攻击时附带穿透效果。"},
+{id:26,name:"毒箭(夏侯渊)",type:SkillType.ATTACK,subType:[SkillSubType.ENEMY_AID],aids:[5],aidCount:1,aidRects:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],probability:30,explanation:"{probability}几率在使用弓箭类兵种攻击时令敌军中毒。"},
 {id:27,name:"毒计(徐庶,审配)",type:SkillType.BOUT_START,subType:[SkillSubType.SELF_AID],aids:[5],aidCount:1,aidRects:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],probability:50,explanation:"{probability}几率在使用法术攻击时令敌军中毒。"},
 {id:28,name:"灵敏(魏延,文鸳)",type:SkillType.BOUT_START,subType:[SkillSubType.SELF_AID],aids:[5],aidCount:1,aidRects:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],probability:40,explanation:"{probability}几率攻击结束时提升自身爆发力。"},
 {id:29,name:"猛攻(姜维)",type:SkillType.BOUT_START,subType:[SkillSubType.SELF_AID],aids:[5],aidCount:1,aidRects:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],probability:30,explanation:"{probability}几率回合开始时提升自身及周围友军的攻击力。"},

@@ -77,6 +77,12 @@ SkillMasterModel.prototype.vampire = function() {
 SkillMasterModel.prototype.ambush = function() {
 	return this.data.ambush;
 };
+SkillMasterModel.prototype.ambushRects = function() {
+	return this.data.ambushRects;
+};
+SkillMasterModel.prototype.thrift = function() {
+	return this.data.thrift;
+};
 SkillMasterModel.prototype.bounce = function() {
 	return this.data.bounce;
 };

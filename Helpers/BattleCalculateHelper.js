@@ -354,3 +354,66 @@ function calculateSpreadPointsLoop(x, y, points, speadRects, speadProbability){
 		calculateSpreadPointsLoop(x + point.x, y + point.y, points, speadRects, speadProbability);
 	}
 }
+/*****************************************************************
+ 特技埋伏加强系数计算
+ **************************************************************/
+function calculateAmbush(currentChara, skill){
+	var ambushRects = skill.ambushRects();
+	var ambush = skill.ambush();
+	var x = currentChara.locationX();
+	var y = currentChara.locationY();
+	var belong = currentChara.belong;
+	var result = 0;
+	for(var i = 0, l = ambushRects.length;i<l;i++){
+		var point = ambushRects[i];
+		var chara = LMvc.BattleController.view.charaLayer.getCharacterFromLocation(x+point.x, y+point.y);
+		if(!chara || !isSameBelong(chara.belong,belong)){
+			continue;
+		}
+		result += ambush;
+	}
+	return result;
+}
+/*****************************************************************
+ 特技穿透效果范围计算
+ **************************************************************/
+function calculatePenetratePoints(chara, target, ranges){
+	var x=0,y=0;
+	var direction = getDirectionFromTarget(chara, target, true);
+	switch(direction){
+		case CharacterDirection.DOWN:
+			y = 1;
+			break;
+		case CharacterDirection.UP:
+			y = -1;
+			break;
+		case CharacterDirection.LEFT:
+			x = -1;
+			break;
+		case CharacterDirection.RIGHT:
+			x = 1;
+			break;
+		case CharacterDirection.LEFT_UP:
+			x = -1;
+			y = -1;
+			break;
+		case CharacterDirection.RIGHT_UP:
+			x = 1;
+			y = -1;
+			break;
+		case CharacterDirection.RIGHT_DOWN:
+			x = 1;
+			y = 1;
+			break;
+		case CharacterDirection.LEFT_DOWN:
+			x = -1;
+			y = 1;
+			break;
+	}
+	if(ranges.findIndex(function(child){
+		return child.x == x && child.y == y;
+	}) < 0){
+		ranges.push({x:x,y:y});
+	}
+	return ranges;
+}

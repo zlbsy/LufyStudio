@@ -40,6 +40,11 @@ BattleCharacterAI.prototype.magicAttack = function(target){
 				}
 			}
 		}
+		var cost = self.chara.currentSelectStrategy.cost();
+		if(skill && skill.isSubType(SkillSubType.THRIFT_MP)){
+			cost *= (1-skill.thrift());
+		}
+		self.chara.data.MP(self.chara.data.MP()-cost);
 		var correctionFactor = 1;
 		var hertValues, charas = [];
 		if(skill && skill.isSubType(SkillSubType.STRATEGY_COUNT)){
@@ -53,9 +58,12 @@ BattleCharacterAI.prototype.magicAttack = function(target){
 			var ranges;
 			if(j == 0 && skill && skill.isSubType(SkillSubType.SPREAD)){
 				ranges = calculateSpreadPoints(skill, rangeAttackTarget);
+			}else if(j == 0 && skill && skill.isSubType(SkillSubType.PENETRATE)){
+				ranges = calculatePenetratePoints(self.chara,target, rangeAttackTarget);
 			}else{
 				ranges = rangeAttackTarget;
 			}
+			
 			for(var i = 0;i<ranges.length;i++){
 				var range = ranges[i];
 				var chara = LMvc.BattleController.view.charaLayer.getCharacterFromLocation(target.locationX()+range.x, target.locationY()+range.y);
@@ -118,7 +126,7 @@ BattleCharacterAI.prototype.physicalAttack = function(target) {
 				hertValues = doubleAtt ? [1,1] : [1];
 			}
 			if(skill && skill.isSubType(SkillSubType.AMBUSH)){
-				var ambush = calculateAmbush();
+				hertValues[0] += calculateAmbush(self.chara, skill);
 			}
 			console.log("hertValues.length="+hertValues.length);
 			for(var j=0;j<hertValues.length;j++){

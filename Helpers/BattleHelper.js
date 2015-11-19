@@ -1,7 +1,7 @@
 function belongLabel(){
 	
 }
-function getDirectionFromTarget(chara, target){
+function getDirectionFromTarget(chara, target, angleFlag){
 	var self = this, direction = chara.direction;
 	var coordinate = chara.getTo();
 	var coordinateTo = target.getTo();
@@ -9,23 +9,19 @@ function getDirectionFromTarget(chara, target){
 	if(angle < 22.5 || angle > 337.5){
 		direction = CharacterDirection.LEFT;
 	}else if(angle > 22.5 && angle < 67.5){
-		//direction = CharacterDirection.LEFT_UP;
-		direction = Math.random() > 0.5 ? CharacterDirection.LEFT : CharacterDirection.UP;
+		direction = angleFlag ? CharacterDirection.LEFT_UP : (Math.random() > 0.5 ? CharacterDirection.LEFT : CharacterDirection.UP);
 	}else if(angle > 67.5 && angle < 112.5){
 		direction = CharacterDirection.UP;
 	}else if(angle > 112.5 && angle < 157.5){
-		//direction = CharacterDirection.RIGHT_UP;
-		direction = Math.random() > 0.5 ? CharacterDirection.RIGHT : CharacterDirection.UP;
+		direction = angleFlag ? CharacterDirection.RIGHT_UP : (Math.random() > 0.5 ? CharacterDirection.RIGHT : CharacterDirection.UP);
 	}else if(angle > 157.5 && angle < 202.5){
 		direction = CharacterDirection.RIGHT;
 	}else if(angle > 202.5 && angle < 247.5){
-		//direction = CharacterDirection.RIGHT_DOWN;
-		direction = Math.random() > 0.5 ? CharacterDirection.RIGHT : CharacterDirection.DOWN;
+		direction = angleFlag ? CharacterDirection.RIGHT_DOWN : (Math.random() > 0.5 ? CharacterDirection.RIGHT : CharacterDirection.DOWN);
 	}else if(angle > 247.5 && angle < 292.5){
 		direction = CharacterDirection.DOWN;
 	}else{
-		//direction = CharacterDirection.LEFT_DOWN;
-		direction = Math.random() > 0.5 ? CharacterDirection.LEFT : CharacterDirection.DOWN;
+		direction = angleFlag ? CharacterDirection.LEFT_DOWN : (Math.random() > 0.5 ? CharacterDirection.LEFT : CharacterDirection.DOWN);
 	}
 	return direction;
 };
