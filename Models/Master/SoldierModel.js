@@ -50,6 +50,9 @@ SoldierModel.prototype.technology = function() {
 SoldierModel.prototype.soldierType = function() {
 	return this.master().soldierType();
 };
+SoldierModel.prototype.attackType = function() {
+	return this.master().attackType();
+};
 SoldierModel.prototype.moveType = function() {
 	return this.master().moveType();
 };

@@ -242,7 +242,7 @@ var StrategyDatas = [
 	rangeAttackTarget:[{x:0,y:0}],
 	explanation:""
 	},
-	{id:23,name:"毒",belong:Belong.ENEMY,type:StrategyType.Fixed,effectType:StrategyEffectType.Status,image:"feng-1",
+	{id:23,name:"毒",belong:Belong.ENEMY,type:StrategyType.Poison,effectType:StrategyEffectType.Status,image:"feng-1",
 	icon:"feng_sign",
 	cost:6,
 	hert:0.8,
@@ -250,7 +250,7 @@ var StrategyDatas = [
 	rangeAttackTarget:[{x:0,y:0}],
 	explanation:""
 	},
-	{id:24,name:"禁咒",belong:Belong.ENEMY,type:StrategyType.Fixed,effectType:StrategyEffectType.Status,image:"feng-1",
+	{id:24,name:"禁咒",belong:Belong.ENEMY,type:StrategyType.BanIncantation,effectType:StrategyEffectType.Status,image:"feng-1",
 	icon:"feng_sign",
 	cost:6,
 	hert:0.8,

@@ -118,7 +118,15 @@ BattleCharacterAI.prototype.physicalAttack = function(target) {
 			var hertValue = calculateHertValue(self.chara, target, 1);
 			var hertValues = [];
 			skill = self.chara.data.skill(SkillType.ATTACK);
-			
+			var condition = skill ? skill.condition() : null;
+			if(condition){
+				if(condition.type == "AttackType"){
+					if(condition.value != self.chara.data.currentSoldiers().attackType()){
+						skill = null;
+					}
+					console.log("AttackType:"+skill);
+				}
+			}
 			if(skill && skill.isSubType(SkillSubType.ATTACK_COUNT)){
 				hertValues = skill.attacks();
 			}else{

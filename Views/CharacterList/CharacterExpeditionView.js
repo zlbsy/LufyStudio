@@ -38,7 +38,7 @@ CharacterExpeditionView.prototype.set=function(){
 	
 	self.currentTroops = self.characterModel.troops();
 	var cityModel = self.controller.getValue("cityData");
-	var soldiers = cityModel.soldiers();
+	var soldiers = self.characterModel.soldiers();
 	self.canUseTroops = cityModel.troops() + self.currentTroops;
 	/*self.troopsList = [];
 	for(var i=0;i<troopsList.length;i++){
@@ -96,7 +96,7 @@ CharacterExpeditionView.prototype.onchangeSoldier=function(event){
 CharacterExpeditionView.prototype.setSoldier=function(){
 	var self = this;
 	var cityModel = self.controller.getValue("cityData");
-	var soldiers = cityModel.soldiers();
+	var soldiers = self.characterModel.soldiers();
 	var currentSoldierModel = soldiers[self.currentTroopsIndex];
 	self.currentSoldierModel = currentSoldierModel;
 	self.maxTroops = self.currentSoldierModel.maxTroops(self.characterModel);

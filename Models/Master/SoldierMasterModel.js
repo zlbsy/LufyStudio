@@ -38,6 +38,9 @@ SoldierMasterModel.prototype.technology = function() {
 SoldierMasterModel.prototype.soldierType = function() {
 	return this.data.type;
 };
+SoldierMasterModel.prototype.attackType = function() {
+	return this.data.attackType;
+};
 SoldierMasterModel.prototype.moveType = function() {
 	return this.data.moveType;
 };

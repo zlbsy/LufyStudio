@@ -435,6 +435,10 @@ Language.skillData = {
 	"skill_explanation_25":"使用法术攻击时附带穿透效果。",
 	"skill_name_26":"毒箭",
 	"skill_explanation_26":"在使用弓箭类兵种攻击时令敌军中毒。",
+	"skill_name_27":"毒计",
+	"skill_explanation_27":"在使用法术攻击时令敌军中毒。",
+	"skill_name_28":"灵敏",
+	"skill_explanation_28":"在使用法术攻击时令敌军中毒。",
 	"skill_name_31":"劫营",
 	"skill_explanation_31":"从敌人背后或侧面攻击时攻击有加成，不包括斜角攻击。",
 };
