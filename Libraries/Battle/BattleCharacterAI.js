@@ -56,9 +56,9 @@ BattleCharacterAI.prototype.magicAttack = function(target){
 			correctionFactor = hertValues[j];
 			hertParams = new HertParams();
 			var ranges;
-			if(j == 0 && skill && skill.isSubType(SkillSubType.SPREAD)){
+			if(j == 0 && skill && skill.isSubType(SkillSubType.SPREAD)){//蔓延
 				ranges = calculateSpreadPoints(skill, rangeAttackTarget);
-			}else if(j == 0 && skill && skill.isSubType(SkillSubType.PENETRATE)){
+			}else if(j == 0 && skill && skill.isSubType(SkillSubType.PENETRATE)){//穿透
 				ranges = calculatePenetratePoints(self.chara,target, rangeAttackTarget);
 			}else{
 				ranges = rangeAttackTarget;
@@ -141,7 +141,9 @@ BattleCharacterAI.prototype.physicalAttack = function(target) {
 				var hertParams = new HertParams();
 				var value = hertValue*hertValues[j]>>>0;
 				hertParams.push(target, value > 1 ? value : 1);
-				if(skill && skill.isSubType(SkillSubType.ATTACK_RECT)){
+				if(j == 0 && skill && skill.isSubType(SkillSubType.SPREAD)){//蔓延
+					rangeAttackTarget = calculateSpreadPoints(skill, self.chara.data.currentSoldiers().rangeAttackTarget());
+				}else if(skill && skill.isSubType(SkillSubType.ATTACK_RECT)){
 					rangeAttackTarget = skill.rects();
 				}else{
 					rangeAttackTarget = self.chara.data.currentSoldiers().rangeAttackTarget();

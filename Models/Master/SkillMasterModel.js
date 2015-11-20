@@ -89,6 +89,9 @@ SkillMasterModel.prototype.bounce = function() {
 SkillMasterModel.prototype.condition = function() {
 	return this.data.condition;
 };
+SkillMasterModel.prototype.ignore = function() {
+	return this.data.ignore;
+};
 SkillMasterModel.prototype.speadRects = function() {
 	return this.data.speadRects;
 };

@@ -255,8 +255,29 @@ function calculateHertValue(attChara,hertChara,correctionFactor){
 	var hertDefenseAddition = hertDefense * hertCharaModel.currentSoldiers().terrain(map[hertChara.locationY()][hertChara.locationX()].value).value * 0.01;
 	//物理攻击的伤害值计算
 	r = attLv + 25 + (attAttackAddition - hertDefenseAddition)/2;
-	//兵种相克
-	r = r * attCharaModel.currentSoldiers().restrain(hertCharaModel.currentSoldiers().id()).value * 0.01;
+	var skill = hertCharaModel.skill(SkillType.IGNORE_RESTRAINT);
+	var ignore = false;
+	if(skill){
+		var skillIgnore = skill.ignore();
+		if(skillIgnore.type == "AttackType"){
+			if(skillIgnore.value == attCharaModel.currentSoldiers().attackType()){
+				ignore = true;
+			}
+		}else if(skillIgnore.type == "MoveType"){
+			if(skillIgnore.value == attCharaModel.currentSoldiers().moveType()){
+				ignore = true;
+			}
+		}else if(skillIgnore.type == "SoldierType"){
+			if(skillIgnore.value == attCharaModel.currentSoldiers().soldierType()){
+				ignore = true;
+			}
+		}
+	}
+	if(!ignore){
+		//兵种相克
+		var restrain = attCharaModel.currentSoldiers().restrain(hertCharaModel.currentSoldiers().id()).value * 0.01;
+		r = r * restrain;
+	}
 	//修正系数
 	r *= correctionFactor;
 	//随即系数

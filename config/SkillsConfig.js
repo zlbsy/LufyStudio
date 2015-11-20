@@ -106,6 +106,10 @@ var SkillSubType = {
 	 **/
 	MOVE_KNOW:"move_know",
 	/**
+	 * 无视相克
+	 **/
+	IGNORE_RESTRAINT:"ignore_restraint",
+	/**
 	 * 节约(兵粮消耗减半)
 	 **/
 	THRIFT:"thrift",
@@ -113,6 +117,10 @@ var SkillSubType = {
 	 * 节约MP
 	 **/
 	THRIFT_MP:"thrift_mp",
+	/**
+	 * 征集(和招募区别)
+	 **/
+	ENLIST_SKILL:"enlist_skill",
 	/**
 	 * 商业
 	 **/
@@ -162,17 +170,17 @@ var SkillsData = [
 {id:25,name:"摆尾(荀攸)",type:SkillType.STRATEGY_ATTACK,subType:[SkillSubType.PENETRATE],probability:100,explanation:"使用法术攻击时附带穿透效果。"},
 {id:26,name:"毒箭(夏侯渊)",type:SkillType.ATTACK,subType:[SkillSubType.ENEMY_AID],condition:{type:"AttackType",value:AttackType.FAR},aids:[23],aidCount:1,aidRects:[{x:0,y:0}],probability:100,explanation:"{probability}几率在使用弓箭类兵种攻击时令敌军中毒。"},
 {id:27,name:"毒计(徐庶,审配)",type:SkillType.STRATEGY_ATTACK,subType:[SkillSubType.ENEMY_AID],aids:[23],aidCount:1,aidRects:[{x:0,y:0}],probability:100,explanation:"{probability}几率在使用法术攻击时令敌军中毒。"},
-{id:28,name:"灵敏(魏延,文鸳)",type:SkillType.BOUT_START,subType:[SkillSubType.SELF_AID],aids:[5],aidCount:1,aidRects:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],probability:40,explanation:"{probability}几率攻击结束时提升自身爆发力。"},
-{id:29,name:"猛攻(姜维)",type:SkillType.BOUT_START,subType:[SkillSubType.SELF_AID],aids:[5],aidCount:1,aidRects:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],probability:30,explanation:"{probability}几率回合开始时提升自身及周围友军的攻击力。"},
-{id:30,name:"坚固(邓艾)",type:SkillType.BOUT_START,subType:[SkillSubType.SELF_AID],aids:[5],aidCount:1,aidRects:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],probability:30,explanation:"{probability}几率回合开始时提升自身及周围友军的防御力。"},
-{id:31,name:"暗行(吕蒙)",type:SkillType.CREATE,subType:[SkillSubType.MOVE_ASSAULT,SkillSubType.MOVE_KNOW],aids:[5],aidCount:1,aidRects:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],probability:100,explanation:"无视地形和敌军阻挡进行移动。"},
-{id:32,name:"劫营(甘宁)",type:SkillType.ATTACK,subType:[SkillSubType.SURPRISE],attacks:[1.5,2.2],probability:100,explanation:"从敌人背后或侧面攻击时攻击有加成,不包括斜角攻击。"},
-{id:33,name:"乱射(太史慈)",type:SkillType.BOUT_START,subType:[SkillSubType.SELF_AID],aids:[5],aidCount:1,aidRects:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],probability:30,explanation:"{probability}几率使用弓箭类兵种攻击时,使攻击波及到目标敌人相邻的敌军。"},
-{id:34,name:"破弩(徐晃)",type:SkillType.BOUT_START,subType:[SkillSubType.SELF_AID],aids:[5],aidCount:1,aidRects:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],probability:100,explanation:"无视弓兵类兵种的克制效果。"},
-{id:35,name:"破步(于禁)",type:SkillType.BOUT_START,subType:[SkillSubType.SELF_AID],aids:[5],aidCount:1,aidRects:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],probability:100,explanation:"无视步兵类兵种的克制效果。"},
-{id:36,name:"破骑(张郃)",type:SkillType.BOUT_START,subType:[SkillSubType.SELF_AID],aids:[5],aidCount:1,aidRects:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],probability:100,explanation:"无视骑兵类兵种的克制效果。"},
-{id:37,name:"破兵(庞德)",type:SkillType.BOUT_START,subType:[SkillSubType.SELF_AID],aids:[5],aidCount:1,aidRects:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],probability:100,explanation:"无视骑步弓三类兵种的克制效果。"},
-{id:38,name:"仁者(鲁肃,羊祜)",type:SkillType.BOUT_START,subType:[SkillSubType.SELF_AID],aids:[5],aidCount:1,aidRects:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],probability:30,explanation:"{probability}几率回合开始时为己方随机一人征集一些兵力。"},
+{id:28,name:"灵敏(魏延,文鸳)",type:SkillType.ATTACK_END,subType:[SkillSubType.SELF_AID],aids:[9],aidCount:1,aidRects:[{x:0,y:0}],probability:100,explanation:"{probability}几率攻击结束时提升自身爆发力。"},
+{id:29,name:"猛攻(姜维)",type:SkillType.BOUT_START,subType:[SkillSubType.SELF_AID],aids:[1],aidCount:1,aidRects:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],probability:100,explanation:"{probability}几率回合开始时提升自身及周围友军的攻击力。"},
+{id:30,name:"坚固(邓艾)",type:SkillType.BOUT_START,subType:[SkillSubType.SELF_AID],aids:[3],aidCount:1,aidRects:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],probability:100,explanation:"{probability}几率回合开始时提升自身及周围友军的防御力。"},
+{id:31,name:"暗行(吕蒙)",type:SkillType.CREATE,subType:[SkillSubType.MOVE_ASSAULT,SkillSubType.MOVE_KNOW],probability:100,explanation:"无视地形和敌军阻挡进行移动。"},
+{id:32,name:"劫营(甘宁)",type:SkillType.ATTACK,subType:[SkillSubType.SURPRISE],attacks:[1.5,1.2],probability:100,explanation:"从敌人背后或侧面攻击时攻击有加成,不包括斜角攻击。"},
+{id:33,name:"乱射(太史慈)",type:SkillType.ATTACK,subType:[SkillSubType.SPREAD],condition:{type:"AttackType",value:AttackType.FAR},speadProbability:0.25,speadRects:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],probability:100,explanation:"{probability}几率使用弓箭类兵种攻击时,使攻击波及到目标敌人相邻的敌军。"},
+{id:34,name:"破弩(徐晃)",type:SkillType.NULL,subType:[SkillSubType.IGNORE_RESTRAINT],ignore:{type:"AttackType",value:AttackType.FAR},probability:100,explanation:"无视弓兵类兵种的克制效果。"},
+{id:35,name:"破步(于禁)",type:SkillType.NULL,subType:[SkillSubType.IGNORE_RESTRAINT],ignore:{type:"MoveType",value:MoveType.INFANTRY},probability:100,explanation:"无视步兵类兵种的克制效果。"},
+{id:36,name:"破骑(张郃)",type:SkillType.NULL,subType:[SkillSubType.IGNORE_RESTRAINT],ignore:{type:"MoveType",value:MoveType.CAVALRY},probability:100,explanation:"无视骑兵类兵种的克制效果。"},
+{id:37,name:"破兵(庞德)",type:SkillType.NULL,subType:[SkillSubType.IGNORE_RESTRAINT],ignore:{type:"SoldierType",value:SoldierType.Physical},probability:100,explanation:"无视物理类兵种的克制效果。"},
+{id:38,name:"仁者(鲁肃,羊祜)",type:SkillType.BOUT_START,subType:[SkillSubType.ENLIST_SKILL],enlist_value:0.05,enlist_count:1,probability:100,explanation:"{probability}几率回合开始时为己方随机一人征集一些兵力。"},
 {id:39,name:"陷阵营(高顺)",type:SkillType.BOUT_START,subType:[SkillSubType.SELF_AID],aids:[5],aidCount:1,aidRects:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],probability:40,explanation:"{probability}几率相邻敌军大于1时攻击有加成，且相邻敌军越多攻击加成越多。"},
 {id:40,name:"强行(刘晔)",type:SkillType.BOUT_START,subType:[SkillSubType.SELF_AID],aids:[5],aidCount:1,aidRects:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],probability:100,explanation:"移动力增加。"},
 {id:41,name:"霸王(孙策)",type:SkillType.BOUT_START,subType:[SkillSubType.SELF_AID],aids:[5],aidCount:1,aidRects:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],probability:100,explanation:"{probability}几率1.5倍暴击，如果目标敌军武力低于己方，则令其攻击力降低。"},

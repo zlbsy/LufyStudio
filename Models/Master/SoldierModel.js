@@ -65,8 +65,8 @@ SoldierModel.prototype.property = function() {
 SoldierModel.prototype.equipment = function() {
 	return this.master().equipment();
 };
-SoldierModel.prototype.restrain = function() {
-	return this.master().restrain();
+SoldierModel.prototype.restrain = function(restrainId) {
+	return this.master().restrain(restrainId);
 };
 SoldierModel.prototype.terrain = function(terrainId) {
 	return this.master().terrain(terrainId);
