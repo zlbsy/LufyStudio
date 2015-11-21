@@ -98,3 +98,9 @@ SkillMasterModel.prototype.speadRects = function() {
 SkillMasterModel.prototype.speadProbability = function() {
 	return this.data.speadProbability;
 };
+SkillMasterModel.prototype.enlistCount = function() {
+	return this.data.enlist_count;
+};
+SkillMasterModel.prototype.enlistValue = function() {
+	return this.data.enlist_value;
+};

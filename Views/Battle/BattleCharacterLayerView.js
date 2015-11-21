@@ -249,42 +249,52 @@ BattleCharacterLayerView.prototype.boutSkillRun=function(belong,callback){
 		if(!skill){
 			continue;
 		}
+		var tweenObj = getStrokeLabel(skill.name(),22,"#FFFFFF","#000000",2);
+		if(callback){
+			tweenObj.callback = callback;
+			callback = null;
+		}
+		tweenObj.x = chara.x + (BattleCharacterSize.width - tweenObj.getWidth()) * 0.5;
+		tweenObj.y = chara.y;
+		chara.controller.view.baseLayer.addChild(tweenObj);
+		LTweenLite.to(tweenObj,0.5,{y:tweenObj.y - 20,alpha:0,onComplete:function(obj){
+			obj.remove();
+			if(obj.callback){
+				obj.callback();
+			}
+		}});
 		if(skill.isSubType(SkillSubType.SELF_AID)){
-			self.boutSkillSelfAid(chara,skill,callback);
-			if(callback){
-				callback = null;
-			}
+			self.boutSkillSelfAid(chara,skill,tweenObj);
 		}else if(skill.isSubType(SkillSubType.ENLIST_SKILL)){
-			self.boutSkillEnlist(chara,skill,callback);
-			if(callback){
-				callback = null;
-			}
+			self.boutSkillEnlist(chara,skill,tweenObj);
 		}
 	}
 	if(callback){
 		callback();
 	}
 };
-BattleCharacterLayerView.prototype.boutSkillEnlist=function(chara,skill,callback){
-	if(callback){
-		callback();
-	}
-};
-BattleCharacterLayerView.prototype.boutSkillSelfAid=function(chara,skill,callback){
+BattleCharacterLayerView.prototype.boutSkillEnlist=function(chara,skill,tweenObj){
 	var self = this;
-	var tweenObj = getStrokeLabel(skill.name(),22,"#FFFFFF","#000000",2);
-	if(callback){
-		tweenObj.callback = callback;
+	var enlistCount = skill.enlistCount();
+	var enlistValue = skill.enlistValue();
+	var charas = self.getCharactersFromBelong(chara.belong);
+	charas = Array.getRandomArrays(charas,enlistCount);
+	for(var i=0,l=charas.length;i<l;i++){
+		var currentChara = charas[i];
+		var addTroops = currentChara.data.maxTroops() * enlistValue >>> 0;
+		var troops = currentChara.data.troops();
+		currentChara.data.troops(troops + addTroops);
+		var tweenVampire = getStrokeLabel(String.format("兵力+{0}",addTroops),12,"#FF0000","#000000",2);
+		tweenVampire.x = currentChara.x + (BattleCharacterSize.width - tweenVampire.getWidth()) * 0.5;
+		tweenVampire.y = currentChara.y + (currentChara.data.id() == chara.data.id() ? 20 : 0);
+		chara.controller.view.baseLayer.addChild(tweenVampire);
+		LTweenLite.to(tweenVampire,1.5,{y:tweenVampire.y - 20,alpha:0,onComplete:function(e){
+			e.target.remove();
+		}});
 	}
-	tweenObj.x = chara.x + (BattleCharacterSize.width - tweenObj.getWidth()) * 0.5;
-	tweenObj.y = chara.y;
-	chara.controller.view.baseLayer.addChild(tweenObj);
-	LTweenLite.to(tweenObj,0.5,{y:tweenObj.y - 20,alpha:0,onComplete:function(obj){
-		obj.remove();
-		if(obj.callback){
-			obj.callback();
-		}
-	}});
+};
+BattleCharacterLayerView.prototype.boutSkillSelfAid=function(chara,skill,tweenObj){
+	var self = this;
 	var aids = Array.getRandomArrays(skill.aids(),skill.aidCount());
 	var aidRects = skill.aidRects();
 	for(var i=0;i<aidRects.length;i++){

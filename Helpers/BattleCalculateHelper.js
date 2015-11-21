@@ -375,22 +375,22 @@ function calculateSpreadPointsLoop(x, y, points, speadRects, speadProbability, l
 	}
 }
 /*****************************************************************
- 特技埋伏加强系数计算
+ 特技(反)埋伏加强系数计算
  **************************************************************/
-function calculateAmbush(currentChara, skill){
+function calculateAmbush(skill, x, y, belong, count){
 	var ambushRects = skill.ambushRects();
 	var ambush = skill.ambush();
-	var x = currentChara.locationX();
-	var y = currentChara.locationY();
-	var belong = currentChara.belong;
 	var result = 0;
+	var num = 0;
 	for(var i = 0, l = ambushRects.length;i<l;i++){
 		var point = ambushRects[i];
 		var chara = LMvc.BattleController.view.charaLayer.getCharacterFromLocation(x+point.x, y+point.y);
 		if(!chara || !isSameBelong(chara.belong,belong)){
 			continue;
 		}
-		result += ambush;
+		if(++num > count){
+			result += ambush;
+		}
 	}
 	return result;
 }

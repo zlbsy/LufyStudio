@@ -52,6 +52,9 @@ BattleCharacterAI.prototype.magicAttack = function(target){
 		}else{
 			hertValues = [1];
 		}
+		if(skill && skill.isSubType(SkillSubType.AMBUSH)){
+			hertValues[0] += calculateAmbush(skill, target.locationX(), target.locationY(), self.chara.belong, 0);
+		}
 		for(var j=0;j<hertValues.length;j++){
 			correctionFactor = hertValues[j];
 			hertParams = new HertParams();
@@ -67,10 +70,13 @@ BattleCharacterAI.prototype.magicAttack = function(target){
 			for(var i = 0;i<ranges.length;i++){
 				var range = ranges[i];
 				var chara = LMvc.BattleController.view.charaLayer.getCharacterFromLocation(target.locationX()+range.x, target.locationY()+range.y);
-				if(!chara || (currentSelectStrategy.belong() == Belong.ENEMY && isSameBelong(chara.belong,self.chara.belong)) 
-					|| (currentSelectStrategy.belong() == Belong.SELF && !isSameBelong(chara.belong,self.chara.belong))){
+				if(!chara || ((currentSelectStrategy.belong() == Belong.SELF) ^ isSameBelong(chara.belong,self.chara.belong)) ){
 					continue;
 				}
+				/*if(!chara || (currentSelectStrategy.belong() == Belong.ENEMY && isSameBelong(chara.belong,self.chara.belong)) 
+					|| (currentSelectStrategy.belong() == Belong.SELF && !isSameBelong(chara.belong,self.chara.belong))){
+					continue;
+				}*/
 				hertParams.push(chara, correctionFactor*calculateStrategyCharasCorrection(chara));
 				charas.push(chara);
 			}
@@ -133,28 +139,22 @@ BattleCharacterAI.prototype.physicalAttack = function(target) {
 				var doubleAtt = calculateDoubleAtt(self.chara, target);
 				hertValues = doubleAtt ? [1,1] : [1];
 			}
-			if(skill && skill.isSubType(SkillSubType.AMBUSH)){
-				hertValues[0] += calculateAmbush(self.chara, skill);
+			if(skill && skill.isSubType(SkillSubType.AMBUSH_INVERSE)){
+				hertValues[0] += calculateAmbush(skill, self.chara.locationX(), self.chara.locationY(), target.belong, 1);
 			}
-			console.log("hertValues.length="+hertValues.length);
 			for(var j=0;j<hertValues.length;j++){
 				var hertParams = new HertParams();
 				var value = hertValue*hertValues[j]>>>0;
 				hertParams.push(target, value > 1 ? value : 1);
 				if(j == 0 && skill && skill.isSubType(SkillSubType.SPREAD)){//蔓延
-					console.log("j == 0 t = "+(getTimer()));
 					var ranges = self.chara.data.currentSoldiers().rangeAttackTarget();
-					console.log("ranges = "+ranges+"t="+(getTimer()));
 					rangeAttackTarget = calculateSpreadPoints(skill, ranges);
 					//rangeAttackTarget = ranges;
-					console.log("rangeAttackTarget = "+rangeAttackTarget+"t="+(getTimer()));
 				}else if(skill && skill.isSubType(SkillSubType.ATTACK_RECT)){
 					rangeAttackTarget = skill.rects();
 				}else{
 					rangeAttackTarget = self.chara.data.currentSoldiers().rangeAttackTarget();
 				}
-				console.log(j+"rangeAttackTarget.length="+rangeAttackTarget.length);
-				console.log("for ranges="+(getTimer()));
 				for(var i = 0;i<rangeAttackTarget.length;i++){
 					var range = rangeAttackTarget[i];
 					if(range.x == 0 && range.y == 0){
@@ -166,7 +166,6 @@ BattleCharacterAI.prototype.physicalAttack = function(target) {
 					}
 					hertParams.push(chara,calculateHertValue(self.chara, chara, 1));
 				}
-				console.log("for over="+(getTimer()));
 				self.herts.push(hertParams);
 			}
 			hertParams = self.herts[0];

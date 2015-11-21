@@ -459,6 +459,8 @@ Language.skillData = {
 	"skill_explanation_37":"无视物理攻击类兵种的克制效果。",
 	"skill_name_38":"仁者",
 	"skill_explanation_38":"回合开始时为己方随机一人征集一些兵力。",
+	"skill_name_39":"陷阵营",
+	"skill_explanation_39":"相邻敌军大于1时攻击有加成，且相邻敌军越多攻击加成越多。",
 };
 Language.groupSkillTalkData = [
 	"痛快，一起上!",
