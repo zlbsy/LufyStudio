@@ -348,31 +348,30 @@ function calculateStrategyCharasCorrection(currentChara){
  特技的法术蔓延范围计算
  **************************************************************/
 function calculateSpreadPoints(skill, ranges){
+	testCount = 0;
 	var points = ranges.concat();
 	var speadRects = skill.speadRects();
 	var speadProbability = skill.speadProbability();
-	console.log("ranges:"+ranges);
-	console.log("speadRects:"+speadRects);
+	var pointsCheck = {};
 	ranges.forEach(function(child){
 		for(var i = 0; i < speadRects.length; i++){
 			var point = speadRects[i];
-			calculateSpreadPointsLoop(child.x + point.x, child.y + point.y, points, speadRects, speadProbability);
+			calculateSpreadPointsLoop(child.x + point.x, child.y + point.y, points, speadRects, speadProbability, 0, pointsCheck);
 		}
 	});
 	return points;
 }
-function calculateSpreadPointsLoop(x, y, points, speadRects, speadProbability){
-	console.log("PointsLoop:"+x+","+y+":"+speadProbability);
-	if(points.findIndex(function(child){return child.x == x && child.y == y;}) >= 0){
-		return;
-	}
+function calculateSpreadPointsLoop(x, y, points, speadRects, speadProbability, loops, pointsCheck){
+	//console.log("PointsLoop("+(testCount++)+"):"+x+","+y+":"+speadProbability+"l="+points.length);
+	if(loops > 2 || pointsCheck[x+","+y])return;
 	if(Math.random() > speadProbability){
 		return;
 	}
+	pointsCheck[x+","+y]=1;
 	points.push({x:x,y:y});
 	for(var i = 0; i < speadRects.length; i++){
 		var point = speadRects[i];
-		calculateSpreadPointsLoop(x + point.x, y + point.y, points, speadRects, speadProbability);
+		calculateSpreadPointsLoop(x + point.x, y + point.y, points, speadRects, speadProbability, loops + 1, pointsCheck);
 	}
 }
 /*****************************************************************
