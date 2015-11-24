@@ -62,6 +62,10 @@ var SkillSubType = {
 	 **/
 	ATTACK_RECT:"attackRect",
 	/**
+	 * 无反击
+	 **/
+	NO_COUNTER:"noCounter",
+	/**
 	 * 伤害减少
 	 **/
 	HERT_MINUS:"hertMinus",
@@ -197,14 +201,14 @@ var SkillsData = [
 {id:40,name:"强行(刘晔)",type:SkillType.CREATE,subType:[SkillSubType.STATUS_ADD_NUM],status_name:"movePower",status_value:2,probability:100,explanation:"移动力增加。"},
 {id:41,name:"小霸王(孙策)",type:SkillType.ATTACK,subType:[SkillSubType.ATTACK_COUNT,SkillSubType.ENEMY_AID],condition:{type:"StatusCompare",name:"force",value:1},attacks:[1.5],aids:[2],aidCount:1,aidRects:[{x:0,y:0}],probability:100,explanation:"{probability}几率对武力低于自己的敌军，进行1.5倍暴击，且令其攻击力降低。"},
 {id:42,name:"逆击(华雄)",type:SkillType.BACK_ATTACK,subType:[SkillSubType.ATTACK_COUNT],attacks:[0.75,0.75],probability:100,explanation:"{probability}几率反击两次。"},
-{id:43,name:"大喝(关兴)",type:SkillType.ATTACK,subType:[SkillSubType.SELF_AID],aids:[5],aidCount:1,aidRects:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],probability:100,explanation:"{probability}几率1.5倍暴击，大喝的强大气势令敌军无法反击。"},
-{id:44,name:"冲锋(张苞)",type:SkillType.BOUT_START,subType:[SkillSubType.SELF_AID],aids:[5],aidCount:1,aidRects:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],probability:100,explanation:"{probability}几率1.5倍暴击，附带穿透效果。"},
+{id:43,name:"大喝(关兴)",type:SkillType.ATTACK,subType:[SkillSubType.ATTACK_COUNT,SkillSubType.NO_COUNTER],attacks:[1.5],probability:100,explanation:"{probability}几率1.5倍暴击，大喝的强大气势令敌军无法反击。"},
+{id:44,name:"冲锋(张苞)",type:SkillType.ATTACK,subType:[SkillSubType.ATTACK_COUNT,SkillSubType.PENETRATE],attacks:[1.5],probability:100,explanation:"{probability}几率1.5倍暴击，附带穿透效果。"},
 {id:45,name:"节粮(马良,郭淮,张紘)",type:SkillType.NULL,subType:[SkillSubType.THRIFT],explanation:"粮食消耗减半。"},
 {id:46,name:"商业(糜竺)",type:SkillType.NULL,subType:[SkillSubType.BUSINESS],explanation:"内政商业加成。"},
 {id:47,name:"技术(伊籍)",type:SkillType.NULL,subType:[SkillSubType.TECHNOLOGY],explanation:"内政技术加成。"},
 {id:48,name:"农业(简雍)",type:SkillType.NULL,subType:[SkillSubType.AGRICULTURE],explanation:"内政农业加成。"},
 {id:49,name:"征兵(陈到)",type:SkillType.NULL,subType:[SkillSubType.ENLIST],explanation:"内政征兵加成。"},
-{id:50,name:"顽强(周泰)",type:SkillType.BOUT_START,subType:[SkillSubType.SELF_AID],aids:[5],aidCount:1,aidRects:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],probability:100,explanation:"反击穿透。"},
+{id:50,name:"肉搏(周泰)",type:SkillType.BACK_ATTACK,subType:[SkillSubType.PENETRATE],probability:100,explanation:"反击时附带穿透效果。"},
 {id:51,name:"死战(凌统)",type:SkillType.BOUT_START,subType:[SkillSubType.SELF_AID],aids:[5],aidCount:1,aidRects:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],probability:100,explanation:"士兵越少攻击越高。"},
 {id:52,name:"顺势(程普)",type:SkillType.BOUT_START,subType:[SkillSubType.SELF_AID],aids:[5],aidCount:1,aidRects:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],probability:30,explanation:"致命一击发动时有几率将攻击提高一倍。"},
 {id:53,name:"忍耐(黄盖)",type:SkillType.BOUT_START,subType:[SkillSubType.SELF_AID],aids:[5],aidCount:1,aidRects:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],probability:100,explanation:"士兵越少防御越高。"},

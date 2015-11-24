@@ -147,6 +147,9 @@ BattleCharacterAI.prototype.physicalAttack = function(target) {
 			if(skill && skill.isSubType(SkillSubType.AMBUSH_INVERSE)){
 				hertValues[0] += calculateAmbush(skill, self.chara.locationX(), self.chara.locationY(), target.belong, 1);
 			}
+			if(skill && skill.isSubType(SkillSubType.NO_COUNTER)){
+				target.AI.herts = [];
+			}
 			for(var j=0;j<hertValues.length;j++){
 				var hertParams = new HertParams();
 				var value = hertValue*hertValues[j]>>>0;
@@ -155,6 +158,9 @@ BattleCharacterAI.prototype.physicalAttack = function(target) {
 					var ranges = self.chara.data.currentSoldiers().rangeAttackTarget();
 					rangeAttackTarget = calculateSpreadPoints(skill, ranges);
 					//rangeAttackTarget = ranges;
+				}else if(j == 0 && skill && skill.isSubType(SkillSubType.PENETRATE)){//穿透
+					var ranges = self.chara.data.currentSoldiers().rangeAttackTarget();
+					rangeAttackTarget = calculatePenetratePoints(self.chara,target, ranges);
 				}else if(skill && skill.isSubType(SkillSubType.ATTACK_RECT)){
 					rangeAttackTarget = skill.rects();
 				}else{
@@ -227,7 +233,13 @@ BattleCharacterAI.prototype.physicalAttack = function(target) {
 			for(var j=0;j<hertValues.length;j++){
 				var hertValue = hertValues[j];
 				var hertParams = new HertParams();
-				rangeAttackTarget = self.chara.data.currentSoldiers().rangeAttackTarget();
+				if(j == 0 && skill && skill.isSubType(SkillSubType.PENETRATE)){//穿透
+					var ranges = self.chara.data.currentSoldiers().rangeAttackTarget();
+					rangeAttackTarget = calculatePenetratePoints(self.chara,target, ranges);
+				}else{
+					rangeAttackTarget = self.chara.data.currentSoldiers().rangeAttackTarget();
+				}
+				
 				hertParams.push(target,calculateHertValue(self.chara, target, hertValue));
 				for(var i = 0;i<rangeAttackTarget.length;i++){
 					var range = rangeAttackTarget[i];
@@ -442,7 +454,7 @@ BattleCharacterAI.prototype.counterAttack = function(event) {
 	}
 	if(attackChatacter.data.id() == BattleController.ctrlChara.data.id()){
 		var chara = LMvc.currentAttackTarget;
-		if(chara.data.troops() > 0 && battleCanAttackCharacter(chara, attackChatacter)){
+		if(chara.data.troops() > 0 && chara.AI.herts === null && battleCanAttackCharacter(chara, attackChatacter)){
 			chara.AI.physicalAttack(attackChatacter);
 			return;
 		}

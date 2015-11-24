@@ -180,7 +180,9 @@ CharacterListView.prototype.selectExecute=function(){
 	if(characterListType == CharacterListType.TEST){
 		return;
 	}
-	LMvc.CityController.dispatchEvent(LController.NOTIFY_ALL);
+	if(LMvc.CityController){
+		LMvc.CityController.dispatchEvent(LController.NOTIFY_ALL);
+	}
 };
 CharacterListView.prototype.getCutoverButton=function(name){
 	var self = this;
