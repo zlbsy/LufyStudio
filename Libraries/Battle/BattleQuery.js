@@ -78,8 +78,8 @@ BattleQuery.prototype.makePath = function(chara){
 		}
 	}
 	self._starPoint = self._map[chara.locationY()][chara.locationX()];
-	var soldier = self._chara.data.currentSoldiers();
-	self._starPoint.moveLong = soldier.movePower();
+	//var soldier = self._chara.data.currentSoldiers();
+	self._starPoint.moveLong = self._chara.data.movePower();
 	self.loopPath(self._starPoint);
 	return self._path;
 };

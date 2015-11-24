@@ -122,6 +122,14 @@ var SkillSubType = {
 	 **/
 	THRIFT_MP:"thrift_mp",
 	/**
+	 * 属性增加固定值
+	 **/
+	STATUS_ADD_NUM:"status_add_num",
+	/**
+	 * 属性增加百分比值
+	 **/
+	STATUS_ADD_PROP:"status_add_prop",
+	/**
 	 * 征集(和招募区别)
 	 **/
 	ENLIST_SKILL:"enlist_skill",
@@ -150,7 +158,7 @@ var SkillsData = [
 {id:1,name:"雷霆怒击(张飞)",type:SkillType.ATTACK,subType:[SkillSubType.ATTACK_COUNT],attacks:[1,1,1],probability:50,explanation:"{probability}几率连续攻击三次。"},
 {id:2,name:"真龙之气(刘备,曹操,孙权,曹丕,司马炎)",type:SkillType.HERT,subType:[SkillSubType.HERT_MINUS],hert:0,probability:30,explanation:"{probability}%几率将受到的伤害减少为0。"},
 {id:3,name:"隔山打牛(关羽)",type:SkillType.ATTACK,subType:[SkillSubType.ATTACK_RECT],rects:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],probability:50,explanation:"{probability}几率使攻击波及到目标敌人相邻的敌军。"},
-{id:4,name:"天下无双(吕布)",type:SkillType.ATTACK,subType:[SkillSubType.ATTACK_COUNT,SkillSubType.ENEMY_AID],attacks:[1.2,1.2],aids:[2],aidCount:1,aidRects:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],probability:100,explanation:"{probability}几率重击敌军两次，并且使得目标敌人相邻的敌军防御力降低。"},
+{id:4,name:"天下无双(吕布)",type:SkillType.ATTACK,subType:[SkillSubType.ATTACK_COUNT,SkillSubType.ENEMY_AID],attacks:[1.2,1.2],aids:[4],aidCount:1,aidRects:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],probability:100,explanation:"{probability}几率重击敌军两次，并且使得目标敌人相邻的敌军防御力降低。"},
 {id:5,name:"愈战愈勇(颜良,杜预)",type:SkillType.ATTACK_END,subType:[SkillSubType.SELF_AID],aids:[1],aidCount:1,aidRects:[{x:0,y:0}],probability:40,explanation:"{probability}几率在攻击结束时提升自身攻击力。"},
 {id:6,name:"愈战愈坚(文丑,郝昭)",type:SkillType.ATTACK_END,subType:[SkillSubType.SELF_AID],aids:[3],aidCount:1,aidRects:[{x:0,y:0}],probability:100,explanation:"{probability}几率在攻击结束时提升自身防御力。"},
 {id:7,name:"鼓舞(张辽,张任)",type:SkillType.BOUT_START,subType:[SkillSubType.SELF_AID],aids:[5],aidCount:1,aidRects:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],probability:100,explanation:"{probability}几率在回合开始时提升自身以及周围友军的士气。"},
@@ -186,20 +194,20 @@ var SkillsData = [
 {id:37,name:"破兵(庞德)",type:SkillType.NULL,subType:[SkillSubType.IGNORE_RESTRAINT],ignore:{type:"SoldierType",value:SoldierType.Physical},probability:100,explanation:"无视物理类兵种的克制效果。"},
 {id:38,name:"仁者(鲁肃,羊祜)",type:SkillType.BOUT_START,subType:[SkillSubType.ENLIST_SKILL],enlist_value:0.05,enlist_count:1,probability:100,explanation:"{probability}几率回合开始时为己方随机一人征集一些兵力。"},
 {id:39,name:"陷阵营(高顺)",type:SkillType.ATTACK,subType:[SkillSubType.AMBUSH_INVERSE],ambush:1.2,ambushRects:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],probability:100,explanation:"{probability}几率相邻敌军大于1时攻击有加成，且相邻敌军越多攻击加成越多。"},
-{id:40,name:"强行(刘晔)",type:SkillType.CREATE,subType:[SkillSubType.SELF_AID],aids:[5],aidCount:1,aidRects:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],probability:100,explanation:"移动力增加。"},
-{id:41,name:"霸王(孙策)",type:SkillType.BOUT_START,subType:[SkillSubType.SELF_AID],aids:[5],aidCount:1,aidRects:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],probability:100,explanation:"{probability}几率1.5倍暴击，如果目标敌军武力低于己方，则令其攻击力降低。"},
-{id:42,name:"逆击(华雄)",type:SkillType.BOUT_START,subType:[SkillSubType.SELF_AID],aids:[5],aidCount:1,aidRects:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],probability:100,explanation:"{probability}几率反击两次。"},
-{id:43,name:"大喝(关兴)",type:SkillType.BOUT_START,subType:[SkillSubType.SELF_AID],aids:[5],aidCount:1,aidRects:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],probability:100,explanation:"{probability}几率1.5倍暴击，大喝的强大气势令敌军无法反击。"},
+{id:40,name:"强行(刘晔)",type:SkillType.CREATE,subType:[SkillSubType.STATUS_ADD_NUM],status_name:"movePower",status_value:2,probability:100,explanation:"移动力增加。"},
+{id:41,name:"小霸王(孙策)",type:SkillType.ATTACK,subType:[SkillSubType.ATTACK_COUNT,SkillSubType.ENEMY_AID],condition:{type:"StatusCompare",name:"force",value:1},attacks:[1.5],aids:[2],aidCount:1,aidRects:[{x:0,y:0}],probability:100,explanation:"{probability}几率对武力低于自己的敌军，进行1.5倍暴击，且令其攻击力降低。"},
+{id:42,name:"逆击(华雄)",type:SkillType.BACK_ATTACK,subType:[SkillSubType.ATTACK_COUNT],attacks:[0.75,0.75],probability:100,explanation:"{probability}几率反击两次。"},
+{id:43,name:"大喝(关兴)",type:SkillType.ATTACK,subType:[SkillSubType.SELF_AID],aids:[5],aidCount:1,aidRects:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],probability:100,explanation:"{probability}几率1.5倍暴击，大喝的强大气势令敌军无法反击。"},
 {id:44,name:"冲锋(张苞)",type:SkillType.BOUT_START,subType:[SkillSubType.SELF_AID],aids:[5],aidCount:1,aidRects:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],probability:100,explanation:"{probability}几率1.5倍暴击，附带穿透效果。"},
 {id:45,name:"节粮(马良,郭淮,张紘)",type:SkillType.NULL,subType:[SkillSubType.THRIFT],explanation:"粮食消耗减半。"},
 {id:46,name:"商业(糜竺)",type:SkillType.NULL,subType:[SkillSubType.BUSINESS],explanation:"内政商业加成。"},
 {id:47,name:"技术(伊籍)",type:SkillType.NULL,subType:[SkillSubType.TECHNOLOGY],explanation:"内政技术加成。"},
 {id:48,name:"农业(简雍)",type:SkillType.NULL,subType:[SkillSubType.AGRICULTURE],explanation:"内政农业加成。"},
 {id:49,name:"征兵(陈到)",type:SkillType.NULL,subType:[SkillSubType.ENLIST],explanation:"内政征兵加成。"},
-{id:50,name:"顽强(周泰)",type:SkillType.BOUT_START,subType:[SkillSubType.SELF_AID],aids:[5],aidCount:1,aidRects:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],probability:100,explanation:"士兵越少防御越高。"},
+{id:50,name:"顽强(周泰)",type:SkillType.BOUT_START,subType:[SkillSubType.SELF_AID],aids:[5],aidCount:1,aidRects:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],probability:100,explanation:"反击穿透。"},
 {id:51,name:"死战(凌统)",type:SkillType.BOUT_START,subType:[SkillSubType.SELF_AID],aids:[5],aidCount:1,aidRects:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],probability:100,explanation:"士兵越少攻击越高。"},
 {id:52,name:"顺势(程普)",type:SkillType.BOUT_START,subType:[SkillSubType.SELF_AID],aids:[5],aidCount:1,aidRects:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],probability:30,explanation:"致命一击发动时有几率将攻击提高一倍。"},
-{id:53,name:"忍耐(黄盖)",type:SkillType.BOUT_START,subType:[SkillSubType.SELF_AID],aids:[5],aidCount:1,aidRects:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],probability:100,explanation:"无视体力影响，保持原有攻击力。"},
+{id:53,name:"忍耐(黄盖)",type:SkillType.BOUT_START,subType:[SkillSubType.SELF_AID],aids:[5],aidCount:1,aidRects:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],probability:100,explanation:"士兵越少防御越高。"},
 {id:54,name:"倾国(貂蝉)",type:SkillType.BOUT_START,subType:[SkillSubType.SELF_AID],aids:[5],aidCount:1,aidRects:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],probability:100,explanation:"使用女兵兵种时,受到攻击时有几率将伤害减半,在攻击时其倾国的美色让敌军无法动弹(定身效果)。"},
 {id:55,name:"倾城(大乔,小乔)",type:SkillType.BOUT_START,subType:[SkillSubType.SELF_AID],aids:[5],aidCount:1,aidRects:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],probability:100,explanation:"使用女兵兵种时,受到攻击时有几率将伤害减半。"},
 {id:56,name:"巾帼(孙尚香)",type:SkillType.BOUT_START,subType:[SkillSubType.SELF_AID],aids:[5],aidCount:1,aidRects:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],probability:100,explanation:"巾帼不让须眉，每次攻击必定双击。"},

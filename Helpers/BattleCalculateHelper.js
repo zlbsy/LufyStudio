@@ -259,7 +259,8 @@ function calculateHertValue(attChara,hertChara,correctionFactor){
 	var ignore = false;
 	if(skill){
 		var skillIgnore = skill.ignore();
-		if(skillIgnore.type == "AttackType"){
+		if(!skillIgnore){
+		}else if(skillIgnore.type == "AttackType"){
 			if(skillIgnore.value == attCharaModel.currentSoldiers().attackType()){
 				ignore = true;
 			}

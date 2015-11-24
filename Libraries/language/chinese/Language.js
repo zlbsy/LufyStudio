@@ -461,6 +461,14 @@ Language.skillData = {
 	"skill_explanation_38":"回合开始时为己方随机一人征集一些兵力。",
 	"skill_name_39":"陷阵营",
 	"skill_explanation_39":"相邻敌军大于1时攻击有加成，且相邻敌军越多攻击加成越多。",
+	"skill_name_40":"强行",
+	"skill_explanation_40":"移动力增加。",
+	"skill_name_41":"小霸王",
+	"skill_explanation_41":"对武力低于自己的敌军，进行1.5倍暴击，且令其攻击力降低。",
+	"skill_name_42":"逆击",
+	"skill_explanation_42":"反击两次。",
+	"skill_name_43":"大喝",
+	"skill_explanation_43":"1.5倍暴击，大喝的强大气势令敌军无法反击。",
 };
 Language.groupSkillTalkData = [
 	"痛快，一起上!",

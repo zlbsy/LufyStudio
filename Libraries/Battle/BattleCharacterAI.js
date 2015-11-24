@@ -130,7 +130,12 @@ BattleCharacterAI.prototype.physicalAttack = function(target) {
 					if(condition.value != self.chara.data.currentSoldiers().attackType()){
 						skill = null;
 					}
-					console.log("AttackType:"+skill);
+				}else if(condition.type == "StatusCompare"){
+					var selfValue = self.chara.data[condition.name]();
+					var targetValue = target.data[condition.name]();
+					if((selfValue - targetValue)*condition.value <= 0){
+						skill = null;
+					}
 				}
 			}
 			if(skill && skill.isSubType(SkillSubType.ATTACK_COUNT)){
@@ -209,22 +214,35 @@ BattleCharacterAI.prototype.physicalAttack = function(target) {
 				}
 			}
 		}else{
-			var hertParams = new HertParams();
-			rangeAttackTarget = self.chara.data.currentSoldiers().rangeAttackTarget();
-			hertParams.push(target,calculateHertValue(self.chara, target, 0.75));
-			for(var i = 0;i<rangeAttackTarget.length;i++){
-				var range = rangeAttackTarget[i];
-				if(range.x == 0 && range.y == 0){
-					continue;
-				}
-				var chara = LMvc.BattleController.view.charaLayer.getCharacterFromLocation(target.locationX()+range.x, target.locationY()+range.y);
-					
-				if(!chara || isSameBelong(chara.belong,self.chara.belong)){
-					continue;
-				}
-				hertParams.push(chara,calculateHertValue(self.chara, chara, 0.75));
+			skill = self.chara.data.skill(SkillType.BACK_ATTACK);
+			self.herts = [];
+			var hertValue = calculateHertValue(self.chara, target, 1);
+			var hertValues;
+			if(skill && skill.isSubType(SkillSubType.ATTACK_COUNT)){
+				hertValues = skill.attacks();
+			}else{
+				var doubleAtt = calculateDoubleAtt(self.chara, target);
+				hertValues = [0.75];
 			}
-			self.herts = [hertParams];
+			for(var j=0;j<hertValues.length;j++){
+				var hertValue = hertValues[j];
+				var hertParams = new HertParams();
+				rangeAttackTarget = self.chara.data.currentSoldiers().rangeAttackTarget();
+				hertParams.push(target,calculateHertValue(self.chara, target, hertValue));
+				for(var i = 0;i<rangeAttackTarget.length;i++){
+					var range = rangeAttackTarget[i];
+					if(range.x == 0 && range.y == 0){
+						continue;
+					}
+					var chara = LMvc.BattleController.view.charaLayer.getCharacterFromLocation(target.locationX()+range.x, target.locationY()+range.y);
+						
+					if(!chara || isSameBelong(chara.belong,self.chara.belong)){
+						continue;
+					}
+					hertParams.push(chara,calculateHertValue(self.chara, chara, hertValue));
+				}
+				self.herts.push(hertParams);
+			}
 		}	
 	}
 	if(!self.chara.groupSkill && calculateFatalAtt(self.chara, target)){
@@ -417,7 +435,7 @@ BattleCharacterAI.prototype.counterAttack = function(event) {
 	console.error("counterAttack" ,attackChatacter.data.name());
 	if(!isCurrentAttackCharacter(attackChatacter) && !isCurrentAttackTarget(attackChatacter)){
 		return;
-	}
+	}console.log("attackChatacter.AI.herts.length="+attackChatacter.AI.herts.length);
 	if(attackChatacter.AI.herts && attackChatacter.AI.herts.length > 0){
 		attackChatacter.AI.physicalAttack(isCurrentAttackCharacter(attackChatacter) ? LMvc.currentAttackTarget : LMvc.currentAttackCharacter);
 		return;

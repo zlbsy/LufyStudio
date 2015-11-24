@@ -69,6 +69,7 @@ CharacterModel.prototype.calculation = function(init) {
 	self.data.morale = self.luck() * 0.5 + CharacterModel.upValue(property.morale, self.luck()) * self.lv();
 	self.data.maxTroops = self.initTroops() + property.troops * self.lv();
 	self.data.maxStrategy = self.initStrategy() + property.strategy * self.lv();
+	self.data.movePower = this.currentSoldiers().movePower();
 	if(init){
 		self.maxTroops(init);
 		self.maxHP(init);
@@ -80,6 +81,11 @@ CharacterModel.prototype.calculation = function(init) {
 	var skill = self.skill(SkillType.CREATE);
 	self.data.moveAssault = (skill && skill.isSubType(SkillSubType.MOVE_ASSAULT));
 	self.data.moveKnow = (skill && skill.isSubType(SkillSubType.MOVE_KNOW));
+	if(skill && skill.isSubType(SkillSubType.STATUS_ADD_NUM)){
+		self.data[skill.statusName()] += skill.statusValue();
+	}else if(skill && skill.isSubType(SkillSubType.STATUS_ADD_PROP)){
+		self.data[skill.statusName()] = self.data[skill.statusName()] * (1 + skill.statusValue()) >>> 0;
+	}
 };
 CharacterModel.prototype.moveKnow = function() {
 	return this.data.moveKnow;
@@ -105,7 +111,7 @@ CharacterModel.prototype.physicalFitness = function(){//体力
 CharacterModel.prototype.maxPhysicalFitness = function(){
 	return this.data.maxPhysicalFitness;
 };
-CharacterModel.prototype.disposition = function(){
+CharacterModel.prototype.disposition = function(){//0胆小，1冷静，2勇敢，3鲁莽
 	return this.data.disposition;
 };
 CharacterModel.prototype.attack = function(){
@@ -122,6 +128,9 @@ CharacterModel.prototype.breakout = function(){
 };
 CharacterModel.prototype.morale = function(){
 	return this.data.morale;
+};
+CharacterModel.prototype.movePower = function() {
+	return this.data.movePower;
 };
 CharacterModel.prototype.dispositionLabel = function(){
 	return Language.get("disposition_"+this.data.disposition);

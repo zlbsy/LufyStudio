@@ -104,3 +104,9 @@ SkillMasterModel.prototype.enlistCount = function() {
 SkillMasterModel.prototype.enlistValue = function() {
 	return this.data.enlist_value;
 };
+SkillMasterModel.prototype.statusName = function() {
+	return this.data.status_name;
+};
+SkillMasterModel.prototype.statusValue = function() {
+	return this.data.status_value;
+};
