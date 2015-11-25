@@ -28,6 +28,10 @@ var SkillType = {
 	 **/
 	BACK_ATTACK_END:"backAttackEnd",
 	/**
+	 * 致命攻击时发动
+	 **/
+	ANGRY_ATTACK:"angryAttack",
+	/**
 	 * 回合开始时发动
 	 **/
 	BOUT_START:"boutStart",
@@ -73,6 +77,10 @@ var SkillSubType = {
 	 * 法术伤害减少
 	 **/
 	STRATEGY_HERT_MINUS:"strategyHertMinus",
+	/**
+	 * 属性随HP变化而变化
+	 **/
+	HERT_VS_STATUS:"hertVsStatus",
 	/**
 	 * 免疫异常攻击或法术
 	 **/
@@ -209,12 +217,12 @@ var SkillsData = [
 {id:48,name:"农业(简雍)",type:SkillType.NULL,subType:[SkillSubType.AGRICULTURE],explanation:"内政农业加成。"},
 {id:49,name:"征兵(陈到)",type:SkillType.NULL,subType:[SkillSubType.ENLIST],explanation:"内政征兵加成。"},
 {id:50,name:"肉搏(周泰)",type:SkillType.BACK_ATTACK,subType:[SkillSubType.PENETRATE],probability:100,explanation:"反击时附带穿透效果。"},
-{id:51,name:"死战(凌统)",type:SkillType.BOUT_START,subType:[SkillSubType.SELF_AID],aids:[5],aidCount:1,aidRects:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],probability:100,explanation:"士兵越少攻击越高。"},
-{id:52,name:"顺势(程普)",type:SkillType.BOUT_START,subType:[SkillSubType.SELF_AID],aids:[5],aidCount:1,aidRects:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],probability:30,explanation:"致命一击发动时有几率将攻击提高一倍。"},
-{id:53,name:"忍耐(黄盖)",type:SkillType.BOUT_START,subType:[SkillSubType.SELF_AID],aids:[5],aidCount:1,aidRects:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],probability:100,explanation:"士兵越少防御越高。"},
-{id:54,name:"倾国(貂蝉)",type:SkillType.BOUT_START,subType:[SkillSubType.SELF_AID],aids:[5],aidCount:1,aidRects:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],probability:100,explanation:"使用女兵兵种时,受到攻击时有几率将伤害减半,在攻击时其倾国的美色让敌军无法动弹(定身效果)。"},
+{id:51,name:"死战(凌统)",type:SkillType.CREATE,subType:[SkillSubType.HERT_VS_STATUS],hert_vs_status:{name:"attack",value:0.2},probability:100,explanation:"士兵越少攻击越高。"},
+{id:52,name:"顺势(程普)",type:SkillType.ANGRY_ATTACK,subType:[SkillSubType.ATTACK_COUNT],attacks:[2.5],probability:100,explanation:"致命一击发动时有几率将攻击提高一倍。"},
+{id:53,name:"忍耐(黄盖)",type:SkillType.CREATE,subType:[SkillSubType.HERT_VS_STATUS],hert_vs_status:{name:"defense",value:0.2},probability:100,explanation:"士兵越少防御越高。"},
+{id:54,name:"倾国(貂蝉)",type:SkillType.HERT,subType:[SkillSubType.HERT_MINUS,SkillSubType.ENEMY_AID],hert:0.5,condition:{type:"SoldierId",value:13},aids:[23],aidCount:1,aidRects:[{x:0,y:0}],probability:100,explanation:"使用女兵兵种时,受到攻击时有几率将伤害减半,其倾国的美色让敌军无法动弹(定身效果)。"},
 {id:55,name:"倾城(大乔,小乔)",type:SkillType.BOUT_START,subType:[SkillSubType.SELF_AID],aids:[5],aidCount:1,aidRects:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],probability:100,explanation:"使用女兵兵种时,受到攻击时有几率将伤害减半。"},
-{id:56,name:"巾帼(孙尚香)",type:SkillType.BOUT_START,subType:[SkillSubType.SELF_AID],aids:[5],aidCount:1,aidRects:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],probability:100,explanation:"巾帼不让须眉，每次攻击必定双击。"},
+{id:56,name:"巾帼(孙尚香)",type:SkillType.ATTACK,subType:[SkillSubType.ATTACK_COUNT],attacks:[1,1],probability:100,explanation:"巾帼不让须眉，每次攻击必定双击。"},
 {id:57,name:"偷天换日(马云绿)",type:SkillType.BOUT_START,subType:[SkillSubType.SELF_AID],aids:[5],aidCount:1,aidRects:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],probability:100,explanation:"几率将受到的攻击伤害转为MP伤害,且每回合自动回复一定的MP。"},
 {id:58,name:"羁绊(马忠,潘璋)",type:SkillType.BOUT_START,subType:[SkillSubType.SELF_AID],aids:[5],aidCount:1,aidRects:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],probability:100,explanation:"有几率附带定身效果。"},
 {id:59,name:"运气(夏侯敦)",type:SkillType.BOUT_START,subType:[SkillSubType.SELF_AID],aids:[5],aidCount:1,aidRects:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],probability:100,explanation:"增强运气。"},

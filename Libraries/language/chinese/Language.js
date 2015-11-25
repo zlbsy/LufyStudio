@@ -485,6 +485,8 @@ Language.skillData = {
 	"skill_explanation_50":"反击时附带穿透效果。",
 	"skill_name_51":"死战",
 	"skill_explanation_51":"士兵越少攻击越高。",
+	"skill_name_52":"顺势",
+	"skill_explanation_52":"致命一击发动时可将攻击伤害 提高一倍。",
 };
 Language.groupSkillTalkData = [
 	"痛快，一起上!",

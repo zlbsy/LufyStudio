@@ -110,3 +110,6 @@ SkillMasterModel.prototype.statusName = function() {
 SkillMasterModel.prototype.statusValue = function() {
 	return this.data.status_value;
 };
+SkillMasterModel.prototype.hertVsStatus = function() {
+	return this.data.hert_vs_status;
+};

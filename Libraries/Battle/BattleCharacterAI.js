@@ -257,11 +257,18 @@ BattleCharacterAI.prototype.physicalAttack = function(target) {
 			}
 		}	
 	}
-	if(!self.chara.groupSkill && calculateFatalAtt(self.chara, target)){
+	if(true || !self.chara.groupSkill && calculateFatalAtt(self.chara, target)){
 		self.chara.isAngry = true;
 		//self.herts[0].value = self.herts[0].value * 1.25 >>> 0;
 		var hertParams = self.herts[0];
-		hertParams.list[0].hertValue = hertParams.list[0].hertValue*1.25 >>> 0;
+		var value = 1.25;
+		if(!skill){
+			skill = self.chara.data.skill(SkillType.ANGRY_ATTACK);
+			if(skill && skill.isSubType(SkillSubType.ATTACK_COUNT)){
+				value = (skill.attacks())[0];
+			}
+		}
+		hertParams.list[0].hertValue = hertParams.list[0].hertValue*value >>> 0;
 	}
 	self.chara.changeDirection(direction);
 	if(skill){
@@ -327,6 +334,14 @@ BattleCharacterAI.prototype.attackActionComplete = function(event) {
 		var hitrate = calculateHitrate(chara,obj.chara);
 		if(hitrate){
 			skill = obj.chara.data.skill(SkillType.HERT);
+			var condition = skill ? skill.condition() : null;
+			if(condition){
+				if(condition.type == "SoldierId"){
+					if(condition.value != self.chara.data.currentSoldiers().id()){
+						skill = null;
+					}
+				}
+			}
 			if(skill && skill.isSubType(SkillSubType.HERT_MINUS)){
 				var tweenObj = getStrokeLabel(skill.name(),22,"#FFFFFF","#000000",2);
 				tweenObj.x = obj.chara.x + (BattleCharacterSize.width - tweenObj.getWidth()) * 0.5;

@@ -85,7 +85,16 @@ CharacterModel.prototype.calculation = function(init) {
 		self.data[skill.statusName()] += skill.statusValue();
 	}else if(skill && skill.isSubType(SkillSubType.STATUS_ADD_PROP)){
 		self.data[skill.statusName()] = self.data[skill.statusName()] * (1 + skill.statusValue()) >>> 0;
+	}else if (skill && skill.isSubType(SkillSubType.HERT_VS_STATUS)) {
+		self.data.hertVsStatus = skill.hertVsStatus();
 	}
+};
+CharacterModel.prototype.statusChange = function(name) {
+	var self = this;
+	if(!self.data.hertVsStatus || self.data.hertVsStatus.name != name){
+		return 1;
+	}
+	return 1 + self.data.hertVsStatus.value * (self.maxTroops() - self.troops()) / self.maxTroops();
 };
 CharacterModel.prototype.moveKnow = function() {
 	return this.data.moveKnow;
@@ -115,13 +124,13 @@ CharacterModel.prototype.disposition = function(){//0胆小，1冷静，2勇敢�
 	return this.data.disposition;
 };
 CharacterModel.prototype.attack = function(){
-	return this.data.attack;
+	return this.data.attack * this.statusChange("attack") >>> 0;
 };
 CharacterModel.prototype.spirit = function(){
 	return this.data.spirit;
 };
 CharacterModel.prototype.defense = function(){
-	return this.data.defense;
+	return this.data.defense * this.statusChange("defense") >>> 0;
 };
 CharacterModel.prototype.breakout = function(){
 	return this.data.breakout;
