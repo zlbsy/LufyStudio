@@ -222,13 +222,17 @@ BattleCharacterAI.prototype.physicalAttack = function(target) {
 		}else{
 			skill = self.chara.data.skill(SkillType.BACK_ATTACK);
 			self.herts = [];
-			var hertValue = calculateHertValue(self.chara, target, 1);
+			//var hertValue = calculateHertValue(self.chara, target, 1);
 			var hertValues;
 			if(skill && skill.isSubType(SkillSubType.ATTACK_COUNT)){
 				hertValues = skill.attacks();
 			}else{
 				var doubleAtt = calculateDoubleAtt(self.chara, target);
 				hertValues = [0.75];
+			}
+			var borrow = false;
+			if(skill && skill.isSubType(SkillSubType.BORROW)){
+				borrow = true;
 			}
 			for(var j=0;j<hertValues.length;j++){
 				var hertValue = hertValues[j];
@@ -239,8 +243,7 @@ BattleCharacterAI.prototype.physicalAttack = function(target) {
 				}else{
 					rangeAttackTarget = self.chara.data.currentSoldiers().rangeAttackTarget();
 				}
-				
-				hertParams.push(target,calculateHertValue(self.chara, target, hertValue));
+				hertParams.push(target,calculateHertValue(borrow ? target : self.chara, target, hertValue));
 				for(var i = 0;i<rangeAttackTarget.length;i++){
 					var range = rangeAttackTarget[i];
 					if(range.x == 0 && range.y == 0){
@@ -482,7 +485,7 @@ BattleCharacterAI.prototype.counterAttack = function(event) {
 	console.error("counterAttack" ,attackChatacter.data.name());
 	if(!isCurrentAttackCharacter(attackChatacter) && !isCurrentAttackTarget(attackChatacter)){
 		return;
-	}console.log("attackChatacter.AI.herts.length="+attackChatacter.AI.herts.length);
+	}
 	if(attackChatacter.AI.herts && attackChatacter.AI.herts.length > 0){
 		attackChatacter.AI.physicalAttack(isCurrentAttackCharacter(attackChatacter) ? LMvc.currentAttackTarget : LMvc.currentAttackCharacter);
 		return;

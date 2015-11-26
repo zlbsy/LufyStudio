@@ -61,7 +61,8 @@ CharacterModel.getChara=function(chara_id){
 };
 CharacterModel.prototype.calculation = function(init) {
 	var self = this;
-	var property = self.currentSoldiers().property();
+	var currentSoldiers = self.currentSoldiers();
+	var property = currentSoldiers.property();
 	self.data.attack = self.force() * 0.5 + CharacterModel.upValue(property.attack, self.force()) * self.lv();
 	self.data.spirit = self.intelligence() * 0.5 + CharacterModel.upValue(property.spirit, self.intelligence()) * self.lv();
 	self.data.defense = self.command() * 0.5 + CharacterModel.upValue(property.defense, self.command()) * self.lv();
@@ -69,7 +70,8 @@ CharacterModel.prototype.calculation = function(init) {
 	self.data.morale = self.luck() * 0.5 + CharacterModel.upValue(property.morale, self.luck()) * self.lv();
 	self.data.maxTroops = self.initTroops() + property.troops * self.lv();
 	self.data.maxStrategy = self.initStrategy() + property.strategy * self.lv();
-	self.data.movePower = this.currentSoldiers().movePower();
+	self.data.movePower = currentSoldiers.movePower();
+	self.data.rangeAttack = null;
 	if(init){
 		self.maxTroops(init);
 		self.maxHP(init);
@@ -87,6 +89,19 @@ CharacterModel.prototype.calculation = function(init) {
 		self.data[skill.statusName()] = self.data[skill.statusName()] * (1 + skill.statusValue()) >>> 0;
 	}else if (skill && skill.isSubType(SkillSubType.HERT_VS_STATUS)) {
 		self.data.hertVsStatus = skill.hertVsStatus();
+	}else if (skill && skill.isSubType(SkillSubType.SOLDIERS_ATTACK_RECT)) {
+		var condition = skill.condition();
+		if(condition && condition.type == "AttackType" && condition.value == currentSoldiers.attackType()){
+			self.data.rangeAttack = skill.rangeAttack().concat();
+			var ranges = currentSoldiers.rangeAttack();
+			for(var i=0,l=ranges.length;i<l;i++){
+				var range = ranges[i];
+				if(self.data.rangeAttack.findIndex(function(child){return range.x == child.x && range.y == child.y;}) >= 0){
+					return;
+				}
+				self.data.rangeAttack.push(range);
+			}
+		}
 	}
 };
 CharacterModel.prototype.statusChange = function(name) {
@@ -95,6 +110,13 @@ CharacterModel.prototype.statusChange = function(name) {
 		return 1;
 	}
 	return 1 + self.data.hertVsStatus.value * (self.maxTroops() - self.troops()) / self.maxTroops();
+};
+CharacterModel.prototype.rangeAttack = function() {
+	var self = this;
+	if(self.data.rangeAttack){
+		return self.data.rangeAttack;
+	}
+	return self.currentSoldiers().rangeAttack();
 };
 CharacterModel.prototype.moveKnow = function() {
 	return this.data.moveKnow;

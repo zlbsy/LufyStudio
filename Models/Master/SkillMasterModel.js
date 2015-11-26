@@ -27,10 +27,10 @@ SkillMasterModel.prototype.id = function() {
 	return this.data.id;
 };
 SkillMasterModel.prototype.name = function() {
-	return Language.getSkill("skill_name_"+this.data.id);
+	return Language.getSkill("s_"+this.data.id);
 };
 SkillMasterModel.prototype.explanation = function() {
-	return Language.getSkill("skill_explanation_"+this.data.id);
+	return Language.getSkill("se_"+this.data.id);
 };
 SkillMasterModel.prototype.mainType = function() {
 	return this.data.type;
@@ -112,4 +112,13 @@ SkillMasterModel.prototype.statusValue = function() {
 };
 SkillMasterModel.prototype.hertVsStatus = function() {
 	return this.data.hert_vs_status;
+};
+SkillMasterModel.prototype.rangeAttack = function() {
+	return this.data.rangeAttack;
+};
+SkillMasterModel.prototype.healId = function() {
+	return this.data.healId;
+};
+SkillMasterModel.prototype.healRects = function() {
+	return this.data.healRects;
 };

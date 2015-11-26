@@ -146,7 +146,7 @@ function battleCanAttack(charaBelong, charaId, targerChara){
 function battleCharaInRangeAttack(chara, targerChara){
 	var relativelyX = targerChara.locationX() - chara.locationX();
 	var relativelyY = targerChara.locationY() - chara.locationY();
-	var rangeAttack = chara.data.currentSoldiers().rangeAttack();
+	var rangeAttack = chara.data.rangeAttack();
 	for(var i=0;i<rangeAttack.length;i++){
 		var range = rangeAttack[i];
 		if(range.x == relativelyX && range.y == relativelyY){
@@ -165,7 +165,7 @@ function battleCanAttackCharacter(attChara, hertChara){
 	if(attChara.status.hasStatus(StrategyType.Chaos)){
 		return false;
 	}
-	var rangeAttack = attChara.data.currentSoldiers().rangeAttack();
+	var rangeAttack = attChara.data.rangeAttack();
 	for(var i=0,l=rangeAttack.length;i<l;i++){
 		var range = rangeAttack[i];
 		if(hertChara.onLocation(attChara.locationX()+range.x, attChara.locationY()+range.y)){

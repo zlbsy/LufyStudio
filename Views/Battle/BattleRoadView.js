@@ -34,8 +34,7 @@ BattleRoadView.prototype.setRangeAttack = function(chara){
 	var self = this,solider,ranges,range,x,y,nodes = [];
 	x = chara.locationX();
 	y = chara.locationY();
-	solider = chara.data.currentSoldiers();
-	ranges = solider.rangeAttack();
+	ranges = chara.data.rangeAttack();
 	for(var i=0;i<ranges.length;i++){
 		range = ranges[i];
 		nodes.push(new LPoint(x + range.x,y + range.y));
@@ -46,8 +45,7 @@ BattleRoadView.prototype.addRangeAttack = function(chara){
 	var self = this,solider,ranges,range,x,y,nodes = [];
 	x = chara.locationX();
 	y = chara.locationY();
-	solider = chara.data.currentSoldiers();
-	ranges = solider.rangeAttack();
+	ranges = chara.data.rangeAttack();
 	for(var i=0;i<ranges.length;i++){
 		range = ranges[i];
 		nodes.push(new LPoint(x + range.x,y + range.y));

@@ -66,9 +66,17 @@ var SkillSubType = {
 	 **/
 	ATTACK_RECT:"attackRect",
 	/**
+	 * 兵种攻击范围
+	 **/
+	SOLDIERS_ATTACK_RECT:"soldiersAttackRect",
+	/**
 	 * 无反击
 	 **/
 	NO_COUNTER:"noCounter",
+	/**
+	 * 治疗
+	 **/
+	HEAL:"heal",
 	/**
 	 * 伤害减少
 	 **/
@@ -138,6 +146,10 @@ var SkillSubType = {
 	 **/
 	THRIFT_MP:"thrift_mp",
 	/**
+	 * 借用
+	 **/
+	BORROW:"borrow",
+	/**
 	 * 属性增加固定值
 	 **/
 	STATUS_ADD_NUM:"status_add_num",
@@ -183,7 +195,7 @@ var SkillsData = [
 {id:10,name:"噬血(马超)",type:SkillType.ATTACK_END,subType:[SkillSubType.VAMPIRE],vampire:0.5,probability:50,explanation:"{probability}几率给在物理攻击对方时将敌军兵力转换为己方兵力。"},
 {id:11,name:"神算(诸葛亮)",type:SkillType.STRATEGY_ATTACK,subType:[SkillSubType.STRATEGY_COUNT,SkillSubType.STRATEGY_HERT_MINUS],strategy_attacks:[1.5],hert:0.5,minusRects:[],probability:100,explanation:"法术攻击时必暴击，我军全员法术伤害减半。"},
 {id:12,name:"火神(周瑜)",type:SkillType.STRATEGY_ATTACK,subType:[SkillSubType.STRATEGY_COUNT,SkillSubType.ENEMY_AID],strategy_attacks:[2],condition:{type:"StrategyType",value:StrategyType.Fire},aids:[25],aidCount:1,aidRects:[{x:0,y:0}],probability:100,explanation:"{probability}几率使用火系策略伤害加倍，且另对方进入燃烧状态。"},
-{id:13,name:"医神(华佗)",type:SkillType.BOUT_START,subType:[SkillSubType.SELF_AID],aids:[5],aidCount:1,aidRects:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],probability:100,explanation:"{probability}几率对自身及相邻友军进行治疗。"},
+{id:13,name:"医神(华佗)",type:SkillType.BOUT_START,subType:[SkillSubType.HEAL],healId:42,healRects:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],probability:100,explanation:"{probability}几率回合开始时对自身及相邻友军进行治疗。"},
 {id:14,name:"反间计(陆逊,陆抗)",type:SkillType.STRATEGY_ATTACK_END,subType:[SkillSubType.VAMPIRE],vampire:0.5,probability:100,explanation:"{probability}几率在法术攻击对方时将敌军兵力转换为己方兵力。"},
 {id:15,name:"识破(司马懿)",type:SkillType.NULL,subType:[SkillSubType.STRATEGY_HERT_MINUS],hert:0.5,minusRects:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],probability:100,explanation:"{probability}几率令自身及相邻的友军受到的法术伤害减半。"},
 {id:16,name:"连珠(法正)",type:SkillType.STRATEGY_ATTACK,subType:[SkillSubType.STRATEGY_COUNT],strategy_attacks:[1,1],probability:100,explanation:"{probability}几率法术连击。"},
@@ -235,10 +247,10 @@ var SkillsData = [
 {id:62,name:"攻击(文鸯)",type:SkillType.CREATE,subType:[SkillSubType.STATUS_ADD_PROP],status_name:"attack",status_value:0.1,probability:100,explanation:"增强攻击。"},
 {id:63,name:"精神(陈登,邓芝)",type:SkillType.CREATE,subType:[SkillSubType.STATUS_ADD_PROP],status_name:"spirit",status_value:0.1,probability:100,explanation:"增强精神。"},
 {id:64,name:"厚皮(周仓)",type:SkillType.CREATE,subType:[SkillSubType.STATUS_ADD_PROP],status_name:"maxTroops",status_value:0.1,probability:100,explanation:"增大兵力。"},
-{id:65,name:"借力(甄氏)",type:SkillType.BOUT_START,subType:[SkillSubType.SELF_AID],aids:[5],aidCount:1,aidRects:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],probability:30,explanation:"有几率在反击时借用对方的攻击力。"},
-{id:66,name:"熟路(吕凯)",type:SkillType.BOUT_START,subType:[SkillSubType.SELF_AID],aids:[5],aidCount:1,aidRects:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],probability:30,explanation:"所有地形消耗1点移动力。"},
-{id:67,name:"反客为主(孙坚)",type:SkillType.BOUT_START,subType:[SkillSubType.SELF_AID],aids:[5],aidCount:1,aidRects:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],probability:30,explanation:"几率反击时给予敌军主动攻击的伤害值。"},
+{id:65,name:"斗转星移(甄氏)",type:SkillType.BACK_ATTACK,subType:[SkillSubType.BORROW],probability:100,explanation:"有几率在反击时借用对方的攻击力。"},
+{id:66,name:"熟路(吕凯)",type:SkillType.CREATE,subType:[SkillSubType.MOVE_KNOW],probability:100,explanation:"所有地形消耗1点移动力。"},
+{id:67,name:"反客为主(孙坚)",type:SkillType.BACK_ATTACK,subType:[SkillSubType.ATTACK_COUNT],attacks:[1],probability:100,explanation:"几率反击时给予敌军主动攻击的伤害值。"},
 {id:68,name:"治安(刘封)",type:SkillType.NULL,subType:[SkillSubType.POLICE],explanation:"内政治安加成。"},
-{id:69,name:"飞刀(祝融)",type:SkillType.NULL,subType:[SkillSubType.POLICE],explanation:"近战兵种攻击范围增强。"},
-{id:70,name:"辅佐(黄月英)",type:SkillType.NULL,subType:[SkillSubType.POLICE],explanation:"回合开始时,为自身及周围所有相邻部队提升一种能力。"},
+{id:69,name:"飞刀(祝融)",type:SkillType.CREATE,subType:[SkillSubType.SOLDIERS_ATTACK_RECT],condition:{type:"AttackType",value:AttackType.NEAR},rangeAttack:[{x:0,y:2},{x:0,y:-2},{x:2,y:0},{x:-2,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],explanation:"近战兵种攻击范围增强。"},
+{id:70,name:"辅佐(黄月英)",type:SkillType.BOUT_START,subType:[SkillSubType.SELF_AID],aids:[1,3,5,7,9],aidCount:1,aidRects:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],explanation:"回合开始时,为自身及周围所有相邻部队提升一种能力。"},
 ];
