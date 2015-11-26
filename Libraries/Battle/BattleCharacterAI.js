@@ -257,7 +257,7 @@ BattleCharacterAI.prototype.physicalAttack = function(target) {
 			}
 		}	
 	}
-	if(true || !self.chara.groupSkill && calculateFatalAtt(self.chara, target)){
+	if(!self.chara.groupSkill && calculateFatalAtt(self.chara, target)){
 		self.chara.isAngry = true;
 		//self.herts[0].value = self.herts[0].value * 1.25 >>> 0;
 		var hertParams = self.herts[0];
@@ -337,7 +337,7 @@ BattleCharacterAI.prototype.attackActionComplete = function(event) {
 			var condition = skill ? skill.condition() : null;
 			if(condition){
 				if(condition.type == "SoldierId"){
-					if(condition.value != self.chara.data.currentSoldiers().id()){
+					if(condition.value != obj.chara.data.currentSoldiers().id()){
 						skill = null;
 					}
 				}
@@ -362,7 +362,27 @@ BattleCharacterAI.prototype.attackActionComplete = function(event) {
 				LTweenLite.to(tweenObj,1.5,{y:tweenObj.y - 20,alpha:0,onComplete:function(e){
 					e.target.remove();
 				}});
+			}else if(skill && skill.isSubType(SkillSubType.HP_MP_CHANGE)){
+				if(obj.chara.data.MP() > 0){
+					var minusMp = obj.hertValue > obj.chara.data.MP() ? obj.chara.data.MP() : obj.hertValue;
+					obj.hertValue = 0;
+					obj.chara.data.MP(obj.chara.data.MP() - minusMp);
+					var tweenObj = getStrokeLabel(skill.name(),22,"#FFFFFF","#000000",2);
+					tweenObj.x = obj.chara.x + (BattleCharacterSize.width - tweenObj.getWidth()) * 0.5;
+					tweenObj.y = obj.chara.y;
+					chara.controller.view.baseLayer.addChild(tweenObj);
+					LTweenLite.to(tweenObj,0.5,{y:tweenObj.y - 20,alpha:0,onComplete:function(obj){
+						obj.remove();
+					}});
+				}else if(Math.random() > skill.changeProbability()*0.01){
+					var emptyMp = obj.chara.data.maxMP() - obj.chara.data.MP();
+					var plusMp = obj.hertValue > emptyMp ? emptyMp : obj.hertValue;
+					obj.chara.data.MP(obj.chara.data.MP() + plusMp);
+				}
 			}
+			
+			//TODO::可能删除了点东西
+			
 			if(i == 0 && selfSkill && selfSkill.isSubType(SkillSubType.VAMPIRE)){
 				var changeHp = obj.hertValue * selfSkill.vampire() >>> 0;
 				chara.data.troops(chara.data.troops() + changeHp);

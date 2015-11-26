@@ -82,6 +82,10 @@ var SkillSubType = {
 	 **/
 	HERT_VS_STATUS:"hertVsStatus",
 	/**
+	 * HP和MP相互转化(偷天换日)
+	 **/
+	HP_MP_CHANGE:"hpMpChange",
+	/**
 	 * 免疫异常攻击或法术
 	 **/
 	WAKE:"wake",
@@ -220,17 +224,17 @@ var SkillsData = [
 {id:51,name:"死战(凌统)",type:SkillType.CREATE,subType:[SkillSubType.HERT_VS_STATUS],hert_vs_status:{name:"attack",value:0.2},probability:100,explanation:"士兵越少攻击越高。"},
 {id:52,name:"顺势(程普)",type:SkillType.ANGRY_ATTACK,subType:[SkillSubType.ATTACK_COUNT],attacks:[2.5],probability:100,explanation:"致命一击发动时有几率将攻击提高一倍。"},
 {id:53,name:"忍耐(黄盖)",type:SkillType.CREATE,subType:[SkillSubType.HERT_VS_STATUS],hert_vs_status:{name:"defense",value:0.2},probability:100,explanation:"士兵越少防御越高。"},
-{id:54,name:"倾国(貂蝉)",type:SkillType.HERT,subType:[SkillSubType.HERT_MINUS,SkillSubType.ENEMY_AID],hert:0.5,condition:{type:"SoldierId",value:13},aids:[23],aidCount:1,aidRects:[{x:0,y:0}],probability:100,explanation:"使用女兵兵种时,受到攻击时有几率将伤害减半,其倾国的美色让敌军无法动弹(定身效果)。"},
-{id:55,name:"倾城(大乔,小乔)",type:SkillType.BOUT_START,subType:[SkillSubType.SELF_AID],aids:[5],aidCount:1,aidRects:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],probability:100,explanation:"使用女兵兵种时,受到攻击时有几率将伤害减半。"},
-{id:56,name:"巾帼(孙尚香)",type:SkillType.ATTACK,subType:[SkillSubType.ATTACK_COUNT],attacks:[1,1],probability:100,explanation:"巾帼不让须眉，每次攻击必定双击。"},
-{id:57,name:"偷天换日(马云绿)",type:SkillType.BOUT_START,subType:[SkillSubType.SELF_AID],aids:[5],aidCount:1,aidRects:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],probability:100,explanation:"几率将受到的攻击伤害转为MP伤害,且每回合自动回复一定的MP。"},
-{id:58,name:"羁绊(马忠,潘璋)",type:SkillType.BOUT_START,subType:[SkillSubType.SELF_AID],aids:[5],aidCount:1,aidRects:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],probability:100,explanation:"有几率附带定身效果。"},
-{id:59,name:"运气(夏侯敦)",type:SkillType.BOUT_START,subType:[SkillSubType.SELF_AID],aids:[5],aidCount:1,aidRects:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],probability:100,explanation:"增强运气。"},
-{id:60,name:"防御(关平)",type:SkillType.BOUT_START,subType:[SkillSubType.SELF_AID],aids:[5],aidCount:1,aidRects:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],probability:100,explanation:"增强防御。"},
-{id:61,name:"敏捷(乐进)",type:SkillType.BOUT_START,subType:[SkillSubType.SELF_AID],aids:[5],aidCount:1,aidRects:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],probability:100,explanation:"增强敏捷。"},
-{id:62,name:"攻击(文鸯)",type:SkillType.BOUT_START,subType:[SkillSubType.SELF_AID],aids:[5],aidCount:1,aidRects:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],probability:100,explanation:"增强攻击。"},
-{id:63,name:"精神(陈登,邓芝)",type:SkillType.BOUT_START,subType:[SkillSubType.SELF_AID],aids:[5],aidCount:1,aidRects:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],probability:100,explanation:"增强精神。"},
-{id:64,name:"厚皮(周仓)",type:SkillType.BOUT_START,subType:[SkillSubType.SELF_AID],aids:[5],aidCount:1,aidRects:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],probability:100,explanation:"增大兵力。"},
+{id:54,name:"倾国(貂蝉)",type:SkillType.HERT,subType:[SkillSubType.HERT_MINUS,SkillSubType.ENEMY_AID],hert:0.5,condition:{type:"SoldierId",value:13},aids:[22],aidCount:1,probability:100,explanation:"使用女兵兵种时,受到攻击时有几率将伤害减半,其倾国的美色让敌军无法动弹(定身效果)。"},
+{id:55,name:"倾城(大乔,小乔)",type:SkillType.HERT,subType:[SkillSubType.HERT_MINUS],hert:0.5,condition:{type:"SoldierId",value:13},aids:[22],aidCount:1,probability:100,explanation:"使用女兵兵种时,受到攻击时有几率将伤害减半。"},
+{id:56,name:"巾帼(孙尚香)",type:SkillType.ATTACK,subType:[SkillSubType.ATTACK_COUNT],attacks:[1,0.75],probability:100,explanation:"巾帼不让须眉，每次攻击必定双击。"},
+{id:57,name:"偷天换日(马云绿)",type:SkillType.HERT,subType:[SkillSubType.HP_MP_CHANGE],changeProbability:50,probability:100,explanation:"几率使用近战兵种时,将受到的攻击伤害转为MP伤害,如果MP为零，则有一定概率将伤害转换为MP。"},
+{id:58,name:"羁绊(马忠,潘璋)",type:SkillType.ATTACK,subType:[SkillSubType.ENEMY_AID],aids:[22],aidCount:1,aidRects:[{x:0,y:0}],probability:100,explanation:"有几率附带定身效果。"},
+{id:59,name:"士气(夏侯敦)",type:SkillType.CREATE,subType:[SkillSubType.STATUS_ADD_PROP],status_name:"morale",status_value:0.1,probability:100,explanation:"增强士气。"},
+{id:60,name:"防御(关平)",type:SkillType.CREATE,subType:[SkillSubType.STATUS_ADD_PROP],status_name:"defense",status_value:0.1,probability:100,explanation:"增强防御。"},
+{id:61,name:"爆发力(乐进)",type:SkillType.CREATE,subType:[SkillSubType.STATUS_ADD_PROP],status_name:"breakout",status_value:0.1,probability:100,explanation:"增强爆发力。"},
+{id:62,name:"攻击(文鸯)",type:SkillType.CREATE,subType:[SkillSubType.STATUS_ADD_PROP],status_name:"attack",status_value:0.1,probability:100,explanation:"增强攻击。"},
+{id:63,name:"精神(陈登,邓芝)",type:SkillType.CREATE,subType:[SkillSubType.STATUS_ADD_PROP],status_name:"spirit",status_value:0.1,probability:100,explanation:"增强精神。"},
+{id:64,name:"厚皮(周仓)",type:SkillType.CREATE,subType:[SkillSubType.STATUS_ADD_PROP],status_name:"maxTroops",status_value:0.1,probability:100,explanation:"增大兵力。"},
 {id:65,name:"借力(甄氏)",type:SkillType.BOUT_START,subType:[SkillSubType.SELF_AID],aids:[5],aidCount:1,aidRects:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],probability:30,explanation:"有几率在反击时借用对方的攻击力。"},
 {id:66,name:"熟路(吕凯)",type:SkillType.BOUT_START,subType:[SkillSubType.SELF_AID],aids:[5],aidCount:1,aidRects:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],probability:30,explanation:"所有地形消耗1点移动力。"},
 {id:67,name:"反客为主(孙坚)",type:SkillType.BOUT_START,subType:[SkillSubType.SELF_AID],aids:[5],aidCount:1,aidRects:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],probability:30,explanation:"几率反击时给予敌军主动攻击的伤害值。"},
