@@ -2,7 +2,7 @@
  * 俘虏概率
  */
 function calculateHitrateCaptive(chara){
-	if(chara.data.hasSkill(StrategyEffectType.Flee)){
+	if(chara.data.hasSkill(SkillSubType.RETREAT)){
 		return false;
 	}
 	var addRate = false;

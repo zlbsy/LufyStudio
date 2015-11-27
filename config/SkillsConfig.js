@@ -98,6 +98,10 @@ var SkillSubType = {
 	 **/
 	WAKE:"wake",
 	/**
+	 * 撤退(血路)
+	 **/
+	RETREAT:"retreat",
+	/**
 	 * 吸血
 	 **/
 	VAMPIRE:"vampire",
@@ -204,7 +208,7 @@ var SkillsData = [
 {id:19,name:"鬼谋(郭嘉)",type:SkillType.STRATEGY_ATTACK,subType:[SkillSubType.STRATEGY_COUNT,SkillSubType.ENEMY_AID],strategy_attacks:[1.5],aids:[21,22,23,24,25],aidCount:1,aidRects:[{x:0,y:0}],probability:100,explanation:"{probability}几率1.5倍法术暴击，且令敌军陷入不良状态。"},
 {id:20,name:"逆嗜血(许褚)",type:SkillType.BACK_ATTACK_END,subType:[SkillSubType.VAMPIRE],vampire:0.5,probability:30,explanation:"{probability}几率反击时将敌军兵力转化为自身兵力。"},
 {id:21,name:"反弹(典韦)",type:SkillType.HERT,subType:[SkillSubType.BOUNCE],bounce:0.5,probability:100,explanation:"{probability}几率被攻击时令敌军也受到一定程度伤害。"},
-{id:22,name:"血路(廖化)",type:SkillType.BOUT_START,subType:[SkillSubType.SELF_AID],aids:[5],aidCount:1,aidRects:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],probability:100,explanation:"降低自身及周围被俘虏概率。"},
+{id:22,name:"血路(廖化)",type:SkillType.NULL,subType:[SkillSubType.RETREAT],probability:100,explanation:"降低自身及周围被俘虏概率。"},
 {id:23,name:"十面埋伏(程昱)",type:SkillType.STRATEGY_ATTACK,subType:[SkillSubType.AMBUSH],ambush:0.2,ambushRects:[{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],probability:100,explanation:"{probability}几率在使用法术攻击敌军时，如果攻击目标的周围有友军存在，可以借助友军的力量提高法术伤害，友军越多，加成越多。"},
 {id:24,name:"决胜(荀彧)",type:SkillType.STRATEGY_ATTACK,subType:[SkillSubType.STRATEGY_COUNT,SkillSubType.THRIFT_MP],strategy_attacks:[2],aidCount:1,thrift:1,probability:100,explanation:"{probability}几率在使用法术攻击敌军时2倍暴击，且不消化MP。"},
 {id:25,name:"摆尾(荀攸)",type:SkillType.STRATEGY_ATTACK,subType:[SkillSubType.PENETRATE],probability:100,explanation:"使用法术攻击时附带穿透效果。"},

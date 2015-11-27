@@ -49,7 +49,9 @@ EffectStrategyView.prototype.toSupply = function(){
 	var troopsAdd = currentSelectStrategy.troops();
 	var woundedAdd = currentSelectStrategy.wounded();
 	var wounded = self.currentTargetCharacter.data.wounded();
-	if(woundedAdd > wounded){
+	if(woundedAdd < 1){
+		woundedAdd = wounded*woundedAdd >>> 0;
+	}else if(woundedAdd > wounded){
 		woundedAdd = wounded;
 	}
 	if(woundedAdd > 0){

@@ -48,8 +48,6 @@ var StrategyType = {
 	Burn:14,//燃烧
 	Wake:15,//觉醒
 	Supply:16,//补给
-	Flee:17,//血路
-	Capture:18//捕获
 };
 var StrategyTypeToString = {};
 for(var key in StrategyType){
@@ -62,8 +60,6 @@ var StrategyEffectType = {
 	Aid:3,//升降能力
 	Wake:4,//觉醒
 	Supply:5,//补给
-	Flee:6,//血路
-	Capture:7//捕获
 };
 var StrategyDatas = [
 	{id:1,name:"加攻",belong:Belong.SELF,type:StrategyType.AttackAid,effectType:StrategyEffectType.Aid,image:"feng-1",
@@ -405,7 +401,7 @@ var StrategyDatas = [
 	icon:"feng_sign",
 	cost:6,
 	troops:0,
-	wounded:50,
+	wounded:0.2,
 	rangeAttack:[{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0}],
 	rangeAttackTarget:[{x:0,y:0}],
 	explanation:""

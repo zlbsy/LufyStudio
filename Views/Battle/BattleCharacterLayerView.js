@@ -184,6 +184,7 @@ BattleCharacterLayerView.prototype.addOurCharacter=function(id,action,direction,
 	chara.changeAction(CharacterAction.MOVE);
 	self.model.ourList.push(chara);
 	self.model.checkCreat(chara, chara.belong);
+	chara.data.wounded(70);
 	if(typeof callback == "function")callback();
 };
 BattleCharacterLayerView.prototype.addEnemyCharacter=function(index,action,direction,x,y,isHide,ai,callback){
@@ -267,11 +268,65 @@ BattleCharacterLayerView.prototype.boutSkillRun=function(belong,callback){
 			self.boutSkillSelfAid(chara,skill,tweenObj);
 		}else if(skill.isSubType(SkillSubType.ENLIST_SKILL)){
 			self.boutSkillEnlist(chara,skill,tweenObj);
+		}else if(skill.isSubType(SkillSubType.HEAL)){
+			self.boutSkillHeal(chara,skill,tweenObj);
 		}
 	}
 	if(callback){
 		callback();
 	}
+};
+BattleCharacterLayerView.prototype.boutSkillHeal=function(chara,skill,tweenObj){
+	var self = this;
+	var healId = skill.healId();
+	var healRects = skill.healRects();
+	var strategy = StrategyMasterModel.getMaster(healId);
+	for(var i=0;i<healRects.length;i++){
+		var range = healRects[i];
+		if(range.x == 0 && range.y == 0){
+			self.healSingle(chara, strategy, 20);
+			continue;
+		}
+		var targetChara = self.getCharacterFromLocation(chara.locationX()+range.x, chara.locationY()+range.y);
+		if(!targetChara || !isSameBelong(targetChara.belong,chara.belong)){
+			continue;
+		}
+		self.healSingle(targetChara, strategy, 0);
+	}
+};
+BattleCharacterLayerView.prototype.healSingle = function(chara,strategy,y){
+	var self = this;
+	var wounded = chara.data.wounded();
+	var troops = chara.data.troops();
+	
+	if(wounded == 0){
+		return;
+	}
+	var troopsAdd = strategy.troops();
+	var woundedAdd = strategy.wounded();
+	if(woundedAdd < 1){
+		woundedAdd = wounded*woundedAdd >>> 0;
+	}else if(woundedAdd > wounded){
+		woundedAdd = wounded;
+	}
+	if(woundedAdd == 0){
+		return;
+	}
+	chara.data.wounded(wounded - woundedAdd);
+	troopsAdd += woundedAdd;
+	chara.changeAction(CharacterAction.WAKE);	
+	
+	var maxTroops = chara.data.maxTroops();
+	var troopsValue = troops + troopsAdd > maxTroops ? maxTroops : troops + troopsAdd;
+	chara.data.troops(troopsValue);
+	
+	var tweenObj = getStrokeLabel(String.format("{0}+{1}",Language.get("treat"),woundedAdd),12,"#FF0000","#000000",2);
+	tweenObj.x = chara.x + (BattleCharacterSize.width - tweenObj.getWidth()) * 0.5;
+	tweenObj.y = chara.y + y;
+	chara.controller.view.baseLayer.addChild(tweenObj);
+	LTweenLite.to(tweenObj,1.5,{y:tweenObj.y - 20,alpha:0,onComplete:function(e){
+		e.target.remove();
+	}});
 };
 BattleCharacterLayerView.prototype.boutSkillEnlist=function(chara,skill,tweenObj){
 	var self = this;
@@ -284,7 +339,7 @@ BattleCharacterLayerView.prototype.boutSkillEnlist=function(chara,skill,tweenObj
 		var addTroops = currentChara.data.maxTroops() * enlistValue >>> 0;
 		var troops = currentChara.data.troops();
 		currentChara.data.troops(troops + addTroops);
-		var tweenVampire = getStrokeLabel(String.format("兵力+{0}",addTroops),12,"#FF0000","#000000",2);
+		var tweenVampire = getStrokeLabel(String.format("{0}+{1}",Language.get("troops"),addTroops),12,"#FF0000","#000000",2);
 		tweenVampire.x = currentChara.x + (BattleCharacterSize.width - tweenVampire.getWidth()) * 0.5;
 		tweenVampire.y = currentChara.y + (currentChara.data.id() == chara.data.id() ? 20 : 0);
 		chara.controller.view.baseLayer.addChild(tweenVampire);

@@ -384,8 +384,6 @@ BattleCharacterAI.prototype.attackActionComplete = function(event) {
 				}
 			}
 			
-			//TODO::可能删除了点东西
-			
 			if(i == 0 && selfSkill && selfSkill.isSubType(SkillSubType.VAMPIRE)){
 				var changeHp = obj.hertValue * selfSkill.vampire() >>> 0;
 				chara.data.troops(chara.data.troops() + changeHp);
