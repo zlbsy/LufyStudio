@@ -27,10 +27,10 @@ SkillMasterModel.prototype.id = function() {
 	return this.data.id;
 };
 SkillMasterModel.prototype.name = function() {
-	return Language.get("skill_name_"+this.data.id);
+	return Language.getSkill("s_"+this.data.id);
 };
 SkillMasterModel.prototype.explanation = function() {
-	return Language.get("skill_explanation_"+this.data.id);
+	return Language.getSkill("se_"+this.data.id);
 };
 SkillMasterModel.prototype.mainType = function() {
 	return this.data.type;
@@ -43,6 +43,9 @@ SkillMasterModel.prototype.isSubType = function(subType) {
 };
 SkillMasterModel.prototype.attacks = function() {
 	return this.data.attacks;
+};
+SkillMasterModel.prototype.strategyAttacks = function() {
+	return this.data.strategy_attacks;
 };
 SkillMasterModel.prototype.rects = function() {
 	return this.data.rects;
@@ -65,6 +68,57 @@ SkillMasterModel.prototype.aidRects = function() {
 SkillMasterModel.prototype.wakeRects = function() {
 	return this.data.wakeRects;
 };
+SkillMasterModel.prototype.minusRects = function() {
+	return this.data.minusRects;
+};
 SkillMasterModel.prototype.vampire = function() {
 	return this.data.vampire;
+};
+SkillMasterModel.prototype.ambush = function() {
+	return this.data.ambush;
+};
+SkillMasterModel.prototype.ambushRects = function() {
+	return this.data.ambushRects;
+};
+SkillMasterModel.prototype.thrift = function() {
+	return this.data.thrift;
+};
+SkillMasterModel.prototype.bounce = function() {
+	return this.data.bounce;
+};
+SkillMasterModel.prototype.condition = function() {
+	return this.data.condition;
+};
+SkillMasterModel.prototype.ignore = function() {
+	return this.data.ignore;
+};
+SkillMasterModel.prototype.speadRects = function() {
+	return this.data.speadRects;
+};
+SkillMasterModel.prototype.speadProbability = function() {
+	return this.data.speadProbability;
+};
+SkillMasterModel.prototype.enlistCount = function() {
+	return this.data.enlist_count;
+};
+SkillMasterModel.prototype.enlistValue = function() {
+	return this.data.enlist_value;
+};
+SkillMasterModel.prototype.statusName = function() {
+	return this.data.status_name;
+};
+SkillMasterModel.prototype.statusValue = function() {
+	return this.data.status_value;
+};
+SkillMasterModel.prototype.hertVsStatus = function() {
+	return this.data.hert_vs_status;
+};
+SkillMasterModel.prototype.rangeAttack = function() {
+	return this.data.rangeAttack;
+};
+SkillMasterModel.prototype.healId = function() {
+	return this.data.healId;
+};
+SkillMasterModel.prototype.healRects = function() {
+	return this.data.healRects;
 };

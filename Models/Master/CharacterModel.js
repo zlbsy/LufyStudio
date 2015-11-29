@@ -61,7 +61,8 @@ CharacterModel.getChara=function(chara_id){
 };
 CharacterModel.prototype.calculation = function(init) {
 	var self = this;
-	var property = self.currentSoldiers().property();
+	var currentSoldiers = self.currentSoldiers();
+	var property = currentSoldiers.property();
 	self.data.attack = self.force() * 0.5 + CharacterModel.upValue(property.attack, self.force()) * self.lv();
 	self.data.spirit = self.intelligence() * 0.5 + CharacterModel.upValue(property.spirit, self.intelligence()) * self.lv();
 	self.data.defense = self.command() * 0.5 + CharacterModel.upValue(property.defense, self.command()) * self.lv();
@@ -69,6 +70,8 @@ CharacterModel.prototype.calculation = function(init) {
 	self.data.morale = self.luck() * 0.5 + CharacterModel.upValue(property.morale, self.luck()) * self.lv();
 	self.data.maxTroops = self.initTroops() + property.troops * self.lv();
 	self.data.maxStrategy = self.initStrategy() + property.strategy * self.lv();
+	self.data.movePower = currentSoldiers.movePower();
+	self.data.rangeAttack = null;
 	if(init){
 		self.maxTroops(init);
 		self.maxHP(init);
@@ -80,6 +83,40 @@ CharacterModel.prototype.calculation = function(init) {
 	var skill = self.skill(SkillType.CREATE);
 	self.data.moveAssault = (skill && skill.isSubType(SkillSubType.MOVE_ASSAULT));
 	self.data.moveKnow = (skill && skill.isSubType(SkillSubType.MOVE_KNOW));
+	if(skill && skill.isSubType(SkillSubType.STATUS_ADD_NUM)){
+		self.data[skill.statusName()] += skill.statusValue();
+	}else if(skill && skill.isSubType(SkillSubType.STATUS_ADD_PROP)){
+		self.data[skill.statusName()] = self.data[skill.statusName()] * (1 + skill.statusValue()) >>> 0;
+	}else if (skill && skill.isSubType(SkillSubType.HERT_VS_STATUS)) {
+		self.data.hertVsStatus = skill.hertVsStatus();
+	}else if (skill && skill.isSubType(SkillSubType.SOLDIERS_ATTACK_RECT)) {
+		var condition = skill.condition();
+		if(condition && condition.type == "AttackType" && condition.value == currentSoldiers.attackType()){
+			self.data.rangeAttack = skill.rangeAttack().concat();
+			var ranges = currentSoldiers.rangeAttack();
+			for(var i=0,l=ranges.length;i<l;i++){
+				var range = ranges[i];
+				if(self.data.rangeAttack.findIndex(function(child){return range.x == child.x && range.y == child.y;}) >= 0){
+					return;
+				}
+				self.data.rangeAttack.push(range);
+			}
+		}
+	}
+};
+CharacterModel.prototype.statusChange = function(name) {
+	var self = this;
+	if(!self.data.hertVsStatus || self.data.hertVsStatus.name != name){
+		return 1;
+	}
+	return 1 + self.data.hertVsStatus.value * (self.maxTroops() - self.troops()) / self.maxTroops();
+};
+CharacterModel.prototype.rangeAttack = function() {
+	var self = this;
+	if(self.data.rangeAttack){
+		return self.data.rangeAttack;
+	}
+	return self.currentSoldiers().rangeAttack();
 };
 CharacterModel.prototype.moveKnow = function() {
 	return this.data.moveKnow;
@@ -105,23 +142,26 @@ CharacterModel.prototype.physicalFitness = function(){//体力
 CharacterModel.prototype.maxPhysicalFitness = function(){
 	return this.data.maxPhysicalFitness;
 };
-CharacterModel.prototype.disposition = function(){
+CharacterModel.prototype.disposition = function(){//0胆小，1冷静，2勇敢，3鲁莽
 	return this.data.disposition;
 };
 CharacterModel.prototype.attack = function(){
-	return this.data.attack;
+	return this.data.attack * this.statusChange("attack") >>> 0;
 };
 CharacterModel.prototype.spirit = function(){
 	return this.data.spirit;
 };
 CharacterModel.prototype.defense = function(){
-	return this.data.defense;
+	return this.data.defense * this.statusChange("defense") >>> 0;
 };
 CharacterModel.prototype.breakout = function(){
 	return this.data.breakout;
 };
 CharacterModel.prototype.morale = function(){
 	return this.data.morale;
+};
+CharacterModel.prototype.movePower = function() {
+	return this.data.movePower;
 };
 CharacterModel.prototype.dispositionLabel = function(){
 	return Language.get("disposition_"+this.data.disposition);
@@ -371,7 +411,7 @@ CharacterModel.prototype.maxProficiencySoldier = function() {
 	var proficiency = 0, soldier;
 	for(var i=0,l=soldiers.length;i<l;i++){
 		var child = soldiers[i];
-		if(proficiency < child.proficiency()){
+		if(i == 0 || proficiency < child.proficiency()){
 			proficiency = child.proficiency();
 			soldier = child;
 		}
@@ -473,7 +513,7 @@ CharacterModel.prototype.groupSkill = function() {
 		return null;
 	}
 	var groupSkill = GroupSkillModel.getMaster(self.data.groupSkill);
-	console.log("groupSkill.probability()/100 = " + (groupSkill.probability()/100));
+	console.log("groupSkill.probability()/100 = " + (groupSkill.probability()*0.01));
 	if(Math.random() > groupSkill.probability()/100){
 		return null;
 	}
@@ -491,7 +531,7 @@ CharacterModel.prototype.skill = function(type) {
 	if(type && skill.mainType() != type){
 		return null;
 	}
-	if(type && Math.random() > skill.probability()/100){
+	if(type && Math.random() > skill.probability()*0.01){
 		return null;
 	}
 	return skill;

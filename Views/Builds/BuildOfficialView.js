@@ -212,7 +212,15 @@ BuildOfficialView.prototype.showBuild=function(event){
 	if(event.characterListType == CharacterListType.EXPEDITION){
 		self.controller.loadCharacterList(CharacterListType.SELECT_LEADER,self);
 	}else if(event.characterListType == CharacterListType.SELECT_LEADER || event.characterListType == CharacterListType.TRANSPORT){
-		self.load.view(["Builds/ExpeditionReady"],self.expeditionReady);
+		if(SeigniorExecute.running){
+			var data = {};
+			data.expeditionCharacterList = self.controller.getValue("expeditionCharacterList");
+			data.expeditionLeader = self.controller.getValue("expeditionLeader");
+			self.controller.setValue("battleData",data);
+			self.controller.gotoBattle();
+		}else{
+			self.load.view(["Builds/ExpeditionReady"],self.expeditionReady);
+		}
 	}
 };
 BuildOfficialView.prototype.expeditionReady=function(){
@@ -228,7 +236,9 @@ BuildOfficialView.prototype.expeditionCancel=function(event){
 	var windowLayer = event.currentTarget.parent;
 	var self = windowLayer.parent;
 	windowLayer.remove();
-	self.menuLayer.visible = true;
+	//self.menuLayer.visible = true;
+	self.controller.loadCharacterList(CharacterListType.SELECT_LEADER,self);
+
 };
 BuildOfficialView.prototype.expeditionReadyComplete=function(event){
 	var windowLayer = event.currentTarget.parent;
@@ -238,9 +248,9 @@ BuildOfficialView.prototype.expeditionReadyComplete=function(event){
 	});
 	var data = readyView.getData();
 	if(self.characterListType == CharacterListType.EXPEDITION){
+		windowLayer.remove();
 		data.expeditionCharacterList = self.controller.getValue("expeditionCharacterList");
 		data.expeditionLeader = self.controller.getValue("expeditionLeader");
-		windowLayer.remove();
 		self.controller.setValue("battleData",data);
 		self.controller.gotoBattle();
 	}else if(self.characterListType == CharacterListType.TRANSPORT){

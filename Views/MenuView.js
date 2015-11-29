@@ -126,9 +126,12 @@ MenuView.prototype.loadSeigniorExecuteLibrary=function(){
 	self.load.library(["Battle/HertParams"],self.seigniorExecute);
 };
 MenuView.prototype.seigniorExecute=function(){
-	var self = this;
+	var self = this;console.log("seigniorExecute");
 	StrategyMasterModel.setMaster(StrategyDatas);
+	console.log("StrategyMasterModel");
 	SoldierMasterModel.setMaster(SoldierDatas);
+	console.log("SoldierMasterModel");
 	SkillMasterModel.setMaster(SkillsData);
+	console.log("SkillMasterModel");
 	SeigniorExecute.run();
 };

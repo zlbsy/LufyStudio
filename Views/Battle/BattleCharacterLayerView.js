@@ -183,6 +183,8 @@ BattleCharacterLayerView.prototype.addOurCharacter=function(id,action,direction,
 	chara.belong = Belong.SELF;
 	chara.changeAction(CharacterAction.MOVE);
 	self.model.ourList.push(chara);
+	self.model.checkCreat(chara, chara.belong);
+	chara.data.wounded(70);
 	if(typeof callback == "function")callback();
 };
 BattleCharacterLayerView.prototype.addEnemyCharacter=function(index,action,direction,x,y,isHide,ai,callback){
@@ -191,6 +193,7 @@ BattleCharacterLayerView.prototype.addEnemyCharacter=function(index,action,direc
 	chara.belong = Belong.ENEMY;
 	chara.changeAction(CharacterAction.MOVE);
 	self.model.enemyList.push(chara);
+	self.model.checkCreat(chara, chara.belong);
 	if(typeof callback == "function")callback();
 };
 BattleCharacterLayerView.prototype.addFriendCharacter=function(index,action,direction,x,y,isHide,ai,callback){
@@ -199,6 +202,7 @@ BattleCharacterLayerView.prototype.addFriendCharacter=function(index,action,dire
 	chara.belong = Belong.FRIEND;
 	chara.changeAction(CharacterAction.MOVE);
 	self.model.friendList.push(chara);
+	self.model.checkCreat(chara, chara.belong);
 	if(typeof callback == "function")callback();
 };
 BattleCharacterLayerView.prototype.removeCharacter=function(belong,id){
@@ -239,10 +243,11 @@ BattleCharacterLayerView.prototype.addCharaLayer=function(index,action,direction
 BattleCharacterLayerView.prototype.boutSkillRun=function(belong,callback){
 	var self = this;
 	var charas = self.getCharactersFromBelong(belong);
+	
 	for(var index = 0,l = charas.length;index<l;index++){
 		var chara = charas[index];
 		var skill = chara.data.skill(SkillType.BOUT_START);
-		if(!skill || !skill.isSubType(SkillSubType.SELF_AID)){
+		if(!skill){
 			continue;
 		}
 		var tweenObj = getStrokeLabel(skill.name(),22,"#FFFFFF","#000000",2);
@@ -259,21 +264,103 @@ BattleCharacterLayerView.prototype.boutSkillRun=function(belong,callback){
 				obj.callback();
 			}
 		}});
-		var aids = Array.getRandomArrays(skill.aids(),skill.aidCount());
-		var aidRects = skill.aidRects();
-		for(var i=0;i<aidRects.length;i++){
-			var range = aidRects[i];
-			var targetChara = self.getCharacterFromLocation(chara.locationX()+range.x, chara.locationY()+range.y);
-			if(!targetChara || !isSameBelong(targetChara.belong,chara.belong)){
-				continue;
-			}
-			for(var j = 0;j<aids.length;j++){
-				var strategy = StrategyMasterModel.getMaster(aids[j]);
-				targetChara.status.addStatus(strategy.strategyType(), strategy.hert());
-			}
+		if(skill.isSubType(SkillSubType.SELF_AID)){
+			self.boutSkillSelfAid(chara,skill,tweenObj);
+		}else if(skill.isSubType(SkillSubType.ENLIST_SKILL)){
+			self.boutSkillEnlist(chara,skill,tweenObj);
+		}else if(skill.isSubType(SkillSubType.HEAL)){
+			self.boutSkillHeal(chara,skill,tweenObj);
 		}
 	}
 	if(callback){
 		callback();
+	}
+};
+BattleCharacterLayerView.prototype.boutSkillHeal=function(chara,skill,tweenObj){
+	var self = this;
+	var healId = skill.healId();
+	var healRects = skill.healRects();
+	var strategy = StrategyMasterModel.getMaster(healId);
+	for(var i=0;i<healRects.length;i++){
+		var range = healRects[i];
+		if(range.x == 0 && range.y == 0){
+			self.healSingle(chara, strategy, 20);
+			continue;
+		}
+		var targetChara = self.getCharacterFromLocation(chara.locationX()+range.x, chara.locationY()+range.y);
+		if(!targetChara || !isSameBelong(targetChara.belong,chara.belong)){
+			continue;
+		}
+		self.healSingle(targetChara, strategy, 0);
+	}
+};
+BattleCharacterLayerView.prototype.healSingle = function(chara,strategy,y){
+	var self = this;
+	var wounded = chara.data.wounded();
+	var troops = chara.data.troops();
+	
+	if(wounded == 0){
+		return;
+	}
+	var troopsAdd = strategy.troops();
+	var woundedAdd = strategy.wounded();
+	if(woundedAdd < 1){
+		woundedAdd = wounded*woundedAdd >>> 0;
+	}else if(woundedAdd > wounded){
+		woundedAdd = wounded;
+	}
+	if(woundedAdd == 0){
+		return;
+	}
+	chara.data.wounded(wounded - woundedAdd);
+	troopsAdd += woundedAdd;
+	chara.changeAction(CharacterAction.WAKE);	
+	
+	var maxTroops = chara.data.maxTroops();
+	var troopsValue = troops + troopsAdd > maxTroops ? maxTroops : troops + troopsAdd;
+	chara.data.troops(troopsValue);
+	
+	var tweenObj = getStrokeLabel(String.format("{0}+{1}",Language.get("treat"),woundedAdd),12,"#FF0000","#000000",2);
+	tweenObj.x = chara.x + (BattleCharacterSize.width - tweenObj.getWidth()) * 0.5;
+	tweenObj.y = chara.y + y;
+	chara.controller.view.baseLayer.addChild(tweenObj);
+	LTweenLite.to(tweenObj,1.5,{y:tweenObj.y - 20,alpha:0,onComplete:function(e){
+		e.target.remove();
+	}});
+};
+BattleCharacterLayerView.prototype.boutSkillEnlist=function(chara,skill,tweenObj){
+	var self = this;
+	var enlistCount = skill.enlistCount();
+	var enlistValue = skill.enlistValue();
+	var charas = self.getCharactersFromBelong(chara.belong);
+	charas = Array.getRandomArrays(charas,enlistCount);
+	for(var i=0,l=charas.length;i<l;i++){
+		var currentChara = charas[i];
+		var addTroops = currentChara.data.maxTroops() * enlistValue >>> 0;
+		var troops = currentChara.data.troops();
+		currentChara.data.troops(troops + addTroops);
+		var tweenVampire = getStrokeLabel(String.format("{0}+{1}",Language.get("troops"),addTroops),12,"#FF0000","#000000",2);
+		tweenVampire.x = currentChara.x + (BattleCharacterSize.width - tweenVampire.getWidth()) * 0.5;
+		tweenVampire.y = currentChara.y + (currentChara.data.id() == chara.data.id() ? 20 : 0);
+		chara.controller.view.baseLayer.addChild(tweenVampire);
+		LTweenLite.to(tweenVampire,1.5,{y:tweenVampire.y - 20,alpha:0,onComplete:function(e){
+			e.target.remove();
+		}});
+	}
+};
+BattleCharacterLayerView.prototype.boutSkillSelfAid=function(chara,skill,tweenObj){
+	var self = this;
+	var aids = Array.getRandomArrays(skill.aids(),skill.aidCount());
+	var aidRects = skill.aidRects();
+	for(var i=0;i<aidRects.length;i++){
+		var range = aidRects[i];
+		var targetChara = self.getCharacterFromLocation(chara.locationX()+range.x, chara.locationY()+range.y);
+		if(!targetChara || !isSameBelong(targetChara.belong,chara.belong)){
+			continue;
+		}
+		for(var j = 0;j<aids.length;j++){
+			var strategy = StrategyMasterModel.getMaster(aids[j]);
+			targetChara.status.addStatus(strategy.strategyType(), strategy.hert());
+		}
 	}
 };

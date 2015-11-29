@@ -227,6 +227,13 @@ AreaModel.prototype.seigniorCharaId=function(seigniorCharaId){
 AreaModel.prototype.seignior_chara_id=function(){
 	return this.seigniorCharaId();
 };
+AreaModel.prototype.seignior=function(){
+	var self = this;
+	if(!self.seigniorCharaId()){
+		return null;
+	}
+	return SeigniorModel.getSeignior(self.seigniorCharaId());
+};
 AreaModel.prototype.itemsFarmland=function(value){
 	return this._dataValue("items_farmland", value, []);
 };
@@ -241,7 +248,7 @@ AreaModel.prototype.color = function(){
 	if(!self.seigniorCharaId()){
 		return "white";
 	}
-	return SeigniorModel.getSeignior(self.seigniorCharaId()).color();
+	return self.seignior().color();
 };
 AreaModel.prototype.neighbor = function(){
 	return this.data.neighbor;
@@ -345,6 +352,10 @@ AreaModel.prototype.cityDefenseLabel=function(){
 	return LString.numberFormat(this.data.city_defense,3);
 };
 AreaModel.prototype.cityDefense=function(value){
+	return this._plusData("city_defense",value);
+};
+//TODO::
+AreaModel.prototype.cityMaxDefense=function(value){
 	return this._plusData("city_defense",value);
 };
 AreaModel.prototype.outOfOfficeSum=function(){

@@ -1,8 +1,10 @@
-function EffectStrategyView(controller, chara, target){
+function EffectStrategyView(controller, chara, target, correctionFactor, skill){
 	var self = this;
 	LExtends(self,LView,[controller]);
 	self.currentCharacter = chara;
 	self.currentTargetCharacter = target;
+	self.correctionFactor = correctionFactor;
+	self.currentSkill = skill;
 	console.log("EffectStrategyView="+self.currentTargetCharacter.data.name());
 	self.init();
 }
@@ -47,7 +49,9 @@ EffectStrategyView.prototype.toSupply = function(){
 	var troopsAdd = currentSelectStrategy.troops();
 	var woundedAdd = currentSelectStrategy.wounded();
 	var wounded = self.currentTargetCharacter.data.wounded();
-	if(woundedAdd > wounded){
+	if(woundedAdd < 1){
+		woundedAdd = wounded*woundedAdd >>> 0;
+	}else if(woundedAdd > wounded){
 		woundedAdd = wounded;
 	}
 	if(woundedAdd > 0){
@@ -106,10 +110,36 @@ EffectStrategyView.prototype.toAttack = function(){
 	if(hitrate){
 		self.currentTargetCharacter.changeAction(CharacterAction.HERT);
 		tweenObj = new Num(Num.MIDDLE,1,20);
-		var hertValue = calculateHertStrategyValue(self.currentCharacter, self.currentTargetCharacter, self.currentCharacter.currentSelectStrategy);
+		var hertValue = calculateHertStrategyValue(self.currentCharacter, self.currentTargetCharacter, self.currentCharacter.currentSelectStrategy,self.correctionFactor);
 		self.currentTargetCharacter.hertValue = hertValue;
 		tweenObj.setValue(hertValue);
 		tweenObj.x = self.currentTargetCharacter.x;
+		if(self.currentSkill && isCurrentAttackTarget(self.currentTargetCharacter)){
+			if(self.currentSkill.isSubType(SkillSubType.VAMPIRE)){
+				var changeHp = hertValue * self.currentSkill.vampire() >>> 0;
+				self.currentCharacter.data.troops(self.currentCharacter.data.troops() + changeHp);
+				var tweenVampire = getStrokeLabel(String.format("{0} 兵力+{1}",self.currentSkill.name(),changeHp),12,"#FF0000","#000000",2);
+				tweenVampire.x = self.currentCharacter.x + (BattleCharacterSize.width - tweenVampire.getWidth()) * 0.5;
+				tweenVampire.y = self.currentCharacter.y;
+				self.currentCharacter.controller.view.baseLayer.addChild(tweenVampire);
+				LTweenLite.to(tweenVampire,1.5,{y:tweenVampire.y - 20,alpha:0,onComplete:function(e){
+					e.target.remove();
+				}});
+			}else if(self.currentSkill.isSubType(SkillSubType.ENEMY_AID)){
+				var aids = self.currentSkill.aids();
+				var aidCount = self.currentSkill.aidCount();
+				var aidList = Array.getRandomArrays(aids,aidCount);
+				var mapLayer = LMvc.BattleController.view.mapLayer;
+				var chara = self.currentTargetCharacter;
+				for(var j = 0;j<aidList.length;j++){
+					var strategy = StrategyMasterModel.getMaster(aidList[j]);
+					if(strategy.canChangeStatus() && mapLayer.isOnWakeRoad(chara)){
+						continue;
+					}
+					chara.status.addStatus(strategy.strategyType(), strategy.hert());
+				}
+			}
+		}
 	}else{
 		self.currentTargetCharacter.changeAction(CharacterAction.BLOCK);
 		tweenObj = getStrokeLabel("MISS",22,"#FFFFFF","#000000",2);

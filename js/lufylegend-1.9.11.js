@@ -6049,14 +6049,14 @@ var LAnimationTimeline = (function() {
 		gotoAndPlay : function(name) {
 			var s = this, l = s.ll_labelList[name];
 			s.setAction(l.rowIndex, l.colIndex, l.mode, l.isMirror);
-			s.onframe();
 			s.play();
+			s.onframe();
 		},
 		gotoAndStop : function(name) {
 			var s = this, l = s.ll_labelList[name];
 			s.setAction(l.rowIndex, l.colIndex, l.mode, l.isMirror);
-			s.onframe();
 			s.stop();
+			s.onframe();
 		},
 		addFrameScript : function(name, func, params) {
 			var l = this.ll_labelList[name];

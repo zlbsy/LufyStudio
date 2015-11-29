@@ -13,7 +13,7 @@ MapController.prototype.baseControllersLoad=function(){
 };
 MapController.prototype.configLoad=function(){
 	var self = this;
-	self.load.config(["characterList","Job","Items","Event","Strategy"],self.helperLoad);
+	self.load.config(["characterList","Job","Items","Event","Strategy","Soldiers"],self.helperLoad);
 };
 MapController.prototype.helperLoad=function(){
 	var self = this;
@@ -68,15 +68,17 @@ MapController.prototype.returnToChapter=function(event){
 	LMvc.changeLoading(Loading);
 	LMvc.keepLoading(false);
 };
-MapController.prototype.showCity=function(cityId){
+MapController.prototype.showCity=function(cityId, initFunc){
 	var self = this;
 	LMvc.cityId = cityId;
+	self.initFunc = initFunc;
 	LMvc.keepLoading(true);
 	self.loadMvc("City",self.cityLoadComplete);
 };
 MapController.prototype.cityLoadComplete=function(){
 	var self = this;
-	var city = new CityController();
+	var city = new CityController(self.initFunc);
+	self.initFunc = null;
 	self.view.parent.addChild(city.view);
 };
 MapController.prototype.returnToCity=function(cityId){

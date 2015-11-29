@@ -30,7 +30,7 @@ GroupSkillModel.prototype.id=function(){
 	return this.data.id;
 };
 GroupSkillModel.prototype.name=function(){
-	return Language.getSkillName("group_"+this.data.id);
+	return Language.getSkill("group_"+this.data.id);
 };
 GroupSkillModel.prototype.probability=function(){
 	return this.data.probability;

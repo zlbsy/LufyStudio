@@ -48,8 +48,12 @@ CityView.prototype.onBuildClick=function(event){
 	if(event.target.alpha != 1){
 		return;
 	}
-	
-	switch(event.target.name){
+	self.showBuildView(event.target.name);
+};
+CityView.prototype.showBuildView=function(name){
+	var self = this, build;
+	console.log("showBuildView :"+name+",self.contentLayer="+self.contentLayer);
+	switch(name){
 		case "official":
 			build = new BuildOfficialView(self.controller);
 			break;
@@ -73,6 +77,7 @@ CityView.prototype.onBuildClick=function(event){
 			break;
 	}
 	self.contentLayer.addChild(build);
+	return build;
 };
 CityView.prototype.buildLayerInit=function(){
 	var self = this;

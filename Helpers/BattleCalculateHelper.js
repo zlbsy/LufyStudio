@@ -189,7 +189,7 @@ function calculateHitrateStrategy(attChara,hertChara){
  r=Lv+25+(X'-Y')/3;<br>
  然后再根据兵种相克和宝物进行修正
  **************************************************************/
-function calculateHertStrategyValue(attChara,hertChara,currentSelectStrategy){
+function calculateHertStrategyValue(attChara,hertChara,currentSelectStrategy,correctionFactor){
 	var r;
 	var attCharaModel = attChara.data;
 	var hertCharaModel = hertChara.data;
@@ -212,6 +212,8 @@ function calculateHertStrategyValue(attChara,hertChara,currentSelectStrategy){
 	r = attLv + 25 + (attAttack - hertDefense)/3;
 	//法术系数加成
 	r = r * currentSelectStrategy.hert();
+	//特技等系数加成
+	r = r * correctionFactor;
 	//兵种伤害系数加成
 	r = r * attCharaModel.currentSoldiers().strategyHert();
 	//TODO:宝物加成
@@ -253,8 +255,30 @@ function calculateHertValue(attChara,hertChara,correctionFactor){
 	var hertDefenseAddition = hertDefense * hertCharaModel.currentSoldiers().terrain(map[hertChara.locationY()][hertChara.locationX()].value).value * 0.01;
 	//物理攻击的伤害值计算
 	r = attLv + 25 + (attAttackAddition - hertDefenseAddition)/2;
-	//兵种相克
-	r = r * attCharaModel.currentSoldiers().restrain(hertCharaModel.currentSoldiers().id()).value * 0.01;
+	var skill = hertCharaModel.skill(SkillType.IGNORE_RESTRAINT);
+	var ignore = false;
+	if(skill){
+		var skillIgnore = skill.ignore();
+		if(!skillIgnore){
+		}else if(skillIgnore.type == "AttackType"){
+			if(skillIgnore.value == attCharaModel.currentSoldiers().attackType()){
+				ignore = true;
+			}
+		}else if(skillIgnore.type == "MoveType"){
+			if(skillIgnore.value == attCharaModel.currentSoldiers().moveType()){
+				ignore = true;
+			}
+		}else if(skillIgnore.type == "SoldierType"){
+			if(skillIgnore.value == attCharaModel.currentSoldiers().soldierType()){
+				ignore = true;
+			}
+		}
+	}
+	if(!ignore){
+		//兵种相克
+		var restrain = attCharaModel.currentSoldiers().restrain(hertCharaModel.currentSoldiers().id()).value * 0.01;
+		r = r * restrain;
+	}
 	//修正系数
 	r *= correctionFactor;
 	//随即系数
@@ -265,4 +289,152 @@ function calculateHertValue(attChara,hertChara,correctionFactor){
 	}
 	r = r >>> 0;
 	return r;
+}
+/*****************************************************************
+ 劫营特技的伤害加成值计算
+ **************************************************************/
+function calculateSkillSurpriseAmend(chara, target, attacks){
+	console.log("calculateSkillSurpriseAmend");
+	if(chara.locationX() != target.locationX() && chara.locationY() != target.locationY()){
+		return 1;
+	}
+	if(chara.direction == target.direction){
+		return attacks[0];
+	}
+	var no = (chara.direction == CharacterDirection.DOWN && chara.direction == CharacterDirection.UP) ||
+		(chara.direction == CharacterDirection.UP && chara.direction == CharacterDirection.DOWN) ||
+		(chara.direction == CharacterDirection.LEFT && chara.direction == CharacterDirection.RIGHT) ||
+		(chara.direction == CharacterDirection.RIGHT && chara.direction == CharacterDirection.LEFT);
+	if(no){
+		return 1;
+	}
+	return attacks[1];
+}
+/*****************************************************************
+ 特技的法术减免伤害加成值计算
+ **************************************************************/
+function calculateStrategyCharasCorrection(currentChara){
+	var strategyCharas = currentChara.model.getMinusStrategyCharas(currentChara.belong);
+	if(strategyCharas.length == 0){
+		return 1;
+	}
+	var hertCorrect = 1;
+	var locationX = currentChara.locationX();
+	var locationY = currentChara.locationY();
+	for(var i=0,l=strategyCharas.length;i<l;i++){
+		var obj = strategyCharas[i];
+		var chara = obj.chara;
+		var skill = obj.skill;
+		if(chara.data.troops() == 0 || skill.hert() > hertCorrect){
+			continue;
+		}
+		var x = chara.locationX();
+		var y = chara.locationY();
+		var minusRects = skill.minusRects();
+		if(minusRects.length == 0){
+			hertCorrect = skill.hert();
+			continue;
+		}
+		for(var i = 0;i<minusRects.length;i++){
+			var point = minusRects[i];
+			if(x + point.x == locationX && y + point.y == locationY){
+				hertCorrect = skill.hert();
+				break;
+			}
+		}
+	}
+	return hertCorrect;
+}
+/*****************************************************************
+ 特技的法术蔓延范围计算
+ **************************************************************/
+function calculateSpreadPoints(skill, ranges){
+	testCount = 0;
+	var points = ranges.concat();
+	var speadRects = skill.speadRects();
+	var speadProbability = skill.speadProbability();
+	var pointsCheck = {};
+	ranges.forEach(function(child){
+		for(var i = 0; i < speadRects.length; i++){
+			var point = speadRects[i];
+			calculateSpreadPointsLoop(child.x + point.x, child.y + point.y, points, speadRects, speadProbability, 0, pointsCheck);
+		}
+	});
+	return points;
+}
+function calculateSpreadPointsLoop(x, y, points, speadRects, speadProbability, loops, pointsCheck){
+	//console.log("PointsLoop("+(testCount++)+"):"+x+","+y+":"+speadProbability+"l="+points.length);
+	if(loops > 2 || pointsCheck[x+","+y])return;
+	if(Math.random() > speadProbability){
+		return;
+	}
+	pointsCheck[x+","+y]=1;
+	points.push({x:x,y:y});
+	for(var i = 0; i < speadRects.length; i++){
+		var point = speadRects[i];
+		calculateSpreadPointsLoop(x + point.x, y + point.y, points, speadRects, speadProbability, loops + 1, pointsCheck);
+	}
+}
+/*****************************************************************
+ 特技(反)埋伏加强系数计算
+ **************************************************************/
+function calculateAmbush(skill, x, y, belong, count){
+	var ambushRects = skill.ambushRects();
+	var ambush = skill.ambush();
+	var result = 0;
+	var num = 0;
+	for(var i = 0, l = ambushRects.length;i<l;i++){
+		var point = ambushRects[i];
+		var chara = LMvc.BattleController.view.charaLayer.getCharacterFromLocation(x+point.x, y+point.y);
+		if(!chara || !isSameBelong(chara.belong,belong)){
+			continue;
+		}
+		if(++num > count){
+			result += ambush;
+		}
+	}
+	return result;
+}
+/*****************************************************************
+ 特技穿透效果范围计算
+ **************************************************************/
+function calculatePenetratePoints(chara, target, ranges){
+	var x=0,y=0;
+	var direction = getDirectionFromTarget(chara, target, true);
+	switch(direction){
+		case CharacterDirection.DOWN:
+			y = 1;
+			break;
+		case CharacterDirection.UP:
+			y = -1;
+			break;
+		case CharacterDirection.LEFT:
+			x = -1;
+			break;
+		case CharacterDirection.RIGHT:
+			x = 1;
+			break;
+		case CharacterDirection.LEFT_UP:
+			x = -1;
+			y = -1;
+			break;
+		case CharacterDirection.RIGHT_UP:
+			x = 1;
+			y = -1;
+			break;
+		case CharacterDirection.RIGHT_DOWN:
+			x = 1;
+			y = 1;
+			break;
+		case CharacterDirection.LEFT_DOWN:
+			x = -1;
+			y = 1;
+			break;
+	}
+	if(ranges.findIndex(function(child){
+		return child.x == x && child.y == y;
+	}) < 0){
+		ranges.push({x:x,y:y});
+	}
+	return ranges;
 }

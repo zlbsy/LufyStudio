@@ -1,9 +1,14 @@
-function CharacterListChildView(controller, charaModel, cityModel, parentView) {
+function CharacterListChildView(controller, param, cityModel, parentView) {
 	var self = this;
 	base(self, LView, [controller]);
 	self.cityModel = cityModel;
 	self.parentView = parentView;
-	self.set(charaModel);
+	if(param.constructor.name == "CharacterModel"){
+		self.set(param);
+	}else if(param.constructor.name == "BattleCharacterView"){
+		self.character = param;
+		self.set(param.data);
+	}
 }
 
 CharacterListChildView.prototype.set = function(charaModel) {
@@ -22,6 +27,7 @@ CharacterListChildView.prototype.setCheckBox = function() {
 	var self = this;
 	switch(self.controller.characterListType) {
 		case CharacterListType.CHARACTER_LIST:
+		case CharacterListType.BATTLE_CHARACTER_LIST:
 			break;
 		default:
 			var bitmap = new LBitmap(new LBitmapData(LMvc.datalist["checkbox-background"]));
@@ -158,7 +164,7 @@ CharacterListChildView.prototype.setBasicProperties = function() {
 	name.y = 5;
 	layer.addChild(name);
 	if(self.cityModel){
-		var name = getStrokeLabel(self.cityModel.name(), 18, "#FFFFFF", "#000000", 4);
+		var name = getStrokeLabel(self.character?self.charaModel.city().name():self.cityModel.name(), 18, "#FFFFFF", "#000000", 4);
 		name.x = 60 * 2 + 2;
 		name.y = 5;
 		layer.addChild(name);

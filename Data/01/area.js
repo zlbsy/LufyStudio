@@ -56,7 +56,7 @@ seigniors : [
     ]
   },
   {  area_id : 22,name:"洛阳",prefecture : 624,
-  money : 121,food : 1021,population : 40021,business : 121,agriculture : 121,technology : 121,police : 91,city_defense : 521,troops : 421,
+  money : 121,food : 11021,population : 40021,business : 121,agriculture : 121,technology : 121,police : 91,city_defense : 521,troops : 421,
   items_farmland:[],
   items_market:[],
   items:[],
@@ -100,7 +100,7 @@ seigniors : [
 ]},
 {chara_id : 66,name:"张角",generals_count : 6,color : "yellow",areas : [
   {  area_id : 24,name:"许昌",prefecture : 70,
-  money : 123,food : 1023,population : 40023,business : 123,agriculture : 123,technology : 123,police : 93,city_defense : 523,troops : 423,
+  money : 11123,food : 21023,population : 40023,business : 11123,agriculture : 11123,technology : 11123,police : 93,city_defense : 6523,troops : 11423,
   items_farmland:[],
   items_market:[],
   items:[],

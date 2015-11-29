@@ -47,6 +47,7 @@ function jobAiEvent(){
 }
 /*检索战力最弱城池*/
 function getWeakBattleCity(areaModel){
+	console.log("getWeakBattleCity");
 	var neighbors = areaModel.neighbor();
 	var enemyCitys = [];
 	for(var i = 0;i < neighbors.length;i++){
@@ -71,6 +72,7 @@ function getCanBattleCity(areaModel,characters,enlistFlag){
 		return;
 	}
 	var weakCity = getWeakBattleCity(areaModel);
+	console.log("weakCity="+weakCity);
 	if(!weakCity){
 		return null;
 	}
@@ -79,12 +81,15 @@ function getCanBattleCity(areaModel,characters,enlistFlag){
 	if(characters.length < weakCityGeneralCount * 0.5){
 		return null;
 	}
-	var generals = getPowerfulCharacters(characters);
+	var generals = AreaModel.getPowerfulCharacters(characters);
+	console.log("getCanBattleCity generals.length="+generals.length);
 	var needFood = 0;
 	for(var i=0,l=generals.length;i<l && i<BattleMapConfig.AttackQuantity;i++){
-		var charaModel = generals[i];
+		var charaModel = generals[i].general;
 		needFood += charaModel.maxTroops();
 	}
+	console.log("areaModel.food()="+areaModel.food());
+	console.log("needFood * 20="+(needFood * 20));
 	if(areaModel.food() < needFood * 20){
 		return null;
 	}
@@ -104,6 +109,9 @@ function getIdleCharacters(areaModel){
 }
 /*出战准备*/
 function jobAiToBattle(areaModel,characters,targetCity){
+	console.log("jobAiToBattle");
+	//TODO::
+	targetCity = AreaModel.getArea(22);
 	var attackQuantity = BattleMapConfig.AttackQuantity;
 	var generalCount = areaModel.generalsSum();
 	if(generalCount - attackQuantity < BattleMapConfig.DetachmentQuantity){
@@ -118,8 +126,9 @@ function jobAiToBattle(areaModel,characters,targetCity){
 	data.attackFlag = 1;
 	data.expeditionCharacterList = [];
 	var sumTroops = 0;
+	console.log("jobAiToBattle attackQuantity="+attackQuantity);
 	for(var i = 0;i<attackQuantity;i++){
-		var general = generals[i];
+		var general = generals[i].general;
 		var index = characters.findIndex(function(child){
 			return child.id() == general.id();
 		});
@@ -132,23 +141,36 @@ function jobAiToBattle(areaModel,characters,targetCity){
 		sumTroops += maxTroops;
 		general.troops(maxTroops);
 	}
+	console.log("jobAiToBattle data:"+data);
 	data.troops = sumTroops;
 	sumTroops = sumTroops + data.troops;
-	data.money = areaModel.money() * 0.2;
+	data.money = areaModel.money() * 0.2 >>> 0;
 	data.food = sumTroops * 10;
 	areaModel.food(-data.food);
 	areaModel.money(-data.money);
 	areaModel.troops(areaModel.troops() - sumTroops);
 	data.cityId = targetCity.id();
 	data.toCity = targetCity;
+	console.log("targetCity.seigniorCharaId():"+targetCity.seigniorCharaId());
+	console.log("LMvc.selectSeignorId:"+LMvc.selectSeignorId);
 	if(targetCity.seigniorCharaId() == LMvc.selectSeignorId){
 		SeigniorExecute.Instance().stop = true;
 		//TODO::进入战斗
 		var attackSeignior = areaModel.seignior();
-		var obj = {title:Language.get("confirm"),message:String.format(Language.get("{0}的{1}向{2}的{3}发起进攻了!"),attackSeignior.character().name(),areaModel.name(),"我军",targetCity.name()),height:200
+		var msg = String.format(Language.get("{0}的{1}向{2}的{3}发起进攻了!"),attackSeignior.character().name(),areaModel.name(),"我军",targetCity.name());
+		var obj = {title:Language.get("confirm"),message:msg,height:200
 		,okEvent:function(event){
 			event.currentTarget.parent.remove();
-			
+			SeigniorExecute.Instance().backLayer.visible = false;
+			LMvc.MapController.showCity(targetCity.id(), function(){
+				var build = LMvc.CityController.view.showBuildView("official");
+				build.characterListType = CharacterListType.EXPEDITION;
+				LMvc.CityController.setValue("cityData",areaModel);
+				LMvc.CityController.setValue("toCity",targetCity);
+				LMvc.CityController.setValue("expeditionEnemyData",data);
+				
+				LMvc.CityController.loadCharacterList(CharacterListType.EXPEDITION,build);
+			});
 		}};
 		var windowLayer = ConfirmWindow(obj);
 		LMvc.layer.addChild(windowLayer);
@@ -158,6 +180,7 @@ function jobAiToBattle(areaModel,characters,targetCity){
 }
 /*AI之间自动战斗*/
 function jobAiBattleExecute(areaModel,data,targetCity){
+	console.log("AI之间自动战斗");
 	var attackSeignior = areaModel.seignior();
 	var defSeignior = targetCity.seignior();
 	SeigniorExecute.Instance().msgView.add(String.format("{0}的{1}向{2}的{3}发起进攻了!",attackSeignior.character().name(),areaModel.name(),defSeignior.character().name(),targetCity.name()));
@@ -308,17 +331,18 @@ function jobAiSetCityBattleDistance(seigniorModel){
 		area.battleDistance = 100;
 		area.aiWillComeNum = 0;
 	});
-	for(var i=0,l=areas.length;i<l;i++){
-		var area = areas[i];
+	console.log("jobAiSetCityBattleDistance areas:"+areas.length);
+	for(var j=0,l=areas.length;j<l;j++){
+		var area = areas[j];
 		if(area.battleDistanceCheckOver){
 			continue;
 		}
-		var neighbors = areaModel.neighbor();
+		var neighbors = area.neighbor();
 		var enemyNear = 0;
 		var neighborCitys = [];
 		for(var i = 0;i < neighbors.length;i++){
 			var child = AreaModel.getArea(neighbors[i]);
-			if(child.seigniorCharaId() != areaModel.seigniorCharaId()){
+			if(child.seigniorCharaId() != area.seigniorCharaId()){
 				enemyNear += 1;
 			}else{
 				neighborCitys.push(child);
@@ -336,6 +360,8 @@ function jobAiSetCityBattleDistance(seigniorModel){
 			}
 		}
 	}
+	SeigniorExecute.Instance().timer.reset();
+	SeigniorExecute.Instance().timer.start();
 }
 function jobAiGeneralMove(areaModel,characters){//武将移动
 	if(characters.length == 0){
@@ -373,8 +399,9 @@ function jobAiGeneralMove(areaModel,characters){//武将移动
 	}
 	var targetCity = citys[citys.length * Math.random() >>> 0];
 	var generals = getPowerfulCharacters(characters);
+	var charaId = generals[0].general.id();
 	var index = characters.findIndex(function(child){
-		return child.id() == generals[0].id();
+		return child.id() == charaId;
 	});
 	var character = characters[index];
 	characters.splice(index, 1);
@@ -474,10 +501,13 @@ function jobAiCaptive(areaModel, seigniorId, charaModel){
 }
 function jobAiCaptivesRescue(areaModel,characters){//解救俘虏
 	if(characters.length == 0){
-		return;
+		return false;
 	}
 	SeigniorExecute.Instance().msgView.add("jobAiCaptivesRescue");
 	var captives = SeigniorModel.getCharactersIsCaptives(areaModel.seigniorCharaId());
+	if(captives.length == 0){
+		return false;
+	}
 	var captive = captives[captives.length * Math.random() >>> 0];
 	var character = characters.shift();
 	var money = (captive.force() + captive.intelligence() + captive.command() + captive.agility() + captive.luck()) * JobCoefficient.REDEEM;

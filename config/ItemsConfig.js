@@ -1,8 +1,8 @@
 var ItemType = {
-	HEAL:"heal"/*治疗伤兵*/
-	,ENLIST:"enlist"/*招募新兵*/
-	,SUPPLEMENT:"supplement"/*从后备兵中补充*/
-	,EQUIPMENT:"equipment"/*装备*/
+	HEAL:"item_heal"/*治疗伤兵*/
+	,ENLIST:"item_enlist"/*招募新兵*/
+	,SUPPLEMENT:"item_supplement"/*从后备兵中补充*/
+	,EQUIPMENT:"item_equipment"/*装备*/
 };
 var ItemSubType = {
 	

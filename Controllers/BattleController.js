@@ -1,6 +1,6 @@
 function BattleController(battleData, fromController){
 	var self = this;
-	base(self,MyController,[]);
+	base(self,OpenCharacterListController,[]);
 	self.fromController = fromController;
 	self.battleData = battleData;
 	self.setValue("bout", 0);
@@ -38,7 +38,7 @@ BattleController.prototype.viewLoad=function(){
 	self.load.view(["Battle/Background","Battle/BattleMiniPreview","Battle/BattleMap","Common/Character","Common/SpecialEffect","Common/StatusBar",
 	"Battle/BattleCharacterLayer","Battle/BattleCharacter","Battle/BattleRoad","Battle/BattleCharacterStatus",
 	"Strategy/Strategy","Strategy/StrategyChild","Battle/EffectStrategy","Battle/BattleMainMenu","Battle/BattleBout",
-	"Battle/CharacterStatusIcon","Battle/BattleWeather","Battle/BattleTerrain","Battle/BattleResult"],self.addMap);
+	"Battle/CharacterStatusIcon","Battle/BattleWeather","Battle/BattleTerrain","Battle/BattleResult","Battle/BattleField"],self.addMap);
 };
 BattleController.prototype.addMap=function(){
 	var self = this;
@@ -93,7 +93,7 @@ BattleController.prototype.init = function(){
 	BattleController.timer.removeAllEventListener();
 	BattleController.timer.addEventListener(LTimerEvent.TIMER, self.showCharacterDetailed);
 
-	
+	console.log("self.battleData.toCity --"+self.battleData.toCity);
 	if(self.battleData.toCity.seigniorCharaId() == 0 || self.battleData.toCity.troops() == 0 || 
 		self.battleData.toCity.generalsSum() == 0){
 		self.noBattle = true;
@@ -104,9 +104,10 @@ BattleController.prototype.init = function(){
 	var enemyCharas;
 	var enemyPositions;
 	var selfPositions;
+	console.log(self.battleData.fromCity.seigniorCharaId() +"=="+LMvc.selectSeignorId);
 	if(self.battleData.fromCity.seigniorCharaId() == LMvc.selectSeignorId){
 		enemyCharas = getDefenseEnemiesFromCity(self.battleData.toCity);
-		enemyCharas[0].isLeader = true;
+		//enemyCharas[0].isLeader = true;
 		enemyPositions = self.model.map.charas;
 		selfPositions = self.model.map.enemys;
 		var sumTroops = self.battleData.toCity.troops();
@@ -128,7 +129,10 @@ BattleController.prototype.init = function(){
 			break;
 		}
 	}else{
-		enemyCharas = self.battleData.expeditionEnemyCharacterList;
+		enemyCharas = self.battleData.expeditionEnemyData.expeditionCharacterList;
+		self.battleData.food = self.battleData.expeditionEnemyData.food;
+		self.battleData.money = self.battleData.expeditionEnemyData.money;
+		self.battleData.troops = self.battleData.expeditionEnemyData.troops;
 		enemyPositions = self.model.map.enemys;
 		selfPositions = self.model.map.charas;
 	}
@@ -140,7 +144,7 @@ BattleController.prototype.init = function(){
 		CharacterModel.getChara(charaId).calculation(true);
 		self.addEnemyCharacter(charaId,charaObjs.direction,charaObjs.x,charaObjs.y);
 	}
-	
+	self.model.enemyList[0].isLeader = true;
 	for(var i=0,l=selfPositions.length;i<l;i++){
 		var charaObjs = selfPositions[i];
 		self.view.charaLayer.addCharacterPosition(charaObjs.direction,charaObjs.x,charaObjs.y);

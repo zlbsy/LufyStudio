@@ -3,7 +3,7 @@ function BattleMapConfig(){
 BattleMapConfig.SPEED = 4;
 BattleMapConfig.AttackQuantity = 5;
 BattleMapConfig.DefenseQuantity = 10;
-
+BattleMapConfig.DetachmentQuantity = 2;
 /*
 BattleMapConfig.GameClear = "gameClear";
 BattleMapConfig.GameOver = "gameOver";

@@ -108,6 +108,9 @@ BattleView.prototype.layerInit=function(){
 	self.mainMenu.mainLayer.x = LGlobal.width - self.mainMenu.getWidth();
 	self.addChild(self.mainMenu);
 	self.mainMenu.visible = false;
+	
+	self.contentLayer = new LSprite();
+	self.addChild(self.contentLayer);
 	return;
 	//Test code
 	self.buildLayer = new LSprite();
@@ -131,6 +134,24 @@ BattleView.prototype.layerInit=function(){
 		c.stroke();
 	});
 	self.buildLayer.addChild(layer);
+};
+BattleView.prototype.addCharacterListView=function(characterListView){
+	var self = this;
+	self.controller.addEventListener(CharacterListEvent.CLOSE, self.clearContentLayer);
+	self.contentLayer.addChild(characterListView);
+};
+BattleView.prototype.showBattleField=function(){
+	var self = this;
+	var battleField = new BattleFieldView(self.controller);
+	var obj = {title:self.controller.battleData.toCity.name()+Language.get("战况"),subWindow:battleField,width:480,height:540,okEvent:null};
+	var windowLayer = ConfirmWindow(obj);
+	self.addChild(windowLayer);
+};
+BattleView.prototype.clearContentLayer=function(event){
+	var self = event.currentTarget.view;
+	self.contentLayer.die();
+	self.contentLayer.removeAllChild();
+	self.controller.addEventListener(CharacterListEvent.CLOSE, self.clearContentLayer);
 };
 BattleView.prototype.onframe=function(event){
 	var self = event.currentTarget.controller;

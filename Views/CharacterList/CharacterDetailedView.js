@@ -1,16 +1,8 @@
 function CharacterDetailedView(controller,param){
 	var self = this;
 	base(self,LView,[controller]);
-	var characterModel;
-	if(param.constructor.name == "CharacterModel"){
-		characterModel = param;
-	}else if(param.constructor.name == "BattleCharacterView"){
-		self.character = param;
-		characterModel = param.data;
-	}
-	console.log("CharacterDetailedView",characterModel);
 	self.nowTab = CharacterDetailedView.TAB_STATUS;
-	self.set(characterModel);
+	self.set(param);
 }
 CharacterDetailedView.prototype.layerInit=function(){
 	var self = this;
@@ -38,7 +30,8 @@ CharacterDetailedView.prototype.changeCharacter=function(value){
 	var self = this;
 	var characterList= self.controller.view.dataList;
 	var index = characterList.findIndex(function(child){
-		return child.id() == self.characterModel.id();
+		var model = child.constructor.name == "CharacterModel"?child:child.data;
+		return model.id() == self.characterModel.id();
 	});
 	index = index + value;
 	if(index < 0){
@@ -49,10 +42,18 @@ CharacterDetailedView.prototype.changeCharacter=function(value){
 	var characterModel = characterList[index];
 	self.set(characterModel);
 };
-CharacterDetailedView.prototype.set=function(characterModel){
+CharacterDetailedView.prototype.set=function(param){
 	var self = this;
 	self.die();
 	self.removeAllChild();
+	var characterModel;
+	if(param.constructor.name == "CharacterModel"){
+		characterModel = param;
+	}else if(param.constructor.name == "BattleCharacterView"){
+		self.character = param;
+		characterModel = param.data;
+	}
+	console.log("CharacterDetailedView",characterModel);
 	var faceW = 224, faceH = 336;
 	self.faceW = faceW;
 	self.faceH = faceH;
@@ -228,9 +229,18 @@ CharacterDetailedView.prototype.showStatus=function(){
 	seigniorId > 0 ? self.characterModel.loyalty() : "--",
 	self.character ? self.character.status.statusLabel() : self.characterModel.jobLabel()
 	];
+	var skill = self.characterModel.skill();
+	if(skill){
+		labels.push("stunt");
+		datas.push(String.format("{0} ({1})",skill.name(),skill.explanation()));
+	}
 	for(var i=0;i<labels.length;i++){
 		startY += txtHeight;
 		var lblCost = getStrokeLabel(String.format("{0} : {1}",Language.get(labels[i]), datas[i]),20,"#FFFFFF","#000000",4);
+		if(labels[i] == "stunt"){
+			lblCost.width = LGlobal.width - 60;
+			lblCost.setWordWrap(true, txtHeight);
+		}
 		lblCost.x = startX;
 		lblCost.y = startY;
 		statusLayer.addChild(lblCost);

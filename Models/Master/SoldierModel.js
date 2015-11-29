@@ -50,6 +50,9 @@ SoldierModel.prototype.technology = function() {
 SoldierModel.prototype.soldierType = function() {
 	return this.master().soldierType();
 };
+SoldierModel.prototype.attackType = function() {
+	return this.master().attackType();
+};
 SoldierModel.prototype.moveType = function() {
 	return this.master().moveType();
 };
@@ -62,8 +65,8 @@ SoldierModel.prototype.property = function() {
 SoldierModel.prototype.equipment = function() {
 	return this.master().equipment();
 };
-SoldierModel.prototype.restrain = function() {
-	return this.master().restrain();
+SoldierModel.prototype.restrain = function(restrainId) {
+	return this.master().restrain(restrainId);
 };
 SoldierModel.prototype.terrain = function(terrainId) {
 	return this.master().terrain(terrainId);
