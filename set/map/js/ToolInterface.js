@@ -1,7 +1,7 @@
 var studioMenubar;
-var characters;
-var components;
-var projectFiles;
+var maps;
+var stageBitmap;
+var mapChild;
 var gameStage;
 var character;
 var currentComponent;
@@ -9,242 +9,69 @@ var dragPoint;
 var user;
 var helper;
 var iconSlider;
+var MapSetting = {
+	w:10,h:10
+};
 function ToolInterface(){
-}
+};
+ToolInterface.stageInit = function(){
+	var h = maps.length;
+	var w = maps[0].length;
+	stageBitmap.bitmapData = new LBitmapData("#FF0000",0,0,48 * w,48 * h, LBitmapData.DATA_CANVAS);
+	for(var i=0;i<h;i++){
+		for(var j=0;j<w;j++){
+			var data = maps[i][j];
+			var matrix = new LMatrix();
+			matrix.translate(-24,-24);
+			matrix.rotate(data[1]*90);
+			matrix.translate(24,24);
+			matrix.translate(j*48,i*48);
+			//console.log(stageBitmap.bitmapData.width,stageBitmap.bitmapData.height,new LRectangle((data[0]/10 >>> 0)*48, (data[0]%10)*48, 48, 48));
+			var sx = (data[0]/10 >>> 0)*48;
+			var sy = (data[0]%10)*48;
+			stageBitmap.bitmapData.draw(MapSetting.bitmapData,matrix,null,null,new LRectangle(sx, sy, 48, 48));
+		}
+	}
+};
 ToolInterface.init = function(){
-	titleLayer = new LSprite();
-	stageLayer.addChild(titleLayer);
+	MapSetting.bitmapData = new LBitmapData(datalist["tile_map"]);
 	gameStage = new LSprite();
-	//gameStage.graphics.drawRect(1,"#333333",[0,0,600,800],true,"#FFFFFF");
-	
-	var scrollbar = new LScrollbar(gameStage,660,960,20);
-	scrollbar.x = 1;
-	scrollbar.y = 30;
-	stageLayer.addChild(scrollbar);
-	//stageLayer.addChild(gameStage);
-	var com = new LComboBox();
-	com.x = 5;
-	com.setChild({label:"50%",value:0.5});
-	com.setChild({label:"75%",value:0.75});
-	com.setChild({label:"100%",value:1});
-	com.setChild({label:"150%",value:1.5});
-	com.setChild({label:"200%",value:2});
-	com.setChild({label:"250%",value:2.5});
-	com.setChild({label:"300%",value:3});
-	com.setValue(1);
-	stageLayer.addChild(com);
-	com.addEventListener(LComboBox.ON_CHANGE,function(event){
-		gameStage.scaleX = gameStage.scaleY = event.target.value;
-		gameStage.x = gameStage.y = 0;
-	});
-
+	var bitmapData = new LBitmapData(null,0,0,48,48); 
+	stageBitmap = new LBitmap(bitmapData);
+	gameStage.addChild(stageBitmap);
 	
 	studioMenubar = new StudioMenubar();
 	rootLayer.addChild(studioMenubar);
-	stageLayer.y = studioMenubar.getHeight();
 	
-	helper = new Helper();
-	helper.x = 300;
-	helper.y = 5;
-	rootLayer.addChild(helper);
-	var maskObj = new LSprite();
-	maskObj.x = helper.x;
-    maskObj.graphics.drawRect(0, "#ff0000", [0, 0, 600, 30]);
-	helper.mask = maskObj;
+	stageLayer.x = 1;
+	stageLayer.y = studioMenubar.getHeight() + 1;
+	var scrollbar = new LScrollbar(gameStage,LGlobal.width,LGlobal.height - stageLayer.y,20);
+	stageLayer.addChild(scrollbar);
 	
-	user = new User();
-	user.x = LGlobal.width;
-	rootLayer.addChild(user);
-	
-	characters = new Characters();
-	characters.x = LGlobal.width - characters.getWidth();
-	stageLayer.addChild(characters);
-	
-	components = new Components();
-	components.x = characters.x;
-	stageLayer.addChild(components);
-	
-	characters.toshow();
-	ToolInterface.charactersPush(characterList, 0);
-	
-	character = new Character(true);
-	gameStage.addChild(character);
-	
-	iconSlider = new IconSlider();
-	rootLayer.addChild(iconSlider);
-	iconSlider.reset();
-	iconSlider.visible = false;
-	
-	
-	LGlobal.stage.addEventListener(LEvent.WINDOW_RESIZE, ToolInterface.onresize);
-	if(window.localStorage.getItem("faceStudio_username")){
-		LAjax.responseType = LAjax.JSON;
-		var username = window.localStorage.getItem("faceStudio_username");
-		var password = window.localStorage.getItem("faceStudio_password");
-		LAjax.post("./Data/login.php",{"username":username,"password":password},function(responseData){
-			console.log("./Data/login.php",responseData);
-			if(responseData.result){
-				user.ssid = responseData.ssid;
-				user.uid = responseData.data.uid;
-				user.username.text = username;
-				user.button.setLabel("退出");
-				user.button.width = 70;
-				user.username.x = -user.button.width - user.username.getWidth() - 10;
-			}
-		});
-	}
+	gameStage.addEventListener(LMouseEvent.MOUSE_DOWN,ToolInterface.clickDownMap);
+	gameStage.addEventListener(LMouseEvent.MOUSE_UP,ToolInterface.clickUpMap);
 };
-ToolInterface.charactersSearch = function(){
-	characters.scrollbar.scrollToTop();
-	characters.showLayer.removeAllChild();
-	if(characters.searchName.text.length == 0){
-		ToolInterface.charactersPush(characterList, 0);
+ToolInterface.clickDownMap = function(e){
+	stageLayer.downX = e.selfX;
+	stageLayer.downY = e.selfY;
+};
+ToolInterface.clickUpMap = function(e){
+	if(Math.abs(stageLayer.downX - e.selfX) > 5 || Math.abs(stageLayer.downY - e.selfY) > 5){
+		if(mapChild){
+			mapChild.remove();
+			mapChild = null;
+		}
 		return;
 	}
-	var name = LString.trim(characters.searchName.text);
-	var charaList = [],child;
-	var value = characters.filterCombox.value;
-	for(var i=0,l=characterList.length;i<l;i++){
-		var obj = characterList[i];
-		if(obj.name.indexOf(name) >= 0){
-			//charaList.push(obj);
-			if(value == 0){
-				charaList.push(obj);
-			}else if(value == 1){
-				if(obj.type == "◎"){
-					charaList.push(obj);
-				}
-			}else if(value == 2){
-				if(obj.type == "◯"){
-					charaList.push(obj);
-				}
-			}else if(value == 3){
-				if(obj.type == "△"){
-					charaList.push(obj);
-				}
-			}else if(value == 4){
-				if(obj.type == "☆"){
-					charaList.push(obj);
-				}
-			}else if(value == 5){
-				if(obj.type == "×"){
-					charaList.push(obj);
-				}
-			}
-		}
+	if(mapChild){
+		mapChild.remove();
+		mapChild = null;
 	}
-	ToolInterface.charactersPush(charaList, 0);
-};
-ToolInterface.charactersFilter = function(value){
-	characters.scrollbar.scrollToTop();
-	characters.showLayer.removeAllChild();
-	if(value == 0){
-		ToolInterface.charactersPush(characterList, 0);
-		return;
-	}
-	var charaList = [];
-	for(var i=0,l=characterList.length;i<l;i++){
-		var obj = characterList[i];
-		if(value == 1){
-			if(obj.type == "◎"){
-				charaList.push(obj);
-			}
-		}else if(value == 2){
-			if(obj.type == "◯"){
-				charaList.push(obj);
-			}
-		}else if(value == 3){
-			if(obj.type == "△"){
-				charaList.push(obj);
-			}
-		}else if(value == 4){
-			if(obj.type == "☆"){
-				charaList.push(obj);
-			}
-		}else if(value == 5){
-			if(obj.type == "×"){
-				charaList.push(obj);
-			}
-		}
-	}
-	ToolInterface.charactersPush(charaList, 0);
-};
-ToolInterface.charactersPush = function(charas, characterIndex){
-	var child,length = charas.length < characterIndex + 50 ? charas.length : characterIndex + 50;
-	for(var i=characterIndex;i<length;i++){
-		child = charas[i];
-		characters.add(child.name, child.index);
-	}
-	if(length < charas.length){
-		setTimeout(function(){
-			ToolInterface.charactersPush(charas, length);
-		},1);
-	}
-};
-ToolInterface.titleInit = function(_name,_stage){
-	for(var i=0,l=gameStage.childList.length;i<l;i++){
-		gameStage.childList[i].visible = false;
-	}
-	var closeButton;
-	var stageTitle = new LSprite();
-	stageTitle.stage = _stage;
-	stageTitle.y = 3;
-	if(gameStage.childList.length > 0){
-		closeButton = new LButton(new LBitmap(new LBitmapData(datalist["iconClose"],0,0,24,24)),new LBitmap(new LBitmapData(datalist["iconClose"],24,0,24,24)));
-		closeButton.x = 5;
-		closeButton.y = 4;
-		closeButton.addEventListener(LMouseEvent.MOUSE_UP,ToolInterface.removeStageFromCloseButton);
-		stageTitle.addChild(closeButton);
-	}
-	var titleLabel = new LTextField();
-	titleLabel.text = _name;
-	titleLabel.color = "#FFFFFF";
-	titleLabel.size = 120;
-	titleLabel.x = 10 + (closeButton?closeButton.getWidth():0);
-	titleLabel.y = 8;
-	stageTitle.addChild(titleLabel);
-	
-	stageTitle.graphics.drawRoundRect(1,"#000000",[0,0,titleLabel.x + titleLabel.getWidth() + 10,40,10],true,"#666666");
-	stageTitle.x = titleLayer.getWidth();
-	titleLayer.addChild(stageTitle);
-	gameStage.addChild(_stage);
-	_stage.visible = true;
-	//stageList.push(stageTitle.stage);
-};
-ToolInterface.removeStageFromCloseButton = function(e){
-	var closeBtn = e.clickTarget;
-	closeBtn.parent.stage.remove();
-	closeBtn.parent.remove();
-	var l=titleLayer.childList.length,startX=0;
-	for(var i=0;i<l;i++){
-		if(i==l-1){
-			gameStage.childList[i].visible = true;
-		}else{
-			gameStage.childList[i].visible = false;
-		}
-		titleLayer.childList[i].x = startX;
-		console.log("titleLayer.childList[i].getWidth()",titleLayer.childList[i].getWidth());
-		startX += titleLayer.childList[i].getWidth();
-	}
-};
-ToolInterface.onresize = function(){
-	LGlobal.width = window.innerWidth;
-	LGlobal.height = window.innerHeight;
-	LGlobal.canvasObj.width  = LGlobal.width;
-	LGlobal.canvasObj.height  = LGlobal.height;
-	LGlobal.resize();
-	rootLayer.graphics.clear();
-	rootLayer.graphics.drawRect(0,"#000000",[0,0,LGlobal.width,LGlobal.height],true,"#999999");
-	
-	var backgroundColor=LGlobal.canvas.createLinearGradient(0,-20,0,30);
-	backgroundColor.addColorStop(0,"#FFFFFF");
-	backgroundColor.addColorStop(1,"#000000");
-	studioMenubar.back.graphics.clear();
-	studioMenubar.back.graphics.drawRect(0,"#000000",[0,0,LGlobal.width,studioMenubar.menu.getHeight()],true,backgroundColor);
-	
-	characters.x = LGlobal.width - characters.getWidth();
-	components.x = characters.x;
-
-	iconSlider.reset();
-	user.x = LGlobal.width;
+	var x = e.selfX/48 >>> 0;
+	var y = e.selfY/48 >>> 0;
+	mapChild = new MapChild(x,y);
+	mapChild.x = x * 48 + gameStage.x;
+	mapChild.y = y * 48 + gameStage.y;
+	stageLayer.addChild(mapChild);
+	mapChild.init();
 };

@@ -1,4 +1,4 @@
-init(1000/60,"lufylegend",window.innerWidth,window.innerHeight,main);
+init(1000/60,"lufylegend",480,800,main);
 var rootLayer;
 var stageLayer;
 var loadingLayer;
@@ -6,7 +6,10 @@ var characterList;
 var datalist;
 var loadData = [
 {path:"./js/ToolInterface.js",type:"js"},
-{path:"../../images/smap/01-small.png",name:"map"}
+{path:"./js/StudioMenubar.js",type:"js"},
+{path:"./js/CreateWindow.js",type:"js"},
+{path:"./js/MapChild.js",type:"js"},
+{path:"../../images/smap/tile_map.png",name:"tile_map"}
 ];
 function main(){
 	LMouseEventContainer.set(LMouseEvent.MOUSE_DOWN,true);
@@ -14,8 +17,16 @@ function main(){
 	LMouseEventContainer.set(LMouseEvent.MOUSE_MOVE,true);
 	LMouseEventContainer.set(LMouseEvent.DOUBLE_CLICK,true);
 	LGlobal.setDebug(true);
-	LGlobal.stageScale = LStageScaleMode.NO_SCALE;
+	if(LGlobal.mobile){
+		LGlobal.width = 480;
+		LGlobal.height = 480*window.innerHeight/window.innerWidth;
+		LGlobal.canvasObj.width  = LGlobal.width;
+		LGlobal.canvasObj.height  = LGlobal.height;
+	}
+	LGlobal.align = LStageAlign.TOP_LEFT;
+	LGlobal.stageScale = LStageScaleMode.SHOW_ALL;
 	LSystem.screen(LStage.FULL_SCREEN);
+			
 	initLayer();
 	loadingLayer = new LoadingSample4();
 	rootLayer.addChild(loadingLayer);	
