@@ -298,7 +298,8 @@ Language.cityData = {
 	"city_49":"山越",
 	"city_50":"羌",
 	"city_51":"氐",
-	"city_52":"匈奴"
+	"city_52":"匈奴",
+	"city_53":"西城"
 };
 Language.soldierData = {
 	"explanation_jj":"君主类兵种１。均衡发展的万能型部队。在攻击、策略两方面都相当活跃。",

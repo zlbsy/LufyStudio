@@ -300,7 +300,7 @@ CharacterDetailedView.prototype.clickRelease=function(event){
 	charaModel.moveTo(city.id());
 	charaModel.moveTo();
 	var characterChildView = self.getCharacterChildView();
-	characterChildView.delete();
+	characterChildView.toDelete();
 	self.closeCharacterDetailed();
 	var obj = {title:Language.get("confirm"),message:String.format(Language.get("武将{0}被释放了"), charaModel.name()),height:200,okEvent:null};
 			var windowLayer = ConfirmWindow(obj);
@@ -312,7 +312,7 @@ CharacterDetailedView.prototype.clickBehead=function(event){
 	var cityData = self.controller.getValue("cityData");
 	cityData.removeCaptives(charaModel.id());
 	var characterChildView = self.getCharacterChildView();
-	characterChildView.delete();
+	characterChildView.toDelete();
 	self.closeCharacterDetailed();
 	var obj = {title:Language.get("confirm"),message:String.format(Language.get("武将{0}被斩首了"), charaModel.name()),height:200,okEvent:null};
 			var windowLayer = ConfirmWindow(obj);

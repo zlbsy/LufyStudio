@@ -13,11 +13,11 @@ CharacterListChildView.prototype.set = function(charaModel) {
 	self.setCheckBox();
 	self.setStatus();
 };
-CharacterListChildView.prototype.delete = function(charaModel) {
+CharacterListChildView.prototype.toDelete = function(charaModel) {
 	var self = this;
 	//var mask = getTranslucentBitmap(420, 50);
 	self.alpha = 0.4;
-}
+};
 CharacterListChildView.prototype.setCheckBox = function() {
 	var self = this;
 	switch(self.controller.characterListType) {
