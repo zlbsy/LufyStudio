@@ -3,8 +3,8 @@ function StudioMenubar(){
 	base(self,LSprite,[]);
 	var list = [
 		{label:"MapMaker",list:[
-			{label:"关于MapMaker",click:null},
-			{label:"关于作者",click:null}
+			{label:"关于MapMaker",click:self.aboutTool},
+			{label:"关于作者",click:self.aboutAuthor}
 		]},
 		{label:"文件",list:[
 			{label:"新建",click:CreateWindow.create},
@@ -47,57 +47,22 @@ StudioMenubar.prototype.aboutAuthor = function(e){
 		message:"作者lufy，HTML5开源游戏引擎lufylegend.js开发者。著有《HTML5 Canvas游戏开发实战》一书。"
 	});
 };
+StudioMenubar.prototype.aboutTool = function(e){
+	LMessageBox.show({
+		title:"关于MapMaker",
+		message:"。。。。"
+	});
+};
 StudioMenubar.prototype.save = function(e){
 	var self = e.target.parent;
-	var data = {
-		b:character.body.getData(),
-		f:character.face.getData(),
-		e:character.eye.getData(),
-		n:character.nose.getData(),
-		m:character.mouth.getData(),
-		h:character.hat.getData(),
-		d1:character.decorative1.getData(),
-		d2:character.decorative2.getData(),
-		d3:character.decorative3.getData()
-	};
-	LAjax.responseType = LAjax.JSON;
-	LAjax.post("./Data/save.php",{"data":JSON.stringify(data),"id":character.index,"ssid":user.ssid},function(responseData){
-		console.log(responseData);
-		if(responseData.result){
-			LMessageBox.show({
-				title:"完成",
-				message:"保存完成！"
-			});
-			LAjax.responseType = LAjax.JSON;
-			LAjax.post("./Data/get.php",{"id":character.index},function(list){
-				characters.backupUpdate(list);
-			});
-			var index = characterList.findIndex(function(child){
-				return character.index == child.index;
-			});
-			var characterObj = characterList[index];
-			if(characterObj.type == "×"){
-				characterList[index].type = "☆";
-			}
-		}else{
-			LMessageBox.show({
-				title:"出错了",
-				message:responseData.error
-			});
-		}
+	LAjax.post("http://d.lufylegend.com/set/map/Data/save.php",{"data":JSON.stringify(maps)},function(responseData){
+		alert(responseData);
 	},function(){alert("error");});
 };
-StudioMenubar.prototype.create = function(e){
-	var self = e.target.parent;
-	if(typeof character.index == UNDEFINED){
-		LMessageBox.show({
-			title:"确认",
-			message:"请先选择要修改的武将。"
-		});
-		return;
-	}
-	character.loadData("Data/default.txt?t="+(new Date()).getTime());
-};
 StudioMenubar.prototype.open = function(e){
-	var self = e.target.parent;
+	LAjax.get("http://d.lufylegend.com/set/map/Data/map.txt?time="+(new Date()).getTime(),{},function(data){
+		maps = JSON.parse(data);
+		ToolInterface.stageInit();
+	});
+	//character.loadData("Data/map.txt?t="+(new Date()).getTime());
 };

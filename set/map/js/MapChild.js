@@ -13,7 +13,7 @@ MapChild.prototype.init = function(){
 	if(coordinate.x >= LGlobal.width - 160){
 		buttonLayer.x = 48 - 160;
 	}
-	if(coordinate.y >= LGlobal.height - 80){
+	if(coordinate.y >= LGlobal.height - 120){
 		buttonLayer.y = -80;
 	}else{
 		buttonLayer.y = 48;
@@ -35,10 +35,16 @@ MapChild.prototype.init = function(){
 	button.x = 120;
 	buttonLayer.addChild(button);
 	button.addEventListener(LMouseEvent.MOUSE_UP,self.left.bind(self));
-	var button = new LButtonSample1("地形");
+	button = new LButtonSample1("地形");
 	button.y = 40;
 	buttonLayer.addChild(button);
 	button.addEventListener(LMouseEvent.MOUSE_UP,self.change.bind(self));
+	button = new LButtonSample1("移动");
+	button.x = 80;
+	button.y = 40;
+	buttonLayer.addChild(button);
+	button.addEventListener(LMouseEvent.MOUSE_DOWN,self.moveStart.bind(self));
+	button.addEventListener(LMouseEvent.MOUSE_UP,self.moveEnd.bind(self));
 };
 MapChild.prototype.up = function(e){
 	this.changeDirection(0);
@@ -56,6 +62,30 @@ MapChild.prototype.changeDirection = function(dir){
 	var self = this;
 	var data = maps[self.my][self.mx];
 	maps[self.my][self.mx][1] = dir;
+	var bitmapData = getMapTile(maps[self.my][self.mx]);
+	stageBitmap.bitmapData.copyPixels(bitmapData,new LRectangle(0, 0, 48, 48),new LPoint(self.mx*48,self.my*48, 48, 48));
+};
+MapChild.prototype.moveStart = function(e){
+	var self = this;
+	self.startDrag(e.touchPointID);
+	self.addEventListener(LEvent.ENTER_FRAME,self.onframe);
+};
+MapChild.prototype.moveEnd = function(e){
+	var self = this;
+	self.stopDrag();
+	self.removeEventListener(LEvent.ENTER_FRAME,self.onframe);
+};
+MapChild.prototype.onframe = function(e){
+	var self = e.currentTarget;
+	var mx =  (self.x + 24 - gameStage.x) / 48 >>> 0;
+	var my =  (self.y + 24 - gameStage.y) / 48 >>> 0;
+	if(self.mx == mx && self.my == my){
+		return;
+	}
+	var data = maps[self.my][self.mx];
+	self.mx = mx;
+	self.my = my;
+	maps[self.my][self.mx] = data;
 	var bitmapData = getMapTile(maps[self.my][self.mx]);
 	stageBitmap.bitmapData.copyPixels(bitmapData,new LRectangle(0, 0, 48, 48),new LPoint(self.mx*48,self.my*48, 48, 48));
 };
