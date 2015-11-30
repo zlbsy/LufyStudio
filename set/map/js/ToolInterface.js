@@ -17,10 +17,13 @@ function ToolInterface(){
 ToolInterface.stageInit = function(){
 	var h = maps.length;
 	var w = maps[0].length;
-	stageBitmap.bitmapData = new LBitmapData("#FF0000",0,0,48 * w,48 * h, LBitmapData.DATA_CANVAS);
+	stageBitmap.bitmapData = new LBitmapData(null,0,0,48 * w,48 * h, LBitmapData.DATA_CANVAS);
 	for(var i=0;i<h;i++){
 		for(var j=0;j<w;j++){
 			var data = maps[i][j];
+			var bitmapData = getMapTile(data);
+			stageBitmap.bitmapData.copyPixels(bitmapData,new LRectangle(0, 0, 48, 48),new LPoint(j*48,i*48, 48, 48));
+			/*continue;
 			var matrix = new LMatrix();
 			matrix.translate(-24,-24);
 			matrix.rotate(data[1]*90);
@@ -29,12 +32,13 @@ ToolInterface.stageInit = function(){
 			//console.log(stageBitmap.bitmapData.width,stageBitmap.bitmapData.height,new LRectangle((data[0]/10 >>> 0)*48, (data[0]%10)*48, 48, 48));
 			var sx = (data[0]/10 >>> 0)*48;
 			var sy = (data[0]%10)*48;
-			stageBitmap.bitmapData.draw(MapSetting.bitmapData,matrix,null,null,new LRectangle(sx, sy, 48, 48));
+		stageBitmap.bitmapData.copyPixels(MapSetting.bitmapData,new LRectangle(0, 0, 48, 48),new LPoint(j*48,i*48, 48, 48));
+			//stageBitmap.bitmapData.draw(MapSetting.bitmapData,matrix,null,null,new LRectangle(sx, sy, 48, 48));*/
 		}
 	}
 };
 ToolInterface.init = function(){
-	MapSetting.bitmapData = new LBitmapData(datalist["tile_map"]);
+	MapHelperSetting.bitmapData = new LBitmapData(datalist["tile_map"]);
 	gameStage = new LSprite();
 	var bitmapData = new LBitmapData(null,0,0,48,48); 
 	stageBitmap = new LBitmap(bitmapData);

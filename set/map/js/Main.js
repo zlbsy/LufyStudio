@@ -9,6 +9,7 @@ var loadData = [
 {path:"./js/StudioMenubar.js",type:"js"},
 {path:"./js/CreateWindow.js",type:"js"},
 {path:"./js/MapChild.js",type:"js"},
+{path:"./js/MapHelper.js",type:"js"},
 {path:"./tile_map.png",name:"tile_map"}
 ];
 function main(){

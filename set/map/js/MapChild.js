@@ -56,12 +56,8 @@ MapChild.prototype.changeDirection = function(dir){
 	var self = this;
 	var data = maps[self.my][self.mx];
 	maps[self.my][self.mx][1] = dir;
-	var matrix = new LMatrix();
-	matrix.translate(-24,-24);
-	matrix.rotate(dir*90);
-	matrix.translate(24,24);
-	matrix.translate(self.mx*48,self.my*48);
-	stageBitmap.bitmapData.draw(MapSetting.bitmapData,matrix,null,null,new LRectangle((data[0]/10 >>> 0)*48, (data[0]%10)*48, 48, 48));
+	var bitmapData = getMapTile(maps[self.my][self.mx]);
+	stageBitmap.bitmapData.copyPixels(bitmapData,new LRectangle(0, 0, 48, 48),new LPoint(self.mx*48,self.my*48, 48, 48));
 };
 MapChild.prototype.change = function(e){
 	var self = this;
@@ -86,7 +82,8 @@ MapChild.prototype.change = function(e){
 	
 	var mapLayer = new LSprite();
 	myWindow.layer.addChild(mapLayer);
-	var bitmap = new LBitmap(MapSetting.bitmapData);
+	//MapHelperSetting.bitmapData.setProperties(0, 0, MapHelperSetting.bitmapData.image.width, MapHelperSetting.bitmapData.image.height);
+	var bitmap = new LBitmap(MapHelperSetting.bitmapData);
 	mapLayer.addChild(bitmap);
 	mapLayer.addEventListener(LMouseEvent.MOUSE_UP,function(event){
 		stageLayer.downX = stageLayer.downY = -10;
@@ -94,12 +91,8 @@ MapChild.prototype.change = function(e){
 		var y = event.selfY / 48 >>> 0;
 		var data = maps[self.my][self.mx];
 		maps[self.my][self.mx] = [x * 10 + y,data[1]];
-		var matrix = new LMatrix();
-		matrix.translate(-24,-24);
-		matrix.rotate(data[1]*90);
-		matrix.translate(24,24);
-		matrix.translate(self.mx*48,self.my*48);
-		stageBitmap.bitmapData.draw(MapSetting.bitmapData,matrix,null,null,new LRectangle(x*48, y*48, 48, 48));
+		var bitmapData = getMapTile(maps[self.my][self.mx]);
+		stageBitmap.bitmapData.copyPixels(bitmapData,new LRectangle(0, 0, 48, 48),new LPoint(self.mx*48,self.my*48, 48, 48));
 		myWindow.close();
 	});
 };
