@@ -4,6 +4,12 @@ BattleMapConfig.SPEED = 4;
 BattleMapConfig.AttackQuantity = 5;
 BattleMapConfig.DefenseQuantity = 10;
 BattleMapConfig.DetachmentQuantity = 2;
+
+var MapHelperSetting = {
+	w:10,h:10,
+	bitmapData:null,
+	tiles:{}
+};
 /*
 BattleMapConfig.GameClear = "gameClear";
 BattleMapConfig.GameOver = "gameOver";

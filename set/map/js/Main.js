@@ -10,7 +10,7 @@ var loadData = [
 {path:"./js/CreateWindow.js",type:"js"},
 {path:"./js/MapChild.js",type:"js"},
 {path:"./js/MapHelper.js",type:"js"},
-{path:"./tile_map.png",name:"tile_map"}
+{path:"../../images/smap/tile_map.png",name:"tile_map"}
 ];
 function main(){
 	LMouseEventContainer.set(LMouseEvent.MOUSE_DOWN,true);

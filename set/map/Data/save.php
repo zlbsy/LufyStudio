@@ -1,6 +1,7 @@
 <?php 
 $data = $_POST["data"];
-$r = savefile($data,"map.txt");
+$index = $_POST["index"];
+$r = savefile($data,"map_{$index}.txt");
 echo $r;
 function savefile($data,$name){
 	$hoge_fp = fopen($name, "w");

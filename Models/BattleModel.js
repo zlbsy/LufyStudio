@@ -28,9 +28,9 @@ BattleModel.prototype.loadMapFileOver=function(event,callback){
 	//保存战场地图文件内容
 	self.map = JSON.parse(event.target);
 	
-	var grids = self.map.data;
-	self.stepWidth = self.map.width/grids[0].length;
-	self.stepHeight = self.map.height/grids.length;
+
+	self.stepWidth = BattleCharacterSize.width;
+	self.stepHeight = BattleCharacterSize.height;
 	callback.apply(self.controller,[]);
 };
 BattleModel.prototype.getImages=function(){
@@ -41,7 +41,7 @@ BattleModel.prototype.getImages=function(){
 	list.push({name:"battle-menu",path:LMvc.IMG_PATH+"battle/menu.png"});
 	list.push({name:"rect",path:LMvc.IMG_PATH+"battle/rect.png"});
 	list.push({name:"character-s-default",path:LMvc.IMG_PATH+"character/s/default.png"});
-	list.push({name:"img-small",path:LMvc.IMG_PATH+"smap/" + self.map["img-small"]});
+	list.push({name:"tile_map",path:LMvc.IMG_PATH+"smap/tile_map.png"});
 	list.push({name:"light",path:LMvc.IMG_PATH+"common/light.png"});
 	list.push({name:"icon_strategy",path:LMvc.IMG_PATH+"icon/strategy.png"});
 	list.push({name:"red_bar",path:LMvc.IMG_PATH+"icon/red_bar.png"});
