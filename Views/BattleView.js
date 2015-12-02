@@ -9,7 +9,7 @@ BattleView.prototype.construct=function(){
 BattleView.prototype.init=function(){
 	var self = this;
 	self.layerInit();
-	self.mapLayerInit();
+	//self.mapLayerInit();
 	//self.buildLayerInit();
 	var battleData = self.controller.battleData;
 	var city = battleData.toCity;
@@ -47,13 +47,13 @@ BattleView.prototype.miniLayerStopDrag = function(event){
 /**
  * 地图层实现
  * */
-BattleView.prototype.mapLayerInit=function(){
+/*BattleView.prototype.mapLayerInit=function(){
 	var self = this;
 	//获取地图定义
 	var map = self.model.map;
 	self.mapLayer.setSmall(map);
 };
-
+*/
 BattleView.prototype.menuLayerInit=function(){
 	var self = this;
 	
@@ -75,7 +75,7 @@ BattleView.prototype.layerInit=function(){
 	//地图层
 	self.mapLayer = new BattleMapView(self.controller);
 	self.baseLayer.addChild(self.mapLayer);
-	
+
 	//路径层
 	self.roadLayer = new BattleRoadView(self.controller);
 	self.baseLayer.addChild(self.roadLayer);

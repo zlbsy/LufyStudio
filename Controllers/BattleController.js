@@ -27,7 +27,7 @@ BattleController.prototype.libraryLoad=function(){
 };
 BattleController.prototype.helperLoad=function(){
 	var self = this;
-	self.load.helper(["Talk","Hert","BattleHelper","CommonHelper","BattleCalculateHelper","SkillCalculateHelper"],self.modelLoad);
+	self.load.helper(["Talk","Hert","BattleHelper","MapHelper","CommonHelper","BattleCalculateHelper","SkillCalculateHelper"],self.modelLoad);
 };
 BattleController.prototype.modelLoad=function(){
 	var self = this;
@@ -48,7 +48,12 @@ BattleController.prototype.addMap=function(){
 BattleController.prototype.globalFilesLoad = function(){
 	var self = this;
 	var list = self.model.getImages();
-	self.load.image(list,self.init);
+	self.load.image(list,self.createMapData);
+};
+BattleController.prototype.createMapData = function(){
+	var self = this;
+	console.log("BattleController.prototype.createMapData");
+	self.model.createMap(self.init);
 };
 BattleController.prototype.showCharacterDetailed = function(){
 	var self = LMvc.BattleController;
@@ -81,7 +86,9 @@ BattleController.prototype.init = function(){
 	SoldierMasterModel.setMaster(SoldierDatas);
 	GroupSkillModel.setMaster(GroupSkillsData);
 	self.queryInit();
+	
 	LMvc.keepLoading(false);
+	
 	self.fromController.view.parent.addChild(self.view);
 	self.fromController.view.remove();
 	LMvc.CityController = null;

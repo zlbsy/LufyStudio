@@ -89,3 +89,24 @@ BattleModel.prototype.getMinusStrategyCharas=function(belong){
 		return self.enemyMinusStrategyCharas;
 	}
 };
+BattleModel.prototype.createMap = function(callback){
+	var self = this;
+	if(!MapHelperSetting.bitmapData){
+		MapHelperSetting.bitmapData = new LBitmapData(LMvc.datalist["tile_map"]);
+	}
+	
+	var maps = self.map.data;
+	var h = maps.length;
+	var w = maps[0].length;
+	self.map.width = BattleCharacterSize.width * w;
+	self.map.height = BattleCharacterSize.height * h;
+	self.mapBitmapData = new LBitmapData(null,0,0,self.map.width,self.map.height, LBitmapData.DATA_CANVAS);
+	for(var i=0;i<h;i++){
+		for(var j=0;j<w;j++){
+			var data = maps[i][j];
+			var bitmapData = getMapTile(data);
+			self.mapBitmapData.copyPixels(bitmapData,new LRectangle(0, 0, BattleCharacterSize.width, BattleCharacterSize.height),new LPoint(j*BattleCharacterSize.width,i*BattleCharacterSize.height, BattleCharacterSize.width, BattleCharacterSize.height));
+		}
+	}
+	callback.apply(self.controller,[]);
+};

@@ -1,6 +1,6 @@
 function BattleMiniPreviewView(controller){
 	var self = this;
-	LExtends(self,LView,[controller]);
+	LExtends(self,LView,[controller]);return;
 	self.alpha = 0.7;
 	var bitmapData = new LBitmapData(LMvc.datalist["img-small"]);
 	

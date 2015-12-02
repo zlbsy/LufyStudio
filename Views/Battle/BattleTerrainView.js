@@ -37,11 +37,12 @@ BattleTerrainView.prototype.init = function(){
 	}
 	self.bitmapStrategys = bitmapStrategys;
 };
-BattleTerrainView.prototype.show = function(sx,sy,terrainId){
+BattleTerrainView.prototype.show = function(sx,sy,mapData){
 	var self = this;
 	if(self.tween){
 		LTweenLite.remove(self.tween);
 	}
+	var terrainId = getTerrainId(mapData);
 	var terrainModel = TerrainMasterModel.getMaster(terrainId);
 	self.nameLabel.text = terrainModel.name();
 	var strategy = terrainModel.strategy();
@@ -54,7 +55,8 @@ BattleTerrainView.prototype.show = function(sx,sy,terrainId){
 	if(self.commentLabel.visible){
 		self.commentLabel.text = comment;
 	}
-		self.bitmap.bitmapData.copyPixels(self.controller.view.mapLayer.bitmapData,new LRectangle(sx,sy,BattleCharacterSize.width,BattleCharacterSize.height),new LPoint(0,0));
+	var bitmapData = getMapTile(mapData);
+	self.bitmap.bitmapData.copyPixels(bitmapData,new LRectangle(0,0,BattleCharacterSize.width,BattleCharacterSize.height),new LPoint(0,0));
 	self.visible = true;
 	self.alpha = 1;
 	self.x = mouseX + BattleCharacterSize.width;
