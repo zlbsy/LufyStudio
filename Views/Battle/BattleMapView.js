@@ -16,7 +16,7 @@ BattleMapView.prototype.init = function(){
 	self.map = new LBitmap(self.bitmapData);
 	self.addChild(self.map);
 	
-	self.datas = [self.bitmapData, self.bitmapData.clone()];
+	self.datas = [self.bitmapData.clone(), self.bitmapData.clone()];
 	//self.map.bitmapData = self.datas[0];
 	self.dataIndex = 0;
 	//self.loadMapComplete = true;
@@ -77,7 +77,7 @@ BattleMapView.prototype.showTerrain=function(x,y){
 	var sX = locationX * BattleCharacterSize.width;
 	var sY = locationY * BattleCharacterSize.height;
 	
-	var data = self.getTerrainData(locationY,locationX);
+	var data = self.getTerrainData(locationX,locationY);
 	self.controller.view.terrainWindow.show(sX,sY,data);
 };
 BattleMapView.prototype.getTerrainData=function(locationX,locationY){

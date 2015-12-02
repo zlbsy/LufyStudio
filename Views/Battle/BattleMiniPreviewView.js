@@ -1,13 +1,18 @@
 function BattleMiniPreviewView(controller){
 	var self = this;
-	LExtends(self,LView,[controller]);return;
+	LExtends(self,LView,[controller]);
 	self.alpha = 0.7;
-	var bitmapData = new LBitmapData(LMvc.datalist["img-small"]);
-	
-	self.map = new LBitmap(bitmapData);
+	self.maxSize = 200;
+	var bitmapData = self.model.mapBitmapData;
+	var bitmap = new LBitmap(bitmapData);
+	if(bitmapData.width > bitmapData.height){
+		bitmap.scaleX = bitmap.scaleY = self.maxSize / bitmapData.width;
+	}else{
+		bitmap.scaleX = bitmap.scaleY = self.maxSize / bitmapData.height;
+	}
+	self.map = new LSprite();
+	self.map.addChild(bitmap);
+	self.map.cacheAsBitmap(true);
 	self.map.x = self.map.y = 10;
 	self.addChild(self.map);
-	return;
-	var miniMapBar = new WindowPanel(1,bitmapData.width + 20,bitmapData.height + 20);
-	self.addChild(miniMapBar);
 };

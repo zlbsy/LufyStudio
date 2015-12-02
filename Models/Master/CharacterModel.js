@@ -6,6 +6,7 @@ function CharacterModel(controller, data) {
 		self.data.physicalFitness = self.data.maxPhysicalFitness = 100;
 	}
 }
+CharacterModel.faceCacher = [];
 CharacterModel.PANT_PROBABILITY = 0.2;
 CharacterModel.list = [];
 CharacterModel.commonAngryTalks = ["angry_talk_0_0","angry_talk_0_1","angry_talk_0_2"];
@@ -376,7 +377,14 @@ CharacterModel.prototype.faceImg = function() {
 	return this.data.faceImg;
 };
 CharacterModel.prototype.face = function() {
-	return new Face(LMvc.IMG_PATH + "face/" + this.data.faceImg + ".png");
+	var self = this;
+	if(CharacterModel.faceCacher[self.data.id]){
+		return CharacterModel.faceCacher[self.data.id];
+	}
+	var characterFace = new CharacterFace(self.data.id);
+	CharacterModel.faceCacher[self.data.id] = characterFace;
+	return characterFace;
+	//return new Face(LMvc.IMG_PATH + "face/" + this.data.faceImg + ".png");
 };
 CharacterModel.prototype.minFace = function(size) {
 	var self = this;

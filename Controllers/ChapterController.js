@@ -13,7 +13,7 @@ ChapterController.prototype.modelLoad=function(){
 };
 ChapterController.prototype.libraryLoad=function(){
 	var self = this;
-	var libraris = ["BitmapSprite","Face"];
+	var libraris = ["BitmapSprite","Face","Face/CharacterFace","Face/Component"];
 	self.load.library(libraris,self.viewLoad);
 };
 ChapterController.prototype.viewLoad=function(){
