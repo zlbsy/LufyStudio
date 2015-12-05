@@ -12,6 +12,10 @@ function StudioMenubar(){
 			{label:"打开",click:self.open.bind(this)},
 			{label:"保存缓存",click:self.saveCache.bind(this)},
 			{label:"读取缓存",click:self.readCache.bind(this)}
+		]},
+		{label:"军队",list:[
+			{label:"显示",click:self.charaShow.bind(this)},
+			{label:"隐藏",click:self.charaHide.bind(this)}
 		]}
 	];
 	var back = new LSprite();
@@ -27,29 +31,74 @@ function StudioMenubar(){
 	self.addChild(self.menu);
 	self.back.graphics.drawRect(0,"#000000",[0,0,LGlobal.width,menu.getHeight()],true,backgroundColor);
 }
+StudioMenubar.toData = function(layer){
+	var arr = [];
+	for(var i=0;i<layer.numChildren;i++){
+		var chara = layer.childList[i];
+		var locationX = chara.x / 48 >>> 0;
+		var locationY = chara.y / 48 >>> 0;
+		arr.push({"x":locationX,"y":locationY,
+		"direction":chara.direction,"index":chara.index});
+	}
+	return arr;
+};
+StudioMenubar.prototype.charaShow = function(){
+	charaLayer.visible=true;
+	enemyLayer.visible=true;
+};
+StudioMenubar.prototype.charaHide = function(){
+	charaLayer.visible=false;
+	enemyLayer.visible=false;
+};
+StudioMenubar.toCharas = function(list,layer,color){
+	layer.removeAllChild();
+	for(var i=0;i<list.length;i++){
+		var data = list[i];
+		var chara = new Character(color);
+		chara.x = data.x * 48;
+		chara.y = data.y * 48;
+		chara.direction=data.direction;
+		chara.index = data.index?data.index:0;
+		chara.draw();
+		layer.addChild(chara);
+	}
+};
 StudioMenubar.prototype.saveCache = function(e){
 	var self = this;
 	self.openWindow(self.saveCacheRun);
-}
+};
 StudioMenubar.prototype.saveCacheRun = function(index){
-	window.localStorage.setItem("maps-"+index, JSON.stringify(maps));
+	var datas = {"data":maps,"charas":StudioMenubar.toData(charaLayer),"enemys":StudioMenubar.toData(enemyLayer)};
+	console.log(JSON.stringify(datas));
+	window.localStorage.setItem("maps-"+index, JSON.stringify(datas));
 	//window.localStorage.setItem("maps", JSON.stringify(maps));
-}
+};
 StudioMenubar.prototype.readCache = function(e){
 	var self = this;
 	self.openWindow(self.readCacheRun);
 };
 StudioMenubar.prototype.readCacheRun = function(index){
 	var strMap = window.localStorage.getItem("maps-"+index);
+	
 	var t = getTimer();
 	if(strMap){
-		maps = JSON.parse(strMap);
+		var datas = JSON.parse(strMap);
+		mapIndex.text = index;
+		if(datas.data){
+			maps = datas.data;
+			StudioMenubar.toCharas(datas.charas,charaLayer,"red");
+			StudioMenubar.toCharas(datas.enemys,enemyLayer,"blue");
+		}else{
+			maps = datas;
+			StudioMenubar.toCharas([],charaLayer,"red");
+			StudioMenubar.toCharas([],enemyLayer,"blue");
+		}
 	}else{
 		alert("no cache");
 		return;
 	}
 	ToolInterface.stageInit();
-	alert(getTimer() - t);
+	//alert(getTimer() - t);
 };
 StudioMenubar.prototype.openWindow = function(complete){
 	var myWindow = new LWindow({width:350,height:140,title:"确认"});
@@ -102,8 +151,10 @@ StudioMenubar.prototype.save = function(e){
 	var self = e.target.parent;
 	self.openWindow(self.saveRun);
 };
+
 StudioMenubar.prototype.saveRun = function(index){
-	LAjax.post("http://d.lufylegend.com/set/map/Data/save.php",{"data":JSON.stringify(maps),"index":index},function(responseData){
+	var datas = {"data":maps,"charas":StudioMenubar.toData(charaLayer),"enemys":StudioMenubar.toData(enemyLayer)};
+	LAjax.post("http://d.lufylegend.com/set/map/Data/save.php",{"data":JSON.stringify(datas),"index":index},function(responseData){
 		alert(responseData);
 	},function(){alert("error");});
 };
@@ -113,7 +164,19 @@ StudioMenubar.prototype.open = function(e){
 };
 StudioMenubar.prototype.openRun = function(index){
 	LAjax.get("http://d.lufylegend.com/set/map/Data/map_"+index+".txt?time="+(new Date()).getTime(),{},function(data){
-		maps = JSON.parse(data);
+		mapIndex.text = index;
+		//maps = JSON.parse(data);
+		var datas = JSON.parse(data);
+		if(datas.data){
+			
+			maps = datas.data;
+			StudioMenubar.toCharas(datas.charas,charaLayer,"red");
+			StudioMenubar.toCharas(datas.enemys,enemyLayer,"blue");
+		}else{
+			maps = datas;
+			StudioMenubar.toCharas([],charaLayer,"red");
+			StudioMenubar.toCharas([],enemyLayer,"blue");
+		}
 		ToolInterface.stageInit();
 	},function(){alert("error");});
 	//character.loadData("Data/map.txt?t="+(new Date()).getTime());

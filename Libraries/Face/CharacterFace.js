@@ -1,7 +1,7 @@
 function CharacterFace(id){
 	var self = this;
 	base(self,LSprite,[]);
-	self.loadData("./Data/face/3.txt");
+	self.loadData("./Data/face/13.txt");
 }
 CharacterFace.prototype.loadData = function(path){
 	var self = this;
@@ -51,6 +51,6 @@ CharacterFace.prototype.loadDataComplete = function(event){
 	self.decorative3 = decorative3;
 	decorative3.name = "装饰3";
 	self.addChild(decorative3);
-	
+	self.graphics.drawRect(0,"#CCCCCC",[0,0,220,320]);
 	self.cacheAsBitmap(true);
 };

@@ -283,7 +283,7 @@ BattleCharacterView.prototype.setRangeSingleCombat = function(){
 };
 BattleCharacterView.prototype.saveShowMoveRoadObject = function(roadList) {
 	var self = this;
-	self.showMoveRoadObject = {x:self.x,y:self.y,action:self.action,direction:self.direction,roadList:roadList};
+	self.showMoveRoadObject = {x:self.x,y:self.y,action:CharacterAction.MOVE,direction:self.direction,roadList:roadList};
 };
 BattleCharacterView.prototype.returnShowMoveRoadObject = function() {
 	var self = this;

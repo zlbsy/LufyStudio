@@ -371,6 +371,7 @@ BattleController.prototype.characterClick = function(cx,cy){
 		return false;
 	}
 	BattleController.ctrlChara = chara;
+	self.view.resetMapPosition(chara);
 	switch(chara.belong){
 		case Belong.SELF:
 			BattleController.ctrlChara.AI.setEvent();

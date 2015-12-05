@@ -39,12 +39,64 @@ MapChild.prototype.init = function(){
 	button.y = 40;
 	buttonLayer.addChild(button);
 	button.addEventListener(LMouseEvent.MOUSE_UP,self.change.bind(self));
+	button = new LButtonSample1("军队");
+	button.x = 52;
+	button.y = 40;
+	buttonLayer.addChild(button);
+	button.addEventListener(LMouseEvent.MOUSE_UP,self.charaAdd.bind(self));
 	button = new LButtonSample1("移动");
-	button.x = 80;
+	button.x = 104;
 	button.y = 40;
 	buttonLayer.addChild(button);
 	button.addEventListener(LMouseEvent.MOUSE_DOWN,self.moveStart.bind(self));
 	button.addEventListener(LMouseEvent.MOUSE_UP,self.moveEnd.bind(self));
+};
+MapChild.prototype.charaAdd = function(e){
+	var self = this;
+	var translucent = new LSprite();
+	translucent.graphics.drawRect(0, "#000000", [0, 0, LGlobal.width, LGlobal.height], true, "#000000");
+	translucent.alpha = 0.5;
+	LGlobal.stage.addChild(translucent);
+	translucent.addEventListener(LMouseEvent.MOUSE_UP, function (e) {});
+	translucent.addEventListener(LMouseEvent.MOUSE_DOWN, function (e) {});
+	translucent.addEventListener(LMouseEvent.MOUSE_MOVE, function (e) {});
+	translucent.addEventListener(LMouseEvent.MOUSE_OVER, function (e) {});
+	translucent.addEventListener(LMouseEvent.MOUSE_OUT, function (e) {});
+
+	var myWindow = new LWindow({width:160,height:140,title:"军队"});
+	myWindow.x = (LGlobal.width - myWindow.getWidth()) * 0.5;
+	myWindow.y = (LGlobal.height - myWindow.getHeight()) * 0.5;
+	LGlobal.stage.addChild(myWindow);
+	myWindow.addEventListener(LWindow.CLOSE, function (e) {
+		translucent.die();
+		translucent.remove();
+	});
+	var button = new LButtonSample1("守方军队");
+	button.x = 20;
+	button.y = 20;
+	myWindow.layer.addChild(button);
+	button.addEventListener(LMouseEvent.MOUSE_UP,function(event){
+		var chara = new Character("red");
+		chara.x = self.mx*48;
+		chara.y = self.my*48;
+		charaLayer.addChild(chara);
+		mapChild.remove();
+		mapChild = null;
+		myWindow.close();
+	});
+	var button = new LButtonSample1("攻方军队");
+	button.x = 20;
+	button.y = 60;
+	myWindow.layer.addChild(button);
+	button.addEventListener(LMouseEvent.MOUSE_UP,function(event){
+		var chara = new Character("blue");
+		chara.x = self.mx*48;
+		chara.y = self.my*48;
+		enemyLayer.addChild(chara);
+		mapChild.remove();
+		mapChild = null;
+		myWindow.close();
+	});
 };
 MapChild.prototype.up = function(e){
 	this.changeDirection(0);

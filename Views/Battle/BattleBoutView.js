@@ -5,6 +5,7 @@ function BattleBoutView(controller, belong){
 };
 BattleBoutView.prototype.set=function(belong){
 	var self = this;
+	LMvc.running = true;
 	var belongLayer = new LSprite();
 	belongLayer.x = -LGlobal.width * 0.5;
 	belongLayer.y = LGlobal.height * 0.5;
@@ -41,7 +42,7 @@ BattleBoutView.prototype.removeSelf=function(event){
 	var self = event.target.parent;
 	var view = self.parent;
 	var belong = self.belong;
-	
+	LMvc.running = false;
 	/*
 	view.charaLayer.boutSkillRun(belong, function(){
 		self.remove();

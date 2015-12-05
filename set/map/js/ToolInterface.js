@@ -2,13 +2,13 @@ var studioMenubar;
 var maps;
 var stageBitmap;
 var mapChild;
+var charaChild;
 var gameStage;
-var character;
-var currentComponent;
-var dragPoint;
-var user;
-var helper;
-var iconSlider;
+var mapIndex;
+var charasIsShow;
+var enemysIsShow;
+var charaLayer;
+var enemyLayer;
 var MapSetting = {
 	w:10,h:10
 };
@@ -43,7 +43,10 @@ ToolInterface.init = function(){
 	var bitmapData = new LBitmapData(null,0,0,48,48); 
 	stageBitmap = new LBitmap(bitmapData);
 	gameStage.addChild(stageBitmap);
-	
+	charaLayer = new LSprite();
+	gameStage.addChild(charaLayer);
+	enemyLayer = new LSprite();
+	gameStage.addChild(enemyLayer);
 	studioMenubar = new StudioMenubar();
 	rootLayer.addChild(studioMenubar);
 	
@@ -51,6 +54,9 @@ ToolInterface.init = function(){
 	stageLayer.y = studioMenubar.getHeight() + 1;
 	var scrollbar = new LScrollbar(gameStage,LGlobal.width,LGlobal.height - stageLayer.y,20);
 	stageLayer.addChild(scrollbar);
+	mapIndex = new LTextField();
+	mapIndex.text = "无";
+	rootLayer.addChild(mapIndex);
 	
 	gameStage.addEventListener(LMouseEvent.MOUSE_DOWN,ToolInterface.clickDownMap);
 	gameStage.addEventListener(LMouseEvent.MOUSE_UP,ToolInterface.clickUpMap);
@@ -70,9 +76,39 @@ ToolInterface.clickUpMap = function(e){
 	if(mapChild){
 		mapChild.remove();
 		mapChild = null;
+		return;
+	}
+	if(charaChild){
+		charaChild.remove();
+		charaChild = null;
+		return;
 	}
 	var x = e.selfX/48 >>> 0;
 	var y = e.selfY/48 >>> 0;
+	if(charaLayer.visible){
+		var chara = charaLayer.childList.find(function(child){
+			return child.x == x*48 && child.y == y*48;
+		});
+		if(chara){
+			charaChild = new CharacterChild(chara);
+			charaChild.x = x * 48 + gameStage.x;
+			charaChild.y = y * 48 + gameStage.y;
+			stageLayer.addChild(charaChild);
+			charaChild.init();
+			return;
+		}
+		chara = enemyLayer.childList.find(function(child){
+			return child.x == x*48 && child.y == y*48;
+		});
+		if(chara){
+			charaChild = new CharacterChild(chara);
+			charaChild.x = x * 48 + gameStage.x;
+			charaChild.y = y * 48 + gameStage.y;
+			stageLayer.addChild(charaChild);
+			charaChild.init();
+			return;
+		}
+	}
 	mapChild = new MapChild(x,y);
 	mapChild.x = x * 48 + gameStage.x;
 	mapChild.y = y * 48 + gameStage.y;

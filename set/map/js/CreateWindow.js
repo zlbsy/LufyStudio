@@ -54,7 +54,10 @@ CreateWindow.create = function(){
 	myWindow.layer.addChild(button01);
 	button01.addEventListener(LMouseEvent.MOUSE_UP,function(){
 		myWindow.close();
+		mapIndex.text = 0;
 		maps = [];
+		StudioMenubar.toCharas([],charaLayer,"red");
+		StudioMenubar.toCharas([],enemyLayer,"blue");
 		var w = parseInt(xText.text);
 		var h = parseInt(yText.text);
 		for(var i=0;i<h;i++){

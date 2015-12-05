@@ -9,10 +9,20 @@ var loadData = [
 {path:"./js/StudioMenubar.js",type:"js"},
 {path:"./js/CreateWindow.js",type:"js"},
 {path:"./js/MapChild.js",type:"js"},
+{path:"./js/Character.js",type:"js"},
+{path:"./js/CharacterChild.js",type:"js"},
 {path:"./js/MapHelper.js",type:"js"},
 {path:"../../images/smap/tile_map.png",name:"tile_map"}
 ];
 function main(){
+	/*if(LGlobal.mobile){
+        	var protocol = location.protocol;
+			if (protocol == "http:" || protocol == "https:") {
+			}else{
+				console.log = trace;
+				//console.log=function(){};
+			}
+		}*/
 	LMouseEventContainer.set(LMouseEvent.MOUSE_DOWN,true);
 	LMouseEventContainer.set(LMouseEvent.MOUSE_UP,true);
 	LMouseEventContainer.set(LMouseEvent.MOUSE_MOVE,true);

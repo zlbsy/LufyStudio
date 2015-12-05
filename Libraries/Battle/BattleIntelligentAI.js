@@ -37,7 +37,8 @@ BattleIntelligentAI.execute = function() {
 			continue;
 		}
 		var terrainData = LMvc.BattleController.view.mapLayer.getTerrainData(chara.locationX(),chara.locationY());
-		var terrain = TerrainMasterModel.getMasterFromValue(terrainData);
+		var terrainId = getTerrainId(terrainData);
+		var terrain = TerrainMasterModel.getMaster(terrainId);
 		if(sortValue == terrain.sortValue()){
 			chatacters.push(chara);
 		}else if(sortValue < terrain.sortValue()){

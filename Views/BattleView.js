@@ -153,10 +153,18 @@ BattleView.prototype.clearContentLayer=function(event){
 	self.contentLayer.removeAllChild();
 	self.controller.addEventListener(CharacterListEvent.CLOSE, self.clearContentLayer);
 };
-BattleView.prototype.onframe=function(event){
-	var self = event.currentTarget.controller;
+BattleView.prototype.resetMapPosition=function(chara){
+	var self = this;
+	var baseLayer = self.baseLayer;
+	//baseLayer.x = LGlobal.width*0.5 - chara.x;
+	//baseLayer.y = LGlobal.height*0.5 - chara.y;
+	LTweenLite.to(baseLayer,0.2,{x:LGlobal.width*0.5 - chara.x,y:LGlobal.height*0.5 - chara.y,});
+	//self.checkPosition();
+};
+BattleView.prototype.checkPosition=function(){
+	var self = this;
 	var map = self.model.map;
-	var baseLayer = self.view.baseLayer;
+	var baseLayer = self.baseLayer;
 	if(baseLayer.x > 0){
 		baseLayer.x = 0;
 	}else if(baseLayer.x < LGlobal.width - map.width){
@@ -168,9 +176,25 @@ BattleView.prototype.onframe=function(event){
 		baseLayer.y = LGlobal.height - map.height;
 	}
 };
+BattleView.prototype.onframe=function(event){
+	event.currentTarget.checkPosition();
+	/*var self = event.currentTarget.controller;
+	self.checkPosition();
+	var baseLayer = self.view.baseLayer;
+	if(baseLayer.x > 0){
+		baseLayer.x = 0;
+	}else if(baseLayer.x < LGlobal.width - map.width){
+		baseLayer.x = LGlobal.width - map.width;
+	}
+	if(baseLayer.y > 0){
+		baseLayer.y = 0;
+	}else if(baseLayer.y < LGlobal.height - map.height){
+		baseLayer.y = LGlobal.height - map.height;
+	}*/
+};
 BattleView.prototype.updateView = function(){
 	var self = this;
-	
+	/*
 	//TODO::
 	self.model.enemyCaptive.push(1);
 	self.model.enemyCaptive.push(2);
@@ -178,7 +202,7 @@ BattleView.prototype.updateView = function(){
 	self.model.selfCaptive.push(24);
 	self.model.selfCaptive.push(25);
 	self.model.selfCaptive.push(26);
-	self.showResult(true);
+	self.showResult(true);*/
 };
 BattleView.prototype.showResult = function(result){
 	var self = this;

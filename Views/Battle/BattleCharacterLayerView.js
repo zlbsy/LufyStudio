@@ -253,12 +253,14 @@ BattleCharacterLayerView.prototype.boutSkillRun=function(belong,callback){
 		var tweenObj = getStrokeLabel(skill.name(),22,"#FFFFFF","#000000",2);
 		if(callback){
 			tweenObj.callback = callback;
+			LMvc.running = true;
 			callback = null;
 		}
 		tweenObj.x = chara.x + (BattleCharacterSize.width - tweenObj.getWidth()) * 0.5;
 		tweenObj.y = chara.y;
 		chara.controller.view.baseLayer.addChild(tweenObj);
 		LTweenLite.to(tweenObj,0.5,{y:tweenObj.y - 20,alpha:0,onComplete:function(obj){
+			LMvc.running = false;
 			obj.remove();
 			if(obj.callback){
 				obj.callback();
@@ -314,6 +316,7 @@ BattleCharacterLayerView.prototype.healSingle = function(chara,strategy,y){
 	}
 	chara.data.wounded(wounded - woundedAdd);
 	troopsAdd += woundedAdd;
+	chara.toStatic(false);
 	chara.changeAction(CharacterAction.WAKE);	
 	
 	var maxTroops = chara.data.maxTroops();
@@ -326,6 +329,8 @@ BattleCharacterLayerView.prototype.healSingle = function(chara,strategy,y){
 	chara.controller.view.baseLayer.addChild(tweenObj);
 	LTweenLite.to(tweenObj,1.5,{y:tweenObj.y - 20,alpha:0,onComplete:function(e){
 		e.target.remove();
+		chara.changeAction(CharacterAction.MOVE);
+		chara.toStatic(true);
 	}});
 };
 BattleCharacterLayerView.prototype.boutSkillEnlist=function(chara,skill,tweenObj){
