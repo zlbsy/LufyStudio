@@ -102,7 +102,9 @@ BattleQuery.prototype.loopPath = function(thisPoint){
 		if(!checkPoint.moveLong)checkPoint.moveLong = 0;
 		if(checkPoint.isChecked && checkPoint.moveLong >= thisPoint.moveLong)continue;
 		var soldier = self._chara.data.currentSoldiers();
-		var cost = soldier.terrain(self._map[checkPoint.y][checkPoint.x].value).moveCost;
+		var terrainData = self._map[checkPoint.y][checkPoint.x].value;
+		var terrainId = getTerrainId(terrainData);
+		var cost = soldier.terrain(terrainId).moveCost;
 		if(self.moveKnow && cost < 100){
 			cost = 1;
 		}
@@ -127,7 +129,9 @@ BattleQuery.prototype.isWay = function(checkPoint,thisPoint){
 	var self = this;
 	if(self.checkDistance){
 		var soldier = BattleController.ctrlChara.data.currentSoldiers();
-		var cost = soldier.terrain(self._map[checkPoint.y][checkPoint.x].value).moveCost;
+		var terrainData = self._map[checkPoint.y][checkPoint.x].value;
+		var terrainId = getTerrainId(terrainData);
+		var cost = soldier.terrain(terrainId).moveCost;
 		return cost < 100;
 	}
 	if (self._map[checkPoint.y][checkPoint.x].isRoad) return true;
