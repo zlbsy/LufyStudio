@@ -22,7 +22,11 @@ Toast.makeText = function(message){
 };
 Toast.prototype.show = function(){
 	var self = this;
-	addChild(self);
+	if(!Toast.layer){
+		Toast.layer = new LSprite();
+		addChild(Toast.layer);
+	}
+	Toast.layer.addChild(self);
 	self.addEventListener(LEvent.ENTER_FRAME,self.onframe);
 };
 Toast.prototype.onframe = function(event){

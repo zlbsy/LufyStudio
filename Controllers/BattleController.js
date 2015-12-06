@@ -2,6 +2,15 @@ function BattleController(battleData, fromController){
 	var self = this;
 	base(self,OpenCharacterListController,[]);
 	self.fromController = fromController;
+	self.fromController.view.visible = false;
+	//TODO::
+	self.loadLayer = new LSprite();
+	self.loadLayer.addChild(getBlackBitmap());
+	var label = getStrokeLabel("XXXXX",20,"#FFFFFF","#000000",4);
+	label.x = (LGlobal.width - label.getWidth())*0.5;
+	label.y = LGlobal.height*0.3;
+	self.loadLayer.addChild(label);
+	self.fromController.view.parent.addChild(self.loadLayer);
 	self.battleData = battleData;
 	self.setValue("bout", 0);
 }
@@ -10,6 +19,8 @@ BattleController.prototype.construct=function(){
 	self.downX = self.downY = 0;
 	self.initOver = false;
 	LMvc.keepLoading(true);
+	LMvc.changeLoading(BattleLoading);
+	Toast.layer.removeAllChild();
 	self.mvcLoad();
 };
 BattleController.prototype.mvcLoad=function(){
@@ -88,7 +99,8 @@ BattleController.prototype.init = function(){
 	self.queryInit();
 	
 	LMvc.keepLoading(false);
-	
+	self.loadLayer.remove();
+	self.loadLayer = null;
 	self.fromController.view.parent.addChild(self.view);
 	self.fromController.view.remove();
 	LMvc.CityController = null;
@@ -143,6 +155,13 @@ BattleController.prototype.init = function(){
 		enemyPositions = self.model.map.enemys;
 		selfPositions = self.model.map.charas;
 	}
+	enemyPositions = enemyPositions.sort(function(a,b){
+		var v = b.index - a.index;
+		if(v == 0){
+			return Math.random() - 0.5;
+		}
+		return v;
+	});
 	console.log("enemyCharas",enemyCharas);
 	self.battleData.expeditionEnemyCharacterList = enemyCharas;
 	for(var i = 0;i<enemyCharas.length;i++){

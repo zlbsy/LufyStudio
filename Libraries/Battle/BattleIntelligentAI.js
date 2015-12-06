@@ -85,6 +85,7 @@ BattleIntelligentAI.execute = function() {
 	chara.inteAI.locationX = chara.locationX();
 	chara.inteAI.locationY = chara.locationY();
 	chara.toStatic(false);
+	LMvc.BattleController.view.resetMapPosition(chara);
 	chara.inteAI.run();
 };
 BattleIntelligentAI.continueExecute = function(){
