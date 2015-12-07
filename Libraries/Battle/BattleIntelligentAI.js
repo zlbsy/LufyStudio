@@ -236,7 +236,7 @@ BattleIntelligentAI.prototype.getNestNode = function(target) {
 			sLength = Math.abs(child.x - self.locationX) + Math.abs(child.y - self.locationY);
 		}
 		node = child;
-	}
+	}console.log("getNestNode:"+node);
 	return node;
 };
 BattleIntelligentAI.prototype.getStrategyNodeTarget = function(strategy, target) {
@@ -314,8 +314,8 @@ BattleIntelligentAI.prototype.useAddHpStrategy = function() {
 };
 BattleIntelligentAI.prototype.moveStart = function() {
 	var self = this, chara = self.chara;
-	console.log("moveStart");
-	var returnList = LMvc.BattleController.query.queryPath(new LPoint(self.locationX, self.locationY),new LPoint(self.targetNode.x,self.targetNode.y));
+	console.log("moveStart : " + self.targetNode);
+	var returnList = self.targetNode ? LMvc.BattleController.query.queryPath(new LPoint(self.locationX, self.locationY),new LPoint(self.targetNode.x,self.targetNode.y)) : [];
 	console.log("returnList=",returnList);
 	LMvc.BattleController.view.roadLayer.clear();
 	if(returnList.length > 0){
@@ -559,7 +559,7 @@ BattleIntelligentAI.prototype.getPhysicalNodeTarget = function(target) {
 BattleIntelligentAI.prototype.findMoveTarget = function() {
 	var self = this, chara = self.chara;
 	//没有可以攻击到的人，向最近目标移动
-	var distance = 100000, lX, lY, targetX, targetY,targetRoads;
+	var distance = 100000, lX, lY, targetX = self.locationX, targetY = self.locationY, targetRoads;
 	for(var i = 0,l = BattleIntelligentAI.targetCharacters.length;i<l;i++){
 		var child = BattleIntelligentAI.targetCharacters[i];
 		lX = child.locationX(), lY = child.locationY();
@@ -586,7 +586,11 @@ BattleIntelligentAI.prototype.findMoveTarget = function() {
 			targetY = node.y;
 		}
 	}
-	self.targetNode = new LPoint(targetX, targetY);
+	if(targetX == self.locationX && targetY == self.locationY){
+		self.targetNode = null;
+	}else{
+		self.targetNode = new LPoint(targetX, targetY);
+	}
 	self.chara.mode = CharacterMode.MOVING;
 };
 
