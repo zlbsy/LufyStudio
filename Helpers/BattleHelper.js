@@ -295,4 +295,5 @@ function battleFoodCheck(belong){
 	var script = "SGJTalk.show(" + chara.data.id() + ",0,糟糕！没有兵粮了，士兵的战斗力开始下降了。);";
 	script += "SGJBattleCharacter.boutSkillRun("+belong+");";
 	LGlobal.script.addScript(script);
+	return false;
 }

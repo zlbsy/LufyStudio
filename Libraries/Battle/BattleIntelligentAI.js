@@ -317,19 +317,25 @@ BattleIntelligentAI.prototype.moveStart = function() {
 	console.log("moveStart");
 	var returnList = LMvc.BattleController.query.queryPath(new LPoint(self.locationX, self.locationY),new LPoint(self.targetNode.x,self.targetNode.y));
 	console.log("returnList=",returnList);
+	LMvc.BattleController.view.roadLayer.clear();
 	if(returnList.length > 0){
-		LMvc.BattleController.view.roadLayer.clear();
 		self.chara.addEventListener(CharacterActionEvent.MOVE_COMPLETE,self.run);
 		self.chara.setRoad(returnList);//move
 	}
 	if(!self.target){
 		self.chara.mode = CharacterMode.END_MOVE;
+		if(returnList.length == 0){
+			self.run();
+		}
 		return;
 	}
 	if(self.chara.currentSelectStrategy){
 		self.chara.mode = CharacterMode.STRATEGY_SELECT;
 	}else{
 		self.chara.mode = CharacterMode.ATTACK;
+	}
+	if(returnList.length == 0){
+		self.run();
 	}
 };
 BattleIntelligentAI.prototype.useWakeStrategy = function() {

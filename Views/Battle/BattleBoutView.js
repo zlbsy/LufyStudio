@@ -43,12 +43,6 @@ BattleBoutView.prototype.removeSelf=function(event){
 	var view = self.parent;
 	var belong = self.belong;
 	LMvc.running = false;
-	/*
-	view.charaLayer.boutSkillRun(belong, function(){
-		self.remove();
-		BattleIntelligentAI.execute();
-	});
-	*/
 	self.remove();
 	if(battleFoodCheck(belong)){
 		view.charaLayer.boutSkillRun(belong, BattleIntelligentAI.execute);
