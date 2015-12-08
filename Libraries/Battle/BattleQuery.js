@@ -127,13 +127,18 @@ BattleQuery.prototype.setStart = function(){
 /*判断是否可通过*/
 BattleQuery.prototype.isWay = function(checkPoint,thisPoint){
 	var self = this;
+	if(self.checkCharacter){
+		if(LMvc.BattleController.view.charaLayer.hasCharacterInPosition(checkPoint.x,checkPoint.y)){
+			return false;
+		}
+	}
 	if(self.checkDistance){
 		var soldier = BattleController.ctrlChara.data.currentSoldiers();
 		var terrainData = self._map[checkPoint.y][checkPoint.x].value;
 		var terrainId = getTerrainId(terrainData);
 		var cost = soldier.terrain(terrainId).moveCost;
 		return cost < 100;
-	}
+	}if(self.checkCharacter)console.log("isWay="+checkPoint+","+self._map[checkPoint.y][checkPoint.x].isRoad);
 	if (self._map[checkPoint.y][checkPoint.x].isRoad) return true;
 	return false;
 };

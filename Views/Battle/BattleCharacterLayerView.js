@@ -5,7 +5,7 @@ function BattleCharacterLayerView(controller) {
 	self.addChild(self.charasPositionsLayer);
 	LTweenLite.to(self.charasPositionsLayer,1,{alpha:0.3,loop:true})
     .to(self.charasPositionsLayer,1,{alpha:1});
-	self.charasPositions = [];
+	self.charasPositions = {};
 	/*for(var i = 0;i<15;i++){
 		for(var j=0;j<12;j++){
 		self.addCharaLayer(1,CharacterAction.MOVE,CharacterDirection.DOWN,i,j);
@@ -32,6 +32,19 @@ BattleCharacterLayerView.prototype.charactersBoutEnd = function(event) {
 			mapLayer.setWakeRoads(event.belong,skill.wakeRects(),child.locationX(),child.locationY());
 		}
 	}
+};
+BattleCharacterLayerView.prototype.resetCharacterPositions=function(){
+	var self = this;
+	self.charasPositions = {};
+	var childList = self.childList,child;
+	for(var i=0,l=childList.length;i<l;i++){
+		child = childList[i];
+		self.charasPositions[child.locationX()+","+child.locationY()] = child;
+	}
+};
+BattleCharacterLayerView.prototype.hasCharacterInPosition=function(lx,ly){
+	var self = this;
+	return self.charasPositions[lx+","+ly] != null;
 };
 BattleCharacterLayerView.prototype.isHasActiveCharacter=function(belong){
 	var self = this;

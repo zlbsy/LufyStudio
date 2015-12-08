@@ -532,6 +532,7 @@ BattleCharacterAI.prototype.endAction = function() {
 	chara.removeAllEventListener();
 	chara.changeAction(chara.data.isPantTroops()?CharacterAction.PANT:CharacterAction.STAND);
 	chara.mode = CharacterMode.END_ACTION;
+	LMvc.BattleController.view.charaLayer.resetCharacterPositions();
 	chara.currentSelectStrategy = null;
 	chara.toStatic(true);
 	chara.inteAI.init();

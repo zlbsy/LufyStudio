@@ -144,16 +144,18 @@ BattleIntelligentAI.prototype.moveRoadsShow = function() {
 	var path = [];
 	if(!self.chara.status.hasStatus(StrategyType.Fixed)){
 		path = LMvc.BattleController.query.makePath(self.chara);
-	}
+	}console.log("moveRoadsShow path="+path);
 	self.roadList = [];
 	for(var i = 0,l=path.length;i<l;i++){
 		var node = path[i];
-		var chara = view.charaLayer.getCharacterFromLocation(node.x,node.y);
-		if(chara){
-			continue;
+		if(node.x != self.locationX || node.y != self.locationY){
+			var chara = view.charaLayer.getCharacterFromLocation(node.x,node.y);
+			if(chara){
+				continue;
+			}
 		}
 		self.roadList.push(node);
-	}
+	}console.log("moveRoadsShow self.roadList="+self.roadList);
 	view.roadLayer.setMoveRoads(path, self.chara.belong);
 	view.roadLayer.addRangeAttack(self.chara);
 	self.chara.mode = CharacterMode.SHOW_MOVE_ROAD;
@@ -493,6 +495,7 @@ BattleIntelligentAI.prototype.findPhysicalOther = function() {
 			targets.push(child);
 		}
 	}
+	console.log("findPhysicalOther targets:",targets);
 	if(targets.length == 0){
 		self.chara.mode = CharacterMode.TO_MOVE;
 		return;
@@ -557,15 +560,18 @@ BattleIntelligentAI.prototype.getPhysicalNodeTarget = function(target) {
 	return node;
 };
 BattleIntelligentAI.prototype.findMoveTarget = function() {
-	var self = this, chara = self.chara;
+	var self = this, chara = self.chara;console.log("findMoveTarget call");
 	//没有可以攻击到的人，向最近目标移动
 	var distance = 100000, lX, lY, targetX = self.locationX, targetY = self.locationY, targetRoads;
 	for(var i = 0,l = BattleIntelligentAI.targetCharacters.length;i<l;i++){
 		var child = BattleIntelligentAI.targetCharacters[i];
 		lX = child.locationX(), lY = child.locationY();
 		LMvc.BattleController.query.checkDistance = true;
+		LMvc.BattleController.query.checkCharacter = true;
 		var roads = LMvc.BattleController.query.queryPath(new LPoint(self.locationX, self.locationY),new LPoint(lX,lY));
+		console.log("findMoveTarget:"+new LPoint(self.locationX, self.locationY)+","+new LPoint(lX,lY)+"="+roads);
 		LMvc.BattleController.query.checkDistance = false;
+		LMvc.BattleController.query.checkCharacter = false;
 		var currentDistance = roads.length;
 		if(currentDistance < distance){
 			distance = currentDistance;
