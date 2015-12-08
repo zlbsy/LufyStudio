@@ -168,7 +168,7 @@ BattleResultView.prototype.selectMoveCityRun=function(event){
 			seignior.addCity(self.retreatCityId);
 			self.retreatCity.seigniorCharaId(self.failSeigniorId);
 		}
-		self.expeditionMove(city, retreatCity);
+		self.expeditionMove(city, self.retreatCity);
 		self.cityChange(self.model.enemyCaptive,  self.controller.battleData.expeditionEnemyCharacterList);
 		layer.remove();
 		self.enemyCaptiveFail();
