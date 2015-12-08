@@ -117,6 +117,9 @@ BattleQuery.prototype.loopPath = function(thisPoint){
 BattleQuery.prototype.setStart = function(){
 	var self=this,node;
 	self.callParent("setStart",arguments);
+	if(self.checkDistance){
+		return;
+	}
 	var roadList = LMvc.BattleController.view.roadLayer.roadList;
 	if(!roadList)return;
 	for(var i=0;i<roadList.length;i++){
@@ -128,6 +131,9 @@ BattleQuery.prototype.setStart = function(){
 BattleQuery.prototype.isWay = function(checkPoint,thisPoint){
 	var self = this;
 	if(self.checkCharacter){
+		if(self._endPoint.x == checkPoint.x && self._endPoint.y == checkPoint.y){
+			return true;
+		}
 		if(LMvc.BattleController.view.charaLayer.hasCharacterInPosition(checkPoint.x,checkPoint.y)){
 			return false;
 		}
@@ -138,7 +144,7 @@ BattleQuery.prototype.isWay = function(checkPoint,thisPoint){
 		var terrainId = getTerrainId(terrainData);
 		var cost = soldier.terrain(terrainId).moveCost;
 		return cost < 100;
-	}if(self.checkCharacter)console.log("isWay="+checkPoint+","+self._map[checkPoint.y][checkPoint.x].isRoad);
+	}
 	if (self._map[checkPoint.y][checkPoint.x].isRoad) return true;
 	return false;
 };
