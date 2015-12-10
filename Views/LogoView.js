@@ -85,7 +85,8 @@ LogoView.prototype.showMenu=function(){
 };
 LogoView.prototype.testStart=function(event){
 	var self = this;
-	self.controller.loadTest();
+	self.controller.showSingleCombatArena();
+	//self.controller.loadTest();
 };
 LogoView.prototype.readGame=function(event){
 	this.testDialog();

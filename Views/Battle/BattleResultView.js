@@ -417,16 +417,22 @@ BattleResultView.prototype.cityFail=function(){
 	console.log("OVER fail");
 	if(!self.end){
 		self.end = true;
+		var charaTroops = 0;
+		self.model.enemyList.forEach(function(child){
+			charaTroops += child.data.troops();
+			child.data.troops(0);
+		});
 		var message;
 		var seignior = CharacterModel.getChara(self.winSeigniorId);
 		var battleData = self.controller.battleData;
 		var cityName = battleData.toCity.name();
 		if(battleData.fromCity.seigniorCharaId() == LMvc.selectSeignorId){
 			message = String.format("我军攻占{0}军的{1}失败了!",seignior.name(),cityName);
+			battleData.toCity.troops(battleData.toCity.troops() + charaTroops);
 		}else{
 			battleData.toCity.food(battleData.food);
 			battleData.toCity.money(battleData.money);
-			battleData.toCity.troops(battleData.toCity.troops() + battleData.troops);
+			battleData.toCity.troops(battleData.toCity.troops() + battleData.troops + charaTroops);
 			message = String.format("我军的{0}被{1}军攻占了!",cityName,seignior.name());
 		}
 		self.confirmShow(null,message);
@@ -439,6 +445,11 @@ BattleResultView.prototype.cityWin=function(){
 	console.log("OVER win");
 	if(!self.end){
 		self.end = true;
+		var charaTroops = 0;
+		self.model.ourList.forEach(function(child){
+			charaTroops += child.data.troops();
+			child.data.troops(0);
+		});
 		var message;
 		var battleData = self.controller.battleData;
 		var cityName = battleData.toCity.name();
@@ -451,10 +462,11 @@ BattleResultView.prototype.cityWin=function(){
 			}
 			battleData.toCity.food(battleData.food);
 			battleData.toCity.money(battleData.money);
-			battleData.toCity.troops(battleData.toCity.troops() + battleData.troops);
+			battleData.toCity.troops(battleData.toCity.troops() + battleData.troops + charaTroops);
 		}else{
 			var seignior = CharacterModel.getChara(self.failSeigniorId);
 			message = String.format("我军在{0}击退了{1}军的进攻!",cityName,seignior.name());
+			battleData.toCity.troops(battleData.toCity.troops() + charaTroops);
 		}
 		self.confirmShow(null,message);
 	}else{

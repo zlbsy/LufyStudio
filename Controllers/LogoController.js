@@ -81,6 +81,21 @@ LogoController.prototype.chapterLoadComplete=function(){
 	var chapter = new ChapterController();
 	LMvc.stageLayer.addChild(chapter.view);
 };
+LogoController.prototype.showSingleCombatArena=function(){
+	var self = this;
+	LMvc.keepLoading(true);
+	LMvc.changeLoading(TranslucentLoading);
+	self.load.controller(["OpenCharacterList"],self.showSingleCombatArenaMvc);
+};
+LogoController.prototype.showSingleCombatArenaMvc=function(){
+	var self = this; 
+	self.loadMvc("SingleCombatArena",self.singleCombatArenaLoadComplete);
+};
+LogoController.prototype.singleCombatArenaLoadComplete=function(){
+	var self = this;
+	var singleCombatArena = new SingleCombatArenaController();
+	self.view.parent.addChild(singleCombatArena.view);
+};
 
 
 

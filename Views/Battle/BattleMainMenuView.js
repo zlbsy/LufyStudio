@@ -81,6 +81,16 @@ BattleMainMenuView.prototype.setMenu=function(){
 	menuButton.y = menuY;
 	layer.addChild(menuButton);
 	menuButton.addEventListener(LMouseEvent.MOUSE_UP, self.clickCharacterList);
+	menuY += menuHeight;
+	var menuButton = getButton("保存进度",menuWidth);
+	menuButton.y = menuY;
+	layer.addChild(menuButton);
+	menuButton.addEventListener(LMouseEvent.MOUSE_UP, self.clickSave);
+	menuY += menuHeight;
+	var menuButton = getButton("读取进度",menuWidth);
+	menuButton.y = menuY;
+	layer.addChild(menuButton);
+	menuButton.addEventListener(LMouseEvent.MOUSE_UP, self.clickRead);
 	
 	menuY += menuHeight;
 	var menuButton = getButton(Language.get("回合结束"),menuWidth);
@@ -115,6 +125,16 @@ BattleMainMenuView.prototype.boutEnd=function(event){
 	var self = event.currentTarget.parent.parent.parent;
 	self.controller.boutEnd();
 	self.menuLayer.visible = false;
+};
+BattleMainMenuView.prototype.clickSave=function(event){
+	var self = event.currentTarget.parent.parent.parent;
+	self.menuLayer.visible = false;
+	
+};
+BattleMainMenuView.prototype.clickRead=function(event){
+	var self = event.currentTarget.parent.parent.parent;
+	self.menuLayer.visible = false;
+	
 };
 BattleMainMenuView.prototype.clickCharacterList=function(event){
 	var self = event.currentTarget.parent.parent.parent;

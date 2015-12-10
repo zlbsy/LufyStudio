@@ -111,6 +111,9 @@ EffectStrategyView.prototype.toAttack = function(){
 		self.currentTargetCharacter.changeAction(CharacterAction.HERT);
 		tweenObj = new Num(Num.MIDDLE,1,20);
 		var hertValue = calculateHertStrategyValue(self.currentCharacter, self.currentTargetCharacter, self.currentCharacter.currentSelectStrategy,self.correctionFactor);
+		if(self.currentTargetCharacter.data.troops() < hertValue){
+			hertValue = self.currentTargetCharacter.data.troops();
+		}
 		self.currentTargetCharacter.hertValue = hertValue;
 		tweenObj.setValue(hertValue);
 		tweenObj.x = self.currentTargetCharacter.x;

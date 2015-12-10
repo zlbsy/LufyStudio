@@ -60,6 +60,23 @@ CharacterModel.getChara=function(chara_id){
 	}
 	return null;
 };
+CharacterModel.getSaveData=function(){
+	var self = this;
+	var saveData = [];
+	for(var i=0,l=CharacterModel.list.length;i<l;i++){
+		var chara = CharacterModel.list[i];
+		saveData.push({
+			id:chara.id(),
+			seignior_id:chara.seignior_id(),
+			job:chara.jobData(),//根据任务内容变化
+			feat:chara.feat(),//功绩
+			loyalty:chara.loyalty(),//忠诚度
+			proficiencys:chara.proficiencys(),//所有兵种熟练度
+			equipments:chara.equipments()
+		});
+	}
+	return saveData;
+};
 CharacterModel.prototype.calculation = function(init) {
 	var self = this;
 	var currentSoldiers = self.currentSoldiers();

@@ -1,3 +1,4 @@
+/*出征兵力分配*/
 function CharacterExpeditionView(controller,characterModel){
 	var self = this;
 	base(self,LView,[controller]);
@@ -58,6 +59,9 @@ CharacterExpeditionView.prototype.set=function(){
 	var icon = currentSoldierModel.icon(new LPoint(width,height), true);
 	layer.addChild(icon);
 	self.maxTroops = self.currentSoldierModel.maxTroops(self.characterModel);
+	if(self.maxTroops > self.canUseTroops){
+		self.maxTroops = self.canUseTroops;
+	}
 	var com = new LComboBox(16,"#000000","Arial",panel,bitmapOff,bitmapOn);
 	for(var i=0;i<soldiers.length;i++){
 		var soldierModel = soldiers[i];
