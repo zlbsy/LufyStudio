@@ -85,7 +85,11 @@ LogoController.prototype.showSingleCombatArena=function(){
 	var self = this;
 	LMvc.keepLoading(true);
 	LMvc.changeLoading(TranslucentLoading);
-	self.load.controller(["OpenCharacterList"],self.showSingleCombatArenaMvc);
+	self.load.controller(["OpenCharacterList"],self.configSingleCombatLoad);
+};
+LogoController.prototype.configSingleCombatLoad=function(){
+	var self = this;
+	self.load.config(["Event"],self.showSingleCombatArenaMvc);
 };
 LogoController.prototype.showSingleCombatArenaMvc=function(){
 	var self = this; 
@@ -93,7 +97,7 @@ LogoController.prototype.showSingleCombatArenaMvc=function(){
 };
 LogoController.prototype.singleCombatArenaLoadComplete=function(){
 	var self = this;
-	var singleCombatArena = new SingleCombatArenaController();
+	var singleCombatArena = new SingleCombatArenaController(self);
 	self.view.parent.addChild(singleCombatArena.view);
 };
 
