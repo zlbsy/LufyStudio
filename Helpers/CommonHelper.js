@@ -70,3 +70,6 @@ function calculateHitrateRelease(leaderId, charaModel){
 	return Math.random() > compatibility/sum;;
 }
 
+function getIdentity(value){
+	var identitis = ["在野","一般","太守"];
+}

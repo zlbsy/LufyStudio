@@ -60,7 +60,7 @@ CharacterModel.getChara=function(chara_id){
 	}
 	return null;
 };
-CharacterModel.getSaveData=function(){
+/*CharacterModel.getSaveData=function(){
 	var self = this;
 	var saveData = [];
 	for(var i=0,l=CharacterModel.list.length;i<l;i++){
@@ -71,10 +71,23 @@ CharacterModel.getSaveData=function(){
 			job:chara.jobData(),//根据任务内容变化
 			feat:chara.feat(),//功绩
 			loyalty:chara.loyalty(),//忠诚度
-			proficiencys:chara.proficiencys(),//所有兵种熟练度
+			soldiers:chara.data.soldiers(),//所有兵种熟练度
 			equipments:chara.equipments()
 		});
 	}
+	return saveData;
+};*/
+CharacterModel.prototype.datas=function(){
+	var self = this;
+	var saveData = {
+		id:self.id(),
+		seignior_id:self.seigniorId(),
+		job:self.jobData(),//根据任务内容变化
+		feat:self.feat(),//功绩
+		loyalty:self.loyalty(),//忠诚度
+		soldiers:self.data.soldiers,//所有兵种熟练度
+		equipments:self.equipments()
+	};
 	return saveData;
 };
 CharacterModel.prototype.calculation = function(init) {
@@ -209,6 +222,9 @@ CharacterModel.prototype.seignior = function(chara_id) {
 CharacterModel.prototype.exp = function(value){
 	return this._dataValue("exp", value, 0);
 };
+CharacterModel.prototype.feat = function(value){
+	return this._dataValue("feat", value, 0);
+};
 CharacterModel.prototype.maxExp = function(value){
 	return this._dataValue("maxExp", value, 100);
 };
@@ -340,6 +356,9 @@ CharacterModel.prototype.hire = function(id) {
 };
 CharacterModel.prototype.job = function(value) {
 	return this._dataValue("job", value, Job.IDLE);
+};
+CharacterModel.prototype.jobData = function() {
+	return "";
 };
 //运输物资
 CharacterModel.prototype.transport = function(data) {

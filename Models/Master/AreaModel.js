@@ -50,6 +50,32 @@ AreaModel.getPowerfulCharacters = function(generals){
 	list = list.sort(function(a,b){return a.value - b.value;});
 	return list;
 };
+
+AreaModel.prototype.datas=function(){
+	var self = this;
+	var saveData = {
+		area_id : self.id(),
+		prefecture : self.prefecture(),
+		money : self.money(),
+		level : self.level(),
+		food : self.food(),
+		population : self.population(),
+		business : self.business(),
+		agriculture : self.agriculture(),
+		technology : self.technology(),
+		police : self.police(),
+		city_defense : self.cityDefense(),
+		troops : self.troops(),
+		items_farmland:self.itemsFarmland(),
+		items_market:self.itemsMarket(),
+		items : self.itemsData(),
+		generals:self.generalsData(),
+		out_of_offices:self.outOfOfficeData(),
+		not_debut:self.data.not_debut,
+		captives:self.captivesData()
+	};
+	return saveData;
+};
 AreaModel.prototype.getDefenseEnemiesAndPowerful = function(){
 	var city = this;
 	var generals = city.generals(),result = [];
@@ -400,6 +426,15 @@ AreaModel.prototype.captives=function(seigniorId){
 	}
 	return list;
 };
+AreaModel.prototype.captivesData=function(){
+	var self = this;
+	var list = [];
+	for(var i=0,l=self.data.captives.length;i<l;i++){
+		var chara = self.data.captives[i];
+		list.push(chara.datas());
+	}
+	return list;
+};
 AreaModel.prototype.troopsSum=function(){
 	return LString.numberFormat(this.troops(),3);
 };
@@ -442,6 +477,15 @@ AreaModel.prototype.soldiers=function(){
 	}
 	return list;
 };
+AreaModel.prototype.generalsData=function(){
+	var self = this;
+	var list = [];
+	for(var i=0,l=self.data.generals.length;i<l;i++){
+		var chara = self.data.generals[i];
+		list.push(chara.datas());
+	}
+	return list;
+};
 AreaModel.prototype.generals=function(job){
 	var self = this;
 	if(job){
@@ -455,6 +499,15 @@ AreaModel.prototype.generals=function(job){
 		return list;
 	}
 	return self.data.generals;
+};
+AreaModel.prototype.outOfOfficeData=function(){
+	var self = this;
+	var list = [];
+	for(var i=0,l=self.data.out_of_offices.length;i<l;i++){
+		var chara = self.data.out_of_offices[i];
+		list.push(chara.datas());
+	}
+	return list;
 };
 AreaModel.prototype.outOfOffice=function(){
 	return this.data.out_of_offices;
@@ -475,6 +528,16 @@ AreaModel.prototype.notDebut=function(){
 		}
 	}
 	return charas;
+};
+AreaModel.prototype.itemsData = function(){
+	var self = this;
+	var items = self.items();
+	var datas = [];
+	for(var i=0;i<items.length;i++){
+		var item = items[i];
+		datas.push({item_id:item.id(),count:item.count()});
+	}
+	return datas;
 };
 AreaModel.prototype.items = function(){
 	if(!this.data.items){

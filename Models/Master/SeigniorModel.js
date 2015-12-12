@@ -66,6 +66,20 @@ SeigniorModel.getCharactersIsCaptives = function(seigniorId){
 	}
 	return list;
 };
+SeigniorModel.getSaveData=function(){
+	var saveData = [];
+	for(var i=0,l=SeigniorModel.list.length;i<l;i++){
+		var seignior = SeigniorModel.list[i];
+		saveData.push({
+			chara_id:seignior.chara_id(),//君主
+			color:seignior.color(),//势力颜色
+			areas:seignior.areasData(),//所有城池
+			spyAreas:seignior.data.spyAreas,//谍报城池
+			stopBattleSeigniors:seignior.data.stopBattleSeigniors//停战城池
+		});
+	}
+	return saveData;
+};
 SeigniorModel.prototype.chara_id = function(){
 	return this.data.chara_id;
 };
@@ -92,6 +106,24 @@ SeigniorModel.prototype.color2 = function(){
  **/
 SeigniorModel.prototype.areas = function(){
 	return this.data.areas;
+};
+SeigniorModel.prototype.areasData = function(){
+	var self = this;
+	console.log("GameManager.areasData ");
+	var datas = [];
+	for(var i = 0, l = self.data.areas.length;i<l;i++){
+		datas.push(self.data.areas[i].datas());
+	}
+	console.log("GameManager.areasData o");
+	return datas;
+};
+SeigniorModel.prototype.areaIds = function(){
+	var self = this;
+	var areaIds = [];
+	for(var i = 0, l = self.data.areas.length;i<l;i++){
+		areaIds.push(self.data.areas[i].id());
+	}
+	return areaIds;
 };
 SeigniorModel.prototype.addSpyCity = function(cityId){
 	var self = this;

@@ -1,6 +1,4 @@
-function getIdentity(value){
-	var identitis = ["在野","一般","太守"];
-}
+
 LMvc.areaData = {
 	title : "黄巾之乱",
 	icon : 1,

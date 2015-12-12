@@ -100,6 +100,12 @@ MenuView.prototype.onClickStampList=function(event){
 	self.controller.loadItemList();
 };
 MenuView.prototype.onClickGameSave=function(event){
+	var self = event.currentTarget.parent.parent.parent;
+	self.load.library(["GameManager"],self.gameSave);
+};
+MenuView.prototype.gameSave=function(){
+	var self = this;
+	GameManager.save();
 };
 MenuView.prototype.onClickGameRead=function(event){
 };

@@ -346,9 +346,11 @@ CharacterListView.prototype.showList=function(){
 	
 	var cityModel = self.controller.getValue("cityData");
 	self.listChildLayer = new LSprite();
-	var scHeight = 0;
-	console.log("showList self.dataList = ", self.dataList);
-	for(var i=0,l=self.dataList.length;i<l;i++){
+	/*var bitmapData = new LBitmapData(null,0,0,430, 120 * ((EventListConfig.length / 2 >>> 0) + 1) - 10,LBitmapData.DATA_CANVAS);
+	self.listChildLayer.push();*/
+	self.charactersPush(self.dataList, 0);
+	/*console.log("showList self.dataList = ", self.dataList);
+	for(var i=0,l=self.dataList.length;i<l && i<20;i++){
 		var charaModel = self.dataList[i];
 		var childLayer = new CharacterListChildView(self.controller,charaModel,cityModel,self);
 		childLayer.y = 50 * i;
@@ -359,7 +361,7 @@ CharacterListView.prototype.showList=function(){
 		scHeight = childLayer.y + childLayer.getHeight();
 	}
 	console.log("showList self.dataList loop ove ");
-	self.listChildLayer.graphics.drawRect(0, "#000000", [0, 0, LGlobal.width - 30, scHeight]);
+	self.listChildLayer.graphics.drawRect(0, "#000000", [0, 0, LGlobal.width - 30, scHeight]);*/
 	var sc = new LScrollbar(self.listChildLayer, LGlobal.width - 20, listHeight - 30, 10, false);
 	//sc._showLayer.graphics.clear();
 	sc.y = 15;
@@ -369,6 +371,42 @@ CharacterListView.prototype.showList=function(){
 	self.listChildLayer.addEventListener(LMouseEvent.MOUSE_DOWN, self.characterClickDown);
 	self.listChildLayer.addEventListener(LMouseEvent.MOUSE_UP, self.characterClickUp.bind(self));
 };
+CharacterListView.prototype.charactersPush = function(charas,characterIndex) {
+	var self = this;
+	var scHeight = 0, maxNum = 5;
+	var child,length = charas.length < characterIndex + maxNum ? charas.length : characterIndex + maxNum;
+	console.log("charactersPush:"+characterIndex+",length:"+length);
+	var cityModel = self.controller.getValue("cityData");
+	for(var i=characterIndex;i<length;i++){
+		var charaModel = charas[i];
+		var childLayer = new CharacterListChildView(self.controller,charaModel,cityModel,self);
+		childLayer.y = 50 * i;
+		self.listChildLayer.addChild(childLayer);
+		if(i < length - 1){
+			continue;
+		}
+		scHeight = childLayer.y + childLayer.getHeight();
+	}
+	self.listChildLayer.graphics.clear();
+	self.listChildLayer.graphics.drawRect(0, "#000000", [0, 0, LGlobal.width - 30, scHeight]);
+	if(length < charas.length){
+		setTimeout(function(){
+			self.charactersPush(charas, length);
+		},LGlobal.speed);
+	}
+};
+/*ToolInterface.charactersPush = function(charas, characterIndex){
+	var child,length = charas.length < characterIndex + 50 ? charas.length : characterIndex + 50;
+	for(var i=characterIndex;i<length;i++){
+		child = charas[i];
+		characters.add(child.name, child.index);
+	}
+	if(length < charas.length){
+		setTimeout(function(){
+			ToolInterface.charactersPush(charas, length);
+		},1);
+	}
+};*/
 CharacterListView.prototype.characterClickDown = function(event) {
 	var chara = event.target;
 	chara.offsetX = event.offsetX;
