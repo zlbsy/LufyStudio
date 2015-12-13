@@ -69,7 +69,23 @@ function calculateHitrateRelease(leaderId, charaModel){
 	}
 	return Math.random() > compatibility/sum;;
 }
-
 function getIdentity(value){
 	var identitis = ["在野","一般","太守"];
+}
+function gameDataInit(){
+	var data = LMvc.areaData;
+	console.log("gameDataInit");
+	SeigniorModel.setSeignior(data.seigniors);
+	for(var i=0,l=data.seigniors.length;i<l;i++){
+		var seignior = data.seigniors[i];
+		var areas = seignior.areas;
+		var areaList = [];
+		areas.forEach(function(child){
+			var area = AreaModel.getArea(child.area_id);
+			area.setSeignor(seignior,child);
+			areaList.push(area);
+		});
+		seignior.areas = areaList;
+	}
+	console.log("gameDataInit o");
 }

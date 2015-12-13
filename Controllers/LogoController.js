@@ -116,6 +116,35 @@ LogoController.prototype.testLoadComplete=function(){
 	var test = new TestController();
 	LMvc.stageLayer.addChild(test.view);
 };
+LogoController.prototype.read = function(){
+	var self = this;
+	LMvc.keepLoading(true);
+	LMvc.changeLoading(TranslucentLoading);
+	self.load.config(["MapSetting","chapterListSetting"],self.readConfigLoadComplete);
+};
+LogoController.prototype.readConfigLoadComplete = function(){
+	var self = this;
+	AreaModel.setArea(MapSetting);
+	var list = ["GameManager"];
+	self.load.library(list,self.readRun);
+};
+LogoController.prototype.readRun = function(){
+	var self = this;
+	LMvc.areaData = LPlugin.GetData("gameData_1");
+	LMvc.selectSeignorId = LMvc.areaData.selectSeignorId;
+	LMvc.chapterData = LMvc.areaData.chapterData;
+	LMvc.isRead = true;
+	self.loadMvc("Chapter",self.chapterLoadComplete);
+};
+LogoController.prototype.loadMap=function(){
+	var self = this;
+	self.loadMvc("Map",self.mapLoadComplete);
+};
+LogoController.prototype.mapLoadComplete=function(){
+	var self = this;
+	var map = new MapController();
+	self.view.parent.addChild(map.view);
+};
 
 //TODO::削除予定
 LogoController.prototype.toLogin = function(nameText, passText){

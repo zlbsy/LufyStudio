@@ -80,7 +80,7 @@ CharacterModel.getChara=function(chara_id){
 CharacterModel.prototype.datas=function(){
 	var self = this;
 	var saveData = {
-		id:self.id(),
+		chara_id:self.id(),
 		seignior_id:self.seigniorId(),
 		job:self.jobData(),//根据任务内容变化
 		feat:self.feat(),//功绩

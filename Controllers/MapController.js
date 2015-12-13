@@ -16,8 +16,8 @@ MapController.prototype.configLoad=function(){
 	self.load.config(["characterList","Job","Items","Event","Strategy","Soldiers"],self.helperLoad);
 };
 MapController.prototype.helperLoad=function(){
-	var self = this;
-	self.load.helper(["Talk"],self.modelLoad);
+	var self = this;console.log("helperLoad");
+	self.load.helper(["Talk","CommonHelper"],self.modelLoad);
 };
 MapController.prototype.modelLoad=function(){
 	var self = this;
@@ -29,7 +29,7 @@ MapController.prototype.libraryLoad=function(){
 	self.load.library(libraris,self.viewLoad);
 };
 MapController.prototype.viewLoad=function(){
-	var self = this;
+	var self = this;console.log("viewLoad");
 	self.load.view(["Area/AreaIcon","Common/Background","Common/Message"],self.menuLoad);
 };
 MapController.prototype.menuLoad=function(){
@@ -37,15 +37,23 @@ MapController.prototype.menuLoad=function(){
 	self.loadMvc("Menu",self.getAreaData);
 };
 MapController.prototype.getAreaData=function(){
-	var self = this;
+	var self = this;console.log("getAreaData");
 	CharacterModel.setChara(characterList);
+	console.log("characterList");
 	ItemMasterModel.setMaster(ItemDatas);
+	console.log("ItemDatas");
 	StrategyMasterModel.setMaster(StrategyDatas);
-	
-	self.model.getAreaData(self.getImages);
+	console.log("StrategyDatas");
+	if(LMvc.isRead){
+		gameDataInit();
+		LMvc.isRead = false;
+		self.getImages();
+	}else{
+		self.model.getAreaData(self.getImages);
+	}
 };
 MapController.prototype.getImages=function(){
-	var self = this;
+	var self = this;console.log("getImages");
 	var list = self.model.getImages();
 	self.load.image(list,self.init);
 };
@@ -56,7 +64,6 @@ MapController.prototype.init=function(status){
 	LMvc.keepLoading(false);
 	LMvc.chapterController.view.visible = false;
 	LMvc.stageLayer.x = 0;
-	//self.view.init();
 	
 	self.dispatchEvent(LController.NOTIFY);
 };

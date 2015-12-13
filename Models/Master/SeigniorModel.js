@@ -10,6 +10,7 @@ function SeigniorModel(controller, data) {
 SeigniorModel.list = [];
 SeigniorModel.setSeignior=function(list){
 	var self = this;
+	SeigniorModel.list = [];
 	for(var i=0,l=list.length;i<l;i++){
 		var seignior = new SeigniorModel(null,list[i]);
 		SeigniorModel.list.push(seignior);

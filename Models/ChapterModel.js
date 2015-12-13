@@ -23,6 +23,10 @@ ChapterModel.prototype.getImages=function(){
 ChapterModel.prototype.getChapterData=function(callback){
 	var self = this;
 	self.callback = callback;
+	if(LMvc.isRead){
+		self.getChapterDataComplete();
+		return;
+	}
 	LLoadManage.load( [{path:"./Data/"+LMvc.dataFolder+"/chapter.js",type:"js"}],null,self.getChapterDataComplete.bind(self));
 };
 ChapterModel.prototype.getChapterDataComplete=function(event){

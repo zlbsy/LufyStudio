@@ -108,6 +108,12 @@ MenuView.prototype.gameSave=function(){
 	GameManager.save();
 };
 MenuView.prototype.onClickGameRead=function(event){
+	var self = event.currentTarget.parent.parent.parent;
+	self.load.library(["GameManager"],self.gameRead);
+};
+MenuView.prototype.gameRead=function(){
+	var self = this;
+	GameManager.read();
 };
 MenuView.prototype.onClickReturnTop=function(event){
 };

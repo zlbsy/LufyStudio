@@ -39,10 +39,7 @@ MapView.prototype.backLayerInit=function(){
 			roadLayer.graphics.drawLine(10, "#FFFFFF", [75 + areaStatus.position().x, 65 + areaStatus.position().y, 75 + neighborArea.position().x, 65 + neighborArea.position().y]);
 		}
 	}
-	/*var layer = new LSprite();
-	layer.addChild(new LBitmap(bitmapData));
-	layer.addChild(roadLayer);
-	bitmapData = roadBitmapData.draw(layer);*/
+	
 	var background = new BackgroundView();
 	background.set(bitmapData);
 	self.backLayer.addChild(background);
@@ -58,11 +55,9 @@ MapView.prototype.init=function(){
 	var self = this;
 	self.layerInit();
 	self.backLayerInit();
-	self.areaLayerInit();
+	//self.areaLayerInit();
 	self.ctrlLayerInit();
-	//self.baseLayer.dragRange = new LRectangle(LGlobal.width - self.baseLayer.getWidth(),LGlobal.height - self.baseLayer.getHeight(),self.baseLayer.getWidth() - LGlobal.width,self.baseLayer.getHeight() - LGlobal.height);
-	console.log("self.baseLayer.getWidth()=",self.baseLayer.getWidth());
-	console.log("self.baseLayer.getHeight()=",self.baseLayer.getHeight());
+
 	self.baseLayer.dragRange = new LRectangle(
 		LGlobal.width - self.baseLayer.getWidth(),
 		LGlobal.height - self.baseLayer.getHeight(),
@@ -72,26 +67,18 @@ MapView.prototype.init=function(){
 	self.backLayer.addEventListener(LMouseEvent.MOUSE_DOWN,self.areaDragStart);
 	self.backLayer.addEventListener(LMouseEvent.MOUSE_UP,self.areaDragStop);
 };
+MapView.prototype.updateView = function(){
+	var self = this;
+	self.areaLayerInit();
+};
 MapView.prototype.areaLayerInit=function(){
 	var self = this;
-	//var bitmapData = new LBitmapData(LMvc.datalist["area-map-1"]);
-	//self.areaLayer.addChild(new LBitmap(bitmapData));
+	self.areaLayer.removeAllChild();
 	for(var i=0,l=AreaModel.list.length;i<l;i++){
 		var areaStatus = AreaModel.list[i];
-		/*var color = areaStatus.color();
-		var area = new LSprite();
-		area.x = areaStatus.position().x;
-		area.y = areaStatus.position().y;
-		area.graphics.drawRect(0, "#000000", [0, 0, 80, 80], true, color);
-		self.areaLayer.addChild(area);
-		continue;*/
 		var area = new AreaIconView(self.controller,areaStatus);
 		self.areaLayer.addChild(area);
 	}
-	/*setTimeout(function(){
-		self.areaLayer.scaleX = self.areaLayer.scaleY = 0.5;
-		window.open(self.areaLayer.getDataURL());
-	},1000);*/
 };
 MapView.prototype.changeMode=function(mode){
 	var self = this;

@@ -55,7 +55,8 @@ MapModel.prototype.getAreaData=function(callback){
 };
 MapModel.prototype.getAreaDataComplete=function(){
 	var self = this;
-	var data = LMvc.areaData;
+	gameDataInit();
+	/*var data = LMvc.areaData;
 	SeigniorModel.setSeignior(data.seigniors);
 	for(var i=0,l=data.seigniors.length;i<l;i++){
 		var seignior = data.seigniors[i];
@@ -67,7 +68,7 @@ MapModel.prototype.getAreaDataComplete=function(){
 			areaList.push(area);
 		});
 		seignior.areas = areaList;
-	}
+	}*/
 	var callback = self.callback;
 	delete self.callback;
 	callback.apply(self.controller,[]);

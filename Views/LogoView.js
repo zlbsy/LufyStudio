@@ -89,7 +89,8 @@ LogoView.prototype.testStart=function(event){
 	//self.controller.loadTest();
 };
 LogoView.prototype.readGame=function(event){
-	this.testDialog();
+	//this.testDialog();
+	this.controller.read();
 };
 LogoView.prototype.settingGame=function(event){
 	this.testDialog();

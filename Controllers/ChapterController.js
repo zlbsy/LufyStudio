@@ -26,7 +26,10 @@ ChapterController.prototype.getChapterData=function(){
 };
 ChapterController.prototype.init=function(status){
 	var self = this;
-	
+	if(LMvc.isRead){
+		self.loadMvc("Map",self.mapLoadComplete);
+		return;
+	}
 	self.dispatchEvent(LEvent.COMPLETE);
 	self.dispatchEvent(LController.NOTIFY);
 	
