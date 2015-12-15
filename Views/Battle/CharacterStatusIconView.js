@@ -131,3 +131,7 @@ CharacterStatusIconView.prototype.statusLabel = function(){
 	}
 	return label.join(",");
 };
+CharacterStatusIconView.prototype.getData = function(){
+	var self = this;
+	return {status:self.status,aidStatus:self.aidStatus};
+};

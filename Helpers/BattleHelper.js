@@ -297,3 +297,71 @@ function battleFoodCheck(belong){
 	LGlobal.script.addScript(script);
 	return false;
 }
+function getBattleSaveData(){
+	var data = {};
+	var battleData = LMvc.BattleController.battleData;
+	data.food = battleData.food;
+	data.money = battleData.money;
+	data.troops = battleData.troops;
+	data.toCityId = battleData.toCity.id();
+	data.fromCityId = battleData.fromCity.id();
+	data.expeditionEnemyCharacterList=[];
+	for(var i=0,l=battleData.expeditionEnemyCharacterList.length;i<l;i++){
+		var character = battleData.expeditionEnemyCharacterList[i];
+		data.expeditionEnemyCharacterList.push(character.data.id());
+	}
+	var model = LMvc.BattleController.model;
+	data.ourList = [];
+	for(var i=0,l=model.ourList.length;i<l;i++){
+		var character = model.ourList[i];
+		data.ourList.push({
+			id:character.data.id(),
+			status:character.status.getData(),
+			direction:character.direction,
+			action:character.action,
+			x:character.x,
+			y:character.y
+		});
+	}
+	data.enemyList = [];
+	for(var i=0,l=model.enemyList.length;i<l;i++){
+		var character = model.enemyList[i];
+		data.enemyList.push({
+			id:character.data.id(),
+			status:character.status.getData(),
+			direction:character.direction,
+			action:character.action,
+			x:character.x,
+			y:character.y
+		});
+	}
+	data.selfCaptive = [];
+	for(var i=0,l=model.selfCaptive.length;i<l;i++){
+		var character = model.selfCaptive[i];
+		data.selfCaptive.push({
+			id:character.data.id()
+		});
+	}
+	data.enemyCaptive = [];
+	for(var i=0,l=model.enemyCaptive.length;i<l;i++){
+		var character = model.enemyCaptive[i];
+		data.enemyCaptive.push({
+			id:character.data.id()
+		});
+	}
+	data.selfMinusStrategyCharas = [];
+	for(var i=0,l=model.selfMinusStrategyCharas.length;i<l;i++){
+		var character = model.selfMinusStrategyCharas[i];
+		data.selfMinusStrategyCharas.push({
+			id:character.data.id()
+		});
+	}
+	data.enemyMinusStrategyCharas = [];
+	for(var i=0,l=model.enemyMinusStrategyCharas.length;i<l;i++){
+		var character = model.enemyMinusStrategyCharas[i];
+		data.enemyMinusStrategyCharas.push({
+			id:character.data.id()
+		});
+	}
+	return data;
+}

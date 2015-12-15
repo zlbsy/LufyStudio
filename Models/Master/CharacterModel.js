@@ -60,35 +60,118 @@ CharacterModel.getChara=function(chara_id){
 	}
 	return null;
 };
-/*CharacterModel.getSaveData=function(){
-	var self = this;
-	var saveData = [];
-	for(var i=0,l=CharacterModel.list.length;i<l;i++){
-		var chara = CharacterModel.list[i];
-		saveData.push({
-			id:chara.id(),
-			seignior_id:chara.seignior_id(),
-			job:chara.jobData(),//根据任务内容变化
-			feat:chara.feat(),//功绩
-			loyalty:chara.loyalty(),//忠诚度
-			soldiers:chara.data.soldiers(),//所有兵种熟练度
-			equipments:chara.equipments()
-		});
-	}
-	return saveData;
-};*/
 CharacterModel.prototype.datas=function(){
 	var self = this;
 	var saveData = {
 		chara_id:self.id(),
 		seignior_id:self.seigniorId(),
-		job:self.jobData(),//根据任务内容变化
+		troops:self.troops(),
+		wounded:self.wounded(),
+		mp:self.MP(),
+		hp:self.HP(),
+		job:self.getJobData(),//根据任务内容变化
 		feat:self.feat(),//功绩
 		loyalty:self.loyalty(),//忠诚度
 		soldiers:self.data.soldiers,//所有兵种熟练度
 		equipments:self.equipments()
 	};
 	return saveData;
+};
+CharacterModel.prototype.setDatas=function(charaData){
+	var self = this;
+	self.cityId(charaData.cityId);
+	if(charaData.seignior_id){
+		self.seigniorId(charaData.seignior_id);
+	}
+	if(charaData.troops){
+		self.troops(charaData.troops);
+	}
+	if(charaData.wounded){
+		self.wounded(charaData.wounded);
+	}
+	if(charaData.mp){
+		self.MP(charaData.mp);
+	}
+	if(charaData.hp){
+		self.HP(charaData.hp);
+	}
+	if(charaData.loyalty){
+		self.loyalty(charaData.loyalty);
+	}
+	if(charaData.job){
+		self.setJobData(charaData.job);
+	}
+	if(charaData.feat){
+		self.feat(charaData.feat);
+	}
+	if(charaData.soldiers){
+		self.data.soldiers = charaData.soldiers;
+	}
+	if(charaData.equipments){
+		self.equip(charaData.equipments);
+	}
+};
+CharacterModel.prototype.getJobData = function() {
+	var self = this;
+	var obj = {};
+	obj.job = self.job();
+	switch(obj.job){
+		case Job.HIRE:
+			obj.targetHireId = self.data.targetHireId;
+			break;
+		case Job.DIPLOMACY_STOP_BATTLE:
+			obj.targetStopBattle = self.data.targetStopBattle;
+			break;
+		case Job.TRANSPORT:
+			obj.transportData = self.data.transportData;
+			break;
+		case Job.MOVE:
+			obj.targetCity = self.data.targetCity;
+			break;
+		case Job.SPY:
+			obj.targetSpyId = self.data.targetSpyId;
+			break;
+		case Job.DIPLOMACY_REDEEM:
+			obj.targetRedeem = self.data.targetRedeem;
+			break;
+		case Job.TRAINING:
+			obj.trainingSoldierId = self.data.trainingSoldierId;
+			break;
+		case Job.ENLIST:
+			obj.targetEnlist = self.data.targetEnlist;
+			break;
+	}
+	return obj;
+};
+CharacterModel.prototype.setJobData = function(obj) {
+	var self = this;
+	self.job(obj.job);
+	switch(obj.job){
+		case Job.HIRE:
+			self.data.targetHireId = obj.targetHireId;
+			break;
+		case Job.DIPLOMACY_STOP_BATTLE:
+			self.data.targetStopBattle = obj.targetStopBattle;
+			break;
+		case Job.TRANSPORT:
+			self.data.transportData = obj.transportData;
+			break;
+		case Job.MOVE:
+			self.data.targetCity = obj.targetCity;
+			break;
+		case Job.SPY:
+			self.data.targetSpyId = obj.targetSpyId;
+			break;
+		case Job.DIPLOMACY_REDEEM:
+			self.data.targetRedeem = obj.targetRedeem;
+			break;
+		case Job.TRAINING:
+			self.data.trainingSoldierId = obj.trainingSoldierId;
+			break;
+		case Job.ENLIST:
+			self.data.targetEnlist = obj.targetEnlist;
+			break;
+	}
 };
 CharacterModel.prototype.calculation = function(init) {
 	var self = this;
@@ -356,9 +439,6 @@ CharacterModel.prototype.hire = function(id) {
 };
 CharacterModel.prototype.job = function(value) {
 	return this._dataValue("job", value, Job.IDLE);
-};
-CharacterModel.prototype.jobData = function() {
-	return "";
 };
 //运输物资
 CharacterModel.prototype.transport = function(data) {

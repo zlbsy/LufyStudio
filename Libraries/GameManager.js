@@ -6,17 +6,16 @@ GameManager.save = function(){
 	data.seigniors = SeigniorModel.getSaveData();
 	data.chapterData = LMvc.chapterData;
 	data.selectSeignorId = LMvc.selectSeignorId;
-	LPlugin.SetData("gameData_1", data);
-	console.log("GameManager.save "+data);
-	if(!LMvc.BattleController){
-		return;
+	if(LMvc.BattleController){
+		data.battleData = getBattleSaveData();
 	}
-	data.battleData = "";
+	LPlugin.SetData("gameData_2", data);
+	console.log("GameManager.save "+data);
 };
 GameManager.read = function(){
 	console.log("GameManager.read ");
 	LMvc.isRead = true;
-	LMvc.areaData = LPlugin.GetData("gameData_1");
+	LMvc.areaData = LPlugin.GetData("gameData_2");
 	console.log("GameManager.read "+LMvc.areaData);
 	gameDataInit();
 	console.log("GameManager.read gameDataInit");

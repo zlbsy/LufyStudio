@@ -128,8 +128,8 @@ BattleMainMenuView.prototype.boutEnd=function(event){
 };
 BattleMainMenuView.prototype.clickSave=function(event){
 	var self = event.currentTarget.parent.parent.parent;
+	GameManager.save();
 	self.menuLayer.visible = false;
-	
 };
 BattleMainMenuView.prototype.clickRead=function(event){
 	var self = event.currentTarget.parent.parent.parent;

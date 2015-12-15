@@ -193,12 +193,11 @@ AreaModel.prototype.setSeignor = function(seignior,areaData){
 			for(var i=0,l=areaData[key].length;i<l;i++){
 				var charaData = areaData[key][i];
 				var chara = CharacterModel.getChara(charaData.chara_id);
-				chara.seigniorId(seignior.chara_id);
-				chara.loyalty(charaData.loyalty);
-				chara.cityId(areaData.area_id);
-				if(charaData.equipments){
-					chara.equip(charaData.equipments);
+				if(!charaData.seignior_id){
+					charaData.seignior_id = seignior.chara_id;
 				}
+				charaData.cityId = areaData.area_id:
+				chara.setDatas(charaData);
 				generals.push(chara);
 			}
 			this.data[key] = generals;
@@ -208,10 +207,8 @@ AreaModel.prototype.setSeignor = function(seignior,areaData){
 			for(var i=0,l=areaData[key].length;i<l;i++){
 				var charaData = areaData[key][i];
 				var chara = CharacterModel.getChara(charaData.chara_id);
-				chara.cityId(areaData.area_id);
-				if(charaData.equipments){
-					chara.equip(charaData.equipments);
-				}
+				charaData.cityId = areaData.area_id:
+				chara.setDatas(charaData);
 				out_of_offices.push(chara);
 			}
 			this.data[key] = out_of_offices;
@@ -222,9 +219,11 @@ AreaModel.prototype.setSeignor = function(seignior,areaData){
 			for(var i=0,l=areaData[key].length;i<l;i++){
 				var charaData = areaData[key][i];
 				var chara = CharacterModel.getChara(charaData.chara_id);
-				chara.seigniorId(charaData.seignior_id);
-				chara.loyalty(charaData.loyalty);
-				chara.cityId(areaData.area_id);
+				if(!charaData.seignior_id){
+					charaData.seignior_id = seignior.chara_id;
+				}
+				charaData.cityId = areaData.area_id:
+				chara.setDatas(charaData);
 				captives.push(chara);
 			}
 			this.data[key] = captives;
