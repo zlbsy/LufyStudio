@@ -196,7 +196,7 @@ AreaModel.prototype.setSeignor = function(seignior,areaData){
 				if(!charaData.seignior_id){
 					charaData.seignior_id = seignior.chara_id;
 				}
-				charaData.cityId = areaData.area_id:
+				charaData.cityId = areaData.area_id;
 				chara.setDatas(charaData);
 				generals.push(chara);
 			}
@@ -207,7 +207,7 @@ AreaModel.prototype.setSeignor = function(seignior,areaData){
 			for(var i=0,l=areaData[key].length;i<l;i++){
 				var charaData = areaData[key][i];
 				var chara = CharacterModel.getChara(charaData.chara_id);
-				charaData.cityId = areaData.area_id:
+				charaData.cityId = areaData.area_id;
 				chara.setDatas(charaData);
 				out_of_offices.push(chara);
 			}
@@ -222,7 +222,7 @@ AreaModel.prototype.setSeignor = function(seignior,areaData){
 				if(!charaData.seignior_id){
 					charaData.seignior_id = seignior.chara_id;
 				}
-				charaData.cityId = areaData.area_id:
+				charaData.cityId = areaData.area_id;
 				chara.setDatas(charaData);
 				captives.push(chara);
 			}
