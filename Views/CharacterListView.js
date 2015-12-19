@@ -345,9 +345,15 @@ CharacterListView.prototype.showList=function(){
 	self.contentLayer.addChild(panel);
 	
 	var cityModel = self.controller.getValue("cityData");
-	self.listChildLayer = new LSprite();
+	//self.listChildLayer = new LSprite();
 	/*var bitmapData = new LBitmapData(null,0,0,430, 120 * ((EventListConfig.length / 2 >>> 0) + 1) - 10,LBitmapData.DATA_CANVAS);
 	self.listChildLayer.push();*/
+	self.listView = new LListView();
+	self.listView.y = 15;
+	self.listView.resize(400,400);
+	self.listView.cellWidth = 400;
+	self.listView.cellHeight = 50;
+	self.contentLayer.addChild(self.listView);
 	self.charactersPush(self.dataList, 0);
 	/*console.log("showList self.dataList = ", self.dataList);
 	for(var i=0,l=self.dataList.length;i<l && i<20;i++){
@@ -362,11 +368,11 @@ CharacterListView.prototype.showList=function(){
 	}
 	console.log("showList self.dataList loop ove ");
 	self.listChildLayer.graphics.drawRect(0, "#000000", [0, 0, LGlobal.width - 30, scHeight]);*/
-	var sc = new LScrollbar(self.listChildLayer, LGlobal.width - 20, listHeight - 30, 10, false);
+	//var sc = new LScrollbar(self.listChildLayer, LGlobal.width - 20, listHeight - 30, 10, false);
 	//sc._showLayer.graphics.clear();
-	sc.y = 15;
-	self.contentLayer.addChild(sc);
-	sc.excluding = true;
+	//sc.y = 15;
+	//self.contentLayer.addChild(sc);
+	//sc.excluding = true;
 	console.log("showList  ove ");
 	self.listChildLayer.addEventListener(LMouseEvent.MOUSE_DOWN, self.characterClickDown);
 	self.listChildLayer.addEventListener(LMouseEvent.MOUSE_UP, self.characterClickUp.bind(self));
@@ -381,14 +387,14 @@ CharacterListView.prototype.charactersPush = function(charas,characterIndex) {
 		var charaModel = charas[i];
 		var childLayer = new CharacterListChildView(self.controller,charaModel,cityModel,self);
 		childLayer.y = 50 * i;
-		self.listChildLayer.addChild(childLayer);
-		if(i < length - 1){
+		self.listView.insertChild(childLayer);
+		/*if(i < length - 1){
 			continue;
 		}
-		scHeight = childLayer.y + childLayer.getHeight();
+		scHeight = childLayer.y + childLayer.getHeight();*/
 	}
-	self.listChildLayer.graphics.clear();
-	self.listChildLayer.graphics.drawRect(0, "#000000", [0, 0, LGlobal.width - 30, scHeight]);
+	//self.listChildLayer.graphics.clear();
+	//self.listChildLayer.graphics.drawRect(0, "#000000", [0, 0, LGlobal.width - 30, scHeight]);
 	if(length < charas.length){
 		setTimeout(function(){
 			self.charactersPush(charas, length);

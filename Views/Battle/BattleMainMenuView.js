@@ -13,7 +13,9 @@ BattleMainMenuView.prototype.init = function(){
 	self.mainLayer = mainLayer;
 	mainLayer.addEventListener(LMouseEvent.MOUSE_DOWN, self.onClickDown);
 	mainLayer.addEventListener(LMouseEvent.MOUSE_UP, self.onClickUp);
-	
+	if(!self.load){
+		self.load = new LMvcLoader(self);
+	}
 };
 BattleMainMenuView.prototype.onClickDown = function(event){
 	var button = event.currentTarget;
@@ -85,12 +87,12 @@ BattleMainMenuView.prototype.setMenu=function(){
 	var menuButton = getButton("保存进度",menuWidth);
 	menuButton.y = menuY;
 	layer.addChild(menuButton);
-	menuButton.addEventListener(LMouseEvent.MOUSE_UP, self.clickSave);
+	menuButton.addEventListener(LMouseEvent.MOUSE_UP, self.onClickGameSave);
 	menuY += menuHeight;
 	var menuButton = getButton("读取进度",menuWidth);
 	menuButton.y = menuY;
 	layer.addChild(menuButton);
-	menuButton.addEventListener(LMouseEvent.MOUSE_UP, self.clickRead);
+	menuButton.addEventListener(LMouseEvent.MOUSE_UP, self.onClickGameRead);
 	
 	menuY += menuHeight;
 	var menuButton = getButton(Language.get("回合结束"),menuWidth);
@@ -126,16 +128,27 @@ BattleMainMenuView.prototype.boutEnd=function(event){
 	self.controller.boutEnd();
 	self.menuLayer.visible = false;
 };
-BattleMainMenuView.prototype.clickSave=function(event){
+BattleMainMenuView.prototype.onClickGameSave=function(event){
 	var self = event.currentTarget.parent.parent.parent;
+	self.menuLayer.visible = false;
+	LMvc.changeLoading(TranslucentLoading);
+	self.load.library(["GameManager"],self.gameSave);
+};
+BattleMainMenuView.prototype.gameSave=function(){
+	var self = this;
 	GameManager.save();
-	self.menuLayer.visible = false;
 };
-BattleMainMenuView.prototype.clickRead=function(event){
+BattleMainMenuView.prototype.onClickGameRead=function(event){
 	var self = event.currentTarget.parent.parent.parent;
 	self.menuLayer.visible = false;
-	
+	LMvc.changeLoading(TranslucentLoading);
+	self.load.library(["GameManager"],self.gameRead);
 };
+BattleMainMenuView.prototype.gameRead=function(){
+	var self = this;
+	GameManager.read();
+};
+
 BattleMainMenuView.prototype.clickCharacterList=function(event){
 	var self = event.currentTarget.parent.parent.parent;
 	self.menuLayer.visible = false;
