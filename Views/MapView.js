@@ -69,7 +69,16 @@ MapView.prototype.init=function(){
 };
 MapView.prototype.updateView = function(){
 	var self = this;
-	self.areaLayerInit();
+	console.log("LMvc.areaData.battleData="+LMvc.areaData.battleData);
+	if(!LMvc.areaData.battleData){
+		self.areaLayerInit();
+		return;
+	}
+	LMvc.MapController.showCity(targetCity.id(), function(){
+		LMvc.CityController.gotoBattle();
+		
+		
+	});
 };
 MapView.prototype.areaLayerInit=function(){
 	var self = this;

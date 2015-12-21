@@ -9,6 +9,7 @@ GameManager.save = function(){
 	if(LMvc.BattleController){
 		data.battleData = getBattleSaveData();
 	}
+	console.log("data.battleData="+data.battleData);
 	LPlugin.SetData("gameData_2", data);
 	console.log("GameManager.save "+data);
 };
@@ -17,6 +18,7 @@ GameManager.read = function(){
 	LMvc.isRead = true;
 	LMvc.areaData = LPlugin.GetData("gameData_2");
 	console.log("GameManager.read "+LMvc.areaData);
+	console.log("LMvc.areaData.battleData="+LMvc.areaData.battleData);
 	gameDataInit();
 	console.log("GameManager.read gameDataInit");
 	LMvc.MapController.dispatchEvent(LController.NOTIFY);

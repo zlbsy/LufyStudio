@@ -308,7 +308,7 @@ function getBattleSaveData(){
 	data.expeditionEnemyCharacterList=[];
 	for(var i=0,l=battleData.expeditionEnemyCharacterList.length;i<l;i++){
 		var character = battleData.expeditionEnemyCharacterList[i];
-		data.expeditionEnemyCharacterList.push(character.data.id());
+		data.expeditionEnemyCharacterList.push(character.id());
 	}
 	var model = LMvc.BattleController.model;
 	data.ourList = [];

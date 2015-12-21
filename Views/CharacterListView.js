@@ -350,8 +350,8 @@ CharacterListView.prototype.showList=function(){
 	self.listChildLayer.push();*/
 	self.listView = new LListView();
 	self.listView.y = 15;
-	self.listView.resize(400,400);
-	self.listView.cellWidth = 400;
+	self.listView.resize(460,400);
+	self.listView.cellWidth = 460;
 	self.listView.cellHeight = 50;
 	self.contentLayer.addChild(self.listView);
 	self.charactersPush(self.dataList, 0);
@@ -374,12 +374,12 @@ CharacterListView.prototype.showList=function(){
 	//self.contentLayer.addChild(sc);
 	//sc.excluding = true;
 	console.log("showList  ove ");
-	self.listChildLayer.addEventListener(LMouseEvent.MOUSE_DOWN, self.characterClickDown);
-	self.listChildLayer.addEventListener(LMouseEvent.MOUSE_UP, self.characterClickUp.bind(self));
+	/*self.listChildLayer.addEventListener(LMouseEvent.MOUSE_DOWN, self.characterClickDown);
+	self.listChildLayer.addEventListener(LMouseEvent.MOUSE_UP, self.characterClickUp.bind(self));*/
 };
 CharacterListView.prototype.charactersPush = function(charas,characterIndex) {
 	var self = this;
-	var scHeight = 0, maxNum = 5;
+	var scHeight = 0, maxNum = 50;
 	var child,length = charas.length < characterIndex + maxNum ? charas.length : characterIndex + maxNum;
 	console.log("charactersPush:"+characterIndex+",length:"+length);
 	var cityModel = self.controller.getValue("cityData");
@@ -387,7 +387,8 @@ CharacterListView.prototype.charactersPush = function(charas,characterIndex) {
 		var charaModel = charas[i];
 		var childLayer = new CharacterListChildView(self.controller,charaModel,cityModel,self);
 		childLayer.y = 50 * i;
-		self.listView.insertChild(childLayer);
+		//console.log("i="+i);
+		self.listView.insertChildView(childLayer);
 		/*if(i < length - 1){
 			continue;
 		}

@@ -1,8 +1,9 @@
 function CharacterListChildView(controller, param, cityModel, parentView) {
 	var self = this;
-	base(self, LView, [controller]);
+	base(self, LListChildView, []);
 	self.cityModel = cityModel;
 	self.parentView = parentView;
+	self.controller = controller;
 	if(param.constructor.name == "CharacterModel"){
 		self.set(param);
 	}else if(param.constructor.name == "BattleCharacterView"){
@@ -45,8 +46,30 @@ CharacterListChildView.prototype.onChangeSelect = function(event) {
 	var self = event.currentTarget.parent;
 	self.parentView.dispatchEvent(LCheckBox.ON_CHANGE);
 };
+CharacterListChildView.prototype.onClick = function(event) {
+	var self = event.target;
+	var listView = event.currentTarget;
+	if(self.alpha < 1){
+		return;
+	}
+	if(self.controller.characterListType == CharacterListType.EXPEDITION && self.armProperties.visible){
+		if(event.offsetX < 70){
+			self.checkbox.setChecked(!self.checkbox.checked);
+			self.cacheAsBitmap(false);
+			self.updateView();
+			console.log("self.checkbox.checked="+self.checkbox.checked);
+			return;
+		}else if(event.offsetX > 350){
+			var characterExpedition = new CharacterExpeditionView(self.controller, self.charaModel);
+			var obj = {title:Language.get("distribute"),subWindow:characterExpedition,width:400,height:320,okEvent:self.updateArmProperties.bind(self),cancelEvent:null};//分配
+			var windowLayer = ConfirmWindow(obj);
+			self.controller.view.addChild(windowLayer);
+			return;
+		}
+	}
+};
 CharacterListChildView.prototype.hitTestPoint = function(offsetX,offsetY) {
-	var self = this;
+	var self = this;return;
 	if(self.alpha < 1){
 		return false;
 	}
@@ -94,10 +117,10 @@ CharacterListChildView.prototype.cutover = function(value) {
 CharacterListChildView.prototype.setStatus = function() {
 	var self = this;
 	var layer = new LSprite();
-	layer.graphics.drawRect(0, "#ff0000", [0, 0, 420, 50]);
+	layer.graphics.drawRect(0, "#ff0000", [0, 0, 420, 40]);
 	var bitmapLine = new LBitmap(new LBitmapData(LMvc.datalist["icon-line"]));
 	bitmapLine.scaleX = 420;
-	bitmapLine.y = 40;
+	bitmapLine.y = 38;
 	layer.addChild(bitmapLine);
 	var name = getStrokeLabel(self.charaModel.name(), 20, "#FFFFFF", "#000000", 4);
 	name.x = 50;

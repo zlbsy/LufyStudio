@@ -1,6 +1,6 @@
 /**
 * lufylegend
-* @version 1.9.12
+* @version 1.10.0
 * @Explain lufylegend是一个HTML5开源引擎，利用它可以快速方便的进行HTML5的开发
 * @author lufy(lufy_legend)
 * @blog http://blog.csdn.net/lufy_Legend
@@ -997,13 +997,14 @@ var LGlobal = ( function () {
 				LGlobal.canvas.fillRect(0, 0, LGlobal.width, LGlobal.height);
 			}
 		}
-		LGlobal.show(LGlobal.childList);
+		LGlobal.show(LGlobal.childList, LGlobal.canvas);
 	};
-	LGlobal.show = function (s) {
+	LGlobal.show = function (s, ctx) {
+		ctx = ctx || LGlobal.canvas;
 		for (var i = 0, l = s.length, c; i < l; i++) {
 			c = s[i];
 			if (c && c.ll_show) {
-				c.ll_show();
+				c.ll_show(ctx);
 				if(c._ll_removeFromSelf){
 					i--;
 					l--;
@@ -2053,8 +2054,9 @@ var LDisplayObject = (function () {
 				s._context = s._canvas.getContext("2d");
 			}
 		},
-		ll_show : function () {
-			var s = this, c = LGlobal.canvas;
+		ll_show : function (c) {
+			var s = this;
+			c = c || LGlobal.canvas;
 			if (!s._canShow()) {
 				return;
 			}
@@ -2068,15 +2070,15 @@ var LDisplayObject = (function () {
 				c.globalCompositeOperation = s.blendMode;
 			}
 			if (s.filters) {
-				s._ll_setFilters();
+				s._ll_setFilters(c);
 			}
 			s._rotateReady();
 			if (s.mask != null && s.mask.ll_show) {
-				s.mask.ll_show();
+				s.mask.ll_show(c);
 				c.clip();
 			}
-			s._transformRotate();
-			s._transformScale();
+			s._transformRotate(c);
+			s._transformScale(c);
 			s._coordinate(c);
 			if (s.transform.matrix) {
 				s.transform.matrix.transform(c);
@@ -2092,7 +2094,7 @@ var LDisplayObject = (function () {
 				}
 			}
 			if(s._ll_cacheAsBitmap){
-				s._ll_cacheAsBitmap._ll_show();
+				s._ll_cacheAsBitmap._ll_show(c);
 			}else{
 				s._ll_show(c);
 			}
@@ -2114,26 +2116,27 @@ var LDisplayObject = (function () {
 		_rotateReady : function () {},
 		_showReady : function (c) {},
 		_ll_show : function (c) {},
-		_ll_setFilters : function () {
+		_ll_setFilters : function (c) {
 			var s = this, f = s.filters, i, l;
 			if (!f) {
 				return;
 			}
 			for (i = 0, l = f.length; i < l; i++) {
-				f[i].ll_show(s);
+				f[i].ll_show(s, c);
 			}
 		},
 		startX : function(){return 0;},
 		startY : function(){return 0;},
 		getWidth : function(){return 1;},
 		getHeight : function(){return 1;},
-		_transformRotate : function () {
-			var s = this, c;
+		_transformRotate : function (c) {
+			var s = this;
+			c = c || LGlobal.canvas;
 			if (s.rotate == 0) {
 				return;
 			}
 			s._ll_trans = true;
-			c = LGlobal.canvas, rotateFlag = Math.PI / 180, rotateObj = new LMatrix();
+			rotateFlag = Math.PI / 180, rotateObj = new LMatrix();
 			if ((typeof s.rotatex) == UNDEFINED) {
 				s.rotatex = 0;
 				s.rotatey = 0;
@@ -2149,8 +2152,9 @@ var LDisplayObject = (function () {
 			rotateObj.ty = s.y + s.rotatey;
 			rotateObj.transform(c).setTo(1, 0, 0, 1, -rotateObj.tx, -rotateObj.ty).transform(c);
 		},
-		_transformScale : function () {
-			var s = this,c = LGlobal.canvas, scaleObj;
+		_transformScale : function (c) {
+			var s = this, scaleObj;
+			c = c || LGlobal.canvas;
 			if (s.scaleX == 1 && s.scaleY == 1) {
 				return;
 			}
@@ -2225,6 +2229,20 @@ var LDisplayObject = (function () {
 		getDataCanvas : function (x,y,w,h) {
 			var s = this, _o, o, _c, c, _x, _y;
 			s._createCanvas();
+			_x = s.x;
+			_y = s.y;
+			s.x = x || 0;
+			s.y = y || 0;
+			s.width = w || s.getWidth();
+			s.height = h || s.getHeight();
+			s._canvas.width = s.width;
+			s._canvas.height = s.height;
+			s.ll_show(s._context);
+			s.x = _x;
+			s.y = _y;
+			return s._canvas;
+			var s = this, _o, o, _c, c, _x, _y;
+			s._createCanvas();
 			o = LGlobal.canvasObj;
 			c = LGlobal.canvas;
 			_o = s._canvas;
@@ -2240,7 +2258,7 @@ var LDisplayObject = (function () {
 			_y = s.y;
 			s.x = x || 0;
 			s.y = y || 0;
-			s.ll_show();
+			s.ll_show(s._context);
 			s.x = _x;
 			s.y = _y;
 			s._canvas = _o;
@@ -3382,13 +3400,13 @@ var LGraphics = (function () {
 		s.showList = new Array();
 	}
 	var p = {
-		ll_show : function () {
+		ll_show : function (ctx) {
 			var s = this, k, l = s.setList.length;
 			if (l == 0) {
 				return;
 			}
 			for (k = 0; k < l; k++) {
-				s.setList[k]();
+				s.setList[k](ctx);
 				if (LGlobal.fpsStatus) {
 					LGlobal.fpsStatus.graphics++;
 				}
@@ -3411,83 +3429,83 @@ var LGraphics = (function () {
 		},
 		lineCap : function (t) {
 			var s = this;
-			s.setList.push(function () {
-				LGlobal.canvas.lineCap = t;
+			s.setList.push(function (ctx) {
+				ctx.lineCap = t;
 			});
 		},
 		lineJoin : function (t) {
 			var s = this;
-			s.setList.push(function () {
-				LGlobal.canvas.lineJoin = t;
+			s.setList.push(function (ctx) {
+				ctx.lineJoin = t;
 			});
 		},
 		lineWidth : function (t) {
 			var s = this;
-			s.setList.push(function () {
-				LGlobal.canvas.lineWidth = t;
+			s.setList.push(function (ctx) {
+				ctx.lineWidth = t;
 			});
 		},
 		strokeStyle : function (co) {
 			var s = this;
-			s.setList.push(function () {
-				LGlobal.canvas.strokeStyle = co;
+			s.setList.push(function (ctx) {
+				ctx.strokeStyle = co;
 			});
 		},
 		stroke : function () {
 			var s = this;
-			s.setList.push(function () {
-				LGlobal.canvas.stroke();
+			s.setList.push(function (ctx) {
+				ctx.stroke();
 			});
 		},
 		beginPath : function () {
 			var s = this;
-			s.setList.push(function () {
-				LGlobal.canvas.beginPath();
+			s.setList.push(function (ctx) {
+				ctx.beginPath();
 			});
 		},
 		closePath : function () {
 			var s = this;
-			s.setList.push(function () {
-				LGlobal.canvas.closePath();
+			s.setList.push(function (ctx) {
+				ctx.closePath();
 			});
 		},
 		moveTo : function (x, y) {
 			var s = this;
-			s.setList.push(function () {
-				LGlobal.canvas.moveTo(x, y);
+			s.setList.push(function (ctx) {
+				ctx.moveTo(x, y);
 			});
 			s.showList.push({type : LShape.POINT, arg : [x, y]});
 		},
 		lineTo : function (x, y) {
 			var s = this;
-			s.setList.push(function () {
-				LGlobal.canvas.lineTo(x, y);
+			s.setList.push(function (ctx) {
+				ctx.lineTo(x, y);
 			});
 			s.showList.push({type : LShape.POINT, arg : [x, y]});
 		},
 		rect : function (x, y, w, h) {
 			var s = this;
-			s.setList.push(function () {
-				LGlobal.canvas.rect(x, y, w, h);
+			s.setList.push(function (ctx) {
+				ctx.rect(x, y, w, h);
 			});
 			s.showList.push({type : LShape.RECT, arg : [x, y, w, h]});
 		},
 		fillStyle : function (co) {
 			var s = this;
-			s.setList.push(function () {
-				LGlobal.canvas.fillStyle = co;
+			s.setList.push(function (ctx) {
+				ctx.fillStyle = co;
 			});
 		},
 		fill : function () {
 			var s = this;
-			s.setList.push(function () {
-				LGlobal.canvas.fill();
+			s.setList.push(function (ctx) {
+				ctx.fill();
 			});
 		},
 		arc : function (x, y, r, sa, ea, aw) {
 			var s = this;
-			s.setList.push(function () {
-				LGlobal.canvas.arc(x, y, r, sa, ea, aw);
+			s.setList.push(function (ctx) {
+				ctx.arc(x, y, r, sa, ea, aw);
 			});
 			s.showList.push({type : LShape.ARC, arg : sa});
 		},
@@ -3497,8 +3515,7 @@ var LGraphics = (function () {
 				co = s.color;
 			}
 			s.color = co;
-			s.setList.push(function () {
-				c = LGlobal.canvas;
+			s.setList.push(function (c) {
 				c.lineWidth = tn;
 				c.strokeStyle = co;
 			});
@@ -3517,9 +3534,8 @@ var LGraphics = (function () {
 		},
 		drawEllipse : function (tn, lco, pa, isf, co) {
 			var s = this;
-			s.setList.push(function () {
-				var c, x, y, w, h, k, ox, oy, xe, ye, xm, ym;
-				c = LGlobal.canvas;
+			s.setList.push(function (c) {
+				var x, y, w, h, k, ox, oy, xe, ye, xm, ym;
 				c.beginPath();
 				k = 0.5522848;
 				x = pa[0];
@@ -3561,8 +3577,7 @@ var LGraphics = (function () {
 		},
 		drawArc : function (tn, lco, pa, isf, co) {
 			var s = this;
-			s.setList.push(function () {
-				var c = LGlobal.canvas;
+			s.setList.push(function (c) {
 				c.beginPath();
 				if (pa.length > 6 && pa[6]) {
 					c.moveTo(pa[0], pa[1]);
@@ -3595,8 +3610,7 @@ var LGraphics = (function () {
 		},
 		drawRect : function (tn, lco, pa, isf, co) {
 			var s = this;
-			s.setList.push(function () {
-				var c = LGlobal.canvas;
+			s.setList.push(function (c) {
 				c.beginPath();
 				c.rect(pa[0], pa[1], pa[2], pa[3]);
 				c.closePath();
@@ -3626,8 +3640,7 @@ var LGraphics = (function () {
 		},
 		drawRoundRect : function (tn, lco, pa, isf, co) {
 			var s = this;
-			s.setList.push(function () {
-				var c = LGlobal.canvas;
+			s.setList.push(function (c) {
 				c.beginPath();
 				c.moveTo(pa[0] + pa[4], pa[1]);
 				c.lineTo(pa[0] + pa[2] - pa[4], pa[1]);
@@ -3668,8 +3681,7 @@ var LGraphics = (function () {
 			if (v.length < 3) {
 				return;
 			}
-			s.setList.push(function () {
-				var c = LGlobal.canvas;
+			s.setList.push(function (c) {
 				c.beginPath();
 				c.moveTo(v[0][0], v[0][1]);
 				var i, l = v.length, pa;
@@ -3705,8 +3717,7 @@ var LGraphics = (function () {
 		drawTriangles : function (ve, ind, u, tn, lco) {
 			var s = this;
 			var i, j, l = ind.length, c;
-			s.setList.push(function () {
-				c = LGlobal.canvas;
+			s.setList.push(function (c) {
 				var v = ve, a, k, sw;
 				for (i = 0, j = 0; i < l; i += 3) {
 					a = 0;
@@ -3811,8 +3822,7 @@ var LGraphics = (function () {
 		},
 		drawLine : function (tn, lco, pa) {
 			var s = this;
-			s.setList.push(function () {
-				var c = LGlobal.canvas;
+			s.setList.push(function (c) {
 				c.beginPath();
 				c.moveTo(pa[0], pa[1]);
 				c.lineTo(pa[2], pa[3]);
@@ -3981,7 +3991,7 @@ var LShape = (function () {
 	var p = {
 		_ll_show : function (c) {
 			var s = this;
-			s.graphics.ll_show();
+			s.graphics.ll_show(c);
 		},
 		getWidth : function (maskSize) {
 			var s = this, mx, mw,
@@ -4107,9 +4117,9 @@ var LSprite = (function () {
 		},
 		_ll_show : function (c) {
 			var s = this;
-			s.graphics.ll_show();
-			LGlobal.show(s.childList);
-			s._ll_debugShape();
+			s.graphics.ll_show(c);
+			LGlobal.show(s.childList, c);
+			s._ll_debugShape(c);
 		},
 		startDrag : function (touchPointID) {
 			var s = this;
@@ -4409,14 +4419,14 @@ var LSprite = (function () {
 		clearShape : function () {
 			this.shapes = [];
 		},
-		_ll_debugShape : function () {
-			var s = this, i, l, child, c, arg, j, ll;
+		_ll_debugShape : function (c) {
+			var s = this, i, l, child, arg, j, ll;
 			if (!LGlobal.traceDebug || !s.shapes || s.shapes.length == 0) {
 				return;
 			}
 			for (i = 0, l = s.shapes.length; i < l; i++) {
 				child = s.shapes[i];
-				c = LGlobal.canvas;
+				c = c || LGlobal.canvas;
 				arg = child.arg;
 				c.beginPath();
 				if (child.type == LShape.RECT) {
@@ -5305,15 +5315,15 @@ var LBitmap = (function () {
 			}
 		},
 		_coordinate : function (c) {},
-		_ll_show : function () {
-			this.ll_draw();
+		_ll_show : function (c) {
+			this.ll_draw(c);
 		},
-		ll_draw : function () {
+		ll_draw : function (c) {
 			var s = this;
 			if (LGlobal.fpsStatus) {
 				LGlobal.fpsStatus.bitmapData++;
 			}
-			LGlobal.canvas.drawImage(s.bitmapData.image,
+			c.drawImage(s.bitmapData.image,
 				s.bitmapData.x,
 				s.bitmapData.y,
 				s.bitmapData.width,
@@ -5420,12 +5430,12 @@ var LBitmapData = (function() {
 		} else {
 			s._createCanvas();
 			s.dataType = LBitmapData.DATA_CANVAS;
-			s._canvas.width = s.width = (width == null ? 1 : width);
-			s._canvas.height = s.height = (height == null ? 1 : height);
+			s._canvas.width = s.width = (width ? width : 1);
+			s._canvas.height = s.height = (height ? height : 1);
 			if ( typeof image == "string") {
-				image = parseInt(image.replace("#", "0x"));
-			}
-			if ( typeof image == "number") {
+				s._context.fillStyle = image;
+				s._context.fillRect(0, 0, s.width, s.height);
+			}else if ( typeof image == "number") {
 				var d = s._context.createImageData(s.width, s.height);
 				for (var i = 0; i < d.data.length; i += 4) {
 					d.data[i + 0] = image >> 16 & 0xFF;
@@ -5514,10 +5524,10 @@ var LBitmapData = (function() {
 			s._setDataType(s._dataType);
 			s._data = null;
 		},
-		applyFilter : function(sourceBitmapData, sourceRect, destPoint, filter) {
+		applyFilter : function(sourceBitmapData, sourceRect, destPoint, filter, c) {
 			var s = this;
 			var r = s._context.getImageData(s.x + sourceRect.x, s.y + sourceRect.y, sourceRect.width, sourceRect.height);
-			var data = filter.filter(r,sourceRect.width);
+			var data = filter.filter(r,sourceRect.width, c);
 			s.putPixels(new LRectangle(destPoint.x, destPoint.y, sourceRect.width, sourceRect.height), data);
 		},
 		getPixel : function(x, y, colorType) {
@@ -5734,12 +5744,13 @@ var LBitmapFilter = (function () {
 		LExtends(s, LObject, []);
 		s.type = "LBitmapFilter";
 	}
-	LBitmapFilter.prototype.ll_show = function (displayObject) {
+	LBitmapFilter.prototype.ll_show = function (displayObject, c) {
 		var s = this;
 		if(s.cacheMaking){
 			return;
 		}
-		var c = LGlobal.canvas, d = displayObject, bitmapData;
+		c = c || LGlobal.canvas;
+		var d = displayObject, bitmapData;
 		if(d.constructor.name == "LBitmap"){
 			bitmapData = d.bitmapData;
 		}else{
@@ -5754,7 +5765,7 @@ var LBitmapFilter = (function () {
 			return;
 		}
 		s.bitmapDataIndex = bitmapData.objectIndex;
-		bitmapData.applyFilter(bitmapData, new LRectangle(0,0,bitmapData.width,bitmapData.height), new LPoint(0,0), s);
+		bitmapData.applyFilter(bitmapData, new LRectangle(0,0,bitmapData.width,bitmapData.height), new LPoint(0,0), s, c);
 	};
 	return LBitmapFilter;
 })();
@@ -5776,8 +5787,9 @@ var LDropShadowFilter = (function () {
 			s.shadowOffsetX = s.distance * Math.cos(a);
 			s.shadowOffsetY = s.distance * Math.sin(a);
 		},
-		ll_show : function () {
-			var s = this, c = LGlobal.canvas;
+		ll_show : function (o, c) {
+			var s = this;
+			c = c || LGlobal.canvas;
 			c.shadowColor = s.shadowColor;
 			c.shadowBlur = s.shadowBlur;
 			c.shadowOffsetX = s.shadowOffsetX;
@@ -5811,8 +5823,9 @@ var LColorMatrixFilter = (function () {
 		s.matrix = matrix;
 	}
 	var p = {
-		filter : function(olddata, w){
-			var s = this, c = LGlobal.canvas;
+		filter : function(olddata, w, c){
+			var s = this;
+			c = c || LGlobal.canvas;
 			var oldpx = olddata.data;
 			var newdata = c.createImageData(olddata);
 			var newpx = newdata.data;
@@ -5847,8 +5860,9 @@ var LConvolutionFilter = (function () {
 		s.bias = bias ? bias : 0;
 	}
 	var p = {
-		filter : function(olddata, w){
-			var s = this, c = LGlobal.canvas;
+		filter : function(olddata, w, c){
+			var s = this;
+			c = c || LGlobal.canvas;
 			var oldpx = olddata.data;
 			var newdata = c.createImageData(olddata);
 			var newpx = newdata.data;
