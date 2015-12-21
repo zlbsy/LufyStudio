@@ -17,7 +17,6 @@ CharacterListView.prototype.init=function(){
 	switch(self.controller.characterListType){
 		case CharacterListType.BATTLE_SINGLE:
 			var chara = self.controller.fromController.currentCharacter;
-			//alert("BATTLE_SINGLE = "+chara);
 			self.showCharacterDetailed(chara);
 			break;
 		default:
@@ -118,7 +117,7 @@ CharacterListView.prototype.listInit=function(){
 		self.executeButton = button;
 		button.x = (LGlobal.width - 200) * 0.5;
 		button.y = LGlobal.height - button.getHeight() - 15;
-		self.addChild(button);
+		self.listLayer.addChild(button);
 		button.addEventListener(LMouseEvent.MOUSE_UP, self.onClickExecuteButton);
 		self.addEventListener(LCheckBox.ON_CHANGE, self.onChangeChildSelect);
 		if(showMoney){
@@ -227,9 +226,11 @@ CharacterListView.prototype.onClickCutoverButton=function(event){
 	}
 	buttonCutover.remove();
 	self.getCutoverButton(cutoverName);
-	self.listView.getItems().forEach(function(child){
-		child.cutover(cutoverName);
-	});
+	var items = self.listView.getItems();
+	for(var i=0,l=items.length;i<l;i++){
+		var child = items[i];
+		child.cutover(cutoverName, self.listView.isInClipping(i));
+	}
 };
 CharacterListView.prototype.onClickCloseButton=function(event){
 	var self = this;
@@ -240,13 +241,18 @@ CharacterListView.prototype.onClickCloseButton=function(event){
 };
 CharacterListView.prototype.showTabMenu=function(){
 	var self = this;
-	var buttonExpedition = getButton("↓",50);
-	buttonExpedition.x = 10;
-	self.tabMenuLayer.addChild(buttonExpedition);
+	self.commonTab = new LSprite();
+	self.commonTab.x = 10;
+	self.tabMenuLayer.addChild(self.commonTab);
+	var buttonSelected = getButton("↓",50);
+	buttonSelected.name = "selected";
+	self.commonTab.addChild(buttonSelected);
 	
-	var buttonExpedition = getButton(Language.get("name"),110);
-	buttonExpedition.x = 60;
-	self.tabMenuLayer.addChild(buttonExpedition);
+	var buttonCharacterName = getButton(Language.get("name"),110);
+	buttonCharacterName.x = 50;
+	buttonCharacterName.name = "characterName";
+	self.commonTab.addChild(buttonCharacterName);
+	self.commonTab.addEventListener(LMouseEvent.MOUSE_UP, self.onClickSortButton);
 	
 	self.setBasicTab();
 	self.setAbilityTab();
@@ -285,15 +291,25 @@ CharacterListView.prototype.setAbilityTab=function(){
 };
 CharacterListView.prototype.onClickSortButton=function(event){
 	var self = event.currentTarget.parent.parent.parent;
+	console.log("onClickSortButton", event.target.name);
 	if(self.sortType == event.target.name){
 		self.sortValue *= -1;
 	}
 	self.sortType = event.target.name;
 	switch(event.target.name){
+		case "selected":
+			break;
+		case "characterName":
+			break;
 		case "city":
 			break;
+		case "status":
+			break;
+		case "identity":
+			break;
+		case "belong":
+			break;
 		default:
-			//self.listChildLayer.childList = self.listChildLayer.childList.sort
 			var items = self.listView.getItems().sort(function(a,b){
 				var va = a.charaModel[self.sortType]();
 				var vb = b.charaModel[self.sortType]();
@@ -342,38 +358,13 @@ CharacterListView.prototype.showList=function(){
 	var panel = getBitmap(new LPanel(new LBitmapData(LMvc.datalist["win05"]),LGlobal.width, LGlobal.height - self.contentLayer.y));
 	self.contentLayer.addChild(panel);
 	
-	var cityModel = self.controller.getValue("cityData");
-	//self.listChildLayer = new LSprite();
-	/*var bitmapData = new LBitmapData(null,0,0,430, 120 * ((EventListConfig.length / 2 >>> 0) + 1) - 10,LBitmapData.DATA_CANVAS);
-	self.listChildLayer.push();*/
 	self.listView = new LListView();
 	self.listView.y = 15;
 	self.listView.resize(LGlobal.width - 20,listHeight - 30);
-	self.listView.cellWidth = 460;
+	self.listView.cellWidth = LGlobal.width - 20;
 	self.listView.cellHeight = 50;
 	self.contentLayer.addChild(self.listView);
 	self.charactersPush(self.dataList, 0);
-	/*console.log("showList self.dataList = ", self.dataList);
-	for(var i=0,l=self.dataList.length;i<l && i<20;i++){
-		var charaModel = self.dataList[i];
-		var childLayer = new CharacterListChildView(self.controller,charaModel,cityModel,self);
-		childLayer.y = 50 * i;
-		self.listChildLayer.addChild(childLayer);
-		if(i < l - 1){
-			continue;
-		}
-		scHeight = childLayer.y + childLayer.getHeight();
-	}
-	console.log("showList self.dataList loop ove ");
-	self.listChildLayer.graphics.drawRect(0, "#000000", [0, 0, LGlobal.width - 30, scHeight]);*/
-	//var sc = new LScrollbar(self.listChildLayer, LGlobal.width - 20, listHeight - 30, 10, false);
-	//sc._showLayer.graphics.clear();
-	//sc.y = 15;
-	//self.contentLayer.addChild(sc);
-	//sc.excluding = true;
-	console.log("showList  ove ");
-	/*self.listChildLayer.addEventListener(LMouseEvent.MOUSE_DOWN, self.characterClickDown);
-	self.listChildLayer.addEventListener(LMouseEvent.MOUSE_UP, self.characterClickUp.bind(self));*/
 };
 CharacterListView.prototype.charactersPush = function(charas,characterIndex) {
 	var self = this;
@@ -381,69 +372,28 @@ CharacterListView.prototype.charactersPush = function(charas,characterIndex) {
 	var child,length = charas.length < characterIndex + maxNum ? charas.length : characterIndex + maxNum;
 	console.log("charactersPush:"+characterIndex+",length:"+length);
 	var cityModel = self.controller.getValue("cityData");
+	var items = self.listView.getItems();
 	for(var i=characterIndex;i<length;i++){
 		var charaModel = charas[i];
 		var childLayer = new CharacterListChildView(self.controller,charaModel,cityModel,self);
 		childLayer.y = 50 * i;
-		//console.log("i="+i);
-		self.listView.insertChildView(childLayer);
-		/*if(i < length - 1){
-			continue;
-		}
-		scHeight = childLayer.y + childLayer.getHeight();*/
+		items.push(childLayer);
 	}
-	//self.listChildLayer.graphics.clear();
-	//self.listChildLayer.graphics.drawRect(0, "#000000", [0, 0, LGlobal.width - 30, scHeight]);
+	self.listView.updateList(items);
 	if(length < charas.length){
 		setTimeout(function(){
 			self.charactersPush(charas, length);
 		},LGlobal.speed);
 	}
 };
-/*ToolInterface.charactersPush = function(charas, characterIndex){
-	var child,length = charas.length < characterIndex + 50 ? charas.length : characterIndex + 50;
-	for(var i=characterIndex;i<length;i++){
-		child = charas[i];
-		characters.add(child.name, child.index);
-	}
-	if(length < charas.length){
-		setTimeout(function(){
-			ToolInterface.charactersPush(charas, length);
-		},1);
-	}
-};*/
-CharacterListView.prototype.characterClickDown = function(event) {
-	var chara = event.target;
-	chara.offsetX = event.offsetX;
-	chara.offsetY = event.offsetY;
-};
-CharacterListView.prototype.characterClickUp = function(event) {
-	if(event.target.constructor.name != "CharacterListChildView"){
-		return;
-	}
-	var self = this;
-	if(self.controller.characterListType == CharacterListType.TEST){
-		return;
-	}
-	var chara = event.target;
-	if (chara.offsetX && chara.offsetY && 
-		Math.abs(chara.offsetX - event.offsetX) < 5 && 
-		Math.abs(chara.offsetY - event.offsetY) < 5 &&
-		chara.hitTestPoint(event.offsetX, event.offsetY)) {
-		self.showCharacterDetailed(chara.character?chara.character:chara.charaModel);
-	}
-};
 CharacterListView.prototype.showCharacterDetailed=function(param){
 	var self = this;
 	var characterDetailed = new CharacterDetailedView(self.controller, param);
 	self.charaDetailedLayer.addChild(characterDetailed);
-	if(!self.listChildLayer){
+	if(!self.listView){
 		return;
 	}
-	if(self.executeButton){
-		self.executeButton.visible = false;
-	}
-	self.listChildLayer.visible = false;
+	self.listLayer.visible = false;
 };
 CharacterListView.prototype.showCharacterList=function(){
 	var self = this;
@@ -453,8 +403,5 @@ CharacterListView.prototype.showCharacterList=function(){
 		self.remove();
 		return;
 	}
-	if(self.executeButton){
-		self.executeButton.visible = true;
-	}
-	self.listChildLayer.visible = true;
+	self.listLayer.visible = true;
 };

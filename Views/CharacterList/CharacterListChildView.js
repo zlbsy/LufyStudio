@@ -97,7 +97,7 @@ CharacterListChildView.prototype.updateArmProperties = function(event) {
 	self.cacheAsBitmap(false);
 	self.updateView();
 };
-CharacterListChildView.prototype.cutover = function(value) {
+CharacterListChildView.prototype.cutover = function(value, isInClipping) {
 	var self = this;
 	self.basicProperties.visible = false;
 	self.abilityProperties.visible = false;
@@ -111,7 +111,11 @@ CharacterListChildView.prototype.cutover = function(value) {
 	} else if (value == CharacterListView.CUTOVER_ABILITY) {
 		self.abilityProperties.visible = true;
 	}
-
+	self.cacheAsBitmap(false);
+	if(!isInClipping){
+		return;
+	}
+	self.updateView();
 };
 CharacterListChildView.prototype.setStatus = function() {
 	var self = this;

@@ -146,6 +146,8 @@ var LListView = (function () {
 	};
 	LListView.prototype.resize = function(w, h){
 		var self = this;
+		w = w >>> 0;
+		h = h >>> 0;
 		self.bitmapData.image.height = self.bitmapData.height = h;
 		self.bitmapData.image.width = self.bitmapData.width = w;
 		self.clipping.width = w;
@@ -176,7 +178,7 @@ var LListView = (function () {
 	LListView.prototype.getItems = function(){
 		return this._ll_items;
 	};
-	LListChildView.prototype.isInClipping = function(index){
+	LListView.prototype.isInClipping = function(index){
 		var self = this, x, y;
 		if(self.arrangement == LListView.Direction.Horizontal){
 			x = (index % self.maxPerLine) * self.cellWidth;
@@ -196,8 +198,8 @@ var LListView = (function () {
 		var length = self._ll_items.length;
 		var startX = self.clipping.x / self.cellWidth >> 0;
 		var startY = self.clipping.y / self.cellHeight >> 0;
-		var addX = self.clipping.width % self.cellWidth == 0 ? 0 : 1;
-		var addY = self.clipping.height % self.cellHeight == 0 ? 0 : 1;
+		var addX;
+		var addY;
 		addX = addY = 1;
 		if(self.arrangement == LListView.Direction.Horizontal){
 			for(var i = 0, l = Math.ceil(self.clipping.height / self.cellHeight) + addY; i < l; i++){
@@ -215,7 +217,6 @@ var LListView = (function () {
 				}
 			}
 		}else{
-			var add = self.clipping.width % self.cellWidth == 0 ? 0 : 1;
 			for(var i = 0, l = Math.ceil(self.clipping.width / self.cellWidth) + addX; i < l; i++){
 				var yIndex = (startX + i) * self.maxPerLine + startY;
 				for(var j = 0, jl = Math.ceil(self.clipping.height / self.cellHeight) + addY;j < self.maxPerLine && j < jl; j++){
