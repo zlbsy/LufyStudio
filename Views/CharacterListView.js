@@ -133,8 +133,8 @@ CharacterListView.prototype.listInit=function(){
 };
 CharacterListView.prototype.onChangeChildSelect=function(event){
 	var self = event.currentTarget,selectedCount=0;
-	self.listChildLayer.childList.forEach(function(child){
-		if(child.constructor.name !== "CharacterListChildView" || !child.checkbox.checked){
+	self.listView.getItems().forEach(function(child){
+		if(!child.checkbox.checked){
 			return;
 		}
 		selectedCount++;
@@ -170,8 +170,8 @@ CharacterListView.prototype.selectExecute=function(){
 	var self = this;
 	var characterListType = self.controller.characterListType;
 	var characterList = [];
-	self.listChildLayer.childList.forEach(function(child){
-		if(child.constructor.name !== "CharacterListChildView" || !child.checkbox.checked){
+	self.listView.getItems().forEach(function(child){
+		if(!child.checkbox.checked){
 			return;
 		}
 		characterList.push(child.charaModel);
@@ -227,10 +227,8 @@ CharacterListView.prototype.onClickCutoverButton=function(event){
 	}
 	buttonCutover.remove();
 	self.getCutoverButton(cutoverName);
-	self.listChildLayer.childList.forEach(function(child){
-		if(child.constructor.name == "CharacterListChildView"){
-			child.cutover(cutoverName);
-		}
+	self.listView.getItems().forEach(function(child){
+		child.cutover(cutoverName);
 	});
 };
 CharacterListView.prototype.onClickCloseButton=function(event){
@@ -295,15 +293,15 @@ CharacterListView.prototype.onClickSortButton=function(event){
 		case "city":
 			break;
 		default:
-			self.listChildLayer.childList = self.listChildLayer.childList.sort(function(a,b){
+			//self.listChildLayer.childList = self.listChildLayer.childList.sort
+			var items = self.listView.getItems().sort(function(a,b){
 				var va = a.charaModel[self.sortType]();
 				var vb = b.charaModel[self.sortType]();
 				return self.sortValue*((typeof va == "number" ? va : 0) - (typeof vb == "number" ? vb : 0));
 			});
-	}
-	for(var i=0,l=self.listChildLayer.numChildren;i<l;i++){
-		var childLayer = self.listChildLayer.childList[i];
-		childLayer.y = 50 * i;
+			self.listView.updateList(items);
+			self.listView.clipping.y = 0;
+			self.listView.updateView();
 	}
 };
 CharacterListView.prototype.setArmTab=function(){
@@ -350,7 +348,7 @@ CharacterListView.prototype.showList=function(){
 	self.listChildLayer.push();*/
 	self.listView = new LListView();
 	self.listView.y = 15;
-	self.listView.resize(460,400);
+	self.listView.resize(LGlobal.width - 20,listHeight - 30);
 	self.listView.cellWidth = 460;
 	self.listView.cellHeight = 50;
 	self.contentLayer.addChild(self.listView);

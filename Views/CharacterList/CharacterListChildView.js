@@ -38,13 +38,8 @@ CharacterListChildView.prototype.setCheckBox = function() {
 			check.y = 10;
 			self.addChild(check);
 			self.checkbox = check;
-			check.addEventListener(LCheckBox.ON_CHANGE, self.onChangeSelect);
 			break;
 	}
-};
-CharacterListChildView.prototype.onChangeSelect = function(event) {
-	var self = event.currentTarget.parent;
-	self.parentView.dispatchEvent(LCheckBox.ON_CHANGE);
 };
 CharacterListChildView.prototype.onClick = function(event) {
 	var self = event.target;
@@ -52,14 +47,15 @@ CharacterListChildView.prototype.onClick = function(event) {
 	if(self.alpha < 1){
 		return;
 	}
+	if(self.checkbox && event.offsetX < 70){
+		self.checkbox.setChecked(!self.checkbox.checked);
+		self.cacheAsBitmap(false);
+		self.updateView();
+		self.parentView.dispatchEvent(LCheckBox.ON_CHANGE);
+		return;
+	}
 	if(self.controller.characterListType == CharacterListType.EXPEDITION && self.armProperties.visible){
-		if(event.offsetX < 70){
-			self.checkbox.setChecked(!self.checkbox.checked);
-			self.cacheAsBitmap(false);
-			self.updateView();
-			console.log("self.checkbox.checked="+self.checkbox.checked);
-			return;
-		}else if(event.offsetX > 350){
+		if(event.offsetX > 350){
 			var characterExpedition = new CharacterExpeditionView(self.controller, self.charaModel);
 			var obj = {title:Language.get("distribute"),subWindow:characterExpedition,width:400,height:320,okEvent:self.updateArmProperties.bind(self),cancelEvent:null};//分配
 			var windowLayer = ConfirmWindow(obj);
@@ -67,6 +63,7 @@ CharacterListChildView.prototype.onClick = function(event) {
 			return;
 		}
 	}
+	self.parentView.showCharacterDetailed(self.character?self.character:self.charaModel);
 };
 CharacterListChildView.prototype.hitTestPoint = function(offsetX,offsetY) {
 	var self = this;return;
@@ -97,6 +94,8 @@ CharacterListChildView.prototype.updateArmProperties = function(event) {
 	characterExpedition.apply();
 	self.setArmProperties();
 	windowLayer.remove();
+	self.cacheAsBitmap(false);
+	self.updateView();
 };
 CharacterListChildView.prototype.cutover = function(value) {
 	var self = this;
