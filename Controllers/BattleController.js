@@ -123,6 +123,7 @@ BattleController.prototype.init = function(){
 	}
 	self.dispatchEvent(LEvent.COMPLETE);
 	if(LMvc.areaData.battleData){
+		setBattleSaveData();
 		/*
 		 LMvc.areaData.battleData= 
 		 {"food":12000,"money":2224,"troops":600,"toCityId":22,"fromCityId":24,

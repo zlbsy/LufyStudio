@@ -77,11 +77,15 @@ MapView.prototype.updateView = function(){
 	LMvc.MapController.showCity(LMvc.areaData.battleData.toCityId, self.readDataToBattle);
 };
 MapView.prototype.readDataToBattle = function(){
-	LMvc.CityController.setValue("battleData", {});
+	var battleData = {};
+	battleData.food = LMvc.areaData.battleData.food;
+	battleData.money = LMvc.areaData.battleData.money;
+	battleData.troops = LMvc.areaData.battleData.troops;
 	var targetCity = AreaModel.getArea(LMvc.areaData.battleData.toCityId);
 	var fromCity = AreaModel.getArea(LMvc.areaData.battleData.fromCityId);
 	LMvc.CityController.setValue("cityData",fromCity);
 	LMvc.CityController.setValue("toCity",targetCity);
+	LMvc.CityController.setValue("battleData", battleData);
 	LMvc.CityController.gotoBattle();
 };
 MapView.prototype.areaLayerInit=function(){

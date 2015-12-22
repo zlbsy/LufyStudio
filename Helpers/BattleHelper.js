@@ -320,8 +320,8 @@ function getBattleSaveData(){
 			direction:character.direction,
 			action:character.action,
 			mode:character.mode,
-			x:character.x,
-			y:character.y
+			x:character.locationX(),
+			y:character.locationY()
 		});
 	}
 	data.enemyList = [];
@@ -332,10 +332,64 @@ function getBattleSaveData(){
 			status:character.status.getData(),
 			direction:character.direction,
 			action:character.action,
-			x:character.x,
-			y:character.y
+			x:character.locationX(),
+			y:character.locationY()
 		});
 	}
+	data.selfCaptive = [];
+	for(var i=0,l=model.selfCaptive.length;i<l;i++){
+		var character = model.selfCaptive[i];
+		data.selfCaptive.push({
+			id:character.data.id()
+		});
+	}
+	data.enemyCaptive = [];
+	for(var i=0,l=model.enemyCaptive.length;i<l;i++){
+		var character = model.enemyCaptive[i];
+		data.enemyCaptive.push({
+			id:character.data.id()
+		});
+	}
+	data.selfMinusStrategyCharas = [];
+	for(var i=0,l=model.selfMinusStrategyCharas.length;i<l;i++){
+		var character = model.selfMinusStrategyCharas[i];
+		data.selfMinusStrategyCharas.push({
+			id:character.data.id()
+		});
+	}
+	data.enemyMinusStrategyCharas = [];
+	for(var i=0,l=model.enemyMinusStrategyCharas.length;i<l;i++){
+		var character = model.enemyMinusStrategyCharas[i];
+		data.enemyMinusStrategyCharas.push({
+			id:character.data.id()
+		});
+	}
+	return data;
+}
+function setBattleSaveData(){
+	var data = LMvc.areaData.battleData;
+	var battleData = LMvc.BattleController.battleData;
+	battleData.expeditionEnemyCharacterList=[];
+	for(var i=0,l=battleData.expeditionEnemyCharacterList.length;i<l;i++){
+		var character = CharacterModel.getChara(battleData.expeditionEnemyCharacterList[i]);
+		data.expeditionEnemyCharacterList.push(character);
+	}
+	var model = LMvc.BattleController.model;
+	var charaLayer = LMvc.BattleController.view.charaLayer;
+	for(var i=0,l=data.ourList.length;i<l;i++){
+		var charaData = data.ourList[i];
+		var chara = charaLayer.addOurCharacter(charaData.id,charaData.action,charaData.direction,charaData.x,charaData.y);
+		chara.changeAction(charaData.action);
+		chara.mode = charaData.mode;
+		chara.toStatic(true);
+		//charaData.status:character.status.getData(),
+	}
+	for(var i=0,l=data.enemyList.length;i<l;i++){
+		var charaData = data.enemyList[i];
+		var chara = charaLayer.addEnemyCharacter(charaData.id,charaData.action,charaData.direction,charaData.x,charaData.y);
+		chara.changeAction(charaData.action);
+		chara.toStatic(true);
+	}return;
 	data.selfCaptive = [];
 	for(var i=0,l=model.selfCaptive.length;i<l;i++){
 		var character = model.selfCaptive[i];

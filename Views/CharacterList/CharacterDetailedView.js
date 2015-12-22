@@ -255,17 +255,17 @@ CharacterDetailedView.prototype.showStatus=function(){
 		if(charaModel.job() == Job.END){
 			btnRecruit.alpha = 0.4;
 		}
-		btnRecruit.x = LGlobal.width - 260
+		btnRecruit.x = LGlobal.width - 260;
 		btnRecruit.y = 5;
 		backLayer.addChild(btnRecruit);
 		btnRecruit.addEventListener(LMouseEvent.MOUSE_UP,self.clickRecruit);
 		var btnRelease = getButton(Language.get("release"),200);//释放
-		btnRelease.x = LGlobal.width - 260
+		btnRelease.x = LGlobal.width - 260;
 		btnRelease.y = 55;
 		backLayer.addChild(btnRelease);
 		btnRelease.addEventListener(LMouseEvent.MOUSE_UP,self.clickRelease);
 		var btnBehead = getButton(Language.get("behead"),200);//斩首
-		btnBehead.x = LGlobal.width - 260
+		btnBehead.x = LGlobal.width - 260;
 		btnBehead.y = 105;
 		backLayer.addChild(btnBehead);
 		btnBehead.addEventListener(LMouseEvent.MOUSE_UP,self.clickBehead);

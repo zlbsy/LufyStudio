@@ -197,8 +197,8 @@ BattleCharacterLayerView.prototype.addOurCharacter=function(id,action,direction,
 	chara.changeAction(CharacterAction.MOVE);
 	self.model.ourList.push(chara);
 	self.model.checkCreat(chara, chara.belong);
-	chara.data.wounded(70);
 	if(typeof callback == "function")callback();
+	return chara;
 };
 BattleCharacterLayerView.prototype.addEnemyCharacter=function(index,action,direction,x,y,isHide,ai,callback){
 	var self = this;
@@ -208,6 +208,7 @@ BattleCharacterLayerView.prototype.addEnemyCharacter=function(index,action,direc
 	self.model.enemyList.push(chara);
 	self.model.checkCreat(chara, chara.belong);
 	if(typeof callback == "function")callback();
+	return chara;
 };
 BattleCharacterLayerView.prototype.addFriendCharacter=function(index,action,direction,x,y,isHide,ai,callback){
 	var self = this;
@@ -217,6 +218,7 @@ BattleCharacterLayerView.prototype.addFriendCharacter=function(index,action,dire
 	self.model.friendList.push(chara);
 	self.model.checkCreat(chara, chara.belong);
 	if(typeof callback == "function")callback();
+	return chara;
 };
 BattleCharacterLayerView.prototype.removeCharacter=function(belong,id){
 	var self = this;
