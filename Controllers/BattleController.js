@@ -20,7 +20,9 @@ BattleController.prototype.construct=function(){
 	self.initOver = false;
 	LMvc.keepLoading(true);
 	LMvc.changeLoading(BattleLoading);
-	Toast.layer.removeAllChild();
+	if(Toast.layer){
+		Toast.layer.removeAllChild();
+	}
 	self.mvcLoad();
 };
 BattleController.prototype.mvcLoad=function(){
@@ -120,6 +122,26 @@ BattleController.prototype.init = function(){
 		return;
 	}
 	self.dispatchEvent(LEvent.COMPLETE);
+	if(LMvc.areaData.battleData){
+		/*
+		 LMvc.areaData.battleData= 
+		 {"food":12000,"money":2224,"troops":600,"toCityId":22,"fromCityId":24,
+		 "expeditionEnemyCharacterList":[526,479,165,159],
+		 "ourList":[
+		 {"id":39,"status":{"status":[],"aidStatus":[]},"direction":"up","action":"stand","mode":"endAction","x":240,"y":624},
+		 {"id":99,"status":{"status":[],"aidStatus":[]},"direction":"up","action":"move","mode":"none","x":192,"y":624}],
+		 "enemyList":[
+		 {"id":526,"status":{"status":[],"aidStatus":[]},"direction":"down","action":"move","x":0,"y":0},
+		 {"id":479,"status":{"status":[],"aidStatus":[]},"direction":"down","action":"move","x":0,"y":48},
+		 {"id":165,"status":{"status":[],"aidStatus":[]},"direction":"down","action":"move","x":48,"y":48},
+		 {"id":159,"status":{"status":[],"aidStatus":[]},"direction":"down","action":"move","x":48,"y":0}
+		 ],
+		 "selfCaptive":[],
+		 "enemyCaptive":[],
+		 "selfMinusStrategyCharas":[],
+		 "enemyMinusStrategyCharas":[]}*/
+		return;
+	}
 	var enemyCharas;
 	var enemyPositions;
 	var selfPositions;

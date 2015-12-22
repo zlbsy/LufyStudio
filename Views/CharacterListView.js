@@ -151,7 +151,7 @@ CharacterListView.prototype.onChangeChildSelect=function(event){
 	self.lblMoney.x = (LGlobal.width - self.lblMoney.getWidth()) * 0.5;
 };
 CharacterListView.prototype.onClickExecuteButton=function(event){
-	var self = event.currentTarget.parent;
+	var self = event.currentTarget.parent.parent;
 	if(self.selectedCount <= 0){
 		var obj = {title:Language.get("confirm"),message:Language.get("dialog_select_generals"),height:200,okEvent:null};
 		var windowLayer = ConfirmWindow(obj);

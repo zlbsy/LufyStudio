@@ -319,6 +319,7 @@ function getBattleSaveData(){
 			status:character.status.getData(),
 			direction:character.direction,
 			action:character.action,
+			mode:character.mode,
 			x:character.x,
 			y:character.y
 		});

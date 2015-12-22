@@ -69,16 +69,20 @@ MapView.prototype.init=function(){
 };
 MapView.prototype.updateView = function(){
 	var self = this;
-	console.log("LMvc.areaData.battleData="+LMvc.areaData.battleData);
+	console.log("LMvc.areaData.battleData=",JSON.stringify(LMvc.areaData.battleData));
 	if(!LMvc.areaData.battleData){
 		self.areaLayerInit();
 		return;
 	}
-	LMvc.MapController.showCity(targetCity.id(), function(){
-		LMvc.CityController.gotoBattle();
-		
-		
-	});
+	LMvc.MapController.showCity(LMvc.areaData.battleData.toCityId, self.readDataToBattle);
+};
+MapView.prototype.readDataToBattle = function(){
+	LMvc.CityController.setValue("battleData", {});
+	var targetCity = AreaModel.getArea(LMvc.areaData.battleData.toCityId);
+	var fromCity = AreaModel.getArea(LMvc.areaData.battleData.fromCityId);
+	LMvc.CityController.setValue("cityData",fromCity);
+	LMvc.CityController.setValue("toCity",targetCity);
+	LMvc.CityController.gotoBattle();
 };
 MapView.prototype.areaLayerInit=function(){
 	var self = this;
