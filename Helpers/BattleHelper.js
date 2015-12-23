@@ -305,6 +305,7 @@ function getBattleSaveData(){
 	data.troops = battleData.troops;
 	data.toCityId = battleData.toCity.id();
 	data.fromCityId = battleData.fromCity.id();
+	data.bout = LMvc.BattleController.getValue("bout");
 	data.expeditionEnemyCharacterList=[];
 	for(var i=0,l=battleData.expeditionEnemyCharacterList.length;i<l;i++){
 		var character = battleData.expeditionEnemyCharacterList[i];
@@ -338,37 +339,31 @@ function getBattleSaveData(){
 	}
 	data.selfCaptive = [];
 	for(var i=0,l=model.selfCaptive.length;i<l;i++){
-		var character = model.selfCaptive[i];
-		data.selfCaptive.push({
-			id:character.data.id()
-		});
+		var characterId = model.selfCaptive[i];
+		data.selfCaptive.push(characterId);
 	}
 	data.enemyCaptive = [];
 	for(var i=0,l=model.enemyCaptive.length;i<l;i++){
-		var character = model.enemyCaptive[i];
-		data.enemyCaptive.push({
-			id:character.data.id()
-		});
+		var characterId = model.enemyCaptive[i];
+		data.enemyCaptive.push(characterId);
 	}
 	data.selfMinusStrategyCharas = [];
 	for(var i=0,l=model.selfMinusStrategyCharas.length;i<l;i++){
-		var character = model.selfMinusStrategyCharas[i];
-		data.selfMinusStrategyCharas.push({
-			id:character.data.id()
-		});
+		var obj = model.selfMinusStrategyCharas[i];
+		data.selfMinusStrategyCharas.push(obj.chara.data.id());
 	}
 	data.enemyMinusStrategyCharas = [];
 	for(var i=0,l=model.enemyMinusStrategyCharas.length;i<l;i++){
-		var character = model.enemyMinusStrategyCharas[i];
-		data.enemyMinusStrategyCharas.push({
-			id:character.data.id()
-		});
+		var obj = model.enemyMinusStrategyCharas[i];
+		data.enemyMinusStrategyCharas.push(obj.chara.data.id());
 	}
 	return data;
 }
 function setBattleSaveData(){
 	var data = LMvc.areaData.battleData;
 	var battleData = LMvc.BattleController.battleData;
+	LMvc.BattleController.setValue("bout", data.bout);
+	LMvc.BattleController.setValue("currentBelong", Belong.SELF);
 	battleData.expeditionEnemyCharacterList=[];
 	for(var i=0,l=battleData.expeditionEnemyCharacterList.length;i<l;i++){
 		var character = CharacterModel.getChara(battleData.expeditionEnemyCharacterList[i]);
@@ -381,42 +376,32 @@ function setBattleSaveData(){
 		var chara = charaLayer.addOurCharacter(charaData.id,charaData.action,charaData.direction,charaData.x,charaData.y);
 		chara.changeAction(charaData.action);
 		chara.mode = charaData.mode;
-		chara.toStatic(true);
-		//charaData.status:character.status.getData(),
+		chara.status.setData(charaData.status);
 	}
 	for(var i=0,l=data.enemyList.length;i<l;i++){
 		var charaData = data.enemyList[i];
 		var chara = charaLayer.addEnemyCharacter(charaData.id,charaData.action,charaData.direction,charaData.x,charaData.y);
 		chara.changeAction(charaData.action);
-		chara.toStatic(true);
-	}return;
-	data.selfCaptive = [];
-	for(var i=0,l=model.selfCaptive.length;i<l;i++){
-		var character = model.selfCaptive[i];
-		data.selfCaptive.push({
-			id:character.data.id()
-		});
+		chara.status.setData(charaData.status);
 	}
-	data.enemyCaptive = [];
-	for(var i=0,l=model.enemyCaptive.length;i<l;i++){
-		var character = model.enemyCaptive[i];
-		data.enemyCaptive.push({
-			id:character.data.id()
-		});
+	for(var i=0,l=data.selfCaptive.length;i<l;i++){
+		var characterId = data.selfCaptive[i];
+		model.selfCaptive.push(characterId);
 	}
-	data.selfMinusStrategyCharas = [];
-	for(var i=0,l=model.selfMinusStrategyCharas.length;i<l;i++){
-		var character = model.selfMinusStrategyCharas[i];
-		data.selfMinusStrategyCharas.push({
-			id:character.data.id()
-		});
+	for(var i=0,l=data.enemyCaptive.length;i<l;i++){
+		var characterId = model.enemyCaptive[i];
+		model.enemyCaptive.push(characterId);
 	}
-	data.enemyMinusStrategyCharas = [];
-	for(var i=0,l=model.enemyMinusStrategyCharas.length;i<l;i++){
-		var character = model.enemyMinusStrategyCharas[i];
-		data.enemyMinusStrategyCharas.push({
-			id:character.data.id()
-		});
+	for(var i=0,l=data.selfMinusStrategyCharas.length;i<l;i++){
+		var characterId = data.selfMinusStrategyCharas[i];
+		var chara = charaLayer.getCharacter(Belong.SELF, characterId);
+		model.selfMinusStrategyCharas.push({chara:chara,skill:chara.data.skill()});
 	}
-	return data;
+	for(var i=0,l=data.enemyMinusStrategyCharas.length;i<l;i++){
+		var characterId = data.enemyMinusStrategyCharas[i];
+		var chara = charaLayer.getCharacter(Belong.ENEMY, characterId);
+		data.enemyMinusStrategyCharas.push({chara:chara,skill:chara.data.skill()});
+	}
+	LMvc.BattleController.view.charaLayer.resetCharacterPositions();
+	LMvc.isRead = false;
 }

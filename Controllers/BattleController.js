@@ -124,23 +124,6 @@ BattleController.prototype.init = function(){
 	self.dispatchEvent(LEvent.COMPLETE);
 	if(LMvc.areaData.battleData){
 		setBattleSaveData();
-		/*
-		 LMvc.areaData.battleData= 
-		 {"food":12000,"money":2224,"troops":600,"toCityId":22,"fromCityId":24,
-		 "expeditionEnemyCharacterList":[526,479,165,159],
-		 "ourList":[
-		 {"id":39,"status":{"status":[],"aidStatus":[]},"direction":"up","action":"stand","mode":"endAction","x":240,"y":624},
-		 {"id":99,"status":{"status":[],"aidStatus":[]},"direction":"up","action":"move","mode":"none","x":192,"y":624}],
-		 "enemyList":[
-		 {"id":526,"status":{"status":[],"aidStatus":[]},"direction":"down","action":"move","x":0,"y":0},
-		 {"id":479,"status":{"status":[],"aidStatus":[]},"direction":"down","action":"move","x":0,"y":48},
-		 {"id":165,"status":{"status":[],"aidStatus":[]},"direction":"down","action":"move","x":48,"y":48},
-		 {"id":159,"status":{"status":[],"aidStatus":[]},"direction":"down","action":"move","x":48,"y":0}
-		 ],
-		 "selfCaptive":[],
-		 "enemyCaptive":[],
-		 "selfMinusStrategyCharas":[],
-		 "enemyMinusStrategyCharas":[]}*/
 		return;
 	}
 	var enemyCharas;
@@ -190,7 +173,7 @@ BattleController.prototype.init = function(){
 	for(var i = 0;i<enemyCharas.length;i++){
 		var charaObjs = enemyPositions[i];
 		var charaId = enemyCharas[i].id();
-		CharacterModel.getChara(charaId).calculation(true);
+		//CharacterModel.getChara(charaId).calculation(true);
 		self.addEnemyCharacter(charaId,charaObjs.direction,charaObjs.x,charaObjs.y);
 	}
 	self.model.enemyList[0].isLeader = true;

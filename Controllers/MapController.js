@@ -46,7 +46,6 @@ MapController.prototype.getAreaData=function(){
 	console.log("StrategyDatas");
 	if(LMvc.isRead){
 		gameDataInit();
-		LMvc.isRead = false;
 		self.getImages();
 	}else{
 		self.model.getAreaData(self.getImages);
@@ -64,7 +63,12 @@ MapController.prototype.init=function(status){
 	LMvc.keepLoading(false);
 	LMvc.chapterController.view.visible = false;
 	LMvc.stageLayer.x = 0;
-	
+	if(LMvc.isRead){
+		LMvc.logoStage.visible = false;
+		if(!LMvc.areaData.battleData){
+			LMvc.isRead = false;
+		}
+	}
 	self.dispatchEvent(LController.NOTIFY);
 };
 MapController.prototype.returnToChapter=function(event){

@@ -1,10 +1,12 @@
 function BattleCharacterLayerView(controller) {
 	var self = this;
 	LExtends(self, LView, [controller]);
-	self.charasPositionsLayer = new LSprite();
-	self.addChild(self.charasPositionsLayer);
-	LTweenLite.to(self.charasPositionsLayer,1,{alpha:0.3,loop:true})
-    .to(self.charasPositionsLayer,1,{alpha:1});
+	if(!LMvc.isRead){
+		self.charasPositionsLayer = new LSprite();
+		self.addChild(self.charasPositionsLayer);
+		LTweenLite.to(self.charasPositionsLayer,1,{alpha:0.3,loop:true})
+	    .to(self.charasPositionsLayer,1,{alpha:1});
+	}
 	self.charasPositions = {};
 	/*for(var i = 0;i<15;i++){
 		for(var j=0;j<12;j++){

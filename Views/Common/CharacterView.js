@@ -3,6 +3,7 @@ function CharacterView(controller,id,w,h){
 	base(self,LView,[controller]);
 	self.id = id;
 	self.data = CharacterModel.getChara(self.id);
+	self.data.calculation(true);
 	self.list = {};
 	self.to = new LPoint(self.x,self.y);
 	self.roads = [];

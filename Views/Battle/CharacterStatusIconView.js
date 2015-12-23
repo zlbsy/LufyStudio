@@ -135,3 +135,8 @@ CharacterStatusIconView.prototype.getData = function(){
 	var self = this;
 	return {status:self.status,aidStatus:self.aidStatus};
 };
+CharacterStatusIconView.prototype.setData = function(data){
+	var self = this;
+	self.status = data.status;
+	self.aidStatus = data.aidStatus;
+};

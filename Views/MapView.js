@@ -69,11 +69,11 @@ MapView.prototype.init=function(){
 };
 MapView.prototype.updateView = function(){
 	var self = this;
-	console.log("LMvc.areaData.battleData=",JSON.stringify(LMvc.areaData.battleData));
-	if(!LMvc.areaData.battleData){
+	if(!LMvc.isRead){
 		self.areaLayerInit();
 		return;
 	}
+	console.log("LMvc.areaData.battleData=",JSON.stringify(LMvc.areaData.battleData));
 	LMvc.MapController.showCity(LMvc.areaData.battleData.toCityId, self.readDataToBattle);
 };
 MapView.prototype.readDataToBattle = function(){

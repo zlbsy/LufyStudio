@@ -221,9 +221,11 @@ BattleCharacterView.prototype.loadSOver = function(event){
 };
 BattleCharacterView.prototype.toStatic = function(value){
 	var self = this;
+	console.log(self.data.name() , "toStatic",value,self.anime.visible);
 	if(value){
 		if(self.anime.visible){
 			var result = self.controller.view.mapLayer.characterIn(self);
+			console.log(self.data.name() ,"characterIn", result);
 			if(result){
 				self.anime.visible = false;
 			}

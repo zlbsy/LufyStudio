@@ -5,7 +5,11 @@ LogoController.prototype.construct=function(){
 	var self = this;
 	LMvc.logoStage = self.view;
 	var list = self.model.getImages();
-	self.load.image(list,self.configLoad);
+	self.load.image(list,self.mvcLoad);
+};
+LogoController.prototype.mvcLoad=function(){
+	var self = this;
+	self.loadMvc(["Record"],self.configLoad);
 };
 LogoController.prototype.configLoad=function(){
 	var self = this;
@@ -38,7 +42,7 @@ LogoController.prototype.startAnimation=function(){
 LogoController.prototype.checkAuth=function(obj){
 	var self = obj.parent.controller;
 	//console.log("self.dispatchEvent(LController.NOTIFY)");
-	//test
+	//TODO::test
 	LPlugin.openStamp(17);
 	LPlugin.openStamp(18);
 	LPlugin.openStamp(19);
