@@ -2,6 +2,8 @@ function RecordController(){
 	base(this,MyController,[]);
 }
 RecordController.RECORD_MAX = 20;
+RecordController.SAVE_MODE = "saveMode";
+RecordController.READ_MODE = "readMode";
 RecordController.instance = function(){
 	if(!RecordController._instance){
 		RecordController._instance = new RecordController();
@@ -13,17 +15,22 @@ RecordController.instance = function(){
 RecordController.prototype.construct=function(){
 	var self = this;
 };
-RecordController.prototype.show=function(){
+RecordController.prototype.show=function(mode){
 	var self = this;console.log("RecordController.prototype.show");
+	self.mode = mode;
 	LMvc.layer.setChildIndex(self.view,LMvc.layer.numChildren - 1);
 	//self.view.y = LGlobal.height;
 	var list = self.model.getImages();
-	self.load.image(list,self.loadView);
+	self.load.image(list,self.loadLibrary);
 	//self.load.view(["Record/RecordChild"],self.showRecordList);
 };
 RecordController.prototype.hide=function(){
 	var self = this;
 	self.view.visible = false;
+};
+RecordController.prototype.loadLibrary=function(){
+	var self = this;
+	self.load.library(["GameManager"],self.loadView);
 };
 RecordController.prototype.loadView=function(){
 	var self = this;

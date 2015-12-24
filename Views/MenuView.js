@@ -105,7 +105,8 @@ MenuView.prototype.onClickGameSave=function(event){
 };
 MenuView.prototype.gameSave=function(){
 	var self = this;
-	GameManager.save();
+	RecordController.instance().show(RecordController.SAVE_MODE);
+	//GameManager.save();
 };
 MenuView.prototype.onClickGameRead=function(event){
 	var self = event.currentTarget.parent.parent.parent;
@@ -113,7 +114,8 @@ MenuView.prototype.onClickGameRead=function(event){
 };
 MenuView.prototype.gameRead=function(){
 	var self = this;
-	GameManager.read();
+	RecordController.instance().show(RecordController.READ_MODE);
+	//GameManager.read();
 };
 MenuView.prototype.onClickReturnTop=function(event){
 };

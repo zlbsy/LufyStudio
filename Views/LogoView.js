@@ -89,7 +89,8 @@ LogoView.prototype.testStart=function(event){
 	//self.controller.loadTest();
 };
 LogoView.prototype.readGame=function(event){
-	RecordController.instance().show();
+	//RecordController.instance().show();
+	RecordController.instance().show(RecordController.READ_MODE);
 	//this.controller.read();
 };
 LogoView.prototype.settingGame=function(event){
