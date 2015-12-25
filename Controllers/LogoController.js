@@ -134,10 +134,10 @@ LogoController.prototype.readConfigLoadComplete = function(){
 };
 LogoController.prototype.readRun = function(){
 	var self = this;
-	LMvc.areaData = LPlugin.GetData("gameData_2");
+	/*LMvc.areaData = LPlugin.GetData("gameData_2");
 	LMvc.selectSeignorId = LMvc.areaData.selectSeignorId;
 	LMvc.chapterData = LMvc.areaData.chapterData;
-	LMvc.isRead = true;
+	LMvc.isRead = true;*/
 	self.loadMvc("Chapter",self.chapterLoadComplete);
 };
 LogoController.prototype.loadMap=function(){

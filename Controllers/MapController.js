@@ -37,13 +37,10 @@ MapController.prototype.menuLoad=function(){
 	self.loadMvc("Menu",self.getAreaData);
 };
 MapController.prototype.getAreaData=function(){
-	var self = this;console.log("getAreaData");
+	var self = this;
 	CharacterModel.setChara(characterList);
-	console.log("characterList");
 	ItemMasterModel.setMaster(ItemDatas);
-	console.log("ItemDatas");
 	StrategyMasterModel.setMaster(StrategyDatas);
-	console.log("StrategyDatas");
 	if(LMvc.isRead){
 		gameDataInit();
 		self.getImages();
@@ -62,7 +59,7 @@ MapController.prototype.init=function(status){
 	self.dispatchEvent(LEvent.COMPLETE);
 	LMvc.keepLoading(false);
 	LMvc.chapterController.view.visible = false;
-	LMvc.stageLayer.x = 0;
+	LMvc.stageLayer.x = 0;console.log("LMvc.logoStage=",LMvc.logoStage);
 	if(LMvc.isRead){
 		LMvc.logoStage.visible = false;
 		if(!LMvc.areaData.battleData){

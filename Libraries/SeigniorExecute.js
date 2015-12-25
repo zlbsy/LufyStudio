@@ -28,14 +28,15 @@ SeigniorExecute.run=function(){
 		self.seigniors = [];
 		self.citys = [];
 		self.maskShow();
-		var month = LMvc.chapterController.getValue("month");
-		var year = LMvc.chapterController.getValue("year");
-		if(++month > 12){
-			year++;
-			month = 1;
+		//var month = LMvc.chapterData.month;//LMvc.chapterController.getValue("month");
+		//var year = LMvc.chapterData.year;//LMvc.chapterController.getValue("year");
+		LMvc.chapterData.month += 1;
+		if(LMvc.chapterData.month > 12){
+			LMvc.chapterData.year += 1;
+			LMvc.chapterData.month = 1;
 		}
-		LMvc.chapterController.setValue("month",month);
-		LMvc.chapterController.setValue("year",year);
+		//LMvc.chapterController.setValue("month",month);
+		//LMvc.chapterController.setValue("year",year);
 		if(SeigniorModel.list[0].chara_id() != LMvc.selectSeignorId){
 			var selectIndex = SeigniorModel.list.findIndex(function(child){
 				return child.chara_id() == LMvc.selectSeignorId;

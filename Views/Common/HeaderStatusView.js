@@ -17,8 +17,8 @@ HeaderStatusView.prototype.set=function(){
 	var panel = new LPanel(new LBitmapData(LMvc.datalist["background-header"]),300,50);
 	panel.x = 5;
 	self.addChild(panel);
-	console.log("LMvc.chapterController="+LMvc.chapterController.getValue("month"));
-	var title = getStrokeLabel(String.format(Language.get("city_title"), LMvc.chapterController.getValue("year"), LMvc.chapterController.getValue("month"), cityModel.name(), cityModel.size()),24,"#FFFFFF","#000000",2);
+	var title = getStrokeLabel(String.format(Language.get("city_title"), LMvc.chapterData.year, LMvc.chapterData.month, cityModel.name(), cityModel.size()),24,"#FFFFFF","#000000",2);
+	//var title = getStrokeLabel(String.format(Language.get("city_title"), LMvc.chapterController.getValue("year"), LMvc.chapterController.getValue("month"), cityModel.name(), cityModel.size()),24,"#FFFFFF","#000000",2);
 	title.x = 5;
 	title.y = 10;
 	panel.addChild(title);
