@@ -136,7 +136,8 @@ BattleMainMenuView.prototype.onClickGameSave=function(event){
 };
 BattleMainMenuView.prototype.gameSave=function(){
 	var self = this;
-	GameManager.save();
+	RecordController.instance().show(RecordController.SAVE_MODE);
+	//GameManager.save();
 };
 BattleMainMenuView.prototype.onClickGameRead=function(event){
 	var self = event.currentTarget.parent.parent.parent;
@@ -146,7 +147,8 @@ BattleMainMenuView.prototype.onClickGameRead=function(event){
 };
 BattleMainMenuView.prototype.gameRead=function(){
 	var self = this;
-	GameManager.read();
+	RecordController.instance().show(RecordController.READ_MODE);
+	//GameManager.read();
 };
 
 BattleMainMenuView.prototype.clickCharacterList=function(event){

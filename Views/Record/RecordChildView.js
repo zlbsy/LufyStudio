@@ -66,7 +66,16 @@ RecordChildView.prototype.onClick=function(event){
 		RecordController.instance().hide();
 		LMvc.isRead = true;
 		if(LMvc.BattleController){
-			//TODO::
+			LMvc.BattleController.view.remove();
+			LMvc.MapController.view.visible = true;
+			LMvc.areaData = self.record;
+			LMvc.selectSeignorId = LMvc.areaData.selectSeignorId;
+			LMvc.chapterData = LMvc.areaData.chapterData;
+			gameDataInit();
+			if(!LMvc.areaData.battleData){
+				LMvc.isRead = false;
+			}
+			LMvc.MapController.dispatchEvent(LController.NOTIFY);
 		}else if(LMvc.MapController){
 			LMvc.areaData = self.record;
 			LMvc.selectSeignorId = LMvc.areaData.selectSeignorId;
