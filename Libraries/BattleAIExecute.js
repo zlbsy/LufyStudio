@@ -310,7 +310,7 @@ BattleAIExecute.prototype.physicalAttack = function(currentChara, targetChara) {
 		currentChara.herts[0].value = currentChara.herts[0].value * 1.25 >>> 0;
 	}
 	
-}
+};
 BattleAIExecute.prototype.physicalAttackStart = function(currentChara, targetChara){
 	var self = this;
 	var selfSkill = currentChara.skill(SkillType.ATTACK_END);

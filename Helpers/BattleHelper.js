@@ -403,5 +403,7 @@ function setBattleSaveData(){
 		data.enemyMinusStrategyCharas.push({chara:chara,skill:chara.data.skill()});
 	}
 	LMvc.BattleController.view.charaLayer.resetCharacterPositions();
+	LMvc.BattleController.view.mainMenu.visible = true;
+	LMvc.BattleController.view.miniLayer.visible = true;
 	LMvc.isRead = false;
 }

@@ -118,6 +118,13 @@ MenuView.prototype.gameRead=function(){
 	//GameManager.read();
 };
 MenuView.prototype.onClickReturnTop=function(event){
+	var self = event.currentTarget.parent.parent.parent;
+	self.hide();
+	LMvc.MapController.view.remove();
+	
+	LMvc.logoStage.visible = true;
+	LMvc.logoStage.chapterMenuLayer.mouseChildren = true;
+	LMvc.stageLayer.x = 0;
 };
 MenuView.prototype.loadSeigniorExecute=function(){
 	var self = this;
@@ -140,12 +147,9 @@ MenuView.prototype.loadSeigniorExecuteLibrary=function(){
 	self.load.library(["Battle/HertParams"],self.seigniorExecute);
 };
 MenuView.prototype.seigniorExecute=function(){
-	var self = this;console.log("seigniorExecute");
+	var self = this;
 	StrategyMasterModel.setMaster(StrategyDatas);
-	console.log("StrategyMasterModel");
 	SoldierMasterModel.setMaster(SoldierDatas);
-	console.log("SoldierMasterModel");
 	SkillMasterModel.setMaster(SkillsData);
-	console.log("SkillMasterModel");
 	SeigniorExecute.run();
 };

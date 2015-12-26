@@ -67,10 +67,11 @@ RecordChildView.prototype.onClick=function(event){
 		LMvc.isRead = true;
 		if(LMvc.BattleController){
 			LMvc.BattleController.view.remove();
+			LMvc.BattleController = null;
 			LMvc.MapController.view.visible = true;
 			LMvc.areaData = self.record;
 			LMvc.selectSeignorId = LMvc.areaData.selectSeignorId;
-			LMvc.chapterData = LMvc.areaData.chapterData;
+			LMvc.chapterData = LMvc.areaData.chapterData;console.log("battle read ",LMvc.areaData);
 			gameDataInit();
 			if(!LMvc.areaData.battleData){
 				LMvc.isRead = false;
@@ -79,7 +80,7 @@ RecordChildView.prototype.onClick=function(event){
 		}else if(LMvc.MapController){
 			LMvc.areaData = self.record;
 			LMvc.selectSeignorId = LMvc.areaData.selectSeignorId;
-			LMvc.chapterData = LMvc.areaData.chapterData;
+			LMvc.chapterData = LMvc.areaData.chapterData;console.log("map read ",LMvc.areaData);
 			gameDataInit();
 			if(!LMvc.areaData.battleData){
 				LMvc.isRead = false;
