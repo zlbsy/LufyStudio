@@ -82,9 +82,6 @@ function gameDataInit(){
 		var areaList = [];
 		areas.forEach(function(child){
 			var area = AreaModel.getArea(child.area_id);
-			if(!area){
-				console.warn("not found ",child.area_id,child);
-			}
 			area.setSeignor(seignior,child);
 			areaList.push(area);
 		});

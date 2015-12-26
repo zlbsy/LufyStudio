@@ -28,27 +28,3 @@ GameManager.read = function(index){
 	var record = LPlugin.GetData(recordName);
 	return record;
 };
-GameManager.readRune = function(index){
-	LMvc.isRead = true;
-	if(LMvc.BattleController){
-		//TODO::
-	}else if(LMvc.MapController){
-		//TODO::
-	}else{
-		LMvc.areaData = record;
-		LMvc.selectSeignorId = LMvc.areaData.selectSeignorId;
-		LMvc.chapterData = LMvc.areaData.chapterData;
-		LMvc.logoStage.controller.read(record);
-	}
-	return;
-	//TODO: 
-	console.log("GameManager.read ");
-	LMvc.isRead = true;
-	LMvc.areaData = LPlugin.GetData("gameData_2");
-	console.log("GameManager.read ",LMvc.areaData);
-	console.log("LMvc.areaData.battleData="+LMvc.areaData.battleData);
-	gameDataInit();
-	console.log("GameManager.read gameDataInit");
-	LMvc.MapController.dispatchEvent(LController.NOTIFY);
-	console.log("GameManager.read over");
-};

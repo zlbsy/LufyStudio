@@ -252,20 +252,30 @@ BattleController.prototype.queryInit=function(){
 	self.query = new BattleQuery(self.model.map.data);
 };
 BattleController.prototype.mapMouseUp = function(event){
+	console.log("mapMouseUp");
 	if(LMvc.running || BattleSelectMenuController.instance().view.visible){
+		console.log("LMvc.running = " + LMvc.running);
+		console.log("BattleSelectMenuController.instance().view.visible = " + BattleSelectMenuController.instance().view.visible);
+		return;
+	}
+	if(BattleController.ctrlChara && BattleController.ctrlChara.isMoving()){
+		console.log("ctrlChara  isMoving");
 		return;
 	}
 	var self = event.currentTarget.parent.controller;
 	if(!self.draging){
+		console.log("self.draging = " + self.draging);
 		return;
 	}
 	self.draging = false;
 	event.currentTarget.stopDrag();
 	BattleController.timer.stop();
 	if(Math.abs(self.downX - event.offsetX) > 12 || Math.abs(self.downY - event.offsetY) > 12){
+		console.log("Math.abs");
 		return;
 	}
 	if(self.getValue("currentBelong") && self.getValue("currentBelong") != Belong.SELF){
+		console.log("currentBelong = " + self.getValue("currentBelong"));
 		return;
 	}
 	if(!self.view.roadLayer.visible){

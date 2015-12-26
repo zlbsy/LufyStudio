@@ -7,6 +7,9 @@ function SkillMasterModel(controller, data) {
 SkillMasterModel.master = [];
 SkillMasterModel.setMaster=function(list){
 	var self = this;
+	if(SkillMasterModel.master.length > 0){
+		return;
+	}
 	for(var i=0,l=list.length;i<l;i++){
 		var skill = new SkillMasterModel(null,list[i]);
 		SkillMasterModel.master.push(skill);

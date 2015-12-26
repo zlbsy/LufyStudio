@@ -236,8 +236,8 @@ seigniors : [
     not_debut:[
     ]
   },
-]},
-{chara_id : 0,name:"0",generals_count : 6,color : "white",areas : [
+/*]},
+{chara_id : 0,name:"0",generals_count : 6,color : "white",areas : [*/
   {  area_id : 1,name:"西凉",prefecture : 0,
   money : 100,food : 1000,population : 40000,business : 100,agriculture : 100,technology : 100,police : 70,city_defense : 500,troops : 400,
   items_farmland:[],

@@ -247,7 +247,15 @@ AreaModel.prototype.setSeignor = function(seignior,areaData){
 	}
 };
 AreaModel.prototype.seigniorCharaId=function(seigniorCharaId){
-	return this._dataValue("seignior_chara_id", seigniorCharaId, 0);
+	var self = this;
+	if(seigniorCharaId){
+		var currentCharaId = self.seigniorCharaId();
+		if(currentCharaId){
+			var seignior = SeigniorModel.getSeignior(currentCharaId);
+			seignior.removeCity(self.id());
+		}
+	}
+	return self._dataValue("seignior_chara_id", seigniorCharaId, 0);
 };
 AreaModel.prototype.seignior_chara_id=function(){
 	return this.seigniorCharaId();

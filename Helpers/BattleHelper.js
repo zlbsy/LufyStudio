@@ -337,6 +337,17 @@ function getBattleSaveData(){
 			y:character.locationY()
 		});
 	}
+	var selfCharas =LMvc.BattleController.view.charaLayer.getCharactersFromBelong(Belong.SELF);
+	var selfLeader = selfCharas.find(function(child){
+		return child.isLeader;
+	});
+	var enemyCharas = LMvc.BattleController.view.charaLayer.getCharactersFromBelong(Belong.ENEMY);
+	var enemyLeader = enemyCharas.find(function(child){
+		return child.isLeader;
+	});
+	data.selfLeader = selfLeader.data.id();
+	data.enemyLeader = enemyLeader.data.id();
+	
 	data.selfCaptive = [];
 	for(var i=0,l=model.selfCaptive.length;i<l;i++){
 		var characterId = model.selfCaptive[i];
@@ -377,12 +388,18 @@ function setBattleSaveData(){
 		chara.changeAction(charaData.action);
 		chara.mode = charaData.mode;
 		chara.status.setData(charaData.status);
+		if(charaData.id == data.selfLeader){
+			chara.isLeader = true;
+		}
 	}
 	for(var i=0,l=data.enemyList.length;i<l;i++){
 		var charaData = data.enemyList[i];
 		var chara = charaLayer.addEnemyCharacter(charaData.id,charaData.action,charaData.direction,charaData.x,charaData.y);
 		chara.changeAction(charaData.action);
 		chara.status.setData(charaData.status);
+		if(charaData.id == data.enemyLeader){
+			chara.isLeader = true;
+		}
 	}
 	for(var i=0,l=data.selfCaptive.length;i<l;i++){
 		var characterId = data.selfCaptive[i];

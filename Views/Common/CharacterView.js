@@ -125,6 +125,10 @@ CharacterView.prototype.checkCoordinate = function(controller,initFlag){
 		}
 	}
 };*/
+CharacterView.prototype.isMoving = function(){
+	var self = this;
+	return self.roads.length > 0 || self.x != self.to.x || self.y != self.to.y;
+};
 CharacterView.prototype.move = function(){
 	var self = this,controller=self.parent.parent.parent.controller;
 	if(self.x == self.to.x && self.y == self.to.y)return;

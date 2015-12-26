@@ -12,6 +12,9 @@ SeigniorModel.setSeignior=function(list){
 	var self = this;
 	SeigniorModel.list = [];
 	for(var i=0,l=list.length;i<l;i++){
+		if(!list[i].chara_id){
+			continue;
+		}
 		var seignior = new SeigniorModel(null,list[i]);
 		SeigniorModel.list.push(seignior);
 	}
@@ -110,7 +113,7 @@ SeigniorModel.prototype.areas = function(){
 };
 SeigniorModel.prototype.areasData = function(){
 	var self = this;
-	console.log("GameManager.areasData ");
+	console.log("GameManager.areasData ", self.data.areas);
 	var datas = [];
 	for(var i = 0, l = self.data.areas.length;i<l;i++){
 		datas.push(self.data.areas[i].datas());
@@ -183,6 +186,7 @@ SeigniorModel.prototype.isStopBattle = function(id){
 	}) >= 0;
 };
 SeigniorModel.prototype.addCity = function(area){
+	console.error("SeigniorModel.prototype.addCity", area);
 	this.data.areas.push(area);
 };
 SeigniorModel.prototype.removeCity = function(areaId){

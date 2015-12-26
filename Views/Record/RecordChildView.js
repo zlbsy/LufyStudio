@@ -2,7 +2,7 @@ function RecordChildView(index){
 	var self = this;
 	base(self,LListChildView,[]);
 	self.recordIndex = index;
-	self.record = GameManager.read(index);
+	self.record = GameManager.read(self.recordIndex);
 	self.init();
 	self.set(self.record);
 }
@@ -55,6 +55,7 @@ RecordChildView.prototype.onClick=function(event){
 	var self = event.target;
 	console.log("mode="+RecordController.instance().mode);
 	if(RecordController.instance().mode == RecordController.SAVE_MODE){
+	console.log(SeigniorModel.list);
 		self.record = GameManager.save(self.recordIndex);
 		self.set(self.record);
 		self.cacheAsBitmap(false);
@@ -71,7 +72,7 @@ RecordChildView.prototype.onClick=function(event){
 			LMvc.MapController.view.visible = true;
 			LMvc.areaData = self.record;
 			LMvc.selectSeignorId = LMvc.areaData.selectSeignorId;
-			LMvc.chapterData = LMvc.areaData.chapterData;console.log("battle read ",LMvc.areaData);
+			LMvc.chapterData = LMvc.areaData.chapterData;
 			gameDataInit();
 			if(!LMvc.areaData.battleData){
 				LMvc.isRead = false;
@@ -80,7 +81,7 @@ RecordChildView.prototype.onClick=function(event){
 		}else if(LMvc.MapController){
 			LMvc.areaData = self.record;
 			LMvc.selectSeignorId = LMvc.areaData.selectSeignorId;
-			LMvc.chapterData = LMvc.areaData.chapterData;console.log("map read ",LMvc.areaData);
+			LMvc.chapterData = LMvc.areaData.chapterData;
 			gameDataInit();
 			if(!LMvc.areaData.battleData){
 				LMvc.isRead = false;
@@ -92,5 +93,6 @@ RecordChildView.prototype.onClick=function(event){
 			LMvc.chapterData = LMvc.areaData.chapterData;
 			LMvc.logoStage.controller.read();
 		}
+		self.record = GameManager.read(self.recordIndex);
 	}
 };

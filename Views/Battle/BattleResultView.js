@@ -37,7 +37,7 @@ function BattleResultView(controller, result){
 				}else if(canMoveCitys.length > 0){
 					self.retreatCity = canMoveCitys[canMoveCitys.length*Math.random() >>> 0];
 					var seignior = SeigniorModel.getSeignior(self.failSeigniorId);
-					seignior.addCity(self.retreatCity.id());
+					seignior.addCity(self.retreatCity);
 					self.retreatCity.seigniorCharaId(self.failSeigniorId);
 				}
 				if(self.retreatCity){
@@ -143,7 +143,7 @@ BattleResultView.prototype.cityChange=function(captiveList, expeditionList){
 		seigniorFail.removeCity(city.id());
 	}
 	var seigniorWin = SeigniorModel.getSeignior(self.winSeigniorId);
-	seigniorWin.addCity(city.id());
+	seigniorWin.addCity(city);
 	city.seigniorCharaId(self.winSeigniorId);
 	generals = expeditionList.slice();
 	for(var i=0,l=generals.length;i<l;i++){
@@ -477,6 +477,7 @@ BattleResultView.prototype.showMap=function(){
 	var self = this;
 	var cityId = self.controller.battleData.toCity.id();
 	self.controller.view.remove();
+	LMvc.BattleController = null;
 	LMvc.MapController.view.visible = true;
 	LMvc.MapController.view.changeMode(MapController.MODE_MAP);
 	LMvc.MapController.view.resetAreaIcon(cityId);

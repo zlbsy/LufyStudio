@@ -78,11 +78,7 @@ MenuView.prototype.hide=function(event){
 MenuView.prototype.onClickOperatingEnd=function(event){
 	var self = event.currentTarget.parent.parent.parent;
 	self.hide();
-	if(typeof SkillMasterModel == UNDEFINED){
-		self.loadSeigniorExecute();
-	}else{
-		SeigniorExecute.run();
-	}
+	self.loadSeigniorExecute();
 };
 MenuView.prototype.onClickAllSeignior=function(event){
 	var self = event.currentTarget.parent.parent.parent;
@@ -105,6 +101,7 @@ MenuView.prototype.onClickGameSave=function(event){
 };
 MenuView.prototype.gameSave=function(){
 	var self = this;
+	self.hide();
 	RecordController.instance().show(RecordController.SAVE_MODE);
 	//GameManager.save();
 };
@@ -114,6 +111,7 @@ MenuView.prototype.onClickGameRead=function(event){
 };
 MenuView.prototype.gameRead=function(){
 	var self = this;
+	self.hide();
 	RecordController.instance().show(RecordController.READ_MODE);
 	//GameManager.read();
 };
