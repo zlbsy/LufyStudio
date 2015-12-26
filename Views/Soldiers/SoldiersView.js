@@ -4,12 +4,30 @@ function SoldiersView(controller, characterModel, size) {
 	self.characterModel = characterModel;
 	self.size = size;
 	//self.getsoldierListData();
-	self.layerInit();
+	
+	//self.layerInit();
 	
 	self.setSoldierList();
 }
 SoldiersView.prototype.setSoldierList = function() {
 	var self = this;
+	if(self.listView){
+		self.listView.updateView();
+		return;
+	}
+	self.listView = new LListView();
+	//self.listView.y = 15;
+	self.listView.resize(self.size.x, self.size.y);
+	self.listView.cellWidth = self.size.x;
+	self.listView.cellHeight = 50;
+	self.addChild(self.listView);
+	var items = [];
+	for (var i = 0, l = soldierList.length; i < l; i++) {
+		var child = new SoldiersChildView(soldierList[i]);
+		items.push(child);
+	}
+	self.listView.updateList(items);
+	return;
 	self.soldierListLayer.removeAllChild();
 	var soldierList = self.characterModel.soldiers();
 	var backLayer = new LSprite();

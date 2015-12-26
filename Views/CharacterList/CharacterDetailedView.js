@@ -14,7 +14,7 @@ CharacterDetailedView.prototype.layerInit=function(){
 	
 	self.tabLayer = new LSprite();
 	self.tabLayer.x = 15;
-	self.tabLayer.y = 375;
+	self.tabLayer.y = 340;
 	self.addChild(self.tabLayer);
 	
 	self.ctrlLayer = new LSprite();
@@ -62,7 +62,7 @@ CharacterDetailedView.prototype.set=function(param){
 	//alert("CharacterDetailedView.prototype.set");
 	var win = new LPanel(new LBitmapData(LMvc.datalist["win05"]),faceW + 10,faceH + 10);
 	win.x = (LGlobal.width - faceW - 10) * 0.5;
-	win.y = 10;
+	win.y = 0;
 	self.layer.addChild(win);
 	var face = self.characterModel.face();
 	face.x = win.x + 5;
@@ -117,7 +117,7 @@ CharacterDetailedView.prototype.TabShow=function(tab){
 		tabIcon.x = 90 * i;
 		self.tabLayer.addChild(tabIcon);
 	}
-	var back = getBitmap(new LPanel(new LBitmapData(LMvc.datalist["win02"]),450,LGlobal.height - self.tabLayer.y - 45,18,24,22,24));
+	var back = getBitmap(new LPanel(new LBitmapData(LMvc.datalist["win02"]),450,LGlobal.height - self.tabLayer.y - 35,18,24,22,24));
 	back.y = 35;
 	self.tabLayer.addChild(back);
 	switch(tab){
@@ -209,9 +209,9 @@ CharacterDetailedView.prototype.showStrategy=function(){
 };
 CharacterDetailedView.prototype.showArms=function(){
 	var self = this;
-	var soldiersView = new SoldiersView(self.controller, self.characterModel, new LPoint(LGlobal.width - 50, LGlobal.height - self.tabLayer.y - 80));
+	var soldiersView = new SoldiersView(self.controller, self.characterModel, new LPoint(LGlobal.width - 50, LGlobal.height - self.tabLayer.y - 60));
 	soldiersView.x = 10;
-	soldiersView.y = 50;
+	soldiersView.y = 45;
 	self.tabLayer.addChild(soldiersView);
 };
 
