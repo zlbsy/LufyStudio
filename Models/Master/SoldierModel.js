@@ -94,8 +94,10 @@ SoldierModel.prototype.img = function() {
 	}
 	return imgIndex;
 };
-SoldierModel.prototype.icon=function(size,anime){
+SoldierModel.prototype.icon=function(size,callback){
 	var self = this;
+	if(typeof callback != "undefined" && typeof callback != "function"){
+	alert("error SoldierModel.prototype.icon");}
 	if(!size){
 		size = new LPoint(100,100);
 	}
@@ -104,8 +106,9 @@ SoldierModel.prototype.icon=function(size,anime){
 		imgIndex = self.master().img();
 	}
 	var icon = new BitmapSprite(LMvc.IMG_PATH + "character/s/"+imgIndex+".png", [64*12,0,64,64],size);
+	icon.addEventListener(LEvent.COMPLETE, callback);
 	//return icon;
-	if(anime){
+	/*if(anime){
 		icon.addEventListener(LEvent.COMPLETE, function(event){
 			var sprite = event.currentTarget;
 			var bitmap = sprite.getChildByName("bitmap");
@@ -119,8 +122,9 @@ SoldierModel.prototype.icon=function(size,anime){
 			animation.scaleY = bitmap.scaleY;
 			sprite.addChild(animation);
 		});
-	}
+	}*/
 	var winPanel = new LPanel(new LBitmapData(LMvc.datalist["win06"]),size.x,size.y);
-	icon.addChild(getBitmap(winPanel));
+	winPanel.cacheAsBitmap(true);
+	icon.addChild(winPanel);
 	return icon;
 };

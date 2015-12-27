@@ -2,7 +2,6 @@ function SoldierDetailedView(controller,soldierModel,fromView){
 	var self = this;
 	base(self,LView,[controller]);
 	self.soldierModel = soldierModel;
-	self.fromView = fromView;
 	self.set();
 }
 SoldierDetailedView.prototype.set=function(){
@@ -11,7 +10,7 @@ SoldierDetailedView.prototype.set=function(){
 	var layer = new LSprite();
 	
 	var width = 48, height = 48;
-	var icon = self.soldierModel.icon(new LPoint(width,height), true);
+	var icon = self.soldierModel.icon(new LPoint(width,height));
 	layer.addChild(icon);
 	var hertIcon = new LBitmap(new LBitmapData(LMvc.datalist["icon_hert"]));
 	hertIcon.scaleX = hertIcon.scaleY = 16 / hertIcon.getHeight();

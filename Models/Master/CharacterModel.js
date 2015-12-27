@@ -6,6 +6,7 @@ function CharacterModel(controller, data) {
 		self.data.physicalFitness = self.data.maxPhysicalFitness = 100;
 	}
 }
+CharacterModel.FEAT_VALUE = 200;
 CharacterModel.faceCacher = [];
 CharacterModel.PANT_PROBABILITY = 0.2;
 CharacterModel.list = [];
@@ -347,7 +348,8 @@ CharacterModel.prototype.lv = function() {
 	return this.level();
 };
 CharacterModel.prototype.level = function() {
-	return 10;
+	var self = this;
+	return self.data.feat / CharacterModel.FEAT_VALUE;
 };
 CharacterModel.prototype.strategies = function() {
 	var self = this;
