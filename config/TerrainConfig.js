@@ -12,11 +12,11 @@ var TerrainConfig = [
 {id:9,name:"大河",strategy:[0,1,1,0],sortValue:9},
 {id:10,name:"城内",strategy:[1,0,0,0],sortValue:10},
 {id:11,name:"民居",strategy:[1,0,0,0],sortValue:11},
-{id:12,name:"城池",strategy:[1,0,0,0],comment:"可以恢复",sortValue:12},
-{id:13,name:"关隘",strategy:[1,0,0,0],comment:"可以恢复",sortValue:13},
-{id:14,name:"鹿砦",strategy:[1,0,0,0],comment:"可以恢复",sortValue:14},
-{id:15,name:"村庄",strategy:[1,0,0,0],comment:"可以恢复",sortValue:15},
-{id:16,name:"兵营",strategy:[1,0,0,0],comment:"可以恢复",sortValue:16},
+{id:12,name:"城池",strategy:[1,0,0,0],heal:0.20,comment:"可以恢复",sortValue:12},
+{id:13,name:"关隘",strategy:[1,0,0,0],heal:0.20,comment:"可以恢复",sortValue:13},
+{id:14,name:"鹿砦",strategy:[1,0,0,0],heal:0.20,comment:"可以恢复",sortValue:14},
+{id:15,name:"村庄",strategy:[1,0,0,0],heal:0.10,comment:"可以恢复",sortValue:15},
+{id:16,name:"兵营",strategy:[1,0,0,0],heal:0.15,comment:"可以恢复",sortValue:16},
 {id:17,name:"岩山",strategy:[0,0,0,0],comment:"禁止移动",sortValue:17},
 {id:18,name:"池塘",strategy:[0,0,0,0],comment:"禁止移动",sortValue:18},
 {id:19,name:"小河",strategy:[0,0,0,0],comment:"禁止移动",sortValue:19},
@@ -27,117 +27,9 @@ var TerrainConfig = [
 {id:24,name:"船",strategy:[0,0,0,0],comment:"禁止移动",sortValue:24}
 ];
 /*
-0:"平原",1:"草原",2:"森林",3:"荒地",4:"山地",5:"雪原",6:"桥梁",7:"浅滩",8:"沼泽",9:"大河",10:"城内",11:"民居",12:"城池",13:"关隘",14:"鹿砦",15:"村庄",16:"兵营"
+0:"平原",1:"草原",2:"森林",3:"荒地",4:"山地",5:"雪原",6:"桥梁",7:"浅滩",8:"沼泽",9:"大河",10:"城内",11:"民居"
 terrain:[
 {id:0,value:100,moveCost:1},{id:1,value:100,moveCost:1},{id:2,value:100,moveCost:1},{id:3,value:100,moveCost:1},
 {id:4,value:100,moveCost:1},{id:5,value:100,moveCost:1},{id:6,value:100,moveCost:1},{id:7,value:100,moveCost:1},
 {id:8,value:100,moveCost:1},{id:9,value:100,moveCost:1},{id:10,value:100,moveCost:1},{id:11,value:100,moveCost:1}],
-
-君主
-terrain:[
-{id:1,value:110,moveCost:1},{id:2,value:90,moveCost:2},{id:3,value:90,moveCost:2},{id:4,value:80,moveCost:3},
-{id:5,value:100,moveCost:2},{id:6,value:110,moveCost:1},{id:7,value:90,moveCost:2},{id:8,value:80,moveCost:3},
-{id:9,value:90,moveCost:2},{id:11,value:100,moveCost:3}],
-步兵
-terrain:[{id:7,value:100,moveCost:2},{id:8,value:100,moveCost:2},{id:10,value:110,moveCost:1},{id:11,value:110,moveCost:2}],
-骑兵
-terrain:[
-{id:0,value:110,moveCost:1},{id:1,value:110,moveCost:1},{id:2,value:90,moveCost:2},{id:3,value:90,moveCost:2},{id:4,value:80,moveCost:3},
-{id:5,value:100,moveCost:2},{id:6,value:110,moveCost:1},{id:7,value:90,moveCost:2},{id:8,value:80,moveCost:3},{id:9,value:80,moveCost:2},{id:11,value:90,moveCost:3}],
-弓骑兵
-terrain:[
-{id:1,value:110,moveCost:1},{id:2,value:90,moveCost:2},{id:3,value:90,moveCost:2},{id:4,value:80,moveCost:3},
-{id:5,value:100,moveCost:2},{id:6,value:110,moveCost:1},{id:7,value:90,moveCost:2},{id:8,value:80,moveCost:3},{id:9,value:80,moveCost:2},{id:11,value:90,moveCost:3}],
-炮车
-terrain:[
-{id:2,value:90,moveCost:1},{id:3,value:90,moveCost:1},
-{id:4,value:80,moveCost:2},{id:6,value:110,moveCost:1},{id:7,value:80,moveCost:2},
-{id:8,value:80,moveCost:2},{id:10,value:110,moveCost:1},{id:11,value:100,moveCost:2}],
-武术家
-terrain:[
-{id:4,value:90,moveCost:1},{id:5,value:90,moveCost:1},
-{id:8,value:100,moveCost:2},{id:9,value:110,moveCost:1},{id:11,value:100,moveCost:2}],
-贼兵
-terrain:[
-{id:2,value:110,moveCost:1},{id:3,value:110,moveCost:1},
-{id:4,value:110,moveCost:1},{id:5,value:80,moveCost:1},{id:7,value:80,moveCost:2},
-{id:8,value:80,moveCost:2},{id:9,value:80,moveCost:2},{id:11,value:110,moveCost:2}],
-策士
-terrain:[
-{id:3,value:90,moveCost:1},
-{id:4,value:80,moveCost:2},{id:5,value:90,moveCost:1},{id:7,value:100,moveCost:2},
-{id:8,value:90,moveCost:2},{id:9,value:80,moveCost:2},{id:11,value:110,moveCost:2}],
-风水士
-terrain:[
-{id:3,value:90,moveCost:1},{id:4,value:80,moveCost:2},{id:7,value:100,moveCost:2},
-{id:8,value:90,moveCost:2},{id:9,value:100,moveCost:2},{id:11,value:110,moveCost:2}],
-道士
-terrain:[
-{id:2,value:110,moveCost:1},{id:3,value:110,moveCost:1},
-{id:4,value:110,moveCost:2},{id:5,value:90,moveCost:1},{id:7,value:90,moveCost:2},
-{id:8,value:80,moveCost:2},{id:9,value:80,moveCost:2},{id:11,value:110,moveCost:2}],
-骑马策士
-0:"平原",1:"草原",2:"森林",3:"荒地",4:"山地",5:"雪原",6:"桥梁",7:"浅滩",8:"沼泽",9:"大河",10:"城内",11:"民居"
-terrain:[
-{id:1,value:110,moveCost:1},{id:2,value:90,moveCost:2},{id:3,value:90,moveCost:2},
-{id:4,value:80,moveCost:3},{id:5,value:100,moveCost:2},{id:6,value:110,moveCost:1},{id:7,value:90,moveCost:2},
-{id:8,value:80,moveCost:3},{id:9,value:80,moveCost:2},{id:11,value:90,moveCost:3}],
-女兵
-★ 发挥效果120％
-○ 发挥效果100％
-× 发挥效果80％
-◎ 发挥效果110％
-△ 发挥效果90％
--- 无法行走
-地形	君主	步兵	弓兵	骑兵	弓骑	炮车	武道	贼兵	策士	风水	道士	骑策	舞孃
-	平原
-	○	○	○	◎	○	○	○	○	○	○	○	○	○
-	草原
-	◎	○	○	◎	◎	○	○	○	○	○	○	◎	○
-	树林
-	△	○	○	△	△	△	○	◎	○	○	◎	△	○
-	荒地
-	△	○	○	△	△	△	○	◎	△	△	◎	△	△
-	山地
-	×	○	○	×	×	×	△	◎	×	×	◎	×	△
-	雪原
-	○	○	○	○	○	○	△	×	△	○	△	○	△
-	桥梁
-	◎	○	○	◎	◎	◎	○	○	○	○	○	◎	○
-	浅滩
-	△	○	○	△	△	×	○	×	○	○	△	△	◎
-	沼泽
-	×	○	○	×	×	×	○	×	△	△	×	×	◎
-	大河
-	△	○	○	×	×	○	◎	×	×	○	×	×	◎
-	城内
-	○	◎	◎	○	○	◎	○	○	○	○	○	○	○
-	民居
-	○	◎	◎	△	△	○	◎	◎	◎	◎	◎	△	◎
-	
-地形	君主	步兵	弓兵	骑兵	弓骑	炮车	武道	贼兵	策士	风水	道士	骑策	舞孃
-	平原
-	1	1	1	1	1	1	1	1	1	1	1	1	1
-	草原
-	1	1	1	1	1	1	1	1	1	1	1	1	1
-	树林
-	2	1	1	2	2	1	1	1	1	1	1	2	1
-	荒地
-	2	1	1	2	2	1	1	1	1	1	1	2	1
-	山地
-	3	2	2	3	3	2	2	1	2	2	2	3	2
-	雪原
-	2	1	1	2	2	1	1	1	1	1	1	2	1
-	桥梁
-	1	1	1	1	1	1	1	1	1	1	1	1	1
-	浅滩
-	2	2	2	2	2	2	1	2	2	2	2	2	1
-	沼泽
-	3	2	2	3	3	2	2	2	2	2	2	3	1
-	大河
-	2	1	1	2	2	1	1	2	2	2	2	2	1
-	城内
-	1	1	1	1	1	1	1	1	1	1	1	1	1
-	民居
-	3	2	2	3	3	2	2	2	2	2	2	3	2
 */
