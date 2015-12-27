@@ -29,19 +29,60 @@ var TerrainConfig = [
 /*
 0:"平原",1:"草原",2:"森林",3:"荒地",4:"山地",5:"雪原",6:"桥梁",7:"浅滩",8:"沼泽",9:"大河",10:"城内",11:"民居",12:"城池",13:"关隘",14:"鹿砦",15:"村庄",16:"兵营"
 terrain:[
-{id:1,value:100,moveCost:1},{id:1,value:100,moveCost:1},{id:2,value:80,moveCost:2},{id:3,value:100,moveCost:1},
+{id:0,value:100,moveCost:1},{id:1,value:100,moveCost:1},{id:2,value:100,moveCost:1},{id:3,value:100,moveCost:1},
 {id:4,value:100,moveCost:1},{id:5,value:100,moveCost:1},{id:6,value:100,moveCost:1},{id:7,value:100,moveCost:1},
-{id:8,value:100,moveCost:1},{id:9,value:100,moveCost:1},{id:10,value:100,moveCost:1},{id:11,value:100,moveCost:1},
-{id:12,value:120,moveCost:1},{id:13,value:120,moveCost:1},{id:14,value:110,moveCost:1},{id:15,value:110,moveCost:1},{id:16,value:110,moveCost:1}],
+{id:8,value:100,moveCost:1},{id:9,value:100,moveCost:1},{id:10,value:100,moveCost:1},{id:11,value:100,moveCost:1}],
 
 君主
-0:"平原",1:"草原",2:"森林",3:"荒地",4:"山地",5:"雪原",6:"桥梁",7:"浅滩",8:"沼泽",9:"大河",10:"城内",11:"民居",12:"城池",13:"关隘",14:"鹿砦",15:"村庄",16:"兵营"
 terrain:[
 {id:1,value:110,moveCost:1},{id:2,value:90,moveCost:2},{id:3,value:90,moveCost:2},{id:4,value:80,moveCost:3},
 {id:5,value:100,moveCost:2},{id:6,value:110,moveCost:1},{id:7,value:90,moveCost:2},{id:8,value:80,moveCost:3},
-{id:9,value:90,moveCost:2},{id:11,value:100,moveCost:3},
-{id:12,value:120,moveCost:1},{id:13,value:120,moveCost:1},{id:14,value:110,moveCost:2},{id:15,value:110,moveCost:2},{id:16,value:110,moveCost:2}],
-
+{id:9,value:90,moveCost:2},{id:11,value:100,moveCost:3}],
+步兵
+terrain:[{id:7,value:100,moveCost:2},{id:8,value:100,moveCost:2},{id:10,value:110,moveCost:1},{id:11,value:110,moveCost:2}],
+骑兵
+terrain:[
+{id:0,value:110,moveCost:1},{id:1,value:110,moveCost:1},{id:2,value:90,moveCost:2},{id:3,value:90,moveCost:2},{id:4,value:80,moveCost:3},
+{id:5,value:100,moveCost:2},{id:6,value:110,moveCost:1},{id:7,value:90,moveCost:2},{id:8,value:80,moveCost:3},{id:9,value:80,moveCost:2},{id:11,value:90,moveCost:3}],
+弓骑兵
+terrain:[
+{id:1,value:110,moveCost:1},{id:2,value:90,moveCost:2},{id:3,value:90,moveCost:2},{id:4,value:80,moveCost:3},
+{id:5,value:100,moveCost:2},{id:6,value:110,moveCost:1},{id:7,value:90,moveCost:2},{id:8,value:80,moveCost:3},{id:9,value:80,moveCost:2},{id:11,value:90,moveCost:3}],
+炮车
+terrain:[
+{id:2,value:90,moveCost:1},{id:3,value:90,moveCost:1},
+{id:4,value:80,moveCost:2},{id:6,value:110,moveCost:1},{id:7,value:80,moveCost:2},
+{id:8,value:80,moveCost:2},{id:10,value:110,moveCost:1},{id:11,value:100,moveCost:2}],
+武术家
+terrain:[
+{id:4,value:90,moveCost:1},{id:5,value:90,moveCost:1},
+{id:8,value:100,moveCost:2},{id:9,value:110,moveCost:1},{id:11,value:100,moveCost:2}],
+贼兵
+terrain:[
+{id:2,value:110,moveCost:1},{id:3,value:110,moveCost:1},
+{id:4,value:110,moveCost:1},{id:5,value:80,moveCost:1},{id:7,value:80,moveCost:2},
+{id:8,value:80,moveCost:2},{id:9,value:80,moveCost:2},{id:11,value:110,moveCost:2}],
+策士
+terrain:[
+{id:3,value:90,moveCost:1},
+{id:4,value:80,moveCost:2},{id:5,value:90,moveCost:1},{id:7,value:100,moveCost:2},
+{id:8,value:90,moveCost:2},{id:9,value:80,moveCost:2},{id:11,value:110,moveCost:2}],
+风水士
+terrain:[
+{id:3,value:90,moveCost:1},{id:4,value:80,moveCost:2},{id:7,value:100,moveCost:2},
+{id:8,value:90,moveCost:2},{id:9,value:100,moveCost:2},{id:11,value:110,moveCost:2}],
+道士
+terrain:[
+{id:2,value:110,moveCost:1},{id:3,value:110,moveCost:1},
+{id:4,value:110,moveCost:2},{id:5,value:90,moveCost:1},{id:7,value:90,moveCost:2},
+{id:8,value:80,moveCost:2},{id:9,value:80,moveCost:2},{id:11,value:110,moveCost:2}],
+骑马策士
+0:"平原",1:"草原",2:"森林",3:"荒地",4:"山地",5:"雪原",6:"桥梁",7:"浅滩",8:"沼泽",9:"大河",10:"城内",11:"民居"
+terrain:[
+{id:1,value:110,moveCost:1},{id:2,value:90,moveCost:2},{id:3,value:90,moveCost:2},
+{id:4,value:80,moveCost:3},{id:5,value:100,moveCost:2},{id:6,value:110,moveCost:1},{id:7,value:90,moveCost:2},
+{id:8,value:80,moveCost:3},{id:9,value:80,moveCost:2},{id:11,value:90,moveCost:3}],
+女兵
 ★ 发挥效果120％
 ○ 发挥效果100％
 × 发挥效果80％
@@ -59,8 +100,6 @@ terrain:[
 	△	○	○	△	△	△	○	◎	△	△	◎	△	△
 	山地
 	×	○	○	×	×	×	△	◎	×	×	◎	×	△
-	岩山	--	--	--	--	--	--	--	--	--	--	--	--	--
-	山崖	--	--	--	--	--	--	--	--	--	--	--	--	--
 	雪原
 	○	○	○	○	○	○	△	×	△	○	△	○	△
 	桥梁
@@ -69,25 +108,10 @@ terrain:[
 	△	○	○	△	△	×	○	×	○	○	△	△	◎
 	沼泽
 	×	○	○	×	×	×	○	×	△	△	×	×	◎
-	池塘	--	--	--	--	--	--	--	--	--	--	--	--	--
-	小河	--	--	--	--	--	--	--	--	--	--	--	--	--
 	大河
 	△	○	○	×	×	○	◎	×	×	○	×	×	◎
-	栅栏	--	--	--	--	--	--	--	--	--	--	--	--	--
-	城墙	--	--	--	--	--	--	--	--	--	--	--	--	--
 	城内
 	○	◎	◎	○	○	◎	○	○	○	○	○	○	○
-	城门	--	--	--	--	--	--	--	--	--	--	--	--	--
-	城池
-	★	★	★	★	★	★	★	★	★	★	★	★	★
-	关隘
-	★	★	★	★	★	★	★	★	★	★	★	★	★
-	鹿砦
-	★	★	★	★	★	★	★	★	★	★	★	★	★
-	村庄
-	◎	◎	◎	◎	◎	◎	◎	◎	◎	◎	◎	◎	◎
-	兵营
-	◎	◎	◎	◎	◎	◎	◎	◎	◎	◎	◎	◎	◎
 	民居
 	○	◎	◎	△	△	○	◎	◎	◎	◎	◎	△	◎
 	
@@ -102,8 +126,6 @@ terrain:[
 	2	1	1	2	2	1	1	1	1	1	1	2	1
 	山地
 	3	2	2	3	3	2	2	1	2	2	2	3	2
-	岩山	--	--	--	--	--	--	--	--	--	--	--	--	--
-	山崖	--	--	--	--	--	--	--	--	--	--	--	--	--
 	雪原
 	2	1	1	2	2	1	1	1	1	1	1	2	1
 	桥梁
@@ -112,25 +134,10 @@ terrain:[
 	2	2	2	2	2	2	1	2	2	2	2	2	1
 	沼泽
 	3	2	2	3	3	2	2	2	2	2	2	3	1
-	池塘	--	--	--	--	--	--	--	--	--	--	--	--	--
-	小河	--	--	--	--	--	--	--	--	--	--	--	--	--
 	大河
 	2	1	1	2	2	1	1	2	2	2	2	2	1
-	栅栏	--	--	--	--	--	--	--	--	--	--	--	--	--
-	城墙	--	--	--	--	--	--	--	--	--	--	--	--	--
 	城内
 	1	1	1	1	1	1	1	1	1	1	1	1	1
-	城门	--	--	--	--	--	--	--	--	--	--	--	--	--
-	城池
-	1	1	1	1	1	1	1	1	1	1	1	1	1
-	关隘
-	1	1	1	1	1	1	1	1	1	1	1	1	1
-	鹿砦
-	2	1	1	2	2	1	1	1	1	1	1	2	1
-	村庄
-	2	1	1	2	2	1	1	1	1	1	1	2	1
-	兵营
-	2	1	1	2	2	1	1	1	1	1	1	2	1
 	民居
 	3	2	2	3	3	2	2	2	2	2	2	3	2
 */

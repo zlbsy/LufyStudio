@@ -38,8 +38,7 @@ var SoldierDatas = [
 	terrain:[
 	{id:1,value:110,moveCost:1},{id:2,value:90,moveCost:2},{id:3,value:90,moveCost:2},{id:4,value:80,moveCost:3},
 	{id:5,value:100,moveCost:2},{id:6,value:110,moveCost:1},{id:7,value:90,moveCost:2},{id:8,value:80,moveCost:3},
-	{id:9,value:90,moveCost:2},{id:11,value:100,moveCost:3},
-	{id:12,value:120,moveCost:1},{id:13,value:120,moveCost:1},{id:14,value:110,moveCost:2},{id:15,value:110,moveCost:2},{id:16,value:110,moveCost:2}],
+	{id:9,value:90,moveCost:2},{id:11,value:100,moveCost:3}],
 	rangeAttack:[{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0}],
 	rangeAttackTarget:[{x:0,y:0}],
 	strategy:[{id:33,lv:0},{id:34,lv:0}],
@@ -51,7 +50,7 @@ var SoldierDatas = [
 	property:{attack:"B",spirit:"A",defense:"S",breakout:"B",morale:"B",troops:6,strategy:1},
 	equipment:{head:0,hand:0,body:0,foot:0,accessories:0},
 	restrain:[{id:2,value:110},{id:3,value:80}],
-	terrain:[{id:1,value:110,moveCost:1},{id:2,value:80,moveCost:2},{id:4,value:100,moveCost:255}],
+	terrain:[{id:7,value:100,moveCost:2},{id:8,value:100,moveCost:2},{id:10,value:110,moveCost:1},{id:11,value:110,moveCost:2}],
 	rangeAttack:[{x:-1,y:-1},{x:-1,y:1},{x:1,y:1},{x:1,y:-1},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0}],
 	rangeAttackTarget:[{x:0,y:0}],
 	strategy:[{id:2,lv:0},{id:3,lv:3}],
@@ -63,7 +62,9 @@ var SoldierDatas = [
 	property:{attack:"S",spirit:"B",defense:"A",breakout:"B",morale:"B",troops:5,strategy:1},
 	equipment:{head:0,hand:0,body:0,foot:0,accessories:0},
 	restrain:[{id:2,value:110},{id:3,value:80}],
-	terrain:[{id:1,value:110,moveCost:1},{id:2,value:80,moveCost:2}],
+	terrain:[
+{id:0,value:110,moveCost:1},{id:1,value:110,moveCost:1},{id:2,value:90,moveCost:2},{id:3,value:90,moveCost:2},{id:4,value:80,moveCost:3},
+{id:5,value:100,moveCost:2},{id:6,value:110,moveCost:1},{id:7,value:90,moveCost:2},{id:8,value:80,moveCost:3},{id:9,value:80,moveCost:2},{id:11,value:90,moveCost:3}],
 	rangeAttack:[{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0}],
 	rangeAttackTarget:[{x:0,y:0}],
 	strategy:[{id:2,lv:0},{id:3,lv:3}],
@@ -74,7 +75,7 @@ var SoldierDatas = [
 	property:{attack:"A",spirit:"B",defense:"B",breakout:"B",morale:"S",troops:4,strategy:1},
 	equipment:{head:0,hand:0,body:0,foot:0,accessories:0},
 	restrain:[{id:2,value:110},{id:3,value:80}],
-	terrain:[{id:1,value:110,moveCost:1},{id:2,value:80,moveCost:2}],
+	terrain:[{id:7,value:100,moveCost:2},{id:8,value:100,moveCost:2},{id:10,value:110,moveCost:1},{id:11,value:110,moveCost:2}],
 	rangeAttack:[{x:-1,y:-1},{x:-1,y:1},{x:1,y:1},{x:1,y:-1},{x:0,y:-2},{x:0,y:2},{x:-2,y:0},{x:2,y:0}],
 	rangeAttackTarget:[{x:0,y:0}],
 	strategy:[{id:2,lv:0},{id:3,lv:3}],
@@ -85,7 +86,9 @@ var SoldierDatas = [
 	property:{attack:"S",spirit:"B",defense:"B",breakout:"B",morale:"A",troops:5,strategy:1},
 	equipment:{head:0,hand:0,body:0,foot:0,accessories:0},
 	restrain:[{id:2,value:110},{id:3,value:80}],
-	terrain:[{id:1,value:110,moveCost:1},{id:2,value:80,moveCost:2}],
+	terrain:[
+{id:1,value:110,moveCost:1},{id:2,value:90,moveCost:2},{id:3,value:90,moveCost:2},{id:4,value:80,moveCost:3},
+{id:5,value:100,moveCost:2},{id:6,value:110,moveCost:1},{id:7,value:90,moveCost:2},{id:8,value:80,moveCost:3},{id:9,value:80,moveCost:2},{id:11,value:90,moveCost:3}],
 	rangeAttack:[{x:0,y:-2},{x:0,y:2},{x:-2,y:0},{x:2,y:0}],
 	rangeAttackTarget:[{x:0,y:0}],
 	strategy:[{id:2,lv:0},{id:3,lv:3}],
@@ -96,7 +99,10 @@ var SoldierDatas = [
 	property:{attack:"S",spirit:"B",defense:"A",breakout:"C",morale:"A",troops:4,strategy:1},
 	equipment:{head:0,hand:0,body:0,foot:0,accessories:0},
 	restrain:[{id:2,value:110},{id:3,value:80}],
-	terrain:[{id:1,value:110,moveCost:1},{id:2,value:80,moveCost:2}],
+	terrain:[
+{id:2,value:90,moveCost:1},{id:3,value:90,moveCost:1},
+{id:4,value:80,moveCost:2},{id:6,value:110,moveCost:1},{id:7,value:80,moveCost:2},
+{id:8,value:80,moveCost:2},{id:10,value:110,moveCost:1},{id:11,value:100,moveCost:2}],
 	rangeAttack:[{x:0,y:-4},{x:0,y:4},{x:-4,y:0},{x:4,y:0}, {x:1,y:-3},{x:1,y:3},{x:-1,y:-3},{x:-1,y:3},{x:-3,y:1},{x:3,y:1},{x:-3,y:-1},{x:3,y:-1}, {x:2,y:-2},{x:2,y:2},{x:-2,y:2},{x:-2,y:-2}],
 	rangeAttackTarget:[{x:0,y:0}],
 	strategy:[{id:2,lv:0},{id:3,lv:3}],
@@ -107,7 +113,9 @@ var SoldierDatas = [
 	property:{attack:"A",spirit:"C",defense:"A",breakout:"S",morale:"B",troops:4,strategy:1},
 	equipment:{head:0,hand:0,body:0,foot:0,accessories:0},
 	restrain:[{id:2,value:110},{id:3,value:80}],
-	terrain:[{id:1,value:110,moveCost:1},{id:2,value:80,moveCost:2}],
+	terrain:[
+{id:4,value:90,moveCost:1},{id:5,value:90,moveCost:1},
+{id:8,value:100,moveCost:2},{id:9,value:110,moveCost:1},{id:11,value:100,moveCost:2}],
 	rangeAttack:[{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0}],
 	rangeAttackTarget:[{x:0,y:0}],
 	strategy:[{id:2,lv:0},{id:3,lv:3}],
@@ -118,7 +126,10 @@ var SoldierDatas = [
 	property:{attack:"S",spirit:"C",defense:"B",breakout:"B",morale:"S",troops:5,strategy:1},
 	equipment:{head:0,hand:0,body:0,foot:0,accessories:0},
 	restrain:[{id:2,value:110},{id:3,value:80}],
-	terrain:[{id:1,value:110,moveCost:1},{id:2,value:80,moveCost:2}],
+	terrain:[
+{id:2,value:110,moveCost:1},{id:3,value:110,moveCost:1},
+{id:4,value:110,moveCost:1},{id:5,value:80,moveCost:1},{id:7,value:80,moveCost:2},
+{id:8,value:80,moveCost:2},{id:9,value:80,moveCost:2},{id:11,value:110,moveCost:2}],
 	rangeAttack:[{x:-1,y:-1},{x:-1,y:1},{x:1,y:1},{x:1,y:-1},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0}],
 	rangeAttackTarget:[{x:0,y:0}],
 	strategy:[{id:2,lv:0},{id:3,lv:3}],
@@ -129,7 +140,10 @@ var SoldierDatas = [
 	property:{attack:"B",spirit:"S",defense:"B",breakout:"B",morale:"B",troops:5,strategy:2},
 	equipment:{head:0,hand:0,body:0,foot:0,accessories:0},
 	restrain:[{id:2,value:110},{id:3,value:80}],
-	terrain:[{id:1,value:110,moveCost:1},{id:2,value:80,moveCost:2}],
+	terrain:[
+{id:3,value:90,moveCost:1},
+{id:4,value:80,moveCost:2},{id:5,value:90,moveCost:1},{id:7,value:100,moveCost:2},
+{id:8,value:90,moveCost:2},{id:9,value:80,moveCost:2},{id:11,value:110,moveCost:2}],
 	rangeAttack:[{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0}],
 	rangeAttackTarget:[{x:0,y:0}],
 	strategy:[{id:2,lv:0},{id:3,lv:3}],
@@ -140,7 +154,9 @@ var SoldierDatas = [
 	property:{attack:"C",spirit:"S",defense:"C",breakout:"A",morale:"A",troops:3,strategy:2},
 	equipment:{head:0,hand:0,body:0,foot:0,accessories:0},
 	restrain:[{id:2,value:110},{id:3,value:80}],
-	terrain:[{id:1,value:110,moveCost:1},{id:2,value:80,moveCost:2}],
+	terrain:[
+{id:3,value:90,moveCost:1},{id:4,value:80,moveCost:2},{id:7,value:100,moveCost:2},
+{id:8,value:90,moveCost:2},{id:9,value:100,moveCost:2},{id:11,value:110,moveCost:2}],
 	rangeAttack:[{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0}],
 	rangeAttackTarget:[{x:0,y:0}],
 	strategy:[{id:2,lv:0},{id:3,lv:3}],
@@ -151,7 +167,10 @@ var SoldierDatas = [
 	property:{attack:"C",spirit:"S",defense:"B",breakout:"A",morale:"B",troops:3,strategy:2},
 	equipment:{head:0,hand:0,body:0,foot:0,accessories:0},
 	restrain:[{id:2,value:110},{id:3,value:80}],
-	terrain:[{id:1,value:110,moveCost:1},{id:2,value:80,moveCost:2}],
+	terrain:[
+{id:2,value:110,moveCost:1},{id:3,value:110,moveCost:1},
+{id:4,value:110,moveCost:2},{id:5,value:90,moveCost:1},{id:7,value:90,moveCost:2},
+{id:8,value:80,moveCost:2},{id:9,value:80,moveCost:2},{id:11,value:110,moveCost:2}],
 	rangeAttack:[{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0}],
 	rangeAttackTarget:[{x:0,y:0}],
 	strategy:[{id:2,lv:0},{id:3,lv:3}],
@@ -162,7 +181,10 @@ var SoldierDatas = [
 	property:{attack:"A",spirit:"S",defense:"B",breakout:"B",morale:"C",troops:5,strategy:2},
 	equipment:{head:0,hand:0,body:0,foot:0,accessories:0},
 	restrain:[{id:2,value:110},{id:3,value:80}],
-	terrain:[{id:1,value:110,moveCost:1},{id:2,value:80,moveCost:2}],
+	terrain:[
+{id:1,value:110,moveCost:1},{id:2,value:90,moveCost:2},{id:3,value:90,moveCost:2},
+{id:4,value:80,moveCost:3},{id:5,value:100,moveCost:2},{id:6,value:110,moveCost:1},{id:7,value:90,moveCost:2},
+{id:8,value:80,moveCost:3},{id:9,value:80,moveCost:2},{id:11,value:90,moveCost:3}],
 	rangeAttack:[{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0}],
 	rangeAttackTarget:[{x:0,y:0}],
 	strategy:[{id:2,lv:0},{id:3,lv:3}],
@@ -289,6 +311,11 @@ var SoldierDatas = [
 	},
 ];
 for(var i=0,l=SoldierDatas.length;i<l;i++){
+	SoldierDatas[i].terrain.push({id:12,value:120,moveCost:1});
+	SoldierDatas[i].terrain.push({id:13,value:120,moveCost:1});
+	SoldierDatas[i].terrain.push({id:14,value:110,moveCost:2});
+	SoldierDatas[i].terrain.push({id:15,value:110,moveCost:2});
+	SoldierDatas[i].terrain.push({id:16,value:110,moveCost:2});
 	SoldierDatas[i].terrain.push({id:17,value:0,moveCost:255});
 	SoldierDatas[i].terrain.push({id:18,value:0,moveCost:255});
 	SoldierDatas[i].terrain.push({id:19,value:0,moveCost:255});
