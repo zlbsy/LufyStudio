@@ -96,8 +96,7 @@ SoldierModel.prototype.img = function() {
 };
 SoldierModel.prototype.icon=function(size,callback){
 	var self = this;
-	if(typeof callback != "undefined" && typeof callback != "function"){
-	alert("error SoldierModel.prototype.icon");}
+	if(typeof callback != "undefined" && typeof callback != "function"){alert("error SoldierModel.prototype.icon");}
 	if(!size){
 		size = new LPoint(100,100);
 	}
@@ -106,23 +105,7 @@ SoldierModel.prototype.icon=function(size,callback){
 		imgIndex = self.master().img();
 	}
 	var icon = new BitmapSprite(LMvc.IMG_PATH + "character/s/"+imgIndex+".png", [64*12,0,64,64],size);
-	icon.addEventListener(LEvent.COMPLETE, callback);
-	//return icon;
-	/*if(anime){
-		icon.addEventListener(LEvent.COMPLETE, function(event){
-			var sprite = event.currentTarget;
-			var bitmap = sprite.getChildByName("bitmap");
-			var bitmapData = bitmap.bitmapData;
-			sprite.removeChild(bitmap);
-			var list = LGlobal.divideCoordinate(48, 96, 2, 1);
-			list = [[{x : 64*12, y : 0, width : 64, height : 64, sx : 0, sy : 0},{x : 64*13, y : 0, width : 64, height : 64, sx : 0, sy : 0}]];
-			var animation = new LAnimationTimeline(bitmapData,list);
-			animation.speed = 5;
-			animation.scaleX = bitmap.scaleX;
-			animation.scaleY = bitmap.scaleY;
-			sprite.addChild(animation);
-		});
-	}*/
+	if(typeof callback == "function")icon.addEventListener(LEvent.COMPLETE, callback);
 	var winPanel = new LPanel(new LBitmapData(LMvc.datalist["win06"]),size.x,size.y);
 	winPanel.cacheAsBitmap(true);
 	icon.addChild(winPanel);
