@@ -30,7 +30,7 @@ MapController.prototype.libraryLoad=function(){
 };
 MapController.prototype.viewLoad=function(){
 	var self = this;console.log("viewLoad");
-	self.load.view(["Area/AreaIcon","Common/Background","Common/Message"],self.menuLoad);
+	self.load.view(["Area/AreaIcon","Common/Background","Common/Message","Common/MessageChild"],self.menuLoad);
 };
 MapController.prototype.menuLoad=function(){
 	var self = this;

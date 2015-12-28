@@ -3,30 +3,29 @@ function MessageView(controller){
 	LExtends(self,LView,[controller]);
 	self.init();
 }
-MessageView.prototype.add = function(msg){
-	var self = this;console.log(msg);
-	var child = new LTextField();
-	child.text = msg;
-	child.size = 18;
-	child.color = "#000000";
-	child.y = self.listLayer.numChildren * 20;
-	self.listLayer.addChild(child);
-	self.listLayer.clearShape();
-	self.listLayer.addShape(LShape.RECT,[0,0,270,self.listLayer.numChildren * 20]);
-	if(self.listLayer.numChildren > 20)self.listLayer.parent.parent.scrollToBottom();
+MessageView.prototype.add = function(msg, color){
+	var self = this;console.log("add "+msg);
+	var child = new MessageChildView(msg, color);
+	self.listView.insertChildView(child);
+	var height = self.listView.cellHeight*self.listView.getItems().length;
+	if(height < self.listView.clipping.height){
+		return;
+	}
+	self.listView.clipping.y = height - self.listView.clipping.height;
 };
 MessageView.prototype.init = function(){
 	var self = this
-	var backgroundData = new LBitmapData(LMvc.datalist["win05"]);
-	var panel = getBitmap(new LPanel(backgroundData,300,300));
+	var height = 200;
+	var backgroundData = new LBitmapData(LMvc.datalist["win03"]);
+	var panel = new LPanel(backgroundData,LGlobal.width,height);
+	panel.cacheAsBitmap(true);
+	panel.y = LGlobal.height - height;
 	self.addChild(panel);
-	self.listLayer = new LSprite();
-	var sc = new LScrollbar(self.listLayer, 270, 270, 10, false);
-	sc.x = 15;
-	sc.y = 15;
-	self.addChild(sc);
-	sc.excluding = true;
-	self.listLayer.getHeight = function(){
-		return this.numChildren * 20;
-	};
+	self.listView = new LListView();
+	self.listView.x = 5;
+	self.listView.y = panel.y + 5;
+	self.listView.resize(LGlobal.width - 10,height - 10);
+	self.listView.cellWidth = LGlobal.width;
+	self.listView.cellHeight = 20;
+	self.addChild(self.listView);
 };
