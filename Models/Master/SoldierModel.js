@@ -100,11 +100,12 @@ SoldierModel.prototype.icon=function(size,callback){
 	if(!size){
 		size = new LPoint(100,100);
 	}
+	//var imgIndex = self.master().id();
 	var imgIndex = self.data.img;
 	if(!imgIndex){
-		imgIndex = self.master().img();
+		imgIndex = "common/" + self.master().id() + "-1";
 	}
-	var icon = new BitmapSprite(LMvc.IMG_PATH + "character/s/"+imgIndex+".png", [64*12,0,64,64],size);
+	var icon = new BitmapSprite(LMvc.IMG_PATH + "character/s/"+imgIndex+".png", [64*18,0,64,64],size);
 	if(typeof callback == "function")icon.addEventListener(LEvent.COMPLETE, callback);
 	var winPanel = new LPanel(new LBitmapData(LMvc.datalist["win06"]),size.x,size.y);
 	winPanel.cacheAsBitmap(true);

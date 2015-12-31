@@ -52,4 +52,4 @@ SoldiersChildView.prototype.onClick = function(event) {
 	var windowLayer = ConfirmWindow(obj);
 		
 	LMvc.layer.addChild(windowLayer);
-}
+};

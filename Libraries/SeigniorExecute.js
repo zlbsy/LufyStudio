@@ -372,7 +372,7 @@ SeigniorExecute.prototype.areaAIRun=function(areaModel){
 		{fun:jobAiFarmland,params:["intelligence","force"]},//农地
 		{fun:jobAiMarket,params:["intelligence","agility"]}//市场
 		];
-		interiorList = interiorList.sort(function(a,b){return Math.random() > 0.5 ? 1 : -1});
+		interiorList = interiorList.sort(function(a,b){return Math.random() > 0.5 ? 1 : -1;});
 		for(var i = 0;i<3;i++){
 			child = interiorList[i];
 			self.jobAiFunction(areaModel,self.characters,child.fun,child.params);

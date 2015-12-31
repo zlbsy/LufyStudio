@@ -383,7 +383,7 @@ BattleAIExecute.prototype.battleCanGroupSkill = function(chara, targerChara){
 		}
 	}
 	return groupSkill;
-}
+};
 BattleAIExecute.prototype.healExec=function(currentCharacter, targetChara){
 	var self = this;
 	var strategy = self.getCanUseStrategy(currentCharacter,targetChara,StrategyEffectType.Supply);

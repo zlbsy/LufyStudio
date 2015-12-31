@@ -35,7 +35,7 @@ CharacterStatusIconView.prototype.downloadAidStatusRandom = function(){
 	var aids =[StrategyType.AttackAid,StrategyType.DefenseAid,StrategyType.ApiritAid,StrategyType.BreakoutAid,StrategyType.MoraleAid];
 	var mode = aids[aids.length * Math.random() >>> 0];
 	self.addStatus(mode,-0.2);
-}
+};
 CharacterStatusIconView.prototype.addStatus = function(mode,value){
 	var self = this, status, isAid = false;
 	if(typeof self.statusPositions[mode] == UNDEFINED){

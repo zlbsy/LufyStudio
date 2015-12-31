@@ -12,7 +12,7 @@ CharacterListController.prototype.construct=function(){
 };
 CharacterListController.prototype.configLoad=function(){
 	var self = this;
-	self.load.config(["Equipment","Arms","Belong","Position","Soldiers","Strategy"],self.helperLoad);
+	self.load.config(["CharacterListType","Skills","Equipment","Arms","Belong","Position","Soldiers","Strategy"],self.helperLoad);
 };
 CharacterListController.prototype.helperLoad=function(){
 	var self = this;
@@ -20,7 +20,7 @@ CharacterListController.prototype.helperLoad=function(){
 };
 CharacterListController.prototype.modelLoad=function(){
 	var self = this;
-	self.load.model(["Items/Item","Master/SoldierMaster","Master/Soldier","Master/StrategyMaster","Master/Strategy"],self.viewLoad);
+	self.load.model(["Master/SkillMaster","Master/SoldierMaster","Items/Item","Master/SoldierMaster","Master/Soldier","Master/StrategyMaster","Master/Strategy"],self.viewLoad);
 };
 CharacterListController.prototype.viewLoad=function(){
 	var self = this;
@@ -33,6 +33,7 @@ CharacterListController.prototype.init=function(status){
 	var self = this;
 	StrategyMasterModel.setMaster(StrategyDatas);
 	SoldierMasterModel.setMaster(SoldierDatas);
+	SkillMasterModel.setMaster(SkillsData);
 	LMvc.keepLoading(false);
 	var cityData = AreaModel.getArea(LMvc.cityId);
 	self.setValue("cityData",cityData);
