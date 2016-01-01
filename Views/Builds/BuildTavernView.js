@@ -35,7 +35,17 @@ BuildTavernView.prototype.showBuild=function(event){
 		return child.isBuildBaseView;
 	});
 	var result = self.callParent("showBuild",arguments);
-	if(event.characterListType == CharacterListType.HIRE && result){
+	if(!result){
+		return;
+	}
+	console.log("event.subEventType = " ,event.subEventType,"event.characterListType =",event.characterListType);
+	if(event.subEventType == "return"){
+		if(event.characterListType == CharacterListType.CHARACTER_HIRE){
+			self.controller.loadCharacterList(CharacterListType.HIRE,self);
+		}
+		return;
+	}
+	if(event.characterListType == CharacterListType.HIRE){
 		self.controller.loadCharacterList(CharacterListType.CHARACTER_HIRE,self);
 	}
 };

@@ -235,7 +235,7 @@ CharacterListView.prototype.onClickCutoverButton=function(event){
 CharacterListView.prototype.onClickCloseButton=function(event){
 	var self = this;
 	if(self.controller.characterListType == CharacterListType.CHARACTER_HIRE){
-		fromController.hireCharacter = null;
+		//fromController.hireCharacter = null;
 	}
 	self.controller.closeCharacterList({subEventType:"return"});
 };

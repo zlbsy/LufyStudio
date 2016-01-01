@@ -53,10 +53,18 @@ BuildBarrackView.prototype.showSoldiers=function(){
 	var msg = getStrokeLabel(Language.get("dialog_training_confirm"),16,"#FFFFFF","#000000",4);
 	layer.addChild(msg);
 	layer.name = "SubWindow";
-	var panel = new LPanel(new LBitmapData(LMvc.datalist["win01"]),110,40);
+	var panel = new LPanel(new LBitmapData(LMvc.datalist["win01"]),260,40);
+	panel.cacheAsBitmap(true);
 	var bitmapOn = new LBitmap(new LBitmapData(LMvc.datalist["combobox_arraw"]));
+	bitmapOn.scaleX = bitmapOn.scaleY = 0.6;
 	var bitmapOff = new LBitmap(new LBitmapData(LMvc.datalist["combobox_arraw"]));
-	var com = new LComboBox(16,"#000000","Arial",panel,bitmapOff,bitmapOn);
+	bitmapOff.scaleX = bitmapOff.scaleY = bitmapOn.scaleX;
+	var com = new LComboBox(16,"#ffffff","Arial",panel,bitmapOff,bitmapOn);
+	com.label.x = 10;
+	com.label.y = 9;
+	com.label.lineColor = "#000000";
+	com.label.stroke = true;
+	com.label.lineWidth = 2;
 	for(var i=0;i<soldiers.length;i++){
 		var soldierModel = soldiers[i];
 		var proficiency = 200;
