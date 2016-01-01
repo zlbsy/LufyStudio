@@ -55,7 +55,7 @@ RecordChildView.prototype.onClick=function(event){
 	var self = event.target;
 	console.log("mode="+RecordController.instance().mode);
 	if(RecordController.instance().mode == RecordController.SAVE_MODE){
-	console.log(SeigniorModel.list);
+		console.log(SeigniorModel.list);
 		self.record = GameManager.save(self.recordIndex);
 		self.set(self.record);
 		self.cacheAsBitmap(false);
@@ -66,6 +66,8 @@ RecordChildView.prototype.onClick=function(event){
 		}
 		RecordController.instance().hide();
 		LMvc.isRead = true;
+		LMvc.mapX = self.record.mapX;
+		LMvc.mapY = self.record.mapY;
 		if(LMvc.BattleController){
 			LMvc.BattleController.view.remove();
 			LMvc.BattleController = null;

@@ -65,7 +65,7 @@ CharacterListChildView.prototype.onClick = function(event) {
 	}
 	self.parentView.showCharacterDetailed(self.character?self.character:self.charaModel);
 };
-CharacterListChildView.prototype.hitTestPoint = function(offsetX,offsetY) {
+/*CharacterListChildView.prototype.hitTestPoint = function(offsetX,offsetY) {
 	var self = this;return;
 	if(self.alpha < 1){
 		return false;
@@ -84,7 +84,7 @@ CharacterListChildView.prototype.hitTestPoint = function(offsetX,offsetY) {
 		return hit && !self.checkbox.hitTestPoint(offsetX,offsetY);
 	}
 	return hit;
-};
+};*/
 CharacterListChildView.prototype.updateArmProperties = function(event) {
 	var self = this;
 	var windowLayer = event.currentTarget.parent;

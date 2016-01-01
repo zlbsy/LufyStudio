@@ -2,6 +2,9 @@ function CharacterModel(controller, data) {
 	var self = this;
 	base(self, MyModel, [controller]);
 	self.data = data;
+	if(!self.data.feat){
+		self.data.feat = 0;
+	}
 	if(!self.data.maxPhysicalFitness){
 		self.data.physicalFitness = self.data.maxPhysicalFitness = 100;
 	}
@@ -349,7 +352,7 @@ CharacterModel.prototype.lv = function() {
 };
 CharacterModel.prototype.level = function() {
 	var self = this;
-	return self.data.feat / CharacterModel.FEAT_VALUE;
+	return self.data.feat / CharacterModel.FEAT_VALUE + 1;
 };
 CharacterModel.prototype.strategies = function() {
 	var self = this;

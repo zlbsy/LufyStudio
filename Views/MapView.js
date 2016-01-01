@@ -50,6 +50,8 @@ MapView.prototype.areaDragStart=function(event){
 };
 MapView.prototype.areaDragStop=function(event){
 	event.currentTarget.parent.stopDrag();
+	LMvc.mapX = event.currentTarget.parent.x;
+	LMvc.mapY = event.currentTarget.parent.y;
 };
 MapView.prototype.init=function(){
 	var self = this;
@@ -66,6 +68,18 @@ MapView.prototype.init=function(){
 	);
 	self.backLayer.addEventListener(LMouseEvent.MOUSE_DOWN,self.areaDragStart);
 	self.backLayer.addEventListener(LMouseEvent.MOUSE_UP,self.areaDragStop);
+	self.updateMapCoordinate();
+};
+MapView.prototype.updateMapCoordinate = function(){
+	var self = this;
+	console.log("LMvc.mapX,LMvc.mapY",LMvc.mapX,LMvc.mapY);
+	if(LMvc.mapX || LMvc.mapY){
+		self.baseLayer.x = LMvc.mapX;
+		self.baseLayer.y = LMvc.mapY;
+	}else{
+		LMvc.mapX = 0;
+		LMvc.mapY = 0;
+	}
 };
 MapView.prototype.updateView = function(){
 	var self = this;
