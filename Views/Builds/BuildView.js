@@ -18,4 +18,5 @@ BuildView.prototype.set=function(img,name){
 	name.heightMode = LTextField.HEIGHT_MODE_BASELINE;
 	layer.addChild(name);
 	self.addChild(getBitmap(layer));
+	self.addShape(LShape.RECT,[0,0,self.width,self.height]);
 };

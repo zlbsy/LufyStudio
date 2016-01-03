@@ -354,13 +354,13 @@ CharacterModel.prototype.level = function() {
 	var self = this;
 	return self.data.feat / CharacterModel.FEAT_VALUE + 1;
 };
-CharacterModel.prototype.strategies = function() {
+CharacterModel.prototype.strategies = function(isAll) {
 	var self = this;
 	var strategies = self.currentSoldiers().strategy();
 	var datas = [];
 	for(var i=0,l=strategies.length;i<l;i++){
 		var child = strategies[i];
-		if(child.level() < self.level()){
+		if(isAll || child.level() < self.level()){
 			datas.push(child);
 		}
 	}

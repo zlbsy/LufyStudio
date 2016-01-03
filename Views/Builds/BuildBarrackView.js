@@ -56,20 +56,19 @@ BuildBarrackView.prototype.showSoldiers=function(){
 	var panel = new LPanel(new LBitmapData(LMvc.datalist["win01"]),260,40);
 	panel.cacheAsBitmap(true);
 	var bitmapOn = new LBitmap(new LBitmapData(LMvc.datalist["combobox_arraw"]));
-	bitmapOn.scaleX = bitmapOn.scaleY = 0.6;
 	var bitmapOff = new LBitmap(new LBitmapData(LMvc.datalist["combobox_arraw"]));
-	bitmapOff.scaleX = bitmapOff.scaleY = bitmapOn.scaleX;
-	var com = new LComboBox(16,"#ffffff","Arial",panel,bitmapOff,bitmapOn);
+	var com = new LComboBox(18,"#ffffff","Arial",panel,bitmapOff,bitmapOn);
+	com.setListChildView(TrainingComboBoxChild);
+	com.listView.cellWidth = 250;
 	com.label.x = 10;
 	com.label.y = 9;
 	com.label.lineColor = "#000000";
 	com.label.stroke = true;
-	com.label.lineWidth = 2;
+	com.label.lineWidth = 3;
 	for(var i=0;i<soldiers.length;i++){
 		var soldierModel = soldiers[i];
-		var proficiency = 200;
-		var label = String.format("{0} {1}({2})", soldierModel.name(), Language.get("proficiency"),proficiency);
-		com.setChild({label:label,value:i});
+		var label = String.format("{0} {1}({2})", soldierModel.name(), Language.get("proficiency"),soldierModel.proficiency());
+		com.setChild({label:label,value:soldierModel.id()});
 	}
 	com.y = 55;
 	layer.addChild(com);
@@ -92,16 +91,19 @@ BuildBarrackView.prototype.selectSoldier=function(event){
 	var selectCharacter = self.controller.getValue("selectCharacter");
 	var cityModel = self.controller.getValue("cityData");
 	var soldiers = selectCharacter.soldiers();
-	var soldier = soldiers[index];
+	var soldier = soldiers.find(function(child){
+		return child.id() == index;
+	});
 	if(soldier.proficiency() >= TrainingSetting.MAX){
 		var obj = {title:Language.get("confirm"),message:Language.get("dialog_proficiency_max_error"),height:200,okEvent:null};
 		var windowLayer = ConfirmWindow(obj);
 		LMvc.layer.addChild(windowLayer);
 		return;
 	}
-	console.log("soldier="+soldier);
+	console.log("self=",self);
 	selectCharacter.training(soldier.id());
 	cityModel.money(-JobPrice.TRAINING);
+	//windowObj.remove();
 	self.controller.closeCharacterList({characterListType : null});
 	LMvc.CityController.dispatchEvent(LController.NOTIFY_ALL);
 	console.log("soldier.id()="+soldier.id());

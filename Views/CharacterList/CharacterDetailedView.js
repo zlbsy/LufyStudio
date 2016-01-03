@@ -157,7 +157,9 @@ CharacterDetailedView.prototype.showEquipment=function(){
 		if(equipment){
 			icon = equipment.icon(new LPoint(iconSize,iconSize));
 			icon.removeItemId = equipment.id();
-			icon.addEventListener(LMouseEvent.MOUSE_UP,self.removeEquipment);
+			if(!LMvc.BattleController && self.characterModel.seigniorId() == LMvc.selectSeignorId){
+				icon.addEventListener(LMouseEvent.MOUSE_UP,self.removeEquipment);
+			}
 		}else{
 			icon = new LPanel(new LBitmapData(LMvc.datalist["win03"]),iconSize,iconSize);
 		}

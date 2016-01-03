@@ -42,8 +42,7 @@ var SoldierDatas = [
 	{id:9,value:90,moveCost:2},{id:11,value:100,moveCost:3}],
 	rangeAttack:[{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0}],
 	rangeAttackTarget:[{x:0,y:0}],
-	strategy:[{id:33,lv:0},{id:34,lv:0}],
-	strategyHert:1,
+	strategy:[{id:33,lv:5},{id:34,lv:10},{id:42,lv:20}],
 	explanation:"explanation_jj",
 	next:[{id:2,lv:20}]
 	},
@@ -54,8 +53,7 @@ var SoldierDatas = [
 	terrain:[{id:7,value:100,moveCost:2},{id:8,value:100,moveCost:2},{id:10,value:110,moveCost:1},{id:11,value:110,moveCost:2}],
 	rangeAttack:[{x:-1,y:-1},{x:-1,y:1},{x:1,y:1},{x:1,y:-1},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0}],
 	rangeAttackTarget:[{x:0,y:0}],
-	strategy:[{id:2,lv:0},{id:3,lv:3}],
-	strategyHert:1,
+	strategy:[],
 	explanation:"explanation_qbb",
 	next:[{id:5,lv:20}]
 	},
@@ -68,7 +66,7 @@ var SoldierDatas = [
 	{id:5,value:100,moveCost:2},{id:6,value:110,moveCost:1},{id:7,value:90,moveCost:2},{id:8,value:80,moveCost:3},{id:9,value:80,moveCost:2},{id:11,value:90,moveCost:3}],
 	rangeAttack:[{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0}],
 	rangeAttackTarget:[{x:0,y:0}],
-	strategy:[{id:2,lv:0},{id:3,lv:3}],
+	strategy:[],
 	explanation:"explanation_qqb",
 	next:[{id:7,lv:20}]
 	},
@@ -79,7 +77,7 @@ var SoldierDatas = [
 	terrain:[{id:7,value:100,moveCost:2},{id:8,value:100,moveCost:2},{id:10,value:110,moveCost:1},{id:11,value:110,moveCost:2}],
 	rangeAttack:[{x:-1,y:-1},{x:-1,y:1},{x:1,y:1},{x:1,y:-1},{x:0,y:-2},{x:0,y:2},{x:-2,y:0},{x:2,y:0}],
 	rangeAttackTarget:[{x:0,y:0}],
-	strategy:[{id:2,lv:0},{id:3,lv:3}],
+	strategy:[],
 	explanation:"explanation_gb",
 	next:[{id:7,lv:20}]
 	},
@@ -92,7 +90,7 @@ var SoldierDatas = [
 	{id:5,value:100,moveCost:2},{id:6,value:110,moveCost:1},{id:7,value:90,moveCost:2},{id:8,value:80,moveCost:3},{id:9,value:80,moveCost:2},{id:11,value:90,moveCost:3}],
 	rangeAttack:[{x:0,y:-2},{x:0,y:2},{x:-2,y:0},{x:2,y:0}],
 	rangeAttackTarget:[{x:0,y:0}],
-	strategy:[{id:2,lv:0},{id:3,lv:3}],
+	strategy:[],
 	explanation:"explanation_gqb",
 	next:[{id:7,lv:20}]
 	},
@@ -106,7 +104,7 @@ var SoldierDatas = [
 	{id:8,value:80,moveCost:2},{id:10,value:110,moveCost:1},{id:11,value:100,moveCost:2}],
 	rangeAttack:[{x:0,y:-4},{x:0,y:4},{x:-4,y:0},{x:4,y:0}, {x:1,y:-3},{x:1,y:3},{x:-1,y:-3},{x:-1,y:3},{x:-3,y:1},{x:3,y:1},{x:-3,y:-1},{x:3,y:-1}, {x:2,y:-2},{x:2,y:2},{x:-2,y:2},{x:-2,y:-2}],
 	rangeAttackTarget:[{x:0,y:0}],
-	strategy:[{id:2,lv:0},{id:3,lv:3}],
+	strategy:[],
 	explanation:"explanation_qpc",
 	next:[{id:7,lv:20}]
 	},
@@ -119,7 +117,7 @@ var SoldierDatas = [
 	{id:8,value:100,moveCost:2},{id:9,value:110,moveCost:1},{id:11,value:100,moveCost:2}],
 	rangeAttack:[{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0}],
 	rangeAttackTarget:[{x:0,y:0}],
-	strategy:[{id:2,lv:0},{id:3,lv:3}],
+	strategy:[{id:47,lv:10}],
 	explanation:"explanation_whj",
 	next:[{id:7,lv:20}]
 	},
@@ -133,7 +131,7 @@ var SoldierDatas = [
 	{id:8,value:80,moveCost:2},{id:9,value:80,moveCost:2},{id:11,value:110,moveCost:2}],
 	rangeAttack:[{x:-1,y:-1},{x:-1,y:1},{x:1,y:1},{x:1,y:-1},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0}],
 	rangeAttackTarget:[{x:0,y:0}],
-	strategy:[{id:2,lv:0},{id:3,lv:3}],
+	strategy:[{id:4,lv:15},{id:36,lv:10}],
 	explanation:"explanation_zb",
 	next:[{id:7,lv:20}]
 	},
@@ -147,7 +145,7 @@ var SoldierDatas = [
 	{id:8,value:90,moveCost:2},{id:9,value:80,moveCost:2},{id:11,value:110,moveCost:2}],
 	rangeAttack:[{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0}],
 	rangeAttackTarget:[{x:0,y:0}],
-	strategy:[{id:2,lv:0},{id:3,lv:3}],
+	strategy:[{id:33,lv:0},{id:34,lv:5},{id:35,lv:10},{id:36,lv:15},{id:37,lv:20},{id:38,lv:25},{id:39,lv:30},{id:40,lv:35},{id:41,lv:5},{id:42,lv:20},{id:48,lv:20}],
 	explanation:"explanation_cs",
 	next:[{id:7,lv:20}]
 	},
@@ -160,7 +158,8 @@ var SoldierDatas = [
 	{id:8,value:90,moveCost:2},{id:9,value:100,moveCost:2},{id:11,value:110,moveCost:2}],
 	rangeAttack:[{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0}],
 	rangeAttackTarget:[{x:0,y:0}],
-	strategy:[{id:2,lv:0},{id:3,lv:3}],
+	strategy:[{id:1,lv:5},{id:3,lv:10},{id:5,lv:15},{id:7,lv:20},{id:9,lv:25},{id:11,lv:30},{id:13,lv:35},{id:15,lv:40},{id:17,lv:45},{id:19,lv:50},{id:31,lv:10},{id:32,lv:50},
+	{id:41,lv:0},{id:42,lv:0},{id:43,lv:10},{id:44,lv:10},{id:45,lv:20},{id:46,lv:20}],
 	explanation:"explanation_fsis",
 	next:[{id:7,lv:20}]
 	},
@@ -174,7 +173,9 @@ var SoldierDatas = [
 	{id:8,value:80,moveCost:2},{id:9,value:80,moveCost:2},{id:11,value:110,moveCost:2}],
 	rangeAttack:[{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0}],
 	rangeAttackTarget:[{x:0,y:0}],
-	strategy:[{id:2,lv:0},{id:3,lv:3}],
+	strategy:[{id:2,lv:5},{id:4,lv:10},{id:6,lv:15},{id:8,lv:20},{id:10,lv:25},{id:12,lv:30},{id:14,lv:35},{id:16,lv:40},{id:18,lv:45},{id:20,lv:50},
+	{id:21,lv:30},{id:22,lv:10},{id:23,lv:0},{id:24,lv:20},{id:26,lv:50},{id:27,lv:40},{id:28,lv:35},{id:29,lv:45},
+	{id:41,lv:5}],
 	explanation:"explanation_ds",
 	next:[{id:7,lv:20}]
 	},
@@ -188,7 +189,7 @@ var SoldierDatas = [
 	{id:8,value:80,moveCost:3},{id:9,value:80,moveCost:2},{id:11,value:90,moveCost:3}],
 	rangeAttack:[{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0}],
 	rangeAttackTarget:[{x:0,y:0}],
-	strategy:[{id:2,lv:0},{id:3,lv:3}],
+	strategy:[{id:4,lv:20},{id:6,lv:30},{id:10,lv:40},{id:33,lv:0},{id:34,lv:5},{id:35,lv:10},{id:36,lv:15},{id:38,lv:25},{id:40,lv:35},{id:41,lv:5},{id:42,lv:20}],
 	explanation:"explanation_qcs",
 	next:[{id:7,lv:20}]
 	},
@@ -201,7 +202,7 @@ var SoldierDatas = [
 	{id:7,value:110,moveCost:1},{id:8,value:110,moveCost:1},{id:9,value:110,moveCost:1},{id:11,value:110,moveCost:2}],
 	rangeAttack:[{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0}],
 	rangeAttackTarget:[{x:0,y:0}],
-	strategy:[{id:2,lv:0},{id:3,lv:3}],
+	strategy:[{id:47,lv:10},{id:49,lv:20}],
 	explanation:"explanation_wun",
 	next:[{id:7,lv:20}]
 	},
@@ -215,7 +216,7 @@ var SoldierDatas = [
 	{id:8,value:110,moveCost:1},{id:9,value:110,moveCost:1},{id:11,value:110,moveCost:2}],
 	rangeAttack:[{x:-1,y:-1},{x:-1,y:1},{x:1,y:1},{x:1,y:-1},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0}],
 	rangeAttackTarget:[{x:0,y:0}],
-	strategy:[{id:2,lv:0},{id:3,lv:3}],
+	strategy:[{id:35,lv:10},{id:39,lv:40}],
 	explanation:"explanation_hd",
 	next:[{id:7,lv:20}]
 	},
@@ -228,7 +229,7 @@ var SoldierDatas = [
 	{id:7,value:110,moveCost:1},{id:8,value:110,moveCost:1},{id:9,value:110,moveCost:1},{id:11,value:110,moveCost:2}],
 	rangeAttack:[{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0}],
 	rangeAttackTarget:[{x:0,y:0}],
-	strategy:[{id:2,lv:0},{id:3,lv:3}],
+	strategy:[{id:33,lv:5},{id:34,lv:10},{id:35,lv:0},{id:36,lv:15},{id:37,lv:25},{id:38,lv:30},{id:39,lv:20},{id:41,lv:5},{id:42,lv:20}],
 	explanation:"explanation_dd",
 	next:[{id:8,lv:40}]
 	},
@@ -241,7 +242,10 @@ var SoldierDatas = [
 	{id:8,value:80,moveCost:2},{id:9,value:80,moveCost:1},{id:11,value:110,moveCost:2}],
 	rangeAttack:[{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0}],
 	rangeAttackTarget:[{x:0,y:0}],
-	strategy:[{id:2,lv:0},{id:3,lv:3}],
+	strategy:[{id:1,lv:5},{id:2,lv:10},{id:3,lv:15},{id:4,lv:20},{id:5,lv:25},{id:6,lv:30},{id:7,lv:35},{id:8,lv:40},{id:9,lv:45},{id:10,lv:50},
+	{id:21,lv:25},{id:22,lv:10},{id:23,lv:15},{id:24,lv:20},{id:31,lv:30},
+	{id:33,lv:0},{id:34,lv:10},{id:35,lv:20},{id:36,lv:30},{id:37,lv:40},
+	{id:41,lv:5},{id:42,lv:0},{id:45,lv:45},{id:46,lv:40}],
 	explanation:"explanation_zss"
 	},
 	{id:17,name:"西凉骑兵",type:SoldierType.Physical,attackType:AttackType.NEAR,moveType:MoveType.CAVALRY,movePower:5,
@@ -254,7 +258,8 @@ var SoldierDatas = [
 	{id:8,value:80,moveCost:2},{id:9,value:80,moveCost:2},{id:11,value:90,moveCost:3}],
 	rangeAttack:[{x:-1,y:-1},{x:-1,y:1},{x:1,y:1},{x:1,y:-1},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0}],
 	rangeAttackTarget:[{x:0,y:0}],
-	strategy:[{id:2,lv:0},{id:3,lv:3}],
+	strategy:[],
+	strategyHert:1.5,
 	explanation:"explanation_xlqb",
 	next:[{id:7,lv:20}]
 	},
@@ -267,7 +272,8 @@ var SoldierDatas = [
 	{id:8,value:90,moveCost:1},{id:9,value:80,moveCost:1},{id:11,value:110,moveCost:2}],
 	rangeAttack:[{x:-1,y:-1},{x:-1,y:1},{x:1,y:1},{x:1,y:-1},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0}],
 	rangeAttackTarget:[{x:0,y:0}],
-	strategy:[{id:2,lv:0},{id:3,lv:3}],
+	strategy:[],
+	strategyHert:1.5,
 	explanation:"explanation_xxs",
 	next:[{id:8,lv:40}]
 	},
@@ -280,7 +286,8 @@ var SoldierDatas = [
 	{id:8,value:90,moveCost:1},{id:9,value:80,moveCost:1},{id:11,value:110,moveCost:2}],
 	rangeAttack:[{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0}],
 	rangeAttackTarget:[{x:0,y:0}],
-	strategy:[{id:2,lv:0},{id:3,lv:3}],
+	strategy:[],
+	strategyHert:1.5,
 	explanation:"explanation_xhs"
 	},
 	{id:20,name:"青龙骑兵",type:SoldierType.Physical,attackType:AttackType.NEAR,moveType:MoveType.CAVALRY,movePower:5,
@@ -290,7 +297,7 @@ var SoldierDatas = [
 	terrain:[{id:1,value:110,moveCost:1},{id:2,value:80,moveCost:2}],
 	rangeAttack:[{x:-1,y:-1},{x:-1,y:1},{x:1,y:1},{x:1,y:-1},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0}],
 	rangeAttackTarget:[{x:0,y:0}],
-	strategy:[{id:2,lv:0},{id:3,lv:3}],
+	strategy:[],
 	explanation:"explanation_qlq",
 	next:[{id:7,lv:20}]
 	},
@@ -301,7 +308,7 @@ var SoldierDatas = [
 	terrain:[{id:1,value:110,moveCost:1},{id:2,value:80,moveCost:2}],
 	rangeAttack:[{x:-1,y:-1},{x:-1,y:1},{x:1,y:1},{x:1,y:-1},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0}],
 	rangeAttackTarget:[{x:0,y:0}],
-	strategy:[{id:2,lv:0},{id:3,lv:3}],
+	strategy:[],
 	explanation:"explanation_bhq",
 	next:[{id:8,lv:40}]
 	},
@@ -312,7 +319,7 @@ var SoldierDatas = [
 	terrain:[{id:1,value:110,moveCost:1},{id:2,value:80,moveCost:2}],
 	rangeAttack:[{x:-1,y:-1},{x:-1,y:1},{x:1,y:1},{x:1,y:-1},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0}],
 	rangeAttackTarget:[{x:0,y:0}],
-	strategy:[{id:2,lv:0},{id:3,lv:3}],
+	strategy:[],
 	explanation:"explanation_xwn"
 	},
 	{id:23,name:"朱雀弩骑",type:SoldierType.Physical,attackType:AttackType.NEAR,moveType:MoveType.CAVALRY,movePower:5,
@@ -322,7 +329,7 @@ var SoldierDatas = [
 	terrain:[{id:1,value:110,moveCost:1},{id:2,value:80,moveCost:2}],
 	rangeAttack:[{x:-1,y:-1},{x:-1,y:1},{x:1,y:1},{x:1,y:-1},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0}],
 	rangeAttackTarget:[{x:0,y:0}],
-	strategy:[{id:2,lv:0},{id:3,lv:3}],
+	strategy:[],
 	explanation:"explanation_zqn",
 	next:[{id:7,lv:20}]
 	},

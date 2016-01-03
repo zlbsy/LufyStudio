@@ -13,37 +13,24 @@ function StrategyView(controller, characterModel, size, fromView) {
 StrategyView.prototype.setStrategyList = function() {
 	var self = this;
 	self.strategyListLayer.removeAllChild();
-	var strategyList = self.characterModel.strategies();
-	var backLayer = new LSprite();
-	var index = 0;
+	var strategyList = self.characterModel.strategies(self.fromCharacterDetailed);
+	self.listView = new LListView();
+	if(self.fromCharacterDetailed){
+		self.listView.resize(self.size.x, self.size.y);
+	}else{
+		self.listView.resize(self.size.x - 50, self.size.y - 140);
+	}
+	self.listView.cellWidth = self.listView.clipping.width;
+	self.listView.cellHeight = 50;
+	self.strategyListLayer.addChild(self.listView);
+	var items = [];
 	for (var i = 0, l = strategyList.length; i < l; i++) {
 		var strategy = strategyList[i];
-		var child = new StrategyChildView(self.controller, strategy);
-		child.y = 50 * index++;
-		backLayer.addChild(child);
+		var isLearned = strategy.level() < self.characterModel.level();
+		var child = new StrategyChildView(strategy, isLearned, self.listView.cellWidth);
+		items.push(child);
 	}
-	
-	
-	backLayer.graphics.drawRect(0, "#000000", [0, 0, self.size.x - (self.fromCharacterDetailed?0:40), 50 * strategyList.length]);
-	self.strategyListLayer.listLayer = backLayer;
-	
-	
-	var left = backLayer.graphics.startX(), right = left + backLayer.graphics.getWidth();
-	var sc;
-	if(self.fromCharacterDetailed){
-		sc = new LScrollbar(backLayer, self.size.x, self.size.y, 10);
-	}else{
-		sc = new LScrollbar(backLayer, self.size.x - 40, self.size.y - 130, 10);
-	}
-	sc._showLayer.graphics.clear();
-	
-	self.strategyListLayer.addChild(sc);
-	sc.excluding = true;
-	if(self.fromCharacterDetailed){
-		return;
-	}
-	backLayer.addEventListener(LMouseEvent.MOUSE_DOWN, self.strategyClickDown);
-	backLayer.addEventListener(LMouseEvent.MOUSE_UP, self.strategyClickUp.bind(self));
+	self.listView.updateList(items);
 };
 StrategyView.prototype.onclick = function() {};
 StrategyView.prototype.layerInit = function() {
@@ -57,7 +44,9 @@ StrategyView.prototype.layerInit = function() {
 	}
 	self.baseLayer = new LSprite();
 	self.addChild(self.baseLayer);
-	self.setBackgroundLayer();
+	if(!self.fromCharacterDetailed){
+		self.setBackgroundLayer();
+	}
 	self.strategyListLayer = new LSprite();
 	self.baseLayer.addChild(self.strategyListLayer);
 	if(self.fromCharacterDetailed){
@@ -69,9 +58,6 @@ StrategyView.prototype.layerInit = function() {
 };
 StrategyView.prototype.setBackgroundLayer = function() {
 	var self = this;
-	if(self.fromCharacterDetailed){
-		return;
-	}
 	var windowLayer = new LSprite();
 	windowLayer.addChild(getTranslucentBitmap());
 	var backgroundData = new LBitmapData(LMvc.datalist["win05"]);
@@ -121,30 +107,16 @@ StrategyView.prototype.close = function(event) {
 	self.dispatchEvent(StrategyListEvent.CLOSE);
 	self.remove();
 };
-StrategyView.prototype.strategyClickDown = function(event) {
-	var child = event.target;
-	child.offsetX = event.offsetX;
-	child.offsetY = event.offsetY;
-};
-StrategyView.prototype.strategyClickUp = function(event) {
-	if(event.target.constructor.name != "StrategyChildView"){
-		return;
-	}
-	var child = event.target, self = this;
-	if (child.offsetX && child.offsetY && Math.abs(child.offsetX - event.offsetX) < 5 && Math.abs(child.offsetY - event.offsetY) < 5) {
-		self.strategySelect(child.strategyModel);
-	}
-};
 StrategyView.prototype.strategySelect = function(strategyModel) {
 	var self = this;
+	if(self.fromCharacterDetailed){
+		return;
+	}
 	var weathers = strategyModel.weathers();
 	if(weathers && weathers.length > 0 && weathers.indexOf(LMvc.BattleController.view.weatherLayer.currentWeather.weather) < 0){
 		Toast.makeText(Language.get("strategy_weather_error")).show();
 		return;
 	}
-	/*self.strategyModel = strategyModel;
-	self.dispatchSelectEvent();
-	return;*/
 	var e = new LEvent(StrategyListEvent.SELECT);
 	e.strategyModel = strategyModel;
 	self.dispatchEvent(e);

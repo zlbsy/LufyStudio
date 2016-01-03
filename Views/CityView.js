@@ -94,7 +94,7 @@ CityView.prototype.buildLayerInit=function(){
 	tavern.alpha = alpha;
 	self.buildLayer.addChild(tavern);
 	
-	var market = new BuildView(self.controller,"main-tavern","market");
+	var market = new BuildView(self.controller,"main-shop","market");
 	market.x = LGlobal.width - market.width;
 	market.y = 150;
 	market.alpha = alpha;
@@ -104,7 +104,7 @@ CityView.prototype.buildLayerInit=function(){
 	citygate.y = LGlobal.height - citygate.height;
 	self.buildLayer.addChild(citygate);
 	
-	var barrack = new BuildView(self.controller,"main-tavern","barrack");
+	var barrack = new BuildView(self.controller,"main-trainingGround","barrack");
 	barrack.x = (LGlobal.width - barrack.width) * 0.7;
 	barrack.y = LGlobal.height - barrack.height - 5;
 	barrack.alpha = alpha;

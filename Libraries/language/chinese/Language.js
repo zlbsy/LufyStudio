@@ -59,6 +59,12 @@ Language.data = {
 	
 	"treat":"治疗",
 	
+	"StrategyEffectType.1":"攻击",
+	"StrategyEffectType.2":"状态变化",
+	"StrategyEffectType.3":"能力变化",
+	"StrategyEffectType.4":"觉醒",
+	"StrategyEffectType.5":"治疗",
+	
 	"return":"返回",
 	"execute":"执行",
 	"who_can_do":"派谁去?",

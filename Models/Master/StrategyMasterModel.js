@@ -77,13 +77,17 @@ StrategyMasterModel.prototype.explanation = function() {
 StrategyMasterModel.prototype.image = function() {
 	return LMvc.IMG_PATH + "strategy/effect/"+this.data.image+".png";
 };
+StrategyMasterModel.prototype.icon = function() {
+	return this.data.icon;
+};
+/*
 StrategyMasterModel.prototype.icon=function(size){
 	var self = this;
 	var icon = new BitmapSprite(LMvc.IMG_PATH + "strategy/icon/"+self.data.icon+".png", null,size);
 	var winPanel = new LPanel(new LBitmapData(LMvc.datalist["win06"]),size.x,size.y);
 	icon.addChild(getBitmap(winPanel));
 	return icon;
-};
+};*/
 StrategyMasterModel.prototype.imageCache = function(cache) {
 	var self = this;
 	if(typeof cache != UNDEFINED){

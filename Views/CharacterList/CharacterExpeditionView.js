@@ -24,7 +24,7 @@ CharacterExpeditionView.prototype.layerInit=function(){
 CharacterExpeditionView.prototype.set=function(){
 	var self = this;
 	var bitmap = new LBitmap(new LBitmapData(LMvc.datalist["checkbox-background"]));
-	var panel = new LPanel(new LBitmapData(LMvc.datalist["win01"]),110,40);
+	var panel = new LPanel(new LBitmapData(LMvc.datalist["win01"]),120,40);
 	var bitmapOn = new LBitmap(new LBitmapData(LMvc.datalist["combobox_arraw"]));
 	var bitmapOff = new LBitmap(new LBitmapData(LMvc.datalist["combobox_arraw"]));
 	var rangeBackground = getBitmap(new LPanel(new LBitmapData(LMvc.datalist["win04"]),170,40));
@@ -56,19 +56,26 @@ CharacterExpeditionView.prototype.set=function(){
 	self.currentTroopsIndex = soldiers.findIndex(function(child){
 		return child.id() == self.currentSoldierModel.id();
 	});
-	var icon = currentSoldierModel.icon(new LPoint(width,height), true);
+	var icon = currentSoldierModel.icon(new LPoint(width,height));
 	layer.addChild(icon);
 	self.maxTroops = self.currentSoldierModel.maxTroops(self.characterModel);
 	if(self.maxTroops > self.canUseTroops){
 		self.maxTroops = self.canUseTroops;
 	}
-	var com = new LComboBox(16,"#000000","Arial",panel,bitmapOff,bitmapOn);
+	var com = new LComboBox(18,"#ffffff","Arial",panel,bitmapOff,bitmapOn);
 	for(var i=0;i<soldiers.length;i++){
 		var soldierModel = soldiers[i];
 		com.setChild({label:soldierModel.name(),value:i});
 	}
 	com.y = 55;
 	layer.addChild(com);
+	com.setListChildView(ExpeditionComboBoxChild);
+	com.listView.cellWidth = 110;
+	com.label.x = 10;
+	com.label.y = 9;
+	com.label.lineColor = "#000000";
+	com.label.stroke = true;
+	com.label.lineWidth = 3;
 	com.setValue(self.currentTroopsIndex);
 	var troopLabel = getStrokeLabel( self.currentTroops, 18, "#FFFFFF", "#000000", 4);
 	troopLabel.x = 150;

@@ -67,7 +67,7 @@ var StrategyDatas = [
 	cost:6,
 	hert:0.2,
 	rangeAttack:[{x:0,y:-1},{x:0,y:-2},{x:0,y:-3},{x:0,y:1},{x:0,y:2},{x:0,y:3},{x:-1,y:0},{x:-2,y:0},{x:-3,y:0},{x:1,y:0},{x:2,y:0},{x:3,y:0}],
-	rangeAttackTarget:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],
+	rangeAttackTarget:[{x:0,y:0}],
 	explanation:""
 	},
 	{id:2,name:"降攻",belong:Belong.ENEMY,type:StrategyType.AttackAid,effectType:StrategyEffectType.Aid,image:"feng-1",
@@ -83,7 +83,7 @@ var StrategyDatas = [
 	cost:6,
 	hert:0.2,
 	rangeAttack:[{x:0,y:-1},{x:0,y:-2},{x:0,y:-3},{x:0,y:1},{x:0,y:2},{x:0,y:3},{x:-1,y:0},{x:-2,y:0},{x:-3,y:0},{x:1,y:0},{x:2,y:0},{x:3,y:0}],
-	rangeAttackTarget:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],
+	rangeAttackTarget:[{x:0,y:0}],
 	explanation:""
 	},
 	{id:4,name:"降防",belong:Belong.ENEMY,type:StrategyType.DefenseAid,effectType:StrategyEffectType.Aid,image:"feng-1",
@@ -99,7 +99,7 @@ var StrategyDatas = [
 	cost:6,
 	hert:0.2,
 	rangeAttack:[{x:0,y:-1},{x:0,y:-2},{x:0,y:-3},{x:0,y:1},{x:0,y:2},{x:0,y:3},{x:-1,y:0},{x:-2,y:0},{x:-3,y:0},{x:1,y:0},{x:2,y:0},{x:3,y:0}],
-	rangeAttackTarget:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],
+	rangeAttackTarget:[{x:0,y:0}],
 	explanation:""
 	},
 	{id:6,name:"降士气",belong:Belong.ENEMY,type:StrategyType.MoraleAid,effectType:StrategyEffectType.Aid,image:"feng-1",
@@ -115,7 +115,7 @@ var StrategyDatas = [
 	cost:6,
 	hert:0.2,
 	rangeAttack:[{x:0,y:-1},{x:0,y:-2},{x:0,y:-3},{x:0,y:1},{x:0,y:2},{x:0,y:3},{x:-1,y:0},{x:-2,y:0},{x:-3,y:0},{x:1,y:0},{x:2,y:0},{x:3,y:0}],
-	rangeAttackTarget:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],
+	rangeAttackTarget:[{x:0,y:0}],
 	explanation:""
 	},
 	{id:8,name:"降精神",belong:Belong.ENEMY,type:StrategyType.ApiritAid,effectType:StrategyEffectType.Aid,image:"feng-1",
@@ -131,7 +131,7 @@ var StrategyDatas = [
 	cost:6,
 	hert:0.2,
 	rangeAttack:[{x:0,y:-1},{x:0,y:-2},{x:0,y:-3},{x:0,y:1},{x:0,y:2},{x:0,y:3},{x:-1,y:0},{x:-2,y:0},{x:-3,y:0},{x:1,y:0},{x:2,y:0},{x:3,y:0}],
-	rangeAttackTarget:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],
+	rangeAttackTarget:[{x:0,y:0}],
 	explanation:""
 	},
 	{id:10,name:"降爆发",belong:Belong.ENEMY,type:StrategyType.BreakoutAid,effectType:StrategyEffectType.Aid,image:"feng-1",
@@ -155,7 +155,7 @@ var StrategyDatas = [
 	cost:6,
 	hert:-0.2,
 	rangeAttack:[{x:0,y:-1},{x:0,y:-2},{x:0,y:-3},{x:0,y:1},{x:0,y:2},{x:0,y:3},{x:-1,y:0},{x:-2,y:0},{x:-3,y:0},{x:1,y:0},{x:2,y:0},{x:3,y:0}],
-	rangeAttackTarget:[{x:0,y:0}],
+	rangeAttackTarget:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],
 	explanation:""
 	},
 	{id:13,name:"群体加防",belong:Belong.SELF,type:StrategyType.DefenseAid,effectType:StrategyEffectType.Aid,image:"feng-1",
@@ -171,7 +171,7 @@ var StrategyDatas = [
 	cost:6,
 	hert:-0.2,
 	rangeAttack:[{x:0,y:-1},{x:0,y:-2},{x:0,y:-3},{x:0,y:1},{x:0,y:2},{x:0,y:3},{x:-1,y:0},{x:-2,y:0},{x:-3,y:0},{x:1,y:0},{x:2,y:0},{x:3,y:0}],
-	rangeAttackTarget:[{x:0,y:0}],
+	rangeAttackTarget:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],
 	explanation:""
 	},
 	{id:15,name:"群体加士气",belong:Belong.SELF,type:StrategyType.MoraleAid,effectType:StrategyEffectType.Aid,image:"feng-1",
@@ -187,7 +187,7 @@ var StrategyDatas = [
 	cost:6,
 	hert:-0.2,
 	rangeAttack:[{x:0,y:-1},{x:0,y:-2},{x:0,y:-3},{x:0,y:1},{x:0,y:2},{x:0,y:3},{x:-1,y:0},{x:-2,y:0},{x:-3,y:0},{x:1,y:0},{x:2,y:0},{x:3,y:0}],
-	rangeAttackTarget:[{x:0,y:0}],
+	rangeAttackTarget:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],
 	explanation:""
 	},
 	{id:17,name:"群体加精神",belong:Belong.SELF,type:StrategyType.ApiritAid,effectType:StrategyEffectType.Aid,image:"feng-1",
@@ -203,7 +203,7 @@ var StrategyDatas = [
 	cost:6,
 	hert:-0.2,
 	rangeAttack:[{x:0,y:-1},{x:0,y:-2},{x:0,y:-3},{x:0,y:1},{x:0,y:2},{x:0,y:3},{x:-1,y:0},{x:-2,y:0},{x:-3,y:0},{x:1,y:0},{x:2,y:0},{x:3,y:0}],
-	rangeAttackTarget:[{x:0,y:0}],
+	rangeAttackTarget:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],
 	explanation:""
 	},
 	{id:19,name:"群体加爆发",belong:Belong.SELF,type:StrategyType.BreakoutAid,effectType:StrategyEffectType.Aid,image:"feng-1",
@@ -219,7 +219,7 @@ var StrategyDatas = [
 	cost:6,
 	hert:-0.2,
 	rangeAttack:[{x:0,y:-1},{x:0,y:-2},{x:0,y:-3},{x:0,y:1},{x:0,y:2},{x:0,y:3},{x:-1,y:0},{x:-2,y:0},{x:-3,y:0},{x:1,y:0},{x:2,y:0},{x:3,y:0}],
-	rangeAttackTarget:[{x:0,y:0}],
+	rangeAttackTarget:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],
 	explanation:""
 	},
 	{id:21,name:"混乱",belong:Belong.ENEMY,type:StrategyType.Chaos,effectType:StrategyEffectType.Status,image:"chaos-1",
@@ -227,7 +227,7 @@ var StrategyDatas = [
 	cost:6,
 	hert:0.8,
 	rangeAttack:[{x:0,y:-1},{x:0,y:-2},{x:0,y:-3},{x:0,y:1},{x:0,y:2},{x:0,y:3},{x:-1,y:0},{x:-2,y:0},{x:-3,y:0},{x:1,y:0},{x:2,y:0},{x:3,y:0}],
-	rangeAttackTarget:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],
+	rangeAttackTarget:[{x:0,y:0}],
 	explanation:""
 	},
 	{id:22,name:"定身",belong:Belong.ENEMY,type:StrategyType.Fixed,effectType:StrategyEffectType.Status,image:"feng-1",
@@ -275,7 +275,7 @@ var StrategyDatas = [
 	cost:6,
 	hert:0.8,
 	rangeAttack:[{x:0,y:-1},{x:0,y:-2},{x:0,y:-3},{x:0,y:1},{x:0,y:2},{x:0,y:3},{x:-1,y:0},{x:-2,y:0},{x:-3,y:0},{x:1,y:0},{x:2,y:0},{x:3,y:0}],
-	rangeAttackTarget:[{x:0,y:0}],
+	rangeAttackTarget:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],
 	explanation:""
 	},
 	{id:28,name:"群体毒",belong:Belong.ENEMY,type:StrategyType.Fixed,effectType:StrategyEffectType.Status,image:"feng-1",
@@ -283,7 +283,7 @@ var StrategyDatas = [
 	cost:6,
 	hert:0.8,
 	rangeAttack:[{x:0,y:-1},{x:0,y:-2},{x:0,y:-3},{x:0,y:1},{x:0,y:2},{x:0,y:3},{x:-1,y:0},{x:-2,y:0},{x:-3,y:0},{x:1,y:0},{x:2,y:0},{x:3,y:0}],
-	rangeAttackTarget:[{x:0,y:0}],
+	rangeAttackTarget:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],
 	explanation:""
 	},
 	{id:29,name:"群体禁咒",belong:Belong.ENEMY,type:StrategyType.Fixed,effectType:StrategyEffectType.Status,image:"feng-1",
@@ -291,7 +291,7 @@ var StrategyDatas = [
 	cost:6,
 	hert:0.8,
 	rangeAttack:[{x:0,y:-1},{x:0,y:-2},{x:0,y:-3},{x:0,y:1},{x:0,y:2},{x:0,y:3},{x:-1,y:0},{x:-2,y:0},{x:-3,y:0},{x:1,y:0},{x:2,y:0},{x:3,y:0}],
-	rangeAttackTarget:[{x:0,y:0}],
+	rangeAttackTarget:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],
 	explanation:""
 	},
 	{id:30,name:"群体燃烧",belong:Belong.ENEMY,type:StrategyType.Fixed,effectType:StrategyEffectType.Status,image:"feng-1",
@@ -299,21 +299,21 @@ var StrategyDatas = [
 	cost:6,
 	hert:0.8,
 	rangeAttack:[{x:0,y:-1},{x:0,y:-2},{x:0,y:-3},{x:0,y:1},{x:0,y:2},{x:0,y:3},{x:-1,y:0},{x:-2,y:0},{x:-3,y:0},{x:1,y:0},{x:2,y:0},{x:3,y:0}],
-	rangeAttackTarget:[{x:0,y:0}],
+	rangeAttackTarget:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],
 	explanation:""
 	},
 	{id:31,name:"觉醒",belong:Belong.SELF,type:StrategyType.Wake,effectType:StrategyEffectType.Wake,image:"feng-1",
 	icon:"feng_sign",
 	cost:6,
-	rangeAttack:[{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0}],
+	rangeAttack:[{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:1,y:1},{x:1,y:-1},{x:-1,y:1},{x:-1,y:-1},{x:2,y:0},{x:-2,y:0},{x:0,y:2},{x:0,y:-2}],
 	rangeAttackTarget:[{x:0,y:0}],
 	explanation:""
 	},
 	{id:32,name:"大觉醒",belong:Belong.SELF,type:StrategyType.Wake,effectType:StrategyEffectType.Wake,image:"feng-1",
 	icon:"feng_sign",
 	cost:6,
-	rangeAttack:[{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0}],
-	rangeAttackTarget:[{x:0,y:0}],
+	rangeAttack:[{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:1,y:1},{x:1,y:-1},{x:-1,y:1},{x:-1,y:-1},{x:2,y:0},{x:-2,y:0},{x:0,y:2},{x:0,y:-2}],
+	rangeAttackTarget:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],
 	explanation:""
 	},
 	{id:33,name:"小火计",belong:Belong.ENEMY,type:StrategyType.Fire,effectType:StrategyEffectType.Attack,image:"feng-1",
@@ -326,19 +326,19 @@ var StrategyDatas = [
 	terrains:[],
 	explanation:""
 	},
-	{id:34,name:"小风计1",belong:Belong.ENEMY,type:StrategyType.Wind,effectType:StrategyEffectType.Attack,image:"feng-1",
+	{id:34,name:"小风计",belong:Belong.ENEMY,type:StrategyType.Wind,effectType:StrategyEffectType.Attack,image:"feng-1",
 	icon:"feng_sign",
 	cost:6,
 	hert:0.8,
 	rangeAttack:[{x:0,y:-1},{x:0,y:-2},{x:0,y:-3},{x:0,y:1},{x:0,y:2},{x:0,y:3},{x:-1,y:0},{x:-2,y:0},{x:-3,y:0},{x:1,y:0},{x:2,y:0},{x:3,y:0}],
-	rangeAttackTarget:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],
+	rangeAttackTarget:[{x:0,y:0}],
 	explanation:""
 	},
 	{id:35,name:"小水计",belong:Belong.ENEMY,type:StrategyType.Fire,effectType:StrategyEffectType.Attack,image:"feng-1",
 	icon:"huo_sign",
 	cost:6,
 	hert:0.8,
-	rangeAttack:[{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0}],
+	rangeAttack:[{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:1,y:1},{x:1,y:-1},{x:-1,y:1},{x:-1,y:-1},{x:2,y:0},{x:-2,y:0},{x:0,y:2},{x:0,y:-2}],
 	rangeAttackTarget:[{x:0,y:0}],
 	weathers:["spring"],
 	explanation:""
@@ -347,7 +347,7 @@ var StrategyDatas = [
 	icon:"huo_sign",
 	cost:6,
 	hert:0.8,
-	rangeAttack:[{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0}],
+	rangeAttack:[{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:1,y:1},{x:1,y:-1},{x:-1,y:1},{x:-1,y:-1},{x:2,y:0},{x:-2,y:0},{x:0,y:2},{x:0,y:-2}],
 	rangeAttackTarget:[{x:0,y:0}],
 	weathers:["spring"],
 	explanation:""
@@ -374,8 +374,8 @@ var StrategyDatas = [
 	icon:"huo_sign",
 	cost:6,
 	hert:0.8,
-	rangeAttack:[{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0}],
-	rangeAttackTarget:[{x:0,y:0}],
+	rangeAttack:[{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:1,y:1},{x:1,y:-1},{x:-1,y:1},{x:-1,y:-1},{x:2,y:0},{x:-2,y:0},{x:0,y:2},{x:0,y:-2}],
+	rangeAttackTarget:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],
 	weathers:["spring"],
 	explanation:""
 	},
@@ -383,8 +383,8 @@ var StrategyDatas = [
 	icon:"huo_sign",
 	cost:6,
 	hert:0.8,
-	rangeAttack:[{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0}],
-	rangeAttackTarget:[{x:0,y:0}],
+	rangeAttack:[{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:1,y:1},{x:1,y:-1},{x:-1,y:1},{x:-1,y:-1},{x:2,y:0},{x:-2,y:0},{x:0,y:2},{x:0,y:-2}],
+	rangeAttackTarget:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],
 	weathers:["spring"],
 	explanation:""
 	},
@@ -402,7 +402,7 @@ var StrategyDatas = [
 	cost:6,
 	troops:0,
 	wounded:0.2,
-	rangeAttack:[{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0}],
+	rangeAttack:[{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:1,y:1},{x:1,y:-1},{x:-1,y:1},{x:-1,y:-1},{x:2,y:0},{x:-2,y:0},{x:0,y:2},{x:0,y:-2}],
 	rangeAttackTarget:[{x:0,y:0}],
 	explanation:""
 	},
@@ -420,7 +420,7 @@ var StrategyDatas = [
 	cost:6,
 	troops:0,
 	wounded:50,
-	rangeAttack:[{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0}],
+	rangeAttack:[{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:1,y:1},{x:1,y:-1},{x:-1,y:1},{x:-1,y:-1},{x:2,y:0},{x:-2,y:0},{x:0,y:2},{x:0,y:-2}],
 	rangeAttackTarget:[{x:0,y:0}],
 	explanation:""
 	},
@@ -430,7 +430,7 @@ var StrategyDatas = [
 	troops:50,
 	wounded:0,
 	rangeAttack:[{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:1,y:1},{x:1,y:-1},{x:-1,y:1},{x:-1,y:-1},{x:2,y:0},{x:-2,y:0},{x:0,y:2},{x:0,y:-2}],
-	rangeAttackTarget:[{x:0,y:0}],
+	rangeAttackTarget:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],
 	explanation:""
 	},
 	{id:46,name:"群体治疗",belong:Belong.SELF,type:StrategyType.Supply,effectType:StrategyEffectType.Supply,image:"feng-1",
@@ -438,7 +438,31 @@ var StrategyDatas = [
 	cost:6,
 	troops:0,
 	wounded:50,
-	rangeAttack:[{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0}],
+	rangeAttack:[{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:1,y:1},{x:1,y:-1},{x:-1,y:1},{x:-1,y:-1},{x:2,y:0},{x:-2,y:0},{x:0,y:2},{x:0,y:-2}],
+	rangeAttackTarget:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],
+	explanation:""
+	},
+	{id:47,name:"奋起",belong:Belong.SELF,type:StrategyType.AttackAid,effectType:StrategyEffectType.Aid,image:"feng-1",
+	icon:"feng_sign",
+	cost:6,
+	hert:0.2,
+	rangeAttack:[{x:0,y:0}],
+	rangeAttackTarget:[{x:0,y:0}],
+	explanation:""
+	},
+	{id:48,name:"奋起",belong:Belong.SELF,type:StrategyType.ApiritAid,effectType:StrategyEffectType.Aid,image:"feng-1",
+	icon:"feng_sign",
+	cost:6,
+	hert:0.2,
+	rangeAttack:[{x:0,y:0}],
+	rangeAttackTarget:[{x:0,y:0}],
+	explanation:""
+	},
+	{id:49,name:"吸血",belong:Belong.SELF,type:StrategyType.ApiritAid,effectType:StrategyEffectType.Aid,image:"feng-1",
+	icon:"feng_sign",
+	cost:6,
+	hert:0.2,
+	rangeAttack:[{x:0,y:0}],
 	rangeAttackTarget:[{x:0,y:0}],
 	explanation:""
 	},

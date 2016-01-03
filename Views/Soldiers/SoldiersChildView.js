@@ -35,7 +35,7 @@ SoldiersChildView.prototype.set=function(){
 	lblLevel.y = lblName.y;
 	layer.addChild(lblLevel);
 	
-	self.layer.addChild(getBitmap(layer));
+	self.layer.addChild(layer);
 	var icon = self.soldierModel.icon(new LPoint(width,height),self.iconComplete);
 	self.layer.addChild(icon);
 };

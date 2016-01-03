@@ -4,8 +4,8 @@ function SoldierModel(controller, data) {
 	self.type = "SoldierModel";
 	self.data = data;
 }
-SoldierModel.createModel = function(id){
-	return new SoldierModel(null,{id:id,proficiency:"B"});
+SoldierModel.createModel = function(id){console.error("SoldierModel.createModel");
+	return new SoldierModel(null,{id:id,proficiency:0});
 };
 SoldierModel.prototype.master=function(){
 	var self = this;
@@ -96,7 +96,7 @@ SoldierModel.prototype.img = function() {
 };
 SoldierModel.prototype.icon=function(size,callback){
 	var self = this;
-	if(typeof callback != "undefined" && typeof callback != "function"){alert("error SoldierModel.prototype.icon");}
+	if(typeof callback != "undefined" && typeof callback != "function"){console.error("error SoldierModel.prototype.icon");}
 	if(!size){
 		size = new LPoint(100,100);
 	}

@@ -25,7 +25,7 @@ MapController.prototype.modelLoad=function(){
 };
 MapController.prototype.libraryLoad=function(){
 	var self = this;
-	var libraris = ["language/chinese/Language","SeigniorExecute"];
+	var libraris = ["language/chinese/Language","SeigniorExecute","SgjComboBoxChild"];
 	self.load.library(libraris,self.viewLoad);
 };
 MapController.prototype.viewLoad=function(){

@@ -7,7 +7,7 @@ CityModel.prototype.construct=function(){
 CityModel.prototype.getImages=function(){
 	var list = [
 		{name:"main-background",path:LMvc.IMG_PATH+"main/background.png"},
-		{name:"builds-market",path:LMvc.IMG_PATH+"builds/market.png"},
+		//{name:"builds-market",path:LMvc.IMG_PATH+"builds/market.png"},
 		{name:"main-official",path:LMvc.IMG_PATH+"main/official.png"},
 		{name:"main-tavern",path:LMvc.IMG_PATH+"main/tavern.png"},
 		{name:"main-shop",path:LMvc.IMG_PATH+"main/shop.png"},

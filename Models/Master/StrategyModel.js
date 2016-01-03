@@ -65,9 +65,18 @@ StrategyModel.prototype.image = function() {
 StrategyModel.prototype.imageCache = function(cache) {
 	return this.master().imageCache(cache);
 };
-StrategyModel.prototype.icon=function(size){
-	return this.master().icon(size);
+StrategyModel.prototype.icon=function(size, callback){
+	var self = this;
+	var icon = new BitmapSprite(LMvc.IMG_PATH + "strategy/icon/"+self.master().icon()+".png", null,size);
+	if(typeof callback == "function")icon.addEventListener(LEvent.COMPLETE, callback);
+	var winPanel = new LPanel(new LBitmapData(LMvc.datalist["win06"]),size.x,size.y);
+	winPanel.cacheAsBitmap(true);
+	icon.addChild(winPanel);
+	return icon;
 };
+/*StrategyModel.prototype.icon=function(size){
+	return this.master().icon(size);
+};*/
 StrategyModel.prototype.strategyImageLoad = function(target,callback,params){
 	var self = this;
 	if(self.imageCache()){
