@@ -86,11 +86,11 @@ SoldierModel.prototype.explanation = function() {
 SoldierModel.prototype.next = function() {
 	return this.master().next();
 };
-SoldierModel.prototype.img = function() {
+SoldierModel.prototype.img = function(isSelf) {
 	var self = this;
 	var imgIndex = self.data.img;
 	if(!imgIndex){
-		imgIndex = self.master().img();
+		imgIndex = "common/" + self.master().id() + (isSelf ? "-1" : "-2");
 	}
 	return imgIndex;
 };

@@ -56,8 +56,7 @@ CharacterExpeditionView.prototype.set=function(){
 	self.currentTroopsIndex = soldiers.findIndex(function(child){
 		return child.id() == self.currentSoldierModel.id();
 	});
-	var icon = currentSoldierModel.icon(new LPoint(width,height));
-	layer.addChild(icon);
+	self.setIcon();
 	self.maxTroops = self.currentSoldierModel.maxTroops(self.characterModel);
 	if(self.maxTroops > self.canUseTroops){
 		self.maxTroops = self.canUseTroops;
@@ -98,11 +97,24 @@ CharacterExpeditionView.prototype.set=function(){
 	r.addEventListener(LRange.ON_CHANGE,self.onchangeTroop);
 	com.addEventListener(LComboBox.ON_CHANGE,self.onchangeSoldier);
 };
+CharacterExpeditionView.prototype.setIcon=function(){
+	var self = this;
+	var width = 48, height = 48;
+	var icon = self.currentSoldierModel.icon(new LPoint(width,height), self.iconLoad);
+	self.icon = icon;
+	self.addChild(icon);
+};
+CharacterExpeditionView.prototype.iconLoad=function(event){
+	var icon = event.currentTarget;
+	icon.cacheAsBitmap(true);
+};
 CharacterExpeditionView.prototype.onchangeSoldier=function(event){
 	var soldierComboBox = event.currentTarget;
 	var self = soldierComboBox.parent.parent;
 	self.currentTroopsIndex = soldierComboBox.selectIndex;
 	self.setSoldier();
+	self.icon.remove();
+	self.setIcon();
 };
 CharacterExpeditionView.prototype.setSoldier=function(){
 	var self = this;

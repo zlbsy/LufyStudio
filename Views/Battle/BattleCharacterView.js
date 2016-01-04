@@ -151,8 +151,8 @@ BattleCharacterView.prototype.addAnimation = function() {
 	self.anime.addFrameScript(String.format("{0}-{1}",CharacterAction.ATTACK,CharacterDirection.UP),self.attackSpecialCheck,[]);
 	self.anime.addFrameScript(String.format("{0}-{1}",CharacterAction.ATTACK,CharacterDirection.LEFT),self.attackSpecialCheck,[]);
 	self.anime.addFrameScript(String.format("{0}-{1}",CharacterAction.ATTACK,CharacterDirection.RIGHT),self.attackSpecialCheck,[]);
-	
-	var img = self.data.currentSoldiers().img();
+	var isSelf = self.data.seigniorId() == LMvc.selectSeignorId;
+	var img = self.data.currentSoldiers().img(isSelf);
 	var loader = new LLoader();
 	loader.parent = self;
 	loader.addEventListener(LEvent.COMPLETE, self.loadSOver);
