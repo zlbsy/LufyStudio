@@ -14,7 +14,7 @@ MessageView.prototype.add = function(msg, color){
 	self.listView.clipping.y = height - self.listView.clipping.height;
 };
 MessageView.prototype.init = function(){
-	var self = this
+	var self = this;
 	var height = 200;
 	var backgroundData = new LBitmapData(LMvc.datalist["win03"]);
 	var panel = new LPanel(backgroundData,LGlobal.width,height);

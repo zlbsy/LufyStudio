@@ -220,7 +220,7 @@ CharacterDetailedView.prototype.showArms=function(){
 CharacterDetailedView.prototype.showStatus=function(){
 	var self = this;
 	var statusLayer = new LSprite();
-	var txtHeight = 25, startY = -txtHeight + 5, startX = 5;
+	var txtHeight = 25, startY = 5, startX = 5;
 	var labels = ["belong","identity","city","loyalty","status"];
 	
  	var seigniorId = self.characterModel.seigniorId();
@@ -237,17 +237,18 @@ CharacterDetailedView.prototype.showStatus=function(){
 		datas.push(String.format("{0} ({1})",skill.name(),skill.explanation()));
 	}
 	for(var i=0;i<labels.length;i++){
-		startY += txtHeight;
+		var height = txtHeight;
 		var lblCost = getStrokeLabel(String.format("{0} : {1}",Language.get(labels[i]), datas[i]),20,"#FFFFFF","#000000",4);
-		if(labels[i] == "stunt"){
+		if(labels[i] == "stunt" || labels[i] == "status"){
 			lblCost.width = LGlobal.width - 60;
 			lblCost.setWordWrap(true, txtHeight);
+			height = lblCost.getHeight();
 		}
 		lblCost.x = startX;
 		lblCost.y = startY;
 		statusLayer.addChild(lblCost);
+		startY += height;
 	}
-	startY += txtHeight;
 	statusLayer.graphics.drawRect(0, "#000000", [0, 0, LGlobal.width - 50, startY]);
 	var statusBitmap = getBitmap(statusLayer);
 	var backLayer = new LSprite();
@@ -347,7 +348,7 @@ CharacterDetailedView.prototype.showProperties=function(){
 	var txtHeight = 25, startY = -txtHeight + 10, startRightY = startY,startX = 5;
 	var labels = ["tab_arms","force","command","intelligence","agility","luck"];
 	var labelsRight = ["troops","MP","physicalFitness","attack","spirit","defense","breakout","morale","movePower"];
- 	
+ 	self.characterModel.calculation(true);
 	var datas = [
 	self.characterModel.currentSoldiers().name(),
 	self.characterModel.force(),
@@ -358,7 +359,7 @@ CharacterDetailedView.prototype.showProperties=function(){
 	self.characterModel.currentSoldiers().movePower()
 	];
 	var datasRight = [
-	[String.format("{0}({1})",self.characterModel.troops(),self.characterModel.wounded()),self.characterModel.maxTroops(),2000],
+	[String.format("{0}({1})",self.characterModel.troops() == 0 ? self.characterModel.maxTroops() : self.characterModel.troops(),self.characterModel.wounded()),self.characterModel.maxTroops(),2000],
 	[self.characterModel.MP(),self.characterModel.maxMP(),1000],
 	[self.characterModel.physicalFitness(),self.characterModel.maxPhysicalFitness(),100],
 	[self.characterModel.attack(),self.characterModel.attack(),1000],

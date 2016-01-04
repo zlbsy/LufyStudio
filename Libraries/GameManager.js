@@ -17,7 +17,7 @@ GameManager.save = function(index){
 	var city_title_format = Language.get("city_title").replace("(","").replace(")","");
 	data.labels.date = LString.trim(String.format(city_title_format, data.chapterData.year, data.chapterData.month, "", ""));
 	var now = new Date();
-	data.labels.saveTime = String.format("{0}-{1}-{2} {3}:{4}:{5}", now.getFullYear(), now.getMonth(), now.getDate(), now.getHours(), now.getMinutes(), now.getSeconds());
+	data.labels.saveTime = String.format("{0}-{1}-{2} {3}:{4}:{5}", now.getFullYear(), now.getMonth() + 1, now.getDate(), now.getHours(), now.getMinutes(), now.getSeconds());
 	if(LMvc.BattleController){
 		data.battleData = getBattleSaveData();
 	}

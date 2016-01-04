@@ -4,7 +4,7 @@ function MessageChildView(msg, color){
 	self.set(msg, color);
 }
 MessageChildView.prototype.set = function(msg, color){
-	var self = this
+	var self = this;
 	var child = new LTextField();
 	child.text = msg;
 	child.size = 14;

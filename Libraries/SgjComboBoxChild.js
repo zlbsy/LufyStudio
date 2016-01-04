@@ -43,6 +43,6 @@ function TrainingComboBoxChild(content, comboBox, selected) {
 }
 function ExpeditionComboBoxChild(content, comboBox, selected) {
 	var self = this;
-	self.childWidth = 110;
+	self.childWidth = 210;
 	base(self, SgjComboBoxChild, [content, comboBox, selected]);
 }

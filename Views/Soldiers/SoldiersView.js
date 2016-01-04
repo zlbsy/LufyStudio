@@ -19,7 +19,7 @@ SoldiersView.prototype.setSoldierList = function() {
 	var items = [];
 	var soldierList = self.characterModel.soldiers();
 	for (var i = 0, l = soldierList.length; i < l; i++) {
-		var child = new SoldiersChildView(soldierList[i],self.size.x);
+		var child = new SoldiersChildView(soldierList[i],self.characterModel,self.size.x);
 		items.push(child);
 	}
 	self.listView.updateList(items);

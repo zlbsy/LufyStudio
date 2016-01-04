@@ -1,8 +1,9 @@
-function SoldiersChildView(soldierModel, width){
+function SoldiersChildView(soldierModel, characterModel,width){
 //function SoldiersChildView(controller,soldierModel){
 	var self = this;
 	base(self, LListChildView, []);
 	self.soldierModel = soldierModel;
+	self.characterModel = characterModel;
 	self.fullWidth = width;
 	self.set();
 }
@@ -34,15 +35,24 @@ SoldiersChildView.prototype.set=function(){
 	lblLevel.x = lblName.x + 120;
 	lblLevel.y = lblName.y;
 	layer.addChild(lblLevel);
-	
-	var bitmap = new LBitmap(new LBitmapData(LMvc.datalist["checkbox-background"]));
-	var bitmapSelect = new LBitmap(new LBitmapData(LMvc.datalist["checkbox-on"]));
-	var check = new LCheckBox(bitmap, bitmapSelect);
-	check.x = lblLevel.x + 200;
-	check.y = 10;
-	layer.addChild(check);
-	self.checkbox = check;
-	
+
+	if(LMvc.BattleController){
+		if(self.soldierModel.id() == self.characterModel.currentSoldierId()){
+			var lblCurrent = getStrokeLabel("当前",23,"#FFFFFF","#000000",3);
+			lblCurrent.x = lblLevel.x + 200;
+			lblCurrent.y = 10;
+			layer.addChild(lblCurrent);
+		}
+	}else{
+		var bitmap = new LBitmap(new LBitmapData(LMvc.datalist["checkbox-background"]));
+		var bitmapSelect = new LBitmap(new LBitmapData(LMvc.datalist["checkbox-on"]));
+		var check = new LCheckBox(bitmap, bitmapSelect);
+		check.x = lblLevel.x + 200;
+		check.y = 10;
+		layer.addChild(check);
+		self.checkbox = check;
+		self.checkbox.setChecked(self.soldierModel.id() == self.characterModel.currentSoldierId());
+	}
 	self.layer.addChild(layer);
 	var icon = self.soldierModel.icon(new LPoint(width,height),self.iconComplete);
 	self.layer.addChild(icon);
@@ -73,17 +83,25 @@ SoldiersChildView.prototype.toSelected=function(listView){
 	self.checkbox.setChecked(true);
 	self.cacheAsBitmap(false);
 	self.updateView();
+	self.characterModel.currentSoldierId(self.soldierModel.id());
 };
 SoldiersChildView.prototype.onClick = function(event) {
 	var self = event.target;
 	var listView = event.currentTarget;
-	if(event.offsetX > self.checkbox.x - 10){
+	var canSelect = (!LMvc.BattleController && self.characterModel.seigniorId() == LMvc.selectSeignorId);
+	if(canSelect && event.offsetX > self.checkbox.x - 10){
 		self.toSelected(listView);
 		return;
 	}
 	var soldierDetailed = new SoldierDetailedView(null,self.soldierModel);
-	var obj = {title:self.soldierModel.name(),subWindow:soldierDetailed,width:400,height:480,okEvent:null,cancelEvent:null};
+	var obj = {title:self.soldierModel.name(),subWindow:soldierDetailed,width:400,height:480};
+	if(canSelect){
+		obj.okEvent = function(e){
+			self.toSelected(listView);
+			e.currentTarget.parent.remove();
+		};
+		obj.cancelEvent = null;
+	}
 	var windowLayer = ConfirmWindow(obj);
-		
 	LMvc.layer.addChild(windowLayer);
 };

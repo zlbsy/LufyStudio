@@ -79,6 +79,10 @@ CharacterModel.prototype.datas=function(){
 		soldiers:self.data.soldiers,//所有兵种熟练度
 		equipments:self.equipments()
 	};
+	if(self.data.currentSoldierId){
+		//当前兵种
+		saveData.currentSoldierId = self.data.currentSoldierId;
+	}
 	return saveData;
 };
 CharacterModel.prototype.setDatas=function(charaData){
@@ -110,6 +114,9 @@ CharacterModel.prototype.setDatas=function(charaData){
 	}
 	if(charaData.soldiers){
 		self.data.soldiers = charaData.soldiers;
+	}
+	if(charaData.currentSoldierId){
+		self.data.currentSoldierId = charaData.currentSoldierId;
 	}
 	if(charaData.equipments){
 		self.equip(charaData.equipments);
@@ -267,16 +274,16 @@ CharacterModel.prototype.attack = function(){
 	return this.data.attack * this.statusChange("attack") >>> 0;
 };
 CharacterModel.prototype.spirit = function(){
-	return this.data.spirit;
+	return this.data.spirit >>> 0;
 };
 CharacterModel.prototype.defense = function(){
 	return this.data.defense * this.statusChange("defense") >>> 0;
 };
 CharacterModel.prototype.breakout = function(){
-	return this.data.breakout;
+	return this.data.breakout >>> 0;
 };
 CharacterModel.prototype.morale = function(){
-	return this.data.morale;
+	return this.data.morale >>> 0;
 };
 CharacterModel.prototype.movePower = function() {
 	return this.data.movePower;
@@ -547,8 +554,32 @@ CharacterModel.prototype.maxProficiencySoldier = function() {
 	}
 	return soldier;
 };
+CharacterModel.prototype.currentSoldierId = function(value) {
+	var self = this;
+	if(value){
+		self.data.currentSoldierId = value;
+		return;
+	}
+	if(!self.data.currentSoldierId){
+		self.data.currentSoldierId = self.maxProficiencySoldier().id();
+	}
+	return self.data.currentSoldierId;
+};
 CharacterModel.prototype.currentSoldiers = function(id) {
-	var soldiers = this.soldiers();
+	var self = this;
+	if(id){
+		self.currentSoldierId(id);
+		return;
+	}
+	var currentSoldierId = self.currentSoldierId();
+	if(!self.data._currentSoldiers || self.data._currentSoldiers.id() != currentSoldierId){
+		var soldiers = self.soldiers();
+		self.data._currentSoldiers = soldiers.find(function(child){
+			return child.id() == currentSoldierId;
+		});
+	}
+	return self.data._currentSoldiers;
+	/*var soldiers = this.soldiers();
 	if(typeof id != UNDEFINED){
 		var soldier;
 		var soldierIndex = soldiers.find(function(child){
@@ -562,7 +593,7 @@ CharacterModel.prototype.currentSoldiers = function(id) {
 		soldiers.unshift(soldier);
 		return;
 	}
-	return soldiers[0];
+	return soldiers[0];*/
 };
 CharacterModel.prototype.underArrestTalk = function() {
 	var self = this, index, list;

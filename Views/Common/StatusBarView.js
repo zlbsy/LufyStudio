@@ -34,7 +34,12 @@ StatusBarView.prototype.setCharacterStatus=function(){
 	barBack.y = hertIcon.y;
 	self.mainLayer.addChild(barBack);
 	
-	value = self.currentValue / self.maxValue;
+	var currentValue = self.currentValue;
+	if(typeof currentValue == "string"){
+		var index = currentValue.indexOf("(");
+		currentValue = self.currentValue.substring(0,index);
+	}
+	value = currentValue / self.maxValue;
 	value = value < 0.001 ? 0.001 : value;
 	var barSize = self.barSize * value;
 	var barIcon = getBitmap(new LPanel(new LBitmapData(LMvc.datalist[self.frontBar]),self.barSize,10));
