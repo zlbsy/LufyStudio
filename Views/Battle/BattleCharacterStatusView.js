@@ -2,7 +2,7 @@ function BattleCharacterStatusView(controller, character){
 	var self = this;
 	LExtends(self,LView,[controller]);
 	self.character = character;
-	 self.belong = character.belong;
+	self.belong = character.belong;
 	self.datas = [];
 };
 BattleCharacterStatusView.BAR_SIZE = 150;
@@ -23,12 +23,12 @@ BattleCharacterStatusView.prototype.startTween=function(){
 BattleCharacterStatusView.prototype.showCharacterStatus=function(){
 	var self = this;
 	self.statusLayer = new LSprite();
-	self.statusTextLayer = new LSprite();
+	//self.statusTextLayer = new LSprite();
 	
 	var characterModel = self.character.data, belong = self.belong;
-	var face = characterModel.face();
+	/*var face = characterModel.face();
 	self.addChild(face);
-	
+	*/
 	var layer = new LSprite();
 	
 	var setH = 30;
@@ -59,19 +59,19 @@ BattleCharacterStatusView.prototype.showCharacterStatus=function(){
 		self.getCharacterStatusChild(BattleCharacterStatusConfig.EXP, expStatus);
 		layer.addChild(expStatus);
 	}
-	var background = getTranslucentBitmap(195,50 + 20 * layer.numChildren);
+	var background = getTranslucentBitmap(195,30 + 20 * layer.numChildren);
 	layer.addChildAt(background,0);
 	var name = getStrokeLabel(characterModel.name(),14,"#FFFFFF","#FF8C00",1);
 	name.x = 5;
 	name.y = 5;
 	layer.addChild(name);
 	
-	var soldier = getStrokeLabel(characterModel.currentSoldiers().name() + " Lv22",14,"#FFFFFF","#000000",1);
+	var soldier = getStrokeLabel(characterModel.currentSoldiers().name() + " Lv."+characterModel.level(),14,"#FFFFFF","#000000",1);
 	soldier.x = background.getWidth() - soldier.getWidth() - 20;
 	soldier.y = 5;
 	layer.addChild(soldier);
 	
-	setH += 18;
+	//setH += 18;
 	/*
 	var weaponStatus = new LSprite();
 	weaponStatus.x = 10;
@@ -94,12 +94,13 @@ BattleCharacterStatusView.prototype.showCharacterStatus=function(){
 		self.statusLayer.y += layer.y;
 		self.addChild(self.statusLayer);
 	}
-	if(self.statusTextLayer.numChildren > 0){
+	/*if(self.statusTextLayer.numChildren > 0){
 		self.statusTextLayer.x += layer.x;
 		self.statusTextLayer.y += layer.y;
 		self.addChild(self.statusTextLayer);
-	}
+	}*/
 };
+/*
 BattleCharacterStatusView.prototype.getCharacterTextStatusChild=function(mode,layer){
 	var self = this,item,equipment,statusLayer;
 	var statusObject = self.get(mode);
@@ -148,7 +149,7 @@ BattleCharacterStatusView.prototype.getCharacterTextStatusChild=function(mode,la
 		};
 	}
 	LTweenLite.to(lblExp,BattleCharacterStatusConfig.SHOW_TIME,changeObject);
-};
+};*/
 BattleCharacterStatusView.prototype.getCharacterStatusChild=function(mode,layer){
 	var self = this;
 	var icon, frontBar, label, value, maxValue, currentValue,statusLayer;
@@ -270,7 +271,7 @@ BattleCharacterStatusView.prototype.setStatus=function(){
 	self.label.x = self.textEndPosition - self.label.getWidth();
 };
 BattleCharacterStatusView.prototype.setPosition=function(character){
-	var self = this, w = self.getWidth(), h = self.getHeight();
+	var self = this, w = 200, h = self.getHeight();
 	self.x = character.x - w * 0.5;
 	self.y = character.y - h * 0.5;
 	var root = self.getRootCoordinate();
