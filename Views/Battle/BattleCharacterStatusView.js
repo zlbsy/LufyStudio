@@ -72,7 +72,7 @@ BattleCharacterStatusView.prototype.showCharacterStatus=function(){
 	layer.addChild(soldier);
 	
 	setH += 18;
-	
+	/*
 	var weaponStatus = new LSprite();
 	weaponStatus.x = 10;
 	weaponStatus.y = setH;
@@ -84,7 +84,7 @@ BattleCharacterStatusView.prototype.showCharacterStatus=function(){
 	armorStatus.y = setH;
 	self.getCharacterTextStatusChild(BattleCharacterStatusConfig.EXP_ARMOR, armorStatus);
 	layer.addChild(armorStatus);
-	
+	*/
 	layer = getBitmap(layer);
 	
 	layer.y = 315 - layer.getHeight();

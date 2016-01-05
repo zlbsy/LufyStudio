@@ -348,7 +348,9 @@ CharacterDetailedView.prototype.showProperties=function(){
 	var txtHeight = 25, startY = -txtHeight + 10, startRightY = startY,startX = 5;
 	var labels = ["tab_arms","force","command","intelligence","agility","luck"];
 	var labelsRight = ["troops","MP","physicalFitness","attack","spirit","defense","breakout","morale","movePower"];
- 	self.characterModel.calculation(true);
+	if(!LMvc.BattleControll){
+ 		self.characterModel.calculation(true);
+ 	}
 	var datas = [
 	self.characterModel.currentSoldiers().name(),
 	self.characterModel.force(),
