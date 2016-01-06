@@ -357,7 +357,7 @@ BattleCharacterAI.prototype.attackActionComplete = function(event) {
 				obj.hertValue = obj.hertValue >>> 0;
 			}else if(skill && skill.isSubType(SkillSubType.BOUNCE)){
 				var changeHp = obj.hertValue * skill.bounce() >>> 0;
-				chara.data.troops(chara.data.troops() - changeHp);
+				chara.data.troops(chara.data.troops() - changeHp, calculateWounded(0.5, 0.2));
 				var tweenObj = getStrokeLabel(String.format("-{0}",changeHp),12,"#FF0000","#000000",2);
 				tweenObj.x = chara.x + (BattleCharacterSize.width - tweenObj.getWidth()) * 0.5;
 				tweenObj.y = chara.y + 10;
@@ -434,6 +434,11 @@ BattleCharacterAI.prototype.blockActionComplete = function(event) {
 	}
 	LTweenLite.to(chara,chara.hertIndex * stepTime,{onComplete:function(e){
 		var chara = e.target;
+		if(!isCurrentAttackTarget(chara)){
+			return;
+		}
+		/*
+		//TODO::取消装备经验，以后版本升级可能加入
 		var statusView = new BattleCharacterStatusView(self.controller,chara);
 		statusView.push(BattleCharacterStatusConfig.EXP_ARMOR, 20);
 		chara.controller.view.baseLayer.addChild(statusView);
@@ -441,7 +446,8 @@ BattleCharacterAI.prototype.blockActionComplete = function(event) {
 		if(!isCurrentAttackTarget(chara)){
 			return;
 		}
-		statusView.addEventListener(BattleCharacterStatusEvent.CHANGE_COMPLETE,LMvc.currentAttackCharacter.AI.plusExp);
+		statusView.addEventListener(BattleCharacterStatusEvent.CHANGE_COMPLETE,LMvc.currentAttackCharacter.AI.plusExp);*/
+		LMvc.currentAttackCharacter.AI.plusExp();
 	}});
 };
 BattleCharacterAI.prototype.hertActionComplete = function(event) {
@@ -471,9 +477,12 @@ BattleCharacterAI.prototype.plusExp = function(event) {
 	var self, chara;
 	chara = LMvc.currentAttackCharacter;
 	self = chara.AI;
-	var statusView = new BattleCharacterStatusView(chara.controller,chara);
-	statusView.push(BattleCharacterStatusConfig.EXP, 30);
+	var statusView = new BattleCharacterStatusView(chara.controller,chara);console.error("exp",calculateExp(chara, self.attackTarget));
+	statusView.push(BattleCharacterStatusConfig.EXP, calculateExp(chara, self.attackTarget));
+	/*
+	//TODO::取消装备经验，以后版本升级可能加入
 	statusView.push(BattleCharacterStatusConfig.EXP_WEAPON, 20);
+	*/
 	statusView.addEventListener(BattleCharacterStatusEvent.CHANGE_COMPLETE,chara.currentSelectStrategy ? self.counterMagicAttack : self.counterAttack);
 	chara.controller.view.baseLayer.addChild(statusView);
 	statusView.startTween();

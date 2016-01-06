@@ -204,6 +204,7 @@ CharacterModel.prototype.calculation = function(init) {
 		//self.data.troops = self.maxTroops();
 		self.data.hp = self.maxHP();
 		self.data.mp = self.maxMP();
+		self.data.exp = 0;
 	}
 	var skill = self.skill(SkillType.CREATE);
 	self.data.moveAssault = (skill && skill.isSubType(SkillSubType.MOVE_ASSAULT));
@@ -314,6 +315,7 @@ CharacterModel.prototype.seignior = function(chara_id) {
 	return SeigniorModel.getSeignior(self.data.seignior_id);
 };
 CharacterModel.prototype.exp = function(value){
+	console.error(this.name(),"exp",value);
 	return this._dataValue("exp", value, 0);
 };
 CharacterModel.prototype.feat = function(value){
@@ -325,8 +327,14 @@ CharacterModel.prototype.maxExp = function(value){
 CharacterModel.prototype.wounded = function(value){//伤兵
 	return this._dataValue("wounded", value, 0);
 };
-CharacterModel.prototype.troops = function(value) {
-	return this._dataValue("troops", value,0);
+CharacterModel.prototype.troops = function(value, proportionWounded) {
+	var self = this;
+	if(value && proportionWounded){
+		var addWounded = (self.data.troops - value) * proportionWounded >>> 0;
+		var wounded = self.wounded();
+		self.wounded(wounded + addWounded);
+	}
+	return self._dataValue("troops", value,0);
 };
 CharacterModel.prototype.HP = function(value) {
 	return this._dataValue("hp", value);

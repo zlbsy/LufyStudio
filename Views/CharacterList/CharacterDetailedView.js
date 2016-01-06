@@ -347,8 +347,11 @@ CharacterDetailedView.prototype.showProperties=function(){
 	var statusLayer = new LSprite();
 	var txtHeight = 25, startY = -txtHeight + 10, startRightY = startY,startX = 5;
 	var labels = ["tab_arms","force","command","intelligence","agility","luck"];
-	var labelsRight = ["troops","MP","physicalFitness","attack","spirit","defense","breakout","morale","movePower"];
-	if(!LMvc.BattleControll){
+	var labelsRight = ["troops","MP",
+	"exp",
+	//"physicalFitness",
+	"attack","spirit","defense","breakout","morale","movePower"];
+	if(!LMvc.BattleController){
  		self.characterModel.calculation(true);
  	}
 	var datas = [
@@ -363,7 +366,8 @@ CharacterDetailedView.prototype.showProperties=function(){
 	var datasRight = [
 	[String.format("{0}({1})",self.characterModel.troops() == 0 ? self.characterModel.maxTroops() : self.characterModel.troops(),self.characterModel.wounded()),self.characterModel.maxTroops(),2000],
 	[self.characterModel.MP(),self.characterModel.maxMP(),1000],
-	[self.characterModel.physicalFitness(),self.characterModel.maxPhysicalFitness(),100],
+	[self.characterModel.exp(),self.characterModel.maxExp(),100],
+	//[self.characterModel.physicalFitness(),self.characterModel.maxPhysicalFitness(),100],
 	[self.characterModel.attack(),self.characterModel.attack(),1000],
 	[self.characterModel.spirit(),self.characterModel.spirit(),1000],
 	[self.characterModel.defense(),self.characterModel.defense(),1000],

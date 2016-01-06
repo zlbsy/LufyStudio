@@ -44,13 +44,15 @@ BattleCharacterStatusView.prototype.showCharacterStatus=function(){
 	mpStatus.y = setH;
 	self.getCharacterStatusChild(BattleCharacterStatusConfig.MP, mpStatus);
 	layer.addChild(mpStatus);
+	/*
+	TODO::版本升级后再加入体力设定
 	setH += 20;
 	var spStatus = new LSprite();
 	spStatus.x = 10;
 	spStatus.y = setH;
 	self.getCharacterStatusChild(BattleCharacterStatusConfig.SP, spStatus);
 	layer.addChild(spStatus);
-	
+	*/
 	if(self.get(BattleCharacterStatusConfig.EXP)){
 		setH += 20;
 		var expStatus = new LSprite();
@@ -94,6 +96,10 @@ BattleCharacterStatusView.prototype.showCharacterStatus=function(){
 		self.statusLayer.y += layer.y;
 		self.addChild(self.statusLayer);
 	}
+	if(self.treen){
+		return;
+	}
+	LTweenLite.to(self,BattleCharacterStatusConfig.SHOW_TIME,{onComplete:self.onComplete});
 	/*if(self.statusTextLayer.numChildren > 0){
 		self.statusTextLayer.x += layer.x;
 		self.statusTextLayer.y += layer.y;
@@ -162,7 +168,7 @@ BattleCharacterStatusView.prototype.getCharacterStatusChild=function(mode,layer)
 			maxValue = self.character.data.maxTroops();
 			currentValue = self.character.data.troops();
 			if(statusObject){
-				self.character.data.troops(currentValue + statusObject.value);
+				self.character.data.troops(currentValue + statusObject.value, statusObject.value >= 0 ? 0 : calculateWounded(0.5, 0.2));
 			}
 			break;
 		case BattleCharacterStatusConfig.MP:
@@ -189,8 +195,8 @@ BattleCharacterStatusView.prototype.getCharacterStatusChild=function(mode,layer)
 			icon = "orange_ball";
 			frontBar = "orange_bar";
 			label = "经验";
-			maxValue = self.character.data.exp();
-			currentValue = self.character.data.maxExp();
+			maxValue = self.character.data.maxExp();
+			currentValue = self.character.data.exp();
 			if(statusObject){
 				self.character.data.exp(currentValue + statusObject.value);
 			}

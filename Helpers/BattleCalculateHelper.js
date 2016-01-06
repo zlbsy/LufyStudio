@@ -438,3 +438,21 @@ function calculatePenetratePoints(chara, target, ranges){
 	}
 	return ranges;
 }
+function calculateWounded(value, range){
+	return value + range * (1 - 2 * Math.random()); 
+}
+function calculateExp(attChara,hertChara){
+	var attCharaModel = attChara.data;
+	var hertCharaModel = hertChara.data;
+	var lv = attCharaModel.level() - hertCharaModel.level();
+	var exp = 8;
+	if(lv > 0){
+		exp -= lv;
+	}else if(lv < 0){
+		exp -= lv * 2;
+	}
+	if(exp < 1){
+		exp = 1;
+	}
+	return exp;
+}
