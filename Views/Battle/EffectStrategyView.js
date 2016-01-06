@@ -66,6 +66,13 @@ EffectStrategyView.prototype.toSupply = function(){
 	console.log(troops+","+troopsAdd+","+maxTroops);
 	var troopsValue = troops + troopsAdd > maxTroops ? maxTroops : troops + troopsAdd;
 	self.currentTargetCharacter.data.troops(troopsValue);
+	var tweenSupply = getStrokeLabel(String.format("兵力+{0}",troopsValue - troops),12,"#FF0000","#000000",2);
+	tweenSupply.x = self.currentTargetCharacter.x + (BattleCharacterSize.width - tweenSupply.getWidth()) * 0.5;
+	tweenSupply.y = self.currentTargetCharacter.y;
+	self.currentTargetCharacter.controller.view.baseLayer.addChild(tweenSupply);
+	LTweenLite.to(tweenSupply,1.5,{y:tweenSupply.y - 20,alpha:0,onComplete:function(e){
+					e.target.remove();
+				}});
 };
 EffectStrategyView.prototype.toChangeStatus = function(){
 	var self = this, hitrate;

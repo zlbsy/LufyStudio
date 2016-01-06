@@ -364,9 +364,9 @@ CharacterDetailedView.prototype.showProperties=function(){
 	self.characterModel.currentSoldiers().movePower()
 	];
 	var datasRight = [
-	[String.format("{0}({1})",self.characterModel.troops() == 0 ? self.characterModel.maxTroops() : self.characterModel.troops(),self.characterModel.wounded()),self.characterModel.maxTroops(),2000],
-	[self.characterModel.MP(),self.characterModel.maxMP(),1000],
-	[self.characterModel.exp(),self.characterModel.maxExp(),100],
+	[String.format("{0}({1})",self.characterModel.troops() == 0 ? self.characterModel.maxTroops() : self.characterModel.troops(),self.characterModel.wounded()),self.characterModel.maxTroops(),self.characterModel.maxTroops()],
+	[self.characterModel.MP(),self.characterModel.maxMP(),self.characterModel.maxMP()],
+	[self.characterModel.exp(),self.characterModel.maxExp(),self.characterModel.maxExp()],
 	//[self.characterModel.physicalFitness(),self.characterModel.maxPhysicalFitness(),100],
 	[self.characterModel.attack(),self.characterModel.attack(),1000],
 	[self.characterModel.spirit(),self.characterModel.spirit(),1000],

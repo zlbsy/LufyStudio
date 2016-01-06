@@ -71,6 +71,7 @@ CharacterModel.prototype.datas=function(){
 		seignior_id:self.seigniorId(),
 		troops:self.troops(),
 		wounded:self.wounded(),
+		exp:self.exp(),
 		mp:self.MP(),
 		hp:self.HP(),
 		job:self.getJobData(),//根据任务内容变化
@@ -96,6 +97,9 @@ CharacterModel.prototype.setDatas=function(charaData){
 	}
 	if(charaData.wounded){
 		self.wounded(charaData.wounded);
+	}
+	if(charaData.exp){
+		self.wounded(charaData.exp);
 	}
 	if(charaData.mp){
 		self.MP(charaData.mp);
@@ -204,7 +208,6 @@ CharacterModel.prototype.calculation = function(init) {
 		//self.data.troops = self.maxTroops();
 		self.data.hp = self.maxHP();
 		self.data.mp = self.maxMP();
-		self.data.exp = 0;
 	}
 	var skill = self.skill(SkillType.CREATE);
 	self.data.moveAssault = (skill && skill.isSubType(SkillSubType.MOVE_ASSAULT));
@@ -322,7 +325,7 @@ CharacterModel.prototype.feat = function(value){
 	return this._dataValue("feat", value, 0);
 };
 CharacterModel.prototype.maxExp = function(value){
-	return this._dataValue("maxExp", value, 100);
+	return this._dataValue("maxExp", value, 500);
 };
 CharacterModel.prototype.wounded = function(value){//伤兵
 	return this._dataValue("wounded", value, 0);
@@ -333,6 +336,9 @@ CharacterModel.prototype.troops = function(value, proportionWounded) {
 		var addWounded = (self.data.troops - value) * proportionWounded >>> 0;
 		var wounded = self.wounded();
 		self.wounded(wounded + addWounded);
+	}
+	if(value && self.data._maxStrategy && value + self.wounded() > self.maxTroops()){
+		self.wounded(self.maxTroops() - value);
 	}
 	return self._dataValue("troops", value,0);
 };
