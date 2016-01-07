@@ -99,7 +99,9 @@ BattleCharacterStatusView.prototype.showCharacterStatus=function(){
 	if(self.treen){
 		return;
 	}
-	LTweenLite.to(self,BattleCharacterStatusConfig.SHOW_TIME,{onComplete:self.onComplete});
+	self.treen = LTweenLite.to(self, 
+		(LMvc.characterStatusView && self.objectIndex == LMvc.characterStatusView.objectIndex) ? BattleCharacterStatusConfig.CONFIRM_STATUS_TIME : BattleCharacterStatusConfig.SHOW_TIME,
+		{onComplete:self.onComplete});
 	/*if(self.statusTextLayer.numChildren > 0){
 		self.statusTextLayer.x += layer.x;
 		self.statusTextLayer.y += layer.y;
@@ -254,8 +256,16 @@ BattleCharacterStatusView.prototype.onComplete=function(event){
 	self.setStatus();
 	LTweenLite.to(self,BattleCharacterStatusConfig.FADE_TIME,{alpha:0,onComplete:self.deleteSelf});
 };
+BattleCharacterStatusView.prototype.toDelete=function(){
+	var self = this;
+	if(self.treen){
+		LTweenLite.remove(self.treen);
+		self.treen = null;
+	}
+	self.deleteSelf();
+};
 BattleCharacterStatusView.prototype.deleteSelf=function(event){
-	var self = event.target;
+	var self = event ? event.target : this;
 	self.dispatchEvent(BattleCharacterStatusEvent.CHANGE_COMPLETE);
 	self.remove();
 };

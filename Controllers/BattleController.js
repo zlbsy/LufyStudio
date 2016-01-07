@@ -427,6 +427,7 @@ BattleController.prototype.clickSelfCharacter = function(chara){
 	var path = self.query.makePath(chara);
 	self.view.roadLayer.setMoveRoads(path, chara.belong);
 	self.view.roadLayer.addRangeAttack(chara);
+	chara.showStatusView();
 	if(chara.mode == CharacterMode.END_ACTION){
 		return;
 	}
@@ -440,6 +441,7 @@ BattleController.prototype.clickOtherCharacter = function(chara){
 	self.view.roadLayer.setMoveRoads(path, chara.belong);
 	self.view.roadLayer.addRangeAttack(chara);
 	chara.mode = CharacterMode.SHOW_MOVE_ROAD;
+	chara.showStatusView();
 };
 
 BattleController.prototype.loadSingleCombat = function(){

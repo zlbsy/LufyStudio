@@ -99,7 +99,7 @@ CharacterModel.prototype.setDatas=function(charaData){
 		self.wounded(charaData.wounded);
 	}
 	if(charaData.exp){
-		self.wounded(charaData.exp);
+		self.exp(charaData.exp);
 	}
 	if(charaData.mp){
 		self.MP(charaData.mp);
@@ -318,7 +318,6 @@ CharacterModel.prototype.seignior = function(chara_id) {
 	return SeigniorModel.getSeignior(self.data.seignior_id);
 };
 CharacterModel.prototype.exp = function(value){
-	console.error(this.name(),"exp",value);
 	return this._dataValue("exp", value, 0);
 };
 CharacterModel.prototype.feat = function(value){

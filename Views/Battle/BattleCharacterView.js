@@ -310,3 +310,16 @@ BattleCharacterView.prototype.toDie = function(isSingleCombat) {
 	script += "SGJBattleCharacter.characterToDie(" + self.belong + ","+ self.data.id() + ");";
 	LGlobal.script.addScript(script);
 };
+BattleCharacterView.prototype.showStatusView = function() {
+	var self = this;
+	if(LMvc.characterStatusView && LMvc.characterStatusView.parent){
+		LMvc.characterStatusView.toDelete();
+	}
+	LMvc.characterStatusView = new BattleCharacterStatusView(self.controller,self);
+	LMvc.characterStatusView.addEventListener(BattleCharacterStatusEvent.CHANGE_COMPLETE,self.hideStatusView);
+	self.controller.view.baseLayer.addChild(LMvc.characterStatusView);
+	LMvc.characterStatusView.startTween();
+};
+BattleCharacterView.prototype.hideStatusView = function() {
+	LMvc.characterStatusView = null;
+};

@@ -477,7 +477,7 @@ BattleCharacterAI.prototype.plusExp = function(event) {
 	var self, chara;
 	chara = LMvc.currentAttackCharacter;
 	self = chara.AI;
-	var statusView = new BattleCharacterStatusView(chara.controller,chara);console.error("exp",calculateExp(chara, self.attackTarget));
+	var statusView = new BattleCharacterStatusView(chara.controller,chara);
 	statusView.push(BattleCharacterStatusConfig.EXP, calculateExp(chara, self.attackTarget));
 	/*
 	//TODO::取消装备经验，以后版本升级可能加入
