@@ -89,7 +89,7 @@ BattleCharacterStatusView.prototype.showCharacterStatus=function(){
 	*/
 	layer = getBitmap(layer);
 	
-	layer.y = 315 - layer.getHeight();
+	//layer.y = 315 - layer.getHeight();
 	self.addChild(layer);
 	if(self.statusLayer.numChildren > 0){
 		self.statusLayer.x += layer.x;
@@ -288,8 +288,9 @@ BattleCharacterStatusView.prototype.setStatus=function(){
 };
 BattleCharacterStatusView.prototype.setPosition=function(character){
 	var self = this, w = 200, h = self.getHeight();
-	self.x = character.x - w * 0.5;
-	self.y = character.y - h * 0.5;
+	self.x = character.x + (BattleCharacterSize.width - w) * 0.5;
+	//self.y = character.y - h * 0.5;
+	self.y = character.y + BattleCharacterSize.height;
 	var root = self.getRootCoordinate();
 	if(root.x < 0){
 		self.x -= root.x;
