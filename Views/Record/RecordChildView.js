@@ -28,7 +28,7 @@ RecordChildView.prototype.set=function(record){
 	var labels = record.labels;
 	
 	var name = getStrokeLabel(labels.name,18,"#FFFFFF","#000000",4);
-	name.x = 50;
+	name.x = 40;
 	name.y = 6;
 	self.labelsLayer.addChild(name);
 	var title = getStrokeLabel(labels.date,18,"#FFFFFF","#000000",4);
@@ -36,24 +36,24 @@ RecordChildView.prototype.set=function(record){
 	title.y = 6;
 	self.labelsLayer.addChild(title);
 	
-	var cityCount = getStrokeLabel(labels.cityCount,18,"#FFFFFF","#000000",2);
-	cityCount.x = 50;
-	cityCount.y = 32;
+	var cityCount = getStrokeLabel(labels.cityCount,18,"#FFFFFF","#000000",3);
+	cityCount.x = 40;
+	cityCount.y = 31;
 	self.labelsLayer.addChild(cityCount);
 	
-	var generalsCount = getStrokeLabel(labels.generalsCount,18,"#FFFFFF","#000000",2);
+	var generalsCount = getStrokeLabel(labels.generalsCount,18,"#FFFFFF","#000000",3);
 	generalsCount.x = 150;
-	generalsCount.y = 32;
+	generalsCount.y = 31;
 	self.labelsLayer.addChild(generalsCount);
 	
 	if(labels.battleTitle){
-		var battleTitle = getStrokeLabel(labels.battleTitle,18,"#FFFFFF","#000000",2);
-		battleTitle.x = 50;
+		var battleTitle = getStrokeLabel(labels.battleTitle,18,"#FFFFFF","#000000",3);
+		battleTitle.x = 40;
 		battleTitle.y = 55;
 		self.labelsLayer.addChild(battleTitle);
 	}
 	
-	var saveTime = getStrokeLabel(labels.saveTime,16,"#FFFFFF","#000000",2);
+	var saveTime = getStrokeLabel(labels.saveTime,16,"#FFFFFF","#000000",3);
 	saveTime.x = 222;
 	saveTime.y = 58;
 	self.labelsLayer.addChild(saveTime);

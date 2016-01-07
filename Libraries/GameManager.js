@@ -15,7 +15,7 @@ GameManager.save = function(index){
 	data.labels.cityCount = Language.get("city") + " : " + selectSeignor.areas().length;
 	data.labels.generalsCount = Language.get("generals") + " : " + selectSeignor.generalsCount();
 	var city_title_format = Language.get("city_title").replace("(","").replace(")","");
-	data.labels.date = LString.trim(String.format(city_title_format, data.chapterData.year, data.chapterData.month, "", ""));
+	data.labels.date = LString.trim(String.format(city_title_format, data.chapterData.year, NumberToString(data.chapterData.month,2), "", ""));
 	var now = new Date();
 	data.labels.saveTime = String.format("{0}-{1}-{2} {3}:{4}:{5}", 
 	now.getFullYear(), 
