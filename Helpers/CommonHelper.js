@@ -89,3 +89,10 @@ function gameDataInit(){
 	}
 	console.log("gameDataInit o");
 }
+function NumberToString(value, length){
+	value = ""+value;
+	while(value.length < length){
+		value = "0"+value;
+	}
+	return value;
+}

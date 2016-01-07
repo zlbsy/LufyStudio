@@ -8,7 +8,7 @@ function RecordChildView(index){
 }
 RecordChildView.prototype.init=function(){
 	var self = this;
-	self.backLayer = new LPanel(new LBitmapData(LMvc.datalist["win03"]), LGlobal.width - 140, 80);
+	self.backLayer = new LPanel(new LBitmapData(LMvc.datalist["win03"]), LGlobal.width - 100, 80);
 	self.addChild(self.backLayer);
 	var lblIndex = getStrokeLabel((self.recordIndex + 1)+".",25,"#FFFFFF","#000000",4);
 	lblIndex.x = 10;
@@ -27,27 +27,34 @@ RecordChildView.prototype.set=function(record){
 	}
 	var labels = record.labels;
 	
-	var name = getStrokeLabel(labels.name,22,"#FFFFFF","#000000",4);
+	var name = getStrokeLabel(labels.name,18,"#FFFFFF","#000000",4);
 	name.x = 50;
-	name.y = 7;
+	name.y = 6;
 	self.labelsLayer.addChild(name);
-	var title = getStrokeLabel(labels.date,22,"#FFFFFF","#000000",4);
+	var title = getStrokeLabel(labels.date,18,"#FFFFFF","#000000",4);
 	title.x = 150;
-	title.y = 7;
+	title.y = 6;
 	self.labelsLayer.addChild(title);
 	
-	var cityCount = getStrokeLabel(labels.cityCount,20,"#FFFFFF","#000000",2);
+	var cityCount = getStrokeLabel(labels.cityCount,18,"#FFFFFF","#000000",2);
 	cityCount.x = 50;
-	cityCount.y = 34;
+	cityCount.y = 32;
 	self.labelsLayer.addChild(cityCount);
 	
-	var generalsCount = getStrokeLabel(labels.generalsCount,20,"#FFFFFF","#000000",2);
+	var generalsCount = getStrokeLabel(labels.generalsCount,18,"#FFFFFF","#000000",2);
 	generalsCount.x = 150;
-	generalsCount.y = 34;
+	generalsCount.y = 32;
 	self.labelsLayer.addChild(generalsCount);
 	
-	var saveTime = getStrokeLabel(labels.saveTime,18,"#FFFFFF","#000000",2);
-	saveTime.x = 150;
+	if(labels.battleTitle){
+		var battleTitle = getStrokeLabel(labels.battleTitle,18,"#FFFFFF","#000000",2);
+		battleTitle.x = 50;
+		battleTitle.y = 55;
+		self.labelsLayer.addChild(battleTitle);
+	}
+	
+	var saveTime = getStrokeLabel(labels.saveTime,16,"#FFFFFF","#000000",2);
+	saveTime.x = 222;
 	saveTime.y = 58;
 	self.labelsLayer.addChild(saveTime);
 };

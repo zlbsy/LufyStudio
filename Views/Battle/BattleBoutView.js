@@ -30,7 +30,7 @@ BattleBoutView.prototype.setBout=function(){
 	var bout = self.controller.getValue("bout");
 	bout++;
 	self.controller.setValue("bout",bout);
-	var boutLabel = getLabelWindow(String.format("第{0}回合",bout), 30, 200, 60);
+	var boutLabel = getLabelWindow(String.format(Language.get("bout_label"),bout), 30, 200, 60);
 	boutLabel.x = -boutLabel.getWidth() * 0.5;
 	boutLabel.y = -boutLabel.getHeight() * 0.5;
 	boutLayer.addChild(boutLabel);

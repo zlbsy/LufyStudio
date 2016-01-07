@@ -25,7 +25,7 @@ RecordView.prototype.init=function(){
 };
 RecordView.prototype.layerInit=function(){
 	var self = this;
-	var width = LGlobal.width - 100;
+	var width = LGlobal.width - 60;
 	var height = LGlobal.height - 100;
 	self.width = width;
 	self.height = height;

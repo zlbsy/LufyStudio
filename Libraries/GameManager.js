@@ -17,9 +17,20 @@ GameManager.save = function(index){
 	var city_title_format = Language.get("city_title").replace("(","").replace(")","");
 	data.labels.date = LString.trim(String.format(city_title_format, data.chapterData.year, data.chapterData.month, "", ""));
 	var now = new Date();
-	data.labels.saveTime = String.format("{0}-{1}-{2} {3}:{4}:{5}", now.getFullYear(), now.getMonth() + 1, now.getDate(), now.getHours(), now.getMinutes(), now.getSeconds());
+	data.labels.saveTime = String.format("{0}-{1}-{2} {3}:{4}:{5}", 
+	now.getFullYear(), 
+	NumberToString(now.getMonth() + 1,2), 
+	NumberToString(now.getDate(),2), 
+	NumberToString(now.getHours(),2), 
+	NumberToString(now.getMinutes(),2), 
+	NumberToString(now.getSeconds(),2));
 	if(LMvc.BattleController){
 		data.battleData = getBattleSaveData();
+		var city = AreaModel.getArea(data.battleData.toCityId);
+		data.labels.battleTitle = 
+		String.format(Language.get("battle_title"), city.name()) + "("+
+		String.format(Language.get("bout_label"),data.battleData.bout) + ")";
+		//data.labels.boutLabel = String.format(Language.get("bout_label"),data.battleData.bout);
 	}
 	var recordName = String.format("gameRecord_{0}", index);
 	LPlugin.SetData(recordName, data);

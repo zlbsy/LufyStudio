@@ -65,6 +65,9 @@ Language.data = {
 	"StrategyEffectType.4":"觉醒",
 	"StrategyEffectType.5":"治疗",
 	
+	"bout_label":"第{0}回合",
+	"battle_title":"{0}之战",
+	
 	"return":"返回",
 	"execute":"执行",
 	"who_can_do":"派谁去?",
