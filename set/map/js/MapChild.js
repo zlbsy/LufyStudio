@@ -4,7 +4,19 @@ function MapChild(mx,my){
 	self.graphics.drawRect(2,"#FF0000",[0,0,48,48]);
 	self.mx = mx;
 	self.my = my;
+	self.directionX = 1;
+	self.directionY = 1;
 	self.data = maps[my][mx];
+	self.direction = maps[my][mx][1];
+	if(self.direction > 11){
+		self.directionX = -1;
+		self.directionY = -1;
+	}else if(self.direction > 7){
+		self.directionY = -1;
+	}else if(self.direction > 3){
+		self.directionX = -1;
+	}
+	self.direction %= 4;
 };
 MapChild.prototype.init = function(){
 	var self = this;
@@ -13,8 +25,8 @@ MapChild.prototype.init = function(){
 	if(coordinate.x >= LGlobal.width - 160){
 		buttonLayer.x = 48 - 160;
 	}
-	if(coordinate.y >= LGlobal.height - 120){
-		buttonLayer.y = -80;
+	if(coordinate.y >= LGlobal.height - 160){
+		buttonLayer.y = -120;
 	}else{
 		buttonLayer.y = 48;
 	}
@@ -50,6 +62,23 @@ MapChild.prototype.init = function(){
 	buttonLayer.addChild(button);
 	button.addEventListener(LMouseEvent.MOUSE_DOWN,self.moveStart.bind(self));
 	button.addEventListener(LMouseEvent.MOUSE_UP,self.moveEnd.bind(self));
+	button = new LButtonSample1("左右");
+	button.y = 80;
+	buttonLayer.addChild(button);
+	button.addEventListener(LMouseEvent.MOUSE_UP,self.changeScaleX.bind(self));
+	button = new LButtonSample1("上下");
+	button.x = 52;
+	button.y = 80;
+	buttonLayer.addChild(button);
+	button.addEventListener(LMouseEvent.MOUSE_UP,self.changeScaleY.bind(self));
+};
+MapChild.prototype.changeScaleX = function(e){
+	this.directionX *= -1;
+	this.changeDirection(this.direction);
+};
+MapChild.prototype.changeScaleY = function(e){
+	this.directionY *= -1;
+	this.changeDirection(this.direction);
 };
 MapChild.prototype.charaAdd = function(e){
 	var self = this;
@@ -112,6 +141,13 @@ MapChild.prototype.left = function(e){
 };
 MapChild.prototype.changeDirection = function(dir){
 	var self = this;
+	self.direction = dir;
+	if(self.directionX == -1){
+		dir += 4;
+	}
+	if(self.directionY == -1){
+		dir += 8;
+	}
 	var data = maps[self.my][self.mx];
 	maps[self.my][self.mx][1] = dir;
 	var bitmapData = getMapTile(maps[self.my][self.mx]);

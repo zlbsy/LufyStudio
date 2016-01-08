@@ -15,7 +15,16 @@ function getMapTile(data){
 	var bitmapData = new LBitmapData(null,0,0,48,48, LBitmapData.DATA_CANVAS);
 	var matrix = new LMatrix();
 	matrix.translate(-24,-24);
-	matrix.rotate(data[1]*90);
+	var dir = data[1];
+	if(dir > 11){
+		matrix.scale(-1,-1);
+	}else if(dir > 7){
+		matrix.scale(1,-1);
+	}else if(dir > 3){
+		matrix.scale(-1,1);
+	}
+	dir %= 4;
+	matrix.rotate(dir*90);
 	matrix.translate(24,24);
 	bitmapData.draw(tile,matrix,null,null,new LRectangle(0, 0, 48, 48));
 	MapHelperSetting.tiles[key] = bitmapData;
