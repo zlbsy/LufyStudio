@@ -274,20 +274,28 @@ CharacterModel.prototype.maxPhysicalFitness = function(){
 CharacterModel.prototype.disposition = function(){//0胆小，1冷静，2勇敢，3鲁莽
 	return this.data.disposition;
 };
+CharacterModel.prototype.proficiency = function(){
+	return 0.5 + this.currentSoldiers().proficiency() * 0.0005;
+};
 CharacterModel.prototype.attack = function(){
-	return this.data.attack * this.statusChange("attack") >>> 0;
+	var self = this;
+	return (self.data.attack * self.proficiency() * self.statusChange("attack")) >>> 0;
 };
 CharacterModel.prototype.spirit = function(){
-	return this.data.spirit >>> 0;
+	var self = this;
+	return (self.data.spirit * self.proficiency()) >>> 0;
 };
 CharacterModel.prototype.defense = function(){
-	return this.data.defense * this.statusChange("defense") >>> 0;
+	var self = this;
+	return (self.data.defense * self.proficiency() * self.statusChange("defense")) >>> 0;
 };
 CharacterModel.prototype.breakout = function(){
-	return this.data.breakout >>> 0;
+	var self = this;
+	return (self.data.breakout * self.proficiency()) >>> 0;
 };
 CharacterModel.prototype.morale = function(){
-	return this.data.morale >>> 0;
+	var self = this;
+	return (self.data.morale * self.proficiency()) >>> 0;
 };
 CharacterModel.prototype.movePower = function() {
 	return this.data.movePower;

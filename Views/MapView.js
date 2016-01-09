@@ -83,8 +83,9 @@ MapView.prototype.updateMapCoordinate = function(){
 };
 MapView.prototype.updateView = function(){
 	var self = this;
+	console.log("MapView.prototype.updateView isRead = " + LMvc.isRead);
+	self.areaLayerInit();
 	if(!LMvc.isRead){
-		self.areaLayerInit();
 		return;
 	}
 	console.log("LMvc.areaData.battleData=",JSON.stringify(LMvc.areaData.battleData));
