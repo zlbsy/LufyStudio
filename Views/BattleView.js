@@ -23,7 +23,15 @@ BattleView.prototype.init=function(){
 	self.baseLayer.addEventListener(LMouseEvent.MOUSE_UP, self.controller.mapMouseUp);
 	self.miniLayer.addEventListener(LMouseEvent.MOUSE_DOWN, self.miniLayerStartDrag);
 	self.miniLayer.addEventListener(LMouseEvent.MOUSE_UP, self.miniLayerStopDrag);
-	self.addEventListener(LEvent.ENTER_FRAME, self.onframe);
+	
+	var map = self.model.map;
+	if(LGlobal.height < map.height){
+		self.addEventListener(LEvent.ENTER_FRAME, self.onframe);
+		return;
+	}
+	self.addChildAt(getBlackBitmap(LGlobal.width, LGlobal.height), 0);
+	var baseLayer = self.baseLayer;
+	baseLayer.y = (LGlobal.height - map.height) * 0.5;
 };
 BattleView.prototype.boutShow = function(event){
 	var self = event.currentTarget.view;
