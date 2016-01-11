@@ -208,6 +208,11 @@ function calculateHertStrategyValue(attChara,hertChara,currentSelectStrategy,cor
 	if(ApiritAid){
 		hertDefense *= (1 + ApiritAid.value);
 	}
+	//地形修正
+	var terrainAtt = attChara.getTerrain();
+	var terrainHert = hertChara.getTerrain();
+	var attAttack = attAttack * terrainAtt.value * 0.01;
+	var hertDefense = hertDefense * terrainHert.value * 0.01;
 	//法术攻击的伤害值计算
 	r = attLv + 25 + (attAttack - hertDefense)/3;
 	//法术系数加成
@@ -250,9 +255,10 @@ function calculateHertValue(attChara,hertChara,correctionFactor){
 		hertDefense *= (1 + DefenseAid.value);
 	}
 	//地形修正
-	var map = LMvc.BattleController.model.map.data;
-	var attAttackAddition = attAttack * attCharaModel.currentSoldiers().terrain(map[attChara.locationY()][hertChara.locationX()].value).value * 0.01;
-	var hertDefenseAddition = hertDefense * hertCharaModel.currentSoldiers().terrain(map[hertChara.locationY()][hertChara.locationX()].value).value * 0.01;
+	var terrainAtt = attChara.getTerrain();
+	var terrainHert = hertChara.getTerrain();
+	var attAttackAddition = attAttack * terrainAtt.value * 0.01;
+	var hertDefenseAddition = hertDefense * terrainHert.value * 0.01;
 	//物理攻击的伤害值计算
 	r = attLv + 25 + (attAttackAddition - hertDefenseAddition)/2;
 	var skill = hertCharaModel.skill(SkillType.IGNORE_RESTRAINT);

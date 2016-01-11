@@ -58,19 +58,19 @@ BattleSelectMenuView.prototype.setMenu=function(){
 	
 	self.mainLayer.addChild(layer);
 	layer.x = menuY;
-	var menuButton = getIconButton("battle-menu",new LRectangle(0,0,35,35),"攻击",menuWidth);
+	var menuButton = getIconButton("battle-menu",new LRectangle(0,0,35,35),Language.get("attack"),menuWidth);
 	menuButton.y = menuY;
 	layer.addChild(menuButton);
 	menuButton.addEventListener(LMouseEvent.MOUSE_UP, self.clickAttack);
 	
 	menuY += menuHeight;
-	var menuButton = getIconButton("battle-menu",new LRectangle(35,0,35,35),"策略",menuWidth);
+	var menuButton = getIconButton("battle-menu",new LRectangle(35,0,35,35),Language.get("spirit"),menuWidth);
 	menuButton.y = menuY;
 	layer.addChild(menuButton);
 	menuButton.addEventListener(LMouseEvent.MOUSE_UP, self.clickMagicSelect);
 	
 	menuY += menuHeight;
-	var menuButton = getIconButton("battle-menu",new LRectangle(70,0,35,35),"单挑",menuWidth);
+	var menuButton = getIconButton("battle-menu",new LRectangle(70,0,35,35),Language.get("singleCombat"),menuWidth);
 	menuButton.y = menuY;
 	layer.addChild(menuButton);
 	menuButton.addEventListener(LMouseEvent.MOUSE_UP, self.clickSingleCombat);
@@ -82,7 +82,7 @@ BattleSelectMenuView.prototype.setMenu=function(){
 	menuButton.addEventListener(LMouseEvent.MOUSE_UP, self.clickItem);*/
 
 	menuY += menuHeight;
-	var menuButton = getIconButton("battle-menu",new LRectangle(175,0,35,35),Language.get("待命"),menuWidth);
+	var menuButton = getIconButton("battle-menu",new LRectangle(175,0,35,35),Language.get("standby"),menuWidth);
 	menuButton.y = menuY;
 	layer.addChild(menuButton);
 	menuButton.addEventListener(LMouseEvent.MOUSE_UP, self.clickStandby);

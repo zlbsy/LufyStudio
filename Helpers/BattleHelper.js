@@ -297,6 +297,46 @@ function battleFoodCheck(belong){
 	LGlobal.script.addScript(script);
 	return false;
 }
+function battleHealTroops(currentSelectStrategy, currentTargetCharacter){
+	var troopsAdd = currentSelectStrategy.troops();
+	var woundedAdd = currentSelectStrategy.wounded();
+	return battleHealTroopsRun(troopsAdd, woundedAdd, currentTargetCharacter);
+}
+function battleHealTroopsRun(troopsAdd, woundedAdd, currentTargetCharacter){
+	//var troopsAdd = currentSelectStrategy.troops();
+	//var woundedAdd = currentSelectStrategy.wounded();
+	var wounded = currentTargetCharacter.data.wounded();
+	if(woundedAdd < 1){
+		woundedAdd = wounded * woundedAdd >>> 0;
+	}else if(woundedAdd > wounded){
+		woundedAdd = wounded;
+	}
+	var battleData = currentTargetCharacter.controller.battleData;
+	var reservist = 0;
+	if(battleData.fromCity.seigniorCharaId() == currentTargetCharacter.data.seigniorId()){
+		reservist = battleData.troops;
+	}else{
+		reservist = battleData.toCity.troops();
+	}
+	if(troopsAdd > reservist){
+		troopsAdd = reservist;
+	}
+	if(woundedAdd > 0){
+		currentTargetCharacter.data.wounded(wounded - woundedAdd);
+		troopsAdd += woundedAdd;
+	}
+	var troops = currentTargetCharacter.data.troops();
+	var maxTroops = currentTargetCharacter.data.maxTroops();
+	if(troops + troopsAdd > maxTroops){
+		troopsAdd = maxTroops - troops;
+	}
+	if(battleData.fromCity.seigniorCharaId() == currentTargetCharacter.data.seigniorId()){
+		battleData.troops -= troopsAdd;
+	}else{
+		battleData.toCity.troops(reservist - troopsAdd);
+	}
+	return troopsAdd;
+}
 function getBattleSaveData(){
 	var data = {};
 	var battleData = LMvc.BattleController.battleData;

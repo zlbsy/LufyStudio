@@ -189,7 +189,7 @@ MapChild.prototype.change = function(e){
 	translucent.addEventListener(LMouseEvent.MOUSE_OVER, function (e) {});
 	translucent.addEventListener(LMouseEvent.MOUSE_OUT, function (e) {});
 
-	var myWindow = new LWindow({width:480,height:480,title:"新建"});
+	var myWindow = new LWindow({width:480,height:520,title:"新建"});
 	myWindow.x = (LGlobal.width - myWindow.getWidth()) * 0.5;
 	myWindow.y = (LGlobal.height - myWindow.getHeight()) * 0.5;
 	LGlobal.stage.addChild(myWindow);
@@ -205,8 +205,8 @@ MapChild.prototype.change = function(e){
 	mapLayer.addChild(bitmap);
 	mapLayer.addEventListener(LMouseEvent.MOUSE_UP,function(event){
 		stageLayer.downX = stageLayer.downY = -10;
-		var x = event.selfX / 48 >>> 0;
-		var y = event.selfY / 48 >>> 0;
+		var y = event.selfX / 48 >>> 0;
+		var x = event.selfY / 48 >>> 0;
 		var data = maps[self.my][self.mx];
 		maps[self.my][self.mx] = [x * 10 + y,data[1]];
 		var bitmapData = getMapTile(maps[self.my][self.mx]);

@@ -8,8 +8,10 @@ function getMapTile(data){
 	if(MapHelperSetting.tiles[key]){
 		return MapHelperSetting.tiles[key];
 	}
-	var sx = (data[0]/MapHelperSetting.w >>> 0)*48;
-	var sy = (data[0]%MapHelperSetting.w)*48;
+	var sy = (data[0]/MapHelperSetting.w >>> 0)*48;
+	var sx = (data[0]%MapHelperSetting.w)*48;
+	//var sx = (data[0]/MapHelperSetting.w >>> 0)*48;
+	//var sy = (data[0]%MapHelperSetting.w)*48;
 	//var tile = MapHelperSetting.bitmapData.clone().setProperties(sx, sy, 48, 48);
 	var tile = new LBitmapData(datalist["tile_map"],sx, sy, 48, 48);
 	var bitmapData = new LBitmapData(null,0,0,48,48, LBitmapData.DATA_CANVAS);

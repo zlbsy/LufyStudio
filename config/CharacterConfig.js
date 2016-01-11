@@ -63,6 +63,7 @@ var BattleCharacterStatusConfig = {};
 BattleCharacterStatusConfig.FADE_TIME = 0.2;
 BattleCharacterStatusConfig.SHOW_TIME = 0.5;
 BattleCharacterStatusConfig.CONFIRM_STATUS_TIME = 1;
+BattleCharacterStatusConfig.TROOPS = "Troops";
 BattleCharacterStatusConfig.HP = "HP";
 BattleCharacterStatusConfig.MP = "MP";
 BattleCharacterStatusConfig.SP = "SP";

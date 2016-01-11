@@ -315,6 +315,9 @@ BattleCharacterLayerView.prototype.boutSkillHeal=function(chara,skill,tweenObj){
 };
 BattleCharacterLayerView.prototype.healSingle = function(chara,strategy,y){
 	var self = this;
+	var healTroops = battleHealTroops(strategy, chara);
+	BattleCharacterStatusView.healCharactersPush(chara, healTroops);
+	/*
 	var wounded = chara.data.wounded();
 	var troops = chara.data.troops();
 	
@@ -349,6 +352,7 @@ BattleCharacterLayerView.prototype.healSingle = function(chara,strategy,y){
 		chara.changeAction(CharacterAction.MOVE);
 		chara.toStatic(true);
 	}});
+	*/
 };
 BattleCharacterLayerView.prototype.boutSkillEnlist=function(chara,skill,tweenObj){
 	var self = this;
@@ -385,4 +389,23 @@ BattleCharacterLayerView.prototype.boutSkillSelfAid=function(chara,skill,tweenOb
 			targetChara.status.addStatus(strategy.strategyType(), strategy.hert());
 		}
 	}
+};
+BattleCharacterLayerView.prototype.terrainHeal = function(){
+	var self = LMvc.BattleController.view.charaLayer;
+	var belong = LMvc.BattleController.getValue("currentBelong");
+	var charas = self.getCharactersFromBelong(belong);
+	
+	for(var index = 0,l = charas.length;index<l;index++){
+		var chara = charas[index];
+		var terrain = chara.getTerrain();
+		var terrainMaster = TerrainMasterModel.getMaster(terrain.id);
+		var heal = terrainMaster.heal();
+		if(heal > 0){
+			var troopsAdd = chara.data.maxTroops() * heal >>> 0;
+			var woundedAdd = chara.data.wounded() * heal >>> 0;
+			var healTroops = battleHealTroopsRun(troopsAdd, woundedAdd, chara);
+			BattleCharacterStatusView.healCharactersPush(chara, healTroops);
+		}
+	}
+	BattleCharacterStatusView.healCharactersBout();
 };

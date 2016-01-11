@@ -45,6 +45,8 @@ BattleBoutView.prototype.removeSelf=function(event){
 	LMvc.running = false;
 	self.remove();
 	if(battleFoodCheck(belong)){
-		view.charaLayer.boutSkillRun(belong, BattleIntelligentAI.execute);
+		//view.charaLayer.boutSkillRun(belong, BattleCharacterStatusView.healCharactersSkill);
+		var terrainHeal = view.charaLayer.terrainHeal;
+		view.charaLayer.boutSkillRun(belong, terrainHeal);
 	}
 };

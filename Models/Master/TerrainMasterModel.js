@@ -43,6 +43,9 @@ TerrainMasterModel.prototype.id = function() {
 TerrainMasterModel.prototype.name = function() {
 	return this.data.name;
 };
+TerrainMasterModel.prototype.heal = function() {
+	return this.data.heal;
+};
 TerrainMasterModel.prototype.strategy = function() {
 	return this.data.strategy;
 };

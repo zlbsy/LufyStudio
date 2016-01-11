@@ -463,7 +463,7 @@ BattleCharacterAI.prototype.hertActionComplete = function(event) {
 	LTweenLite.to(chara,chara.hertIndex * stepTime,{onComplete:function(e){
 		var chara = e.target;
 		var statusView = new BattleCharacterStatusView(self.controller,chara);
-		statusView.push(BattleCharacterStatusConfig.HP, -chara.hertValue);
+		statusView.push(BattleCharacterStatusConfig.TROOPS, -chara.hertValue);
 		chara.controller.view.baseLayer.addChild(statusView);
 		statusView.startTween();
 		if(!isCurrentAttackTarget(chara)){

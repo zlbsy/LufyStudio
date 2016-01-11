@@ -86,7 +86,7 @@ SoldierMasterModel.prototype.terrain = function(terrainId) {
 	}
 	var terrainData = self._terrains[terrainId];
 	if(!terrainData){
-		terrainData = {"id": 1, "value": 100, "moveCost": 1};
+		terrainData = {"id": terrainId, "value": 100, "moveCost": 1};
 		self._terrains[terrainId] = terrainData;
 	}
 	return terrainData;

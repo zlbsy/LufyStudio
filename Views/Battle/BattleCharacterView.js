@@ -318,7 +318,14 @@ BattleCharacterView.prototype.showStatusView = function() {
 	LMvc.characterStatusView = new BattleCharacterStatusView(self.controller,self);
 	LMvc.characterStatusView.addEventListener(BattleCharacterStatusEvent.CHANGE_COMPLETE,self.hideStatusView);
 	self.controller.view.baseLayer.addChild(LMvc.characterStatusView);
-	LMvc.characterStatusView.startTween();
+	LMvc.characterStatusView.startShow();
+};
+BattleCharacterView.prototype.getTerrain = function() {
+	var self = this;
+	var map = self.controller.model.map.data;
+	var mapData = map[self.locationY()][self.locationX()];
+	var terrainId = getTerrainId(mapData);
+	return self.data.currentSoldiers().terrain(terrainId);
 };
 BattleCharacterView.prototype.hideStatusView = function() {
 	LMvc.characterStatusView = null;

@@ -57,8 +57,9 @@ Language.data = {
 	"status_Chaos":"混乱",
 	"status_BanIncantation":"禁咒",
 	
+	"exp":"经验",
 	"treat":"治疗",
-	
+	"troops_plus":"兵力+{0}",
 	"StrategyEffectType.1":"攻击",
 	"StrategyEffectType.2":"状态变化",
 	"StrategyEffectType.3":"能力变化",
@@ -96,7 +97,9 @@ Language.data = {
 	"belong_enemy_action":"敌军行动",
 	"belong_friend_action":"友军行动",
 	
-	"strategy_weather_error":"无法在此天气使用!",
+	"strategy_weather_error":"无法在此天气使用！",
+	"strategy_troops_error":"已经没有可用的预备兵力了！",
+	"strategy_mp_error":"MP不足！",
 	"ctrl_Chaos_error":"混乱中!",
 	"stunt":"特技",
 	"menu":"菜单",
@@ -156,6 +159,8 @@ Language.data = {
 	"luck":"运气",
 	"sc_angry":"怒气",
 	
+	"standby":"待命",
+	"singleCombat":"单挑",
 	"attack":"攻击",
 	"spirit":"策略",
 	"defense":"防御",

@@ -163,12 +163,12 @@ StudioMenubar.prototype.open = function(e){
 	self.openWindow(self.openRun);
 };
 StudioMenubar.prototype.openRun = function(index){
-	LAjax.get("http://d.lufylegend.com/set/map/Data/map_"+index+".txt?time="+(new Date()).getTime(),{},function(data){
+	//LAjax.get("http://d.lufylegend.com/set/map/Data/map_"+index+".txt?time="+(new Date()).getTime(),{},function(data){
+	LAjax.get("./Data/map_"+index+".txt?time="+(new Date()).getTime(),{},function(data){
 		mapIndex.text = index;
 		//maps = JSON.parse(data);
 		var datas = JSON.parse(data);
 		if(datas.data){
-			
 			maps = datas.data;
 			StudioMenubar.toCharas(datas.charas,charaLayer,"red");
 			StudioMenubar.toCharas(datas.enemys,enemyLayer,"blue");

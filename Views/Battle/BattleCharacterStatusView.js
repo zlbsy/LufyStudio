@@ -3,11 +3,44 @@ function BattleCharacterStatusView(controller, character){
 	LExtends(self,LView,[controller]);
 	self.character = character;
 	self.belong = character.belong;
+	self.width = 195;
 	self.datas = [];
 };
+BattleCharacterStatusView.callback = null;
+BattleCharacterStatusView.healCharacters = [];
 BattleCharacterStatusView.BAR_SIZE = 150;
+BattleCharacterStatusView.healCharactersPush = function(healCharacter, troops){
+	BattleCharacterStatusView.healCharacters.push({healCharacter : healCharacter, troops : troops});
+};
+BattleCharacterStatusView.healCharactersBout = function(){
+	BattleCharacterStatusView.callback = BattleIntelligentAI.execute;
+	BattleCharacterStatusView.healCharactersCheck();
+};
+BattleCharacterStatusView.healCharactersStrategy = function(){
+	BattleCharacterStatusView.callback = LMvc.currentAttackCharacter.AI.plusExp;
+	BattleCharacterStatusView.healCharactersCheck();
+};
+BattleCharacterStatusView.healCharactersCheck = function(){
+	console.log("healCharactersCheck", BattleCharacterStatusView.healCharacters.length);
+	if(BattleCharacterStatusView.healCharacters.length == 0){
+		var callback = BattleCharacterStatusView.callback;
+		BattleCharacterStatusView.callback = null;
+		callback();
+		return;
+	}
+	var obj = BattleCharacterStatusView.healCharacters.shift();
+	var controller = obj.healCharacter.controller;
+	var statusView = new BattleCharacterStatusView(controller,obj.healCharacter);
+	statusView.push(BattleCharacterStatusConfig.TROOPS, obj.troops);
+	controller.view.baseLayer.addChild(statusView);
+	statusView.startTween();
+	statusView.addEventListener(BattleCharacterStatusEvent.CHANGE_COMPLETE,BattleCharacterStatusView.healCharactersCheck);
+};
 BattleCharacterStatusView.prototype.push=function(mode,value){
 	var self = this;
+	if(mode == BattleCharacterStatusConfig.HP){
+		console.error("BattleCharacterStatusConfig.HP");
+	}
 	self.datas.push({mode:mode,value:value});
 };
 BattleCharacterStatusView.prototype.get=function(mode){
@@ -17,10 +50,15 @@ BattleCharacterStatusView.prototype.get=function(mode){
 };
 BattleCharacterStatusView.prototype.startTween=function(){
 	var self = this;
-	self.showCharacterStatus();
+	self.showCharacterStatus(false);
 	self.setPosition(self.character);
 };
-BattleCharacterStatusView.prototype.showCharacterStatus=function(){
+BattleCharacterStatusView.prototype.startShow=function(){
+	var self = this;
+	self.showCharacterStatus(true);
+	self.setPosition(self.character);
+};
+BattleCharacterStatusView.prototype.showCharacterStatus=function(confirmStatus){
 	var self = this;
 	self.statusLayer = new LSprite();
 	//self.statusTextLayer = new LSprite();
@@ -33,11 +71,11 @@ BattleCharacterStatusView.prototype.showCharacterStatus=function(){
 	
 	var setH = 30;
 	
-	var hpStatus = new LSprite();
-	hpStatus.x = 10;
-	hpStatus.y = setH;
-	self.getCharacterStatusChild(BattleCharacterStatusConfig.HP, hpStatus);
-	layer.addChild(hpStatus);
+	var troopsStatus = new LSprite();
+	troopsStatus.x = 10;
+	troopsStatus.y = setH;
+	self.getCharacterStatusChild(BattleCharacterStatusConfig.TROOPS, troopsStatus);
+	layer.addChild(troopsStatus);
 	setH += 20;
 	var mpStatus = new LSprite();
 	mpStatus.x = 10;
@@ -61,18 +99,55 @@ BattleCharacterStatusView.prototype.showCharacterStatus=function(){
 		self.getCharacterStatusChild(BattleCharacterStatusConfig.EXP, expStatus);
 		layer.addChild(expStatus);
 	}
-	var background = getTranslucentBitmap(195,30 + 20 * layer.numChildren);
-	layer.addChildAt(background,0);
-	var name = getStrokeLabel(characterModel.name(),14,"#FFFFFF","#FF8C00",1);
+	
+	var soldier = getStrokeLabel(characterModel.currentSoldiers().name() + " Lv."+characterModel.level(),14,"#FFFFFF","#000000",1);
+	soldier.x = self.width - soldier.getWidth() - 20;
+	soldier.y = 5;
+	layer.addChild(soldier);
+	
+	var confirmLabel;
+	if(confirmStatus){
+		setH += 20;
+		if(self.character.belong == Belong.SELF){
+			var exp = getStrokeLabel("Exp " + characterModel.exp(), 14, "#FFFFFF", "#000000", 1);
+			exp.x = 10;
+			exp.y = setH;
+			layer.addChild(exp);
+			confirmLabel = exp;
+		}else if(self.character.belong == Belong.ENEMY){
+			var belong = getStrokeLabel(Language.get(Belong.ENEMY), 14, "#FFFFFF", "#000000", 1);
+			belong.x = 10;
+			belong.y = setH;
+			layer.addChild(belong);
+			confirmLabel = belong;
+		}
+	}
+	
+	var background = getTranslucentBitmap(self.width, 10 + 20 * layer.numChildren);
+	layer.addChildAt(background, 0);
+	var name = getStrokeLabel(characterModel.name(), 14, "#FFFFFF", "#FF8C00", 1);
 	name.x = 5;
 	name.y = 5;
 	layer.addChild(name);
 	
-	var soldier = getStrokeLabel(characterModel.currentSoldiers().name() + " Lv."+characterModel.level(),14,"#FFFFFF","#000000",1);
-	soldier.x = background.getWidth() - soldier.getWidth() - 20;
-	soldier.y = 5;
-	layer.addChild(soldier);
-	
+	if(confirmStatus){
+		var terrain = self.character.getTerrain();
+		var terrainMaster = TerrainMasterModel.getMaster(terrain.id);
+		var exert = getStrokeLabel(terrain.value + "%", 14, "#FFFFFF", "#000000", 1);
+		exert.x = self.width - exert.getWidth() - 20;
+		exert.y = confirmLabel.y;
+		layer.addChild(exert);
+		var color = "#FFFFFF";
+		if(terrain.value > 100){
+			color = "#32CD32";
+		}else if(terrain.value < 100){
+			color = "#FF0000";
+		}
+		var terrainLabel = getStrokeLabel(terrainMaster.name(), 14, color, "#000000", 1);
+		terrainLabel.x = exert.x - terrainLabel.getWidth() - 10;
+		terrainLabel.y = confirmLabel.y;
+		layer.addChild(terrainLabel);
+	}
 	//setH += 18;
 	/*
 	var weaponStatus = new LSprite();
@@ -163,10 +238,10 @@ BattleCharacterStatusView.prototype.getCharacterStatusChild=function(mode,layer)
 	var icon, frontBar, label, value, maxValue, currentValue,statusLayer;
 	var statusObject = self.get(mode);
 	switch(mode){
-		case BattleCharacterStatusConfig.HP:
+		case BattleCharacterStatusConfig.TROOPS:
 			icon = "icon_hert";
 			frontBar = "red_bar";
-			label = "兵力";
+			label = Language.get("troops");
 			maxValue = self.character.data.maxTroops();
 			currentValue = self.character.data.troops();
 			if(statusObject){
@@ -176,7 +251,7 @@ BattleCharacterStatusView.prototype.getCharacterStatusChild=function(mode,layer)
 		case BattleCharacterStatusConfig.MP:
 			icon = "yellow_ball";
 			frontBar = "yellow_bar";
-			label = "策略";
+			label = Language.get("spirit");
 			maxValue = self.character.data.maxMP();
 			currentValue = self.character.data.MP();
 			if(statusObject){
@@ -186,7 +261,7 @@ BattleCharacterStatusView.prototype.getCharacterStatusChild=function(mode,layer)
 		case BattleCharacterStatusConfig.SP:
 			icon = "orange_ball";
 			frontBar = "orange_bar";
-			label = "体力";
+			label = Language.get("physicalFitness");
 			maxValue = self.character.data.maxPhysicalFitness();
 			currentValue = self.character.data.physicalFitness();
 			if(statusObject){
@@ -196,7 +271,7 @@ BattleCharacterStatusView.prototype.getCharacterStatusChild=function(mode,layer)
 		case BattleCharacterStatusConfig.EXP:
 			icon = "orange_ball";
 			frontBar = "orange_bar";
-			label = "经验";
+			label = Language.get("exp");
 			maxValue = self.character.data.maxExp();
 			currentValue = self.character.data.exp();
 			if(statusObject){

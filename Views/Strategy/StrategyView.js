@@ -112,6 +112,23 @@ StrategyView.prototype.strategySelect = function(strategyModel) {
 	if(self.fromCharacterDetailed){
 		return;
 	}
+	if(BattleController.ctrlChara.data.MP() < strategyModel.cost()){
+		Toast.makeText(Language.get("strategy_mp_error")).show();
+		return;
+	}
+	if(strategyModel.effectType() == StrategyEffectType.Supply){
+		var battleData = LMvc.BattleController.battleData;
+		var reservist = 0;
+		if(battleData.fromCity.seigniorCharaId() == LMvc.selectSeignorId){
+			reservist = battleData.troops;
+		}else{
+			reservist = battleData.toCity.troops();
+		}
+		if(reservist <= 0){
+			Toast.makeText(Language.get("strategy_troops_error")).show();
+			return;
+		}
+	}
 	var weathers = strategyModel.weathers();
 	if(weathers && weathers.length > 0 && weathers.indexOf(LMvc.BattleController.view.weatherLayer.currentWeather.weather) < 0){
 		Toast.makeText(Language.get("strategy_weather_error")).show();

@@ -163,6 +163,9 @@ BattleView.prototype.clearContentLayer=function(event){
 };
 BattleView.prototype.resetMapPosition=function(chara){
 	var self = this;
+	if(LGlobal.height >= self.model.map.height){
+		return;
+	}
 	var baseLayer = self.baseLayer;
 	//baseLayer.x = LGlobal.width*0.5 - chara.x;
 	//baseLayer.y = LGlobal.height*0.5 - chara.y;
