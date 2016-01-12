@@ -3,6 +3,8 @@ LMvc.chapterData = {
 	icon:1,
 	year:184,
 	month:1,
+	exp:0,
+	level:1,
 	eventList:[],
 	seigniors:[
 		{chara_id:624,name:"刘备",faceImg:6,minFace:[0,23,151,151], general_count:6, city_count:1,color:"#FF0000"},

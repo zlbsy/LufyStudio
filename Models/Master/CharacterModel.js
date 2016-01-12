@@ -192,13 +192,23 @@ CharacterModel.prototype.calculation = function(init) {
 	var self = this;
 	var currentSoldiers = self.currentSoldiers();
 	var property = currentSoldiers.property();
-	self.data.attack = self.force() * 0.5 + CharacterModel.upValue(property.attack, self.force()) * self.lv();
-	self.data.spirit = self.intelligence() * 0.5 + CharacterModel.upValue(property.spirit, self.intelligence()) * self.lv();
-	self.data.defense = self.command() * 0.5 + CharacterModel.upValue(property.defense, self.command()) * self.lv();
-	self.data.breakout = self.agility() * 0.5 + CharacterModel.upValue(property.breakout, self.agility()) * self.lv();
-	self.data.morale = self.luck() * 0.5 + CharacterModel.upValue(property.morale, self.luck()) * self.lv();
+	/*************
+	兵力,MP,策略,使用武将等级,功绩100一级
+	五围,使用君主等级,总功绩2000一级
+	简单:敌军君主等级低于我军
+	普通:敌军君主等级等于我军
+	困难:敌军君主等级高于我军
+	*************/
+	var lv = self.seigniorLevel();
+	self.data.attack = self.force() * 0.5 + CharacterModel.upValue(property.attack, self.force()) * lv;
+	self.data.spirit = self.intelligence() * 0.5 + CharacterModel.upValue(property.spirit, self.intelligence()) * lv;
+	self.data.defense = self.command() * 0.5 + CharacterModel.upValue(property.defense, self.command()) * lv;
+	self.data.breakout = self.agility() * 0.5 + CharacterModel.upValue(property.breakout, self.agility()) * lv;
+	self.data.morale = self.luck() * 0.5 + CharacterModel.upValue(property.morale, self.luck()) * lv;
+	
 	self.data.maxTroops = self.initTroops() + property.troops * self.lv();
 	self.data.maxStrategy = self.initStrategy() + property.strategy * self.lv();
+	
 	self.data.movePower = currentSoldiers.movePower();
 	self.data.rangeAttack = null;
 	if(init){
@@ -324,6 +334,9 @@ CharacterModel.prototype.seignior = function(chara_id) {
 		return null;
 	}
 	return SeigniorModel.getSeignior(self.data.seignior_id);
+};
+CharacterModel.prototype.seigniorLevel = function(){
+	return LMvc.chapterData.level;
 };
 CharacterModel.prototype.exp = function(value){
 	return this._dataValue("exp", value, 0);
