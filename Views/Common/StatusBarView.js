@@ -24,14 +24,17 @@ StatusBarView.prototype.set = function(obj){
 };
 StatusBarView.prototype.setCharacterStatus=function(){
 	var self = this;
-	
-	var iconBitmapData = new LBitmapData(LMvc.datalist[self.icon]);
-	var hertIcon = new LBitmap(iconBitmapData);
-	hertIcon.scaleX = hertIcon.scaleY = 16 / hertIcon.getHeight();
-	self.mainLayer.addChild(hertIcon);
+	var iconX = 0, iconY = 0;
+	if(self.icon){
+		var iconBitmapData = new LBitmapData(LMvc.datalist[self.icon]);
+		var hertIcon = new LBitmap(iconBitmapData);
+		hertIcon.scaleX = hertIcon.scaleY = 16 / hertIcon.getHeight();
+		self.mainLayer.addChild(hertIcon);
+	}
 	var barBack = new LPanel(new LBitmapData(LMvc.datalist["blue_bar"]),self.barSize + 4,14);
-	barBack.x = hertIcon.x + 20;
-	barBack.y = hertIcon.y;
+	//barBack.x = hertIcon.x + 20;
+	//barBack.y = hertIcon.y;
+	barBack.x = 20;
 	self.mainLayer.addChild(barBack);
 	
 	var currentValue = self.currentValue;
@@ -46,10 +49,10 @@ StatusBarView.prototype.setCharacterStatus=function(){
 	barIcon.scaleX = value;
 	var barEndPosition = barBack.x + self.barSize + 2;
 	barIcon.x = barEndPosition - barSize;
-	barIcon.y = hertIcon.y + 2;
+	barIcon.y = iconY + 2;
 	self.statusLayer.addChild(barIcon);
 	var lblBar = getStrokeLabel(String.format("{0} {1}/{2} ",self.name,self.currentValue,self.normalValue),14,"#FFFFFF","#000000",3);
-	var textEndPosition = hertIcon.x + 15 + self.barSize;
+	var textEndPosition = iconX + 15 + self.barSize;
 	lblBar.x = textEndPosition - lblBar.getWidth();
 	lblBar.y = barBack.y + barBack.getHeight() - lblBar.getHeight() - 5;
 	self.statusLayer.addChild(lblBar);

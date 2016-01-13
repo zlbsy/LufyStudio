@@ -346,9 +346,10 @@ CharacterDetailedView.prototype.showProperties=function(){
 	/*	"attack":"攻击","spirit":"策略","defense":"防御","breakout":"爆发","morale":"士气","movePower":"移动力",*/
 	var statusLayer = new LSprite();
 	var txtHeight = 25, startY = -txtHeight + 10, startRightY = startY,startX = 5;
-	var labels = ["君主等级","武将等级","tab_arms","force","command","intelligence","agility","luck"];
+	var labels = ["君主等级","武将等级","tab_arms",
+	"force","command","intelligence","agility","luck"];
 	var labelsRight = ["troops","MP",
-	"exp",
+	"exp","熟练度",
 	//"physicalFitness",
 	"attack","spirit","defense","breakout","morale","movePower"];
 	if(!LMvc.BattleController){
@@ -358,6 +359,7 @@ CharacterDetailedView.prototype.showProperties=function(){
 	self.characterModel.seigniorLevel(),
 	self.characterModel.level(),
 	self.characterModel.currentSoldiers().name(),
+	//self.characterModel.currentSoldiers().proficiency(),
 	self.characterModel.force(),
 	self.characterModel.command(),
 	self.characterModel.intelligence(),
@@ -366,16 +368,17 @@ CharacterDetailedView.prototype.showProperties=function(){
 	self.characterModel.currentSoldiers().movePower()
 	];
 	var datasRight = [
-	[String.format("{0}({1})",self.characterModel.troops() == 0 ? self.characterModel.maxTroops() : self.characterModel.troops(),self.characterModel.wounded()),self.characterModel.maxTroops(),self.characterModel.maxTroops()],
-	[self.characterModel.MP(),self.characterModel.maxMP(),self.characterModel.maxMP()],
-	[self.characterModel.exp(),self.characterModel.maxExp(),self.characterModel.maxExp()],
+	[String.format("{0}({1})",self.characterModel.troops() == 0 ? self.characterModel.maxTroops() : self.characterModel.troops(),self.characterModel.wounded()),self.characterModel.maxTroops(),self.characterModel.maxTroops(),"red_bar", "icon_hert"],
+	[self.characterModel.MP(),self.characterModel.maxMP(),self.characterModel.maxMP(),"yellow_bar","yellow_ball"],
+	[self.characterModel.exp(),self.characterModel.maxExp(),self.characterModel.maxExp(),"orange_bar","orange_ball"],
 	//[self.characterModel.physicalFitness(),self.characterModel.maxPhysicalFitness(),100],
-	[self.characterModel.attack(),self.characterModel.attack(),1000],
-	[self.characterModel.spirit(),self.characterModel.spirit(),1000],
-	[self.characterModel.defense(),self.characterModel.defense(),1000],
-	[self.characterModel.breakout(),self.characterModel.breakout(),1000],
-	[self.characterModel.morale(),self.characterModel.morale(),1000],
-	[self.characterModel.currentSoldiers().movePower(),self.characterModel.currentSoldiers().movePower(),10],
+	[self.characterModel.currentSoldiers().proficiency(),self.characterModel.currentSoldiers().proficiency(),1000,"red_bar",null],
+	[self.characterModel.attack(),self.characterModel.attack(),1000,"red_bar",null],
+	[self.characterModel.spirit(),self.characterModel.spirit(),1000,"red_bar",null],
+	[self.characterModel.defense(),self.characterModel.defense(),1000,"red_bar",null],
+	[self.characterModel.breakout(),self.characterModel.breakout(),1000,"red_bar",null],
+	[self.characterModel.morale(),self.characterModel.morale(),1000,"red_bar",null],
+	[self.characterModel.currentSoldiers().movePower(),self.characterModel.currentSoldiers().movePower(),10,"red_bar",null],
 	];
 	for(var i=0;i<labels.length;i++){
 		startY += txtHeight;
@@ -390,8 +393,8 @@ CharacterDetailedView.prototype.showProperties=function(){
 		var obj = datasRight[i];
 		var bar = new StatusBarView(self.controller);
 		bar.set({maxValue:obj[2],currentValue:obj[0],normalValue:obj[1],name:Language.get(labelsRight[i]),
-		icon:"icon_hert",
-		frontBar:"red_bar",
+		icon:obj[4],
+		frontBar:obj[3],
 		barSize:200});
 		bar.x = startX;
 		bar.y = startRightY;
