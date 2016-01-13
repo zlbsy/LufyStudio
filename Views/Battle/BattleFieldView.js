@@ -1,3 +1,6 @@
+/*
+ * 战况
+ */
 function BattleFieldView(controller){
 	var self = this;
 	LExtends(self,LView,[controller]);

@@ -52,6 +52,10 @@ BattleSelectMenuEvent.SELECT_MENU_HIDDEN = "select_menu_hidden";
 var StrategyListEvent = {};
 StrategyListEvent.SELECT = "strategyListSelect";
 StrategyListEvent.CLOSE = "strategyListClose";
+
+var BattleResultEvent = {};
+BattleResultEvent.CLOSE_EXP = "close_exp";
+
 if (!Array.getRandomArrays){
 	Array.getRandomArrays = function(list,num){
 		var result = [], length = list.length < num ? list.length : num;

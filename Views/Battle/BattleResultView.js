@@ -72,7 +72,7 @@ function BattleResultView(controller, result){
 			console.log("nothing");
 		}
 		self.showWin();
-		self.addEventListener("close_exp", self.selfCaptiveWin);
+		self.addEventListener(BattleResultEvent.CLOSE_EXP, self.selfCaptiveWin);
 		self.showExpDialog();
 		//self.selfCaptiveWin();
 	}else{
@@ -86,19 +86,22 @@ function BattleResultView(controller, result){
 			//nothing
 			console.log("nothing");
 			//self.enemyCaptiveFail();
-			self.addEventListener("close_exp", self.enemyCaptiveFail);
+			self.addEventListener(BattleResultEvent.CLOSE_EXP, self.enemyCaptiveFail);
 		}else{
 			//enemy change city
 			console.log("enemy change city");
 			self.winSeigniorId = battleData.fromCity.seigniorCharaId();
 			//self.selectMoveCity();
-			self.addEventListener("close_exp", self.selectMoveCity);
+			self.addEventListener(BattleResultEvent.CLOSE_EXP, self.selectMoveCity);
 		}
 		self.showExpDialog();
 	}
 };
 BattleResultView.prototype.showExpDialog=function(){
 	var self = this;
+	var view = new BattleExpChangeView(self.controller);
+	self.addChild(view);
+	return;
 	var obj = {title:"showExpDialog",message:"showExpDialog",width:400,height:480};
 	obj.okEvent = function(e){
 		var w = e.currentTarget.parent;
