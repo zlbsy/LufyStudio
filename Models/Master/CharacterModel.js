@@ -336,7 +336,7 @@ CharacterModel.prototype.seignior = function(chara_id) {
 	return SeigniorModel.getSeignior(self.data.seignior_id);
 };
 CharacterModel.prototype.seigniorLevel = function(){
-	return LMvc.chapterData.level;
+	return (LMvc.chapterData.exp / CharacterExpConfig.seignior >>> 0) + 1;
 };
 CharacterModel.prototype.exp = function(value){
 	return this._dataValue("exp", value, 0);
@@ -392,8 +392,7 @@ CharacterModel.prototype.lv = function() {
 	return this.level();
 };
 CharacterModel.prototype.level = function() {
-	var self = this;
-	return self.data.feat / CharacterModel.FEAT_VALUE + 1;
+	return (this.data.feat / CharacterExpConfig.general >>> 0) + 1;
 };
 CharacterModel.prototype.strategies = function(isAll) {
 	var self = this;

@@ -59,6 +59,10 @@ var CharacterDisposition = {
 var BattleCharacterSize = {
 	width:48,height:48
 };
+var CharacterExpConfig = {
+	seignior:2000,
+	general:200
+};
 var BattleCharacterStatusConfig = {};
 BattleCharacterStatusConfig.FADE_TIME = 0.2;
 BattleCharacterStatusConfig.SHOW_TIME = 0.5;

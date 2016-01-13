@@ -20,6 +20,12 @@ function calculateDoubleAtt(attChara,hertChara){
 	if(BreakoutAid){
 		hertBreakout *= (1 + BreakoutAid.value);
 	}
+	//地形修正
+	var terrainAtt = attChara.getTerrain();
+	var terrainHert = hertChara.getTerrain();
+	var attBreakout = attBreakout * terrainAtt.value * 0.01;
+	var hertBreakout = hertBreakout * terrainHert.value * 0.01;
+	
 	var rate = attBreakout/hertBreakout;
 	if(rate < 1){
 		h = 1;
@@ -58,6 +64,12 @@ function calculateFatalAtt(attChara,hertChara){
 	if(MoraleAid){
 		hertMorale *= (1 + MoraleAid.value);
 	}
+	//地形修正
+	var terrainAtt = attChara.getTerrain();
+	var terrainHert = hertChara.getTerrain();
+	var attMorale = attMorale * terrainAtt.value * 0.01;
+	var hertMorale = hertMorale * terrainHert.value * 0.01;
+	
 	var rate = attMorale/hertMorale;
 	if(rate < 1){
 		h = 1;
@@ -90,7 +102,7 @@ function calculateFatalAtt(attChara,hertChara){
  再考虑宝物的加成<br>
  最后，不同的法术还会有具体的权重系数，比如还要乘以1.5、0.9等等。
  *********************************************/
-function calculateHitrate(attChara,hertChara){
+function calculateHitrate(attChara,hertChara,isView){
 	//对方混乱
 	if(hertChara.status.hasStatus(StrategyType.Chaos)){
 		return true;
@@ -109,6 +121,12 @@ function calculateHitrate(attChara,hertChara){
 	if(BreakoutAid){
 		hertBreakout *= (1 + BreakoutAid.value);
 	}
+	//地形修正
+	var terrainAtt = attChara.getTerrain();
+	var terrainHert = hertChara.getTerrain();
+	var attBreakout = attBreakout * terrainAtt.value * 0.01;
+	var hertBreakout = hertBreakout * terrainHert.value * 0.01;
+	
 	if(attBreakout > 2*hertBreakout){
 		r = 100;
 	}else if(attBreakout > hertBreakout){
@@ -117,6 +135,10 @@ function calculateHitrate(attChara,hertChara){
 		r=(attBreakout-hertBreakout/2)*30/(hertBreakout/2)+60;
 	}else{
 		r=(attBreakout-hertBreakout/3)*30/(hertBreakout/3)+30;
+	}
+	if(isView){
+		var s = String(r).split(".");
+		return s.length == 1 ? s[0] : s[0] + "." + s[1].substring(0, 1);
 	}
 	if(Math.random()*100 <= r){
 		return true;
@@ -168,6 +190,11 @@ function calculateHitrateStrategy(attChara,hertChara){
 		hertMorale *= (1 + MoraleAid.value);
 	}
 	var hertY = hertSpirit + hertMorale;
+	//地形修正
+	var terrainAtt = attChara.getTerrain();
+	var terrainHert = hertChara.getTerrain();
+	var attX = attX * terrainAtt.value * 0.01;
+	var hertY = hertY * terrainHert.value * 0.01;
 	
 	if(attX > 2*hertY){
 		r = 100;
@@ -235,7 +262,7 @@ function calculateHertStrategyValue(attChara,hertChara,currentSelectStrategy,cor
  r=Lv+25+(X'-Y')/2;
  然后再根据兵种相克和宝物进行修正
  **************************************************************/
-function calculateHertValue(attChara,hertChara,correctionFactor){
+function calculateHertValue(attChara,hertChara,correctionFactor, isView){
 	var r;
 	var attCharaModel = attChara.data;
 	var hertCharaModel = hertChara.data;
@@ -287,8 +314,10 @@ function calculateHertValue(attChara,hertChara,correctionFactor){
 	}
 	//修正系数
 	r *= correctionFactor;
-	//随即系数
-	r = (11 - Math.random() * 2) * 0.1 * r;
+	if(!isView){
+		//随即系数
+		r = (11 - Math.random() * 2) * 0.1 * r;
+	}
 	//TODO:: 宝物修正
 	if(r < 1){
 		r = 1;

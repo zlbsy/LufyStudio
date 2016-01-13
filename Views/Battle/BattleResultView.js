@@ -72,7 +72,9 @@ function BattleResultView(controller, result){
 			console.log("nothing");
 		}
 		self.showWin();
-		self.selfCaptiveWin();
+		self.addEventListener("close_exp", self.selfCaptiveWin);
+		self.showExpDialog();
+		//self.selfCaptiveWin();
 	}else{
 		self.enemyLeader = self.model.enemyList.find(function(child){
 			return child.isLeader;
@@ -83,14 +85,29 @@ function BattleResultView(controller, result){
 			self.winSeigniorId = battleData.toCity.seigniorCharaId();
 			//nothing
 			console.log("nothing");
-			self.enemyCaptiveFail();
+			//self.enemyCaptiveFail();
+			self.addEventListener("close_exp", self.enemyCaptiveFail);
 		}else{
 			//enemy change city
 			console.log("enemy change city");
 			self.winSeigniorId = battleData.fromCity.seigniorCharaId();
-			self.selectMoveCity();
+			//self.selectMoveCity();
+			self.addEventListener("close_exp", self.selectMoveCity);
 		}
+		self.showExpDialog();
 	}
+};
+BattleResultView.prototype.showExpDialog=function(){
+	var self = this;
+	var obj = {title:"showExpDialog",message:"showExpDialog",width:400,height:480};
+	obj.okEvent = function(e){
+		var w = e.currentTarget.parent;
+		var s = w.parent;
+		w.remove();
+		s.dispatchEvent("close_exp");
+		};
+	var windowLayer = ConfirmWindow(obj);
+	self.addChild(windowLayer);
 };
 BattleResultView.prototype.expeditionMove=function(city, retreatCity){
 	//资源损失0.2
@@ -182,8 +199,14 @@ BattleResultView.prototype.showWin=function(){
 	title.y = 20;
 	self.addChild(title);
 };
-BattleResultView.prototype.selfCaptiveWin=function(count){
-	var self = this;
+BattleResultView.prototype.selfCaptiveWin=function(event){
+	var self, count;
+	if(typeof event == UNDEFINED || typeof event == "number"){
+		self = this;
+		count = event;
+	}else{
+		self = event.target;
+	}
 	if(!count){
 		count = 0;
 	}

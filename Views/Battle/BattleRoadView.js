@@ -40,6 +40,42 @@ BattleRoadView.prototype.setRangeAttack = function(chara){
 		nodes.push(new LPoint(x + range.x,y + range.y));
 	}
 	self.setRoads(nodes, self.redData);
+	if(chara.belong != Belong.SELF){
+		return;
+	}
+	for(var i=0;i<nodes.length;i++){
+		var node = nodes[i];
+		var target = chara.controller.view.charaLayer.getCharacterFromLocation(node.x, node.y);
+		if(!target || isSameBelong(chara.belong, target.belong)){
+			continue;
+		}
+		var layer = new LSprite();
+		var m = new LTextField();
+		m.setWordWrap(true, 12);
+		m.size = 10;
+		m.text = "伤: "+calculateHertValue(chara,target,1,true)+"\n命: "+calculateHitrate(chara,target,true)+"%";
+		m.color = "#ffffff";
+		m.lineColor = "#000000";
+		m.stroke = true;
+		m.x = 2;
+		m.y = self.model.stepHeight - m.getHeight();
+		layer.addChild(m);
+		var bitmapData = getBitmapData(layer);
+		var x = node.x*self.model.stepWidth;
+		var y = node.y*self.model.stepHeight;
+		self.bitmap.bitmapData.copyPixels(bitmapData, new LRectangle(0, 0, self.model.stepWidth, self.model.stepHeight), new LPoint(x,y));
+	}
+};
+BattleRoadView.prototype.setAttackStatus = function(chara){
+	var self = this,solider,ranges,range,x,y,nodes = [];
+	x = chara.locationX();
+	y = chara.locationY();
+	ranges = chara.data.rangeAttack();
+	for(var i=0;i<ranges.length;i++){
+		range = ranges[i];
+		nodes.push(new LPoint(x + range.x,y + range.y));
+	}
+	self.setRoads(nodes, self.redData);
 };
 BattleRoadView.prototype.addRangeAttack = function(chara){
 	var self = this,solider,ranges,range,x,y,nodes = [];
