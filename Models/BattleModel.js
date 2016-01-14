@@ -57,6 +57,7 @@ BattleModel.prototype.getImages=function(){
 	list.push({name:"menu_line",path:LMvc.IMG_PATH+"component/menu_line.png"});
 	list.push({name:"battle_status",path:LMvc.IMG_PATH+"battle/status.png"});
 	list.push({name:"big_attack_1",path:LMvc.IMG_PATH+"battle/big_attack_1.gif"});
+	list.push({name:"background-text01",path:LMvc.IMG_PATH+"background/text01.png"});
 	for(var i=0;i<10;i++){
 		list.push({name:"num-1-"+i,path:LMvc.IMG_PATH+"num/1/num_" +i+".png"});
 	}
