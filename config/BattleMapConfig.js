@@ -10,6 +10,10 @@ var MapHelperSetting = {
 	bitmapData:null,
 	tiles:{}
 };
+
+var BattleResultConfirmType = {
+	selfCaptive:1
+};
 /*
 BattleMapConfig.GameClear = "gameClear";
 BattleMapConfig.GameOver = "gameOver";

@@ -55,6 +55,7 @@ StrategyListEvent.CLOSE = "strategyListClose";
 
 var BattleResultEvent = {};
 BattleResultEvent.CLOSE_EXP = "close_exp";
+BattleResultEvent.CLOSE_CAPTIVE = "close_captive";
 
 if (!Array.getRandomArrays){
 	Array.getRandomArrays = function(list,num){

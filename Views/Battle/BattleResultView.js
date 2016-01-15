@@ -72,7 +72,8 @@ function BattleResultView(controller, result){
 			console.log("nothing");
 		}
 		self.showWin();
-		self.addEventListener(BattleResultEvent.CLOSE_EXP, self.selfCaptiveWin);
+		//self.addEventListener(BattleResultEvent.CLOSE_EXP, self.selfCaptiveWin);
+		self.addEventListener(BattleResultEvent.CLOSE_EXP, self.checkAndShowDialog);
 		self.showExpDialog();
 		//self.selfCaptiveWin();
 	}else{
@@ -102,6 +103,50 @@ BattleResultView.prototype.showExpDialog=function(){
 	var view = new BattleExpChangeView(self.controller);
 	self.addChild(view);
 };
+BattleResultView.prototype.checkAndShowDialog=function(event){
+	var self = event.currentTarget;
+	switch(event.eventType){
+		case BattleResultEvent.CLOSE_EXP:
+		case BattleResultEvent.CLOSE_CAPTIVE:
+			if(self.result){
+				if(self.model.selfCaptive.length == 0){
+					self.enemyCaptiveWin();
+				}else{
+					self.selfCaptiveWin();
+				}
+			}
+		break;
+	}
+};
+BattleResultView.prototype.selfCaptiveWin=function(){
+	var self = this;
+	
+	var view = new BattleResultConfirmView(self.controller, BattleResultConfirmType.selfCaptive, {
+		charaModel : CharacterModel.getChara(self.model.selfCaptive[0])
+	});
+	self.addChild(view);
+	
+	return;
+	if(self.model.selfCaptive.length == 0){
+		self.enemyCaptiveWin();
+		return;
+	}
+	
+	var charaId = self.model.selfCaptive[0];
+	var charaModel = CharacterModel.getChara(charaId);
+	//self.model.selfCaptive.splice(0, 1);
+	self.confirmShow(charaModel,String.format("俘虏了敌将{0}!",charaModel.name()),count);
+};
+BattleResultView.prototype.enemyCaptiveWin=function(){
+	var self = this;
+	if(self.model.enemyCaptive.length == 0){
+		self.cityWin();
+		return;
+	}
+	self.model.enemyCaptive.length = 0;
+	self.confirmShow(null,"被敌军俘虏的将领也被救回来了!");
+};
+
 BattleResultView.prototype.expeditionMove=function(city, retreatCity){
 	//资源损失0.2
 	retreatCity.food(city.food()*0.4 >>> 0);
@@ -192,6 +237,7 @@ BattleResultView.prototype.showWin=function(){
 	title.y = 20;
 	self.addChild(title);
 };
+/*
 BattleResultView.prototype.selfCaptiveWin=function(event){
 	var self, count;
 	if(typeof event == UNDEFINED || typeof event == "number"){
@@ -221,6 +267,7 @@ BattleResultView.prototype.enemyCaptiveWin=function(){
 	self.model.enemyCaptive.length = 0;
 	self.confirmShow(null,"被敌军俘虏的将领也被救回来了!");
 };
+*/
 BattleResultView.prototype.showFail=function(){
 	var self = this;
 	var title = getStrokeLabel("战斗失败",50,"#CCCCCC","#000000",4);
