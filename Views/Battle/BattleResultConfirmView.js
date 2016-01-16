@@ -1,16 +1,19 @@
-function BattleResultConfirmView(controller, confirmType, params){
+function BattleResultConfirmView(controller, params){
 	var self = this;
 	LExtends(self,LView,[controller]);
 	self.initLayer();
 	self.setBackground();
-	self.confirmType = confirmType;
+	self.confirmType = params.confirmType;
 	self.characterModel = params.characterModel;
-	switch(confirmType){
-		case BattleResultConfirmType.selfCaptive:
+	switch(self.confirmType){
+		case BattleWinConfirmType.selfCaptive:
 			self.setSelfCaptive();
 			break;
-		case BattleResultConfirmType.selfRecruitFail:
+		case BattleWinConfirmType.selfRecruitFail:
 			self.setSelfRecruitFail();
+			break;
+		case BattleWinConfirmType.enemyCaptive:
+			self.setEnemyCaptive();
 			break;
 	}
 	var y = self.baseLayer.y;
@@ -22,6 +25,16 @@ BattleResultConfirmView.prototype.initLayer = function(){
 	self.baseLayer = new LSprite();
 	self.addChild(self.baseLayer);
 };
+BattleResultConfirmView.prototype.resize = function(w, h){
+	var self = this;
+	self.windowWidth = w;
+	self.windowHeight = h;
+	self.windowPanel.cacheAsBitmap(false);
+	self.windowPanel.resize(w, h);
+	self.windowPanel.cacheAsBitmap(true);
+	self.baseLayer.x = (LGlobal.width - self.windowWidth)*0.5;
+	self.baseLayer.y = (LGlobal.height - self.windowHeight)*0.5;
+};
 BattleResultConfirmView.prototype.setBackground = function(){
 	var self = this;
 	self.windowWidth = 420;
@@ -29,19 +42,36 @@ BattleResultConfirmView.prototype.setBackground = function(){
 	var windowData = new LBitmapData(LMvc.datalist["win05"]);
 	var windowPanel = new LPanel(windowData,self.windowWidth,self.windowHeight);
 	windowPanel.cacheAsBitmap(true);
+	self.windowPanel = windowPanel;
 	self.baseLayer.addChild(windowPanel);
-	self.baseLayer.x = (LGlobal.width - self.windowWidth)*0.5;
-	self.baseLayer.y = (LGlobal.height - self.windowHeight)*0.5;
+	self.resize(self.windowWidth, self.windowHeight);
 };
 BattleResultConfirmView.prototype.setSelfCaptive = function(){
 	var self = this;
 	self.addEventListener(BattleResultEvent.SURRENDER_CAPTIVE, self.captiveSurrender);
-	self.selfCaptiveButton("俘虏了敌将{0}!", BattleResultEvent.SURRENDER_CAPTIVE);
+	self.selfCaptiveButton(Language.get("captive_dialog_msg"), BattleResultEvent.SURRENDER_CAPTIVE);//俘虏了敌将{0}!
 };
 BattleResultConfirmView.prototype.setSelfRecruitFail = function(){
 	var self = this;
 	self.addEventListener(BattleResultEvent.CAPTIVE_CAPTIVE, self.captiveCaptive);
-	self.selfCaptiveButton("敌将{0}拒绝加入我军!", BattleResultEvent.CAPTIVE_CAPTIVE);
+	self.selfCaptiveButton(Language.get("recruit_fail_dialog_msg"), BattleResultEvent.CAPTIVE_CAPTIVE);//敌将{0}拒绝加入我军!
+};
+BattleResultConfirmView.prototype.setEnemyCaptive = function(){
+	var self = this;
+	self.selfCaptiveButton(Language.get("rescue_self_captive_dialog_msg"), BattleResultEvent.RESCUE_CAPTIVE);//被敌军俘虏的将领也被救回来了
+};
+BattleResultConfirmView.prototype.setOnlyMessage = function(msg, eventType){
+	var self = this;
+	self.resize(400,200);
+	var lblMsg = getStrokeLabel(String.format(msg, self.characterModel.name()), 20, "#FFFFFF", "#000000", 4);
+	lblMsg.x = (self.windowWidth - lblMsg.getWidth())*0.5;
+	lblMsg.y = 10;
+	self.baseLayer.addChild(lblMsg);
+	var btnConfirm = getButton(Language.get("release"),100);//释放
+	btnConfirm.x = (self.windowWidth - 100)*0.5;
+	btnConfirm.eventType = eventType;
+	self.baseLayer.addChild(btnConfirm);
+	btnConfirm.addEventListener(BattleResultEvent.CAPTIVE_CAPTIVE, self.captiveCaptive);
 };
 BattleResultConfirmView.prototype.selfCaptiveButton = function(msg, leftEventType){
 	var self = this;
@@ -180,4 +210,5 @@ BattleResultConfirmView.prototype.setCharacter = function(){
 		lblLeft.y = startY;
 		statusLayer.addChild(lblLeft);
 	}
+	statusLayer.cacheAsBitmap(true);
 };

@@ -144,6 +144,9 @@ Language.data = {
 	
 	"recruit_success":"愿效犬马之力!",
 	"recruit_fail":"少废话!忠臣不事二主!",
+	"captive_dialog_msg":"俘虏了敌将{0}!",
+	"recruit_fail_dialog_msg":"敌将{0}拒绝加入我军!",
+	"rescue_self_captive_dialog_msg":"被敌军俘虏的将领也被救回来了!",
 	
 	"label_equip":"装备",
 	"label_use":"使用",

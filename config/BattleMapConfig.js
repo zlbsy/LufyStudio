@@ -11,9 +11,10 @@ var MapHelperSetting = {
 	tiles:{}
 };
 
-var BattleResultConfirmType = {
+var BattleWinConfirmType = {
 	selfCaptive:1,
-	selfRecruitFail:2
+	selfRecruitFail:2,
+	enemyCaptive:3
 };
 /*
 BattleMapConfig.GameClear = "gameClear";
