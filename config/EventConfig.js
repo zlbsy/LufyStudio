@@ -56,6 +56,10 @@ StrategyListEvent.CLOSE = "strategyListClose";
 var BattleResultEvent = {};
 BattleResultEvent.CLOSE_EXP = "close_exp";
 BattleResultEvent.CLOSE_CAPTIVE = "close_captive";
+BattleResultEvent.CAPTIVE_CAPTIVE = "captive_captive";
+BattleResultEvent.SURRENDER_CAPTIVE = "surrender_captive";
+BattleResultEvent.RELEASE_CAPTIVE = "release_captive";
+BattleResultEvent.BEHEAD_CAPTIVE = "behead_captive";
 
 if (!Array.getRandomArrays){
 	Array.getRandomArrays = function(list,num){

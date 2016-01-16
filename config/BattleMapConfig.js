@@ -12,7 +12,8 @@ var MapHelperSetting = {
 };
 
 var BattleResultConfirmType = {
-	selfCaptive:1
+	selfCaptive:1,
+	selfRecruitFail:2
 };
 /*
 BattleMapConfig.GameClear = "gameClear";

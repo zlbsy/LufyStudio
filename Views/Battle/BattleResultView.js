@@ -4,6 +4,7 @@ function BattleResultView(controller, result){
 	self.name = "BattleResult";
 	self.backInit();
 	self.result = result;
+	self.checkCaptives = [];
 	//TODO:test code
 	//var from = self.controller.battleData.fromCity;
 	//self.controller.battleData.fromCity = self.controller.battleData.toCity;
@@ -11,6 +12,7 @@ function BattleResultView(controller, result){
 	//self.model.enemyList[0].isLeader = true;
 	//TODO:test code end
 		
+	self.addEventListener(BattleResultEvent.CLOSE_CAPTIVE, self.checkAndShowDialog);
 	var battleData = controller.battleData;
 	if(result){
 		self.winSeigniorId = LMvc.selectSeignorId;
@@ -120,10 +122,17 @@ BattleResultView.prototype.checkAndShowDialog=function(event){
 };
 BattleResultView.prototype.selfCaptiveWin=function(){
 	var self = this;
-	
-	var view = new BattleResultConfirmView(self.controller, BattleResultConfirmType.selfCaptive, {
-		charaModel : CharacterModel.getChara(self.model.selfCaptive[0])
-	});
+	var characterId = self.model.selfCaptive[0];
+	var confirmType = BattleResultConfirmType.selfCaptive;
+	if(self.checkCaptives.indexOf(characterId) >= 0){
+		confirmType = BattleResultConfirmType.selfRecruitFail;
+	}
+	var view = new BattleResultConfirmView(self.controller, 
+		confirmType, 
+		{
+			characterModel : CharacterModel.getChara(characterId)
+		}
+	);
 	self.addChild(view);
 	
 	return;

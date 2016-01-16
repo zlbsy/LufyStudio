@@ -1775,17 +1775,22 @@ LSGJBattleResultScript.analysis = function(value) {
 	var start = value.indexOf("(");
 	var end = value.indexOf(")");
 	switch(value.substr(0,start)) {
-		case "SGJBattleResult.selfCaptiveWin":
-			LSGJBattleResultScript.selfCaptiveWin(value, start, end);
+		//case "SGJBattleResult.selfCaptiveWin":
+		//	LSGJBattleResultScript.selfCaptiveWin(value, start, end);
+		case "SGJBattleResult.talk":
+			LSGJBattleResultScript.talk(value, start, end);
 			break;
 		default:
 			LGlobal.script.analysis();
 	}
 };
-LSGJBattleResultScript.selfCaptiveWin = function(value, start, end) {
+LSGJBattleResultScript.talk = function(value, start, end) {
 	var params = value.substring(start + 1, end).split(",");
 	var resultView = LMvc.BattleController.view.getChildByName("BattleResult");
-	resultView.selfCaptiveWin(parseInt(params[0]));
+	//resultView.checkAndShowDialog(parseInt(params[0]));
+	//resultView.checkAndShowDialog();
+	var eventType = params[0];
+	resultView.dispatchEvent(eventType);
 };
 /*
  * LSGJTalkScript.js

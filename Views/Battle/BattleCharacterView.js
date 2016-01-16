@@ -296,7 +296,7 @@ BattleCharacterView.prototype.returnShowMoveRoadObject = function() {
 BattleCharacterView.prototype.toDie = function(isSingleCombat) {
 	var self = this;
 	var talkMsg;
-	if(isSingleCombat || calculateHitrateCaptive(self)){
+	if(isSingleCombat || calculateHitrateCaptive(self) || true){
 		if(self.belong == Belong.ENEMY){
 			LMvc.BattleController.model.selfCaptive.push(self.data.id());
 		}else{

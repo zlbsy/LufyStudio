@@ -142,6 +142,9 @@ Language.data = {
 	"recruit":"招降",
 	"behead":"斩首",
 	
+	"recruit_success":"愿效犬马之力!",
+	"recruit_fail":"少废话!忠臣不事二主!",
+	
 	"label_equip":"装备",
 	"label_use":"使用",
 	"label_sale":"出售",
