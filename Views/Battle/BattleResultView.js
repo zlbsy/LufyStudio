@@ -12,9 +12,14 @@ function BattleResultView(controller, result){
 	//self.model.enemyList[0].isLeader = true;
 	//TODO:test code end
 		
-	self.addEventListener(BattleResultEvent.CLOSE_CAPTIVE, self.checkAndShowDialog);
+	
 	var battleData = controller.battleData;
 	if(result){
+		self.addEventListener(BattleResultEvent.CLOSE_CAPTIVE, self.selfCaptiveWin);
+		self.addEventListener(BattleResultEvent.CLOSE_CAPTIVE_SELF, self.enemyCaptiveWin);
+		self.addEventListener(BattleResultEvent.CLOSE_CAPTIVE_ENEMY, self.cityWin);
+		self.addEventListener(BattleResultEvent.RESCUE_CAPTIVE, self.cityWin);
+		
 		self.winSeigniorId = LMvc.selectSeignorId;
 		if(battleData.fromCity.seigniorCharaId() == LMvc.selectSeignorId){
 			self.failSeigniorId = battleData.toCity.seigniorCharaId();
@@ -75,7 +80,7 @@ function BattleResultView(controller, result){
 		}
 		self.showWin();
 		//self.addEventListener(BattleResultEvent.CLOSE_EXP, self.selfCaptiveWin);
-		self.addEventListener(BattleResultEvent.CLOSE_EXP, self.checkAndShowDialog);
+		self.addEventListener(BattleResultEvent.CLOSE_EXP, self.selfCaptiveWin);
 		self.showExpDialog();
 		//self.selfCaptiveWin();
 	}else{
@@ -111,17 +116,27 @@ BattleResultView.prototype.checkAndShowDialog=function(event){
 		case BattleResultEvent.CLOSE_EXP:
 		case BattleResultEvent.CLOSE_CAPTIVE:
 			if(self.result){
-				if(self.model.selfCaptive.length == 0){
-					self.enemyCaptiveWin();
-				}else{
-					self.selfCaptiveWin();
-				}
+				self.selfCaptiveWin();
 			}
-		break;
+			break;
+		case BattleResultEvent.CLOSE_CAPTIVE_SELF:
+			if(self.result){
+				self.enemyCaptiveWin();
+			}
+			break;
+		case BattleResultEvent.CLOSE_CAPTIVE_ENEMY:
+			if(self.result){
+				self.cityWin();
+			}
+			break;
 	}
 };
-BattleResultView.prototype.selfCaptiveWin=function(){
-	var self = this;
+BattleResultView.prototype.selfCaptiveWin=function(event){
+	var self = event.currentTarget;
+	if(self.model.selfCaptive.length == 0){
+		self.dispatchEvent(BattleResultEvent.CLOSE_CAPTIVE_SELF);
+		return;
+	}
 	var characterId = self.model.selfCaptive[0];
 	var confirmType = BattleWinConfirmType.selfCaptive;
 	if(self.checkCaptives.indexOf(characterId) >= 0){
@@ -146,17 +161,21 @@ BattleResultView.prototype.selfCaptiveWin=function(){
 	//self.model.selfCaptive.splice(0, 1);
 	self.confirmShow(charaModel,String.format("俘虏了敌将{0}!",charaModel.name()),count);*/
 };
-BattleResultView.prototype.enemyCaptiveWin=function(){
-	var self = this;
+BattleResultView.prototype.enemyCaptiveWin=function(event){
+	var self = event.currentTarget;
 	if(self.model.enemyCaptive.length == 0){
-		self.cityWin();
+		self.dispatchEvent(BattleResultEvent.CLOSE_CAPTIVE_ENEMY);
 		return;
 	}
 	self.model.enemyCaptive.length = 0;
-	self.confirmShow(null,"被敌军俘虏的将领也被救回来了!");
+	var view = new BattleResultConfirmView(self.controller, 
+		{confirmType : BattleWinConfirmType.enemyCaptive}
+	);
+	self.addChild(view);
+	//self.confirmShow(null,"被敌军俘虏的将领也被救回来了!");
 };
-BattleResultView.prototype.cityWin=function(){
-	var self = this;
+BattleResultView.prototype.cityWin=function(event){
+	var self = event.currentTarget;
 	console.log("OVER win");
 	if(!self.end){
 		self.end = true;

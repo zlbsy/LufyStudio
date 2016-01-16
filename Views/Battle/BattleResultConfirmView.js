@@ -58,7 +58,7 @@ BattleResultConfirmView.prototype.setSelfRecruitFail = function(){
 };
 BattleResultConfirmView.prototype.setEnemyCaptive = function(){
 	var self = this;
-	self.selfCaptiveButton(Language.get("rescue_self_captive_dialog_msg"), BattleResultEvent.RESCUE_CAPTIVE);//被敌军俘虏的将领也被救回来了
+	self.setOnlyMessage(Language.get("rescue_self_captive_dialog_msg"), BattleResultEvent.RESCUE_CAPTIVE);//被敌军俘虏的将领也被救回来了
 };
 BattleResultConfirmView.prototype.setOnlyMessage = function(msg, eventType){
 	var self = this;
@@ -67,11 +67,19 @@ BattleResultConfirmView.prototype.setOnlyMessage = function(msg, eventType){
 	lblMsg.x = (self.windowWidth - lblMsg.getWidth())*0.5;
 	lblMsg.y = 10;
 	self.baseLayer.addChild(lblMsg);
+	var buttonLayer = new LSprite();
+	self.baseLayer.addChild(buttonLayer);
+	//buttonLayer.y = 355;
 	var btnConfirm = getButton(Language.get("release"),100);//释放
 	btnConfirm.x = (self.windowWidth - 100)*0.5;
 	btnConfirm.eventType = eventType;
-	self.baseLayer.addChild(btnConfirm);
-	btnConfirm.addEventListener(BattleResultEvent.CAPTIVE_CAPTIVE, self.captiveCaptive);
+	self.addEventListener(eventType, self.closeSelf);
+	buttonLayer.addChild(btnConfirm);
+	buttonLayer.addEventListener(LMouseEvent.MOUSE_UP, self.captiveCheck);
+};
+BattleResultConfirmView.prototype.closeSelf=function(event){
+	var self = event.currentTarget;
+	self.parent.dispatchEvent(event.eventType);
 };
 BattleResultConfirmView.prototype.selfCaptiveButton = function(msg, leftEventType){
 	var self = this;
