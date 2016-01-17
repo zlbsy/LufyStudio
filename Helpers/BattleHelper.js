@@ -464,3 +464,52 @@ function setBattleSaveData(){
 	LMvc.BattleController.view.miniLayer.visible = true;
 	LMvc.isRead = false;
 }
+/*
+ * 战斗失败后资源移动
+ */
+function battleExpeditionMove(city, retreatCity){
+	//资源损失0.2
+	retreatCity.food(city.food()*0.4 >>> 0);
+	city.food(-city.food()*0.6 >>> 0);
+	retreatCity.money(city.money()*0.4 >>> 0);
+	city.money(-city.money()*0.6 >>> 0);
+	retreatCity.troops(retreatCity.troops() + (city.troops()*0.4 >>> 0));
+	city.troops(city.troops()*0.4 >>> 0);
+}
+/*
+ * 战斗后移动到指定城池
+ */
+function battleCityChange(winSeigniorId, failSeigniorId, retreatCityId, captiveList, expeditionList){
+	var city = LMvc.BattleController.battleData.toCity;
+	var generals = city.generals();
+	var moveCharas = generals.slice();
+	for(var i=0,l=moveCharas.length;i<l;i++){
+		var chara = moveCharas[i];
+		if(captiveList.find(function(child){return child == chara.id();})){
+			continue;
+		}
+		if(retreatCityId){
+			chara.moveTo(retreatCityId);
+			chara.moveTo();
+		}else{
+			//TODO::下野
+			//city.outOfOffice().push(chara);
+		}
+	}
+	generals.splice(0, generals.length);
+	if(failSeigniorId){
+		var seigniorFail = SeigniorModel.getSeignior(failSeigniorId);
+		seigniorFail.removeCity(city.id());
+	}
+	var seigniorWin = SeigniorModel.getSeignior(winSeigniorId);
+	seigniorWin.addCity(city);
+	city.seigniorCharaId(winSeigniorId);
+	generals = expeditionList.slice();
+	for(var i=0,l=generals.length;i<l;i++){
+		var chara = generals[i];
+		city.troops(city.troops() + chara.troops());
+		chara.troops(0);
+		chara.moveTo(city.id());
+		chara.moveTo();
+	}
+};

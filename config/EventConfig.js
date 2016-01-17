@@ -64,6 +64,10 @@ BattleResultEvent.RELEASE_CAPTIVE = "release_captive";
 BattleResultEvent.BEHEAD_CAPTIVE = "behead_captive";
 BattleResultEvent.RESCUE_CAPTIVE = "rescue_captive";
 BattleResultEvent.ATTACK_AND_OCCUPY = "attack_and_occupy";
+BattleResultEvent.LOSE_CITY = "lose_city";
+BattleResultEvent.CLOSE_FAIL_CAPTIVE = "close_fail_captive";
+BattleResultEvent.CLOSE_FAIL_CAPTIVE_ENEMY = "close_fail_captive_enemy";
+BattleResultEvent.CLOSE_FAIL_CAPTIVE_SELF = "close_fail_captive_self";
 
 if (!Array.getRandomArrays){
 	Array.getRandomArrays = function(list,num){

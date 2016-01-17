@@ -17,6 +17,12 @@ var BattleWinConfirmType = {
 	enemyCaptive:3,
 	attackAndOccupy:4
 };
+var BattleFailConfirmType = {
+	selectMoveCity:-1,
+	enemyCaptive:-2,
+	selfCaptive:-3,
+	attackAndOccupy:-4
+};
 /*
 BattleMapConfig.GameClear = "gameClear";
 BattleMapConfig.GameOver = "gameOver";
