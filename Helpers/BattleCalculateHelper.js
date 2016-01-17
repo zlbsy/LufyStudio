@@ -137,8 +137,7 @@ function calculateHitrate(attChara,hertChara,isView){
 		r=(attBreakout-hertBreakout/3)*30/(hertBreakout/3)+30;
 	}
 	if(isView){
-		var s = String(r).split(".");
-		return s.length == 1 ? s[0] : s[0] + "." + s[1].substring(0, 1);
+		return r >>> 0;
 	}
 	if(Math.random()*100 <= r){
 		return true;

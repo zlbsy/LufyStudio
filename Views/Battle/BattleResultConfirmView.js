@@ -145,14 +145,11 @@ BattleResultConfirmView.prototype.citySelected=function(event){
 	self.parent.retreatCityId = self.retreatCityId;
 	var city = self.controller.battleData.toCity;
 	self.retreatCity = AreaModel.getArea(self.retreatCityId);
-	/*if(!self.retreatCity.seigniorCharaId()){
-		console.log("self.failSeigniorId="+self.failSeigniorId);
+	if(!self.retreatCity.seigniorCharaId()){
 		var seignior = SeigniorModel.getSeignior(self.failSeigniorId);
-		console.log("seignior="+seignior);
-		seignior.addCity(self.retreatCityId);
+		seignior.addCity(self.retreatCity);
 		self.retreatCity.seigniorCharaId(self.failSeigniorId);
-		console.log("self.retreatCity="+self.retreatCity.seigniorCharaId());
-	}*/
+	}
 	//战斗失败后资源移动
 	battleExpeditionMove(city, self.retreatCity);
 	battleCityChange(self.winSeigniorId, self.failSeigniorId, self.retreatCityId, self.model.enemyCaptive,  self.controller.battleData.expeditionEnemyCharacterList);

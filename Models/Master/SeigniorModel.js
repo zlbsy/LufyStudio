@@ -186,12 +186,17 @@ SeigniorModel.prototype.isStopBattle = function(id){
 	}) >= 0;
 };
 SeigniorModel.prototype.addCity = function(area){
-	console.error("SeigniorModel.prototype.addCity", area);
-	this.data.areas.push(area);
+	var self = this;
+	for(var i=0,l=self.data.areas.length;i<l;i++){
+		var child = self.data.areas[i];
+		if(child.id() == area.id()){
+			return;
+		}
+	}
+	self.data.areas.push(area);
 };
 SeigniorModel.prototype.removeCity = function(areaId){
-	var self = this
-	console.error(":::::::::::::SeigniorModel.prototype.removeCity:"+areaId);
+	var self = this;
 	for(var i=0,l=self.data.areas.length;i<l;i++){
 		var child = self.data.areas[i];
 		if(child.id() == areaId){
