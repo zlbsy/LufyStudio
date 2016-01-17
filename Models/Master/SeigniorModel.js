@@ -190,10 +190,15 @@ SeigniorModel.prototype.addCity = function(area){
 	this.data.areas.push(area);
 };
 SeigniorModel.prototype.removeCity = function(areaId){
-	var index = this.data.areas.findIndex(function(child){
-		return child.id() == areaId;
-	});
-	this.data.areas.splice(index, 1);
+	var self = this
+	console.error(":::::::::::::SeigniorModel.prototype.removeCity:"+areaId);
+	for(var i=0,l=self.data.areas.length;i<l;i++){
+		var child = self.data.areas[i];
+		if(child.id() == areaId){
+			self.data.areas.splice(i, 1);
+			break;
+		}
+	}
 };
 SeigniorModel.prototype.getCaptivedList = function(){
 	var self = this;

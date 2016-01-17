@@ -503,6 +503,7 @@ function battleCityChange(winSeigniorId, failSeigniorId, retreatCityId, captiveL
 	}
 	var seigniorWin = SeigniorModel.getSeignior(winSeigniorId);
 	seigniorWin.addCity(city);
+	console.log("winSeigniorId="+winSeigniorId);
 	city.seigniorCharaId(winSeigniorId);
 	generals = expeditionList.slice();
 	for(var i=0,l=generals.length;i<l;i++){

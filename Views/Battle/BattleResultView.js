@@ -166,7 +166,6 @@ BattleResultView.prototype.cityWin=function(event){
 };
 BattleResultView.prototype.cityFail=function(event){
 	var self = event.currentTarget;
-	console.log("BattleResultView.prototype.cityFail");
 	var charaTroops = 0;
 	self.model.enemyList.forEach(function(child){
 		charaTroops += child.data.troops();
@@ -195,7 +194,6 @@ BattleResultView.prototype.cityFail=function(event){
 };
 BattleResultView.prototype.selfCaptiveFail=function(event){
 	var self = event.currentTarget;
-	console.log("BattleResultView.prototype.selfCaptiveFail");
 	if(self.model.selfCaptive.length == 0){
 		self.dispatchEvent(BattleResultEvent.CLOSE_FAIL_CAPTIVE_SELF);
 		return;
@@ -208,7 +206,6 @@ BattleResultView.prototype.selfCaptiveFail=function(event){
 };
 BattleResultView.prototype.enemyCaptiveFail=function(event){
 	var self = event.currentTarget;
-	console.log("BattleResultView.prototype.enemyCaptiveFail"+self.model.enemyCaptive.length);
 	if(self.model.enemyCaptive.length == 0){
 		self.dispatchEvent(BattleResultEvent.CLOSE_FAIL_CAPTIVE_ENEMY);
 		return;
@@ -262,16 +259,6 @@ BattleResultView.prototype.enemyCaptiveWin=function(event){
 	);
 	self.addChild(view);
 };
-//TODO::Delete
-BattleResultView.prototype.expeditionMove=function(city, retreatCity){
-	//资源损失0.2
-	retreatCity.food(city.food()*0.4 >>> 0);
-	city.food(-city.food()*0.6 >>> 0);
-	retreatCity.money(city.money()*0.4 >>> 0);
-	city.money(-city.money()*0.6 >>> 0);
-	retreatCity.troops(retreatCity.troops() + (city.troops()*0.4 >>> 0));
-	city.troops(city.troops()*0.4 >>> 0);
-};
 BattleResultView.prototype.backInit=function(){
 	var self = this;
 	var windowLayer = new LSprite();
@@ -297,7 +284,6 @@ BattleResultView.prototype.showFail=function(){
 };
 BattleResultView.prototype.showMap=function(event){
 	var self = event.currentTarget;
-	console.log("BattleResultView.prototype.showMap ",event);
 	var cityId = self.controller.battleData.toCity.id();
 	self.controller.view.remove();
 	LMvc.BattleController = null;
@@ -315,6 +301,16 @@ BattleResultView.prototype.showMap=function(event){
 };
 
 /*
+//TODO::Delete
+BattleResultView.prototype.expeditionMove=function(city, retreatCity){
+	//资源损失0.2
+	retreatCity.food(city.food()*0.4 >>> 0);
+	city.food(-city.food()*0.6 >>> 0);
+	retreatCity.money(city.money()*0.4 >>> 0);
+	city.money(-city.money()*0.6 >>> 0);
+	retreatCity.troops(retreatCity.troops() + (city.troops()*0.4 >>> 0));
+	city.troops(city.troops()*0.4 >>> 0);
+};
 //TODO::Delete
 BattleResultView.prototype.cityChange=function(captiveList, expeditionList){
 	var self = this;
