@@ -5,6 +5,7 @@ function BattleResultConfirmView(controller, params){
 	self.setBackground();
 	self.confirmType = params.confirmType;
 	self.characterModel = params.characterModel;
+	self.message = params.message;
 	switch(self.confirmType){
 		case BattleWinConfirmType.selfCaptive:
 			self.setSelfCaptive();
@@ -14,6 +15,9 @@ function BattleResultConfirmView(controller, params){
 			break;
 		case BattleWinConfirmType.enemyCaptive:
 			self.setEnemyCaptive();
+			break;
+		case BattleWinConfirmType.attackAndOccupy:
+			self.setAttackAndOccupy();
 			break;
 	}
 	var y = self.baseLayer.y;
@@ -58,20 +62,25 @@ BattleResultConfirmView.prototype.setSelfRecruitFail = function(){
 };
 BattleResultConfirmView.prototype.setEnemyCaptive = function(){
 	var self = this;
-	self.setOnlyMessage(Language.get("rescue_self_captive_dialog_msg"), BattleResultEvent.RESCUE_CAPTIVE);//被敌军俘虏的将领也被救回来了
+	self.setOnlyMessage(String.format(Language.get("rescue_self_captive_dialog_msg"), self.characterModel.name()), BattleResultEvent.RESCUE_CAPTIVE);//被敌军俘虏的将领也被救回来了
+};
+BattleResultConfirmView.prototype.setAttackAndOccupy = function(){
+	var self = this;
+	self.setOnlyMessage(self.message, BattleResultEvent.ATTACK_AND_OCCUPY);//攻占
 };
 BattleResultConfirmView.prototype.setOnlyMessage = function(msg, eventType){
 	var self = this;
 	self.resize(400,200);
-	var lblMsg = getStrokeLabel(String.format(msg, self.characterModel.name()), 20, "#FFFFFF", "#000000", 4);
+	var lblMsg = getStrokeLabel(msg, 20, "#FFFFFF", "#000000", 4);
 	lblMsg.x = (self.windowWidth - lblMsg.getWidth())*0.5;
-	lblMsg.y = 10;
+	lblMsg.y = 30;
 	self.baseLayer.addChild(lblMsg);
 	var buttonLayer = new LSprite();
 	self.baseLayer.addChild(buttonLayer);
 	//buttonLayer.y = 355;
-	var btnConfirm = getButton(Language.get("release"),100);//释放
+	var btnConfirm = getButton(Language.get("confirm"),100);//释放
 	btnConfirm.x = (self.windowWidth - 100)*0.5;
+	btnConfirm.y = 120;
 	btnConfirm.eventType = eventType;
 	self.addEventListener(eventType, self.closeSelf);
 	buttonLayer.addChild(btnConfirm);
@@ -120,9 +129,10 @@ BattleResultConfirmView.prototype.captiveCheck=function(event){
 	baseLayer.parent.eventType = button.eventType;
 	LTweenLite.to(buttonLayer.parent,0.3,{y:LGlobal.height,onComplete:function(e){
 		var self = e.target.parent;
-		console.log(self,self.eventType);
 		self.dispatchEvent(self.eventType);
-		self.remove();
+		if(LMvc.BattleController){
+			self.remove();
+		}
 	}});
 };
 BattleResultConfirmView.prototype.surrender=function(seigniorId){

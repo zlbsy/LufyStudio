@@ -14,7 +14,8 @@ var MapHelperSetting = {
 var BattleWinConfirmType = {
 	selfCaptive:1,
 	selfRecruitFail:2,
-	enemyCaptive:3
+	enemyCaptive:3,
+	attackAndOccupy:4
 };
 /*
 BattleMapConfig.GameClear = "gameClear";

@@ -19,6 +19,7 @@ function BattleResultView(controller, result){
 		self.addEventListener(BattleResultEvent.CLOSE_CAPTIVE_SELF, self.enemyCaptiveWin);
 		self.addEventListener(BattleResultEvent.CLOSE_CAPTIVE_ENEMY, self.cityWin);
 		self.addEventListener(BattleResultEvent.RESCUE_CAPTIVE, self.cityWin);
+		self.addEventListener(BattleResultEvent.ATTACK_AND_OCCUPY, self.showMap);
 		
 		self.winSeigniorId = LMvc.selectSeignorId;
 		if(battleData.fromCity.seigniorCharaId() == LMvc.selectSeignorId){
@@ -110,28 +111,8 @@ BattleResultView.prototype.showExpDialog=function(){
 	var view = new BattleExpChangeView(self.controller);
 	self.addChild(view);
 };
-BattleResultView.prototype.checkAndShowDialog=function(event){
-	var self = event.currentTarget;
-	switch(event.eventType){
-		case BattleResultEvent.CLOSE_EXP:
-		case BattleResultEvent.CLOSE_CAPTIVE:
-			if(self.result){
-				self.selfCaptiveWin();
-			}
-			break;
-		case BattleResultEvent.CLOSE_CAPTIVE_SELF:
-			if(self.result){
-				self.enemyCaptiveWin();
-			}
-			break;
-		case BattleResultEvent.CLOSE_CAPTIVE_ENEMY:
-			if(self.result){
-				self.cityWin();
-			}
-			break;
-	}
-};
 BattleResultView.prototype.selfCaptiveWin=function(event){
+	if(!event){console.error(event);return;}
 	var self = event.currentTarget;
 	if(self.model.selfCaptive.length == 0){
 		self.dispatchEvent(BattleResultEvent.CLOSE_CAPTIVE_SELF);
@@ -149,17 +130,6 @@ BattleResultView.prototype.selfCaptiveWin=function(event){
 		}
 	);
 	self.addChild(view);
-/*
-	return;
-	if(self.model.selfCaptive.length == 0){
-		self.enemyCaptiveWin();
-		return;
-	}
-	
-	var charaId = self.model.selfCaptive[0];
-	var charaModel = CharacterModel.getChara(charaId);
-	//self.model.selfCaptive.splice(0, 1);
-	self.confirmShow(charaModel,String.format("俘虏了敌将{0}!",charaModel.name()),count);*/
 };
 BattleResultView.prototype.enemyCaptiveWin=function(event){
 	var self = event.currentTarget;
@@ -172,40 +142,39 @@ BattleResultView.prototype.enemyCaptiveWin=function(event){
 		{confirmType : BattleWinConfirmType.enemyCaptive}
 	);
 	self.addChild(view);
-	//self.confirmShow(null,"被敌军俘虏的将领也被救回来了!");
 };
 BattleResultView.prototype.cityWin=function(event){
 	var self = event.currentTarget;
-	console.log("OVER win");
-	if(!self.end){
-		self.end = true;
-		var charaTroops = 0;
-		self.model.ourList.forEach(function(child){
-			charaTroops += child.data.troops();
-			child.data.troops(0);
-		});
-		var message;
-		var battleData = self.controller.battleData;
-		var cityName = battleData.toCity.name();
-		if(battleData.fromCity.seigniorCharaId() == LMvc.selectSeignorId){
-			if(!self.failSeigniorId){
-				message = String.format("我军攻占了{0}!",cityName);
-			}else{
-				var seignior = CharacterModel.getChara(self.failSeigniorId);
-				message = String.format("我军攻占了{0}军的{1}!",seignior.name(),cityName);
-			}
-			battleData.toCity.food(battleData.food);
-			battleData.toCity.money(battleData.money);
-			battleData.toCity.troops(battleData.toCity.troops() + battleData.troops + charaTroops);
+	var charaTroops = 0;
+	self.model.ourList.forEach(function(child){
+		charaTroops += child.data.troops();
+		child.data.troops(0);
+	});
+	var message;
+	var battleData = self.controller.battleData;
+	var cityName = battleData.toCity.name();
+	if(battleData.fromCity.seigniorCharaId() == LMvc.selectSeignorId){
+		if(!self.failSeigniorId){
+			message = String.format("我军攻占了{0}!",cityName);
 		}else{
 			var seignior = CharacterModel.getChara(self.failSeigniorId);
-			message = String.format("我军在{0}击退了{1}军的进攻!",cityName,seignior.name());
-			battleData.toCity.troops(battleData.toCity.troops() + charaTroops);
+			message = String.format("我军攻占了{0}军的{1}!",seignior.name(),cityName);
 		}
-		self.confirmShow(null,message);
+		battleData.toCity.food(battleData.food);
+		battleData.toCity.money(battleData.money);
+		battleData.toCity.troops(battleData.toCity.troops() + battleData.troops + charaTroops);
 	}else{
-		self.showMap();
+		var seignior = CharacterModel.getChara(self.failSeigniorId);
+		message = String.format("我军在{0}击退了{1}军的进攻!",cityName,seignior.name());
+		battleData.toCity.troops(battleData.toCity.troops() + charaTroops);
 	}
+	var view = new BattleResultConfirmView(self.controller, 
+		{
+			confirmType : BattleWinConfirmType.attackAndOccupy, 
+			message : message
+		}
+	);
+	self.addChild(view);
 };
 BattleResultView.prototype.expeditionMove=function(city, retreatCity){
 	//资源损失0.2
@@ -291,43 +260,11 @@ BattleResultView.prototype.selectMoveCityRun=function(event){
 };
 BattleResultView.prototype.showWin=function(){
 	var self = this;
-	console.log("showWin");
 	var title = getStrokeLabel("战斗胜利",50,"#CCCCCC","#000000",4);
 	title.x = (LGlobal.width - title.getWidth())*0.5;
 	title.y = 20;
 	self.addChild(title);
 };
-/*
-BattleResultView.prototype.selfCaptiveWin=function(event){
-	var self, count;
-	if(typeof event == UNDEFINED || typeof event == "number"){
-		self = this;
-		count = event;
-	}else{
-		self = event.target;
-	}
-	if(!count){
-		count = 0;
-	}
-	if(self.model.selfCaptive.length == 0){
-		self.enemyCaptiveWin();
-		return;
-	}
-	var charaId = self.model.selfCaptive[0];
-	var charaModel = CharacterModel.getChara(charaId);
-	//self.model.selfCaptive.splice(0, 1);
-	self.confirmShow(charaModel,String.format("俘虏了敌将{0}!",charaModel.name()),count);
-};
-BattleResultView.prototype.enemyCaptiveWin=function(){
-	var self = this;
-	if(self.model.enemyCaptive.length == 0){
-		self.cityWin();
-		return;
-	}
-	self.model.enemyCaptive.length = 0;
-	self.confirmShow(null,"被敌军俘虏的将领也被救回来了!");
-};
-*/
 BattleResultView.prototype.showFail=function(){
 	var self = this;
 	var title = getStrokeLabel("战斗失败",50,"#CCCCCC","#000000",4);
@@ -562,42 +499,9 @@ BattleResultView.prototype.cityFail=function(){
 		self.showMap();
 	}
 };
-/*
-BattleResultView.prototype.cityWin=function(){
-	var self = this;
-	console.log("OVER win");
-	if(!self.end){
-		self.end = true;
-		var charaTroops = 0;
-		self.model.ourList.forEach(function(child){
-			charaTroops += child.data.troops();
-			child.data.troops(0);
-		});
-		var message;
-		var battleData = self.controller.battleData;
-		var cityName = battleData.toCity.name();
-		if(battleData.fromCity.seigniorCharaId() == LMvc.selectSeignorId){
-			if(!self.failSeigniorId){
-				message = String.format("我军攻占了{0}!",cityName);
-			}else{
-				var seignior = CharacterModel.getChara(self.failSeigniorId);
-				message = String.format("我军攻占了{0}军的{1}!",seignior.name(),cityName);
-			}
-			battleData.toCity.food(battleData.food);
-			battleData.toCity.money(battleData.money);
-			battleData.toCity.troops(battleData.toCity.troops() + battleData.troops + charaTroops);
-		}else{
-			var seignior = CharacterModel.getChara(self.failSeigniorId);
-			message = String.format("我军在{0}击退了{1}军的进攻!",cityName,seignior.name());
-			battleData.toCity.troops(battleData.toCity.troops() + charaTroops);
-		}
-		self.confirmShow(null,message);
-	}else{
-		self.showMap();
-	}
-};*/
-BattleResultView.prototype.showMap=function(){
-	var self = this;
+BattleResultView.prototype.showMap=function(event){
+	var self = event.currentTarget;
+	console.log("BattleResultView.prototype.showMap ",event);
 	var cityId = self.controller.battleData.toCity.id();
 	self.controller.view.remove();
 	LMvc.BattleController = null;

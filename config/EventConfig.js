@@ -62,6 +62,8 @@ BattleResultEvent.CAPTIVE_CAPTIVE = "captive_captive";
 BattleResultEvent.SURRENDER_CAPTIVE = "surrender_captive";
 BattleResultEvent.RELEASE_CAPTIVE = "release_captive";
 BattleResultEvent.BEHEAD_CAPTIVE = "behead_captive";
+BattleResultEvent.RESCUE_CAPTIVE = "rescue_captive";
+BattleResultEvent.ATTACK_AND_OCCUPY = "attack_and_occupy";
 
 if (!Array.getRandomArrays){
 	Array.getRandomArrays = function(list,num){
