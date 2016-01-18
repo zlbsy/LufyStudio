@@ -75,6 +75,7 @@ RecordChildView.prototype.onClick=function(event){
 		LMvc.isRead = true;
 		LMvc.mapX = self.record.mapX;
 		LMvc.mapY = self.record.mapY;
+		SeigniorExecute.setSaveData(self.record.seigniorExecute);
 		if(LMvc.BattleController){
 			LMvc.BattleController.view.remove();
 			LMvc.BattleController = null;

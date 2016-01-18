@@ -1,23 +1,6 @@
 LMvc.areaData = {
 seigniors : [
 {chara_id : 624,name:"何进",generals_count : 6,color : "black",areas : [
-  {  area_id : 14,name:"宛",prefecture : 85,
-  money : 113,food : 1013,population : 40013,business : 113,agriculture : 113,technology : 113,police : 83,city_defense : 513,troops : 413,
-  items_farmland:[],
-  items_market:[],
-  items:[],
-  generals:[
-    {chara_id:1,name:"曹操",feat:0,loyalty:100},
-    {chara_id:8,name:"孙坚",feat:0,loyalty:100},
-    {chara_id:85,name:"皇甫嵩",feat:0,loyalty:100},
-    {chara_id:247,name:"朱儁",feat:0,loyalty:100},
-    ],
-    out_of_offices:[
-    {chara_id:450,name:"许攸"},
-    ],
-    not_debut:[
-    ]
-  },
   {  area_id : 45,name:"蓟",prefecture : 345,
   money : 144,food : 1044,population : 40044,business : 144,agriculture : 144,technology : 144,police : 83,city_defense : 544,troops : 444,
   items_farmland:[],
@@ -80,6 +63,25 @@ seigniors : [
     not_debut:[
     ]
   },
+]},
+{chara_id : 66,name:"张角",generals_count : 6,color : "yellow",areas : [
+  {  area_id : 14,name:"宛",prefecture : 85,
+  money : 113,food : 1013,population : 40013,business : 113,agriculture : 113,technology : 113,police : 83,city_defense : 513,troops : 413,
+  items_farmland:[],
+  items_market:[],
+  items:[],
+  generals:[
+    {chara_id:1,name:"曹操",feat:0,loyalty:100},
+    {chara_id:8,name:"孙坚",feat:0,loyalty:100},
+    {chara_id:85,name:"皇甫嵩",feat:0,loyalty:100},
+    {chara_id:247,name:"朱儁",feat:0,loyalty:100},
+    ],
+    out_of_offices:[
+    {chara_id:450,name:"许攸"},
+    ],
+    not_debut:[
+    ]
+  },
   {  area_id : 12,name:"长安",prefecture : 195,
   money : 111,food : 1011,population : 40011,business : 111,agriculture : 111,technology : 111,police : 81,city_defense : 511,troops : 411,
   items_farmland:[],
@@ -97,8 +99,19 @@ seigniors : [
     not_debut:[
     ]
   },
-]},
-{chara_id : 66,name:"张角",generals_count : 6,color : "yellow",areas : [
+  {  area_id : 23,name:"河内",prefecture : 526,
+  money : 122,food : 1022,population : 40022,business : 122,agriculture : 122,technology : 122,police : 92,city_defense : 522,troops : 422,
+  items_farmland:[],
+  items_market:[],
+  items:[],
+  generals:[
+    {chara_id:526,name:"严政",feat:0,loyalty:100},
+    ],
+    out_of_offices:[
+    ],
+    not_debut:[
+    ]
+  },
   {  area_id : 24,name:"许昌",prefecture : 70,
   money : 11123,food : 21023,population : 40023,business : 11123,agriculture : 11123,technology : 11123,police : 93,city_defense : 6523,troops : 11423,
   items_farmland:[],
@@ -110,7 +123,6 @@ seigniors : [
     {chara_id:159,name:"刘辟",feat:0,loyalty:100},
     {chara_id:165,name:"龚都",feat:0,loyalty:100},
     {chara_id:479,name:"高升",feat:0,loyalty:100},
-    {chara_id:526,name:"严政",feat:0,loyalty:100},
     ],
     out_of_offices:[
     ],
@@ -444,18 +456,6 @@ seigniors : [
   },
   {  area_id : 21,name:"南海",prefecture : 0,
   money : 120,food : 1020,population : 40020,business : 120,agriculture : 120,technology : 120,police : 90,city_defense : 520,troops : 420,
-  items_farmland:[],
-  items_market:[],
-  items:[],
-  generals:[
-    ],
-    out_of_offices:[
-    ],
-    not_debut:[
-    ]
-  },
-  {  area_id : 23,name:"河内",prefecture : 0,
-  money : 122,food : 1022,population : 40022,business : 122,agriculture : 122,technology : 122,police : 92,city_defense : 522,troops : 422,
   items_farmland:[],
   items_market:[],
   items:[],

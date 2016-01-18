@@ -21,6 +21,24 @@ SeigniorExecute.close = function(event){
 	}
 	SeigniorExecute.Instance().maskHide();
 };
+SeigniorExecute.getSaveData = function(){
+	var self = SeigniorExecute.Instance();
+	var data = {
+		running : SeigniorExecute.running
+	};
+	if(!SeigniorExecute.running){
+		return data;
+	}
+	//
+	return data;
+};
+SeigniorExecute.setSaveData = function(data){
+	var self = SeigniorExecute.Instance();
+	SeigniorExecute.running = data.running;
+	if(!SeigniorExecute.running){
+		return;
+	}
+};
 SeigniorExecute.run=function(){
 	var self = SeigniorExecute.Instance();
 	if(!self.backLayer){

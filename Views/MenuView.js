@@ -77,7 +77,6 @@ MenuView.prototype.hide=function(event){
 };
 MenuView.prototype.onClickOperatingEnd=function(event){
 	var self = event.currentTarget.parent.parent.parent;
-	self.hide();
 	self.loadSeigniorExecute();
 };
 MenuView.prototype.onClickAllSeignior=function(event){
@@ -126,6 +125,7 @@ MenuView.prototype.onClickReturnTop=function(event){
 };
 MenuView.prototype.loadSeigniorExecute=function(){
 	var self = this;
+	self.hide();
 	self.loadMvc("EventMap",self.loadSeigniorExecuteLoadSkill);
 };
 MenuView.prototype.loadSeigniorExecuteLoadSkill=function(){

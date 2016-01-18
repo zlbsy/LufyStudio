@@ -287,7 +287,17 @@ BattleResultView.prototype.showMap=function(event){
 	}
 	if(self.failSeigniorId){
 		LMvc.MapController.checkSeigniorFail(self.failSeigniorId);
+		//TODO::
+		//self.seigniorExecute();
+		//callback : self.seigniorExecute
+		//checkSeigniorIsDie(self.seigniorExecute);
 	}else{
 		LMvc.MapController.checkSeigniorWin();
+	}
+};
+BattleResultView.prototype.seigniorExecute=function(){
+	console.log("SeigniorExecute.running = " + SeigniorExecute.running);
+	if(SeigniorExecute.running){
+		MenuController.instance().view.loadSeigniorExecute();
 	}
 };

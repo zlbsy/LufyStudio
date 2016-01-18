@@ -493,6 +493,7 @@ function battleCityChange(winSeigniorId, failSeigniorId, retreatCityId, captiveL
 			chara.moveTo();
 		}else{
 			//TODO::下野
+			console.error("TODO::下野");
 			//city.outOfOffice().push(chara);
 		}
 	}
