@@ -101,7 +101,8 @@ BattleResultConfirmView.prototype.setSelectMoveCity = function(){
 	var city = battleData.toCity;
 	var fromSeigniorCharaId = battleData.fromCity.seigniorCharaId();
 	var fromSeignior = CharacterModel.getChara(fromSeigniorCharaId);
-	if(city.generals().length > self.model.enemyCaptive.length){
+	var generals = city.generals();
+	if(generals.length > self.model.enemyCaptive.length){
 		var selectCitys = 0;
 		var neighbors = battleData.toCity.neighbor();
 		var cityButtonLayer = new LSprite();
@@ -120,18 +121,26 @@ BattleResultConfirmView.prototype.setSelectMoveCity = function(){
 			cityButtonLayer.addChild(btnMoveTo);
 			selectCitys++;
 		}
+		var message;
 		if(selectCitys == 0){
-			//self.cityChange(self.model.enemyCaptive,  self.controller.battleData.expeditionEnemyCharacterList);
-			//self.enemyCaptiveFail();
-			console.error("全部被俘");
+			for(var i=0,l=generals.length;i<l;i++){
+				var child = generals[i];
+				if(self.model.enemyCaptive.indexOf(child.id())>=0){
+					continue;
+				}
+				self.model.enemyCaptive.push(child.id());
+			}
+			console.error("全员被俘");
+			message = String.format(Language.get("lose_city_dialog_msg"), city.name(), fromSeignior.name());//{0}被{1}军占领了
 		}else{
 			cityButtonLayer.x = (self.windowWidth - cityButtonLayer.getWidth())*0.5;
 			if(selectCitys <= 3){
 				cityButtonLayer.y += 30;
 			}
 			self.buttonLayer.visible = false;
+			message = String.format(Language.get("retreat_city_dialog_msg"), city.name(), fromSeignior.name());
 		}
-		self.setOnlyMessage(String.format(Language.get("retreat_city_dialog_msg"), city.name(), fromSeignior.name()), BattleResultEvent.LOSE_CITY);//{0}被{1}军占领了，撤往哪里？
+		self.setOnlyMessage(message, BattleResultEvent.LOSE_CITY);//{0}被{1}军占领了，撤往哪里？
 		cityButtonLayer.addEventListener(LMouseEvent.MOUSE_UP, self.citySelectOnClick);
 	}else{
 		self.setOnlyMessage(String.format(Language.get("lose_city_dialog_msg"), city.name(), fromSeignior.name()), BattleResultEvent.LOSE_CITY);//{0}被{1}军占领了
@@ -228,7 +237,11 @@ BattleResultConfirmView.prototype.selfCaptiveButton = function(msg, leftEventTyp
 	btnBehead.x = (self.windowWidth - 100)*0.5 + 110;
 	btnBehead.eventType = BattleResultEvent.BEHEAD_CAPTIVE;
 	buttonLayer.addChild(btnBehead);
-	
+	if(self.characterModel.id() == self.characterModel.city().seigniorCharaId()){
+		btnCaptive.visible = false;
+		btnRelease.x = (self.windowWidth - 100)*0.5 - 60;
+		btnBehead.x = (self.windowWidth - 100)*0.5 + 60;
+	}
 	self.addEventListener(BattleResultEvent.RELEASE_CAPTIVE, self.captiveRelease);
 	self.addEventListener(BattleResultEvent.BEHEAD_CAPTIVE, self.captiveBehead);
 	buttonLayer.addEventListener(LMouseEvent.MOUSE_UP, self.tweenClose);
