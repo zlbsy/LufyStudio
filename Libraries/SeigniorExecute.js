@@ -22,14 +22,18 @@ SeigniorExecute.close = function(event){
 	SeigniorExecute.Instance().maskHide();
 };
 SeigniorExecute.getSaveData = function(){
+	if(!SeigniorExecute.running){
+		return {running:false};
+	}
 	var self = SeigniorExecute.Instance();
 	var data = {
-		running : SeigniorExecute.running
+		running : SeigniorExecute.running,
+		seigniorIndex:self.seigniorIndex,
+		areaIndex:self.areaIndex,
+		stop:self.stop,
+		seigniors:self.seigniors,
+		citys:self.citys
 	};
-	if(!SeigniorExecute.running){
-		return data;
-	}
-	//
 	return data;
 };
 SeigniorExecute.setSaveData = function(data){
@@ -38,29 +42,32 @@ SeigniorExecute.setSaveData = function(data){
 	if(!SeigniorExecute.running){
 		return;
 	}
+	self.seigniorIndex = self.seigniorIndex;
+	self.areaIndex = self.areaIndex;
+	self.stop = self.stop;
+	self.seigniors = self.seigniors;
+	self.citys = self.citys;
 };
 SeigniorExecute.run=function(){
 	var self = SeigniorExecute.Instance();
 	if(!self.backLayer){
-		SeigniorExecute.running = true;
-		self.seigniors = [];
-		self.citys = [];
 		self.maskShow();
-		//var month = LMvc.chapterData.month;//LMvc.chapterController.getValue("month");
-		//var year = LMvc.chapterData.year;//LMvc.chapterController.getValue("year");
-		LMvc.chapterData.month += 1;
-		if(LMvc.chapterData.month > 12){
-			LMvc.chapterData.year += 1;
-			LMvc.chapterData.month = 1;
-		}
-		//LMvc.chapterController.setValue("month",month);
-		//LMvc.chapterController.setValue("year",year);
 		if(SeigniorModel.list[0].chara_id() != LMvc.selectSeignorId){
 			var selectIndex = SeigniorModel.list.findIndex(function(child){
 				return child.chara_id() == LMvc.selectSeignorId;
 			});
 			var deleteModels = SeigniorModel.list.splice(selectIndex, 1);
 			SeigniorModel.list.unshift(deleteModels[0]);
+		}
+		if(!SeigniorExecute.running){
+			SeigniorExecute.running = true;
+			self.seigniors = [];
+			self.citys = [];
+			LMvc.chapterData.month += 1;
+			if(LMvc.chapterData.month > 12){
+				LMvc.chapterData.year += 1;
+				LMvc.chapterData.month = 1;
+			}
 		}
 	}
 	if(self.stop || jobAiEvent()){
@@ -92,6 +99,9 @@ SeigniorExecute.run=function(){
 		self.areasRun(seigniorModel);
 		return;
 	}
+	if(checkSeigniorIsDie(LMvc.selectSeignorId)){
+		return;
+	}
 	//self.maskHide();
 	self.seigniorIndex = 0;
 	self.areaIndex = 0;
@@ -116,12 +126,15 @@ SeigniorExecute.prototype.areaRun=function(area){
 SeigniorExecute.prototype.areaGainRun=function(area){
 	var self = this;
 	//TODO::自然灾害
+	
 	//金钱
 	area.money(area.business());
 	//粮食
 	area.food(area.agriculture());
 	//人口
 	area.population(area.business() + area.agriculture());
+	//TODO::武将死亡
+	
 	console.log("areaGainRun over");
 };
 SeigniorExecute.addMessage = function(value){
@@ -406,7 +419,7 @@ SeigniorExecute.prototype.areaAIRun=function(areaModel){
 	}
 	//如果有剩余无法分配工作的人员(金钱不够等),则直接跳过
 	self.areaAIIndex++;
-	LGlobal.sleep(50);console.log("self.areaAIIndex:"+self.areaAIIndex);
+	console.log("self.areaAIIndex:"+self.areaAIIndex);
 	self.timer.reset();
 	self.timer.start();
 };

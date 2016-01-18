@@ -105,10 +105,19 @@ MapController.prototype.returnToCity=function(cityId){
     console.log("LMvc.CityController._eventList",LMvc.CityController._eventList);
 	LMvc.CityController.dispatchEvent(event);
 };
+MapController.prototype.checkSeigniorChange=function(seigniorId){
+	var self = this;
+	if(checkSeigniorIsDie(self.failSeigniorId)){
+		return;
+	}else{
+		self.checkSeigniorFail(seigniorId);
+	}
+};
 MapController.prototype.checkSeigniorFail=function(seigniorId){
 	var self = this;
 	var seignior = SeigniorModel.getSeignior(seigniorId);
 	if(seignior.areas().length > 0){
+		self.checkSeigniorChange(seigniorId);
 		return;
 	}
 	self.removeSeigniorId = seigniorId;
