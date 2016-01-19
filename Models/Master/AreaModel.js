@@ -150,6 +150,15 @@ AreaModel.prototype.name = function(){
 AreaModel.prototype.id = function(){
 	return this.data.id;
 };
+AreaModel.prototype.removeOutOfOffice = function(charaId){
+	var self = this;
+	var list = [];
+	for(var i=0,l=self.data.out_of_offices.length;i<l;i++){
+		var chara = self.data.out_of_offices[i];
+		list.push(chara.datas());
+	}
+	return list;
+};
 AreaModel.prototype.removeGenerals = function(param){
 	var self = this, charaId;
 	if(typeof param == "number"){
@@ -161,9 +170,10 @@ AreaModel.prototype.removeGenerals = function(param){
 		var chara = self.data.generals[i];
 		if(chara.id() == charaId){
 			self.data.generals.splice(i, 1);
-			break;
+			return true;
 		}
 	}
+	return false;
 };
 AreaModel.prototype.addGenerals = function(param){
 	var self = this, chara;

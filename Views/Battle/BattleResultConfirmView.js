@@ -78,12 +78,13 @@ BattleResultConfirmView.prototype.setFailEnemyCaptive = function(){
 	var toCity = self.controller.battleData.toCity;
 	var fromCity = self.controller.battleData.fromCity;
 	var seigniorId = toCity.seigniorCharaId();
-	if(calculateHitrateSurrender(seigniorId, self.characterModel)){//投降
+	var isSeignior = self.characterModel.id() == self.characterModel.seigniorId();
+	if(!isSeignior && calculateHitrateSurrender(seigniorId, self.characterModel)){//投降
 		self.surrender(seigniorId, self.characterModel);
 		message = String.format(Language.get("surrender_dialog_msg"),self.characterModel.name());//{0}投降了敌军!
-	}else if(calculateHitrateBehead(self.leaderId, self.characterModel)){//斩首
+	}else if(isSeignior && calculateHitrateBehead(self.leaderId, self.characterModel)){//斩首
 		message = String.format(Language.get("beheaded_dialog_msg"),self.characterModel.name());//{0}被敌军斩首了!
-	}else if(calculateHitrateRelease(self.leaderId, self.characterModel)){//释放
+	}else if(isSeignior || calculateHitrateRelease(self.leaderId, self.characterModel)){//释放
 		if(toCity.seigniorCharaId() == LMvc.selectSeignorId){
 			self.characterModel.moveTo(self.retreatCityId);
 			self.characterModel.moveTo();
@@ -239,7 +240,7 @@ BattleResultConfirmView.prototype.selfCaptiveButton = function(msg, leftEventTyp
 	btnBehead.x = (self.windowWidth - 100)*0.5 + 110;
 	btnBehead.eventType = BattleResultEvent.BEHEAD_CAPTIVE;
 	buttonLayer.addChild(btnBehead);
-	if(self.characterModel.id() == self.characterModel.city().seigniorCharaId()){
+	if(self.characterModel.id() == self.characterModel.seigniorId()){
 		btnCaptive.visible = false;
 		btnRelease.x = (self.windowWidth - 100)*0.5 - 60;
 		btnBehead.x = (self.windowWidth - 100)*0.5 + 60;

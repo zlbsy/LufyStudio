@@ -96,3 +96,7 @@ function NumberToString(value, length){
 	}
 	return value;
 }
+function checkSeigniorIsDie(seigniorId){
+	var character = CharacterModel.getChara(seigniorId);
+	return character.seigniorId() == 0;
+}

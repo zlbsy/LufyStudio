@@ -525,6 +525,13 @@ CharacterModel.prototype.spy = function(id) {
 CharacterModel.prototype.targetCity = function() {
 	return this.data.targetCity;
 };
+CharacterModel.prototype.toDie = function() {
+	var self = this;
+	if(self.data.cityId){
+		self.city().removeCharacter(self.id());
+	}
+	self.seigniorId(0);
+};
 CharacterModel.prototype.cityId = function(value) {
 	return this._dataValue("cityId", value);
 };

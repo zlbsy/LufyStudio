@@ -107,7 +107,8 @@ MapController.prototype.returnToCity=function(cityId){
 };
 MapController.prototype.checkSeigniorChange=function(seigniorId){
 	var self = this;
-	if(checkSeigniorIsDie(self.failSeigniorId)){
+	if(checkSeigniorIsDie(seigniorId)){
+		console.log("checkSeigniorIsDie true");
 		return;
 	}else{
 		self.checkSeigniorFail(seigniorId);
@@ -116,6 +117,7 @@ MapController.prototype.checkSeigniorChange=function(seigniorId){
 MapController.prototype.checkSeigniorFail=function(seigniorId){
 	var self = this;
 	var seignior = SeigniorModel.getSeignior(seigniorId);
+	console.log("seignior.areas().length="+seignior.areas().length);
 	if(seignior.areas().length > 0){
 		self.checkSeigniorChange(seigniorId);
 		return;
