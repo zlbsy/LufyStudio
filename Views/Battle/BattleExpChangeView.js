@@ -46,7 +46,14 @@ BattleExpChangeView.prototype.initData = function(){
 	var model = LMvc.BattleController.model;
 	var datas = [];
 	var sumExp = 0;
-	for(var i=0,l=model.ourList.length;i<l;i++){
+	var battleData = LMvc.BattleController.battleData;
+	console.log("battleData.expeditionCharacterList.length="+battleData.expeditionCharacterList.length);
+	for(var i=0,l=battleData.expeditionCharacterList.length;i<l;i++){
+		var character = battleData.expeditionCharacterList[i];
+		datas.push({name:character.name(), exp:character.exp()});
+		sumExp += character.exp();
+	}
+	/*for(var i=0,l=model.ourList.length;i<l;i++){
 		var character = model.ourList[i];
 		datas.push({name:character.data.name(), exp:character.data.exp()});
 		sumExp += character.data.exp();
@@ -56,7 +63,7 @@ BattleExpChangeView.prototype.initData = function(){
 		var character = CharacterModel.getChara(characterId);
 		datas.push({name:character.name(), exp:character.exp()});
 		sumExp += character.exp();
-	}
+	}*/
 	self.average = sumExp / datas.length;
 	var feat = self.average * 1;
 	var rewardValue = 1.5;

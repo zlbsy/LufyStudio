@@ -346,6 +346,12 @@ function getBattleSaveData(){
 	data.toCityId = battleData.toCity.id();
 	data.fromCityId = battleData.fromCity.id();
 	data.bout = LMvc.BattleController.getValue("bout");
+	
+	data.expeditionCharacterList=[];
+	for(var i=0,l=battleData.expeditionCharacterList.length;i<l;i++){
+		var character = battleData.expeditionCharacterList[i];
+		data.expeditionCharacterList.push(character.id());
+	}
 	data.expeditionEnemyCharacterList=[];
 	for(var i=0,l=battleData.expeditionEnemyCharacterList.length;i<l;i++){
 		var character = battleData.expeditionEnemyCharacterList[i];
@@ -415,7 +421,11 @@ function setBattleSaveData(){
 	var battleData = LMvc.BattleController.battleData;
 	LMvc.BattleController.setValue("bout", data.bout);
 	LMvc.BattleController.setValue("currentBelong", Belong.SELF);
-	battleData.expeditionEnemyCharacterList=[];
+	
+	for(var i=0,l=battleData.expeditionCharacterList.length;i<l;i++){
+		var character = CharacterModel.getChara(battleData.expeditionCharacterList[i]);
+		data.expeditionCharacterList.push(character.id());
+	}
 	for(var i=0,l=battleData.expeditionEnemyCharacterList.length;i<l;i++){
 		var character = CharacterModel.getChara(battleData.expeditionEnemyCharacterList[i]);
 		data.expeditionEnemyCharacterList.push(character);

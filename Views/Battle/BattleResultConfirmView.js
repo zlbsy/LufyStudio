@@ -84,10 +84,15 @@ BattleResultConfirmView.prototype.setFailEnemyCaptive = function(){
 		message = String.format(Language.get("surrender_dialog_msg"),self.characterModel.name());//{0}投降了敌军!
 	}else if(isSeignior && calculateHitrateBehead(self.leaderId, self.characterModel)){//斩首
 		message = String.format(Language.get("beheaded_dialog_msg"),self.characterModel.name());//{0}被敌军斩首了!
+		self.characterModel.toDie();
 	}else if(isSeignior || calculateHitrateRelease(self.leaderId, self.characterModel)){//释放
 		if(toCity.seigniorCharaId() == LMvc.selectSeignorId){
-			self.characterModel.moveTo(self.retreatCityId);
-			self.characterModel.moveTo();
+			if(self.retreatCityId){
+				self.characterModel.moveTo(self.retreatCityId);
+				self.characterModel.moveTo();
+			}else{
+				self.characterModel.toOutOfOffice();
+			}
 		}
 		message = String.format(Language.get("released_dialog_msg"),self.characterModel.name());//{0}被敌军释放了!
 	}else{//俘虏
@@ -152,6 +157,7 @@ BattleResultConfirmView.prototype.setSelectMoveCity = function(){
 BattleResultConfirmView.prototype.citySelected=function(event){
 	var self = event.currentTarget;
 	console.log("self.retreatCityId = " + self.retreatCityId);
+	var battleData = self.controller.battleData;
 	if(self.retreatCityId){
 		self.parent.retreatCityId = self.retreatCityId;
 		var city = self.controller.battleData.toCity;
@@ -165,6 +171,22 @@ BattleResultConfirmView.prototype.citySelected=function(event){
 		battleExpeditionMove(city, self.retreatCity);
 	}
 	battleCityChange(self.winSeigniorId, self.failSeigniorId, self.retreatCityId, self.model.enemyCaptive,  self.controller.battleData.expeditionEnemyCharacterList);
+	if(!self.retreatCityId){
+		//无相邻可以撤退
+		var seignior = SeigniorModel.getSeignior(self.failSeigniorId);
+		var seigniorCharacter = seignior.character();
+		if(seigniorCharacter.cityId() != battleData.toCity.id()){
+			//如果君主未被擒,则撤退到君主所在城池
+			self.parent.retreatCityId = seigniorCharacter.cityId();
+		}else{
+			//TODO::君主被擒，暂时随机决定撤退城池
+			//TODO::版本升级后需调整为最近城池
+			var citys = seignior.areas();
+			if(citys.length > 0){
+				self.parent.retreatCityId = citys[(citys.length * Math.random()) >>> 0];
+			}
+		}
+	}
 	self.parent.dispatchEvent(BattleResultEvent.LOSE_CITY);
 };
 BattleResultConfirmView.prototype.citySelectOnClick=function(event){
