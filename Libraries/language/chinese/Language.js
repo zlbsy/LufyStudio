@@ -124,6 +124,7 @@ Language.data = {
 	"dialog_select_leader_error":"只能选一个主将！",
 	"dialog_select_onlyone_error":"只能选一个武将！",
 	"select_leader":"选择主将",
+	"select_monarch":"选择继承武将",
 	"dialog_remove_equipment_confirm":"要解除装备{0}吗？",
 	"dialog_select_seignior_confirm":"选择{0}吗？",
 	"dialog_training_confirm":"训练哪个兵种？",

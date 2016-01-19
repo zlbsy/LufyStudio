@@ -216,7 +216,7 @@ SingleCombatCharacterView.prototype.changeHp = function(value){
 SingleCombatCharacterView.prototype.singleCombatEnd = function(event){
 	var self = this, obj;
 	console.log("singleCombatEnd");
-	var dieChara = LMvc.BattleController.view.charaLayer.getCharacter(null,self.data.id())
+	var dieChara = LMvc.BattleController.view.charaLayer.getCharacter(null,self.data.id());
 	self.controller.over();
 	dieChara.data.troops(0);
 	dieChara.toDie(true);

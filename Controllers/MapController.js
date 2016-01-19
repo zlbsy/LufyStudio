@@ -67,6 +67,9 @@ MapController.prototype.init=function(status){
 		}
 	}
 	self.dispatchEvent(LController.NOTIFY);
+	
+	self.addEventListener(CharacterListEvent.SHOW, self.view.hideMapLayer);
+	self.addEventListener(CharacterListEvent.CLOSE, self.view.showMapLayer);
 };
 MapController.prototype.returnToChapter=function(event){
 	var self = event.currentTarget.parent.parent.controller;

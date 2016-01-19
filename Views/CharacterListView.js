@@ -43,12 +43,18 @@ CharacterListView.prototype.listInit=function(){
 	self.listLayer.addChild(title);
 	
 	self.getCutoverButton(self.controller.characterListType == CharacterListType.EXPEDITION ? CharacterListView.CUTOVER_ARM : CharacterListView.CUTOVER_BASIC);
-	if(!SeigniorExecute.running || self.controller.characterListType != CharacterListType.EXPEDITION){
-		var bitmapClose = new LBitmap(new LBitmapData(LMvc.datalist["close"]));
-		var buttonClose = new LButton(bitmapClose);
-		buttonClose.x = LGlobal.width - bitmapClose.getWidth() - 5;
-		self.listLayer.addChild(buttonClose);
-		buttonClose.addEventListener(LMouseEvent.MOUSE_UP, self.onClickCloseButton.bind(self));
+	
+	var bitmapClose = new LBitmap(new LBitmapData(LMvc.datalist["close"]));
+	var buttonClose = new LButton(bitmapClose);
+	buttonClose.x = LGlobal.width - bitmapClose.getWidth() - 5;
+	self.listLayer.addChild(buttonClose);
+	buttonClose.addEventListener(LMouseEvent.MOUSE_UP, self.onClickCloseButton.bind(self));
+
+	//if(!SeigniorExecute.running && self.controller.characterListType != CharacterListType.EXPEDITION){
+	//}
+	if((SeigniorExecute.running && self.controller.characterListType == CharacterListType.EXPEDITION)
+	|| self.controller.characterListType == CharacterListType.SELECT_MONARCH){
+		buttonClose.visible = false;
 	}
 	self.tabMenuLayer = new LSprite();
 	self.tabMenuLayer.y = 60;
@@ -84,9 +90,12 @@ CharacterListView.prototype.listInit=function(){
 			self.dataList = self.controller.characterList;
 			break;
 		case CharacterListType.STOP_BATTLE:
-		case CharacterListType.SELECT_MONARCH:
 			self.dataList = self.controller.characterList;
 			buttonLabel = "select_seignior";
+			break;
+		case CharacterListType.SELECT_MONARCH:
+			self.dataList = self.controller.characterList;
+			buttonLabel = "execute";
 			break;
 		default:
 			buttonLabel = "execute";
@@ -350,6 +359,7 @@ CharacterListView.prototype.showList=function(){
 		case CharacterListType.TRAINING:
 		case CharacterListType.EXPEDITION:
 		case CharacterListType.SELECT_LEADER:
+		case CharacterListType.SELECT_MONARCH:
 			minusHeight = 70;
 			break;
 		default:

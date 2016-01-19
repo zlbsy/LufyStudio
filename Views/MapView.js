@@ -2,7 +2,8 @@ function MapView(){
 	base(this,LView,[]);
 }
 MapView.prototype.construct=function(){
-	this.controller.addEventListener(LEvent.COMPLETE, this.init.bind(this));
+	var self = this;
+	self.controller.addEventListener(LEvent.COMPLETE, self.init.bind(self));
 };
 MapView.prototype.layerInit=function(){
 	var self = this;
@@ -14,6 +15,8 @@ MapView.prototype.layerInit=function(){
 	self.baseLayer.addChild(self.areaLayer);
 	self.ctrlLayer = new LSprite();
 	self.addChild(self.ctrlLayer);
+	self.characterLayer = new LSprite();
+	self.addChild(self.characterLayer);
 };
 MapView.prototype.backLayerInit=function(){
 	var self = this;
@@ -155,8 +158,28 @@ MapView.prototype.resetAreaIcon=function(cityId){
 		area.resetIcon();
 	}
 };
+MapView.prototype.hideMapLayer=function(event){
+	var self = event.currentTarget.view;
+	self.baseLayer.visible = false;
+	self.ctrlLayer.visible = false;
+};
+MapView.prototype.showMapLayer=function(event){
+	var self = event.currentTarget.view;
+	if(event.characterList.length > 1){
+		var obj = {title:Language.get("confirm"),message:Language.get("dialog_select_onlyone_error"),height:200,okEvent:null};
+		var windowLayer = ConfirmWindow(obj);
+		LMvc.layer.addChild(windowLayer);
+		return;
+	}
+	console.log("MapView.prototype.showMapLayer",event.characterList);
+	self.baseLayer.visible = false;
+	self.ctrlLayer.visible = false;
+};
 MapView.prototype.addCharacterListView=function(characterListView){
 	var self = this;
 	console.log("MapView.prototype.addCharacterListView:"+characterListView);
-	self.addChild(characterListView);
+	self.baseLayer.visible = false;
+	self.ctrlLayer.visible = false;
+	self.characterLayer.addChild(getTranslucentMask());
+	self.characterLayer.addChild(characterListView);
 };
