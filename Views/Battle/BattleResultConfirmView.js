@@ -86,6 +86,16 @@ BattleResultConfirmView.prototype.setFailEnemyCaptive = function(){
 		message = String.format(Language.get("beheaded_dialog_msg"),self.characterModel.name());//{0}被敌军斩首了!
 		self.characterModel.toDie();
 	}else if(isSeignior || calculateHitrateRelease(self.leaderId, self.characterModel)){//释放
+		if(self.retreatCityId){
+			if(self.characterModel.cityId() != self.retreatCityId){
+				self.characterModel.moveTo(self.retreatCityId);
+				self.characterModel.moveTo();
+			}
+		}else{
+			self.characterModel.toOutOfOffice();
+		}
+		/*
+		 TODO::Test
 		if(toCity.seigniorCharaId() == LMvc.selectSeignorId){
 			if(self.retreatCityId){
 				self.characterModel.moveTo(self.retreatCityId);
@@ -93,7 +103,7 @@ BattleResultConfirmView.prototype.setFailEnemyCaptive = function(){
 			}else{
 				self.characterModel.toOutOfOffice();
 			}
-		}
+		}*/
 		message = String.format(Language.get("released_dialog_msg"),self.characterModel.name());//{0}被敌军释放了!
 	}else{//俘虏
 		toCity.addCaptives(self.characterModel);
@@ -183,7 +193,8 @@ BattleResultConfirmView.prototype.citySelected=function(event){
 			//TODO::版本升级后需调整为最近城池
 			var citys = seignior.areas();
 			if(citys.length > 0){
-				self.parent.retreatCityId = citys[(citys.length * Math.random()) >>> 0];
+				self.parent.retreatCityId = citys[(citys.length * Math.random()) >>> 0].id();
+				console.log("君主被擒，暂时随机决定撤退城池 : " + self.parent.retreatCityId);
 			}
 		}
 	}

@@ -60,6 +60,13 @@ RecordChildView.prototype.set=function(record){
 };
 RecordChildView.prototype.onClick=function(event){
 	var self = event.target;
+	if(!self.load){
+		self.load = new LMvcLoader(self);
+	}
+	self.load.library(["SeigniorExecute"],self.readRecordData);
+};
+RecordChildView.prototype.readRecordData=function(){
+	var self = this;
 	console.log("mode="+RecordController.instance().mode);
 	if(RecordController.instance().mode == RecordController.SAVE_MODE){
 		console.log(SeigniorModel.list);

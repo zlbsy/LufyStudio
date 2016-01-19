@@ -47,9 +47,9 @@ BattleExpChangeView.prototype.initData = function(){
 	var datas = [];
 	var sumExp = 0;
 	var battleData = LMvc.BattleController.battleData;
-	console.log("battleData.expeditionCharacterList.length="+battleData.expeditionCharacterList.length);
+	console.error("battleData.expeditionCharacterList=",battleData.expeditionCharacterList);
 	for(var i=0,l=battleData.expeditionCharacterList.length;i<l;i++){
-		var character = battleData.expeditionCharacterList[i];
+		var character = battleData.expeditionCharacterList[i];if(!character || !character.name){self.datas=datas;return;}
 		datas.push({name:character.name(), exp:character.exp()});
 		sumExp += character.exp();
 	}

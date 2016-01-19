@@ -11,10 +11,10 @@ function BattleResultView(controller, result){
 	//self.controller.battleData.toCity = from;
 	//self.model.enemyList[0].isLeader = true;
 	//TODO:test code end
-	self.result = result=0;
-	controller.addEnemyCharacter(243,"up",3,3);
-	self.model.enemyList[0].isLeader = true;
-	self.model.enemyCaptive.push(4);
+	//self.result = result=0;
+	//controller.addEnemyCharacter(243,"up",3,3);
+	//self.model.enemyList[0].isLeader = true;
+	//self.model.enemyCaptive.push(4);
 	
 	self.setEvent();
 	if(result){
@@ -96,6 +96,7 @@ BattleResultView.prototype.failInit=function(){
 	if(battleData.fromCity.seigniorCharaId() == LMvc.selectSeignorId){
 		console.log("nothing");
 		self.winSeigniorId = battleData.toCity.seigniorCharaId();
+		self.retreatCityId = battleData.fromCity.id();
 		self.addEventListener(BattleResultEvent.CLOSE_EXP, self.enemyCaptiveFail);
 	}else{
 		console.log("enemy change city");

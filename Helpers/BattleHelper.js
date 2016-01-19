@@ -421,14 +421,15 @@ function setBattleSaveData(){
 	var battleData = LMvc.BattleController.battleData;
 	LMvc.BattleController.setValue("bout", data.bout);
 	LMvc.BattleController.setValue("currentBelong", Belong.SELF);
-	
-	for(var i=0,l=battleData.expeditionCharacterList.length;i<l;i++){
-		var character = CharacterModel.getChara(battleData.expeditionCharacterList[i]);
-		data.expeditionCharacterList.push(character.id());
+	battleData.expeditionCharacterList = [];
+	for(var i=0,l=data.expeditionCharacterList.length;i<l;i++){
+		var character = CharacterModel.getChara(data.expeditionCharacterList[i]);
+		battleData.expeditionCharacterList.push(character);
 	}
-	for(var i=0,l=battleData.expeditionEnemyCharacterList.length;i<l;i++){
-		var character = CharacterModel.getChara(battleData.expeditionEnemyCharacterList[i]);
-		data.expeditionEnemyCharacterList.push(character);
+	battleData.expeditionEnemyCharacterList = [];
+	for(var i=0,l=data.expeditionEnemyCharacterList.length;i<l;i++){
+		var character = CharacterModel.getChara(data.expeditionEnemyCharacterList[i]);
+		battleData.expeditionEnemyCharacterList.push(character);
 	}
 	var model = LMvc.BattleController.model;
 	var charaLayer = LMvc.BattleController.view.charaLayer;

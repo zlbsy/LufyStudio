@@ -109,9 +109,8 @@ MapController.prototype.checkSeigniorChange=function(seigniorId){
 	var self = this;
 	if(checkSeigniorIsDie(seigniorId)){
 		console.log("checkSeigniorIsDie true");
-		return;
 	}else{
-		self.checkSeigniorFail(seigniorId);
+		console.log("checkSeigniorIsDie false");
 	}
 };
 MapController.prototype.checkSeigniorFail=function(seigniorId){
