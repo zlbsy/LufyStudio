@@ -82,7 +82,7 @@ BattleResultConfirmView.prototype.setFailEnemyCaptive = function(){
 	if(!isSeignior && calculateHitrateSurrender(seigniorId, self.characterModel)){//投降
 		self.surrender(seigniorId, self.characterModel);
 		message = String.format(Language.get("surrender_dialog_msg"),self.characterModel.name());//{0}投降了敌军!
-	}else if(isSeignior && calculateHitrateBehead(self.leaderId, self.characterModel)){//斩首
+	}else if(isSeignior || calculateHitrateBehead(self.leaderId, self.characterModel)){//斩首
 		message = String.format(Language.get("beheaded_dialog_msg"),self.characterModel.name());//{0}被敌军斩首了!
 		self.characterModel.toDie();
 	}else if(isSeignior || calculateHitrateRelease(self.leaderId, self.characterModel)){//释放

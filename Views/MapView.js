@@ -155,3 +155,8 @@ MapView.prototype.resetAreaIcon=function(cityId){
 		area.resetIcon();
 	}
 };
+MapView.prototype.addCharacterListView=function(characterListView){
+	var self = this;
+	console.log("MapView.prototype.addCharacterListView:"+characterListView);
+	self.addChild(characterListView);
+};

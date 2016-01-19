@@ -225,6 +225,14 @@ SeigniorModel.prototype.getCaptivedList = function(){
 /**
  * 武将
  **/
+SeigniorModel.prototype.generals = function(){
+	var areas = this.data.areas;
+	var arr = [];
+	areas.forEach(function(city){
+		arr = arr.concat(city.generals());
+	});
+	return arr;
+};
 SeigniorModel.prototype.generalsCount = function(){
 	var areas = this.data.areas;
 	var count = 0;

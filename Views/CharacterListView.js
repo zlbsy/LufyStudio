@@ -84,6 +84,7 @@ CharacterListView.prototype.listInit=function(){
 			self.dataList = self.controller.characterList;
 			break;
 		case CharacterListType.STOP_BATTLE:
+		case CharacterListType.SELECT_MONARCH:
 			self.dataList = self.controller.characterList;
 			buttonLabel = "select_seignior";
 			break;

@@ -9,7 +9,11 @@ LogoController.prototype.construct=function(){
 };
 LogoController.prototype.mvcLoad=function(){
 	var self = this;
-	self.loadMvc(["Record"],self.configLoad);
+	self.loadMvc(["Record"],self.baseControllersLoad);
+};
+LogoController.prototype.baseControllersLoad=function(){
+	var self = this;
+	self.load.controller(["OpenCharacterList"],self.configLoad);
 };
 LogoController.prototype.configLoad=function(){
 	var self = this;
@@ -89,10 +93,10 @@ LogoController.prototype.showSingleCombatArena=function(){
 	var self = this;
 	LMvc.keepLoading(true);
 	LMvc.changeLoading(TranslucentLoading);
-	self.load.controller(["OpenCharacterList"],self.configSingleCombatLoad);
+	/*self.load.controller(["OpenCharacterList"],self.configSingleCombatLoad);
 };
 LogoController.prototype.configSingleCombatLoad=function(){
-	var self = this;
+	var self = this;*/
 	self.load.config(["Event"],self.showSingleCombatArenaMvc);
 };
 LogoController.prototype.showSingleCombatArenaMvc=function(){

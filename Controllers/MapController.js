@@ -1,16 +1,16 @@
 function MapController(){
-	base(this,MyController,[]);
+	base(this,OpenCharacterListController,[]);
 }
 MapController.MODE_MAP = "map";
 MapController.MODE_CHARACTER_MOVE = "generals_move";
 MapController.prototype.construct=function(){
 	var self = this;
-	self.baseControllersLoad();
+	self.configLoad();
 };
-MapController.prototype.baseControllersLoad=function(){
+/*MapController.prototype.baseControllersLoad=function(){
 	var self = this;
 	self.load.controller(["OpenCharacterList"],self.configLoad);
-};
+};*/
 MapController.prototype.configLoad=function(){
 	var self = this;
 	self.load.config(["Character","characterList","Job","Items","Event","Strategy","Soldiers"],self.helperLoad);
@@ -109,6 +109,8 @@ MapController.prototype.checkSeigniorChange=function(seigniorId){
 	var self = this;
 	if(checkSeigniorIsDie(seigniorId)){
 		console.log("checkSeigniorIsDie true");
+		var seignior = SeigniorModel.getSeignior(seigniorId);
+		self.loadCharacterList(CharacterListType.SELECT_MONARCH,seignior.generals());
 	}else{
 		console.log("checkSeigniorIsDie false");
 	}
