@@ -52,7 +52,7 @@ seigniors : [
   items_market:[],
   items:[],
   generals:[
-    {chara_id:39,name:"袁绍",feat:0,loyalty:100},
+    {chara_id:39,name:"袁绍",feat:10,loyalty:100},
     {chara_id:99,name:"鲍信",feat:0,loyalty:100},
     {chara_id:102,name:"荀攸",feat:0,loyalty:100},
     {chara_id:199,name:"淳于琼",feat:0,loyalty:100},

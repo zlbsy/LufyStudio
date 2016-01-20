@@ -81,6 +81,7 @@ MapController.prototype.returnToChapter=function(event){
 };
 MapController.prototype.showCity=function(cityId, initFunc){
 	var self = this;
+	console.log("MapController.prototype.showCity " + cityId);
 	LMvc.cityId = cityId;
 	self.initFunc = initFunc;
 	LMvc.keepLoading(true);

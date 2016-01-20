@@ -527,9 +527,13 @@ CharacterModel.prototype.targetCity = function() {
 };
 CharacterModel.prototype.toDie = function() {
 	var self = this;
-	if(self.data.cityId){
-		self.city().removeCharacter(self.id());
-	}
+	self.city().removeCharacter(self.id());
+	self.seigniorId(0);
+};
+CharacterModel.prototype.toOutOfOffice = function() {
+	var self = this;
+	self.city().removeGenerals(self.id());
+	self.city().addOutOfOfficeCharacter(self);
 	self.seigniorId(0);
 };
 CharacterModel.prototype.cityId = function(value) {

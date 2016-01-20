@@ -84,8 +84,11 @@ SeigniorModel.getSaveData=function(){
 	}
 	return saveData;
 };
-SeigniorModel.prototype.chara_id = function(){
-	return this.data.chara_id;
+SeigniorModel.prototype.chara_id = function(value){
+	if(value){
+		CharacterModel.getChara(value).city().prefecture(value);
+	}
+	return this._dataValue("chara_id", value);
 };
 SeigniorModel.prototype.character = function(){
 	var self = this;

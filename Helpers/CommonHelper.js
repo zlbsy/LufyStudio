@@ -100,3 +100,27 @@ function checkSeigniorIsDie(seigniorId){
 	var character = CharacterModel.getChara(seigniorId);
 	return character.seigniorId() == 0;
 }
+function monarchChange(seigniorId, characterId){
+	var seignior = SeigniorModel.getSeignior(seigniorId);
+	seignior.chara_id(characterId);
+	
+	console.log("seignior.chara="+seignior.character().name());
+	var areas = seignior.areas();
+	for(var i=0,l=areas.length;i<l;i++){
+		var city = areas[i];
+		city.monarchChange(characterId);
+		if(city.prefecture() == seigniorId){
+			var generals = city.generals();
+			if(generals.length == 0){
+				city.prefecture(0);
+				continue,
+			}
+			var charas = generals.sort(function(a,b){
+				var va = a.feat()*100 + a.force() + a.intelligence() + a.agility() + a.luck() + a.command();
+				var vb = b.feat()*100 + b.force() + b.intelligence() + b.agility() + b.luck() + b.command();
+				return vb - va;
+			});
+			city.prefecture(charas[0].id());
+		}
+	}
+}

@@ -172,8 +172,12 @@ MapView.prototype.showMapLayer=function(event){
 		return;
 	}
 	console.log("MapView.prototype.showMapLayer",event.characterList);
-	self.baseLayer.visible = false;
-	self.ctrlLayer.visible = false;
+	var character = event.characterList[0];
+	monarchChange(LMvc.selectSeignorId, character.id());
+	LMvc.selectSeignorId = character.id();
+	self.baseLayer.visible = true;
+	self.ctrlLayer.visible = true;
+	self.characterLayer.removeAllChild();
 };
 MapView.prototype.addCharacterListView=function(characterListView){
 	var self = this;
