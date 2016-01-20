@@ -116,13 +116,19 @@ BattleController.prototype.init = function(){
 	BattleController.timer.addEventListener(LTimerEvent.TIMER, self.showCharacterDetailed);
 
 	console.log("self.battleData.toCity --"+self.battleData.toCity);
-	if(self.battleData.toCity.seigniorCharaId() == 0 || self.battleData.toCity.troops() == 0 || 
+	var enemyTroops = self.battleData.toCity.troops();
+	var generals = self.battleData.toCity.generals();
+	for(var i=0,l=generals.length;i<l;i++){
+		enemyTroops += generals[i].troops();
+	}
+	if(self.battleData.toCity.seigniorCharaId() == 0 || enemyTroops == 0 || 
 		self.battleData.toCity.generalsSum() == 0){
 		self.noBattle = true;
 		self.dispatchEvent(LEvent.COMPLETE);
 		return;
 	}
 	self.dispatchEvent(LEvent.COMPLETE);
+	console.log("LMvc.areaData.battleData --",LMvc.areaData.battleData);
 	if(LMvc.areaData.battleData){
 		setBattleSaveData();
 		return;

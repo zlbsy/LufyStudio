@@ -419,6 +419,7 @@ function getBattleSaveData(){
 function setBattleSaveData(){
 	var data = LMvc.areaData.battleData;
 	var battleData = LMvc.BattleController.battleData;
+	console.log("setBattleSaveData",battleData);
 	LMvc.BattleController.setValue("bout", data.bout);
 	LMvc.BattleController.setValue("currentBelong", Belong.SELF);
 	battleData.expeditionCharacterList = [];

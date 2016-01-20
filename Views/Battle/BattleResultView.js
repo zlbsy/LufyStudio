@@ -1,6 +1,6 @@
 function BattleResultView(controller, result){
 	var self = this;
-	LExtends(self,LView,[controller]);
+	LExtends(self,LView,[controller]);console.error("BattleResultView");
 	self.name = "BattleResult";
 	self.backInit();
 	self.result = result;
@@ -63,20 +63,47 @@ BattleResultView.prototype.winInit=function(){
 		if(city.seigniorCharaId() > 0 && city.generalsSum() > self.model.selfCaptive.length){
 			self.selfChangeCity();
 		}
-		battleCityChange(self.winSeigniorId, self.failSeigniorId, self.retreatCityId, self.model.selfCaptive, battleData.expeditionCharacterList);
 		//敌方太守
 		if(self.retreatCity){
+			battleCityChange(self.winSeigniorId, self.failSeigniorId, self.retreatCityId, self.model.selfCaptive, battleData.expeditionCharacterList);
 			var enemyCharas = getDefenseEnemiesFromCity(self.retreatCity);
 			self.retreatCity.prefecture(enemyCharas[0].id());
+		}else{
+			var generals = battleData.toCity.generals();
+			for(var i=0,l=generals.length;i<l;i++){
+				var child = generals[i];
+				if(self.model.selfCaptive.indexOf(child.id())>=0){
+					continue;
+				}
+				self.model.selfCaptive.push(child.id());
+			}
+			
+			//无相邻可以撤退
+			var seignior = SeigniorModel.getSeignior(self.failSeigniorId);
+			var seigniorCharacter = seignior.character();
+			if(seigniorCharacter.cityId() != battleData.toCity.id()){
+				//如果君主未被擒,则撤退到君主所在城池
+				self.retreatCityId = seigniorCharacter.cityId();
+			}else{
+				//TODO::君主被擒，暂时随机决定撤退城池
+				//TODO::版本升级后需调整为最近城池
+				var citys = seignior.areas();
+				if(citys > 0){
+					self.retreatCityId = citys[(citys.length * Math.random()) >>> 0].id();
+					console.log("君主被擒，暂时随机决定撤退城池 : " + self.retreatCityId);
+				}
+			}
 		}
 		//己方太守
 		if(self.controller.noBattle){
 			city.prefecture(battleData.expeditionLeader.id());
 		}else{
 			var selfCharas = self.controller.view.charaLayer.getCharactersFromBelong(Belong.SELF);
+			console.log("selfCharas", selfCharas);
 			var chara = selfCharas.find(function(child){
 				return child.isLeader;
-			});
+			});console.log("chara", chara);
+			if(!chara)return;
 			city.prefecture(chara.data.id());
 		}
 	}else{

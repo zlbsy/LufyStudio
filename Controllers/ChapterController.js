@@ -5,11 +5,7 @@ function ChapterController(chapterSelectData){
 ChapterController.prototype.construct=function(){
 	var self = this;
 	var list = self.model.getImages();
-	self.load.image(list,self.modelLoad);
-};
-ChapterController.prototype.modelLoad=function(){
-	var self = this;
-	self.load.model(["Chapter/ChapterStatus"],self.libraryLoad);
+	self.load.image(list,self.libraryLoad);
 };
 ChapterController.prototype.libraryLoad=function(){
 	var self = this;

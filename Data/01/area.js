@@ -47,7 +47,7 @@ seigniors : [
     ]
   },
   {  area_id : 22,name:"洛阳",prefecture : 624,
-  money : 121,food : 11021,population : 40021,business : 121,agriculture : 121,technology : 121,police : 91,city_defense : 521,troops : 421,
+  money : 121,food : 11021,population : 40021,business : 121,agriculture : 121,technology : 121,police : 91,city_defense : 521,troops : 21,
   items_farmland:[],
   items_market:[],
   items:[],
@@ -696,4 +696,4 @@ seigniors : [
   },
 ]},
 ]
-}
+};

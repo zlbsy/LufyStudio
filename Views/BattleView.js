@@ -13,7 +13,12 @@ BattleView.prototype.init=function(){
 	//self.buildLayerInit();
 	var battleData = self.controller.battleData;
 	var city = battleData.toCity;
-	if(city.seigniorCharaId() == 0 || city.troops() == 0 || city.generals() == 0){
+	var enemyTroops = city.troops();
+	var generals = city.generals();
+	for(var i=0,l=generals.length;i<l;i++){
+		enemyTroops += generals[i].troops();
+	}
+	if(city.seigniorCharaId() == 0 || enemyTroops == 0 || city.generals() == 0){
 		self.showResult(battleData.fromCity.seigniorCharaId() == LMvc.selectSeignorId);
 		return;
 	}

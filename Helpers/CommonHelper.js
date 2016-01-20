@@ -113,7 +113,7 @@ function monarchChange(seigniorId, characterId){
 			var generals = city.generals();
 			if(generals.length == 0){
 				city.prefecture(0);
-				continue,
+				continue;
 			}
 			var charas = generals.sort(function(a,b){
 				var va = a.feat()*100 + a.force() + a.intelligence() + a.agility() + a.luck() + a.command();
