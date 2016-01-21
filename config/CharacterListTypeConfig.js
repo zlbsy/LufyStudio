@@ -15,6 +15,7 @@ CharacterListType.EXPEDITION = "expedition";//出征
 CharacterListType.SELECT_LEADER = "select_leader";//出征主将
 CharacterListType.BATTLE_CHARACTER_LIST = "battle_generals_list";//战场武将一览
 CharacterListType.SELECT_MONARCH = "select_monarch";//选择继承武将
+CharacterListType.APPOINT_PREFECTURE = "appoint_prefecture";//任命太守
 
 CharacterListType.BATTLE_SINGLE = "battle_single";//选择单挑出战
 CharacterListType.CHARACTER_SPY = "generals_spy";//谍报

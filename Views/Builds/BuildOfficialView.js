@@ -8,14 +8,15 @@ function BuildOfficialView(controller){
 }
 BuildOfficialView.prototype.showMenu=function(){
 	var self = this, layer = new LSprite(), menuY = 0, menuHeight = 55;
-	//var cityModel = self.controller.getValue("cityData");
 	if(self.controller.getValue("selfCity")){
-		var buttonExpedition = getButton(Language.get("expedition"),200);
-		buttonExpedition.y = menuY;
-		layer.addChild(buttonExpedition);
-		buttonExpedition.addEventListener(LMouseEvent.MOUSE_UP, self.onClickExpeditionButton.bind(self));
-		
-		menuY += menuHeight;
+		var cityModel = self.controller.getValue("cityData");
+		if(cityModel.prefecture() != cityModel.seigniorCharaId()){
+			var buttonPrefecture = getButton(Language.get("appoint_prefecture"),200);
+			buttonPrefecture.y = menuY;
+			layer.addChild(buttonPrefecture);
+			buttonPrefecture.addEventListener(LMouseEvent.MOUSE_UP, self.onClickPrefectureButton.bind(self));
+			menuY += menuHeight;
+		}
 		var buttonGeneralsList = getButton(Language.get("generals_list"),200);
 		buttonGeneralsList.y = menuY;
 		layer.addChild(buttonGeneralsList);
@@ -53,6 +54,10 @@ BuildOfficialView.prototype.showMenu=function(){
 	
 	return layer;
 };
+BuildOfficialView.prototype.onClickPrefectureButton=function(event){
+	var self = this;
+	self.controller.loadCharacterList(CharacterListType.APPOINT_PREFECTURE,self);
+};
 BuildOfficialView.prototype.onClickDiplomacyButton=function(event){
 	var self = this;
 	var parent = self.parent;
@@ -77,7 +82,7 @@ BuildOfficialView.prototype.transportSelectCharacter=function(event){
 	controller.removeEventListener(LCityEvent.SELECT_CITY, self.transportSelectCharacter);
 	controller.loadCharacterList(CharacterListType.TRANSPORT,self);
 };
-BuildOfficialView.prototype.onClickExpeditionButton=function(event){
+/*BuildOfficialView.prototype.onClickExpeditionButton=function(event){
 	var self = this;
 	//TODO::Testcode
 	//self.controller.gotoBattle();
@@ -91,9 +96,9 @@ BuildOfficialView.prototype.expeditionSelectCharacter=function(event){
 		return child.constructor.name == "BuildOfficialView";
 	});
 	self.controller.setValue("cityId", event.cityId);
-	controller.removeEventListener(LCityEvent.SELECT_CITY, self.moveToCity);
+	controller.removeEventListener(LCityEvent.SELECT_CITY, self.expeditionSelectCharacter);
 	controller.loadCharacterList(CharacterListType.EXPEDITION,self);
-};
+};*/
 BuildOfficialView.prototype.onClickSpyButton=function(event){
 	var self = this;
 	self.controller.addEventListener(LCityEvent.SELECT_CITY, self.spySelectCharacter);
@@ -136,7 +141,16 @@ BuildOfficialView.prototype.selectComplete=function(event){
 	if(!characterList){
 		return true;
 	}
-	if(event.characterListType == CharacterListType.CHARACTER_MOVE){
+	if(event.characterListType == CharacterListType.APPOINT_PREFECTURE){
+		if(characterList.length > 1){
+			var obj = {title:Language.get("confirm"),message:Language.get("dialog_select_onlyone_error"),height:200,okEvent:null};
+			var windowLayer = ConfirmWindow(obj);
+			LMvc.layer.addChild(windowLayer);
+			return false;
+		}
+		var city = self.controller.getValue("cityData");
+		city.prefecture(event.characterList[0].id());
+	}else if(event.characterListType == CharacterListType.CHARACTER_MOVE){
 		self.controller.setValue("cityId", null);
 		event.characterList.forEach(function(child){
 			child.moveTo(cityId);
@@ -146,31 +160,7 @@ BuildOfficialView.prototype.selectComplete=function(event){
 		event.characterList.forEach(function(child){
 			child.spy(cityId);
 		});
-	}else if(event.characterListType == CharacterListType.EXPEDITION){
-		var characterList = event.characterList;
-		for(var i = 0,l = characterList.length;i<l;i++){
-			if(characterList[i].troops() > 0){
-				continue;
-			}
-			var obj = {title:Language.get("confirm"),message:String.format(Language.get("dialog_character_troops_error"),characterList[i].name()),height:200,okEvent:null};
-			var windowLayer = ConfirmWindow(obj);
-			LMvc.layer.addChild(windowLayer);
-			return false;
-		}
-		self.controller.setValue("expeditionCharacterList", characterList);
-	}else if(event.characterListType == CharacterListType.SELECT_LEADER){
-		if(event.characterList.length > 1){
-			var obj = {title:Language.get("confirm"),message:Language.get("dialog_select_leader_error"),height:200,okEvent:null};
-			var windowLayer = ConfirmWindow(obj);
-			LMvc.layer.addChild(windowLayer);
-			return false;
-		}else{
-			self.controller.setValue("expeditionLeader",event.characterList[0]);
-			self.controller.setValue("toCityId", cityId);
-			return true;
-		}
 	}else if(event.characterListType == CharacterListType.TRANSPORT){
-		
 		if(event.characterList.length > 1){
 			var obj = {title:Language.get("confirm"),message:Language.get("dialog_select_onlyone_error"),height:200,okEvent:null};
 			var windowLayer = ConfirmWindow(obj);
@@ -194,40 +184,19 @@ BuildOfficialView.prototype.showBuild=function(event){
 	}
 	console.log("event.subEventType = " ,event.subEventType,"event.characterListType =",event.characterListType);
 	if(event.subEventType == "return"){
-		if(event.characterListType == CharacterListType.EXPEDITION){
-			var expeditionCharacterList = self.controller.getValue("expeditionCharacterList");
-			var cityData = self.controller.getValue("cityData");
-			troopsFromCharactersToCity(expeditionCharacterList, cityData);
-			self.controller.setValue("expeditionCharacterList", null);
-			self.controller.setValue("toCityId", null);
-			self.controller.dispatchEvent(LController.NOTIFY_ALL);
-		}else if(event.characterListType == CharacterListType.SELECT_LEADER){
-			self.controller.loadCharacterList(CharacterListType.EXPEDITION,self);
-		}
 		return;
 	}
 	if(!self.load){
 		self.load = new LMvcLoader(self);
 	}
-	if(event.characterListType == CharacterListType.EXPEDITION){
-		self.controller.loadCharacterList(CharacterListType.SELECT_LEADER,self);
-	}else if(event.characterListType == CharacterListType.SELECT_LEADER || event.characterListType == CharacterListType.TRANSPORT){
-		if(SeigniorExecute.running){
-			var data = {};
-			data.expeditionCharacterList = self.controller.getValue("expeditionCharacterList");
-			data.expeditionLeader = self.controller.getValue("expeditionLeader");
-			self.controller.setValue("battleData",data);
-			self.controller.gotoBattle();
-		}else{
-			self.load.view(["Builds/ExpeditionReady"],self.expeditionReady);
-		}
+	if(event.characterListType == CharacterListType.TRANSPORT){
+		self.load.view(["Builds/ExpeditionReady"],self.expeditionReady);
 	}
 };
 BuildOfficialView.prototype.expeditionReady=function(){
 	var self = this;
 	var readyView = new ExpeditionReadyView(self.controller);
-	//self.addChild(readyView);
-	var obj = {title:Language.get(self.characterListType == CharacterListType.EXPEDITION ? "备战军资" : "transport"),subWindow:readyView,width:480,height:540,okEvent:self.expeditionReadyComplete,cancelEvent:self.expeditionCancel};
+	var obj = {title:Language.get("transport"),subWindow:readyView,width:480,height:540,okEvent:self.expeditionReadyComplete,cancelEvent:self.expeditionCancel};
 	var windowLayer = ConfirmWindow(obj);
 	self.addChild(windowLayer);
 	self.menuLayer.visible = false;
@@ -236,9 +205,7 @@ BuildOfficialView.prototype.expeditionCancel=function(event){
 	var windowLayer = event.currentTarget.parent;
 	var self = windowLayer.parent;
 	windowLayer.remove();
-	//self.menuLayer.visible = true;
-	self.controller.loadCharacterList(CharacterListType.SELECT_LEADER,self);
-
+	self.controller.loadCharacterList(CharacterListType.TRANSPORT,self);
 };
 BuildOfficialView.prototype.expeditionReadyComplete=function(event){
 	var windowLayer = event.currentTarget.parent;
@@ -247,18 +214,10 @@ BuildOfficialView.prototype.expeditionReadyComplete=function(event){
 		return child.constructor.name == "ExpeditionReadyView";
 	});
 	var data = readyView.getData();
-	if(self.characterListType == CharacterListType.EXPEDITION){
-		windowLayer.remove();
-		data.expeditionCharacterList = self.controller.getValue("expeditionCharacterList");
-		data.expeditionLeader = self.controller.getValue("expeditionLeader");
-		self.controller.setValue("battleData",data);
-		self.controller.gotoBattle();
-	}else if(self.characterListType == CharacterListType.TRANSPORT){
-		var characterModel = self.controller.getValue("transportCharacter");
-		windowLayer.remove();
-		data.cityId = self.controller.getValue("cityId");
-		characterModel.transport(data);
-		self.controller.dispatchEvent(LController.NOTIFY_ALL);
-		self.menuLayer.visible = true;
-	}
+	var characterModel = self.controller.getValue("transportCharacter");
+	windowLayer.remove();
+	data.cityId = self.controller.getValue("cityId");
+	characterModel.transport(data);
+	self.controller.dispatchEvent(LController.NOTIFY_ALL);
+	self.menuLayer.visible = true;
 };

@@ -217,6 +217,8 @@ Language.data = {
 	"arm_properties":"备战属性",
 	"basic_properties":"基本属性",
 	"ability_properties":"能力属性",
+	"expedition_resources":"备战军资",
+	"appoint_prefecture":"任命太守",
 	"cutover":"切换",
 	"spy":"谍报",
 	"transport":"输送物资",

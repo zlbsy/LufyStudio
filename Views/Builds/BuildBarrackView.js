@@ -1,6 +1,6 @@
 /**
  * 兵营
- * 招募，训练
+ * 出征，招募，训练
  */
 function BuildBarrackView(controller){
 	var self = this;
@@ -8,6 +8,13 @@ function BuildBarrackView(controller){
 }
 BuildBarrackView.prototype.showMenu=function(){
 	var self = this, layer = new LSprite(), menuY = 0, menuHeight = 55;
+	
+	var buttonExpedition = getButton(Language.get("expedition"),200);
+	buttonExpedition.y = menuY;
+	layer.addChild(buttonExpedition);
+	buttonExpedition.addEventListener(LMouseEvent.MOUSE_UP, self.onClickExpeditionButton);
+		
+	menuY += menuHeight;
 	var buttonEnlist = getButton(Language.get("enlist"),200);
 	buttonEnlist.y = menuY;
 	layer.addChild(buttonEnlist);
@@ -20,6 +27,22 @@ BuildBarrackView.prototype.showMenu=function(){
 	buttonTraining.addEventListener(LMouseEvent.MOUSE_UP, self.onClickTrainingButton);
 	return layer;
 };
+BuildBarrackView.prototype.onClickExpeditionButton=function(event){
+	var self = event.currentTarget.parent.parent.parent;
+	self.characterListType = CharacterListType.EXPEDITION;
+	self.controller.addEventListener(LCityEvent.SELECT_CITY, self.expeditionSelectCharacter);
+	self.controller.toSelectMap(CharacterListType.EXPEDITION);
+};
+BuildBarrackView.prototype.expeditionSelectCharacter=function(event){
+	var controller = event.currentTarget;
+	var self = controller.view.contentLayer.childList.find(function(child){
+		return child.constructor.name == "BuildBarrackView";
+	});
+	self.controller.setValue("cityId", event.cityId);
+	controller.removeEventListener(LCityEvent.SELECT_CITY, self.expeditionSelectCharacter);
+	controller.loadCharacterList(CharacterListType.EXPEDITION,self);
+};
+
 BuildBarrackView.prototype.onClickTrainingButton=function(event){
 	var self = event.currentTarget.parent.parent.parent;
 	self.controller.loadCharacterList(CharacterListType.TRAINING);
@@ -31,6 +54,7 @@ BuildBarrackView.prototype.selectComplete=function(event){
 	if(!characterList){
 		return true;
 	}
+	var cityId = self.controller.getValue("cityId");
 	if(event.characterListType == CharacterListType.TRAINING){
 		if(event.characterList.length > 1){
 			var obj = {title:Language.get("confirm"),message:Language.get("dialog_select_onlyone_error"),height:200,okEvent:null};
@@ -41,8 +65,101 @@ BuildBarrackView.prototype.selectComplete=function(event){
 			self.showSoldiers();
 		}
 		return false;
+	}else if(event.characterListType == CharacterListType.EXPEDITION){
+		var characterList = event.characterList;
+		for(var i = 0,l = characterList.length;i<l;i++){
+			if(characterList[i].troops() > 0){
+				continue;
+			}
+			var obj = {title:Language.get("confirm"),message:String.format(Language.get("dialog_character_troops_error"),characterList[i].name()),height:200,okEvent:null};
+			var windowLayer = ConfirmWindow(obj);
+			LMvc.layer.addChild(windowLayer);
+			return false;
+		}
+		self.controller.setValue("expeditionCharacterList", characterList);
+	}else if(event.characterListType == CharacterListType.SELECT_LEADER){
+		if(event.characterList.length > 1){
+			var obj = {title:Language.get("confirm"),message:Language.get("dialog_select_leader_error"),height:200,okEvent:null};
+			var windowLayer = ConfirmWindow(obj);
+			LMvc.layer.addChild(windowLayer);
+			return false;
+		}else{
+			self.controller.setValue("expeditionLeader",event.characterList[0]);
+			self.controller.setValue("toCityId", cityId);
+			return true;
+		}
 	}
 	return true;
+};
+BuildBarrackView.prototype.showBuild=function(event){
+	var contentLayer = event.currentTarget.view.contentLayer;
+	var self = contentLayer.childList.find(function(child){
+		return child.isBuildBaseView;
+	});
+	var result = self.callParent("showBuild",arguments);
+	if(!result){
+		return;
+	}
+	console.log("event.subEventType = " ,event.subEventType,"event.characterListType =",event.characterListType);
+	if(event.subEventType == "return"){
+		if(event.characterListType == CharacterListType.EXPEDITION){
+			var expeditionCharacterList = self.controller.getValue("expeditionCharacterList");
+			var cityData = self.controller.getValue("cityData");
+			troopsFromCharactersToCity(expeditionCharacterList, cityData);
+			self.controller.setValue("expeditionCharacterList", null);
+			self.controller.setValue("toCityId", null);
+			self.controller.dispatchEvent(LController.NOTIFY_ALL);
+		}else if(event.characterListType == CharacterListType.SELECT_LEADER){
+			self.controller.loadCharacterList(CharacterListType.EXPEDITION,self);
+		}
+		return;
+	}
+	if(!self.load){
+		self.load = new LMvcLoader(self);
+	}
+	if(event.characterListType == CharacterListType.EXPEDITION){
+		self.controller.loadCharacterList(CharacterListType.SELECT_LEADER,self);
+	}else if(event.characterListType == CharacterListType.SELECT_LEADER){
+		if(SeigniorExecute.running){
+			var data = {};
+			data.expeditionCharacterList = self.controller.getValue("expeditionCharacterList");
+			data.expeditionLeader = self.controller.getValue("expeditionLeader");
+			self.controller.setValue("battleData",data);
+			self.controller.gotoBattle();
+		}else{
+			self.load.view(["Builds/ExpeditionReady"],self.expeditionReady);
+		}
+	}
+};
+BuildBarrackView.prototype.expeditionReady=function(){
+	var self = this;
+	var readyView = new ExpeditionReadyView(self.controller);
+	//self.addChild(readyView);
+	var obj = {title:Language.get("expedition_resources"),subWindow:readyView,width:480,height:540,okEvent:self.expeditionReadyComplete,cancelEvent:self.expeditionCancel};
+	var windowLayer = ConfirmWindow(obj);
+	self.addChild(windowLayer);
+	self.menuLayer.visible = false;
+};
+BuildBarrackView.prototype.expeditionCancel=function(event){
+	var windowLayer = event.currentTarget.parent;
+	var self = windowLayer.parent;
+	windowLayer.remove();
+	//self.menuLayer.visible = true;
+	self.controller.loadCharacterList(CharacterListType.SELECT_LEADER,self);
+
+};
+BuildBarrackView.prototype.expeditionReadyComplete=function(event){
+	var windowLayer = event.currentTarget.parent;
+	var self = windowLayer.parent;
+	var readyView = windowLayer.childList.find(function(child){
+		return child.constructor.name == "ExpeditionReadyView";
+	});
+	var data = readyView.getData();
+	windowLayer.remove();
+	data.expeditionCharacterList = self.controller.getValue("expeditionCharacterList");
+	data.expeditionLeader = self.controller.getValue("expeditionLeader");
+	self.controller.setValue("battleData",data);
+	self.controller.gotoBattle();
 };
 BuildBarrackView.prototype.showSoldiers=function(){
 	var self = this;
@@ -100,72 +217,14 @@ BuildBarrackView.prototype.selectSoldier=function(event){
 		LMvc.layer.addChild(windowLayer);
 		return;
 	}
-	console.log("self=",self);
 	selectCharacter.training(soldier.id());
 	cityModel.money(-JobPrice.TRAINING);
-	//windowObj.remove();
 	self.controller.closeCharacterList({characterListType : null});
 	LMvc.CityController.dispatchEvent(LController.NOTIFY_ALL);
 	console.log("soldier.id()="+soldier.id());
 };
-/*
-BuildBarrackView.prototype.showBuild=function(event){
-	var contentLayer = event.currentTarget.view.contentLayer;
-	var self = contentLayer.childList.find(function(child){
-		return child.isBuildBaseView;
-	});
-	var result = self.callParent("showBuild",arguments);
-	if(!result){
-		return;
-	}
-	if(event.subEventType == "return"){
-		if(event.characterListType == CharacterListType.STOP_BATTLE_CHARACTER){
-			self.onClickStopBattleButton();
-		}else if(event.characterListType == CharacterListType.REDEEM){
-			self.onClickRedeemButton();
-		}
-		return;
-	}
-	if(event.characterListType == CharacterListType.TRAINING){
-		self.showSoldiers();
-	}
-};*/
-/*
-BuildBarrackView.prototype.hideArmBuild=function(event){
-	var controller = event.currentTarget;
-	var armListLayer = controller.getValue("armListLayer");
-	var self = armListLayer.parent;
-	
-	self.menuLayer.visible = false;
-	self.controller.view.baseLayer.visible = false;
-};
-BuildBarrackView.prototype.showArmBuild=function(event){
-	var controller = event.currentTarget;
-	var armListLayer = controller.getValue("armListLayer");
-	var self = armListLayer.parent;
-	console.log("showArmBuild",self);
-	armListLayer.remove();
-	self.menuLayer.visible = true;
-	self.controller.view.baseLayer.visible = true;
-	console.log("self.menuLayer.visible",self.menuLayer.visible);
-	self.controller.removeEventListener(ArmListEvent.SHOW, self.hideArmBuild);
-	self.controller.removeEventListener(ArmListEvent.CLOSE, self.showArmBuild);
-};
-BuildBarrackView.prototype.onClickArmyListButton=function(event){
-	var self = event.currentTarget.parent.parent.parent;
-	self.controller.addEventListener(ArmListEvent.SHOW, self.hideArmBuild);
-	self.controller.addEventListener(ArmListEvent.CLOSE, self.showArmBuild);
-	var armListLayer = new LSprite();
-	self.addChild(armListLayer);
-	self.controller.setValue("armListLayer", armListLayer);
-	self.controller.loadArmList(ArmListType.ARM_LIST);
-};*/
 BuildBarrackView.prototype.onClickEnlistButton=function(event){
 	var self = event.currentTarget.parent.parent.parent;
-	//self.controller.loadCharacterList(CharacterListType.ENLIST,self);
-	//return;
-	//self.controller.addEventListener(ArmListEvent.SHOW, self.hideArmBuild);
-	//self.controller.addEventListener(ArmListEvent.CLOSE, self.showArmBuild);
 	var armListLayer = new LSprite();
 	self.addChild(armListLayer);
 	self.controller.setValue("armListLayer", armListLayer);

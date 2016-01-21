@@ -1,6 +1,6 @@
 function BattleResultView(controller, result){
 	var self = this;
-	LExtends(self,LView,[controller]);console.error("BattleResultView");
+	LExtends(self,LView,[controller]);
 	self.name = "BattleResult";
 	self.backInit();
 	self.result = result;
@@ -342,5 +342,11 @@ BattleResultView.prototype.changeCharactersStatus=function(){
 	}
 	for(var i=0,l=characters.length;i<l;i++){
 		characters[i].job(Job.END);
+	}
+	if(self.winSeigniorId == battleData.fromCity.seigniorCharaId()){
+		var prefectureChara = CharacterModel.getChara(battleData.fromCity.prefecture());
+		if(prefectureChara.cityId() != battleData.fromCity.id()){
+			appointPrefecture(battleData.fromCity);
+		}
 	}
 };

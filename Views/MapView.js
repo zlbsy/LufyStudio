@@ -42,7 +42,7 @@ MapView.prototype.backLayerInit=function(){
 			roadLayer.graphics.drawLine(10, "#FFFFFF", [75 + areaStatus.position().x, 65 + areaStatus.position().y, 75 + neighborArea.position().x, 65 + neighborArea.position().y]);
 		}
 	}
-	
+	roadLayer.cacheAsBitmap(true);
 	var background = new BackgroundView();
 	background.set(bitmapData);
 	self.backLayer.addChild(background);

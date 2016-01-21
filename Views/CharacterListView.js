@@ -93,6 +93,10 @@ CharacterListView.prototype.listInit=function(){
 			self.dataList = self.controller.characterList;
 			buttonLabel = "select_seignior";
 			break;
+		case CharacterListType.APPOINT_PREFECTURE:
+			self.dataList = generals;
+			buttonLabel = "appoint_prefecture";
+			break;
 		case CharacterListType.SELECT_MONARCH:
 			self.dataList = self.controller.characterList;
 			buttonLabel = "execute";
@@ -360,6 +364,7 @@ CharacterListView.prototype.showList=function(){
 		case CharacterListType.EXPEDITION:
 		case CharacterListType.SELECT_LEADER:
 		case CharacterListType.SELECT_MONARCH:
+		case CharacterListType.APPOINT_PREFECTURE:
 			minusHeight = 70;
 			break;
 		default:

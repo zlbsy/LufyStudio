@@ -108,6 +108,25 @@ function checkSeigniorIsDie(seigniorId){
 	var character = CharacterModel.getChara(seigniorId);
 	return character.seigniorId() == 0;
 }
+function appointPrefecture(city){
+	var generals = city.generals();
+	if(generals.length == 0){
+		city.prefecture(0);
+		return;
+	}else if(generals.length == 1){
+		city.prefecture(generals[0].id());
+		return;
+	}
+	var compatibility = city.seignior().compatibility();
+	generals = generals.sort(function(a,b){
+		var value = b.feat() - a.feat();
+		if(value == 0){
+			value = Math.abs(a.compatibility() - compatibility) - Math.abs(b.compatibility() - compatibility);
+		}
+		return value;
+	});
+	city.prefecture(generals[0].id());
+}
 function getMonarchChangeId(seignior){
 	var chara;
 	var childs = seignior.character().childs();

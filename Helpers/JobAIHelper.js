@@ -163,7 +163,7 @@ function jobAiToBattle(areaModel,characters,targetCity){
 			event.currentTarget.parent.remove();
 			SeigniorExecute.Instance().backLayer.visible = false;
 			LMvc.MapController.showCity(targetCity.id(), function(){
-				var build = LMvc.CityController.view.showBuildView("official");
+				var build = LMvc.CityController.view.showBuildView("barrack");
 				build.characterListType = CharacterListType.EXPEDITION;
 				LMvc.CityController.setValue("cityData",areaModel);
 				LMvc.CityController.setValue("toCity",targetCity);
