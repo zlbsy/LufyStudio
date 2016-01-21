@@ -108,10 +108,54 @@ function checkSeigniorIsDie(seigniorId){
 	var character = CharacterModel.getChara(seigniorId);
 	return character.seigniorId() == 0;
 }
+function getMonarchChangeId(seignior){
+	var chara;
+	var childs = seignior.character().childs();
+	if(childs && childs.length > 0){
+		for(var i=0;i<childs.length;i++){
+			chara = CharacterModel.getChara(childs[i]);
+			if(chara.seigniorId() == seignior.chara_id()){
+				return chara.id();
+			}
+		}
+	}
+	var generals = seignior.generals();
+	if(generals.length == 0){
+		return 0;
+	}
+	var charas = [];
+	var compatibilityValue = 1000;
+	var compatibility = seignior.character().compatibility();
+	for(var i=0,l=generals.length;i<l;i++){
+		var child = generals[i];
+		var value = Math.abs(child.compatibility() - compatibility);
+		if(value < compatibilityValue){
+			compatibilityValue = value;
+			charas = [child];
+		}else if(value == compatibilityValue){
+			charas.push(child);
+		}
+	}
+	if(charas.length > 1){
+		charas = charas.sort(function(a,b){return b.feat()-a.feat();});
+	}
+	return charas[0].id();
+}
 function monarchChange(seigniorId, characterId){
 	var seignior = SeigniorModel.getSeignior(seigniorId);
+	if(!characterId){
+		characterId = getMonarchChangeId(seignior);
+		console.log("getMonarchChangeId .characterId="+characterId);
+		if(!characterId){
+			return;
+		}
+	}
+	var captives = SeigniorModel.getCharactersIsCaptives(seigniorId);
 	seignior.chara_id(characterId);
-	
+	for(var i=0,l=captives.length;i<l;i++){
+		var captive = captives[i];
+		captive.seigniorId(characterId);
+	}
 	console.log("seignior.chara="+seignior.character().name());
 	var areas = seignior.areas();
 	for(var i=0,l=areas.length;i<l;i++){

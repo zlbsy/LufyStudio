@@ -334,11 +334,13 @@ BattleResultView.prototype.changeCharactersStatus=function(){
 		return;
 	}
 	var battleData = self.controller.battleData;
-	if(battleData.fromCity.seigniorCharaId() != LMvc.selectSeignorId){
-		return;
+	var characters;
+	if(battleData.fromCity.seigniorCharaId() == LMvc.selectSeignorId){
+		characters = battleData.expeditionCharacterList;
+	}else{
+		characters = battleData.expeditionEnemyCharacterList;
 	}
-	for(var i=0,l=battleData.expeditionCharacterList.length;i<l;i++){
-		var character = battleData.expeditionCharacterList[i];
-		character.job(Job.END);
+	for(var i=0,l=characters.length;i<l;i++){
+		characters[i].job(Job.END);
 	}
 };

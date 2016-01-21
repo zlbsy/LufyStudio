@@ -113,8 +113,12 @@ MapController.prototype.checkSeigniorChange=function(seigniorId){
 	var self = this;
 	if(checkSeigniorIsDie(seigniorId)){
 		console.log("checkSeigniorIsDie true");
-		var seignior = SeigniorModel.getSeignior(seigniorId);
-		self.loadCharacterList(CharacterListType.SELECT_MONARCH,seignior.generals());
+		if(seigniorId == LMvc.selectSeignorId){
+			var seignior = SeigniorModel.getSeignior(seigniorId);
+			self.loadCharacterList(CharacterListType.SELECT_MONARCH,seignior.generals());
+		}else{
+			monarchChange(seigniorId);
+		}
 	}else{
 		console.log("checkSeigniorIsDie false");
 	}

@@ -12,6 +12,8 @@
 * luck：运气
 * compatibility : 相性 1-150
 * personalLoyalty ： 义气 1-15
+* childs : 子[id,id]
+* father : 父id
 * soldiers：初始可带兵种［{id:兵种ID,proficiency:熟练度,img:兵种形象ID}］(熟练度 : 精通S，熟练A，普通B，略懂C，不会D) 用兵符升级 D+1=C,C+2=B,B+3=A,A+4=S
 * */
 /*

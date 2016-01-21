@@ -335,6 +335,12 @@ CharacterModel.prototype.seigniorLevel = function(){
 CharacterModel.prototype.exp = function(value){
 	return this._dataValue("exp", value, 0);
 };
+CharacterModel.prototype.childs = function(){
+	return this.data.childs ? this.data.childs : [];
+};
+CharacterModel.prototype.father = function(){
+	return this.data.father;
+};
 CharacterModel.prototype.feat = function(value){
 	return this._dataValue("feat", value, 0);
 };
