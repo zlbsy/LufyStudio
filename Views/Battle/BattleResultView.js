@@ -58,6 +58,7 @@ BattleResultView.prototype.winInit=function(){
 	var battleData = self.controller.battleData;
 	self.winSeigniorId = LMvc.selectSeignorId;
 	if(battleData.fromCity.seigniorCharaId() == LMvc.selectSeignorId){
+		experienceToFeat(battleData.expeditionEnemyCharacterList);
 		self.failSeigniorId = battleData.toCity.seigniorCharaId();
 		var city = battleData.toCity;
 		if(city.seigniorCharaId() > 0 && city.generalsSum() > self.model.selfCaptive.length){
@@ -69,7 +70,8 @@ BattleResultView.prototype.winInit=function(){
 			var enemyCharas = getDefenseEnemiesFromCity(self.retreatCity);
 			self.retreatCity.prefecture(enemyCharas[0].id());
 		}else{
-			var generals = battleData.toCity.generals();
+			/*var generals = battleData.toCity.generals();
+			console.log("toCity generals",generals);
 			for(var i=0,l=generals.length;i<l;i++){
 				var child = generals[i];
 				if(self.model.selfCaptive.indexOf(child.id())>=0){
@@ -78,6 +80,7 @@ BattleResultView.prototype.winInit=function(){
 				self.model.selfCaptive.push(child.id());
 			}
 			console.log("全员被俘虏 : " + self.model.selfCaptive);
+			*/
 			//无相邻可以撤退
 			var seignior = SeigniorModel.getSeignior(self.failSeigniorId);
 			var seigniorCharacter = seignior.character();
@@ -91,7 +94,7 @@ BattleResultView.prototype.winInit=function(){
 				var citys = seignior.areas();
 				if(citys.length > 0){
 					self.retreatCityId = citys[(citys.length * Math.random()) >>> 0].id();
-					console.log("君主被擒，暂时随机决定撤退城池 : " + self.retreatCityId);
+					console.log("敌军君主被擒，暂时随机决定撤退城池 : " + self.retreatCityId);
 				}
 			}
 		}
@@ -235,6 +238,9 @@ BattleResultView.prototype.selfCaptiveFail=function(event){
 };
 BattleResultView.prototype.enemyCaptiveFail=function(event){
 	var self = event.currentTarget;
+	if(event.eventType == BattleResultEvent.CLOSE_EXP){
+		experienceToFeat(battleData.expeditionEnemyCharacterList);
+	}
 	if(self.model.enemyCaptive.length == 0){
 		self.dispatchEvent(BattleResultEvent.CLOSE_FAIL_CAPTIVE_ENEMY);
 		return;
@@ -305,6 +311,7 @@ BattleResultView.prototype.showResultTitle=function(value){
 };
 BattleResultView.prototype.showMap=function(event){
 	var self = event.currentTarget;
+	self.changeCharactersStatus();
 	var cityId = self.controller.battleData.toCity.id();
 	self.controller.view.remove();
 	LMvc.BattleController = null;
@@ -320,9 +327,18 @@ BattleResultView.prototype.showMap=function(event){
 		LMvc.MapController.checkSeigniorWin();
 	}
 };
-BattleResultView.prototype.seigniorExecute=function(){
+BattleResultView.prototype.changeCharactersStatus=function(){
+	var self = this;
 	console.log("SeigniorExecute.running = " + SeigniorExecute.running);
 	if(SeigniorExecute.running){
-		MenuController.instance().view.loadSeigniorExecute();
+		return;
+	}
+	var battleData = self.controller.battleData;
+	if(battleData.fromCity.seigniorCharaId() != LMvc.selectSeignorId){
+		return;
+	}
+	for(var i=0,l=battleData.expeditionCharacterList.length;i<l;i++){
+		var character = battleData.expeditionCharacterList[i];
+		character.job(Job.END);
 	}
 };

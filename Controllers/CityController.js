@@ -81,6 +81,13 @@ CityController.prototype.battleLoadComplete=function(){
 	battleData.fromCity = self.getValue("cityData");
 	var toCity = self.getValue("toCity");
 	battleData.toCity = toCity?toCity:AreaModel.getArea(self.getValue("toCityId"));
+	if(battleData.expeditionCharacterList){
+		var leaderIndex = battleData.expeditionCharacterList.findIndex(function(child){return child.id() == battleData.expeditionLeader.id();});
+		if(leaderIndex > 0){
+			battleData.expeditionCharacterList.splice(leaderIndex, 1);
+			battleData.expeditionCharacterList.unshift(battleData.expeditionLeader);
+		}
+	}
 	battleData.expeditionEnemyData = self.getValue("expeditionEnemyData");
 	var battle = new BattleController(battleData, self);
 	console.log("cityData="+self.getValue("cityData"));

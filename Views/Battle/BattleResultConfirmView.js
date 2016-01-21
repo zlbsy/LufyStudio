@@ -73,44 +73,6 @@ BattleResultConfirmView.prototype.setFailSelfCaptive = function(){
 	var self = this;
 	self.setOnlyMessage(Language.get("rescue_enemy_captive_dialog_msg"), BattleResultEvent.RESCUE_CAPTIVE);//我军俘虏的敌将也被救回去了!
 };
-BattleResultConfirmView.prototype.setFailEnemyCaptive = function(){
-	var self = this, message;
-	var toCity = self.controller.battleData.toCity;
-	var fromCity = self.controller.battleData.fromCity;
-	var seigniorId = toCity.seigniorCharaId();
-	var isSeignior = self.characterModel.id() == self.characterModel.seigniorId();
-	if(!isSeignior && calculateHitrateSurrender(seigniorId, self.characterModel)){//投降
-		self.surrender(seigniorId, self.characterModel);
-		message = String.format(Language.get("surrender_dialog_msg"),self.characterModel.name());//{0}投降了敌军!
-	}else if(isSeignior || calculateHitrateBehead(self.leaderId, self.characterModel)){//斩首
-		message = String.format(Language.get("beheaded_dialog_msg"),self.characterModel.name());//{0}被敌军斩首了!
-		self.characterModel.toDie();
-	}else if(isSeignior || calculateHitrateRelease(self.leaderId, self.characterModel)){//释放
-		if(self.retreatCityId){
-			if(self.characterModel.cityId() != self.retreatCityId){
-				self.characterModel.moveTo(self.retreatCityId);
-				self.characterModel.moveTo();
-			}
-		}else{
-			self.characterModel.toOutOfOffice();
-		}
-		/*
-		 TODO::Test
-		if(toCity.seigniorCharaId() == LMvc.selectSeignorId){
-			if(self.retreatCityId){
-				self.characterModel.moveTo(self.retreatCityId);
-				self.characterModel.moveTo();
-			}else{
-				self.characterModel.toOutOfOffice();
-			}
-		}*/
-		message = String.format(Language.get("released_dialog_msg"),self.characterModel.name());//{0}被敌军释放了!
-	}else{//俘虏
-		toCity.addCaptives(self.characterModel);
-		message = String.format(Language.get("captived_dialog_msg"),self.characterModel.name());//{0}被敌军俘虏了!
-	}
-	self.setOnlyMessage(message, BattleResultEvent.CLOSE_FAIL_CAPTIVE);
-};
 BattleResultConfirmView.prototype.setSelectMoveCity = function(){
 	var self = this;
 	var battleData = self.controller.battleData;
@@ -295,18 +257,39 @@ BattleResultConfirmView.prototype.tweenClose=function(event){
 		}
 	}});
 };
-/*BattleResultConfirmView.prototype.surrender=function(seigniorId){
-	var self = this;
-	var city = self.controller.battleData.toCity;
-	self.characterModel.moveTo(city.id());
-	self.characterModel.moveTo();
-	self.characterModel.seigniorId(seigniorId);
-};*/
+BattleResultConfirmView.prototype.setFailEnemyCaptive = function(){
+	var self = this, message;
+	var toCity = self.controller.battleData.toCity;
+	var fromCity = self.controller.battleData.fromCity;
+	var seigniorId = toCity.seigniorCharaId();
+	var isSeignior = self.characterModel.id() == self.characterModel.seigniorId();
+	if(!isSeignior && calculateHitrateSurrender(seigniorId, self.characterModel)){//投降
+		generalSurrender(self.characterModel, toCity);
+		message = String.format(Language.get("surrender_dialog_msg"),self.characterModel.name());//{0}投降了敌军!
+	}else if(isSeignior || calculateHitrateBehead(self.leaderId, self.characterModel)){//斩首
+		message = String.format(Language.get("beheaded_dialog_msg"),self.characterModel.name());//{0}被敌军斩首了!
+		self.characterModel.toDie();
+	}else if(isSeignior || calculateHitrateRelease(self.leaderId, self.characterModel)){//释放
+		if(self.retreatCityId){
+			if(self.characterModel.cityId() != self.retreatCityId){
+				self.characterModel.moveTo(self.retreatCityId);
+				self.characterModel.moveTo();
+			}
+			message = String.format(Language.get("released_dialog_msg"),self.characterModel.name());//{0}被敌军释放了!
+		}else{
+			self.characterModel.toOutOfOffice();
+			message = String.format(Language.get("shimono_dialog_msg"),self.characterModel.name());//{0}下野了!
+		}
+	}else{//俘虏
+		toCity.addCaptives(self.characterModel);
+		message = String.format(Language.get("captived_dialog_msg"),self.characterModel.name());//{0}被敌军俘虏了!
+	}
+	self.setOnlyMessage(message, BattleResultEvent.CLOSE_FAIL_CAPTIVE);
+};
 BattleResultConfirmView.prototype.captiveSurrender=function(event){
 	var self = event.currentTarget, script;
 	if(calculateHitrateSurrender(LMvc.selectSeignorId, self.characterModel)){
 		generalSurrender(self.characterModel, self.controller.battleData.toCity);
-		//self.surrender(LMvc.selectSeignorId);
 		script = "SGJTalk.show(" + self.characterModel.id() + ",0,"+Language.get("recruit_success")+");";//愿效犬马之力!
 		script += "SGJBattleResult.talk("+BattleResultEvent.CLOSE_CAPTIVE+");";
 		self.model.selfCaptive.splice(0, 1);
@@ -319,16 +302,20 @@ BattleResultConfirmView.prototype.captiveSurrender=function(event){
 	LGlobal.script.addScript(script);
 };
 BattleResultConfirmView.prototype.captiveCaptive=function(event){
+	//俘虏
 	var self = event.currentTarget, script;
 	self.controller.battleData.toCity.addCaptives(self.characterModel);
 	self.model.selfCaptive.splice(0, 1);
 	self.parent.dispatchEvent(BattleResultEvent.CLOSE_CAPTIVE);
 };
 BattleResultConfirmView.prototype.captiveRelease=function(event){
+	//释放
 	var self = event.currentTarget;
 	var resultView = self.parent;
-	if(self.controller.battleData.fromCity.seigniorCharaId() == LMvc.selectSeignorId){
-		console.log("释放retreatCityId="+resultView.retreatCityId);
+	if(!resultView.retreatCityId){
+		//下野
+		self.characterModel.toOutOfOffice();
+	}else if(self.characterModel.cityId() != resultView.retreatCityId){
 		self.characterModel.moveTo(resultView.retreatCityId);
 		self.characterModel.moveTo();
 	}
@@ -336,7 +323,9 @@ BattleResultConfirmView.prototype.captiveRelease=function(event){
 	self.parent.dispatchEvent(BattleResultEvent.CLOSE_CAPTIVE);
 };
 BattleResultConfirmView.prototype.captiveBehead=function(event){
+	//斩首
 	var self = event.currentTarget;
+	self.characterModel.toDie();
 	self.model.selfCaptive.splice(0, 1);
 	self.parent.dispatchEvent(BattleResultEvent.CLOSE_CAPTIVE);
 };

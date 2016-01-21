@@ -43,29 +43,20 @@ BattleExpChangeView.prototype.initData = function(){
 	layer.y = 10;
 	self.baseLayer.addChild(layer);
 	
+	var battleData = LMvc.BattleController.battleData;
+	self.datas = experienceToFeat(battleData.expeditionCharacterList);
+	/*
 	var model = LMvc.BattleController.model;
 	var datas = [];
 	var sumExp = 0;
-	var battleData = LMvc.BattleController.battleData;
-	console.error("battleData.expeditionCharacterList=",battleData.expeditionCharacterList);
 	for(var i=0,l=battleData.expeditionCharacterList.length;i<l;i++){
-		var character = battleData.expeditionCharacterList[i];if(!character || !character.name){self.datas=datas;return;}
+		var character = battleData.expeditionCharacterList[i];
 		datas.push({name:character.name(), exp:character.exp()});
 		sumExp += character.exp();
 	}
-	/*for(var i=0,l=model.ourList.length;i<l;i++){
-		var character = model.ourList[i];
-		datas.push({name:character.data.name(), exp:character.data.exp()});
-		sumExp += character.data.exp();
-	}
-	for(var i=0,l=model.enemyCaptive.length;i<l;i++){
-		var characterId = model.enemyCaptive[i];
-		var character = CharacterModel.getChara(characterId);
-		datas.push({name:character.name(), exp:character.exp()});
-		sumExp += character.exp();
-	}*/
 	self.average = sumExp / datas.length;
-	var feat = self.average * 1;
+	var feat = self.average * 0.1;
+	var minFeat = feat > 20 ? 10 : 5;
 	var rewardValue = 1.5;
 	self.datas = datas.sort(function(a,b){return b.exp - a.exp;});
 	for(var i=0,l=self.datas.length;i<l;i++){
@@ -80,7 +71,7 @@ BattleExpChangeView.prototype.initData = function(){
 		}
 		feat -= 5;
 		data.feat = data.feat >>> 0;
-	}
+	}*/
 	var xs = self.xs;
 	label = getStrokeLabel(Language.get("generals"),20,"#FFFFFF","#000000",4);
 	label.x = xs[0];

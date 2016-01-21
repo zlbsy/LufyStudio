@@ -253,15 +253,16 @@ CharacterDetailedView.prototype.showStatus=function(){
 	var statusBitmap = getBitmap(statusLayer);
 	var backLayer = new LSprite();
 	backLayer.addChild(statusBitmap);
-	if(!self.character && self.characterModel.job() == Job.IDLE && self.characterModel.seigniorId() > 0 && self.characterModel.seigniorId() != self.characterModel.city().seigniorCharaId()){
+	if(!self.character && self.characterModel.seigniorId() > 0 && self.characterModel.seigniorId() != self.characterModel.city().seigniorCharaId()){
 		var btnRecruit = getButton(Language.get("recruit"),200);//招降
-		if(charaModel.job() == Job.END){
-			btnRecruit.alpha = 0.4;
-		}
 		btnRecruit.x = LGlobal.width - 260;
 		btnRecruit.y = 5;
 		backLayer.addChild(btnRecruit);
-		btnRecruit.addEventListener(LMouseEvent.MOUSE_UP,self.clickRecruit);
+		if(self.characterModel.job() == Job.END){
+			btnRecruit.alpha = 0.4;
+		}else{
+			btnRecruit.addEventListener(LMouseEvent.MOUSE_UP,self.clickRecruit);
+		}
 		var btnRelease = getButton(Language.get("release"),200);//释放
 		btnRelease.x = LGlobal.width - 260;
 		btnRelease.y = 55;

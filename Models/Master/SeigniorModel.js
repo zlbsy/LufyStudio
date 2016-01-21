@@ -3,6 +3,9 @@ function SeigniorModel(controller, data) {
 	base(self, MyModel, [controller]);
 	self.type = "StageMasterModel";
 	self.data = data;
+	if(!self.data.exp){
+		self.data.exp = 0;
+	}
 	self.data.spyAreas = self.data.spyAreas || [];
 	self.data.stopBattleSeigniors = self.data.stopBattleSeigniors || [];
 }
@@ -96,6 +99,12 @@ SeigniorModel.prototype.character = function(){
 		self.data._chara = CharacterModel.getChara(self.data.chara_id);
 	}
 	return self.data._chara;
+};
+SeigniorModel.prototype.exp = function(value){
+	return this._dataValue("exp", value, 0);
+};
+SeigniorModel.prototype.level = function(){
+	return (this.exp() / CharacterExpConfig.seignior >>> 0) + 1;
 };
 SeigniorModel.prototype.color = function(){
 	return this.data.color;

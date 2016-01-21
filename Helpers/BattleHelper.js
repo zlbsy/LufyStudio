@@ -492,24 +492,34 @@ function battleExpeditionMove(city, retreatCity){
  * 战斗后移动到指定城池
  */
 function battleCityChange(winSeigniorId, failSeigniorId, retreatCityId, captiveList, expeditionList){
-	var city = LMvc.BattleController.battleData.toCity;
+	var battleData = LMvc.BattleController.battleData;
+	var city = battleData.toCity;
+	var model = LMvc.BattleController.model;
 	var generals = city.generals();
 	var moveCharas = generals.slice();
-	for(var i=0,l=moveCharas.length;i<l;i++){
-		var chara = moveCharas[i];
-		if(captiveList.find(function(child){return child == chara.id();})){
-			continue;
-		}
-		if(retreatCityId){
+	if(retreatCityId){
+		for(var i=0,l=moveCharas.length;i<l;i++){
+			var chara = moveCharas[i];
+			if(captiveList.find(function(child){return child == chara.id();})){
+				continue;
+			}
 			chara.moveTo(retreatCityId);
 			chara.moveTo();
-		}else{
-			//TODO::下野
-			console.error("TODO::下野");
-			//city.outOfOffice().push(chara);
 		}
+	}else{
+		console.log("无撤退城市");
+		var generals = battleData.toCity.generals();
+		var captives = winSeigniorId == LMvc.selectSeignorId ? model.selfCaptive : model.enemyCaptive;
+		for(var i=0,l=generals.length;i<l;i++){
+			var child = generals[i];
+			if(captives.indexOf(child.id())>=0){
+				continue;
+			}
+			captives.push(child.id());
+		}
+		console.log("全员被俘虏 : " + model.selfCaptive);
 	}
-	generals.splice(0, generals.length);
+	//generals.splice(0, generals.length);
 	if(failSeigniorId){
 		var seigniorFail = SeigniorModel.getSeignior(failSeigniorId);
 		seigniorFail.removeCity(city.id());
@@ -518,6 +528,7 @@ function battleCityChange(winSeigniorId, failSeigniorId, retreatCityId, captiveL
 	seigniorWin.addCity(city);
 	console.log("winSeigniorId="+winSeigniorId);
 	city.seigniorCharaId(winSeigniorId);
+	city.prefecture(expeditionList[0].id());
 	generals = expeditionList.slice();
 	for(var i=0,l=generals.length;i<l;i++){
 		var chara = generals[i];
@@ -527,3 +538,39 @@ function battleCityChange(winSeigniorId, failSeigniorId, retreatCityId, captiveL
 		chara.moveTo();
 	}
 };
+function experienceToFeat(characterModels){
+	if(characterModels.length == 0){
+		return;
+	}
+	var sumExp = 0;
+	var datas = [];
+	for(var i=0,l=characterModels.length;i<l;i++){
+		var character = characterModels[i];
+		datas.push({name:character.name(), exp:character.exp(), character:character});
+		sumExp += character.exp();
+	}
+	var seignior = characterModels[0].seignior();
+	seignior.exp(seignior.exp() + sumExp);
+	average = sumExp / datas.length;
+	var feat = average * 0.1;
+	var minFeat = feat > 20 ? 10 : 5;
+	var rewardValue = 1.5;
+	datas = datas.sort(function(a,b){return b.exp - a.exp;});
+	for(var i=0,l=datas.length;i<l;i++){
+		var data = datas[i];
+		data.feat = feat;
+		if(data.feat < 10){
+			data.feat = 10;
+		}
+		if(data.exp >= average * rewardValue){
+			data.feat += feat * (data.exp / average  - rewardValue);
+			data.reward = true;
+		}
+		feat -= 5;
+		data.feat = data.feat >>> 0;
+		data.character.feat(data.character.feat() + data.feat);
+		data.character.exp(0);
+		delete data.character;
+	}
+	return datas;
+}

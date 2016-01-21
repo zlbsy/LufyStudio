@@ -157,6 +157,7 @@ Language.data = {
 	"beheaded_dialog_msg":"{0}被敌军斩首了!",
 	"released_dialog_msg":"{0}被敌军释放了!",
 	"captived_dialog_msg":"{0}被敌军俘虏了!",
+	"shimono_dialog_msg":"{0}下野了!",
 	"rescue_enemy_captive_dialog_msg":"我军俘虏的敌将也被救回去了!",
 	"win_attack_and_occupy_null":"我军攻占了{0}!",
 	"win_attack_and_occupy_enemy":"我军攻占了{0}军的{1}!",

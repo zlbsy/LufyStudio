@@ -199,7 +199,7 @@ CharacterModel.prototype.calculation = function(init) {
 	普通:敌军君主等级等于我军
 	困难:敌军君主等级高于我军
 	*************/
-	var lv = self.seigniorLevel();
+	var lv = self.seignior().level();
 	self.data.attack = self.force() * 0.5 + CharacterModel.upValue(property.attack, self.force()) * lv;
 	self.data.spirit = self.intelligence() * 0.5 + CharacterModel.upValue(property.spirit, self.intelligence()) * lv;
 	self.data.defense = self.command() * 0.5 + CharacterModel.upValue(property.defense, self.command()) * lv;
@@ -324,19 +324,13 @@ CharacterModel.prototype.seigniorId = function(value){
 };
 CharacterModel.prototype.seignior = function(chara_id) {
 	var self = this;
-	alert("seignior changed:"+chara_id);
-	console.error("seignior changed:"+chara_id);
-	/*if(typeof chara_id != UNDEFINED){
-		self.data.seignior_id = chara_id;
-		return;
-	}*/
 	if(!self.data.seignior_id){
 		return null;
 	}
 	return SeigniorModel.getSeignior(self.data.seignior_id);
 };
 CharacterModel.prototype.seigniorLevel = function(){
-	return (LMvc.chapterData.exp / CharacterExpConfig.seignior >>> 0) + 1;
+	return this.seignior().level();
 };
 CharacterModel.prototype.exp = function(value){
 	return this._dataValue("exp", value, 0);

@@ -449,6 +449,10 @@ AreaModel.prototype.addCaptives = function(param){
 	}else{
 		chara = param;
 	}
+	chara.city().removeCharacter(chara.id());
+	if(chara.cityId() != self.id()){
+		chara.cityId(self.id());
+	}
 	self.data.captives.push(chara);
 };
 AreaModel.prototype.removeCaptives = function(charaId){
@@ -457,9 +461,10 @@ AreaModel.prototype.removeCaptives = function(charaId){
 		var characterModel = self.data.captives[i];
 		if(characterModel.id() == charaId){
 			self.data.captives.splice(i, 1);
-			break;
+			return true;
 		}
 	}
+	return false;
 };
 AreaModel.prototype.captives=function(seigniorId){
 	var self = this;
