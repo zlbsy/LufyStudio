@@ -40,6 +40,14 @@ function calculateHitrateSurrender(seignorId, charaModel){
 	return false;
 }
 /**
+ * 投降
+ */
+function generalSurrender(characterModel, city){
+	characterModel.moveTo(city.id());
+	characterModel.moveTo();
+	characterModel.seigniorId(city.seigniorCharaId());
+}
+/**
  * 斩首概率
  */
 function calculateHitrateBehead(leaderId, charaModel){

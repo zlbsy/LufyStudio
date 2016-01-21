@@ -295,17 +295,18 @@ BattleResultConfirmView.prototype.tweenClose=function(event){
 		}
 	}});
 };
-BattleResultConfirmView.prototype.surrender=function(seigniorId){
+/*BattleResultConfirmView.prototype.surrender=function(seigniorId){
 	var self = this;
 	var city = self.controller.battleData.toCity;
 	self.characterModel.moveTo(city.id());
 	self.characterModel.moveTo();
 	self.characterModel.seigniorId(seigniorId);
-};
+};*/
 BattleResultConfirmView.prototype.captiveSurrender=function(event){
 	var self = event.currentTarget, script;
 	if(calculateHitrateSurrender(LMvc.selectSeignorId, self.characterModel)){
-		self.surrender(LMvc.selectSeignorId);
+		generalSurrender(self.characterModel, self.controller.battleData.toCity);
+		//self.surrender(LMvc.selectSeignorId);
 		script = "SGJTalk.show(" + self.characterModel.id() + ",0,"+Language.get("recruit_success")+");";//愿效犬马之力!
 		script += "SGJBattleResult.talk("+BattleResultEvent.CLOSE_CAPTIVE+");";
 		self.model.selfCaptive.splice(0, 1);
