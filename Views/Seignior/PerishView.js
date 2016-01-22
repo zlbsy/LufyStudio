@@ -24,9 +24,9 @@ PerishView.prototype.set = function(charaId){
 	face.addEventListener(LEvent.COMPLETE, self.faceLoadOver);
 	var message;
 	if(LMvc.selectSeignorId == charaId){
-		message = String.format("{0}势力灭亡了！游戏结束了！",charaModel.name());
+		message = String.format(Language.get("seignor_die_self"),charaModel.name());
 	}else{
-		message = String.format("{0}势力灭亡了！！",charaModel.name());
+		message = String.format(Language.get("seignor_die_other"),charaModel.name());
 	}
 	var messageLabel = getStrokeLabel(message, 20, "#FFFFFF", "#000000", 4);
 	messageLabel.x = (LGlobal.width - messageLabel.getWidth()) * 0.5;

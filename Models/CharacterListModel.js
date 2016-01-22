@@ -15,5 +15,7 @@ CharacterListModel.prototype.getImages=function(){
 	list.push({name:"yellow_bar",path:LMvc.IMG_PATH+"icon/yellow_bar.png"});
 	list.push({name:"icon_hert",path:LMvc.IMG_PATH+"icon/hert.png"});
 	list.push({name:"yellow_ball",path:LMvc.IMG_PATH+"icon/yellow_ball.png"});
+	list.push({name:"win05",path:LMvc.IMG_PATH+"win/win05.png"});
+	list.push({name:"icon-line",path:LMvc.IMG_PATH+"icon/line.png"});
 	return list;
 };

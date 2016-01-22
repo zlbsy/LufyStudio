@@ -112,9 +112,31 @@ SeigniorModel.prototype.color = function(){
 SeigniorModel.prototype.color2 = function(){
 	switch(this.data.color){
 		case "red":
-			return "#ff0000";
+			return "#FF0000";
+		case "black":
+			return "#000000";
+		case "blue":
+			return "#0000FF";
+		case "brown":
+			return "#A52A2A";
+		case "darkgoldenrod":
+			return "#B8860B";
+		case "darkviolet":
+			return "#9400D3";
+		case "green":
+			return "#008000";
+		case "greenyellow":
+			return "#ADFF2F";
+		case "orange":
+			return "#FFA500";
+		case "pink":
+			return "#FFC0CB";
+		case "teal":
+			return "#008080";
+		case "yellow":
+			return "#FFFF00";
 		default:
-			return "#fffff0";
+			return "#FFFFF0";
 	}
 };
 /**

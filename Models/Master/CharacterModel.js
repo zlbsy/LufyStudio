@@ -327,7 +327,17 @@ CharacterModel.prototype.seignior = function(chara_id) {
 	if(!self.data.seignior_id){
 		return null;
 	}
-	return SeigniorModel.getSeignior(self.data.seignior_id);
+	if(!self.data._seignior || self.data._seignior.chara_id() != self.data.seignior_id){
+		self.data._seignior = SeigniorModel.getSeignior(self.data.seignior_id);
+	}
+	return self.data._seignior;
+};
+CharacterModel.prototype.seigniorName = function(){
+	var self = this;
+	if(self.seignior() && self.seignior().character().seigniorId() > 0){
+		return self.seignior().character().name();
+	}
+	return Language.get("nothing");
 };
 CharacterModel.prototype.seigniorLevel = function(){
 	return this.seignior().level();
@@ -543,7 +553,11 @@ CharacterModel.prototype.cityId = function(value) {
 	return this._dataValue("cityId", value);
 };
 CharacterModel.prototype.city = function() {
-	return AreaModel.getArea(this.data.cityId);
+	var self = this;
+	if(!self._city || self._city.id() != self.data.cityId){
+		self._city = AreaModel.getArea(self.data.cityId);
+	}
+	return self._city;
 };
 CharacterModel.prototype.content = function(value) {
 	return this._dataValue("content", value);

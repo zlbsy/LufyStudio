@@ -73,43 +73,43 @@ SeigniorListChildView.prototype.set=function(){
 	var win = new LPanel(new LBitmapData(LMvc.datalist["win05"]),400,winH);
 	layer.addChild(win);
 	var name = getStrokeLabel(character.name(),22,"#000000","#CCCCCC",1);
-	name.x = 10 + (faceW - name.getWidth()) * 0.5;
-	name.y = 10 + faceSize + 5;
+	name.x = 5 + faceW;
+	name.y = 20;
 	win.addChild(name);
 	
-	var city_count_label = getStrokeLabel("城池",20,"#000000","#CCCCCC",1);
-	city_count_label.x = 10 + faceW + 5;
-	city_count_label.y = 10;
-	win.addChild(city_count_label);
-	var city_count = getStrokeLabel(self.seigniorModel.areas().length,20,"#000000","#CCCCCC",1);
-	city_count.x = city_count_label.x;
-	city_count.y = 37;
-	win.addChild(city_count);
-	
-	var general_count_label = getStrokeLabel("武将",20,"#000000","#CCCCCC",1);
-	general_count_label.x = 10 + faceW + 5;
-	general_count_label.y = 72;
-	win.addChild(general_count_label);
-	var general_count = getStrokeLabel(self.seigniorModel.generalsCount(),20,"#000000","#CCCCCC",1);
-	general_count.x = general_count_label.x;
-	general_count.y = 99;
-	win.addChild(general_count);
-	
 	var colorLabel = getStrokeLabel("势力颜色",20,"#000000","#CCCCCC",1);
-	colorLabel.x = 300;
-	colorLabel.y = 10;
+	colorLabel.x = name.x;
+	colorLabel.y = 57;
 	win.addChild(colorLabel);
 	var colorSprite = new LShape();
 	colorSprite.graphics.drawRect(0, "#000000", [0, 0, colorLabel.getWidth(), 20],true,self.seigniorModel.color());
 	colorSprite.x = colorLabel.x;
-	colorSprite.y = 37;
+	colorSprite.y = 84;
 	win.addChild(colorSprite);
+	
+	var city_count_label = getStrokeLabel("城池",20,"#000000","#CCCCCC",1);
+	city_count_label.x = 320;
+	city_count_label.y = 20;
+	win.addChild(city_count_label);
+	var city_count = getStrokeLabel(self.seigniorModel.areas().length,20,"#000000","#CCCCCC",1);
+	city_count.x = city_count_label.x;
+	city_count.y = 47;
+	win.addChild(city_count);
+	
+	var general_count_label = getStrokeLabel("武将",20,"#000000","#CCCCCC",1);
+	general_count_label.x = 320;
+	general_count_label.y = 82;
+	win.addChild(general_count_label);
+	var general_count = getStrokeLabel(self.seigniorModel.generalsCount(),20,"#000000","#CCCCCC",1);
+	general_count.x = general_count_label.x;
+	general_count.y = 109;
+	win.addChild(general_count);
 	
 	layer.cacheAsBitmap(true);
 	self.layer.addChild(layer);
 	
 	var face = character.face();
-	face.x = 50;
+	face.x = 0;
 	face.y = winH - faceH;
 	self.layer.addChild(face);
 };

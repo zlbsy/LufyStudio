@@ -3,7 +3,7 @@ function BattleAIExecute(){
 	if(!self.timer){
 		self.timer = new LTimer(LGlobal.speed, 1);
 	}
-	self.timer.addEventListener(LTimerEvent.TIMER, SeigniorExecute.run);
+	self.timer.addEventListener(LTimerEvent.TIMER, BattleAIExecute.run);
 };
 BattleAIExecute.Instance = function(){
 	if(!BattleAIExecute._Instance){
@@ -12,14 +12,18 @@ BattleAIExecute.Instance = function(){
 	return BattleAIExecute._Instance;
 };
 BattleAIExecute.set = function(attackData, targetData){
+	console.log("BattleAIExecute.set Start ",attackData, targetData);
 	BattleAIExecute.Instance()._set(attackData, targetData);
 };
 BattleAIExecute.run=function(){
+	console.log("BattleAIExecute.run");
 	var self = BattleAIExecute.Instance();
 	self.attackIndex = 0;
 	self.targetIndex = 0;
 	var attackCharacters = self.attackData.expeditionCharacterList;
 	var targetCharacters = self.targetData.expeditionCharacterList;
+	console.log("run attackCharacters.length:"+attackCharacters.length);
+	console.log("run targetCharacters.length:"+targetCharacters.length);
 	if(attackCharacters.length==0){
 		self.result(false);
 		SeigniorExecute.run();
@@ -32,23 +36,40 @@ BattleAIExecute.run=function(){
 	self.battleFoodCheck(attackCharacters, true, self.attackData);
 	self.battleFoodCheck(targetCharacters, false, self.attackData);
 	while(self.attackIndex < attackCharacters.length || self.targetIndex < targetCharacters.length){
+		console.log("while attackCharacters.length:"+attackCharacters.length);
+		console.log("while targetCharacters.length:"+targetCharacters.length);
 		var rand;
 		if(self.attackIndex >= attackCharacters.length){
-			rand = 0;
-		}else if(self.targetIndex >= targetCharacters.length){
 			rand = 1;
+		}else if(self.targetIndex >= targetCharacters.length){
+			rand = 0;
 		}else{
 			rand = Math.random();
 		}
 		if(rand < 0.5){
+			console.log("attackIndex:"+self.attackIndex + ",currentChara:"+attackCharacters[self.attackIndex]);
 			self.currentChara = attackCharacters[self.attackIndex++];
-			characterExec(self.currentChara, self.attackData, self.targetData);
+			self.characterExec(self.currentChara, self.attackData, self.targetData);
 		}else{
+			console.log("targetIndex:"+self.targetIndex + ",currentChara:"+targetCharacters[self.targetIndex]);
 			self.currentChara = targetCharacters[self.targetIndex++];
-			characterExec(self.currentChara, self.targetData, self.attackData);
+			self.characterExec(self.currentChara, self.targetData, self.attackData);
 		}
 		self.currentChara.herts = null;
+		if(self.currentChara.attackTarget){
+			self.currentChara.attackTarget.herts = null;
+		}
 		self.currentChara = null;
+		
+		if(attackCharacters.length==0){
+			self.result(false);
+			SeigniorExecute.run();
+			return;
+		}else if(targetCharacters.length==0){
+			self.result(true);
+			SeigniorExecute.run();
+			return;
+		}
 	}
 	self.timer.reset();
 	self.timer.start();
@@ -56,13 +77,15 @@ BattleAIExecute.run=function(){
 BattleAIExecute.prototype.result=function(isWin){
 	var self = this;
 	console.log("result isWin:"+isWin);
+	console.log("self.attackData:",self.attackData);
 	if(isWin){
-		SeigniorExecute.Instance().msgView.add(String.format("{0}攻占了{2}的{3}!",self.attackData.fromCity.seiginor().character().name(),self.attackData.toCity.seiginor().character().name(),self.attackData.toCity.name()));
-		self.attackData.toCity.food(self.attackData.food);
+		SeigniorExecute.Instance().msgView.add(String.format("{0}攻占了{2}的{3}!",self.attackData.fromCity.seignior().character().name(),self.attackData.toCity.seignior().character().name(),self.attackData.toCity.name()));
+		//TODO::城池变换，资源变换
+		/*self.attackData.toCity.food(self.attackData.food);
 		self.attackData.toCity.money(self.attackData.money);
-		self.attackData.toCity.troops(self.attackData.toCity.troops() + self.attackData.troops);
+		self.attackData.toCity.troops(self.attackData.toCity.troops() + self.attackData.troops);*/
 	}else{
-		SeigniorExecute.Instance().msgView.add(String.format("{0}战败了!",self.attackData.fromCity.seiginor().character().name()));
+		SeigniorExecute.Instance().msgView.add(String.format("{0}战败了!",self.attackData.fromCity.seignior().character().name()));
 		
 	}
 };
@@ -71,7 +94,7 @@ BattleAIExecute.prototype._set=function(attackData, targetData){
 	var expeditionCharacterList = [];
 	attackData.expeditionCharacterList.forEach(function(child){
 		child.calculation(true);
-		expeditionCharacterList.push({data:child,belong:Belong.SELF,status:new BattleCharacterStatusView(null,child)});
+		expeditionCharacterList.push({data:child,belong:Belong.SELF,status:new CharacterStatusIconView(null),getTerrain:function(){return {value:1};}});
 	});
 	attackData._characterList = attackData.expeditionCharacterList;
 	attackData.expeditionCharacterList = expeditionCharacterList;
@@ -79,7 +102,7 @@ BattleAIExecute.prototype._set=function(attackData, targetData){
 	expeditionCharacterList = [];
 	targetData.expeditionCharacterList.forEach(function(child){
 		child.calculation(true);
-		expeditionCharacterList.push({data:child,belong:Belong.ENEMY,status:new BattleCharacterStatusView(null,child)});
+		expeditionCharacterList.push({data:child,belong:Belong.ENEMY,status:new CharacterStatusIconView(null),getTerrain:function(){return {value:1};}});
 	});
 	targetData._characterList = targetData.expeditionCharacterList;
 	targetData.expeditionCharacterList = expeditionCharacterList;
@@ -92,22 +115,27 @@ BattleAIExecute.prototype.getTargetCharacters=function(chara){
 };
 BattleAIExecute.prototype.removeChara = function(chara){
 	var self = this;
-	var charaList = self.attackData.expeditionCharacterList[0].seigniorId() == chara.seigniorId() ? self.attackData.expeditionCharacterList : self.targetData.expeditionCharacterList;
+	var charaList = self.attackData.expeditionCharacterList[0].data.seigniorId() == chara.data.seigniorId() ? self.attackData.expeditionCharacterList : self.targetData.expeditionCharacterList;
+	console.log("removeChara "+chara.data.name()+" : " + charaList.length);
 	for(var i=0,l=charaList.length;i<l;i++){
-		if(charaList[i].id() == chara.id()){
+		if(charaList[i].data.id() == chara.data.id()){
 			charaList.splice(i, 1);
 			break;
 		}
 	}
+	console.log("removeChara over : " + charaList.length);
 };
 BattleAIExecute.prototype.characterExec=function(currentCharacter, currentData, enemyData){
 	var self = this;
+	console.log("characterExec:",currentCharacter);
 	var currentCharacters = currentData.expeditionCharacterList;
 	var enemyCharacters = enemyData.expeditionCharacterList;
 	var enemyPants = self.getPantCharacter(enemyCharacters);
 	//有虚弱敌军->攻击
 	if(enemyPants.length > 0 && Math.random() > 0.8){
 		var targetChara = enemyPants[enemyPants.length*Math.random() >>> 0];
+		console.log("有虚弱敌军->攻击:"+currentCharacter.data.name() + " > " + targetChara.data.name());
+		currentCharacter.attackTarget = targetChara;
 		self.attackExec(currentCharacter, targetChara, true);
 		return;
 	}
@@ -116,23 +144,29 @@ BattleAIExecute.prototype.characterExec=function(currentCharacter, currentData, 
 	if(currentPants.length > 0){
 		var targetChara = currentPants[currentPants.length*Math.random() >>> 0];
 		if(self.healExec(currentCharacter, targetChara)){
+			console.log("有虚弱友军->回复:"+currentCharacter.data.name() + " > " + targetChara.data.name());
 			return;
 		}
 	}
 	//有异常状态友军->觉醒
 	if(self.toWake(currentCharacter,currentCharacters)){
+		console.log("有异常状态友军->觉醒");
 		return;
 	}
 	//加状态
 	if(self.useAidStrategy(currentCharacter,currentCharacters,StrategyEffectType.Aid, BattleIntelligentAI.UP_STATUS)){
+		console.log("加状态");
 		return;
 	}
 	//减状态
 	if(self.useAidStrategy(currentCharacter,enemyCharacters,StrategyEffectType.Aid, BattleIntelligentAI.DOWN_STATUS)){
+		console.log("减状态");
 		return;
 	}
 	//攻击
 	var targetChara = enemyCharacters[enemyCharacters.length*Math.random() >>> 0];
+	console.log("攻击:"+currentCharacter.data.name() + " > " + targetChara.data.name());
+	currentCharacter.attackTarget = targetChara;
 	self.attackExec(currentCharacter, targetChara, false);
 };
 BattleAIExecute.prototype.toWake = function(currentCharacter,currentCharacters){
@@ -157,6 +191,7 @@ BattleAIExecute.prototype.toWake = function(currentCharacter,currentCharacters){
 };
 BattleAIExecute.prototype.useHertStrategy = function(chara, target, attack) {
 	var self = this;
+	console.log("chara:"+chara.data.troops() + " -> " + target.data.troops());
 	if((chara.data.currentSoldiers().soldierType() == SoldierType.Physical) || (chara.data.currentSoldiers().soldierType() == SoldierType.Comprehensive && Math.random() < 0.5)){
 		return false;
 	}
@@ -196,6 +231,7 @@ BattleAIExecute.prototype.useHertStrategy = function(chara, target, attack) {
 };
 BattleAIExecute.prototype.useAidStrategy = function(chara, charas, strategyEffectType, strategyFlag) {
 	var self = this;
+	console.error("useAidStrategy",chara);
 	if((chara.data.currentSoldiers().soldierType() == SoldierType.Physical) || (chara.data.currentSoldiers().soldierType() == SoldierType.Comprehensive && Math.random() < 0.5) || Math.random() < 0.8){
 		return false;
 	}
@@ -232,19 +268,43 @@ BattleAIExecute.prototype.attackExec=function(currentCharacter, targetChara, att
 };
 BattleAIExecute.prototype.physicalAttack = function(currentChara, targetChara) {
 	var self = this;
+	console.log("physicalAttack:"+currentChara.data.name() + "("+currentChara.data.troops() + ")->" + targetChara.data.name()+"("+targetChara.data.troops() + ")");
 	var groupSkill;
+	var skill;
 	if(currentChara.herts == null){
-		if(currentChara.id() == self.currentChara.id()){
-			var hertValues;
+		if(currentChara.data.id() == self.currentChara.data.id()){
 			currentChara.herts = [];
 			var hertValue = calculateHertValue(currentChara, targetChara, 1);
-			var skill = currentChara.skill(SkillType.ATTACK);
+			var hertValues = [];
+			skill = currentChara.data.skill(SkillType.ATTACK);
+			var condition = skill ? skill.condition() : null;
+			if(condition){
+				if(condition.type == "AttackType"){
+					if(condition.value != currentChara.data.currentSoldiers().attackType()){
+						skill = null;
+					}
+				}else if(condition.type == "StatusCompare"){
+					var selfValue = currentChara.data[condition.name]();
+					var targetValue = targetChara.data[condition.name]();
+					if((selfValue - targetValue)*condition.value <= 0){
+						skill = null;
+					}
+				}
+			}
 			if(skill && skill.isSubType(SkillSubType.ATTACK_COUNT)){
 				hertValues = skill.attacks();
 			}else{
 				var doubleAtt = calculateDoubleAtt(currentChara, targetChara);
 				hertValues = doubleAtt ? [1,1] : [1];
 			}
+			if(skill && skill.isSubType(SkillSubType.AMBUSH_INVERSE)){
+				//TODO::暂时增加0.1，需计算得出
+				hertValues[0] += 0.1;
+			}
+			if(skill && skill.isSubType(SkillSubType.NO_COUNTER)){
+				targetChara.herts = [];
+			}
+			
 			for(var j=0;j<hertValues.length;j++){
 				var hertParams = new HertParams();
 				var value = hertValue*hertValues[j]>>>0;
@@ -252,8 +312,9 @@ BattleAIExecute.prototype.physicalAttack = function(currentChara, targetChara) {
 				if(skill && skill.isSubType(SkillSubType.ATTACK_RECT)){
 						rangeAttackTarget = skill.rects();
 					}else{
-						rangeAttackTarget = self.chara.data.currentSoldiers().rangeAttackTarget();
+						rangeAttackTarget = currentChara.data.currentSoldiers().rangeAttackTarget();
 				}
+				//TODO::蔓延，穿透等效果暂时未加入
 				var rangeLength = (rangeAttackTarget.length / 4) >>> 0;
 				if(rangeLength){
 					var targetCharas = self.getTargetCharacters(currentChara);
@@ -282,13 +343,24 @@ BattleAIExecute.prototype.physicalAttack = function(currentChara, targetChara) {
 				}
 			}
 			groupSkill = self.battleCanGroupSkill(currentChara, targetChara);
+			currentChara.groupSkill = null;
 			if(groupSkill){
+				currentChara.groupSkill = groupSkill;
+				var hertParamObj = 
 				currentChara.herts[0].value = currentChara.herts[0].value * groupSkill.correctionFactor() >>> 0;
+			}
+			if(skill && skill.isSubType(SkillSubType.SURPRISE)){
+				var amendValue = calculateSkillSurpriseAmend(currentChara, targetChara, skill.attacks());
+				if(amendValue > 1){
+					hertParams.list[0].hertValue = hertParams.list[0].hertValue*amendValue>>>0;
+				}else{
+					skill = null;
+				}
 			}
 		}else{
 			var hertParams = new HertParams();
-			rangeAttackTarget = self.chara.data.currentSoldiers().rangeAttackTarget();
-			hertParams.push(target,calculateHertValue(self.chara, target, 0.75));
+			rangeAttackTarget = self.currentChara.data.currentSoldiers().rangeAttackTarget();
+			hertParams.push(targetChara, calculateHertValue(currentChara, targetChara, 0.75));
 			var rangeLength = (rangeAttackTarget.length / 4) >>> 0;
 			if(rangeLength){
 				var targetCharas = self.getTargetCharacters(currentChara);
@@ -300,20 +372,29 @@ BattleAIExecute.prototype.physicalAttack = function(currentChara, targetChara) {
 					if(targetChara.data.id() == chara.data.id() || currentChara.data.seigniorId() == chara.data.seigniorId()){
 						continue;
 					}
-					hertParams.push(chara,calculateHertValue(self.chara, chara, 0.75));
+					hertParams.push(chara,calculateHertValue(currentChara, chara, 0.75));
 				}
 			}
 			currentChara.herts = [hertParams];
 		}
 	}
-	if(!groupSkill && calculateFatalAtt(currentChara, targetChara)){
-		currentChara.herts[0].value = currentChara.herts[0].value * 1.25 >>> 0;
+	if(!currentChara.groupSkill && calculateFatalAtt(currentChara, targetChara)){
+		var hertParams = currentChara.herts[0];
+		var value = 1.25;
+		if(!skill){
+			skill = currentChara.data.skill(SkillType.ANGRY_ATTACK);
+			if(skill && skill.isSubType(SkillSubType.ATTACK_COUNT)){
+				value = (skill.attacks())[0];
+			}
+		}
+		hertParams.list[0].hertValue = hertParams.list[0].hertValue*value >>> 0;
 	}
-	
+	self.physicalAttackStart(currentChara, targetChara);
 };
 BattleAIExecute.prototype.physicalAttackStart = function(currentChara, targetChara){
 	var self = this;
-	var selfSkill = currentChara.skill(SkillType.ATTACK_END);
+	console.log("physicalAttackStart:",currentChara.herts);
+	var selfSkill = currentChara.data.skill(SkillType.ATTACK_END);
 	if(selfSkill && selfSkill.isSubType(SkillSubType.SELF_AID)){
 		var aids = Array.getRandomArrays(selfSkill.aids(),selfSkill.aidCount());
 		for(var j = 0;aids && j<aids.length;j++){
@@ -326,8 +407,8 @@ BattleAIExecute.prototype.physicalAttackStart = function(currentChara, targetCha
 	for(var i = 0,l = hertParams.list.length;i<l;i++){
 		var obj = hertParams.list[i];
 		var hitrate = calculateHitrate(currentChara,obj.chara);
-		if(hitrate){
-			
+		console.log("命中率 : "+currentChara.data.name() +" - "+obj.chara.data.name() + "="+hitrate);
+		if(!hitrate){
 			continue;
 		}
 		skill = obj.chara.data.skill(SkillType.HERT);
@@ -335,7 +416,8 @@ BattleAIExecute.prototype.physicalAttackStart = function(currentChara, targetCha
 			obj.hertValue *= skill.hert();
 		}
 		obj.chara.hertValue = obj.hertValue > obj.chara.data.troops() ? obj.chara.data.troops() : obj.hertValue;
-		obj.chara.data.troops(-obj.chara.hertValue);
+		obj.chara.data.troops(obj.chara.data.troops() - obj.chara.hertValue);
+		console.log("伤害 : "+(-obj.chara.hertValue)+" 剩余 : "+obj.chara.data.name() + "("+obj.chara.data.troops()+")");
 		if(obj.chara.data.troops() == 0){
 			self.removeChara(obj.chara);
 			continue;
@@ -356,11 +438,13 @@ BattleAIExecute.prototype.physicalAttackStart = function(currentChara, targetCha
 BattleAIExecute.prototype.counterAttack = function(currentChara, targetChara) {
 	var self = this;
 	if(currentChara.herts && currentChara.herts.length > 0){
+		console.log("counterAttack "+currentChara.data.name()+" 双击");
 		self.physicalAttack(currentChara, targetChara);
 		return;
 	}
 	if(currentChara.data.id() == self.currentChara.data.id()){
-		if(currentChara.data.troops() > 0){
+		if(targetChara.data.troops() > 0 && !targetChara.herts){
+			console.log("counterAttack "+targetChara.data.name()+" 反击");
 			self.physicalAttack(targetChara, currentChara);
 			return;
 		}

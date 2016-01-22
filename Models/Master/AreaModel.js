@@ -11,6 +11,8 @@ AreaModel.troopsList = [10000,20000,30000,40000,50000];
 AreaModel.agricultureList = [10000,20000,30000,40000,50000];
 AreaModel.businessList = [10000,20000,30000,40000,50000];
 AreaModel.populationList = [[100000,200000],[100000,200000],[100000,200000],[100000,200000],[100000,200000]];
+AreaModel.defenseList = [1000,2000,3000,4000,5000];
+	
 AreaModel.list = [];
 AreaModel.setArea=function(list){
 	var self = this;
@@ -430,8 +432,8 @@ AreaModel.prototype.cityDefense=function(value){
 	return this._plusData("city_defense",value);
 };
 //TODO::
-AreaModel.prototype.cityMaxDefense=function(value){
-	return this._plusData("city_defense",value);
+AreaModel.prototype.maxCityDefense=function(){
+	return AreaModel.defenseList[this.level()-1];
 };
 AreaModel.prototype.outOfOfficeSum=function(){
 	return this.data.out_of_offices.length;

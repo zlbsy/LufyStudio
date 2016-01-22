@@ -248,6 +248,7 @@ SeigniorExecute.prototype.areasAIRun=function(seigniorModel){
 	var areas = seigniorModel.areas();
 	if(self.areaAIIndex < areas.length){
 		var areaModel = areas[self.areaAIIndex];
+		console.error("*****" + areaModel.name() + "*****");
 		self.areaAIRun(areaModel);
 		return false;
 	}
@@ -331,7 +332,7 @@ SeigniorExecute.prototype.areaAIRun=function(areaModel){
 	}
 	console.log("招兵买马");
 	//修补
-	if(areaModel.cityDefense() < areaModel.cityMaxDefense() && !(
+	if(areaModel.cityDefense() < areaModel.maxCityDefense() && !(
 		needEnlistFlag == AiEnlistFlag.Must || 
 		needEnlistFlag == AiEnlistFlag.Need || 
 		needEnlistFlag == AiEnlistFlag.MustResource || 
@@ -345,7 +346,7 @@ SeigniorExecute.prototype.areaAIRun=function(areaModel){
 	console.log("判断是否有可攻击的城池"+city);
 	if(city){
 		jobAiToBattle(areaModel, self.characters, city);
-		console.log("jobAiToBattle");
+		console.log("战斗中");
 		return;
 	}
 	//TODO::外交

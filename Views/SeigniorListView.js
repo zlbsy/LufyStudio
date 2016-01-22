@@ -31,7 +31,7 @@ SeigniorListView.prototype.updateMap=function(){
 	var index = Math.floor((-self.listLayer.x) / LGlobal.width);
 	self.mapData.bitmapData.copyPixels(self.areaMap,new LRectangle(0,0,self.areaMap.width,self.areaMap.height),new LPoint(0,0));
 	var seigniorModel = SeigniorModel.list[index];
-	var size = 20;
+	var size = 14;
 	var citys = seigniorModel.areas();
 	for(var i=0,l=citys.length;i<l;i++){
 		var city = citys[i];
@@ -64,14 +64,14 @@ SeigniorListView.prototype.mapLayerInit=function(){
 	self.areaMap.draw(bitmapData, matrix);
 	for(var i=0,l=AreaModel.list.length;i<l;i++){
 		var city = AreaModel.list[i];
-		var size = 14;
+		var size = 10;
 		var colorData = new LBitmapData("#ffffff",0,0,size,size,LBitmapData.DATA_CANVAS);
 		self.areaMap.copyPixels(colorData,new LRectangle(0,0,colorData.width,colorData.height),new LPoint(city.position().x*self.mapScaleX,city.position().y*self.mapScaleY));
 	}
 	var seigniors = SeigniorModel.list;
 	for(var i=0,l=seigniors.length;i<l;i++){
 		var seigniorModel = seigniors[i];
-		var size = 14;
+		var size = 10;
 		var citys = seigniorModel.areas();
 		for(var j=0,ll=citys.length;j<ll;j++){
 			var city = citys[j];

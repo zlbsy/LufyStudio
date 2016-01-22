@@ -142,7 +142,11 @@ MenuView.prototype.loadSeigniorExecuteHelper=function(){
 };
 MenuView.prototype.loadSeigniorExecuteLibrary=function(){
 	var self = this;
-	self.load.library(["Battle/HertParams"],self.seigniorExecute);
+	self.load.library(["BattleAIExecute","Battle/HertParams","Battle/BattleIntelligentAI"],self.loadSeigniorExecuteView);
+};
+MenuView.prototype.loadSeigniorExecuteView=function(){
+	var self = this;
+	self.load.view(["Battle/CharacterStatusIcon"],self.seigniorExecute);
 };
 MenuView.prototype.seigniorExecute=function(){
 	var self = this;

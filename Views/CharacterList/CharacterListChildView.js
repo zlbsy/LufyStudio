@@ -180,7 +180,7 @@ CharacterListChildView.prototype.setBasicProperties = function() {
 	layer.graphics.drawRect(0, "#ff0000", [0, 0, LGlobal.width - 200, 50]);
 
 	var seigniorId = self.charaModel.seigniorId();
-	var name = getStrokeLabel( seigniorId>0 ? CharacterModel.getChara(seigniorId).name() : Language.get("nothing"), 18, "#FFFFFF", "#000000", 4);
+	var name = getStrokeLabel( self.charaModel.seigniorName(), 18, "#FFFFFF", "#000000", 4);
 	name.x = 2;
 	name.y = 5;
 	layer.addChild(name);

@@ -225,7 +225,7 @@ CharacterDetailedView.prototype.showStatus=function(){
 	
  	var seigniorId = self.characterModel.seigniorId();
 	var datas = [
-	seigniorId > 0 ? CharacterModel.getChara(seigniorId).name() : Language.get("nothing"),
+	self.characterModel.seigniorName(),
 	self.characterModel.identity(),
 	self.characterModel.city().name(),
 	seigniorId > 0 ? self.characterModel.loyalty() : "--",

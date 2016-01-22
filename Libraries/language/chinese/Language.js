@@ -164,6 +164,8 @@ Language.data = {
 	"win_attack_and_occupy_self":"我军在{0}击退了{1}军的进攻!",
 	"fail_attack_and_occupy_enemy":"我军攻占{0}军的{1}失败了!",
 	"fail_attack_and_occupy_self":"我军的{0}被{1}军攻占了!",
+	"seignor_die_other":"{0}势力灭亡了！！",
+	"seignor_die_self":"{0}势力灭亡了！游戏结束了！",
 	
 	"label_equip":"装备",
 	"label_use":"使用",

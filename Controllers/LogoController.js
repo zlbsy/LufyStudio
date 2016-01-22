@@ -97,7 +97,7 @@ LogoController.prototype.showSingleCombatArena=function(){
 };
 LogoController.prototype.configSingleCombatLoad=function(){
 	var self = this;*/
-	self.load.config(["Event"],self.showSingleCombatArenaMvc);
+	self.load.config(["Event","Strategy","Soldiers"],self.showSingleCombatArenaMvc);
 };
 LogoController.prototype.showSingleCombatArenaMvc=function(){
 	var self = this; 
