@@ -62,19 +62,23 @@ SeigniorListChildView.prototype.onframe=function(event){
 };
 SeigniorListChildView.prototype.set=function(){
 	var self = this;
+	//0,0,220,320
+	var winH = 160;
+	var faceW = 220;
+	var faceH = 320;
 	var faceSize = 100;
 	var character = self.seigniorModel.character();
 	var layer = new LSprite();
 	layer.x = 40;
-	var win = new LPanel(new LBitmapData(LMvc.datalist["win05"]),400,160);
+	var win = new LPanel(new LBitmapData(LMvc.datalist["win05"]),400,winH);
 	layer.addChild(win);
 	var name = getStrokeLabel(character.name(),22,"#000000","#CCCCCC",1);
-	name.x = 10 + (faceSize - name.getWidth()) * 0.5;
+	name.x = 10 + (faceW - name.getWidth()) * 0.5;
 	name.y = 10 + faceSize + 5;
 	win.addChild(name);
 	
 	var city_count_label = getStrokeLabel("城池",20,"#000000","#CCCCCC",1);
-	city_count_label.x = 10 + faceSize + 5;
+	city_count_label.x = 10 + faceW + 5;
 	city_count_label.y = 10;
 	win.addChild(city_count_label);
 	var city_count = getStrokeLabel(self.seigniorModel.areas().length,20,"#000000","#CCCCCC",1);
@@ -83,7 +87,7 @@ SeigniorListChildView.prototype.set=function(){
 	win.addChild(city_count);
 	
 	var general_count_label = getStrokeLabel("武将",20,"#000000","#CCCCCC",1);
-	general_count_label.x = 10 + faceSize + 5;
+	general_count_label.x = 10 + faceW + 5;
 	general_count_label.y = 72;
 	win.addChild(general_count_label);
 	var general_count = getStrokeLabel(self.seigniorModel.generalsCount(),20,"#000000","#CCCCCC",1);
@@ -104,8 +108,8 @@ SeigniorListChildView.prototype.set=function(){
 	layer.cacheAsBitmap(true);
 	self.layer.addChild(layer);
 	
-	var face = character.minFace(faceSize);
+	var face = character.face();
 	face.x = 50;
-	face.y = 10;
+	face.y = winH - faceH;
 	self.layer.addChild(face);
 };

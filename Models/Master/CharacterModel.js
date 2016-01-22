@@ -507,6 +507,9 @@ CharacterModel.prototype.moveTo = function(cityId) {
 		self.data.cityId = self.data.targetCity;
 		self.data.targetCity = null;
 		self.job(Job.IDLE);
+		if(self.id() == area.seigniorCharaId()){
+			area.prefecture(self.id());
+		}
 	}else{
 		self.data.targetCity = cityId;
 		self.job(Job.MOVE);

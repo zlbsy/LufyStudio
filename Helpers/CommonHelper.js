@@ -117,7 +117,8 @@ function appointPrefecture(city){
 		city.prefecture(generals[0].id());
 		return;
 	}
-	var compatibility = city.seignior().compatibility();
+	
+	var compatibility = city.seignior().character().compatibility();
 	generals = generals.sort(function(a,b){
 		var value = b.feat() - a.feat();
 		if(value == 0){

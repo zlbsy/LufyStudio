@@ -306,6 +306,7 @@ BattleResultConfirmView.prototype.captiveCaptive=function(event){
 	var self = event.currentTarget, script;
 	self.controller.battleData.toCity.addCaptives(self.characterModel);
 	self.model.selfCaptive.splice(0, 1);
+	self.characterModel.job(Job.END);
 	self.parent.dispatchEvent(BattleResultEvent.CLOSE_CAPTIVE);
 };
 BattleResultConfirmView.prototype.captiveRelease=function(event){
