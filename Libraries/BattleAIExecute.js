@@ -78,12 +78,29 @@ BattleAIExecute.prototype.result=function(isWin){
 	var self = this;
 	console.log("result isWin:"+isWin);
 	console.log("self.attackData:",self.attackData);
+	var fromCity = self.attackData.fromCity;
+	var toCity = self.attackData.toCity;
+	var fromSeignior = fromCity.seignior();
 	if(isWin){
-		SeigniorExecute.Instance().msgView.add(String.format("{0}攻占了{2}的{3}!",self.attackData.fromCity.seignior().character().name(),self.attackData.toCity.seignior().character().name(),self.attackData.toCity.name()));
+		SeigniorExecute.addMessage(String.format("{0}攻占了{2}的{3}!",fromSeignior.character().name(),toCity.seignior().character().name(),toCity.name()));
+		var winSeigniorId = fromSeignior.seignior().chara_id();
+		var failSeigniorId = toCity.seignior().chara_id();
+		retreatCity = battleFailChangeCity(battleData, failSeigniorId);
+		var retreatCityId = 0;
+		if(retreatCity){
+			retreatCityId = retreatCity.id();
+			battleExpeditionMove(toCity, retreatCity);
+		}
+		battleCityChange(winSeigniorId,
+		failSeigniorId, 
+		retreatCityId, 
+		self.attackData.captives, 
+		expeditionEnemyCharacterList,
+		LMvc.BattleController);
 		//TODO::城池变换，资源变换
-		/*self.attackData.toCity.food(self.attackData.food);
+		self.attackData.toCity.food(self.attackData.food);
 		self.attackData.toCity.money(self.attackData.money);
-		self.attackData.toCity.troops(self.attackData.toCity.troops() + self.attackData.troops);*/
+		self.attackData.toCity.troops(self.attackData.toCity.troops() + self.attackData.troops);
 	}else{
 		SeigniorExecute.Instance().msgView.add(String.format("{0}战败了!",self.attackData.fromCity.seignior().character().name()));
 		

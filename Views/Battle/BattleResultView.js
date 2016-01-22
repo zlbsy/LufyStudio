@@ -27,6 +27,12 @@ function BattleResultView(controller, result){
 BattleResultView.prototype.selfChangeCity=function(){
 	var self = this;
 	var battleData = self.controller.battleData;
+	self.retreatCity = battleFailChangeCity(battleData, self.failSeigniorId);
+	if(self.retreatCity){
+		self.retreatCityId = self.retreatCity.id();
+		battleExpeditionMove(battleData.toCity, self.retreatCity);
+	}
+	/*
 	var city = battleData.toCity;
 	var neighbors = city.neighbor();
 	var enemyCitys = [];
@@ -51,7 +57,7 @@ BattleResultView.prototype.selfChangeCity=function(){
 	if(self.retreatCity){
 		self.retreatCityId = self.retreatCity.id();
 		battleExpeditionMove(city, self.retreatCity);
-	}
+	}*/
 };
 BattleResultView.prototype.winInit=function(){
 	var self = this;
@@ -64,7 +70,7 @@ BattleResultView.prototype.winInit=function(){
 		if(city.seigniorCharaId() > 0 && city.generalsSum() > self.model.selfCaptive.length){
 			self.selfChangeCity();
 		}
-		battleCityChange(self.winSeigniorId, self.failSeigniorId, self.retreatCityId, self.model.selfCaptive, battleData.expeditionCharacterList);
+		battleCityChange(self.winSeigniorId, self.failSeigniorId, self.retreatCityId, self.model.selfCaptive, battleData.expeditionCharacterList, LMvc.BattleController);
 		//敌方太守
 		if(self.retreatCity){
 			var enemyCharas = getDefenseEnemiesFromCity(self.retreatCity);

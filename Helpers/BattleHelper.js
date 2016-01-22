@@ -491,10 +491,9 @@ function battleExpeditionMove(city, retreatCity){
 /*
  * 战斗后移动到指定城池
  */
-function battleCityChange(winSeigniorId, failSeigniorId, retreatCityId, captiveList, expeditionList){
-	var battleData = LMvc.BattleController.battleData;
+function battleCityChange(winSeigniorId, failSeigniorId, retreatCityId, captiveList, expeditionList, controller){
+	var battleData = controller.battleData;
 	var city = battleData.toCity;
-	var model = LMvc.BattleController.model;
 	var generals = city.generals();
 	var moveCharas = generals.slice();
 	if(retreatCityId){
@@ -509,7 +508,13 @@ function battleCityChange(winSeigniorId, failSeigniorId, retreatCityId, captiveL
 	}else{
 		console.log("无撤退城市");
 		var generals = battleData.toCity.generals();
-		var captives = winSeigniorId == LMvc.selectSeignorId ? model.selfCaptive : model.enemyCaptive;
+		var captives;
+		if(LMvc.BattleController){
+			var model = controller.model;
+			captives = winSeigniorId == LMvc.selectSeignorId ? model.selfCaptive : model.enemyCaptive;
+		}else{
+			captives = controller.captives;
+		}
 		for(var i=0,l=generals.length;i<l;i++){
 			var child = generals[i];
 			if(captives.indexOf(child.id())>=0){
@@ -517,7 +522,7 @@ function battleCityChange(winSeigniorId, failSeigniorId, retreatCityId, captiveL
 			}
 			captives.push(child.id());
 		}
-		console.log("全员被俘虏 : " + model.selfCaptive);
+		console.log("全员被俘虏 : " + captives);
 	}
 	//generals.splice(0, generals.length);
 	if(failSeigniorId){
@@ -538,6 +543,32 @@ function battleCityChange(winSeigniorId, failSeigniorId, retreatCityId, captiveL
 		chara.moveTo();
 	}
 };
+/*战斗失败,撤退城池搜索及处理*/
+function battleFailChangeCity(battleData, failSeigniorId){
+	var city = battleData.toCity;
+	var neighbors = city.neighbor();
+	var enemyCitys = [];
+	var canMoveCitys = [];
+	for(var i = 0; i < neighbors.length; i++){
+		var child = AreaModel.getArea(neighbors[i]);
+		if(child.seigniorCharaId() == failSeigniorId){
+			enemyCitys.push(child);
+		}else if(child.seigniorCharaId() == 0){
+			canMoveCitys.push(child);
+		}
+	}
+	var retreatCity = null;
+	if(enemyCitys.length > 0){
+		retreatCity = enemyCitys[enemyCitys.length*Math.random() >>> 0];
+	}else if(canMoveCitys.length > 0){
+		retreatCity = canMoveCitys[canMoveCitys.length*Math.random() >>> 0];
+		var seignior = SeigniorModel.getSeignior(failSeigniorId);
+		seignior.addCity(retreatCity);
+		retreatCity.seigniorCharaId(failSeigniorId);
+	}
+	return retreatCity;
+};
+/*经验转换成功绩*/
 function experienceToFeat(characterModels){
 	if(characterModels.length == 0){
 		return;
