@@ -118,7 +118,7 @@ BuildBarrackView.prototype.showBuild=function(event){
 		self.load = new LMvcLoader(self);
 	}
 	if(event.characterListType == CharacterListType.EXPEDITION){
-		self.controller.loadCharacterList(CharacterListType.SELECT_LEADER,self);
+		self.controller.loadCharacterList(CharacterListType.SELECT_LEADER, self.controller.getValue("expeditionCharacterList"), true);
 	}else if(event.characterListType == CharacterListType.SELECT_LEADER){
 		if(SeigniorExecute.running){
 			var data = {};
@@ -145,7 +145,7 @@ BuildBarrackView.prototype.expeditionCancel=function(event){
 	var self = windowLayer.parent;
 	windowLayer.remove();
 	//self.menuLayer.visible = true;
-	self.controller.loadCharacterList(CharacterListType.SELECT_LEADER,self);
+	self.controller.loadCharacterList(CharacterListType.SELECT_LEADER, self.controller.getValue("expeditionCharacterList"), true);
 
 };
 BuildBarrackView.prototype.expeditionReadyComplete=function(event){

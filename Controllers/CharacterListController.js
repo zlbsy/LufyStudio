@@ -1,8 +1,9 @@
-function CharacterListController(characterListType,fromController, characterList){
+function CharacterListController(characterListType, fromController,  characterList, isOnlyOne){
 	var self = this;
 	self.characterListType = characterListType;
 	self.fromController = fromController;
 	self.characterList = characterList;
+	self.isOnlyOne = isOnlyOne;
 	base(self,MyController,[]);
 }
 CharacterListController.prototype.construct=function(){

@@ -56,6 +56,7 @@ SeigniorExecute.removeSeignior=function(seigniorId){
 	});
 	if(index < self.seigniorIndex){
 		self.seigniorIndex -= 1;
+		self.seigniors.shift();
 	}
 };
 SeigniorExecute.run=function(){
@@ -93,7 +94,7 @@ SeigniorExecute.run=function(){
 			return;
 		}
 		if(self.seigniors.indexOf(self.seigniorIndex) < 0){
-			SeigniorExecute.Instance().msgView.setSeignior(seigniorModel.chara_id());
+			self.msgView.setSeignior(seigniorModel.chara_id());
 			self.seigniors.push(self.seigniorIndex);
 			self.msgView.add(seigniorModel.character().name() + "势力行动!");
 			/*if(seigniorModel.chara_id() != LMvc.selectSeignorId){
@@ -122,6 +123,7 @@ SeigniorExecute.run=function(){
 		return child.constructor.name == "LButton";
 	});
 	buttonClose.visible = true;
+	self.msgView.clearSeignior();
 };
 SeigniorExecute.prototype.areaRun=function(area){
 	var self = this;
@@ -241,7 +243,7 @@ SeigniorExecute.prototype.areasRun=function(seigniorModel){
 	var areas = seigniorModel.areas();
 	if(self.areaIndex < areas.length){
 		var areaModel = areas[self.areaIndex];
-		SeigniorExecute.Instance().msgView.setSeigniorProcess(self.areaIndex);
+		self.msgView.setSeigniorProcess(self.areaIndex);
 		self.areaRun(areaModel);
 		return;
 	}

@@ -48,6 +48,19 @@ CharacterListChildView.prototype.onClick = function(event) {
 		return;
 	}
 	if(self.checkbox && event.offsetX < 70){
+		console.log("isOnlyOne="+self.controller.isOnlyOne);
+		if(self.controller.isOnlyOne){
+			var items = listView.getItems();
+			for(var i=0,l=items.length;i<l;i++){
+				var item = items[i];
+				if(!item.checkbox.checked){
+					continue;
+				}
+				item.checkbox.setChecked(false);
+				item.cacheAsBitmap(false);
+				item.updateView();
+			}
+		}
 		self.checkbox.setChecked(!self.checkbox.checked);
 		self.cacheAsBitmap(false);
 		self.updateView();
@@ -65,26 +78,6 @@ CharacterListChildView.prototype.onClick = function(event) {
 	}
 	self.parentView.showCharacterDetailed(self.character?self.character:self.charaModel);
 };
-/*CharacterListChildView.prototype.hitTestPoint = function(offsetX,offsetY) {
-	var self = this;return;
-	if(self.alpha < 1){
-		return false;
-	}
-	if(self.controller.characterListType == CharacterListType.EXPEDITION && self.armProperties.visible){
-		if(offsetX > 370){
-			var characterExpedition = new CharacterExpeditionView(self.controller, self.charaModel);
-			var obj = {title:Language.get("distribute"),subWindow:characterExpedition,width:400,height:320,okEvent:self.updateArmProperties.bind(self),cancelEvent:null};//分配
-			var windowLayer = ConfirmWindow(obj);
-			self.controller.view.addChild(windowLayer);
-			return false;
-		}
-	}
-	var hit = self.callParent("hitTestPoint",arguments);
-	if(self.checkbox){
-		return hit && !self.checkbox.hitTestPoint(offsetX,offsetY);
-	}
-	return hit;
-};*/
 CharacterListChildView.prototype.updateArmProperties = function(event) {
 	var self = this;
 	var windowLayer = event.currentTarget.parent;

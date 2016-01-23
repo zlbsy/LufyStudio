@@ -43,9 +43,14 @@ MessageView.prototype.init = function(){
 	var win = new LPanel(new LBitmapData(LMvc.datalist["win05"]),LGlobal.width,faceH);
 	win.cacheAsBitmap(true);
 	self.addChild(win);
+	self.seigniorBackground = win;
 	self.seigniorLayer = new LSprite();
 	self.addChild(self.seigniorLayer);
-	
+};
+MessageView.prototype.clearSeignior = function(){
+	var self = this;
+	self.removeChild(self.seigniorBackground);
+	self.removeChild(self.seigniorLayer);
 };
 MessageView.prototype.setSeignior = function(seigniorId){
 	var self = this;

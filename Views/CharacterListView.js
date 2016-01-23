@@ -66,6 +66,7 @@ CharacterListView.prototype.listInit=function(){
 	self.listLayer.addChild(self.contentLayer);
 	
 	title.text = Language.get(self.controller.characterListType);
+	self.dataList = self.controller.characterList;
 	var buttonLabel = null, showMoney = false;
 	switch(self.controller.characterListType){
 		case CharacterListType.TEST:
@@ -81,7 +82,6 @@ CharacterListView.prototype.listInit=function(){
 			break;
 		case CharacterListType.SELECT_LEADER:
 			buttonLabel = "execute";
-			self.dataList = self.controller.fromController.getValue("expeditionCharacterList");
 			Toast.makeText(Language.get("dialog_expedition_select_leader")).show();
 			break;
 		case CharacterListType.CAPTIVE:

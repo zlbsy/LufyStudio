@@ -3,11 +3,21 @@ function OpenCharacterListController(){
 	base(self,MyController,[]);
 }
 OpenCharacterListController.prototype.construct=function(){};
-OpenCharacterListController.prototype.loadCharacterList = function(type, characterList){
+OpenCharacterListController.prototype.loadCharacterList = function(type, characterList, isOnlyOne, toast, buttonLabel, showMoney){
 	var self = this;
 	LMvc.keepLoading(true);
 	LMvc.changeLoading(TranslucentLoading);
+	self.params = {};
+	self.params.characterListType = type;
+	self.params.isOnlyOne = isOnlyOne;
+	self.params.toast = toast;
+	self.params.buttonLabel = buttonLabel;
+	
 	self.characterListType = type;
+	if(isOnlyOne){
+		self.isOnlyOne = true;
+	}
+	console.log("self.isOnlyOne="+self.isOnlyOne);
 	if(Array.isArray(characterList)){
 		self.characterList = characterList;
 	}
@@ -15,8 +25,9 @@ OpenCharacterListController.prototype.loadCharacterList = function(type, charact
 };
 OpenCharacterListController.prototype.showCharacterList=function(){
 	var self = this;
-	var characterList = new CharacterListController(self.characterListType,self,self.characterList);
+	var characterList = new CharacterListController(self.characterListType,self,self.characterList, self.isOnlyOne);
 	self.characterList = null;
+	self.isOnlyOne = false;
 	self.view.addCharacterListView(characterList.view);
 	self.dispatchEvent(CharacterListEvent.SHOW);
 };
