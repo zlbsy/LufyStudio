@@ -83,9 +83,9 @@ BattleAIExecute.prototype.result=function(isWin){
 	var fromSeignior = fromCity.seignior();
 	if(isWin){
 		SeigniorExecute.addMessage(String.format("{0}攻占了{2}的{3}!",fromSeignior.character().name(),toCity.seignior().character().name(),toCity.name()));
-		var winSeigniorId = fromSeignior.seignior().chara_id();
+		var winSeigniorId = fromSeignior.chara_id();
 		var failSeigniorId = toCity.seignior().chara_id();
-		retreatCity = battleFailChangeCity(battleData, failSeigniorId);
+		retreatCity = battleFailChangeCity(toCity, failSeigniorId);
 		var retreatCityId = 0;
 		if(retreatCity){
 			retreatCityId = retreatCity.id();
@@ -94,13 +94,14 @@ BattleAIExecute.prototype.result=function(isWin){
 		battleCityChange(winSeigniorId,
 		failSeigniorId, 
 		retreatCityId, 
-		self.attackData.captives, 
-		expeditionEnemyCharacterList,
-		LMvc.BattleController);
+		self.attackData._characterList,
+		toCity,
+		self.attackData.captives);
 		//TODO::城池变换，资源变换
-		self.attackData.toCity.food(self.attackData.food);
-		self.attackData.toCity.money(self.attackData.money);
-		self.attackData.toCity.troops(self.attackData.toCity.troops() + self.attackData.troops);
+		toCity.food(self.attackData.food);
+		toCity.money(self.attackData.money);
+		toCity.troops(toCity.troops() + self.attackData.troops);
+		LMvc.MapController.view.resetAreaIcon(toCity.id());
 	}else{
 		SeigniorExecute.Instance().msgView.add(String.format("{0}战败了!",self.attackData.fromCity.seignior().character().name()));
 		
@@ -113,6 +114,7 @@ BattleAIExecute.prototype._set=function(attackData, targetData){
 		child.calculation(true);
 		expeditionCharacterList.push({data:child,belong:Belong.SELF,status:new CharacterStatusIconView(null),getTerrain:function(){return {value:1};}});
 	});
+	attackData.captives = [];
 	attackData._characterList = attackData.expeditionCharacterList;
 	attackData.expeditionCharacterList = expeditionCharacterList;
 	self.attackData = attackData;
@@ -121,6 +123,7 @@ BattleAIExecute.prototype._set=function(attackData, targetData){
 		child.calculation(true);
 		expeditionCharacterList.push({data:child,belong:Belong.ENEMY,status:new CharacterStatusIconView(null),getTerrain:function(){return {value:1};}});
 	});
+	targetData.captives = [];
 	targetData._characterList = targetData.expeditionCharacterList;
 	targetData.expeditionCharacterList = expeditionCharacterList;
 	self.targetData = targetData;

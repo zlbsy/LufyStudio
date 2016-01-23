@@ -491,15 +491,24 @@ function battleExpeditionMove(city, retreatCity){
 /*
  * 战斗后移动到指定城池
  */
-function battleCityChange(winSeigniorId, failSeigniorId, retreatCityId, captiveList, expeditionList, controller){
-	var battleData = controller.battleData;
-	var city = battleData.toCity;
+function battleCityChange(winSeigniorId, failSeigniorId, retreatCityId, expeditionList, city, captives){
+	//var battleData = controller.battleData;
+	//var city = battleData.toCity;
 	var generals = city.generals();
 	var moveCharas = generals.slice();
+	/*
+	var captives;
+	if(LMvc.BattleController){
+		var model = controller.model;
+		captives = winSeigniorId == LMvc.selectSeignorId ? model.selfCaptive : model.enemyCaptive;
+	}else{
+		captives = controller.captives;
+	}
+	*/
 	if(retreatCityId){
 		for(var i=0,l=moveCharas.length;i<l;i++){
 			var chara = moveCharas[i];
-			if(captiveList.find(function(child){return child == chara.id();})){
+			if(captives.find(function(child){return child == chara.id();})){
 				continue;
 			}
 			chara.moveTo(retreatCityId);
@@ -507,14 +516,7 @@ function battleCityChange(winSeigniorId, failSeigniorId, retreatCityId, captiveL
 		}
 	}else{
 		console.log("无撤退城市");
-		var generals = battleData.toCity.generals();
-		var captives;
-		if(LMvc.BattleController){
-			var model = controller.model;
-			captives = winSeigniorId == LMvc.selectSeignorId ? model.selfCaptive : model.enemyCaptive;
-		}else{
-			captives = controller.captives;
-		}
+		var generals = city.generals();
 		for(var i=0,l=generals.length;i<l;i++){
 			var child = generals[i];
 			if(captives.indexOf(child.id())>=0){
@@ -544,8 +546,8 @@ function battleCityChange(winSeigniorId, failSeigniorId, retreatCityId, captiveL
 	}
 };
 /*战斗失败,撤退城池搜索及处理*/
-function battleFailChangeCity(battleData, failSeigniorId){
-	var city = battleData.toCity;
+function battleFailChangeCity(city, failSeigniorId){
+	//var city = battleData.toCity;
 	var neighbors = city.neighbor();
 	var enemyCitys = [];
 	var canMoveCitys = [];

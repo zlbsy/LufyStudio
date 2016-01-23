@@ -142,7 +142,7 @@ BattleResultConfirmView.prototype.citySelected=function(event){
 		//战斗失败后资源移动
 		battleExpeditionMove(city, self.retreatCity);
 	}
-	battleCityChange(self.winSeigniorId, self.failSeigniorId, self.retreatCityId, self.model.enemyCaptive,  self.controller.battleData.expeditionEnemyCharacterList,LMvc.BattleController);
+	battleCityChange(self.winSeigniorId, self.failSeigniorId, self.retreatCityId,  battleData.expeditionEnemyCharacterList, battleData.toCity, self.model.enemyCaptive);
 	if(!self.retreatCityId){
 		//无相邻可以撤退
 		var seignior = SeigniorModel.getSeignior(self.failSeigniorId);
