@@ -6,6 +6,9 @@ function PerishView(controller,charaId){
 }
 PerishView.prototype.set = function(charaId){
 	var self = this;
+	if(SeigniorExecute.running){
+		SeigniorExecute.Instance().msgView.visible = false;
+	}
 	var faceW = 224, faceH = 336;
 	var winW = 320, winH = faceH + 120;
 	var layer = new LSprite();
@@ -46,7 +49,13 @@ PerishView.prototype.removeSelf = function(event){
 		console.log("Game Over");
 	}else{
 		self.remove();
-		LMvc.MapController.checkSeigniorWin();
+		console.error("SeigniorExecute.running = " + SeigniorExecute.running);
+		if(SeigniorExecute.running){
+			SeigniorExecute.Instance().msgView.visible = true;
+			SeigniorExecute.run();
+		}else{
+			LMvc.MapController.checkSeigniorWin();
+		}
 	}
 };
 PerishView.prototype.faceLoadOver = function(event){

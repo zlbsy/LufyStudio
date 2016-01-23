@@ -67,7 +67,7 @@ BattleAIExecute.run=function(){
 			return;
 		}else if(targetCharacters.length==0){
 			self.result(true);
-			SeigniorExecute.run();
+			//SeigniorExecute.run();
 			return;
 		}
 	}
@@ -81,10 +81,13 @@ BattleAIExecute.prototype.result=function(isWin){
 	var fromCity = self.attackData.fromCity;
 	var toCity = self.attackData.toCity;
 	var fromSeignior = fromCity.seignior();
+	SeigniorExecute.Instance().stop = false;
 	if(isWin){
-		SeigniorExecute.addMessage(String.format("{0}攻占了{2}的{3}!",fromSeignior.character().name(),toCity.seignior().character().name(),toCity.name()));
+		//{0}攻占了{1}军的{2}!
+		SeigniorExecute.addMessage(String.format(Language.get("win_attack_and_occupy_enemy"),fromSeignior.character().name(),toCity.seignior().character().name(),toCity.name()));
 		var winSeigniorId = fromSeignior.chara_id();
 		var failSeigniorId = toCity.seignior().chara_id();
+		var leaderId = self.attackData._characterList[0].id();
 		retreatCity = battleFailChangeCity(toCity, failSeigniorId);
 		var retreatCityId = 0;
 		if(retreatCity){
@@ -97,13 +100,20 @@ BattleAIExecute.prototype.result=function(isWin){
 		self.attackData._characterList,
 		toCity,
 		self.attackData.captives);
-		//TODO::城池变换，资源变换
+		
 		toCity.food(self.attackData.food);
 		toCity.money(self.attackData.money);
 		toCity.troops(toCity.troops() + self.attackData.troops);
+		
+		captivesAutomatedProcessing(self.attackData.captives, leaderId, retreatCityId, toCity, fromCity);//处理俘虏
+		battleChangeCharactersStatus(winSeigniorId, fromCity, self.attackData._characterList);//战斗结束后武将状态转换，以及出战城池太守任命
+		
 		LMvc.MapController.view.resetAreaIcon(toCity.id());
+		LMvc.MapController.checkSeigniorFail(failSeigniorId);
 	}else{
-		SeigniorExecute.Instance().msgView.add(String.format("{0}战败了!",self.attackData.fromCity.seignior().character().name()));
+		//{0}攻占{1}军的{2}失败了!
+		SeigniorExecute.addMessage(String.format(Language.get("fail_attack_and_occupy_enemy"),fromSeignior.character().name(),toCity.seignior().character().name(),toCity.name()));
+		//SeigniorExecute.Instance().msgView.add(String.format("{0}战败了!",self.attackData.fromCity.seignior().character().name()));
 		
 	}
 };

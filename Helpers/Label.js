@@ -1,6 +1,10 @@
 function getStrokeLabel(txt,size,color,lineColor,lineWidth,type){
 	var label = new LTextField();
-	label.text = txt;
+	if(type == "htmlText"){
+		label.htmlText = txt;
+	}else{
+		label.text = txt;
+	}
 	label.size = size;
 	label.color = color;
 	label.lineColor = lineColor;

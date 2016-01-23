@@ -118,9 +118,15 @@ MapController.prototype.checkSeigniorChange=function(seigniorId){
 			self.loadCharacterList(CharacterListType.SELECT_MONARCH,seignior.generals());
 		}else{
 			monarchChange(seigniorId);
+			if(SeigniorExecute.running){
+				SeigniorExecute.run();
+			}
 		}
 	}else{
 		console.log("checkSeigniorIsDie false");
+		if(SeigniorExecute.running){
+			SeigniorExecute.run();
+		}
 	}
 };
 MapController.prototype.checkSeigniorFail=function(seigniorId){
@@ -133,6 +139,9 @@ MapController.prototype.checkSeigniorFail=function(seigniorId){
 	}
 	self.removeSeigniorId = seigniorId;
 	SeigniorModel.removeSeignior(seigniorId);
+	if(SeigniorExecute.running){
+		SeigniorExecute.removeSeignior(seigniorId);
+	}
 	self.load.view(["Seignior/Perish"],self.seigniorPerish);
 };
 MapController.prototype.seigniorPerish=function(){
@@ -140,7 +149,7 @@ MapController.prototype.seigniorPerish=function(){
 	var charaId = self.removeSeigniorId;
 	self.removeSeigniorId = null;
 	var perishView = new PerishView(self,charaId);
-	self.view.addChild(perishView);
+	LMvc.layer.addChild(perishView);
 };
 MapController.prototype.checkSeigniorWin=function(){
 	var self = this;

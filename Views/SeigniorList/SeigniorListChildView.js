@@ -87,7 +87,7 @@ SeigniorListChildView.prototype.set=function(){
 	colorSprite.y = 84;
 	win.addChild(colorSprite);
 	
-	var city_count_label = getStrokeLabel("城池",20,"#000000","#CCCCCC",1);
+	var city_count_label = getStrokeLabel(Language.get("city"),20,"#000000","#CCCCCC",1);
 	city_count_label.x = 320;
 	city_count_label.y = 20;
 	win.addChild(city_count_label);
@@ -96,7 +96,7 @@ SeigniorListChildView.prototype.set=function(){
 	city_count.y = 47;
 	win.addChild(city_count);
 	
-	var general_count_label = getStrokeLabel("武将",20,"#000000","#CCCCCC",1);
+	var general_count_label = getStrokeLabel(Language.get("generals"),20,"#000000","#CCCCCC",1);
 	general_count_label.x = 320;
 	general_count_label.y = 82;
 	win.addChild(general_count_label);

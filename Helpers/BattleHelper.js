@@ -607,3 +607,52 @@ function experienceToFeat(characterModels){
 	}
 	return datas;
 }
+/*战斗结束后武将状态转换，以及出战城池太守任命*/
+function battleChangeCharactersStatus(winSeigniorId, fromCity, characters){
+	for(var i=0,l=characters.length;i<l;i++){
+		characters[i].job(Job.END);
+	}
+	if(winSeigniorId == fromCity.seigniorCharaId()){
+		var prefectureChara = CharacterModel.getChara(fromCity.prefecture());
+		if(prefectureChara.cityId() != fromCity.id()){
+			appointPrefecture(fromCity);
+		}
+	}
+}
+/*俘虏自动化处理AI(一个)*/
+function captiveAutomatedProcessing(characterModel, leaderId, retreatCityId, toCity, fromCity){
+	var message;
+	var seigniorId = toCity.seigniorCharaId();
+	var isSeignior = characterModel.id() == characterModel.seigniorId();
+	if(!isSeignior && calculateHitrateSurrender(seigniorId, characterModel)){//投降
+		generalSurrender(characterModel, toCity);
+		message = String.format(Language.get("surrender_dialog_msg"), characterModel.name());//{0}投降了敌军!
+	}else if(calculateHitrateBehead(leaderId, characterModel)){//斩首
+		message = String.format(Language.get("beheaded_dialog_msg"), characterModel.name());//{0}被敌军斩首了!
+		characterModel.toDie();
+	}else if(isSeignior || calculateHitrateRelease(leaderId, characterModel)){//释放
+		if(retreatCityId){
+			if(characterModel.cityId() != retreatCityId){
+				characterModel.moveTo(retreatCityId);
+				characterModel.moveTo();
+			}
+			message = String.format(Language.get("released_dialog_msg"), characterModel.name());//{0}被敌军释放了!
+		}else{
+			characterModel.toOutOfOffice();
+			message = String.format(Language.get("shimono_dialog_msg"), characterModel.name());//{0}下野了!
+		}
+	}else{//俘虏
+		toCity.addCaptives(characterModel);
+		message = String.format(Language.get("captived_dialog_msg"), characterModel.name());//{0}被敌军俘虏了!
+	}
+	console.log("俘虏自动化处理",message);
+	return message;
+}
+/*俘虏自动化处理AI(多个)*/
+function captivesAutomatedProcessing(captives, leaderId, retreatCityId, toCity, fromCity){
+	for(var i=0,l=captives.length;i<l;i++){
+		var characterId = captives[i];
+		var characterModel = CharacterModel.getChara(characterId);
+		captiveAutomatedProcessing(characterModel, leaderId, retreatCityId, toCity, fromCity);
+	}
+}

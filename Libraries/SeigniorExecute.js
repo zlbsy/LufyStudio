@@ -20,6 +20,7 @@ SeigniorExecute.close = function(event){
 		return;
 	}
 	SeigniorExecute.Instance().maskHide();
+	LMvc.MapController.view.ctrlLayer.visible = true;
 };
 SeigniorExecute.getSaveData = function(){
 	if(!SeigniorExecute.running){
@@ -47,6 +48,15 @@ SeigniorExecute.setSaveData = function(data){
 	self.stop = self.stop;
 	self.seigniors = self.seigniors;
 	self.citys = self.citys;
+};
+SeigniorExecute.removeSeignior=function(seigniorId){
+	var self = SeigniorExecute.Instance();
+	var index = SeigniorModel.list.findIndex(function(seigniorModel){
+		return seigniorModel.chara_id() == seigniorId;
+	});
+	if(index < self.seigniorIndex){
+		self.seigniorIndex -= 1;
+	}
 };
 SeigniorExecute.run=function(){
 	var self = SeigniorExecute.Instance();
@@ -83,6 +93,7 @@ SeigniorExecute.run=function(){
 			return;
 		}
 		if(self.seigniors.indexOf(self.seigniorIndex) < 0){
+			SeigniorExecute.Instance().msgView.setSeignior(seigniorModel.chara_id());
 			self.seigniors.push(self.seigniorIndex);
 			self.msgView.add(seigniorModel.character().name() + "势力行动!");
 			if(seigniorModel.chara_id() != LMvc.selectSeignorId){
@@ -106,11 +117,10 @@ SeigniorExecute.run=function(){
 	self.seigniorIndex = 0;
 	self.areaIndex = 0;
 	SeigniorExecute.running = false;
-	var buttonOK = self.backLayer.childList.find(function(child){
+	var buttonClose = self.backLayer.childList.find(function(child){
 		return child.constructor.name == "LButton";
 	});
-	buttonOK.alpha = 1;
-	buttonOK.staticMode = false;
+	buttonClose.visible = true;
 };
 SeigniorExecute.prototype.areaRun=function(area){
 	var self = this;
@@ -230,7 +240,7 @@ SeigniorExecute.prototype.areasRun=function(seigniorModel){
 	var areas = seigniorModel.areas();
 	if(self.areaIndex < areas.length){
 		var areaModel = areas[self.areaIndex];
-		
+		SeigniorExecute.Instance().msgView.setSeigniorProcess(self.areaIndex);
 		self.areaRun(areaModel);
 		return;
 	}
@@ -431,18 +441,21 @@ SeigniorExecute.prototype.maskShow=function(){
 	}
 	console.log("SeigniorExecute.prototype.maskShow");
 	var maskLayer = getTranslucentMask();
+	maskLayer.alpha = 0.01;
 	self.backLayer = new LSprite();
 	self.backLayer.addChild(maskLayer);
 	self.msgView = new MessageView();
 	self.backLayer.addChild(self.msgView);
-	var buttonOK = getButton(Language.get("OK"),200);
-	buttonOK.alpha = 0.5;
-	buttonOK.staticMode = true;
-	buttonOK.x = (self.msgView.getWidth() - 200) * 0.5;
-	buttonOK.y = self.msgView.getHeight();
-	self.backLayer.addChild(buttonOK);
-	buttonOK.addEventListener(LMouseEvent.MOUSE_UP, SeigniorExecute.close);
 	LMvc.MapController.view.parent.addChild(self.backLayer);
+	
+	var bitmapClose = new LBitmap(new LBitmapData(LMvc.datalist["close"]));
+	var buttonClose = new LButton(bitmapClose);
+	buttonClose.x = LGlobal.width - bitmapClose.getWidth() - 5;
+	buttonClose.y = self.msgView.panelY - bitmapClose.getHeight();
+	self.backLayer.addChild(buttonClose);
+	buttonClose.addEventListener(LMouseEvent.MOUSE_UP, SeigniorExecute.close);
+	buttonClose.visible = false;
+	LMvc.MapController.view.ctrlLayer.visible = false;
 };
 SeigniorExecute.prototype.maskHide=function(){
 	var self = this;

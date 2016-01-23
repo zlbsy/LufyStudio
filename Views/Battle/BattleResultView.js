@@ -181,10 +181,10 @@ BattleResultView.prototype.cityWin=function(event){
 	var cityName = battleData.toCity.name();
 	if(battleData.fromCity.seigniorCharaId() == LMvc.selectSeignorId){
 		if(!self.failSeigniorId){
-			message = String.format(Language.get("win_attack_and_occupy_null"),cityName);//我军攻占了{0}!
+			message = String.format(Language.get("win_attack_and_occupy_null"),Language.get("belong_self"),cityName);//{0}攻占了{1}!
 		}else{
 			var seignior = CharacterModel.getChara(self.failSeigniorId);
-			message = String.format(Language.get("win_attack_and_occupy_enemy"),seignior.name(),cityName);//我军攻占了{0}军的{1}!
+			message = String.format(Language.get("win_attack_and_occupy_enemy"),Language.get("belong_self"),seignior.name(),cityName);//{0}攻占了{1}军的{2}!
 		}
 		battleData.toCity.food(battleData.food);
 		battleData.toCity.money(battleData.money);
@@ -214,7 +214,7 @@ BattleResultView.prototype.cityFail=function(event){
 	var battleData = self.controller.battleData;
 	var cityName = battleData.toCity.name();
 	if(battleData.fromCity.seigniorCharaId() == LMvc.selectSeignorId){
-		message = String.format(Language.get("fail_attack_and_occupy_enemy"),seignior.name(),cityName);//我军攻占{0}军的{1}失败了!
+		message = String.format(Language.get("fail_attack_and_occupy_enemy"),Language.get("belong_self"),seignior.name(),cityName);//{0}攻占{1}军的{2}失败了!
 		battleData.toCity.troops(battleData.toCity.troops() + charaTroops);
 	}else{
 		battleData.toCity.food(battleData.food);
@@ -335,10 +335,6 @@ BattleResultView.prototype.showMap=function(event){
 };
 BattleResultView.prototype.changeCharactersStatus=function(){
 	var self = this;
-	console.log("SeigniorExecute.running = " + SeigniorExecute.running);
-	if(SeigniorExecute.running){
-		return;
-	}
 	var battleData = self.controller.battleData;
 	var characters;
 	if(battleData.fromCity.seigniorCharaId() == LMvc.selectSeignorId){
@@ -346,13 +342,5 @@ BattleResultView.prototype.changeCharactersStatus=function(){
 	}else{
 		characters = battleData.expeditionEnemyCharacterList;
 	}
-	for(var i=0,l=characters.length;i<l;i++){
-		characters[i].job(Job.END);
-	}
-	if(self.winSeigniorId == battleData.fromCity.seigniorCharaId()){
-		var prefectureChara = CharacterModel.getChara(battleData.fromCity.prefecture());
-		if(prefectureChara.cityId() != battleData.fromCity.id()){
-			appointPrefecture(battleData.fromCity);
-		}
-	}
+	battleChangeCharactersStatus(self.winSeigniorId, battleData.fromCity, characters);
 };

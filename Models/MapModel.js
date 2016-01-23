@@ -25,6 +25,8 @@ MapModel.prototype.getImages=function(){
 	list.push({name:"flag-red",path:LMvc.IMG_PATH+"area/flag-red.png"});
 	list.push({name:"flag-teal",path:LMvc.IMG_PATH+"area/flag-teal.png"});
 	list.push({name:"flag-yellow",path:LMvc.IMG_PATH+"area/flag-yellow.png"});
+	list.push({name:"blue_bar",path:LMvc.IMG_PATH+"icon/blue_bar.png"});
+	list.push({name:"yellow_bar",path:LMvc.IMG_PATH+"icon/yellow_bar.png"});
 	
 	list.push({name:"checkbox-background",path:LMvc.IMG_PATH+"component/checkbox-background.png"});
 	

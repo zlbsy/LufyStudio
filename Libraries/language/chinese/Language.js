@@ -159,13 +159,15 @@ Language.data = {
 	"captived_dialog_msg":"{0}被敌军俘虏了!",
 	"shimono_dialog_msg":"{0}下野了!",
 	"rescue_enemy_captive_dialog_msg":"我军俘虏的敌将也被救回去了!",
-	"win_attack_and_occupy_null":"我军攻占了{0}!",
-	"win_attack_and_occupy_enemy":"我军攻占了{0}军的{1}!",
+	"win_attack_and_occupy_null":"{0}攻占了{1}!",
+	"win_attack_and_occupy_enemy":"{0}攻占了{1}军的{2}!",
 	"win_attack_and_occupy_self":"我军在{0}击退了{1}军的进攻!",
-	"fail_attack_and_occupy_enemy":"我军攻占{0}军的{1}失败了!",
+	"fail_attack_and_occupy_enemy":"{0}攻占{1}军的{2}失败了!",
 	"fail_attack_and_occupy_self":"我军的{0}被{1}军攻占了!",
 	"seignor_die_other":"{0}势力灭亡了！！",
 	"seignor_die_self":"{0}势力灭亡了！游戏结束了！",
+	
+	"seigniorProcess":"<font size='22'><font color='#FF0000'>{0}</font>势力行动中</font>",
 	
 	"label_equip":"装备",
 	"label_use":"使用",

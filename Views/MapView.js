@@ -178,6 +178,9 @@ MapView.prototype.showMapLayer=function(event){
 	self.baseLayer.visible = true;
 	self.ctrlLayer.visible = true;
 	self.characterLayer.removeAllChild();
+	if(SeigniorExecute.running){
+		SeigniorExecute.run();
+	}
 };
 MapView.prototype.addCharacterListView=function(characterListView){
 	var self = this;

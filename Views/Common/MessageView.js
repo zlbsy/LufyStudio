@@ -25,7 +25,80 @@ MessageView.prototype.init = function(){
 	self.listView.x = 5;
 	self.listView.y = panel.y + 5;
 	self.listView.resize(LGlobal.width - 10,height - 10);
-	self.listView.cellWidth = LGlobal.width;
+	self.listView.cellWidth = LGlobal.width - 10;
 	self.listView.cellHeight = 20;
 	self.addChild(self.listView);
+	self.panelY = panel.y;
+	
+	var faceW = 220;
+	var faceH = 320;
+	var win = new LPanel(new LBitmapData(LMvc.datalist["win05"]),LGlobal.width,faceH);
+	win.cacheAsBitmap(true);
+	self.addChild(win);
+	self.seigniorLayer = new LSprite();
+	self.addChild(self.seigniorLayer);
+	
+};
+MessageView.prototype.setSeignior = function(seigniorId){
+	var self = this;
+	var waitTime = 1000;
+	if(self.time){
+		var time = getTimer();
+		if(time - self.time < waitTime){
+			LSystem.sleep(waitTime - (time - self.time));
+		}
+		self.time = time;
+	}
+	self.time = getTimer();
+	var faceW = 220;
+	var faceH = 320;
+	self.seigniorLayer.removeAllChild();
+	var seignior = SeigniorModel.getSeignior(seigniorId);
+	self.seignior = seignior;
+
+	var layer = new LSprite();
+	layer.x = faceW + 10;
+	self.seigniorLayer.addChild(layer);
+	
+	var face = seignior.character().face();
+	self.seigniorLayer.addChild(face);
+	
+	var name = getStrokeLabel(String.format(Language.get("seigniorProcess"), seignior.character().name()),22,"#000000","#CCCCCC",1,"htmlText");
+	name.y = 30;
+	layer.addChild(name);
+	
+	var city_count_label = getStrokeLabel(Language.get("city"),20,"#000000","#CCCCCC",1);
+	city_count_label.y = 80;
+	layer.addChild(city_count_label);
+	var city_count = getStrokeLabel(seignior.areas().length,20,"#000000","#CCCCCC",1);
+	city_count.x = city_count_label.x;
+	city_count.y = 110;
+	layer.addChild(city_count);
+	
+	var general_count_label = getStrokeLabel(Language.get("generals"),20,"#000000","#CCCCCC",1);
+	general_count_label.y = 150;
+	layer.addChild(general_count_label);
+	var general_count = getStrokeLabel(seignior.generalsCount(),20,"#000000","#CCCCCC",1);
+	general_count.x = general_count_label.x;
+	general_count.y = 180;
+	layer.addChild(general_count);
+	
+	var barWidth = LGlobal.width - layer.x - 20;
+	var barBack = new LPanel(new LBitmapData(LMvc.datalist["blue_bar"]), barWidth, 14);
+	barBack.y = 280;
+	layer.addChild(barBack);
+	
+	layer.cacheAsBitmap(true);
+	
+	var barFore = new LPanel(new LBitmapData(LMvc.datalist["yellow_bar"]), barWidth, 14);
+	barFore.cacheAsBitmap(true);
+	barFore.x = layer.x;
+	barFore.y = 280;
+	barFore.scaleX = 0.5;
+	self.seigniorLayer.addChild(barFore);
+	self.process = barFore;
+};
+MessageView.prototype.setSeigniorProcess = function(index){
+	var self = this;
+	self.process.scaleX = (index + 1) / self.seignior.areas().length;
 };
