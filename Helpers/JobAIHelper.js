@@ -325,6 +325,11 @@ function jobAiInternal(areaModel,characters,price,job){//内政
 	}
 }
 function jobAiSetCityBattleDistance(seigniorModel){
+	if(seigniorModel.chara_id() == LMvc.selectSeignorId){
+		SeigniorExecute.Instance().timer.reset();
+		SeigniorExecute.Instance().timer.start();
+		return;
+	}
 	var areas = seigniorModel.areas();
 	areas.forEach(function(area){
 		area.battleDistanceCheckOver = false;

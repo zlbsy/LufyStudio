@@ -96,10 +96,11 @@ SeigniorExecute.run=function(){
 			SeigniorExecute.Instance().msgView.setSeignior(seigniorModel.chara_id());
 			self.seigniors.push(self.seigniorIndex);
 			self.msgView.add(seigniorModel.character().name() + "势力行动!");
-			if(seigniorModel.chara_id() != LMvc.selectSeignorId){
+			/*if(seigniorModel.chara_id() != LMvc.selectSeignorId){
 				jobAiSetCityBattleDistance(seigniorModel);
 				return;
-			}
+			}*/
+			return;
 		}
 		if(seigniorModel.chara_id() != LMvc.selectSeignorId){
 			var aiOver = self.areasAIRun(seigniorModel);
@@ -459,6 +460,9 @@ SeigniorExecute.prototype.maskShow=function(){
 };
 SeigniorExecute.prototype.maskHide=function(){
 	var self = this;
+	if(self.msgView.timer != null){
+		self.msgView.timer.destroy();
+	}
 	self.backLayer.remove();
 	self.backLayer = null;
 };

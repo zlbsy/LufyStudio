@@ -1,7 +1,15 @@
 function MessageView(controller){
 	var self = this;
 	LExtends(self,LView,[controller]);
+	self.timer = new LTimer(LGlobal.speed, 1);
+	self.timer.addEventListener(LTimerEvent.TIMER, MessageView.SetCurrentSeigniorId);
+	MessageView._Instance = self;
 	self.init();
+}
+MessageView._Instance = null;
+MessageView.currentSeigniorId = 0;
+MessageView.SetCurrentSeigniorId = function(){
+	MessageView._Instance.setSeignior(MessageView.currentSeigniorId);
 }
 MessageView.prototype.add = function(msg, color){
 	var self = this;console.log("add "+msg);
@@ -44,10 +52,14 @@ MessageView.prototype.setSeignior = function(seigniorId){
 	var waitTime = 1000;
 	if(self.time){
 		var time = getTimer();
+		console.log("*************************************************************************************" +time + "-" +self.time + "="+ (time - self.time),seigniorId);
 		if(time - self.time < waitTime){
-			LSystem.sleep(waitTime - (time - self.time));
+			MessageView.currentSeigniorId = seigniorId;
+			self.timer.reset();
+			self.timer.start();
+			return;
 		}
-		self.time = time;
+		console.log("*************************************************************************************");
 	}
 	self.time = getTimer();
 	var faceW = 220;
@@ -97,6 +109,9 @@ MessageView.prototype.setSeignior = function(seigniorId){
 	barFore.scaleX = 0.5;
 	self.seigniorLayer.addChild(barFore);
 	self.process = barFore;
+	
+	jobAiSetCityBattleDistance(seignior);
+	//SeigniorExecute.run();
 };
 MessageView.prototype.setSeigniorProcess = function(index){
 	var self = this;
