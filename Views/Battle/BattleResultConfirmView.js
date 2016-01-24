@@ -132,7 +132,7 @@ BattleResultConfirmView.prototype.citySelected=function(event){
 	var battleData = self.controller.battleData;
 	if(self.retreatCityId){
 		self.parent.retreatCityId = self.retreatCityId;
-		var city = self.controller.battleData.toCity;
+		/*var city = self.controller.battleData.toCity;
 		self.retreatCity = AreaModel.getArea(self.retreatCityId);
 		if(!self.retreatCity.seigniorCharaId()){
 			var seignior = SeigniorModel.getSeignior(self.failSeigniorId);
@@ -140,10 +140,11 @@ BattleResultConfirmView.prototype.citySelected=function(event){
 			self.retreatCity.seigniorCharaId(self.failSeigniorId);
 		}
 		//战斗失败后资源移动
-		battleExpeditionMove(city, self.retreatCity);
+		battleExpeditionMove(city, self.retreatCity);*/
 	}
 	battleCityChange(self.winSeigniorId, self.failSeigniorId, self.retreatCityId,  battleData.expeditionEnemyCharacterList, battleData.toCity, self.model.enemyCaptive);
-	if(!self.retreatCityId){
+	self.retreatCityId = battleCheckRetreatCity(self.retreatCity, self.failSeigniorId, battleData.toCity);
+	/*if(!self.retreatCityId){
 		//无相邻可以撤退
 		var seignior = SeigniorModel.getSeignior(self.failSeigniorId);
 		var seigniorCharacter = seignior.character();
@@ -159,7 +160,7 @@ BattleResultConfirmView.prototype.citySelected=function(event){
 				console.log("君主被擒，暂时随机决定撤退城池 : " + self.parent.retreatCityId);
 			}
 		}
-	}
+	}*/
 	self.parent.dispatchEvent(BattleResultEvent.LOSE_CITY);
 };
 BattleResultConfirmView.prototype.citySelectOnClick=function(event){

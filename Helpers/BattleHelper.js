@@ -4,7 +4,7 @@ function belongLabel(){
 function getDirectionFromTarget(chara, target, angleFlag){
 	var self = this, direction = chara.direction;
 	var coordinate = chara.getTo();
-	var coordinateTo = target.getTo();
+	var coordinateTo = target.getTo();console.log("getDirectionFromTarget",coordinate,coordinateTo);
 	var angle = Math.atan2(coordinateTo[1] - coordinate[1],coordinateTo[0] - coordinate[0])*180/Math.PI + 180;
 	if(angle < 22.5 || angle > 337.5){
 		direction = CharacterDirection.LEFT;
@@ -474,6 +474,12 @@ function setBattleSaveData(){
 	LMvc.BattleController.view.charaLayer.resetCharacterPositions();
 	LMvc.BattleController.view.mainMenu.visible = true;
 	LMvc.BattleController.view.miniLayer.visible = true;
+	if(BattleSelectMenuController._instance){
+		if(BattleSelectMenuController._instance.view.parent){
+			BattleSelectMenuController._instance.view.remove();
+		}
+		BattleSelectMenuController._instance = null;
+	}
 	LMvc.isRead = false;
 }
 /*
@@ -506,6 +512,15 @@ function battleCityChange(winSeigniorId, failSeigniorId, retreatCityId, expediti
 	}
 	*/
 	if(retreatCityId){
+		var retreatCity = AreaModel.getArea(retreatCityId);
+		if(!retreatCity.seigniorCharaId()){
+			var seignior = SeigniorModel.getSeignior(failSeigniorId);
+			seignior.addCity(retreatCity);
+			retreatCity.seigniorCharaId(failSeigniorId);
+		}
+		//战斗失败后资源移动
+		battleExpeditionMove(city, self.retreatCity);
+		
 		for(var i=0,l=moveCharas.length;i<l;i++){
 			var chara = moveCharas[i];
 			if(captives.find(function(child){return child == chara.id();})){
@@ -570,6 +585,34 @@ function battleFailChangeCity(city, failSeigniorId){
 	}
 	return retreatCity;
 };
+function battleCheckRetreatCity(retreatCity, failSeigniorId, toCity){
+	var retreatCityId = 0;
+	if(retreatCity){
+		if(!retreatCity.prefecture()){
+			var enemyCharas = getDefenseEnemiesFromCity(retreatCity);
+			retreatCity.prefecture(enemyCharas[0].id());
+		}
+		retreatCityId = retreatCity.id();
+	}else{
+		//无相邻可以撤退
+		var seignior = SeigniorModel.getSeignior(failSeigniorId);
+		var seigniorCharacter = seignior.character();
+		if(seigniorCharacter.cityId() != toCity.id()){
+			//如果君主未被擒,则撤退到君主所在城池
+			console.log("如果君主未被擒,则撤退到君主所在城池");
+			retreatCityId = seigniorCharacter.cityId();
+		}else{
+			//TODO::君主被擒，暂时随机决定撤退城池
+			//TODO::版本升级后需调整为最近城池
+			var citys = seignior.areas();
+			if(citys.length > 0){
+				retreatCityId = citys[(citys.length * Math.random()) >>> 0].id();
+				console.log("敌军君主被擒，暂时随机决定撤退城池 : " + retreatCityId);
+			}
+		}
+	}
+	return retreatCityId;
+}
 /*经验转换成功绩*/
 function experienceToFeat(characterModels){
 	if(characterModels.length == 0){
@@ -612,11 +655,9 @@ function battleChangeCharactersStatus(winSeigniorId, fromCity, characters){
 	for(var i=0,l=characters.length;i<l;i++){
 		characters[i].job(Job.END);
 	}
-	if(winSeigniorId == fromCity.seigniorCharaId()){
-		var prefectureChara = CharacterModel.getChara(fromCity.prefecture());
-		if(prefectureChara.cityId() != fromCity.id()){
-			appointPrefecture(fromCity);
-		}
+	var prefectureChara = CharacterModel.getChara(fromCity.prefecture());
+	if(!prefectureChara.seigniorId() || prefectureChara.cityId() != fromCity.id()){
+		appointPrefecture(fromCity);
 	}
 }
 /*俘虏自动化处理AI(一个)*/
@@ -628,9 +669,11 @@ function captiveAutomatedProcessing(characterModel, leaderId, retreatCityId, toC
 		generalSurrender(characterModel, toCity);
 		message = String.format(Language.get("surrender_dialog_msg"), characterModel.name());//{0}投降了敌军!
 	}else if(calculateHitrateBehead(leaderId, characterModel)){//斩首
+		console.log("斩首:"+characterModel.name());
 		message = String.format(Language.get("beheaded_dialog_msg"), characterModel.name());//{0}被敌军斩首了!
 		characterModel.toDie();
 	}else if(isSeignior || calculateHitrateRelease(leaderId, characterModel)){//释放
+		console.log("释放:"+characterModel.name());
 		if(retreatCityId){
 			if(characterModel.cityId() != retreatCityId){
 				characterModel.moveTo(retreatCityId);

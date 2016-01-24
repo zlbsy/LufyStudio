@@ -30,7 +30,7 @@ BattleResultView.prototype.selfChangeCity=function(){
 	self.retreatCity = battleFailChangeCity(battleData.toCity, self.failSeigniorId);
 	if(self.retreatCity){
 		self.retreatCityId = self.retreatCity.id();
-		battleExpeditionMove(battleData.toCity, self.retreatCity);
+		//battleExpeditionMove(battleData.toCity, self.retreatCity);
 	}
 	/*
 	var city = battleData.toCity;
@@ -72,21 +72,11 @@ BattleResultView.prototype.winInit=function(){
 		}
 		battleCityChange(self.winSeigniorId, self.failSeigniorId, self.retreatCityId, battleData.expeditionCharacterList, battleData.toCity, self.model.selfCaptive);
 		//敌方太守
-		if(self.retreatCity){
+		self.retreatCityId = battleCheckRetreatCity(self.retreatCity, self.failSeigniorId, battleData.toCity);
+		/*if(self.retreatCity){
 			var enemyCharas = getDefenseEnemiesFromCity(self.retreatCity);
 			self.retreatCity.prefecture(enemyCharas[0].id());
 		}else{
-			/*var generals = battleData.toCity.generals();
-			console.log("toCity generals",generals);
-			for(var i=0,l=generals.length;i<l;i++){
-				var child = generals[i];
-				if(self.model.selfCaptive.indexOf(child.id())>=0){
-					continue;
-				}
-				self.model.selfCaptive.push(child.id());
-			}
-			console.log("全员被俘虏 : " + self.model.selfCaptive);
-			*/
 			//无相邻可以撤退
 			var seignior = SeigniorModel.getSeignior(self.failSeigniorId);
 			var seigniorCharacter = seignior.character();
@@ -103,7 +93,7 @@ BattleResultView.prototype.winInit=function(){
 					console.log("敌军君主被擒，暂时随机决定撤退城池 : " + self.retreatCityId);
 				}
 			}
-		}
+		}*/
 		//己方太守
 		if(self.controller.noBattle){
 			city.prefecture(battleData.expeditionLeader.id());
@@ -117,7 +107,7 @@ BattleResultView.prototype.winInit=function(){
 			city.prefecture(chara.data.id());
 		}
 	}else{
-		self.failSeigniorId = controller.battleData.fromCity.seigniorCharaId();
+		self.failSeigniorId = battleData.fromCity.seigniorCharaId();
 		console.log("nothing");
 	}
 	self.showResultTitle("battle_win");
@@ -327,6 +317,7 @@ BattleResultView.prototype.showMap=function(event){
 	if(self.retreatCityId){
 		LMvc.MapController.view.resetAreaIcon(self.retreatCityId);
 	}
+	SeigniorExecute.Instance().stop = false;
 	if(self.failSeigniorId){
 		LMvc.MapController.checkSeigniorFail(self.failSeigniorId);
 	}else{

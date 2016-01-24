@@ -22,6 +22,8 @@ MapView.prototype.backLayerInit=function(){
 	var self = this;
 	//TODO::春夏秋冬
 	var bitmapData = new LBitmapData(LMvc.datalist["area-map-1"],null,null,null,null,LBitmapData.DATA_CANVAS);
+	self.backgroundWidth = bitmapData.width;
+	self.backgroundHeight = bitmapData.height;
 	var roadBitmapData = new LBitmapData(null,0,0,bitmapData.width,bitmapData.height,LBitmapData.DATA_CANVAS);
 	//bitmapData.copyPixels(roadBitmapData, new LRectangle(0, 0, 28, 28), new LPoint(50,50));
 	var roadLayer = new LShape();
@@ -55,6 +57,16 @@ MapView.prototype.areaDragStop=function(event){
 	event.currentTarget.parent.stopDrag();
 	LMvc.mapX = event.currentTarget.parent.x;
 	LMvc.mapY = event.currentTarget.parent.y;
+};
+MapView.prototype.positionChangeToCity=function(city){
+	var self = this;
+	var position = city.position();
+	self.toPosition(position.x, position.y);
+};
+MapView.prototype.toPosition=function(x, y){
+	var self = this;
+	self.baseLayer.x = LGlobal.width * 0.5 - x - CityIconConfig.width * 0.5;
+	self.baseLayer.y = LGlobal.height * 0.5 - y - CityIconConfig.height * 0.3;
 };
 MapView.prototype.init=function(){
 	var self = this;
@@ -190,3 +202,4 @@ MapView.prototype.addCharacterListView=function(characterListView){
 	self.characterLayer.addChild(getTranslucentMask());
 	self.characterLayer.addChild(characterListView);
 };
+

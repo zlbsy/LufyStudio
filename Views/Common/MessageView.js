@@ -10,12 +10,12 @@ MessageView._Instance = null;
 MessageView.currentSeigniorId = 0;
 MessageView.SetCurrentSeigniorId = function(){
 	MessageView._Instance.setSeignior(MessageView.currentSeigniorId);
-}
+};
 MessageView.prototype.add = function(msg, color){
 	var self = this;console.log("add "+msg);
-	var child = new MessageChildView(msg, color);
+	var child = new MessageChildView(msg, color ? color : "#FFFFFF");
 	self.listView.insertChildView(child);
-	var height = self.listView.cellHeight*self.listView.getItems().length;
+	var height = self.listView.cellHeight * self.listView.getItems().length;
 	if(height < self.listView.clipping.height){
 		return;
 	}
@@ -46,6 +46,16 @@ MessageView.prototype.init = function(){
 	self.seigniorBackground = win;
 	self.seigniorLayer = new LSprite();
 	self.addChild(self.seigniorLayer);
+};
+MessageView.prototype.hideSeignior = function(){
+	var self = this;
+	self.seigniorBackground.visible = false;
+	self.seigniorLayer.visible = false;
+};
+MessageView.prototype.showSeignior = function(){
+	var self = this;
+	self.seigniorBackground.visible = true;
+	self.seigniorLayer.visible = true;
 };
 MessageView.prototype.clearSeignior = function(){
 	var self = this;
@@ -80,22 +90,22 @@ MessageView.prototype.setSeignior = function(seigniorId){
 	var face = seignior.character().face();
 	self.seigniorLayer.addChild(face);
 	
-	var name = getStrokeLabel(String.format(Language.get("seigniorProcess"), seignior.character().name()),22,"#000000","#CCCCCC",1,"htmlText");
+	var name = getStrokeLabel(String.format(Language.get("seigniorProcess"), seignior.character().name()),22,"#FFFFFF","#000000",2,"htmlText");
 	name.y = 30;
 	layer.addChild(name);
 	
-	var city_count_label = getStrokeLabel(Language.get("city"),20,"#000000","#CCCCCC",1);
+	var city_count_label = getStrokeLabel(Language.get("city"),20,"#FFFFFF","#000000",2);
 	city_count_label.y = 80;
 	layer.addChild(city_count_label);
-	var city_count = getStrokeLabel(seignior.areas().length,20,"#000000","#CCCCCC",1);
+	var city_count = getStrokeLabel(seignior.areas().length,20,"#FFFFFF","#000000",2);
 	city_count.x = city_count_label.x;
 	city_count.y = 110;
 	layer.addChild(city_count);
 	
-	var general_count_label = getStrokeLabel(Language.get("generals"),20,"#000000","#CCCCCC",1);
+	var general_count_label = getStrokeLabel(Language.get("generals"),20,"#FFFFFF","#000000",2);
 	general_count_label.y = 150;
 	layer.addChild(general_count_label);
-	var general_count = getStrokeLabel(seignior.generalsCount(),20,"#000000","#CCCCCC",1);
+	var general_count = getStrokeLabel(seignior.generalsCount(),20,"#FFFFFF","#000000",2);
 	general_count.x = general_count_label.x;
 	general_count.y = 180;
 	layer.addChild(general_count);
@@ -114,11 +124,18 @@ MessageView.prototype.setSeignior = function(seigniorId){
 	barFore.scaleX = 0.5;
 	self.seigniorLayer.addChild(barFore);
 	self.process = barFore;
+	self.process.scaleX = 0.01;
 	
+	LMvc.MapController.view.positionChangeToCity(seignior.character().city());
 	jobAiSetCityBattleDistance(seignior);
 	//SeigniorExecute.run();
 };
 MessageView.prototype.setSeigniorProcess = function(index){
 	var self = this;
+	if(!self.seignior){
+		var seigniorExecute = SeigniorExecute.Instance();
+		var seigniorModel = SeigniorModel.list[seigniorExecute.seigniorIndex];
+		self.setSeignior(seigniorModel.chara_id());
+	}
 	self.process.scaleX = (index + 1) / self.seignior.areas().length;
 };

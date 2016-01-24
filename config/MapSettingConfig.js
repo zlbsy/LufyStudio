@@ -124,6 +124,7 @@ var MapSetting = [
 	{id:53,position:{x:1050,y:700},neighbor:[7,13,15],level:1,maxLevel:3,business:0,agriculture:0,technology:0,police:50, food : 1000, population : 40000,troops:0,generals:[],captives:[],out_of_offices:[],not_debut:[], city_defense : 1000},
 ];
 MapSetting.sort(function(a,b){return a.position.y - b.position.y;});
+var CityIconConfig = {width:150, height:130};
 /*
 var government = [
 	{id:1,name:"校尉",rating:1,type:0},

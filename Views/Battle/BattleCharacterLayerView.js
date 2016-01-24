@@ -34,6 +34,9 @@ BattleCharacterLayerView.prototype.charactersBoutEnd = function(event) {
 			mapLayer.setWakeRoads(event.belong,skill.wakeRects(),child.locationX(),child.locationY());
 		}
 	}
+	for(var i=0,l=self.childList.length;i<l;i++){
+		self.childList[i].mode = CharacterMode.NONE;
+	}
 };
 BattleCharacterLayerView.prototype.resetCharacterPositions=function(){
 	var self = this;

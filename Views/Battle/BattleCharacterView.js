@@ -221,6 +221,9 @@ BattleCharacterView.prototype.loadSOver = function(event){
 };
 BattleCharacterView.prototype.toStatic = function(value){
 	var self = this;
+	if(self.controller.constructor.name != "BattleController"){
+		return;
+	}
 	console.log(self.data.name() , "toStatic",value,self.anime.visible);
 	if(value){
 		if(self.anime.visible){

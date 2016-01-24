@@ -19,6 +19,25 @@ seigniors : [
     not_debut:[
     ]
   },
+]},
+{chara_id : 624,name:"何进",generals_count : 6,color : "black",areas : [
+  {  area_id : 22,name:"洛阳",prefecture : 624,
+  money : 121,food : 11021,population : 40021,business : 121,agriculture : 121,technology : 121,police : 91,city_defense : 521,troops : 421,
+  items_farmland:[],
+  items_market:[],
+  items:[],
+  generals:[
+    {chara_id:39,name:"袁绍",feat:10,loyalty:100},
+    {chara_id:99,name:"鲍信",feat:0,loyalty:100},
+    {chara_id:102,name:"荀攸",feat:0,loyalty:100},
+    {chara_id:199,name:"淳于琼",feat:0,loyalty:100},
+    {chara_id:624,name:"何进",feat:0,loyalty:100},
+    ],
+    out_of_offices:[
+    ],
+    not_debut:[
+    ]
+  },
   {  area_id : 42,name:"晋阳",prefecture : 377,
   money : 141,food : 1041,population : 40041,business : 141,agriculture : 141,technology : 141,police : 80,city_defense : 541,troops : 441,
   items_farmland:[],
@@ -40,25 +59,6 @@ seigniors : [
     {chara_id:523,name:"王允",feat:0,loyalty:100},
     {chara_id:542,name:"孔伷",feat:0,loyalty:100},
     {chara_id:588,name:"孔融",feat:0,loyalty:100},
-    ],
-    out_of_offices:[
-    ],
-    not_debut:[
-    ]
-  },
-]},
-{chara_id : 624,name:"何进",generals_count : 6,color : "black",areas : [
-  {  area_id : 22,name:"洛阳",prefecture : 624,
-  money : 121,food : 11021,population : 40021,business : 121,agriculture : 121,technology : 121,police : 91,city_defense : 521,troops : 21,
-  items_farmland:[],
-  items_market:[],
-  items:[],
-  generals:[
-    {chara_id:39,name:"袁绍",feat:10,loyalty:100},
-    {chara_id:99,name:"鲍信",feat:0,loyalty:100},
-    {chara_id:102,name:"荀攸",feat:0,loyalty:100},
-    {chara_id:199,name:"淳于琼",feat:0,loyalty:100},
-    {chara_id:624,name:"何进",feat:0,loyalty:100},
     ],
     out_of_offices:[
     ],

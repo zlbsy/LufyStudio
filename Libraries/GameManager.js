@@ -9,6 +9,7 @@ GameManager.save = function(index){
 	data.mapX = LMvc.mapX;
 	data.mapY = LMvc.mapY;
 	data.seigniorExecute = SeigniorExecute.getSaveData();
+	console.warn("data.seigniorExecute", data.seigniorExecute);
 	data.labels = {};
 	var selectSeignor = SeigniorModel.getSeignior(LMvc.selectSeignorId);
 	data.labels.name = selectSeignor.character().name();

@@ -167,7 +167,7 @@ Language.data = {
 	"seignor_die_other":"{0}势力灭亡了！！",
 	"seignor_die_self":"{0}势力灭亡了！游戏结束了！",
 	
-	"seigniorProcess":"<font size='22'><font color='#FF0000'>{0}</font>势力行动中</font>",
+	"seigniorProcess":"<font size='22' color='#FFFFFF'><font color='#FF0000'>{0}</font>势力行动中</font>",
 	
 	"label_equip":"装备",
 	"label_use":"使用",

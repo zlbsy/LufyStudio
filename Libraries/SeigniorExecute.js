@@ -1,5 +1,6 @@
 function SeigniorExecute(){
 	var self = this;
+	base(self,LMvcObject,[]);
 	self.seigniorIndex = 0;
 	self.areaIndex = 0;
 	if(!self.timer){
@@ -43,11 +44,11 @@ SeigniorExecute.setSaveData = function(data){
 	if(!SeigniorExecute.running){
 		return;
 	}
-	self.seigniorIndex = self.seigniorIndex;
-	self.areaIndex = self.areaIndex;
-	self.stop = self.stop;
-	self.seigniors = self.seigniors;
-	self.citys = self.citys;
+	self.seigniorIndex = data.seigniorIndex;
+	self.areaIndex = data.areaIndex;
+	self.stop = data.stop;
+	self.seigniors = data.seigniors;
+	self.citys = data.citys;
 };
 SeigniorExecute.removeSeignior=function(seigniorId){
 	var self = SeigniorExecute.Instance();
@@ -61,6 +62,11 @@ SeigniorExecute.removeSeignior=function(seigniorId){
 };
 SeigniorExecute.run=function(){
 	var self = SeigniorExecute.Instance();
+	if(!self.load){
+		self.load = new LMvcLoader(self);
+		self.loadSeigniorExecute();
+		return;
+	}
 	if(!self.backLayer){
 		self.maskShow();
 		if(SeigniorModel.list[0].chara_id() != LMvc.selectSeignorId){
@@ -81,10 +87,10 @@ SeigniorExecute.run=function(){
 			}
 		}
 	}
+	console.warn("SeigniorExecute.run self.seigniorIndex="+self.seigniorIndex+"<"+SeigniorModel.list.length+",elf.stop="+self.stop);
 	if(self.stop || jobAiEvent()){
 		return;
 	}
-	console.log("self.seigniorIndex="+self.seigniorIndex+"<"+SeigniorModel.list.length);
 	if(self.seigniorIndex < SeigniorModel.list.length){
 		var seigniorModel = SeigniorModel.list[self.seigniorIndex];
 		if(seigniorModel.chara_id() == 0){
@@ -103,6 +109,7 @@ SeigniorExecute.run=function(){
 			}*/
 			return;
 		}
+		console.warn("SeigniorExecute.run :"+seigniorModel.character().name()+", area:"+self.areaIndex);
 		if(seigniorModel.chara_id() != LMvc.selectSeignorId){
 			var aiOver = self.areasAIRun(seigniorModel);
 			if(!aiOver){
@@ -467,4 +474,36 @@ SeigniorExecute.prototype.maskHide=function(){
 	}
 	self.backLayer.remove();
 	self.backLayer = null;
+};
+
+SeigniorExecute.prototype.loadSeigniorExecute=function(){
+	var self = this;
+	self.loadMvc("EventMap",self.loadSeigniorExecuteLoadSkill);
+};
+SeigniorExecute.prototype.loadSeigniorExecuteLoadSkill=function(){
+	var self = this;
+	self.load.model(["Master/SkillMaster","Master/SoldierMaster","Master/Soldier","Master/StrategyMaster","Master/Strategy"],self.loadSeigniorExecuteConfig);
+};
+SeigniorExecute.prototype.loadSeigniorExecuteConfig=function(){
+	var self = this;
+	self.load.config(["CharacterListType","Skills","EventList","BattleMap","Soldiers","Strategy"],self.loadSeigniorExecuteHelper);
+};
+SeigniorExecute.prototype.loadSeigniorExecuteHelper=function(){
+	var self = this;
+	self.load.helper(["JobHelper","JobAIHelper","BattleHelper","BattleCalculateHelper","CommonHelper"],self.loadSeigniorExecuteLibrary);
+};
+SeigniorExecute.prototype.loadSeigniorExecuteLibrary=function(){
+	var self = this;
+	self.load.library(["BattleAIExecute","Battle/HertParams","Battle/BattleIntelligentAI"],self.loadSeigniorExecuteView);
+};
+SeigniorExecute.prototype.loadSeigniorExecuteView=function(){
+	var self = this;
+	self.load.view(["Common/Character", "Battle/CharacterStatusIcon", "Battle/BattleCharacter"],self.seigniorExecute);
+};
+SeigniorExecute.prototype.seigniorExecute=function(){
+	var self = this;
+	StrategyMasterModel.setMaster(StrategyDatas);
+	SoldierMasterModel.setMaster(SoldierDatas);
+	SkillMasterModel.setMaster(SkillsData);
+	SeigniorExecute.run();
 };

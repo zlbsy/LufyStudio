@@ -82,6 +82,10 @@ BattleAIExecute.prototype.result=function(isWin){
 	var toCity = self.attackData.toCity;
 	var fromSeignior = fromCity.seignior();
 	SeigniorExecute.Instance().stop = false;
+	self.characterView.attackTarget.remove();
+	self.characterView.remove();
+	experienceToFeat(self.attackData._characterList);
+	experienceToFeat(self.targetData._characterList);
 	if(isWin){
 		//{0}攻占了{1}军的{2}!
 		SeigniorExecute.addMessage(String.format(Language.get("win_attack_and_occupy_enemy"),fromSeignior.character().name(),toCity.seignior().character().name(),toCity.name()));
@@ -92,7 +96,7 @@ BattleAIExecute.prototype.result=function(isWin){
 		var retreatCityId = 0;
 		if(retreatCity){
 			retreatCityId = retreatCity.id();
-			battleExpeditionMove(toCity, retreatCity);
+			//battleExpeditionMove(toCity, retreatCity);
 		}
 		battleCityChange(winSeigniorId,
 		failSeigniorId, 
@@ -100,6 +104,8 @@ BattleAIExecute.prototype.result=function(isWin){
 		self.attackData._characterList,
 		toCity,
 		self.attackData.captives);
+		console.warn("self.attackData.captives=" , self.attackData.captives);
+		retreatCityId = battleCheckRetreatCity(retreatCity, failSeigniorId, toCity);
 		
 		toCity.food(self.attackData.food);
 		toCity.money(self.attackData.money);
@@ -107,15 +113,19 @@ BattleAIExecute.prototype.result=function(isWin){
 		
 		captivesAutomatedProcessing(self.attackData.captives, leaderId, retreatCityId, toCity, fromCity);//处理俘虏
 		battleChangeCharactersStatus(winSeigniorId, fromCity, self.attackData._characterList);//战斗结束后武将状态转换，以及出战城池太守任命
-		
 		LMvc.MapController.view.resetAreaIcon(toCity.id());
 		LMvc.MapController.checkSeigniorFail(failSeigniorId);
 	}else{
 		//{0}攻占{1}军的{2}失败了!
 		SeigniorExecute.addMessage(String.format(Language.get("fail_attack_and_occupy_enemy"),fromSeignior.character().name(),toCity.seignior().character().name(),toCity.name()));
-		//SeigniorExecute.Instance().msgView.add(String.format("{0}战败了!",self.attackData.fromCity.seignior().character().name()));
-		
+		var winSeigniorId = toCity.seignior().chara_id();
+		var failSeigniorId = fromSeignior.chara_id();
+		var retreatCityId = fromCity.id();
+		var leaderId = self.targetData._characterList[0].id();
+		captivesAutomatedProcessing(self.targetData.captives, leaderId, retreatCityId, toCity, fromCity);//处理俘虏
+		battleChangeCharactersStatus(winSeigniorId, fromCity, self.attackData._characterList);//战斗结束后武将状态转换，以及出战城池太守任命
 	}
+	SeigniorExecute.Instance().msgView.showSeignior();
 };
 BattleAIExecute.prototype._set=function(attackData, targetData){
 	var self = this;
@@ -137,8 +147,47 @@ BattleAIExecute.prototype._set=function(attackData, targetData){
 	targetData._characterList = targetData.expeditionCharacterList;
 	targetData.expeditionCharacterList = expeditionCharacterList;
 	self.targetData = targetData;
-	self.timer.reset();
-	self.timer.start();
+	
+	var fromPosition = self.attackData.fromCity.position();
+	var fromX = fromPosition.x + CityIconConfig.width * 0.5 - BattleCharacterSize.width;
+	var fromY = fromPosition.y + CityIconConfig.height * 0.5 - BattleCharacterSize.height;
+	var toPosition = self.attackData.toCity.position();
+	var toX = toPosition.x + CityIconConfig.width * 0.5;
+	var toY = toPosition.y + CityIconConfig.height * 0.5 - BattleCharacterSize.height;
+	var targetX = toX, targetY = toY;
+	if(fromPosition.x > toPosition.x){
+		targetX = toX - BattleCharacterSize.width * 2;
+	}else{
+		toX = targetX - BattleCharacterSize.width * 2;
+	}
+	LMvc.MapController.view.positionChangeToCity(self.attackData.fromCity);
+	var chara = new BattleCharacterView(LMvc.MapController, attackData._characterList[0].id(), BattleCharacterSize.width, BattleCharacterSize.height);
+	chara.scaleX = chara.scaleY = 2;
+	chara.setCoordinate(fromX, fromY);
+	LMvc.MapController.view.baseLayer.addChild(chara);
+	var target = new BattleCharacterView(LMvc.MapController, targetData._characterList[0].id(), BattleCharacterSize.width, BattleCharacterSize.height);
+	target.scaleX = target.scaleY = 2;
+	target.setCoordinate(targetX, targetY);
+	LMvc.MapController.view.baseLayer.addChild(target);
+	chara.setActionDirection(CharacterAction.MOVE, getDirectionFromTarget(chara, target));
+	target.setActionDirection(CharacterAction.STAND, getDirectionFromTarget(target, chara));
+	chara.attackTarget = target;
+	chara.ctrlX = chara.x;
+	chara.ctrlY = chara.y;
+	self.characterView = chara;
+	SeigniorExecute.Instance().msgView.hideSeignior();
+	LTweenLite.to(chara,1,{ctrlX:toX,ctrlY:toY,delay:1,onUpdate:function(event){
+		var child = event.target;
+		child.setCoordinate(child.ctrlX, child.ctrlY);
+		LMvc.MapController.view.toPosition(child.x, child.y);
+	},onComplete:function(event){
+		var child = event.target;
+		child.setActionDirection(CharacterAction.ATTACK, getDirectionFromTarget(child, child.attackTarget));
+		child.attackTarget.setActionDirection(CharacterAction.ATTACK, getDirectionFromTarget(child.attackTarget, child));
+	}}).to(chara,1,{onUpdate:function(){}, onComplete:function(event){
+		BattleAIExecute.Instance().timer.reset();
+		BattleAIExecute.Instance().timer.start();
+	}});
 };
 BattleAIExecute.prototype.getTargetCharacters=function(chara){
 	return this.attackData.expeditionCharacterList[0].seigniorId() == chara.seigniorId() ? this.targetData.expeditionCharacterList : this.attackData.expeditionCharacterList;

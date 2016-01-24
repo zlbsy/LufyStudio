@@ -107,6 +107,7 @@ BattleIntelligentAI.prototype.init = function(){
 };
 BattleIntelligentAI.prototype.run = function() {
 	var self = BattleController.ctrlChara.inteAI;
+	console.log(BattleController.ctrlChara.data.name() +" run : " + self.chara.mode);
 	switch(self.chara.mode){
 		case CharacterMode.NONE:
 			self.moveRoadsShow();

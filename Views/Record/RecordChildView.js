@@ -82,6 +82,7 @@ RecordChildView.prototype.readRecordData=function(){
 		LMvc.isRead = true;
 		LMvc.mapX = self.record.mapX;
 		LMvc.mapY = self.record.mapY;
+		console.warn("self.record.seigniorExecute", self.record.seigniorExecute);
 		SeigniorExecute.setSaveData(self.record.seigniorExecute);
 		if(LMvc.BattleController){
 			LMvc.BattleController.view.remove();

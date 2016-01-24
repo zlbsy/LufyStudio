@@ -77,7 +77,9 @@ MenuView.prototype.hide=function(event){
 };
 MenuView.prototype.onClickOperatingEnd=function(event){
 	var self = event.currentTarget.parent.parent.parent;
-	self.loadSeigniorExecute();
+	self.hide();
+	SeigniorExecute.run();
+	//self.loadSeigniorExecute();
 };
 MenuView.prototype.onClickAllSeignior=function(event){
 	var self = event.currentTarget.parent.parent.parent;
@@ -123,6 +125,7 @@ MenuView.prototype.onClickReturnTop=function(event){
 	LMvc.logoStage.chapterMenuLayer.mouseChildren = true;
 	LMvc.stageLayer.x = 0;
 };
+/*
 MenuView.prototype.loadSeigniorExecute=function(){
 	var self = this;
 	self.hide();
@@ -146,7 +149,7 @@ MenuView.prototype.loadSeigniorExecuteLibrary=function(){
 };
 MenuView.prototype.loadSeigniorExecuteView=function(){
 	var self = this;
-	self.load.view(["Battle/CharacterStatusIcon"],self.seigniorExecute);
+	self.load.view(["Common/Character", "Battle/CharacterStatusIcon", "Battle/BattleCharacter"],self.seigniorExecute);
 };
 MenuView.prototype.seigniorExecute=function(){
 	var self = this;
@@ -155,3 +158,4 @@ MenuView.prototype.seigniorExecute=function(){
 	SkillMasterModel.setMaster(SkillsData);
 	SeigniorExecute.run();
 };
+*/

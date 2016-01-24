@@ -24,7 +24,7 @@ PerishView.prototype.set = function(charaId){
 	face.x = (LGlobal.width - faceW) * 0.5;
 	face.y = win.y + 10;
 	layer.addChild(face);
-	face.addEventListener(LEvent.COMPLETE, self.faceLoadOver);
+	LTweenLite.to(face,0.5,{alpha:0.5});
 	var message;
 	if(LMvc.selectSeignorId == charaId){
 		message = String.format(Language.get("seignor_die_self"),charaModel.name());
@@ -57,8 +57,4 @@ PerishView.prototype.removeSelf = function(event){
 			LMvc.MapController.checkSeigniorWin();
 		}
 	}
-};
-PerishView.prototype.faceLoadOver = function(event){
-	var face = event.currentTarget;
-	LTweenLite.to(face,0.5,{alpha:0.5});
 };
