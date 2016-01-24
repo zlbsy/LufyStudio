@@ -184,6 +184,7 @@ BattleResultView.prototype.cityWin=function(event){
 		message = String.format(Language.get("win_attack_and_occupy_self"),cityName,seignior.name());//我军在{0}击退了{1}军的进攻!
 		battleData.toCity.troops(battleData.toCity.troops() + charaTroops);
 	}
+	self.message = message;
 	var view = new BattleResultConfirmView(self.controller, 
 		{
 			confirmType : BattleWinConfirmType.attackAndOccupy, 
@@ -212,6 +213,7 @@ BattleResultView.prototype.cityFail=function(event){
 		battleData.toCity.troops(battleData.toCity.troops() + battleData.troops + charaTroops);
 		message = String.format(Language.get("fail_attack_and_occupy_self"),cityName,seignior.name());//我军的{0}被{1}军攻占了!
 	}
+	self.message = message;
 	var view = new BattleResultConfirmView(self.controller, 
 		{
 			confirmType : BattleFailConfirmType.attackAndOccupy, 
@@ -312,12 +314,15 @@ BattleResultView.prototype.showMap=function(event){
 	self.controller.view.remove();
 	LMvc.BattleController = null;
 	LMvc.MapController.view.visible = true;
+	
 	LMvc.MapController.view.changeMode(MapController.MODE_MAP);
 	LMvc.MapController.view.resetAreaIcon(cityId);
 	if(self.retreatCityId){
 		LMvc.MapController.view.resetAreaIcon(self.retreatCityId);
 	}
 	SeigniorExecute.Instance().stop = false;
+	SeigniorExecute.addMessage(self.message);
+	
 	if(self.failSeigniorId){
 		LMvc.MapController.checkSeigniorFail(self.failSeigniorId);
 	}else{
