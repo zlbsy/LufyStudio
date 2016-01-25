@@ -63,8 +63,10 @@ CityController.prototype.toSelectMap=function(eventType){
 	var neighbor = cityData.neighbor();
 	LMvc.MapController.view.areaLayer.childList.forEach(function(child){
 		if(neighbor.indexOf(child.areaStatus.id()) >= 0){
+			LMvc.MapController.view.addBattleMark(child.areaStatus);
+			/*
 			LTweenLite.to(child,1,{alpha:0.5,loop:true})
-    		.to(child,1,{alpha:1});
+    		.to(child,1,{alpha:1});*/
 		}
 	});
 	LMvc.MapController.view.changeMode(MapController.MODE_CHARACTER_MOVE);

@@ -502,7 +502,7 @@ SeigniorExecute.prototype.loadSeigniorExecuteLibrary=function(){
 };
 SeigniorExecute.prototype.loadSeigniorExecuteView=function(){
 	var self = this;
-	self.load.view(["Common/Character", "Battle/CharacterStatusIcon", "Battle/BattleCharacter"],self.seigniorExecute);
+	self.load.view(["Common/Character","Common/Message","Common/MessageChild", "Battle/CharacterStatusIcon", "Battle/BattleCharacter"],self.seigniorExecute);
 };
 SeigniorExecute.prototype.seigniorExecute=function(){
 	var self = this;

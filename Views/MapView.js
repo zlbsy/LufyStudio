@@ -13,6 +13,8 @@ MapView.prototype.layerInit=function(){
 	self.baseLayer.addChild(self.backLayer);
 	self.areaLayer = new LSprite();
 	self.baseLayer.addChild(self.areaLayer);
+	self.markLayer = new LSprite();
+	self.baseLayer.addChild(self.markLayer);
 	self.ctrlLayer = new LSprite();
 	self.addChild(self.ctrlLayer);
 	self.characterLayer = new LSprite();
@@ -57,6 +59,17 @@ MapView.prototype.areaDragStop=function(event){
 	event.currentTarget.parent.stopDrag();
 	LMvc.mapX = event.currentTarget.parent.x;
 	LMvc.mapY = event.currentTarget.parent.y;
+};
+MapView.prototype.addBattleMark=function(city){
+	var self = this;
+	console.log("addBattleMark:"+city);
+	var position = city.position();
+	console.log("addBattleMark:"+position+(typeof BattleMarkView));
+	var mark = new BattleMarkView();
+	mark.x = position.x + CityIconConfig.width*0.5;
+	mark.y = position.y;
+	self.markLayer.addChild(mark);
+	console.log("addBattleMark:"+mark.x+","+mark.y);
 };
 MapView.prototype.positionChangeToCity=function(city){
 	var self = this;
@@ -133,11 +146,13 @@ MapView.prototype.readDataToBattle = function(){
 MapView.prototype.areaLayerInit=function(){
 	var self = this;
 	self.areaLayer.removeAllChild();
+	self.areaLayer.cacheAsBitmap(false);
 	for(var i=0,l=AreaModel.list.length;i<l;i++){
 		var areaStatus = AreaModel.list[i];
 		var area = new AreaIconView(self.controller,areaStatus);
 		self.areaLayer.addChild(area);
 	}
+	self.areaLayer.cacheAsBitmap(true);
 };
 MapView.prototype.changeMode=function(mode){
 	var self = this;
