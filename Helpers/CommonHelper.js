@@ -1,11 +1,11 @@
 /**
  * 俘虏概率
  */
-function calculateHitrateCaptive(chara){
+function calculateHitrateCaptive(chara, nearChara){
 	var rate = 1;
 	if(chara.data.hasSkill(SkillSubType.RETREAT)){
 		rate = 0.2;
-	}else{
+	}else if(LMvc.BattleController){
 		var positions = [[-1,-1],[0,-1],[1,-1],[-1,0],[1,0],[-1,1],[0,1],[1,1]];
 		var locationX = chara.locationX();
 		var locationY = chara.locationY();
@@ -19,6 +19,8 @@ function calculateHitrateCaptive(chara){
 			rate = 0.2;
 			break;
 		}
+	}else if(nearChara && nearChara.data.hasSkill(SkillSubType.RETREAT)){
+		rate = 0.2;
 	}
 	return Math.random() < 0.1*rate;
 }

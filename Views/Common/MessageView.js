@@ -3,13 +3,18 @@ function MessageView(controller){
 	LExtends(self,LView,[controller]);
 	self.timer = new LTimer(LGlobal.speed, 1);
 	self.timer.addEventListener(LTimerEvent.TIMER, MessageView.SetCurrentSeigniorId);
-	MessageView._Instance = self;
 	self.init();
 }
 MessageView._Instance = null;
+MessageView.Instance = function(){
+	if(!MessageView._Instance){
+		MessageView._Instance = new MessageView();
+	}
+	return MessageView._Instance;
+};
 MessageView.currentSeigniorId = 0;
 MessageView.SetCurrentSeigniorId = function(){
-	MessageView._Instance.setSeignior(MessageView.currentSeigniorId);
+	MessageView.Instance().setSeignior(MessageView.currentSeigniorId);
 };
 MessageView.prototype.add = function(msg, color){
 	var self = this;console.log("add "+msg);

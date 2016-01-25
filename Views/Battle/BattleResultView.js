@@ -310,11 +310,12 @@ BattleResultView.prototype.showResultTitle=function(value){
 BattleResultView.prototype.showMap=function(event){
 	var self = event.currentTarget;
 	self.changeCharactersStatus();
-	var cityId = self.controller.battleData.toCity.id();
+	var toCity = self.controller.battleData.toCity;
+	var cityId = toCity.id();
 	self.controller.view.remove();
 	LMvc.BattleController = null;
 	LMvc.MapController.view.visible = true;
-	
+	LMvc.MapController.view.positionChangeToCity(toCity);
 	LMvc.MapController.view.changeMode(MapController.MODE_MAP);
 	LMvc.MapController.view.resetAreaIcon(cityId);
 	if(self.retreatCityId){

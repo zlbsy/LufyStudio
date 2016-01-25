@@ -158,7 +158,7 @@ SeigniorExecute.prototype.areaGainRun=function(area){
 	console.log("areaGainRun over");
 };
 SeigniorExecute.addMessage = function(value){
-	SeigniorExecute.Instance().msgView.add(value);
+	MessageView.Instance().add(value);
 };
 SeigniorExecute.prototype.areaJobRun=function(area){
 	var self = this, chara, job;
@@ -454,7 +454,7 @@ SeigniorExecute.prototype.maskShow=function(){
 	maskLayer.alpha = 0.01;
 	self.backLayer = new LSprite();
 	self.backLayer.addChild(maskLayer);
-	self.msgView = new MessageView();
+	self.msgView = MessageView.Instance();
 	self.backLayer.addChild(self.msgView);
 	LMvc.MapController.view.parent.addChild(self.backLayer);
 	
@@ -474,6 +474,7 @@ SeigniorExecute.prototype.maskHide=function(){
 	}
 	self.backLayer.remove();
 	self.backLayer = null;
+	MessageView._Instance = null;
 };
 
 SeigniorExecute.prototype.loadSeigniorExecute=function(){

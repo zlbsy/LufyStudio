@@ -194,10 +194,19 @@ BattleAIExecute.prototype.getTargetCharacters=function(chara){
 };
 BattleAIExecute.prototype.removeChara = function(chara){
 	var self = this;
-	var charaList = self.attackData.expeditionCharacterList[0].data.seigniorId() == chara.data.seigniorId() ? self.attackData.expeditionCharacterList : self.targetData.expeditionCharacterList;
+	var charaList =self.getTargetCharacters(chara);
+	var captives;
+	if(self.attackData.expeditionCharacterList[0].data.seigniorId() == chara.data.seigniorId()){
+		captives = self.targetData.captives;
+	}else{
+		captives = self.attackData.captives;
+	}
 	console.log("removeChara "+chara.data.name()+" : " + charaList.length);
 	for(var i=0,l=charaList.length;i<l;i++){
 		if(charaList[i].data.id() == chara.data.id()){
+			if(calculateHitrateCaptive(chara)){
+				captives.push(chara.data.id());
+			}
 			charaList.splice(i, 1);
 			break;
 		}
