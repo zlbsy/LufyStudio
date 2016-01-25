@@ -1,7 +1,7 @@
 /**
  * 俘虏概率
  */
-function calculateHitrateCaptive(chara, nearChara){
+function calculateHitrateCaptive(chara, nearCharas){
 	var rate = 1;
 	if(chara.data.hasSkill(SkillSubType.RETREAT)){
 		rate = 0.2;
@@ -19,8 +19,15 @@ function calculateHitrateCaptive(chara, nearChara){
 			rate = 0.2;
 			break;
 		}
-	}else if(nearChara && nearChara.data.hasSkill(SkillSubType.RETREAT)){
-		rate = 0.2;
+	}else if(nearCharas && nearCharas.length > 0){
+		for(var i=0,l=nearCharas.length;i<l;i++){
+			var child = nearCharas[i];
+			if(!child.data.hasSkill(SkillSubType.RETREAT)){
+				continue;
+			}
+			rate = 0.2;
+			break;
+		}
 	}
 	return Math.random() < 0.1*rate;
 }

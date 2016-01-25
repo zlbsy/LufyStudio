@@ -131,6 +131,12 @@ MapController.prototype.checkSeigniorChange=function(seigniorId){
 };
 MapController.prototype.checkSeigniorFail=function(seigniorId){
 	var self = this;
+	if(!seigniorId){
+		if(SeigniorExecute.running){
+			SeigniorExecute.run();
+		}
+		return;
+	}
 	var seignior = SeigniorModel.getSeignior(seigniorId);
 	console.log("seignior.areas().length="+seignior.areas().length);
 	if(seignior.areas().length > 0){

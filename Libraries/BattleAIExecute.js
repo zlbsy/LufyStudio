@@ -38,6 +38,9 @@ BattleAIExecute.run=function(){
 	while(self.attackIndex < attackCharacters.length || self.targetIndex < targetCharacters.length){
 		console.log("while attackCharacters.length:"+attackCharacters.length);
 		console.log("while targetCharacters.length:"+targetCharacters.length);
+		if(attackCharacters.length==0 && targetCharacters.length==0){
+			break;
+		}
 		var rand;
 		if(self.attackIndex >= attackCharacters.length){
 			rand = 1;
@@ -82,21 +85,26 @@ BattleAIExecute.prototype.result=function(isWin){
 	var toCity = self.attackData.toCity;
 	var fromSeignior = fromCity.seignior();
 	SeigniorExecute.Instance().stop = false;
-	self.characterView.attackTarget.remove();
+	if(self.characterView.attackTarget){
+		self.characterView.attackTarget.remove();
+	}
 	self.characterView.remove();
 	experienceToFeat(self.attackData._characterList);
 	experienceToFeat(self.targetData._characterList);
 	if(isWin){
 		//{0}攻占了{1}军的{2}!
-		SeigniorExecute.addMessage(String.format(Language.get("win_attack_and_occupy_enemy"),fromSeignior.character().name(),toCity.seignior().character().name(),toCity.name()));
+		if(toCity.seigniorCharaId()){
+			SeigniorExecute.addMessage(String.format(Language.get("win_attack_and_occupy_enemy"),fromSeignior.character().name(),toCity.seignior().character().name(),toCity.name()));
+		}else{
+			SeigniorExecute.addMessage(String.format(Language.get("win_attack_and_occupy_null"),fromSeignior.character().name(),toCity.name()));
+		}
 		var winSeigniorId = fromSeignior.chara_id();
-		var failSeigniorId = toCity.seignior().chara_id();
+		var failSeigniorId = toCity.seigniorCharaId();
 		var leaderId = self.attackData._characterList[0].id();
 		retreatCity = battleFailChangeCity(toCity, failSeigniorId);
 		var retreatCityId = 0;
 		if(retreatCity){
 			retreatCityId = retreatCity.id();
-			//battleExpeditionMove(toCity, retreatCity);
 		}
 		battleCityChange(winSeigniorId,
 		failSeigniorId, 
@@ -165,13 +173,19 @@ BattleAIExecute.prototype._set=function(attackData, targetData){
 	chara.scaleX = chara.scaleY = 2;
 	chara.setCoordinate(fromX, fromY);
 	LMvc.MapController.view.baseLayer.addChild(chara);
-	var target = new BattleCharacterView(LMvc.MapController, targetData._characterList[0].id(), BattleCharacterSize.width, BattleCharacterSize.height);
-	target.scaleX = target.scaleY = 2;
-	target.setCoordinate(targetX, targetY);
-	LMvc.MapController.view.baseLayer.addChild(target);
-	chara.setActionDirection(CharacterAction.MOVE, getDirectionFromTarget(chara, target));
-	target.setActionDirection(CharacterAction.STAND, getDirectionFromTarget(target, chara));
-	chara.attackTarget = target;
+	var target;
+	if(targetData._characterList.length > 0){
+		target = new BattleCharacterView(LMvc.MapController, targetData._characterList[0].id(), BattleCharacterSize.width, BattleCharacterSize.height);
+		target.scaleX = target.scaleY = 2;
+		target.setCoordinate(targetX, targetY);
+		LMvc.MapController.view.baseLayer.addChild(target);
+		chara.setActionDirection(CharacterAction.MOVE, getDirectionFromTarget(chara, target));
+		target.setActionDirection(CharacterAction.STAND, getDirectionFromTarget(target, chara));
+		chara.attackTarget = target;
+	}else{
+		chara.setActionDirection(CharacterAction.MOVE, getDirectionFromTarget(chara, {getTo:function(){return [targetX, targetY];}}));
+	}
+	
 	chara.ctrlX = chara.x;
 	chara.ctrlY = chara.y;
 	self.characterView = chara;
@@ -182,36 +196,51 @@ BattleAIExecute.prototype._set=function(attackData, targetData){
 		LMvc.MapController.view.toPosition(child.x, child.y);
 	},onComplete:function(event){
 		var child = event.target;
-		child.setActionDirection(CharacterAction.ATTACK, getDirectionFromTarget(child, child.attackTarget));
-		child.attackTarget.setActionDirection(CharacterAction.ATTACK, getDirectionFromTarget(child.attackTarget, child));
+		if(child.attackTarget){
+			child.setActionDirection(CharacterAction.ATTACK, getDirectionFromTarget(child, child.attackTarget));
+			child.attackTarget.setActionDirection(CharacterAction.ATTACK, getDirectionFromTarget(child.attackTarget, child));
+		}else{
+			child.changeAction(CharacterAction.ATTACK);
+		}
 	}}).to(chara,1,{onUpdate:function(){}, onComplete:function(event){
 		BattleAIExecute.Instance().timer.reset();
 		BattleAIExecute.Instance().timer.start();
 	}});
 };
 BattleAIExecute.prototype.getTargetCharacters=function(chara){
-	return this.attackData.expeditionCharacterList[0].seigniorId() == chara.seigniorId() ? this.targetData.expeditionCharacterList : this.attackData.expeditionCharacterList;
+	return this.attackData.expeditionCharacterList[0].data.seigniorId() == chara.data.seigniorId() ? this.targetData.expeditionCharacterList : this.attackData.expeditionCharacterList;
 };
 BattleAIExecute.prototype.removeChara = function(chara){
 	var self = this;
-	var charaList =self.getTargetCharacters(chara);
+	var charaList;
 	var captives;
+	console.log("removeChara", self.attackData.expeditionCharacterList, chara);
 	if(self.attackData.expeditionCharacterList[0].data.seigniorId() == chara.data.seigniorId()){
+		charaList = self.attackData.expeditionCharacterList;
 		captives = self.targetData.captives;
 	}else{
+		charaList = self.targetData.expeditionCharacterList;
 		captives = self.attackData.captives;
 	}
-	console.log("removeChara "+chara.data.name()+" : " + charaList.length);
+	console.log("removeChara "+chara.data.name() + ", length=" + charaList.length);
 	for(var i=0,l=charaList.length;i<l;i++){
+		console.warn(charaList[i].data.name() + "==" + chara.data.name());
 		if(charaList[i].data.id() == chara.data.id()){
-			if(calculateHitrateCaptive(chara)){
+			var nearCharas = [];
+			if(i - 1 >= 0){
+				nearCharas.push(charaList[i - 1]);
+			}
+			if(i + 1 < charaList.length){
+				nearCharas.push(charaList[i + 1]);
+			}
+			if(calculateHitrateCaptive(chara, nearCharas) || true){
 				captives.push(chara.data.id());
 			}
 			charaList.splice(i, 1);
 			break;
 		}
 	}
-	console.log("removeChara over : " + charaList.length);
+	console.log("removeChara Over, length=" + charaList.length);
 };
 BattleAIExecute.prototype.characterExec=function(currentCharacter, currentData, enemyData){
 	var self = this;
@@ -526,6 +555,9 @@ BattleAIExecute.prototype.physicalAttackStart = function(currentChara, targetCha
 BattleAIExecute.prototype.counterAttack = function(currentChara, targetChara) {
 	var self = this;
 	if(currentChara.herts && currentChara.herts.length > 0){
+		if(targetChara.data.troops() == 0){
+			return;
+		}
 		console.log("counterAttack "+currentChara.data.name()+" 双击");
 		self.physicalAttack(currentChara, targetChara);
 		return;

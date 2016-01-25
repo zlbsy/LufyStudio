@@ -67,6 +67,18 @@ MapView.prototype.toPosition=function(x, y){
 	var self = this;
 	self.baseLayer.x = LGlobal.width * 0.5 - x - CityIconConfig.width * 0.5;
 	self.baseLayer.y = LGlobal.height * 0.5 - y - CityIconConfig.height * 0.3;
+	console.log("toPosition:x="+self.baseLayer.x+",y="+self.baseLayer.y);
+	if(self.baseLayer.x > 0){
+		self.baseLayer.x = 0;
+	}else if(self.baseLayer.x < LGlobal.width - self.backgroundWidth){
+		self.baseLayer.x = LGlobal.width - self.backgroundWidth;
+	}
+	if(self.baseLayer.y > 0){
+		self.baseLayer.y = 0;
+	}else if(self.baseLayer.y < LGlobal.height - self.backgroundHeight){
+		self.baseLayer.y = LGlobal.height - self.backgroundHeight;
+	}
+	console.log("toPosition check:x="+self.baseLayer.x+",y="+self.baseLayer.y);
 };
 MapView.prototype.init=function(){
 	var self = this;

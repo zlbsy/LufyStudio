@@ -41,7 +41,7 @@ TerrainMasterModel.prototype.id = function() {
 	return this.data.id;
 };
 TerrainMasterModel.prototype.name = function() {
-	return this.data.name;
+	return Language.get("terrain_"+this.data.id);
 };
 TerrainMasterModel.prototype.heal = function() {
 	return this.data.heal;
@@ -50,8 +50,10 @@ TerrainMasterModel.prototype.strategy = function() {
 	return this.data.strategy;
 };
 TerrainMasterModel.prototype.comment = function() {
-	return this.data.comment;
+	return Language.get(this.data.comment);
 };
 TerrainMasterModel.prototype.sortValue = function() {
-	return this.data.sortValue;
+	console.error("已删除属性");
+	alert("已删除属性");
+	return 1;
 };

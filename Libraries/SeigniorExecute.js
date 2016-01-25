@@ -2,6 +2,7 @@ function SeigniorExecute(){
 	var self = this;
 	base(self,LMvcObject,[]);
 	self.seigniorIndex = 0;
+	self.messageCitys = [];
 	self.areaIndex = 0;
 	if(!self.timer){
 		self.timer = new LTimer(LGlobal.speed, 1);
@@ -158,6 +159,7 @@ SeigniorExecute.prototype.areaGainRun=function(area){
 	console.log("areaGainRun over");
 };
 SeigniorExecute.addMessage = function(value){
+	console.error("addMessage :", value);
 	MessageView.Instance().add(value);
 };
 SeigniorExecute.prototype.areaJobRun=function(area){
@@ -472,6 +474,7 @@ SeigniorExecute.prototype.maskHide=function(){
 	if(self.msgView.timer != null){
 		self.msgView.timer.destroy();
 	}
+	self.messageCitys = [];
 	self.backLayer.remove();
 	self.backLayer = null;
 	MessageView._Instance = null;

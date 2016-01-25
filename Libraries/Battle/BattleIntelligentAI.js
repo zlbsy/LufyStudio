@@ -30,20 +30,47 @@ BattleIntelligentAI.execute = function() {
 	var chatacters = [];
 	var charas = [], chara;
 	charas = LMvc.BattleController.view.charaLayer.getCharactersFromBelong(currentBelong);
+	//TODO::位于恢复地形>残血状态>攻击型法师>远程类>近战类>风水士类
+	/*
+	 * 风水士类 +1
+	 * 近战类 +2
+	 * 远程类 +3
+	 * 攻击型法师 +4
+	 * 残血状态 x10
+	 * 地形 x100
+	 */
 	var sortValue = 0;
 	for(var i = 0;i<charas.length;i++){
 		chara = charas[i];
 		if(chara.mode == CharacterMode.END_ACTION){
 			continue;
 		}
+		var currentSoldier = chara.data.currentSoldiers();
+		var attackType = currentSoldier.attackType();
 		var terrainData = LMvc.BattleController.view.mapLayer.getTerrainData(chara.locationX(),chara.locationY());
 		var terrainId = getTerrainId(terrainData);
 		var terrain = TerrainMasterModel.getMaster(terrainId);
-		if(sortValue == terrain.sortValue()){
+		var currentSort = 1;
+		if(HealSoldiers.indexOf(currentSoldier.id())){
+			currentSort += 1;
+		}else if(attackType == AttackType.NEAR){
+			currentSort += 2;
+		}else if(attackType == AttackType.FAR){
+			currentSort += 3;
+		}else if(attackType == AttackType.MAGIC){
+			currentSort += 4;
+		}
+		if(chara.data.isPantTroops()){
+			currentSort *= 10;
+		}
+		if(terrain.heal() > 0){
+			currentSort *= 100;
+		}
+		if(sortValue == currentSort){
 			chatacters.push(chara);
-		}else if(sortValue < terrain.sortValue()){
+		}else if(sortValue < currentSort){
 			chatacters = [chara];
-			sortValue = terrain.sortValue();
+			sortValue = currentSort;
 		}
 	}
 	BattleIntelligentAI.ownCharacters = charas;

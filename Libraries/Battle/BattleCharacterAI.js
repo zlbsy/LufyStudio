@@ -398,7 +398,7 @@ BattleCharacterAI.prototype.attackActionComplete = function(event) {
 			}
 			var num = new Num(Num.MIDDLE,1,20);
 			obj.chara.hertValue = obj.hertValue > obj.chara.data.troops() ? obj.chara.data.troops() : obj.hertValue;
-			num.setValue(obj.hertValue);
+			num.setValue(obj.chara.hertValue);
 			num.x = obj.chara.x;
 			num.y = obj.chara.y;
 			chara.controller.view.baseLayer.addChild(num);

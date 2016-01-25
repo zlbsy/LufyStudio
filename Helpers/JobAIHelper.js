@@ -47,7 +47,7 @@ function jobAiEvent(){
 }
 /*检索战力最弱城池*/
 function getWeakBattleCity(areaModel){
-	console.log("getWeakBattleCity");
+	console.log("getWeakBattleCity :: 检索战力最弱城池");
 	var neighbors = areaModel.neighbor();
 	var enemyCitys = [];
 	for(var i = 0;i < neighbors.length;i++){
@@ -64,6 +64,7 @@ function getWeakBattleCity(areaModel){
 }
 /*检索可攻击城池*/
 function getCanBattleCity(areaModel,characters,enlistFlag){
+	console.log("getCanBattleCity :: 检索可攻击城池");
 	if(enlistFlag == AiEnlistFlag.Must || enlistFlag == AiEnlistFlag.MustResource){
 		return null;
 	}
@@ -82,14 +83,14 @@ function getCanBattleCity(areaModel,characters,enlistFlag){
 		return null;
 	}
 	var generals = AreaModel.getPowerfulCharacters(characters);
-	console.log("getCanBattleCity generals.length="+generals.length);
+	//console.log("getCanBattleCity generals.length="+generals.length);
 	var needFood = 0;
 	for(var i=0,l=generals.length;i<l && i<BattleMapConfig.AttackQuantity;i++){
 		var charaModel = generals[i].general;
 		needFood += charaModel.maxTroops();
 	}
-	console.log("areaModel.food()="+areaModel.food());
-	console.log("needFood * 20="+(needFood * 20));
+	//console.log("areaModel.food()="+areaModel.food());
+	//console.log("needFood * 20="+(needFood * 20));
 	if(areaModel.food() < needFood * 20){
 		return null;
 	}
@@ -109,9 +110,10 @@ function getIdleCharacters(areaModel){
 }
 /*出战准备*/
 function jobAiToBattle(areaModel,characters,targetCity){
-	console.log("jobAiToBattle");
+	console.log("jobAiToBattle :: 出战准备");
 	//TODO::
-	targetCity = AreaModel.getArea(22);
+	//targetCity = AreaModel.getArea(22);
+	
 	var attackQuantity = BattleMapConfig.AttackQuantity;
 	var generalCount = areaModel.generalsSum();
 	if(generalCount - attackQuantity < BattleMapConfig.DetachmentQuantity){
@@ -141,7 +143,6 @@ function jobAiToBattle(areaModel,characters,targetCity){
 		sumTroops += maxTroops;
 		general.troops(maxTroops);
 	}
-	console.log("jobAiToBattle data:"+data);
 	data.troops = sumTroops;
 	sumTroops = sumTroops + data.troops;
 	data.money = areaModel.money() * 0.2 >>> 0;
@@ -151,8 +152,6 @@ function jobAiToBattle(areaModel,characters,targetCity){
 	areaModel.troops(areaModel.troops() - sumTroops);
 	data.cityId = targetCity.id();
 	data.toCity = targetCity;
-	console.log("targetCity.seigniorCharaId():"+targetCity.seigniorCharaId());
-	console.log("LMvc.selectSeignorId:"+LMvc.selectSeignorId);
 	if(targetCity.seigniorCharaId() == LMvc.selectSeignorId){
 		SeigniorExecute.Instance().stop = true;
 		//TODO::进入战斗
@@ -180,10 +179,15 @@ function jobAiToBattle(areaModel,characters,targetCity){
 }
 /*AI之间自动战斗*/
 function jobAiBattleExecute(areaModel,data,targetCity){
-	console.log("AI之间自动战斗");
+	console.log("AI之间自动战斗", areaModel,data,targetCity);
 	var attackSeignior = areaModel.seignior();
 	var defSeignior = targetCity.seignior();
-	SeigniorExecute.Instance().msgView.add(String.format("{0}的{1}向{2}的{3}发起进攻了!",attackSeignior.character().name(),areaModel.name(),defSeignior.character().name(),targetCity.name()));
+	if(!targetCity.seigniorCharaId()){
+		SeigniorExecute.addMessage(String.format(Language.get("to_attack_null_city"),attackSeignior.character().name(),areaModel.name(),targetCity.name()));
+		BattleAIExecute.set(data, {expeditionCharacterList:[]});
+		return;
+	}
+	SeigniorExecute.addMessage(String.format(Language.get("to_attack_seignior_city"),attackSeignior.character().name(),areaModel.name(),defSeignior.character().name(),targetCity.name()));
 	var targetData = {};
 	var enemyCharas = getDefenseEnemiesFromCity(targetCity);
 	enemyCharas[0].isLeader = true;
@@ -250,7 +254,7 @@ function jobAiToEnlish(areaModel,characters){
 	if(areaModel.money() < JobPrice.ENLIST){
 		return;
 	}
-	SeigniorExecute.Instance().msgView.add("jobAiToEnlish");
+	console.log("jobAiToEnlish :: 征兵");
 	var character = characters.shift();
 	var num = EnlistSetting.ENLIST_TO - EnlistSetting.ENLIST_FROM;
 	var cost = JobPrice.ENLIST * EnlistSetting.ENLIST_TO / EnlistSetting.ENLIST_FROM >>> 0;
@@ -273,7 +277,10 @@ function jobAiTavern(areaModel,characters){//录用
 	if(characters.length == 0){
 		return;
 	}
-	SeigniorExecute.Instance().areaMessage(areaModel,"{0}在招贤纳士!");
+	if(areaModel.seigniorCharaId() != LMvc.selectSeignorId && SeigniorExecute.Instance().messageCitys.indexOf(areaModel.id()) < 0){
+		SeigniorExecute.Instance().messageCitys.push(areaModel.id());
+		SeigniorExecute.addMessage(String.format("{0}在招贤纳士!", areaModel.name()));
+	}
 	var outOfOfficeCharas = areaModel.outOfOffice();
 	if(outOfOfficeCharas.length == 0){
 		return;
@@ -286,7 +293,10 @@ function jobAiAccess(areaModel,characters){//访问
 	if(characters.length == 0){
 		return;
 	}
-	SeigniorExecute.Instance().areaMessage(areaModel,"{0}在招贤纳士!");
+	if(areaModel.seigniorCharaId() != LMvc.selectSeignorId && SeigniorExecute.Instance().messageCitys.indexOf(areaModel.id()) < 0){
+		SeigniorExecute.Instance().messageCitys.push(areaModel.id());
+		SeigniorExecute.addMessage(String.format("{0}在招贤纳士!", areaModel.name()));
+	}
 	jobAiInternal(areaModel,characters,0,Job.ACCESS);
 }
 function jobAiInstitute(areaModel,characters){//技术
@@ -317,7 +327,10 @@ function jobAiInternal(areaModel,characters,price,job){//内政
 	if(price > 0 && areaModel.money() < price){
 		return;
 	}
-	SeigniorExecute.Instance().areaMessage(areaModel,"{0}在发展内政!");
+	if(areaModel.seigniorCharaId() != LMvc.selectSeignorId && SeigniorExecute.Instance().messageCitys.indexOf(areaModel.id()) < 0){
+		SeigniorExecute.Instance().messageCitys.push(areaModel.id());
+		SeigniorExecute.addMessage(String.format("{0}在发展内政!", areaModel.name()));
+	}
 	var character = characters.shift();
 	character.job(job);
 	if(price > 0){
@@ -372,7 +385,7 @@ function jobAiGeneralMove(areaModel,characters){//武将移动
 	if(characters.length == 0){
 		return;
 	}
-	SeigniorExecute.Instance().msgView.add("jobAiGeneralMove");
+	console.log("jobAiGeneralMove :: 武将移动");
 	var nowGeneralSum = areaModel.aiWillComeNum + areaModel.generalsSum();
 	if(nowGeneralSum <= 1){
 		return;
@@ -418,7 +431,7 @@ function jobAiTransport(areaModel,characters){//运输物资
 	if(characters.length == 0){
 		return;
 	}
-	SeigniorExecute.Instance().msgView.add("jobAiTransport");
+	console.log("jobAiTransport :: 运输物资");
 	var neighbors = areaModel.neighbor();
 	var battleDistance = 100;
 	var currentCity;
@@ -450,7 +463,7 @@ function jobAiTransport(areaModel,characters){//运输物资
 	food = food < minToops * 10 ? 0 : food;
 	var money = areaModel.money() - 10000;
 	money = money < 5000 ? 0 : money;
-	if(moveTroops == 0 && food == 0 && money == 0){
+	if(troops == 0 && food == 0 && money == 0){
 		return;
 	}
 	var data = {
@@ -462,7 +475,7 @@ function jobAiTransport(areaModel,characters){//运输物资
 	var index = characters.length * Math.random() >>> 0;
 	var character = characters[index];
 	characters.splice(index, 1);
-	characterModel.transport(data);
+	character.transport(data);
 }
 function jobAiCaptives(areaModel){
 	var captives = areaModel.captives();
@@ -479,16 +492,16 @@ function jobAiCaptive(areaModel, seigniorId, charaModel){
 	charaModel.job(Job.END);
 	if(calculateHitrateSurrender(seigniorId, charaModel)){//投降
 		if(charaModel.seigniorId() == LMvc.selectSeignorId){
-			SeigniorExecute.Instance().msgView.add(String.format("{0}投降了敌军!",charaModel.name()));
+			SeigniorExecute.addMessage(String.format("{0}投降了敌军!",charaModel.name()));
 		}
 		charaModel.seigniorId(seigniorId);
 		areaModel.removeCaptives(charaModel.id());
 		areaModel.addGenerals(charaModel);
 		return;
 	}
-	if(calculateHitrateRelease(leaderId, charaModel)){//释放
+	if(calculateHitrateRelease(seigniorId, charaModel)){//释放
 		if(charaModel.seigniorId() == LMvc.selectSeignorId){
-			SeigniorExecute.Instance().msgView.add(String.format("{0}被敌军释放了!",charaModel.name()));
+			SeigniorExecute.addMessage(String.format("{0}被敌军释放了!",charaModel.name()));
 		}
 		areaModel.removeCaptives(charaModel.id());
 		var areas = charaModel.seignior().areas();
@@ -499,7 +512,7 @@ function jobAiCaptive(areaModel, seigniorId, charaModel){
 	}
 	if(calculateHitrateBehead(seigniorId, charaModel)){//斩首
 		if(charaModel.seigniorId() == LMvc.selectSeignorId){
-			SeigniorExecute.Instance().msgView.add(String.format("{0}被敌军斩首了!",charaModel.name()));
+			SeigniorExecute.addMessage(String.format("{0}被敌军斩首了!",charaModel.name()));
 		}
 		areaModel.removeCaptives(charaModel.id());
 	} 
@@ -508,20 +521,23 @@ function jobAiCaptivesRescue(areaModel,characters){//解救俘虏
 	if(characters.length == 0){
 		return false;
 	}
-	SeigniorExecute.Instance().msgView.add("jobAiCaptivesRescue");
+	console.log("jobAiCaptivesRescue :: 解救俘虏");
 	var captives = SeigniorModel.getCharactersIsCaptives(areaModel.seigniorCharaId());
 	if(captives.length == 0){
 		return false;
 	}
-	var captive = captives[captives.length * Math.random() >>> 0];
+	//TODO::执行解救俘虏概率
+	var captiveIndex = captives.length * Math.random() >>> 0;
+	var captive = captives[captiveIndex];
 	var character = characters.shift();
 	var money = (captive.force() + captive.intelligence() + captive.command() + captive.agility() + captive.luck()) * JobCoefficient.REDEEM;
 	money += (money * captive.skillCoefficient() * 0.1);
+	console.log("captive:" ,captive.name(),",money:",money,", areaModel.money():",areaModel.money());
 	if(areaModel.money() < money){
 		return false;
 	}
 	areaModel.money(-money);
-	var captiveArea = captive.area();
+	var captiveArea = captive.city();
 	if(captiveArea.seigniorCharaId() == LMvc.selectSeignorId){
 		character.job(Job.End);
 		var obj = {title:Language.get("confirm"),message:String.format(Language.get("{0}的{1}想用金钱{2}赎回{3}，是否答应？"),captiveArea.seignior().name(),character.name(),money,captive.name()),height:200

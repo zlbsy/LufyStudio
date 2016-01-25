@@ -498,6 +498,7 @@ function battleExpeditionMove(city, retreatCity){
  * 战斗后移动到指定城池
  */
 function battleCityChange(winSeigniorId, failSeigniorId, retreatCityId, expeditionList, city, captives){
+	console.error(winSeigniorId, failSeigniorId, retreatCityId, expeditionList, city, captives);
 	//var battleData = controller.battleData;
 	//var city = battleData.toCity;
 	var generals = city.generals();
@@ -563,6 +564,9 @@ function battleCityChange(winSeigniorId, failSeigniorId, retreatCityId, expediti
 /*战斗失败,撤退城池搜索及处理*/
 function battleFailChangeCity(city, failSeigniorId){
 	//var city = battleData.toCity;
+	if(!failSeigniorId){
+		return null;
+	}
 	var neighbors = city.neighbor();
 	var enemyCitys = [];
 	var canMoveCitys = [];
@@ -587,6 +591,9 @@ function battleFailChangeCity(city, failSeigniorId){
 };
 function battleCheckRetreatCity(retreatCity, failSeigniorId, toCity){
 	var retreatCityId = 0;
+	if(!failSeigniorId){
+		return retreatCityId;
+	}
 	if(retreatCity){
 		if(!retreatCity.prefecture()){
 			var enemyCharas = getDefenseEnemiesFromCity(retreatCity);

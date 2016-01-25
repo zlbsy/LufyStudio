@@ -19,6 +19,7 @@ var EnlistSetting = {
 var TrainingSetting = {
 	MAX:500//训练最大熟练度
 };
+var HealSoldiers = [10];
 /* {id:1,name:"兵种名",type:SoldierType,movetype:MoveType,movePower:移动力,
 	property:兵种属性,
 	equipment:可以装备的装备的种类,

@@ -135,7 +135,7 @@ BattleCharacterView.prototype.showLightComplete = function(event){
 };
 BattleCharacterView.prototype.addAnimation = function() {
 	var self = this;
-	var bitmapData = new LBitmapData(LMvc.datalist[BattleCharacterView.DEFAULT_IMG]);
+	var bitmapData = new LBitmapData(LMvc.datalist[BattleCharacterView.DEFAULT_IMG], 0, 0, BattleCharacterSize.width, BattleCharacterSize.height);
 	self.anime = new LAnimationTimeline(bitmapData, BattleCharacterView.getAnimationData());
 	self.anime.speed = BattleMapConfig.SPEED;
 	self.layer.addChild(self.anime);

@@ -87,7 +87,7 @@ var MapSetting = [
 	{id:21,position:{x:1750,y:1300},neighbor:[10,20,49],level:1,maxLevel:3,business:0,agriculture:0,technology:0,police:50, food : 1000, population : 40000,troops:0,generals:[],captives:[],out_of_offices:[],not_debut:[], city_defense : 1000},
 	{id:22,position:{x:1400,y:450},neighbor:[12,14,23,24],level:1,maxLevel:3,business:0,agriculture:0,technology:0,police:50, food : 1000, population : 40000,troops:0,generals:[],captives:[],out_of_offices:[],not_debut:[], city_defense : 1000},
 	{id:23,position:{x:1530,y:380},neighbor:[22,41,42],level:1,maxLevel:3,business:0,agriculture:0,technology:0,police:50, food : 1000, population : 40000,troops:0,generals:[],captives:[],out_of_offices:[],not_debut:[], city_defense : 1000},
-	{id:24,position:{x:1570,y:500},neighbor:[14,22,26,33,39,41],level:1,maxLevel:3,business:0,agriculture:0,technology:0,police:50, food : 1000, population : 40000,troops:0,generals:[],captives:[],out_of_offices:[],not_debut:[], city_defense : 1000},
+	{id:24,position:{x:1570,y:500},neighbor:[14,22,26,39,41],level:1,maxLevel:3,business:0,agriculture:0,technology:0,police:50, food : 1000, population : 40000,troops:0,generals:[],captives:[],out_of_offices:[],not_debut:[], city_defense : 1000},
 	{id:25,position:{x:1430,y:650},neighbor:[14,15,26],level:1,maxLevel:3,business:0,agriculture:0,technology:0,police:50, food : 1000, population : 40000,troops:0,generals:[],captives:[],out_of_offices:[],not_debut:[], city_defense : 1000},
 	{id:26,position:{x:1630,y:750},neighbor:[24,25,33,34,38],level:1,maxLevel:3,business:0,agriculture:0,technology:0,police:50, food : 1000, population : 40000,troops:0,generals:[],captives:[],out_of_offices:[],not_debut:[], city_defense : 1000},
 	{id:27,position:{x:1590,y:900},neighbor:[16,28,29],level:1,maxLevel:3,business:0,agriculture:0,technology:0,police:50, food : 1000, population : 40000,troops:0,generals:[],captives:[],out_of_offices:[],not_debut:[], city_defense : 1000},
@@ -98,7 +98,7 @@ var MapSetting = [
 	{id:31,position:{x:2250,y:1100},neighbor:[30,32,49],level:1,maxLevel:3,business:0,agriculture:0,technology:0,police:50, food : 1000, population : 40000,troops:0,generals:[],captives:[],out_of_offices:[],not_debut:[], city_defense : 1000},
 	{id:32,position:{x:2200,y:1230},neighbor:[31],level:1,maxLevel:3,business:0,agriculture:0,technology:0,police:50, food : 1000, population : 40000,troops:0,generals:[],captives:[],out_of_offices:[],not_debut:[], city_defense : 1000},
 	
-	{id:33,position:{x:1900,y:680},neighbor:[24,26,35,39],level:1,maxLevel:3,business:0,agriculture:0,technology:0,police:50, food : 1000, population : 40000,troops:0,generals:[],captives:[],out_of_offices:[],not_debut:[], city_defense : 1000},
+	{id:33,position:{x:1900,y:680},neighbor:[34,26,35,39],level:1,maxLevel:3,business:0,agriculture:0,technology:0,police:50, food : 1000, population : 40000,troops:0,generals:[],captives:[],out_of_offices:[],not_debut:[], city_defense : 1000},
 	{id:34,position:{x:1950,y:800},neighbor:[26,29,30,33,35],level:1,maxLevel:3,business:0,agriculture:0,technology:0,police:50, food : 1000, population : 40000,troops:0,generals:[],captives:[],out_of_offices:[],not_debut:[], city_defense : 1000},
 	
 	{id:35,position:{x:2070,y:660},neighbor:[33,34,36,39,40],level:1,maxLevel:3,business:0,agriculture:0,technology:0,police:50, food : 1000, population : 40000,troops:0,generals:[],captives:[],out_of_offices:[],not_debut:[], city_defense : 1000},
