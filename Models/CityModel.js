@@ -23,8 +23,7 @@ CityModel.prototype.getImages=function(){
 		{name:"win05",path:LMvc.IMG_PATH+"win/win05.png"},
 		{name:"win06",path:LMvc.IMG_PATH+"win/win06.png"},
 		{name:"background-text01",path:LMvc.IMG_PATH+"background/text01.png"},
-		{name:"background-header",path:LMvc.IMG_PATH+"background/header.png"},
-		{name:"icon-return",path:LMvc.IMG_PATH+"icon/return.png"}
+		{name:"background-header",path:LMvc.IMG_PATH+"background/header.png"}
 	];
 	//人物头像
 	//list.push({name:"face-5",path:LMvc.IMG_PATH+"face/5.png"});

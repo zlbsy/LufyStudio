@@ -26,14 +26,15 @@ MapView.prototype.backLayerInit=function(){
 	var bitmapData = new LBitmapData(LMvc.datalist["area-map-1"],null,null,null,null,LBitmapData.DATA_CANVAS);
 	self.backgroundWidth = bitmapData.width;
 	self.backgroundHeight = bitmapData.height;
-	var roadBitmapData = new LBitmapData(null,0,0,bitmapData.width,bitmapData.height,LBitmapData.DATA_CANVAS);
+	//var roadBitmapData = new LBitmapData(null,0,0,bitmapData.width,bitmapData.height,LBitmapData.DATA_CANVAS);
 	//bitmapData.copyPixels(roadBitmapData, new LRectangle(0, 0, 28, 28), new LPoint(50,50));
 	var roadLayer = new LShape();
-	roadLayer.alpha = 0.5;
+	roadLayer.alpha = 0.7;
 	//"checkbox-background"
 	//self.x = self.areaStatus.position().x;
 	//self.y = self.areaStatus.position().y;
 	//neighbor:[1,3,4,50]
+	roadLayer.graphics.drawRect(0,"#FFFFFF",[0, 0, self.backgroundWidth, self.backgroundHeight]);
 	for(var i=0,l=AreaModel.list.length;i<l;i++){
 		var areaStatus = AreaModel.list[i];
 		var neighbor = areaStatus.neighbor();
@@ -47,10 +48,12 @@ MapView.prototype.backLayerInit=function(){
 		}
 	}
 	roadLayer.cacheAsBitmap(true);
+	bitmapData.copyPixels(roadLayer._ll_cacheAsBitmap.bitmapData, new LRectangle(0, 0, self.backgroundWidth, self.backgroundHeight), new LPoint(0,0));
+	self.mapBitmapData = bitmapData;
 	var background = new BackgroundView();
 	background.set(bitmapData);
 	self.backLayer.addChild(background);
-	self.backLayer.addChild(roadLayer);
+	//self.backLayer.addChild(roadLayer);
 };
 MapView.prototype.areaDragStart=function(event){
 	event.currentTarget.parent.startDrag(event.touchPointID);
@@ -146,13 +149,17 @@ MapView.prototype.readDataToBattle = function(){
 MapView.prototype.areaLayerInit=function(){
 	var self = this;
 	self.areaLayer.removeAllChild();
-	self.areaLayer.cacheAsBitmap(false);
+	//bitmapData.copyPixels(roadLayer._ll_cacheAsBitmap.bitmapData, 
+	//new LRectangle(0, 0, self.backgroundWidth, self.backgroundHeight), new LPoint(0,0));
+	//iconLayer.cacheAsBitmap(true);
+	var rect = new LRectangle(self.mapBitmapData.x, self.mapBitmapData.y, self.mapBitmapData.width, self.mapBitmapData.height);
+	self.mapBitmapData.setProperties(0, 0, self.backgroundWidth, self.backgroundHeight);
 	for(var i=0,l=AreaModel.list.length;i<l;i++){
 		var areaStatus = AreaModel.list[i];
 		var area = new AreaIconView(self.controller,areaStatus);
 		self.areaLayer.addChild(area);
 	}
-	self.areaLayer.cacheAsBitmap(true);
+	self.mapBitmapData.setProperties(rect.x, rect.y, rect.width, rect.height);
 };
 MapView.prototype.changeMode=function(mode){
 	var self = this;

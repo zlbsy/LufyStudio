@@ -5,7 +5,7 @@ function LScript(scriptLayer, value) {
 	var self = this;
 	LGlobal.script = self;
 	self.scriptLayer = scriptLayer;
-	scriptLayer.graphics.drawRect(0, "#000", [0, 0, LGlobal.width, LGlobal.height]);
+	scriptLayer.addShape(LShape.RECT,[0, 0, LGlobal.width, LGlobal.height]);
 	self.scriptArray = new LScriptArray();
 	self.scriptArray.layerList["-"] = scriptLayer;
 	self.dataList = new Array();

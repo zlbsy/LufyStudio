@@ -9,7 +9,7 @@ BattleMarkView.prototype.set = function(){
 	var mark = new LBitmap(bitmapData);
 	mark.x = -bitmapData.width*0.5;
 	mark.y = -bitmapData.height*0.5;
-	self.mark = new LSprite()
+	self.mark = new LSprite();
 	self.addChild(self.mark);
 	self.mark.addChild(mark);
 	self.mark.rotate = -90;

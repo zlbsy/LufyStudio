@@ -346,6 +346,9 @@ AreaModel.prototype.icon=function(){
 	//self.iconWidth(bitmapData.width);
 	//bitmapData.setProperties(0, 0, self.iconWidth(), bitmapData.height);
 	var bitmap = new LBitmap(bitmapData);
+	bitmap.scaleX = bitmap.scaleY = Math.random() > 0.5 ? 1 : (Math.random() > 0.5 ? 0.8 : 0.6);
+	bitmap.x = (bitmapData.width - bitmap.getWidth())*0.5;
+	bitmap.y = (bitmapData.height - bitmap.getHeight())*0.5;
 	iconLayer.addChild(bitmap);
 	
 	var flag = self.flag();
@@ -355,10 +358,11 @@ AreaModel.prototype.icon=function(){
 		iconLayer.addChild(flag);
 	}
 	var name = getStrokeLabel(self.name(), 25, "#FFFFFF", "#000000", 3);
-	var name = getBitmap(name);
-	name.x = (bitmap.getWidth() - name.getWidth()) * 0.5;
-	name.y = bitmap.getHeight() - name.getHeight();
+	//var name = getBitmap(name);
+	name.x = bitmap.x + (bitmap.getWidth() - name.getWidth()) * 0.5;
+	name.y = bitmap.y + bitmap.getHeight() - name.getHeight();
 	iconLayer.addChild(name);
+	iconLayer.cacheAsBitmap(true);
 	return iconLayer;
 };
 AreaModel.prototype.iconWidth=function(w){

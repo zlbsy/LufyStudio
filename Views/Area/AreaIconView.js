@@ -128,7 +128,11 @@ AreaIconView.prototype.set=function(){
 	self.icon = self.areaStatus.icon();
 	self.width = self.icon.getWidth();
 	self.height = self.icon.getHeight();
-	self.layer.addChild(self.icon);
+	
+	LMvc.MapController.view.mapBitmapData.copyPixels(self.icon._ll_cacheAsBitmap.bitmapData, 
+	new LRectangle(0, 0, self.width, self.height), 
+	new LPoint(self.x+self.icon._ll_cacheAsBitmap.x,self.y + self.icon._ll_cacheAsBitmap.y));
+	//self.layer.addChild(self.icon);
 };
 AreaIconView.prototype.resetIcon = function(){
 	var self = this;
