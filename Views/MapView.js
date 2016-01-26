@@ -7,6 +7,8 @@ MapView.prototype.construct=function(){
 };
 MapView.prototype.layerInit=function(){
 	var self = this;
+	self.mapLayer = new LSprite();
+	self.addChild(self.mapLayer);
 	self.baseLayer = new LSprite();
 	self.addChild(self.baseLayer);
 	self.backLayer = new LSprite();
@@ -51,9 +53,10 @@ MapView.prototype.backLayerInit=function(){
 	bitmapData.copyPixels(roadLayer._ll_cacheAsBitmap.bitmapData, new LRectangle(0, 0, self.backgroundWidth, self.backgroundHeight), new LPoint(0,0));
 	self.mapBitmapData = bitmapData;
 	var background = new BackgroundView();
-	background.set(bitmapData);
-	self.backLayer.addChild(background);
+	background.set(bitmapData, self.baseLayer);
+	self.mapLayer.addChild(background);
 	//self.backLayer.addChild(roadLayer);
+	self.backLayer.addShape(LShape.RECT,[0,0,self.backgroundWidth,self.backgroundHeight]);
 };
 MapView.prototype.areaDragStart=function(event){
 	event.currentTarget.parent.startDrag(event.touchPointID);
@@ -68,14 +71,11 @@ MapView.prototype.clearBattleMark=function(){
 };
 MapView.prototype.addBattleMark=function(city){
 	var self = this;
-	console.log("addBattleMark:"+city);
 	var position = city.position();
-	console.log("addBattleMark:"+position+(typeof BattleMarkView));
 	var mark = new BattleMarkView();
 	mark.x = position.x + CityIconConfig.width*0.5;
 	mark.y = position.y;
 	self.markLayer.addChild(mark);
-	console.log("addBattleMark:"+mark.x+","+mark.y);
 };
 MapView.prototype.positionChangeToCity=function(city){
 	var self = this;
@@ -107,10 +107,10 @@ MapView.prototype.init=function(){
 	self.ctrlLayerInit();
 
 	self.baseLayer.dragRange = new LRectangle(
-		LGlobal.width - self.baseLayer.getWidth(),
-		LGlobal.height - self.baseLayer.getHeight(),
-		self.baseLayer.getWidth() - LGlobal.width,
-		self.baseLayer.getHeight() - LGlobal.height
+		LGlobal.width - self.backgroundWidth,
+		LGlobal.height - self.backgroundHeight,
+		self.backgroundWidth - LGlobal.width,
+		self.backgroundHeight - LGlobal.height
 	);
 	self.backLayer.addEventListener(LMouseEvent.MOUSE_DOWN,self.areaDragStart);
 	self.backLayer.addEventListener(LMouseEvent.MOUSE_UP,self.areaDragStop);
@@ -152,17 +152,11 @@ MapView.prototype.readDataToBattle = function(){
 MapView.prototype.areaLayerInit=function(){
 	var self = this;
 	self.areaLayer.removeAllChild();
-	//bitmapData.copyPixels(roadLayer._ll_cacheAsBitmap.bitmapData, 
-	//new LRectangle(0, 0, self.backgroundWidth, self.backgroundHeight), new LPoint(0,0));
-	//iconLayer.cacheAsBitmap(true);
-	var rect = new LRectangle(self.mapBitmapData.x, self.mapBitmapData.y, self.mapBitmapData.width, self.mapBitmapData.height);
-	self.mapBitmapData.setProperties(0, 0, self.backgroundWidth, self.backgroundHeight);
 	for(var i=0,l=AreaModel.list.length;i<l;i++){
 		var areaStatus = AreaModel.list[i];
 		var area = new AreaIconView(self.controller,areaStatus);
 		self.areaLayer.addChild(area);
 	}
-	self.mapBitmapData.setProperties(rect.x, rect.y, rect.width, rect.height);
 };
 MapView.prototype.changeMode=function(mode){
 	var self = this;
