@@ -36,6 +36,11 @@ Language.groupSkillTalk = function(){
 	return Language.groupSkillTalkData[index];
 };
 Language.data = {
+	"size_1":"微",
+	"size_2":"小",
+	"size_3":"中",
+	"size_4":"大",
+	"size_5":"巨",
 	"disposition":"性格",
 	"disposition_0":"胆小",
 	"disposition_1":"冷静",

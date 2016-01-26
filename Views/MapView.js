@@ -63,6 +63,9 @@ MapView.prototype.areaDragStop=function(event){
 	LMvc.mapX = event.currentTarget.parent.x;
 	LMvc.mapY = event.currentTarget.parent.y;
 };
+MapView.prototype.clearBattleMark=function(){
+	this.markLayer.removeAllChild();
+};
 MapView.prototype.addBattleMark=function(city){
 	var self = this;
 	console.log("addBattleMark:"+city);

@@ -342,19 +342,19 @@ AreaModel.prototype.flag = function(){
 AreaModel.prototype.icon=function(){
 	var self = this;
 	var iconLayer = new LSprite();
-	var bitmapData = new LBitmapData(LMvc.datalist["area-"+self.level()]);
+	var bitmapData = new LBitmapData(LMvc.datalist["area-1"]);
 	//self.iconWidth(bitmapData.width);
 	//bitmapData.setProperties(0, 0, self.iconWidth(), bitmapData.height);
 	var bitmap = new LBitmap(bitmapData);
-	bitmap.scaleX = bitmap.scaleY = Math.random() > 0.5 ? 1 : (Math.random() > 0.5 ? 0.8 : 0.6);
+	bitmap.scaleX = bitmap.scaleY = (5+this.data.level)*0.1;
 	bitmap.x = (bitmapData.width - bitmap.getWidth())*0.5;
 	bitmap.y = (bitmapData.height - bitmap.getHeight())*0.5;
 	iconLayer.addChild(bitmap);
 	
 	var flag = self.flag();
 	if(flag != null){
-		flag.x = bitmap.getWidth() * 0.4;
-		flag.y = -flag.getHeight() * 0.4;
+		flag.x = CityIconConfig.width * 0.4;
+		flag.y = -flag.getHeight() * 0.3;
 		iconLayer.addChild(flag);
 	}
 	var name = getStrokeLabel(self.name(), 25, "#FFFFFF", "#000000", 3);
@@ -373,7 +373,7 @@ AreaModel.prototype.iconWidth=function(w){
 	}
 };
 AreaModel.prototype.size=function(){
-	return ["微","小","中","大","巨"][this.data.level - 1];
+	return Language.get("size_"+this.data.level);
 };
 AreaModel.prototype.level=function(value){
 	return this._plusData("level",value);

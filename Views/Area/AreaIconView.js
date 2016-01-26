@@ -128,7 +128,7 @@ AreaIconView.prototype.set=function(){
 	self.icon = self.areaStatus.icon();
 	self.width = self.icon.getWidth();
 	self.height = self.icon.getHeight();
-	
+	self.addShape(LShape.RECT,[0,0,CityIconConfig.width, CityIconConfig.height]);
 	LMvc.MapController.view.mapBitmapData.copyPixels(self.icon._ll_cacheAsBitmap.bitmapData, 
 	new LRectangle(0, 0, self.width, self.height), 
 	new LPoint(self.x+self.icon._ll_cacheAsBitmap.x,self.y + self.icon._ll_cacheAsBitmap.y));
