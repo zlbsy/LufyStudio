@@ -154,7 +154,7 @@ BuildBarrackView.prototype.toExpedition=function(){
 BuildBarrackView.prototype.toSelectLeader=function(){
 	var self = this;
 	self.controller.loadCharacterList(CharacterListType.SELECT_LEADER, self.controller.getValue("expeditionCharacterList"), 
-		{isOnlyOne:true, toast:"dialog_expedition_select_leader", buttonLabel:"execute", showMoney:false}
+		{isOnlyOne:true, toast:"dialog_expedition_select_leader", buttonLabel:"execute", showMoney:false});
 };
 BuildBarrackView.prototype.expeditionReadyComplete=function(event){
 	var windowLayer = event.currentTarget.parent;
