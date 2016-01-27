@@ -162,9 +162,8 @@ BattleView.prototype.showBattleField=function(){
 };
 BattleView.prototype.clearContentLayer=function(event){
 	var self = event.currentTarget.view;
-	self.contentLayer.die();
 	self.contentLayer.removeAllChild();
-	self.controller.addEventListener(CharacterListEvent.CLOSE, self.clearContentLayer);
+	self.controller.removeEventListener(CharacterListEvent.CLOSE, self.clearContentLayer);
 };
 BattleView.prototype.resetMapPosition=function(chara){
 	var self = this;

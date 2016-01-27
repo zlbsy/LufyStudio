@@ -37,6 +37,7 @@ BattleMainMenuView.prototype.onClickUp = function(event){
 	var self = button.parent;
 	if(self.menuLayer){
 		self.menuLayer.visible = !self.menuLayer.visible;
+		self.backLayer.visible = self.menuLayer.visible;
 		self.miniMapVisible = self.menuLayer.visible;
 		if(self.menuLayer.visible){
 			self.setMenuPosition();
@@ -57,6 +58,10 @@ BattleMainMenuView.prototype.getMainMenu = function(){
 	}
 	return getBitmap(bitmapWin);
 };
+BattleMainMenuView.prototype.hideMenu=function(){
+	this.backLayer.visible = false;
+	this.menuLayer.visible = false;
+};
 BattleMainMenuView.prototype.setMenu=function(){
 	var self = this;
 	var menuLayer = new LSprite();
@@ -64,6 +69,8 @@ BattleMainMenuView.prototype.setMenu=function(){
 	self.menuLayer = menuLayer;
 	
 	var layer = new LSprite(), menuY = 10, menuWidth = 120, menuHeight = 50;
+	self.backLayer = getTranslucentMask();
+	self.addChildAt(self.backLayer, 0);
 	
 	self.menuLayer.addChild(layer);
 	layer.x = menuY;
@@ -126,11 +133,11 @@ BattleMainMenuView.prototype.showOrHideMiniMap=function(event){
 BattleMainMenuView.prototype.boutEnd=function(event){
 	var self = event.currentTarget.parent.parent.parent;
 	self.controller.boutEnd();
-	self.menuLayer.visible = false;
+	self.hideMenu();
 };
 BattleMainMenuView.prototype.onClickGameSave=function(event){
 	var self = event.currentTarget.parent.parent.parent;
-	self.menuLayer.visible = false;
+	self.hideMenu();
 	LMvc.changeLoading(TranslucentLoading);
 	self.load.library(["GameManager"],self.gameSave);
 };
@@ -141,7 +148,7 @@ BattleMainMenuView.prototype.gameSave=function(){
 };
 BattleMainMenuView.prototype.onClickGameRead=function(event){
 	var self = event.currentTarget.parent.parent.parent;
-	self.menuLayer.visible = false;
+	self.hideMenu();
 	LMvc.changeLoading(TranslucentLoading);
 	self.load.library(["GameManager"],self.gameRead);
 };
@@ -153,13 +160,13 @@ BattleMainMenuView.prototype.gameRead=function(){
 
 BattleMainMenuView.prototype.clickCharacterList=function(event){
 	var self = event.currentTarget.parent.parent.parent;
-	self.menuLayer.visible = false;
+	self.hideMenu();
 	var selfCharas = self.controller.view.charaLayer.getCharactersFromBelong(Belong.SELF);
 	var enemyCharas = self.controller.view.charaLayer.getCharactersFromBelong(Belong.ENEMY);
 	self.controller.loadCharacterList(CharacterListType.BATTLE_CHARACTER_LIST,selfCharas.concat(enemyCharas), {showOnly:true});
 };
 BattleMainMenuView.prototype.clickBattleField=function(event){
 	var self = event.currentTarget.parent.parent.parent;
-	self.menuLayer.visible = false;
+	self.hideMenu();
 	self.controller.view.showBattleField();
 };

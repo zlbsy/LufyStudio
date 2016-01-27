@@ -6,9 +6,8 @@ function CharacterDetailedView(controller,param){
 }
 CharacterDetailedView.prototype.layerInit=function(){
 	var self = this;
-	var backLayer = new LSprite();
-	backLayer.graphics.drawRect(0,"#000000",[0,0,LGlobal.width,LGlobal.height],true,"#FFFFFF");
-	self.addChild(getBitmap(backLayer));
+	var backLayer = getTranslucentMask();
+	self.addChild(backLayer);
 	self.layer = new LSprite();
 	self.addChild(self.layer);
 	
@@ -350,7 +349,7 @@ CharacterDetailedView.prototype.showProperties=function(){
 	var labels = ["君主等级","武将等级","tab_arms",
 	"force","command","intelligence","agility","luck"];
 	var labelsRight = ["troops","MP",
-	"exp","熟练度",
+	LMvc.BattleController ? "exp" : "feat", "熟练度",
 	//"physicalFitness",
 	"attack","spirit","defense","breakout","morale","movePower"];
 	if(!LMvc.BattleController){
@@ -371,7 +370,7 @@ CharacterDetailedView.prototype.showProperties=function(){
 	var datasRight = [
 	[String.format("{0}({1})",self.characterModel.troops() == 0 ? self.characterModel.maxTroops() : self.characterModel.troops(),self.characterModel.wounded()),self.characterModel.maxTroops(),self.characterModel.maxTroops(),"red_bar", "icon_hert"],
 	[self.characterModel.MP(),self.characterModel.maxMP(),self.characterModel.maxMP(),"yellow_bar","yellow_ball"],
-	[self.characterModel.exp(),self.characterModel.maxExp(),self.characterModel.maxExp(),"orange_bar","orange_ball"],
+	LMvc.BattleController ? [self.characterModel.exp(),self.characterModel.maxExp(),self.characterModel.maxExp(),"orange_bar","orange_ball"] : [self.characterModel.feat(),self.characterModel.maxFeat(),self.characterModel.maxFeat(),"orange_bar","orange_ball"],
 	//[self.characterModel.physicalFitness(),self.characterModel.maxPhysicalFitness(),100],
 	[self.characterModel.currentSoldiers().proficiency(),self.characterModel.currentSoldiers().proficiency(),1000,"red_bar",null],
 	[self.characterModel.attack(),self.characterModel.attack(),1000,"red_bar",null],

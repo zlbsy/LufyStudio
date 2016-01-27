@@ -354,6 +354,9 @@ CharacterModel.prototype.father = function(){
 CharacterModel.prototype.feat = function(value){
 	return this._dataValue("feat", value, 0);
 };
+CharacterModel.prototype.maxFeat = function(){
+	return 9999;
+};
 CharacterModel.prototype.maxExp = function(value){
 	return this._dataValue("maxExp", value, 500);
 };

@@ -10,6 +10,8 @@ CharacterListView.CUTOVER_ABILITY = "ability_properties";
 CharacterListView.CUTOVER_ARM = "arm_properties";
 CharacterListView.prototype.init=function(){
 	var self = this;
+	var backLayer = getTranslucentMask();
+	self.addChild(backLayer);
 	self.listLayer = new LSprite();
 	self.addChild(self.listLayer);
 	self.charaDetailedLayer = new LSprite();
