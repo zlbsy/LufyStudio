@@ -80,27 +80,6 @@ CharacterListView.prototype.listInit=function(){
 			buttonLabel = "execute";
 			self.dataList = generals;
 			break;
-		case CharacterListType.APPOINT_PREFECTURE:
-			self.dataList = generals;
-			buttonLabel = "appoint_prefecture";
-			break;
-		case CharacterListType.SELECT_MONARCH:
-			self.dataList = self.controller.characterList;
-			buttonLabel = "execute";
-			break;
-		default:
-			buttonLabel = "execute";
-			showMoney = true;
-			self.dataList = cityModel.generals(Job.IDLE);
-			Toast.makeText(Language.get("dialog_select_generals")).show();
-			switch(self.controller.characterListType){
-				case CharacterListType.ENLIST:
-				case CharacterListType.EXPLORE_AGRICULTURE:
-				case CharacterListType.EXPLORE_BUSINESS:
-					showMoney = false;
-					break;
-			}
-			break;
 	}
 	*/
 	console.log("listInit datalist="+self.dataList);
