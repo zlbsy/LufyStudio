@@ -23,9 +23,11 @@ BuildMarketView.prototype.showMenu=function(){
 };
 BuildMarketView.prototype.onClickBusinessButton=function(event){
 	var self = event.currentTarget.parent.parent.parent;
-	self.controller.loadCharacterList(CharacterListType.BUSINESS,self);
+	var cityModel = self.controller.getValue("cityData");
+	self.controller.loadCharacterList(CharacterListType.BUSINESS, cityModel.generals(Job.IDLE), {showMoney:true, buttonLabel:"execute"});
 };
 BuildMarketView.prototype.onClickExploreButton=function(event){
 	var self = event.currentTarget.parent.parent.parent;
-	self.controller.loadCharacterList(CharacterListType.EXPLORE_BUSINESS,self);
+	var cityModel = self.controller.getValue("cityData");
+	self.controller.loadCharacterList(CharacterListType.EXPLORE_BUSINESS, cityModel.generals(Job.IDLE), {buttonLabel:"execute"});
 };

@@ -95,7 +95,6 @@ CharacterListView.prototype.listInit=function(){
 			Toast.makeText(Language.get("dialog_select_generals")).show();
 			switch(self.controller.characterListType){
 				case CharacterListType.ENLIST:
-				case CharacterListType.TRANSPORT:
 				case CharacterListType.EXPLORE_AGRICULTURE:
 				case CharacterListType.EXPLORE_BUSINESS:
 					showMoney = false;

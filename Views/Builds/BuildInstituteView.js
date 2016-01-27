@@ -23,11 +23,13 @@ BuildInstituteView.prototype.showMenu=function(){
 };
 BuildInstituteView.prototype.onClickTechnologyButton=function(event){
 	var self = event.currentTarget.parent.parent.parent;
-	self.controller.loadCharacterList(CharacterListType.TECHNOLOGY,self);
+	var cityModel = self.controller.getValue("cityData");
+	self.controller.loadCharacterList(CharacterListType.TECHNOLOGY, cityModel.generals(Job.IDLE), {isOnlyOne:true,showMoney:true, buttonLabel:"execute"});
 };
 BuildInstituteView.prototype.onClickLevelUpButton=function(event){
 	var self = event.currentTarget.parent.parent.parent;
-	self.controller.loadCharacterList(CharacterListType.LEVEL_UP,self);
+	var cityModel = self.controller.getValue("cityData");
+	self.controller.loadCharacterList(CharacterListType.LEVEL_UP, cityModel.generals(Job.IDLE), {isOnlyOne:true,showMoney:true, buttonLabel:"execute"});
 };
 BuildInstituteView.prototype.selectComplete=function(event){
 	var self = this;

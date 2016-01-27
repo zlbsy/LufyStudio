@@ -31,9 +31,11 @@ BuildCitygateView.prototype.onClickMapButton=function(event){
 };
 BuildCitygateView.prototype.onClickPoliceButton=function(event){
 	var self = event.currentTarget.parent.parent.parent;
-	self.controller.loadCharacterList(CharacterListType.POLICE,self);
+	var cityModel = self.controller.getValue("cityData");
+	self.controller.loadCharacterList(CharacterListType.POLICE, cityModel.generals(Job.IDLE), {showMoney:true, buttonLabel:"execute"});
 };
 BuildCitygateView.prototype.onClickRepairButton=function(event){
 	var self = event.currentTarget.parent.parent.parent;
-	self.controller.loadCharacterList(CharacterListType.REPAIR,self);
+	var cityModel = self.controller.getValue("cityData");
+	self.controller.loadCharacterList(CharacterListType.REPAIR, cityModel.generals(Job.IDLE), {showMoney:true, buttonLabel:"execute"});
 };

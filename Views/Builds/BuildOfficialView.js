@@ -56,7 +56,8 @@ BuildOfficialView.prototype.showMenu=function(){
 };
 BuildOfficialView.prototype.onClickPrefectureButton=function(event){
 	var self = this;
-	self.controller.loadCharacterList(CharacterListType.APPOINT_PREFECTURE,self);
+	var cityModel = self.controller.getValue("cityData");
+	self.controller.loadCharacterList(CharacterListType.APPOINT_PREFECTURE, cityModel.generals(), {isOnlyOne:true, buttonLabel:"appoint_prefecture"});
 };
 BuildOfficialView.prototype.onClickDiplomacyButton=function(event){
 	var self = this;
@@ -80,7 +81,12 @@ BuildOfficialView.prototype.transportSelectCharacter=function(event){
 	self.controller.setValue("cityId", event.cityId);
 	console.log("event.cityId = " + event.cityId);
 	controller.removeEventListener(LCityEvent.SELECT_CITY, self.transportSelectCharacter);
-	controller.loadCharacterList(CharacterListType.TRANSPORT,self);
+	self.toTransport();
+};
+BuildOfficialView.prototype.toTransport=function(){
+	var self = this;
+	var cityModel = self.controller.getValue("cityData");
+	self.controller.loadCharacterList(CharacterListType.TRANSPORT, cityModel.generals(Job.IDLE), {isOnlyOne:true, buttonLabel:"execute"});
 };
 /*BuildOfficialView.prototype.onClickExpeditionButton=function(event){
 	var self = this;
@@ -124,7 +130,8 @@ BuildOfficialView.prototype.spySelectCharacter=function(event){
 	self.controller.setValue("cityId", event.cityId);
 	console.log("spy event.cityId = " + event.cityId);
 	controller.removeEventListener(LCityEvent.SELECT_CITY, self.spySelectCharacter);
-	controller.loadCharacterList(CharacterListType.CHARACTER_SPY,self);
+	var cityModel = self.controller.getValue("cityData");
+	self.controller.loadCharacterList(CharacterListType.CHARACTER_SPY, cityModel.generals(Job.IDLE), {showMoney:true, buttonLabel:"execute"});
 };
 BuildOfficialView.prototype.moveSelectCharacter=function(event){
 	var controller = event.currentTarget;
@@ -209,7 +216,7 @@ BuildOfficialView.prototype.expeditionCancel=function(event){
 	var windowLayer = event.currentTarget.parent;
 	var self = windowLayer.parent;
 	windowLayer.remove();
-	self.controller.loadCharacterList(CharacterListType.TRANSPORT,self);
+	self.toTransport();
 };
 BuildOfficialView.prototype.expeditionReadyComplete=function(event){
 	var windowLayer = event.currentTarget.parent;

@@ -23,9 +23,11 @@ BuildFarmlandView.prototype.showMenu=function(){
 };
 BuildFarmlandView.prototype.onClickAgricultureButton=function(event){
 	var self = event.currentTarget.parent.parent.parent;
-	self.controller.loadCharacterList(CharacterListType.AGRICULTURE,self);
+	var cityModel = self.controller.getValue("cityData");
+	self.controller.loadCharacterList(CharacterListType.AGRICULTURE, cityModel.generals(Job.IDLE), {showMoney:true, buttonLabel:"execute"});
 };
 BuildFarmlandView.prototype.onClickExploreButton=function(event){
 	var self = event.currentTarget.parent.parent.parent;
-	self.controller.loadCharacterList(CharacterListType.EXPLORE_AGRICULTURE,self);
+	var cityModel = self.controller.getValue("cityData");
+	self.controller.loadCharacterList(CharacterListType.EXPLORE_AGRICULTURE, cityModel.generals(Job.IDLE), {buttonLabel:"execute"});
 };

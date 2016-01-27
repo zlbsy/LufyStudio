@@ -35,7 +35,7 @@ BuildDiplomacyView.prototype.onClickStopBattleButton=function(event){
 	var self = this;
 	var characters = SeigniorModel.getSeigniors(LMvc.selectSeignorId);
 	self.characterListType = CharacterListType.STOP_BATTLE;
-	self.controller.loadCharacterList(CharacterListType.STOP_BATTLE,characters,{buttonLabel:"select_seignior"});
+	self.controller.loadCharacterList(CharacterListType.STOP_BATTLE,characters,{isOnlyOne:true, buttonLabel:"select_seignior"});
 };
 BuildDiplomacyView.prototype.selectComplete=function(event){
 	var self = this;
@@ -116,12 +116,12 @@ BuildDiplomacyView.prototype.showBuild=function(event){
 BuildDiplomacyView.prototype.stopBattleCharacter=function(){
 	var self = this;
 	var cityModel = self.controller.getValue("cityData");
-	self.controller.loadCharacterList(CharacterListType.STOP_BATTLE_CHARACTER, cityModel.generals(Job.IDLE), {buttonLabel:"execute"});
+	self.controller.loadCharacterList(CharacterListType.STOP_BATTLE_CHARACTER, cityModel.generals(Job.IDLE), {isOnlyOne:true, buttonLabel:"execute"});
 };
 BuildDiplomacyView.prototype.toRedeem=function(){
 	var self = this;
 	var cityModel = self.controller.getValue("cityData");
-	self.controller.loadCharacterList(CharacterListType.REDEEM, cityModel.generals(Job.IDLE), {buttonLabel:"execute"});
+	self.controller.loadCharacterList(CharacterListType.REDEEM, cityModel.generals(Job.IDLE), {isOnlyOne:true, buttonLabel:"execute"});
 };
 BuildDiplomacyView.prototype.selectMoneyRedeem = function(){
 	var self = this;
