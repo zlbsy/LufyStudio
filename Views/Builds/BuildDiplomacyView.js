@@ -34,7 +34,7 @@ BuildDiplomacyView.prototype.onClickRedeemButton=function(event){
 BuildDiplomacyView.prototype.onClickStopBattleButton=function(event){
 	var self = this;
 	var characters = SeigniorModel.getSeigniors(LMvc.selectSeignorId);
-	//self.characterListType = CharacterListType.STOP_BATTLE;
+	self.characterListType = CharacterListType.STOP_BATTLE;
 	self.controller.loadCharacterList(CharacterListType.STOP_BATTLE,characters,{buttonLabel:"select_seignior"});
 };
 BuildDiplomacyView.prototype.selectComplete=function(event){
@@ -179,6 +179,7 @@ BuildDiplomacyView.prototype.redeemMoneyComplete=function(event){
 	var self = windowLayer.parent;
 	windowLayer.remove();
 	self.menuLayer.visible = true;
+	console.error("self.characterListType="+self.characterListType);
 	if(self.characterListType == CharacterListType.REDEEM){
 		var captiveCharacterId = self.controller.getValue("captiveCharacterId");
 		var redeemCharacter = self.controller.getValue("selectCharacter");
