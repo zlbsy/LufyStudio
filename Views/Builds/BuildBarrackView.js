@@ -40,12 +40,13 @@ BuildBarrackView.prototype.expeditionSelectCharacter=function(event){
 	});
 	self.controller.setValue("cityId", event.cityId);
 	controller.removeEventListener(LCityEvent.SELECT_CITY, self.expeditionSelectCharacter);
-	controller.loadCharacterList(CharacterListType.EXPEDITION,self);
+	self.toExpedition();
 };
 
 BuildBarrackView.prototype.onClickTrainingButton=function(event){
 	var self = event.currentTarget.parent.parent.parent;
-	self.controller.loadCharacterList(CharacterListType.TRAINING);
+	var cityModel = self.controller.getValue("cityData");
+	self.controller.loadCharacterList(CharacterListType.TRAINING, cityModel.generals(Job.IDLE), {isOnlyOne:true, buttonLabel:"execute"});
 };
 BuildBarrackView.prototype.selectComplete=function(event){
 	var self = this;
@@ -110,7 +111,7 @@ BuildBarrackView.prototype.showBuild=function(event){
 			self.controller.setValue("toCityId", null);
 			self.controller.dispatchEvent(LController.NOTIFY_ALL);
 		}else if(event.characterListType == CharacterListType.SELECT_LEADER){
-			self.controller.loadCharacterList(CharacterListType.EXPEDITION,self);
+			self.toExpedition();
 		}
 		return;
 	}
@@ -118,7 +119,7 @@ BuildBarrackView.prototype.showBuild=function(event){
 		self.load = new LMvcLoader(self);
 	}
 	if(event.characterListType == CharacterListType.EXPEDITION){
-		self.controller.loadCharacterList(CharacterListType.SELECT_LEADER, self.controller.getValue("expeditionCharacterList"), true);
+		self.toSelectLeader();
 	}else if(event.characterListType == CharacterListType.SELECT_LEADER){
 		if(SeigniorExecute.running){
 			var data = {};
@@ -134,7 +135,6 @@ BuildBarrackView.prototype.showBuild=function(event){
 BuildBarrackView.prototype.expeditionReady=function(){
 	var self = this;
 	var readyView = new ExpeditionReadyView(self.controller);
-	//self.addChild(readyView);
 	var obj = {title:Language.get("expedition_resources"),subWindow:readyView,width:480,height:540,okEvent:self.expeditionReadyComplete,cancelEvent:self.expeditionCancel};
 	var windowLayer = ConfirmWindow(obj);
 	self.addChild(windowLayer);
@@ -144,9 +144,17 @@ BuildBarrackView.prototype.expeditionCancel=function(event){
 	var windowLayer = event.currentTarget.parent;
 	var self = windowLayer.parent;
 	windowLayer.remove();
-	//self.menuLayer.visible = true;
-	self.controller.loadCharacterList(CharacterListType.SELECT_LEADER, self.controller.getValue("expeditionCharacterList"), true);
-
+	self.toSelectLeader();
+};
+BuildBarrackView.prototype.toExpedition=function(){
+	var self = this;
+	var cityModel = self.controller.getValue("cityData");
+	self.controller.loadCharacterList(CharacterListType.EXPEDITION, cityModel.generals(Job.IDLE), {buttonLabel:"execute"});
+};
+BuildBarrackView.prototype.toSelectLeader=function(){
+	var self = this;
+	self.controller.loadCharacterList(CharacterListType.SELECT_LEADER, self.controller.getValue("expeditionCharacterList"), 
+		{isOnlyOne:true, toast:"dialog_expedition_select_leader", buttonLabel:"execute", showMoney:false}
 };
 BuildBarrackView.prototype.expeditionReadyComplete=function(event){
 	var windowLayer = event.currentTarget.parent;

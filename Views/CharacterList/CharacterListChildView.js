@@ -22,24 +22,21 @@ CharacterListChildView.prototype.set = function(charaModel) {
 CharacterListChildView.prototype.toDelete = function(charaModel) {
 	var self = this;
 	//var mask = getTranslucentBitmap(420, 50);
+	console.error("TODO:: 临时对应to delete");
 	self.alpha = 0.4;
 };
 CharacterListChildView.prototype.setCheckBox = function() {
 	var self = this;
-	switch(self.controller.characterListType) {
-		case CharacterListType.CHARACTER_LIST:
-		case CharacterListType.BATTLE_CHARACTER_LIST:
-			break;
-		default:
-			var bitmap = new LBitmap(new LBitmapData(LMvc.datalist["checkbox-background"]));
-			var bitmapSelect = new LBitmap(new LBitmapData(LMvc.datalist["checkbox-on"]));
-			var check = new LCheckBox(bitmap, bitmapSelect);
-			check.x = 10;
-			check.y = 10;
-			self.addChild(check);
-			self.checkbox = check;
-			break;
+	if(self.controller.params.showOnly) {
+		return;
 	}
+	var bitmap = new LBitmap(new LBitmapData(LMvc.datalist["checkbox-background"]));
+	var bitmapSelect = new LBitmap(new LBitmapData(LMvc.datalist["checkbox-on"]));
+	var check = new LCheckBox(bitmap, bitmapSelect);
+	check.x = 10;
+	check.y = 10;
+	self.addChild(check);
+	self.checkbox = check;
 };
 CharacterListChildView.prototype.onClick = function(event) {
 	var self = event.target;
@@ -48,8 +45,7 @@ CharacterListChildView.prototype.onClick = function(event) {
 		return;
 	}
 	if(self.checkbox && event.offsetX < 70){
-		console.log("isOnlyOne="+self.controller.isOnlyOne);
-		if(self.controller.isOnlyOne){
+		if(self.controller.params.isOnlyOne){
 			var items = listView.getItems();
 			for(var i=0,l=items.length;i<l;i++){
 				var item = items[i];

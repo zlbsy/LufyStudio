@@ -37,7 +37,7 @@ CharacterListView.prototype.listInit=function(){
 	self.selectedCount = 0;
 	self.usedMoney = 0;
 		
-	var title = getStrokeLabel("",30,"#FFFFFF","#000000",4);
+	var title = getStrokeLabel(Language.get(self.controller.characterListType),30,"#FFFFFF","#000000",4);
 	title.x = 15;
 	title.y = 10;
 	self.listLayer.addChild(title);
@@ -50,12 +50,12 @@ CharacterListView.prototype.listInit=function(){
 	self.listLayer.addChild(buttonClose);
 	buttonClose.addEventListener(LMouseEvent.MOUSE_UP, self.onClickCloseButton.bind(self));
 
-	//if(!SeigniorExecute.running && self.controller.characterListType != CharacterListType.EXPEDITION){
-	//}
+	//TODO::参数控制
 	if((SeigniorExecute.running && self.controller.characterListType == CharacterListType.EXPEDITION)
 	|| self.controller.characterListType == CharacterListType.SELECT_MONARCH){
 		buttonClose.visible = false;
 	}
+	
 	self.tabMenuLayer = new LSprite();
 	self.tabMenuLayer.y = 60;
 	self.listLayer.addChild(self.tabMenuLayer);
@@ -65,33 +65,20 @@ CharacterListView.prototype.listInit=function(){
 	self.contentLayer.y = 110;
 	self.listLayer.addChild(self.contentLayer);
 	
-	title.text = Language.get(self.controller.characterListType);
+	//title.text = Language.get(self.controller.characterListType);
 	self.dataList = self.controller.characterList;
-	var buttonLabel = null, showMoney = false;
+	
+	if(self.controller.params.toast){
+		Toast.makeText(Language.get(self.controller.params.toast)).show();
+	}
+	
+	var buttonLabel = self.controller.params.buttonLabel;
+	var showMoney = self.controller.params.showMoney;
+	/* TODO::调整中
 	switch(self.controller.characterListType){
 		case CharacterListType.TEST:
 			buttonLabel = "execute";
 			self.dataList = generals;
-			break;
-		case CharacterListType.CHARACTER_LIST:
-			self.dataList = generals.concat(cityModel.outOfOffice()).concat(cityModel.captives());
-			break;
-		case CharacterListType.HIRE:
-			buttonLabel = "hire";
-			self.dataList = cityModel.outOfOffice();
-			break;
-		case CharacterListType.SELECT_LEADER:
-			buttonLabel = "execute";
-			Toast.makeText(Language.get("dialog_expedition_select_leader")).show();
-			break;
-		case CharacterListType.CAPTIVE:
-			buttonLabel = "redeem";
-		case CharacterListType.BATTLE_CHARACTER_LIST:
-			self.dataList = self.controller.characterList;
-			break;
-		case CharacterListType.STOP_BATTLE:
-			self.dataList = self.controller.characterList;
-			buttonLabel = "select_seignior";
 			break;
 		case CharacterListType.APPOINT_PREFECTURE:
 			self.dataList = generals;
@@ -107,23 +94,16 @@ CharacterListView.prototype.listInit=function(){
 			self.dataList = cityModel.generals(Job.IDLE);
 			Toast.makeText(Language.get("dialog_select_generals")).show();
 			switch(self.controller.characterListType){
-				case CharacterListType.CHARACTER_MOVE:
-					buttonLabel = "move_start";
 				case CharacterListType.ENLIST:
-				case CharacterListType.CHARACTER_HIRE:
-				case CharacterListType.EXPEDITION:
 				case CharacterListType.TRANSPORT:
-				case CharacterListType.ACCESS:
 				case CharacterListType.EXPLORE_AGRICULTURE:
 				case CharacterListType.EXPLORE_BUSINESS:
-				case CharacterListType.REDEEM:
-				case CharacterListType.STOP_BATTLE_CHARACTER:
-				case CharacterListType.TRAINING:
 					showMoney = false;
 					break;
 			}
 			break;
 	}
+	*/
 	console.log("listInit datalist="+self.dataList);
 	console.log("listInit buttonLabel="+buttonLabel);
 	if(buttonLabel){
@@ -354,7 +334,12 @@ CharacterListView.prototype.showList=function(){
 	console.log("showList run");
 	var listHeight = LGlobal.height - self.contentLayer.y;
 	var minusHeight = 0;
-	switch(self.controller.characterListType){
+	if(self.controller.params.showMoney){
+		minusHeight = 100;
+	}else if(self.controller.params.buttonLabel){
+		minusHeight = 70;
+	}
+	/*switch(self.controller.characterListType){
 		case CharacterListType.CHARACTER_LIST:
 		case CharacterListType.BATTLE_CHARACTER_LIST:
 			break;
@@ -369,7 +354,7 @@ CharacterListView.prototype.showList=function(){
 			break;
 		default:
 			minusHeight = 100;
-	}
+	}*/
 	listHeight = LGlobal.height - self.contentLayer.y - minusHeight;
 	var panel = getBitmap(new LPanel(new LBitmapData(LMvc.datalist["win05"]),LGlobal.width, LGlobal.height - self.contentLayer.y));
 	self.contentLayer.addChild(panel);

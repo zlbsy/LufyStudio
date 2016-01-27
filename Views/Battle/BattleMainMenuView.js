@@ -156,7 +156,7 @@ BattleMainMenuView.prototype.clickCharacterList=function(event){
 	self.menuLayer.visible = false;
 	var selfCharas = self.controller.view.charaLayer.getCharactersFromBelong(Belong.SELF);
 	var enemyCharas = self.controller.view.charaLayer.getCharactersFromBelong(Belong.ENEMY);
-	self.controller.loadCharacterList(CharacterListType.BATTLE_CHARACTER_LIST,selfCharas.concat(enemyCharas));
+	self.controller.loadCharacterList(CharacterListType.BATTLE_CHARACTER_LIST,selfCharas.concat(enemyCharas), {showOnly:true});
 };
 BattleMainMenuView.prototype.clickBattleField=function(event){
 	var self = event.currentTarget.parent.parent.parent;

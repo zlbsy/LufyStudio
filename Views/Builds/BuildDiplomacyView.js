@@ -29,14 +29,13 @@ BuildDiplomacyView.prototype.onClickRedeemButton=function(event){
 		return;
 	}
 	self.characterListType = CharacterListType.REDEEM;
-	self.controller.loadCharacterList(CharacterListType.CAPTIVE,captivedList);
+	self.controller.loadCharacterList(CharacterListType.CAPTIVE,captivedList,{isOnlyOne:true, buttonLabel:"redeem"});
 };
 BuildDiplomacyView.prototype.onClickStopBattleButton=function(event){
 	var self = this;
 	var characters = SeigniorModel.getSeigniors(LMvc.selectSeignorId);
-	self.characterListType = CharacterListType.STOP_BATTLE;
-	console.log("onClickStopBattleButton",characters);
-	self.controller.loadCharacterList(CharacterListType.STOP_BATTLE,characters);
+	//self.characterListType = CharacterListType.STOP_BATTLE;
+	self.controller.loadCharacterList(CharacterListType.STOP_BATTLE,characters,{buttonLabel:"select_seignior"});
 };
 BuildDiplomacyView.prototype.selectComplete=function(event){
 	var self = this;
@@ -107,12 +106,22 @@ BuildDiplomacyView.prototype.showBuild=function(event){
 		return;
 	}
 	if(event.characterListType == CharacterListType.STOP_BATTLE){
-		self.controller.loadCharacterList(CharacterListType.STOP_BATTLE_CHARACTER,self);
+		self.stopBattleCharacter();
 	}else if(event.characterListType == CharacterListType.CAPTIVE){
-		self.controller.loadCharacterList(CharacterListType.REDEEM,self);
+		self.toRedeem();
 	}else if(event.characterListType == CharacterListType.REDEEM || event.characterListType == CharacterListType.STOP_BATTLE_CHARACTER){
 		self.selectMoneyRedeem();
 	}
+};
+BuildDiplomacyView.prototype.stopBattleCharacter=function(){
+	var self = this;
+	var cityModel = self.controller.getValue("cityData");
+	self.controller.loadCharacterList(CharacterListType.STOP_BATTLE_CHARACTER, cityModel.generals(Job.IDLE), {buttonLabel:"execute"});
+};
+BuildDiplomacyView.prototype.toRedeem=function(){
+	var self = this;
+	var cityModel = self.controller.getValue("cityData");
+	self.controller.loadCharacterList(CharacterListType.REDEEM, cityModel.generals(Job.IDLE), {buttonLabel:"execute"});
 };
 BuildDiplomacyView.prototype.selectMoneyRedeem = function(){
 	var self = this;
@@ -160,9 +169,9 @@ BuildDiplomacyView.prototype.redeemMoneyCancel=function(event){
 	var self = windowLayer.parent;
 	windowLayer.remove();
 	if(self.characterListType == CharacterListType.REDEEM){
-		self.controller.loadCharacterList(CharacterListType.REDEEM,self);
+		self.toRedeem();
 	}else if(self.characterListType == CharacterListType.STOP_BATTLE){
-		self.controller.loadCharacterList(CharacterListType.STOP_BATTLE_CHARACTER,self);
+		self.stopBattleCharacter();
 	}
 };
 BuildDiplomacyView.prototype.redeemMoneyComplete=function(event){

@@ -23,11 +23,18 @@ BuildTavernView.prototype.showMenu=function(){
 };
 BuildTavernView.prototype.onClickAccessButton=function(event){
 	var self = event.currentTarget.parent.parent.parent;
-	self.controller.loadCharacterList(CharacterListType.ACCESS,self);
+	//self.controller.loadCharacterList(CharacterListType.ACCESS,self);
+	var cityModel = self.controller.getValue("cityData");
+	self.controller.loadCharacterList(CharacterListType.ACCESS, cityModel.generals(Job.IDLE), {buttonLabel:"execute"});
 };
 BuildTavernView.prototype.onClickHireButton=function(event){
 	var self = event.currentTarget.parent.parent.parent;
-	self.controller.loadCharacterList(CharacterListType.HIRE,self);
+	self.toHire();
+};
+BuildTavernView.prototype.toHire=function(){
+	var self = this;
+	var cityModel = self.controller.getValue("cityData");
+	self.controller.loadCharacterList(CharacterListType.HIRE, cityModel.outOfOffice(), {isOnlyOne:true, buttonLabel:"execute"});
 };
 BuildTavernView.prototype.showBuild=function(event){
 	var contentLayer = event.currentTarget.view.contentLayer;
@@ -41,12 +48,13 @@ BuildTavernView.prototype.showBuild=function(event){
 	console.log("event.subEventType = " ,event.subEventType,"event.characterListType =",event.characterListType);
 	if(event.subEventType == "return"){
 		if(event.characterListType == CharacterListType.CHARACTER_HIRE){
-			self.controller.loadCharacterList(CharacterListType.HIRE,self);
+			self.toHire();
 		}
 		return;
 	}
 	if(event.characterListType == CharacterListType.HIRE){
-		self.controller.loadCharacterList(CharacterListType.CHARACTER_HIRE,self);
+		var cityModel = self.controller.getValue("cityData");
+		self.controller.loadCharacterList(CharacterListType.CHARACTER_HIRE, cityModel.generals(Job.IDLE), {buttonLabel:"execute"});
 	}
 };
 BuildTavernView.prototype.selectComplete=function(event){

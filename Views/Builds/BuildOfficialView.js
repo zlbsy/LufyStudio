@@ -106,7 +106,10 @@ BuildOfficialView.prototype.onClickSpyButton=function(event){
 };
 BuildOfficialView.prototype.onClickGeneralsListButton=function(event){
 	var self = this;
-	self.controller.loadCharacterList(CharacterListType.CHARACTER_LIST,self);
+	var cityModel = self.controller.getValue("cityData");
+	generals = cityModel.generals();
+	var characterList = generals.concat(cityModel.outOfOffice()).concat(cityModel.captives());
+	self.controller.loadCharacterList(CharacterListType.CHARACTER_LIST, characterList, {showOnly:true});
 };
 BuildOfficialView.prototype.onClickGeneralsMoveButton=function(event){
 	var self = this;
@@ -131,7 +134,8 @@ BuildOfficialView.prototype.moveSelectCharacter=function(event){
 	self.controller.setValue("cityId", event.cityId);
 	console.log("event.cityId = " + event.cityId);
 	controller.removeEventListener(LCityEvent.SELECT_CITY, self.moveSelectCharacter);
-	controller.loadCharacterList(CharacterListType.CHARACTER_MOVE,self);
+	var cityModel = self.controller.getValue("cityData");
+	self.controller.loadCharacterList(CharacterListType.CHARACTER_MOVE, cityModel.generals(Job.IDLE), {buttonLabel:"move_start"});
 };
 BuildOfficialView.prototype.selectComplete=function(event){
 	var self = this;
