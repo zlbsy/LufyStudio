@@ -56,12 +56,11 @@ MapChild.prototype.init = function(){
 	button.y = 40;
 	buttonLayer.addChild(button);
 	button.addEventListener(LMouseEvent.MOUSE_UP,self.charaAdd.bind(self));
-	button = new LButtonSample1("移动");
+	button = new LButtonSample1("防御");
 	button.x = 104;
 	button.y = 40;
 	buttonLayer.addChild(button);
-	button.addEventListener(LMouseEvent.MOUSE_DOWN,self.moveStart.bind(self));
-	button.addEventListener(LMouseEvent.MOUSE_UP,self.moveEnd.bind(self));
+	button.addEventListener(LMouseEvent.MOUSE_UP,self.defCharaAdd.bind(self));
 	button = new LButtonSample1("左右");
 	button.y = 80;
 	buttonLayer.addChild(button);
@@ -71,6 +70,12 @@ MapChild.prototype.init = function(){
 	button.y = 80;
 	buttonLayer.addChild(button);
 	button.addEventListener(LMouseEvent.MOUSE_UP,self.changeScaleY.bind(self));
+	button = new LButtonSample1("移动");
+	button.x = 104;
+	button.y = 80;
+	buttonLayer.addChild(button);
+	button.addEventListener(LMouseEvent.MOUSE_DOWN,self.moveStart.bind(self));
+	button.addEventListener(LMouseEvent.MOUSE_UP,self.moveEnd.bind(self));
 };
 MapChild.prototype.changeScaleX = function(e){
 	this.directionX *= -1;
@@ -79,6 +84,65 @@ MapChild.prototype.changeScaleX = function(e){
 MapChild.prototype.changeScaleY = function(e){
 	this.directionY *= -1;
 	this.changeDirection(this.direction);
+};
+MapChild.prototype.defCharaAdd = function(e){
+	var self = this;
+	var translucent = new LSprite();
+	translucent.graphics.drawRect(0, "#000000", [0, 0, LGlobal.width, LGlobal.height], true, "#000000");
+	translucent.alpha = 0.5;
+	LGlobal.stage.addChild(translucent);
+	translucent.addEventListener(LMouseEvent.MOUSE_UP, function (e) {});
+	translucent.addEventListener(LMouseEvent.MOUSE_DOWN, function (e) {});
+	translucent.addEventListener(LMouseEvent.MOUSE_MOVE, function (e) {});
+	translucent.addEventListener(LMouseEvent.MOUSE_OVER, function (e) {});
+	translucent.addEventListener(LMouseEvent.MOUSE_OUT, function (e) {});
+
+	var myWindow = new LWindow({width:160,height:140,title:"防御设施"});
+	myWindow.x = (LGlobal.width - myWindow.getWidth()) * 0.5;
+	myWindow.y = (LGlobal.height - myWindow.getHeight()) * 0.5;
+	LGlobal.stage.addChild(myWindow);
+	myWindow.addEventListener(LWindow.CLOSE, function (e) {
+		translucent.die();
+		translucent.remove();
+	});
+	var com = new LComboBox(18,"#000000","Arial", new LPanel("#cccccc",100,30));
+	com.setChild({label:"箭塔",value:4});
+	com.setChild({label:"炮台",value:6});
+	com.x = 20;
+	com.y = 20;
+	myWindow.layer.addChild(com);
+	/*for(var i=0;i<soldiers.length;i++){
+		var soldierModel = soldiers[i];
+		var label = String.format("{0} {1}({2})", soldierModel.name(), Language.get("proficiency"),soldierModel.proficiency());
+		com.setChild({label:label,value:i});
+		//com.setChild({label:soldierModel.name(),value:i});
+	}
+	var button = new LButtonSample1("守方军队");
+	button.x = 20;
+	button.y = 20;
+	myWindow.layer.addChild(button);
+	button.addEventListener(LMouseEvent.MOUSE_UP,function(event){
+		var chara = new Character("red");
+		chara.x = self.mx*48;
+		chara.y = self.my*48;
+		charaLayer.addChild(chara);
+		mapChild.remove();
+		mapChild = null;
+		myWindow.close();
+	});*/
+	var button = new LButtonSample1("增加");
+	button.x = 20;
+	button.y = 60;
+	myWindow.layer.addChild(button);
+	button.addEventListener(LMouseEvent.MOUSE_UP,function(event){
+		var chara = new DefCharacter(com.value);
+		chara.x = self.mx*48;
+		chara.y = self.my*48;
+		defCharaLayer.addChild(chara);
+		mapChild.remove();
+		mapChild = null;
+		myWindow.close();
+	});
 };
 MapChild.prototype.charaAdd = function(e){
 	var self = this;

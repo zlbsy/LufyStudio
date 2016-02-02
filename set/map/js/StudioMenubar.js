@@ -16,6 +16,10 @@ function StudioMenubar(){
 		{label:"军队",list:[
 			{label:"显示",click:self.charaShow.bind(this)},
 			{label:"隐藏",click:self.charaHide.bind(this)}
+		]},
+		{label:"防御",list:[
+			{label:"显示",click:self.defCharaShow.bind(this)},
+			{label:"隐藏",click:self.defCharaHide.bind(this)}
 		]}
 	];
 	var back = new LSprite();
@@ -42,6 +46,23 @@ StudioMenubar.toData = function(layer){
 	}
 	return arr;
 };
+StudioMenubar.toDefData = function(){
+	var arr = [];
+	for(var i=0;i<defCharaLayer.numChildren;i++){
+		var chara = defCharaLayer.childList[i];
+		var locationX = chara.x / 48 >>> 0;
+		var locationY = chara.y / 48 >>> 0;
+		arr.push({"x":locationX,"y":locationY,
+		"direction":chara.direction,"index":chara.index,"id":chara.id});
+	}
+	return arr;
+};
+StudioMenubar.prototype.defCharaShow = function(){
+	defCharaLayer.visible=true;
+};
+StudioMenubar.prototype.defCharaHide = function(){
+	defCharaLayer.visible=false;
+};
 StudioMenubar.prototype.charaShow = function(){
 	charaLayer.visible=true;
 	enemyLayer.visible=true;
@@ -63,12 +84,26 @@ StudioMenubar.toCharas = function(list,layer,color){
 		layer.addChild(chara);
 	}
 };
+StudioMenubar.toDefCharas = function(list){
+	defCharaLayer.removeAllChild();
+	if(!list)return;
+	for(var i=0;i<list.length;i++){
+		var data = list[i];
+		var chara = new DefCharacter(data.id);
+		chara.x = data.x * 48;
+		chara.y = data.y * 48;
+		chara.direction=data.direction;
+		chara.index = data.index?data.index:0;
+		chara.draw();
+		defCharaLayer.addChild(chara);
+	}
+};
 StudioMenubar.prototype.saveCache = function(e){
 	var self = this;
 	self.openWindow(self.saveCacheRun);
 };
 StudioMenubar.prototype.saveCacheRun = function(index){
-	var datas = {"data":maps,"charas":StudioMenubar.toData(charaLayer),"enemys":StudioMenubar.toData(enemyLayer)};
+	var datas = {"data":maps,"charas":StudioMenubar.toData(charaLayer),"enemys":StudioMenubar.toData(enemyLayer),"defCharas":StudioMenubar.toDefData()};
 	console.log(JSON.stringify(datas));
 	window.localStorage.setItem("maps-"+index, JSON.stringify(datas));
 	//window.localStorage.setItem("maps", JSON.stringify(maps));
@@ -88,6 +123,7 @@ StudioMenubar.prototype.readCacheRun = function(index){
 			maps = datas.data;
 			StudioMenubar.toCharas(datas.charas,charaLayer,"red");
 			StudioMenubar.toCharas(datas.enemys,enemyLayer,"blue");
+			StudioMenubar.toDefCharas(datas.defCharas);
 		}else{
 			maps = datas;
 			StudioMenubar.toCharas([],charaLayer,"red");
@@ -153,7 +189,7 @@ StudioMenubar.prototype.save = function(e){
 };
 
 StudioMenubar.prototype.saveRun = function(index){
-	var datas = {"data":maps,"charas":StudioMenubar.toData(charaLayer),"enemys":StudioMenubar.toData(enemyLayer)};
+	var datas = {"data":maps,"charas":StudioMenubar.toData(charaLayer),"enemys":StudioMenubar.toData(enemyLayer),"defCharas":StudioMenubar.toDefData()};
 	LAjax.post("http://d.lufylegend.com/set/map/Data/save.php",{"data":JSON.stringify(datas),"index":index},function(responseData){
 		alert(responseData);
 	},function(){alert("error");});
@@ -172,6 +208,7 @@ StudioMenubar.prototype.openRun = function(index){
 			maps = datas.data;
 			StudioMenubar.toCharas(datas.charas,charaLayer,"red");
 			StudioMenubar.toCharas(datas.enemys,enemyLayer,"blue");
+			StudioMenubar.toDefCharas(datas.defCharas);
 		}else{
 			maps = datas;
 			StudioMenubar.toCharas([],charaLayer,"red");

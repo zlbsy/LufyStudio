@@ -10,6 +10,7 @@ var loadData = [
 {path:"./js/CreateWindow.js",type:"js"},
 {path:"./js/MapChild.js",type:"js"},
 {path:"./js/Character.js",type:"js"},
+{path:"./js/DefCharacter.js",type:"js"},
 {path:"./js/CharacterChild.js",type:"js"},
 {path:"./js/MapHelper.js",type:"js"},
 {path:"../../images/smap/tile_map.png",name:"tile_map"}

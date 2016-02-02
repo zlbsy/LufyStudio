@@ -9,6 +9,7 @@ var charasIsShow;
 var enemysIsShow;
 var charaLayer;
 var enemyLayer;
+var defCharaLayer;
 var MapSetting = {
 	w:10,h:10
 };
@@ -47,6 +48,8 @@ ToolInterface.init = function(){
 	gameStage.addChild(charaLayer);
 	enemyLayer = new LSprite();
 	gameStage.addChild(enemyLayer);
+	defCharaLayer = new LSprite();
+	gameStage.addChild(defCharaLayer);
 	studioMenubar = new StudioMenubar();
 	rootLayer.addChild(studioMenubar);
 	
@@ -98,6 +101,19 @@ ToolInterface.clickUpMap = function(e){
 			return;
 		}
 		chara = enemyLayer.childList.find(function(child){
+			return child.x == x*48 && child.y == y*48;
+		});
+		if(chara){
+			charaChild = new CharacterChild(chara);
+			charaChild.x = x * 48 + gameStage.x;
+			charaChild.y = y * 48 + gameStage.y;
+			stageLayer.addChild(charaChild);
+			charaChild.init();
+			return;
+		}
+	}
+	if(defCharaLayer.visible){
+		var chara = defCharaLayer.childList.find(function(child){
 			return child.x == x*48 && child.y == y*48;
 		});
 		if(chara){
