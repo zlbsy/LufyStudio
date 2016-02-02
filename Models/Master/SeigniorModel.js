@@ -106,6 +106,35 @@ SeigniorModel.prototype.exp = function(value){
 SeigniorModel.prototype.level = function(){
 	return (this.exp() / CharacterExpConfig.seignior >>> 0) + 1;
 };
+SeigniorModel.cloths = [];
+SeigniorModel.getColorCloth = function(color){
+	if(!SeigniorModel.cloths[color]){
+		var colors = color.split(",");
+		var bitmapData = new LBitmapData(LMvc.datalist["flag-cloth"],null,null,null,null, LBitmapData.DATA_CANVAS);
+		var colorTransform = new LColorTransform(0, 0, 0, 1, parseInt(colors[0]), parseInt(colors[1]), parseInt(colors[2]), 0);
+		bitmapData.colorTransform(new LRectangle(0, 0, bitmapData.width, bitmapData.height), colorTransform);
+		SeigniorModel.cloths[color] = bitmapData;
+	}
+	return SeigniorModel.cloths[color];
+};
+SeigniorModel.prototype.flag = function(){
+	var self = this;
+	if(!self._flag){
+		var bitmapData = SeigniorModel.getColorCloth(self.color());
+		var flagCloth = new LBitmap(bitmapData);
+		var flagStick = new LBitmap(new LBitmapData(LMvc.datalist["flag-stick"]));
+		self._flag = new LSprite();
+		self._flag.addChild(flagCloth);
+		self._flag.addChild(flagStick);
+		var label = getStrokeLabel(self.character().name().substring(0,1), 16, "#FFFFFF", "#000000", 1);
+		label.x = 30;
+		label.y = 10;
+		label.rotate = 30;
+		self._flag.addChild(label);
+		self._flag.cacheAsBitmap(true);
+	}
+	return self._flag._ll_cacheAsBitmap.bitmapData;
+};
 SeigniorModel.prototype.color = function(){
 	return this.data.color;
 };

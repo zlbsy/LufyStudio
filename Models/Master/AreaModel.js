@@ -323,7 +323,7 @@ AreaModel.prototype.prefecture=function(value){
 AreaModel.prototype.color = function(){
 	var self = this;
 	if(!self.seigniorCharaId()){
-		return "white";
+		return "";
 	}
 	return self.seignior().color();
 };
@@ -333,10 +333,10 @@ AreaModel.prototype.neighbor = function(){
 AreaModel.prototype.flag = function(){
 	var self = this;
 	var color = self.color();
-	if(color == "white"){
+	if(!color){
 		return null;
 	}
-	var bitmapData = new LBitmapData(LMvc.datalist["flag-"+color]);
+	var bitmapData = self.seignior().flag();
 	return new LBitmap(bitmapData);
 };
 AreaModel.prototype.icon=function(){

@@ -1,6 +1,6 @@
 LMvc.areaData = {
 seigniors : [
-{chara_id : 1,name:"曹操",color : "blue",generals_count:14,areas : [
+{chara_id : 1,name:"曹操",color : "0,0,255",generals_count:14,areas : [
   {  area_id : 39,name:"陈留",prefecture : 1,
   money : 138,food : 1038,population : 40038,business : 138,agriculture : 138,technology : 138,police : 77,city_defense : 538,troops : 438,
   items_farmland:[],
@@ -38,7 +38,7 @@ seigniors : [
     ]
   },
 ]},
-{chara_id : 8,name:"孙坚",color : "red",generals_count:10,areas : [
+{chara_id : 8,name:"孙坚",color : "255,0,0",generals_count:10,areas : [
   {  area_id : 18,name:"长沙",prefecture : 8,
   money : 117,food : 1017,population : 40017,business : 117,agriculture : 117,technology : 117,police : 87,city_defense : 517,troops : 417,
   items_farmland:[],
@@ -66,7 +66,7 @@ seigniors : [
     ]
   },
 ]},
-{chara_id : 602,name:"韩馥",color : "",generals_count:7,areas : [
+{chara_id : 602,name:"韩馥",color : "160,82,45",generals_count:7,areas : [
   {  area_id : 41,name:"邺",prefecture : 602,
   money : 140,food : 1040,population : 40040,business : 140,agriculture : 140,technology : 140,police : 79,city_defense : 540,troops : 440,
   items_farmland:[],
@@ -100,7 +100,7 @@ seigniors : [
     ]
   },
 ]},
-{chara_id : 21,name:"刘备",color : "green",generals_count:3,areas : [
+{chara_id : 21,name:"刘备",color : "0,128,0",generals_count:3,areas : [
   {  area_id : 43,name:"平原",prefecture : 21,
   money : 142,food : 1042,population : 40042,business : 142,agriculture : 142,technology : 142,police : 81,city_defense : 542,troops : 442,
   items_farmland:[],
@@ -122,7 +122,7 @@ seigniors : [
     ]
   },
 ]},
-{chara_id : 265,name:"董卓",color : "black",generals_count:28,areas : [
+{chara_id : 265,name:"董卓",color : "1,1,1",generals_count:28,areas : [
   {  area_id : 4,name:"安定",prefecture : 87,
   money : 103,food : 1003,population : 40003,business : 103,agriculture : 103,technology : 103,police : 73,city_defense : 503,troops : 403,
   items_farmland:[],
@@ -257,7 +257,7 @@ seigniors : [
     ]
   },
 ]},
-{chara_id : 0,name:"",color : "white",generals_count:0,areas : [
+{chara_id : 0,name:"",color : "",generals_count:0,areas : [
   {  area_id : 33,name:"谯",prefecture : 0,
   money : 132,food : 1032,population : 40032,business : 132,agriculture : 132,technology : 132,police : 71,city_defense : 532,troops : 432,
   items_farmland:[],
@@ -665,7 +665,7 @@ seigniors : [
     ]
   },
 ]},
-{chara_id : 446,name:"刘表",color : "pink",generals_count:9,areas : [
+{chara_id : 446,name:"刘表",color : "255,192,203",generals_count:9,areas : [
   {  area_id : 15,name:"襄阳",prefecture : 446,
   money : 114,food : 1014,population : 40014,business : 114,agriculture : 114,technology : 114,police : 84,city_defense : 514,troops : 414,
   items_farmland:[],
@@ -720,7 +720,7 @@ seigniors : [
     ]
   },
 ]},
-{chara_id : 451,name:"陶谦",color : "",generals_count:9,areas : [
+{chara_id : 451,name:"陶谦",color : "135,206,235",generals_count:9,areas : [
   {  area_id : 36,name:"下邳",prefecture : 451,
   money : 135,food : 1035,population : 40035,business : 135,agriculture : 135,technology : 135,police : 74,city_defense : 535,troops : 435,
   items_farmland:[],
@@ -757,7 +757,7 @@ seigniors : [
     ]
   },
 ]},
-{chara_id : 367,name:"刘焉",color : "teal",generals_count:10,areas : [
+{chara_id : 367,name:"刘焉",color : "0,128,128",generals_count:10,areas : [
   {  area_id : 7,name:"江州",prefecture : 119,
   money : 106,food : 1006,population : 40006,business : 106,agriculture : 106,technology : 106,police : 76,city_defense : 506,troops : 406,
   items_farmland:[],
@@ -850,7 +850,7 @@ seigniors : [
     ]
   },
 ]},
-{chara_id : 237,name:"张扬",color : "",generals_count:9,areas : [
+{chara_id : 237,name:"张扬",color : "70,130,180",generals_count:9,areas : [
   {  area_id : 42,name:"晋阳",prefecture : 237,
   money : 141,food : 1041,population : 40041,business : 141,agriculture : 141,technology : 141,police : 80,city_defense : 541,troops : 441,
   items_farmland:[],
@@ -878,7 +878,7 @@ seigniors : [
     ]
   },
 ]},
-{chara_id : 39,name:"袁绍",color : "yellow",generals_count:19,areas : [
+{chara_id : 39,name:"袁绍",color : "255,255,0",generals_count:19,areas : [
   {  area_id : 44,name:"南皮",prefecture : 39,
   money : 143,food : 1043,population : 40043,business : 143,agriculture : 143,technology : 143,police : 82,city_defense : 543,troops : 443,
   items_farmland:[],
@@ -922,7 +922,7 @@ seigniors : [
     ]
   },
 ]},
-{chara_id : 160,name:"马腾",color : "darkgoldenrod",generals_count:7,areas : [
+{chara_id : 160,name:"马腾",color : "184,134,11",generals_count:7,areas : [
   {  area_id : 3,name:"武威",prefecture : 160,
   money : 102,food : 1002,population : 40002,business : 102,agriculture : 102,technology : 102,police : 72,city_defense : 502,troops : 402,
   items_farmland:[],
@@ -958,7 +958,7 @@ seigniors : [
     ]
   },
 ]},
-{chara_id : 75,name:"公孙瓒",color : "",generals_count:11,areas : [
+{chara_id : 75,name:"公孙瓒",color : "0,255,0",generals_count:11,areas : [
   {  area_id : 46,name:"北平",prefecture : 75,
   money : 145,food : 1045,population : 40045,business : 145,agriculture : 145,technology : 145,police : 84,city_defense : 545,troops : 445,
   items_farmland:[],
@@ -986,7 +986,7 @@ seigniors : [
     ]
   },
 ]},
-{chara_id : 453,name:"张鲁",color : "brown",generals_count:5,areas : [
+{chara_id : 453,name:"张鲁",color : "165,42,42",generals_count:5,areas : [
   {  area_id : 11,name:"汉中",prefecture : 453,
   money : 110,food : 1010,population : 40010,business : 110,agriculture : 110,technology : 110,police : 80,city_defense : 510,troops : 410,
   items_farmland:[],
@@ -1011,7 +1011,7 @@ seigniors : [
     ]
   },
 ]},
-{chara_id : 495,name:"孔融",color : "orange",generals_count:3,areas : [
+{chara_id : 495,name:"孔融",color : "255,165,0",generals_count:3,areas : [
   {  area_id : 38,name:"北海",prefecture : 495,
   money : 137,food : 1037,population : 40037,business : 137,agriculture : 137,technology : 137,police : 76,city_defense : 537,troops : 437,
   items_farmland:[],
@@ -1035,7 +1035,7 @@ seigniors : [
     ]
   },
 ]},
-{chara_id : 408,name:"刘岱",color : "",generals_count:3,areas : [
+{chara_id : 408,name:"刘岱",color : "143,188,143",generals_count:3,areas : [
   {  area_id : 40,name:"濮阳",prefecture : 408,
   money : 139,food : 1039,population : 40039,business : 139,agriculture : 139,technology : 139,police : 78,city_defense : 539,troops : 439,
   items_farmland:[],
@@ -1063,7 +1063,7 @@ seigniors : [
     ]
   },
 ]},
-{chara_id : 484,name:"刘虞",color : "",generals_count:5,areas : [
+{chara_id : 484,name:"刘虞",color : "255,0,255",generals_count:5,areas : [
   {  area_id : 45,name:"蓟",prefecture : 484,
   money : 144,food : 1044,population : 40044,business : 144,agriculture : 144,technology : 144,police : 83,city_defense : 544,troops : 444,
   items_farmland:[],
@@ -1084,7 +1084,7 @@ seigniors : [
     ]
   },
 ]},
-{chara_id : 144,name:"公孙度",color : "greenyellow",generals_count:3,areas : [
+{chara_id : 144,name:"公孙度",color : "173,255,47",generals_count:3,areas : [
   {  area_id : 47,name:"襄平",prefecture : 144,
   money : 146,food : 1046,population : 40046,business : 146,agriculture : 146,technology : 146,police : 85,city_defense : 546,troops : 446,
   items_farmland:[],
@@ -1106,7 +1106,7 @@ seigniors : [
     ]
   },
 ]},
-{chara_id : 375,name:"袁术",color : "",generals_count:13,areas : [
+{chara_id : 375,name:"袁术",color : "128,0,0",generals_count:13,areas : [
   {  area_id : 14,name:"宛",prefecture : 375,
   money : 113,food : 1013,population : 40013,business : 113,agriculture : 113,technology : 113,police : 83,city_defense : 513,troops : 413,
   items_farmland:[],
@@ -1138,7 +1138,7 @@ seigniors : [
     ]
   },
 ]},
-{chara_id : 562,name:"孔伷",color : "",generals_count:2,areas : [
+{chara_id : 562,name:"孔伷",color : "255,160,122",generals_count:2,areas : [
   {  area_id : 24,name:"许昌",prefecture : 562,
   money : 123,food : 1023,population : 40023,business : 123,agriculture : 123,technology : 123,police : 93,city_defense : 523,troops : 423,
   items_farmland:[],
@@ -1163,7 +1163,7 @@ seigniors : [
     ]
   },
 ]},
-{chara_id : 621,name:"乌丸大王",color : "",generals_count:10,areas : [
+{chara_id : 621,name:"乌丸大王",color : "0,0,128",generals_count:10,areas : [
   {  area_id : 48,name:"乌丸",prefecture : 621,
   money : 147,food : 1047,population : 40047,business : 147,agriculture : 147,technology : 147,police : 86,city_defense : 547,troops : 447,
   items_farmland:[],
@@ -1187,7 +1187,7 @@ seigniors : [
     ]
   },
 ]},
-{chara_id : 631,name:"山越大王",color : "",generals_count:10,areas : [
+{chara_id : 631,name:"山越大王",color : "0,191,255",generals_count:10,areas : [
   {  area_id : 49,name:"山越",prefecture : 631,
   money : 148,food : 1048,population : 40048,business : 148,agriculture : 148,technology : 148,police : 87,city_defense : 548,troops : 448,
   items_farmland:[],
@@ -1211,7 +1211,7 @@ seigniors : [
     ]
   },
 ]},
-{chara_id : 641,name:"匈奴大王",color : "",generals_count:10,areas : [
+{chara_id : 641,name:"匈奴大王",color : "139,0,0",generals_count:10,areas : [
   {  area_id : 52,name:"匈奴",prefecture : 641,
   money : 151,food : 1051,population : 40051,business : 151,agriculture : 151,technology : 151,police : 90,city_defense : 551,troops : 451,
   items_farmland:[],
@@ -1235,7 +1235,7 @@ seigniors : [
     ]
   },
 ]},
-{chara_id : 651,name:"氐大王",color : "",generals_count:10,areas : [
+{chara_id : 651,name:"氐大王",color : "255,69,0",generals_count:10,areas : [
   {  area_id : 51,name:"氐",prefecture : 651,
   money : 150,food : 1050,population : 40050,business : 150,agriculture : 150,technology : 150,police : 89,city_defense : 550,troops : 450,
   items_farmland:[],
@@ -1259,7 +1259,7 @@ seigniors : [
     ]
   },
 ]},
-{chara_id : 661,name:"羌大王",color : "",generals_count:10,areas : [
+{chara_id : 661,name:"羌大王",color : "179,142,35",generals_count:10,areas : [
   {  area_id : 50,name:"羌",prefecture : 661,
   money : 149,food : 1049,population : 40049,business : 149,agriculture : 149,technology : 149,police : 88,city_defense : 549,troops : 449,
   items_farmland:[],
@@ -1283,7 +1283,7 @@ seigniors : [
     ]
   },
 ]},
-{chara_id : 0,name:"0",color : "white",generals_count:0,areas : [
+{chara_id : 0,name:"0",color : "",generals_count:0,areas : [
   {  area_id : 9,name:"南蛮",prefecture : 0,
   money : 108,food : 1008,population : 40008,business : 108,agriculture : 108,technology : 108,police : 78,city_defense : 508,troops : 408,
   items_farmland:[],
@@ -1346,4 +1346,4 @@ seigniors : [
   },
 ]},
 ]
-}
+};

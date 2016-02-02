@@ -505,10 +505,21 @@ seigniors : [
     {chara_id:99,name:"李恢",year:207},
     {chara_id:181,name:"鄂焕",year:225},
     {chara_id:212,name:"雍凯",year:212},
+    {chara_id:233,name:"朵思大王",year:211},
+    {chara_id:241,name:"祝融",year:225},
     {chara_id:250,name:"杨稷",year:263},
     {chara_id:281,name:"李球",year:263},
+    {chara_id:336,name:"孟获",year:219},
+    {chara_id:364,name:"木鹿大王",year:211},
+    {chara_id:389,name:"兀突骨",year:219},
+    {chara_id:398,name:"董荼那",year:221},
     {chara_id:433,name:"朱褒",year:213},
+    {chara_id:460,name:"阿会喃",year:221},
+    {chara_id:476,name:"忙牙长",year:222},
+    {chara_id:477,name:"金环三结",year:223},
     {chara_id:488,name:"高定",year:213},
+    {chara_id:505,name:"带来洞主",year:221},
+    {chara_id:516,name:"孟优",year:219},
     ]
   },
   {  area_id : 10,name:"交趾",prefecture : 0,
@@ -616,29 +627,6 @@ seigniors : [
     {chara_id:493,name:"刘贤",year:207},
     {chara_id:572,name:"滕脩",year:263},
     {chara_id:605,name:"刘度",year:187},
-    ]
-  },
-  {  area_id : ,name:"云南",prefecture : 0,
-  money : ,food : ,population : ,business : ,agriculture : ,technology : ,police : ,city_defense : ,troops : ,
-  items_farmland:[],
-  items_market:[],
-  items:[],
-  generals:[
-    ],
-    out_of_offices:[
-    ],
-    not_debut:[
-    {chara_id:233,name:"朵思大王",year:211},
-    {chara_id:241,name:"祝融",year:225},
-    {chara_id:336,name:"孟获",year:219},
-    {chara_id:364,name:"木鹿大王",year:211},
-    {chara_id:389,name:"兀突骨",year:219},
-    {chara_id:398,name:"董荼那",year:221},
-    {chara_id:460,name:"阿会喃",year:221},
-    {chara_id:476,name:"忙牙长",year:222},
-    {chara_id:477,name:"金环三结",year:223},
-    {chara_id:505,name:"带来洞主",year:221},
-    {chara_id:516,name:"孟优",year:219},
     ]
   },
   {  area_id : 17,name:"武陵",prefecture : 0,
@@ -950,8 +938,8 @@ seigniors : [
     {chara_id:351,name:"马铁",year:194},
     ]
   },
-  {  area_id : ,name:"西平",prefecture : 95,
-  money : ,food : ,population : ,business : ,agriculture : ,technology : ,police : ,city_defense : ,troops : ,
+  {  area_id : 1,name:"西凉",prefecture : 95,
+  money : 100,food : 1000,population : 40000,business : 100,agriculture : 100,technology : 100,police : 70,city_defense : 500,troops : 400,
   items_farmland:[],
   items_market:[],
   items:[],
@@ -1296,18 +1284,6 @@ seigniors : [
   },
 ]},
 {chara_id : 0,name:"0",color : "white",generals_count:0,areas : [
-  {  area_id : 1,name:"西凉",prefecture : 0,
-  money : 100,food : 1000,population : 40000,business : 100,agriculture : 100,technology : 100,police : 70,city_defense : 500,troops : 400,
-  items_farmland:[],
-  items_market:[],
-  items:[],
-  generals:[
-    ],
-    out_of_offices:[
-    ],
-    not_debut:[
-    ]
-  },
   {  area_id : 9,name:"南蛮",prefecture : 0,
   money : 108,food : 1008,population : 40008,business : 108,agriculture : 108,technology : 108,police : 78,city_defense : 508,troops : 408,
   items_farmland:[],
@@ -1346,6 +1322,18 @@ seigniors : [
   },
   {  area_id : 37,name:"徐州",prefecture : 0,
   money : 136,food : 1036,population : 40036,business : 136,agriculture : 136,technology : 136,police : 75,city_defense : 536,troops : 436,
+  items_farmland:[],
+  items_market:[],
+  items:[],
+  generals:[
+    ],
+    out_of_offices:[
+    ],
+    not_debut:[
+    ]
+  },
+  {  area_id : 53,name:"西城",prefecture : 0,
+  money : 151,food : 1051,population : 40051,business : 151,agriculture : 151,technology : 151,police : 90,city_defense : 551,troops : 451,
   items_farmland:[],
   items_market:[],
   items:[],
