@@ -272,6 +272,9 @@ CharacterModel.prototype.initTroops = function() {
 CharacterModel.prototype.id = function() {
 	return this.data.id;
 };
+CharacterModel.prototype.age = function() {
+	return LMvc.chapterData.year - this.data.born;
+};
 CharacterModel.prototype.personalLoyalty = function() {
 	return this.data.personalLoyalty;
 };

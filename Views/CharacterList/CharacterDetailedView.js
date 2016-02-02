@@ -346,7 +346,7 @@ CharacterDetailedView.prototype.showProperties=function(){
 	/*	"attack":"攻击","spirit":"策略","defense":"防御","breakout":"爆发","morale":"士气","movePower":"移动力",*/
 	var statusLayer = new LSprite();
 	var txtHeight = 25, startY = -txtHeight + 10, startRightY = startY,startX = 5;
-	var labels = ["君主等级","武将等级","tab_arms",
+	var labels = ["势力等级","武将等级","年龄","tab_arms",
 	"force","command","intelligence","agility","luck"];
 	var labelsRight = ["troops","MP",
 	LMvc.BattleController ? "exp" : "feat", "熟练度",
@@ -358,6 +358,7 @@ CharacterDetailedView.prototype.showProperties=function(){
 	var datas = [
 	self.characterModel.seigniorLevel(),
 	self.characterModel.level(),
+	self.characterModel.age(),
 	self.characterModel.currentSoldiers().name(),
 	//self.characterModel.currentSoldiers().proficiency(),
 	self.characterModel.force(),
