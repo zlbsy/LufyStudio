@@ -30,8 +30,7 @@ BattleIntelligentAI.execute = function() {
 	var chatacters = [];
 	var charas = [], chara;
 	charas = LMvc.BattleController.view.charaLayer.getCharactersFromBelong(currentBelong);
-	//TODO::位于恢复地形>残血状态>攻击型法师>远程类>近战类>风水士类
-	/*
+	/* 行动顺序：位于恢复地形>残血状态>攻击型法师>远程类>近战类>风水士类
 	 * 风水士类 +1
 	 * 近战类 +2
 	 * 远程类 +3
@@ -170,9 +169,10 @@ BattleIntelligentAI.prototype.moveRoadsShow = function() {
 	var self = this;
 	var view = LMvc.BattleController.view;
 	var path = [];
-	if(!self.chara.status.hasStatus(StrategyType.Fixed)){
+	//定身及原地防守判断
+	if(!self.chara.status.hasStatus(StrategyType.Fixed) && self.chara.mission != BattleCharacterMission.Defensive){
 		path = LMvc.BattleController.query.makePath(self.chara);
-	}console.log("moveRoadsShow path="+path);
+	}
 	self.roadList = [];
 	for(var i = 0,l=path.length;i<l;i++){
 		var node = path[i];
@@ -588,7 +588,11 @@ BattleIntelligentAI.prototype.getPhysicalNodeTarget = function(target) {
 	return node;
 };
 BattleIntelligentAI.prototype.findMoveTarget = function() {
-	var self = this, chara = self.chara;console.log("findMoveTarget call");
+	var self = this, chara = self.chara;
+	if(chara.mission != BattleCharacterMission.Initiative){
+		chara.mode = CharacterMode.END_MOVE;
+		return;
+	}
 	//没有可以攻击到的人，向最近目标移动
 	var distance = 100000, lX, lY, targetX = self.locationX, targetY = self.locationY, targetRoads;
 	for(var i = 0,l = BattleIntelligentAI.targetCharacters.length;i<l;i++){

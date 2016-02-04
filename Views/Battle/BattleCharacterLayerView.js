@@ -84,7 +84,7 @@ BattleCharacterLayerView.prototype.getDieCharacter = function(belong) {
 	}
 	return null;
 };
-BattleCharacterLayerView.prototype.getCharactersFromBelong = function(belong,isAll) {
+BattleCharacterLayerView.prototype.getCharactersFromBelong = function(belong,isAll,noDef) {
 	var self = this;
 	var childList,characters = [];
 	if(belong == Belong.SELF){
@@ -97,6 +97,9 @@ BattleCharacterLayerView.prototype.getCharactersFromBelong = function(belong,isA
 	for(var i=0,l=childList.length;i<l;i++){
 		var child = childList[i];
 		if(child.data.troops() == 0 && !isAll){
+			continue;
+		}
+		if(noDef && child.data.isDefCharacter()){
 			continue;
 		}
 		characters.push(child);

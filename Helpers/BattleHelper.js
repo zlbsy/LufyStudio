@@ -175,7 +175,7 @@ function battleCanAttackCharacter(attChara, hertChara){
 	return false;
 }
 function battleEndCheck(belong){
-	var charas = LMvc.BattleController.view.charaLayer.getCharactersFromBelong(belong);
+	var charas = LMvc.BattleController.view.charaLayer.getCharactersFromBelong(belong, null, true);
 	if(charas.length == 0){
 		var result;
 		if(belong == Belong.FRIEND){

@@ -59,10 +59,23 @@ var CharacterDisposition = {
 var BattleCharacterSize = {
 	width:48,height:48
 };
+var CharacterFaceSize = {
+	width:220,height:320
+};
 var CharacterExpConfig = {
 	seignior:2000,
 	general:200
 };
+
+var DefCharacterList = {
+	"soldier_4":[671,672,673,674,675,676],
+	"soldier_6":[677,678,679,680,681,682]
+};
+var DefCharacterImage = {
+	"soldier_4":20,
+	"soldier_6":6
+};
+var DefenseCharacterCost = 500;//每个防御设施所需城防
 var BattleCharacterStatusConfig = {};
 BattleCharacterStatusConfig.FADE_TIME = 0.2;
 BattleCharacterStatusConfig.SHOW_TIME = 0.5;
@@ -86,7 +99,12 @@ var CharacterMode = {
 	END_MOVE : "endMove",
 	END_ACTION : "endAction"
 };
-
+//行动方针
+var BattleCharacterMission = {
+	Initiative:0,//主动出击
+	Passive:1,//被动出击
+	Defensive:2//原地防守
+};
 var SingleCombatCharacterConfig = {};
 SingleCombatCharacterConfig.INIT = "init";
 SingleCombatCharacterConfig.START = "start";

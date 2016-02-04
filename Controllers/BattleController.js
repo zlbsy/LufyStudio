@@ -88,8 +88,6 @@ BattleController.prototype.showCharacterDetailed = function(){
 };
 BattleController.prototype.showCharacterDetailedView=function(){
 	var self = this;
-	//var chara = self.currentCharacter;
-	//self.currentCharacter = null;
 	var charaList = new CharacterListController(CharacterListType.BATTLE_SINGLE, self);
 	self.view.parent.addChild(charaList.view);
 };
@@ -131,15 +129,17 @@ BattleController.prototype.init = function(){
 	console.log("LMvc.areaData.battleData --",LMvc.areaData.battleData);
 	if(LMvc.areaData.battleData){
 		setBattleSaveData();
-		return;
+	}else{
+		self.charactersInit();
 	}
+};
+BattleController.prototype.charactersInit = function(){
+	var self = this;
 	var enemyCharas;
 	var enemyPositions;
 	var selfPositions;
-	console.log(self.battleData.fromCity.seigniorCharaId() +"=="+LMvc.selectSeignorId);
 	if(self.battleData.fromCity.seigniorCharaId() == LMvc.selectSeignorId){
 		enemyCharas = getDefenseEnemiesFromCity(self.battleData.toCity);
-		//enemyCharas[0].isLeader = true;
 		enemyPositions = self.model.map.charas;
 		selfPositions = self.model.map.enemys;
 		var sumTroops = self.battleData.toCity.troops();
@@ -178,72 +178,54 @@ BattleController.prototype.init = function(){
 	console.log("enemyCharas",enemyCharas);
 	self.battleData.expeditionEnemyCharacterList = enemyCharas;
 	for(var i = 0;i<enemyCharas.length;i++){
-		var charaObjs = enemyPositions[i];
+		var child = enemyPositions[i];
 		var charaId = enemyCharas[i].id();
-		//CharacterModel.getChara(charaId).calculation(true);
-		self.addEnemyCharacter(charaId,charaObjs.direction,charaObjs.x,charaObjs.y);
+		self.addEnemyCharacter(charaId,child.direction,child.x,child.y);
+		var battleCharacter = self.view.charaLayer.getCharacter(Belong.ENEMY, charaId);
+		if(child.index > 0){
+			battleCharacter.mission = BattleCharacterMission.Passive;
+		}
 	}
 	self.model.enemyList[0].isLeader = true;
+	self.model.enemyList[0].mission = BattleCharacterMission.Defensive;
+	self.defCharactersInit();
+	for(var i=0,l=selfPositions.length;i<l;i++){
+		var charaObjs = selfPositions[i];
+		self.view.charaLayer.addCharacterPosition(charaObjs.direction,charaObjs.x,charaObjs.y);
+	}
+};
+BattleController.prototype.defCharactersInit=function(){
+	var self = this;
 	var defCharas = self.model.map.defCharas.sort(function(a, b) {return a.index - b.index;});
-	console.log("self.model.map:",self.model.map.defCharas);
 	var charaIndexObj = {};
 	var defense = self.battleData.toCity.cityDefense();
-	for(var i = 0;defense >= 500 && i<defCharas.length;i++){
+	var isSelfDef = self.battleData.toCity.seigniorCharaId() == LMvc.selectSeignorId;
+	for(var i = 0;defense >= DefenseCharacterCost && i<defCharas.length;i++){
 		var child = defCharas[i];
 		var soldierId = child.id;
 		var key = "soldier_" + soldierId;
 		if(typeof charaIndexObj[key] == UNDEFINED){
 			charaIndexObj[key] = 0;
 		}
-		var ids = defCharacterList[key];
+		var ids = DefCharacterList[key];
 		var charaId = ids[charaIndexObj[key]];
 		charaIndexObj[key] += 1;
 		var chara = CharacterModel.getChara(charaId);
+		chara.isDefCharacter(1);
+		chara.currentSoldiers().data.img =  "common/" + DefCharacterImage[key] + (isSelfDef ? "-1" : "-2");
 		chara.seigniorId(self.battleData.toCity.seigniorCharaId());
 		chara.cityId(self.battleData.toCity.id());
 		chara.calculation(true);
-		if(self.battleData.fromCity.seigniorCharaId() == LMvc.selectSeignorId){
+		chara.troops(chara.maxTroops());
+		if(!isSelfDef){
 			self.addEnemyCharacter(charaId,child.direction,child.x,child.y);
 		}else{
 			self.addOurCharacter(charaId,child.direction,child.x,child.y);
 		}
-		defense -= 500;
+		var battleCharacter = self.view.charaLayer.getCharacter(null, charaId);
+		battleCharacter.mission = BattleCharacterMission.Defensive;
+		defense -= DefenseCharacterCost;
 	}
-	for(var i=0,l=selfPositions.length;i<l;i++){
-		var charaObjs = selfPositions[i];
-		self.view.charaLayer.addCharacterPosition(charaObjs.direction,charaObjs.x,charaObjs.y);
-	}
-	
-	//self.dispatchEvent(LController.NOTIFY);
-	
-	
-	/*for(var i = 0;i<self.battleData.expeditionCharacterList.length;i++){
-		var chara = self.battleData.expeditionCharacterList[i];
-		chara.calculation(true);
-		self.addOurCharacter(chara.id());
-	}*/
-	/*
-	for(var i = 1;i<16;i++){
-		//CharacterModel.getChara(i).data.troops = CharacterModel.getChara(i).maxTroops() - 50;
-		//CharacterModel.getChara(i).maxHP(100);
-		//CharacterModel.getChara(i).HP(100);
-		CharacterModel.getChara(i).calculation(true);
-		CharacterModel.getChara(i).troops(CharacterModel.getChara(i).troops() - 40);
-	}
-	CharacterModel.getChara(2).troops(80);
-	CharacterModel.getChara(2).wounded(70);
-	CharacterModel.getChara(4).troops(10);
-	
-	self.addOurCharacter(1,CharacterAction.MOVE,CharacterDirection.DOWN,5,5);
-	self.addOurCharacter(2,CharacterAction.MOVE,CharacterDirection.UP,4,4);
-	self.addOurCharacter(3,CharacterAction.MOVE,CharacterDirection.LEFT,3,3);
-	self.addEnemyCharacter(4,CharacterAction.MOVE,CharacterDirection.LEFT,3,4);
-	self.addEnemyCharacter(5,CharacterAction.MOVE,CharacterDirection.LEFT,4,6);
-	self.addFriendCharacter(6,CharacterAction.MOVE,CharacterDirection.RIGHT,0,12);*/
-	
-	//TODO::先决定出战位置
-	//self.boutNotify(Belong.SELF);
-	//self.view.charaLayer.getCharacter(Belong.SELF,2).status.addStatus(StrategyType.Chaos, 0);
 };
 BattleController.prototype.boutEnd=function(){
 	var self = this;
@@ -286,8 +268,7 @@ BattleController.prototype.queryInit=function(){
 BattleController.prototype.mapMouseUp = function(event){
 	console.log("mapMouseUp");
 	if(LMvc.running || BattleSelectMenuController.instance().view.visible){
-		console.log("LMvc.running = " + LMvc.running);
-		console.log("BattleSelectMenuController.instance().view.visible = " + BattleSelectMenuController.instance().view.visible);
+		console.log("LMvc.running = " + LMvc.running + ", visible = " + BattleSelectMenuController.instance().view.visible);
 		return;
 	}
 	if(BattleController.ctrlChara && BattleController.ctrlChara.isMoving()){

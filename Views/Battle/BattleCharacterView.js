@@ -4,6 +4,8 @@ function BattleCharacterView(controller, id, w, h) {
 	self.step = self.moveStep = 4;
 	self.layer.x = self.layer.y = -8;
 	self.belong = null;
+	//行动方针
+	self.mission = BattleCharacterMission.Initiative;
 	if(controller.constructor.name == "BattleController"){
 		self.AI = new BattleCharacterAI(self);
 		self.inteAI = new BattleIntelligentAI(self);

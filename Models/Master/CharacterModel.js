@@ -11,6 +11,7 @@ function CharacterModel(controller, data) {
 }
 CharacterModel.FEAT_VALUE = 200;
 CharacterModel.faceCacher = [];
+//虚弱兵力比例
 CharacterModel.PANT_PROBABILITY = 0.2;
 CharacterModel.list = [];
 CharacterModel.commonAngryTalks = ["angry_talk_0_0","angry_talk_0_1","angry_talk_0_2"];
@@ -268,6 +269,9 @@ CharacterModel.prototype.initStrategy = function() {
 };
 CharacterModel.prototype.initTroops = function() {
 	return this.data.initTroops;
+};
+CharacterModel.prototype.isDefCharacter = function(value) {
+	return this._dataValue("isDefCharacter", value, 0);
 };
 CharacterModel.prototype.id = function() {
 	return this.data.id;
@@ -580,26 +584,26 @@ CharacterModel.prototype.faceImg = function() {
 };
 CharacterModel.prototype.face = function() {
 	var self = this;
+	if(self.isDefCharacter()){
+		var icon = self.currentSoldiers().icon();
+		var soldierIcon = new LSprite();
+		soldierIcon.addChild(icon);
+		icon.x = (CharacterFaceSize.width - BattleCharacterSize.width) * 0.5;
+		icon.y = (CharacterFaceSize.height - BattleCharacterSize.height) * 0.5;
+		return soldierIcon;
+	}
 	if(CharacterModel.faceCacher[self.data.id]){
 		return CharacterModel.faceCacher[self.data.id];
 	}
 	var characterFace = new CharacterFace(self.data.id);
 	CharacterModel.faceCacher[self.data.id] = characterFace;
 	return characterFace;
-	//return new Face(LMvc.IMG_PATH + "face/" + this.data.faceImg + ".png");
 };
 CharacterModel.prototype.minFace = function(size) {
-	var self = this;
-	var face = new Face(LMvc.IMG_PATH + "face/" + self.data.faceImg + ".png", self.data.minFace);
-	if ( typeof size == UNDEFINED) {
-		size = 100;
-	}
-	face.scaleX = size / self.data.minFace[2];
-	face.scaleY = size / self.data.minFace[3];
-	return face;
+	alert("minFace已废弃");console.error("minFace已废弃");
 };
 CharacterModel.prototype.minFaceRect = function() {
-	return this.data.minFace;
+	alert("minFaceRect已废弃");console.error("minFaceRect已废弃");
 };
 CharacterModel.prototype.command = function() {
 	return this.data.command;
@@ -653,21 +657,6 @@ CharacterModel.prototype.currentSoldiers = function(id) {
 		});
 	}
 	return self.data._currentSoldiers;
-	/*var soldiers = this.soldiers();
-	if(typeof id != UNDEFINED){
-		var soldier;
-		var soldierIndex = soldiers.find(function(child){
-			return child.id() == id;
-		});
-		if(soldierIndex >= 0){
-			soldier = soldiers.splice(soldierIndex,1);
-		}else{
-			soldier = SoldierModel.createModel(id);
-		}
-		soldiers.unshift(soldier);
-		return;
-	}
-	return soldiers[0];*/
 };
 CharacterModel.prototype.underArrestTalk = function() {
 	var self = this, index, list;
