@@ -42,16 +42,7 @@ ChapterView.prototype.backLayerInit=function(){
 };
 ChapterView.prototype.chapterLayerInit=function(){
 	var self = this;
-	
 	var icon = new BitmapSprite(LMvc.IMG_PATH + "chapter/chapter-" + self.controller.getValue("icon") + ".png", null,null);
-	/*var seigniors = self.controller.getValue("seigniors");
-	for(var i=0,l=AreaModel.list.length;i<l;i++){
-		var areaModel = AreaModel.list[i];
-		var seignior = seigniors.find(function(child){
-			
-		});
-	}*/
-	
 	var layer = new LSprite();
 	var bitmapWin = new LPanel(new LBitmapData(LMvc.datalist["win01"]),420,260,20,30,23,24);
 	layer.addChild(bitmapWin);
@@ -74,39 +65,20 @@ ChapterView.prototype.chapterLayerInit=function(){
 ChapterView.prototype.seigniorsLayerInit=function(){
 	var self = this;
 	var seigniors = self.controller.getValue("seigniors");
-	var backLayer = new LSprite();
+	self.listView = new LListView();
+	self.listView.resize(LGlobal.width - 60, 160);
+	self.listView.cellWidth = 160;
+	self.listView.cellHeight = 160;
+	self.listView.arrangement = LListView.Direction.Vertical;
+	self.listView.movement = LListView.Direction.Horizontal;
+	self.listView.maxPerLine = 1;
+	self.seigniorsLayer.addChild(self.listView);
+	var items = [];
 	for(var i=0;i<seigniors.length;i++){
-		var chapterSeignior = new ChapterSeigniorView(self.controller,seigniors[i]);
-		chapterSeignior.x = 160 * i;
-		backLayer.addChild(chapterSeignior);
+		var chapterSeignior = new ChapterSeigniorView(seigniors[i]);
+		items.push(chapterSeignior);
 	}
-	backLayer.graphics.drawRect(1, "#000000", [0, 0, 160 * seigniors.length, 150]);
-	var sc = new LScrollbar(backLayer, LGlobal.width - 60, 150, 10);
-	self.seigniorsLayer.addChild(sc);
-	sc.excluding = true;
-	backLayer.addEventListener(LMouseEvent.MOUSE_DOWN, self.characterClickDown);
-	backLayer.addEventListener(LMouseEvent.MOUSE_UP, self.characterClickUp.bind(self));
-};
-ChapterView.prototype.characterClickDown = function(event) {
-	var chara = event.target;
-	chara.offsetX = event.offsetX;
-	chara.offsetY = event.offsetY;
-};
-ChapterView.prototype.characterClickUp = function(event) {
-	if(event.target.constructor.name != "ChapterSeigniorView"){
-		return;
-	}
-	var self = this;
-	var chara = event.target;
-	if (chara.offsetX && chara.offsetY && Math.abs(chara.offsetX - event.offsetX) < 5 && Math.abs(chara.offsetY - event.offsetY) < 5) {
-		self.select_chara_id = chara.data.chara_id;
-		/*var obj = {title:Language.get("confirm"),message:String.format(Language.get("dialog_select_seignior_confirm"),chara.data.name),height:200,
-		okEvent:self.okEvent.bind(self),cancelEvent:null};*/
-		var obj = {title:"确认",message:"选择"+chara.data.name+"吗？",height:200,
-		okEvent:self.okEvent.bind(self),cancelEvent:null};
-		var windowLayer = ConfirmWindow(obj);
-		self.addChild(windowLayer);
-	}
+	self.listView.updateList(items);
 };
 ChapterView.prototype.okEvent=function(event){
 	this.removeChildAt(this.numChildren - 1);
@@ -114,13 +86,6 @@ ChapterView.prototype.okEvent=function(event){
 };
 ChapterView.prototype.ctrlLayerInit=function(){
 	var self = this;
-	/*var returnBitmapData = new LBitmapData(LMvc.datalist["icon-return"]);
-	var returnBitmap = new LBitmap(returnBitmapData);
-	var returnButton = new LButton(returnBitmap);
-	returnButton.x = 20;
-	returnButton.y = LGlobal.height - returnBitmapData.height - 20;
-	self.ctrlLayer.addChild(returnButton);
-	*/
 	var bitmapClose = new LBitmap(new LBitmapData(LMvc.datalist["close"]));
 	var buttonClose = new LButton(bitmapClose);
 	buttonClose.x = LGlobal.width - bitmapClose.getWidth() - 5;
