@@ -97,6 +97,10 @@ function ConfirmWindow(obj){
 	var msg;
 	if(obj.subWindow){
 		msg = obj.subWindow;
+	}else if(obj.messageHtml){
+		msg = getStrokeLabel(obj.messageHtml,16,"#FFFFFF","#000000",2,"htmlText");
+		msg.width = 260;
+		msg.setWordWrap(true,27);
 	}else{
 		msg = getStrokeLabel(obj.message,16,"#FFFFFF","#000000",4);
 		msg.width = 260;

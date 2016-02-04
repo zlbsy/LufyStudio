@@ -68,6 +68,22 @@ BuildBarrackView.prototype.selectComplete=function(event){
 		return false;
 	}else if(event.characterListType == CharacterListType.EXPEDITION){
 		var characterList = event.characterList;
+		if(SeigniorExecute.running){
+			var prefecture = LMvc.CityController.getValue("toCity").prefecture();
+			var prefectureCharacter = CharacterModel.getChara(prefecture);
+			if(characterList.findIndex(function(child){
+				return child.id() == prefecture;
+			}) < 0){
+				var obj = {title:Language.get("confirm"),messageHtml:String.format(Language.get("dialog_prefecture_nodef_error"),prefectureCharacter.name()),height:200,okEvent:null};
+				var windowLayer = ConfirmWindow(obj);
+				LMvc.layer.addChild(windowLayer);
+				return false;
+			}else{
+				self.controller.setValue("expeditionLeader",prefectureCharacter);
+				self.controller.setValue("toCityId", cityId);
+				return true;
+			}
+		}
 		for(var i = 0,l = characterList.length;i<l;i++){
 			if(characterList[i].troops() > 0){
 				continue;
@@ -119,8 +135,6 @@ BuildBarrackView.prototype.showBuild=function(event){
 		self.load = new LMvcLoader(self);
 	}
 	if(event.characterListType == CharacterListType.EXPEDITION){
-		self.toSelectLeader();
-	}else if(event.characterListType == CharacterListType.SELECT_LEADER){
 		if(SeigniorExecute.running){
 			var data = {};
 			data.expeditionCharacterList = self.controller.getValue("expeditionCharacterList");
@@ -128,8 +142,19 @@ BuildBarrackView.prototype.showBuild=function(event){
 			self.controller.setValue("battleData",data);
 			self.controller.gotoBattle();
 		}else{
-			self.load.view(["Builds/ExpeditionReady"],self.expeditionReady);
+			self.toSelectLeader();
 		}
+	}else if(event.characterListType == CharacterListType.SELECT_LEADER){
+		/*if(SeigniorExecute.running){
+			var data = {};
+			data.expeditionCharacterList = self.controller.getValue("expeditionCharacterList");
+			data.expeditionLeader = self.controller.getValue("expeditionLeader");
+			self.controller.setValue("battleData",data);
+			self.controller.gotoBattle();
+		}else{
+			
+		}*/
+		self.load.view(["Builds/ExpeditionReady"],self.expeditionReady);
 	}
 };
 BuildBarrackView.prototype.expeditionReady=function(){
