@@ -186,10 +186,6 @@ BattleController.prototype.init = function(){
 	self.model.enemyList[0].isLeader = true;
 	var defCharas = self.model.map.defCharas.sort(function(a, b) {return a.index - b.index;});
 	console.log("self.model.map:",self.model.map.defCharas);
-	var defCharacterList = {
-	"soldier_4":[671,672,673,674,675,676],
-	"soldier_6":[677,678,679,680,681,682]
-};
 	var charaIndexObj = {};
 	var defense = self.battleData.toCity.cityDefense();
 	for(var i = 0;defense >= 500 && i<defCharas.length;i++){
@@ -199,11 +195,12 @@ BattleController.prototype.init = function(){
 		if(typeof charaIndexObj[key] == UNDEFINED){
 			charaIndexObj[key] = 0;
 		}
-		var ids = defCharacterList[key]
+		var ids = defCharacterList[key];
 		var charaId = ids[charaIndexObj[key]];
 		charaIndexObj[key] += 1;
 		var chara = CharacterModel.getChara(charaId);
 		chara.seigniorId(self.battleData.toCity.seigniorCharaId());
+		chara.cityId(self.battleData.toCity.id());
 		chara.calculation(true);
 		if(self.battleData.fromCity.seigniorCharaId() == LMvc.selectSeignorId){
 			self.addEnemyCharacter(charaId,child.direction,child.x,child.y);

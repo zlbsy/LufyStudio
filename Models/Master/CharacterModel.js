@@ -273,6 +273,9 @@ CharacterModel.prototype.id = function() {
 	return this.data.id;
 };
 CharacterModel.prototype.age = function() {
+	if(this.data.born == 0){
+		return "--";
+	}
 	return LMvc.chapterData.year - this.data.born;
 };
 CharacterModel.prototype.personalLoyalty = function() {
@@ -443,7 +446,7 @@ CharacterModel.prototype.identity = function(value) {
 	return Language.get(identity);
 };
 CharacterModel.prototype.loyalty = function(value) {
-	return this._dataValue("loyalty", value);
+	return this._dataValue("loyalty", value, 0);
 };
 CharacterModel.prototype.jobLabel = function() {
 	var self = this;
