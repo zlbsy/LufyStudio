@@ -78,10 +78,20 @@ LogoView.prototype.showMenu=function(){
 	menuLayer.addChild(buttonTest);
 	buttonTest.addEventListener(LMouseEvent.MOUSE_UP, self.testStart.bind(self));
 	
+	menuY += menuHeight;
+	var buttonCreate = getButton("自设武将",200);
+	buttonCreate.y = menuY;
+	menuLayer.addChild(buttonCreate);
+	buttonCreate.addEventListener(LMouseEvent.MOUSE_UP, self.createCharacter.bind(self));
+	
 	menuY += menuHeight * 2;
 	menuLayer.y = LGlobal.height - menuY;
 	
 	self.topMenuLayer = menuLayer;
+};
+LogoView.prototype.createCharacter=function(event){
+	var self = this;
+	self.controller.loadCreateCharacter();
 };
 LogoView.prototype.testStart=function(event){
 	var self = this;
