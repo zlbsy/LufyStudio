@@ -75,7 +75,7 @@ ChapterView.prototype.seigniorsLayerInit=function(){
 	self.seigniorsLayer.addChild(self.listView);
 	var items = [];
 	for(var i=0;i<seigniors.length;i++){
-		var chapterSeignior = new ChapterSeigniorView(seigniors[i]);
+		var chapterSeignior = new ChapterSeigniorView(self.controller,seigniors[i]);
 		items.push(chapterSeignior);
 	}
 	self.listView.updateList(items);

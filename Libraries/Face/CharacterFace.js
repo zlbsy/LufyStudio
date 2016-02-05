@@ -8,8 +8,9 @@ CharacterFace.prototype.loadData = function(path){
 	var self = this;
 	var loader = new LURLLoader();
 	loader.parent = self;
-    loader.addEventListener(LEvent.COMPLETE, self.loadDataComplete); 
-    loader.load(path+"?t="+(new Date()).getTime(), "text");
+    loader.addEventListener(LEvent.COMPLETE, self.loadDataComplete);
+    path += LGlobal.traceDebug ? "?t="+(new Date()).getTime() : "";
+    loader.load(path, "text");
 };
 CharacterFace.prototype.loadDataComplete = function(event){
 	var loader = event.currentTarget;

@@ -1,7 +1,8 @@
-function ChapterSeigniorView(data){
+function ChapterSeigniorView(controller,data){
 	var self = this;
 	base(self, LListChildView, []);
 	self.data = data;
+	self.controller = controller;
 	self.layer = new LSprite();
 	self.addChild(self.layer);
 	self.set();
@@ -37,15 +38,27 @@ ChapterSeigniorView.prototype.set=function(){
 	win.cacheAsBitmap(true);
 	self.layer.addChild(win);
 	
-	var face = new CharacterFace(self.data.faceImg);
-	face.x = 5;
-	face.y = 5;
-	face.scaleX = face.scaleY = 100 / 220;
-	self.layer.addChild(face);
-    face.addEventListener(LEvent.COMPLETE, self.loadFaceComplete); 
+	var loader = new LURLLoader();
+	loader.parent = self;
+    loader.addEventListener(LEvent.COMPLETE, self.loadTxtComplete);
+    var path = LMvc.IMG_PATH+"face/base64/"+self.data.faceImg+".txt";
+    path += LGlobal.traceDebug ? "?t="+(new Date()).getTime() : "";
+    loader.load(path, "text");
+};
+ChapterSeigniorView.prototype.loadTxtComplete=function(event){
+	var self = event.currentTarget.parent;
+	var txtData=event.target;
+	var loader = new LLoader();
+	loader.parent = self;
+    loader.addEventListener(LEvent.COMPLETE, self.loadFaceComplete); 
+    loader.load(txtData, "bitmapData");
 };
 ChapterSeigniorView.prototype.loadFaceComplete=function(event){
-	var self = event.currentTarget.parent.parent;
+	var self = event.currentTarget.parent;
+	var face = new LBitmap(new LBitmapData(event.target));
+	face.x = 5;
+	face.y = 5;
+	self.layer.addChild(face);
 	self.cacheAsBitmap(false);
 	self.updateView();
 };
