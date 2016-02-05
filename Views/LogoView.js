@@ -55,19 +55,19 @@ LogoView.prototype.showMenu=function(){
 	menuLayer.x = menuLayer.tx = (LGlobal.width - 200) * 0.5;
 	self.addChild(menuLayer);
 	
-	var buttonStart = getButton("开始游戏",200);
+	var buttonStart = getButton(Language.get("game_start"),200);
 	buttonStart.y = menuY;
 	menuLayer.addChild(buttonStart);
 	buttonStart.addEventListener(LMouseEvent.MOUSE_UP, self.loadChapterList.bind(self));
 	
 	menuY += menuHeight;
-	var buttonRead = getButton("读取进度",200);
+	var buttonRead = getButton(Language.get("game_read"),200);
 	buttonRead.y = menuY;
 	menuLayer.addChild(buttonRead);
 	buttonRead.addEventListener(LMouseEvent.MOUSE_UP, self.readGame.bind(self));
 	
 	menuY += menuHeight;
-	var buttonSetting = getButton("环境设定",200);
+	var buttonSetting = getButton(Language.get("game_setting"),200);
 	buttonSetting.y = menuY;
 	menuLayer.addChild(buttonSetting);
 	buttonSetting.addEventListener(LMouseEvent.MOUSE_UP, self.settingGame.bind(self));
@@ -90,21 +90,16 @@ LogoView.prototype.showMenu=function(){
 	self.topMenuLayer = menuLayer;
 };
 LogoView.prototype.createCharacter=function(event){
-	var self = this;
-	self.controller.loadCreateCharacter();
+	this.controller.loadCreateCharacter();
 };
 LogoView.prototype.testStart=function(event){
-	var self = this;
-	self.controller.showSingleCombatArena();
-	//self.controller.loadTest();
+	this.controller.showSingleCombatArena();
 };
 LogoView.prototype.readGame=function(event){
-	//RecordController.instance().show();
 	RecordController.instance().show(RecordController.READ_MODE);
-	//this.controller.read();
 };
 LogoView.prototype.settingGame=function(event){
-	this.testDialog();
+	this.controller.loadSettingGame();
 };
 LogoView.prototype.testDialog=function(){
 	LMessageBox.show({

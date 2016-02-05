@@ -140,6 +140,7 @@ Language.data = {
 	"game_save":"保存进度",
 	"game_read":"读取进度",
 	"return_top":"回主页面",
+	"game_setting":"环境设定",
 	"confirm":"确认",
 	"dialog_select_generals":"请选择武将！",
 	"dialog_character_troops_error":"{0}没有分配士兵!",

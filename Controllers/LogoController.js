@@ -29,6 +29,7 @@ LogoController.prototype.libraryLoad=function(){
 	if(typeof LPlugin == UNDEFINED){
 		list.push("LPlugin");
 	}
+	list.push("language/chinese/LanguageSimple");
 	self.load.library(list,self.modelLoad);
 };
 LogoController.prototype.modelLoad=function(){
@@ -133,11 +134,20 @@ LogoController.prototype.mapLoadComplete=function(){
 	var map = new MapController();
 	self.view.parent.addChild(map.view);
 };
+LogoController.prototype.loadSettingGame = function(){
+	var self = this;
+	self.loadMvc("SettingGame",self.settingGameLoadComplete);
+};
+LogoController.prototype.settingGameLoadComplete = function(){
+	var self = this;
+	var settingGame = new SettingGameController();
+	self.view.parent.addChild(settingGame.view);
+};
 LogoController.prototype.loadCreateCharacter = function(){
 	var self = this;
 	self.loadMvc("CreateCharacter",self.createCharacterLoadComplete);
 };
-LogoController.prototype.createCharacterLoadComplete = function(data){
+LogoController.prototype.createCharacterLoadComplete = function(){
 	var self = this;
 	var createCharacter = new CreateCharacterController();
 	self.view.parent.addChild(createCharacter.view);
