@@ -21,18 +21,21 @@ function getIconButton(icon, rect, text,width,img){
 	bitmapWin.addChild(textLabel);
 	return new LButton(getBitmap(bitmapWin));
 }
-function getButton(text,width,img){
+function getSizeButton(text,width,height,img){
 	if(typeof img == UNDEFINED){
 		img = "win01";
 	}
-	var bitmapWin = new LPanel(new LBitmapData(LMvc.datalist[img]),width,50);
+	var bitmapWin = new LPanel(new LBitmapData(LMvc.datalist[img]),width,height);
 	var textLabel = getStrokeLabel(text,18,"#FFFFFF","#000000",3);
 	textLabel.x = (width - textLabel.getWidth()) * 0.5;
-	textLabel.y = (50 - textLabel.getHeight()) * 0.5;
+	textLabel.y = (height - textLabel.getHeight()) * 0.5;
 	bitmapWin.addChild(textLabel);
 	var btn = new LButton(getBitmap(bitmapWin));
 	btn.text = text;
 	return btn;
+}
+function getButton(text,width,img){
+	return getSizeButton(text,width,50,img);
 }
 function getTranslucentMask(){
 	var layer = new LSprite();
@@ -106,8 +109,13 @@ function ConfirmWindow(obj){
 		msg.width = 260;
 		msg.setWordWrap(true,27);
 	}
-	msg.x = panel.x + 30;
-	msg.y = panel.y + 70;
+	if(obj.width < LGlobal.width){
+		msg.x = panel.x + 30;
+	}
+	if(!obj.contentStartY){
+		obj.contentStartY = 70;
+	}
+	msg.y = panel.y + obj.contentStartY;
 	windowLayer.addChild(msg);
 	
 	var okPanel = new LButton(new LBitmap(new LBitmapData(LMvc.datalist["ok"])));

@@ -46,3 +46,8 @@ function ExpeditionComboBoxChild(content, comboBox, selected) {
 	self.childWidth = 210;
 	base(self, SgjComboBoxChild, [content, comboBox, selected]);
 }
+function CreateCharacterComboBoxChild(content, comboBox, selected) {
+	var self = this;
+	self.childWidth = 100;
+	base(self, SgjComboBoxChild, [content, comboBox, selected]);
+}

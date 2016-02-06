@@ -9,7 +9,7 @@ ChapterController.prototype.construct=function(){
 };
 ChapterController.prototype.libraryLoad=function(){
 	var self = this;
-	var libraris = ["BitmapSprite","Face","Face/CharacterFace","Face/Component"];
+	var libraris = ["BitmapSprite"];
 	self.load.library(libraris,self.viewLoad);
 };
 ChapterController.prototype.viewLoad=function(){
