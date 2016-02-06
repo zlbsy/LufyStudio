@@ -2,74 +2,11 @@ function CreateCharacterDetailedView(controller){
 	base(this,LView,[controller]);
 	this.init();
 }
-CreateCharacterDetailedView.TAB_EQUIPMENT = "tab_equipment";
-CreateCharacterDetailedView.TAB_SKILL = "tab_skill";
-CreateCharacterDetailedView.TAB_ARMS = "tab_arms";
-CreateCharacterDetailedView.TAB_LINEUPS = "tab_lineups";
-CreateCharacterDetailedView.TAB_STATUS = "tab_status";
-CreateCharacterDetailedView.TAB_PROPERTIES = "tab_properties";
-CreateCharacterDetailedView.prototype.init=function(){
-	var self = this;
-	self.layerInit();
-	self.TabShow(CreateCharacterDetailedView.TAB_STATUS);
-	return;
-	self.faceInit();
-	self.statusInit();
-	self.abilityInit();
-};
-CreateCharacterDetailedView.prototype.TabShow=function(tab){
-	var self = this, tabIcon, layer;
-	self.tabLayer.removeAllChild();
-	self.nowTab = tab;
-	var tabs = [CreateCharacterDetailedView.TAB_STATUS,CreateCharacterDetailedView.TAB_PROPERTIES,CreateCharacterDetailedView.TAB_SKILL,CreateCharacterDetailedView.TAB_ARMS,CreateCharacterDetailedView.TAB_EQUIPMENT];
-	for(var i=0,l=tabs.length;i<l;i++){
-		tabIcon = new LSprite();
-		if(tabs[i] == tab){
-			layer = new LPanel(new LBitmapData(LMvc.datalist["win01"],0,0,51,34),90,50);
-			tabIcon.y = -10;
-		}else{
-			layer = new LPanel(new LBitmapData(LMvc.datalist["win01"],0,0,51,34),90,40);
-			tabIcon.tabName = tabs[i];
-			//tabIcon.addEventListener(LMouseEvent.MOUSE_UP,self.TabClick.bind(self));
-		}
-		var label = getStrokeLabel(Language.get(tabs[i]),22,"#FFFFFF","#000000",2);
-		label.x = (90 - label.getWidth()) * 0.5;
-		label.y = 10;
-		layer.addChild(label);
-		tabIcon.addChild(getBitmap(layer));
-		tabIcon.x = 90 * i;
-		self.tabLayer.addChild(tabIcon);
-	}
-	return;
-	var back = getBitmap(new LPanel(new LBitmapData(LMvc.datalist["win02"]),450,LGlobal.height - self.tabLayer.y - 35,18,24,22,24));
-	back.y = 35;
-	self.tabLayer.addChild(back);
-	
-	switch(tab){
-		case CharacterDetailedView.TAB_EQUIPMENT:
-			self.showEquipment();
-			break;
-		case CharacterDetailedView.TAB_SKILL:
-			self.showStrategy();
-			break;
-		case CharacterDetailedView.TAB_ARMS:
-			self.showArms();
-			break;
-		case CharacterDetailedView.TAB_PROPERTIES:
-			self.showProperties();
-			break;
-		case CharacterDetailedView.TAB_STATUS:
-			self.showStatus();
-			break;
-	}
-};
 CreateCharacterDetailedView.prototype.layerInit=function(){
 	var self = this;
 	//self.addChild(getTranslucentMask());
 	self.baseLayer = new LSprite();
 	self.addChild(self.baseLayer);
-	self.tabLayer = new LSprite();
-	self.baseLayer.addChild(self.tabLayer);
 };
 CreateCharacterDetailedView.prototype.faceInit=function(){
 	var self = this;
@@ -303,4 +240,11 @@ CreateCharacterDetailedView.prototype.abilityInit=function(){
 	self.forceText = self.getAbilityText("运气", 215);
 	
 	self.baseLayer.addChild(self.abilityLayer);
+};
+CreateCharacterDetailedView.prototype.init=function(){
+	var self = this;
+	self.layerInit();
+	self.faceInit();
+	self.statusInit();
+	self.abilityInit();
 };
