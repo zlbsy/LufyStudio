@@ -14,10 +14,17 @@ CreateCharacterArmItemView.prototype.init=function(list){
 	self.comboBox = self.getStatusComboBox(list);
 	self.comboBox.x = 60;
 	self.addChild(self.comboBox);
+	self.comboBox.addEventListener(LComboBox.ON_CHANGE, self.onValueChange);
 };
-CreateCharacterArmItemView.prototype.onClick=function(){
-	var self = this;
+CreateCharacterArmItemView.prototype.onClick=function(event){
+	var self = event.target;
 	self.comboBox.showChildList();
+};
+CreateCharacterArmItemView.prototype.onValueChange=function(event){
+	console.log("onChange");
+	var self = event.currentTarget.parent;
+	self.cacheAsBitmap(false);
+	self.updateView();
 };
 CreateCharacterArmItemView.prototype.getStatusComboBox=function(list){
 	var panel = new LPanel(new LBitmapData(LMvc.datalist["win01"]),100,40);

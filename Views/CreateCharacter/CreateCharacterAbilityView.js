@@ -13,61 +13,41 @@ CreateCharacterAbilityView.prototype.init=function(){
 	self.layerInit();
 	self.abilityInit();
 };
-CreateCharacterAbilityView.prototype.getAbilityText=function(name, y){
+CreateCharacterAbilityView.prototype.updatePoint=function(value){
 	var self = this;
-	var label = getStrokeLabel(Language.get(name) + ":",20,"#FFFFFF","#000000",3);
-	label.y = y + 4;
-	self.abilityLayer.addChild(label);
-	var text = getStrokeLabel("100",20,"#FFFFFF","#000000",3);
-	text.x = 50;
-	text.y = y + 4;
-	self.abilityLayer.addChild(text);
-	var minusButton = getSizeButton("-",40,40);
-	minusButton.status = text;
-	minusButton.x = 90;
-	minusButton.y = y;
-	self.abilityLayer.addChild(minusButton);
-	minusButton.addEventListener(LMouseEvent.MOUSE_UP, self.onMinusStatus);
-	var plusButton = getSizeButton("+",40,40);
-	plusButton.status = text;
-	plusButton.x = 130;
-	plusButton.y = y;
-	self.abilityLayer.addChild(plusButton);
-	plusButton.addEventListener(LMouseEvent.MOUSE_UP, self.onPlusStatus);
-	return text;
-};
-CreateCharacterAbilityView.prototype.onMinusStatus=function(event){
-	var button = event.currentTarget;
-	var self = button.parent.parent.parent;
-	var status = button.status;
-	status.text = parseInt(status.text) - 1;
-};
-CreateCharacterAbilityView.prototype.onPlusStatus=function(event){
-	var button = event.currentTarget;
-	var self = button.parent.parent.parent;
-	var status = button.status;
-	status.text = parseInt(status.text) + 1;
+	self.point += value;
+	self.statusPoint.text = String.format("可分配点数: {0}",self.point);
 };
 CreateCharacterAbilityView.prototype.abilityInit=function(){
 	var self = this;
-	self.abilityLayer = new LSprite();
-	self.abilityLayer.x = 300;
-	self.abilityLayer.y = 10;
+	self.point = 20;
 	
-	self.statusPoint = getStrokeLabel("分配: 200",20,"#FFFFFF","#000000",3);
-	//self.statusPoint.x = 5;
-	self.statusPoint.y = 5;
-	self.abilityLayer.addChild(self.statusPoint);
+	self.statusPoint = getStrokeLabel(String.format("可分配点数: {0}",self.point),20,"#FFFFFF","#000000",3);
+	self.statusPoint.x = 10;
+	self.statusPoint.y = 12;
+	self.baseLayer.addChild(self.statusPoint);
 	var updateButton = getSizeButton("刷新",80,40);
-	updateButton.x = 90;
-	//updateButton.y = y;
-	self.abilityLayer.addChild(updateButton);
-	
-	self.forceText = self.getAbilityText("force", 43);
-	self.forceText = self.getAbilityText("智利", 86);
-	self.forceText = self.getAbilityText("统帅", 129);
-	self.forceText = self.getAbilityText("敏捷", 172);
-	self.forceText = self.getAbilityText("运气", 215);
-	
-	self.baseLayer.addChild(self.abilityLayer);
+	updateButton.x = 180;
+	updateButton.y = 5;
+	self.baseLayer.addChild(updateButton);
+	self.listView = new LListView();
+	self.listView.dragEffect = LListView.DragEffects.None;
+	self.listView.x = 10;
+	self.listView.y = 55;
+	self.listView.cellWidth = 200;
+	self.listView.cellHeight = 45;
+	self.baseLayer.addChild(self.listView);
+	var items = [], child;
+	child = new CreateCharacterAbilityItemView(self.listView, "force", 80);
+	items.push(child);
+	child = new CreateCharacterAbilityItemView(self.listView, "intelligence", 80);
+	items.push(child);
+	child = new CreateCharacterAbilityItemView(self.listView, "command", 80);
+	items.push(child);
+	child = new CreateCharacterAbilityItemView(self.listView, "agility", 80);
+	items.push(child);
+	child = new CreateCharacterAbilityItemView(self.listView, "luck", 80);
+	items.push(child);
+	self.listView.resize(200, 45 * items.length);
+	self.listView.updateList(items);
 };
