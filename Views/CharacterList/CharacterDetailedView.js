@@ -101,7 +101,7 @@ CharacterDetailedView.prototype.TabShow=function(tab){
 	for(var i=0,l=tabs.length;i<l;i++){
 		tabIcon = new LSprite();
 		if(tabs[i] == tab){
-			layer = new LPanel(new LBitmapData(LMvc.datalist["win01"],0,0,51,34),90,50);
+			layer = new LPanel(new LBitmapData(LMvc.datalist["win02"],0,0,51,34),90,50);
 			tabIcon.y = -10;
 		}else{
 			layer = new LPanel(new LBitmapData(LMvc.datalist["win01"],0,0,51,34),90,40);

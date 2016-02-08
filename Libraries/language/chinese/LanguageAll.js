@@ -210,6 +210,13 @@ Language.data = {
 	"label_use":"使用",
 	"label_sale":"出售",
 	
+	"born":"出生",
+	"life":"寿命",
+	"personalLoyalty":"义气",
+	"disposition":"性格",
+	"ambition":"野心",
+	"compatibility":"相性",
+	
 	"belong":"所属",
 	"identity":"身份",
 	"city":"城池",

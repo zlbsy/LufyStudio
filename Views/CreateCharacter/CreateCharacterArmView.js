@@ -1,14 +1,14 @@
-function CreateCharacterDetailedView(controller){
+function CreateCharacterArmView(controller){
 	base(this,LView,[controller]);
 	this.init();
 }
-CreateCharacterDetailedView.prototype.layerInit=function(){
+CreateCharacterArmView.prototype.layerInit=function(){
 	var self = this;
 	//self.addChild(getTranslucentMask());
 	self.baseLayer = new LSprite();
 	self.addChild(self.baseLayer);
 };
-CreateCharacterDetailedView.prototype.faceInit=function(){
+CreateCharacterArmView.prototype.faceInit=function(){
 	var self = this;
 	self.faceLayer = new LSprite();
 	var backgroundData = new LBitmapData(LMvc.datalist["win05"]);
@@ -43,11 +43,11 @@ CreateCharacterDetailedView.prototype.faceInit=function(){
 	
 	self.baseLayer.addChild(self.faceLayer);
 };
-CreateCharacterDetailedView.prototype.changeFace=function(event){
+CreateCharacterArmView.prototype.changeFace=function(event){
 	var self = event.currentTarget.parent.parent.parent;
 	self.randomFace();
 };
-CreateCharacterDetailedView.prototype.randomFace=function(faceIndex){
+CreateCharacterArmView.prototype.randomFace=function(faceIndex){
 	var self = this;
 	if(self.face){
 		self.face.remove();
@@ -61,7 +61,7 @@ CreateCharacterDetailedView.prototype.randomFace=function(faceIndex){
 	self.face.scaleX = self.face.scaleY = 0.5;
 	self.faceLayer.addChild(self.face);
 };
-CreateCharacterDetailedView.prototype.getStatusComboBox=function(list){
+CreateCharacterArmView.prototype.getStatusComboBox=function(list){
 	var panelBorn = new LPanel(new LBitmapData(LMvc.datalist["win01"]),100,40);
 	panelBorn.cacheAsBitmap(true);
 	var bitmapOn = new LBitmap(new LBitmapData(LMvc.datalist["combobox_arraw"]));
@@ -79,7 +79,7 @@ CreateCharacterDetailedView.prototype.getStatusComboBox=function(list){
 	}
 	return com;
 };
-CreateCharacterDetailedView.prototype.statusInit=function(){
+CreateCharacterArmView.prototype.statusInit=function(){
 	var self = this;
 	self.statusLayer = new LSprite();
 	self.statusLayer.x = 120;
@@ -183,7 +183,7 @@ CreateCharacterDetailedView.prototype.statusInit=function(){
 	
 	self.baseLayer.addChild(self.statusLayer);
 };
-CreateCharacterDetailedView.prototype.getAbilityText=function(name, y){
+CreateCharacterArmView.prototype.getAbilityText=function(name, y){
 	var self = this;
 	var label = getStrokeLabel(Language.get(name) + ":",20,"#FFFFFF","#000000",3);
 	label.y = y + 4;
@@ -206,19 +206,19 @@ CreateCharacterDetailedView.prototype.getAbilityText=function(name, y){
 	plusButton.addEventListener(LMouseEvent.MOUSE_UP, self.onPlusStatus);
 	return text;
 };
-CreateCharacterDetailedView.prototype.onMinusStatus=function(event){
+CreateCharacterArmView.prototype.onMinusStatus=function(event){
 	var button = event.currentTarget;
 	var self = button.parent.parent.parent;
 	var status = button.status;
 	status.text = parseInt(status.text) - 1;
 };
-CreateCharacterDetailedView.prototype.onPlusStatus=function(event){
+CreateCharacterArmView.prototype.onPlusStatus=function(event){
 	var button = event.currentTarget;
 	var self = button.parent.parent.parent;
 	var status = button.status;
 	status.text = parseInt(status.text) + 1;
 };
-CreateCharacterDetailedView.prototype.abilityInit=function(){
+CreateCharacterArmView.prototype.abilityInit=function(){
 	var self = this;
 	self.abilityLayer = new LSprite();
 	self.abilityLayer.x = 300;
@@ -241,7 +241,7 @@ CreateCharacterDetailedView.prototype.abilityInit=function(){
 	
 	self.baseLayer.addChild(self.abilityLayer);
 };
-CreateCharacterDetailedView.prototype.init=function(){
+CreateCharacterArmView.prototype.init=function(){
 	var self = this;
 	self.layerInit();
 	self.faceInit();

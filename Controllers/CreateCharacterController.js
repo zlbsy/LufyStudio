@@ -15,7 +15,14 @@ CreateCharacterController.prototype.libraryLoad=function(){
 };
 CreateCharacterController.prototype.viewLoad=function(){
 	var self = this;
-	self.load.view(["CreateCharacter/CreateCharacterDetailed"],self.init);
+	self.load.view(["CreateCharacter/CreateCharacterDetailed", 
+	"CreateCharacter/CreateCharacterFace", 
+	"CreateCharacter/CreateCharacterBasic", 
+	"CreateCharacter/CreateCharacterBasicItem", 
+	"CreateCharacter/CreateCharacterAbility", 
+	"CreateCharacter/CreateCharacterAbilityItem", 
+	"CreateCharacter/CreateCharacterArm", 
+	"CreateCharacter/CreateCharacterArmItem"],self.init);
 };
 CreateCharacterController.prototype.init=function(){
 	var self = this;
