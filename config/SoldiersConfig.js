@@ -290,50 +290,7 @@ var SoldierDatas = [
 	strategy:[],
 	strategyHert:1.5,
 	explanation:"explanation_xhs"
-	},
-	{id:20,name:"青龙骑兵",type:SoldierType.Physical,attackType:AttackType.NEAR,moveType:MoveType.CAVALRY,movePower:5,
-	property:{attack:"C",spirit:"C",defense:"C",breakout:"C",morale:"C",troops:3,strategy:1},
-	equipment:{head:0,hand:0,body:0,foot:0,accessories:0},
-	restrain:[{id:2,value:110},{id:3,value:80}],
-	terrain:[{id:1,value:110,moveCost:1},{id:2,value:80,moveCost:2}],
-	rangeAttack:[{x:-1,y:-1},{x:-1,y:1},{x:1,y:1},{x:1,y:-1},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0}],
-	rangeAttackTarget:[{x:0,y:0}],
-	strategy:[],
-	explanation:"explanation_qlq",
-	next:[{id:7,lv:20}]
-	},
-	{id:21,name:"白虎步兵",type:SoldierType.Physical,attackType:AttackType.NEAR,moveType:MoveType.CAVALRY,movePower:5,
-	property:{attack:"C",spirit:"C",defense:"C",breakout:"C",morale:"C",troops:3,strategy:1},
-	equipment:{head:0,hand:0,body:0,foot:0,accessories:0},
-	restrain:[{id:2,value:110},{id:3,value:80}],
-	terrain:[{id:1,value:110,moveCost:1},{id:2,value:80,moveCost:2}],
-	rangeAttack:[{x:-1,y:-1},{x:-1,y:1},{x:1,y:1},{x:1,y:-1},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0}],
-	rangeAttackTarget:[{x:0,y:0}],
-	strategy:[],
-	explanation:"explanation_bhq",
-	next:[{id:8,lv:40}]
-	},
-	{id:22,name:"玄武弩兵",type:SoldierType.Physical,attackType:AttackType.NEAR,moveType:MoveType.CAVALRY,movePower:5,
-	property:{attack:"C",spirit:"C",defense:"C",breakout:"C",morale:"C",troops:3,strategy:1},
-	equipment:{head:0,hand:0,body:0,foot:0,accessories:0},
-	restrain:[{id:2,value:110},{id:3,value:80}],
-	terrain:[{id:1,value:110,moveCost:1},{id:2,value:80,moveCost:2}],
-	rangeAttack:[{x:-1,y:-1},{x:-1,y:1},{x:1,y:1},{x:1,y:-1},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0}],
-	rangeAttackTarget:[{x:0,y:0}],
-	strategy:[],
-	explanation:"explanation_xwn"
-	},
-	{id:23,name:"朱雀弩骑",type:SoldierType.Physical,attackType:AttackType.NEAR,moveType:MoveType.CAVALRY,movePower:5,
-	property:{attack:"C",spirit:"C",defense:"C",breakout:"C",morale:"C",troops:3,strategy:1},
-	equipment:{head:0,hand:0,body:0,foot:0,accessories:0},
-	restrain:[{id:2,value:110},{id:3,value:80}],
-	terrain:[{id:1,value:110,moveCost:1},{id:2,value:80,moveCost:2}],
-	rangeAttack:[{x:-1,y:-1},{x:-1,y:1},{x:1,y:1},{x:1,y:-1},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0}],
-	rangeAttackTarget:[{x:0,y:0}],
-	strategy:[],
-	explanation:"explanation_zqn",
-	next:[{id:7,lv:20}]
-	},
+	}
 ];
 for(var i=0,l=SoldierDatas.length;i<l;i++){
 	SoldierDatas[i].terrain.push({id:12,value:120,moveCost:1});

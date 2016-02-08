@@ -1,11 +1,11 @@
-function CreateCharacterArmItemView(listView, name, list){
+function CreateCharacterBasicItemView(listView, name, list){
 	var self = this;
 	base(self,LListChildView,[]);
 	self.listView = listView;
 	self.name = name;
 	self.init(list);
 }
-CreateCharacterArmItemView.prototype.init=function(list){
+CreateCharacterBasicItemView.prototype.init=function(list){
 	var self = this;
 	var label = getStrokeLabel(Language.get(self.name) + ":", 20, "#FFFFFF", "#000000", 3);
 	label.y = 5;
@@ -16,17 +16,16 @@ CreateCharacterArmItemView.prototype.init=function(list){
 	self.addChild(self.comboBox);
 	self.comboBox.addEventListener(LComboBox.ON_CHANGE, self.onValueChange);
 };
-CreateCharacterArmItemView.prototype.onClick=function(event){
-	var self = event.target;
-	self.comboBox.showChildList();
-};
-CreateCharacterArmItemView.prototype.onValueChange=function(event){
-	console.log("onChange");
+CreateCharacterBasicItemView.prototype.onValueChange=function(event){
 	var self = event.currentTarget.parent;
 	self.cacheAsBitmap(false);
 	self.updateView();
 };
-CreateCharacterArmItemView.prototype.getStatusComboBox=function(list){
+CreateCharacterBasicItemView.prototype.onClick=function(){
+	var self = this;
+	self.comboBox.showChildList();
+};
+CreateCharacterBasicItemView.prototype.getStatusComboBox=function(list){
 	var panel = new LPanel(new LBitmapData(LMvc.datalist["win01"]),100,40);
 	panel.cacheAsBitmap(true);
 	var bitmapOn = new LBitmap(new LBitmapData(LMvc.datalist["combobox_arraw"]));

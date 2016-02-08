@@ -4,6 +4,7 @@ function CreateCharacterFaceView(controller){
 }
 CreateCharacterFaceView.prototype.init=function(){
 	var self = this;
+	self.females = [36,37,380,524,528,548];
 	var backgroundData = new LBitmapData(LMvc.datalist["win05"]);
 	var panel = getBitmap(new LPanel(backgroundData,186, 266));
 	self.addChild(panel);
@@ -25,17 +26,18 @@ CreateCharacterFaceView.prototype.init=function(){
 	self.addChild(fastLabel);
 	var radioBackground = new LBitmap(new LBitmapData(LMvc.datalist["checkbox-background"]));
 	var radioSelect = new LBitmap(new LBitmapData(LMvc.datalist["checkbox-on"]));
-	speedRadio = new LRadio();
-	speedRadio.x = 25;
-	speedRadio.y = 330;
-	speedRadio.setChildRadio(1,0,0,radioBackground,radioSelect);
-	speedRadio.setChildRadio(2,80,0,radioBackground,radioSelect);
-	speedRadio.setValue(2);
-	self.addChild(speedRadio);
+	var genderRadio = new LRadio();
+	genderRadio.x = 25;
+	genderRadio.y = 330;
+	genderRadio.setChildRadio(1,0,0,radioBackground,radioSelect);
+	genderRadio.setChildRadio(2,80,0,radioBackground,radioSelect);
+	genderRadio.setValue(2);
+	self.addChild(genderRadio);
+	self.genderRadio = genderRadio;
 	//speedRadio.addEventListener(LMouseEvent.MOUSE_UP,self.onSpeedChange);
 };
 CreateCharacterFaceView.prototype.changeFace=function(event){
-	var self = event.currentTarget.parent.parent.parent;
+	var self = event.currentTarget.parent;
 	self.randomFace();
 };
 CreateCharacterFaceView.prototype.randomFace=function(faceIndex){
@@ -44,7 +46,16 @@ CreateCharacterFaceView.prototype.randomFace=function(faceIndex){
 		self.face.remove();
 	}
 	if(!faceIndex){
-		faceIndex = (620 * Math.random() >>> 0) + 1;
+		faceIndex = self.faceIndex;
+		if(self.genderRadio.value == 2){
+			while(self.faceIndex == faceIndex){
+				faceIndex = self.females[self.females.length * Math.random() >>> 0];
+			}
+		}else{
+			while(self.faceIndex == faceIndex || self.females.indexOf(self.faceIndex) >= 0){
+				faceIndex = (620 * Math.random() >>> 0) + 1;break;
+			}
+		}
 	}
 	self.faceIndex = faceIndex;
 	self.face = new CharacterFace(faceIndex);

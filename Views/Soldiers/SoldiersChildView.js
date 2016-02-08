@@ -31,7 +31,7 @@ SoldiersChildView.prototype.set=function(){
 	bitmapLine.y = 48;
 	layer.addChild(bitmapLine);
 	
-	var lblLevel = getStrokeLabel(String.format("熟练度:{0} ",self.soldierModel.proficiency()),23,"#FFFFFF","#000000",3);
+	var lblLevel = getStrokeLabel(Language.get("proficiency") + ": " + self.soldierModel.proficiency(), 23, "#FFFFFF", "#000000", 3);
 	lblLevel.x = lblName.x + 120;
 	lblLevel.y = lblName.y;
 	layer.addChild(lblLevel);
