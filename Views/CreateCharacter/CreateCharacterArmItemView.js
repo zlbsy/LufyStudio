@@ -30,6 +30,12 @@ CreateCharacterArmItemView.prototype.onPlusStatus=function(){
 	self.updateView();
 	abilityView.updatePoint(-50);
 };
+CreateCharacterArmItemView.prototype.setStatus=function(value){
+	var self = this;
+	self.textField.text = value;
+	self.cacheAsBitmap(false);
+	self.updateView();
+};
 CreateCharacterArmItemView.prototype.onClick=function(event){
 	var self = event.target;
 	if(event.selfX > self.minusButton.x && event.selfX < self.minusButton.x + self.minusButton.getWidth() && event.selfY > self.minusButton.y && event.selfY < self.minusButton.y + self.minusButton.getHeight()){

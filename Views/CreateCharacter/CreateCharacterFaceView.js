@@ -8,19 +8,21 @@ CreateCharacterFaceView.prototype.init=function(data){
 	var backgroundData = new LBitmapData(LMvc.datalist["win05"]);
 	var panel = getBitmap(new LPanel(backgroundData,186, 266));
 	self.addChild(panel);
-	
+	if(!data){
+		data = {faceImg:1, gender:1};
+	}
 	self.randomFace(data.faceImg);
 	
-	var buttonFace = getButton("头像变更",176);
+	var buttonFace = getButton(Language.get("change_face"),176);
 	buttonFace.y = 266;
 	self.addChild(buttonFace);
 	buttonFace.addEventListener(LMouseEvent.MOUSE_UP, self.changeFace);
 	
-	var normalLabel = getStrokeLabel("男",20,"#FFFFFF","#000000",4);
+	var normalLabel = getStrokeLabel(Language.get("gender_male"),20,"#FFFFFF","#000000",4);
 	normalLabel.x = 10;
 	normalLabel.y = 330;
 	self.addChild(normalLabel);
-	var fastLabel = getStrokeLabel("女",20,"#FFFFFF","#000000",4);
+	var fastLabel = getStrokeLabel(Language.get("gender_female"),20,"#FFFFFF","#000000",4);
 	fastLabel.x = 85;
 	fastLabel.y = 330;
 	self.addChild(fastLabel);

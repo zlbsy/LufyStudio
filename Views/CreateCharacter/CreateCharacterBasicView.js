@@ -11,9 +11,7 @@ CreateCharacterBasicView.prototype.layerInit=function(){
 CreateCharacterBasicView.prototype.init=function(data){
 	var self = this;
 	self.layerInit();
-	//self.faceInit();
 	self.statusInit(data);
-	//self.abilityInit();
 };
 CreateCharacterBasicView.prototype.statusInit=function(data){
 	var self = this;
@@ -29,10 +27,12 @@ CreateCharacterBasicView.prototype.statusInit=function(data){
 	panelName.y = 10;
 	statusLabelLayer.addChild(panelName);
 	
-	var nameLabel = getStrokeLabel("姓名:",20,"#FFFFFF","#000000",3);
+	var nameLabel = getStrokeLabel(Language.get("name") + ":",20,"#FFFFFF","#000000",3);
 	nameLabel.x = 10;
 	nameLabel.y = 12;
 	statusLabelLayer.addChild(nameLabel);
+	statusLabelLayer.cacheAsBitmap(true);
+	
 	var strName;
 	if(data){
 		strName = data.name;
@@ -57,7 +57,9 @@ CreateCharacterBasicView.prototype.statusInit=function(data){
 	self.listView.cellWidth = 200;
 	self.listView.cellHeight = 45;
 	self.baseLayer.addChild(self.listView);
-	
+	if(!data){
+		data = {born:132, life:20, personalLoyalty:1, disposition:0, ambition:1, compatibility:0};
+	}
 	var items = [], list;
 	for(var i=0, list = [], bornStart = 132; i<100; i++,bornStart++){
 		list.push({label:bornStart, value:bornStart});
@@ -76,38 +78,23 @@ CreateCharacterBasicView.prototype.statusInit=function(data){
 	}
 	var childLayer = new CreateCharacterBasicItemView(self.listView, "personalLoyalty", list);
 	items.push(childLayer);
-	list = [{label:"胆小",value:0}, {label:"冷静",value:1}, {label:"勇敢",value:2}, {label:"鲁莽",value:3}];
+	list = [{label:Language.get("disposition_0"),value:0}, {label:Language.get("disposition_1"),value:1}, {label:Language.get("disposition_2"),value:2}, {label:Language.get("disposition_3"),value:3}];
 	var childLayer = new CreateCharacterBasicItemView(self.listView, "disposition", list);
+	childLayer.comboBox.setValue(data.disposition);
 	items.push(childLayer);
 	for(var i=0, list = [], ambitionStart = 0; i<15; i++,ambitionStart++){
 		list.push({label:ambitionStart + 1, value:ambitionStart + 1});
 	}
 	var childLayer = new CreateCharacterBasicItemView(self.listView, "ambition", list);
+	childLayer.comboBox.setValue(data.ambition);
 	items.push(childLayer);
 	for(var i=0, list = [], compatibilityStart = 0; i<150; i++,compatibilityStart++){
 		list.push({label:compatibilityStart, value:compatibilityStart});
 	}
 	var childLayer = new CreateCharacterBasicItemView(self.listView, "compatibility", list);
+	childLayer.comboBox.setValue(data.compatibility);
 	items.push(childLayer);
 	
 	self.listView.resize(200, 45 * items.length);
 	self.listView.updateList(items);
-};
-CreateCharacterBasicView.prototype.getStatusComboBox=function(list){
-	var panelBorn = new LPanel(new LBitmapData(LMvc.datalist["win01"]),100,40);
-	panelBorn.cacheAsBitmap(true);
-	var bitmapOn = new LBitmap(new LBitmapData(LMvc.datalist["combobox_arraw"]));
-	var bitmapOff = new LBitmap(new LBitmapData(LMvc.datalist["combobox_arraw"]));
-	var com = new LComboBox(18,"#ffffff","Arial",panelBorn,bitmapOff,bitmapOn);
-	com.setListChildView(CreateCharacterComboBoxChild);
-	com.listView.cellWidth = 100;
-	com.label.x = 10;
-	com.label.y = 9;
-	com.label.lineColor = "#000000";
-	com.label.stroke = true;
-	com.label.lineWidth = 3;
-	for(var i=0,l=list.length;i<l;i++){
-		com.setChild({label:list[i].label,value:list[i].value});
-	}
-	return com;
 };
