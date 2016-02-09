@@ -29,10 +29,10 @@ CreateCharacterFaceView.prototype.init=function(data){
 	var radioBackground = new LBitmap(new LBitmapData(LMvc.datalist["checkbox-background"]));
 	var radioSelect = new LBitmap(new LBitmapData(LMvc.datalist["checkbox-on"]));
 	var genderRadio = new LRadio();
-	genderRadio.x = 25;
+	genderRadio.x = 29;
 	genderRadio.y = 330;
 	genderRadio.setChildRadio(1,0,0,radioBackground,radioSelect);
-	genderRadio.setChildRadio(2,80,0,radioBackground,radioSelect);
+	genderRadio.setChildRadio(2,77,0,radioBackground,radioSelect);
 	genderRadio.setValue(data.gender);
 	self.addChild(genderRadio);
 	self.genderRadio = genderRadio;

@@ -5,11 +5,15 @@ function CreateCharacterController(){
 CreateCharacterController.prototype.construct=function(){
 	var self = this;
 	var list = self.model.getImages();
-	self.load.image(list, self.configLoad);
+	self.load.image(list, self.configLoad1);
 };
-CreateCharacterController.prototype.configLoad=function(){
+CreateCharacterController.prototype.configLoad1=function(){
 	var self = this;
-	self.load.config(["Character","characterList","Soldiers"], self.libraryLoad);
+	self.load.config(["Soldiers","Strategy"], self.configLoad2);
+};
+CreateCharacterController.prototype.configLoad2=function(){
+	var self = this;
+	self.load.config(["Character","Skills","characterList"], self.libraryLoad);
 };
 CreateCharacterController.prototype.libraryLoad=function(){
 	var self = this;
@@ -37,6 +41,7 @@ CreateCharacterController.prototype.init=function(){
 	var self = this;
 	SoldierMasterModel.setMaster(SoldierDatas);
 	CharacterModel.setChara(characterList);
+	SkillMasterModel.setMaster(SkillsData);
 	
 	LMvc.keepLoading(false);
 	self.dispatchEvent(LEvent.COMPLETE);

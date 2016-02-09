@@ -49,6 +49,7 @@ CreateCharacterBasicView.prototype.statusInit=function(data){
 	inputLayer.graphics.drawRect(0,"#000000",[0, 0, 100, 30]);
 	nameText.setType(LTextFieldType.INPUT, inputLayer);
 	self.baseLayer.addChild(nameText);
+	self.nameTextField = nameText;
 	
 	self.listView = new LListView();
 	self.listView.dragEffect = LListView.DragEffects.None;

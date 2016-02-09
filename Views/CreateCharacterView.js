@@ -31,7 +31,7 @@ CreateCharacterView.prototype.init=function(){
 	self.listView.resize(260, 50 * 6);
 	self.listView.updateList(items);
 	
-	var updateButton = getSizeButton("做成",80,40);
+	var updateButton = getSizeButton(Language.get("create"),80,40);
 	updateButton.x = 90;
 	updateButton.y = 90;
 	self.baseLayer.addChild(updateButton);
@@ -42,7 +42,7 @@ CreateCharacterView.prototype.showDetailed=function(event){
 	
 	data = null;
 	var detailedView = new CreateCharacterDetailedView(self.controller, data);
-	var obj = {title:Language.get("武将做成"),subWindow:detailedView,contentStartY:60,width:LGlobal.width,height:LGlobal.height - 20,okEvent:self.saveCharacter,cancelEvent:null};
+	var obj = {title:Language.get("create_character"),subWindow:detailedView,contentStartY:60,width:LGlobal.width,height:600,okEvent:self.saveCharacter,cancelEvent:null};
 	var windowLayer = ConfirmWindow(obj);
 	self.addChild(windowLayer);
 };
@@ -53,6 +53,9 @@ CreateCharacterView.prototype.saveCharacter=function(event){
 	});
 	var self = windowLayer.parent;
 	var charaData = detailedView.getData();
+	if(charaData == null){
+		return;
+	}
 	windowLayer.remove();
 	
 };

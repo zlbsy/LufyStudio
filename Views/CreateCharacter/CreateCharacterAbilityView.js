@@ -12,6 +12,7 @@ CreateCharacterAbilityView.prototype.init=function(data){
 	var self = this;
 	self.layerInit();
 	self.abilityInit(data);
+	self.skillInit(data);
 };
 CreateCharacterAbilityView.prototype.updatePoint=function(value){
 	var self = this;
@@ -80,4 +81,57 @@ CreateCharacterAbilityView.prototype.abilityInit=function(data){
 	items.push(child);
 	self.listView.resize(200, 45 * items.length);
 	self.listView.updateList(items);
+};
+CreateCharacterAbilityView.prototype.skillInit=function(data){
+	var self = this;
+	
+	var label = getStrokeLabel(Language.get("stunt") + ": ",20,"#FFFFFF","#000000",3);
+	label.x = 10;
+	label.y = 282;
+	self.baseLayer.addChild(label);
+	
+	var panel = new LPanel(new LBitmapData(LMvc.datalist["win01"]),170,40);
+	panel.cacheAsBitmap(true);
+	var bitmapOn = new LBitmap(new LBitmapData(LMvc.datalist["combobox_arraw"]));
+	var bitmapOff = new LBitmap(new LBitmapData(LMvc.datalist["combobox_arraw"]));
+	var com = new LComboBox(18,"#ffffff","Arial",panel,bitmapOff,bitmapOn);
+	com.setListChildView(CreateCharacterSkillComboBoxChild);
+	com.label.x = 10;
+	com.label.y = 9;
+	com.label.lineColor = "#000000";
+	com.label.stroke = true;
+	com.label.lineWidth = 3;
+	com.setChild({label:Language.get("null"),value:0});
+	for(var i=0,l=SkillMasterModel.master.length;i<l;i++){
+		var skill = SkillMasterModel.master[i];
+		com.setChild({label:skill.name(),value:skill.id()});
+	}
+	com.maxIndex = 4;
+	self.skillComboBox = com;
+	com.x = 60;
+	com.y = 277;
+	self.baseLayer.addChild(com);
+	com.addEventListener(LComboBox.ON_CHANGE, self.onSkillChange);
+	
+	var skillTextField = getStrokeLabel("",15,"#FFFFFF","#000000",3);
+	skillTextField.width = 260;
+	skillTextField.setWordWrap(true, 22);
+	skillTextField.x = 10;
+	skillTextField.y = 322;
+	self.baseLayer.addChild(skillTextField);
+	self.skillTextField = skillTextField;
+	
+	if(data && data.skill > 0){
+		com.setValue(data.skill);
+		skillTextField.text = SkillMasterModel.getMaster(data.skill).explanation();
+	}
+};
+CreateCharacterAbilityView.prototype.onSkillChange=function(event){
+	var com = event.currentTarget;
+	var self = com.parent.parent;
+	if(com.value == 0){
+		self.skillTextField.text = "";
+		return;
+	}
+	self.skillTextField.text = SkillMasterModel.getMaster(com.value).explanation();
 };

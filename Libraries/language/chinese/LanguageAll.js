@@ -130,6 +130,11 @@ Language.data = {
 	"belong_enemy_action":"敌军行动",
 	"belong_friend_action":"友军行动",
 	
+	"create":"做成",
+	"create_character":"武将做成",
+	"create_character_name_error":"请输入姓名！",
+	"create_character_ability_error":"请设定武将能力属性！",
+	"create_character_arm_error":"请设定武将兵种属性！",
 	"strategy_weather_error":"无法在此天气使用！",
 	"strategy_troops_error":"已经没有可用的预备兵力了！",
 	"strategy_mp_error":"MP不足！",

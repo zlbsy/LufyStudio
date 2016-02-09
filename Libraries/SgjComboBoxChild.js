@@ -51,3 +51,8 @@ function CreateCharacterComboBoxChild(content, comboBox, selected) {
 	self.childWidth = 100;
 	base(self, SgjComboBoxChild, [content, comboBox, selected]);
 }
+function CreateCharacterSkillComboBoxChild(content, comboBox, selected) {
+	var self = this;
+	self.childWidth = 170;
+	base(self, SgjComboBoxChild, [content, comboBox, selected]);
+}

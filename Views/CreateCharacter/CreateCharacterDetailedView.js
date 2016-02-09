@@ -111,15 +111,64 @@ CreateCharacterDetailedView.prototype.faceInit=function(){
 };
 CreateCharacterDetailedView.prototype.getData=function(){
 	var self = this;
+	var name = self.basicView.nameTextField.text;
+	if(!name || LString.trim(name).length == 0){
+		var obj = {title:Language.get("confirm"),message:Language.get("create_character_name_error"),height:200,okEvent:null};
+		var windowLayer = ConfirmWindow(obj);
+		LMvc.layer.addChild(windowLayer);
+		return null;
+	}
 	/*
-	var data = {id:1,name:"测试",faceImg:4,gender:1,statusPoint:10,force:72,intelligence:92,command:99,agility:82,luck:96,born:155,life:54,personalLoyalty:6,ambition:15,disposition:0,skill:2,compatibility:25,initTroops:100,initStrategy:20,proficiencyPoint:100,soldiers:[{id:1,proficiency:900},{id:2,proficiency:500},{id:3,proficiency:0},{id:4,proficiency:0},{id:5,proficiency:0},{id:6,proficiency:0},{id:7,proficiency:0},{id:8,proficiency:0},{id:9,proficiency:0},{id:10,proficiency:0},{id:11,proficiency:0},{id:12,proficiency:0},{id:13,proficiency:0},{id:14,proficiency:0},{id:15,proficiency:0},{id:16,proficiency:0},{id:17,proficiency:0},{id:18,proficiency:0},{id:19,proficiency:0}],groupSkill:0};*/
-	var data = {};
+	var data = {id:1,name:"测试",faceImg:4,gender:1,
+	statusPoint:10,force:72,intelligence:92,command:99,agility:82,luck:96,
+	born:155,life:54,personalLoyalty:6,ambition:15,
+	disposition:0,skill:2,compatibility:25,initTroops:100,initStrategy:20,
+	proficiencyPoint:100,
+	soldiers:[{id:1,proficiency:900},{id:2,proficiency:500},{id:3,proficiency:0},{id:4,proficiency:0},{id:5,proficiency:0},{id:6,proficiency:0},{id:7,proficiency:0},{id:8,proficiency:0},{id:9,proficiency:0},{id:10,proficiency:0},{id:11,proficiency:0},{id:12,proficiency:0},{id:13,proficiency:0},{id:14,proficiency:0},{id:15,proficiency:0},{id:16,proficiency:0},{id:17,proficiency:0},{id:18,proficiency:0},{id:19,proficiency:0}],
+	groupSkill:0};*/
+	var data = {groupSkill:0};
 	if(self.data){
 		data.id = self.data.id;
 	}else{
 		var characters = LPlugin.characters();
 		data.id = characters.list.length == 0 ? 1000 : characters.list[characters.list.length - 1].id + 1;
-		
 	}
+	data.name = name;
+	data.faceImg = self.faceLayer.faceIndex;
+	data.gender = self.faceLayer.genderRadio.value;
+	if(!self.abilityView){
+		var obj = {title:Language.get("confirm"),message:Language.get("create_character_ability_error"),height:200,okEvent:null};
+		var windowLayer = ConfirmWindow(obj);
+		LMvc.layer.addChild(windowLayer);
+		return null;
+	}
+	data.statusPoint = self.abilityView.point;
+	var items = self.abilityView.listView.getItems();
+	for(var i=0, l=items.length;i<l;i++){
+		var child = items[i];
+		data[child.name] = child.textField.text;
+	}
+	data.skill = self.abilityView.skillComboBox.value;
+	if(!self.armView){
+		var obj = {title:Language.get("confirm"),message:Language.get("create_character_arm_error"),height:200,okEvent:null};
+		var windowLayer = ConfirmWindow(obj);
+		LMvc.layer.addChild(windowLayer);
+		return null;
+	}
+	data.proficiencyPoint = self.armView.point;
+	var soldiers = [];
+	var items = self.armView.listView.getItems();
+	for(var i=0, l=items.length;i<l;i++){
+		var child = items[i];
+		soldiers.push({id:child.soldier.id(),proficiency:child.textField.text});
+	}
+	data.soldiers = soldiers;
+	
+	var items = self.basicView.listView.getItems();
+	for(var i=0, l=items.length;i<l;i++){
+		var child = items[i];
+		data[child.name] = child.comboBox.value;
+	}
+	console.error(data);
 	return data;
 };
