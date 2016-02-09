@@ -1,6 +1,6 @@
-function CreateCharacterAbilityView(controller){
+function CreateCharacterAbilityView(controller,data){
 	base(this,LView,[controller]);
-	this.init();
+	this.init(data);
 }
 CreateCharacterAbilityView.prototype.layerInit=function(){
 	var self = this;

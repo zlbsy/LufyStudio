@@ -1,6 +1,6 @@
-function CreateCharacterArmView(controller){
+function CreateCharacterArmView(controller, data){
 	base(this,LView,[controller]);
-	this.init();
+	this.init(data);
 }
 CreateCharacterArmView.prototype.layerInit=function(){
 	var self = this;

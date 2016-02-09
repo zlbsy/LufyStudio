@@ -1,6 +1,8 @@
-function CreateCharacterDetailedView(controller){
-	base(this,LView,[controller]);
-	this.init();
+function CreateCharacterDetailedView(controller, data){
+	var self = this;
+	base(self,LView,[controller]);
+	self.data = data;
+	self.init();
 }
 CreateCharacterDetailedView.TAB_BASIC = "basic_properties";
 CreateCharacterDetailedView.TAB_ABILITY = "ability_properties";
@@ -75,7 +77,7 @@ CreateCharacterDetailedView.prototype.showBasic=function(){
 	if(self.basicView){
 		return;
 	}
-	self.basicView = new CreateCharacterBasicView();
+	self.basicView = new CreateCharacterBasicView(null, self.data);
 	self.basicLayer.addChild(self.basicView);
 };
 CreateCharacterDetailedView.prototype.showAbility=function(){
@@ -84,7 +86,7 @@ CreateCharacterDetailedView.prototype.showAbility=function(){
 	if(self.abilityView){
 		return;
 	}
-	self.abilityView = new CreateCharacterAbilityView();
+	self.abilityView = new CreateCharacterAbilityView(null, self.data);
 	self.abilityLayer.addChild(self.abilityView);
 };
 CreateCharacterDetailedView.prototype.showArms=function(){
@@ -93,7 +95,7 @@ CreateCharacterDetailedView.prototype.showArms=function(){
 	if(self.armView){
 		return;
 	}
-	self.armView = new CreateCharacterArmView();
+	self.armView = new CreateCharacterArmView(null, self.data);
 	self.armLayer.addChild(self.armView);
 };
 CreateCharacterDetailedView.prototype.hideTabs=function(){
@@ -104,6 +106,6 @@ CreateCharacterDetailedView.prototype.hideTabs=function(){
 };
 CreateCharacterDetailedView.prototype.faceInit=function(){
 	var self = this;
-	self.faceLayer = new CreateCharacterFaceView();
+	self.faceLayer = new CreateCharacterFaceView(null, self.data);
 	self.contentLayer.addChild(self.faceLayer);
 };

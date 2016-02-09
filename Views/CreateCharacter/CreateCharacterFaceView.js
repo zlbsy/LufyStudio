@@ -1,15 +1,15 @@
-function CreateCharacterFaceView(controller){
+function CreateCharacterFaceView(controller, data){
 	base(this,LView,[controller]);
-	this.init();
+	this.init(data);
 }
-CreateCharacterFaceView.prototype.init=function(){
+CreateCharacterFaceView.prototype.init=function(data){
 	var self = this;
 	self.females = [36,37,380,524,528,548];
 	var backgroundData = new LBitmapData(LMvc.datalist["win05"]);
 	var panel = getBitmap(new LPanel(backgroundData,186, 266));
 	self.addChild(panel);
 	
-	self.randomFace(1);
+	self.randomFace(data.faceImg);
 	
 	var buttonFace = getButton("头像变更",176);
 	buttonFace.y = 266;
@@ -31,7 +31,7 @@ CreateCharacterFaceView.prototype.init=function(){
 	genderRadio.y = 330;
 	genderRadio.setChildRadio(1,0,0,radioBackground,radioSelect);
 	genderRadio.setChildRadio(2,80,0,radioBackground,radioSelect);
-	genderRadio.setValue(2);
+	genderRadio.setValue(data.gender);
 	self.addChild(genderRadio);
 	self.genderRadio = genderRadio;
 	//speedRadio.addEventListener(LMouseEvent.MOUSE_UP,self.onSpeedChange);

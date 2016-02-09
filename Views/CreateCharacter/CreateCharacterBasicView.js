@@ -1,6 +1,6 @@
-function CreateCharacterBasicView(controller){
+function CreateCharacterBasicView(controller, data){
 	base(this,LView,[controller]);
-	this.init();
+	this.init(data);
 }
 CreateCharacterBasicView.prototype.layerInit=function(){
 	var self = this;
@@ -8,14 +8,14 @@ CreateCharacterBasicView.prototype.layerInit=function(){
 	self.baseLayer.x = 190;
 	self.addChild(self.baseLayer);
 };
-CreateCharacterBasicView.prototype.init=function(){
+CreateCharacterBasicView.prototype.init=function(data){
 	var self = this;
 	self.layerInit();
 	//self.faceInit();
-	self.statusInit();
+	self.statusInit(data);
 	//self.abilityInit();
 };
-CreateCharacterBasicView.prototype.statusInit=function(){
+CreateCharacterBasicView.prototype.statusInit=function(data){
 	var self = this;
 	
 	var statusLabelLayer = new LSprite();
@@ -33,10 +33,16 @@ CreateCharacterBasicView.prototype.statusInit=function(){
 	nameLabel.x = 10;
 	nameLabel.y = 12;
 	statusLabelLayer.addChild(nameLabel);
+	var strName;
+	if(data){
+		strName = data.name;
+	}else{
+		eval( "var wordRandom1=" +  '"\\u' + (Math.round(Math.random() * 20901) + 19968).toString(16)+'"');
+		eval( "var wordRandom2=" +  '"\\u' + (Math.round(Math.random() * 20901) + 19968).toString(16)+'"');
+		strName = wordRandom1 + wordRandom2;
+	}
 	
-	eval( "var wordRandom1=" +  '"\\u' + (Math.round(Math.random() * 20901) + 19968).toString(16)+'"');
-	eval( "var wordRandom2=" +  '"\\u' + (Math.round(Math.random() * 20901) + 19968).toString(16)+'"');
-	var nameText = getStrokeLabel(wordRandom1 + wordRandom2,20,"#FFFFFF","#000000",3);
+	var nameText = getStrokeLabel(strName,20,"#FFFFFF","#000000",3);
 	nameText.x = 75;
 	nameText.y = 12;
 	var inputLayer = new LSprite();
@@ -57,11 +63,13 @@ CreateCharacterBasicView.prototype.statusInit=function(){
 		list.push({label:bornStart, value:bornStart});
 	}
 	var childLayer = new CreateCharacterBasicItemView(self.listView, "born", list);
+	childLayer.comboBox.setValue(data.born);
 	items.push(childLayer);
 	for(var i=0, list = [], lifeStart = 20; i<100; i++,lifeStart++){
 		list.push({label:lifeStart, value:lifeStart});
 	}
 	var childLayer = new CreateCharacterBasicItemView(self.listView, "life", list);
+	childLayer.comboBox.setValue(data.life);
 	items.push(childLayer);
 	for(var i=0, list = [], perStart = 0; i<15; i++,perStart++){
 		list.push({label:perStart + 1, value:perStart + 1});
