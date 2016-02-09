@@ -24,6 +24,7 @@ CreateCharacterController.prototype.modelLoad=function(){
 CreateCharacterController.prototype.viewLoad=function(){
 	var self = this;
 	self.load.view(["CreateCharacter/CreateCharacterDetailed", 
+	"CreateCharacter/CreateCharacterListChild", 
 	"CreateCharacter/CreateCharacterFace", 
 	"CreateCharacter/CreateCharacterBasic", 
 	"CreateCharacter/CreateCharacterBasicItem", 

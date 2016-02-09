@@ -13,6 +13,23 @@ CreateCharacterView.prototype.layerInit=function(){
 CreateCharacterView.prototype.init=function(){
 	var self = this;
 	self.layerInit();
+	var characters = LPlugin.characters();
+	self.listView = new LListView();
+	self.listView.x = 10;
+	self.listView.y = 55;
+	self.listView.cellWidth = LGlobal.width - 40;
+	self.listView.cellHeight = 50;
+	self.baseLayer.addChild(self.listView);
+
+	var items = [], child;
+	for(var i=0,l=characters.length;i<l;i++){
+		var character = characters[i];
+		child = new CreateCharacterListChildView(character);
+		items.push(child);
+	}
+	
+	self.listView.resize(260, 50 * 6);
+	self.listView.updateList(items);
 	
 	var updateButton = getSizeButton("做成",80,40);
 	updateButton.x = 90;
@@ -22,10 +39,20 @@ CreateCharacterView.prototype.init=function(){
 };
 CreateCharacterView.prototype.showDetailed=function(event){
 	var self = event.currentTarget.parent.parent;
-	var data = {id:1,name:"测试",faceImg:4,gender:1,statusPoint:10,force:72,intelligence:92,command:99,agility:82,luck:96,born:155,life:54,personalLoyalty:6,ambition:15,disposition:0,skill:2,compatibility:25,initTroops:100,initStrategy:20,proficiencyPoint:100,soldiers:[{id:1,proficiency:900},{id:2,proficiency:500},{id:3,proficiency:0},{id:4,proficiency:0},{id:5,proficiency:0},{id:6,proficiency:0},{id:7,proficiency:0},{id:8,proficiency:0},{id:9,proficiency:0},{id:10,proficiency:0},{id:11,proficiency:0},{id:12,proficiency:0},{id:13,proficiency:0},{id:14,proficiency:0},{id:15,proficiency:0},{id:16,proficiency:0},{id:17,proficiency:0},{id:18,proficiency:0},{id:19,proficiency:0}],groupSkill:0};
+	
 	data = null;
 	var detailedView = new CreateCharacterDetailedView(self.controller, data);
-	var obj = {title:Language.get("武将做成"),subWindow:detailedView,contentStartY:60,width:LGlobal.width,height:LGlobal.height - 20,okEvent:null,cancelEvent:null};
+	var obj = {title:Language.get("武将做成"),subWindow:detailedView,contentStartY:60,width:LGlobal.width,height:LGlobal.height - 20,okEvent:self.saveCharacter,cancelEvent:null};
 	var windowLayer = ConfirmWindow(obj);
 	self.addChild(windowLayer);
+};
+CreateCharacterView.prototype.saveCharacter=function(event){
+	var windowLayer = event.currentTarget.parent;
+	var detailedView = windowLayer.childList.find(function(child){
+		return child.constructor.name == "CreateCharacterDetailedView";
+	});
+	var self = windowLayer.parent;
+	var charaData = detailedView.getData();
+	windowLayer.remove();
+	
 };
