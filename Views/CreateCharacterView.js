@@ -24,7 +24,7 @@ CreateCharacterView.prototype.titleInit=function(){
 	self.titleLayer.addChild(label);
 	var list = ["name", 20, "force", 110, "intelligence", 160, "command", 210, "agility", 260, "luck", 310, "stunt", 360];
 	for(var i=0,l=list.length;i<l;i+=2){
-		label = getStrokeLabel(Language.get(list[i]),20,"#CCCCCC","#000000",4);
+		label = getStrokeLabel(Language.get(list[i]),20,"#CDD4AF","#000000",4);
 		label.x = list[i + 1];
 		label.y = 60;
 		self.titleLayer.addChild(label);
@@ -32,6 +32,7 @@ CreateCharacterView.prototype.titleInit=function(){
 			break;
 		}
 		var bitmapLine = new LBitmap(new LBitmapData(LMvc.datalist["icon-line"]));
+		bitmapLine.scaleX = 2;
 		bitmapLine.scaleY = 20;
 		bitmapLine.x = list[i + 3] - 5;
 		bitmapLine.y = 60;
@@ -52,7 +53,7 @@ CreateCharacterView.prototype.init=function(){
 	console.log("characters.list.length="+characters.list.length);
 	self.listView = new LListView();
 	self.listView.x = 10;
-	self.listView.y = 100;
+	self.listView.y = 90;
 	self.listView.cellWidth = LGlobal.width - 40;
 	self.listView.cellHeight = 50;
 	self.baseLayer.addChild(self.listView);
@@ -64,7 +65,7 @@ CreateCharacterView.prototype.init=function(){
 		items.push(child);
 	}
 	
-	self.listView.resize(self.listView.cellWidth, 50 * 6);
+	self.listView.resize(self.listView.cellWidth, LGlobal.height - self.y - self.listView.y - 15);
 	self.listView.updateList(items);
 	
 	var updateButton = getSizeButton(Language.get("create"),100,40);
@@ -72,11 +73,22 @@ CreateCharacterView.prototype.init=function(){
 	updateButton.y = 10;
 	self.baseLayer.addChild(updateButton);
 	updateButton.addEventListener(LMouseEvent.MOUSE_UP, self.showDetailed);
+	
+	var closeButton = new LButton(new LBitmap(new LBitmapData(LMvc.datalist["close"])));
+	closeButton.x = LGlobal.width - closeButton.getWidth();
+	self.baseLayer.addChild(closeButton);
+	closeButton.addEventListener(LMouseEvent.MOUSE_UP, self.returnToTop);
+};
+CreateCharacterView.prototype.returnToTop=function(event){
+	var self = event.currentTarget.parent.parent;
+	self.controller.close();
 };
 CreateCharacterView.prototype.showDetailed=function(event){
 	var self = event.currentTarget.parent.parent;
-	
-	data = null;
+	self.toShowDetailed(null);
+};
+CreateCharacterView.prototype.toShowDetailed=function(data){
+	var self = this;
 	var detailedView = new CreateCharacterDetailedView(self.controller, data);
 	var obj = {title:Language.get("create_character"),subWindow:detailedView,contentStartY:60,width:LGlobal.width,height:560,okEvent:self.saveCharacter,cancelEvent:self.cancelEvent};
 	var windowLayer = ConfirmWindow(obj);
@@ -93,7 +105,21 @@ CreateCharacterView.prototype.saveCharacter=function(event){
 	if(charaData == null){
 		return;
 	}
+	var length = LPlugin.characters().list.length;
 	LPlugin.setCharacter(charaData);
+	var characters = LPlugin.characters();
+	if(characters.list.length == length){
+		var view = self.listView.getItems().find(function(child){
+			return child.data.id == charaData.id;
+		});
+		view.set(charaData);
+		view.cacheAsBitmap(false);
+		view.updateView();
+	}else{
+		var view = new CreateCharacterListChildView(charaData);
+		self.listView.insertChildView(view);
+		view.updateView();
+	}
 	self.baseLayer.visible = true;
 	windowLayer.remove();
 };

@@ -12,30 +12,25 @@ CreateCharacterListChildView.prototype.set = function(data) {
 };
 CreateCharacterListChildView.prototype.onClick = function(event) {
 	var self = event.target;
-	
+	var parentView = event.currentTarget.parent.parent;
+	parentView.toShowDetailed(self.data);
 };
 CreateCharacterListChildView.prototype.setStatus = function() {
-	var self = this;
+	var self = this, label;
 	var layer = new LSprite();
-	layer.graphics.drawRect(0, "#ff0000", [0, 0, 420, 40]);
+	layer.graphics.drawRect(0, "#ff0000", [0, 0, LGlobal.width - 20, 40]);
 	var bitmapLine = new LBitmap(new LBitmapData(LMvc.datalist["icon-line"]));
-	bitmapLine.scaleX = 420;
+	bitmapLine.scaleX = LGlobal.width - 60;
+	//bitmapLine.x = 10;
 	bitmapLine.y = 38;
 	layer.addChild(bitmapLine);
-	/*var name = getStrokeLabel(self.data.name, 20, "#FFFFFF", "#000000", 4);
-	//name.x = 10;
-	name.y = 5;
-	layer.addChild(name);
-	var bitmapName = getBitmap(layer);
-	bitmapName.x = 20;
-	bitmapName.y = 10;
-	self.addChild(bitmapName);*/
+	/*
 	self.setAbilityProperties();
 }; 
 CreateCharacterListChildView.prototype.setAbilityProperties = function() {
 	var self = this, label;
 	var layer = new LSprite();
-	layer.graphics.drawRect(0, "#ff0000", [0, 0, LGlobal.width - 20, 50]);
+	layer.graphics.drawRect(0, "#ff0000", [0, 0, LGlobal.width - 20, 50]);*/
 	var list = ["name", 20, "force", 110, "intelligence", 160, "command", 210, "agility", 260, "luck", 310];
 	for(var i=0,l=list.length;i<l;i+=2){
 		label = getStrokeLabel(self.data[list[i]],18,"#FFFFFF","#000000",4);
