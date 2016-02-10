@@ -22,8 +22,8 @@ CreateCharacterListChildView.prototype.setStatus = function() {
 	bitmapLine.scaleX = 420;
 	bitmapLine.y = 38;
 	layer.addChild(bitmapLine);
-	var name = getStrokeLabel(self.name, 20, "#FFFFFF", "#000000", 4);
-	name.x = 50;
+	var name = getStrokeLabel(self.data.name, 20, "#FFFFFF", "#000000", 4);
+	//name.x = 10;
 	name.y = 5;
 	layer.addChild(name);
 	var bitmapName = getBitmap(layer);
@@ -57,7 +57,7 @@ CreateCharacterListChildView.prototype.setAbilityProperties = function() {
 	name.y = 5;
 	layer.addChild(name);
 
-	layer.x = 180;
+	layer.x = 100;
 	layer.y = 10;
 	self.addChild(layer);
 }; 

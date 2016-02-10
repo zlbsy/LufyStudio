@@ -19,7 +19,8 @@ CreateCharacterModel.prototype.getImages=function(){
 		{name:"range",path:LMvc.IMG_PATH+"component/range.png"},
 		{name:"checkbox-background",path:LMvc.IMG_PATH+"component/checkbox-background.png"},
 		{name:"checkbox-on",path:LMvc.IMG_PATH+"component/checkbox-on.png"},
-		{name:"common-black",path:LMvc.IMG_PATH+"common/black.png"}
+		{name:"common-black",path:LMvc.IMG_PATH+"common/black.png"},
+		{name:"icon-line",path:LMvc.IMG_PATH+"icon/line.png"}
 	];
 	
 	var loadComponents = [

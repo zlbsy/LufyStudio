@@ -38,10 +38,10 @@ LPlugin.openEvent = function(key){
 	LPlugin.events()[key] = 1;
 	LPlugin.SetData(LPlugin.KEY_EVENT_LIST, LPlugin.events());
 };
-LPlugin.setCharacter = function(id, charaData){
+LPlugin.setCharacter = function(charaData){
 	var data = LPlugin.characters();
-	var index = id ? data.list.findIndex(function(child){
-		return child.id == id;
+	var index = charaData.id ? data.list.findIndex(function(child){
+		return child.id == charaData.id;
 	}) : -1;
 	if(index >= 0){
 		data.list.splice(index, 1, charaData);
