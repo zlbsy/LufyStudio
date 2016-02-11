@@ -18,11 +18,11 @@ CreateSettingView.prototype.layerInit=function(){
 };
 CreateSettingView.prototype.titleInit=function(){
 	var self = this, label;
-	label = getStrokeLabel("自设武将一览",24,"#CDD4AF","#000000",4);
+	label = getStrokeLabel(Language.get("create_seignior_list"),24,"#CDD4AF","#000000",4);
 	label.x = 15;
 	label.y = 15;
 	self.titleLayer.addChild(label);
-	var list = ["name", 20, "force", 110, "intelligence", 160, "command", 210, "agility", 260, "luck", 310, "stunt", 360];
+	var list = ["name", 20, "city", 110, "generals", 160, "seignior_color", 210];
 	for(var i=0,l=list.length;i<l;i+=2){
 		label = getStrokeLabel(Language.get(list[i]),20,"#CDD4AF","#000000",4);
 		label.x = list[i + 1];
@@ -38,17 +38,13 @@ CreateSettingView.prototype.titleInit=function(){
 		bitmapLine.y = 60;
 		self.titleLayer.addChild(bitmapLine);
 	}
-	/*
-	label = getStrokeLabel(Language.get("name"),20,"#FFFFFF","#000000",4);
-	label.x = 100;
-	label.y = 60;
-	self.titleLayer.addChild(label);*/
 	self.titleLayer.cacheAsBitmap(true);
 };
 CreateSettingView.prototype.init=function(){
 	var self = this;
 	self.layerInit();
 	self.titleInit();
+	return;
 	var characters = LPlugin.characters();
 	console.log("characters.list.length="+characters.list.length);
 	self.listView = new LListView();

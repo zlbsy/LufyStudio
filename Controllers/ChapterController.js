@@ -9,7 +9,7 @@ ChapterController.prototype.construct=function(){
 };
 ChapterController.prototype.libraryLoad=function(){
 	var self = this;
-	var libraris = ["BitmapSprite","GameCacher"];
+	var libraris = ["GameManager","GameCacher"];
 	self.load.library(libraris,self.viewLoad);
 };
 ChapterController.prototype.viewLoad=function(){
@@ -59,6 +59,7 @@ ChapterController.prototype.loadCreateSetting=function(){
 };
 ChapterController.prototype.loadCreateSettingComplete=function(){
 	var self = this;
+	LMvc.chapterController = self;
 	var createSetting = new CreateSettingController();
 	createSetting.view.x = self.view.x;
 	self.view.parent.addChild(createSetting.view);

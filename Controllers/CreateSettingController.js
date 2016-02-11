@@ -46,10 +46,10 @@ CreateSettingController.prototype.init=function(){
 	LMvc.keepLoading(false);
 	self.dispatchEvent(LEvent.COMPLETE);
 	self.dispatchEvent(LController.NOTIFY);
-	LMvc.logoStage.visible = false;
+	LMvc.chapterController.view.visible = false;
 };
 CreateSettingController.prototype.close=function(){
 	var self = this;
-	LMvc.logoStage.visible = true;
+	LMvc.chapterController.view.visible = true;
 	self.view.remove();
 };

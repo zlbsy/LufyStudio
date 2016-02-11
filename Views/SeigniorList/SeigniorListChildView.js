@@ -77,7 +77,7 @@ SeigniorListChildView.prototype.set=function(){
 	name.y = 20;
 	win.addChild(name);
 	
-	var colorLabel = getStrokeLabel("势力颜色",20,"#000000","#CCCCCC",1);
+	var colorLabel = getStrokeLabel(Language.get("seignior_color"),20,"#000000","#CCCCCC",1);
 	colorLabel.x = name.x;
 	colorLabel.y = 57;
 	win.addChild(colorLabel);
