@@ -22,7 +22,7 @@ ChapterSeigniorView.prototype.set=function(){
 	city_count_label.x = faceSize + 5;
 	city_count_label.y = 55;
 	win.addChild(city_count_label);
-	var city_count = getStrokeLabel(self.data.city_count,20,"#000000","#CCCCCC",1);
+	var city_count = getStrokeLabel(self.data.citys.length,20,"#000000","#CCCCCC",1);
 	city_count.x = faceSize + 5;
 	city_count.y = 75;
 	win.addChild(city_count);

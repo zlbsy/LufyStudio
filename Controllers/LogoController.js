@@ -38,14 +38,14 @@ LogoController.prototype.modelLoad=function(){
 };
 LogoController.prototype.startAnimation=function(){
 	var self = this;
-	LTweenLite.to(self.view.bitmapBgBack,1,{y:130,onStart:self.checkAuth});
+	LTweenLite.to(self.view.bitmapBgBack,1,{y:130,onStart:self.start});
 	LTweenLite.to(self.view.layerBg,1,{scaleX:1,scaleY:1});
-	LTweenLite.to(self.view.layerChara,1,{scaleX:1,scaleY:1,y:LGlobal.height - 220})
-	.to(self.view.layerChara,2,{y:LGlobal.height - 200,loop:true})
-	.to(self.view.layerChara,2,{y:LGlobal.height - 220});
+	LTweenLite.to(self.view.layerChara,1,{scaleX:1,scaleY:1,y:180})
+	.to(self.view.layerChara,2,{y:200,loop:true})
+	.to(self.view.layerChara,2,{y:180});
 };
-LogoController.prototype.checkAuth=function(obj){
-	var self = obj.parent.controller;
+LogoController.prototype.start=function(event){
+	var self = event.target.parent.controller;
 	//TODO::test
 	LPlugin.openStamp(17);
 	LPlugin.openStamp(18);

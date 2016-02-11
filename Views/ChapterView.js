@@ -93,6 +93,15 @@ ChapterView.prototype.ctrlLayerInit=function(){
 	
 	self.ctrlLayer.addChild(buttonClose);
 	buttonClose.addEventListener(LMouseEvent.MOUSE_UP,self.returnToChapterMenu.bind(self));
+	var settingButton = getButton(Language.get("create_character_setting"),150);
+	settingButton.x = LGlobal.width - settingButton.getWidth() - 5;
+	settingButton.y = self.seigniorsLayer.y - settingButton.getHeight() - 5;
+	self.ctrlLayer.addChild(settingButton);
+	settingButton.addEventListener(LMouseEvent.MOUSE_UP, self.loadCreateSetting);
+};
+ChapterView.prototype.loadCreateSetting=function(event){
+	var self = event.currentTarget.parent.parent;
+	
 };
 ChapterView.prototype.returnToChapterMenu=function(event){
 	var self = this;

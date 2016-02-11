@@ -11,5 +11,6 @@ Language.data = {
 	"game_setting":"环境设定",
 	"game_single_combat":"单挑挑战",
 	"create_character":"武将作成",
+	"create_character_setting":"新武将设置",
 	"return":"返回",
 };
