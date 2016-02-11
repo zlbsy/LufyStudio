@@ -144,7 +144,6 @@ Language.data = {
 	"game_save":"保存进度",
 	"game_read":"读取进度",
 	"return_top":"回主页面",
-	"confirm":"确认",
 	"dialog_select_generals":"请选择武将！",
 	"dialog_character_troops_error":"{0}没有分配士兵!",
 	"dialog_prefecture_nodef_error":"<font size='22' color='#FFFFFF'>防守战太守<font color='#FF0000'>{0}</font>必须出战!</font>",

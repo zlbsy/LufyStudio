@@ -73,7 +73,7 @@ LogoController.prototype.showChapter = function(chapterId){
 	LMvc.keepLoading(true);
 	LMvc.changeLoading(TranslucentLoading);
 	LMvc.chapterId = chapterId;
-	var chapterSelectData = chapterListSetting[chapterId];
+	var chapterSelectData = chapterListSetting.find(function(child){return child.id == chapterId;});
 	LMvc.dataFolder = chapterSelectData.folder;
 	self.loadMvc("Chapter",self.chapterLoadComplete);
 };

@@ -4,6 +4,13 @@ function CreateSettingView(controller){
 CreateSettingView.prototype.construct=function(){
 	this.controller.addEventListener(LEvent.COMPLETE, this.init.bind(this));
 };
+CreateSettingView.prototype.init=function(){
+	var self = this;
+	self.layerInit();
+	self.titleInit();
+	self.seigniorInit();
+	self.setSeigniorList();
+};
 CreateSettingView.prototype.layerInit=function(){
 	var self = this;
 	//self.addChild(getTranslucentMask());
@@ -15,6 +22,8 @@ CreateSettingView.prototype.layerInit=function(){
 	
 	self.titleLayer = new LSprite();
 	self.baseLayer.addChild(self.titleLayer);
+	self.seigniorLayer = new LSprite();
+	self.baseLayer.addChild(self.seigniorLayer);
 };
 CreateSettingView.prototype.titleInit=function(){
 	var self = this, label;
@@ -22,48 +31,51 @@ CreateSettingView.prototype.titleInit=function(){
 	label.x = 15;
 	label.y = 15;
 	self.titleLayer.addChild(label);
-	var list = ["name", 20, "city", 110, "generals", 160, "seignior_color", 210];
+	self.titleLayer.cacheAsBitmap(true);
+};
+CreateSettingView.prototype.seigniorInit=function(){
+	var self = this, label;
+	var list = ["name", 20, "city", 130, "generals", 200, "seignior_color", 270];
 	for(var i=0,l=list.length;i<l;i+=2){
 		label = getStrokeLabel(Language.get(list[i]),20,"#CDD4AF","#000000",4);
 		label.x = list[i + 1];
 		label.y = 60;
-		self.titleLayer.addChild(label);
+		self.seigniorLayer.addChild(label);
 		if(i+2 >= l){
 			break;
 		}
 		var bitmapLine = new LBitmap(new LBitmapData(LMvc.datalist["icon-line"]));
 		bitmapLine.scaleX = 2;
 		bitmapLine.scaleY = 20;
-		bitmapLine.x = list[i + 3] - 5;
+		bitmapLine.x = list[i + 3] - 15;
 		bitmapLine.y = 60;
-		self.titleLayer.addChild(bitmapLine);
+		self.seigniorLayer.addChild(bitmapLine);
 	}
-	self.titleLayer.cacheAsBitmap(true);
+	self.seigniorLayer.cacheAsBitmap(true);
 };
-CreateSettingView.prototype.init=function(){
+CreateSettingView.prototype.setSeigniorList=function(){
 	var self = this;
-	self.layerInit();
-	self.titleInit();
-	return;
-	var characters = LPlugin.characters();
-	console.log("characters.list.length="+characters.list.length);
+	var seigniorList = GameManager.getCreateSeigniorList(LMvc.chapterId);
+	console.log("seigniorList.length="+seigniorList.length);
 	self.listView = new LListView();
 	self.listView.x = 10;
 	self.listView.y = 90;
 	self.listView.cellWidth = LGlobal.width - 40;
 	self.listView.cellHeight = 50;
 	self.baseLayer.addChild(self.listView);
-
+	/*
+	 {chara_id:1,color:"0,0,255",citys:[{id:39,generals:[1,2]}]}
+	 * */
 	var items = [], child;
-	for(var i=0,l=characters.list.length;i<l;i++){
-		var character = characters.list[i];
-		child = new CreateCharacterListChildView(character);
+	for(var i=0,l=seigniorList.list.length;i<l;i++){
+		var seignior = seigniorList.list[i];
+		child = new CreateSeigniorListChildView(seignior);
 		items.push(child);
 	}
 	
 	self.listView.resize(self.listView.cellWidth, LGlobal.height - self.y - self.listView.y - 15);
 	self.listView.updateList(items);
-	
+	return;
 	var updateButton = getSizeButton(Language.get("create"),100,40);
 	updateButton.x = 300;
 	updateButton.y = 10;

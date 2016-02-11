@@ -109,7 +109,7 @@ SeigniorModel.prototype.level = function(){
 SeigniorModel.cloths = [];
 SeigniorModel.getColorCloth = function(color){
 	if(!SeigniorModel.cloths[color]){
-		var colors = color.split(",");
+		var colors = color.split(",");console.log("colors",color,colors);
 		var bitmapData = new LBitmapData(LMvc.datalist["flag-cloth"],null,null,null,null, LBitmapData.DATA_CANVAS);
 		var colorTransform = new LColorTransform(0, 0, 0, 1, parseInt(colors[0]), parseInt(colors[1]), parseInt(colors[2]), 0);
 		bitmapData.colorTransform(new LRectangle(0, 0, bitmapData.width, bitmapData.height), colorTransform);
@@ -137,36 +137,6 @@ SeigniorModel.prototype.flag = function(){
 };
 SeigniorModel.prototype.color = function(){
 	return this.data.color;
-};
-SeigniorModel.prototype.color2 = function(){
-	switch(this.data.color){
-		case "red":
-			return "#FF0000";
-		case "black":
-			return "#000000";
-		case "blue":
-			return "#0000FF";
-		case "brown":
-			return "#A52A2A";
-		case "darkgoldenrod":
-			return "#B8860B";
-		case "darkviolet":
-			return "#9400D3";
-		case "green":
-			return "#008000";
-		case "greenyellow":
-			return "#ADFF2F";
-		case "orange":
-			return "#FFA500";
-		case "pink":
-			return "#FFC0CB";
-		case "teal":
-			return "#008080";
-		case "yellow":
-			return "#FFFF00";
-		default:
-			return "#FFFFF0";
-	}
 };
 /**
  * 城池

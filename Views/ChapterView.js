@@ -74,7 +74,7 @@ ChapterView.prototype.chapterLayerInit=function(){
 			var city = MapSetting.find(function(child){
 				return child.id == citys[j];
 			});
-			var color = seignior.color;
+			var color = String.format("rgb({0})",seignior.color);
 			var colorData = new LBitmapData(color,0,0,size,size,LBitmapData.DATA_CANVAS);
 			miniMapData.copyPixels(colorData,new LRectangle(0,0,colorData.width,colorData.height),new LPoint(city.position.x*miniMapData.mapScaleX,city.position.y*miniMapData.mapScaleY));
 		}
@@ -124,7 +124,7 @@ ChapterView.prototype.ctrlLayerInit=function(){
 	self.checkbox = check;
 	
 	var settingButton = getButton(Language.get("create_character_setting"),150);
-	settingButton.x = LGlobal.width - settingButton.getWidth() - 5;
+	settingButton.x = LGlobal.width - settingButton.getWidth() - 25;
 	settingButton.y = self.seigniorsLayer.y - settingButton.getHeight() - 5;
 	self.ctrlLayer.addChild(settingButton);
 	settingButton.addEventListener(LMouseEvent.MOUSE_UP, self.loadCreateSetting);

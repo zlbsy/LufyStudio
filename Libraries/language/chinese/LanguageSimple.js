@@ -16,6 +16,8 @@ Language.dataSimple = {
 	"return":"返回",
 	"city":"城池",
 	"generals":"武将",
+	"confirm":"确认",
+	"select_seignior_message":"<font size='22' color='#FFFFFF'>要选择势力 <font color='#FF0000'>{0}</font> 吗？</font>",
 	"chapter_1":"黄巾之乱",
 	"chapter_2":"权臣董卓",
 	"chapter_3":"豺狼吕布",

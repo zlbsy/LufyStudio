@@ -43,6 +43,11 @@ GameManager.read = function(index){
 	var record = LPlugin.GetData(recordName);
 	return record;
 };
-GameManager.getCreateSeigniorList = function(){
-
+GameManager.getCreateSeigniorList = function(chapterId){
+	var dataName = String.format("createSeignior_{0}", chapterId);
+	var data = LPlugin.GetData(dataName);
+	if(!data.list){
+		data.list = [];
+	}
+	return data;
 };
