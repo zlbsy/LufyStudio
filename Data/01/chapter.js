@@ -11,7 +11,7 @@ LMvc.chapterData = {
 		{chara_id:8,name:"孙坚",faceImg:144, general_count:16, citys:[5,7,9], city_count:3,color:"#00FF00"},
 		{chara_id:602,name:"韩馥",faceImg:160, general_count:2, citys:[24,25,26,27], city_count:1,color:"#0000FF"},
 		{chara_id:21,name:"刘备",faceImg:21, general_count:11, citys:[11], city_count:2,color:"#008800"},
-		{chara_id:265,name:"董卓",faceImg:237, general_count:18, citys:[12,13,14,15,16], city_count:4,color:"#0000FF"},
+		{chara_id:265,name:"董卓",faceImg:237, general_count:18, citys:[12,13,14,15,16], city_count:4,color:"#0077FF"},
 		{chara_id:446,name:"刘表",faceImg:265, general_count:3, citys:[45,46], city_count:1,color:"#FF8800"}
 	]
 };

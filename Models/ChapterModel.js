@@ -16,8 +16,10 @@ ChapterModel.prototype.getImages=function(){
 		{name:"close",path:LMvc.IMG_PATH+"component/close.png"},
 		{name:"ok",path:LMvc.IMG_PATH+"component/ok.png"},
 		{name:"arrow",path:LMvc.IMG_PATH+"icon/arrow.png"},
-		{name:"common-black",path:LMvc.IMG_PATH+"common/black.png"}//,
-		//{name:"icon-return",path:LMvc.IMG_PATH+"icon/return.png"}
+		{name:"common-black",path:LMvc.IMG_PATH+"common/black.png"},
+		{name:"checkbox-background",path:LMvc.IMG_PATH+"component/checkbox-background.png"},
+		{name:"checkbox-on",path:LMvc.IMG_PATH+"component/checkbox-on.png"},
+		{name:"area-map-1",path:LMvc.IMG_PATH+"area/map-1.png"}
 	];
 	return list;
 };

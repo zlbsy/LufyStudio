@@ -42,25 +42,43 @@ ChapterView.prototype.backLayerInit=function(){
 };
 ChapterView.prototype.chapterLayerInit=function(){
 	var self = this;
-	var icon = new BitmapSprite(LMvc.IMG_PATH + "chapter/chapter-" + self.controller.getValue("icon") + ".png", null,null);
+	var miniMapData = GameCacher.getAreaMiniMap("area-map-1");
+	var miniMap = new LBitmap(miniMapData);
 	var layer = new LSprite();
 	var bitmapWin = new LPanel(new LBitmapData(LMvc.datalist["win01"]),420,260,20,30,23,24);
 	layer.addChild(bitmapWin);
-	
 	var title = self.controller.getValue("title");
 	var txtChapter = getStrokeLabel(title,30,"#FFFFFF","#CCCCCC",1);
 	txtChapter.x = (bitmapWin.getWidth() - txtChapter.getWidth()) * 0.5;
 	bitmapWin.y = txtChapter.getHeight();
 	layer.addChild(txtChapter);
-	
-	layer = getBitmap(layer);
+	layer.cacheAsBitmap(true);
 	layer.x = (LGlobal.width - layer.getWidth()) * 0.5;
 	layer.y = 30;
-	icon.x = layer.x + 10;
-	icon.y = layer.y + bitmapWin.y + 10;
+	miniMap.x = layer.x + 10;
+	miniMap.y = layer.y + bitmapWin.y + 10;
 	self.chapterLayer.addChild(layer);
-	
-	self.chapterLayer.addChild(icon);
+	self.chapterLayer.addChild(miniMap);
+	for(var i=0,l=MapSetting.length;i<l;i++){
+		var city = MapSetting[i];
+		var size = 10;
+		var colorData = new LBitmapData("#ffffff",0,0,size,size,LBitmapData.DATA_CANVAS);
+		miniMapData.copyPixels(colorData,new LRectangle(0,0,colorData.width,colorData.height),new LPoint(city.position.x*miniMapData.mapScaleX,city.position.y*miniMapData.mapScaleY));
+	}
+	var seigniors = LMvc.chapterData.seigniors;
+	for(var i=0,l=seigniors.length;i<l;i++){
+		var seignior = seigniors[i];
+		var size = 10;
+		var citys = seignior.citys;
+		for(var j=0,ll=citys.length;j<ll;j++){
+			var city = MapSetting.find(function(child){
+				return child.id == citys[j];
+			});
+			var color = seignior.color;
+			var colorData = new LBitmapData(color,0,0,size,size,LBitmapData.DATA_CANVAS);
+			miniMapData.copyPixels(colorData,new LRectangle(0,0,colorData.width,colorData.height),new LPoint(city.position.x*miniMapData.mapScaleX,city.position.y*miniMapData.mapScaleY));
+		}
+	}
 };
 ChapterView.prototype.seigniorsLayerInit=function(){
 	var self = this;
@@ -90,9 +108,21 @@ ChapterView.prototype.ctrlLayerInit=function(){
 	var buttonClose = new LButton(bitmapClose);
 	buttonClose.x = LGlobal.width - bitmapClose.getWidth() - 5;
 	buttonClose.y = 5;
-	
 	self.ctrlLayer.addChild(buttonClose);
 	buttonClose.addEventListener(LMouseEvent.MOUSE_UP,self.returnToChapterMenu.bind(self));
+	
+	var newCharacter = getStrokeLabel(Language.get("create_character_debut"),20,"#FFFFFF","#CCCCCC",1);
+	newCharacter.x = self.seigniorsLayer.x;
+	newCharacter.y = self.seigniorsLayer.y - newCharacter.getHeight() - 10;
+	self.ctrlLayer.addChild(newCharacter);
+	var bitmap = new LBitmap(new LBitmapData(LMvc.datalist["checkbox-background"]));
+	var bitmapSelect = new LBitmap(new LBitmapData(LMvc.datalist["checkbox-on"]));
+	var check = new LCheckBox(bitmap, bitmapSelect);
+	check.x = newCharacter.x + newCharacter.getWidth();
+	check.y = newCharacter.y + (newCharacter.getHeight() - bitmap.height) * 0.5;
+	self.addChild(check);
+	self.checkbox = check;
+	
 	var settingButton = getButton(Language.get("create_character_setting"),150);
 	settingButton.x = LGlobal.width - settingButton.getWidth() - 5;
 	settingButton.y = self.seigniorsLayer.y - settingButton.getHeight() - 5;
@@ -101,7 +131,7 @@ ChapterView.prototype.ctrlLayerInit=function(){
 };
 ChapterView.prototype.loadCreateSetting=function(event){
 	var self = event.currentTarget.parent.parent;
-	
+	self.controller.loadCreateSetting();
 };
 ChapterView.prototype.returnToChapterMenu=function(event){
 	var self = this;

@@ -18,7 +18,7 @@ ChapterSeigniorView.prototype.set=function(){
 	name.y = 15;
 	win.addChild(name);
 	
-	var city_count_label = getStrokeLabel("城市",20,"#000000","#CCCCCC",1);
+	var city_count_label = getStrokeLabel(Language.get("city"),20,"#000000","#CCCCCC",1);
 	city_count_label.x = faceSize + 5;
 	city_count_label.y = 55;
 	win.addChild(city_count_label);
@@ -27,7 +27,7 @@ ChapterSeigniorView.prototype.set=function(){
 	city_count.y = 75;
 	win.addChild(city_count);
 	
-	var general_count_label = getStrokeLabel("武将",20,"#000000","#CCCCCC",1);
+	var general_count_label = getStrokeLabel(Language.get("generals"),20,"#000000","#CCCCCC",1);
 	general_count_label.x = faceSize + 5;
 	general_count_label.y = 100;
 	win.addChild(general_count_label);

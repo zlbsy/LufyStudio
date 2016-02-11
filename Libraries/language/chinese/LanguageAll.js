@@ -1,8 +1,8 @@
-function Language(){
+/*function Language(){
 	var self = this;
-}
+}*/
 Language.get = function(key){
-	return Language.data[key] || key;
+	return Language.dataSimple[key] || Language.data[key] || key;
 };
 Language.getItem = function(key){
 	return Language.itemData[key] || key;
@@ -131,7 +131,6 @@ Language.data = {
 	"belong_friend_action":"友军行动",
 	
 	"create":"作成",
-	"create_character":"武将作成",
 	"create_character_name_error":"请输入姓名！",
 	"create_character_ability_error":"请设定武将能力属性！",
 	"create_character_arm_error":"请设定武将兵种属性！",
@@ -145,7 +144,6 @@ Language.data = {
 	"game_save":"保存进度",
 	"game_read":"读取进度",
 	"return_top":"回主页面",
-	"game_setting":"环境设定",
 	"confirm":"确认",
 	"dialog_select_generals":"请选择武将！",
 	"dialog_character_troops_error":"{0}没有分配士兵!",
@@ -158,7 +156,7 @@ Language.data = {
 	"dialog_move_generals_error":"无法移动到此城池！",
 	"dialog_spy_generals_confirm":"要对{0}进行谍报吗？",
 	"dialog_spy_generals_error":"无法对此城池进行谍报！",
-	"dialog_expedition_select_error":"无法攻击此城市！",
+	"dialog_expedition_select_error":"无法攻击此城池！",
 	"dialog_expedition_select_confirm":"要对{0}发动攻击吗？",
 	"dialog_expedition_select_leader":"请选择主将！",
 	"dialog_select_leader_error":"只能选一个主将！",
@@ -229,7 +227,6 @@ Language.data = {
 	
 	"belong":"所属",
 	"identity":"身份",
-	"city":"城池",
 	"status":"状态",
 	"effect":"效果",
 	
@@ -255,7 +252,6 @@ Language.data = {
 	"nothing":"无",
 	"seignior":"势力",
 	"prefecture":"太守",
-	"generals":"武将",
 	"captive":"俘虏",
 	"business":"商业",
 	"agriculture":"农业",
