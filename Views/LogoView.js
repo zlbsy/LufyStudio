@@ -41,7 +41,7 @@ LogoView.prototype.showMenu=function(){
 	var menuHeight = 55;
 	var menuY = 0;
 	var layer = new LSprite();
-	var title = getStrokeLabel("三国记",80,"#FFFFFF","#000000",4);
+	var title = getStrokeLabel(Language.get("game_title"),80,"#FFFFFF","#000000",4);
 	title.x = (LGlobal.width - title.getWidth())*0.5;
 	title.y = 150;
 	var shadow = new LDropShadowFilter(5,45,"#00FF00");
@@ -73,13 +73,13 @@ LogoView.prototype.showMenu=function(){
 	buttonSetting.addEventListener(LMouseEvent.MOUSE_UP, self.settingGame.bind(self));
 	
 	menuY += menuHeight;
-	var buttonTest = getButton("单挑测试",200);
-	buttonTest.y = menuY;
-	menuLayer.addChild(buttonTest);
-	buttonTest.addEventListener(LMouseEvent.MOUSE_UP, self.testStart.bind(self));
+	var buttonSingleCombat = getButton(Language.get("game_single_combat"),200);
+	buttonSingleCombat.y = menuY;
+	menuLayer.addChild(buttonSingleCombat);
+	buttonSingleCombat.addEventListener(LMouseEvent.MOUSE_UP, self.showSingleCombatArena.bind(self));
 	
 	menuY += menuHeight;
-	var buttonCreate = getButton("自设武将",200);
+	var buttonCreate = getButton(Language.get("create_character"),200);
 	buttonCreate.y = menuY;
 	menuLayer.addChild(buttonCreate);
 	buttonCreate.addEventListener(LMouseEvent.MOUSE_UP, self.createCharacter.bind(self));
@@ -92,7 +92,7 @@ LogoView.prototype.showMenu=function(){
 LogoView.prototype.createCharacter=function(event){
 	this.controller.loadCreateCharacter();
 };
-LogoView.prototype.testStart=function(event){
+LogoView.prototype.showSingleCombatArena=function(event){
 	this.controller.showSingleCombatArena();
 };
 LogoView.prototype.readGame=function(event){
@@ -100,14 +100,6 @@ LogoView.prototype.readGame=function(event){
 };
 LogoView.prototype.settingGame=function(event){
 	this.controller.loadSettingGame();
-};
-LogoView.prototype.testDialog=function(){
-	LMessageBox.show({
-			title:"错误",
-			message:"无法操作，请选择单挑测试！",
-			width:300,
-			height:150
-		});
 };
 LogoView.prototype.loadChapterList=function(event){
 	var self = this;
@@ -121,17 +113,29 @@ LogoView.prototype.showChapterList=function(list){
 	var menuLayer = new LSprite();
 	menuLayer.tx = (LGlobal.width - 200) * 0.5;
 	self.addChild(menuLayer);
-	
-	for(var i = 0; i < list.length; i++){
+	var i = 0;
+	for(; i < list.length*0.5; i++){
 		var chapter = list[i];
-		var buttonChapter = getButton(chapter.name,200);
+		var buttonChapter = getButton(Language.get(chapter.name),150);
 		buttonChapter.chapterId = chapter.id;
+		buttonChapter.x = (200 - buttonChapter.getWidth()) * 0.5 - 90;
 		buttonChapter.y = menuY;
 		menuLayer.addChild(buttonChapter);
 		buttonChapter.addEventListener(LMouseEvent.MOUSE_UP, self.showChapter.bind(self));
 		menuY += menuHeight;
 	}
-	var buttonReturn = getButton("返回",200);
+	menuY = 0;
+	for(; i < list.length; i++){
+		var chapter = list[i];
+		var buttonChapter = getButton(Language.get(chapter.name),150);
+		buttonChapter.chapterId = chapter.id;
+		buttonChapter.x = (200 - buttonChapter.getWidth()) * 0.5 + 90;
+		buttonChapter.y = menuY;
+		menuLayer.addChild(buttonChapter);
+		buttonChapter.addEventListener(LMouseEvent.MOUSE_UP, self.showChapter.bind(self));
+		menuY += menuHeight;
+	}
+	var buttonReturn = getButton(Language.get("return"),200);
 	buttonReturn.y = menuY;
 	menuLayer.addChild(buttonReturn);
 	buttonReturn.addEventListener(LMouseEvent.MOUSE_UP, self.returnTopMenu.bind(self));

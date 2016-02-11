@@ -130,8 +130,8 @@ Language.data = {
 	"belong_enemy_action":"敌军行动",
 	"belong_friend_action":"友军行动",
 	
-	"create":"做成",
-	"create_character":"武将做成",
+	"create":"作成",
+	"create_character":"武将作成",
 	"create_character_name_error":"请输入姓名！",
 	"create_character_ability_error":"请设定武将能力属性！",
 	"create_character_arm_error":"请设定武将兵种属性！",
