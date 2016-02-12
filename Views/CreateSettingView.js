@@ -27,7 +27,7 @@ CreateSettingView.prototype.layerInit=function(){
 };
 CreateSettingView.prototype.titleInit=function(){
 	var self = this, label;
-	label = getStrokeLabel(Language.get("create_seignior_list"),24,"#CDD4AF","#000000",4);
+	label = getStrokeLabel(Language.get("create_seignior_list"),26,"#CDD4AF","#000000",4);
 	label.x = 15;
 	label.y = 15;
 	self.titleLayer.addChild(label);
@@ -64,7 +64,7 @@ CreateSettingView.prototype.setSeigniorList=function(){
 	self.listView.cellHeight = 50;
 	self.baseLayer.addChild(self.listView);
 	/*
-	 {id:1000,color:"0,0,255",citys:[{id:39,generals:[1,2]}]}
+	 {id:1000,color:"0,0,255",citys:[{id:39,prefecture:1,generals:[1,2]}]}
 	 * */
 	var items = [], child;
 	for(var i=0,l=seigniorList.list.length;i<l;i++){

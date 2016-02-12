@@ -30,6 +30,49 @@ CreateSeigniorDetailedView.prototype.layerInit=function(){
 	self.selectSeigniorLayer = new LSprite();
 	self.addChild(self.selectSeigniorLayer);
 };
+CreateSeigniorDetailedView.prototype.changeMonarchColor=function(){
+	var self = this;
+	
+};
+CreateSeigniorDetailedView.prototype.closeCharacterList=function(characters){
+	var self = this;
+	self.baseLayer.visible = true;
+	self.selectSeigniorView.remove();
+	self.selectSeigniorView = null;
+	if(characters.length == 0){
+		return;
+	}
+	var character = characters[0];
+	if(!self.data){
+		self.data = {id:character.data.id,color:"255,255,255",citys:[]};
+	}else{
+		/*{id:1000,color:"0,0,255",citys:[{id:39,prefecture:1,generals:[1,2]}]}*/
+		var seigniorId = self.data.id;
+		if(self.data.citys.length == 1){
+			self.data.citys[0].prefecture = character.data.id;
+			if(self.data.citys[0].generals.indexOf(character.data.id) < 0){
+				self.data.citys[0].generals.push(character.data.id);
+			}
+		}else if(self.data.citys.length > 1){
+			var indexOld = self.data.citys.findIndex(function(city){
+				return city.generals.indexOf(self.data.id) >= 0;
+			});
+			var indexNew = self.data.citys.findIndex(function(city){
+				return city.generals.indexOf(character.data.id) >= 0;
+			});
+			if(indexNew < 0){
+				self.data.citys[indexOld].generals.push(character.data.id);
+				self.data.citys[indexOld].prefecture = character.data.id;
+			}else if(indexOld == indexNew){
+				self.data.citys[indexOld].prefecture = character.data.id;
+			}else{
+				self.data.citys[indexNew].prefecture = character.data.id;
+			}
+		}
+		self.data.id = character.data.id;
+	}
+	self.faceLayer.setData(character.data, self.data.color);
+};
 CreateSeigniorDetailedView.prototype.closeSelf=function(event){
 	var self = event.currentTarget.getParentByConstructor(CreateSeigniorDetailedView);
 	self.parent.baseLayer.visible = true;
@@ -37,7 +80,7 @@ CreateSeigniorDetailedView.prototype.closeSelf=function(event){
 };
 CreateSeigniorDetailedView.prototype.titleInit=function(data){
 	var self = this, label;
-	label = getStrokeLabel(Language.get(data ? "update_seignior" : "create_seignior"),24,"#CDD4AF","#000000",4);
+	label = getStrokeLabel(Language.get(data ? "update_seignior" : "create_seignior"),26,"#CDD4AF","#000000",4);
 	label.x = 15;
 	label.y = 15;
 	self.titleLayer.addChild(label);
@@ -50,64 +93,10 @@ CreateSeigniorDetailedView.prototype.faceInit=function(){
 };
 CreateSeigniorDetailedView.prototype.toSelectSeignior=function(){
 	var self = this;
-	console.log("CreateSeigniorDetailedView.prototype.toSelectSeignior");
-	self.selectSeigniorView = new SelectSeigniorListView(null, "change_monarch");
-	self.selectSeigniorLayer.addChild(self.selectSeigniorView);
+	self.selectSeigniorView = new CreateSettingCharacterListView(null, "change_monarch");
+	self.addChild(self.selectSeigniorView);
 	self.baseLayer.visible = false;
 };
 CreateSeigniorDetailedView.prototype.getData=function(){
 	var self = this;
-	var name = self.basicView.nameTextField.text;
-	if(!name || LString.trim(name).length == 0){
-		var obj = {title:Language.get("confirm"),message:Language.get("create_character_name_error"),height:200,okEvent:null};
-		var windowLayer = ConfirmWindow(obj);
-		LMvc.layer.addChild(windowLayer);
-		return null;
-	}
-	/*{id:1,color:"0,0,255",citys:[{id:39,generals:[1,2]}]}*/
-	var data = {groupSkill:0};
-	if(self.data){
-		data.id = self.data.id;
-	}else{
-		var characters = LPlugin.characters();
-		data.id = characters.list.length == 0 ? 1000 : characters.list[characters.list.length - 1].id + 1;
-	}
-	data.name = name;
-	data.faceImg = self.faceLayer.faceIndex;
-	data.gender = self.faceLayer.genderRadio.value;
-	if(!self.abilityView){
-		var obj = {title:Language.get("confirm"),message:Language.get("create_character_ability_error"),height:200,okEvent:null};
-		var windowLayer = ConfirmWindow(obj);
-		LMvc.layer.addChild(windowLayer);
-		return null;
-	}
-	data.statusPoint = self.abilityView.point;
-	var items = self.abilityView.listView.getItems();
-	for(var i=0, l=items.length;i<l;i++){
-		var child = items[i];
-		data[child.name] = child.textField.text;
-	}
-	data.skill = self.abilityView.skillComboBox.value;
-	if(!self.armView){
-		var obj = {title:Language.get("confirm"),message:Language.get("create_character_arm_error"),height:200,okEvent:null};
-		var windowLayer = ConfirmWindow(obj);
-		LMvc.layer.addChild(windowLayer);
-		return null;
-	}
-	data.proficiencyPoint = self.armView.point;
-	var soldiers = [];
-	var items = self.armView.listView.getItems();
-	for(var i=0, l=items.length;i<l;i++){
-		var child = items[i];
-		soldiers.push({id:child.soldier.id(),proficiency:child.textField.text});
-	}
-	data.soldiers = soldiers;
-	
-	var items = self.basicView.listView.getItems();
-	for(var i=0, l=items.length;i<l;i++){
-		var child = items[i];
-		data[child.name] = child.comboBox.value;
-	}
-	console.error(data);
-	return data;
 };

@@ -12,43 +12,45 @@ CreateSettingCharacterListChildView.prototype.set = function(data) {
 	self.setStatus();
 };
 CreateSettingCharacterListChildView.prototype.onClick = function(event) {
-	
+	var self = event.target;
+	var listView = event.currentTarget;
+	if(listView.isOnlyOne){
+		var items = listView.getItems();
+		for(var i=0,l=items.length;i<l;i++){
+			var item = items[i];
+			if(!item.checkbox.checked){
+				continue;
+			}
+			item.checkbox.setChecked(false);
+			item.cacheAsBitmap(false);
+			item.updateView();
+		}
+	}
+	self.checkbox.setChecked(!self.checkbox.checked);
+	self.cacheAsBitmap(false);
+	self.updateView();
 };
 CreateSettingCharacterListChildView.prototype.setStatus = function() {
 	var self = this;
-	self.graphics.drawRect(0, "#ff0000", [0, 0, 420, 40]);
+	self.graphics.drawRect(0, "#ff0000", [0, 0, 440, 40]);
 	var bitmapLine = new LBitmap(new LBitmapData(LMvc.datalist["icon-line"]));
-	bitmapLine.scaleX = 320;
-	bitmapLine.x = 10;
+	bitmapLine.scaleX = 400;
+	bitmapLine.x = 20;
 	bitmapLine.y = 38;
 	self.addChild(bitmapLine);
 	var bitmap = new LBitmap(new LBitmapData(LMvc.datalist["checkbox-background"]));
 	var bitmapSelect = new LBitmap(new LBitmapData(LMvc.datalist["checkbox-on"]));
 	var check = new LCheckBox(bitmap, bitmapSelect);
-	check.x = 10;
-	check.y = 10;
+	check.x = 20;
+	check.y = 5;
 	self.addChild(check);
 	self.checkbox = check;
-	var name = getStrokeLabel(self.data.name, 20, "#FFFFFF", "#000000", 4);
-	name.x = 60;
-	name.y = 5;
-	self.addChild(name);
-	/*var cityCount = self.data.citys.length;
-	var city = getStrokeLabel(cityCount, 20, "#FFFFFF", "#000000", 4);
-	city.x = 120;
-	city.y = 5;
-	self.addChild(city);
-	var generalCount = 0;
-	for(var i = 0;i<cityCount;i++){
-		generalCount += self.data.citys[i].generals.length;
+	
+	var list = ["name", 80, "force", 180, "intelligence", 230, "command", 280, "agility", 330, "luck", 380];
+	for(var i=0,l=list.length;i<l;i+=2){
+		label = getStrokeLabel(self.data[list[i]],18,"#FFFFFF","#000000",4);
+		label.x = list[i + 1];
+		label.y = 10;
+		self.addChild(label);
 	}
-	var general = getStrokeLabel(generalCount, 20, "#FFFFFF", "#000000", 4);
-	general.x = 190;
-	general.y = 5;
-	self.addChild(general);
-	self.graphics.drawRect(0, "#ff0000", [260, 5, 60, 30],true,String.format("rgb({0})",self.data.color));
-	var deleteButton = getSizeButton(Language.get("删除"),100,40);
-	deleteButton.x = 340;
-	self.addChild(deleteButton);
-	self.deleteButton = deleteButton;*/
 }; 

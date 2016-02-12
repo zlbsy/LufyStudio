@@ -7,18 +7,56 @@ CreateSeigniorFaceView.prototype.init=function(data){
 	var backgroundData = new LBitmapData(LMvc.datalist["win05"]);
 	var panel = getBitmap(new LPanel(backgroundData,186, 266));
 	self.addChild(panel);
-	if(data){
-		self.changeFace(data.faceImg);
-	}
 	
+	var label = getStrokeLabel(Language.get("monarch") + ": " + Language.get("null"),18,"#FFFFFF","#000000",4);
+	self.nameTextField = label;
+	label.x = (176 - label.getWidth()) * 0.5;
+	label.y = 270;
+	self.addChild(label);
+		
 	var buttonChange = getButton(Language.get("change_monarch"),176);
-	buttonChange.y = 266;
+	buttonChange.y = 292;
 	self.addChild(buttonChange);
 	buttonChange.addEventListener(LMouseEvent.MOUSE_UP, self.changeMonarch);
+	
+	var buttonBackground = new LPanel(new LBitmapData(LMvc.datalist["win07"]),176,50);
+	var textLabel = getStrokeLabel(Language.get("seignior_color"),18,"#999999","#000000",3);
+	textLabel.x = (buttonBackground.getWidth() - textLabel.getWidth()) * 0.5;
+	textLabel.y = (buttonBackground.getHeight() - textLabel.getHeight()) * 0.5;
+	buttonBackground.addChild(textLabel);
+	buttonBackground.y = 385;
+	buttonBackground.cacheAsBitmap(true);
+	self.addChild(buttonBackground);
+	var buttonChangeColor = getButton(Language.get("seignior_color"),176);
+	buttonChangeColor.y = 385;
+	self.addChild(buttonChangeColor);
+	self.buttonChangeColor = buttonChangeColor;
+	buttonChangeColor.visible = false;
+	buttonChangeColor.addEventListener(LMouseEvent.MOUSE_UP, self.changeMonarchColor);
+	
+	self.setData(data);
+};
+CreateSeigniorFaceView.prototype.changeMonarchColor=function(event){
+	var detailedView = event.currentTarget.getParentByConstructor(CreateSeigniorDetailedView);
+	detailedView.changeMonarchColor();
 };
 CreateSeigniorFaceView.prototype.changeMonarch=function(event){
 	var detailedView = event.currentTarget.getParentByConstructor(CreateSeigniorDetailedView);
 	detailedView.toSelectSeignior();
+};
+CreateSeigniorFaceView.prototype.setData=function(data, color){
+	var self = this;
+	if(!data){
+		self.buttonChangeColor.visible = false;
+		return;
+	}
+	self.buttonChangeColor.visible = true;
+	self.changeFace(data.faceImg);
+	self.nameTextField.text = Language.get("monarch") + ": " + data.name;
+	self.nameTextField.x = (176 - self.nameTextField.getWidth()) * 0.5;
+	console.log("data.color",data.color);
+	self.graphics.clear();
+	self.graphics.drawRect(0, "#ff0000", [58, 350, 60, 30],true,String.format("rgb({0})",color));
 };
 CreateSeigniorFaceView.prototype.changeFace=function(faceIndex){
 	var self = this;
