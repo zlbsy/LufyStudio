@@ -28,6 +28,7 @@ CreateSettingController.prototype.modelLoad=function(){
 CreateSettingController.prototype.viewLoad=function(){
 	var self = this;
 	self.load.view(["CreateSetting/CreateSeigniorListChild", 
+	"CreateSetting/CreateSettingCharacterListChild", 
 	"CreateSetting/CreateSeigniorFace", 
 	"CreateSetting/SelectSeigniorList", 
 	"CreateSetting/CreateSeigniorDetailed"], self.init);
