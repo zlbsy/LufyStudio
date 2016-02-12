@@ -27,15 +27,10 @@ CreateSettingController.prototype.modelLoad=function(){
 };
 CreateSettingController.prototype.viewLoad=function(){
 	var self = this;
-	self.load.view(["CreateCharacter/CreateCharacterDetailed", 
-	"CreateCharacter/CreateCharacterListChild", 
-	"CreateCharacter/CreateCharacterFace", 
-	"CreateCharacter/CreateCharacterBasic", 
-	"CreateCharacter/CreateCharacterBasicItem", 
-	"CreateCharacter/CreateCharacterAbility", 
-	"CreateCharacter/CreateCharacterAbilityItem", 
-	"CreateCharacter/CreateCharacterArm", 
-	"CreateCharacter/CreateCharacterArmItem"], self.init);
+	self.load.view(["CreateSetting/CreateSeigniorListChild", 
+	"CreateSetting/CreateSeigniorFace", 
+	"CreateSetting/SelectSeigniorList", 
+	"CreateSetting/CreateSeigniorDetailed"], self.init);
 };
 CreateSettingController.prototype.init=function(){
 	var self = this;

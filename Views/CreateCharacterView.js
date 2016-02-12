@@ -90,7 +90,7 @@ CreateCharacterView.prototype.showDetailed=function(event){
 CreateCharacterView.prototype.toShowDetailed=function(data){
 	var self = this;
 	var detailedView = new CreateCharacterDetailedView(self.controller, data);
-	var obj = {title:Language.get("create_character"),subWindow:detailedView,contentStartY:60,width:LGlobal.width,height:560,okEvent:self.saveCharacter,cancelEvent:self.cancelEvent};
+	var obj = {title:Language.get(data?"update_character":"create_character"),subWindow:detailedView,contentStartY:60,width:LGlobal.width,height:560,okEvent:self.saveCharacter,cancelEvent:self.cancelEvent};
 	var windowLayer = ConfirmWindow(obj);
 	self.addChild(windowLayer);
 	self.baseLayer.visible = false;

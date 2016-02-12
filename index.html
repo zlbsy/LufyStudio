@@ -22,6 +22,16 @@ and open the template in the editor.
     <body style="margin:0px 0px 0px 0px;padding:0px 0px 0px 0px;font-size: 0;">
         <div id="mvclegend">loading</div>
         <script>
+        LDisplayObject.prototype.getParentByConstructor = function(value){
+        	var parent = this.parent;
+        	while(typeof parent == "object"){
+        		if(parent.constructor == value){
+        			return parent;
+        		}
+        		parent = parent.parent;
+        	}
+        	return null;
+        };
         if(LGlobal.mobile){
         	var protocol = location.protocol;
 			if (protocol == "http:" || protocol == "https:") {

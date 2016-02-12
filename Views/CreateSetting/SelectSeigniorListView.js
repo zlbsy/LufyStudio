@@ -1,17 +1,18 @@
-function CreateSettingView(controller){
-	base(this,LView,[controller]);
+function SelectSeigniorListView(controller, title){
+	var self = this;
+	base(self,LView,[controller]);
+	self.title = title;
+	self.init();
 }
-CreateSettingView.prototype.construct=function(){
-	this.controller.addEventListener(LEvent.COMPLETE, this.init.bind(this));
-};
-CreateSettingView.prototype.init=function(){
+SelectSeigniorListView.prototype.init=function(){
 	var self = this;
 	self.layerInit();
 	self.titleInit();
+	return;
 	self.seigniorInit();
 	self.setSeigniorList();
 };
-CreateSettingView.prototype.layerInit=function(){
+SelectSeigniorListView.prototype.layerInit=function(){
 	var self = this;
 	//self.addChild(getTranslucentMask());
 	self.baseLayer = new LSprite();
@@ -24,16 +25,27 @@ CreateSettingView.prototype.layerInit=function(){
 	self.baseLayer.addChild(self.titleLayer);
 	self.seigniorLayer = new LSprite();
 	self.baseLayer.addChild(self.seigniorLayer);
+	
+	var closeButton = new LButton(new LBitmap(new LBitmapData(LMvc.datalist["close"])));
+	closeButton.x = LGlobal.width - closeButton.getWidth();
+	self.baseLayer.addChild(closeButton);
+	closeButton.addEventListener(LMouseEvent.MOUSE_UP, self.closeSelf);
 };
-CreateSettingView.prototype.titleInit=function(){
+SelectSeigniorListView.prototype.closeSelf=function(event){
+	var self = event.currentTarget.getParentByConstructor(SelectSeigniorListView);
+	var detailedView = self.getParentByConstructor(CreateSeigniorDetailedView);
+	detailedView.baseLayer.visible = true;
+	self.remove();
+};
+SelectSeigniorListView.prototype.titleInit=function(){
 	var self = this, label;
-	label = getStrokeLabel(Language.get("create_seignior_list"),24,"#CDD4AF","#000000",4);
+	label = getStrokeLabel(Language.get(self.title),24,"#CDD4AF","#000000",4);
 	label.x = 15;
 	label.y = 15;
 	self.titleLayer.addChild(label);
 	self.titleLayer.cacheAsBitmap(true);
 };
-CreateSettingView.prototype.seigniorInit=function(){
+SelectSeigniorListView.prototype.seigniorInit=function(){
 	var self = this, label;
 	var list = ["name", 20, "city", 130, "generals", 200, "seignior_color", 270];
 	for(var i=0,l=list.length;i<l;i+=2){
@@ -53,7 +65,7 @@ CreateSettingView.prototype.seigniorInit=function(){
 	}
 	self.seigniorLayer.cacheAsBitmap(true);
 };
-CreateSettingView.prototype.setSeigniorList=function(){
+SelectSeigniorListView.prototype.setSeigniorList=function(){
 	var self = this;
 	var seigniorList = GameManager.getCreateSeigniorList(LMvc.chapterId);
 	console.log("seigniorList.length="+seigniorList.length);
@@ -90,58 +102,4 @@ CreateSettingView.prototype.setSeigniorList=function(){
 	closeButton.x = LGlobal.width - closeButton.getWidth();
 	self.baseLayer.addChild(closeButton);
 	closeButton.addEventListener(LMouseEvent.MOUSE_UP, self.closeSelf);
-};
-CreateSettingView.prototype.closeSelf=function(event){
-	var self = event.currentTarget.parent.parent;
-	self.controller.close();
-};
-CreateSettingView.prototype.showDetailed=function(event){
-	var self = event.currentTarget.parent.parent;
-	self.toShowDetailed(null);
-};
-CreateSettingView.prototype.toShowDetailed=function(data){
-	var self = this;
-	var detailedView = new CreateSeigniorDetailedView(self.controller, data);
-	self.addChild(detailedView);
-	//var obj = {title:Language.get(data ? "update_seignior" : "create_seignior"),subWindow:detailedView,contentStartY:60,width:LGlobal.width,height:560,okEvent:self.saveCharacter,cancelEvent:self.cancelEvent};
-	//var windowLayer = ConfirmWindow(obj);
-	//self.addChild(windowLayer);
-	self.baseLayer.visible = false;
-};
-CreateSettingView.prototype.saveCharacter=function(event){
-	var windowLayer = event.currentTarget.parent;
-	var detailedView = windowLayer.childList.find(function(child){
-		return child.constructor.name == "CreateSeigniorDetailedView";
-	});
-	var self = windowLayer.parent;
-	var charaData = detailedView.getData();
-	if(charaData == null){
-		return;
-	}
-	var length = LPlugin.characters().list.length;
-	LPlugin.setCharacter(charaData);
-	var characters = LPlugin.characters();
-	if(characters.list.length == length){
-		var view = self.listView.getItems().find(function(child){
-			return child.data.id == charaData.id;
-		});
-		view.set(charaData);
-		view.cacheAsBitmap(false);
-		view.updateView();
-	}else{
-		var view = new CreateSeigniorListChildView(charaData);
-		self.listView.insertChildView(view);
-		view.updateView();
-	}
-	self.baseLayer.visible = true;
-	windowLayer.remove();
-};
-CreateSettingView.prototype.cancelEvent=function(event){
-	var windowLayer = event.currentTarget.parent;
-	var detailedView = windowLayer.childList.find(function(child){
-		return child.constructor.name == "CreateSeigniorDetailedView";
-	});
-	var self = windowLayer.parent;
-	self.baseLayer.visible = true;
-	windowLayer.remove();
 };

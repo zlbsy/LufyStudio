@@ -131,6 +131,9 @@ Language.data = {
 	"belong_friend_action":"友军行动",
 	
 	"create":"作成",
+	"update_character":"武将编辑",
+	"create_seignior":"势力作成",
+	"update_seignior":"势力编辑",
 	"create_character_name_error":"请输入姓名！",
 	"create_character_ability_error":"请设定武将能力属性！",
 	"create_character_arm_error":"请设定武将兵种属性！",
@@ -178,6 +181,7 @@ Language.data = {
 	"strategy":"谋略",
 	"refresh":"刷新",
 	"change_face":"头像变更",
+	"change_monarch":"选择君主",
 	"gender_male":"男",
 	"gender_female":"女",
 	
