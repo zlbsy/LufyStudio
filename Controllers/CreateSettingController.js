@@ -30,8 +30,12 @@ CreateSettingController.prototype.viewLoad=function(){
 	self.load.view(["CreateSetting/CreateSeigniorListChild", 
 	"CreateSetting/CreateSettingCharacterList", 
 	"CreateSetting/CreateSettingCharacterListChild", 
+	"CreateSetting/CreateCityCharacterListChild", 
 	"CreateSetting/CreateSeigniorFace", 
-	"CreateSetting/CreateSeigniorColor", 
+	"CreateSetting/SelectSeigniorColor", 
+	"CreateSetting/SelectSeigniorColorChild", 
+	"CreateSetting/SelectSeigniorCityChild", 
+	"CreateSetting/CreateSeigniorCityDetailed", 
 	"CreateSetting/CreateSeigniorDetailed"], self.init);
 };
 CreateSettingController.prototype.init=function(){

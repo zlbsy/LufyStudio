@@ -118,6 +118,16 @@ function ConfirmWindow(obj){
 	msg.y = panel.y + obj.contentStartY;
 	windowLayer.addChild(msg);
 	
+	if(obj.noButton){
+		var closePanel = new LButton(new LBitmap(new LBitmapData(LMvc.datalist["close"])));
+		closePanel.x = panel.x + panel.getWidth() - closePanel.getWidth() + 10;
+		closePanel.y = panel.y - 10;
+		windowLayer.addChild(closePanel);
+		closePanel.addEventListener(LMouseEvent.MOUSE_UP,function(event){
+			event.currentTarget.parent.remove();
+		});
+		return windowLayer;
+	}
 	var okPanel = new LButton(new LBitmap(new LBitmapData(LMvc.datalist["ok"])));
 	okPanel.y = panel.y + panel.getHeight() - okPanel.getHeight() - 20;
 	windowLayer.addChild(okPanel);

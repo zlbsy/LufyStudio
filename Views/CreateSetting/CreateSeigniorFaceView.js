@@ -50,6 +50,8 @@ CreateSeigniorFaceView.prototype.setData=function(data, color){
 		self.buttonChangeColor.visible = false;
 		return;
 	}
+	self.data = data;
+	self.color = color;
 	self.buttonChangeColor.visible = true;
 	self.changeFace(data.faceImg);
 	self.nameTextField.text = Language.get("monarch") + ": " + data.name;

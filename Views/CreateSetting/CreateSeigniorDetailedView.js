@@ -9,6 +9,7 @@ CreateSeigniorDetailedView.prototype.init=function(){
 	self.layerInit();
 	self.titleInit();
 	self.faceInit();
+	self.citysInit();
 };
 CreateSeigniorDetailedView.prototype.layerInit=function(){
 	var self = this;
@@ -21,18 +22,28 @@ CreateSeigniorDetailedView.prototype.layerInit=function(){
 	self.contentLayer = new LSprite();
 	self.contentLayer.y = 50;
 	self.baseLayer.addChild(self.contentLayer);
+	self.cityLayer = new LSprite();
+	self.cityLayer.x = 195;
+	self.cityLayer.y = 120;
+	self.baseLayer.addChild(self.cityLayer);
 	
 	var closeButton = new LButton(new LBitmap(new LBitmapData(LMvc.datalist["close"])));
 	closeButton.x = LGlobal.width - closeButton.getWidth();
 	self.baseLayer.addChild(closeButton);
 	closeButton.addEventListener(LMouseEvent.MOUSE_UP, self.closeSelf);
-	
-	self.selectSeigniorLayer = new LSprite();
-	self.addChild(self.selectSeigniorLayer);
 };
 CreateSeigniorDetailedView.prototype.changeMonarchColor=function(){
 	var self = this;
-	
+	var view = new SelectSeigniorColorView(self.controller);
+	var obj = {title:Language.get("create_character"),subWindow:view,width:440,height:500,noButton:true};
+	var windowLayer = ConfirmWindow(obj);
+	self.addChild(windowLayer);
+};
+CreateSeigniorDetailedView.prototype.selectedMonarchColor=function(color){
+	var self = this;
+	self.removeChildAt(self.numChildren - 1);
+	self.data.color = color;
+	self.faceLayer.setData(self.faceLayer.data, color);
 };
 CreateSeigniorDetailedView.prototype.closeCharacterList=function(characters){
 	var self = this;
@@ -84,6 +95,25 @@ CreateSeigniorDetailedView.prototype.titleInit=function(data){
 	label.x = 15;
 	label.y = 15;
 	self.titleLayer.addChild(label);
+	
+	label = getStrokeLabel(Language.get("city_list") + ":",22,"#FFFFFF","#000000",4);
+	label.x = 200;
+	label.y = 50;
+	self.titleLayer.addChild(label);
+	
+	label = getStrokeLabel(Language.get("city"),18,"#CDD4AF","#000000",4);
+	label.x = 200;
+	label.y = 90;
+	self.titleLayer.addChild(label);
+	label = getStrokeLabel(Language.get("prefecture"),18,"#CDD4AF","#000000",4);
+	label.x = 250;
+	label.y = 90;
+	self.titleLayer.addChild(label);
+	label = getStrokeLabel(Language.get("generals"),18,"#CDD4AF","#000000",4);
+	label.x = 340;
+	label.y = 90;
+	self.titleLayer.addChild(label);
+	
 	self.titleLayer.cacheAsBitmap(true);
 };
 CreateSeigniorDetailedView.prototype.faceInit=function(){
@@ -95,6 +125,49 @@ CreateSeigniorDetailedView.prototype.toSelectSeignior=function(){
 	var self = this;
 	self.selectSeigniorView = new CreateSettingCharacterListView(null, "change_monarch");
 	self.addChild(self.selectSeigniorView);
+	self.baseLayer.visible = false;
+};
+CreateSeigniorDetailedView.prototype.citysInit=function(){
+	var self = this;
+	
+	var addCityButton = getButton(Language.get("+"),50);
+	addCityButton.x = 300;
+	addCityButton.y = 35;
+	self.baseLayer.addChild(addCityButton);
+	addCityButton.addEventListener(LMouseEvent.MOUSE_UP, self.clickShowCityDetailed);
+	
+	self.listView = new LListView();
+	self.listView.cellWidth = 250;
+	self.listView.cellHeight = 50;
+	self.cityLayer.addChild(self.listView);
+	var citys = self.data ? self.data.citys : [];
+	var items = [], child;
+	for(var i=0,l=citys.length;i<l;i++){
+		var cityData = citys[i];
+		child = new SelectSeigniorCityChildView(cityData);
+		items.push(child);
+	}
+	child = new SelectSeigniorCityChildView({id:39,prefecture:1000,generals:[1000,1002]});
+	items.push(child);
+	child = new SelectSeigniorCityChildView({id:40,prefecture:1003,generals:[1003]});
+	items.push(child);
+	for(var i=0,l=20;i<l;i++){
+		var cityData = {id:39,prefecture:1000,generals:[1000,1002]};
+		child = new SelectSeigniorCityChildView(cityData);
+		items.push(child);
+	}
+	self.listView.resize(300, LGlobal.height - self.cityLayer.y - 20);
+	self.listView.updateList(items);
+	
+};
+CreateSeigniorDetailedView.prototype.clickShowCityDetailed=function(event){
+	var self = event.currentTarget.getParentByConstructor(CreateSeigniorDetailedView);
+	self.showCityDetailed(null);
+};
+CreateSeigniorDetailedView.prototype.showCityDetailed=function(cityData){
+	var self = this;
+	self.cityDetailedView = new CreateSeigniorCityDetailedView(self.data, cityData);
+	self.addChild(self.cityDetailedView);
 	self.baseLayer.visible = false;
 };
 CreateSeigniorDetailedView.prototype.getData=function(){

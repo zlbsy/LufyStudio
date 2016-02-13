@@ -53,10 +53,8 @@ GameManager.getCreateSeigniorList = function(chapterId){
 };
 GameManager.getNoSetCharacters = function(chapterId){
 	var characters = LPlugin.characters().list;
-	console.log("getNoSetCharacters="+characters.length);
 	var list = [];
 	var seigniors = GameManager.getCreateSeigniorList(chapterId).list;
-	console.log("seigniors="+seigniors.length);
 	for(var i=0,l=characters.length;i<l;i++){
 		var character = characters[i];
 		var index = seigniors.findIndex(function(seignior){
@@ -67,12 +65,10 @@ GameManager.getNoSetCharacters = function(chapterId){
 		}
 		list.push(character);
 	}
-	console.log("list="+list.length);
 	return list;
 };
 GameManager._getNoSetCharacters=function(citys, characterId){
 	for(var i=0,l=citys.length;i<l;i++){
-	//{id:1,color:"0,0,255",citys:[{id:39,generals:[1,2]}]}
 		if(citys[i].generals.findIndex(function(id){return id == characterId;})>=0){
 			return true;
 		}
