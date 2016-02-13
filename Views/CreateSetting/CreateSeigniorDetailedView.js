@@ -83,6 +83,7 @@ CreateSeigniorDetailedView.prototype.closeCharacterList=function(characters){
 		self.data.id = character.data.id;
 	}
 	self.faceLayer.setData(character.data, self.data.color);
+	self.addGeneralsButton.visible = true;
 };
 CreateSeigniorDetailedView.prototype.closeSelf=function(event){
 	var self = event.currentTarget.getParentByConstructor(CreateSeigniorDetailedView);
@@ -129,12 +130,23 @@ CreateSeigniorDetailedView.prototype.toSelectSeignior=function(){
 };
 CreateSeigniorDetailedView.prototype.citysInit=function(){
 	var self = this;
+	var buttonBackground = new LPanel(new LBitmapData(LMvc.datalist["win07"]),50,50);
+	var textLabel = getStrokeLabel(Language.get("+"),18,"#999999","#000000",3);
+	textLabel.x = (buttonBackground.getWidth() - textLabel.getWidth()) * 0.5;
+	textLabel.y = (buttonBackground.getHeight() - textLabel.getHeight()) * 0.5;
+	buttonBackground.addChild(textLabel);
+	buttonBackground.x = 300;
+	buttonBackground.y = 35;
+	buttonBackground.cacheAsBitmap(true);
+	self.baseLayer.addChild(buttonBackground);
 	
-	var addCityButton = getButton(Language.get("+"),50);
-	addCityButton.x = 300;
-	addCityButton.y = 35;
-	self.baseLayer.addChild(addCityButton);
-	addCityButton.addEventListener(LMouseEvent.MOUSE_UP, self.clickShowCityDetailed);
+	var addGeneralsButton = getButton(Language.get("+"),50);
+	addGeneralsButton.x = 300;
+	addGeneralsButton.y = 35;
+	self.baseLayer.addChild(addGeneralsButton);
+	addGeneralsButton.addEventListener(LMouseEvent.MOUSE_UP, self.clickShowCityDetailed);
+	addGeneralsButton.visible = false;
+	self.addGeneralsButton = addGeneralsButton;
 	
 	self.listView = new LListView();
 	self.listView.cellWidth = 250;
@@ -166,7 +178,7 @@ CreateSeigniorDetailedView.prototype.clickShowCityDetailed=function(event){
 };
 CreateSeigniorDetailedView.prototype.showCityDetailed=function(cityData){
 	var self = this;
-	self.cityDetailedView = new CreateSeigniorCityDetailedView(self.data, cityData);
+	self.cityDetailedView = new CreateSeigniorCityDetailedView(self.faceLayer.data, cityData);
 	self.addChild(self.cityDetailedView);
 	self.baseLayer.visible = false;
 };

@@ -25,15 +25,15 @@ CreateCityCharacterListChildView.prototype.setStatus = function() {
 	bitmapLine.y = 38;
 	self.addChild(bitmapLine);
 	
-	var list = ["name", 80, "force", 180, "intelligence", 230, "command", 280, "agility", 330, "luck", 380];
+	var list = ["name", 0, "force", 100, "intelligence", 150, "command", 200, "agility", 250, "luck", 300];
 	for(var i=0,l=list.length;i<l;i+=2){
 		label = getStrokeLabel(self.data[list[i]],18,"#FFFFFF","#000000",4);
-		label.x = list[i + 1];
+		label.x = list[i + 1]+5;
 		label.y = 10;
 		self.addChild(label);
 	}
 	var closeButton = new LBitmap(new LBitmapData(LMvc.datalist["close"]));
-	closeButton.x = 190;
+	closeButton.x = 350;
 	closeButton.y = 5;
 	closeButton.scaleX = closeButton.scaleY = 0.5;
 	self.addChild(closeButton);
