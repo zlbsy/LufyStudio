@@ -13,11 +13,6 @@ CreateSeigniorFaceView.prototype.init=function(data){
 	label.x = (176 - label.getWidth()) * 0.5;
 	label.y = 270;
 	self.addChild(label);
-		
-	var buttonChange = getButton(Language.get("change_monarch"),176);
-	buttonChange.y = 292;
-	self.addChild(buttonChange);
-	buttonChange.addEventListener(LMouseEvent.MOUSE_UP, self.changeMonarch);
 	
 	var buttonBackground = new LPanel(new LBitmapData(LMvc.datalist["win07"]),176,50);
 	var textLabel = getStrokeLabel(Language.get("seignior_color"),18,"#999999","#000000",3);
@@ -33,8 +28,24 @@ CreateSeigniorFaceView.prototype.init=function(data){
 	self.buttonChangeColor = buttonChangeColor;
 	buttonChangeColor.visible = false;
 	buttonChangeColor.addEventListener(LMouseEvent.MOUSE_UP, self.changeMonarchColor);
-	
-	self.setData(data);
+	if(!data){
+		var buttonChange = getButton(Language.get("change_monarch"),176);
+		buttonChange.y = 292;
+		self.addChild(buttonChange);
+		buttonChange.addEventListener(LMouseEvent.MOUSE_UP, self.changeMonarch);
+		self.setData(null);
+	}else{
+		var buttonBackground = new LPanel(new LBitmapData(LMvc.datalist["win07"]),176,50);
+		var textLabel = getStrokeLabel(Language.get("change_monarch"),20,"#999999","#000000",3);
+		textLabel.x = (buttonBackground.getWidth() - textLabel.getWidth()) * 0.5;
+		textLabel.y = (buttonBackground.getHeight() - textLabel.getHeight()) * 0.5;
+		buttonBackground.addChild(textLabel);
+		buttonBackground.y = 292;
+		buttonBackground.cacheAsBitmap(true);
+		self.addChild(buttonBackground);
+		var characters = LPlugin.characters().list;
+		self.setData(characters.find(function(child){return child.id == data.id;}), data.color);
+	}
 };
 CreateSeigniorFaceView.prototype.changeMonarchColor=function(event){
 	var detailedView = event.currentTarget.getParentByConstructor(CreateSeigniorDetailedView);
@@ -46,6 +57,7 @@ CreateSeigniorFaceView.prototype.changeMonarch=function(event){
 };
 CreateSeigniorFaceView.prototype.setData=function(data, color){
 	var self = this;
+	console.log("CreateSeigniorFaceView.prototype.setData", data, color);
 	if(!data){
 		self.buttonChangeColor.visible = false;
 		return;

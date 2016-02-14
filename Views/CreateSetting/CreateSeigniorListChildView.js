@@ -15,7 +15,20 @@ CreateSeigniorListChildView.prototype.set = function(data) {
 	self.setStatus();
 };
 CreateSeigniorListChildView.prototype.onClick = function(event) {
-	
+	var self = event.target;
+	var listView = event.currentTarget;
+	var createSetting = listView.getParentByConstructor(CreateSettingView);
+	if(event.selfX <= 360){
+		createSetting.toShowDetailed(self.data);
+		return;
+	}
+	var errorMessage = String.format(Language.get("create_seignior_delete_error"), self.seignior.name);
+	var obj = {title:Language.get("confirm"),messageHtml:errorMessage,height:200,okEvent:function(event){
+		createSetting.toDeleteDetailed(self);
+		event.currentTarget.parent.remove();
+	}, cancelEvent:null};
+	var windowLayer = ConfirmWindow(obj);
+	LMvc.layer.addChild(windowLayer);
 };
 CreateSeigniorListChildView.prototype.setStatus = function() {
 	var self = this;
@@ -43,8 +56,11 @@ CreateSeigniorListChildView.prototype.setStatus = function() {
 	general.y = 5;
 	self.addChild(general);
 	self.graphics.drawRect(0, "#ff0000", [260, 5, 60, 30],true,String.format("rgb({0})",self.data.color));
-	var deleteButton = getSizeButton(Language.get("删除"),100,40);
-	deleteButton.x = 340;
+	
+	var deleteButton = new LBitmap(new LBitmapData(LMvc.datalist["close"]));
+	deleteButton.x = 350;
+	deleteButton.y = 5;
+	deleteButton.scaleX = deleteButton.scaleY = 0.5;
 	self.addChild(deleteButton);
 	self.deleteButton = deleteButton;
 }; 

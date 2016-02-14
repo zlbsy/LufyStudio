@@ -2,6 +2,7 @@ function CreateSeigniorDetailedView(controller, data){
 	var self = this;
 	base(self,LView,[controller]);
 	self.data = data;
+	console.log(self.data);
 	self.init();
 }
 CreateSeigniorDetailedView.prototype.init=function(){
@@ -31,6 +32,38 @@ CreateSeigniorDetailedView.prototype.layerInit=function(){
 	closeButton.x = LGlobal.width - closeButton.getWidth();
 	self.baseLayer.addChild(closeButton);
 	closeButton.addEventListener(LMouseEvent.MOUSE_UP, self.closeSelf);
+	
+	var buttonOK = getButton("OK",200);
+	buttonOK.x = (LGlobal.width - buttonOK.getWidth()) * 0.5;
+	buttonOK.y = LGlobal.height - 60;
+	self.baseLayer.addChild(buttonOK);
+	buttonOK.addEventListener(LMouseEvent.MOUSE_UP, self.onClickOK);
+};
+CreateSeigniorDetailedView.prototype.onClickOK=function(event){
+	var self = event.currentTarget.getParentByConstructor(CreateSeigniorDetailedView);
+	var items = self.listView.getItems();
+	if(items.length == 0){
+		var obj = {title:Language.get("confirm"),message:Language.get("create_seignior_city_error"),width:300,height:220};
+		var windowLayer = ConfirmWindow(obj);
+		LMvc.layer.addChild(windowLayer);
+		return;
+	}
+	var seigniorItem = items.find(function(child){
+		return child.cityData.generals.indexOf(self.data.id) >= 0;
+	});
+	if(!seigniorItem){
+		var obj = {title:Language.get("confirm"),message:Language.get("create_seignior_character_error"),width:300,height:220};
+		var windowLayer = ConfirmWindow(obj);
+		LMvc.layer.addChild(windowLayer);
+		return;
+	}
+	var settingView = self.getParentByConstructor(CreateSettingView);
+	settingView.closeSeigniorDetailed(true);
+};
+CreateSeigniorDetailedView.prototype.closeSelf=function(event){
+	var self = event.currentTarget.getParentByConstructor(CreateSeigniorDetailedView);
+	self.parent.baseLayer.visible = true;
+	self.remove();
 };
 CreateSeigniorDetailedView.prototype.changeMonarchColor=function(){
 	var self = this;
@@ -83,16 +116,11 @@ CreateSeigniorDetailedView.prototype.closeCharacterList=function(characters){
 		self.data.id = character.data.id;
 	}
 	self.faceLayer.setData(character.data, self.data.color);
-	self.addGeneralsButton.visible = true;
+	self.addCitysButton.visible = true;
 };
-CreateSeigniorDetailedView.prototype.closeSelf=function(event){
-	var self = event.currentTarget.getParentByConstructor(CreateSeigniorDetailedView);
-	self.parent.baseLayer.visible = true;
-	self.remove();
-};
-CreateSeigniorDetailedView.prototype.titleInit=function(data){
+CreateSeigniorDetailedView.prototype.titleInit=function(){
 	var self = this, label;
-	label = getStrokeLabel(Language.get(data ? "update_seignior" : "create_seignior"),26,"#CDD4AF","#000000",4);
+	label = getStrokeLabel(Language.get(self.data ? "update_seignior" : "create_seignior"),26,"#CDD4AF","#000000",4);
 	label.x = 15;
 	label.y = 15;
 	self.titleLayer.addChild(label);
@@ -140,13 +168,15 @@ CreateSeigniorDetailedView.prototype.citysInit=function(){
 	buttonBackground.cacheAsBitmap(true);
 	self.baseLayer.addChild(buttonBackground);
 	
-	var addGeneralsButton = getButton(Language.get("+"),50);
-	addGeneralsButton.x = 300;
-	addGeneralsButton.y = 35;
-	self.baseLayer.addChild(addGeneralsButton);
-	addGeneralsButton.addEventListener(LMouseEvent.MOUSE_UP, self.clickShowCityDetailed);
-	addGeneralsButton.visible = false;
-	self.addGeneralsButton = addGeneralsButton;
+	var addCitysButton = getButton(Language.get("+"),50);
+	addCitysButton.x = 300;
+	addCitysButton.y = 35;
+	self.baseLayer.addChild(addCitysButton);
+	addCitysButton.addEventListener(LMouseEvent.MOUSE_UP, self.clickShowCityDetailed);
+	if(!self.data){
+		addCitysButton.visible = false;
+	}
+	self.addCitysButton = addCitysButton;
 	
 	self.listView = new LListView();
 	self.listView.cellWidth = 250;
@@ -159,18 +189,8 @@ CreateSeigniorDetailedView.prototype.citysInit=function(){
 		child = new SelectSeigniorCityChildView(cityData);
 		items.push(child);
 	}
-	child = new SelectSeigniorCityChildView({id:39,prefecture:1000,generals:[1000,1002]});
-	items.push(child);
-	child = new SelectSeigniorCityChildView({id:40,prefecture:1003,generals:[1003]});
-	items.push(child);
-	for(var i=0,l=20;i<l;i++){
-		var cityData = {id:39,prefecture:1000,generals:[1000,1002]};
-		child = new SelectSeigniorCityChildView(cityData);
-		items.push(child);
-	}
-	self.listView.resize(300, LGlobal.height - self.cityLayer.y - 20);
+	self.listView.resize(300, LGlobal.height - self.cityLayer.y - 70);
 	self.listView.updateList(items);
-	
 };
 CreateSeigniorDetailedView.prototype.clickShowCityDetailed=function(event){
 	var self = event.currentTarget.getParentByConstructor(CreateSeigniorDetailedView);
@@ -178,10 +198,51 @@ CreateSeigniorDetailedView.prototype.clickShowCityDetailed=function(event){
 };
 CreateSeigniorDetailedView.prototype.showCityDetailed=function(cityData){
 	var self = this;
-	self.cityDetailedView = new CreateSeigniorCityDetailedView(self.faceLayer.data, cityData);
+	self.cityDetailedView = new CreateSeigniorCityDetailedView(self.faceLayer.data, cityData, self.getCitys());
 	self.addChild(self.cityDetailedView);
 	self.baseLayer.visible = false;
 };
+CreateSeigniorDetailedView.prototype.closeCityDetailed=function(isSave){
+	var self = this;
+	self.baseLayer.visible = true;
+	if(isSave){
+		var city = {};
+		city.id = self.cityDetailedView.cityComboBox.value;
+		city.prefecture = self.cityDetailedView.prefectureComboBox.value;
+		var items = self.cityDetailedView.listView.getItems();
+		city.generals = [];
+		for(var i=0,l=items.length;i<l;i++){
+			var data  = items[i].data;
+			city.generals.push(data.id);
+		}
+		var cityItems = self.listView.getItems();
+		var cityIndex = cityItems.findIndex(function(item){
+			return item.cityData.id == city.id;
+		});
+		if(cityIndex >= 0){
+			var cityItem = cityItems[cityIndex];
+			cityItem.setData(city);
+			cityItem.cacheAsBitmap(false);
+			cityItem.updateView();
+		}else{
+			var cityItem = new SelectSeigniorCityChildView(city);
+			self.listView.insertChildView(cityItem);
+		}
+	}
+	self.cityDetailedView.remove();
+	self.cityDetailedView = null;
+};
+CreateSeigniorDetailedView.prototype.getCitys=function(){
+	var self = this, citys = [];
+	var cityItems = self.listView.getItems();
+	for(var i=0,l=cityItems.length;i<l;i++){
+		var cityData  = cityItems[i].cityData;
+		citys.push(cityData);
+	}
+	return citys;
+};
 CreateSeigniorDetailedView.prototype.getData=function(){
 	var self = this;
+	//{id:1000,color:"0,0,255",citys:[{id:39,generals:[1,2]}]}
+	return {id:self.data.id,color:self.data.color,citys:self.getCitys()};
 };

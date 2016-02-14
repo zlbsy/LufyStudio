@@ -13,11 +13,9 @@ CreateSettingView.prototype.init=function(){
 };
 CreateSettingView.prototype.layerInit=function(){
 	var self = this;
-	//self.addChild(getTranslucentMask());
 	self.baseLayer = new LSprite();
 	self.addChild(self.baseLayer);
 	var panel = getBitmap(new LPanel(new LBitmapData(LMvc.datalist["win05"]),LGlobal.width, LGlobal.height));
-	//panel.y = 20;
 	self.baseLayer.addChild(panel);
 	
 	self.titleLayer = new LSprite();
@@ -56,26 +54,19 @@ CreateSettingView.prototype.seigniorInit=function(){
 CreateSettingView.prototype.setSeigniorList=function(){
 	var self = this;
 	var seigniorList = GameManager.getCreateSeigniorList(LMvc.chapterId);
-	console.log("seigniorList.length="+seigniorList.length);
 	self.listView = new LListView();
 	self.listView.x = 10;
 	self.listView.y = 90;
 	self.listView.cellWidth = LGlobal.width - 40;
 	self.listView.cellHeight = 50;
 	self.baseLayer.addChild(self.listView);
-	/*
-	 {id:1000,color:"0,0,255",citys:[{id:39,prefecture:1,generals:[1,2]}]}
-	 * */
+	/*{id:1000,color:"0,0,255",citys:[{id:39,prefecture:1,generals:[1,2]}]}*/
 	var items = [], child;
 	for(var i=0,l=seigniorList.list.length;i<l;i++){
 		var seignior = seigniorList.list[i];
 		child = new CreateSeigniorListChildView(seignior);
 		items.push(child);
 	}
-		child = new CreateSeigniorListChildView({id:1000,color:"0,0,255",citys:[{id:39,generals:[1,2]}]});
-		items.push(child);
-		child = new CreateSeigniorListChildView({id:1001,color:"100,0,255",citys:[{id:39,generals:[1,2]}]});
-		items.push(child);
 		
 	self.listView.resize(self.listView.cellWidth, LGlobal.height - self.y - self.listView.y - 15);
 	self.listView.updateList(items);
@@ -92,8 +83,33 @@ CreateSettingView.prototype.setSeigniorList=function(){
 	closeButton.addEventListener(LMouseEvent.MOUSE_UP, self.closeSelf);
 };
 CreateSettingView.prototype.closeSelf=function(event){
-	var self = event.currentTarget.parent.parent;
+	var self = event.currentTarget.getParentByConstructor(CreateSettingView);
 	self.controller.close();
+};
+CreateSettingView.prototype.closeSeigniorDetailed=function(isSave){
+	var self = this;
+	self.baseLayer.visible = true;
+	if(isSave){
+		var data = self.detailedView.getData();
+		//{id:1000,color:"0,0,255",citys:[{id:39,generals:[1,2]}]}
+		var seigniorItems = self.listView.getItems();
+		var seigniorIndex = seigniorItems.findIndex(function(item){
+			return item.data.id == data.id;
+		});
+		var child;
+		if(seigniorIndex >= 0){
+			child = seigniorItems[seigniorIndex];
+			child.set(data);
+			child.cacheAsBitmap(false);
+			child.updateView();
+		}else{
+			child = new CreateSeigniorListChildView(data);
+			self.listView.insertChildView(child);
+		}
+		self.saveSeignior();
+	}
+	self.detailedView.remove();
+	self.detailedView = null;
 };
 CreateSettingView.prototype.showDetailed=function(event){
 	var self = event.currentTarget.parent.parent;
@@ -101,47 +117,21 @@ CreateSettingView.prototype.showDetailed=function(event){
 };
 CreateSettingView.prototype.toShowDetailed=function(data){
 	var self = this;
-	var detailedView = new CreateSeigniorDetailedView(self.controller, data);
-	self.addChild(detailedView);
-	//var obj = {title:Language.get(data ? "update_seignior" : "create_seignior"),subWindow:detailedView,contentStartY:60,width:LGlobal.width,height:560,okEvent:self.saveCharacter,cancelEvent:self.cancelEvent};
-	//var windowLayer = ConfirmWindow(obj);
-	//self.addChild(windowLayer);
+	self.detailedView = new CreateSeigniorDetailedView(self.controller, data);
+	self.addChild(self.detailedView);
 	self.baseLayer.visible = false;
 };
-CreateSettingView.prototype.saveCharacter=function(event){
-	var windowLayer = event.currentTarget.parent;
-	var detailedView = windowLayer.childList.find(function(child){
-		return child.constructor.name == "CreateSeigniorDetailedView";
-	});
-	var self = windowLayer.parent;
-	var charaData = detailedView.getData();
-	if(charaData == null){
-		return;
-	}
-	var length = LPlugin.characters().list.length;
-	LPlugin.setCharacter(charaData);
-	var characters = LPlugin.characters();
-	if(characters.list.length == length){
-		var view = self.listView.getItems().find(function(child){
-			return child.data.id == charaData.id;
-		});
-		view.set(charaData);
-		view.cacheAsBitmap(false);
-		view.updateView();
-	}else{
-		var view = new CreateSeigniorListChildView(charaData);
-		self.listView.insertChildView(view);
-		view.updateView();
-	}
-	self.baseLayer.visible = true;
-	windowLayer.remove();
+CreateSettingView.prototype.toDeleteDetailed=function(child){
+	var self = this;
+	self.listView.deleteChildView(child);
+	self.saveSeignior();
 };
-CreateSettingView.prototype.cancelEvent=function(event){
-	var windowLayer = event.currentTarget.parent;
-	var detailedView = windowLayer.childList.find(function(child){
-		return child.constructor.name == "CreateSeigniorDetailedView";
-	});
-	var self = windowLayer.parent;
-	self.baseLayer.visible = true;
-	windowLayer.remove();
+CreateSettingView.prototype.saveSeignior=function(){
+	var self = this;
+	var data = {list:[]};
+	var seigniorItems = self.listView.getItems();
+	for(var i=0,l=seigniorItems.length;i<l;i++){
+		data.list.push(seigniorItems[i].data);
+	}console.log(data);
+	GameManager.setCreateSeigniorList(LMvc.chapterId, data);
 };

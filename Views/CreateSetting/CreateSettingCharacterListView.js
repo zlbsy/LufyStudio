@@ -1,8 +1,11 @@
-function CreateSettingCharacterListView(controller, title, isOnlyOne){
+function CreateSettingCharacterListView(controller, title, isOnlyOne, characters, excludeCharacters){
 	var self = this;
 	base(self,LView,[controller]);
 	self.title = title;
 	self.isOnlyOne = isOnlyOne;
+	self.characters = characters ? characters : null;
+	self.excludeCharacters = excludeCharacters ? excludeCharacters : [];
+	console.log("existedCharacters", self.existedCharacters);
 	self.init();
 }
 CreateSettingCharacterListView.prototype.init=function(){
@@ -84,9 +87,9 @@ CreateSettingCharacterListView.prototype.titleInit=function(){
 };
 CreateSettingCharacterListView.prototype.setCharacterList=function(){
 	var self = this;
-	var characters = GameManager.getNoSetCharacters(LMvc.chapterId);
+	var characters = self.characters ? self.characters : GameManager.getNoSetCharacters(LMvc.chapterId);
 	self.listView = new LListView();
-	self.listView.isOnlyOne = true;
+	self.listView.isOnlyOne = self.isOnlyOne;
 	self.listView.x = 10;
 	self.listView.y = 90;
 	self.listView.cellWidth = LGlobal.width - 40;
@@ -95,10 +98,19 @@ CreateSettingCharacterListView.prototype.setCharacterList=function(){
 	var items = [], child;
 	for(var i=0,l=characters.length;i<l;i++){
 		var character = characters[i];
+		if(self.excludeCharacters.indexOf(character.id) >= 0){
+			continue;
+		}
 		child = new CreateSettingCharacterListChildView(character);
 		items.push(child);
 	}
 		
 	self.listView.resize(self.listView.cellWidth, LGlobal.height - self.listView.y - 80);
+	if(items.length == 0){
+		var obj = {title:Language.get("confirm"),message:Language.get("create_seignior_no_character_error"),width:300,height:220};
+		var windowLayer = ConfirmWindow(obj);
+		LMvc.layer.addChild(windowLayer);
+		return;
+	}
 	self.listView.updateList(items);
 };

@@ -51,13 +51,20 @@ GameManager.getCreateSeigniorList = function(chapterId){
 	}
 	return data;
 };
-GameManager.getNoSetCharacters = function(chapterId){
+GameManager.setCreateSeigniorList = function(chapterId, data){
+	var dataName = String.format("createSeignior_{0}", chapterId);
+	LPlugin.SetData(dataName, data);
+};
+GameManager.getNoSetCharacters = function(chapterId, excludeSeignior){
 	var characters = LPlugin.characters().list;
 	var list = [];
 	var seigniors = GameManager.getCreateSeigniorList(chapterId).list;
 	for(var i=0,l=characters.length;i<l;i++){
 		var character = characters[i];
 		var index = seigniors.findIndex(function(seignior){
+			if(excludeSeignior && seignior.id == excludeSeignior){
+				return false;
+			}
 			return GameManager._getNoSetCharacters(seignior.citys, character.id);
 		});
 		if(index >= 0){

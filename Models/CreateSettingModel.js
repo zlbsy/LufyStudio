@@ -42,3 +42,14 @@ CreateSettingModel.prototype.getImages=function(){
 	}
 	return list;
 };
+CreateSettingModel.prototype.getAreaData=function(callback){
+	var self = this;
+	self.callback = callback;
+	LLoadManage.load( [{path:"./Data/"+LMvc.dataFolder+"/area.js",type:"js"}],null,self.getAreaDataComplete.bind(self));
+};
+CreateSettingModel.prototype.getAreaDataComplete=function(){
+	var self = this;
+	var callback = self.callback;
+	delete self.callback;
+	callback.apply(self.controller,[]);
+};

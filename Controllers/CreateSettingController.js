@@ -36,7 +36,11 @@ CreateSettingController.prototype.viewLoad=function(){
 	"CreateSetting/SelectSeigniorColorChild", 
 	"CreateSetting/SelectSeigniorCityChild", 
 	"CreateSetting/CreateSeigniorCityDetailed", 
-	"CreateSetting/CreateSeigniorDetailed"], self.init);
+	"CreateSetting/CreateSeigniorDetailed"], self.getAreaData);
+};
+CreateSettingController.prototype.getAreaData=function(){
+	var self = this;
+	self.model.getAreaData(self.init);
 };
 CreateSettingController.prototype.init=function(){
 	var self = this;

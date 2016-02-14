@@ -8,9 +8,9 @@ ChapterView.prototype.init=function(){
 	var self = this;
 	self.layerInit();
 	self.backLayerInit();
-	self.chapterLayerInit();
 	self.seigniorsLayerInit();
 	self.ctrlLayerInit();
+	self.chapterLayerInit();
 	self.x = LGlobal.width;
 	LTweenLite.to(LMvc.stageLayer,0.5,{x:-LGlobal.width, onComplete:self.logoToHide.bind(self)});
 };
@@ -59,6 +59,12 @@ ChapterView.prototype.chapterLayerInit=function(){
 	miniMap.y = layer.y + bitmapWin.y + 10;
 	self.chapterLayer.addChild(layer);
 	self.chapterLayer.addChild(miniMap);
+	self.miniMapData = miniMapData;
+	self.setMapData();
+};
+ChapterView.prototype.setMapData=function(){
+	var self = this;
+	var miniMapData = self.miniMapData;
 	for(var i=0,l=MapSetting.length;i<l;i++){
 		var city = MapSetting[i];
 		var size = 10;
@@ -79,6 +85,23 @@ ChapterView.prototype.chapterLayerInit=function(){
 			miniMapData.copyPixels(colorData,new LRectangle(0,0,colorData.width,colorData.height),new LPoint(city.position.x*miniMapData.mapScaleX,city.position.y*miniMapData.mapScaleY));
 		}
 	}
+	if(!self.checkboxDebut.checked){
+		return;
+	}
+	var seigniorList = GameManager.getCreateSeigniorList(LMvc.chapterId);
+	for(var i=0,l=seigniorList.list.length;i<l;i++){
+		var seignior = seigniorList.list[i];
+		var citys = seignior.citys;
+		for(var j=0,ll=citys.length;j<ll;j++){
+			var city = MapSetting.find(function(child){
+				return child.id == citys[j].id;
+			});
+			var color = String.format("rgb({0})",seignior.color);
+			var colorData = new LBitmapData(color,0,0,size,size,LBitmapData.DATA_CANVAS);
+			miniMapData.copyPixels(colorData,new LRectangle(0,0,colorData.width,colorData.height),new LPoint(city.position.x*miniMapData.mapScaleX,city.position.y*miniMapData.mapScaleY));
+		}
+	}
+	
 };
 ChapterView.prototype.seigniorsLayerInit=function(){
 	var self = this;
@@ -120,14 +143,19 @@ ChapterView.prototype.ctrlLayerInit=function(){
 	var check = new LCheckBox(bitmap, bitmapSelect);
 	check.x = newCharacter.x + newCharacter.getWidth();
 	check.y = newCharacter.y + (newCharacter.getHeight() - bitmap.height) * 0.5;
+	check.addEventListener(LCheckBox.ON_CHANGE,self.onChangeDebut);
 	self.addChild(check);
-	self.checkbox = check;
+	self.checkboxDebut = check;
 	
 	var settingButton = getButton(Language.get("create_character_setting"),150);
 	settingButton.x = LGlobal.width - settingButton.getWidth() - 25;
 	settingButton.y = self.seigniorsLayer.y - settingButton.getHeight() - 5;
 	self.ctrlLayer.addChild(settingButton);
 	settingButton.addEventListener(LMouseEvent.MOUSE_UP, self.loadCreateSetting);
+};
+ChapterView.prototype.onChangeDebut=function(event){
+	var self = event.currentTarget.parent;
+	self.setMapData();
 };
 ChapterView.prototype.loadCreateSetting=function(event){
 	var self = event.currentTarget.parent.parent;

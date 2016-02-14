@@ -106,7 +106,7 @@ function ConfirmWindow(obj){
 		msg.setWordWrap(true,27);
 	}else{
 		msg = getStrokeLabel(obj.message,16,"#FFFFFF","#000000",4);
-		msg.width = 260;
+		msg.width = obj.width - 60;
 		msg.setWordWrap(true,27);
 	}
 	if(obj.width < LGlobal.width){
