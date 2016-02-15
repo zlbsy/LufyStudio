@@ -37,7 +37,7 @@ ChapterSeigniorView.prototype.set=function(){
 	win.addChild(general_count);
 	win.cacheAsBitmap(true);
 	self.layer.addChild(win);
-	if(self.data.chara_id < 1000){
+	if(self.data.id < 1000){
 		var loader = new LURLLoader();
 		loader.parent = self;
 	    loader.addEventListener(LEvent.COMPLETE, self.loadTxtComplete);
@@ -48,7 +48,8 @@ ChapterSeigniorView.prototype.set=function(){
     	var loader = new LLoader();
 		loader.parent = self;
 	    loader.addEventListener(LEvent.COMPLETE, self.loadFaceComplete); 
-	    loader.load(GameManager.readFaceData(self.data.chara_id), "bitmapData");
+	    var imgData = GameManager.readFaceData(self.data.id).data;
+	    loader.load(imgData, "bitmapData");
     }
 };
 ChapterSeigniorView.prototype.loadTxtComplete=function(event){
@@ -71,8 +72,8 @@ ChapterSeigniorView.prototype.loadFaceComplete=function(event){
 ChapterSeigniorView.prototype.onClick=function(event){
 	var self = event.target;
 	var listView = event.currentTarget;
-	var chapterView = listView.parent.parent;
-	chapterView.select_chara_id = self.data.chara_id;
+	var chapterView = listView.getParentByConstructor(ChapterView);
+	chapterView.select_chara_id = self.data.id;
 	var obj = {title:Language.get("confirm"),messageHtml:String.format(Language.get("select_seignior_message"), self.data.name),height:200,
 	okEvent:chapterView.okEvent.bind(chapterView),cancelEvent:null};
 	var windowLayer = ConfirmWindow(obj);

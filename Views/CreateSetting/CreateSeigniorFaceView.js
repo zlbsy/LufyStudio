@@ -84,5 +84,10 @@ CreateSeigniorFaceView.prototype.changeFace=function(faceIndex){
 };
 CreateSeigniorFaceView.prototype.getFaceData=function(){
 	var self = this;
-	return self.face.getDataURL();
+	var layer = new LSprite();
+	var face = self.face.clone();
+	face.x = face.y = 0;
+	face.scaleX = face.scaleY = 100 / 220;
+	layer.addChild(face);
+	return layer.getDataURL();
 };

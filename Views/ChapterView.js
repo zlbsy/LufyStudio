@@ -34,11 +34,7 @@ ChapterView.prototype.logoToHide=function(){
 };
 ChapterView.prototype.backLayerInit=function(){
 	var self = this;
-	var bitmapData = new LBitmapData(LMvc.datalist["common-black"]);
-	var bitmap = new LBitmap(bitmapData);
-	bitmap.scaleX = LGlobal.width / bitmapData.width;
-	bitmap.scaleY = LGlobal.height / bitmapData.height;
-	self.backLayer.addChild(bitmap);
+	self.backLayer.addChild(getBlackBitmap());
 };
 ChapterView.prototype.chapterLayerInit=function(){
 	var self = this;
@@ -164,7 +160,7 @@ ChapterView.prototype.setCreateSeigniorList=function(){
 	var items = self.listView.getItems();
 	for(var i=items.length - 1;i>=0;i--){
 		var child = items[i];
-		if(child.data.chara_id < 1000){
+		if(child.data.id < 1000){
 			break;
 		}
 		self.listView.deleteChildView(child);

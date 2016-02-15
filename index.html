@@ -25,7 +25,7 @@ and open the template in the editor.
         LDisplayObject.prototype.getParentByConstructor = function(value){
         	var parent = this.parent;
         	while(typeof parent == "object"){
-        		if(parent.constructor == value){
+        		if(parent instanceof value){
         			return parent;
         		}
         		parent = parent.parent;

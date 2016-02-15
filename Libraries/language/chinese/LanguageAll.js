@@ -259,6 +259,7 @@ Language.data = {
 	"all_seignior":"全势力一览",
 	"city_list":"城池一览",
 	"create_seignior_list":"自设势力一览",
+	"create_character_list":"自设武将一览",
 	"monarch":"君主",
 	"general":"一般",
 	"nothing":"无",

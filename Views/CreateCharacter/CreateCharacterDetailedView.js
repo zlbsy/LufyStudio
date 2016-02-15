@@ -11,6 +11,8 @@ CreateCharacterDetailedView.prototype.init=function(){
 	var self = this;
 	self.layerInit();
 	self.faceInit();
+	self.TabShow(CreateCharacterDetailedView.TAB_ARMS);
+	self.TabShow(CreateCharacterDetailedView.TAB_ABILITY);
 	self.TabShow(CreateCharacterDetailedView.TAB_BASIC);
 };
 CreateCharacterDetailedView.prototype.TabClick=function(event){

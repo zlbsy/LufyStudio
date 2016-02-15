@@ -18,7 +18,7 @@ CreateCharacterView.prototype.layerInit=function(){
 };
 CreateCharacterView.prototype.titleInit=function(){
 	var self = this, label;
-	label = getStrokeLabel("自设武将一览",24,"#CDD4AF","#000000",4);
+	label = getStrokeLabel(Language.get("create_character_list"),24,"#CDD4AF","#000000",4);
 	label.x = 15;
 	label.y = 15;
 	self.titleLayer.addChild(label);
@@ -104,6 +104,11 @@ CreateCharacterView.prototype.saveCharacter=function(event){
 	var charaData = detailedView.getData();
 	if(charaData == null){
 		return;
+	}
+	var faceData = GameManager.readFaceData(charaData.id);
+	if(faceData){
+		faceData = detailedView.faceLayer.getFaceData();
+		GameManager.saveFaceData(charaData.id, faceData);
 	}
 	var length = LPlugin.characters().list.length;
 	LPlugin.setCharacter(charaData);
