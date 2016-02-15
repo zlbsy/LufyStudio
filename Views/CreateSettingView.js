@@ -108,6 +108,7 @@ CreateSettingView.prototype.closeSeigniorDetailed=function(isSave){
 		}
 		self.saveSeignior();
 	}
+	self.detailedView.faceSave();
 	self.detailedView.remove();
 	self.detailedView = null;
 };

@@ -82,3 +82,7 @@ CreateSeigniorFaceView.prototype.changeFace=function(faceIndex){
 	self.face.scaleX = self.face.scaleY = 0.8;
 	self.addChild(self.face);
 };
+CreateSeigniorFaceView.prototype.getFaceData=function(){
+	var self = this;
+	return self.face.getDataURL();
+};

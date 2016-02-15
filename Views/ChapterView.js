@@ -156,6 +156,28 @@ ChapterView.prototype.ctrlLayerInit=function(){
 ChapterView.prototype.onChangeDebut=function(event){
 	var self = event.currentTarget.parent;
 	self.setMapData();
+	
+	self.setCreateSeigniorList();
+};
+ChapterView.prototype.setCreateSeigniorList=function(){
+	var self = this;
+	var items = self.listView.getItems();
+	for(var i=items.length - 1;i>=0;i--){
+		var child = items[i];
+		if(child.data.chara_id < 1000){
+			break;
+		}
+		self.listView.deleteChildView(child);
+	}
+	if(!self.checkboxDebut.checked){
+		return;
+	}
+	var seigniorList = GameManager.getCreateSeigniorList(LMvc.chapterId);
+	for(var i=0,l=seigniorList.list.length;i<l;i++){
+		var seignior = seigniorList.list[i];
+		var child = new ChapterSeigniorView(self.controller,seignior);
+		self.listView.insertChildView(child);
+	}
 };
 ChapterView.prototype.loadCreateSetting=function(event){
 	var self = event.currentTarget.parent.parent;

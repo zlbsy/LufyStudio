@@ -8,9 +8,9 @@ function CreateSeigniorListChildView(data) {
 CreateSeigniorListChildView.prototype.set = function(data) {
 	var self = this;
 	self.data = data;
-	self.seignior = LPlugin.characters().list.find(function(child){
+	/*self.seignior = LPlugin.characters().list.find(function(child){
 		return child.id == data.id;
-	});
+	});*/
 	self.removeAllChild();
 	self.setStatus();
 };
@@ -22,7 +22,7 @@ CreateSeigniorListChildView.prototype.onClick = function(event) {
 		createSetting.toShowDetailed(self.data);
 		return;
 	}
-	var errorMessage = String.format(Language.get("create_seignior_delete_error"), self.seignior.name);
+	var errorMessage = String.format(Language.get("create_seignior_delete_error"), self.data.name);
 	var obj = {title:Language.get("confirm"),messageHtml:errorMessage,height:200,okEvent:function(event){
 		createSetting.toDeleteDetailed(self);
 		event.currentTarget.parent.remove();
@@ -38,7 +38,7 @@ CreateSeigniorListChildView.prototype.setStatus = function() {
 	bitmapLine.x = 10;
 	bitmapLine.y = 38;
 	self.addChild(bitmapLine);
-	var name = getStrokeLabel(self.seignior.name, 20, "#FFFFFF", "#000000", 4);
+	var name = getStrokeLabel(self.data.name, 20, "#FFFFFF", "#000000", 4);
 	name.x = 10;
 	name.y = 5;
 	self.addChild(name);
@@ -47,11 +47,11 @@ CreateSeigniorListChildView.prototype.setStatus = function() {
 	city.x = 120;
 	city.y = 5;
 	self.addChild(city);
-	var generalCount = 0;
+	/*var generalCount = 0;
 	for(var i = 0;i<cityCount;i++){
 		generalCount += self.data.citys[i].generals.length;
-	}
-	var general = getStrokeLabel(generalCount, 20, "#FFFFFF", "#000000", 4);
+	}*/
+	var general = getStrokeLabel(self.data.general_count, 20, "#FFFFFF", "#000000", 4);
 	general.x = 190;
 	general.y = 5;
 	self.addChild(general);

@@ -82,3 +82,11 @@ GameManager._getNoSetCharacters=function(citys, characterId){
 	}
 	return false;
 };
+GameManager.saveFaceData = function(characterId, data){
+	var dataName = String.format("face/{0}", characterId);
+	LPlugin.SetData(dataName, data);
+};
+GameManager.readFaceData = function(characterId){
+	var dataName = String.format("face/{0}", characterId);
+	return LPlugin.GetData(dataName);
+};

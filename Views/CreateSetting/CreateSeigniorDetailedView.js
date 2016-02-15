@@ -232,6 +232,12 @@ CreateSeigniorDetailedView.prototype.closeCityDetailed=function(isSave){
 	self.cityDetailedView.remove();
 	self.cityDetailedView = null;
 };
+CreateSeigniorDetailedView.prototype.faceSave=function(){
+	var self = this;
+	var canvasData = self.faceLayer.getFaceData();
+	console.log(canvasData);
+	GameManager.saveFaceData(self.data.id, canvasData);
+};
 CreateSeigniorDetailedView.prototype.getCitys=function(){
 	var self = this, citys = [];
 	var cityItems = self.listView.getItems();
@@ -244,5 +250,10 @@ CreateSeigniorDetailedView.prototype.getCitys=function(){
 CreateSeigniorDetailedView.prototype.getData=function(){
 	var self = this;
 	//{id:1000,color:"0,0,255",citys:[{id:39,generals:[1,2]}]}
-	return {id:self.data.id,color:self.data.color,citys:self.getCitys()};
+	var citys = self.getCitys();
+	var generalCount = 0;
+	for(var i = 0,l=citys.length;i<l;i++){
+		generalCount += citys[i].generals.length;
+	}
+	return {id:self.data.id,name:self.faceLayer.data.name,color:self.data.color,general_count:generalCount,citys:self.getCitys()};
 };
