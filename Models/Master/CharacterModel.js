@@ -265,10 +265,10 @@ CharacterModel.prototype.moveAssault = function() {
 	return this.data.moveAssault;
 };
 CharacterModel.prototype.initStrategy = function() {
-	return this.data.initStrategy;
+	return this.data.initStrategy ? this.data.initStrategy : 20;
 };
 CharacterModel.prototype.initTroops = function() {
-	return this.data.initTroops;
+	return this.data.initTroops ? this.data.initTroops : 100;
 };
 CharacterModel.prototype.isDefCharacter = function(value) {
 	return this._dataValue("isDefCharacter", value, 0);
@@ -324,6 +324,9 @@ CharacterModel.prototype.dispositionLabel = function(){
 	return Language.get("disposition_"+this.data.disposition);
 };
 CharacterModel.prototype.name = function() {
+	if(this.data.id >= 1000){
+		return this.data.name;
+	}
 	return Language.getCharacter("character_"+this.data.id);
 };
 CharacterModel.prototype.compatibility = function() {
@@ -401,7 +404,7 @@ CharacterModel.prototype.isPantTroops = function() {
 CharacterModel.prototype.maxTroops = function(init) {
 	var self = this;
 	if(init || !self.data._maxTroops){
-		self.data._maxTroops = self.data.initTroops + self.currentSoldiers().property().troops * self.level();
+		self.data._maxTroops = self.initTroops() + self.currentSoldiers().property().troops * self.level();
 	}
 	return self.data._maxTroops;
 };
@@ -411,7 +414,7 @@ CharacterModel.prototype.maxHP = function(init) {
 CharacterModel.prototype.maxMP = function(init) {
 	var self = this;
 	if(init){
-		self.data._maxStrategy = self.data.initStrategy + self.currentSoldiers().property().strategy * self.level();
+		self.data._maxStrategy = self.initStrategy() + self.currentSoldiers().property().strategy * self.level();
 	}
 	return self.data._maxStrategy;
 };
@@ -592,11 +595,11 @@ CharacterModel.prototype.face = function() {
 		icon.y = (CharacterFaceSize.height - BattleCharacterSize.height) * 0.5;
 		return soldierIcon;
 	}
-	if(CharacterModel.faceCacher[self.data.id]){
-		return CharacterModel.faceCacher[self.data.id];
+	if(CharacterModel.faceCacher[self.data.faceImg]){
+		return CharacterModel.faceCacher[self.data.faceImg];
 	}
-	var characterFace = new CharacterFace(self.data.id);
-	CharacterModel.faceCacher[self.data.id] = characterFace;
+	var characterFace = new CharacterFace(self.data.faceImg);
+	CharacterModel.faceCacher[self.data.faceImg] = characterFace;
 	return characterFace;
 };
 CharacterModel.prototype.minFace = function(size) {
