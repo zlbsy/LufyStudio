@@ -92,6 +92,9 @@ function getIdentity(value){
 function gameDataInit(){
 	var data = LMvc.areaData;
 	console.log("gameDataInit");
+	if(LMvc.chapterData.isCreateDebut){
+		addCreateCharactersToGame();
+	}
 	SeigniorModel.setSeignior(data.seigniors);
 	for(var i=0,l=data.seigniors.length;i<l;i++){
 		var seignior = data.seigniors[i];
@@ -105,6 +108,52 @@ function gameDataInit(){
 		seignior.areas = areaList;
 	}
 	console.log("gameDataInit o");
+}
+function addCreateCharactersToGame(){
+	var characters = LPlugin.characters();
+	for(var i=0,l=characters.list.length;i<l;i++){
+		var character = characters.list[i];
+		var chara = new CharacterModel(null,character);
+		CharacterModel.list.push(chara);
+	}
+}
+function addCreateSeigniorsToGame(){
+	var seigniorList = GameManager.getCreateSeigniorList(LMvc.chapterId);
+	var noneSeigniorIndex = LMvc.areaData.seigniors.findIndex(function(s){
+		return s.chara_id == 0;
+	});
+	var noneSeignior = LMvc.areaData.seigniors[noneSeigniorIndex];
+	for(var i=0,l=seigniorList.list.length;i<l;i++){
+		var seignior = getCreateSeigniorAsType(noneSeignior, seigniorList.list[i]);
+		if(seignior.areas.length == 0){
+			continue;
+		}
+		LMvc.areaData.seigniors.push(seignior);
+	}
+	LMvc.areaData.seigniors[noneSeigniorIndex] = noneSeignior;
+}
+function getCreateSeigniorAsType(noneSeignior,child){
+	var seignior = {};
+	seignior.chara_id = child.id;
+	seignior.color = child.color;
+	seignior.areas = [];
+	console.log("getCreateSeigniorAsType",child);
+	for(var j=0,jl=child.citys.length;j<jl;j++){
+		var city = child.citys[j];
+		console.log("city",city);
+		var cityIndex = noneSeignior.areas.findIndex(function(c){
+			return c.area_id == city.id;
+		});
+		if(cityIndex < 0){
+			continue;
+		}
+		var area = noneSeignior.areas.splice(cityIndex, 1)[0];
+		for(var i=0,l=city.generals.length;i<l;i++){
+			area.generals.push({chara_id:city.generals[i],feat:0,loyalty:100});
+		}
+		seignior.areas.push(area);
+	}
+	return seignior;
 }
 function NumberToString(value, length){
 	value = ""+value;

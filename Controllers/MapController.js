@@ -1,5 +1,6 @@
 function MapController(){
-	base(this,OpenCharacterListController,[]);
+	var self = this
+	base(self,OpenCharacterListController,[]);
 }
 MapController.MODE_MAP = "map";
 MapController.MODE_CHARACTER_MOVE = "generals_move";

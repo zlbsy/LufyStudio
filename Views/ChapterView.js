@@ -120,6 +120,7 @@ ChapterView.prototype.seigniorsLayerInit=function(){
 ChapterView.prototype.okEvent=function(event){
 	var self = event.currentTarget.getParentByConstructor(ChapterView);
 	self.removeChildAt(self.numChildren - 1);
+	LMvc.chapterData.isCreateDebut = self.checkboxDebut.checked;
 	self.controller.loadMap(self.select_chara_id);
 };
 ChapterView.prototype.ctrlLayerInit=function(){

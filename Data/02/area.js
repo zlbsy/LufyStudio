@@ -664,6 +664,66 @@ seigniors : [
     {chara_id:586,name:"丁仪",year:211},
     ]
   },
+  {  area_id : 9,name:"南蛮",prefecture : 0,
+  money : 108,food : 1008,population : 40008,business : 108,agriculture : 108,technology : 108,police : 78,city_defense : 508,troops : 408,
+  items_farmland:[],
+  items_market:[],
+  items:[],
+  generals:[
+    ],
+    out_of_offices:[
+    ],
+    not_debut:[
+    ]
+  },
+  {  area_id : 21,name:"南海",prefecture : 0,
+  money : 120,food : 1020,population : 40020,business : 120,agriculture : 120,technology : 120,police : 90,city_defense : 520,troops : 420,
+  items_farmland:[],
+  items_market:[],
+  items:[],
+  generals:[
+    ],
+    out_of_offices:[
+    ],
+    not_debut:[
+    ]
+  },
+  {  area_id : 23,name:"河内",prefecture : 0,
+  money : 122,food : 1022,population : 40022,business : 122,agriculture : 122,technology : 122,police : 92,city_defense : 522,troops : 422,
+  items_farmland:[],
+  items_market:[],
+  items:[],
+  generals:[
+    ],
+    out_of_offices:[
+    ],
+    not_debut:[
+    ]
+  },
+  {  area_id : 37,name:"徐州",prefecture : 0,
+  money : 136,food : 1036,population : 40036,business : 136,agriculture : 136,technology : 136,police : 75,city_defense : 536,troops : 436,
+  items_farmland:[],
+  items_market:[],
+  items:[],
+  generals:[
+    ],
+    out_of_offices:[
+    ],
+    not_debut:[
+    ]
+  },
+  {  area_id : 53,name:"西城",prefecture : 0,
+  money : 151,food : 1051,population : 40051,business : 151,agriculture : 151,technology : 151,police : 90,city_defense : 551,troops : 451,
+  items_farmland:[],
+  items_market:[],
+  items:[],
+  generals:[
+    ],
+    out_of_offices:[
+    ],
+    not_debut:[
+    ]
+  },
 ]},
 {chara_id : 446,name:"刘表",color : "255,192,203",generals_count:9,areas : [
   {  area_id : 15,name:"襄阳",prefecture : 446,
@@ -1276,68 +1336,6 @@ seigniors : [
     {chara_id:668,name:"羌弓骑",feat:0,loyalty:100},
     {chara_id:669,name:"羌医生",feat:0,loyalty:100},
     {chara_id:670,name:"羌医生1",feat:0,loyalty:100},
-    ],
-    out_of_offices:[
-    ],
-    not_debut:[
-    ]
-  },
-]},
-{chara_id : 0,name:"0",color : "",generals_count:0,areas : [
-  {  area_id : 9,name:"南蛮",prefecture : 0,
-  money : 108,food : 1008,population : 40008,business : 108,agriculture : 108,technology : 108,police : 78,city_defense : 508,troops : 408,
-  items_farmland:[],
-  items_market:[],
-  items:[],
-  generals:[
-    ],
-    out_of_offices:[
-    ],
-    not_debut:[
-    ]
-  },
-  {  area_id : 21,name:"南海",prefecture : 0,
-  money : 120,food : 1020,population : 40020,business : 120,agriculture : 120,technology : 120,police : 90,city_defense : 520,troops : 420,
-  items_farmland:[],
-  items_market:[],
-  items:[],
-  generals:[
-    ],
-    out_of_offices:[
-    ],
-    not_debut:[
-    ]
-  },
-  {  area_id : 23,name:"河内",prefecture : 0,
-  money : 122,food : 1022,population : 40022,business : 122,agriculture : 122,technology : 122,police : 92,city_defense : 522,troops : 422,
-  items_farmland:[],
-  items_market:[],
-  items:[],
-  generals:[
-    ],
-    out_of_offices:[
-    ],
-    not_debut:[
-    ]
-  },
-  {  area_id : 37,name:"徐州",prefecture : 0,
-  money : 136,food : 1036,population : 40036,business : 136,agriculture : 136,technology : 136,police : 75,city_defense : 536,troops : 436,
-  items_farmland:[],
-  items_market:[],
-  items:[],
-  generals:[
-    ],
-    out_of_offices:[
-    ],
-    not_debut:[
-    ]
-  },
-  {  area_id : 53,name:"西城",prefecture : 0,
-  money : 151,food : 1051,population : 40051,business : 151,agriculture : 151,technology : 151,police : 90,city_defense : 551,troops : 451,
-  items_farmland:[],
-  items_market:[],
-  items:[],
-  generals:[
     ],
     out_of_offices:[
     ],
