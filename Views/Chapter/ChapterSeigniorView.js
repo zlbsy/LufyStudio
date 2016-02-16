@@ -75,7 +75,7 @@ ChapterSeigniorView.prototype.onClick=function(event){
 	var chapterView = listView.getParentByConstructor(ChapterView);
 	chapterView.select_chara_id = self.data.id;
 	var obj = {title:Language.get("confirm"),messageHtml:String.format(Language.get("select_seignior_message"), self.data.name),height:200,
-	okEvent:chapterView.okEvent.bind(chapterView),cancelEvent:null};
+	okEvent:chapterView.okEvent,cancelEvent:null};
 	var windowLayer = ConfirmWindow(obj);
 	chapterView.addChild(windowLayer);
 };

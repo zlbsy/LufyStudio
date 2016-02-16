@@ -118,8 +118,9 @@ ChapterView.prototype.seigniorsLayerInit=function(){
 	self.listView.updateList(items);
 };
 ChapterView.prototype.okEvent=function(event){
-	this.removeChildAt(this.numChildren - 1);
-	this.controller.loadMap(this.select_chara_id);
+	var self = event.currentTarget.getParentByConstructor(ChapterView);
+	self.removeChildAt(self.numChildren - 1);
+	self.controller.loadMap(self.select_chara_id);
 };
 ChapterView.prototype.ctrlLayerInit=function(){
 	var self = this;
