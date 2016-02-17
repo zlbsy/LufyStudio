@@ -321,9 +321,10 @@ BattleResultView.prototype.showMap=function(event){
 	if(self.retreatCityId){
 		LMvc.MapController.view.resetAreaIcon(self.retreatCityId);
 	}
-	SeigniorExecute.Instance().stop = false;
-	SeigniorExecute.addMessage(self.message);
-	
+	if(SeigniorExecute.Instance().running){
+		SeigniorExecute.Instance().stop = false;
+		SeigniorExecute.addMessage(self.message);
+	}
 	if(self.failSeigniorId){
 		LMvc.MapController.checkSeigniorFail(self.failSeigniorId);
 	}else{

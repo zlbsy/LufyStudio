@@ -25,7 +25,7 @@ MapView.prototype.layerInit=function(){
 MapView.prototype.backLayerInit=function(){
 	var self = this;
 	//TODO::春夏秋冬
-	var bitmapData = new LBitmapData(LMvc.datalist["area-map-1"],null,null,null,null,LBitmapData.DATA_CANVAS);
+	var bitmapData = GameCacher.getAreaMap("area-map-1");//new LBitmapData(LMvc.datalist["area-map-1"],null,null,null,null,LBitmapData.DATA_CANVAS);
 	self.backgroundWidth = bitmapData.width;
 	self.backgroundHeight = bitmapData.height;
 	//var roadBitmapData = new LBitmapData(null,0,0,bitmapData.width,bitmapData.height,LBitmapData.DATA_CANVAS);
@@ -86,7 +86,6 @@ MapView.prototype.toPosition=function(x, y){
 	var self = this;
 	self.baseLayer.x = LGlobal.width * 0.5 - x - CityIconConfig.width * 0.5;
 	self.baseLayer.y = LGlobal.height * 0.5 - y - CityIconConfig.height * 0.3;
-	console.log("toPosition:x="+self.baseLayer.x+",y="+self.baseLayer.y);
 	if(self.baseLayer.x > 0){
 		self.baseLayer.x = 0;
 	}else if(self.baseLayer.x < LGlobal.width - self.backgroundWidth){
@@ -97,7 +96,6 @@ MapView.prototype.toPosition=function(x, y){
 	}else if(self.baseLayer.y < LGlobal.height - self.backgroundHeight){
 		self.baseLayer.y = LGlobal.height - self.backgroundHeight;
 	}
-	console.log("toPosition check:x="+self.baseLayer.x+",y="+self.baseLayer.y);
 };
 MapView.prototype.init=function(){
 	var self = this;
@@ -118,7 +116,6 @@ MapView.prototype.init=function(){
 };
 MapView.prototype.updateMapCoordinate = function(){
 	var self = this;
-	console.log("LMvc.mapX,LMvc.mapY",LMvc.mapX,LMvc.mapY);
 	if(LMvc.mapX || LMvc.mapY){
 		self.baseLayer.x = LMvc.mapX;
 		self.baseLayer.y = LMvc.mapY;
@@ -129,12 +126,10 @@ MapView.prototype.updateMapCoordinate = function(){
 };
 MapView.prototype.updateView = function(){
 	var self = this;
-	console.log("MapView.prototype.updateView isRead = " + LMvc.isRead);
 	self.areaLayerInit();
 	if(!LMvc.isRead){
 		return;
 	}
-	console.log("LMvc.areaData.battleData=",JSON.stringify(LMvc.areaData.battleData));
 	LMvc.MapController.showCity(LMvc.areaData.battleData.toCityId, self.readDataToBattle);
 };
 MapView.prototype.readDataToBattle = function(){
@@ -214,7 +209,6 @@ MapView.prototype.showMapLayer=function(event){
 		LMvc.layer.addChild(windowLayer);
 		return;
 	}
-	console.log("MapView.prototype.showMapLayer",event.characterList);
 	var character = event.characterList[0];
 	monarchChange(LMvc.selectSeignorId, character.id());
 	LMvc.selectSeignorId = character.id();
@@ -227,7 +221,6 @@ MapView.prototype.showMapLayer=function(event){
 };
 MapView.prototype.addCharacterListView=function(characterListView){
 	var self = this;
-	console.log("MapView.prototype.addCharacterListView:"+characterListView);
 	self.baseLayer.visible = false;
 	self.ctrlLayer.visible = false;
 	self.characterLayer.addChild(getTranslucentMask());

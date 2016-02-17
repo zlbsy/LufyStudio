@@ -17,7 +17,7 @@ MessageView.SetCurrentSeigniorId = function(){
 	MessageView.Instance().setSeignior(MessageView.currentSeigniorId);
 };
 MessageView.prototype.add = function(msg, color){
-	var self = this;console.log("add "+msg);
+	var self = this;
 	var child = new MessageChildView(msg, color ? color : "#FFFFFF");
 	self.listView.insertChildView(child);
 	var height = self.listView.cellHeight * self.listView.getItems().length;
@@ -72,14 +72,12 @@ MessageView.prototype.setSeignior = function(seigniorId){
 	var waitTime = 1000;
 	if(self.time){
 		var time = getTimer();
-		console.log("*************************************************************************************" +time + "-" +self.time + "="+ (time - self.time),seigniorId);
 		if(time - self.time < waitTime){
 			MessageView.currentSeigniorId = seigniorId;
 			self.timer.reset();
 			self.timer.start();
 			return;
 		}
-		console.log("*************************************************************************************");
 	}
 	self.time = getTimer();
 	var faceW = 220;
@@ -133,7 +131,6 @@ MessageView.prototype.setSeignior = function(seigniorId){
 	
 	LMvc.MapController.view.positionChangeToCity(seignior.character().city());
 	jobAiSetCityBattleDistance(seignior);
-	//SeigniorExecute.run();
 };
 MessageView.prototype.setSeigniorProcess = function(index){
 	var self = this;

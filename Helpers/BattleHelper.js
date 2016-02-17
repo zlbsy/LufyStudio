@@ -622,7 +622,7 @@ function battleCheckRetreatCity(retreatCity, failSeigniorId, toCity){
 }
 /*经验转换成功绩*/
 function experienceToFeat(characterModels){
-	if(characterModels.length == 0){
+	if(!characterModels || characterModels.length == 0){
 		return;
 	}
 	var sumExp = 0;

@@ -13,8 +13,8 @@ var AttackType = {
 	MAGIC:2,//法术
 };
 var EnlistSetting = {
-	ENLIST_FROM:500,//征兵范围
-	ENLIST_TO:1000//征兵范围
+	ENLIST_FROM:100,//征兵范围
+	ENLIST_TO:200//征兵范围
 };
 var TrainingSetting = {
 	MAX:500//训练最大熟练度

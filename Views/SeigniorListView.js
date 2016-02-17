@@ -28,10 +28,18 @@ SeigniorListView.prototype.onClickCloseButton=function(event){
 };
 SeigniorListView.prototype.updateMap=function(){
 	var self = this;
+	var miniMapData = self.miniMapData;
 	var index = Math.floor((-self.listLayer.x) / LGlobal.width);
 	self.mapData.bitmapData.copyPixels(self.areaMap,new LRectangle(0,0,self.areaMap.width,self.areaMap.height),new LPoint(0,0));
 	var seigniorModel = SeigniorModel.list[index];
 	var size = 14;
+	
+	for(var i=0,l=AreaModel.list.length;i<l;i++){
+		var city = AreaModel.list[i];
+		var size = 10;
+		var colorData = new LBitmapData("#ffffff",0,0,size,size,LBitmapData.DATA_CANVAS);
+		miniMapData.copyPixels(colorData,new LRectangle(0,0,colorData.width,colorData.height),new LPoint(city.position().x*self.mapScaleX,city.position().y*self.mapScaleY));
+	}
 	var citys = seigniorModel.areas();
 	for(var i=0,l=citys.length;i<l;i++){
 		var city = citys[i];
@@ -55,13 +63,18 @@ SeigniorListView.prototype.mapLayerInit=function(){
 	var self = this;
 	self.mapLayer = new LSprite();
 	self.addChild(self.mapLayer);
-	var bitmapData = new LBitmapData(LMvc.datalist["area-map-1"],null,null,null,null,LBitmapData.DATA_CANVAS);
-	self.areaMap = new LBitmapData(null,0,0,400,240,LBitmapData.DATA_CANVAS);
-	self.mapScaleX = self.areaMap.width/bitmapData.width;
-	self.mapScaleY = self.areaMap.height/bitmapData.height;
-	var matrix = new LMatrix();
-	matrix.scale(self.mapScaleX, self.mapScaleY);
-	self.areaMap.draw(bitmapData, matrix);
+	var miniMapData = GameCacher.getAreaMiniMap("area-map-1");
+	self.miniMapData = miniMapData;
+	var miniMap = new LBitmap(miniMapData);
+	
+	//var bitmapData = new LBitmapData(LMvc.datalist["area-map-1"],null,null,null,null,LBitmapData.DATA_CANVAS);
+	//self.areaMap = new LBitmapData(null,0,0,400,240,LBitmapData.DATA_CANVAS);
+	//self.mapScaleX = self.areaMap.width/bitmapData.width;
+	//self.mapScaleY = self.areaMap.height/bitmapData.height;
+	//var matrix = new LMatrix();
+	//matrix.scale(self.mapScaleX, self.mapScaleY);
+	//self.areaMap.draw(bitmapData, matrix);
+	
 	for(var i=0,l=AreaModel.list.length;i<l;i++){
 		var city = AreaModel.list[i];
 		var size = 10;
