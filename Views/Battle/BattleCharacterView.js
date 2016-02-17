@@ -300,18 +300,21 @@ BattleCharacterView.prototype.returnShowMoveRoadObject = function() {
 };
 BattleCharacterView.prototype.toDie = function(isSingleCombat) {
 	var self = this;
-	var talkMsg;
-	if(isSingleCombat || calculateHitrateCaptive(self) || true){
-		if(self.belong == Belong.ENEMY){
-			LMvc.BattleController.model.selfCaptive.push(self.data.id());
+	var script = "";
+	if(!self.data.isDefCharacter()){
+		var talkMsg;
+		if(isSingleCombat || calculateHitrateCaptive(self)){
+			if(self.belong == Belong.ENEMY){
+				LMvc.BattleController.model.selfCaptive.push(self.data.id());
+			}else{
+				LMvc.BattleController.model.enemyCaptive.push(self.data.id());
+			}
+			talkMsg = self.data.underArrestTalk();
 		}else{
-			LMvc.BattleController.model.enemyCaptive.push(self.data.id());
+			talkMsg = self.data.dieTalk();
 		}
-		talkMsg = self.data.underArrestTalk();
-	}else{
-		talkMsg = self.data.dieTalk();
+		script += "SGJTalk.show(" + self.data.id() + ",0," + talkMsg + ");";
 	}
-	var script = "SGJTalk.show(" + self.data.id() + ",0," + talkMsg + ");";
 	script += "SGJBattleCharacter.characterToDie(" + self.belong + ","+ self.data.id() + ");";
 	LGlobal.script.addScript(script);
 };
