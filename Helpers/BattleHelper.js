@@ -520,7 +520,7 @@ function battleCityChange(winSeigniorId, failSeigniorId, retreatCityId, expediti
 			retreatCity.seigniorCharaId(failSeigniorId);
 		}
 		//战斗失败后资源移动
-		battleExpeditionMove(city, self.retreatCity);
+		battleExpeditionMove(city, retreatCity);
 		
 		for(var i=0,l=moveCharas.length;i<l;i++){
 			var chara = moveCharas[i];

@@ -201,13 +201,16 @@ SingleCombatView.prototype.startSingleCombat=function(event){
 SingleCombatView.prototype.faceLayerInit=function(characterModel,isLeft){
 	var self = this;
 	var faceSize = 100, startPosition = 10;
-	var win = new LPanel(new LBitmapData(LMvc.datalist["win05"]),220,160);
+	var win = new LPanel(new LBitmapData(LMvc.datalist["win05"]),220,180);
 	win.x = isLeft ? 0 : LGlobal.width - win.getWidth();
 	self.backLayer.addChild(win);
-	var face = characterModel.minFace(faceSize);
-	face.x = isLeft ? startPosition : LGlobal.width - faceSize - startPosition;
-	face.y = startPosition;
-	self.characterLayer.addChild(face);
+	var faceLayer = new LSprite();
+	var face = characterModel.face();
+	faceLayer.scaleX = faceLayer.scaleY = faceSize/CharacterFaceSize.width;
+	faceLayer.addChild(face);
+	faceLayer.x = isLeft ? startPosition : LGlobal.width - faceSize - startPosition;
+	faceLayer.y = startPosition;
+	self.characterLayer.addChild(faceLayer);
 	
 	var name = getStrokeLabel(characterModel.name(),20,"#FFFFFF","#000000",2);
 	name.x = isLeft ? face.x + faceSize + startPosition * 0.5: win.x + startPosition;
@@ -227,7 +230,7 @@ SingleCombatView.prototype.faceLayerInit=function(characterModel,isLeft){
 	console.log("characterModel.maxHP()="+characterModel.maxHP());
 	console.log("characterModel.HP()="+characterModel.HP());
 	var barHp = new StatusBarView(self.controller);
-	barHp.y = face.y + faceSize;
+	barHp.y = faceLayer.y + faceSize + 20;
 	var obj = {maxValue:characterModel.maxHP(),currentValue:characterModel.HP(),name:"HP",icon:"icon_hert",frontBar:"red_bar",barSize:170};
 	barHp.set(obj);
 	barHp.x = isLeft ? startPosition : LGlobal.width - barHp.getWidth() - startPosition;

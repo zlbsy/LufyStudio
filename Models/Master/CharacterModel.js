@@ -595,11 +595,14 @@ CharacterModel.prototype.face = function() {
 		icon.y = (CharacterFaceSize.height - BattleCharacterSize.height) * 0.5;
 		return soldierIcon;
 	}
+	var characterFace;
 	if(CharacterModel.faceCacher[self.data.faceImg]){
-		return CharacterModel.faceCacher[self.data.faceImg];
+		characterFace = CharacterModel.faceCacher[self.data.faceImg];
+	}else{
+		characterFace = new CharacterFace(self.data.faceImg);
+		CharacterModel.faceCacher[self.data.faceImg] = characterFace;
 	}
-	var characterFace = new CharacterFace(self.data.faceImg);
-	CharacterModel.faceCacher[self.data.faceImg] = characterFace;
+	characterFace.x = characterFace.y = 0;
 	return characterFace;
 };
 CharacterModel.prototype.minFace = function(size) {
