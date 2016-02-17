@@ -30,22 +30,18 @@ SeigniorListView.prototype.updateMap=function(){
 	var self = this;
 	var miniMapData = self.miniMapData;
 	var index = Math.floor((-self.listLayer.x) / LGlobal.width);
-	self.mapData.bitmapData.copyPixels(self.areaMap,new LRectangle(0,0,self.areaMap.width,self.areaMap.height),new LPoint(0,0));
+	self.mapData.bitmapData.copyPixels(miniMapData,new LRectangle(0,0,miniMapData.width,miniMapData.height),new LPoint(0,0));
 	var seigniorModel = SeigniorModel.list[index];
-	var size = 14;
 	
-	for(var i=0,l=AreaModel.list.length;i<l;i++){
-		var city = AreaModel.list[i];
-		var size = 10;
-		var colorData = new LBitmapData("#ffffff",0,0,size,size,LBitmapData.DATA_CANVAS);
-		miniMapData.copyPixels(colorData,new LRectangle(0,0,colorData.width,colorData.height),new LPoint(city.position().x*self.mapScaleX,city.position().y*self.mapScaleY));
-	}
+	var w = CityIconConfig.width * miniMapData.mapScaleX;
+	var h = CityIconConfig.height * miniMapData.mapScaleY;
 	var citys = seigniorModel.areas();
 	for(var i=0,l=citys.length;i<l;i++){
 		var city = citys[i];
-		var color = seigniorModel.color2();
-		var colorData = new LBitmapData(color,0,0,size,size,LBitmapData.DATA_CANVAS);
-		self.mapData.bitmapData.copyPixels(colorData,new LRectangle(0,0,colorData.width,colorData.height),new LPoint(city.position().x*self.mapScaleX-2,city.position().y*self.mapScaleY-2));
+		var color = seigniorModel.color();
+		var colorData = GameCacher.getColorBitmapData(color,w,h);
+		//var colorData = new LBitmapData(color,0,0,size,size,LBitmapData.DATA_CANVAS);
+		self.mapData.bitmapData.copyPixels(colorData,new LRectangle(0,0,colorData.width,colorData.height),new LPoint(city.position().x*miniMapData.mapScaleX,city.position().y*miniMapData.mapScaleY));
 	}
 };
 SeigniorListView.prototype.listLayerInit=function(){
@@ -64,7 +60,6 @@ SeigniorListView.prototype.mapLayerInit=function(){
 	self.mapLayer = new LSprite();
 	self.addChild(self.mapLayer);
 	var miniMapData = GameCacher.getAreaMiniMap("area-map-1");
-	self.miniMapData = miniMapData;
 	var miniMap = new LBitmap(miniMapData);
 	
 	//var bitmapData = new LBitmapData(LMvc.datalist["area-map-1"],null,null,null,null,LBitmapData.DATA_CANVAS);
@@ -74,12 +69,13 @@ SeigniorListView.prototype.mapLayerInit=function(){
 	//var matrix = new LMatrix();
 	//matrix.scale(self.mapScaleX, self.mapScaleY);
 	//self.areaMap.draw(bitmapData, matrix);
-	
+	/*
+	var size = 10;
+	var colorData = GameCacher.getColorBitmapData("255,255,255",size,size);
 	for(var i=0,l=AreaModel.list.length;i<l;i++){
 		var city = AreaModel.list[i];
 		var size = 10;
-		var colorData = new LBitmapData("#ffffff",0,0,size,size,LBitmapData.DATA_CANVAS);
-		self.areaMap.copyPixels(colorData,new LRectangle(0,0,colorData.width,colorData.height),new LPoint(city.position().x*self.mapScaleX,city.position().y*self.mapScaleY));
+		miniMapData.copyPixels(colorData,new LRectangle(0,0,colorData.width,colorData.height),new LPoint(city.position().x*self.mapScaleX,city.position().y*self.mapScaleY));
 	}
 	var seigniors = SeigniorModel.list;
 	for(var i=0,l=seigniors.length;i<l;i++){
@@ -88,12 +84,13 @@ SeigniorListView.prototype.mapLayerInit=function(){
 		var citys = seigniorModel.areas();
 		for(var j=0,ll=citys.length;j<ll;j++){
 			var city = citys[j];
-			var color = seigniorModel.color2();
-			var colorData = new LBitmapData(color,0,0,size,size,LBitmapData.DATA_CANVAS);
-			self.areaMap.copyPixels(colorData,new LRectangle(0,0,colorData.width,colorData.height),new LPoint(city.position().x*self.mapScaleX,city.position().y*self.mapScaleY));
+			var color = seigniorModel.color();
+			colorData = GameCacher.getColorBitmapData(color,size,size);
+			//var colorData = new LBitmapData(color,0,0,size,size,LBitmapData.DATA_CANVAS);
+			miniMapData.copyPixels(colorData,new LRectangle(0,0,colorData.width,colorData.height),new LPoint(city.position().x*miniMapData.mapScaleX,city.position().y*miniMapData.mapScaleY));
 		}
-	}
-	
+	}*/
+	self.miniMapData = miniMapData;
 	var mapBitmapData = new LBitmapData(null,0,0,400,240,LBitmapData.DATA_CANVAS);
 	self.mapData = new LBitmap(mapBitmapData);
 	
