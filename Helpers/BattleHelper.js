@@ -361,27 +361,39 @@ function getBattleSaveData(){
 	data.ourList = [];
 	for(var i=0,l=model.ourList.length;i<l;i++){
 		var character = model.ourList[i];
-		data.ourList.push({
+		var childData = {
 			id:character.data.id(),
 			status:character.status.getData(),
 			direction:character.direction,
 			action:character.action,
 			mode:character.mode,
+			mission:character.mission,
+			isDefCharacter:character.data.isDefCharacter(),
 			x:character.locationX(),
 			y:character.locationY()
-		});
+		};
+		if(childData.isDefCharacter){
+			childData.data = character.data.datas();
+		}
+		data.ourList.push(childData);
 	}
 	data.enemyList = [];
 	for(var i=0,l=model.enemyList.length;i<l;i++){
 		var character = model.enemyList[i];
-		data.enemyList.push({
+		var childData = {
 			id:character.data.id(),
 			status:character.status.getData(),
 			direction:character.direction,
 			action:character.action,
+			mission:character.mission,
+			isDefCharacter:character.data.isDefCharacter(),
 			x:character.locationX(),
 			y:character.locationY()
-		});
+		};
+		if(childData.isDefCharacter){
+			childData.data = character.data.datas();
+		}
+		data.enemyList.push(childData);
 	}
 	var selfCharas =LMvc.BattleController.view.charaLayer.getCharactersFromBelong(Belong.SELF);
 	var selfLeader = selfCharas.find(function(child){
@@ -436,9 +448,15 @@ function setBattleSaveData(){
 	var charaLayer = LMvc.BattleController.view.charaLayer;
 	for(var i=0,l=data.ourList.length;i<l;i++){
 		var charaData = data.ourList[i];
+		if(charaData.isDefCharacter){
+			var chara = CharacterModel.getChara(charaData.id);
+			chara.isDefCharacter(1);
+			chara.setDatas(charaData.data);
+		}
 		var chara = charaLayer.addOurCharacter(charaData.id,charaData.action,charaData.direction,charaData.x,charaData.y);
 		chara.changeAction(charaData.action);
 		chara.mode = charaData.mode;
+		chara.mission = charaData.mission;
 		chara.status.setData(charaData.status);
 		if(charaData.id == data.selfLeader){
 			chara.isLeader = true;
@@ -446,9 +464,15 @@ function setBattleSaveData(){
 	}
 	for(var i=0,l=data.enemyList.length;i<l;i++){
 		var charaData = data.enemyList[i];
+		if(charaData.isDefCharacter){
+			var chara = CharacterModel.getChara(charaData.id);
+			chara.isDefCharacter(1);
+			chara.setDatas(charaData.data);
+		}
 		var chara = charaLayer.addEnemyCharacter(charaData.id,charaData.action,charaData.direction,charaData.x,charaData.y);
 		chara.changeAction(charaData.action);
 		chara.status.setData(charaData.status);
+		chara.mission = charaData.mission;
 		if(charaData.id == data.enemyLeader){
 			chara.isLeader = true;
 		}
