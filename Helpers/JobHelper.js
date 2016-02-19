@@ -236,6 +236,24 @@ function exploreAgricultureRun(characterModel){
 		SeigniorExecute.addMessage(String.format("{0}在农地进行探索,发现了[{1}]",characterModel.name(),item.name()));
 	}
 }
+function getValueByExploreFail(baseValue, randomValue){
+	if(Math.random() > 0.5){
+		return 0;
+	}
+	var value = 0;
+	var r = Math.random();
+	var m = randomValue*Math.random();;
+	if(r < 0.1){
+		value = baseValue + m;
+	}else if(r < 0.3){
+		value = baseValue*0.75 + m;
+	}else if(r < 0.6){
+		value = baseValue*0.5 + m;
+	}else{
+		value = baseValue*0.25 + m;
+	}
+	return value >>> 0;
+}
 function exploreBusinessRun(characterModel){
 	//市场探索：智力+敏捷+运气
 	console.log("exploreBusinessRun市场探索 : ",characterModel.id());
@@ -248,8 +266,16 @@ function exploreBusinessRun(characterModel){
 	
 	if(rand > value){
 		console.log("exploreBusinessRun : 失败 能力不够");
+		var money = getValueByExploreFail(200,50);
+		cityModel.money(money);
 		if(characterModel.seigniorId() == LMvc.selectSeignorId){
-			SeigniorExecute.addMessage(String.format("{0}在市场进行探索,但是没有任何发现。",characterModel.name()));
+			var msg = "";
+			if(money>0){
+				msg = String.format("{0}在市场进行探索,发现金钱{1}。",characterModel.name(),money)
+			}else{
+				msg = String.format("{0}在市场进行探索,但是没有任何发现。",characterModel.name());
+			}
+			SeigniorExecute.addMessage(msg);
 		}
 		return;
 	}
@@ -258,8 +284,16 @@ function exploreBusinessRun(characterModel){
 	var index = exploreItems(items);
 	if(index < 0){
 		console.log("exploreBusinessRun : 失败");
+		var money = getValueByExploreFail(400,100);
+		cityModel.money(money);
 		if(characterModel.seigniorId() == LMvc.selectSeignorId){
-			SeigniorExecute.addMessage(String.format("{0}在市场进行探索,但是没有任何发现。",characterModel.name()));
+			var msg = "";
+			if(money>0){
+				msg = String.format("{0}在市场进行探索,发现金钱{1}。",characterModel.name(),money)
+			}else{
+				msg = String.format("{0}在市场进行探索,但是没有任何发现。",characterModel.name());
+			}
+			SeigniorExecute.addMessage(msg);
 		}
 		return;
 	}
@@ -334,11 +368,17 @@ function enlistRun(characterModel, targetEnlist){
 	//招募：运气+统率
 	console.log("enlistRun招募 : ",characterModel.id());
 	var area = characterModel.city();
+	var population = area.population();
+	var minPopulation = AreaModel.populationList[area.level()][0];
 	var troop = area.troops();
 	var value01 = getJobResult(characterModel.luck(),JobCoefficient.ENLIST);
 	var value02 = getJobResult(characterModel.command(),JobCoefficient.ENLIST);
 	var value = (value01 + value02) * (characterModel.hasSkill(SkillSubType.ENLIST) ? 1.5 : 1);
 	var quantity = (targetEnlist.quantity * value / JobCoefficient.NORMAL) >> 0;
+	if(quantity > population - minPopulation){
+		quantity = (population - minPopulation)*Math.random();
+	}
+	area.population(-quantity);
 	troop += quantity;
 	area.troops(troop);
 	characterModel.job(Job.IDLE);
@@ -469,18 +509,23 @@ function SeigniorExecuteChangeCityResources(area){
 	var population = area.population();
 	//金钱
 	if(LMvc.chapterData.month % 3 == 0){
-		var addMoney = area.business();
+		var maxBusiness = AreaModel.businessList[AreaModel.businessList.length - 1];
+		var addMoney = 500 + 5000*area.business()/maxBusiness;
+		addMoney *= (1 + population/maxPopulation);
 		area.money(addMoney);
 	}
 	//粮食
 	if(LMvc.chapterData.month  == 7){
-		var addFood = area.agriculture();
+		var maxAgriculture = AreaModel.agricultureList[AreaModel.agricultureList.length - 1];
+		var addFood = 10000 + 50000*area.agriculture()/maxAgriculture;
+		addFood *= (1 + population/maxPopulation);
 		area.food(addFood);
 	}
 	var police = area.police();
 	var minPolice = 40;
 	if(police>50){
 		//人口增长
+		var addPopulation = population * 0.005 * (police-50)/50;
 		area.population(area.business() + area.agriculture());
 	}else if (police < 40) {
 		var minusValue = (minPolice - police)/minPolice;
@@ -491,23 +536,25 @@ function SeigniorExecuteChangeCityResources(area){
 			area.population(-minusPopulation);
 		}
 		//暴动
-		var troops = area.troops();
-		if(troops > 0){
-			var minusTroops = troops * 0.1*minusValue;
-			area.troops(troops - minusTroops);
+		if(Math.random() < 0.2){
+			var troops = area.troops();
+			if(troops > 0){
+				var minusTroops = troops * 0.1*minusValue;
+				area.troops(troops - minusTroops);
+			}
+			var business = area.business();
+			var minusBusiness = business*0.01*minusValue;
+			area.business(-minusBusiness);
+			var agriculture = area.agriculture();
+			var minusAgriculture = agriculture*0.01*minusValue;
+			area.agriculture(-minusAgriculture);
+			var technology = area.technology();
+			var minusTechnology = technology*0.01*minusValue;
+			area.technology(-minusTechnology);
+			var cityDefense = area.cityDefense();
+			var minusCityDefense = cityDefense*0.01*minusValue;
+			area.cityDefense(-minusCityDefense);
 		}
-		var business = area.business();
-		var minusBusiness = business*0.01*minusValue;
-		area.business(-minusBusiness);
-		var agriculture = area.agriculture();
-		var minusAgriculture = agriculture*0.01*minusValue;
-		area.agriculture(-minusAgriculture);
-		var technology = area.technology();
-		var minusTechnology = technology*0.01*minusValue;
-		area.technology(-minusTechnology);
-		var cityDefense = area.cityDefense();
-		var minusCityDefense = cityDefense*0.01*minusValue;
-		area.cityDefense(-minusCityDefense);
 	}
 	//TODO::武将死亡
 	
