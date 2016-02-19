@@ -145,17 +145,7 @@ SeigniorExecute.prototype.areaRun=function(area){
 	self.timer.start();
 };
 SeigniorExecute.prototype.areaGainRun=function(area){
-	var self = this;
-	//TODO::自然灾害
-	
-	//金钱
-	area.money(area.business());
-	//粮食
-	area.food(area.agriculture());
-	//人口
-	area.population(area.business() + area.agriculture());
-	//TODO::武将死亡
-	
+	SeigniorExecuteChangeCityResources(area);
 	console.log("areaGainRun over");
 };
 SeigniorExecute.addMessage = function(value){

@@ -462,4 +462,54 @@ function hireRun2(characterModel, hireCharacter,area){
 		SeigniorExecute.addMessage(String.format("{0}成功说服了{1}，{2}加入我军!",characterModel.name(),hireCharacter.name(),hireCharacter.name()));
 	}
 }
+function SeigniorExecuteChangeCityResources(area){
+	//TODO::自然灾害
+	var minPopulation = AreaModel.populationList[0][0];
+	var maxPopulation = AreaModel.populationList[AreaModel.populationList.length - 1][1];
+	var population = area.population();
+	//金钱
+	if(LMvc.chapterData.month % 3 == 0){
+		var addMoney = area.business();
+		area.money(addMoney);
+	}
+	//粮食
+	if(LMvc.chapterData.month  == 7){
+		var addFood = area.agriculture();
+		area.food(addFood);
+	}
+	var police = area.police();
+	var minPolice = 40;
+	if(police>50){
+		//人口增长
+		area.population(area.business() + area.agriculture());
+	}else if (police < 40) {
+		var minusValue = (minPolice - police)/minPolice;
+		var nowMin = AreaModel.populationList[area.level()][0];
+		if(population > nowMin*0.9){
+			//人口流失
+			var minusPopulation = population*0.01*minusValue;
+			area.population(-minusPopulation);
+		}
+		//暴动
+		var troops = area.troops();
+		if(troops > 0){
+			var minusTroops = troops * 0.1*minusValue;
+			area.troops(troops - minusTroops);
+		}
+		var business = area.business();
+		var minusBusiness = business*0.01*minusValue;
+		area.business(-minusBusiness);
+		var agriculture = area.agriculture();
+		var minusAgriculture = agriculture*0.01*minusValue;
+		area.agriculture(-minusAgriculture);
+		var technology = area.technology();
+		var minusTechnology = technology*0.01*minusValue;
+		area.technology(-minusTechnology);
+		var cityDefense = area.cityDefense();
+		var minusCityDefense = cityDefense*0.01*minusValue;
+		area.cityDefense(-minusCityDefense);
+	}
+	//TODO::武将死亡
+	
+}
 
