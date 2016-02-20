@@ -512,15 +512,15 @@ function SeigniorExecuteChangeCityResources(area){
 	var maxPopulation = AreaModel.populationList[AreaModel.populationList.length - 1][1];
 	var population = area.population();
 	//金钱
+	var maxBusiness = AreaModel.businessList[AreaModel.businessList.length - 1];
 	if(LMvc.chapterData.month % 3 == 0){
-		var maxBusiness = AreaModel.businessList[AreaModel.businessList.length - 1];
 		var addMoney = 500 + 5000*area.business()/maxBusiness;
 		addMoney *= (1 + population/maxPopulation);
 		area.money(addMoney);
 	}
 	//粮食
+	var maxAgriculture = AreaModel.agricultureList[AreaModel.agricultureList.length - 1];
 	if(LMvc.chapterData.month  == 7){
-		var maxAgriculture = AreaModel.agricultureList[AreaModel.agricultureList.length - 1];
 		var addFood = 10000 + 50000*area.agriculture()/maxAgriculture;
 		addFood *= (1 + population/maxPopulation);
 		area.food(addFood);
@@ -529,8 +529,8 @@ function SeigniorExecuteChangeCityResources(area){
 	var minPolice = 40;
 	if(police>50){
 		//人口增长
-		var addPopulation = population * 0.005 * (police-50)/50;
-		area.population(area.business() + area.agriculture());
+		var addPopulation = population * (0.005 * (police-50)/50 + 0.002*area.business()/maxBusiness + 0.003*area.agriculture()/maxAgriculture);
+		area.population(addPopulation);
 	}else if (police < 40) {
 		var minusValue = (minPolice - police)/minPolice;
 		var nowMin = AreaModel.populationList[area.level()][0];
@@ -558,6 +558,7 @@ function SeigniorExecuteChangeCityResources(area){
 			var cityDefense = area.cityDefense();
 			var minusCityDefense = cityDefense*0.01*minusValue;
 			area.cityDefense(-minusCityDefense);
+			SeigniorExecute.addMessage(String.format(Language.get("{0}的百姓发生暴动了!"),area.name()));
 		}
 	}
 	//TODO::武将死亡

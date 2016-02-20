@@ -103,7 +103,8 @@ SeigniorExecute.run=function(){
 		if(self.seigniors.indexOf(self.seigniorIndex) < 0){
 			self.msgView.setSeignior(seigniorModel.chara_id());
 			self.seigniors.push(self.seigniorIndex);
-			self.msgView.add(seigniorModel.character().name() + "势力行动!");
+			//势力行动消息取消
+			//self.msgView.add(seigniorModel.character().name() + "势力行动!");
 			/*if(seigniorModel.chara_id() != LMvc.selectSeignorId){
 				jobAiSetCityBattleDistance(seigniorModel);
 				return;
@@ -309,7 +310,7 @@ SeigniorExecute.prototype.areaMessage=function(areaModel,key){
 		return;
 	}
 	self.citys.push(areaModel.id());
-	self.msgView.add(String.format(key,areaModel.name()));
+	self.msgView.add(String.format(key,areaModel.seignior().character().name(),areaModel.name()));
 };
 SeigniorExecute.prototype.areaAIRun=function(areaModel){
 	var self = this;
@@ -338,7 +339,7 @@ SeigniorExecute.prototype.areaAIRun=function(areaModel){
 	var canEnlish = jobAiCanToEnlish(areaModel);
 	if(needEnlistFlag == AiEnlistFlag.Must || needEnlistFlag == AiEnlistFlag.Need){
 		if(canEnlish){
-			self.areaMessage(areaModel,"{0}在招兵买马!");
+			self.areaMessage(areaModel,"{0}的{1}在招兵买马!");
 			self.jobAiFunction(areaModel,self.characters,jobAiToEnlish,["luck","command"]);
 		}
 	}

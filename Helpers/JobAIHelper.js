@@ -329,7 +329,7 @@ function jobAiInternal(areaModel,characters,price,job){//内政
 	}
 	if(areaModel.seigniorCharaId() != LMvc.selectSeignorId && SeigniorExecute.Instance().messageCitys.indexOf(areaModel.id()) < 0){
 		SeigniorExecute.Instance().messageCitys.push(areaModel.id());
-		SeigniorExecute.addMessage(String.format("{0}在发展内政!", areaModel.name()));
+		SeigniorExecute.addMessage(String.format("{0}的{1}在发展内政!", areaModel.seignior().character().name(),areaModel.name()));
 	}
 	var character = characters.shift();
 	character.job(job);
