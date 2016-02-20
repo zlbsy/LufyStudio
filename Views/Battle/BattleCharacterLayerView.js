@@ -124,19 +124,26 @@ BattleCharacterLayerView.prototype.getCharacterFromCoordinate=function(x,y){
 };
 BattleCharacterLayerView.prototype.addOurCharacterOnClick=function(locationX,locationY){
 	var self = this;
-	var childList = self.charasPositionsLayer.childList,child;
+	var childList = self.charasPositionsLayer.childList,child,length;
+	for(var i=0,length=0,l=self.model.ourList.length;i<l;i++){
+		if(self.model.ourList[i].data.isDefCharacter()){
+			continue;
+		}
+		length++;
+	}
 	for(var i=0,l=childList.length;i<l;i++){
 		child = childList[i];
 		if(child.cx != locationX || child.cy != locationY){
 			continue;
 		}
-		var id = self.controller.battleData.expeditionCharacterList[self.model.ourList.length].id();
+		var id = self.controller.battleData.expeditionCharacterList[length].id();
 		CharacterModel.getChara(id).calculation(true);
 		self.addOurCharacter(id,CharacterAction.MOVE,child.direction,locationX,locationY);
 		child.remove();
 		break;
 	}
-	if(self.model.ourList.length == self.controller.battleData.expeditionCharacterList.length){
+	length++;
+	if(length == self.controller.battleData.expeditionCharacterList.length){
 		self.charasPositionsLayer.remove();
 		self.charasPositionsLayer = null;
 		console.log("leader="+self.controller.battleData.expeditionLeader);

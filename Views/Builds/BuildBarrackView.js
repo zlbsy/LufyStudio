@@ -68,6 +68,16 @@ BuildBarrackView.prototype.selectComplete=function(event){
 		return false;
 	}else if(event.characterListType == CharacterListType.EXPEDITION){
 		var characterList = event.characterList;
+		for(var i = 0,l = characterList.length;i<l;i++){
+			if(characterList[i].troops() > 0){
+				continue;
+			}
+			var obj = {title:Language.get("confirm"),message:String.format(Language.get("dialog_character_troops_error"),characterList[i].name()),height:200,okEvent:null};
+			var windowLayer = ConfirmWindow(obj);
+			LMvc.layer.addChild(windowLayer);
+			return false;
+		}
+		self.controller.setValue("expeditionCharacterList", characterList);
 		if(SeigniorExecute.running){
 			var prefecture = LMvc.CityController.getValue("toCity").prefecture();
 			var prefectureCharacter = CharacterModel.getChara(prefecture);
@@ -84,16 +94,6 @@ BuildBarrackView.prototype.selectComplete=function(event){
 				return true;
 			}
 		}
-		for(var i = 0,l = characterList.length;i<l;i++){
-			if(characterList[i].troops() > 0){
-				continue;
-			}
-			var obj = {title:Language.get("confirm"),message:String.format(Language.get("dialog_character_troops_error"),characterList[i].name()),height:200,okEvent:null};
-			var windowLayer = ConfirmWindow(obj);
-			LMvc.layer.addChild(windowLayer);
-			return false;
-		}
-		self.controller.setValue("expeditionCharacterList", characterList);
 	}else if(event.characterListType == CharacterListType.SELECT_LEADER){
 		if(event.characterList.length > 1){
 			var obj = {title:Language.get("confirm"),message:Language.get("dialog_select_leader_error"),height:200,okEvent:null};

@@ -168,7 +168,7 @@ function jobAiToBattle(areaModel,characters,targetCity){
 				LMvc.CityController.setValue("toCity",targetCity);
 				LMvc.CityController.setValue("expeditionEnemyData",data);
 				
-				LMvc.CityController.loadCharacterList(CharacterListType.EXPEDITION,build);
+				LMvc.CityController.loadCharacterList(CharacterListType.EXPEDITION,targetCity.generals(Job.IDLE), {buttonLabel:"execute"});
 			});
 		}};
 		var windowLayer = ConfirmWindow(obj);

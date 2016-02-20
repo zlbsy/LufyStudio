@@ -984,7 +984,7 @@ seigniors : [
 ]},
 {chara_id : 160,name:"马腾",color : "184,134,11",generals_count:7,areas : [
   {  area_id : 3,name:"武威",prefecture : 160,
-  money : 102,food : 1002,population : 40002,business : 102,agriculture : 102,technology : 102,police : 72,city_defense : 502,troops : 402,
+  money : 9102,food : 1002,population : 40002,business : 102,agriculture : 102,technology : 102,police : 72,city_defense : 502,troops : 402,
   items_farmland:[],
   items_market:[],
   items:[],
@@ -1321,7 +1321,7 @@ seigniors : [
 ]},
 {chara_id : 661,name:"羌大王",color : "179,142,35",generals_count:10,areas : [
   {  area_id : 50,name:"羌",prefecture : 661,
-  money : 149,food : 1049,population : 40049,business : 149,agriculture : 149,technology : 149,police : 88,city_defense : 549,troops : 449,
+  money : 5149,food : 51049,population : 40049,business : 8149,agriculture : 9149,technology : 7149,police : 88,city_defense : 949,troops : 5449,
   items_farmland:[],
   items_market:[],
   items:[],
