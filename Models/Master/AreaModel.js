@@ -7,11 +7,11 @@ function AreaModel(controller, data) {
 		self.data.money = 0;
 	}
 }
-AreaModel.troopsList = [10000,20000,30000,40000,50000];
-AreaModel.agricultureList = [10000,20000,30000,40000,50000];
-AreaModel.businessList = [10000,20000,30000,40000,50000];
-AreaModel.populationList = [[100000,200000],[100000,200000],[100000,200000],[100000,200000],[100000,200000]];
-AreaModel.defenseList = [1000,2000,3000,4000,5000];
+AreaModel.troopsList = [10000,15000,20000,25000,30000];
+AreaModel.agricultureList = [10000,15000,20000,25000,30000];
+AreaModel.businessList = [10000,15000,20000,25000,30000];
+AreaModel.populationList = [[10000,50000],[15000,100000],[20000,200000],[25000,250000],[30000,300000]];
+AreaModel.defenseList = [1000,1500,2000,2500,3000];
 	
 AreaModel.list = [];
 AreaModel.setArea=function(list){
@@ -403,13 +403,13 @@ AreaModel.prototype._plusData=function(name, value, min, max){
 	return this.data[name] >>> 0;
 };
 AreaModel.prototype.moneyLabel=function(value){
-	return LString.numberFormat(this.data.money,3);
+	return LString.numberFormat(this.data.money>>>0,3);
 };
 AreaModel.prototype.money=function(value){
 	return this._plusData("money",value);
 };
 AreaModel.prototype.foodLabel=function(){
-	return LString.numberFormat(this.data.food,3);
+	return LString.numberFormat(this.data.food>>>0,3);
 };
 AreaModel.prototype.food=function(value){
 	return this._plusData("food",value);
@@ -421,19 +421,19 @@ AreaModel.prototype.technology=function(value){
 	return this._plusData("technology",value);
 };
 AreaModel.prototype.populationLabel=function(){
-	return LString.numberFormat(this.data.population,3);
+	return LString.numberFormat(this.data.population >>> 0,3);
 };
 AreaModel.prototype.population=function(value){
 	return this._plusData("population",value);
 };
 AreaModel.prototype.police=function(value){
-	return this._plusData("police",value);
+	return this._plusData("police",value,0,100);
 };
 AreaModel.prototype.cityDefenseLabel=function(){
-	return LString.numberFormat(this.data.city_defense,3);
+	return LString.numberFormat(this.cityDefense(),3);
 };
 AreaModel.prototype.cityDefense=function(value){
-	return this._plusData("city_defense",value);
+	return this._plusData("city_defense",value,0,AreaModel.defenseList[this.level()]);
 };
 //TODO::
 AreaModel.prototype.maxCityDefense=function(){

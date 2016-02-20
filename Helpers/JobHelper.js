@@ -351,11 +351,12 @@ function businessRun(characterModel){
 	characterModel.job(Job.IDLE);
 }
 function policeRun(characterModel){
-	//治安：武力+敏捷
+	//治安：武力*2+敏捷
 	console.log("policeRun治安 : ",characterModel.id());
 	var value01 = getJobResult(characterModel.force(),JobCoefficient.POLICE);
 	var value02 = getJobResult(characterModel.agility(),JobCoefficient.POLICE);
-	var value = (value01 + value02) * (characterModel.hasSkill(SkillSubType.POLICE) ? 1.5 : 1);
+	var value = (value01 * 2 + value02) * (characterModel.hasSkill(SkillSubType.POLICE) ? 1.5 : 1);
+	//SeigniorExecute.addMessage("治安"+characterModel.name()+"="+value);
 	characterModel.city().police(value >>> 0);
 	characterModel.job(Job.IDLE);
 }

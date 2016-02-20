@@ -133,6 +133,7 @@ SeigniorExecute.run=function(){
 	});
 	buttonClose.visible = true;
 	self.msgView.clearSeignior();
+	LMvc.MapController.view.positionChangeToCity(CharacterModel.getChara(LMvc.selectSeignorId).city());
 };
 SeigniorExecute.prototype.areaRun=function(area){
 	var self = this;
