@@ -3,7 +3,11 @@ function AreaModel(controller, data) {
 	base(self, MyModel, [controller]);
 	self.type = "AreaModel";
 	self.data = self.copyProperty(data);
-	if(typeof self.data.money == UNDEFINED){
+	console.log("self.data.level="+self.data.level);
+	if(!self.data.level){
+		self.data.level = 1;
+	}
+	if(!self.data.money){
 		self.data.money = 0;
 	}
 }
@@ -280,6 +284,9 @@ AreaModel.prototype.setSeignor = function(seignior,areaData){
 		}
 		this.data[key] = areaData[key];
 	}
+	if(!this.data.level){
+		this.data.level = 1;
+	}
 };
 AreaModel.prototype.seigniorCharaId=function(seigniorCharaId){
 	var self = this;
@@ -376,7 +383,7 @@ AreaModel.prototype.size=function(){
 	return Language.get("size_"+this.data.level);
 };
 AreaModel.prototype.level=function(value){
-	return this._plusData("level",value);
+	return this._plusData("level",value,1,5);
 };
 AreaModel.prototype.maxLevel=function(){
 	return this.data.maxLevel;
@@ -433,10 +440,11 @@ AreaModel.prototype.cityDefenseLabel=function(){
 	return LString.numberFormat(this.cityDefense(),3);
 };
 AreaModel.prototype.cityDefense=function(value){
-	return this._plusData("city_defense",value,0,AreaModel.defenseList[this.level()]);
+	return this._plusData("city_defense",value,0,this.maxCityDefense());
 };
 //TODO::
 AreaModel.prototype.maxCityDefense=function(){
+	console.log("maxCityDefense level="+this.data.level);
 	return AreaModel.defenseList[this.level()-1];
 };
 AreaModel.prototype.outOfOfficeSum=function(){

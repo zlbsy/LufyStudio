@@ -75,6 +75,7 @@ CharacterModel.prototype.datas=function(){
 		exp:self.exp(),
 		mp:self.MP(),
 		hp:self.HP(),
+		isDefCharacter:self.isDefCharacter(),
 		job:self.getJobData(),//根据任务内容变化
 		feat:self.feat(),//功绩
 		loyalty:self.loyalty(),//忠诚度
@@ -107,6 +108,9 @@ CharacterModel.prototype.setDatas=function(charaData){
 	}
 	if(charaData.hp){
 		self.HP(charaData.hp);
+	}
+	if(charaData.isDefCharacter){
+		self.isDefCharacter(charaData.isDefCharacter);
 	}
 	if(charaData.loyalty){
 		self.loyalty(charaData.loyalty);
@@ -250,6 +254,9 @@ CharacterModel.prototype.statusChange = function(name) {
 		return 1;
 	}
 	return 1 + self.data.hertVsStatus.value * (self.maxTroops() - self.troops()) / self.maxTroops();
+};
+CharacterModel.prototype.isTribeCharacter = function() {
+	return this.id() >= TribeCharacter[0] && this.id() <= TribeCharacter[1];
 };
 CharacterModel.prototype.rangeAttack = function() {
 	var self = this;

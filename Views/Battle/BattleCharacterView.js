@@ -301,7 +301,7 @@ BattleCharacterView.prototype.returnShowMoveRoadObject = function() {
 BattleCharacterView.prototype.toDie = function(isSingleCombat) {
 	var self = this;
 	var script = "";
-	if(!self.data.isDefCharacter()){
+	if(!self.data.isDefCharacter() && !self.data.isTribeCharacter()){
 		var talkMsg;
 		if(isSingleCombat || calculateHitrateCaptive(self)){
 			if(self.belong == Belong.ENEMY){
