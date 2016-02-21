@@ -220,17 +220,22 @@ SeigniorExecute.prototype.areaJobRun=function(area){
 				chara.job(Job.IDLE);
 		}
 	}
-	if(list.length == 0){
-		return false;
-	}
-	for(var i=0;i<list.length;i++){
-		chara = list[i];
-		job = chara.job();
-		switch(job){
-			case Job.MOVE:
-				chara.moveTo();
-				break;
+	if(list.length > 0){
+		for(var i=0;i<list.length;i++){
+			chara = list[i];
+			job = chara.job();
+			switch(job){
+				case Job.MOVE:
+					chara.moveTo();
+					break;
+			}
 		}
+	}
+	var captives = area.captives();
+	SeigniorExecute.addMessage("captives.length="+captives.length);
+	for(var i=0;i<captives.length;i++){
+		chara = captives[i];
+		chara.job(Job.IDLE);
 	}
 	return false;
 };

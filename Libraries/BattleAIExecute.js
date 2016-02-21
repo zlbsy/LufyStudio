@@ -26,11 +26,11 @@ BattleAIExecute.run=function(){
 	console.log("run targetCharacters.length:"+targetCharacters.length);
 	if(attackCharacters.length==0){
 		self.result(false);
-		SeigniorExecute.run();
+		//SeigniorExecute.run();
 		return;
 	}else if(targetCharacters.length==0){
 		self.result(true);
-		SeigniorExecute.run();
+		//SeigniorExecute.run();
 		return;
 	}
 	self.battleFoodCheck(attackCharacters, true, self.attackData);
@@ -70,7 +70,6 @@ BattleAIExecute.run=function(){
 			return;
 		}else if(targetCharacters.length==0){
 			self.result(true);
-			//SeigniorExecute.run();
 			return;
 		}
 	}
@@ -91,6 +90,7 @@ BattleAIExecute.prototype.result=function(isWin){
 	self.characterView.remove();
 	experienceToFeat(self.attackData._characterList);
 	experienceToFeat(self.targetData._characterList);
+	SeigniorExecute.Instance().msgView.showSeignior();
 	if(isWin){
 		//{0}攻占了{1}军的{2}!
 		if(toCity.seigniorCharaId()){
@@ -133,7 +133,6 @@ BattleAIExecute.prototype.result=function(isWin){
 		captivesAutomatedProcessing(self.targetData.captives, leaderId, retreatCityId, toCity, fromCity);//处理俘虏
 		battleChangeCharactersStatus(winSeigniorId, fromCity, self.attackData._characterList);//战斗结束后武将状态转换，以及出战城池太守任命
 	}
-	SeigniorExecute.Instance().msgView.showSeignior();
 };
 BattleAIExecute.prototype._set=function(attackData, targetData){
 	var self = this;

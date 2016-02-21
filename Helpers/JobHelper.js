@@ -477,17 +477,20 @@ function hireRun2(characterModel, hireCharacter,area){
 		compatibility -= JobCoefficient.COMPATIBILITY;
 	}
 	percentage *= (JobCoefficient.COMPATIBILITY - compatibility) / JobCoefficient.COMPATIBILITY;
-	compatibility = Math.abs(characterModel.compatibility() - hireCharacter.compatibility());
+	/*compatibility = Math.abs(characterModel.compatibility() - hireCharacter.compatibility());
 	if(compatibility > JobCoefficient.COMPATIBILITY){
 		compatibility -= JobCoefficient.COMPATIBILITY;
 	}
-	percentage *= (JobCoefficient.COMPATIBILITY - compatibility) / JobCoefficient.COMPATIBILITY;
+	percentage *= (JobCoefficient.COMPATIBILITY - compatibility) / JobCoefficient.COMPATIBILITY;*/
 	var rand = Math.random();
 	if(rand > percentage){
 		//TODO::失败
 		console.log("hireRun : 失败 " + rand + " > " + percentage + " = " + (rand > percentage));
 		if(characterModel.seigniorId() == LMvc.selectSeignorId){
 			SeigniorExecute.addMessage(String.format(Language.get("hireRefuseMessage"),hireCharacter.name(),characterModel.name()));
+			SeigniorExecute.addMessage("hireRun : 失败 " + rand + " > " + percentage + " = " + (rand > percentage));
+			SeigniorExecute.addMessage("seigniorChara.compatibility() " + " = " + seigniorChara.compatibility());
+			SeigniorExecute.addMessage("hireCharacter.compatibility() " + " = " + hireCharacter.compatibility());
 		}
 		return;
 	}
