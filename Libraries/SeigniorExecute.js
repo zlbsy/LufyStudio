@@ -232,7 +232,7 @@ SeigniorExecute.prototype.areaJobRun=function(area){
 		}
 	}
 	var captives = area.captives();
-	SeigniorExecute.addMessage("captives.length="+captives.length);
+	//SeigniorExecute.addMessage("captives.length="+captives.length);
 	for(var i=0;i<captives.length;i++){
 		chara = captives[i];
 		chara.job(Job.IDLE);

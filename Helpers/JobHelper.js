@@ -568,4 +568,7 @@ function SeigniorExecuteChangeCityResources(area){
 	//TODO::武将死亡
 	
 }
-
+//褒奖
+function toPrizedByMoney(characterModel){
+	
+}

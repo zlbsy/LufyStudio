@@ -311,7 +311,6 @@ CharacterListView.prototype.setArmTab=function(){
 };
 CharacterListView.prototype.showList=function(){
 	var self = this;
-	console.log("showList run");
 	var listHeight = LGlobal.height - self.contentLayer.y;
 	var minusHeight = 0;
 	if(self.controller.params.showMoney){
@@ -319,22 +318,6 @@ CharacterListView.prototype.showList=function(){
 	}else if(self.controller.params.buttonLabel){
 		minusHeight = 70;
 	}
-	/*switch(self.controller.characterListType){
-		case CharacterListType.CHARACTER_LIST:
-		case CharacterListType.BATTLE_CHARACTER_LIST:
-			break;
-		case CharacterListType.CHARACTER_MOVE:
-		case CharacterListType.ENLIST:
-		case CharacterListType.TRAINING:
-		case CharacterListType.EXPEDITION:
-		case CharacterListType.SELECT_LEADER:
-		case CharacterListType.SELECT_MONARCH:
-		case CharacterListType.APPOINT_PREFECTURE:
-			minusHeight = 70;
-			break;
-		default:
-			minusHeight = 100;
-	}*/
 	listHeight = LGlobal.height - self.contentLayer.y - minusHeight;
 	var panel = getBitmap(new LPanel(new LBitmapData(LMvc.datalist["win05"]),LGlobal.width, LGlobal.height - self.contentLayer.y));
 	self.contentLayer.addChild(panel);

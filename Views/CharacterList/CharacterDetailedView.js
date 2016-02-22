@@ -252,32 +252,55 @@ CharacterDetailedView.prototype.showStatus=function(){
 	var statusBitmap = getBitmap(statusLayer);
 	var backLayer = new LSprite();
 	backLayer.addChild(statusBitmap);
-	if(!self.character && self.characterModel.seigniorId() > 0 && self.characterModel.seigniorId() != self.characterModel.city().seigniorCharaId()){
-		var btnRecruit = getButton(Language.get("recruit"),200);//招降
-		btnRecruit.x = LGlobal.width - 260;
-		btnRecruit.y = 5;
-		backLayer.addChild(btnRecruit);
-		if(self.characterModel.job() == Job.END){
-			btnRecruit.alpha = 0.4;
-		}else{
-			btnRecruit.addEventListener(LMouseEvent.MOUSE_UP,self.clickRecruit);
+	if(self.characterModel.city().seigniorCharaId() == LMvc.selectSeignorId){
+		if(!self.character && self.characterModel.seigniorId() > 0 && self.characterModel.seigniorId() != self.characterModel.city().seigniorCharaId()){
+			var btnRecruit = getButton(Language.get("recruit"),200);//招降
+			btnRecruit.x = LGlobal.width - 260;
+			btnRecruit.y = 5;
+			backLayer.addChild(btnRecruit);
+			if(self.characterModel.job() == Job.END){
+				btnRecruit.alpha = 0.4;
+			}else{
+				btnRecruit.addEventListener(LMouseEvent.MOUSE_UP,self.clickRecruit);
+			}
+			var btnRelease = getButton(Language.get("release"),200);//释放
+			btnRelease.x = LGlobal.width - 260;
+			btnRelease.y = 55;
+			backLayer.addChild(btnRelease);
+			btnRelease.addEventListener(LMouseEvent.MOUSE_UP,self.clickRelease);
+			var btnBehead = getButton(Language.get("behead"),200);//斩首
+			btnBehead.x = LGlobal.width - 260;
+			btnBehead.y = 105;
+			backLayer.addChild(btnBehead);
+			btnBehead.addEventListener(LMouseEvent.MOUSE_UP,self.clickBehead);
+		}else if(self.characterModel.loyalty() < 100 && !self.characterModel.isPrized()){
+			var btnPrized = getButton(Language.get("褒奖"),200);//褒奖
+			btnPrized.x = LGlobal.width - 260;
+			btnPrized.y = 5;
+			backLayer.addChild(btnPrized);
+			btnPrized.addEventListener(LMouseEvent.MOUSE_UP,self.clickPrized);
 		}
-		var btnRelease = getButton(Language.get("release"),200);//释放
-		btnRelease.x = LGlobal.width - 260;
-		btnRelease.y = 55;
-		backLayer.addChild(btnRelease);
-		btnRelease.addEventListener(LMouseEvent.MOUSE_UP,self.clickRelease);
-		var btnBehead = getButton(Language.get("behead"),200);//斩首
-		btnBehead.x = LGlobal.width - 260;
-		btnBehead.y = 105;
-		backLayer.addChild(btnBehead);
-		btnBehead.addEventListener(LMouseEvent.MOUSE_UP,self.clickBehead);
 	}
-	
 	var sc = new LScrollbar(backLayer, LGlobal.width - 50, LGlobal.height - self.tabLayer.y - 70, 10);
 	sc.x = 10;
 	sc.y = 50;
 	self.tabLayer.addChild(sc);
+};
+CharacterDetailedView.prototype.clickPrized=function(event){
+	event.currentTarget.visible = false;
+	var self = event.currentTarget.getParentByConstructor(CharacterDetailedView);
+	var charaModel = self.characterModel;
+	var cityData = self.controller.getValue("cityData");
+	if(cityData.money() < JobPrice.PRIZE){
+		var obj = {title:Language.get("confirm"),message:String.format(Language.get("金钱不够，褒奖一次需要{0}金钱!"), JobPrice.PRIZE),height:200,okEvent:null};
+			var windowLayer = ConfirmWindow(obj);
+			LMvc.layer.addChild(windowLayer);
+			return;
+	}
+	var loyaltyUpValue = toPrizedByMoney(charaModel);
+	var obj = {title:Language.get("confirm"),message:String.format(Language.get("武将{0}的忠诚度提升了{1}!"), charaModel.name(),loyaltyUpValue),height:200,okEvent:null};
+			var windowLayer = ConfirmWindow(obj);
+			LMvc.layer.addChild(windowLayer);
 };
 CharacterDetailedView.prototype.clickRecruit=function(event){
 	var btnRecruit = event.currentTarget;
@@ -312,8 +335,14 @@ CharacterDetailedView.prototype.clickRelease=function(event){
 	var city = areas[areas.length * Math.random() >>> 0];
 	charaModel.moveTo(city.id());
 	charaModel.moveTo();
-	var characterChildView = self.getCharacterChildView();
-	characterChildView.toDelete();
+	var listView = self.controller.view.listView;
+	var items = listView.getItems();
+	var item = items.find(function(child){
+		return charaModel.id() == child.charaModel.id();
+	});
+	listView.deleteChildView(item);
+	/*var characterChildView = self.getCharacterChildView();
+	characterChildView.toDelete();*/
 	self.closeCharacterDetailed();
 	var obj = {title:Language.get("confirm"),message:String.format(Language.get("武将{0}被释放了"), charaModel.name()),height:200,okEvent:null};
 			var windowLayer = ConfirmWindow(obj);
