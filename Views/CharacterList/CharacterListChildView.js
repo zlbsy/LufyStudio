@@ -19,12 +19,6 @@ CharacterListChildView.prototype.set = function(charaModel) {
 	self.setCheckBox();
 	self.setStatus();
 };
-CharacterListChildView.prototype.toDelete = function(charaModel) {
-	var self = this;
-	//var mask = getTranslucentBitmap(420, 50);
-	console.error("TODO:: 临时对应to delete");
-	self.alpha = 0.4;
-};
 CharacterListChildView.prototype.setCheckBox = function() {
 	var self = this;
 	if(self.controller.params.showOnly) {

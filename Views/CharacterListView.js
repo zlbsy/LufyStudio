@@ -354,6 +354,7 @@ CharacterListView.prototype.showCharacterDetailed=function(param){
 	var self = this;
 	var characterDetailed = new CharacterDetailedView(self.controller, param);
 	self.charaDetailedLayer.addChild(characterDetailed);
+	self.controller.dispatchEvent(LController.NOTIFY_ALL);
 	if(!self.listView){
 		return;
 	}
