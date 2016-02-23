@@ -45,47 +45,28 @@ CharacterDetailedView.prototype.set=function(param){
 	var self = this;
 	self.die();
 	self.removeAllChild();
+	self.layerInit();
 	var characterModel;
 	if(param.constructor.name == "CharacterModel"){
 		characterModel = param;
 		self.controller.setValue("selectedCharacter", characterModel);
 		self.controller.setValue("battleStatus", null);
+		self.controller.setValue("battleBelong", null);
 	}else if(param.constructor.name == "BattleCharacterView"){
 		self.character = param;
 		characterModel = param.data;
 		self.controller.setValue("selectedCharacter", characterModel);
 		self.controller.setValue("battleStatus", self.character);
+		self.controller.setValue("battleBelong", self.character.belong);
 	}
-	console.log("CharacterDetailedView",characterModel);
-	var faceW = 224, faceH = 336;
-	self.faceW = faceW;
-	self.faceH = faceH;
-	self.characterModel = characterModel;
-	self.layerInit();
-	//alert("CharacterDetailedView.prototype.set");
-	var win = new LPanel(new LBitmapData(LMvc.datalist["win05"]),faceW + 10,faceH + 10);
-	win.x = (LGlobal.width - faceW - 10) * 0.5;
-	win.y = 0;
-	self.layer.addChild(win);
-	var face = self.characterModel.face();
-	face.x = win.x + 5;
-	face.y = win.y + 5;
-	self.face = face;
-	self.layer.addChild(face);
+	self.faceView = new CharacterDetailedFaceView(self.controller);
 	
-	var name = getStrokeLabel(self.characterModel.name(), 20, "#FFFFFF", "#000000", 4);
-	name.x = face.x + 10;
-	name.y = face.y + 10;
-	self.layer.addChild(name);
-	if(self.character){
-		var belongLabel = getStrokeLabel(Language.get(self.character.belong), 20, "#FFFFFF", "#000000", 4);
-		belongLabel.x = name.x;
-		belongLabel.y = name.y + name.getHeight()+ 10;
-		self.layer.addChild(belongLabel);
-	}
-	
+	self.faceView.x = (LGlobal.width - CharacterFaceSize.width - 20) * 0.5;
+	self.faceView.y = 0;
+	self.layer.addChild(self.faceView);
 	self.TabShow(self.nowTab);
 	self.ctrlLayerInit();
+	self.controller.dispatchEvent(LController.NOTIFY_ALL);
 };
 CharacterDetailedView.TAB_EQUIPMENT = "tab_equipment";
 CharacterDetailedView.TAB_SKILL = "tab_skill";

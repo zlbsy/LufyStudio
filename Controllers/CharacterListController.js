@@ -26,7 +26,7 @@ CharacterListController.prototype.modelLoad=function(){
 CharacterListController.prototype.viewLoad=function(){
 	var self = this;
 	self.load.view(["CharacterList/CharacterListChild","CharacterList/CharacterDetailed","CharacterList/CharacterExpedition",
-	"CharacterList/CharacterDetailedTabStatus","CharacterList/CharacterDetailedTabProperties",
+	"CharacterList/CharacterDetailedTabStatus","CharacterList/CharacterDetailedTabProperties","CharacterList/CharacterDetailedFace",
 	"Equipments/Equipments","Equipments/EquipmentsChild","Equipments/EquipmentDetailed","Common/StatusBar",
 	"Soldiers/Soldiers","Soldiers/SoldiersChild","Soldiers/SoldierDetailed",
 	"Strategy/Strategy","Strategy/StrategyChild","Strategy/StrategyDetailed"],self.init);
