@@ -592,6 +592,9 @@ CharacterModel.prototype.content = function(value) {
 CharacterModel.prototype.faceImg = function() {
 	return this.data.faceImg;
 };
+CharacterModel.prototype.hasFaceCacher = function() {
+	return CharacterModel.faceCacher[this.data.faceImg];
+};
 CharacterModel.prototype.face = function() {
 	var self = this;
 	if(self.isDefCharacter()){

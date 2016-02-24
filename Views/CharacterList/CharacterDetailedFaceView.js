@@ -38,19 +38,30 @@ CharacterDetailedFaceView.prototype.init=function(){
 CharacterDetailedFaceView.prototype.updateView=function(){
 	console.log("CharacterDetailedFaceView.prototype.updateView");
 	var self = this;
-	self.showFace();
+	var characterModel = self.controller.getValue("selectedCharacter");
+	self.showLabel(characterModel);
+	self.faceLayer.removeAllChild();
+	if(characterModel.hasFaceCacher()){
+		self.showFace();
+	}else{
+		self.controller.nextFrameExecute(function(){
+			self.showFace();
+		});
+	}
+};
+CharacterDetailedFaceView.prototype.showLabel=function(characterModel){
+	var self = this;
+	self.textFieldName.text = characterModel.name();
+	var battleBelong = self.controller.getValue("battleBelong");
+	if(!battleBelong){
+		self.textFieldBelong.text = Language.get(battleBelong);
+	}
 	self.textLayer.cacheAsBitmap(false);
 	self.textLayer.cacheAsBitmap(true);
 };
 CharacterDetailedFaceView.prototype.showFace=function(){
 	var self = this;
 	var characterModel = self.controller.getValue("selectedCharacter");
-	self.faceLayer.removeAllChild();
 	var face = characterModel.face();
 	self.faceLayer.addChild(face);
-	self.textFieldName.text = characterModel.name();
-	var battleBelong = self.controller.getValue("battleBelong");
-	if(!battleBelong){
-		self.textFieldBelong.text = Language.get(battleBelong);
-	}
 };
