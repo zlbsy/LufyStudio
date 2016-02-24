@@ -2,6 +2,8 @@ function CharacterDetailedView(controller,param){
 	var self = this;
 	base(self,LView,[controller]);
 	self.nowTab = CharacterDetailedView.TAB_STATUS;
+	self.layerInit();
+	self.ctrlLayerInit();
 	self.set(param);
 }
 CharacterDetailedView.prototype.layerInit=function(){
@@ -27,10 +29,12 @@ CharacterDetailedView.prototype.clickRightArrow=function(event){
 };
 CharacterDetailedView.prototype.changeCharacter=function(value){
 	var self = this;
-	var characterList= self.controller.view.dataList;
+	var characterList= self.controller.characterList;
+	var characterModel = self.controller.getValue("selectedCharacter");
+	console.log("changeCharacter",characterList);
 	var index = characterList.findIndex(function(child){
 		var model = child.constructor.name == "CharacterModel"?child:child.data;
-		return model.id() == self.characterModel.id();
+		return model.id() == characterModel.id();
 	});
 	index = index + value;
 	if(index < 0){
@@ -43,9 +47,6 @@ CharacterDetailedView.prototype.changeCharacter=function(value){
 };
 CharacterDetailedView.prototype.set=function(param){
 	var self = this;
-	self.die();
-	self.removeAllChild();
-	self.layerInit();
 	var characterModel;
 	if(param.constructor.name == "CharacterModel"){
 		characterModel = param;
@@ -59,16 +60,21 @@ CharacterDetailedView.prototype.set=function(param){
 		self.controller.setValue("battleStatus", self.character);
 		self.controller.setValue("battleBelong", self.character.belong);
 	}
-	self.faceView = new CharacterDetailedFaceView(self.controller);
-	
-	self.faceView.x = (LGlobal.width - CharacterFaceSize.width - 20) * 0.5;
-	self.faceView.y = 0;
-	self.layer.addChild(self.faceView);
+	self.setFace();
 	self.TabShow(self.nowTab);
-	self.ctrlLayerInit();
 	self.controller.nextFrameExecute(function(){
 		self.controller.dispatchEvent(LController.NOTIFY_ALL);
 	});
+};
+CharacterDetailedView.prototype.setFace=function(){
+	var self = this;
+	if(self.faceView){
+		return;
+	}
+	self.faceView = new CharacterDetailedFaceView(self.controller);
+	self.faceView.x = (LGlobal.width - CharacterFaceSize.width - 20) * 0.5;
+	self.faceView.y = 0;
+	self.layer.addChild(self.faceView);
 };
 CharacterDetailedView.TAB_EQUIPMENT = "tab_equipment";
 CharacterDetailedView.TAB_SKILL = "tab_skill";
@@ -130,18 +136,19 @@ CharacterDetailedView.prototype.showEquipment=function(){
 	tabView.x = 10;
 	tabView.y = 50;
 	self.tabLayer.addChild(tabView);
-	tabView.updateView();
 };
 CharacterDetailedView.prototype.showStrategy=function(){
 	var self = this;
-	var strategyView = new StrategyView(self.controller, self.characterModel, new LPoint(LGlobal.width - 50, LGlobal.height - self.tabLayer.y - 80),self);
+	var characterModel = self.controller.getValue("selectedCharacter");
+	var strategyView = new StrategyView(self.controller, characterModel, new LPoint(LGlobal.width - 50, LGlobal.height - self.tabLayer.y - 80),self);
 	strategyView.x = 10;
 	strategyView.y = 50;
 	self.tabLayer.addChild(strategyView);
 };
 CharacterDetailedView.prototype.showArms=function(){
 	var self = this;
-	var soldiersView = new SoldiersView(self.controller, self.characterModel, new LPoint(LGlobal.width - 50, LGlobal.height - self.tabLayer.y - 60));
+	var characterModel = self.controller.getValue("selectedCharacter");
+	var soldiersView = new SoldiersView(self.controller, characterModel, new LPoint(LGlobal.width - 50, LGlobal.height - self.tabLayer.y - 60));
 	soldiersView.x = 10;
 	soldiersView.y = 45;
 	self.tabLayer.addChild(soldiersView);
@@ -153,7 +160,6 @@ CharacterDetailedView.prototype.showStatus=function(){
 	tabView.x = 10;
 	tabView.y = 50;
 	self.tabLayer.addChild(tabView);
-	tabView.updateView();
 };
 CharacterDetailedView.prototype.deleteChildFromList=function(characterId){
 	var self = this;

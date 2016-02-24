@@ -3,7 +3,6 @@ function SoldiersView(controller, characterModel, size) {
 	base(self, LView, [controller]);
 	self.characterModel = characterModel;
 	self.size = size;
-	self.setSoldierList();
 }
 SoldiersView.prototype.setSoldierList = function() {
 	var self = this;
@@ -25,5 +24,6 @@ SoldiersView.prototype.setSoldierList = function() {
 	self.listView.updateList(items);
 };
 SoldiersView.prototype.updateView = function() {
-	this.setsoldierList();
+	console.log("SoldiersView.prototype.updateView");
+	this.setSoldierList();
 };

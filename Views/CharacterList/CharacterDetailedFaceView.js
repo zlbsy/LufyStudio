@@ -6,7 +6,6 @@ function CharacterDetailedFaceView(controller){
 CharacterDetailedFaceView.prototype.init=function(){
 	var self = this;
 	
-	
 	var faceW = CharacterFaceSize.width + 20, faceH = CharacterFaceSize.height + 20;
 	
 	var win = new LPanel(new LBitmapData(LMvc.datalist["win05"]),faceW,faceH)
@@ -37,6 +36,7 @@ CharacterDetailedFaceView.prototype.init=function(){
 	}
 };
 CharacterDetailedFaceView.prototype.updateView=function(){
+	console.log("CharacterDetailedFaceView.prototype.updateView");
 	var self = this;
 	self.showFace();
 	self.textLayer.cacheAsBitmap(false);

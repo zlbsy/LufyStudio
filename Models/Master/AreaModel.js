@@ -74,7 +74,6 @@ AreaModel.prototype.datas=function(){
 		troops : self.troops(),
 		items_farmland:self.itemsFarmland(),
 		items_market:self.itemsMarket(),
-		items : self.itemsData(),
 		generals:self.generalsData(),
 		out_of_offices:self.outOfOfficeData(),
 		not_debut:self.data.not_debut,
@@ -219,7 +218,7 @@ AreaModel.prototype.setSeignor = function(seignior,areaData){
 		if(typeof areaData[key] == "function"){
 			continue;
 		}
-		if(key == "items"){
+		/*if(key == "items"){
 			var items = [];
 			for(var i=0,l=areaData[key].length;i<l;i++){
 				var item = new ItemModel(null,areaData[key][i]);
@@ -227,7 +226,8 @@ AreaModel.prototype.setSeignor = function(seignior,areaData){
 			}
 			this.data[key] = items;
 			continue;
-		}else if(key == "generals"){
+		}else */
+		if(key == "generals"){
 			var generals = [];
 			for(var i=0,l=areaData[key].length;i<l;i++){
 				var charaData = areaData[key][i];
@@ -597,50 +597,15 @@ AreaModel.prototype.notDebut=function(){
 	}
 	return charas;
 };
-AreaModel.prototype.itemsData = function(){
-	var self = this;
-	var items = self.items();
-	var datas = [];
-	for(var i=0;i<items.length;i++){
-		var item = items[i];
-		datas.push({item_id:item.id(),count:item.count()});
-	}
-	return datas;
-};
 AreaModel.prototype.items = function(){
-	if(!this.data.items){
-		this.data.items = [];
-	}
-	return this.data.items;
+	return this.seignior().items();
 };
 AreaModel.prototype.addItem = function(item){
-	var self = this;console.error("addItem",item);
-	var items = self.items();
-	items.push(item);
+	this.seignior().addItem(item);
 };
 AreaModel.prototype.removeItem = function(item){
-	var self = this;
-	var items = self.items();
-	console.error("removeItem",item);
-	console.error("items",items);
-	for(var i=0;i<items.length;i++){
-		console.error("items[i].objectIndex",items[i].objectIndex+",item.objectIndex="+item.objectIndex);
-		if(items[i].objectIndex == item.objectIndex){
-			items.splice(i,1);
-			break;
-		}
-	}
+	this.seignior().removeItem(item);
 };
 AreaModel.prototype.equipments = function() {
-	var self = this;
-	var items = self.items();
-	var equipmentList = [];
-	for(var i=0;i<items.length;i++){
-		var item = items[i];
-		if(item.itemType() != ItemType.EQUIPMENT){
-			continue;
-		}
-		equipmentList.push(item);
-	}
-	return equipmentList;
+	return this.seignior().equipments();
 };

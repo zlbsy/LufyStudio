@@ -22,6 +22,29 @@ and open the template in the editor.
     <body style="margin:0px 0px 0px 0px;padding:0px 0px 0px 0px;font-size: 0;">
         <div id="mvclegend">loading</div>
         <script>
+		LController.prototype.notify = function(event){
+			var self = event.currentTarget;
+			LController._notify(self.view);
+		};
+		LController.prototype.notifyAll = function(event){
+			var self = event.currentTarget;
+			for(var i=0,l=self.ll_viewList.length;i<l;i++){
+				LController._notify(self.ll_viewList[i]);
+			}
+		};
+		LController._notify = function(view, depth){
+			if(view && view.visible && view.mvcType == "view"){
+				view.updateView();
+			}
+		};
+		LView.prototype.addController = function(controller){
+			if(self.controller){
+				return;
+			}
+			self.controller = controller;
+			self.model = controller.model;
+			self.controller.addView(self);
+		};
         LDisplayObject.prototype.getParentByConstructor = function(value){
         	var parent = this.parent;
         	while(typeof parent == "object"){

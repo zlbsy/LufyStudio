@@ -1,10 +1,18 @@
 function SeigniorModel(controller, data) {
 	var self = this;
 	base(self, MyModel, [controller]);
-	self.type = "StageMasterModel";
+	self.type = "SeigniorModel";
 	self.data = data;
 	if(!self.data.exp){
 		self.data.exp = 0;
+	}
+	if(self.data.items){
+		var items = [];
+		for(var i=0,l=self.data.items.length;i<l;i++){
+			var item = new ItemModel(null,self.data.items[i]);
+			items.push(item);
+		}
+		self.data.items = items;
 	}
 	self.data.spyAreas = self.data.spyAreas || [];
 	self.data.stopBattleSeigniors = self.data.stopBattleSeigniors || [];
@@ -82,6 +90,7 @@ SeigniorModel.getSaveData=function(){
 			color:seignior.color(),//势力颜色
 			areas:seignior.areasData(),//所有城池
 			spyAreas:seignior.data.spyAreas,//谍报城池
+			items:seignior.itemsData(),//
 			stopBattleSeigniors:seignior.data.stopBattleSeigniors//停战城池
 		});
 	}
@@ -273,4 +282,52 @@ SeigniorModel.prototype.generalsCount = function(){
 		count += city.generals().length;
 	});
 	return count;
+};
+SeigniorModel.prototype.items = function(){
+	if(!this.data.items){
+		this.data.items = [];
+	}
+	return this.data.items;
+};
+SeigniorModel.prototype.itemsData = function(){
+	var self = this;
+	var items = self.items();
+	var datas = [];
+	for(var i=0;i<items.length;i++){
+		var item = items[i];
+		datas.push({item_id:item.id(),count:item.count()});
+	}
+	return datas;
+};
+SeigniorModel.prototype.addItem = function(item){
+	var self = this;
+	var items = self.items();
+	items.push(item);
+};
+SeigniorModel.prototype.removeItem = function(item){
+	var self = this;
+	var items = self.items();
+	for(var i=0;i<items.length;i++){
+		var child = items[i];
+		if(child.objectIndex == item.objectIndex){
+			child.count(child.count() - 1);
+			if(child.count() == 0){
+				items.splice(i,1);
+			}
+			break;
+		}
+	}
+};
+SeigniorModel.prototype.equipments = function() {
+	var self = this;
+	var items = self.items();
+	var equipmentList = [];
+	for(var i=0;i<items.length;i++){
+		var item = items[i];
+		if(item.itemType() != ItemType.EQUIPMENT){
+			continue;
+		}
+		equipmentList.push(item);
+	}
+	return equipmentList;
 };

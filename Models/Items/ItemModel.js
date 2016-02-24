@@ -13,8 +13,8 @@ ItemModel.prototype.master=function(){
 ItemModel.prototype.id = function(){
 	return this.data.item_id;
 };
-ItemModel.prototype.count = function(){
-	return this.data.count;
+ItemModel.prototype.count = function(value){
+	return this._dataValue("count", value, 0);
 };
 ItemModel.prototype.name = function(){
 	return this.master().name();
@@ -67,6 +67,15 @@ ItemModel.prototype.position = function(){
 ItemModel.prototype.explanation = function(){
 	return this.master().explanation();
 };
-ItemModel.prototype.icon=function(size){
-	return this.master().icon(size);
+ItemModel.prototype.icon=function(size,callback){
+	if(!size){
+		size = new LPoint(100,100);
+	}
+	//var icon = new BitmapSprite(LMvc.IMG_PATH + "item/" + this.id() + ".png", null,size);
+	var icon = new BitmapSprite(LMvc.IMG_PATH + "item/1.png", null,size);
+	if(typeof callback == "function")icon.addEventListener(LEvent.COMPLETE, callback);
+	var winPanel = new LPanel(new LBitmapData(LMvc.datalist["win06"]),size.x,size.y);
+	winPanel.cacheAsBitmap(true);
+	icon.addChild(winPanel);
+	return icon;
 };

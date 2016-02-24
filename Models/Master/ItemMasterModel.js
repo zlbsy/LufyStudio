@@ -111,14 +111,3 @@ ItemMasterModel.prototype.luck = function(){
 ItemMasterModel.prototype.explanation = function(){
 	return Language.getItem("item_explanation_" + this.data.id);
 };
-ItemMasterModel.prototype.icon=function(size){
-	var self = this;
-	if(!size){
-		size = new LPoint(100,100);
-	}
-	//var icon = new BitmapSprite(LMvc.IMG_PATH + "item/" + this.id() + ".png", null,size);
-	var icon = new BitmapSprite(LMvc.IMG_PATH + "item/1.png", null,size);
-	var winPanel = new LPanel(new LBitmapData(LMvc.datalist["win06"]),size.x,size.y);
-	icon.addChild(getBitmap(winPanel));
-	return icon;
-};
