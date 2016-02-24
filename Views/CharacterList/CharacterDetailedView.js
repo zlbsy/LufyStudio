@@ -66,7 +66,9 @@ CharacterDetailedView.prototype.set=function(param){
 	self.layer.addChild(self.faceView);
 	self.TabShow(self.nowTab);
 	self.ctrlLayerInit();
-	self.controller.dispatchEvent(LController.NOTIFY_ALL);
+	self.controller.nextFrameExecute(function(){
+		self.controller.dispatchEvent(LController.NOTIFY_ALL);
+	});
 };
 CharacterDetailedView.TAB_EQUIPMENT = "tab_equipment";
 CharacterDetailedView.TAB_SKILL = "tab_skill";
@@ -124,67 +126,11 @@ CharacterDetailedView.prototype.TabShow=function(tab){
 };
 CharacterDetailedView.prototype.showEquipment=function(){
 	var self = this;
-	var icon,iconSize = 60;
-	var equipmentCoordinates = [];
-	equipmentCoordinates[PositionConfig.Head] = {x:(self.faceW - iconSize)*0.5,y:0};
-	equipmentCoordinates[PositionConfig.Hand] = {x:0,y:(self.faceH - iconSize) * 0.5};
-	equipmentCoordinates[PositionConfig.Body] = {x:(self.faceW - iconSize)*0.5,y:(self.faceH - iconSize) * 0.5};
-	equipmentCoordinates[PositionConfig.Foot] = {x:(self.faceW - iconSize)*0.5,y:self.faceH - iconSize};
-	equipmentCoordinates[PositionConfig.Accessories] = {x:self.faceW - iconSize,y:(self.faceH - iconSize) * 0.5};
-	var equipments = self.characterModel.equipments();
-	for(var i=0;i<PositionConfig.positions.length;i++){
-		var position = PositionConfig.positions[i];
-		var coordinate = equipmentCoordinates[position];
-		var equipment = equipments.find(function(child){
-			return child.position() == position;
-		});
-		if(equipment){
-			icon = equipment.icon(new LPoint(iconSize,iconSize));
-			icon.removeItemId = equipment.id();
-			if(!LMvc.BattleController && self.characterModel.seigniorId() == LMvc.selectSeignorId){
-				icon.addEventListener(LMouseEvent.MOUSE_UP,self.removeEquipment);
-			}
-		}else{
-			icon = new LPanel(new LBitmapData(LMvc.datalist["win03"]),iconSize,iconSize);
-		}
-		icon.x = self.face.x + coordinate.x - self.tabLayer.x;
-		icon.y = self.face.y + coordinate.y - self.tabLayer.y;
-		self.tabLayer.addChild(icon);
-	}
-	if(LMvc.BattleController){
-		return;
-	}
-	var equipmentsView = new EquipmentsView(self.controller, "equipment", new LPoint(LGlobal.width - 50, LGlobal.height - self.tabLayer.y - 80));
-	equipmentsView.x = 10;
-	equipmentsView.y = 50;
-	self.tabLayer.addChild(equipmentsView);
-	equipmentsView.addEventListener(EquipmentEvent.Dress,self.dressEquipment.bind(self));
-};
-CharacterDetailedView.prototype.dressEquipment=function(event){
-	var self = this;
-	var selectItemModel = event.selectItemModel;
-	self.characterModel.equip(selectItemModel);
-	
-	var cityData = LMvc.CityController.getValue("cityData");
-	cityData.removeItem(selectItemModel);
-	self.changeCharacter(0);
-};
-CharacterDetailedView.prototype.removeEquipment=function(event){
-	var icon = event.currentTarget;
-	var self = icon.parent.parent;
-	self.removeItemId = icon.removeItemId;
-	var equipment = self.characterModel.equipments().find(function(child){
-		return child.id() == self.removeItemId;
-	});
-	var obj = {title:Language.get("confirm"),message:String.format(Language.get("dialog_remove_equipment_confirm"),equipment.name()),height:200,
-		okEvent:self.removeEquipmentRun,cancelEvent:null};
-	var windowLayer = ConfirmWindow(obj);
-	self.addChild(windowLayer);
-};
-CharacterDetailedView.prototype.removeEquipmentRun=function(event){
-	var self = event.currentTarget.parent.parent;
-	self.characterModel.equipOff(self.removeItemId);
-	self.changeCharacter(0);
+	var tabView = new CharacterDetailedTabEquipmentView(self.controller, LGlobal.width - 50, LGlobal.height - self.tabLayer.y - 70);
+	tabView.x = 10;
+	tabView.y = 50;
+	self.tabLayer.addChild(tabView);
+	tabView.updateView();
 };
 CharacterDetailedView.prototype.showStrategy=function(){
 	var self = this;
