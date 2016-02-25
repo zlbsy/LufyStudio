@@ -38,12 +38,20 @@ GameCacher.getColorBitmapData = function(color, width, height){
 	return GameCacher._colorBitmapDatas[key];
 };
 GameCacher.getPanelBitmapData = function(k, w, h, x1, x2, y1, y2){
-	var key = k+"_"+w+"_"+h+"_"+x1+"_"+x2+"_"+y1+"_"+y2;
+	var key = k+"_"+(w || 0)+"_"+(h || 0)+"_"+(x1 || 0)+"_"+(x2 || 0)+"_"+(y1 || 0)+"_"+(y2 || 0);
 	if(!GameCacher._panelBitmapDatas[key]){
 		var data = new LBitmapData(LMvc.datalist[k]);
 		var panel = new LPanel(data,w,h,x1,x2,y1,y2);
 		var bitmapData = getBitmapData(panel);
 		GameCacher._panelBitmapDatas[key] = bitmapData;
 	}
+	return GameCacher._panelBitmapDatas[key];
+};
+GameCacher.setPanelBitmapData = function(k, w, h, x1, x2, y1, y2, data){
+	var key = k+"_"+(w || 0)+"_"+(h || 0)+"_"+(x1 || 0)+"_"+(x2 || 0)+"_"+(y1 || 0)+"_"+(y2 || 0);
+	GameCacher._panelBitmapDatas[key] = data;
+};
+GameCacher.hasPanelBitmapData = function(k, w, h, x1, x2, y1, y2){
+	var key = k+"_"+(w || 0)+"_"+(h || 0)+"_"+(x1 || 0)+"_"+(x2 || 0)+"_"+(y1 || 0)+"_"+(y2 || 0);
 	return GameCacher._panelBitmapDatas[key];
 };

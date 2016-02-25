@@ -7,6 +7,7 @@ function CharacterDetailedView(controller,param){
 	self.tabs = [CharacterDetailedView.TAB_STATUS,CharacterDetailedView.TAB_PROPERTIES,CharacterDetailedView.TAB_SKILL,CharacterDetailedView.TAB_ARMS,CharacterDetailedView.TAB_EQUIPMENT];
 	self.setFaceLayer();
 	self.setTabButtons();
+	self.tabLayerInit();
 	self.set(param);
 }
 CharacterDetailedView.TAB_EQUIPMENT = "tab_equipment";
@@ -27,17 +28,16 @@ CharacterDetailedView.prototype.layerInit=function(){
 	self.tabButtonCacheLayer.y = 340;
 	self.addChild(self.tabButtonCacheLayer);
 	self.selectedTabLayer = new LSprite();
-	self.selectedTabLayer.x = 15;
-	self.selectedTabLayer.y = 340;
+	self.selectedTabLayer.y = self.tabButtonCacheLayer.y - 10;
 	self.addChild(self.selectedTabLayer);
 	self.tabButtonLayer = new LSprite();
-	self.tabButtonLayer.x = 15;
-	self.tabButtonLayer.y = 340;
+	self.tabButtonLayer.x = self.tabButtonCacheLayer.x;
+	self.tabButtonLayer.y = self.tabButtonCacheLayer.y;
 	self.addChild(self.tabButtonLayer);
 	
 	self.tabLayer = new LSprite();
-	self.tabLayer.x = 15;
-	self.tabLayer.y = 340;
+	self.tabLayer.x = self.tabButtonCacheLayer.x + 10;
+	self.tabLayer.y = self.tabButtonCacheLayer.y + 45;
 	self.addChild(self.tabLayer);
 	
 	self.ctrlLayer = new LSprite();
@@ -92,14 +92,15 @@ CharacterDetailedView.prototype.setFaceLayer=function(){
 	self.faceView.y = 0;
 	self.layer.addChild(self.faceView);
 };
-CharacterDetailedView.prototype.TabClick=function(event){
-	var self = this;
-	self.TabShow(event.currentTarget.tabName);
-};
 CharacterDetailedView.prototype.setTabButtons=function(){
 	var self = this, layer;
+	var tabs = self.tabs;
 	for(var i=0,l=self.tabs.length;i<l;i++){
-		layer = new LPanel(new LBitmapData(LMvc.datalist["win01"],0,0,51,34),90,40);
+		if(!GameCacher.hasPanelBitmapData("tab_no_selected")){
+			var bitmapData = getBitmapData(new LPanel(new LBitmapData(LMvc.datalist["win01"],0,0,51,34),90,40));
+			GameCacher.setPanelBitmapData("tab_no_selected",0,0,0,0,0,0,bitmapData);
+		}
+		layer = getPanel("tab_no_selected");
 		var label = getStrokeLabel(Language.get(tabs[i]),22,"#FFFFFF","#000000",2);
 		label.x = (90 - label.getWidth()) * 0.5;
 		label.y = 10;
@@ -110,46 +111,58 @@ CharacterDetailedView.prototype.setTabButtons=function(){
 	self.tabButtonCacheLayer.cacheAsBitmap(true);
 };
 CharacterDetailedView.prototype.selectedTab=function(key){
-	var self = this;
+	var self = this, label;
 	self.selectedTabLayer.cacheAsBitmap(false);
 	if(self.selectedTabLayer.numChildren == 0){
-		var layer = new LPanel(new LBitmapData(LMvc.datalist["win02"],0,0,51,34),90,50);
-		layer.cacheAsBitmap(true);
+		if(!GameCacher.hasPanelBitmapData("tab_selected")){
+			var bitmapData = getBitmapData(new LPanel(new LBitmapData(LMvc.datalist["win02"],0,0,51,34),90,50));
+			GameCacher.setPanelBitmapData("tab_selected",0,0,0,0,0,0,bitmapData);
+		}
+		var layer = getPanel("tab_selected");
 		self.selectedTabLayer.addChild(layer);
-		var label = getStrokeLabel("",22,"#FFFFFF","#000000",2);
-		label.x = (90 - label.getWidth()) * 0.5;
+		label = getStrokeLabel("",22,"#FFFFFF","#000000",2);
 		label.y = 10;
 		self.selectedTabLayer.addChild(label);
 	}
-	self.selectedTabLayer.getChildAt(1).text = Language.get(key);
+	label = self.selectedTabLayer.getChildAt(1); 
+	label.text = Language.get(key);
+	label.x = (90 - label.getWidth()) * 0.5;
 	self.selectedTabLayer.cacheAsBitmap(true);
 };
+CharacterDetailedView.prototype.tabLayerInit=function(){
+	var self = this;
+	var back = getPanel("win02",450,LGlobal.height - self.tabLayer.y + 10);
+	back.x = -10;
+	back.y = -10;
+	self.tabLayer.addChild(back);
+};
+CharacterDetailedView.prototype.TabClick=function(event){
+	var button = event.currentTarget;
+	var self = button.getParentByConstructor(CharacterDetailedView);
+	self.TabShow(button.tabName);
+	self.controller.dispatchEvent(LController.NOTIFY_ALL);
+};
 CharacterDetailedView.prototype.TabShow=function(tab){
-	var self = this, tabIcon, layer;
-	self.tabLayer.removeAllChild();
+	var self = this, layer;
+	self.tabButtonLayer.removeAllChild();
 	self.nowTab = tab;
 	var tabs = self.tabs;
 	for(var i=0,l=tabs.length;i<l;i++){
-		tabIcon = new LSprite();
 		if(tabs[i] == tab){
-			layer = new LPanel(new LBitmapData(LMvc.datalist["win02"],0,0,51,34),90,50);
-			tabIcon.y = -10;
+			self.selectedTab(tab);
+			self.selectedTabLayer.x = self.tabButtonCacheLayer.x + 90 * i;
 		}else{
-			layer = new LPanel(new LBitmapData(LMvc.datalist["win01"],0,0,51,34),90,40);
-			tabIcon.tabName = tabs[i];
-			tabIcon.addEventListener(LMouseEvent.MOUSE_UP,self.TabClick.bind(self));
+			layer = new LSprite();
+			layer.tabName = tabs[i];
+			layer.addShape(LShape.RECT,[0,0,90,40]);
+			layer.x = 90 * i;
+			self.tabButtonLayer.addChild(layer);
+			layer.addEventListener(LMouseEvent.MOUSE_UP,self.TabClick);
 		}
-		var label = getStrokeLabel(Language.get(tabs[i]),22,"#FFFFFF","#000000",2);
-		label.x = (90 - label.getWidth()) * 0.5;
-		label.y = 10;
-		layer.addChild(label);
-		tabIcon.addChild(getBitmap(layer));
-		tabIcon.x = 90 * i;
-		self.tabLayer.addChild(tabIcon);
 	}
-	var back = getBitmap(new LPanel(new LBitmapData(LMvc.datalist["win02"]),450,LGlobal.height - self.tabLayer.y - 35,18,24,22,24));
-	back.y = 35;
-	self.tabLayer.addChild(back);
+	for(var i=1;i<self.tabLayer.numChildren;i++){
+		self.tabLayer.childList[i].visible = false;
+	}
 	switch(tab){
 		case CharacterDetailedView.TAB_EQUIPMENT:
 			self.showEquipment();
@@ -170,35 +183,66 @@ CharacterDetailedView.prototype.TabShow=function(tab){
 };
 CharacterDetailedView.prototype.showEquipment=function(){
 	var self = this;
-	var tabView = new CharacterDetailedTabEquipmentView(self.controller, LGlobal.width - 50, LGlobal.height - self.tabLayer.y - 70);
-	tabView.x = 10;
-	tabView.y = 50;
-	self.tabLayer.addChild(tabView);
+	var equipmentView = self.tabLayer.childList.find(function(child){
+		return child instanceof CharacterDetailedTabEquipmentView;
+	});
+	if(equipmentView){
+		equipmentView.visible = true;
+		return;
+	}
+	equipmentView = new CharacterDetailedTabEquipmentView(self.controller, LGlobal.width - 50, LGlobal.height - self.tabLayer.y - 70);
+	self.tabLayer.addChild(equipmentView);
 };
 CharacterDetailedView.prototype.showStrategy=function(){
 	var self = this;
+	var strategyView = self.tabLayer.childList.find(function(child){
+		return child instanceof StrategyView;
+	});
+	if(strategyView){
+		strategyView.visible = true;
+		return;
+	}
 	var characterModel = self.controller.getValue("selectedCharacter");
-	var strategyView = new StrategyView(self.controller, characterModel, new LPoint(LGlobal.width - 50, LGlobal.height - self.tabLayer.y - 80),self);
-	strategyView.x = 10;
-	strategyView.y = 50;
+	strategyView = new StrategyView(self.controller, characterModel, new LPoint(LGlobal.width - 50, LGlobal.height - self.tabLayer.y - 80),self);
 	self.tabLayer.addChild(strategyView);
 };
 CharacterDetailedView.prototype.showArms=function(){
 	var self = this;
+	var soldiersView = self.tabLayer.childList.find(function(child){
+		return child instanceof SoldiersView;
+	});
+	if(soldiersView){
+		soldiersView.visible = true;
+		return;
+	}
 	var characterModel = self.controller.getValue("selectedCharacter");
-	var soldiersView = new SoldiersView(self.controller, characterModel, new LPoint(LGlobal.width - 50, LGlobal.height - self.tabLayer.y - 60));
-	soldiersView.x = 10;
-	soldiersView.y = 45;
+	soldiersView = new SoldiersView(self.controller, characterModel, new LPoint(LGlobal.width - 50, LGlobal.height - self.tabLayer.y - 60));
 	self.tabLayer.addChild(soldiersView);
 };
 
 CharacterDetailedView.prototype.showStatus=function(){
 	var self = this;
-	var tabView = new CharacterDetailedTabStatusView(self.controller, LGlobal.width - 50, LGlobal.height - self.tabLayer.y - 70);
-	tabView.x = 10;
-	tabView.y = 50;
-	self.tabLayer.addChild(tabView);
-	tabView.updateView();
+	var statusView = self.tabLayer.childList.find(function(child){
+		return child instanceof CharacterDetailedTabStatusView;
+	});
+	if(statusView){
+		statusView.visible = true;
+		return;
+	}
+	statusView = new CharacterDetailedTabStatusView(self.controller, LGlobal.width - 50, LGlobal.height - self.tabLayer.y - 70);
+	self.tabLayer.addChild(statusView);
+};
+CharacterDetailedView.prototype.showProperties=function(){
+	var self = this;
+	var propertiesView = self.tabLayer.childList.find(function(child){
+		return child instanceof CharacterDetailedTabPropertiesView;
+	});
+	if(propertiesView){
+		propertiesView.visible = true;
+		return;
+	}
+	propertiesView = new CharacterDetailedTabPropertiesView(self.controller, LGlobal.width - 50, LGlobal.height - self.tabLayer.y - 70);
+	self.tabLayer.addChild(propertiesView);
 };
 CharacterDetailedView.prototype.deleteChildFromList=function(characterId){
 	var self = this;
@@ -209,15 +253,6 @@ CharacterDetailedView.prototype.deleteChildFromList=function(characterId){
 	});
 	listView.deleteChildView(item);
 	self.closeCharacterDetailed();
-};
-CharacterDetailedView.prototype.showProperties=function(){
-	console.log("CharacterDetailedView.prototype.showProperties");
-	var self = this;
-	var tabView = new CharacterDetailedTabPropertiesView(self.controller, LGlobal.width - 50, LGlobal.height - self.tabLayer.y - 70);
-	tabView.x = 10;
-	tabView.y = 50;
-	self.tabLayer.addChild(tabView);
-	tabView.updateView();
 };
 CharacterDetailedView.prototype.ctrlLayerInit=function(){
 	var self = this;

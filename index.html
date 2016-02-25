@@ -22,21 +22,44 @@ and open the template in the editor.
     <body style="margin:0px 0px 0px 0px;padding:0px 0px 0px 0px;font-size: 0;">
         <div id="mvclegend">loading</div>
         <script>
+        LController._notify_over = {};
 		LController.prototype.notify = function(event){
 			var self = event.currentTarget;
-			LController._notify(self.view);
+			LController._notify(self.view, false);
+			LController._notify_over = {};
 		};
 		LController.prototype.notifyAll = function(event){
 			var self = event.currentTarget;
+			LController._notify(self.view, true);
 			for(var i=0,l=self.ll_viewList.length;i<l;i++){
-				LController._notify(self.ll_viewList[i]);
+				LController._notify(self.ll_viewList[i], true);
+			}
+			self.ll_viewList.length = 0;
+			LController._notify_over = {};
+		};
+		LController._notify=function(view,depth){
+			if(view && view.visible){
+				if(view.mvcType=="view"){
+					if(LController._notify_over[""+view.objectIndex]){
+						return;
+					}
+					LController._notify_over[""+view.objectIndex] = true;
+					view.updateView();
+				}
+				if(!depth){return;}
+				var childList=view.childList;
+				if(!childList||!childList.length){return;}
+				for(var i=0;i<childList.length;i++){
+					var child=childList[i];
+					LController._notify(child,depth);
+				}
 			}
 		};
-		LController._notify = function(view, depth){
+		/*LController._notify = function(view, depth){
 			if(view && view.visible && view.mvcType == "view"){
 				view.updateView();
 			}
-		};
+		};*/
 		LView.prototype.addController = function(controller){
 			if(self.controller){
 				return;

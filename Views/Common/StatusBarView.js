@@ -31,9 +31,10 @@ StatusBarView.prototype.setCharacterStatus=function(){
 		hertIcon.scaleX = hertIcon.scaleY = 16 / hertIcon.getHeight();
 		self.mainLayer.addChild(hertIcon);
 	}
-	var barBack = new LPanel(new LBitmapData(LMvc.datalist["blue_bar"]),self.barSize + 4,14);
+	//var barBack = new LPanel(new LBitmapData(LMvc.datalist["blue_bar"]),self.barSize + 4,14);
 	//barBack.x = hertIcon.x + 20;
 	//barBack.y = hertIcon.y;
+	var barBack = getPanel("blue_bar",self.barSize + 4,14);
 	barBack.x = 20;
 	self.mainLayer.addChild(barBack);
 	
@@ -45,7 +46,8 @@ StatusBarView.prototype.setCharacterStatus=function(){
 	value = currentValue / self.maxValue;
 	value = value < 0.001 ? 0.001 : value;
 	var barSize = self.barSize * value;
-	var barIcon = getBitmap(new LPanel(new LBitmapData(LMvc.datalist[self.frontBar]),self.barSize,10));
+	//var barIcon = getBitmap(new LPanel(new LBitmapData(LMvc.datalist[self.frontBar]),self.barSize,10));
+	var barIcon = getPanel(self.frontBar,self.barSize,10);
 	barIcon.scaleX = value;
 	var barEndPosition = barBack.x + self.barSize + 2;
 	barIcon.x = barEndPosition - barSize;
