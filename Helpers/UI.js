@@ -10,7 +10,8 @@ function getIconButton(icon, rect, text,width,img){
 	if(typeof img == UNDEFINED){
 		img = "win01";
 	}
-	var bitmapWin = new LPanel(new LBitmapData(LMvc.datalist[img]),width,50);
+	var bitmapWin = getPanel(img,width,50);
+	//var bitmapWin = new LPanel(new LBitmapData(LMvc.datalist[img]),width,50);
 	var bitmapIcon = new LBitmap(new LBitmapData(LMvc.datalist[icon],rect.x,rect.y,rect.width,rect.height));
 	bitmapIcon.x = 10;
 	bitmapIcon.y = (50 - bitmapIcon.getHeight()) * 0.5;
@@ -21,16 +22,23 @@ function getIconButton(icon, rect, text,width,img){
 	bitmapWin.addChild(textLabel);
 	return new LButton(getBitmap(bitmapWin));
 }
+function getPanel(key, width, height, x1, x2, y1, y2){
+	var data = GameCacher.getPanelBitmapData(key,width,height,x1,x2,y1,y2);
+	var sprite = new LSprite();
+	sprite.addChild(new LBitmap(data));
+	return sprite;
+}
 function getSizeButton(text,width,height,img){
 	if(typeof img == UNDEFINED){
 		img = "win01";
 	}
-	var bitmapWin = new LPanel(new LBitmapData(LMvc.datalist[img]),width,height);
+	var bitmapWin = getPanel(img,width,height);
 	var textLabel = getStrokeLabel(text,18,"#FFFFFF","#000000",3);
 	textLabel.x = (width - textLabel.getWidth()) * 0.5;
 	textLabel.y = (height - textLabel.getHeight()) * 0.5;
 	bitmapWin.addChild(textLabel);
-	var btn = new LButton(getBitmap(bitmapWin));
+	bitmapWin.cacheAsBitmap(true);
+	var btn = new LButton(bitmapWin);
 	btn.text = text;
 	return btn;
 }
@@ -68,13 +76,6 @@ function getBlackBitmap(width,height){
 function ConfirmWindow(obj){
 	console.log("ConfirmWindow",obj);
 	var windowLayer = getTranslucentMask();
-	/*var windowBackgrond = getTranslucentBitmap();
-	windowLayer.addChild(windowBackgrond);
-	windowLayer.addEventListener(LMouseEvent.MOUSE_DOWN, function(){});
-	windowLayer.addEventListener(LMouseEvent.MOUSE_UP, function(){});
-	windowLayer.addEventListener(LMouseEvent.MOUSE_MOVE, function(){});
-	windowLayer.addEventListener(LMouseEvent.MOUSE_OVER, function(){});
-	windowLayer.addEventListener(LMouseEvent.MOUSE_OUT, function(){});*/
 	
 	var backgroundData = new LBitmapData(LMvc.datalist["win05"]);
 	if(!obj.width){

@@ -25,7 +25,7 @@ LogoController.prototype.helperLoad=function(){
 };
 LogoController.prototype.libraryLoad=function(){
 	var self = this;
-	var list = ["TranslucentLoading","BitmapSprite","BattleLoading"];
+	var list = ["TranslucentLoading","BitmapSprite","BattleLoading","GameCacher"];
 	if(typeof LPlugin == UNDEFINED){
 		list.push("LPlugin");
 	}

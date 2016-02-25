@@ -3,6 +3,7 @@ function GameCacher(){
 GameCacher._areaMaps = {};
 GameCacher._areaMiniMaps = {};
 GameCacher._colorBitmapDatas = {};
+GameCacher._panelBitmapDatas = {};
 GameCacher.getAreaMap = function(key){
 	if(GameCacher._areaMaps[key]){
 		return GameCacher._areaMaps[key];
@@ -35,4 +36,14 @@ GameCacher.getColorBitmapData = function(color, width, height){
 		GameCacher._colorBitmapDatas[key] = colorData;
 	}
 	return GameCacher._colorBitmapDatas[key];
+};
+GameCacher.getPanelBitmapData = function(k, w, h, x1, x2, y1, y2){
+	var key = k+"_"+w+"_"+h+"_"+x1+"_"+x2+"_"+y1+"_"+y2;
+	if(!GameCacher._panelBitmapDatas[key]){
+		var data = new LBitmapData(LMvc.datalist[k]);
+		var panel = new LPanel(data,w,h,x1,x2,y1,y2);
+		var bitmapData = getBitmapData(panel);
+		GameCacher._panelBitmapDatas[key] = bitmapData;
+	}
+	return GameCacher._panelBitmapDatas[key];
 };
