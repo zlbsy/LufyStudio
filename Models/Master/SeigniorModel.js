@@ -302,6 +302,13 @@ SeigniorModel.prototype.itemsData = function(){
 SeigniorModel.prototype.addItem = function(item){
 	var self = this;
 	var items = self.items();
+	for(var i=0;i<items.length;i++){
+		var child = items[i];
+		if(child.id() == item.id()){
+			child.count(child.count() + 1);
+			return;
+		}
+	}
 	items.push(item);
 };
 SeigniorModel.prototype.removeItem = function(item){
@@ -309,7 +316,7 @@ SeigniorModel.prototype.removeItem = function(item){
 	var items = self.items();
 	for(var i=0;i<items.length;i++){
 		var child = items[i];
-		if(child.objectIndex == item.objectIndex){
+		if(child.id() == item.id()){
 			child.count(child.count() - 1);
 			if(child.count() == 0){
 				items.splice(i,1);

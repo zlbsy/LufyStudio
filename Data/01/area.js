@@ -982,7 +982,7 @@ seigniors : [
     ]
   },
 ]},
-{chara_id : 160,name:"马腾",color : "184,134,11",items:[{item_id:25,count:2},{item_id:82,count:5},{item_id:34,count:1},{item_id:35,count:1},{item_id:36,count:1},{item_id:82,count:5}],generals_count:7,areas : [
+{chara_id : 160,name:"马腾",color : "184,134,11",items:[{item_id:25,count:2},{item_id:82,count:5},{item_id:34,count:1},{item_id:35,count:1},{item_id:36,count:1},{item_id:83,count:5}],generals_count:7,areas : [
   {  area_id : 3,name:"武威",prefecture : 160,
   money : 9102,food : 1002,population : 40002,business : 102,agriculture : 102,technology : 102,police : 72,city_defense : 502,troops : 402,
   items_farmland:[],

@@ -4,23 +4,42 @@ function StatusBarView(controller){
 }
 StatusBarView.prototype.set = function(obj){
 	var self = this;
-	self.maxValue = obj.maxValue;
-	self.currentValue = obj.currentValue;
-	self.normalValue = obj.normalValue;
-	if(typeof self.normalValue == UNDEFINED){
-		self.normalValue = self.maxValue;
-	}
-	//label
-	self.name = obj.name;
-	self.icon = obj.icon;
-	self.frontBar = obj.frontBar;
-	self.barSize = obj.barSize;
+	self.setData(obj);
 	//isDynamic
 	self.mainLayer = new LSprite();
 	self.statusLayer = new LSprite();
 	self.addChild(self.statusLayer);
 	self.setCharacterStatus();
 	self.addChildAt(getBitmap(self.mainLayer), 0);
+}
+StatusBarView.prototype.setData = function(obj){
+	var self = this;
+	self.maxValue = obj.maxValue;
+	if(typeof obj.currentValue == "string"){
+		var index = obj.currentValue.indexOf("(");
+		var indexEnd = obj.currentValue.indexOf(")");
+		self.currentValue = parseInt(obj.currentValue.substring(0,index));
+		self.subCurrentValue = parseInt(obj.currentValue.substring(index+1, indexEnd));
+	}else {
+		self.currentValue = obj.currentValue;
+		self.subCurrentValue = undefined;
+	}
+	self.normalValue = obj.normalValue;
+	if(typeof self.normalValue == UNDEFINED){
+		self.normalValue = self.maxValue;
+	}
+	if(typeof obj.name != UNDEFINED){
+		self.name = obj.name;
+	}
+	if(typeof obj.icon != UNDEFINED){
+		self.icon = obj.icon;
+	}
+	if(typeof obj.frontBar != UNDEFINED){
+		self.frontBar = obj.frontBar;
+	}
+	if(typeof obj.barSize != UNDEFINED){
+		self.barSize = obj.barSize;
+	}
 };
 StatusBarView.prototype.setCharacterStatus=function(){
 	var self = this;
@@ -31,9 +50,6 @@ StatusBarView.prototype.setCharacterStatus=function(){
 		hertIcon.scaleX = hertIcon.scaleY = 16 / hertIcon.getHeight();
 		self.mainLayer.addChild(hertIcon);
 	}
-	//var barBack = new LPanel(new LBitmapData(LMvc.datalist["blue_bar"]),self.barSize + 4,14);
-	//barBack.x = hertIcon.x + 20;
-	//barBack.y = hertIcon.y;
 	var barBack = getPanel("blue_bar",self.barSize + 4,14);
 	barBack.x = 20;
 	self.mainLayer.addChild(barBack);
@@ -46,7 +62,6 @@ StatusBarView.prototype.setCharacterStatus=function(){
 	value = currentValue / self.maxValue;
 	value = value < 0.001 ? 0.001 : value;
 	var barSize = self.barSize * value;
-	//var barIcon = getBitmap(new LPanel(new LBitmapData(LMvc.datalist[self.frontBar]),self.barSize,10));
 	var barIcon = getPanel(self.frontBar,self.barSize,10);
 	barIcon.scaleX = value;
 	var barEndPosition = barBack.x + self.barSize + 2;
@@ -79,16 +94,23 @@ StatusBarView.prototype.changeValue=function(value){
 	}else if(self.value < 0){
 		self.value = 0;
 	}
-	LTweenLite.to(self,0.5,{currentValue:self.value,onUpdate:self.onUpdate,onComplete:self.onComplete});
+	var obj = {currentValue:self.value,onUpdate:self.onUpdate,onComplete:self.onComplete};
+	LTweenLite.to(self,0.5,obj);
 };
 StatusBarView.prototype.setStatus=function(){
 	var self = this;
-	var value = self.currentValue / self.maxValue;
+	var currentValue = self.currentValue;
+	if(typeof currentValue == "string"){
+		var index = currentValue.indexOf("(");
+		currentValue = self.currentValue.substring(0,index);
+	}
+	value = currentValue / self.maxValue;
 	value = value < 0.001 ? 0.001 : value;
 	var barSize = self.barSize * value;
 	self.barIcon.scaleX = value;
 	self.barIcon.x = self.barEndPosition - barSize;
+	console.log("x="+self.barIcon.x+", barSize="+barSize+",value="+value);
 	
-	self.label.text = String.format("{0} {1}/{2} ",self.name,self.currentValue>>0,self.maxValue);
+	self.label.text = String.format("{0} {1}/{2} ",self.name,currentValue>>0,self.maxValue);
 	self.label.x = self.textEndPosition - self.label.getWidth();
 };

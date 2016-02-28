@@ -190,7 +190,7 @@ CharacterDetailedView.prototype.showEquipment=function(){
 		equipmentView.visible = true;
 		return;
 	}
-	equipmentView = new CharacterDetailedTabEquipmentView(self.controller, LGlobal.width - 50, LGlobal.height - self.tabLayer.y - 70);
+	equipmentView = new CharacterDetailedTabEquipmentView(self.controller, LGlobal.width - 50, LGlobal.height - self.tabLayer.y - 10);
 	self.tabLayer.addChild(equipmentView);
 };
 CharacterDetailedView.prototype.showStrategy=function(){
@@ -203,7 +203,7 @@ CharacterDetailedView.prototype.showStrategy=function(){
 		return;
 	}
 	var characterModel = self.controller.getValue("selectedCharacter");
-	strategyView = new StrategyView(self.controller, characterModel, new LPoint(LGlobal.width - 50, LGlobal.height - self.tabLayer.y - 80),self);
+	strategyView = new StrategyView(self.controller, characterModel, new LPoint(LGlobal.width - 50, LGlobal.height - self.tabLayer.y - 10),self);
 	self.tabLayer.addChild(strategyView);
 };
 CharacterDetailedView.prototype.showArms=function(){
@@ -216,7 +216,7 @@ CharacterDetailedView.prototype.showArms=function(){
 		return;
 	}
 	var characterModel = self.controller.getValue("selectedCharacter");
-	soldiersView = new SoldiersView(self.controller, characterModel, new LPoint(LGlobal.width - 50, LGlobal.height - self.tabLayer.y - 60));
+	soldiersView = new SoldiersView(self.controller, characterModel, new LPoint(LGlobal.width - 50, LGlobal.height - self.tabLayer.y - 10));
 	self.tabLayer.addChild(soldiersView);
 };
 
@@ -229,7 +229,7 @@ CharacterDetailedView.prototype.showStatus=function(){
 		statusView.visible = true;
 		return;
 	}
-	statusView = new CharacterDetailedTabStatusView(self.controller, LGlobal.width - 50, LGlobal.height - self.tabLayer.y - 70);
+	statusView = new CharacterDetailedTabStatusView(self.controller, LGlobal.width - 50, LGlobal.height - self.tabLayer.y - 10);
 	self.tabLayer.addChild(statusView);
 };
 CharacterDetailedView.prototype.showProperties=function(){
@@ -241,7 +241,7 @@ CharacterDetailedView.prototype.showProperties=function(){
 		propertiesView.visible = true;
 		return;
 	}
-	propertiesView = new CharacterDetailedTabPropertiesView(self.controller, LGlobal.width - 50, LGlobal.height - self.tabLayer.y - 70);
+	propertiesView = new CharacterDetailedTabPropertiesView(self.controller, LGlobal.width - 50, LGlobal.height - self.tabLayer.y - 10);
 	self.tabLayer.addChild(propertiesView);
 };
 CharacterDetailedView.prototype.deleteChildFromList=function(characterId){

@@ -25,10 +25,12 @@ CharacterDetailedTabEquipmentView.prototype.showEquipments=function(){
 	equipmentCoordinates[PositionConfig.Foot] = {x:(faceW - iconSize)*0.5,y:faceH - iconSize};
 	equipmentCoordinates[PositionConfig.Accessories] = {x:faceW - iconSize,y:(faceH - iconSize) * 0.5};
 	var equipments = characterModel.equipments();
+	console.log("equipments",equipments);
 	for(var i=0;i<PositionConfig.positions.length;i++){
 		var position = PositionConfig.positions[i];
 		var coordinate = equipmentCoordinates[position];
 		var equipment = equipments.find(function(child){
+			console.log("child",child);
 			return child.position() == position;
 		});
 		if(equipment){
@@ -49,10 +51,10 @@ CharacterDetailedTabEquipmentView.prototype.showEquipmentList=function(){
 	var self = this;
 	var equipmentsView = new EquipmentsView(self.controller, "equipment", new LPoint(self.tabWidth, self.tabHeight));
 	self.addChild(equipmentsView);
-	equipmentsView.addEventListener(EquipmentEvent.Dress,self.dressEquipment.bind(self));
+	equipmentsView.addEventListener(EquipmentEvent.Dress,self.dressEquipment);
 };
 CharacterDetailedTabEquipmentView.prototype.dressEquipment=function(event){
-	var self = this;
+	var self = event.currentTarget.getParentByConstructor(CharacterDetailedTabEquipmentView);
 	var selectItemModel = event.selectItemModel;
 	var itemCount = selectItemModel.count();
 	var characterModel = self.controller.getValue("selectedCharacter");
@@ -66,18 +68,24 @@ CharacterDetailedTabEquipmentView.prototype.dressEquipment=function(event){
 };
 CharacterDetailedTabEquipmentView.prototype.removeEquipment=function(event){
 	var icon = event.currentTarget;
-	var self = icon.parent.parent;
-	self.removeItemId = icon.removeItemId;
-	var equipment = self.characterModel.equipments().find(function(child){
-		return child.id() == self.removeItemId;
+	var self = icon.getParentByConstructor(CharacterDetailedTabEquipmentView);
+	var characterModel = self.controller.getValue("selectedCharacter");
+	var removeItemId = icon.removeItemId;;
+	var equipment = characterModel.equipments().find(function(child){
+		return child.id() == removeItemId;
 	});
 	var obj = {title:Language.get("confirm"),message:String.format(Language.get("dialog_remove_equipment_confirm"),equipment.name()),height:200,
 		okEvent:self.removeEquipmentRun,cancelEvent:null};
 	var windowLayer = ConfirmWindow(obj);
-	self.addChild(windowLayer);
+	var detailedView = self.getParentByConstructor(CharacterDetailedView);
+	detailedView.removeItemId = removeItemId;
+	detailedView.addChild(windowLayer);
 };
 CharacterDetailedTabEquipmentView.prototype.removeEquipmentRun=function(event){
-	var self = event.currentTarget.parent.parent;
-	self.characterModel.equipOff(self.removeItemId);
-	self.changeCharacter(0);
+	var detailedView = event.currentTarget.getParentByConstructor(CharacterDetailedView);
+	event.currentTarget.parent.remove();
+	var characterModel = detailedView.controller.getValue("selectedCharacter");
+	characterModel.equipOff(detailedView.removeItemId);
+	delete detailedView.removeItemId;
+	detailedView.changeCharacter(0);
 };

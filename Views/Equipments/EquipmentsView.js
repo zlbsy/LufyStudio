@@ -13,14 +13,42 @@ EquipmentsView.prototype.getEquipmentListData = function() {
 	var cityData = LMvc.CityController.getValue("cityData");
 	self.equipmentList = cityData.equipments();
 };
+EquipmentsView.prototype.isSameList = function(equipmentList) {
+	var self = this;
+	var items = self.listView.getItems();
+	if(equipmentList.length != items.length){
+		return false;
+	}
+	for(var i=0,l=items.length;i<l;i++){
+		if(items[i].itemModel.id() != equipmentList[i].id()){
+			return false;
+		}
+	}
+	return true;
+};
+EquipmentsView.prototype.updateItems = function(equipmentList) {
+	var self = this;
+	var items = self.listView.getItems();
+	for(var i=0,l=items.length;i<l;i++){
+		items[i].itemModel = equipmentList[i];
+		items[i].cacheAsBitmap(false);
+		items[i].set();
+		items[i].updateView();
+		items[i].cacheAsBitmap(true);
+	}
+};
 EquipmentsView.prototype.setEquipmentList = function() {
 	var self = this;
-	if(self.listView){
-		self.listView.updateView();
-		return;
-	}
 	var cityData = LMvc.CityController.getValue("cityData");
 	var equipmentList = cityData.equipments();
+	if(self.listView){
+		if(self.isSameList(equipmentList)){
+			self.updateItems(equipmentList);
+			return;
+		}else{
+			self.listView.remove();
+		}
+	}
 	self.listView = new LListView();
 	self.listView.resize(self.size.x, self.size.y);
 	self.listView.cellWidth = self.size.x;
@@ -34,31 +62,8 @@ EquipmentsView.prototype.setEquipmentList = function() {
 	self.listView.updateList(items);
 };
 EquipmentsView.prototype.updateView = function() {
-	this.setsoldierList();
+	this.setEquipmentList();
 };
-/*
-EquipmentsView.prototype.setEquipmentList1 = function() {
-	var self = this;
-	self.equipmentListLayer.removeAllChild();
-	var equipmentList = self.equipmentList;
-	var backLayer = new LSprite();
-	for (var i = 0, l = equipmentList.length; i < l; i++) {
-		var child = new EquipmentsChildView(self.controller, equipmentList[i]);
-		//child.x = 110 * (i % 4);
-		//child.y = 110 * (i / 4 >>> 0);
-		child.y = 50 * i;
-		backLayer.addChild(child);
-	}
-	backLayer.graphics.drawRect(0, "#000000", [0, 0, self.size.x, 50 * equipmentList.length]);
-	self.equipmentListLayer.listLayer = backLayer;
-	var left = backLayer.graphics.startX(), right = left + backLayer.graphics.getWidth();
-	var sc = new LScrollbar(backLayer, self.size.x, self.size.y, 10);
-	//sc._showLayer.graphics.clear();
-	self.equipmentListLayer.addChild(sc);
-	sc.excluding = true;
-	backLayer.addEventListener(LMouseEvent.MOUSE_DOWN, self.equipmentClickDown);
-	backLayer.addEventListener(LMouseEvent.MOUSE_UP, self.equipmentClickUp.bind(self));
-};*/
 EquipmentsView.prototype.set = function() {
 	var self = this;
 	self.layerInit();
@@ -67,29 +72,13 @@ EquipmentsView.prototype.set = function() {
 };
 EquipmentsView.prototype.layerInit = function() {
 	var self = this;
-	/*
-	var bitmapData = new LBitmapData(LMvc.datalist["translucent"]);
-	var panel = new LPanel(bitmapData,LGlobal.width, LGlobal.height);
-	self.addChild(getBitmap(panel));*/
 
 	self.baseLayer = new LSprite();
 	self.addChild(self.baseLayer);
 
 	self.equipmentListLayer = new LSprite();
 	self.baseLayer.addChild(self.equipmentListLayer);
-	/*
-	self.ctrlLayer = new LSprite();
-	self.addChild(self.ctrlLayer);
-	if(self.controller.fromController.constructor.name == "CharacterListController"){
-		return;
-	}
-	self.statusLayer = new LSprite();
-	self.addChild(self.statusLayer);*/
 };
-/*EquipmentsView.prototype.updateView = function() {
-	var self = this;
-	self.setEquipmentList();
-};*/
 EquipmentsView.prototype.ctrlLayerInit = function() {
 	var self = this;
 	var returnBitmapData = new LBitmapData(LMvc.datalist["icon-return"]);
@@ -100,21 +89,6 @@ EquipmentsView.prototype.ctrlLayerInit = function() {
 	self.ctrlLayer.addChild(returnButton);
 	returnButton.addEventListener(LMouseEvent.MOUSE_UP, self.controller.close.bind(self.controller));
 };
-/*
-EquipmentsView.prototype.equipmentClickDown = function(event) {
-	var item = event.target;
-	item.offsetX = event.offsetX;
-	item.offsetY = event.offsetY;
-};
-EquipmentsView.prototype.equipmentClickUp = function(event) {
-	if(event.target.constructor.name != "EquipmentsChildView"){
-		return;
-	}
-	var equipment = event.target, self = this;
-	if (equipment.offsetX && equipment.offsetY && Math.abs(equipment.offsetX - event.offsetX) < 5 && Math.abs(equipment.offsetY - event.offsetY) < 5) {
-		self.equipmentDetailedDialog(equipment.itemModel);
-	}
-};*/
 EquipmentsView.prototype.equipmentDetailedDialog = function(itemModel) {
 	var self = this;
 	var equipmentDetailed = new EquipmentDetailedView(self.controller,itemModel,self);

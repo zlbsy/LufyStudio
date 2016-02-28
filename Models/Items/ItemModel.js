@@ -8,6 +8,7 @@ ItemModel.prototype.master=function(){
 	if(!self._master){
 		self._master = ItemMasterModel.getMaster(self.id());
 	}
+	console.log("self._master",self.id(),self._master);
 	return self._master;
 };
 ItemModel.prototype.id = function(){

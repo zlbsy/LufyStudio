@@ -4,10 +4,14 @@ function SoldiersView(controller, characterModel, size) {
 	self.characterModel = characterModel;
 	self.size = size;
 }
-SoldiersView.prototype.setSoldierList = function() {
+SoldiersView.prototype.setSoldierList = function(characterModel) {
 	var self = this;
 	if(self.listView){
-		self.listView.updateView();
+		if(characterModel && characterModel.id() != self.characterModel.id()){
+			self.updateItems(characterModel);
+		}else{
+			self.listView.updateView();
+		}
 		return;
 	}
 	self.listView = new LListView();
@@ -24,6 +28,22 @@ SoldiersView.prototype.setSoldierList = function() {
 	self.listView.updateList(items);
 };
 SoldiersView.prototype.updateView = function() {
+	var self = this;
 	console.log("SoldiersView.prototype.updateView");
-	this.setSoldierList();
+	var characterModel = self.controller.getValue("selectedCharacter");
+	this.setSoldierList(characterModel);
+};
+SoldiersView.prototype.updateItems = function(characterModel) {
+	var self = this;
+	var items = self.listView.getItems();
+	var soldierList = characterModel.soldiers();
+	for(var i=0,l=items.length;i<l;i++){
+		items[i].soldierModel = soldierList[i];
+		items[i].characterModel = characterModel;
+		items[i].cacheAsBitmap(false);
+		items[i].set();
+		items[i].updateView();
+		items[i].cacheAsBitmap(true);
+	}
+	self.characterModel = characterModel;
 };

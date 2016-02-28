@@ -1,10 +1,12 @@
 function SoldiersChildView(soldierModel, characterModel,width){
-//function SoldiersChildView(controller,soldierModel){
 	var self = this;
 	base(self, LListChildView, []);
 	self.soldierModel = soldierModel;
 	self.characterModel = characterModel;
 	self.fullWidth = width;
+	self.iconWidth = 50;
+	self.iconHeight = 50;
+	self.layerInit();
 	self.set();
 }
 SoldiersChildView.prototype.layerInit=function(){
@@ -12,50 +14,85 @@ SoldiersChildView.prototype.layerInit=function(){
 	self.layer = new LSprite();
 	self.addChild(self.layer);
 };
-SoldiersChildView.prototype.set=function(){
+SoldiersChildView.prototype.drawLine=function(){
 	var self = this;
-	self.layerInit();
-	
-	var layer = new LSprite();
-	
-	var width = 50, height = 50;
-	
-	var lblName = getStrokeLabel(self.soldierModel.name(),23,"#FFFFFF","#000000",3);
-	lblName.x = width + 5;
-	lblName.y = 5;
-	layer.addChild(lblName);
-	
+	if(self.bitmapLine){
+		return;
+	}
 	var bitmapLine = new LBitmap(new LBitmapData(LMvc.datalist["icon-line"]));
-	bitmapLine.scaleX = self.fullWidth - lblName.x;
-	bitmapLine.x = lblName.x;
+	bitmapLine.scaleX = self.fullWidth - self.lblName.x;
+	bitmapLine.x = self.lblName.x;
 	bitmapLine.y = 48;
-	layer.addChild(bitmapLine);
-	
-	var lblLevel = getStrokeLabel(Language.get("proficiency") + ": " + self.soldierModel.proficiency(), 23, "#FFFFFF", "#000000", 3);
-	lblLevel.x = lblName.x + 120;
-	lblLevel.y = lblName.y;
-	layer.addChild(lblLevel);
-
-	if(LMvc.BattleController){
-		if(self.soldierModel.id() == self.characterModel.currentSoldierId()){
-			var lblCurrent = getStrokeLabel("当前",23,"#FFFFFF","#000000",3);
-			lblCurrent.x = lblLevel.x + 200;
-			lblCurrent.y = 10;
-			layer.addChild(lblCurrent);
-		}
-	}else{
+	self.layer.addChild(bitmapLine);
+	self.bitmapLine = bitmapLine;
+};
+SoldiersChildView.prototype.getName=function(){
+	var self = this;
+	if(!self.lblName){
+		var lblName = getStrokeLabel("",23,"#FFFFFF","#000000",3);
+		lblName.x = self.iconWidth + 5;
+		lblName.y = 5;
+		self.layer.addChild(lblName);
+		self.lblName = lblName;
+	}
+	return self.lblName;
+};
+SoldiersChildView.prototype.getLevel=function(){
+	var self = this;
+	if(!self.lblLevel){
+		var lblLevel = getStrokeLabel("", 23, "#FFFFFF", "#000000", 3);
+		lblLevel.x = self.lblName.x + 120;
+		lblLevel.y = self.lblName.y;
+		self.layer.addChild(lblLevel);
+		self.lblLevel = lblLevel;
+	}
+	return self.lblLevel;
+};
+SoldiersChildView.prototype.getCurrent=function(){
+	var self = this;
+	if(!self.lblCurrent){
+		var lblCurrent = getStrokeLabel("",23,"#FFFFFF","#000000",3);
+		lblCurrent.x = self.lblLevel.x + 200;
+		lblCurrent.y = 10;
+		self.layer.addChild(lblCurrent);
+		self.lblCurrent = lblCurrent;
+	}
+	return self.lblCurrent;
+};
+SoldiersChildView.prototype.getCheckBox=function(){
+	var self = this;
+	if(!self.checkbox){
 		var bitmap = new LBitmap(new LBitmapData(LMvc.datalist["checkbox-background"]));
 		var bitmapSelect = new LBitmap(new LBitmapData(LMvc.datalist["checkbox-on"]));
 		var check = new LCheckBox(bitmap, bitmapSelect);
-		check.x = lblLevel.x + 200;
+		check.x = self.lblLevel.x + 200;
 		check.y = 10;
-		layer.addChild(check);
+		self.layer.addChild(check);
 		self.checkbox = check;
-		self.checkbox.setChecked(self.soldierModel.id() == self.characterModel.currentSoldierId());
 	}
-	self.layer.addChild(layer);
-	var icon = self.soldierModel.icon(new LPoint(width,height),self.iconComplete);
-	self.layer.addChild(icon);
+	return self.checkbox;
+};
+SoldiersChildView.prototype.set=function(){
+	var self = this;
+	
+	var lblName = self.getName();
+	lblName.text = self.soldierModel.name();
+	var lblLevel = self.getLevel();
+	lblLevel.text = Language.get("proficiency") + ": " + self.soldierModel.proficiency();
+	self.drawLine();
+
+	if(LMvc.BattleController){
+		var lblCurrent = self.getCurrent();
+		lblCurrent.text = self.soldierModel.id() == self.characterModel.currentSoldierId() ? "当前" : "";
+	}else{
+		var check = self.getCheckBox();
+		check.setChecked(self.soldierModel.id() == self.characterModel.currentSoldierId());
+	}
+	if(self.icon){
+		self.icon.remove();
+	}
+	self.icon = self.soldierModel.icon(new LPoint(self.iconWidth, self.iconHeight),self.iconComplete);
+	self.layer.addChild(self.icon);
 };
 SoldiersChildView.prototype.iconComplete=function(event){
 	var self = event.currentTarget.parent.parent;
