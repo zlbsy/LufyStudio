@@ -25,12 +25,10 @@ CharacterDetailedTabEquipmentView.prototype.showEquipments=function(){
 	equipmentCoordinates[PositionConfig.Foot] = {x:(faceW - iconSize)*0.5,y:faceH - iconSize};
 	equipmentCoordinates[PositionConfig.Accessories] = {x:faceW - iconSize,y:(faceH - iconSize) * 0.5};
 	var equipments = characterModel.equipments();
-	console.log("equipments",equipments);
 	for(var i=0;i<PositionConfig.positions.length;i++){
 		var position = PositionConfig.positions[i];
 		var coordinate = equipmentCoordinates[position];
 		var equipment = equipments.find(function(child){
-			console.log("child",child);
 			return child.position() == position;
 		});
 		if(equipment){

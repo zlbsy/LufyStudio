@@ -11,7 +11,7 @@ StatusBarView.prototype.set = function(obj){
 	self.addChild(self.statusLayer);
 	self.setCharacterStatus();
 	self.addChildAt(getBitmap(self.mainLayer), 0);
-}
+};
 StatusBarView.prototype.setData = function(obj){
 	var self = this;
 	self.maxValue = obj.maxValue;
@@ -55,9 +55,9 @@ StatusBarView.prototype.setCharacterStatus=function(){
 	self.mainLayer.addChild(barBack);
 	
 	var currentValue = self.currentValue;
-	if(typeof currentValue == "string"){
-		var index = currentValue.indexOf("(");
-		currentValue = self.currentValue.substring(0,index);
+	var strCurrent = currentValue;
+	if(typeof self.subCurrentValue != UNDEFINED){
+		strCurrent += "(" + self.subCurrentValue + ")";
 	}
 	value = currentValue / self.maxValue;
 	value = value < 0.001 ? 0.001 : value;
@@ -68,7 +68,7 @@ StatusBarView.prototype.setCharacterStatus=function(){
 	barIcon.x = barEndPosition - barSize;
 	barIcon.y = iconY + 2;
 	self.statusLayer.addChild(barIcon);
-	var lblBar = getStrokeLabel(String.format("{0} {1}/{2} ",self.name,self.currentValue,self.normalValue),14,"#FFFFFF","#000000",3);
+	var lblBar = getStrokeLabel(String.format("{0} {1}/{2} ",self.name, strCurrent, self.normalValue),14,"#FFFFFF","#000000",3);
 	var textEndPosition = iconX + 15 + self.barSize;
 	lblBar.x = textEndPosition - lblBar.getWidth();
 	lblBar.y = barBack.y + barBack.getHeight() - lblBar.getHeight() - 5;
@@ -99,18 +99,17 @@ StatusBarView.prototype.changeValue=function(value){
 };
 StatusBarView.prototype.setStatus=function(){
 	var self = this;
-	var currentValue = self.currentValue;
-	if(typeof currentValue == "string"){
-		var index = currentValue.indexOf("(");
-		currentValue = self.currentValue.substring(0,index);
+	var currentValue = self.currentValue >>0;
+	var strCurrent = currentValue;
+	if(typeof self.subCurrentValue != UNDEFINED){
+		strCurrent += "(" + self.subCurrentValue + ")";
 	}
 	value = currentValue / self.maxValue;
 	value = value < 0.001 ? 0.001 : value;
 	var barSize = self.barSize * value;
 	self.barIcon.scaleX = value;
 	self.barIcon.x = self.barEndPosition - barSize;
-	console.log("x="+self.barIcon.x+", barSize="+barSize+",value="+value);
 	
-	self.label.text = String.format("{0} {1}/{2} ",self.name,currentValue>>0,self.maxValue);
+	self.label.text = String.format("{0} {1}/{2} ",self.name, strCurrent, self.maxValue);
 	self.label.x = self.textEndPosition - self.label.getWidth();
 };

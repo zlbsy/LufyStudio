@@ -8,7 +8,7 @@ CharacterDetailedFaceView.prototype.init=function(){
 	
 	var faceW = CharacterFaceSize.width + 20, faceH = CharacterFaceSize.height + 20;
 	
-	var win = new LPanel(new LBitmapData(LMvc.datalist["win05"]),faceW,faceH)
+	var win = new LPanel(new LBitmapData(LMvc.datalist["win05"]),faceW,faceH);
 	self.addChild(win);
 	win.cacheAsBitmap(true);
 	
@@ -36,7 +36,6 @@ CharacterDetailedFaceView.prototype.init=function(){
 	}
 };
 CharacterDetailedFaceView.prototype.updateView=function(){
-	console.log("CharacterDetailedFaceView.prototype.updateView");
 	var self = this;
 	var characterModel = self.controller.getValue("selectedCharacter");
 	self.showLabel(characterModel);

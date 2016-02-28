@@ -118,7 +118,7 @@ SeigniorModel.prototype.level = function(){
 SeigniorModel.cloths = [];
 SeigniorModel.getColorCloth = function(color){
 	if(!SeigniorModel.cloths[color]){
-		var colors = color.split(",");console.log("colors",color,colors);
+		var colors = color.split(",");
 		var bitmapData = new LBitmapData(LMvc.datalist["flag-cloth"],null,null,null,null, LBitmapData.DATA_CANVAS);
 		var colorTransform = new LColorTransform(0, 0, 0, 1, parseInt(colors[0]), parseInt(colors[1]), parseInt(colors[2]), 0);
 		bitmapData.colorTransform(new LRectangle(0, 0, bitmapData.width, bitmapData.height), colorTransform);

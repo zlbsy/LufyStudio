@@ -97,9 +97,7 @@ EquipmentsView.prototype.equipmentDetailedDialog = function(itemModel) {
 };
 EquipmentsView.prototype.equipmentDress = function(event) {
 	var equipmentDetailed = LMvc.layer.getChildAt(LMvc.layer.numChildren - 1);
-	console.log("equipmentDress equipmentDetailed",equipmentDetailed);
 	var self = equipmentDetailed.fromView;
-	console.log("equipmentDress self",self);
 	var selectItemModel = equipmentDetailed.itemModel;
 	equipmentDetailed.close();
 	var e = new LEvent(EquipmentEvent.Dress);

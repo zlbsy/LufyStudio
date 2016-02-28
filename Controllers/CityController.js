@@ -42,7 +42,7 @@ CityController.prototype.init=function(){
 	LMvc.CityController = self;
 	LMvc.MapController.view.visible = false;
 	self.dispatchEvent(LEvent.COMPLETE);
-	self.dispatchEvent(LController.NOTIFY);
+	self.dispatchEvent(LController.NOTIFY_ALL);
 	if(self.initFunc){
 		self.initFunc();
 	}

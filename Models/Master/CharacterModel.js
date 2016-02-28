@@ -243,7 +243,7 @@ CharacterModel.prototype.calculation = function(init) {
 	var keys = ["attack","spirit","defense","breakout","morale"];
 	for(var i=0,l=keys.length;i<l;i++){
 		var key = keys[i];
-		self.data[key] += self.getEquipmentPlus(key);
+		self.data["_equipment_"+key] = self.getEquipmentPlus(key);
 	}
 	var skill = self.skill(SkillType.CREATE);
 	self.data.moveAssault = (skill && skill.isSubType(SkillSubType.MOVE_ASSAULT));
@@ -327,23 +327,23 @@ CharacterModel.prototype.proficiency = function(){
 };
 CharacterModel.prototype.attack = function(){
 	var self = this;
-	return (self.data.attack * self.proficiency() * self.statusChange("attack")) >>> 0;
+	return (self.data.attack * self.proficiency() * self.statusChange("attack") + self.data._equipment_attack) >>> 0;
 };
 CharacterModel.prototype.spirit = function(){
 	var self = this;
-	return (self.data.spirit * self.proficiency()) >>> 0;
+	return (self.data.spirit * self.proficiency() + self.data._equipment_spirit) >>> 0;
 };
 CharacterModel.prototype.defense = function(){
 	var self = this;
-	return (self.data.defense * self.proficiency() * self.statusChange("defense")) >>> 0;
+	return (self.data.defense * self.proficiency() * self.statusChange("defense") + self.data._equipment_defense) >>> 0;
 };
 CharacterModel.prototype.breakout = function(){
 	var self = this;
-	return (self.data.breakout * self.proficiency()) >>> 0;
+	return (self.data.breakout * self.proficiency() + self.data._equipment_breakout) >>> 0;
 };
 CharacterModel.prototype.morale = function(){
 	var self = this;
-	return (self.data.morale * self.proficiency()) >>> 0;
+	return (self.data.morale * self.proficiency() + self.data._equipment_morale) >>> 0;
 };
 CharacterModel.prototype.movePower = function() {
 	return this.data.movePower;

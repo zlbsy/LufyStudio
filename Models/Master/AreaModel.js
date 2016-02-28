@@ -3,7 +3,6 @@ function AreaModel(controller, data) {
 	base(self, MyModel, [controller]);
 	self.type = "AreaModel";
 	self.data = self.copyProperty(data);
-	console.log("self.data.level="+self.data.level);
 	if(!self.data.level){
 		self.data.level = 1;
 	}

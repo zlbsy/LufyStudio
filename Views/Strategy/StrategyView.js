@@ -8,8 +8,16 @@ function StrategyView(controller, characterModel, size, fromView) {
 	}
 	self.fromCharacterDetailed = (fromView && fromView.constructor.name == "CharacterDetailedView");
 	self.layerInit();
-	self.setStrategyList();
+	if(!self.fromCharacterDetailed){
+		self.setStrategyList();
+	}
 }
+StrategyView.prototype.updateView = function() {
+	var self = this;
+	var characterModel = self.controller.getValue("selectedCharacter");
+	self.characterModel = characterModel;
+	self.setStrategyList();
+};
 StrategyView.prototype.setStrategyList = function() {
 	var self = this;
 	self.strategyListLayer.removeAllChild();

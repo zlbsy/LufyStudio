@@ -999,7 +999,7 @@ seigniors : [
     ]
   },
   {  area_id : 1,name:"西凉",prefecture : 95,
-  money : 100,food : 1000,population : 40000,business : 100,agriculture : 100,technology : 100,police : 70,city_defense : 500,troops : 400,
+  money : 1000,food : 1000,population : 40000,business : 100,agriculture : 100,technology : 100,police : 70,city_defense : 500,troops : 400,
   items_farmland:[],
   items_market:[],
   items:[],
