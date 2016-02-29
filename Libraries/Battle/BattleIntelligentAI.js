@@ -599,6 +599,9 @@ BattleIntelligentAI.prototype.findMoveTarget = function() {
 	var distance = 100000, lX, lY, targetX = self.locationX, targetY = self.locationY, targetRoads;
 	for(var i = 0,l = BattleIntelligentAI.targetCharacters.length;i<l;i++){
 		var child = BattleIntelligentAI.targetCharacters[i];
+		if(child.data.isDefCharacter()){
+			continue;//绕过防御设施
+		}
 		lX = child.locationX(), lY = child.locationY();
 		LMvc.BattleController.query.checkDistance = true;
 		LMvc.BattleController.query.checkCharacter = true;

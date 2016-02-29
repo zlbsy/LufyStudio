@@ -138,7 +138,8 @@ BattleController.prototype.charactersInit = function(){
 	var enemyCharas;
 	var enemyPositions;
 	var selfPositions;
-	if(self.battleData.fromCity.seigniorCharaId() == LMvc.selectSeignorId){
+	var selfAttack = (self.battleData.fromCity.seigniorCharaId() == LMvc.selectSeignorId);
+	if(selfAttack){
 		enemyCharas = getDefenseEnemiesFromCity(self.battleData.toCity);
 		enemyPositions = self.model.map.charas;
 		selfPositions = self.model.map.enemys;
@@ -182,12 +183,14 @@ BattleController.prototype.charactersInit = function(){
 		var charaId = enemyCharas[i].id();
 		self.addEnemyCharacter(charaId,child.direction,child.x,child.y);
 		var battleCharacter = self.view.charaLayer.getCharacter(Belong.ENEMY, charaId);
-		if(child.index > 0){
+		if(child.index > 0 && selfAttack){
 			battleCharacter.mission = BattleCharacterMission.Passive;
 		}
 	}
 	self.model.enemyList[0].isLeader = true;
-	self.model.enemyList[0].mission = BattleCharacterMission.Defensive;
+	if(selfAttack){
+		self.model.enemyList[0].mission = BattleCharacterMission.Defensive;
+	}
 	self.defCharactersInit();
 	for(var i=0,l=selfPositions.length;i<l;i++){
 		var charaObjs = selfPositions[i];

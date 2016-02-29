@@ -313,8 +313,10 @@ BattleCharacterView.prototype.toDie = function(isSingleCombat) {
 		}else{
 			talkMsg = self.data.dieTalk();
 		}
-		script += "SGJTalk.show(" + self.data.id() + ",0," + talkMsg + ");";
+	}else{
+		talkMsg = self.data.dieTalk();
 	}
+	script += "SGJTalk.show(" + self.data.id() + ",0," + talkMsg + ");";
 	script += "SGJBattleCharacter.characterToDie(" + self.belong + ","+ self.data.id() + ");";
 	LGlobal.script.addScript(script);
 };

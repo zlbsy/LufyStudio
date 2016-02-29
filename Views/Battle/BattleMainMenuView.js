@@ -102,6 +102,12 @@ BattleMainMenuView.prototype.setMenu=function(){
 	menuButton.addEventListener(LMouseEvent.MOUSE_UP, self.onClickGameRead);
 	
 	menuY += menuHeight;
+	var menuButton = getButton(Language.get("全军撤退"),menuWidth);
+	menuButton.y = menuY;
+	layer.addChild(menuButton);
+	menuButton.addEventListener(LMouseEvent.MOUSE_UP, self.toRetreat);
+	
+	menuY += menuHeight;
 	var menuButton = getButton(Language.get("回合结束"),menuWidth);
 	menuButton.y = menuY;
 	layer.addChild(menuButton);
@@ -129,6 +135,17 @@ BattleMainMenuView.prototype.showOrHideMiniMap=function(event){
 	var self = event.currentTarget.parent.parent.parent;
 	var miniLayer = self.controller.view.miniLayer;
 	miniLayer.visible = !miniLayer.visible;
+};
+BattleMainMenuView.prototype.toRetreat=function(event){
+	var self = event.currentTarget.getParentByConstructor(BattleMainMenuView);
+	self.hideMenu();
+	var obj = {title:Language.get("confirm"),message:Language.get("确定全军撤离战场吗？"),height:200,
+		okEvent:self.retreatRun,cancelEvent:null};
+	var windowLayer = ConfirmWindow(obj);
+	LMvc.layer.addChild(windowLayer);
+};
+BattleMainMenuView.prototype.retreatRun=function(event){
+	event.currentTarget.parent.remove();
 };
 BattleMainMenuView.prototype.boutEnd=function(event){
 	var self = event.currentTarget.parent.parent.parent;

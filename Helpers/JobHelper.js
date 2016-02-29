@@ -495,7 +495,7 @@ function hireRun2(characterModel, hireCharacter,area){
 		return;
 	}
 	hireCharacter.seigniorId(characterModel.seigniorId());
-	var loyalty = 100 * percentage >> 0;
+	var loyalty = 50 + 50 * percentage >> 0;
 	hireCharacter.loyalty(loyalty > 100 ? 100 : loyalty);
 	var outOfOffice = area.outOfOffice();
 	var hireCharacterIndex = outOfOffice.findIndex(function(child){
@@ -570,5 +570,16 @@ function SeigniorExecuteChangeCityResources(area){
 }
 //褒奖
 function toPrizedByMoney(characterModel){
-	
+	var personalLoyaltyValue = 5;
+	var compatibilityValue = 3;
+	var value1 = personalLoyaltyValue * characterModel.personalLoyalty()/15;
+	var value2 = compatibilityValue * (150 - Math.abs(characterModel.compatibility() - characterModel.seignior().character().compatibility())) / 150;
+	var upValue1 = (value1 + value2) >>> 0;
+	var value = (value1 + value2 - upValue1)*0.5 + 0.5;
+	if(value > Math.random()){
+		upValue += 1;
+	}
+	var loyalty = characterModel.loyalty() + upValue;
+	loyalty = loyalty > 100 ? 100 : loyalty;
+	characterModel.loyalty(loyalty);
 }
