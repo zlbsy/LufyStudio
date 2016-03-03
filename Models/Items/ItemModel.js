@@ -69,10 +69,10 @@ ItemModel.prototype.explanation = function(){
 };
 ItemModel.prototype.icon=function(size,callback){
 	if(!size){
-		size = new LPoint(100,100);
+		size = new LPoint(60, 60);
 	}
-	//var icon = new BitmapSprite(LMvc.IMG_PATH + "item/" + this.id() + ".png", null,size);
-	var icon = new BitmapSprite(LMvc.IMG_PATH + "item/1.png", null,size);
+	var icon = new BitmapSprite(LMvc.IMG_PATH + "item/" + this.id() + ".png", null,size);
+	//var icon = new BitmapSprite(LMvc.IMG_PATH + "item/1.png", null,size);
 	if(typeof callback == "function")icon.addEventListener(LEvent.COMPLETE, callback);
 	var winPanel = new LPanel(new LBitmapData(LMvc.datalist["win06"]),size.x,size.y);
 	winPanel.cacheAsBitmap(true);

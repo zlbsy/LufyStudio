@@ -16,7 +16,7 @@ BitmapSprite.prototype.loadOver = function(event){
 	}
 	var bitmap = new LBitmap(bitmapData);
 	bitmap.name = "bitmap";
-	self.addChild(bitmap);
+	self.addChildAt(bitmap, 0);
 	if(self.size){
 		bitmap.scaleX = self.size.x / bitmap.bitmapData.width;
 		bitmap.scaleY = self.size.y / bitmap.bitmapData.height;
