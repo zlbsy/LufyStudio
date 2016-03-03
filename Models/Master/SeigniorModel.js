@@ -109,6 +109,9 @@ SeigniorModel.prototype.character = function(){
 	}
 	return self.data._chara;
 };
+SeigniorModel.prototype.isTribe = function(){
+	return this.character().isTribeCharacter();
+};
 SeigniorModel.prototype.exp = function(value){
 	return this._dataValue("exp", value, 0);
 };

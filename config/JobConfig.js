@@ -46,7 +46,18 @@ var JobCoefficient = {
 	REDEEM:2,
 	STOP_BATTLE:350,
 	COMPATIBILITY:75,
-	TRAINING:20
+	TRAINING:0.2
+};
+/*任务转功绩系数*/
+var JobFeatCoefficient = {
+	NORMAL:20,
+	TRAINING:30,
+	REPAIR:100,
+	AGRICULTURE:100,
+	BUSINESS:100,
+	POLICE:100,
+	TECHNOLOGY:100,
+	ENLIST:100
 };
 var JobMax = {
 	AGRICULTURE:[3000,4000,5000,6000,7000],
@@ -66,3 +77,9 @@ var AiEnlistFlag = {
 	BattleResource:6,//战斗准备物资
 	Free:7//充足
 };
+//收获月份
+var HarvestMonths = {
+	Food:[7],
+	Money:[3,6,9,12]
+};
+var TribeAIProbability = 0.2;

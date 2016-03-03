@@ -92,34 +92,54 @@ BattleAIExecute.prototype.result=function(isWin){
 	experienceToFeat(self.targetData._characterList);
 	SeigniorExecute.Instance().msgView.showSeignior();
 	if(isWin){
-		//{0}攻占了{1}军的{2}!
-		if(toCity.seigniorCharaId()){
-			SeigniorExecute.addMessage(String.format(Language.get("win_attack_and_occupy_enemy"),fromSeignior.character().name(),toCity.seignior().character().name(),toCity.name()));
-		}else{
-			SeigniorExecute.addMessage(String.format(Language.get("win_attack_and_occupy_null"),fromSeignior.character().name(),toCity.name()));
-		}
 		var winSeigniorId = fromSeignior.chara_id();
 		var failSeigniorId = toCity.seigniorCharaId();
-		var leaderId = self.attackData._characterList[0].id();
-		retreatCity = battleFailChangeCity(toCity, failSeigniorId);
-		var retreatCityId = 0;
-		if(retreatCity){
-			retreatCityId = retreatCity.id();
+		var isTribe = fromSeignior.character().isTribeCharacter();
+		if(isTribe){
+			if(toCity.seigniorCharaId()){
+				SeigniorExecute.addMessage(String.format(Language.get("{0}的{1}遭到了{2}的掠夺,损失惨重!"),toCity.seignior().character().name(),toCity.name(),fromSeignior.character().name()));
+			}else{
+				SeigniorExecute.addMessage(String.format(Language.get("{0}遭到了{1}的掠夺,损失惨重!"),toCity.name(),toCity.seignior().character().name()));
+			}
+			//外族入侵，资源损失
+			lossOfResourcesByTribe(toCity, fromCity);
+			//外族兵力及资源撤回
+			var characters = self.attackData.expeditionCharacterList;
+			attackResourcesReturnToCity(characters, self.attackData, fromCity);
+		}else{
+			if(toCity.seignior().isTribe()){
+				//外族资源重设
+				resetTribeCity(toCity);
+			}
+			//{0}攻占了{1}军的{2}!
+			if(toCity.seigniorCharaId()){
+				SeigniorExecute.addMessage(String.format(Language.get("win_attack_and_occupy_enemy"),fromSeignior.character().name(),toCity.seignior().character().name(),toCity.name()));
+			}else{
+				SeigniorExecute.addMessage(String.format(Language.get("win_attack_and_occupy_null"),fromSeignior.character().name(),toCity.name()));
+			}
+		
+		
+			var leaderId = self.attackData._characterList[0].id();
+			retreatCity = battleFailChangeCity(toCity, failSeigniorId);
+			var retreatCityId = 0;
+			if(retreatCity){
+				retreatCityId = retreatCity.id();
+			}
+			battleCityChange(winSeigniorId,
+			failSeigniorId, 
+			retreatCityId, 
+			self.attackData._characterList,
+			toCity,
+			self.attackData.captives);
+			console.warn("self.attackData.captives=" , self.attackData.captives);
+			retreatCityId = battleCheckRetreatCity(retreatCity, failSeigniorId, toCity);
+			
+			toCity.food(self.attackData.food);
+			toCity.money(self.attackData.money);
+			toCity.troops(toCity.troops() + self.attackData.troops);
+			
+			captivesAutomatedProcessing(self.attackData.captives, leaderId, retreatCityId, toCity, fromCity);//处理俘虏
 		}
-		battleCityChange(winSeigniorId,
-		failSeigniorId, 
-		retreatCityId, 
-		self.attackData._characterList,
-		toCity,
-		self.attackData.captives);
-		console.warn("self.attackData.captives=" , self.attackData.captives);
-		retreatCityId = battleCheckRetreatCity(retreatCity, failSeigniorId, toCity);
-		
-		toCity.food(self.attackData.food);
-		toCity.money(self.attackData.money);
-		toCity.troops(toCity.troops() + self.attackData.troops);
-		
-		captivesAutomatedProcessing(self.attackData.captives, leaderId, retreatCityId, toCity, fromCity);//处理俘虏
 		battleChangeCharactersStatus(winSeigniorId, fromCity, self.attackData._characterList);//战斗结束后武将状态转换，以及出战城池太守任命
 		LMvc.MapController.view.resetAreaIcon(toCity.id());
 		LMvc.MapController.checkSeigniorFail(failSeigniorId);

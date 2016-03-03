@@ -301,6 +301,10 @@ BattleCharacterView.prototype.returnShowMoveRoadObject = function() {
 BattleCharacterView.prototype.toDie = function(isSingleCombat) {
 	var self = this;
 	var script = "";
+	if(self.data.isDefCharacter()){
+		//防御设施被摧毁,城防降低
+		self.data.city.cityDefense(-DefenseCharacterCost * 0.5);
+	}
 	if(!self.data.isDefCharacter() && !self.data.isTribeCharacter()){
 		var talkMsg;
 		if(isSingleCombat || calculateHitrateCaptive(self)){

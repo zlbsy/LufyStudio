@@ -1849,7 +1849,9 @@ LSGJBattleCharacterScript.analysis = function(value) {
 };
 LSGJBattleCharacterScript.boutSkillRun = function(value, start, end) {
 	var params = value.substring(start + 1, end).split(",");
-	LMvc.BattleController.view.charaLayer.boutSkillRun(params[0], BattleIntelligentAI.execute);
+	var charaLayer = LMvc.BattleController.view.charaLayer;
+	var terrainHeal = charaLayer.terrainHeal;
+	charaLayer.boutSkillRun(params[0], terrainHeal);
 };
 LSGJBattleCharacterScript.battleEndCheck = function(value, start, end) {
 	var params = value.substring(start + 1, end).split(",");

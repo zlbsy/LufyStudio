@@ -21,7 +21,8 @@ var BattleFailConfirmType = {
 	selectMoveCity:-1,
 	enemyCaptive:-2,
 	selfCaptive:-3,
-	attackAndOccupy:-4
+	attackAndOccupy:-4,
+	lossOfResources:-5
 };
 /*
 BattleMapConfig.GameClear = "gameClear";

@@ -217,6 +217,7 @@ SeigniorExecute.prototype.areaJobRun=function(area){
 				chara.transport();
 				break;
 			default:
+				chara.featPlus(JobFeatCoefficient.NORMAL * 0.25);
 				chara.job(Job.IDLE);
 		}
 	}
@@ -329,6 +330,21 @@ SeigniorExecute.prototype.areaAIRun=function(areaModel){
 		return;
 	}
 	console.log("判断是否有未执行任务人员");
+	
+	if(areaModel.seignior().isTribe()){
+		//外族只在每年收获粮食时随机进行侵略行动一次，其他时间不行动
+		if(HarvestMonths.Food.indexOf(LMvc.chapterData.month) >= 0 && Math.random() < TribeAIProbability && self.characters.length == areaModel.generalsSum()){
+			var neighbors = areaModel.neighbor();
+			var cityId = neighbors[neighbors.length * Math.random() >>> 0];
+			var city = AreaModel.getArea(cityId);
+			jobAiToBattle(areaModel, self.characters, city);
+		}else{
+			self.areaAIIndex++;
+			self.timer.reset();
+			self.timer.start();
+		}
+		return;
+	}
 	//俘虏处理
 	jobAiCaptives(areaModel);
 	console.log("俘虏处理");

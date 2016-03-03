@@ -512,9 +512,9 @@ function setBattleSaveData(){
 function battleExpeditionMove(city, retreatCity){
 	//资源损失0.2
 	retreatCity.food(city.food()*0.4 >>> 0);
-	city.food(-city.food()*0.6 >>> 0);
+	city.food(-(city.food()*0.6 >>> 0));
 	retreatCity.money(city.money()*0.4 >>> 0);
-	city.money(-city.money()*0.6 >>> 0);
+	city.money(-(city.money()*0.6 >>> 0));
 	retreatCity.troops(retreatCity.troops() + (city.troops()*0.4 >>> 0));
 	city.troops(city.troops()*0.4 >>> 0);
 }
@@ -557,14 +557,22 @@ function battleCityChange(winSeigniorId, failSeigniorId, retreatCityId, expediti
 	}else{
 		console.log("无撤退城市");
 		var generals = city.generals();
-		for(var i=0,l=generals.length;i<l;i++){
-			var child = generals[i];
-			if(captives.indexOf(child.id())>=0){
-				continue;
+		if(city.seignior().isTribeCharacter()){
+			//外族消亡
+			for(var i=0,l=generals.length;i<l;i++){
+				generals[i].toDie();
 			}
-			captives.push(child.id());
+		}else{
+			//全员被俘虏
+			for(var i=0,l=generals.length;i<l;i++){
+				var child = generals[i];
+				if(captives.indexOf(child.id())>=0){
+					continue;
+				}
+				captives.push(child.id());
+			}
+			console.log("全员被俘虏 : " + captives);
 		}
-		console.log("全员被俘虏 : " + captives);
 	}
 	//generals.splice(0, generals.length);
 	if(failSeigniorId){
@@ -669,7 +677,7 @@ function experienceToFeat(characterModels){
 		if(data.feat < 10){
 			data.feat = 10;
 		}
-		if(data.exp >= average * rewardValue){
+		if(data.exp >= average * rewardValue && data.exp > 50){
 			data.feat += feat * (data.exp / average  - rewardValue);
 			data.reward = true;
 		}
@@ -729,4 +737,60 @@ function captivesAutomatedProcessing(captives, leaderId, retreatCityId, toCity, 
 		var characterModel = CharacterModel.getChara(characterId);
 		captiveAutomatedProcessing(characterModel, leaderId, retreatCityId, toCity, fromCity);
 	}
+}
+/*全军撤退*/
+function allCharactersToRetreat(){
+	var controller = LMvc.BattleController;
+	var toCity = controller.battleData.toCity;
+	var isSelfDef = toCity.seigniorCharaId() == LMvc.selectSeignorId;
+	var characters = controller.view.charaLayer.getCharactersFromBelong(Belong.SELF);
+	for(var i=0,l=characters.length;i<l;i++){
+		if(characters[i].data.isDefCharacter()){
+			continue;
+		}
+		var troops = characters[i].data.troops();
+		characters[i].data.troops(0);
+		if(isSelfDef){
+			toCity.troops(toCity.troops() + troops);
+		}else{
+			controller.battleData.troops += troops;
+		}
+	}
+	battleEndCheck(Belong.SELF);
+};
+/*外族兵力及资源撤回*/
+function attackResourcesReturnToCity(characters, battleData, city){
+	for(var i=0,l=characters.length;i<l;i++){
+		if(characters[i].data.isDefCharacter()){
+			continue;
+		}
+		var troops = characters[i].data.troops();
+		characters[i].data.troops(0);
+		battleData.troops += troops;
+	}
+	city.troops(city.troops() + battleData.troops);
+	city.food(battleData.food);
+	city.money(battleData.money);
+};
+/*外族入侵，资源损失0.5*/
+function lossOfResourcesByTribe(toCity, fromCity){
+	var food = toCity.food()*0.5 >>> 0;//粮食掠夺
+	toCity.food(-food);
+	fromCity.food(food);
+	var money = toCity.money()*0.5 >>> 0;//金钱掠夺
+	toCity.money(-money);
+	fromCity.money(money);
+	toCity.troops(toCity.troops()*0.5 >>> 0);//兵力损失
+	toCity.cityDefense(-(toCity.cityDefense()*0.4 >>> 0));//防御损失
+	toCity.population(-(toCity.population()*0.1 >>> 0));//人口损失
+	toCity.police(-(toCity.police()*0.3 >>> 0));//治安损失
+	toCity.agriculture(-(toCity.agriculture()*0.1 >>> 0));//农业损失
+	toCity.business(-(toCity.business()*0.1 >>> 0));//商业损失
+	toCity.technology(-(toCity.technology()*0.1 >>> 0));//技术损失
+}
+/*外族灭亡，资源重设*/
+function resetTribeCity(city){
+	city.troops(0);
+	city.food(2000);
+	city.money(1000);
 }

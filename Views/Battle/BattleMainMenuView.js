@@ -146,6 +146,7 @@ BattleMainMenuView.prototype.toRetreat=function(event){
 };
 BattleMainMenuView.prototype.retreatRun=function(event){
 	event.currentTarget.parent.remove();
+	allCharactersToRetreat();
 };
 BattleMainMenuView.prototype.boutEnd=function(event){
 	var self = event.currentTarget.parent.parent.parent;

@@ -210,6 +210,10 @@ CharacterModel.prototype.basicPropertiesCalculation = function() {
 		self.data["_"+key] += self.getEquipmentPlus(key);
 	}
 };
+CharacterModel.prototype.basicPropertiesSum = function(){
+	var self = this;
+	return self.force() + self.intelligence() + self.command() + self.agility() + self.luck();
+};
 CharacterModel.prototype.calculation = function(init) {
 	var self = this;
 	var currentSoldiers = self.currentSoldiers();
@@ -395,6 +399,10 @@ CharacterModel.prototype.childs = function(){
 };
 CharacterModel.prototype.father = function(){
 	return this.data.father;
+};
+CharacterModel.prototype.featPlus = function(value){
+	var self = this, feat = self.feat();
+	self.feat((feat + value) >>> 0);
 };
 CharacterModel.prototype.feat = function(value){
 	return this._dataValue("feat", value, 0);

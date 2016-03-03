@@ -22,12 +22,10 @@ HeaderStatusView.prototype.set=function(){
 	title.x = 5;
 	title.y = 10;
 	panel.addChild(title);
-	console.log("seigniorCharacterName");
 	var seigniorCharacterName = "***";
 	if(cityModel.seignior_chara_id()){
 		 seigniorCharacterName = CharacterModel.getChara(cityModel.seignior_chara_id()).name();
 	}
-	console.log("prefectureCharacterName");
 	var prefectureCharacterName = "***";
 	if(cityModel.prefecture()){
 		 prefectureCharacterName = CharacterModel.getChara(cityModel.prefecture()).name();
@@ -42,7 +40,7 @@ HeaderStatusView.prototype.set=function(){
 	self.setStatus(Language.get("city_defense"), self.get(cityModel.cityDefenseLabel()), self.stepMiniWidth * 1 + 5, self.stepHeight * 2, self.stepMiniWidth + 20);
 	self.setStatus(Language.get("troops"), self.get(cityModel.troopsSum()), self.stepMiniWidth * 1 + 5, self.stepHeight * 3, self.stepMiniWidth + 20);
 	self.setStatus(Language.get("police"), self.get(cityModel.police()), self.stepMiniWidth * 1 + 5, self.stepHeight * 4, self.stepMiniWidth + 20);
-	console.log("generals");
+	
 	self.setStatus(Language.get("generals"), self.get(cityModel.generalsSum()), self.stepMiniWidth * 2 + 5 + 20, self.stepHeight * 2, self.stepMiniWidth - 20);
 	self.setStatus(Language.get("out_of_office"), self.get(cityModel.outOfOfficeSum()), self.stepMiniWidth * 2 + 5 + 20, self.stepHeight * 3, self.stepMiniWidth - 20);
 	self.setStatus(Language.get("captive"), self.get(cityModel.captiveSum()), self.stepMiniWidth * 2 + 5 + 20, self.stepHeight * 4, self.stepMiniWidth - 20);

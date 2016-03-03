@@ -36,6 +36,9 @@ function BattleResultConfirmView(controller, params){
 		case BattleFailConfirmType.attackAndOccupy:
 			self.setAttackAndOccupy();
 			break;
+		case BattleFailConfirmType.lossOfResources:
+			self.setLossOfResources();
+			break;
 	}
 	var y = self.baseLayer.y;
 	self.baseLayer.y = LGlobal.height;
@@ -188,10 +191,16 @@ BattleResultConfirmView.prototype.setAttackAndOccupy = function(){
 	var self = this;
 	self.setOnlyMessage(self.message, BattleResultEvent.ATTACK_AND_OCCUPY);//攻占
 };
+BattleResultConfirmView.prototype.setLossOfResources = function(){
+	var self = this;
+	self.setOnlyMessage(self.message, BattleResultEvent.LOSS_OF_OCCUPY);//被掠夺
+};
 BattleResultConfirmView.prototype.setOnlyMessage = function(msg, eventType){
 	var self = this;
 	self.resize(400,200);
 	var lblMsg = getStrokeLabel(msg, 20, "#FFFFFF", "#000000", 4);
+	lblMsg.width = self.windowWidth - 60;
+	lblMsg.setWordWrap(true,27);
 	lblMsg.x = (self.windowWidth - lblMsg.getWidth())*0.5;
 	lblMsg.y = 30;
 	self.baseLayer.addChild(lblMsg);

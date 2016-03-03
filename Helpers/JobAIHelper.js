@@ -485,6 +485,9 @@ function jobAiCaptives(areaModel){
 	var seigniorId = areaModel.seigniorCharaId();
 	for(var i = captives.length - 1; i >= 0; i--){
 		var charaModel = captives[i];
+		if(charaModel.job() != Job.IDLE){
+			continue;
+		}
 		jobAiCaptive(areaModel, seigniorId, charaModel);
 	}
 }

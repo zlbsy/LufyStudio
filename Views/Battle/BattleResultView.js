@@ -67,6 +67,10 @@ BattleResultView.prototype.winInit=function(){
 		experienceToFeat(battleData.expeditionEnemyCharacterList);
 		self.failSeigniorId = battleData.toCity.seigniorCharaId();
 		var city = battleData.toCity;
+		if(city.seignior().isTribe()){
+			//外族资源重设
+			resetTribeCity(city);
+		}
 		if(city.seigniorCharaId() > 0 && city.generalsSum() > self.model.selfCaptive.length){
 			self.selfChangeCity();
 		}
@@ -128,8 +132,29 @@ BattleResultView.prototype.failInit=function(){
 	}else{
 		console.log("enemy change city");
 		self.winSeigniorId = battleData.fromCity.seigniorCharaId();
-		self.addEventListener(BattleResultEvent.CLOSE_EXP, self.selectMoveCity);
+		if(self.enemyLeader.data.isTribeCharacter()){
+			self.addEventListener(BattleResultEvent.CLOSE_EXP, self.lossOfResources);
+			self.addEventListener(BattleResultEvent.LOSS_OF_OCCUPY, self.showMap);
+		}else{
+			self.addEventListener(BattleResultEvent.CLOSE_EXP, self.selectMoveCity);
+		}
 	}
+};
+BattleResultView.prototype.lossOfResources=function(event){
+	var self = event.currentTarget;
+	var battleData = self.controller.battleData;
+	//外族入侵，资源损失
+	lossOfResourcesByTribe(battleData.toCity, battleData.fromCity);
+	//外族兵力及资源撤回
+	var characters = self.controller.view.charaLayer.getCharactersFromBelong(Belong.ENEMY);
+	attackResourcesReturnToCity(characters, battleData, battleData.fromCity);
+	var view = new BattleResultConfirmView(self.controller, 
+		{
+			confirmType : BattleFailConfirmType.lossOfResources, 
+			message : String.format("{0}被外族入侵，城池遭到破坏，资源损失严重!", battleData.toCity.name())
+		}
+	);
+	self.addChild(view);
 };
 BattleResultView.prototype.selectMoveCity=function(event){
 	var self = event.currentTarget;

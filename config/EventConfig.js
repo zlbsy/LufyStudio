@@ -68,6 +68,7 @@ BattleResultEvent.LOSE_CITY = "lose_city";
 BattleResultEvent.CLOSE_FAIL_CAPTIVE = "close_fail_captive";
 BattleResultEvent.CLOSE_FAIL_CAPTIVE_ENEMY = "close_fail_captive_enemy";
 BattleResultEvent.CLOSE_FAIL_CAPTIVE_SELF = "close_fail_captive_self";
+BattleResultEvent.LOSS_OF_OCCUPY = "lose_of_occupy";
 
 if (!Array.getRandomArrays){
 	Array.getRandomArrays = function(list,num){

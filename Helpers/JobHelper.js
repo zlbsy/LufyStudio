@@ -65,6 +65,7 @@ function getJobPrice(jobType) {
 技术：智力+统率
 招募：运气+统率
 录用：运气+相性
+训练：总和
 */
 function getJobResult(realValue,coefficient){
 	var value = (JobCoefficient.NORMAL + realValue) * coefficient;
@@ -74,19 +75,20 @@ function trainingRun(characterModel, soldierId){
 	var soldier = characterModel.soldiers().find(function(child){
 		return child.id() == soldierId;
 	});
+	var proficiencyPlus = getJobResult(characterModel.basicPropertiesSum() * 0.2,JobCoefficient.TRAINING);
 	var proficiency = soldier.proficiency();
-	var proficiencyPlus;
-	if(proficiency + JobCoefficient.TRAINING < TrainingSetting.MAX){
-		proficiencyPlus = JobCoefficient.TRAINING;
-	}else{
+	if(proficiency + proficiencyPlus > TrainingSetting.MAX){
 		proficiencyPlus = TrainingSetting.MAX - proficiency;
 	}
 	soldier.proficiency(proficiency + proficiencyPlus);
+	var feat = JobFeatCoefficient.NORMAL * proficiencyPlus / JobFeatCoefficient.TRAINING;
+	characterModel.featPlus(feat);
 	characterModel.job(Job.IDLE);
 }
 function levelUpCityRun(characterModel){
 	var city = characterModel.city();
 	city.level(1);
+	characterModel.featPlus(JobFeatCoefficient.NORMAL);
 	characterModel.job(Job.IDLE);
 	LMvc.MapController.view.resetAreaIcon(city.id());
 	SeigniorExecute.addMessage(String.format(Language.get("levelUpCityMessage"),city.name(),city.size()));
@@ -107,6 +109,7 @@ function redeemRun(characterModel, data){
 		if(characterModel.seigniorId() == LMvc.selectSeignorId){
 			SeigniorExecute.addMessage(String.format(Language.get("redeemFailMessage"),characterModel.name()));
 		}
+		characterModel.featPlus(JobFeatCoefficient.NORMAL * 0.5);
 		return;
 	}
 	var city = characterModel.city();
@@ -114,6 +117,7 @@ function redeemRun(characterModel, data){
 	targetCharacter.moveTo(city.id());
 	targetCharacter.moveTo();
 	targetCity.removeCaptives(data.chara_id);
+	characterModel.featPlus(JobFeatCoefficient.NORMAL);
 	console.log("赎回俘虏 : 成功");
 	if(characterModel.seigniorId() == LMvc.selectSeignorId){
 		SeigniorExecute.addMessage(String.format(Language.get("redeemSuccessMessage"),characterModel.name()));
@@ -133,6 +137,7 @@ function stopBattleRun(characterModel, data){
 		if(characterModel.seigniorId() == LMvc.selectSeignorId){
 			SeigniorExecute.addMessage(String.format(Language.get("stopBattleFailMessage"),characterModel.name()));
 		}
+		characterModel.featPlus(JobFeatCoefficient.NORMAL * 0.5);
 		return;
 	}
 	var seignior = characterModel.seignior();
@@ -141,6 +146,7 @@ function stopBattleRun(characterModel, data){
 	if(characterModel.seigniorId() == LMvc.selectSeignorId){
 		SeigniorExecute.addMessage(String.format(Language.get("stopBattleSuccessMessage"),characterModel.name()));
 	}
+	characterModel.featPlus(JobFeatCoefficient.NORMAL);
 }
 function accessRun(characterModel){
 	//访问：智力+统率+运气
@@ -157,6 +163,7 @@ function accessRun(characterModel){
 		if(characterModel.seigniorId() == LMvc.selectSeignorId){
 			SeigniorExecute.addMessage(String.format(Language.get("accessFailMessage"),characterModel.name()));
 		}
+		characterModel.featPlus(JobFeatCoefficient.NORMAL * 0.5);
 		return;
 	}
 	var cityModel = characterModel.city();
@@ -166,6 +173,7 @@ function accessRun(characterModel){
 		if(characterModel.seigniorId() == LMvc.selectSeignorId){
 			SeigniorExecute.addMessage(String.format(Language.get("accessFailMessage"),characterModel.name()));
 		}
+		characterModel.featPlus(JobFeatCoefficient.NORMAL * 0.5);
 		return;
 	}
 	var charaId = notDebut[notDebut.length*Math.random() >>> 0];
@@ -174,6 +182,7 @@ function accessRun(characterModel){
 	var area = characterModel.city();
 	var outOfOffice = area.outOfOffice();
 	outOfOffice.push(targetModel);
+	characterModel.featPlus(JobFeatCoefficient.NORMAL);
 	if(characterModel.seigniorId() == LMvc.selectSeignorId){
 		SeigniorExecute.addMessage(String.format(Language.get("accessSuccessMessage"),characterModel.name(),targetModel.name()));
 	}
@@ -233,6 +242,7 @@ function exploreAgricultureRun(characterModel){
 	if(characterModel.seigniorId() == LMvc.selectSeignorId){
 		SeigniorExecute.addMessage(String.format(Language.get("exploreAgricultureSuccess"),characterModel.name(),item.name()));
 	}
+	characterModel.featPlus(JobFeatCoefficient.NORMAL);
 }
 function getValueByExploreFail(baseValue, randomValue){
 	if(Math.random() > 0.5){
@@ -254,6 +264,7 @@ function getValueByExploreFail(baseValue, randomValue){
 }
 function exploreAgricultureFailRun(cityModel, characterModel, food){
 	cityModel.food(food);
+	characterModel.featPlus(JobFeatCoefficient.NORMAL * 0.5);
 	if(characterModel.seigniorId() == LMvc.selectSeignorId){
 		var msg = "";
 		if(food>0){
@@ -266,6 +277,7 @@ function exploreAgricultureFailRun(cityModel, characterModel, food){
 }
 function exploreBusinessFailRun(cityModel, characterModel, money){
 	cityModel.money(money);
+	characterModel.featPlus(JobFeatCoefficient.NORMAL * 0.5);
 	if(characterModel.seigniorId() == LMvc.selectSeignorId){
 		var msg = "";
 		if(money>0){
@@ -312,6 +324,7 @@ function exploreBusinessRun(characterModel){
 	if(characterModel.seigniorId() == LMvc.selectSeignorId){
 		SeigniorExecute.addMessage(String.format(Language.get("exploreBusinessSuccess"),characterModel.name(),item.name()));
 	}
+	characterModel.featPlus(JobFeatCoefficient.NORMAL);
 }
 function transportRun(characterModel, transportData){
 	//运输物资
@@ -322,6 +335,7 @@ function transportRun(characterModel, transportData){
 	cityModel.troops(troops + transportData.troops);
 	cityModel.food(transportData.food);
 	cityModel.money(transportData.money);
+	characterModel.featPlus(JobFeatCoefficient.NORMAL * 0.5);
 }
 function repairRun(characterModel){
 	//修补：武力+统率
@@ -331,6 +345,8 @@ function repairRun(characterModel){
 	var value = (value01 + value02) * (characterModel.hasSkill(SkillSubType.AGRICULTURE) ? 1.5 : 1);
 	characterModel.city().cityDefense(value >>> 0);
 	characterModel.job(Job.IDLE);
+	var feat = JobFeatCoefficient.NORMAL * value / JobFeatCoefficient.REPAIR;
+	characterModel.featPlus(feat);
 }
 function agricultureRun(characterModel){
 	//农业：智力+武力
@@ -340,6 +356,8 @@ function agricultureRun(characterModel){
 	var value = (value01 + value02) * (characterModel.hasSkill(SkillSubType.AGRICULTURE) ? 1.5 : 1);
 	characterModel.city().agriculture(value >>> 0);
 	characterModel.job(Job.IDLE);
+	var feat = JobFeatCoefficient.NORMAL * value / JobFeatCoefficient.AGRICULTURE;
+	characterModel.featPlus(feat);
 }
 function businessRun(characterModel){
 	//商业：智力+敏捷
@@ -349,6 +367,8 @@ function businessRun(characterModel){
 	var value = (value01 + value02) * (characterModel.hasSkill(SkillSubType.BUSINESS) ? 1.5 : 1);
 	characterModel.city().business(value >>> 0);
 	characterModel.job(Job.IDLE);
+	var feat = JobFeatCoefficient.NORMAL * value / JobFeatCoefficient.BUSINESS;
+	characterModel.featPlus(feat);
 }
 function policeRun(characterModel){
 	//治安：武力*2+敏捷
@@ -359,6 +379,8 @@ function policeRun(characterModel){
 	//SeigniorExecute.addMessage("治安"+characterModel.name()+"="+value);
 	characterModel.city().police(value >>> 0);
 	characterModel.job(Job.IDLE);
+	var feat = JobFeatCoefficient.NORMAL * value / JobFeatCoefficient.POLICE;
+	characterModel.featPlus(feat);
 }
 function technologyRun(characterModel){
 	//技术：智力+统率
@@ -368,6 +390,8 @@ function technologyRun(characterModel){
 	var value = (value01 + value02) * (characterModel.hasSkill(SkillSubType.TECHNOLOGY) ? 1.5 : 1);
 	characterModel.city().technology(value >>> 0);
 	characterModel.job(Job.IDLE);
+	var feat = JobFeatCoefficient.NORMAL * value / JobFeatCoefficient.TECHNOLOGY;
+	characterModel.featPlus(feat);
 }
 function enlistRun(characterModel, targetEnlist){
 	//招募：运气+统率
@@ -387,6 +411,8 @@ function enlistRun(characterModel, targetEnlist){
 	troop += quantity;
 	area.troops(troop);
 	characterModel.job(Job.IDLE);
+	var feat = JobFeatCoefficient.NORMAL * quantity / JobFeatCoefficient.ENLIST;
+	characterModel.featPlus(feat);
 }
 function spyRun(characterModel, cityId){
 	//谍报：武力+运气
@@ -396,9 +422,9 @@ function spyRun(characterModel, cityId){
 	if(characterModel.seigniorId() == area.seigniorCharaId()){
 		//TODO::失败:己方城池
 		console.log("spyRun : 失败 null");
+		characterModel.featPlus(JobFeatCoefficient.NORMAL * 0.5);
 		return;
 	}
-	var seignior;
 	var spyValue = characterModel.force() + characterModel.luck();
 	if(spyValue<JobCoefficient.SPY){
 		if(spyValue < Math.random()*JobCoefficient.SPY){
@@ -406,15 +432,17 @@ function spyRun(characterModel, cityId){
 			if(characterModel.seigniorId() == LMvc.selectSeignorId){
 				SeigniorExecute.addMessage(String.format(Language.get("spyFailMessage"),characterModel.name(),area.name()));
 			}
+			characterModel.featPlus(JobFeatCoefficient.NORMAL * 0.5);
 			return;
 		}
-		seignior = characterModel.seignior();
-		seignior.addSpyCity(cityId);
-		return;
+		//seignior = characterModel.seignior();
+		//seignior.addSpyCity(cityId);
+		//return;
 	}
 	var num = (spyValue / JobCoefficient.SPY) >>> 0;
-	seignior = seignior || characterModel.seignior();
+	var seignior = characterModel.seignior();
 	seignior.addSpyCity(cityId);
+	characterModel.featPlus(JobFeatCoefficient.NORMAL);
 	if(characterModel.seigniorId() == LMvc.selectSeignorId){
 		SeigniorExecute.addMessage(String.format(Language.get("spySuccessMessage"),characterModel.name(),area.name()));
 	}
@@ -438,6 +466,7 @@ function spyRun(characterModel, cityId){
 	if(citys.length == 0){
 		return;
 	}
+	characterModel.featPlus(JobFeatCoefficient.NORMAL * 0.5);
 	if(num > citys.length){
 		num = citys.length;
 	}
@@ -461,6 +490,7 @@ function hireRun(characterModel, hireCharacterId){
 		if(characterModel.seigniorId() == LMvc.selectSeignorId){
 			SeigniorExecute.addMessage(String.format(Language.get("hireFailMessage"),characterModel.name()));
 		}
+		characterModel.featPlus(JobFeatCoefficient.NORMAL * 0.5);
 		return;
 	}
 	//var hireCharacter = outOfOffice[hireCharacterIndex];
@@ -492,6 +522,7 @@ function hireRun2(characterModel, hireCharacter,area){
 			SeigniorExecute.addMessage("seigniorChara.compatibility() " + " = " + seigniorChara.compatibility());
 			SeigniorExecute.addMessage("hireCharacter.compatibility() " + " = " + hireCharacter.compatibility());
 		}
+		characterModel.featPlus(JobFeatCoefficient.NORMAL * 0.5);
 		return;
 	}
 	hireCharacter.seigniorId(characterModel.seigniorId());
@@ -509,6 +540,7 @@ function hireRun2(characterModel, hireCharacter,area){
 	if(characterModel.seigniorId() == LMvc.selectSeignorId){
 		SeigniorExecute.addMessage(String.format(Language.get("hireSuccessMessage"),characterModel.name(),hireCharacter.name(),hireCharacter.name()));
 	}
+	characterModel.featPlus(JobFeatCoefficient.NORMAL);
 }
 function SeigniorExecuteChangeCityResources(area){
 	//TODO::自然灾害
@@ -517,14 +549,14 @@ function SeigniorExecuteChangeCityResources(area){
 	var population = area.population();
 	//金钱
 	var maxBusiness = AreaModel.businessList[AreaModel.businessList.length - 1];
-	if(LMvc.chapterData.month % 3 == 0){
+	if(HarvestMonths.Money.indexOf(LMvc.chapterData.month) >= 0){
 		var addMoney = 500 + 5000*area.business()/maxBusiness;
 		addMoney *= (1 + population/maxPopulation);
 		area.money(addMoney);
 	}
 	//粮食
 	var maxAgriculture = AreaModel.agricultureList[AreaModel.agricultureList.length - 1];
-	if(LMvc.chapterData.month  == 7){
+	if(HarvestMonths.Food.indexOf(LMvc.chapterData.month)  >= 0){
 		var addFood = 10000 + 50000*area.agriculture()/maxAgriculture;
 		addFood *= (1 + population/maxPopulation);
 		area.food(addFood);

@@ -120,8 +120,7 @@ MapView.prototype.updateMapCoordinate = function(){
 		self.baseLayer.x = LMvc.mapX;
 		self.baseLayer.y = LMvc.mapY;
 	}else{
-		LMvc.mapX = 0;
-		LMvc.mapY = 0;
+		self.positionChangeToCity(CharacterModel.getChara(LMvc.selectSeignorId).city());
 	}
 };
 MapView.prototype.updateView = function(){
