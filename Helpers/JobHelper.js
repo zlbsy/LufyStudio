@@ -65,13 +65,14 @@ function getJobPrice(jobType) {
 技术：智力+统率
 招募：运气+统率
 录用：运气+相性
-训练：总和
+训练：总和 + 城池技术
 */
 function getJobResult(realValue,coefficient){
 	var value = (JobCoefficient.NORMAL + realValue) * coefficient;
 	return value;
 }
 function trainingRun(characterModel, soldierId){
+	//TODO::城池技术
 	var soldier = characterModel.soldiers().find(function(child){
 		return child.id() == soldierId;
 	});
@@ -218,7 +219,7 @@ function exploreAgricultureRun(characterModel){
 	
 	var cityModel = characterModel.city();
 	if(rand > value){
-		console.log("exploreAgricultureRun : 失败 能力不够");
+		//console.log("exploreAgricultureRun : 失败 能力不够");
 		var food = getValueByExploreFail(400,100);
 		exploreAgricultureFailRun(cityModel, characterModel, food);
 		return;
@@ -226,7 +227,7 @@ function exploreAgricultureRun(characterModel){
 	var items = cityModel.itemsFarmland();
 	var index = exploreItems(items);
 	if(index < 0){
-		console.log("exploreAgricultureRun : 失败");
+		//console.log("exploreAgricultureRun : 失败");
 		var food = getValueByExploreFail(800,200);
 		exploreAgricultureFailRun(cityModel, characterModel, food);
 		return;
@@ -300,7 +301,7 @@ function exploreBusinessRun(characterModel){
 	
 	var cityModel = characterModel.city();
 	if(rand > value){
-		console.log("exploreBusinessRun : 失败 能力不够");
+		//console.log("exploreBusinessRun : 失败 能力不够");
 		var money = getValueByExploreFail(200,50);
 		exploreBusinessFailRun(cityModel, characterModel, money);
 		return;
@@ -308,7 +309,7 @@ function exploreBusinessRun(characterModel){
 	var items = cityModel.itemsMarket();
 	var index = exploreItems(items);
 	if(index < 0){
-		console.log("exploreBusinessRun : 失败");
+		//console.log("exploreBusinessRun : 失败");
 		var money = getValueByExploreFail(400,100);
 		exploreBusinessFailRun(cityModel, characterModel, money);
 		return;
@@ -339,58 +340,73 @@ function transportRun(characterModel, transportData){
 }
 function repairRun(characterModel){
 	//修补：武力+统率
-	console.log("repairRun修补 : ",characterModel.id());
+	/*console.log("repairRun修补 : ",characterModel.id());
 	var value01 = getJobResult(characterModel.force(),JobCoefficient.REPAIR);
 	var value02 = getJobResult(characterModel.command(),JobCoefficient.REPAIR);
-	var value = (value01 + value02) * (characterModel.hasSkill(SkillSubType.AGRICULTURE) ? 1.5 : 1);
+	var value = (value01 + value02) * (characterModel.hasSkill(SkillSubType.AGRICULTURE) ? 1.5 : 1);*/
+	var value = getJobResult(characterModel.force() + characterModel.command(),JobCoefficient.REPAIR);
+	var value = value * (characterModel.hasSkill(SkillSubType.REPAIR) ? 1.5 : 1);
 	characterModel.city().cityDefense(value >>> 0);
 	characterModel.job(Job.IDLE);
 	var feat = JobFeatCoefficient.NORMAL * value / JobFeatCoefficient.REPAIR;
+	console.log(characterModel.name() + " 修补:",characterModel.force() + characterModel.command(), value, feat);
 	characterModel.featPlus(feat);
 }
 function agricultureRun(characterModel){
 	//农业：智力+武力
-	console.log("agricultureRun农业 : ",characterModel.id());
+	/*console.log("agricultureRun农业 : ",characterModel.id());
 	var value01 = getJobResult(characterModel.intelligence(),JobCoefficient.AGRICULTURE);
 	var value02 = getJobResult(characterModel.force(),JobCoefficient.AGRICULTURE);
-	var value = (value01 + value02) * (characterModel.hasSkill(SkillSubType.AGRICULTURE) ? 1.5 : 1);
+	var value = (value01 + value02) * (characterModel.hasSkill(SkillSubType.AGRICULTURE) ? 1.5 : 1);*/
+	var value = getJobResult(characterModel.intelligence() + characterModel.force(),JobCoefficient.AGRICULTURE);
+	var value = value * (characterModel.hasSkill(SkillSubType.AGRICULTURE) ? 1.5 : 1);
 	characterModel.city().agriculture(value >>> 0);
 	characterModel.job(Job.IDLE);
 	var feat = JobFeatCoefficient.NORMAL * value / JobFeatCoefficient.AGRICULTURE;
+	console.log(characterModel.name() + " 农业:",characterModel.intelligence() + characterModel.force(), value, feat);
 	characterModel.featPlus(feat);
 }
 function businessRun(characterModel){
 	//商业：智力+敏捷
-	console.log("businessRun商业 : ",characterModel.id());
-	var value01 = getJobResult(characterModel.intelligence(),JobCoefficient.BUSINESS);
+	//console.log("businessRun商业 : ",characterModel.id());
+	/*var value01 = getJobResult(characterModel.intelligence(),JobCoefficient.BUSINESS);
 	var value02 = getJobResult(characterModel.agility(),JobCoefficient.BUSINESS);
-	var value = (value01 + value02) * (characterModel.hasSkill(SkillSubType.BUSINESS) ? 1.5 : 1);
+	var value = (value01 + value02) * (characterModel.hasSkill(SkillSubType.BUSINESS) ? 1.5 : 1);*/
+	var value = getJobResult(characterModel.intelligence() + characterModel.agility(),JobCoefficient.BUSINESS);
+	var value = value * (characterModel.hasSkill(SkillSubType.BUSINESS) ? 1.5 : 1);
 	characterModel.city().business(value >>> 0);
 	characterModel.job(Job.IDLE);
 	var feat = JobFeatCoefficient.NORMAL * value / JobFeatCoefficient.BUSINESS;
+	console.log(characterModel.name() + " 商业:",characterModel.intelligence() + characterModel.agility(), value, feat);
 	characterModel.featPlus(feat);
 }
 function policeRun(characterModel){
 	//治安：武力*2+敏捷
-	console.log("policeRun治安 : ",characterModel.id());
+	/*console.log("policeRun治安 : ",characterModel.id());
 	var value01 = getJobResult(characterModel.force(),JobCoefficient.POLICE);
 	var value02 = getJobResult(characterModel.agility(),JobCoefficient.POLICE);
-	var value = (value01 * 2 + value02) * (characterModel.hasSkill(SkillSubType.POLICE) ? 1.5 : 1);
+	var value = (value01 * 2 + value02) * (characterModel.hasSkill(SkillSubType.POLICE) ? 1.5 : 1);*/
+	var value = getJobResult((characterModel.force() * 2 + characterModel.agility() - JobCoefficient.NORMAL),JobCoefficient.POLICE);
+	var value = value * (characterModel.hasSkill(SkillSubType.POLICE) ? 1.5 : 1);
 	//SeigniorExecute.addMessage("治安"+characterModel.name()+"="+value);
 	characterModel.city().police(value >>> 0);
 	characterModel.job(Job.IDLE);
 	var feat = JobFeatCoefficient.NORMAL * value / JobFeatCoefficient.POLICE;
+	console.log(characterModel.name() + " 治安:",characterModel.force()*2 + characterModel.agility(), value, feat);
 	characterModel.featPlus(feat);
 }
 function technologyRun(characterModel){
 	//技术：智力+统率
-	console.log("technologyRun技术 : ",characterModel.id());
+	/*console.log("technologyRun技术 : ",characterModel.id());
 	var value01 = getJobResult(characterModel.intelligence(),JobCoefficient.TECHNOLOGY);
 	var value02 = getJobResult(characterModel.command(),JobCoefficient.TECHNOLOGY);
-	var value = (value01 + value02) * (characterModel.hasSkill(SkillSubType.TECHNOLOGY) ? 1.5 : 1);
+	var value = (value01 + value02) * (characterModel.hasSkill(SkillSubType.TECHNOLOGY) ? 1.5 : 1);*/
+	var value = getJobResult(characterModel.intelligence() + characterModel.command(),JobCoefficient.TECHNOLOGY);
+	var value = value * (characterModel.hasSkill(SkillSubType.TECHNOLOGY) ? 1.5 : 1);
 	characterModel.city().technology(value >>> 0);
 	characterModel.job(Job.IDLE);
 	var feat = JobFeatCoefficient.NORMAL * value / JobFeatCoefficient.TECHNOLOGY;
+	console.log(characterModel.name() + " 技术:",characterModel.intelligence() + characterModel.command(), value, feat);
 	characterModel.featPlus(feat);
 }
 function enlistRun(characterModel, targetEnlist){
@@ -420,15 +436,14 @@ function spyRun(characterModel, cityId){
 	var area = AreaModel.getArea(cityId);
 	characterModel.job(Job.IDLE);
 	if(characterModel.seigniorId() == area.seigniorCharaId()){
-		//TODO::失败:己方城池
-		console.log("spyRun : 失败 null");
+		//console.log("spyRun : 失败 null");
 		characterModel.featPlus(JobFeatCoefficient.NORMAL * 0.5);
 		return;
 	}
 	var spyValue = characterModel.force() + characterModel.luck();
 	if(spyValue<JobCoefficient.SPY){
 		if(spyValue < Math.random()*JobCoefficient.SPY){
-			console.log("spyRun : 失败 能力不够");
+			//console.log("spyRun : 失败 能力不够");
 			if(characterModel.seigniorId() == LMvc.selectSeignorId){
 				SeigniorExecute.addMessage(String.format(Language.get("spyFailMessage"),characterModel.name(),area.name()));
 			}
@@ -485,8 +500,7 @@ function hireRun(characterModel, hireCharacterId){
 	});
 	characterModel.job(Job.IDLE);
 	if(hireCharacterIndex < 0){
-		//TODO::失败
-		console.log("hireRun : 失败 null");
+		//console.log("hireRun : 失败 null");
 		if(characterModel.seigniorId() == LMvc.selectSeignorId){
 			SeigniorExecute.addMessage(String.format(Language.get("hireFailMessage"),characterModel.name()));
 		}
@@ -514,8 +528,7 @@ function hireRun2(characterModel, hireCharacter,area){
 	percentage *= (JobCoefficient.COMPATIBILITY - compatibility) / JobCoefficient.COMPATIBILITY;*/
 	var rand = Math.random();
 	if(rand > percentage){
-		//TODO::失败
-		console.log("hireRun : 失败 " + rand + " > " + percentage + " = " + (rand > percentage));
+		//console.log("hireRun : 失败 " + rand + " > " + percentage + " = " + (rand > percentage));
 		if(characterModel.seigniorId() == LMvc.selectSeignorId){
 			SeigniorExecute.addMessage(String.format(Language.get("hireRefuseMessage"),hireCharacter.name(),characterModel.name()));
 			SeigniorExecute.addMessage("hireRun : 失败 " + rand + " > " + percentage + " = " + (rand > percentage));

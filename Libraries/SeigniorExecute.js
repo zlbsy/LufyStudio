@@ -157,7 +157,6 @@ SeigniorExecute.addMessage = function(value){
 SeigniorExecute.prototype.areaJobRun=function(area){
 	var self = this, chara, job;
 	var generals = area.generals();
-	console.log("SeigniorExecute.prototype.areaJobRun",generals);
 	
 	var list = [];
 	for(var i=0;i<generals.length;i++){
@@ -242,7 +241,6 @@ SeigniorExecute.prototype.areaJobRun=function(area){
 };
 SeigniorExecute.prototype.areasRun=function(seigniorModel){
 	var self = this;
-	console.log("self.areaIndex="+self.areaIndex);
 	if(self.areaIndex == 0){
 		seigniorModel.checkSpyCitys();
 		seigniorModel.checkStopBattleSeigniors();
@@ -261,10 +259,6 @@ SeigniorExecute.prototype.areasRun=function(seigniorModel){
 };
 SeigniorExecute.prototype.areasAIRun=function(seigniorModel){
 	var self = this;
-	console.log("self.areaAIIndex="+self.areaAIIndex);
-	if(self.areaAIIndex == 0){
-		
-	}
 	var areas = seigniorModel.areas();
 	if(self.areaAIIndex < areas.length){
 		var areaModel = areas[self.areaAIIndex];
@@ -329,7 +323,7 @@ SeigniorExecute.prototype.areaAIRun=function(areaModel){
 		self.timer.start();
 		return;
 	}
-	console.log("判断是否有未执行任务人员");
+	//console.log("判断是否有未执行任务人员");
 	
 	if(areaModel.seignior().isTribe()){
 		//外族只在每年收获粮食时随机进行侵略行动一次，其他时间不行动
@@ -347,17 +341,17 @@ SeigniorExecute.prototype.areaAIRun=function(areaModel){
 	}
 	//俘虏处理
 	jobAiCaptives(areaModel);
-	console.log("俘虏处理");
+	//console.log("俘虏处理");
 	//是否需要征兵
 	var needEnlistFlag = jobAiNeedToEnlist(areaModel);
-	console.log("是否需要征兵");
+	//console.log("是否需要征兵");
 	//治安
 	var police = areaModel.police();
 	var toPolice = police < 70 || (police < 80 && Math.random() < 0.5) || (police < 90 && Math.random() < 0.3) || (police < 100 && Math.random() < 0.1);
 	if(toPolice){
 		self.jobAiFunction(areaModel,self.characters,jobAiPolice,["force","agility"]);//治安
 	}
-	console.log("治安");
+	//console.log("治安");
 	var canEnlish = jobAiCanToEnlish(areaModel);
 	if(needEnlistFlag == AiEnlistFlag.Must || needEnlistFlag == AiEnlistFlag.Need){
 		if(canEnlish){
@@ -365,7 +359,7 @@ SeigniorExecute.prototype.areaAIRun=function(areaModel){
 			self.jobAiFunction(areaModel,self.characters,jobAiToEnlish,["luck","command"]);
 		}
 	}
-	console.log("招兵买马");
+	//console.log("招兵买马");
 	//修补
 	if(areaModel.cityDefense() < areaModel.maxCityDefense() && !(
 		needEnlistFlag == AiEnlistFlag.Must || 
@@ -375,10 +369,10 @@ SeigniorExecute.prototype.areaAIRun=function(areaModel){
 		) && Math.random() > 0.5){
 		self.jobAiFunction(areaModel,self.characters,jobAiRepair,["force","command"]);//修补
 	}
-	console.log("修补");
+	//console.log("修补");
 	//判断是否有可攻击的城池
 	var city = getCanBattleCity(areaModel, self.characters, needEnlistFlag);
-	console.log("判断是否有可攻击的城池"+city);
+	//console.log("判断是否有可攻击的城池"+city);
 	if(city){
 		jobAiToBattle(areaModel, self.characters, city);
 		console.log("战斗中");
@@ -389,13 +383,13 @@ SeigniorExecute.prototype.areaAIRun=function(areaModel){
 	//LGlobal.sleep(50);console.log("外交");
 	//武将移动
 	jobAiGeneralMove(areaModel,self.characters);
-	console.log("武将移动");
+	//console.log("武将移动");
 	//输送物资
 	jobAiTransport(areaModel,self.characters);
-	console.log("输送物资");
+	//console.log("输送物资");
 	//解救俘虏
 	if(self.jobAiFunction(areaModel,self.characters,jobAiCaptivesRescue,["intelligence","luck"],1)){
-		console.log("解救俘虏");
+		//console.log("解救俘虏");
 		return;
 	}
 	//酒馆
@@ -419,7 +413,7 @@ SeigniorExecute.prototype.areaAIRun=function(areaModel){
 			self.jobAiFunction(areaModel,self.characters,jobAiAccess,["intelligence","command","luck"]);//访问
 		}
 	}
-	console.log("酒馆");
+	//console.log("酒馆");
 	
 	var toInterior = 
 	needEnlistFlag == AiEnlistFlag.Must || 
@@ -432,7 +426,7 @@ SeigniorExecute.prototype.areaAIRun=function(areaModel){
 	(
 		needEnlistFlag == AiEnlistFlag.Free && Math.random() > 0.5
 	);
-	console.log("toInterior:"+toInterior);
+	//console.log("toInterior:"+toInterior);
 	if(toInterior){
 		var interiorList = [
 		{fun:jobAiInstitute,params:["intelligence","command"]},//太学院
@@ -455,7 +449,7 @@ SeigniorExecute.prototype.areaAIRun=function(areaModel){
 	}
 	//如果有剩余无法分配工作的人员(金钱不够等),则直接跳过
 	self.areaAIIndex++;
-	console.log("self.areaAIIndex:"+self.areaAIIndex);
+	//console.log("self.areaAIIndex:"+self.areaAIIndex);
 	self.timer.reset();
 	self.timer.start();
 };
@@ -464,7 +458,6 @@ SeigniorExecute.prototype.maskShow=function(){
 	if(self.backLayer){
 		return;
 	}
-	console.log("SeigniorExecute.prototype.maskShow");
 	var maskLayer = getTranslucentMask();
 	maskLayer.alpha = 0.01;
 	self.backLayer = new LSprite();

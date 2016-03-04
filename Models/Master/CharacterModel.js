@@ -650,20 +650,27 @@ CharacterModel.prototype.minFace = function(size) {
 CharacterModel.prototype.minFaceRect = function() {
 	alert("minFaceRect已废弃");console.error("minFaceRect已废弃");
 };
+CharacterModel.prototype.getBasicProperties = function(key) {
+	var self = this;
+	if(!self.data["_"+key]){
+		self.calculation(false);
+	}
+	return self.data["_"+key];
+};
 CharacterModel.prototype.command = function() {
-	return this.data._command;
+	return this.getBasicProperties("command");
 };
 CharacterModel.prototype.force = function() {
-	return this.data._force;
+	return this.getBasicProperties("force");
 };
 CharacterModel.prototype.intelligence = function() {
-	return this.data._intelligence;
+	return this.getBasicProperties("intelligence");
 };
 CharacterModel.prototype.agility = function() {
-	return this.data._agility;
+	return this.getBasicProperties("agility");
 };
 CharacterModel.prototype.luck = function() {
-	return this.data._luck;
+	return this.getBasicProperties("luck");
 };
 CharacterModel.prototype.maxProficiencySoldier = function() {
 	var soldiers = this.soldiers();
@@ -818,11 +825,9 @@ CharacterModel.prototype.skill = function(type) {
 };
 CharacterModel.prototype.hasSkill = function(subType) {
 	var self = this;
-	console.log("self.data.skill="+self.data.skill);
 	if(!self.data.skill){
 		return false;
 	}
-	console.log("SkillMasterModel="+(typeof SkillMasterModel));
 	var skill = SkillMasterModel.getMaster(self.data.skill);
 	if(subType && skill.isSubType(subType)){
 		return true;

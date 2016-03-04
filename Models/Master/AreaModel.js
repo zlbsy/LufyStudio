@@ -13,7 +13,7 @@ function AreaModel(controller, data) {
 AreaModel.troopsList = [10000,15000,20000,25000,30000];
 AreaModel.agricultureList = [10000,15000,20000,25000,30000];
 AreaModel.businessList = [10000,15000,20000,25000,30000];
-AreaModel.populationList = [[10000,50000],[15000,100000],[20000,200000],[25000,250000],[30000,300000]];
+AreaModel.populationList = [[10000,30000],[20000,60000],[30000,90000],[40000,120000],[50000,150000]];
 AreaModel.defenseList = [1000,1500,2000,2500,3000];
 	
 AreaModel.list = [];
@@ -37,7 +37,7 @@ AreaModel.getArea=function(area_id){
 };
 AreaModel.getPowerfulCharacters = function(generals){
 	var list = [],result = [];
-	console.log("AreaModel.getPowerfulCharacters:",generals);
+	//console.log("AreaModel.getPowerfulCharacters:",generals);
 	for(var i=0,l=generals.length;i<l;i++){
 		var child = generals[i];
 		var data;
@@ -441,9 +441,7 @@ AreaModel.prototype.cityDefenseLabel=function(){
 AreaModel.prototype.cityDefense=function(value){
 	return this._plusData("city_defense",value,0,this.maxCityDefense());
 };
-//TODO::
 AreaModel.prototype.maxCityDefense=function(){
-	console.log("maxCityDefense level="+this.data.level);
 	return AreaModel.defenseList[this.level()-1];
 };
 AreaModel.prototype.outOfOfficeSum=function(){

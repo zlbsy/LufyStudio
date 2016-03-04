@@ -6,6 +6,7 @@ function BattleBoutView(controller, belong){
 BattleBoutView.prototype.set=function(belong){
 	var self = this;
 	LMvc.running = true;
+	LMvc.BattleController.view.roadLayer.clear();
 	var belongLayer = new LSprite();
 	belongLayer.x = -LGlobal.width * 0.5;
 	belongLayer.y = LGlobal.height * 0.5;

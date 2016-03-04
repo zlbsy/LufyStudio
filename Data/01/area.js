@@ -2,7 +2,7 @@ LMvc.areaData = {
 seigniors : [
 {chara_id : 1,name:"曹操",color : "0,0,255",generals_count:14,areas : [
   {  area_id : 39,name:"陈留",prefecture : 1,
-  money : 138,food : 10038,population : 40038,business : 138,agriculture : 138,technology : 138,police : 77,city_defense : 538,troops : 2438,
+  money : 4138,food : 10038,population : 40038,business : 138,agriculture : 138,technology : 138,police : 47,city_defense : 538,troops : 2438,
   items_farmland:[],
   items_market:[],
   items:[],

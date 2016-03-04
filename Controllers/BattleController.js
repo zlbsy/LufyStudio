@@ -140,7 +140,7 @@ BattleController.prototype.charactersInit = function(){
 	var selfPositions;
 	var selfAttack = (self.battleData.fromCity.seigniorCharaId() == LMvc.selectSeignorId);
 	if(selfAttack){
-		enemyCharas = getDefenseEnemiesFromCity(self.battleData.toCity);
+		enemyCharas = self.battleData.toCity.getDefenseEnemies();
 		enemyPositions = self.model.map.charas;
 		selfPositions = self.model.map.enemys;
 		var sumTroops = self.battleData.toCity.troops();

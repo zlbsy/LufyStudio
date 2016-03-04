@@ -196,7 +196,7 @@ function battleEndCheck(belong){
 			}
 			//换主将
 			if(belong == Belong.SELF || belong == Belong.ENEMY){
-				var list = getPowerfulCharacters(charas);
+				var list = AreaModel.getPowerfulCharacters(charas);
 				chara = list[0].general;
 				chara.isLeader = true;
 				script = "SGJTalk.show(" + chara.data.id() + ",0," + Language.get("leader_change_talk") + ");";
@@ -207,47 +207,6 @@ function battleEndCheck(belong){
 		}
 		BattleController.ctrlChara.AI.endBoutCheck();
 	}
-}
-function getDefenseEnemiesFromCity(city){
-	var generals = city.generals(),result = [];
-	var list = getPowerfulCharacters(generals);
-	var index = list.findIndex(function(child){
-		return child.general.id() == city.seigniorCharaId();
-	});
-	if(index < 0){
-		index = list.findIndex(function(child){
-			return child.general.id() == city.prefecture();
-		});
-	}
-	if(index >= 0){
-		var chara = list.splice(index,1)[0];
-		list.unshift(chara);
-	}
-	console.log("getDefenseEnemiesFromCity list:",list);
-	for(var i=0,l=list.length < BattleMapConfig.DefenseQuantity ? list.length : BattleMapConfig.DefenseQuantity;i<l;i++){
-		result.push(list[i].general);
-	}
-	return result;
-}
-function getPowerfulCharacters(generals){
-	var list = [],result = [];
-	console.log("getPowerfulCharacters generals:",generals);
-	for(var i=0,l=generals.length;i<l;i++){
-		var child = generals[i];
-		var data;
-		if(child.constructor.name == "BattleCharacterView"){
-			data = child.data;
-		}else{
-			data = child;
-		}
-		var value = data.force() + data.intelligence() + data.agility() + data.luck() + data.command();
-		value += value * data.lv() * 0.1;
-		value += data.maxProficiencySoldier().proficiency() * 0.1;
-		value += data.skill() > 0 ? 100 : 0;
-		list.push({general:child,value:value});
-	}
-	list = list.sort(function(a,b){return a.value - b.value;});
-	return list;
 }
 function battleFoodCheck(belong){
 	var battleData = LMvc.BattleController.battleData;
@@ -628,7 +587,7 @@ function battleCheckRetreatCity(retreatCity, failSeigniorId, toCity){
 	}
 	if(retreatCity){
 		if(!retreatCity.prefecture()){
-			var enemyCharas = getDefenseEnemiesFromCity(retreatCity);
+			var enemyCharas = retreatCity.getDefenseEnemies();
 			retreatCity.prefecture(enemyCharas[0].id());
 		}
 		retreatCityId = retreatCity.id();

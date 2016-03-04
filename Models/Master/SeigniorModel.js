@@ -158,12 +158,10 @@ SeigniorModel.prototype.areas = function(){
 };
 SeigniorModel.prototype.areasData = function(){
 	var self = this;
-	console.log("GameManager.areasData ", self.data.areas);
 	var datas = [];
 	for(var i = 0, l = self.data.areas.length;i<l;i++){
 		datas.push(self.data.areas[i].datas());
 	}
-	console.log("GameManager.areasData o");
 	return datas;
 };
 SeigniorModel.prototype.areaIds = function(){

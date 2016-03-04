@@ -178,6 +178,10 @@ var SkillSubType = {
 	 **/
 	TECHNOLOGY:"technology",
 	/**
+	 * 修补
+	 **/
+	REPAIR:"repair",
+	/**
 	 * 治安
 	 **/
 	POLICE:"police",

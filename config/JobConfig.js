@@ -32,10 +32,10 @@ var JobPrice = {
 };
 var JobCoefficient = {
 	NORMAL:90,
-	REPAIR:0.5,
+	REPAIR:0.2,
 	AGRICULTURE:0.5,
 	BUSINESS:0.5,
-	POLICE:0.01,
+	POLICE:0.03,
 	TECHNOLOGY:0.5,
 	SPY:75,
 	ENLIST:0.25,
@@ -52,10 +52,10 @@ var JobCoefficient = {
 var JobFeatCoefficient = {
 	NORMAL:20,
 	TRAINING:30,
-	REPAIR:100,
+	REPAIR:40,
 	AGRICULTURE:100,
 	BUSINESS:100,
-	POLICE:100,
+	POLICE:6,
 	TECHNOLOGY:100,
 	ENLIST:100
 };

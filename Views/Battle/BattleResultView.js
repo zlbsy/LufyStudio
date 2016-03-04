@@ -77,27 +77,6 @@ BattleResultView.prototype.winInit=function(){
 		battleCityChange(self.winSeigniorId, self.failSeigniorId, self.retreatCityId, battleData.expeditionCharacterList, battleData.toCity, self.model.selfCaptive);
 		//敌方太守
 		self.retreatCityId = battleCheckRetreatCity(self.retreatCity, self.failSeigniorId, battleData.toCity);
-		/*if(self.retreatCity){
-			var enemyCharas = getDefenseEnemiesFromCity(self.retreatCity);
-			self.retreatCity.prefecture(enemyCharas[0].id());
-		}else{
-			//无相邻可以撤退
-			var seignior = SeigniorModel.getSeignior(self.failSeigniorId);
-			var seigniorCharacter = seignior.character();
-			if(seigniorCharacter.cityId() != battleData.toCity.id()){
-				//如果君主未被擒,则撤退到君主所在城池
-				console.log("如果君主未被擒,则撤退到君主所在城池");
-				self.retreatCityId = seigniorCharacter.cityId();
-			}else{
-				//TODO::君主被擒，暂时随机决定撤退城池
-				//TODO::版本升级后需调整为最近城池
-				var citys = seignior.areas();
-				if(citys.length > 0){
-					self.retreatCityId = citys[(citys.length * Math.random()) >>> 0].id();
-					console.log("敌军君主被擒，暂时随机决定撤退城池 : " + self.retreatCityId);
-				}
-			}
-		}*/
 		//己方太守
 		if(self.controller.noBattle){
 			city.prefecture(battleData.expeditionLeader.id());
