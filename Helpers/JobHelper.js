@@ -591,7 +591,7 @@ function SeigniorExecuteChangeCityResources(area){
 	//在野武将移动
 	outOfOfficeCharactersMove(area);
 	//武将死亡
-	charactersNaturalDeath(area);
+	//charactersNaturalDeath(area);
 }
 //装备
 function toEquipmentItem(item, characterModel){
@@ -620,10 +620,8 @@ function toEquipmentCityItem(item, cityModel){
 function charactersLoyaltyToDown(area){
 	var generals = area.generals();
 	var length = generals.length;
-	console.log(area.name(),generals);
 	for(var i=0;i<length;i++){
 		var general = generals[i];
-		console.log(i,general.name(), general.seignior());
 		var compatibility = Math.abs(general.seignior().character().compatibility() - general.compatibility());
 		compatibility = compatibility / JobCoefficient.COMPATIBILITY;
 		if(compatibility > 0.3){
@@ -640,6 +638,12 @@ function charactersLoyaltyToDown(area){
 //武将死亡
 function charactersNaturalDeath(area){
 	var generals = area.generals();
+	var prefecture = area.prefecture();
+	var prefectureDie = false;
+	var seigniorCharaId = area.seigniorCharaId();
+	var seignior = area.seignior();
+	var seigniorName = seignior.character().name();
+	var seigniorCharaDie = false;
 	var length = generals.length;
 	for(var i=length-1;i>=0;i--){
 		var general = generals[i];
@@ -647,10 +651,33 @@ function charactersNaturalDeath(area){
 			continue;
 		}
 		var value = general.age() - general.life();
-		if(Math.random() < 0.5 + 0.1 * value){
-			general.toDie();
+		if(Math.random() > 0.5 + 0.1 * value){
+			continue;
+		}
+		console.error("---------------武将死亡：：" + general.name() + ","+general.age()+"<="+general.life());
+		general.toDie();
+		if(general.id() == prefecture){
+			prefectureDie = true;
+		}
+		if(general.id() == seigniorCharaId){
+			seigniorCharaDie = true;
 		}
 	}
+	if(seigniorCharaDie){
+		monarchChange(seigniorCharaId);
+		//console.error("seignior="+seignior.character().name(),area.seigniorCharaId());
+		var obj = {title:Language.get("confirm"),
+		message:String.format(Language.get("{0}病逝了，{1}成了新君主！"), seigniorName, seignior.character().name()),
+		height:200,okEvent:function(event){
+			event.currentTarget.parent.remove();
+			SeigniorExecute.run();
+		}};
+		var windowLayer = ConfirmWindow(obj);
+		LMvc.layer.addChild(windowLayer);
+	}else if(prefectureDie){
+		appointPrefecture(area);
+	}
+	return seigniorCharaDie;
 }
 //在野武将移动
 function outOfOfficeCharactersMove(area){

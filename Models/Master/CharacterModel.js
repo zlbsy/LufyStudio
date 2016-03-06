@@ -92,6 +92,7 @@ CharacterModel.prototype.datas=function(){
 CharacterModel.prototype.setDatas=function(charaData){
 	var self = this;
 	self.cityId(charaData.cityId);
+	console.error(self.name()+"="+self.city().name());
 	if(charaData.seignior_id){
 		self.seigniorId(charaData.seignior_id);
 	}

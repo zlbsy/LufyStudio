@@ -218,15 +218,6 @@ AreaModel.prototype.setSeignor = function(seignior,areaData){
 		if(typeof areaData[key] == "function"){
 			continue;
 		}
-		/*if(key == "items"){
-			var items = [];
-			for(var i=0,l=areaData[key].length;i<l;i++){
-				var item = new ItemModel(null,areaData[key][i]);
-				items.push(item);
-			}
-			this.data[key] = items;
-			continue;
-		}else */
 		if(key == "generals"){
 			var generals = [];
 			for(var i=0,l=areaData[key].length;i<l;i++){

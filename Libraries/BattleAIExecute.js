@@ -104,7 +104,7 @@ BattleAIExecute.prototype.result=function(isWin){
 			var characters = self.attackData.expeditionCharacterList;
 			attackResourcesReturnToCity(characters, self.attackData, fromCity);
 		}else{
-			if(toCity.seignior().isTribe()){
+			if(toCity.seigniorCharaId() > 0 && toCity.seignior().isTribe()){
 				//外族资源重设
 				resetTribeCity(toCity);
 			}

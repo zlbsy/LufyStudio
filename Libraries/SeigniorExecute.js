@@ -137,18 +137,28 @@ SeigniorExecute.run=function(){
 };
 SeigniorExecute.prototype.areaRun=function(area){
 	var self = this;
-	self.areaIndex++;
-	self.areaGainRun(area);
-	var stop = self.areaJobRun(area);
-	if(stop){
-		return;
+	if(!self.areaGainOver){//城池收获
+		self.areaGainRun(area);
 	}
+	if(!self.areaJobOver){//任务
+		self.areaJobRun(area);
+	}
+	/*if(!self.areaDieOver){//武将死亡
+		if(self.areaCharacterDieRun(area)){
+			return;
+		}
+	}*/
+	self.areaIndex++;
+	self.areaGainOver = false;
+	self.areaJobOver = false;
+	self.areaDieOver = false;
 	self.timer.reset();
 	self.timer.start();
 };
 SeigniorExecute.prototype.areaGainRun=function(area){
+	var self = this;
 	SeigniorExecuteChangeCityResources(area);
-	console.log("areaGainRun over");
+	self.areaGainOver = true;
 };
 SeigniorExecute.addMessage = function(value){
 	console.error("addMessage :", value);
@@ -238,7 +248,7 @@ SeigniorExecute.prototype.areaJobRun=function(area){
 		chara = captives[i];
 		chara.job(Job.IDLE);
 	}
-	return false;
+	self.areaJobOver = true;
 };
 SeigniorExecute.prototype.areasRun=function(seigniorModel){
 	var self = this;
@@ -314,6 +324,11 @@ SeigniorExecute.prototype.areaMessage=function(areaModel,key){
 	self.citys.push(areaModel.id());
 	self.msgView.add(String.format(key,areaModel.seignior().character().name(),areaModel.name()));
 };
+SeigniorExecute.prototype.areaCharacterDieRun=function(area){
+	var self = this;
+	self.areaDieOver = true;
+	return charactersNaturalDeath(area);
+};
 SeigniorExecute.prototype.areaAIRun=function(areaModel){
 	var self = this;
 	//判断是否有未执行任务人员
@@ -342,6 +357,13 @@ SeigniorExecute.prototype.areaAIRun=function(areaModel){
 		self.timer.start();
 		return;
 	}
+	
+	if(!self.areaDieOver){//武将死亡
+		if(self.areaCharacterDieRun(areaModel)){
+			return;
+		}
+	}
+	
 	//俘虏处理
 	jobAiCaptives(areaModel);
 	//console.log("俘虏处理");

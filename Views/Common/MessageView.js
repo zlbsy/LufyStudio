@@ -128,7 +128,7 @@ MessageView.prototype.setSeignior = function(seigniorId){
 	self.seigniorLayer.addChild(barFore);
 	self.process = barFore;
 	self.process.scaleX = 0.01;
-	
+	console.log(seignior,seignior.character(),seignior.character().city());
 	LMvc.MapController.view.positionChangeToCity(seignior.character().city());
 	jobAiSetCityBattleDistance(seignior);
 };
