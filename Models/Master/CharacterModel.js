@@ -80,6 +80,7 @@ CharacterModel.prototype.datas=function(){
 		feat:self.feat(),//功绩
 		loyalty:self.loyalty(),//忠诚度
 		soldiers:self.data.soldiers,//所有兵种熟练度
+		isPrized:self.isPrized(),
 		equipments:self.equipmentsData()
 	};
 	if(self.data.currentSoldierId){
@@ -126,6 +127,9 @@ CharacterModel.prototype.setDatas=function(charaData){
 	}
 	if(charaData.currentSoldierId){
 		self.data.currentSoldierId = charaData.currentSoldierId;
+	}
+	if(charaData.isPrized){
+		self.data.isPrized = charaData.isPrized;
 	}
 	if(charaData.equipments){
 		self.equip(charaData.equipments);
@@ -300,13 +304,16 @@ CharacterModel.prototype.initStrategy = function() {
 	return this.data.initStrategy ? this.data.initStrategy : 20;
 };
 CharacterModel.prototype.initTroops = function() {
-	return this.data.initTroops ? this.data.initTroops : 100;
+	return this.data.initTroops ? this.data.initTroops : 200;
 };
 CharacterModel.prototype.isDefCharacter = function(value) {
 	return this._dataValue("isDefCharacter", value, 0);
 };
 CharacterModel.prototype.id = function() {
 	return this.data.id;
+};
+CharacterModel.prototype.life = function() {
+	return this.data.life;
 };
 CharacterModel.prototype.age = function() {
 	if(this.data.born == 0){
@@ -391,6 +398,9 @@ CharacterModel.prototype.seigniorLevel = function(){
 	}
 	return self.seignior().level();
 };
+CharacterModel.prototype.isPrized = function(value) {
+	return this._dataValue("isPrized", value, 0);
+};
 CharacterModel.prototype.exp = function(value){
 	return this._dataValue("exp", value, 0);
 };
@@ -440,7 +450,7 @@ CharacterModel.prototype.isPantTroops = function() {
 CharacterModel.prototype.maxTroops = function(init) {
 	var self = this;
 	if(init || !self.data._maxTroops){
-		self.data._maxTroops = self.initTroops() + self.currentSoldiers().property().troops * self.level();
+		self.data._maxTroops = self.initTroops() + self.currentSoldiers().property().troops * 2 * self.level();
 	}
 	return self.data._maxTroops;
 };
@@ -643,12 +653,6 @@ CharacterModel.prototype.face = function() {
 	}
 	characterFace.x = characterFace.y = 0;
 	return characterFace;
-};
-CharacterModel.prototype.minFace = function(size) {
-	alert("minFace已废弃");console.error("minFace已废弃");
-};
-CharacterModel.prototype.minFaceRect = function() {
-	alert("minFaceRect已废弃");console.error("minFaceRect已废弃");
 };
 CharacterModel.prototype.getBasicProperties = function(key) {
 	var self = this;

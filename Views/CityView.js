@@ -52,7 +52,7 @@ CityView.prototype.onBuildClick=function(event){
 };
 CityView.prototype.showBuildView=function(name){
 	var self = this, build;
-	console.log("showBuildView :"+name+",self.contentLayer="+self.contentLayer);
+	//console.log("showBuildView :"+name+",self.contentLayer="+self.contentLayer);
 	switch(name){
 		case "official":
 			build = new BuildOfficialView(self.controller);
@@ -151,5 +151,5 @@ CityView.prototype.init=function(){
 };
 CityView.prototype.updateView = function(){
 	var self = this;
-	console.log("CityView.prototype.updateView run");
+	//console.log("CityView.prototype.updateView run");
 };

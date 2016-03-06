@@ -161,6 +161,7 @@ SeigniorExecute.prototype.areaJobRun=function(area){
 	var list = [];
 	for(var i=0;i<generals.length;i++){
 		chara = generals[i];
+		chara.isPrized(false);
 		job = chara.job();
 		//self.msgView.add(chara.name()+":"+job);
 		switch(job){
@@ -331,12 +332,14 @@ SeigniorExecute.prototype.areaAIRun=function(areaModel){
 			var neighbors = areaModel.neighbor();
 			var cityId = neighbors[neighbors.length * Math.random() >>> 0];
 			var city = AreaModel.getArea(cityId);
-			jobAiToBattle(areaModel, self.characters, city);
-		}else{
-			self.areaAIIndex++;
-			self.timer.reset();
-			self.timer.start();
+			if(city.seigniorCharaId()){
+				jobAiToBattle(areaModel, self.characters, city);
+				return;
+			}
 		}
+		self.areaAIIndex++;
+		self.timer.reset();
+		self.timer.start();
 		return;
 	}
 	//俘虏处理

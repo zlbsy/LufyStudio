@@ -26,7 +26,6 @@ CharacterDetailedTabPropertiesView.prototype.showLeft=function(characterModel){
 	var datas = [
 	characterModel.seigniorLevel(),
 	characterModel.level(),
-	characterModel.age(),
 	characterModel.currentSoldiers().name(),
 	characterModel.force(),
 	characterModel.command(),
@@ -64,7 +63,7 @@ CharacterDetailedTabPropertiesView.prototype.showRight=function(characterModel){
 CharacterDetailedTabPropertiesView.prototype.setProperties=function(){
 	var self = this;
 	var statusLayer = new LSprite();
-	self.leftLabels = ["seignior_lv","generals_lv","age","tab_arms",
+	self.leftLabels = ["seignior_lv","generals_lv","tab_arms",
 	"force","command","intelligence","agility","luck"];
 	self.leftLayer = new LSprite();
 	statusLayer.addChild(self.leftLayer);

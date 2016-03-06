@@ -1,7 +1,6 @@
 function GameManager(){
 }
 GameManager.save = function(index){
-	console.log("GameManager.save ");
 	var data = {};
 	data.seigniors = SeigniorModel.getSaveData();
 	data.chapterData = LMvc.chapterData;
@@ -9,7 +8,7 @@ GameManager.save = function(index){
 	data.mapX = LMvc.mapX;
 	data.mapY = LMvc.mapY;
 	data.seigniorExecute = SeigniorExecute.getSaveData();
-	console.warn("data.seigniorExecute", data.seigniorExecute);
+	//console.warn("data.seigniorExecute", data.seigniorExecute);
 	data.labels = {};
 	var selectSeignor = SeigniorModel.getSeignior(LMvc.selectSeignorId);
 	data.labels.name = selectSeignor.character().name();

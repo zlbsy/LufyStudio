@@ -96,11 +96,8 @@ BattleAIExecute.prototype.result=function(isWin){
 		var failSeigniorId = toCity.seigniorCharaId();
 		var isTribe = fromSeignior.character().isTribeCharacter();
 		if(isTribe){
-			if(toCity.seigniorCharaId()){
-				SeigniorExecute.addMessage(String.format(Language.get("{0}的{1}遭到了{2}的掠夺,损失惨重!"),toCity.seignior().character().name(),toCity.name(),fromSeignior.character().name()));
-			}else{
-				SeigniorExecute.addMessage(String.format(Language.get("{0}遭到了{1}的掠夺,损失惨重!"),toCity.name(),toCity.seignior().character().name()));
-			}
+			//{0}的{1}遭到了{2}的掠夺,损失惨重!
+			SeigniorExecute.addMessage(String.format(Language.get("dialog_tribe_invasion_message"),toCity.seignior().character().name(),toCity.name(),fromSeignior.character().name()));
 			//外族入侵，资源损失
 			lossOfResourcesByTribe(toCity, fromCity);
 			//外族兵力及资源撤回
@@ -609,10 +606,22 @@ BattleAIExecute.prototype.battleCanGroupSkill = function(chara, targerChara){
 };
 BattleAIExecute.prototype.healExec=function(currentCharacter, targetChara){
 	var self = this;
+	var isAttack = false;
+	if(self.attackData.expeditionCharacterList[0].data.seigniorId() == currentCharacter.data.seigniorId()){
+		isAttack = true;
+	}
 	var strategy = self.getCanUseStrategy(currentCharacter,targetChara,StrategyEffectType.Supply);
 	if(!strategy){
 		return false;
 	}
+	//TODO::
+	var elseTroops = 0;
+	if(isAttack){
+		elseTroops = self.attackData.troops;
+	}else{
+		elseTroops = self.attackData.toCity.troops();
+	}
+	
 	var troopsAdd = strategy.troops();
 	var woundedAdd = strategy.wounded();
 	var wounded = targetChara.data.wounded();

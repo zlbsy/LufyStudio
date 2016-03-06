@@ -84,8 +84,8 @@ CharacterListView.prototype.listInit=function(){
 			break;
 	}
 	*/
-	console.log("listInit datalist="+self.dataList);
-	console.log("listInit buttonLabel="+buttonLabel);
+	//console.log("listInit datalist="+self.dataList);
+	//console.log("listInit buttonLabel="+buttonLabel);
 	if(buttonLabel){
 		var button = getButton(Language.get(buttonLabel),200);
 		self.executeButton = button;
@@ -334,7 +334,7 @@ CharacterListView.prototype.charactersPush = function(charas,characterIndex) {
 	var self = this;
 	var scHeight = 0, maxNum = 50;
 	var child,length = charas.length < characterIndex + maxNum ? charas.length : characterIndex + maxNum;
-	console.log("charactersPush:"+characterIndex+",length:"+length);
+	//console.log("charactersPush:"+characterIndex+",length:"+length);
 	var cityModel = self.controller.getValue("cityData");
 	var items = self.listView.getItems();
 	for(var i=characterIndex;i<length;i++){

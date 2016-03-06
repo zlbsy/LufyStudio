@@ -162,7 +162,7 @@ LogoView.prototype.returnTopMenu=function(event){
 };
 LogoView.prototype.showChapter=function(event){
 	var self = this;
-	console.log(typeof event.currentTarget.chapterId, event.currentTarget.chapterId);
+	//console.log(typeof event.currentTarget.chapterId, event.currentTarget.chapterId);
 	if(typeof event.currentTarget.chapterId !== "number"){
 		return;
 	}

@@ -15,12 +15,13 @@ CharacterDetailedTabStatusView.prototype.showStatus=function(){
 	var characterModel = self.controller.getValue("selectedCharacter");
 	var battleStatus = self.controller.getValue("battleStatus");
 	var txtHeight = 25, startY = 5, startX = 5;
-	var labels = ["belong","identity","city","loyalty","status"];
+	var labels = ["belong","identity","age","city","loyalty","status"];
 	var seigniorId = characterModel.seigniorId();
  	var loyaltyLabel = seigniorId > 0 ? characterModel.loyalty() : "--";
 	var datas = [
 	characterModel.seigniorName(),
 	characterModel.identity(),
+	characterModel.age(),
 	characterModel.city().name(),
 	loyaltyLabel,
 	battleStatus ? battleStatus : characterModel.jobLabel()
@@ -58,7 +59,10 @@ CharacterDetailedTabStatusView.prototype.setCtrlButtons=function(backLayer){
 	if(battleStatus || characterModel.city().seigniorCharaId() != LMvc.selectSeignorId){
 		return;
 	}
-	if(characterModel.seigniorId() > 0 && characterModel.seigniorId() != LMvc.selectSeignorId){
+	if(characterModel.seigniorId() == 0){
+		return;
+	}
+	if(characterModel.seigniorId() != LMvc.selectSeignorId){
 		var btnRecruit = getButton(Language.get("recruit"),200);//招降
 		btnRecruit.x = LGlobal.width - 260;
 		btnRecruit.y = 5;
@@ -79,7 +83,7 @@ CharacterDetailedTabStatusView.prototype.setCtrlButtons=function(backLayer){
 		backLayer.addChild(btnBehead);
 		btnBehead.addEventListener(LMouseEvent.MOUSE_UP,self.clickBehead);
 	}else if(characterModel.loyalty() < 100 && !characterModel.isPrized()){
-		var btnPrized = getButton(Language.get("褒奖"),200);//褒奖
+		var btnPrized = getButton(Language.get("prize"),200);//褒奖
 		btnPrized.x = LGlobal.width - 260;
 		btnPrized.y = 5;
 		backLayer.addChild(btnPrized);

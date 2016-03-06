@@ -22,7 +22,7 @@ OpenCharacterListController.prototype.showCharacterList=function(){
 	self.dispatchEvent(CharacterListEvent.SHOW);
 };
 OpenCharacterListController.prototype.closeCharacterList=function(obj){
-	console.log("closeCharacterList",obj);
+	//console.log("closeCharacterList",obj);
 	var e = new LEvent(CharacterListEvent.CLOSE);
 	if(!obj){
 		obj = {};

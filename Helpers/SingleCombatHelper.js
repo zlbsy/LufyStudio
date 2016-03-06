@@ -116,6 +116,9 @@ function singleCombatHert(leftCharacter, rightCharacter) {
 		hertValue *= 0.5;
 	}
 	hertValue = hertValue >>> 0;
+	if(hertValue < 1){
+		hertValue = 1;
+	}
 	rightCharacter.changeHp(hertValue);
 }
 function singleCombatAttackActionComplete(currentCharacter, targetCharacter) {

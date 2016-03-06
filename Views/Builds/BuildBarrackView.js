@@ -93,6 +93,16 @@ BuildBarrackView.prototype.selectComplete=function(event){
 				self.controller.setValue("toCityId", cityId);
 				return true;
 			}
+		}else{
+			var index = characterList.findIndex(function(child){
+				return child.id() == LMvc.selectSeignorId;
+			});
+			if(index >= 0){
+				var seigniorCharacter = CharacterModel.getChara(LMvc.selectSeignorId);
+				self.controller.setValue("expeditionLeader",seigniorCharacter);
+				self.controller.setValue("toCityId", cityId);
+				return true;
+			}
 		}
 	}else if(event.characterListType == CharacterListType.SELECT_LEADER){
 		if(event.characterList.length > 1){
@@ -120,9 +130,8 @@ BuildBarrackView.prototype.showBuild=function(event){
 	console.log("event.subEventType = " ,event.subEventType,"event.characterListType =",event.characterListType);
 	if(event.subEventType == "return"){
 		if(event.characterListType == CharacterListType.EXPEDITION){
-			var expeditionCharacterList = self.controller.getValue("expeditionCharacterList");
 			var cityData = self.controller.getValue("cityData");
-			troopsFromCharactersToCity(expeditionCharacterList, cityData);
+			troopsFromCharactersToCity(cityData);
 			self.controller.setValue("expeditionCharacterList", null);
 			self.controller.setValue("toCityId", null);
 			self.controller.dispatchEvent(LController.NOTIFY_ALL);
@@ -142,18 +151,14 @@ BuildBarrackView.prototype.showBuild=function(event){
 			self.controller.setValue("battleData",data);
 			self.controller.gotoBattle();
 		}else{
-			self.toSelectLeader();
+			var expeditionLeader = self.controller.getValue("expeditionLeader");
+			if(expeditionLeader){
+				self.load.view(["Builds/ExpeditionReady"],self.expeditionReady);
+			}else{
+				self.toSelectLeader();
+			}
 		}
 	}else if(event.characterListType == CharacterListType.SELECT_LEADER){
-		/*if(SeigniorExecute.running){
-			var data = {};
-			data.expeditionCharacterList = self.controller.getValue("expeditionCharacterList");
-			data.expeditionLeader = self.controller.getValue("expeditionLeader");
-			self.controller.setValue("battleData",data);
-			self.controller.gotoBattle();
-		}else{
-			
-		}*/
 		self.load.view(["Builds/ExpeditionReady"],self.expeditionReady);
 	}
 };
@@ -169,7 +174,12 @@ BuildBarrackView.prototype.expeditionCancel=function(event){
 	var windowLayer = event.currentTarget.parent;
 	var self = windowLayer.parent;
 	windowLayer.remove();
-	self.toSelectLeader();
+	var expeditionLeader = self.controller.getValue("expeditionLeader");
+	if(LMvc.selectSeignorId == expeditionLeader.id()){
+		self.toExpedition();
+	}else{
+		self.toSelectLeader();
+	}
 };
 BuildBarrackView.prototype.toExpedition=function(){
 	var self = this;
@@ -178,6 +188,8 @@ BuildBarrackView.prototype.toExpedition=function(){
 };
 BuildBarrackView.prototype.toSelectLeader=function(){
 	var self = this;
+	var expeditionCharacterList = self.controller.getValue("expeditionCharacterList");
+	troopsFromCharactersToCity(cityData, expeditionCharacterList);
 	self.controller.loadCharacterList(CharacterListType.SELECT_LEADER, self.controller.getValue("expeditionCharacterList"), 
 		{isOnlyOne:true, toast:"dialog_expedition_select_leader", buttonLabel:"execute", showMoney:false});
 };
@@ -254,7 +266,6 @@ BuildBarrackView.prototype.selectSoldier=function(event){
 	cityModel.money(-JobPrice.TRAINING);
 	self.controller.closeCharacterList({characterListType : null});
 	LMvc.CityController.dispatchEvent(LController.NOTIFY_ALL);
-	console.log("soldier.id()="+soldier.id());
 };
 BuildBarrackView.prototype.onClickEnlistButton=function(event){
 	var self = event.currentTarget.parent.parent.parent;

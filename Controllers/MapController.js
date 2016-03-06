@@ -17,7 +17,7 @@ MapController.prototype.configLoad=function(){
 	self.load.config(["Character","characterList","Job","Items","Event","Strategy","Soldiers"],self.helperLoad);
 };
 MapController.prototype.helperLoad=function(){
-	var self = this;console.log("helperLoad");
+	var self = this;
 	self.load.helper(["Talk","CommonHelper"],self.modelLoad);
 };
 MapController.prototype.modelLoad=function(){
@@ -30,7 +30,7 @@ MapController.prototype.libraryLoad=function(){
 	self.load.library(libraris,self.viewLoad);
 };
 MapController.prototype.viewLoad=function(){
-	var self = this;console.log("viewLoad");
+	var self = this;
 	self.load.view(["Area/AreaIcon","Common/Background","Common/BattleMark"],self.menuLoad);
 };
 MapController.prototype.menuLoad=function(){
@@ -50,7 +50,7 @@ MapController.prototype.getAreaData=function(){
 	}
 };
 MapController.prototype.getImages=function(){
-	var self = this;console.log("getImages");
+	var self = this;
 	var list = self.model.getImages();
 	self.load.image(list,self.init);
 };
@@ -60,7 +60,7 @@ MapController.prototype.init=function(status){
 	self.dispatchEvent(LEvent.COMPLETE);
 	LMvc.keepLoading(false);
 	LMvc.chapterController.view.visible = false;
-	LMvc.stageLayer.x = 0;console.log("LMvc.logoStage=",LMvc.logoStage);
+	LMvc.stageLayer.x = 0;
 	if(LMvc.isRead){
 		LMvc.logoStage.visible = false;
 		if(!LMvc.areaData.battleData){
@@ -82,7 +82,7 @@ MapController.prototype.returnToChapter=function(event){
 };
 MapController.prototype.showCity=function(cityId, initFunc){
 	var self = this;
-	console.log("MapController.prototype.showCity " + cityId);
+	//console.log("MapController.prototype.showCity " + cityId);
 	LMvc.cityId = cityId;
 	self.initFunc = initFunc;
 	LMvc.keepLoading(true);
@@ -105,7 +105,7 @@ MapController.prototype.returnToCity=function(cityId){
 	}
 	var event = new LEvent(LCityEvent.SELECT_CITY);
     event.cityId = cityId;
-    console.log("LMvc.CityController._eventList",LMvc.CityController._eventList);
+    //console.log("LMvc.CityController._eventList",LMvc.CityController._eventList);
 	LMvc.CityController.dispatchEvent(event);
 };
 MapController.prototype.checkSeigniorChange=function(seigniorId){
@@ -122,7 +122,7 @@ MapController.prototype.checkSeigniorChange=function(seigniorId){
 			}
 		}
 	}else{
-		console.log("checkSeigniorIsDie false");
+		//console.log("checkSeigniorIsDie false");
 		if(SeigniorExecute.running){
 			SeigniorExecute.run();
 		}
@@ -137,7 +137,7 @@ MapController.prototype.checkSeigniorFail=function(seigniorId){
 		return;
 	}
 	var seignior = SeigniorModel.getSeignior(seigniorId);
-	console.log("seignior.areas().length="+seignior.areas().length);
+	//console.log("seignior.areas().length="+seignior.areas().length);
 	if(seignior.areas().length > 0){
 		self.checkSeigniorChange(seigniorId);
 		return;

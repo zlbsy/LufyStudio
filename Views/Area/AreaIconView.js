@@ -26,7 +26,6 @@ AreaIconView.prototype.onUp=function(event){
 	var baseView = self.parent.parent;
 	baseView.stopDrag();
 	if(LPoint.distance2(self.offsetX,self.offsetY,event.offsetX,event.offsetY) < 5){
-		console.log("AreaIconView.prototype.onUp " + LMvc.CityController);
 		if(LMvc.CityController){
 			var obj;
 			var cityData = LMvc.CityController.getValue("cityData");

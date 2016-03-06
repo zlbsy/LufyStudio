@@ -1,5 +1,5 @@
 function CityController(initFunc){
-	this.initFunc = initFunc;console.log("CityController");
+	this.initFunc = initFunc;
 	base(this,OpenCharacterListController,[]);
 }
 CityController.prototype.construct=function(){
@@ -32,12 +32,13 @@ CityController.prototype.viewLoad=function(){
 };
 CityController.prototype.init=function(){
 	var self = this;
-	console.log("CityController.prototype.init");
 	var cityData = AreaModel.getArea(LMvc.cityId);
 	self.setValue("cityData",cityData);
 	var cityFree = cityData.seigniorCharaId() == LMvc.selectSeignorId || SeigniorModel.getSeignior(LMvc.selectSeignorId).isSpyCity(LMvc.cityId);
 	self.setValue("cityFree",cityFree);
 	self.setValue("selfCity",cityData.seigniorCharaId() == LMvc.selectSeignorId);
+	//TODO::
+	self.setValue("cityFree",true);
 	LMvc.keepLoading(false);
 	LMvc.CityController = self;
 	LMvc.MapController.view.visible = false;

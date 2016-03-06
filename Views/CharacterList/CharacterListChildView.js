@@ -123,6 +123,10 @@ CharacterListChildView.prototype.setStatus = function() {
 		self.basicProperties.visible = false;
 		self.abilityProperties.visible = false;
 		self.armProperties.visible = true;
+		if(self.charaModel.troops() > 0){
+			self.checkbox.setChecked(true);
+			self.parentView.dispatchEvent(LCheckBox.ON_CHANGE);
+		}
 	}
 }; 
 CharacterListChildView.prototype.setArmProperties = function() {

@@ -127,10 +127,11 @@ BattleResultView.prototype.lossOfResources=function(event){
 	//外族兵力及资源撤回
 	var characters = self.controller.view.charaLayer.getCharactersFromBelong(Belong.ENEMY);
 	attackResourcesReturnToCity(characters, battleData, battleData.fromCity);
+	//{0}被外族入侵，城池遭到破坏，资源损失严重!
 	var view = new BattleResultConfirmView(self.controller, 
 		{
 			confirmType : BattleFailConfirmType.lossOfResources, 
-			message : String.format("{0}被外族入侵，城池遭到破坏，资源损失严重!", battleData.toCity.name())
+			message : String.format(Language.get("dialog_tribe_invasion_self_message"), battleData.toCity.name())
 		}
 	);
 	self.addChild(view);

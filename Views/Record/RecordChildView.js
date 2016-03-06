@@ -21,7 +21,7 @@ RecordChildView.prototype.init=function(){
 RecordChildView.prototype.set=function(record){
 	var self = this;
 	self.labelsLayer.removeAllChild();
-	console.log("RecordChildView.prototype.set="+self.record);
+	//console.log("RecordChildView.prototype.set="+self.record);
 	if(!record || !record.labels){
 		return;
 	}
@@ -67,9 +67,7 @@ RecordChildView.prototype.onClick=function(event){
 };
 RecordChildView.prototype.readRecordData=function(){
 	var self = this;
-	console.log("mode="+RecordController.instance().mode);
 	if(RecordController.instance().mode == RecordController.SAVE_MODE){
-		console.log(SeigniorModel.list);
 		self.record = GameManager.save(self.recordIndex);
 		self.set(self.record);
 		self.cacheAsBitmap(false);
@@ -82,7 +80,6 @@ RecordChildView.prototype.readRecordData=function(){
 		LMvc.isRead = true;
 		LMvc.mapX = self.record.mapX;
 		LMvc.mapY = self.record.mapY;
-		console.warn("self.record.seigniorExecute", self.record.seigniorExecute);
 		SeigniorExecute.setSaveData(self.record.seigniorExecute);
 		if(LMvc.BattleController){
 			LMvc.BattleController.view.remove();
