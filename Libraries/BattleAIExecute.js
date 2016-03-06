@@ -614,15 +614,24 @@ BattleAIExecute.prototype.healExec=function(currentCharacter, targetChara){
 	if(!strategy){
 		return false;
 	}
-	//TODO::
 	var elseTroops = 0;
 	if(isAttack){
 		elseTroops = self.attackData.troops;
 	}else{
 		elseTroops = self.attackData.toCity.troops();
 	}
-	
+	if(elseTroops == 0){
+		return false;
+	}
 	var troopsAdd = strategy.troops();
+	if(troopsAdd > elseTroops){
+		troopsAdd = elseTroops;
+	}
+	if(isAttack){
+		self.attackData.troops = elseTroops - troopsAdd;
+	}else{
+		self.attackData.toCity.troops(elseTroops - troopsAdd);
+	}
 	var woundedAdd = strategy.wounded();
 	var wounded = targetChara.data.wounded();
 	if(woundedAdd > wounded){

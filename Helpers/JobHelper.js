@@ -238,8 +238,10 @@ function exploreAgricultureRun(characterModel){
 		items.splice(index, 1);
 	}
 	cityModel.itemsFarmland(items);
-	var item = new ItemModel(null,{item_id:itemId});
-	cityModel.addItem(item);
+	var item = new ItemModel(null,{item_id:itemId,count:1});
+	if(!toEquipmentItem(item, characterModel)){
+		cityModel.addItem(item);
+	}
 	if(characterModel.seigniorId() == LMvc.selectSeignorId){
 		SeigniorExecute.addMessage(String.format(Language.get("exploreAgricultureSuccess"),characterModel.name(),item.name()));
 	}
@@ -320,8 +322,10 @@ function exploreBusinessRun(characterModel){
 		items.splice(index, 1);
 	}
 	cityModel.itemsFarmland(items);
-	var item = new ItemModel(null,{item_id:itemId});
-	cityModel.addItem(item);
+	var item = new ItemModel(null,{item_id:itemId,count:1});
+	if(!toEquipmentItem(item, characterModel)){
+		cityModel.addItem(item);
+	}
 	if(characterModel.seigniorId() == LMvc.selectSeignorId){
 		SeigniorExecute.addMessage(String.format(Language.get("exploreBusinessSuccess"),characterModel.name(),item.name()));
 	}
@@ -500,11 +504,7 @@ function hireRun2(characterModel, hireCharacter,area){
 		compatibility -= JobCoefficient.COMPATIBILITY;
 	}
 	percentage *= (JobCoefficient.COMPATIBILITY - compatibility) / JobCoefficient.COMPATIBILITY;
-	/*compatibility = Math.abs(characterModel.compatibility() - hireCharacter.compatibility());
-	if(compatibility > JobCoefficient.COMPATIBILITY){
-		compatibility -= JobCoefficient.COMPATIBILITY;
-	}
-	percentage *= (JobCoefficient.COMPATIBILITY - compatibility) / JobCoefficient.COMPATIBILITY;*/
+	
 	var rand = Math.random();
 	if(rand > percentage){
 		//console.log("hireRun : 失败 " + rand + " > " + percentage + " = " + (rand > percentage));
@@ -523,9 +523,9 @@ function hireRun2(characterModel, hireCharacter,area){
 	});
 	
 	outOfOffice.splice(hireCharacterIndex, 1);
+	hireCharacter.seigniorId(characterModel.seigniorId());
 	hireCharacter.cityId(characterModel.cityId());
-	var generals = area.generals();
-	generals.push(hireCharacter);
+	area.addGenerals(hireCharacter);
 	if(characterModel.seigniorId() == LMvc.selectSeignorId){
 		SeigniorExecute.addMessage(String.format(Language.get("hireSuccessMessage"),characterModel.name(),hireCharacter.name(),hireCharacter.name()));
 	}
@@ -593,12 +593,37 @@ function SeigniorExecuteChangeCityResources(area){
 	//武将死亡
 	charactersNaturalDeath(area);
 }
+//装备
+function toEquipmentItem(item, characterModel){
+	//TODO::暂定，版本升级后改善
+	var equipments = characterModel.equipments();
+	for(var j=0;j<equipments.length;j++){
+		
+	}
+	//var cityModel = characterModel.city();
+	return false;
+}
+//装备
+function toEquipmentCityItem(item, cityModel){
+	var generals = cityModel.generals();
+	var length = generals.length;
+	//TODO::sort
+	for(var i=0;i<length;i++){
+		var general = generals[i];
+		if(toEquipmentItem(item, general)){
+			return true;
+		}
+	}
+	return false;
+}
 //武将忠诚随相性随机降低
 function charactersLoyaltyToDown(area){
 	var generals = area.generals();
 	var length = generals.length;
+	console.log(area.name(),generals);
 	for(var i=0;i<length;i++){
 		var general = generals[i];
+		console.log(i,general.name(), general.seignior());
 		var compatibility = Math.abs(general.seignior().character().compatibility() - general.compatibility());
 		compatibility = compatibility / JobCoefficient.COMPATIBILITY;
 		if(compatibility > 0.3){
@@ -642,8 +667,8 @@ function outOfOfficeCharactersMove(area){
 			continue;
 		}
 		var neighborCityId = neighbor[(Math.random() * neighbor.length) >>> 0];
-		character.moveTo(neighborCityId);
-		character.moveTo();
+		character.city().removeOutOfOffice(character.id());
+		AreaModel.getArea(neighborCityId).addOutOfOfficeCharacter(character);
 		character.job(Job.END);
 	}
 }

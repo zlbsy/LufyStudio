@@ -11,8 +11,9 @@ function AreaModel(controller, data) {
 	}
 }
 AreaModel.troopsList = [10000,15000,20000,25000,30000];
-AreaModel.agricultureList = [10000,15000,20000,25000,30000];
-AreaModel.businessList = [10000,15000,20000,25000,30000];
+AreaModel.agricultureList = [10000,12500,15000,17500,20000];
+AreaModel.businessList = [10000,12500,15000,17500,20000];
+AreaModel.technologyList = [5000,7000,9000,12000,15000];
 AreaModel.populationList = [[10000,30000],[20000,60000],[30000,90000],[40000,120000],[50000,150000]];
 AreaModel.defenseList = [1000,1500,2000,2500,3000];
 	
@@ -521,6 +522,9 @@ AreaModel.prototype.business=function(value){
 AreaModel.prototype.maxBusiness=function(){
 	return AreaModel.businessList[this.level()-1];
 };
+AreaModel.prototype.maxTechnology=function(){
+	return AreaModel.technologyList[this.level()-1];
+};
 AreaModel.prototype.minPopulation=function(){
 	return AreaModel.populationList[this.level()-1][0];
 };
@@ -529,18 +533,6 @@ AreaModel.prototype.maxPopulation=function(){
 };
 AreaModel.prototype.position=function(){
 	return this.data.position;
-};
-AreaModel.prototype.soldiers=function(){
-	var self = this;
-	var list = [];
-	for(var i=0,l=SoldierMasterModel.master.length;i<l;i++){
-		var soldier = SoldierMasterModel.master[i];
-		if(soldier.technology() > self.technology()){
-			continue;
-		}
-		list.push(soldier);
-	}
-	return list;
 };
 AreaModel.prototype.generalsData=function(){
 	var self = this;

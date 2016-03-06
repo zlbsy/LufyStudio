@@ -330,42 +330,6 @@ BattleCharacterLayerView.prototype.healSingle = function(chara,strategy,y){
 	var self = this;
 	var healTroops = battleHealTroops(strategy, chara);
 	BattleCharacterStatusView.healCharactersPush(chara, healTroops);
-	/*
-	var wounded = chara.data.wounded();
-	var troops = chara.data.troops();
-	
-	if(wounded == 0){
-		return;
-	}
-	var troopsAdd = strategy.troops();
-	var woundedAdd = strategy.wounded();
-	if(woundedAdd < 1){
-		woundedAdd = wounded*woundedAdd >>> 0;
-	}else if(woundedAdd > wounded){
-		woundedAdd = wounded;
-	}
-	if(woundedAdd == 0){
-		return;
-	}
-	chara.data.wounded(wounded - woundedAdd);
-	troopsAdd += woundedAdd;
-	chara.toStatic(false);
-	chara.changeAction(CharacterAction.WAKE);	
-	
-	var maxTroops = chara.data.maxTroops();
-	var troopsValue = troops + troopsAdd > maxTroops ? maxTroops : troops + troopsAdd;
-	chara.data.troops(troopsValue);
-	
-	var tweenObj = getStrokeLabel(String.format("{0}+{1}",Language.get("treat"),woundedAdd),12,"#FF0000","#000000",2);
-	tweenObj.x = chara.x + (BattleCharacterSize.width - tweenObj.getWidth()) * 0.5;
-	tweenObj.y = chara.y + y;
-	chara.controller.view.baseLayer.addChild(tweenObj);
-	LTweenLite.to(tweenObj,1.5,{y:tweenObj.y - 20,alpha:0,onComplete:function(e){
-		e.target.remove();
-		chara.changeAction(CharacterAction.MOVE);
-		chara.toStatic(true);
-	}});
-	*/
 };
 BattleCharacterLayerView.prototype.boutSkillEnlist=function(chara,skill,tweenObj){
 	var self = this;

@@ -262,8 +262,6 @@ function battleHealTroops(currentSelectStrategy, currentTargetCharacter){
 	return battleHealTroopsRun(troopsAdd, woundedAdd, currentTargetCharacter);
 }
 function battleHealTroopsRun(troopsAdd, woundedAdd, currentTargetCharacter){
-	//var troopsAdd = currentSelectStrategy.troops();
-	//var woundedAdd = currentSelectStrategy.wounded();
 	var wounded = currentTargetCharacter.data.wounded();
 	if(woundedAdd < 1){
 		woundedAdd = wounded * woundedAdd >>> 0;
@@ -280,6 +278,11 @@ function battleHealTroopsRun(troopsAdd, woundedAdd, currentTargetCharacter){
 	if(troopsAdd > reservist){
 		troopsAdd = reservist;
 	}
+	if(battleData.fromCity.seigniorCharaId() == currentTargetCharacter.data.seigniorId()){
+		battleData.troops -= troopsAdd;
+	}else{
+		battleData.toCity.troops(reservist - troopsAdd);
+	}
 	if(woundedAdd > 0){
 		currentTargetCharacter.data.wounded(wounded - woundedAdd);
 		troopsAdd += woundedAdd;
@@ -288,11 +291,6 @@ function battleHealTroopsRun(troopsAdd, woundedAdd, currentTargetCharacter){
 	var maxTroops = currentTargetCharacter.data.maxTroops();
 	if(troops + troopsAdd > maxTroops){
 		troopsAdd = maxTroops - troops;
-	}
-	if(battleData.fromCity.seigniorCharaId() == currentTargetCharacter.data.seigniorId()){
-		battleData.troops -= troopsAdd;
-	}else{
-		battleData.toCity.troops(reservist - troopsAdd);
 	}
 	return troopsAdd;
 }
