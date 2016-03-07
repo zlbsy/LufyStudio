@@ -44,6 +44,9 @@ AreaIconView.prototype.onUp=function(event){
 				case CharacterListType.TRANSPORT:
 					errorMessage = "dialog_transport_select_error";
 					break;
+				case CharacterListType.PERSUADE_TARGET:
+					errorMessage = "dialog_persuade_target_error";
+					break;
 			}
 			if(neighbor.indexOf(self.areaStatus.id()) < 0 || LMvc.cityId == self.areaStatus.id()){
 				obj = {title:Language.get("confirm"),message:Language.get(errorMessage),height:240};
@@ -91,6 +94,13 @@ AreaIconView.prototype.onUp=function(event){
 						self.selectCityComplete(event);
 					},cancelEvent:null};
 				}
+			}else if(LMvc.CityController.eventType == CharacterListType.PERSUADE_TARGET){
+				if(cityData.seignior_chara_id() == self.areaStatus.seignior_chara_id()){
+					obj = {title:Language.get("confirm"),message:Language.get(errorMessage),height:240};
+				}else{
+					self.selectCityComplete(null);
+					return;
+				}
 			}
 			var windowLayer = ConfirmWindow(obj);
 			self.controller.view.parent.addChild(windowLayer);
@@ -101,7 +111,9 @@ AreaIconView.prototype.onUp=function(event){
 };
 AreaIconView.prototype.selectCityComplete=function(event){
 	var self = this;
-	event.currentTarget.parent.remove();
+	if(event){
+		event.currentTarget.parent.remove();
+	}
 	self.controller.returnToCity(self.areaStatus.id());
 };
 AreaIconView.prototype.onframe=function(event){

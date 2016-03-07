@@ -166,6 +166,7 @@ Language.data = {
 	"dialog_spy_generals_confirm":"要对{0}进行谍报吗？",
 	"dialog_spy_generals_error":"无法对此城池进行谍报！",
 	"dialog_expedition_select_error":"无法攻击此城池！",
+	"dialog_persuade_target_error":"无法劝降己方城池的武将！",
 	"dialog_expedition_select_confirm":"要对{0}发动攻击吗？",
 	"dialog_expedition_select_leader":"请选择主将！",
 	"dialog_select_leader_error":"只能选一个主将！",

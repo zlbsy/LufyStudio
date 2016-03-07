@@ -1,7 +1,7 @@
 function CharacterFace(id){
 	var self = this;
 	base(self,LSprite,[]);
-	console.log("id="+id);
+	//console.log("id="+id);
 	self.loadData("./Data/face/"+id+".txt");
 }
 CharacterFace.prototype.loadData = function(path){

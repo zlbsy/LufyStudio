@@ -108,8 +108,9 @@ BuildOfficialView.prototype.persuadeTargetSelectCharacter=function(event){
 	});
 	self.controller.setValue("cityId", event.cityId);
 	controller.removeEventListener(LCityEvent.SELECT_CITY, self.persuadeTargetSelectCharacter);
-	var characterList = [];
-	self.controller.loadCharacterList(CharacterListType.PERSUADE_TARGET, characterList, {showOnly:true});
+	var selectCity = AreaModel.getArea(event.cityId);
+	var characterList = selectCity.generals();
+	self.controller.loadCharacterList(CharacterListType.PERSUADE_TARGET, characterList, {isOnlyOne:true, buttonLabel:"execute"});
 };
 BuildOfficialView.prototype.onClickSpyButton=function(event){
 	var self = this;

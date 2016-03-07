@@ -91,7 +91,6 @@ function getIdentity(value){
 }
 function gameDataInit(){
 	var data = LMvc.areaData;
-	console.log("gameDataInit");
 	if(LMvc.chapterData.isCreateDebut){
 		addCreateCharactersToGame();
 	}
@@ -107,7 +106,6 @@ function gameDataInit(){
 		});
 		seignior.areas = areaList;
 	}
-	console.log("gameDataInit o");
 }
 function addCreateCharactersToGame(){
 	var characters = LPlugin.characters();
@@ -224,7 +222,7 @@ function monarchChange(seigniorId, characterId){
 	var seignior = SeigniorModel.getSeignior(seigniorId);
 	if(!characterId){
 		characterId = getMonarchChangeId(seignior);
-		console.log("getMonarchChangeId .characterId="+characterId);
+		//console.log("getMonarchChangeId .characterId="+characterId);
 		if(!characterId){
 			return;
 		}
@@ -235,7 +233,7 @@ function monarchChange(seigniorId, characterId){
 		var captive = captives[i];
 		captive.seigniorId(characterId);
 	}
-	console.log("seignior.chara="+seignior.character().name());
+	//console.log("seignior.chara="+seignior.character().name());
 	var areas = seignior.areas();
 	for(var i=0,l=areas.length;i<l;i++){
 		var city = areas[i];

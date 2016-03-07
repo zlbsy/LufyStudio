@@ -20,7 +20,7 @@ and open the template in the editor.
     <body style="margin:0px 0px 0px 0px;padding:0px 0px 0px 0px;font-size: 0;">
         <div id="mvclegend">loading</div>
         <script>
-        LController._notify_over = {};
+        /*LController._notify_over = {};
 		LController.prototype.notify = function(event){
 			var self = event.currentTarget;
 			LController._notify(self.view, false);
@@ -52,13 +52,13 @@ and open the template in the editor.
 					LController._notify(child,depth);
 				}
 			}
-		};
+		};*/
 		/*LController._notify = function(view, depth){
 			if(view && view.visible && view.mvcType == "view"){
 				view.updateView();
 			}
 		};*/
-		LView.prototype.addController = function(controller){
+		/*LView.prototype.addController = function(controller){
 			if(self.controller){
 				return;
 			}
@@ -75,7 +75,7 @@ and open the template in the editor.
         		parent = parent.parent;
         	}
         	return null;
-        };
+        };*/
         if(LGlobal.mobile){
         	var protocol = location.protocol;
 			if (protocol == "http:" || protocol == "https:") {

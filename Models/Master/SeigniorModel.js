@@ -186,7 +186,7 @@ SeigniorModel.prototype.addSpyCity = function(cityId){
 };
 SeigniorModel.prototype.checkSpyCitys = function(){
 	var self = this;
-	console.log("self.data.spyAreas.length="+self.data.spyAreas.length);
+	//console.log("self.data.spyAreas.length="+self.data.spyAreas.length);
 	for(var i = self.data.spyAreas.length - 1;i>=0;i--){
 		var city = self.data.spyAreas[i];
 		city.month -= 1;
@@ -194,7 +194,7 @@ SeigniorModel.prototype.checkSpyCitys = function(){
 			self.data.spyAreas.splice(i, 1);
 		}
 	}
-	console.log("checkSpyCitys="+self.data.spyAreas.length);
+	//console.log("checkSpyCitys="+self.data.spyAreas.length);
 };
 SeigniorModel.prototype.isSpyCity = function(id){
 	return this.data.spyAreas.findIndex(function(child){

@@ -16,7 +16,7 @@ RecordController.prototype.construct=function(){
 	var self = this;
 };
 RecordController.prototype.show=function(mode){
-	var self = this;console.log("RecordController.prototype.show");
+	var self = this;
 	self.mode = mode;
 	LMvc.layer.setChildIndex(self.view,LMvc.layer.numChildren - 1);
 	//self.view.y = LGlobal.height;
@@ -37,7 +37,7 @@ RecordController.prototype.loadView=function(){
 	self.load.view(["Record/RecordChild"],self.showRecordList);
 };
 RecordController.prototype.showRecordList=function(){
-	var self = this;console.log("RecordController.prototype.showRecordList");
+	var self = this;
 	self.view.visible = true;
 	self.dispatchEvent(LEvent.COMPLETE);
 	/*var records = [];

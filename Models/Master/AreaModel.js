@@ -103,7 +103,7 @@ AreaModel.prototype.getDefenseEnemies = function(){
 	var self = this;
 	var result = [];
 	var list = self.getDefenseEnemiesAndPowerful();
-	console.log("getDefenseEnemies list:",list);
+	//console.log("getDefenseEnemies list:",list);
 	for(var i=0,l=list.length < BattleMapConfig.DefenseQuantity ? list.length : BattleMapConfig.DefenseQuantity;i<l;i++){
 		result.push(list[i].general);
 	}
@@ -113,7 +113,7 @@ AreaModel.prototype.powerful = function(){
 	var self = this;
 	var power = [];
 	var list = self.getDefenseEnemiesAndPowerful();
-	console.log("powerful list:",list);
+	//console.log("powerful list:",list);
 	var needTroops = 0;
 	for(var i=0,l=list.length < BattleMapConfig.DefenseQuantity ? list.length : BattleMapConfig.DefenseQuantity;i<l;i++){
 		power += list[i].value;

@@ -249,7 +249,7 @@ BattleAIExecute.prototype.removeChara = function(chara){
 			if(i + 1 < charaList.length){
 				nearCharas.push(charaList[i + 1]);
 			}
-			if(calculateHitrateCaptive(chara, nearCharas) || true){
+			if(calculateHitrateCaptive(chara, nearCharas)){
 				captives.push(chara.data.id());
 			}
 			charaList.splice(i, 1);

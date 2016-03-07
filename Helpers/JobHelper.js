@@ -322,12 +322,15 @@ function exploreBusinessRun(characterModel){
 		items.splice(index, 1);
 	}
 	cityModel.itemsFarmland(items);
+	
 	var item = new ItemModel(null,{item_id:itemId,count:1});
-	if(!toEquipmentItem(item, characterModel)){
-		cityModel.addItem(item);
-	}
 	if(characterModel.seigniorId() == LMvc.selectSeignorId){
+		cityModel.addItem(item);
 		SeigniorExecute.addMessage(String.format(Language.get("exploreBusinessSuccess"),characterModel.name(),item.name()));
+	}else{
+		if(!toEquipmentCityItem(item, cityModel)){
+			cityModel.addItem(item);
+		}
 	}
 	characterModel.featPlus(JobFeatCoefficient.NORMAL);
 }
@@ -596,7 +599,7 @@ function SeigniorExecuteChangeCityResources(area){
 //装备
 function toEquipmentItem(item, characterModel){
 	var key = item.params()[0];
-	var equipItem = general.getEquipment(item.position());
+	var equipItem = characterModel.getEquipment(item.position());
 	if(equipItem && equipItem[key] >= item[key]){
 		return false;
 	}
@@ -692,7 +695,7 @@ function charactersNaturalDeath(area){
 		if(Math.random() > 0.5 + 0.1 * value){
 			continue;
 		}
-		console.error("---------------武将死亡：：" + general.name() + ","+general.age()+"<="+general.life());
+		//console.error("---------------武将死亡：：" + general.name() + ","+general.age()+"<="+general.life());
 		general.toDie();
 		if(general.id() == prefecture){
 			prefectureDie = true;

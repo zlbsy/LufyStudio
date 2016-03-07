@@ -74,7 +74,7 @@ function getBlackBitmap(width,height){
  *title,message,okEvent,cancelEvent 
  */
 function ConfirmWindow(obj){
-	console.log("ConfirmWindow",obj);
+	//console.log("ConfirmWindow",obj);
 	var windowLayer = getTranslucentMask();
 	
 	var backgroundData = new LBitmapData(LMvc.datalist["win05"]);

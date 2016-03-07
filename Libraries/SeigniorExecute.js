@@ -88,7 +88,7 @@ SeigniorExecute.run=function(){
 			}
 		}
 	}
-	console.warn("SeigniorExecute.run self.seigniorIndex="+self.seigniorIndex+"<"+SeigniorModel.list.length+",elf.stop="+self.stop);
+	//console.warn("SeigniorExecute.run self.seigniorIndex="+self.seigniorIndex+"<"+SeigniorModel.list.length+",elf.stop="+self.stop);
 	if(self.stop || jobAiEvent()){
 		return;
 	}
@@ -111,7 +111,7 @@ SeigniorExecute.run=function(){
 			}*/
 			return;
 		}
-		console.warn("SeigniorExecute.run :"+seigniorModel.character().name()+", area:"+self.areaIndex);
+		//console.warn("SeigniorExecute.run :"+seigniorModel.character().name()+", area:"+self.areaIndex);
 		if(seigniorModel.chara_id() != LMvc.selectSeignorId){
 			var aiOver = self.areasAIRun(seigniorModel);
 			if(!aiOver){
@@ -289,7 +289,7 @@ SeigniorExecute.prototype.jobNumberOfCharacter=function(characters){
 };
 SeigniorExecute.prototype.jobAiFunction=function(areaModel, characters, func,params,maxNum){
 	var self = this;
-	console.log("jobAiFunction "+func.name);
+	//console.log("jobAiFunction "+func.name);
 	var length = self.jobNumberOfCharacter(characters);
 	if(maxNum && maxNum < length){
 		length = maxNum;
@@ -322,7 +322,8 @@ SeigniorExecute.prototype.areaMessage=function(areaModel,key){
 		return;
 	}
 	self.citys.push(areaModel.id());
-	self.msgView.add(String.format(key,areaModel.seignior().character().name(),areaModel.name()));
+	SeigniorExecute.addMessage(String.format(Language.get(key),areaModel.seignior().character().name(),areaModel.name()));
+	//self.msgView.add(String.format(key,areaModel.seignior().character().name(),areaModel.name()));
 };
 SeigniorExecute.prototype.areaCharacterDieRun=function(area){
 	var self = this;

@@ -253,7 +253,7 @@ function jobAiToEnlish(areaModel,characters){
 	if(areaModel.money() < JobPrice.ENLIST){
 		return;
 	}
-	console.log("jobAiToEnlish :: 征兵");
+	//console.log("jobAiToEnlish :: 征兵");
 	var character = characters.shift();
 	var num = EnlistSetting.ENLIST_TO - EnlistSetting.ENLIST_FROM;
 	var cost = JobPrice.ENLIST * EnlistSetting.ENLIST_TO / EnlistSetting.ENLIST_FROM >>> 0;
@@ -276,10 +276,11 @@ function jobAiTavern(areaModel,characters){//录用
 	if(characters.length == 0){
 		return;
 	}
-	if(areaModel.seigniorCharaId() != LMvc.selectSeignorId && SeigniorExecute.Instance().messageCitys.indexOf(areaModel.id()) < 0){
+	SeigniorExecute.Instance().areaMessage(areaModel, "jobai_tavern_message");
+	/*if(areaModel.seigniorCharaId() != LMvc.selectSeignorId && SeigniorExecute.Instance().messageCitys.indexOf(areaModel.id()) < 0){
 		SeigniorExecute.Instance().messageCitys.push(areaModel.id());
 		SeigniorExecute.addMessage(String.format(Language.get("jobai_tavern_message"), areaModel.seignior().character().name(), areaModel.name()));//{0}在招贤纳士!
-	}
+	}*/
 	var outOfOfficeCharas = areaModel.outOfOffice();
 	if(outOfOfficeCharas.length == 0){
 		return;
@@ -292,10 +293,11 @@ function jobAiAccess(areaModel,characters){//访问
 	if(characters.length == 0){
 		return;
 	}
-	if(areaModel.seigniorCharaId() != LMvc.selectSeignorId && SeigniorExecute.Instance().messageCitys.indexOf(areaModel.id()) < 0){
+	SeigniorExecute.Instance().areaMessage(areaModel, "jobai_tavern_message");
+	/*if(areaModel.seigniorCharaId() != LMvc.selectSeignorId && SeigniorExecute.Instance().messageCitys.indexOf(areaModel.id()) < 0){
 		SeigniorExecute.Instance().messageCitys.push(areaModel.id());
 		SeigniorExecute.addMessage(String.format(Language.get("jobai_tavern_message"), areaModel.seignior().character().name(), areaModel.name()));
-	}
+	}*/
 	jobAiInternal(areaModel,characters,0,Job.ACCESS);
 }
 function jobAiLevelUpCity(areaModel,characters){//升级城池
@@ -329,11 +331,12 @@ function jobAiInternal(areaModel,characters,price,job){//内政
 	if(price > 0 && areaModel.money() < price){
 		return;
 	}
-	if(areaModel.seigniorCharaId() != LMvc.selectSeignorId && SeigniorExecute.Instance().messageCitys.indexOf(areaModel.id()) < 0){
+	SeigniorExecute.Instance().areaMessage(areaModel, "jobai_internal_message");//{0}的{1}在发展内政!
+	/*if(areaModel.seigniorCharaId() != LMvc.selectSeignorId && SeigniorExecute.Instance().messageCitys.indexOf(areaModel.id()) < 0){
 		SeigniorExecute.Instance().messageCitys.push(areaModel.id());
 		//{0}的{1}在发展内政!
 		SeigniorExecute.addMessage(String.format(Language.get("jobai_internal_message"), areaModel.seignior().character().name(),areaModel.name()));
-	}
+	}*/
 	var character = characters.shift();
 	character.job(job);
 	if(price > 0){
@@ -510,10 +513,16 @@ function jobAiCaptive(areaModel, seigniorId, charaModel){
 			SeigniorExecute.addMessage(String.format(Language.get("released_dialog_msg"),charaModel.name()));
 		}
 		areaModel.removeCaptives(charaModel.id());
-		var areas = charaModel.seignior().areas();
-		var city = areas[areas.length * Math.random() >>> 0];
-		charaModel.moveTo(city.id());
-		charaModel.moveTo();
+		if(!charaModel.seignior() || !charaModel.seignior().character().seigniorId()){
+			//下野
+			charaModel.toOutOfOffice();
+		}else{
+			//回归自己势力
+			var areas = charaModel.seignior().areas();
+			var city = areas[areas.length * Math.random() >>> 0];
+			charaModel.moveTo(city.id());
+			charaModel.moveTo();
+		}
 		return;
 	}
 	if(calculateHitrateBehead(seigniorId, charaModel)){//斩首
