@@ -7,8 +7,14 @@ function MyModel(controller){
 MyModel.prototype.textTutorialStep = 1;
 MyModel.prototype.construct=function(){
 };
-MyModel.prototype._dataValue = function(name, value, defaultValue){
+MyModel.prototype._dataValue = function(name, value, defaultValue, min, max){
 	if(typeof value != UNDEFINED){
+		if(typeof min != UNDEFINED && value < min){
+			value = min;
+		}
+		if(typeof max != UNDEFINED && value > max){
+			value = max;
+		}
 		this.data[name] = value;
 	}
 	return typeof this.data[name] == UNDEFINED ? defaultValue : this.data[name];

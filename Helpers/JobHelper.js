@@ -595,24 +595,60 @@ function SeigniorExecuteChangeCityResources(area){
 }
 //装备
 function toEquipmentItem(item, characterModel){
-	//TODO::暂定，版本升级后改善
-	var equipments = characterModel.equipments();
-	for(var j=0;j<equipments.length;j++){
-		
+	var key = item.params()[0];
+	var equipItem = general.getEquipment(item.position());
+	if(equipItem && equipItem[key] >= item[key]){
+		return false;
 	}
-	//var cityModel = characterModel.city();
+	characterModel.equip(item);
 	return false;
 }
 //装备
 function toEquipmentCityItem(item, cityModel){
 	var generals = cityModel.generals();
 	var length = generals.length;
-	//TODO::sort
+	var key = item.params()[0];
+	generals = generals.sort(function(a,b){
+		return b.data[key] - a.data[key];
+	});
+	var generalMustList = [];
+	var generalList = [];
 	for(var i=0;i<length;i++){
 		var general = generals[i];
-		if(toEquipmentItem(item, general)){
-			return true;
+		if(key == "force"){
+			var soldierType = general.currentSoldiers().soldierType();
+			if(soldierType == SoldierType.Magic){
+				continue;
+			}else if(soldierType == SoldierType.Comprehensive && general.data.force < general.data.intelligence){
+				continue;
+			}
+		}else if(key == "intelligence"){
+			var soldierType = general.currentSoldiers().soldierType();
+			if(soldierType == SoldierType.Physical){
+				continue;
+			}else if(soldierType == SoldierType.Comprehensive && general.data.force > general.data.intelligence){
+				continue;
+			}
 		}
+		var equipItem = general.getEquipment(item.position());
+		if(equipItem && equipItem[key] >= item[key]){
+			continue;
+		}
+		if((general[key]() / 10 >>> 0) - (general.data[key] / 10 >>> 0) >= 1){
+			continue;
+		}
+		if(((general.data[key] + item[key]) / 10 >>> 0) - (general.data[key] / 10 >>> 0) >= 1){
+			generalMustList.push(general);
+		}else{
+			generalList.push(general);
+		}
+	}
+	if(generalMustList.length + generalList.length == 0){
+		return false;
+	}
+	var general = generalMustList.length > 0 ? generalMustList[0] : generalList[0];
+	if(toEquipmentItem(item, general)){
+		return true;
 	}
 	return false;
 }
@@ -651,6 +687,8 @@ function charactersNaturalDeath(area){
 			continue;
 		}
 		var value = general.age() - general.life();
+		//TODO::Test
+		console.log("---------------年龄：：" + general.name() + ","+general.age()+"<="+general.life());
 		if(Math.random() > 0.5 + 0.1 * value){
 			continue;
 		}
@@ -705,8 +743,8 @@ function toPrizedByMoney(characterModel){
 	var compatibilityValue = 3;
 	var value1 = personalLoyaltyValue * characterModel.personalLoyalty()/15;
 	var value2 = compatibilityValue * (150 - Math.abs(characterModel.compatibility() - characterModel.seignior().character().compatibility())) / 150;
-	var upValue1 = (value1 + value2) >>> 0;
-	var value = (value1 + value2 - upValue1)*0.5 + 0.5;
+	var upValue = (value1 + value2) >>> 0;
+	var value = (value1 + value2 - upValue)*0.5 + 0.5;
 	if(value > Math.random()){
 		upValue += 1;
 	}

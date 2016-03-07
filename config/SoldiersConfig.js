@@ -136,7 +136,7 @@ var SoldierDatas = [
 	explanation:"explanation_zb",
 	next:[{id:7,lv:20}]
 	},
-	{id:9,name:"策士",type:SoldierType.Physical,attackType:AttackType.MAGIC,moveType:MoveType.CAVALRY,movePower:4,
+	{id:9,name:"策士",type:SoldierType.Magic,attackType:AttackType.MAGIC,moveType:MoveType.CAVALRY,movePower:4,
 	property:{attack:"B",spirit:"S",defense:"B",breakout:"B",morale:"B",troops:5,strategy:2},
 	equipment:{head:0,hand:0,body:0,foot:0,accessories:0},
 	restrain:[{id:2,value:110},{id:3,value:80}],
@@ -150,7 +150,7 @@ var SoldierDatas = [
 	explanation:"explanation_cs",
 	next:[{id:7,lv:20}]
 	},
-	{id:10,name:"风水士",type:SoldierType.Physical,attackType:AttackType.MAGIC,moveType:MoveType.CAVALRY,movePower:4,
+	{id:10,name:"风水士",type:SoldierType.Magic,attackType:AttackType.MAGIC,moveType:MoveType.CAVALRY,movePower:4,
 	property:{attack:"C",spirit:"S",defense:"C",breakout:"A",morale:"A",troops:3,strategy:2},
 	equipment:{head:0,hand:0,body:0,foot:0,accessories:0},
 	restrain:[{id:2,value:110},{id:3,value:80}],
@@ -164,7 +164,7 @@ var SoldierDatas = [
 	explanation:"explanation_fsis",
 	next:[{id:7,lv:20}]
 	},
-	{id:11,name:"道士",type:SoldierType.Physical,attackType:AttackType.MAGIC,moveType:MoveType.CAVALRY,movePower:4,
+	{id:11,name:"道士",type:SoldierType.Magic,attackType:AttackType.MAGIC,moveType:MoveType.CAVALRY,movePower:4,
 	property:{attack:"C",spirit:"S",defense:"B",breakout:"A",morale:"B",troops:3,strategy:2},
 	equipment:{head:0,hand:0,body:0,foot:0,accessories:0},
 	restrain:[{id:2,value:110},{id:3,value:80}],
@@ -180,7 +180,7 @@ var SoldierDatas = [
 	explanation:"explanation_ds",
 	next:[{id:7,lv:20}]
 	},
-	{id:12,name:"骑马策士",type:SoldierType.Physical,attackType:AttackType.MAGIC,moveType:MoveType.CAVALRY,movePower:6,
+	{id:12,name:"骑马策士",type:SoldierType.Magic,attackType:AttackType.MAGIC,moveType:MoveType.CAVALRY,movePower:6,
 	property:{attack:"A",spirit:"S",defense:"B",breakout:"B",morale:"C",troops:5,strategy:2},
 	equipment:{head:0,hand:0,body:0,foot:0,accessories:0},
 	restrain:[{id:2,value:110},{id:3,value:80}],
@@ -221,7 +221,7 @@ var SoldierDatas = [
 	explanation:"explanation_hd",
 	next:[{id:7,lv:20}]
 	},
-	{id:15,name:"都督",type:SoldierType.Physical,attackType:AttackType.MAGIC,moveType:MoveType.CAVALRY,movePower:5,
+	{id:15,name:"都督",type:SoldierType.Comprehensive,attackType:AttackType.MAGIC,moveType:MoveType.CAVALRY,movePower:5,
 	property:{attack:"A",spirit:"S",defense:"B",breakout:"B",morale:"B",troops:4,strategy:2},
 	equipment:{head:0,hand:0,body:0,foot:0,accessories:0},
 	restrain:[{id:2,value:110},{id:3,value:80}],
@@ -234,7 +234,7 @@ var SoldierDatas = [
 	explanation:"explanation_dd",
 	next:[{id:8,lv:40}]
 	},
-	{id:16,name:"咒术士",type:SoldierType.Physical,attackType:AttackType.MAGIC,moveType:MoveType.CAVALRY,movePower:5,
+	{id:16,name:"咒术士",type:SoldierType.Magic,attackType:AttackType.MAGIC,moveType:MoveType.CAVALRY,movePower:5,
 	property:{attack:"C",spirit:"S",defense:"B",breakout:"B",morale:"A",troops:3,strategy:3},
 	equipment:{head:0,hand:0,body:0,foot:0,accessories:0},
 	restrain:[{id:2,value:110},{id:3,value:80}],

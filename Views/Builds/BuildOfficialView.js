@@ -1,6 +1,6 @@
 /**
  * 官府
- * 出征，武将一览，谍报，外交
+ * 武将一览，谍报，外交
  */
 function BuildOfficialView(controller){
 	var self = this;
@@ -45,6 +45,12 @@ BuildOfficialView.prototype.showMenu=function(){
 		buttonDiplomacy.y = menuY;
 		layer.addChild(buttonDiplomacy);
 		buttonDiplomacy.addEventListener(LMouseEvent.MOUSE_UP, self.onClickDiplomacyButton.bind(self));
+			
+		menuY += menuHeight;
+		var buttonPersuade = getButton(Language.get("劝降武将"),200);
+		buttonPersuade.y = menuY;
+		layer.addChild(buttonPersuade);
+		buttonPersuade.addEventListener(LMouseEvent.MOUSE_UP, self.onClickPersuade);
 	}else{
 		var buttonGeneralsList = getButton(Language.get("generals_list"),200);
 		buttonGeneralsList.y = menuY;
@@ -88,23 +94,23 @@ BuildOfficialView.prototype.toTransport=function(){
 	var cityModel = self.controller.getValue("cityData");
 	self.controller.loadCharacterList(CharacterListType.TRANSPORT, cityModel.generals(Job.IDLE), {isOnlyOne:true, buttonLabel:"execute"});
 };
-/*BuildOfficialView.prototype.onClickExpeditionButton=function(event){
-	var self = this;
-	//TODO::Testcode
-	//self.controller.gotoBattle();
-	self.characterListType = CharacterListType.EXPEDITION;
-	self.controller.addEventListener(LCityEvent.SELECT_CITY, self.expeditionSelectCharacter);
-	self.controller.toSelectMap(CharacterListType.EXPEDITION);
+BuildOfficialView.prototype.onClickPersuade=function(event){
+	var self = event.currentTarget.getParentByConstructor(BuildOfficialView);
+	self.characterListType = CharacterListType.PERSUADE_TARGET;
+	self.controller.addEventListener(LCityEvent.SELECT_CITY, self.persuadeTargetSelectCharacter);
+	self.controller.toSelectMap(CharacterListType.PERSUADE_TARGET);
 };
-BuildOfficialView.prototype.expeditionSelectCharacter=function(event){
+BuildOfficialView.prototype.persuadeTargetSelectCharacter=function(event){
 	var controller = event.currentTarget;
+	console.log("persuadeTargetSelectCharacter");
 	var self = controller.view.contentLayer.childList.find(function(child){
 		return child.constructor.name == "BuildOfficialView";
 	});
 	self.controller.setValue("cityId", event.cityId);
-	controller.removeEventListener(LCityEvent.SELECT_CITY, self.expeditionSelectCharacter);
-	controller.loadCharacterList(CharacterListType.EXPEDITION,self);
-};*/
+	controller.removeEventListener(LCityEvent.SELECT_CITY, self.persuadeTargetSelectCharacter);
+	var characterList = [];
+	self.controller.loadCharacterList(CharacterListType.PERSUADE_TARGET, characterList, {showOnly:true});
+};
 BuildOfficialView.prototype.onClickSpyButton=function(event){
 	var self = this;
 	self.controller.addEventListener(LCityEvent.SELECT_CITY, self.spySelectCharacter);

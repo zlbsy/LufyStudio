@@ -349,8 +349,7 @@ BattleAIExecute.prototype.useHertStrategy = function(chara, target, attack) {
 	}
 	var strategy = strategys[(strategys.length * Math.random()) >>> 0];
 	var effectType = strategy.strategyType();
-	var target = obj.target;
-	chara.data.MP(chara.data.MP() - obj.strategy.cost());
+	chara.data.MP(chara.data.MP() - strategy.cost());
 	if(effectType == StrategyEffectType.Attack){
 		var hertValue = calculateHertStrategyValue(chara, target, strategy);
 		chara.data.troops(chara.data.troops() - hertValue);

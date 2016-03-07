@@ -255,3 +255,14 @@ function monarchChange(seigniorId, characterId){
 		}
 	}
 }
+//物品转换忠诚度
+function itemExchangeLoyalty(item){
+	var loyalty = 0;
+	if(item.itemType() == ItemType.EQUIPMENT){
+		var params = item.params();
+		for(var i=0;i<params.length;i++){
+			loyalty += Math.ceil(item[params[i]]() * (i == 0 ? 1 : 0.5));
+		}
+	}
+	return loyalty;
+}

@@ -92,7 +92,6 @@ CharacterModel.prototype.datas=function(){
 CharacterModel.prototype.setDatas=function(charaData){
 	var self = this;
 	self.cityId(charaData.cityId);
-	console.error(self.name()+"="+self.city().name());
 	if(charaData.seignior_id){
 		self.seigniorId(charaData.seignior_id);
 	}
@@ -500,7 +499,7 @@ CharacterModel.prototype.identity = function(value) {
 	return Language.get(identity);
 };
 CharacterModel.prototype.loyalty = function(value) {
-	return this._dataValue("loyalty", value, 0);
+	return this._dataValue("loyalty", value, 0, 0, 100);
 };
 CharacterModel.prototype.jobLabel = function() {
 	var self = this;
@@ -754,6 +753,16 @@ CharacterModel.prototype.equipmentsData = function() {
 	}
 	return list;
 };
+CharacterModel.prototype.getEquipment = function(position) {
+	var equipments = this.equipments();
+	for(var i=0;i<equipments.length;i++){
+		var item = equipments[i];
+		if(item.position() == position){
+			return item;
+		}
+	}
+	return null;
+};
 CharacterModel.prototype.equipments = function() {
 	if(!this.data.equipments){
 		this.data.equipments = [];
@@ -766,9 +775,13 @@ CharacterModel.prototype.equip = function(itemModel) {
 	var equipments = self.equipments();
 	
 	if(Array.isArray(itemModel)){
+		for(var i=equipments.length-1;i>=0;i--){
+			var item = equipments[i];
+			equipments.splice(i,1);
+			self.city().addItem(item);
+		}
 		var datas = itemModel;
 		for(var i=0;i<datas.length;i++){
-			console.log(i,datas[i]);
 			itemModel = new ItemModel(null, datas[i]);
 			equipments.push(itemModel);
 		}
@@ -776,14 +789,13 @@ CharacterModel.prototype.equip = function(itemModel) {
 		for(var i=0;i<equipments.length;i++){
 			var item = equipments[i];
 			if(item.position() == itemModel.position()){
-				console.log("CharacterModel.prototype.equip=",itemModel.objectIndex);
-				equipments.splice(i,1);
-				self.city().addItem(item);
-				console.log("CharacterModel addItem=",item.objectIndex);
+				self.equipOff(item.id());
 				break;
 			}
 		}
 		var item = new ItemModel(null, {item_id:itemModel.id(), count:1});
+		var loyalty = self.loyalty();
+		self.loyalty(loyalty + itemExchangeLoyalty(item));
 		equipments.push(item);
 	}
 };
@@ -793,6 +805,8 @@ CharacterModel.prototype.equipOff = function(itemId) {
 	for(var i=0;i<equipments.length;i++){
 		var item = equipments[i];
 		if(item.id() == itemId){
+			var loyalty = self.loyalty();
+			self.loyalty(loyalty - itemExchangeLoyalty(item));
 			equipments.splice(i,1);
 			self.city().addItem(item);
 			break;

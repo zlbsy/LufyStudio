@@ -298,6 +298,9 @@ function jobAiAccess(areaModel,characters){//访问
 	}
 	jobAiInternal(areaModel,characters,0,Job.ACCESS);
 }
+function jobAiLevelUpCity(areaModel,characters){//升级城池
+	jobAiInternal(areaModel,characters,JobPrice.LEVEL_UP,Job.LEVEL_UP);
+}
 function jobAiInstitute(areaModel,characters){//技术
 	jobAiInternal(areaModel,characters,JobPrice.TECHNOLOGY,Job.TECHNOLOGY);
 }

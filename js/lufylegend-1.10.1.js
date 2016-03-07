@@ -1,6 +1,6 @@
 /**
 * lufylegend
-* @version 1.10.0
+* @version 1.10.1
 * @Explain lufylegend是一个HTML5开源引擎，利用它可以快速方便的进行HTML5的开发
 * @author lufy(lufy_legend)
 * @blog http://blog.csdn.net/lufy_Legend
@@ -430,7 +430,11 @@ var LMouseEventContainer = (function () {
 			return list;
 		}
 	};
-	return new MouseEventContainer();
+	var container = new MouseEventContainer();
+	container.set(LMouseEvent.MOUSE_DOWN,true);
+	container.set(LMouseEvent.MOUSE_UP,true);
+	container.set(LMouseEvent.MOUSE_MOVE,true);
+	return container;
 })();
 var LKeyboardEvent = function () {throw "LKeyboardEvent cannot be instantiated";};
 LKeyboardEvent.KEY_DOWN = "keydown";
@@ -1540,7 +1544,7 @@ function init (s, c, w, h, f, t) {
 			_f();
 		};
 	}
-	if (t != null && t == LEvent.INIT) {
+	if (document.readyState === "complete") {
 		loop();
 	}else{
 		LEvent.addEventListener(window, "load", function () {
@@ -1643,7 +1647,7 @@ var LTimer = (function () {
 		LExtends (s, LEventDispatcher, []);
 		s.type = "LTimer";
 		s.delay = delay;
-		s.repeatCount = repeat ? repeat : int.MAX_VALUE;
+		s.repeatCount = repeat ? repeat : Number.MAX_VALUE;
 		s.running = false;
 		s.currentCount = 0;
 		s.reset();
@@ -2073,7 +2077,7 @@ var LDisplayObject = (function () {
 				s._ll_setFilters(c);
 			}
 			s._rotateReady();
-			if (s.mask != null && s.mask.ll_show) {
+			if (s.mask != null && s.mask.ll_show && !s._ll_cacheAsBitmap) {
 				s.mask.ll_show(c);
 				c.clip();
 			}
@@ -2127,8 +2131,8 @@ var LDisplayObject = (function () {
 		},
 		startX : function(){return 0;},
 		startY : function(){return 0;},
-		getWidth : function(){return 1;},
-		getHeight : function(){return 1;},
+		getWidth : function(maskSize){return 1;},
+		getHeight : function(maskSize){return 1;},
 		_transformRotate : function (c) {
 			var s = this;
 			c = c || LGlobal.canvas;
@@ -2208,8 +2212,8 @@ var LDisplayObject = (function () {
 				x = sp.x - dp.x;
 				y = sp.y - dp.y;
 			}
-			w = s.getWidth();
-			h = s.getHeight();
+			w = s.getWidth(true);
+			h = s.getHeight(true);
 			return new LRectangle(x, y, w, h);
 		},
 		cacheAsBitmap : function (value) {
@@ -2218,8 +2222,8 @@ var LDisplayObject = (function () {
 				s._ll_cacheAsBitmap = null;
 				return;
 			}
-			var sx = s.x - s.startX(), sy = s.y - s.startY();
-			var data = s.getDataCanvas(sx, sy, s.getWidth(), s.getHeight());
+			var sx = s.x - s.startX(true), sy = s.y - s.startY(true);
+			var data = s.getDataCanvas(sx, sy, s.getWidth(true), s.getHeight(true));
 			var b = new LBitmapData(data, 0, 0, null, null, LBitmapData.DATA_CANVAS);
 			var cache = new LBitmap(b);
 			cache.x = -sx;
@@ -2237,39 +2241,37 @@ var LDisplayObject = (function () {
 			s.height = h || s.getHeight();
 			s._canvas.width = s.width;
 			s._canvas.height = s.height;
+			var mx, my;
+			if(s.mask){
+				mx = s.mask.x;
+				my = s.mask.y;
+				s.mask.x += (s.x - _x);
+				s.mask.y += (s.y - _y);
+			}
 			s.ll_show(s._context);
 			s.x = _x;
 			s.y = _y;
-			return s._canvas;
-			var s = this, _o, o, _c, c, _x, _y;
-			s._createCanvas();
-			o = LGlobal.canvasObj;
-			c = LGlobal.canvas;
-			_o = s._canvas;
-			_c = s._context;
-			s.width = w || s.getWidth();
-			s.height = h || s.getHeight();
-			_o.width = s.width;
-			_o.height = s.height;
-			_c.clearRect(0, 0, s.width, s.height);
-			LGlobal.canvasObj = s._canvas;
-			LGlobal.canvas = s._context;
-			_x = s.x;
-			_y = s.y;
-			s.x = x || 0;
-			s.y = y || 0;
-			s.ll_show(s._context);
-			s.x = _x;
-			s.y = _y;
-			s._canvas = _o;
-			s._context = _c;
-			LGlobal.canvasObj = o;
-			LGlobal.canvas = c;
+			if(s.mask){
+				s.mask.x = mx;
+				s.mask.y = my;
+			}
 			return s._canvas;
 		},
 		getDataURL : function () {
-			var s = this, r = s.getDataCanvas();
+			var s = this;
+			var sx = s.x - s.startX(true), sy = s.y - s.startY(true);
+			var r = s.getDataCanvas(sx, sy, s.getWidth(true), s.getHeight(true));
 			return r.toDataURL.apply(r, arguments);
+		},
+		getParentByConstructor : function (value) {
+			var parent = this.parent;
+			while(typeof parent == "object"){
+				if(parent instanceof value){
+					return parent;
+				}
+				parent = parent.parent;
+			}
+			return null;
 		},
 		ismouseonShapes : function (shapes, mx, my) {
 			var s = this, parent = s, m, child, j, v, arg;
@@ -4164,7 +4166,7 @@ var LSprite = (function () {
 				}
 				a = o.x;
 				if (typeof o._startX == "function") {
-					a=o._startX();
+					a=o._startX(maskSize);
 				}
 				b = a + o.getWidth(maskSize);
 				if (a < left) {
@@ -4183,9 +4185,12 @@ var LSprite = (function () {
 				if (right > mx + mw) {
 					right = mx + mw;
 				}
+				s.ll_left = left;
+				s.ll_right = right;
+			}else{
+				s.ll_left = s.x + left;
+				s.ll_right = s.x + right;
 			}
-			s.ll_left = s.x + left;
-			s.ll_right = s.x + right;
 			return (right - left) * s.scaleX;
 		},
 		getHeight : function (maskSize) {
@@ -4198,7 +4203,7 @@ var LSprite = (function () {
 				}
 				a = o.y;
 				if (typeof o._startY == "function") {
-					a=o._startY();
+					a=o._startY(maskSize);
 				}
 				b = a + o.getHeight(maskSize);
 				if (a < top) {
@@ -4217,28 +4222,31 @@ var LSprite = (function () {
 				if (bottom > my + mh) {
 					bottom = my + mh;
 				}
+				s.ll_top = top;
+				s.ll_bottom = bottom;
+			}else{
+				s.ll_top = s.y + top;
+				s.ll_bottom = s.y + bottom;
 			}
-			s.ll_top = s.y + top;
-			s.ll_bottom = s.y + bottom;
 			return (bottom - top) * s.scaleY;
 		},
-		_startX : function () {
+		_startX : function (maskSize) {
 			var s = this;
-			s.getWidth();
+			s.getWidth(maskSize);
 			return s.ll_left;
 		},
-		startX : function () {
+		startX : function (maskSize) {
 			var s = this;
-			return s._startX() * s.scaleX;
+			return s._startX(maskSize) * s.scaleX;
 		},
-		_startY : function () {
+		_startY : function (maskSize) {
 			var s = this;
-			s.getHeight();
+			s.getHeight(maskSize);
 			return s.ll_top;
 		},
-		startY : function () {
+		startY : function (maskSize) {
 			var s = this;
-			return s._startY() * s.scaleY;
+			return s._startY(maskSize) * s.scaleY;
 		},
 		_ll_loopframe : function () {
 			this.dispatchEvent(LEvent.ENTER_FRAME);

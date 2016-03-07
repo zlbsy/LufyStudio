@@ -453,17 +453,30 @@ SeigniorExecute.prototype.areaAIRun=function(areaModel){
 	);
 	//console.log("toInterior:"+toInterior);
 	if(toInterior){
-		var interiorList = [
-		{fun:jobAiInstitute,params:["intelligence","command"]},//太学院
-		{fun:jobAiFarmland,params:["intelligence","force"]},//农地
-		{fun:jobAiMarket,params:["intelligence","agility"]}//市场
-		];
-		interiorList = interiorList.sort(function(a,b){return Math.random() > 0.5 ? 1 : -1;});
-		for(var i = 0;i<3;i++){
-			child = interiorList[i];
-			self.jobAiFunction(areaModel,self.characters,child.fun,child.params);
+		var interiorList = [];
+		if(!areaModel.isMaxTechnology()){
+			interiorList.push({fun:jobAiInstitute,params:["intelligence","command"]});//太学院
 		}
-	}else{
+		if(!areaModel.isMaxAgriculture()){
+			interiorList.push({fun:jobAiFarmland,params:["intelligence","force"]});//农地
+		}
+		if(!areaModel.isMaxBusiness()){
+			interiorList.push({fun:jobAiMarket,params:["intelligence","agility"]});//市场
+		}
+		if(interiorList.length > 0){
+			interiorList = interiorList.sort(function(a,b){return Math.random() > 0.5 ? 1 : -1;});
+			for(var i = 0;i<interiorList.length;i++){
+				child = interiorList[i];
+				self.jobAiFunction(areaModel,self.characters,child.fun,child.params);
+			}
+		}else{
+			//升级城池
+			jobAiLevelUpCity(areaModel,self.characters);
+		}
+	}
+	
+	//如果有剩余无分配工作的人员,则执行探索
+	while(self.characters > 0){
 		if(Math.random() > 0.5){
 			//农地探索
 			self.jobAiFunction(areaModel,self.characters,jobAiFarmlandExplore,["intelligence","force","luck"]);
@@ -472,7 +485,6 @@ SeigniorExecute.prototype.areaAIRun=function(areaModel){
 			self.jobAiFunction(areaModel,self.characters,jobAiMarketExplore,["intelligence","agility","luck"]);
 		}
 	}
-	//如果有剩余无法分配工作的人员(金钱不够等),则直接跳过
 	self.areaAIIndex++;
 	//console.log("self.areaAIIndex:"+self.areaAIIndex);
 	self.timer.reset();

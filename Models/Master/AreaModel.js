@@ -412,12 +412,6 @@ AreaModel.prototype.foodLabel=function(){
 AreaModel.prototype.food=function(value){
 	return this._plusData("food",value);
 };
-AreaModel.prototype.technologyLabel=function(){
-	return LString.numberFormat(this.data.technology,3);
-};
-AreaModel.prototype.technology=function(value){
-	return this._plusData("technology",value);
-};
 AreaModel.prototype.populationLabel=function(){
 	return LString.numberFormat(this.data.population >>> 0,3);
 };
@@ -501,11 +495,26 @@ AreaModel.prototype.troops=function(value){
 AreaModel.prototype.maxTroops=function(){
 	return AreaModel.troopsList[this.level()-1];
 };
+AreaModel.prototype.technologyLabel=function(){
+	return LString.numberFormat(this.data.technology,3);
+};
+AreaModel.prototype.technology=function(value){
+	return this._plusData("technology",value);
+};
+AreaModel.prototype.maxTechnology=function(){
+	return AreaModel.technologyList[this.level()-1];
+};
+AreaModel.prototype.isMaxTechnology=function(){
+	return this.technology() >= this.maxTechnology();
+};
 AreaModel.prototype.agriculture=function(value){
 	return this._plusData("agriculture",value);
 };
 AreaModel.prototype.maxAgriculture=function(){
 	return AreaModel.agricultureList[this.level()-1];
+};
+AreaModel.prototype.isMaxAgriculture=function(){
+	return this.agriculture() >= this.maxAgriculture();
 };
 AreaModel.prototype.business=function(value){
 	return this._plusData("business",value);
@@ -513,8 +522,8 @@ AreaModel.prototype.business=function(value){
 AreaModel.prototype.maxBusiness=function(){
 	return AreaModel.businessList[this.level()-1];
 };
-AreaModel.prototype.maxTechnology=function(){
-	return AreaModel.technologyList[this.level()-1];
+AreaModel.prototype.isMaxBusiness=function(){
+	return this.business() >= this.maxBusiness();
 };
 AreaModel.prototype.minPopulation=function(){
 	return AreaModel.populationList[this.level()-1][0];
