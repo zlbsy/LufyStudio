@@ -38,7 +38,7 @@ CityController.prototype.init=function(){
 	self.setValue("cityFree",cityFree);
 	self.setValue("selfCity",cityData.seigniorCharaId() == LMvc.selectSeignorId);
 	//TODO::
-	self.setValue("cityFree",true);
+	//self.setValue("cityFree",true);
 	LMvc.keepLoading(false);
 	LMvc.CityController = self;
 	LMvc.MapController.view.visible = false;
@@ -55,22 +55,31 @@ CityController.prototype.gotoMap=function(){
 	LMvc.MapController.view.visible = true;
 	LMvc.MapController.view.changeMode(MapController.MODE_MAP);
 };
-CityController.prototype.toSelectMap=function(eventType){
+CityController.prototype.toSelectMap=function(eventType, params){
 	var self = this;
 	self.eventType = eventType;
 	self.view.visible = false;
 	LMvc.MapController.view.visible = true;
-	var cityData = self.getValue("cityData");
-	var neighbor = cityData.neighbor();
-	LMvc.MapController.view.areaLayer.childList.forEach(function(child){
-		if(neighbor.indexOf(child.areaStatus.id()) >= 0){
-			LMvc.MapController.view.addBattleMark(child.areaStatus);
-			/*
-			LTweenLite.to(child,1,{alpha:0.5,loop:true})
-    		.to(child,1,{alpha:1});*/
-		}
-	});
+	LMvc.MapController.setValue("selectCityParams", params);
+	if(!params.hideArraw){
+		var cityData = self.getValue("cityData");
+		var neighbor = cityData.neighbor();
+		LMvc.MapController.view.areaLayer.childList.forEach(function(child){
+			var citySeigniorId = child.areaStatus.seigniorCharaId();
+			if(params.isSelf && citySeigniorId != LMvc.selectSeignorId){
+				return;
+			}else if(!params.isSelf && citySeigniorId == LMvc.selectSeignorId){
+				return;
+			}
+			if(neighbor.indexOf(child.areaStatus.id()) >= 0){
+				LMvc.MapController.view.addBattleMark(child.areaStatus);
+			}
+		});
+	}
 	LMvc.MapController.view.changeMode(MapController.MODE_CHARACTER_MOVE);
+	if(params.toast){
+		Toast.makeText(Language.get(params.toast)).show();
+	}
 };
 CityController.prototype.gotoBattle=function(){
 	var self = this;

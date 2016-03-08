@@ -27,9 +27,40 @@ AreaIconView.prototype.onUp=function(event){
 	baseView.stopDrag();
 	if(LPoint.distance2(self.offsetX,self.offsetY,event.offsetX,event.offsetY) < 5){
 		if(LMvc.CityController){
+			if(LMvc.cityId == self.areaStatus.id()){
+				self.showDialogKey("dialog_select_city_common_error");
+				return;
+			}
+			var params = self.controller.getValue("selectCityParams");
 			var obj;
 			var cityData = LMvc.CityController.getValue("cityData");
+			//if(params.neighbor){
 			var neighbor = cityData.neighbor();
+			if(neighbor.indexOf(self.areaStatus.id()) < 0 || LMvc.cityId == self.areaStatus.id()){
+				self.showDialogKey("dialog_select_city_neighbor_error");
+				return;
+			}
+			//}
+			if((params.isSelf && self.areaStatus.seigniorCharaId() != LMvc.selectSeignorId) ||
+			(!params.isSelf && self.areaStatus.seigniorCharaId() == LMvc.selectSeignorId)){
+				self.showDialogKey(params.belongError);
+				return;
+			}
+			if(params.spy){
+				var cityFree = SeigniorModel.getSeignior(LMvc.selectSeignorId).isSpyCity(self.areaStatus.id());
+				self.showDialogKey(params.spyError);
+				return;
+			}
+			if(params.confirmMessage){
+				var formatMsg = Language.get(params.confirmMessage);
+				var message=String.format(formatMsg,self.areaStatus.name());
+				self.showDialogMessage(params.belongError, function(event){
+					self.selectCityComplete(event);
+				},null);
+			}else{
+				self.selectCityComplete(null);
+			}
+			return;
 			var errorMessage = "";
 			switch(LMvc.CityController.eventType){
 				case CharacterListType.CHARACTER_MOVE:
@@ -108,6 +139,22 @@ AreaIconView.prototype.onUp=function(event){
 			self.controller.showCity(self.areaStatus.id());
 		}
 	}
+};
+AreaIconView.prototype.showDialogKey=function(msgKey, okEvent, cancelEvent){
+	var self = this;
+	self.showDialogMessage(Language.get(msgKey), okEvent, cancelEvent);
+};
+AreaIconView.prototype.showDialogMessage=function(msg, okEvent, cancelEvent){
+	var self = this;
+	var obj = {title:Language.get("confirm"),message:msg,height:240};
+	if(typeof okEvent != UNDEFINED){
+		obj.okEvent = okEvent;
+	}
+	if(typeof cancelEvent != UNDEFINED){
+		obj.cancelEvent = cancelEvent;
+	}
+	var windowLayer = ConfirmWindow(obj);
+	self.controller.view.parent.addChild(windowLayer);
 };
 AreaIconView.prototype.selectCityComplete=function(event){
 	var self = this;

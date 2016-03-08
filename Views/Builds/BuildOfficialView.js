@@ -98,7 +98,7 @@ BuildOfficialView.prototype.onClickPersuade=function(event){
 	var self = event.currentTarget.getParentByConstructor(BuildOfficialView);
 	self.characterListType = CharacterListType.PERSUADE_TARGET;
 	self.controller.addEventListener(LCityEvent.SELECT_CITY, self.persuadeTargetSelectCharacter);
-	self.controller.toSelectMap(CharacterListType.PERSUADE_TARGET);
+	self.controller.toSelectMap(CharacterListType.PERSUADE_TARGET, {isSelf:false,toast:"dialog_persuade_select_city_toast",spy:true, belongError:"dialog_persuade_belong_error", spyError:"dialog_persuade_spy_error"});
 };
 BuildOfficialView.prototype.persuadeTargetSelectCharacter=function(event){
 	var controller = event.currentTarget;
