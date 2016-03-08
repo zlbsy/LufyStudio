@@ -24,6 +24,8 @@ function characterListType2JobType(characterListType) {
 			return Job.SPY;
 		case CharacterListType.LEVEL_UP:
 			return Job.LEVEL_UP;
+		case CharacterListType.PERSUADE:
+			return Job.PERSUADE;
 	}
 	console.error("Can't change to jobType");
 	return Job.IDLE;
@@ -72,7 +74,7 @@ function getJobResult(realValue,coefficient){
 	return value;
 }
 function trainingRun(characterModel, soldierId){
-	//TODO::城池技术
+	//TODO::训练加成城池技术
 	var soldier = characterModel.soldiers().find(function(child){
 		return child.id() == soldierId;
 	});
@@ -397,6 +399,27 @@ function technologyRun(characterModel){
 }
 function enlistRun(characterModel, targetEnlist){
 	//招募：运气+统率
+	//console.log("enlistRun招募 : ",characterModel.id());
+	var area = characterModel.city();
+	var population = area.population();
+	var minPopulation = AreaModel.populationList[area.level()][0];
+	var troop = area.troops();
+	var value01 = getJobResult(characterModel.luck(),JobCoefficient.ENLIST);
+	var value02 = getJobResult(characterModel.command(),JobCoefficient.ENLIST);
+	var value = (value01 + value02) * (characterModel.hasSkill(SkillSubType.ENLIST) ? 1.5 : 1);
+	var quantity = (targetEnlist.quantity * value / JobCoefficient.NORMAL) >> 0;
+	if(quantity > population - minPopulation){
+		quantity = (population - minPopulation)*Math.random();
+	}
+	area.population(-quantity);
+	troop += quantity;
+	area.troops(troop);
+	characterModel.job(Job.IDLE);
+	var feat = JobFeatCoefficient.NORMAL * quantity / JobFeatCoefficient.ENLIST;
+	characterModel.featPlus(feat);
+}
+function persuadeRun(characterModel, targetPersuade){
+	//劝降：运气+统率
 	//console.log("enlistRun招募 : ",characterModel.id());
 	var area = characterModel.city();
 	var population = area.population();

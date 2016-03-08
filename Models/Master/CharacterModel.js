@@ -508,6 +508,16 @@ CharacterModel.prototype.jobLabel = function() {
 	}
 	return Language.get(self.data.job);
 };
+CharacterModel.prototype.persuade = function(target) {
+	var self = this;
+	if(typeof target == UNDEFINED){
+		persuadeRun(self,self.data.targetPersuade);
+		self.data.targetPersuade = null;
+	}else{
+		self.data.targetPersuade = target;
+		self.job(Job.PERSUADE);
+	}
+};
 CharacterModel.prototype.enlist = function(enlistCount) {
 	var self = this;
 	if(typeof enlistCount == UNDEFINED){

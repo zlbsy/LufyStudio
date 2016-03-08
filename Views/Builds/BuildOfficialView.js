@@ -188,6 +188,13 @@ BuildOfficialView.prototype.selectComplete=function(event){
 			self.controller.setValue("transportCharacter", event.characterList[0]);
 			return true;
 		}
+	}else if(event.characterListType == CharacterListType.PERSUADE_TARGET){
+		self.controller.setValue("persuadeCharacter", event.characterList[0]);
+	}else if(event.characterListType == CharacterListType.PERSUADE){
+		self.controller.setValue("cityId", null);
+		var transportCharacter = self.controller.getValue("transportCharacter");
+		var characterModel = event.characterList[0];
+		characterModel.persuade(transportCharacter);
 	}
 	return true;
 };
@@ -209,6 +216,9 @@ BuildOfficialView.prototype.showBuild=function(event){
 	}
 	if(event.characterListType == CharacterListType.TRANSPORT){
 		self.load.view(["Builds/ExpeditionReady"],self.expeditionReady);
+	}else if(event.characterListType == CharacterListType.PERSUADE_TARGET){
+		var cityModel = self.controller.getValue("cityData");
+		self.controller.loadCharacterList(CharacterListType.PERSUADE, cityModel.generals(Job.IDLE), {isOnlyOne:true, buttonLabel:"execute"});
 	}
 };
 BuildOfficialView.prototype.expeditionReady=function(){

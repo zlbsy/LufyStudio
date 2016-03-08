@@ -17,6 +17,7 @@ var Job = {
 	DIPLOMACY_REDEEM:"diplomacy_redeem",
 	DIPLOMACY_STOP_BATTLE:"diplomacy_stop_battle",
 	LEVEL_UP:"levelUp",
+	PERSUADE:"persuade",
 	END:"end"
 };
 var JobPrice = {

@@ -46,11 +46,11 @@ AreaIconView.prototype.onUp=function(event){
 				self.showDialogKey(params.belongError);
 				return;
 			}
-			if(params.spy){
+			/*if(params.spy){
 				var cityFree = SeigniorModel.getSeignior(LMvc.selectSeignorId).isSpyCity(self.areaStatus.id());
 				self.showDialogKey(params.spyError);
 				return;
-			}
+			}*/
 			if(params.confirmMessage){
 				var formatMsg = Language.get(params.confirmMessage);
 				var message=String.format(formatMsg,self.areaStatus.name());
