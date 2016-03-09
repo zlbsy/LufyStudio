@@ -68,6 +68,7 @@ function getJobPrice(jobType) {
 招募：运气+统率
 录用：运气+相性
 训练：总和 + 城池技术
+劝降：忠诚度+义气+运气+武将相性
 */
 function getJobResult(realValue,coefficient){
 	var value = (JobCoefficient.NORMAL + realValue) * coefficient;
@@ -419,25 +420,44 @@ function enlistRun(characterModel, targetEnlist){
 	characterModel.featPlus(feat);
 }
 function persuadeRun(characterModel, targetPersuade){
-	//劝降：运气+统率
-	//console.log("enlistRun招募 : ",characterModel.id());
-	var area = characterModel.city();
-	var population = area.population();
-	var minPopulation = AreaModel.populationList[area.level()][0];
-	var troop = area.troops();
-	var value01 = getJobResult(characterModel.luck(),JobCoefficient.ENLIST);
-	var value02 = getJobResult(characterModel.command(),JobCoefficient.ENLIST);
-	var value = (value01 + value02) * (characterModel.hasSkill(SkillSubType.ENLIST) ? 1.5 : 1);
-	var quantity = (targetEnlist.quantity * value / JobCoefficient.NORMAL) >> 0;
-	if(quantity > population - minPopulation){
-		quantity = (population - minPopulation)*Math.random();
+	//劝降：忠诚度+义气+运气+武将相性
+	console.log("劝降 : ",characterModel.id());
+	var loyalty = targetPersuade.loyalty(), compatibility, percentage;
+	var personalLoyalty = targetPersuade.personalLoyalty();
+	//义气影响忠诚范围:义气*1.5
+	loyalty += personalLoyalty * 1.5;
+	if(loyalty >= 100){
+		return;
 	}
-	area.population(-quantity);
-	troop += quantity;
-	area.troops(troop);
-	characterModel.job(Job.IDLE);
-	var feat = JobFeatCoefficient.NORMAL * quantity / JobFeatCoefficient.ENLIST;
-	characterModel.featPlus(feat);
+	percentage = (100 - loyalty) * 0.01 * 0.8;
+	var percentageLuck = (JobCoefficient.NORMAL + characterModel.luck()) * 0.5 / JobCoefficient.NORMAL;
+	percentage *= (0.5 + 0.5 * percentageLuck);
+	
+	compatibility = Math.abs(characterModel.compatibility() - targetPersuade.compatibility());
+	if(compatibility > JobCoefficient.COMPATIBILITY){
+		compatibility -= JobCoefficient.COMPATIBILITY;
+	}
+	var percentageCompatibility = (JobCoefficient.COMPATIBILITY - compatibility) / JobCoefficient.COMPATIBILITY;
+	percentage *= (0.5 + 0.5 * percentageCompatibility);
+	
+	var rand = Math.random();
+	if(rand > percentage){
+		if(characterModel.seigniorId() == LMvc.selectSeignorId){
+			SeigniorExecute.addMessage(String.format(Language.get("persuadeRefuseMessage"),targetPersuade.name(),characterModel.name()));
+		}
+		characterModel.featPlus(JobFeatCoefficient.NORMAL * 0.5);
+		return;
+	}
+	targetPersuade.seigniorId(characterModel.seigniorId());
+	var loyalty = 50 + 50 * percentage >> 0;
+	targetPersuade.loyalty(loyalty > 100 ? 100 : loyalty);
+	targetCharacter.moveTo(characterModel.cityId());
+	targetCharacter.moveTo();
+	
+	if(characterModel.seigniorId() == LMvc.selectSeignorId){
+		SeigniorExecute.addMessage(String.format(Language.get("persuadeSuccessMessage"),characterModel.name(),hireCharacter.name(),hireCharacter.name()));
+	}
+	characterModel.featPlus(JobFeatCoefficient.NORMAL);
 }
 function spyRun(characterModel, cityId){
 	//谍报：武力+运气
@@ -685,6 +705,9 @@ function charactersLoyaltyToDown(area){
 	for(var i=0;i<length;i++){
 		var general = generals[i];
 		var compatibility = Math.abs(general.seignior().character().compatibility() - general.compatibility());
+		if(compatibility > JobCoefficient.COMPATIBILITY){
+			compatibility -= JobCoefficient.COMPATIBILITY;
+		}
 		compatibility = compatibility / JobCoefficient.COMPATIBILITY;
 		if(compatibility > 0.3){
 			continue;

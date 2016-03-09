@@ -226,6 +226,9 @@ SeigniorExecute.prototype.areaJobRun=function(area){
 			case Job.TRANSPORT:
 				chara.transport();
 				break;
+			case Job.PERSUADE:
+				chara.persuade();
+				break;
 			default:
 				chara.featPlus(JobFeatCoefficient.NORMAL * 0.25);
 				chara.job(Job.IDLE);

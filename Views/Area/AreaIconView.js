@@ -46,15 +46,19 @@ AreaIconView.prototype.onUp=function(event){
 				self.showDialogKey(params.belongError);
 				return;
 			}
-			/*if(params.spy){
+			console.log("params.spy="+params.spy);
+			if(params.spy){
 				var cityFree = SeigniorModel.getSeignior(LMvc.selectSeignorId).isSpyCity(self.areaStatus.id());
-				self.showDialogKey(params.spyError);
-				return;
-			}*/
+				if(!cityFree){
+					self.showDialogKey(params.spyError);
+					return;
+				}
+			}
+			console.log("params.confirmMessage="+params.confirmMessage);
 			if(params.confirmMessage){
 				var formatMsg = Language.get(params.confirmMessage);
 				var message=String.format(formatMsg,self.areaStatus.name());
-				self.showDialogMessage(params.belongError, function(event){
+				self.showDialogMessage(message, function(event){
 					self.selectCityComplete(event);
 				},null);
 			}else{

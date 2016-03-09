@@ -115,7 +115,7 @@ BuildOfficialView.prototype.persuadeTargetSelectCharacter=function(event){
 BuildOfficialView.prototype.onClickSpyButton=function(event){
 	var self = this;
 	self.controller.addEventListener(LCityEvent.SELECT_CITY, self.spySelectCharacter);
-	self.controller.toSelectMap(CharacterListType.CHARACTER_SPY);
+	self.controller.toSelectMap(CharacterListType.CHARACTER_SPY, {isSelf:false,toast:"dialog_common_select_city_toast", belongError:"dialog_spy_generals_error",confirmMessage:"dialog_spy_generals_confirm"});
 };
 BuildOfficialView.prototype.onClickGeneralsListButton=function(event){
 	var self = this;
@@ -192,9 +192,9 @@ BuildOfficialView.prototype.selectComplete=function(event){
 		self.controller.setValue("persuadeCharacter", event.characterList[0]);
 	}else if(event.characterListType == CharacterListType.PERSUADE){
 		self.controller.setValue("cityId", null);
-		var transportCharacter = self.controller.getValue("transportCharacter");
+		var persuadeCharacter = self.controller.getValue("persuadeCharacter");
 		var characterModel = event.characterList[0];
-		characterModel.persuade(transportCharacter);
+		characterModel.persuade(persuadeCharacter.id());
 	}
 	return true;
 };

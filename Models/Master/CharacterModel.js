@@ -164,6 +164,9 @@ CharacterModel.prototype.getJobData = function() {
 		case Job.ENLIST:
 			obj.targetEnlist = self.data.targetEnlist;
 			break;
+		case Job.PERSUADE:
+			obj.targetPersuade = self.data.targetPersuade;
+			break;
 	}
 	return obj;
 };
@@ -194,6 +197,9 @@ CharacterModel.prototype.setJobData = function(obj) {
 			break;
 		case Job.ENLIST:
 			self.data.targetEnlist = obj.targetEnlist;
+			break;
+		case Job.PERSUADE:
+			self.data.targetPersuade = obj.targetPersuade;
 			break;
 	}
 };
