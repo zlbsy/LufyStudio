@@ -109,15 +109,16 @@ CharacterListView.prototype.listInit=function(){
 CharacterListView.prototype.onChangeList=function(event){
 	console.log("onChangeList=", event);
 	var self = event.currentTarget;
-	var characterId = event.characterId;
+	var characterId = event.characterModel.id();
 	var characterListChildView = self.listView.getItems().find(function(child){
 		return child.charaModel.id() == characterId;
 	});
 	if(!characterListChildView){
 		return;
 	}
+	characterListChildView.set(event.characterModel);
 	characterListChildView.cacheAsBitmap(false);
-	characterListChildView.cacheAsBitmap(true);
+	characterListChildView.updateView();
 };
 CharacterListView.prototype.onChangeChildSelect=function(event){
 	var self = event.currentTarget,selectedCount=0;

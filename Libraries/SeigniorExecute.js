@@ -326,7 +326,6 @@ SeigniorExecute.prototype.areaMessage=function(areaModel,key){
 	}
 	self.citys.push(areaModel.id());
 	SeigniorExecute.addMessage(String.format(Language.get(key),areaModel.seignior().character().name(),areaModel.name()));
-	//self.msgView.add(String.format(key,areaModel.seignior().character().name(),areaModel.name()));
 };
 SeigniorExecute.prototype.areaCharacterDieRun=function(area){
 	var self = this;
@@ -370,25 +369,23 @@ SeigniorExecute.prototype.areaAIRun=function(areaModel){
 	
 	//俘虏处理
 	jobAiCaptives(areaModel);
-	//console.log("俘虏处理");
+	
+	//TODO::是否进行停战：下个版本对应
+	
 	//是否需要征兵
 	var needEnlistFlag = jobAiNeedToEnlist(areaModel);
-	//console.log("是否需要征兵");
 	//治安
 	var police = areaModel.police();
 	var toPolice = police < 70 || (police < 80 && Math.random() < 0.5) || (police < 90 && Math.random() < 0.3) || (police < 100 && Math.random() < 0.1);
 	if(toPolice){
 		self.jobAiFunction(areaModel,self.characters,jobAiPolice,["force","agility"]);//治安
 	}
-	//console.log("治安");
 	var canEnlish = jobAiCanToEnlish(areaModel);
 	if(needEnlistFlag == AiEnlistFlag.Must || needEnlistFlag == AiEnlistFlag.Need){
 		if(canEnlish){
-			self.areaMessage(areaModel,"{0}的{1}在招兵买马!");
 			self.jobAiFunction(areaModel,self.characters,jobAiToEnlish,["luck","command"]);
 		}
 	}
-	//console.log("招兵买马");
 	//修补
 	if(areaModel.cityDefense() < areaModel.maxCityDefense() && !(
 		needEnlistFlag == AiEnlistFlag.Must || 
@@ -398,29 +395,22 @@ SeigniorExecute.prototype.areaAIRun=function(areaModel){
 		) && Math.random() > 0.5){
 		self.jobAiFunction(areaModel,self.characters,jobAiRepair,["force","command"]);//修补
 	}
-	//console.log("修补");
 	//判断是否有可攻击的城池
 	var city = getCanBattleCity(areaModel, self.characters, needEnlistFlag);
-	//console.log("判断是否有可攻击的城池"+city);
 	if(city){
 		jobAiToBattle(areaModel, self.characters, city);
-		console.log("战斗中");
 		return;
 	}
-	//TODO::外交
-	//self.jobAiFunction(areaModel,self.characters,jobAiDiplomacy);
-	//LGlobal.sleep(50);console.log("外交");
 	//武将移动
 	jobAiGeneralMove(areaModel,self.characters);
-	//console.log("武将移动");
 	//输送物资
 	jobAiTransport(areaModel,self.characters);
-	//console.log("输送物资");
 	//解救俘虏
 	if(self.jobAiFunction(areaModel,self.characters,jobAiCaptivesRescue,["intelligence","luck"],1)){
-		//console.log("解救俘虏");
 		return;
 	}
+	//劝降其他势力武将
+	jobAiPersuade(areaModel,self.characters);
 	//酒馆
 	var toTavern = !(
 	(
@@ -442,7 +432,6 @@ SeigniorExecute.prototype.areaAIRun=function(areaModel){
 			self.jobAiFunction(areaModel,self.characters,jobAiAccess,["intelligence","command","luck"]);//访问
 		}
 	}
-	//console.log("酒馆");
 	
 	var toInterior = 
 	needEnlistFlag == AiEnlistFlag.Must || 
@@ -455,8 +444,7 @@ SeigniorExecute.prototype.areaAIRun=function(areaModel){
 	(
 		needEnlistFlag == AiEnlistFlag.Free && Math.random() > 0.5
 	);
-	//console.log("toInterior:"+toInterior);
-	if(toInterior){
+	if(toInterior){//内政
 		var interiorList = [];
 		if(!areaModel.isMaxTechnology()){
 			interiorList.push({fun:jobAiInstitute,params:["intelligence","command"]});//太学院

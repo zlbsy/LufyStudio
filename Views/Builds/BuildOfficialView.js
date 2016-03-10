@@ -127,7 +127,7 @@ BuildOfficialView.prototype.onClickGeneralsListButton=function(event){
 BuildOfficialView.prototype.onClickGeneralsMoveButton=function(event){
 	var self = this;
 	self.controller.addEventListener(LCityEvent.SELECT_CITY, self.moveSelectCharacter);
-	self.controller.toSelectMap(CharacterListType.CHARACTER_MOVE);
+	self.controller.toSelectMap(CharacterListType.CHARACTER_MOVE, {isSelf:true,toast:"dialog_common_select_city_toast",belongError:"dialog_move_generals_error",confirmMessage:"dialog_move_generals_confirm"});
 };
 BuildOfficialView.prototype.spySelectCharacter=function(event){
 	var controller = event.currentTarget;

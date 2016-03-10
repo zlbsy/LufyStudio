@@ -165,6 +165,7 @@ function checkSeigniorIsDie(seigniorId){
 	var character = CharacterModel.getChara(seigniorId);
 	return character.seigniorId() == 0;
 }
+/*智能任命新太守*/
 function appointPrefecture(city){
 	var generals = city.generals();
 	if(generals.length == 0){
@@ -263,4 +264,30 @@ function itemExchangeLoyalty(item){
 		}
 	}
 	return loyalty;
+}
+//获取可劝降武将列表
+function getCanPersuadeCharacters(){
+	return LMvc.chapterData.persuadeCharacters || [];
+}
+//更新可劝降武将列表,忠诚度降序
+function updateCanPersuadeCharacters(characterModel){
+	var characters = getCanPersuadeCharacters();
+	var id = characterModel.id();
+	var index = characters.findIndex(function(child){
+		return id == child.i;
+	});
+	var validLoyalty = characterModel.validLoyalty();
+	if(validLoyalty >= 90){
+		if(index >= 0){
+			characters.splice(index, 1);
+		}
+	}else{
+		if(index < 0){
+			characters.push({i:id, l:validLoyalty});
+			characters = characters.sort(function(a,b){return b.l - a.l;});
+		}else{
+			characters[index].l = validLoyalty;
+		}
+	}
+	LMvc.chapterData.persuadeCharacters = characters;
 }

@@ -114,6 +114,7 @@ function redeemRun(characterModel, data){
 			SeigniorExecute.addMessage(String.format(Language.get("redeemFailMessage"),characterModel.name()));
 		}
 		characterModel.featPlus(JobFeatCoefficient.NORMAL * 0.5);
+		characterModel.city().money(data.money);
 		return;
 	}
 	var city = characterModel.city();
@@ -142,6 +143,7 @@ function stopBattleRun(characterModel, data){
 			SeigniorExecute.addMessage(String.format(Language.get("stopBattleFailMessage"),characterModel.name()));
 		}
 		characterModel.featPlus(JobFeatCoefficient.NORMAL * 0.5);
+		characterModel.city().money(data.money);
 		return;
 	}
 	var seignior = characterModel.seignior();
@@ -428,10 +430,7 @@ function persuadeRun(characterModel, targetPersuadeId){
 		characterModel.featPlus(JobFeatCoefficient.NORMAL * 0.5);
 		return;
 	}
-	var loyalty = targetPersuade.loyalty(), compatibility, percentage;
-	var personalLoyalty = targetPersuade.personalLoyalty();
-	//义气影响忠诚范围:义气*1.5
-	loyalty += personalLoyalty * 1.5;
+	var loyalty = targetPersuade.validLoyalty(), compatibility, percentage;
 	if(loyalty >= 100){
 		if(characterModel.seigniorId() == LMvc.selectSeignorId){
 			SeigniorExecute.addMessage(String.format(Language.get("persuadeRefuseMessage"),targetPersuade.name(),characterModel.name()));

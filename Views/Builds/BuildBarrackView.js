@@ -31,7 +31,7 @@ BuildBarrackView.prototype.onClickExpeditionButton=function(event){
 	var self = event.currentTarget.parent.parent.parent;
 	self.characterListType = CharacterListType.EXPEDITION;
 	self.controller.addEventListener(LCityEvent.SELECT_CITY, self.expeditionSelectCharacter);
-	self.controller.toSelectMap(CharacterListType.EXPEDITION);
+	self.controller.toSelectMap(CharacterListType.EXPEDITION, {isSelf:false,toast:"dialog_common_select_city_toast",belongError:"dialog_expedition_select_error",confirmMessage:"dialog_expedition_select_confirm"});
 };
 BuildBarrackView.prototype.expeditionSelectCharacter=function(event){
 	var controller = event.currentTarget;

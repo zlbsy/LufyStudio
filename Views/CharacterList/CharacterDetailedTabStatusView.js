@@ -107,7 +107,7 @@ CharacterDetailedTabStatusView.prototype.clickPrized=function(event){
 	self.controller.dispatchEvent(LController.NOTIFY_ALL);
 	var characterListView = self.getParentByConstructor(CharacterListView);
 	var e = new LEvent(CharacterListEvent.LIST_CHANGE);
-	e.characterId = characterModel.id();
+	e.characterModel = characterModel;
 	characterListView.dispatchEvent(e);
 	//武将{0}的忠诚度提升了{1}!
 	var obj = {title:Language.get("confirm"),message:String.format(Language.get("dialog_prize_success_message"), characterModel.name(),loyaltyUpValue),height:200,okEvent:null};

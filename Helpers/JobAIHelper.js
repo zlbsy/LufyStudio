@@ -271,16 +271,28 @@ function jobAiToEnlish(areaModel,characters){
 	}
 	areaModel.money(-cost);
 	character.enlist(EnlistSetting.ENLIST_FROM + num);
+	SeigniorExecute.Instance().areaMessage(areaModel, "jobai_enlish_message");//{0}的{1}在招兵买马!
+}
+function jobAiPersuade(areaModel,characters){//劝降
+	if(characters.length == 0){
+		return;
+	}
+	var persuadeCharacters = getCanPersuadeCharacters();
+	var length = persuadeCharacters.length;
+	if(length == 0){
+		return;
+	}
+	var minLoyalty = persuadeCharacters[length - 1];
+	var sum = 0;
+	for(var i = 0;i<length;i++){
+		sum += (i + 1);
+	}
 }
 function jobAiTavern(areaModel,characters){//录用
 	if(characters.length == 0){
 		return;
 	}
 	SeigniorExecute.Instance().areaMessage(areaModel, "jobai_tavern_message");
-	/*if(areaModel.seigniorCharaId() != LMvc.selectSeignorId && SeigniorExecute.Instance().messageCitys.indexOf(areaModel.id()) < 0){
-		SeigniorExecute.Instance().messageCitys.push(areaModel.id());
-		SeigniorExecute.addMessage(String.format(Language.get("jobai_tavern_message"), areaModel.seignior().character().name(), areaModel.name()));//{0}在招贤纳士!
-	}*/
 	var outOfOfficeCharas = areaModel.outOfOffice();
 	if(outOfOfficeCharas.length == 0){
 		return;
@@ -294,10 +306,6 @@ function jobAiAccess(areaModel,characters){//访问
 		return;
 	}
 	SeigniorExecute.Instance().areaMessage(areaModel, "jobai_tavern_message");
-	/*if(areaModel.seigniorCharaId() != LMvc.selectSeignorId && SeigniorExecute.Instance().messageCitys.indexOf(areaModel.id()) < 0){
-		SeigniorExecute.Instance().messageCitys.push(areaModel.id());
-		SeigniorExecute.addMessage(String.format(Language.get("jobai_tavern_message"), areaModel.seignior().character().name(), areaModel.name()));
-	}*/
 	jobAiInternal(areaModel,characters,0,Job.ACCESS);
 }
 function jobAiLevelUpCity(areaModel,characters){//升级城池
@@ -332,11 +340,6 @@ function jobAiInternal(areaModel,characters,price,job){//内政
 		return;
 	}
 	SeigniorExecute.Instance().areaMessage(areaModel, "jobai_internal_message");//{0}的{1}在发展内政!
-	/*if(areaModel.seigniorCharaId() != LMvc.selectSeignorId && SeigniorExecute.Instance().messageCitys.indexOf(areaModel.id()) < 0){
-		SeigniorExecute.Instance().messageCitys.push(areaModel.id());
-		//{0}的{1}在发展内政!
-		SeigniorExecute.addMessage(String.format(Language.get("jobai_internal_message"), areaModel.seignior().character().name(),areaModel.name()));
-	}*/
 	var character = characters.shift();
 	character.job(job);
 	if(price > 0){

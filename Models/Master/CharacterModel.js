@@ -507,6 +507,13 @@ CharacterModel.prototype.identity = function(value) {
 CharacterModel.prototype.loyalty = function(value) {
 	return this._dataValue("loyalty", value, 0, 0, 100);
 };
+CharacterModel.prototype.validLoyalty = function(){//获取武将最终有效忠诚度
+	var loyalty = this.loyalty();
+	var personalLoyalty = this.personalLoyalty();
+	//义气影响忠诚范围:义气*1.5
+	loyalty += personalLoyalty * 1.5;
+	return loyalty;
+}
 CharacterModel.prototype.jobLabel = function() {
 	var self = this;
 	if(!self.data.job){
@@ -541,6 +548,7 @@ CharacterModel.prototype.redeem = function(id, money) {
 		self.data.targetRedeem = null;
 	}else{
 		self.data.targetRedeem = {chara_id:id, money:money};
+		self.city().money(-money);
 		self.job(Job.DIPLOMACY_REDEEM);
 	}
 };
@@ -561,6 +569,7 @@ CharacterModel.prototype.stopBattle = function(id, money) {
 		self.data.targetStopBattle = null;
 	}else{
 		self.data.targetStopBattle = {chara_id:id, money:money};
+		self.city().money(-money);
 		self.job(Job.DIPLOMACY_STOP_BATTLE);
 	}
 };
@@ -592,15 +601,18 @@ CharacterModel.prototype.transport = function(data) {
 CharacterModel.prototype.moveTo = function(cityId) {
 	var self = this;
 	if(typeof cityId == UNDEFINED){
-		var area = self.city();
-		area.removeGenerals(self);
-		area = AreaModel.getArea(self.data.targetCity);
+		var areaFrom = self.city();
+		areaFrom.removeGenerals(self);
+		var area = AreaModel.getArea(self.data.targetCity);
 		area.addGenerals(self);
 		self.data.cityId = self.data.targetCity;
 		self.data.targetCity = null;
 		self.job(Job.IDLE);
 		if(self.id() == area.seigniorCharaId()){
 			area.prefecture(self.id());
+		}
+		if(areaFrom.prefecture() == self.id()){
+			appointPrefecture(areaFrom);
 		}
 	}else{
 		self.data.targetCity = cityId;

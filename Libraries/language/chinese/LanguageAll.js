@@ -241,6 +241,7 @@ Language.data = {
 	"seignor_die_self":"{0}势力灭亡了！游戏结束了！",
 	"jobai_tavern_message":"{0}的{1}在招贤纳士!",
 	"jobai_internal_message":"{0}的{1}在发展内政!",
+	"jobai_enlish_message":"{0}的{1}在招兵买马!",
 	"jobai_rescue_confirm_message":"{0}的{1}想用金钱{2}赎回{3}，是否答应？",
 	
 	"seigniorProcess":"<font size='22' color='#FFFFFF'><font color='#FF0000'>{0}</font>势力行动中</font>",
