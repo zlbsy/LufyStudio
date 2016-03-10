@@ -165,7 +165,7 @@ CharacterModel.prototype.getJobData = function() {
 			obj.targetEnlist = self.data.targetEnlist;
 			break;
 		case Job.PERSUADE:
-			obj.targetPersuade = self.data.targetPersuade;
+			obj.targetPersuadeId = self.data.targetPersuadeId;
 			break;
 	}
 	return obj;
@@ -199,7 +199,7 @@ CharacterModel.prototype.setJobData = function(obj) {
 			self.data.targetEnlist = obj.targetEnlist;
 			break;
 		case Job.PERSUADE:
-			self.data.targetPersuade = obj.targetPersuade;
+			self.data.targetPersuadeId = obj.targetPersuadeId;
 			break;
 	}
 };
@@ -514,13 +514,13 @@ CharacterModel.prototype.jobLabel = function() {
 	}
 	return Language.get(self.data.job);
 };
-CharacterModel.prototype.persuade = function(target) {
+CharacterModel.prototype.persuade = function(targetId) {
 	var self = this;
-	if(typeof target == UNDEFINED){
-		persuadeRun(self,self.data.targetPersuade);
-		self.data.targetPersuade = null;
+	if(typeof targetId == UNDEFINED){
+		persuadeRun(self,self.data.targetPersuadeId);
+		self.data.targetPersuadeId = null;
 	}else{
-		self.data.targetPersuade = target;
+		self.data.targetPersuadeId = targetId;
 		self.job(Job.PERSUADE);
 	}
 };

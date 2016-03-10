@@ -1,6 +1,7 @@
 var CharacterListEvent = {};
 CharacterListEvent.SHOW = "characterList_show";
 CharacterListEvent.CLOSE = "characterList_close";
+CharacterListEvent.LIST_CHANGE = "characterList_list_change";
 
 var ArmListEvent = {};
 ArmListEvent.SHOW = "armList_show";

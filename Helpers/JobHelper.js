@@ -419,17 +419,27 @@ function enlistRun(characterModel, targetEnlist){
 	var feat = JobFeatCoefficient.NORMAL * quantity / JobFeatCoefficient.ENLIST;
 	characterModel.featPlus(feat);
 }
-function persuadeRun(characterModel, targetPersuade){
+function persuadeRun(characterModel, targetPersuadeId){
 	//劝降：忠诚度+义气+运气+武将相性
-	console.log("劝降 : ",characterModel.id());
+	console.error("劝降 : ",characterModel.id());
+	characterModel.job(Job.IDLE);
+	var targetPersuade = CharacterModel.getChara(targetPersuadeId);
+	if(!targetPersuade || targetPersuade.seigniorId() == characterModel.seigniorId()){
+		characterModel.featPlus(JobFeatCoefficient.NORMAL * 0.5);
+		return;
+	}
 	var loyalty = targetPersuade.loyalty(), compatibility, percentage;
 	var personalLoyalty = targetPersuade.personalLoyalty();
 	//义气影响忠诚范围:义气*1.5
 	loyalty += personalLoyalty * 1.5;
 	if(loyalty >= 100){
+		if(characterModel.seigniorId() == LMvc.selectSeignorId){
+			SeigniorExecute.addMessage(String.format(Language.get("persuadeRefuseMessage"),targetPersuade.name(),characterModel.name()));
+		}
+		characterModel.featPlus(JobFeatCoefficient.NORMAL * 0.5);
 		return;
 	}
-	percentage = (100 - loyalty) * 0.01 * 0.8;
+	percentage = (100 - loyalty) * 0.01;
 	var percentageLuck = (JobCoefficient.NORMAL + characterModel.luck()) * 0.5 / JobCoefficient.NORMAL;
 	percentage *= (0.5 + 0.5 * percentageLuck);
 	
@@ -451,11 +461,11 @@ function persuadeRun(characterModel, targetPersuade){
 	targetPersuade.seigniorId(characterModel.seigniorId());
 	var loyalty = 50 + 50 * percentage >> 0;
 	targetPersuade.loyalty(loyalty > 100 ? 100 : loyalty);
-	targetCharacter.moveTo(characterModel.cityId());
-	targetCharacter.moveTo();
+	targetPersuade.moveTo(characterModel.cityId());
+	targetPersuade.moveTo();
 	
 	if(characterModel.seigniorId() == LMvc.selectSeignorId){
-		SeigniorExecute.addMessage(String.format(Language.get("persuadeSuccessMessage"),characterModel.name(),hireCharacter.name(),hireCharacter.name()));
+		SeigniorExecute.addMessage(String.format(Language.get("persuadeSuccessMessage"),characterModel.name(),targetPersuade.name(),targetPersuade.name()));
 	}
 	characterModel.featPlus(JobFeatCoefficient.NORMAL);
 }
@@ -801,4 +811,5 @@ function toPrizedByMoney(characterModel){
 	loyalty = loyalty > 100 ? 100 : loyalty;
 	characterModel.loyalty(loyalty);
 	characterModel.isPrized(true);
+	return upValue;
 }

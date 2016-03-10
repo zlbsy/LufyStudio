@@ -46,7 +46,6 @@ AreaIconView.prototype.onUp=function(event){
 				self.showDialogKey(params.belongError);
 				return;
 			}
-			console.log("params.spy="+params.spy);
 			if(params.spy){
 				var cityFree = SeigniorModel.getSeignior(LMvc.selectSeignorId).isSpyCity(self.areaStatus.id());
 				if(!cityFree){
@@ -54,7 +53,6 @@ AreaIconView.prototype.onUp=function(event){
 					return;
 				}
 			}
-			console.log("params.confirmMessage="+params.confirmMessage);
 			if(params.confirmMessage){
 				var formatMsg = Language.get(params.confirmMessage);
 				var message=String.format(formatMsg,self.areaStatus.name());

@@ -47,7 +47,7 @@ BuildOfficialView.prototype.showMenu=function(){
 		buttonDiplomacy.addEventListener(LMouseEvent.MOUSE_UP, self.onClickDiplomacyButton.bind(self));
 			
 		menuY += menuHeight;
-		var buttonPersuade = getButton(Language.get("劝降武将"),200);
+		var buttonPersuade = getButton(Language.get("persuade_character"),200);
 		buttonPersuade.y = menuY;
 		layer.addChild(buttonPersuade);
 		buttonPersuade.addEventListener(LMouseEvent.MOUSE_UP, self.onClickPersuade);
@@ -77,7 +77,7 @@ BuildOfficialView.prototype.onClickTransportButton=function(event){
 	var self = this;
 	self.characterListType = CharacterListType.TRANSPORT;
 	self.controller.addEventListener(LCityEvent.SELECT_CITY, self.transportSelectCharacter);
-	self.controller.toSelectMap(CharacterListType.TRANSPORT);
+	self.controller.toSelectMap(CharacterListType.TRANSPORT, {isSelf:true,toast:"dialog_common_select_city_toast",belongError:"dialog_transport_select_error",confirmMessage:"dialog_transport_select_confirm"});
 };
 BuildOfficialView.prototype.transportSelectCharacter=function(event){
 	var controller = event.currentTarget;

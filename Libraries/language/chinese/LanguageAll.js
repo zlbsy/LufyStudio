@@ -160,7 +160,7 @@ Language.data = {
 	"dialog_no_money":"金钱不够！",
 	"dialog_error_hire_more":"一次只能录用一个在野武将！",
 	"dialog_transport_select_confirm":"要向{0}输送物资吗？",
-	"dialog_transport_select_error":"无法向此城池输送物资！",
+	"dialog_transport_select_error":"不可向其他势力城池输送物资！",
 	"dialog_move_generals_confirm":"要移动到{0}吗？",
 	"dialog_move_generals_error":"无法移动到此城池！",
 	"dialog_spy_generals_confirm":"要对{0}进行谍报吗？",
@@ -212,6 +212,7 @@ Language.data = {
 	"recruit":"招降",
 	"behead":"斩首",
 	"persuade":"劝降",
+	"persuade_character":"劝降武将",
 	
 	"battle_win":"战斗胜利",
 	"battle_fail":"战斗失败",

@@ -2,8 +2,10 @@ function CharacterListView(){
 	base(this,LView,[]);
 }
 CharacterListView.prototype.construct=function(){
-	this.sortValue = 1;
-	this.controller.addEventListener(LEvent.COMPLETE, this.init.bind(this));
+	var self = this;
+	self.sortValue = 1;
+	self.controller.addEventListener(LEvent.COMPLETE, self.init.bind(self));
+	self.addEventListener(CharacterListEvent.LIST_CHANGE, self.onChangeList);
 };
 CharacterListView.CUTOVER_BASIC = "basic_properties";
 CharacterListView.CUTOVER_ABILITY = "ability_properties";
@@ -103,6 +105,19 @@ CharacterListView.prototype.listInit=function(){
 		}
 	}
 	self.showList();
+};
+CharacterListView.prototype.onChangeList=function(event){
+	console.log("onChangeList=", event);
+	var self = event.currentTarget;
+	var characterId = event.characterId;
+	var characterListChildView = self.listView.getItems().find(function(child){
+		return child.charaModel.id() == characterId;
+	});
+	if(!characterListChildView){
+		return;
+	}
+	characterListChildView.cacheAsBitmap(false);
+	characterListChildView.cacheAsBitmap(true);
 };
 CharacterListView.prototype.onChangeChildSelect=function(event){
 	var self = event.currentTarget,selectedCount=0;
