@@ -505,7 +505,19 @@ CharacterModel.prototype.identity = function(value) {
 	return Language.get(identity);
 };
 CharacterModel.prototype.loyalty = function(value) {
-	return this._dataValue("loyalty", value, 0, 0, 100);
+	var self = this;
+	var loyaltyValue = self._dataValue("loyalty", value, 0, 0, 100);
+	if(typeof value == UNDEFINED){
+		return loyaltyValue;
+	}
+	if(LMvc.isRead || self.validLoyalty() >= 90){
+		return;
+	}
+	var v = self.validLoyalty();
+	console.error(self.name(),"v="+v);
+	if(v < 90 || v - value < 90){
+		updateCanPersuadeCharacters(self);
+	}
 };
 CharacterModel.prototype.validLoyalty = function(){//获取武将最终有效忠诚度
 	var loyalty = this.loyalty();
@@ -513,7 +525,7 @@ CharacterModel.prototype.validLoyalty = function(){//获取武将最终有效忠
 	//义气影响忠诚范围:义气*1.5
 	loyalty += personalLoyalty * 1.5;
 	return loyalty;
-}
+};
 CharacterModel.prototype.jobLabel = function() {
 	var self = this;
 	if(!self.data.job){

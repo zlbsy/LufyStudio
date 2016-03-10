@@ -284,10 +284,10 @@ function updateCanPersuadeCharacters(characterModel){
 	}else{
 		if(index < 0){
 			characters.push({i:id, l:validLoyalty});
-			characters = characters.sort(function(a,b){return b.l - a.l;});
 		}else{
 			characters[index].l = validLoyalty;
 		}
+		characters = characters.sort(function(a,b){return b.l - a.l;});
 	}
 	LMvc.chapterData.persuadeCharacters = characters;
 }

@@ -274,6 +274,7 @@ function jobAiToEnlish(areaModel,characters){
 	SeigniorExecute.Instance().areaMessage(areaModel, "jobai_enlish_message");//{0}的{1}在招兵买马!
 }
 function jobAiPersuade(areaModel,characters){//劝降
+	console.error("+++++++++++++++++++++++劝降"+characters.length);
 	if(characters.length == 0){
 		return;
 	}
@@ -282,11 +283,28 @@ function jobAiPersuade(areaModel,characters){//劝降
 	if(length == 0){
 		return;
 	}
-	var minLoyalty = persuadeCharacters[length - 1];
+	var minLoyalty = persuadeCharacters[length - 1].l;
+	var p = Math.ceil((90 - minLoyalty) / 5) * 0.1;
+	var r = Math.random();
+	if(r > p){
+		return;
+	}
+	console.error("+++++++++++++++++++++++",r,p,persuadeCharacters);
 	var sum = 0;
-	for(var i = 0;i<length;i++){
+	for(var i = 0;i<length;i++){console.log(persuadeCharacters[i]);
 		sum += (i + 1);
 	}
+	var v = sum * Math.random();
+	sum = 0, targetId = persuadeCharacters[length - 1].i;
+	for(var i = 0;i<length;i++){
+		sum += (i + 1);
+		if(v < sum){
+			targetId = persuadeCharacters[i].i;
+			break;
+		}
+	}
+	var character = characters.shift();
+	character.persuade(targetId);
 }
 function jobAiTavern(areaModel,characters){//录用
 	if(characters.length == 0){

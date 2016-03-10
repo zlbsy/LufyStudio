@@ -411,6 +411,7 @@ SeigniorExecute.prototype.areaAIRun=function(areaModel){
 	}
 	//劝降其他势力武将
 	jobAiPersuade(areaModel,self.characters);
+	//TODO::褒奖
 	//酒馆
 	var toTavern = !(
 	(
