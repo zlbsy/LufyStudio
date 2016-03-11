@@ -137,20 +137,19 @@ SeigniorExecute.run=function(){
 };
 SeigniorExecute.prototype.areaRun=function(area){
 	var self = this;
+	if(!self.areaPrizedOver){//褒奖
+		self.generalsPrizedRun(area);
+	}
 	if(!self.areaGainOver){//城池收获
 		self.areaGainRun(area);
 	}
 	if(!self.areaJobOver){//任务
 		self.areaJobRun(area);
 	}
-	/*if(!self.areaDieOver){//武将死亡
-		if(self.areaCharacterDieRun(area)){
-			return;
-		}
-	}*/
 	self.areaIndex++;
 	self.areaGainOver = false;
 	self.areaJobOver = false;
+	self.areaPrizedOver = false;
 	self.areaDieOver = false;
 	self.timer.reset();
 	self.timer.start();
@@ -160,6 +159,26 @@ SeigniorExecute.prototype.areaGainRun=function(area){
 	SeigniorExecuteChangeCityResources(area);
 	self.areaGainOver = true;
 };
+SeigniorExecute.prototype.generalsPrizedRun=function(area){
+	var self = this;
+	self.areaPrizedOver = true;
+	var generals = area.generals();
+	if(area.seigniorCharaId() == LMvc.selectSeignorId){
+		return;
+	}
+	//褒奖
+	var generals = area.generals();
+	for(var i=0;i<generals.length;i++){
+		var chara = generals[i];
+		if(area.money() < JobPrice.PRIZE){
+			return;
+		}
+		if(chara.loyalty() >= 100 || chara.isPrized()){
+			continue;
+		}
+		toPrizedByMoney(chara);
+	}
+};
 SeigniorExecute.addMessage = function(value){
 	console.error("addMessage :", value);
 	MessageView.Instance().add(value);
@@ -167,13 +186,11 @@ SeigniorExecute.addMessage = function(value){
 SeigniorExecute.prototype.areaJobRun=function(area){
 	var self = this, chara, job;
 	var generals = area.generals();
-	
 	var list = [];
 	for(var i=0;i<generals.length;i++){
 		chara = generals[i];
 		chara.isPrized(false);
 		job = chara.job();
-		//self.msgView.add(chara.name()+":"+job);
 		switch(job){
 			case Job.MOVE:
 				list.push(chara);
@@ -246,7 +263,6 @@ SeigniorExecute.prototype.areaJobRun=function(area){
 		}
 	}
 	var captives = area.captives();
-	//SeigniorExecute.addMessage("captives.length="+captives.length);
 	for(var i=0;i<captives.length;i++){
 		chara = captives[i];
 		chara.job(Job.IDLE);
@@ -342,8 +358,6 @@ SeigniorExecute.prototype.areaAIRun=function(areaModel){
 		self.timer.start();
 		return;
 	}
-	//console.log("判断是否有未执行任务人员");
-	
 	if(areaModel.seignior().isTribe()){
 		//外族只在每年收获粮食时随机进行侵略行动一次，其他时间不行动
 		if(HarvestMonths.Food.indexOf(LMvc.chapterData.month) >= 0 && Math.random() < TribeAIProbability && self.characters.length == areaModel.generalsSum()){
@@ -411,7 +425,6 @@ SeigniorExecute.prototype.areaAIRun=function(areaModel){
 	}
 	//劝降其他势力武将
 	jobAiPersuade(areaModel,self.characters);
-	//TODO::褒奖
 	//酒馆
 	var toTavern = !(
 	(

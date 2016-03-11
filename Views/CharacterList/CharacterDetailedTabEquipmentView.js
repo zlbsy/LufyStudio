@@ -47,6 +47,10 @@ CharacterDetailedTabEquipmentView.prototype.showEquipments=function(){
 };
 CharacterDetailedTabEquipmentView.prototype.showEquipmentList=function(){
 	var self = this;
+	var characterModel = self.controller.getValue("selectedCharacter");
+	if(characterModel.seigniorId() != LMvc.selectSeignorId){
+		return;
+	}
 	var equipmentsView = new EquipmentsView(self.controller, "equipment", new LPoint(self.tabWidth, self.tabHeight));
 	self.addChild(equipmentsView);
 	equipmentsView.addEventListener(EquipmentEvent.Dress,self.dressEquipment);

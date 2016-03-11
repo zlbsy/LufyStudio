@@ -510,11 +510,10 @@ CharacterModel.prototype.loyalty = function(value) {
 	if(typeof value == UNDEFINED){
 		return loyaltyValue;
 	}
-	if(LMvc.isRead || self.validLoyalty() >= 90){
+	if(LMvc.isRead || self.seigniorId() == 0 || self.validLoyalty() >= 90){
 		return;
 	}
 	var v = self.validLoyalty();
-	console.error(self.name(),"v="+v);
 	if(v < 90 || v - value < 90){
 		updateCanPersuadeCharacters(self);
 	}
@@ -614,9 +613,13 @@ CharacterModel.prototype.moveTo = function(cityId) {
 	var self = this;
 	if(typeof cityId == UNDEFINED){
 		var areaFrom = self.city();
-		areaFrom.removeGenerals(self);
+		areaFrom.removeCharacter(self);
 		var area = AreaModel.getArea(self.data.targetCity);
-		area.addGenerals(self);
+		if(self.seigniorId() > 0){
+			area.addGenerals(self);
+		}else{
+			area.addOutOfOfficeCharacter(self);
+		}
 		self.data.cityId = self.data.targetCity;
 		self.data.targetCity = null;
 		self.job(Job.IDLE);

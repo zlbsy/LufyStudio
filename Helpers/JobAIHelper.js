@@ -274,7 +274,7 @@ function jobAiToEnlish(areaModel,characters){
 	SeigniorExecute.Instance().areaMessage(areaModel, "jobai_enlish_message");//{0}的{1}在招兵买马!
 }
 function jobAiPersuade(areaModel,characters){//劝降
-	console.error("+++++++++++++++++++++++劝降"+characters.length);
+	console.log("+++++++++++++++++++++++劝降"+characters.length);
 	if(characters.length == 0){
 		return;
 	}
@@ -289,9 +289,9 @@ function jobAiPersuade(areaModel,characters){//劝降
 	if(r > p){
 		return;
 	}
-	console.error("+++++++++++++++++++++++",r,p,persuadeCharacters);
+	console.log("+++++++++++++++++++++++",r,p,persuadeCharacters);
 	var sum = 0;
-	for(var i = 0;i<length;i++){console.log(persuadeCharacters[i]);
+	for(var i = 0;i<length;i++){console.log(persuadeCharacters[i].i);
 		sum += (i + 1);
 	}
 	var v = sum * Math.random();

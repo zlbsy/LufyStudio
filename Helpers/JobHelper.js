@@ -790,13 +790,17 @@ function outOfOfficeCharactersMove(area){
 			continue;
 		}
 		var neighborCityId = neighbor[(Math.random() * neighbor.length) >>> 0];
-		character.city().removeOutOfOffice(character.id());
-		AreaModel.getArea(neighborCityId).addOutOfOfficeCharacter(character);
+		character.moveTo(neighborCityId);
+		character.moveTo();
 		character.job(Job.END);
 	}
 }
 //褒奖
 function toPrizedByMoney(characterModel){
+	if(characterModel.city().money() < JobPrice.PRIZE){
+		return 0;
+	}
+	characterModel.city().money(-JobPrice.PRIZE);
 	var personalLoyaltyValue = 5;
 	var compatibilityValue = 3;
 	var value1 = personalLoyaltyValue * characterModel.personalLoyalty()/15;

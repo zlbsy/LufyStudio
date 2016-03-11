@@ -277,7 +277,7 @@ function updateCanPersuadeCharacters(characterModel){
 		return id == child.i;
 	});
 	var validLoyalty = characterModel.validLoyalty();
-	if(validLoyalty >= 90){
+	if(characterModel.seigniorId() == 0 || validLoyalty >= 90){
 		if(index >= 0){
 			characters.splice(index, 1);
 		}
