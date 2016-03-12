@@ -101,7 +101,7 @@ CharacterListView.prototype.listInit=function(){
 			lblMoney.x = (LGlobal.width - lblMoney.getWidth()) * 0.5;
 			lblMoney.y = button.y - lblMoney.getHeight() - 10;
 			self.lblMoney = lblMoney;
-			self.addChild(lblMoney);
+			self.listLayer.addChild(lblMoney);
 		}
 	}
 	self.showList();

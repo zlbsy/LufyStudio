@@ -165,8 +165,13 @@ AreaModel.prototype.removeCharacter = function(charaId){
 	}
 	return false;
 };
-AreaModel.prototype.removeOutOfOffice = function(charaId){
-	var self = this;
+AreaModel.prototype.removeOutOfOffice = function(param){
+	var self = this, charaId;
+	if(typeof param == "number"){
+		charaId = param;
+	}else{
+		charaId = param.id();
+	}
 	for(var i=0,l=self.data.out_of_offices.length;i<l;i++){
 		var chara = self.data.out_of_offices[i];
 		if(chara.id() == charaId){
