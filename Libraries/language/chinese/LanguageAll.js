@@ -334,6 +334,8 @@ Language.data = {
 	"appoint_prefecture":"任命太守",
 	"cutover":"切换",
 	"spy":"谍报",
+	"appoint":"委任",
+	"remove_appoint":"解除委任",
 	"transport":"输送物资",
 	"transport_job":"输送",
 	"diplomacy":"外交",

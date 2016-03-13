@@ -36,7 +36,11 @@ CityController.prototype.init=function(){
 	self.setValue("cityData",cityData);
 	var cityFree = cityData.seigniorCharaId() == LMvc.selectSeignorId || SeigniorModel.getSeignior(LMvc.selectSeignorId).isSpyCity(LMvc.cityId);
 	self.setValue("cityFree",cityFree);
-	self.setValue("selfCity",cityData.seigniorCharaId() == LMvc.selectSeignorId);
+	var selfCity = cityData.seigniorCharaId() == LMvc.selectSeignorId;
+	self.setValue("selfCity",selfCity);
+	if(selfCity){
+		self.setValue("isAppoint",cityData.isAppoint());
+	}
 	//TODO::
 	//self.setValue("cityFree",true);
 	LMvc.keepLoading(false);

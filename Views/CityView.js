@@ -34,6 +34,7 @@ CityView.prototype.clearContentLayer=function(event){
 	self.contentLayer.die();
 	self.contentLayer.removeAllChild();
 	self.contentMask.visible = false;
+	self.controller.dispatchEvent(LController.NOTIFY_ALL);
 };
 CityView.prototype.backLayerInit=function(){
 	var self = this;
@@ -88,6 +89,9 @@ CityView.prototype.buildLayerInit=function(){
 	official.y = (LGlobal.height - official.height) * 0.6;
 	official.alpha = self.controller.getValue("cityFree") ? 1 : 0.5;
 	self.buildLayer.addChild(official);
+	if(self.controller.getValue("isAppoint")){
+	
+	}
 	
 	var tavern = new BuildView(self.controller,"main-tavern","tavern");
 	tavern.y = LGlobal.height - tavern.height - 160;
@@ -121,21 +125,6 @@ CityView.prototype.buildLayerInit=function(){
 	institute.y = 150;
 	institute.alpha = alpha;
 	self.buildLayer.addChild(institute);
-	
-	//var bitmapOfficial = new BuildOfficialView(self.controller);
-	//self.buildLayer.addChild(bitmapOfficial);
-	//var bitmapTavern = new BuildTavernView(self.controller);
-	//self.buildLayer.addChild(bitmapTavern);
-	//var bitmapMarket = new BuildMarketView(self.controller);
-	//self.buildLayer.addChild(bitmapMarket);
-	//var bitmapCitygate = new BuildCitygateView(self.controller);
-	//self.buildLayer.addChild(bitmapCitygate);
-	//var bitmapBarrack = new BuildBarrackView(self.controller);
-	//self.buildLayer.addChild(bitmapBarrack);
-	//var farmland = new BuildFarmlandView(self.controller);
-	//self.buildLayer.addChild(farmland);
-	//var institute = new BuildInstituteView(self.controller);
-	//self.buildLayer.addChild(institute);
 };
 CityView.prototype.statusLayerInit=function(){
 	var self = this;
@@ -151,5 +140,7 @@ CityView.prototype.init=function(){
 };
 CityView.prototype.updateView = function(){
 	var self = this;
+	self.statusLayer.getChildAt(0).updateView();
+	
 	//console.log("CityView.prototype.updateView run");
 };

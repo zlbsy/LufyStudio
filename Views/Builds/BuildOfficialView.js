@@ -51,6 +51,19 @@ BuildOfficialView.prototype.showMenu=function(){
 		buttonPersuade.y = menuY;
 		layer.addChild(buttonPersuade);
 		buttonPersuade.addEventListener(LMouseEvent.MOUSE_UP, self.onClickPersuade);
+		
+		menuY += menuHeight;
+		if(cityData.isAppoint()){
+			var buttonAppoint = getButton(Language.get("remove_appoint"),200);
+			buttonAppoint.y = menuY;
+			layer.addChild(buttonAppoint);
+			buttonAppoint.addEventListener(LMouseEvent.MOUSE_UP, self.onClickRemoveAppoint);
+		}else{
+			var buttonAppoint = getButton(Language.get("appoint"),200);
+			buttonAppoint.y = menuY;
+			layer.addChild(buttonAppoint);
+			buttonAppoint.addEventListener(LMouseEvent.MOUSE_UP, self.onClickAppoint);
+		}
 	}else{
 		var buttonGeneralsList = getButton(Language.get("generals_list"),200);
 		buttonGeneralsList.y = menuY;
@@ -59,6 +72,18 @@ BuildOfficialView.prototype.showMenu=function(){
 	}
 	
 	return layer;
+};
+BuildOfficialView.prototype.onClickAppoint=function(event){
+	var self = event.currentTarget.getParentByConstructor(BuildOfficialView);
+	var cityModel = self.controller.getValue("cityData");
+	cityModel.isAppoint(1);
+	self.controller.dispatchEvent(LController.NOTIFY_ALL);
+};
+BuildOfficialView.prototype.onClickRemoveAppoint=function(event){
+	var self = event.currentTarget.getParentByConstructor(BuildOfficialView);
+	var cityModel = self.controller.getValue("cityData");
+	cityModel.isAppoint(0);
+	self.controller.dispatchEvent(LController.NOTIFY_ALL);
 };
 BuildOfficialView.prototype.onClickPrefectureButton=function(event){
 	var self = this;

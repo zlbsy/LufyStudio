@@ -79,6 +79,9 @@ AreaModel.prototype.datas=function(){
 		not_debut:self.data.not_debut,
 		captives:self.captivesData()
 	};
+	if(self.isAppoint()){
+		saveData.isAppoint = 1;
+	}
 	return saveData;
 };
 AreaModel.prototype.getDefenseEnemiesAndPowerful = function(){
@@ -216,6 +219,13 @@ AreaModel.prototype.addGenerals = function(param){
 	}
 	self.removeGenerals(chara.id());
 	self.data.generals.push(chara);
+};
+AreaModel.prototype.isAppoint = function(value){
+	var self = this;
+	if(self.seigniorCharaId() != LMvc.selectSeignorId){
+		return false;
+	}
+	return self._dataValue("isAppoint", value, 0);
 };
 AreaModel.prototype.setSeignor = function(seignior,areaData){
 	this.data.seignior_chara_id = seignior.chara_id;
