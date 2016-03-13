@@ -20,7 +20,7 @@ BackgroundView.prototype.onframe = function(event){
 	self.ll_x = self.targetLayer.x;
 	self.ll_y = self.targetLayer.y;
 	self.map.bitmapData.copyPixels(self.baseBitmapData, new LRectangle(-self.targetLayer.x,-self.targetLayer.y, LGlobal.width,LGlobal.height), new LPoint(0,0));
-	/*self.map.x = -point.x;
-	self.map.y = -point.y;
-	self.map.bitmapData.setProperties(self.map.x,self.map.y,LGlobal.width,LGlobal.height);*/
+};
+BackgroundView.prototype.updateView = function(){
+	this.ll_x = Number.MIN_VALUE;
 };

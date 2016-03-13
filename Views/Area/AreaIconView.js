@@ -107,7 +107,6 @@ AreaIconView.prototype.onframe=function(event){
 };
 AreaIconView.prototype.set=function(){
 	var self = this;
-	
 	self.layer = new LSprite();
 	self.addChild(self.layer);
 	self.icon = self.areaStatus.icon();

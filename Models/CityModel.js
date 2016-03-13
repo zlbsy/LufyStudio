@@ -18,6 +18,8 @@ CityModel.prototype.getImages=function(){
 		{name:"main-trainingGround",path:LMvc.IMG_PATH+"main/trainingground.png"},
 		{name:"icon-line",path:LMvc.IMG_PATH+"icon/line.png"},
 		{name:"icon-appoint",path:LMvc.IMG_PATH+"icon/appoint.png"},
+		{name:"icon-map",path:LMvc.IMG_PATH+"icon/map.png"},
+		{name:"icon-general",path:LMvc.IMG_PATH+"icon/general.png"},
 		{name:"win02",path:LMvc.IMG_PATH+"win/win02.png"},
 		{name:"win03",path:LMvc.IMG_PATH+"win/win03.png"},
 		{name:"win04",path:LMvc.IMG_PATH+"win/win04.png"},

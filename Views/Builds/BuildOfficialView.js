@@ -53,17 +53,7 @@ BuildOfficialView.prototype.showMenu=function(){
 		buttonPersuade.addEventListener(LMouseEvent.MOUSE_UP, self.onClickPersuade);
 		
 		menuY += menuHeight;
-		if(cityData.isAppoint()){
-			var buttonAppoint = getButton(Language.get("remove_appoint"),200);
-			buttonAppoint.y = menuY;
-			layer.addChild(buttonAppoint);
-			buttonAppoint.addEventListener(LMouseEvent.MOUSE_UP, self.onClickRemoveAppoint);
-		}else{
-			var buttonAppoint = getButton(Language.get("appoint"),200);
-			buttonAppoint.y = menuY;
-			layer.addChild(buttonAppoint);
-			buttonAppoint.addEventListener(LMouseEvent.MOUSE_UP, self.onClickAppoint);
-		}
+		self.addAppointButton(layer, menuY);
 	}else{
 		var buttonGeneralsList = getButton(Language.get("generals_list"),200);
 		buttonGeneralsList.y = menuY;
@@ -73,16 +63,39 @@ BuildOfficialView.prototype.showMenu=function(){
 	
 	return layer;
 };
+BuildOfficialView.prototype.addAppointButton=function(layer, y){
+	var self = this;
+	if(self.buttonAppoint){
+		layer = self.buttonAppoint.parent;
+		y = self.buttonAppoint.y;
+		self.buttonAppoint.remove();
+	}
+	var cityModel = self.controller.getValue("cityData");
+	var buttonAppoint = getButton(Language.get(cityModel.isAppoint() ? "remove_appoint" : "appoint"),200);
+	buttonAppoint.y = y;
+	self.buttonAppoint = buttonAppoint;
+	layer.addChild(buttonAppoint);
+	if(cityModel.isAppoint()){
+		buttonAppoint.addEventListener(LMouseEvent.MOUSE_UP, self.onClickRemoveAppoint);
+	}else{
+		buttonAppoint.addEventListener(LMouseEvent.MOUSE_UP, self.onClickAppoint);
+	}
+};
 BuildOfficialView.prototype.onClickAppoint=function(event){
 	var self = event.currentTarget.getParentByConstructor(BuildOfficialView);
-	var cityModel = self.controller.getValue("cityData");
-	cityModel.isAppoint(1);
-	self.controller.dispatchEvent(LController.NOTIFY_ALL);
+	self.updateAppoint(1);
 };
 BuildOfficialView.prototype.onClickRemoveAppoint=function(event){
 	var self = event.currentTarget.getParentByConstructor(BuildOfficialView);
-	var cityModel = self.controller.getValue("cityData");
-	cityModel.isAppoint(0);
+	self.updateAppoint(0);
+};
+BuildOfficialView.prototype.updateAppoint=function(value){
+	var self = this;
+	var cityData = self.controller.getValue("cityData");
+	cityData.isAppoint(value);
+	self.controller.setValue("isAppoint",cityData.isAppoint());
+	self.addAppointButton();
+	LMvc.MapController.view.resetAreaIcon(cityData.id());
 	self.controller.dispatchEvent(LController.NOTIFY_ALL);
 };
 BuildOfficialView.prototype.onClickPrefectureButton=function(event){

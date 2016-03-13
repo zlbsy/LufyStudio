@@ -4,7 +4,7 @@ function belongLabel(){
 function getDirectionFromTarget(chara, target, angleFlag){
 	var self = this, direction = chara.direction;
 	var coordinate = chara.getTo();
-	var coordinateTo = target.getTo();console.log("getDirectionFromTarget",coordinate,coordinateTo);
+	var coordinateTo = target.getTo();
 	var angle = Math.atan2(coordinateTo[1] - coordinate[1],coordinateTo[0] - coordinate[0])*180/Math.PI + 180;
 	if(angle < 22.5 || angle > 337.5){
 		direction = CharacterDirection.LEFT;

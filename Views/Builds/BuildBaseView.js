@@ -4,7 +4,8 @@ function BuildBaseView(controller, buildName){
 	base(self,LView,[controller]);
 	self.setBackground();
 	self.buildName = buildName;
-	var build = controller.view.buildLayer.childList.find(function(child){
+	var view = controller.view;
+	var build = view.buildLayer.childList.find(function(child){
 		return child.name == buildName;
 	});
 	self.menuLayer = new LSprite();
@@ -13,8 +14,14 @@ function BuildBaseView(controller, buildName){
 	self.addChild(self.contentLayer);
 	var menuLayer = self.showMenu();
 	self.menuLayer.addChild(menuLayer);
-	self.setMenuPosition(build, menuLayer);
-	
+	if(build){
+		self.setMenuPosition(build, menuLayer);
+	}else{
+		var button = view.footerLayer.childList.find(function(child){
+			return child.name == buildName;
+		});
+		self.setMenuPositionByFooter(button, menuLayer);
+	}
 	self.controller.addEventListener(CharacterListEvent.SHOW, self.hideBuild);
 	self.controller.addEventListener(CharacterListEvent.CLOSE, self.showBuild);
 }
@@ -22,6 +29,13 @@ BuildBaseView.prototype.showMenu=function(){};
 BuildBaseView.prototype.setBackground=function(){
 	var self = this;
 	self.controller.view.contentMask.visible = true;
+};
+BuildBaseView.prototype.setMenuPositionByFooter=function(build, menuLayer){
+	var self = this;
+	var menuW = menuLayer.getWidth();
+	var menuH = menuLayer.getHeight();
+	menuLayer.x = build.x + (build.getWidth() - menuW) * 0.5;
+	menuLayer.y = LGlobal.height - menuH - 100;
 };
 BuildBaseView.prototype.setMenuPosition=function(build, menuLayer){
 	var self = this;

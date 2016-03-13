@@ -4,6 +4,7 @@ function SeigniorExecute(){
 	self.seigniorIndex = 0;
 	self.messageCitys = [];
 	self.areaIndex = 0;
+	self.areaAIIndex = 0;
 	if(!self.timer){
 		self.timer = new LTimer(LGlobal.speed, 1);
 	}
@@ -88,14 +89,12 @@ SeigniorExecute.run=function(){
 			}
 		}
 	}
-	//console.warn("SeigniorExecute.run self.seigniorIndex="+self.seigniorIndex+"<"+SeigniorModel.list.length+",elf.stop="+self.stop);
 	if(self.stop || jobAiEvent()){
 		return;
 	}
 	if(self.seigniorIndex < SeigniorModel.list.length){
 		var seigniorModel = SeigniorModel.list[self.seigniorIndex];
 		if(seigniorModel.chara_id() == 0){
-			console.error("null seignior");
 			self.seigniorIndex++;
 			SeigniorExecute.run();
 			return;
@@ -111,12 +110,9 @@ SeigniorExecute.run=function(){
 			}*/
 			return;
 		}
-		//console.warn("SeigniorExecute.run :"+seigniorModel.character().name()+", area:"+self.areaIndex);
-		if(seigniorModel.chara_id() != LMvc.selectSeignorId){
-			var aiOver = self.areasAIRun(seigniorModel);
-			if(!aiOver){
-				return;
-			}
+		var aiOver = self.areasAIRun(seigniorModel);
+		if(!aiOver){
+			return;
 		}
 		self.areasRun(seigniorModel);
 		return;
@@ -292,7 +288,7 @@ SeigniorExecute.prototype.areasAIRun=function(seigniorModel){
 	var areas = seigniorModel.areas();
 	if(self.areaAIIndex < areas.length){
 		var areaModel = areas[self.areaAIIndex];
-		console.error("*****" + areaModel.name() + "*****");
+		//console.error("*****" + areaModel.name() + "*****");
 		self.areaAIRun(areaModel);
 		return false;
 	}
@@ -341,7 +337,8 @@ SeigniorExecute.prototype.areaMessage=function(areaModel,key){
 		return;
 	}
 	self.citys.push(areaModel.id());
-	SeigniorExecute.addMessage(String.format(Language.get(key),areaModel.seignior().character().name(),areaModel.name()));
+	var seigniorName = areaModel.seigniorCharaId() == LMvc.selectSeignorId ? Language.get("belong_self") : areaModel.seignior().character().name();
+	SeigniorExecute.addMessage(String.format(Language.get(key),seigniorName,areaModel.name()));
 };
 SeigniorExecute.prototype.areaCharacterDieRun=function(area){
 	var self = this;
@@ -350,8 +347,12 @@ SeigniorExecute.prototype.areaCharacterDieRun=function(area){
 };
 SeigniorExecute.prototype.areaAIRun=function(areaModel){
 	var self = this;
+	if(areaModel.seigniorCharaId() == LMvc.selectSeignorId && !areaModel.isAppoint()){
+		self.characters = [];
+	}else{
+		self.characters = getIdleCharacters(areaModel);
+	}
 	//判断是否有未执行任务人员
-	self.characters = getIdleCharacters(areaModel);
 	if(self.characters.length == 0){
 		self.areaAIIndex++;
 		self.timer.reset();

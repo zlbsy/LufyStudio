@@ -193,6 +193,7 @@ MapView.prototype.resetAreaIcon=function(cityId){
 	});
 	if(area != null){
 		area.resetIcon();
+		self.mapLayer.getChildAt(0).updateView();
 	}
 };
 MapView.prototype.hideMapLayer=function(event){
