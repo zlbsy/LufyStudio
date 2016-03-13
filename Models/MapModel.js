@@ -13,6 +13,7 @@ MapModel.prototype.getImages=function(){
 	list.push({name:"talkbox",path:LMvc.IMG_PATH+"common/talkbox.png"});
 	
 	list.push({name:"area-1",path:LMvc.IMG_PATH+"area/area-1.png"});
+	list.push({name:"icon-appoint",path:LMvc.IMG_PATH+"icon/appoint.png"});
 	/*list.push({name:"flag-black",path:LMvc.IMG_PATH+"area/flag-black.png"});
 	list.push({name:"flag-blue",path:LMvc.IMG_PATH+"area/flag-blue.png"});
 	list.push({name:"flag-brown",path:LMvc.IMG_PATH+"area/flag-brown.png"});

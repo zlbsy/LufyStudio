@@ -363,6 +363,11 @@ AreaModel.prototype.icon=function(){
 	bitmap.x = (bitmapData.width - bitmap.getWidth())*0.5;
 	bitmap.y = (bitmapData.height - bitmap.getHeight())*0.5;
 	iconLayer.addChild(bitmap);
+	var iconAppoint = new LBitmap(new LBitmapData(LMvc.datalist["icon-appoint"]));
+	iconAppoint.scaleX = iconAppoint.scaleY = 0.6;
+	iconAppoint.x = bitmap.x + (bitmap.getWidth() - iconAppoint.getWidth()) * 0.5;
+	iconAppoint.y = bitmap.y + (bitmap.getHeight() - iconAppoint.getHeight()) * 0.2;
+	iconLayer.addChild(iconAppoint);
 	
 	var flag = self.flag();
 	if(flag != null){

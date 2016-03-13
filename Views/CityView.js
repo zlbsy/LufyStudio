@@ -89,9 +89,12 @@ CityView.prototype.buildLayerInit=function(){
 	official.y = (LGlobal.height - official.height) * 0.6;
 	official.alpha = self.controller.getValue("cityFree") ? 1 : 0.5;
 	self.buildLayer.addChild(official);
-	if(self.controller.getValue("isAppoint")){
-	
-	}
+	var iconAppoint = new LBitmap(new LBitmapData(LMvc.datalist["icon-appoint"]));
+	iconAppoint.x = official.x + (official.getWidth() - iconAppoint.getWidth()) * 0.5;
+	iconAppoint.y = official.y + (official.getHeight() - iconAppoint.getHeight()) * 0.5;
+	self.buildLayer.addChild(iconAppoint);
+	self.iconAppoint = iconAppoint;
+	self.iconAppoint.visible = self.controller.getValue("isAppoint");
 	
 	var tavern = new BuildView(self.controller,"main-tavern","tavern");
 	tavern.y = LGlobal.height - tavern.height - 160;
@@ -141,6 +144,5 @@ CityView.prototype.init=function(){
 CityView.prototype.updateView = function(){
 	var self = this;
 	self.statusLayer.getChildAt(0).updateView();
-	
-	//console.log("CityView.prototype.updateView run");
+	self.iconAppoint.visible = self.controller.getValue("isAppoint");
 };
