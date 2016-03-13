@@ -4,6 +4,17 @@ GameCacher._areaMaps = {};
 GameCacher._areaMiniMaps = {};
 GameCacher._colorBitmapDatas = {};
 GameCacher._panelBitmapDatas = {};
+GameCacher._grayBitmapDatas = {};
+GameCacher.getGrayDisplayObject = function(key, width, height){
+	if(!GameCacher._grayBitmapDatas[key]){
+		var layer = new LSprite();
+		var bitmap = new LBitmap(new LBitmapData(LMvc.datalist[key]));    
+		layer.addChild(bitmap);
+		layer.filters = [new LColorMatrixFilter([0.3086,0.6094, 0.0820, 0, 0, 0.3086, 0.6094, 0.0820, 0, 0, 0.3086, 0.6094, 0.0820, 0, 0, 0, 0, 0, 1, 0])];
+		GameCacher._grayBitmapDatas[key] = layer;
+	}
+	return GameCacher._grayBitmapDatas[key];
+};
 GameCacher.getAreaMap = function(key){
 	if(GameCacher._areaMaps[key]){
 		return GameCacher._areaMaps[key];

@@ -83,12 +83,14 @@ CityView.prototype.showBuildView=function(name){
 };
 CityView.prototype.buildLayerInit=function(){
 	var self = this;
-	self.buildLayer.addEventListener(LMouseEvent.MOUSE_UP, self.onBuildClick.bind(self));
-	var alpha = self.controller.getValue("selfCity") ? 1 : 0.5;
+	if(self.controller.getValue("selfCity")){
+		self.buildLayer.addEventListener(LMouseEvent.MOUSE_UP, self.onBuildClick.bind(self));
+	}
+	//var alpha = self.controller.getValue("selfCity") ? 1 : 0.5;
+	//official.alpha = self.controller.getValue("cityFree") ? 1 : 0.5;
 	var official = new BuildView(self.controller,"main-official","official");
 	official.x = (LGlobal.width - official.width)*0.5;
 	official.y = (LGlobal.height - official.height) * 0.4;
-	official.alpha = self.controller.getValue("cityFree") ? 1 : 0.5;
 	self.buildLayer.addChild(official);
 	var iconAppoint = new LBitmap(new LBitmapData(LMvc.datalist["icon-appoint"]));
 	iconAppoint.name = "official";
@@ -98,10 +100,9 @@ CityView.prototype.buildLayerInit=function(){
 	self.iconAppoint = iconAppoint;
 	self.iconAppoint.visible = self.controller.getValue("isAppoint");
 	
-	var institute = new BuildView(self.controller,"main-tavern","institute");
+	var institute = new BuildView(self.controller,"main-institute","institute");
 	institute.x = 0;
 	institute.y = 160;
-	institute.alpha = alpha;
 	self.buildLayer.addChild(institute);
 	
 	var citygate = new BuildView(self.controller,"main-citygate","citygate");
@@ -110,25 +111,21 @@ CityView.prototype.buildLayerInit=function(){
 	
 	var tavern = new BuildView(self.controller,"main-tavern","tavern");
 	tavern.y = institute.y + institute.height + (citygate.y - institute.y - institute.height - tavern.height) * 0.5;
-	tavern.alpha = alpha;
 	self.buildLayer.addChild(tavern);
 	
 	var market = new BuildView(self.controller,"main-shop","market");
 	market.x = LGlobal.width - market.width;
 	market.y = 160;
-	market.alpha = alpha;
 	self.buildLayer.addChild(market);
 	
 	var barrack = new BuildView(self.controller,"main-trainingGround","barrack");
 	barrack.x = LGlobal.width - barrack.width;
 	barrack.y = LGlobal.height - barrack.height - 100;
-	barrack.alpha = alpha;
 	self.buildLayer.addChild(barrack);
 	
-	var farmland = new BuildView(self.controller,"main-tavern","farmland");
+	var farmland = new BuildView(self.controller,"main-farmland","farmland");
 	farmland.x = LGlobal.width - farmland.width;
 	farmland.y = market.y + market.height + (barrack.y - market.y - market.height - farmland.height) * 0.5;
-	farmland.alpha = alpha;
 	self.buildLayer.addChild(farmland);
 };
 CityView.prototype.footerLayerInit=function(){
@@ -145,11 +142,11 @@ CityView.prototype.footerLayerInit=function(){
 	buttonGenerals.x = buttonMap.x + buttonWidth + 10;
 	self.footerLayer.addChild(buttonGenerals);
 	buttonGenerals.addEventListener(LMouseEvent.MOUSE_UP, self.onClickGeneralsButton);
-	var buttonDiplomacy = self.getIconButton(Language.get("diplomacy"), buttonWidth, buttonHeight, "icon-general");
+	var buttonDiplomacy = self.getIconButton(Language.get("diplomacy"), buttonWidth, buttonHeight, "icon-diplomacy");
 	buttonDiplomacy.name = "diplomacy";
 	buttonDiplomacy.x = buttonGenerals.x + buttonWidth + 10;
 	self.footerLayer.addChild(buttonDiplomacy);
-	var buttonExpedition = self.getIconButton(Language.get("expedition"), buttonWidth, buttonHeight, "icon-general");
+	var buttonExpedition = self.getIconButton(Language.get("expedition"), buttonWidth, buttonHeight, "icon-expedition");
 	buttonExpedition.name = "expedition";
 	buttonExpedition.x = buttonDiplomacy.x + buttonWidth + 10;
 	self.footerLayer.addChild(buttonExpedition);

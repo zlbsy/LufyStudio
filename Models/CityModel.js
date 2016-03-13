@@ -7,8 +7,9 @@ CityModel.prototype.construct=function(){
 CityModel.prototype.getImages=function(){
 	var list = [
 		{name:"main-background",path:LMvc.IMG_PATH+"main/background.png"},
-		//{name:"builds-market",path:LMvc.IMG_PATH+"builds/market.png"},
 		{name:"main-official",path:LMvc.IMG_PATH+"main/official.png"},
+		{name:"main-institute",path:LMvc.IMG_PATH+"main/institute.png"},
+		{name:"main-farmland",path:LMvc.IMG_PATH+"main/farmland.png"},
 		{name:"main-tavern",path:LMvc.IMG_PATH+"main/tavern.png"},
 		{name:"main-shop",path:LMvc.IMG_PATH+"main/shop.png"},
 		{name:"checkbox-background",path:LMvc.IMG_PATH+"component/checkbox-background.png"},
@@ -20,6 +21,8 @@ CityModel.prototype.getImages=function(){
 		{name:"icon-appoint",path:LMvc.IMG_PATH+"icon/appoint.png"},
 		{name:"icon-map",path:LMvc.IMG_PATH+"icon/map.png"},
 		{name:"icon-general",path:LMvc.IMG_PATH+"icon/general.png"},
+		{name:"icon-expedition",path:LMvc.IMG_PATH+"icon/expedition.png"},
+		{name:"icon-diplomacy",path:LMvc.IMG_PATH+"icon/diplomacy.png"},
 		{name:"win02",path:LMvc.IMG_PATH+"win/win02.png"},
 		{name:"win03",path:LMvc.IMG_PATH+"win/win03.png"},
 		{name:"win04",path:LMvc.IMG_PATH+"win/win04.png"},
