@@ -8,59 +8,28 @@ function BuildOfficialView(controller){
 }
 BuildOfficialView.prototype.showMenu=function(){
 	var self = this, layer = new LSprite(), menuY = 0, menuHeight = 55;
-	if(self.controller.getValue("selfCity")){
-		var cityModel = self.controller.getValue("cityData");
-		if(cityModel.prefecture() != cityModel.seigniorCharaId()){
-			var buttonPrefecture = getButton(Language.get("appoint_prefecture"),200);
-			buttonPrefecture.y = menuY;
-			layer.addChild(buttonPrefecture);
-			buttonPrefecture.addEventListener(LMouseEvent.MOUSE_UP, self.onClickPrefectureButton.bind(self));
-			menuY += menuHeight;
-		}
-		var buttonGeneralsList = getButton(Language.get("generals_list"),200);
-		buttonGeneralsList.y = menuY;
-		layer.addChild(buttonGeneralsList);
-		buttonGeneralsList.addEventListener(LMouseEvent.MOUSE_UP, self.onClickGeneralsListButton.bind(self));
-		
+	var cityModel = self.controller.getValue("cityData");
+	if(cityModel.prefecture() != cityModel.seigniorCharaId()){
+		var buttonPrefecture = getButton(Language.get("appoint_prefecture"),200);
+		buttonPrefecture.y = menuY;
+		layer.addChild(buttonPrefecture);
+		buttonPrefecture.addEventListener(LMouseEvent.MOUSE_UP, self.onClickPrefectureButton.bind(self));
 		menuY += menuHeight;
-		var buttonGeneralsMove = getButton(Language.get("generals_move"),200);
-		buttonGeneralsMove.y = menuY;
-		layer.addChild(buttonGeneralsMove);
-		buttonGeneralsMove.addEventListener(LMouseEvent.MOUSE_UP, self.onClickGeneralsMoveButton.bind(self));
-		
-		menuY += menuHeight;
-		var buttonGeneralsMove = getButton(Language.get("transport"),200);
-		buttonGeneralsMove.y = menuY;
-		layer.addChild(buttonGeneralsMove);
-		buttonGeneralsMove.addEventListener(LMouseEvent.MOUSE_UP, self.onClickTransportButton.bind(self));
-		
-		menuY += menuHeight;
-		var buttonSpy = getButton(Language.get("spy"),200);
-		buttonSpy.y = menuY;
-		layer.addChild(buttonSpy);
-		buttonSpy.addEventListener(LMouseEvent.MOUSE_UP, self.onClickSpyButton.bind(self));
-		
-		menuY += menuHeight;
-		var buttonDiplomacy = getButton(Language.get("diplomacy"),200);
-		buttonDiplomacy.y = menuY;
-		layer.addChild(buttonDiplomacy);
-		buttonDiplomacy.addEventListener(LMouseEvent.MOUSE_UP, self.onClickDiplomacyButton.bind(self));
-			
-		menuY += menuHeight;
-		var buttonPersuade = getButton(Language.get("persuade_character"),200);
-		buttonPersuade.y = menuY;
-		layer.addChild(buttonPersuade);
-		buttonPersuade.addEventListener(LMouseEvent.MOUSE_UP, self.onClickPersuade);
-		
-		menuY += menuHeight;
-		self.addAppointButton(layer, menuY);
-	}else{
-		var buttonGeneralsList = getButton(Language.get("generals_list"),200);
-		buttonGeneralsList.y = menuY;
-		layer.addChild(buttonGeneralsList);
-		buttonGeneralsList.addEventListener(LMouseEvent.MOUSE_UP, self.onClickGeneralsListButton.bind(self));
 	}
-	
+	menuY += menuHeight;
+	var buttonGeneralsMove = getButton(Language.get("transport"),200);
+	buttonGeneralsMove.y = menuY;
+	layer.addChild(buttonGeneralsMove);
+	buttonGeneralsMove.addEventListener(LMouseEvent.MOUSE_UP, self.onClickTransportButton.bind(self));
+		
+	menuY += menuHeight;
+	var buttonSpy = getButton(Language.get("spy"),200);
+	buttonSpy.y = menuY;
+	layer.addChild(buttonSpy);
+	buttonSpy.addEventListener(LMouseEvent.MOUSE_UP, self.onClickSpyButton.bind(self));
+		
+	menuY += menuHeight;
+	self.addAppointButton(layer, menuY);
 	return layer;
 };
 BuildOfficialView.prototype.addAppointButton=function(layer, y){
@@ -103,14 +72,6 @@ BuildOfficialView.prototype.onClickPrefectureButton=function(event){
 	var cityModel = self.controller.getValue("cityData");
 	self.controller.loadCharacterList(CharacterListType.APPOINT_PREFECTURE, cityModel.generals(), {isOnlyOne:true, buttonLabel:"appoint_prefecture"});
 };
-BuildOfficialView.prototype.onClickDiplomacyButton=function(event){
-	var self = this;
-	var parent = self.parent;
-	var controller = self.controller;
-	self.remove();
-	var buildDiplomacy = new BuildDiplomacyView(controller);
-	parent.addChild(buildDiplomacy);
-};
 BuildOfficialView.prototype.onClickTransportButton=function(event){
 	var self = this;
 	self.characterListType = CharacterListType.TRANSPORT;
@@ -132,40 +93,10 @@ BuildOfficialView.prototype.toTransport=function(){
 	var cityModel = self.controller.getValue("cityData");
 	self.controller.loadCharacterList(CharacterListType.TRANSPORT, cityModel.generals(Job.IDLE), {isOnlyOne:true, buttonLabel:"execute"});
 };
-BuildOfficialView.prototype.onClickPersuade=function(event){
-	var self = event.currentTarget.getParentByConstructor(BuildOfficialView);
-	self.characterListType = CharacterListType.PERSUADE_TARGET;
-	self.controller.addEventListener(LCityEvent.SELECT_CITY, self.persuadeTargetSelectCharacter);
-	self.controller.toSelectMap(CharacterListType.PERSUADE_TARGET, {isSelf:false,toast:"dialog_persuade_select_city_toast",spy:true, belongError:"dialog_persuade_belong_error", spyError:"dialog_persuade_spy_error"});
-};
-BuildOfficialView.prototype.persuadeTargetSelectCharacter=function(event){
-	var controller = event.currentTarget;
-	console.log("persuadeTargetSelectCharacter");
-	var self = controller.view.contentLayer.childList.find(function(child){
-		return child.constructor.name == "BuildOfficialView";
-	});
-	self.controller.setValue("cityId", event.cityId);
-	controller.removeEventListener(LCityEvent.SELECT_CITY, self.persuadeTargetSelectCharacter);
-	var selectCity = AreaModel.getArea(event.cityId);
-	var characterList = selectCity.generals();
-	self.controller.loadCharacterList(CharacterListType.PERSUADE_TARGET, characterList, {isOnlyOne:true, buttonLabel:"execute"});
-};
 BuildOfficialView.prototype.onClickSpyButton=function(event){
 	var self = this;
 	self.controller.addEventListener(LCityEvent.SELECT_CITY, self.spySelectCharacter);
 	self.controller.toSelectMap(CharacterListType.CHARACTER_SPY, {isSelf:false,toast:"dialog_common_select_city_toast", belongError:"dialog_spy_generals_error",confirmMessage:"dialog_spy_generals_confirm"});
-};
-BuildOfficialView.prototype.onClickGeneralsListButton=function(event){
-	var self = this;
-	var cityModel = self.controller.getValue("cityData");
-	generals = cityModel.generals();
-	var characterList = generals.concat(cityModel.outOfOffice()).concat(cityModel.captives());
-	self.controller.loadCharacterList(CharacterListType.CHARACTER_LIST, characterList, {showOnly:true});
-};
-BuildOfficialView.prototype.onClickGeneralsMoveButton=function(event){
-	var self = this;
-	self.controller.addEventListener(LCityEvent.SELECT_CITY, self.moveSelectCharacter);
-	self.controller.toSelectMap(CharacterListType.CHARACTER_MOVE, {isSelf:true,toast:"dialog_common_select_city_toast",belongError:"dialog_move_generals_error",confirmMessage:"dialog_move_generals_confirm"});
 };
 BuildOfficialView.prototype.spySelectCharacter=function(event){
 	var controller = event.currentTarget;
@@ -178,20 +109,8 @@ BuildOfficialView.prototype.spySelectCharacter=function(event){
 	var cityModel = self.controller.getValue("cityData");
 	self.controller.loadCharacterList(CharacterListType.CHARACTER_SPY, cityModel.generals(Job.IDLE), {showMoney:true, buttonLabel:"execute"});
 };
-BuildOfficialView.prototype.moveSelectCharacter=function(event){
-	var controller = event.currentTarget;
-	var self = controller.view.contentLayer.childList.find(function(child){
-		return child.constructor.name == "BuildOfficialView";
-	});
-	self.controller.setValue("cityId", event.cityId);
-	console.log("event.cityId = " + event.cityId);
-	controller.removeEventListener(LCityEvent.SELECT_CITY, self.moveSelectCharacter);
-	var cityModel = self.controller.getValue("cityData");
-	self.controller.loadCharacterList(CharacterListType.CHARACTER_MOVE, cityModel.generals(Job.IDLE), {buttonLabel:"move_start"});
-};
 BuildOfficialView.prototype.selectComplete=function(event){
 	var self = this;
-	console.log("BuildOfficialView.prototype.selectComplete event = " , event);
 	var characterList = event.characterList;
 	var cityId = self.controller.getValue("cityId");
 	if(!characterList){
@@ -206,11 +125,6 @@ BuildOfficialView.prototype.selectComplete=function(event){
 		}
 		var city = self.controller.getValue("cityData");
 		city.prefecture(event.characterList[0].id());
-	}else if(event.characterListType == CharacterListType.CHARACTER_MOVE){
-		self.controller.setValue("cityId", null);
-		event.characterList.forEach(function(child){
-			child.moveTo(cityId);
-		});
 	}else if(event.characterListType == CharacterListType.CHARACTER_SPY){
 		self.controller.setValue("cityId", null);
 		event.characterList.forEach(function(child){
@@ -226,13 +140,6 @@ BuildOfficialView.prototype.selectComplete=function(event){
 			self.controller.setValue("transportCharacter", event.characterList[0]);
 			return true;
 		}
-	}else if(event.characterListType == CharacterListType.PERSUADE_TARGET){
-		self.controller.setValue("persuadeCharacter", event.characterList[0]);
-	}else if(event.characterListType == CharacterListType.PERSUADE){
-		self.controller.setValue("cityId", null);
-		var persuadeCharacter = self.controller.getValue("persuadeCharacter");
-		var characterModel = event.characterList[0];
-		characterModel.persuade(persuadeCharacter.id());
 	}
 	return true;
 };
@@ -245,7 +152,6 @@ BuildOfficialView.prototype.showBuild=function(event){
 	if(!result){
 		return;
 	}
-	console.log("event.subEventType = " ,event.subEventType,"event.characterListType =",event.characterListType);
 	if(event.subEventType == "return"){
 		return;
 	}
@@ -254,9 +160,6 @@ BuildOfficialView.prototype.showBuild=function(event){
 	}
 	if(event.characterListType == CharacterListType.TRANSPORT){
 		self.load.view(["Builds/ExpeditionReady"],self.expeditionReady);
-	}else if(event.characterListType == CharacterListType.PERSUADE_TARGET){
-		var cityModel = self.controller.getValue("cityData");
-		self.controller.loadCharacterList(CharacterListType.PERSUADE, cityModel.generals(Job.IDLE), {isOnlyOne:true, buttonLabel:"execute"});
 	}
 };
 BuildOfficialView.prototype.expeditionReady=function(){

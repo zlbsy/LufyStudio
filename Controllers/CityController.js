@@ -27,8 +27,10 @@ CityController.prototype.libraryLoad=function(){
 };
 CityController.prototype.viewLoad=function(){
 	var self = this;
-	self.load.view(["Builds/Build","Builds/BuildBase","Builds/BuildMarket","Builds/BuildBarrack","Builds/BuildCitygate",
-	"Builds/BuildOfficial","Builds/BuildFarmland","Builds/BuildTavern","Builds/BuildInstitute","Builds/BuildDiplomacy","Builds/BuildGenerals","Common/HeaderStatus"],self.init);
+	self.load.view(["Builds/Build","Builds/BuildBase","Common/HeaderStatus",
+	"Builds/BuildMarket","Builds/BuildBarrack","Builds/BuildCitygate","Builds/BuildOfficial",
+	"Builds/BuildFarmland","Builds/BuildTavern","Builds/BuildInstitute","Builds/BuildDiplomacy",
+	"Builds/BuildGenerals","Builds/BuildExpedition"],self.init);
 };
 CityController.prototype.init=function(){
 	var self = this;
@@ -106,8 +108,5 @@ CityController.prototype.battleLoadComplete=function(){
 	}
 	battleData.expeditionEnemyData = self.getValue("expeditionEnemyData");
 	var battle = new BattleController(battleData, self);
-	console.log("cityData="+self.getValue("cityData"));
-	console.log("toCityId="+self.getValue("toCityId"));
-	console.log("expeditionEnemyData="+self.getValue("expeditionEnemyData"));
 	LMvc.stageLayer.addChild(battle);
 };

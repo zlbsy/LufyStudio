@@ -12,18 +12,24 @@ function BuildBaseView(controller, buildName){
 	self.addChild(self.menuLayer);
 	self.contentLayer = new LSprite();
 	self.addChild(self.contentLayer);
-	var menuLayer = self.showMenu();
-	self.menuLayer.addChild(menuLayer);
-	if(build){
-		self.setMenuPosition(build, menuLayer);
-	}else{
-		var button = view.footerLayer.childList.find(function(child){
-			return child.name == buildName;
-		});
-		self.setMenuPositionByFooter(button, menuLayer);
-	}
+	
 	self.controller.addEventListener(CharacterListEvent.SHOW, self.hideBuild);
 	self.controller.addEventListener(CharacterListEvent.CLOSE, self.showBuild);
+	
+	var menuLayer = self.showMenu();
+	if(menuLayer){
+		self.menuLayer.addChild(menuLayer);
+		if(build){
+			self.setMenuPosition(build, menuLayer);
+		}else{
+			var button = view.footerLayer.childList.find(function(child){
+				return child.name == buildName;
+			});
+			self.setMenuPositionByFooter(button, menuLayer);
+		}
+	}else{
+		self.run();
+	}
 }
 BuildBaseView.prototype.showMenu=function(){};
 BuildBaseView.prototype.setBackground=function(){

@@ -158,6 +158,9 @@ AreaModel.prototype.name = function(){
 AreaModel.prototype.id = function(){
 	return this.data.id;
 };
+AreaModel.prototype.smap = function(){
+	return this.data.smap;
+};
 AreaModel.prototype.removeCharacter = function(charaId){
 	var self = this;
 	if(self.removeGenerals(charaId)){

@@ -3,7 +3,7 @@
  */
 function BuildDiplomacyView(controller){
 	var self = this;
-	base(self,BuildBaseView,[controller,"official"]);
+	base(self,BuildBaseView,[controller,"diplomacy"]);
 }
 BuildDiplomacyView.prototype.showMenu=function(){
 	var self = this, layer = new LSprite(), menuY = 0, menuHeight = 55;
@@ -179,7 +179,6 @@ BuildDiplomacyView.prototype.redeemMoneyComplete=function(event){
 	var self = windowLayer.parent;
 	windowLayer.remove();
 	self.menuLayer.visible = true;
-	console.error("self.characterListType="+self.characterListType);
 	if(self.characterListType == CharacterListType.REDEEM){
 		var captiveCharacterId = self.controller.getValue("captiveCharacterId");
 		var redeemCharacter = self.controller.getValue("selectCharacter");

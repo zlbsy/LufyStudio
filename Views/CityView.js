@@ -86,8 +86,6 @@ CityView.prototype.buildLayerInit=function(){
 	if(self.controller.getValue("selfCity")){
 		self.buildLayer.addEventListener(LMouseEvent.MOUSE_UP, self.onBuildClick.bind(self));
 	}
-	//var alpha = self.controller.getValue("selfCity") ? 1 : 0.5;
-	//official.alpha = self.controller.getValue("cityFree") ? 1 : 0.5;
 	var official = new BuildView(self.controller,"main-official","official");
 	official.x = (LGlobal.width - official.width)*0.5;
 	official.y = (LGlobal.height - official.height) * 0.4;
@@ -146,10 +144,22 @@ CityView.prototype.footerLayerInit=function(){
 	buttonDiplomacy.name = "diplomacy";
 	buttonDiplomacy.x = buttonGenerals.x + buttonWidth + 10;
 	self.footerLayer.addChild(buttonDiplomacy);
+	buttonDiplomacy.addEventListener(LMouseEvent.MOUSE_UP, self.onClickDiplomacyButton);
 	var buttonExpedition = self.getIconButton(Language.get("expedition"), buttonWidth, buttonHeight, "icon-expedition");
 	buttonExpedition.name = "expedition";
 	buttonExpedition.x = buttonDiplomacy.x + buttonWidth + 10;
 	self.footerLayer.addChild(buttonExpedition);
+	buttonExpedition.addEventListener(LMouseEvent.MOUSE_UP, self.onClickExpeditionButton);
+};
+CityView.prototype.onClickExpeditionButton=function(event){
+	var self = event.currentTarget.getParentByConstructor(CityView);
+	var build = new BuildExpeditionView(self.controller);
+	self.contentLayer.addChild(build);
+};
+CityView.prototype.onClickDiplomacyButton=function(event){
+	var self = event.currentTarget.getParentByConstructor(CityView);
+	var build = new BuildDiplomacyView(self.controller);
+	self.contentLayer.addChild(build);
 };
 CityView.prototype.onClickGeneralsButton=function(event){
 	var self = event.currentTarget.getParentByConstructor(CityView);

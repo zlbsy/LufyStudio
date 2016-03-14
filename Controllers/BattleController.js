@@ -56,7 +56,7 @@ BattleController.prototype.viewLoad=function(){
 };
 BattleController.prototype.addMap=function(){
 	var self = this;
-	var mapPath = "s02.smap";
+	var mapPath = String.format("s{0}.smap", self.battleData.toCity.smap());
 	self.model.loadMapFile(mapPath,self.globalFilesLoad);
 };
 BattleController.prototype.globalFilesLoad = function(){
