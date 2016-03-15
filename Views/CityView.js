@@ -31,7 +31,7 @@ CityView.prototype.layerInit=function(){
 	self.addChild(self.contentLayer);
 };
 CityView.prototype.clearContentLayer=function(event){
-	var self = this;
+	var self = this;console.log("clearContentLayer");
 	self.contentLayer.die();
 	self.contentLayer.removeAllChild();
 	self.contentMask.visible = false;

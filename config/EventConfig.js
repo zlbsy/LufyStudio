@@ -9,6 +9,7 @@ ArmListEvent.CLOSE = "armList_close";
 
 var LCityEvent = {};
 LCityEvent.SELECT_CITY = "select_city";
+LCityEvent.CLOSE_SELECT_CITY = "close_select_city";
 
 /*
 var BattleCharacterEvent = {};

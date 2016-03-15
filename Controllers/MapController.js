@@ -96,11 +96,13 @@ MapController.prototype.cityLoadComplete=function(){
 };
 MapController.prototype.returnToCity=function(cityId){
 	var self = this;
+	console.log("returnToCity cityId="+cityId);
 	LTweenLite.removeAll();
 	LMvc.MapController.view.clearBattleMark();
 	LMvc.MapController.view.visible = false;
 	LMvc.CityController.view.visible = true;
 	if(!cityId){
+		LMvc.CityController.dispatchEvent(LCityEvent.CLOSE_SELECT_CITY);
 		return;
 	}
 	var event = new LEvent(LCityEvent.SELECT_CITY);

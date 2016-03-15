@@ -12,13 +12,23 @@ BuildExpeditionView.prototype.run=function(){
 	var self = this;
 	self.characterListType = CharacterListType.EXPEDITION;
 	self.controller.addEventListener(LCityEvent.SELECT_CITY, self.expeditionSelectCharacter);
+	self.controller.addEventListener(LCityEvent.CLOSE_SELECT_CITY, self.closeSelectCity);
 	self.controller.toSelectMap(CharacterListType.EXPEDITION, {isSelf:false,toast:"dialog_common_select_city_toast",belongError:"dialog_expedition_select_error",confirmMessage:"dialog_expedition_select_confirm"});
+};
+BuildExpeditionView.prototype.closeSelectCity=function(event){
+	var controller = event.currentTarget;
+	var self = controller.view.contentLayer.childList.find(function(child){
+		return child.constructor.name == "BuildExpeditionView";
+	});
+	var cityView = self.getParentByConstructor(CityView);
+	cityView.clearContentLayer();
 };
 BuildExpeditionView.prototype.expeditionSelectCharacter=function(event){
 	var controller = event.currentTarget;
 	var self = controller.view.contentLayer.childList.find(function(child){
 		return child.constructor.name == "BuildExpeditionView";
 	});
+	console.log("event.cityId="+event.cityId);
 	self.controller.setValue("cityId", event.cityId);
 	controller.removeEventListener(LCityEvent.SELECT_CITY, self.expeditionSelectCharacter);
 	self.toExpedition();
@@ -98,6 +108,8 @@ BuildExpeditionView.prototype.showBuild=function(event){
 			self.controller.setValue("expeditionCharacterList", null);
 			self.controller.setValue("toCityId", null);
 			self.controller.dispatchEvent(LController.NOTIFY_ALL);
+			var cityView = self.getParentByConstructor(CityView);
+			cityView.clearContentLayer();
 		}else if(event.characterListType == CharacterListType.SELECT_LEADER){
 			self.toExpedition();
 		}
