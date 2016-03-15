@@ -575,6 +575,7 @@ function battleFailChangeCity(city, failSeigniorId){
 		var seignior = SeigniorModel.getSeignior(failSeigniorId);
 		seignior.addCity(retreatCity);
 		retreatCity.seigniorCharaId(failSeigniorId);
+		LMvc.MapController.view.resetAreaIcon(retreatCity.id());
 	}
 	return retreatCity;
 };

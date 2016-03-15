@@ -135,21 +135,30 @@ CityView.prototype.footerLayerInit=function(){
 	buttonMap.x = (LGlobal.width - buttonWidth * 4 - 30) * 0.5;
 	self.footerLayer.addChild(buttonMap);
 	buttonMap.addEventListener(LMouseEvent.MOUSE_UP, self.onClickMapButton);
-	var buttonGenerals = self.getIconButton(Language.get("generals"), buttonWidth, buttonHeight, "icon-general");
+	var buttonGenerals = self.getIconButton(Language.get("generals"), buttonWidth, buttonHeight, "icon-general", !self.controller.getValue("cityFree"));
 	buttonGenerals.name = "generals";
 	buttonGenerals.x = buttonMap.x + buttonWidth + 10;
 	self.footerLayer.addChild(buttonGenerals);
-	buttonGenerals.addEventListener(LMouseEvent.MOUSE_UP, self.onClickGeneralsButton);
-	var buttonDiplomacy = self.getIconButton(Language.get("diplomacy"), buttonWidth, buttonHeight, "icon-diplomacy");
+	var buttonDiplomacy = self.getIconButton(Language.get("diplomacy"), buttonWidth, buttonHeight, "icon-diplomacy", true);
 	buttonDiplomacy.name = "diplomacy";
 	buttonDiplomacy.x = buttonGenerals.x + buttonWidth + 10;
 	self.footerLayer.addChild(buttonDiplomacy);
-	buttonDiplomacy.addEventListener(LMouseEvent.MOUSE_UP, self.onClickDiplomacyButton);
-	var buttonExpedition = self.getIconButton(Language.get("expedition"), buttonWidth, buttonHeight, "icon-expedition");
+	var buttonExpedition = self.getIconButton(Language.get("expedition"), buttonWidth, buttonHeight, "icon-expedition", true);
 	buttonExpedition.name = "expedition";
 	buttonExpedition.x = buttonDiplomacy.x + buttonWidth + 10;
 	self.footerLayer.addChild(buttonExpedition);
-	buttonExpedition.addEventListener(LMouseEvent.MOUSE_UP, self.onClickExpeditionButton);
+	if(self.controller.getValue("cityFree")){
+		buttonGenerals.addEventListener(LMouseEvent.MOUSE_UP, self.onClickGeneralsButton);
+	}else{
+		buttonGenerals.staticMode = true;
+	}
+	if(self.controller.getValue("selfCity")){
+		buttonDiplomacy.addEventListener(LMouseEvent.MOUSE_UP, self.onClickDiplomacyButton);
+		buttonExpedition.addEventListener(LMouseEvent.MOUSE_UP, self.onClickExpeditionButton);
+	}else{
+		buttonDiplomacy.staticMode = true;
+		buttonExpedition.staticMode = true;
+	}
 };
 CityView.prototype.onClickExpeditionButton=function(event){
 	var self = event.currentTarget.getParentByConstructor(CityView);
@@ -170,12 +179,20 @@ CityView.prototype.onClickMapButton=function(event){
 	var self = event.currentTarget.getParentByConstructor(CityView);
 	self.controller.gotoMap();
 };
-CityView.prototype.getIconButton=function(text,width,height,icon){
-	var bitmapWin = getPanel("win05", width, height);
-	var iconBitmap = new LBitmap(new LBitmapData(LMvc.datalist[icon]));
-	iconBitmap.x = (width - iconBitmap.getWidth()) * 0.5;
-	iconBitmap.y = height - iconBitmap.getHeight() - 10;
-	bitmapWin.addChild(iconBitmap);
+CityView.prototype.getIconButton=function(text,width,height,icon, belong){
+	var self = this;
+	var bitmapWin;
+	var display;
+	if(!belong || self.controller.getValue("selfCity")){
+		bitmapWin = getPanel("win05", width, height);
+		display = new LBitmap(new LBitmapData(LMvc.datalist[icon]));
+	}else{
+		bitmapWin = getPanel("win07", width, height);
+		display = GameCacher.getGrayDisplayObject(icon);
+	}
+	display.x = (width - display.getWidth()) * 0.5;
+	display.y = height - display.getHeight() - 10;
+	bitmapWin.addChild(display);
 	var textLabel = getStrokeLabel(text,18,"#FFFFFF","#000000",3);
 	textLabel.x = (width - textLabel.getWidth()) * 0.5;
 	textLabel.y = height - textLabel.getHeight() - 10;
