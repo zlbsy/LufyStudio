@@ -18,21 +18,18 @@ var EventListConfig = [
 },
 {
 	id:2,
-	name:"一顾茅庐",
+	name:"讨伐董卓",
 	condition:{
-		from:{year:194,month:1},
-		to:{year:194,month:1},
-		seignior:1,
+		from:{year:190,month:1},
+		to:{year:190,month:2},
+		seignior:0,
 		generals:[
-			{id:4,seignior:0,city:25},
-			{id:2,seignior:1},
-			{id:3,seignior:1}
+			{id:265,seignior:265},
 		],
 		citys:[
-			{id:25,seignior:1},
 		]
 	},
-	script:"Data/Event/sgml1.txt",
+	script:"Data/Event/fdzlm.txt",
 	result:[]
 },
 {

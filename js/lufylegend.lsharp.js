@@ -1742,9 +1742,39 @@ LScriptSGJ.analysis = function(childType, lineValue) {
 		case "SGJJobHelper":
 			LSGJJobHelperScript.analysis(lineValue);
 			break;
+		case "SGJEvent":
+			LSGJEventScript.analysis(lineValue);
+			break;
 		default:
 			LGlobal.script.analysis();
 	}
+};
+/*
+ * LSGJEventScript.js
+ **/
+LSGJEventScript = function() {
+};
+LSGJEventScript.analysis = function(value) {
+	var start = value.indexOf("(");
+	var end = value.indexOf(")");
+	switch(value.substr(0,start)) {
+		case "SGJEvent.addCharacter":
+			LSGJEventScript.addCharacter(value, start, end);
+			break;
+		case "SGJEvent.dispatchEventListResult":
+			LSGJJobHelperScript.dispatchEventListResult(value, start, end);
+			break;
+		default:
+			LGlobal.script.analysis();
+	}
+};
+LSGJEventScript.addCharacter = function(value, start, end) {
+	var params = value.substring(start + 1, end).split(",");
+	//charaId, x, y, tween
+};
+LSGJEventScript.dispatchEventListResult = function(value, start, end) {
+	var params = value.substring(start + 1, end).split(",");
+	dispatchEventListResult(parseInt(params[0]));
 };
 /*
  * LSGJJobHelperScript.js
@@ -1755,7 +1785,7 @@ LSGJJobHelperScript.analysis = function(value) {
 	var start = value.indexOf("(");
 	var end = value.indexOf(")");
 	switch(value.substr(0,start)) {
-		case "LSGJJobHelperScript.dispatchEventListResult":
+		case "SGJJobHelperScript.dispatchEventListResult":
 			LSGJJobHelperScript.dispatchEventListResult(value, start, end);
 			break;
 		default:

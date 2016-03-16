@@ -1,5 +1,6 @@
 function jobAiEvent(){
-	var month = LMvc.chapterController.getValue("month");
+	return checkEventList();
+	/*var month = LMvc.chapterController.getValue("month");
 	var year = LMvc.chapterController.getValue("year");
 	for(var i=0,l=EventListConfig.length;i<l;i++){
 		var eventObject = EventListConfig[i];
@@ -43,7 +44,7 @@ function jobAiEvent(){
 		LMvc.MapController.view.visible = false;
 		return true;
 	}
-	return false;
+	return false;*/
 }
 /*检索战力最弱城池*/
 function getWeakBattleCity(areaModel){

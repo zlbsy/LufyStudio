@@ -47,12 +47,12 @@ LogoController.prototype.startAnimation=function(){
 LogoController.prototype.start=function(event){
 	var self = event.target.parent.controller;
 	//TODO::test
-	LPlugin.openStamp(17);
+	/*LPlugin.openStamp(17);
 	LPlugin.openStamp(18);
 	LPlugin.openStamp(19);
 	LPlugin.openEvent(1);
 	LPlugin.openEvent(2);
-	LPlugin.openEvent(3);
+	LPlugin.openEvent(3);*/
 	
 	self.dispatchEvent(LController.NOTIFY);
 };

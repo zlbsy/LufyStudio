@@ -544,7 +544,7 @@ SeigniorExecute.prototype.loadSeigniorExecuteConfig=function(){
 };
 SeigniorExecute.prototype.loadSeigniorExecuteHelper=function(){
 	var self = this;
-	self.load.helper(["JobHelper","JobAIHelper","BattleHelper","BattleCalculateHelper","CommonHelper"],self.loadSeigniorExecuteLibrary);
+	self.load.helper(["JobHelper","JobAIHelper","EventListHelper","BattleHelper","BattleCalculateHelper","CommonHelper"],self.loadSeigniorExecuteLibrary);
 };
 SeigniorExecute.prototype.loadSeigniorExecuteLibrary=function(){
 	var self = this;

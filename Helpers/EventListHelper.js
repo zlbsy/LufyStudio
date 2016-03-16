@@ -1,5 +1,6 @@
 function checkEventList() {
 	var eventListFinished = LMvc.chapterData.eventListFinished || [];
+	
 	for(var i = 0,l = EventListConfig.length;i<l;i++){
 		var currentEvent = EventListConfig[i];
 		if(eventListFinished.findIndex(function(child){
@@ -7,13 +8,13 @@ function checkEventList() {
 			}) >= 0){
 			continue;
 		}
-		var month = LMvc.chapterController.getValue("month");
-		var year = LMvc.chapterController.getValue("year");
+		var month = LMvc.chapterData.month;
+		var year = LMvc.chapterData.year;
 		var timeIn = (currentEvent.condition.from.year <= year && currentEvent.condition.to.year >= year && currentEvent.condition.from.month <= month && currentEvent.condition.to.month >= month);
 		if(!timeIn){
 			continue;
 		}
-		if(LMvc.selectSeignorId != currentEvent.condition.seignior){
+		if(currentEvent.condition.seignior > 0 && LMvc.selectSeignorId != currentEvent.condition.seignior){
 			continue;
 		}
 		var generalsOk = true;
@@ -42,6 +43,9 @@ function checkEventList() {
 		if(!citysOk){
 			continue;
 		}
+		if(!LPlugin.eventIsOpen(currentEvent.id)){
+			LPlugin.openEvent(currentEvent.id);
+		}
 		eventListFinished.push(currentEvent.id);
 		LMvc.chapterData.eventListFinished = eventListFinished;
 		dispatchEventList(currentEvent);
@@ -51,8 +55,8 @@ function checkEventList() {
 }
 function dispatchEventList(currentEvent) {
 	var script = "Var.set(eventId,"+currentEvent.id+");";
-	script += "Load.script("+currentEvent.stript+");";
-	script += "SGJJobHelper.dispatchEventListResult("+currentEvent.id+");";
+	script += "Load.script("+currentEvent.script+");";
+	script += "SGJEvent.dispatchEventListResult("+currentEvent.id+");";
 	LGlobal.script.addScript(script);
 }
 function dispatchEventListResult(eventId) {
