@@ -406,7 +406,7 @@ Language.cityData = {
 	"city_6":"成都",
 	"city_7":"江洲",
 	"city_8":"建宁",
-	"city_9":"南蛮",
+	"city_9":"云南",
 	"city_10":"交趾",
 	"city_11":"汉中",
 	"city_12":"长安",

@@ -48,14 +48,24 @@ CharacterModel.upValue = function(type, value) {
 	return 0;
 };
 CharacterModel.setChara=function(list){
-	var self = this;
+	var fathers = [];
 	for(var i=0,l=list.length;i<l;i++){
 		var chara = new CharacterModel(null,list[i]);
+		if(chara.childs().length > 0){
+			fathers.push(chara);
+		}
 		CharacterModel.list.push(chara);
+	}
+	for(var i=0,l=fathers.length;i<l;i++){
+		var chara = fathers[i];
+		var childs = chara.childs();
+		for(var j=0,jl=childs.length;j<jl;j++){
+			var child = CharacterModel.getChara(childs[j]);
+			child.data.father = chara.id();
+		}
 	}
 };
 CharacterModel.getChara=function(chara_id){
-	var self = this;
 	for(var i=0,l=CharacterModel.list.length;i<l;i++){
 		var chara = CharacterModel.list[i];
 		if(chara.id() != chara_id){

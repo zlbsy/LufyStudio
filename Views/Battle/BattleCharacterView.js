@@ -92,16 +92,15 @@ BattleCharacterView.prototype.attackSpecialCheck = function(anime) {
 };
 BattleCharacterView.prototype.groupSkillExec = function() {
 	var self = this;
-	console.log("self.groupSkill.group",self.groupSkill.group());
 	self.anime.stop();
-	var group = self.groupSkill.group();
+	var members = self.groupSkill.members();
 	var script = "";
 	script += "SGJTalk.show(" + self.data.id() + ",0," + Language.getSkillName(String.format("group_{0}", self.groupSkill.id())) + ");";
-	for (var i = 0; i < group.length; i++) {
-		if(group[i] == self.data.id()){
+	for (var i = 0; i < members.length; i++) {
+		if(members[i] == self.data.id()){
 			continue;
 		}
-		script += "SGJTalk.show(" + group[i] + ",0," + Language.groupSkillTalk() + ");";
+		script += "SGJTalk.show(" + members[i] + ",0," + Language.groupSkillTalk() + ");";
 	}
 	script += "SGJBattleCharacter.attackAngryExec(" + self.belong + ","+ self.data.id() + ");";
 	LGlobal.script.addScript(script);

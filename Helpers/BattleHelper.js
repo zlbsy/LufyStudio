@@ -97,8 +97,6 @@ function battleSingleCombatCheck(attChara){
 			result = true;
 		}
 	}
-	//TODO::
-	result = true;
 	if(result){
 		script += "SGJTalk.show(" + hertCharaModel.id() + ",0," + Language.get("single_combat_answer_ok") + ");" + 
 		"SGJBattleCharacter.singleCombatStart(" + attChara.belong + "," + attCharaModel.id() + ");";
@@ -108,7 +106,33 @@ function battleSingleCombatCheck(attChara){
 	}
 	LGlobal.script.addScript(script);
 }
+function battleCanAffectionGroupSkill(chara, targerChara){
+	var members = [];
+	if(chara.data.father()){
+		if(battleCanAttack(chara.belong, chara.data.father(), targerChara)){
+			members.push(chara.data.id(), chara.data.father());
+			var groupSkill = GroupSkillModel.getMaster(GroupSkillAffectionId);
+			groupSkill.members = members;
+			return groupSkill;
+		}
+	}
+	var childs = chara.data.childs();
+	for(var i=0;i<childs.length;i++){
+		var charaId = childs[i];
+		if(battleCanAttack(chara.belong, charaId, targerChara)){
+			members.push(chara.data.id(), charaId);
+			var groupSkill = GroupSkillModel.getMaster(GroupSkillAffectionId);
+			groupSkill.members = members;
+			return groupSkill;
+		}
+	}
+	return null;
+}
 function battleCanGroupSkill(chara, targerChara){
+	var groupSkill = battleCanAffectionGroupSkill(chara, targerChara);
+	if(groupSkill){
+		return groupSkill;
+	}
 	var groupSkill = chara.data.groupSkill();
 	if(!groupSkill){
 		return null;

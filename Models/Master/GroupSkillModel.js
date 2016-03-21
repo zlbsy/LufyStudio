@@ -41,3 +41,15 @@ GroupSkillModel.prototype.correctionFactor=function(){
 GroupSkillModel.prototype.group=function(){
 	return this.data.group;
 };
+GroupSkillModel.prototype.members=function(){
+	var self = this;
+	var group = self.group();
+	if(group){
+		return group;
+	}
+	var members = self.members();
+	if(members){
+		return members;
+	}
+	return [];
+};
