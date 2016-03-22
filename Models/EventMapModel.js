@@ -3,17 +3,12 @@ function EventMapModel(){
 }
 EventMapModel.prototype.construct=function(){
 	var self = this;
-	self.map = null;
-	self.atRect = [];
 };
-EventMapModel.prototype.loadMapFile=function(mapPath){
-	var self = this;
-	//开始读取战场地图文件
-	var urlloader = new LURLLoader();
-	urlloader.parent = self;
-	urlloader.addEventListener(LEvent.COMPLETE,self.loadMapFileOver);
-	urlloader.load("./Data/Event/maps/"+mapPath+(LGlobal.traceDebug?("?"+(new Date()).getTime()):""),"text");
+EventMapModel.prototype.mapPath=function(mapIndex){
+	return String.format("./images/rmap/{0}.png", mapIndex);
 };
+/*
+
 EventMapModel.prototype.loadMapFileOver=function(event){
 	var self = event.currentTarget.parent;
 	//保存战场地图文件内容
@@ -61,4 +56,4 @@ EventMapModel.prototype.getImages=function(){
 EventMapModel.prototype.setMapFiles=function(){
 	this.map = LMvc.mapdata;
 	delete LMvc.mapdata;
-};
+};*/

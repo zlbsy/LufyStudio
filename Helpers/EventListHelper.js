@@ -1,6 +1,6 @@
 function checkEventList() {
 	var eventListFinished = LMvc.chapterData.eventListFinished || [];
-	
+	console.log("checkEventList"+eventListFinished.length);
 	for(var i = 0,l = EventListConfig.length;i<l;i++){
 		var currentEvent = EventListConfig[i];
 		if(eventListFinished.findIndex(function(child){
@@ -53,7 +53,7 @@ function checkEventList() {
 	}
 	return false;
 }
-function dispatchEventList(currentEvent) {
+function dispatchEventList(currentEvent) {console.log("dispatchEventList");
 	var script = "Var.set(eventId,"+currentEvent.id+");";
 	script += "Load.script("+currentEvent.script+");";
 	script += "SGJEvent.dispatchEventListResult("+currentEvent.id+");";

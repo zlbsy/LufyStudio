@@ -1,0 +1,3 @@
+SGJEvent.init();
+SGJEvent.mapShow(1);
+//SGJEvent.end();

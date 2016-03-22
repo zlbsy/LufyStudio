@@ -7,46 +7,62 @@ EventMapController.prototype.construct=function(){
 	LMvc.keepLoading(true);
 	self.configLoad();
 };
-EventMapController.prototype.imagesLoad = function(){
+/*EventMapController.prototype.imagesLoad = function(){
 	var self = this;
 	var list = self.model.getImages();
 	self.load.image(list,self.init);
-};
+};*/
 EventMapController.prototype.configLoad=function(){
 	var self = this;
-	self.load.config(["Character"],self.libraryLoad);
+	self.load.config(["Character"],self.helperLoad);
 };
-EventMapController.prototype.libraryLoad=function(){
+/*EventMapController.prototype.libraryLoad=function(){
 	var self = this;
 	self.load.library(["LStarQuery","Battle/BattleQuery"],self.helperLoad);
-};
+};*/
 EventMapController.prototype.helperLoad=function(){
 	var self = this;
-	self.load.helper(["Talk"],self.viewLoad);
+	self.load.helper(["Talk"],self.init);
 };
-EventMapController.prototype.viewLoad=function(){
+/*EventMapController.prototype.viewLoad=function(){
 	var self = this;
-	self.load.view(["Common/Character","EventMap/RPGCharacter"],self.viewComplete);
-};
-EventMapController.prototype.viewComplete=function(){
+	self.load.view("EventMap/EventCharacter"],self.viewComplete);
+};*/
+EventMapController.prototype.init=function(){
 	var self = this;
 	LMvc.EventMapController = self;
-	LRPGMapScript.analysis();
+	LMvc.keepLoading(false);
+	
+	self.dispatchEvent(LEvent.COMPLETE);
+	self.dispatchEvent(LController.NOTIFY);
+	
+	if(!LMvc.EventListController){
+		LMvc.MapController.view.visible = false;
+	}else{
+		LMvc.EventListController.view.visible = false;
+	}
+	LGlobal.script.analysis();
 };
 EventMapController.prototype.close=function(){
 	var self = this;
 	self.view.remove();
-	if(SeigniorExecute.running){
+	if(!LMvc.EventListController){
 		LMvc.MapController.view.visible = true;
 		SeigniorExecute.run();
 	}else{
 		LMvc.EventListController.view.visible = true;
 	}
 };
-EventMapController.prototype.addMap=function(mapPath){
-	var self = this;
-	self.model.loadMapFile(mapPath,self.loadMapFileOver);
+EventMapController.prototype.mapShow=function(mapIndex){
+	var self = this;console.log("EventMapController.prototype.addMap:"+mapIndex);
+	self.view.addMap(mapIndex);
 };
+EventMapController.prototype.loadMapFileOver=function(){
+	var self = this;
+	
+};
+/*
+
 EventMapController.prototype.addCoordinateCheck=function(index,startX,startY,endX,endY,funName){
 	this.model.addCoordinateCheck(index,startX,startY,endX,endY,funName);
 };
@@ -272,7 +288,7 @@ EventMapController.prototype.showBattleComplete = function(){
 	self.view.visible = false;
 };
 
-/*test code*/
+//test code
 EventMapController.prototype.testMinus = function(event){
 	var self = event.clickTarget.parent.parent.controller;
 	if(self.view.baseLayer.scaleX <= 0.5)return;
@@ -309,4 +325,5 @@ EventMapController.prototype.testGridShow = function(event){
 	var self = event.clickTarget.parent.parent.controller;
 	self.view.gridLayer.visible = !self.view.gridLayer.visible;
 };
-/*test code end*/
+//test code end
+*/

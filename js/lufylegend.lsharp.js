@@ -1758,19 +1758,36 @@ LSGJEventScript.analysis = function(value) {
 	var start = value.indexOf("(");
 	var end = value.indexOf(")");
 	switch(value.substr(0,start)) {
+		case "SGJEvent.init":
+			if(!LMvc.EventListController){
+				var map = new EventMapController();
+				LMvc.layer.addChild(map.view);
+			}else{
+				LMvc.EventListController.eventMapLoad();
+			}
+			break;
+		case "SGJEvent.dispatchEventListResult":
+			LSGJEventScript.dispatchEventListResult(value, start, end);
+			break;
+		/*case "SGJEvent.end":
+			LMvc.EventMapController.close();
+			break;
 		case "SGJEvent.addCharacter":
 			LSGJEventScript.addCharacter(value, start, end);
 			break;
-		case "SGJEvent.dispatchEventListResult":
-			LSGJJobHelperScript.dispatchEventListResult(value, start, end);
-			break;
+		case "SGJEvent.mapShow":
+			LGlobal.script.analysisClassFunc(LMvc.EventMapController, value.substring(start + 1, end).split(","));
+			
+			method.apply(LMvc.EventMapController, params);
+			break;*/
 		default:
-			LGlobal.script.analysis();
+			var startMethod = value.indexOf(".");
+			var method = value.substring(startMethod + 1, start);
+			var argumentsArray = value.substring(start + 1, end).split(",");
+			console.log();
+			LMvc.EventMapController[method].apply(LMvc.EventMapController, argumentsArray);
+			//LGlobal.script.analysis();
 	}
-};
-LSGJEventScript.addCharacter = function(value, start, end) {
-	var params = value.substring(start + 1, end).split(",");
-	//charaId, x, y, tween
 };
 LSGJEventScript.dispatchEventListResult = function(value, start, end) {
 	var params = value.substring(start + 1, end).split(",");

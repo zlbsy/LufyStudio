@@ -69,6 +69,9 @@ SeigniorExecute.run=function(){
 		self.loadSeigniorExecute();
 		return;
 	}
+	if(jobAiEvent()){
+		return;
+	}
 	if(!self.backLayer){
 		self.maskShow();
 		if(SeigniorModel.list[0].chara_id() != LMvc.selectSeignorId){
@@ -89,7 +92,7 @@ SeigniorExecute.run=function(){
 			}
 		}
 	}
-	if(self.stop || jobAiEvent()){
+	if(self.stop){
 		return;
 	}
 	if(self.seigniorIndex < SeigniorModel.list.length){

@@ -2,46 +2,37 @@ function EventMapView(){
 	base(this,LView,[]);
 }
 EventMapView.prototype.construct=function(){
+	this.controller.addEventListener(LEvent.COMPLETE, this.init.bind(this));
 };
 EventMapView.prototype.init=function(){
 	var self = this;
-	self.graphics.drawRect(0,"#000000",[0, 0, LGlobal.width, LGlobal.height],true,"#000000");
 	self.layerInit();
-	self.mapLayerInit();
-	self.gridLayerInit();
-	self.buildLayerInit();
-	//self.menuLayerInit();
-	//self.testCtrlLayerInit();
-	
-	self.controller.queryInit();
+	self.menuLayerInit();
+};
+EventMapView.prototype.layerInit=function(){
+	var self = this;
+	self.addChild(getBlackBitmap());
+	self.baseLayer = new LSprite();
+	self.addChild(self.baseLayer);
+	self.mapLayer = new LSprite();
+	self.baseLayer.addChild(self.mapLayer);
+	//人物层
+	self.charaLayer = new LSprite();
+	self.baseLayer.addChild(self.charaLayer);
+	//遮挡层
+	self.menuLayer = new LSprite();
+	self.baseLayer.addChild(self.menuLayer);
 };
 EventMapView.prototype.menuLayerInit=function(){
 	var self = this;
-	/*
-	var openmenuButton = GetButton(LMvc.datalist["openmenu"],null,0);
-	openmenuButton.x = LGlobal.width - openmenuButton.getWidth();
-	openmenuButton.y = 0;
-	self.addChild(openmenuButton);
-	openmenuButton.addEventListener(LMouseEvent.MOUSE_UP, function(){
-		self.controller.openmenuClick();
-	});*/
+	var buttonSkip = getButton(Language.get("跳过剧情"),100);
+	buttonSkip.x = LGlobal.width - 100;
+	self.menuLayer.addChild(buttonSkip);
+	buttonSkip.addEventListener(LMouseEvent.MOUSE_UP, self.onClickSkipButton);
 };
-/**
- * 建筑层实现
- * */
-EventMapView.prototype.buildLayerInit=function(){
-	var self = this;
-	//获取地图定义
-	var map = self.model.map;
-	for(var i=0;map.builds && i<map.builds.length;i++){
-		for(var j=0;j<map.imgs[i].length;j++){
-			var imgObj = map.builds[i][j];
-			var bitmap = new LBitmap(new LBitmapData(LMvc.datalist[imgObj.img],imgObj.rect[0],imgObj.rect[1],map.pieceWidth,map.pieceHeight));
-			bitmap.x = j*map.pieceWidth;
-			bitmap.y = i*map.pieceHeight;
-			self.buildLayer.addChild(bitmap);
-		}
-	}
+EventMapView.prototype.onClickSkipButton=function(event){
+	var self = event.currentTarget.getParentByConstructor(EventMapView);
+	
 };
 /**
  * 添加人物
@@ -74,10 +65,21 @@ EventMapView.prototype.removeCharaLayer=function(index){
 		}
 	}
 };
+EventMapView.prototype.addMap=function(mapIndex){
+	var self = this;
+	var path = self.model.mapPath(mapIndex);
+	var bitmapSprite = new BitmapSprite(path);
+	
+	self.mapLayer.addChild(bitmapSprite);
+};
+/**
+ * 建筑层实现
+ * */
+/**/
 /**
  * 测试层实现
  * */
-EventMapView.prototype.testCtrlLayerInit=function(){
+/*EventMapView.prototype.testCtrlLayerInit=function(){
 	var self = this;
 	var backLayer = new LSprite();
 	backLayer.alpha = 0.7;
@@ -106,11 +108,11 @@ EventMapView.prototype.testCtrlLayerInit=function(){
 	buttonGrid.y = 100;
 	self.testCtrlLayer.addChild(buttonGrid);
 	buttonGrid.addEventListener(LMouseEvent.MOUSE_UP, self.controller.testGridShow);
-};
+};*/
 /**
  * 地图层实现
  * */
-EventMapView.prototype.mapLayerInit=function(){
+/*EventMapView.prototype.mapLayerInit=function(){
 	var self = this;
 	//获取地图定义
 	var map = self.model.map;
@@ -125,11 +127,11 @@ EventMapView.prototype.mapLayerInit=function(){
 	}
 	//地图点击事件
 	self.mapLayer.addEventListener(LMouseEvent.MOUSE_UP, self.controller.mapClick);
-};
+};*/
 /**
  * 网格层实现
  * */
-EventMapView.prototype.gridLayerInit=function(){
+/*EventMapView.prototype.gridLayerInit=function(){
 	var self = this;
 	var map = self.model.map;
 	var grids = map.data;
@@ -162,11 +164,11 @@ EventMapView.prototype.gridLayerInit=function(){
 		}
         c.fill();
 	});
-};
+};*/
 /**
  * 游戏层的分离和加载
  * */
-EventMapView.prototype.layerInit=function(){
+/*EventMapView.prototype.layerInit=function(){
 	var self = this;
 	self.baseLayer = new LSprite();
 	self.addChild(self.baseLayer);
@@ -186,8 +188,8 @@ EventMapView.prototype.layerInit=function(){
 	
 	self.testCtrlLayer = new LSprite();
 	self.addChild(self.testCtrlLayer);
-};
-
+};*/
+/*
 EventMapView.prototype.addItem = function(name,x,y){
 	var self = this,item;
 	switch(name){
@@ -198,4 +200,4 @@ EventMapView.prototype.addItem = function(name,x,y){
 			self.mapLayer.addChild(item);
 			break;
 	}	
-};
+};*/
