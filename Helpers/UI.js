@@ -84,12 +84,14 @@ function ConfirmWindow(obj){
 	if(!obj.height){
 		obj.height = 300;
 	}
-	var panel = getBitmap(new LPanel(backgroundData,obj.width,obj.height));
-	panel.x = (LGlobal.width - panel.getWidth()) * 0.5;
-	panel.y = (LGlobal.height - panel.getHeight()) * 0.5;
+	var panel = getPanel("win05",obj.width,obj.height);
+	//var panel = getBitmap(new LPanel(backgroundData,obj.width,obj.height));
+	panel.x = (LGlobal.width - obj.width) * 0.5;
+	panel.y = (LGlobal.height - obj.height) * 0.5;
 	windowLayer.addChild(panel);
-	var titleData = new LBitmapData(LMvc.datalist["win02"]);
-	var titlePanel = getBitmap(new LPanel(titleData,160,60));
+	var titlePanel = getPanel("win02",160,60);
+	//var titleData = new LBitmapData(LMvc.datalist["win02"]);
+	//var titlePanel = getBitmap(new LPanel(titleData,160,60));
 	titlePanel.x = (LGlobal.width - titlePanel.getWidth()) * 0.5;
 	titlePanel.y = panel.y - 10;
 	windowLayer.addChild(titlePanel);

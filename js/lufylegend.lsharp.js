@@ -68,7 +68,7 @@ LScript.prototype = {
 		}
 	},
 	analysis : function() {
-		var self = this;
+		var self = LGlobal.script;
 		var arr;
 		if (self.lineList.length == 0) {
 			self.dataList.shift();
@@ -1784,7 +1784,6 @@ LSGJEventScript.analysis = function(value) {
 			var startMethod = value.indexOf(".");
 			var method = value.substring(startMethod + 1, start);
 			var argumentsArray = value.substring(start + 1, end).split(",");
-			console.log();
 			LMvc.EventMapController[method].apply(LMvc.EventMapController, argumentsArray);
 			//LGlobal.script.analysis();
 	}

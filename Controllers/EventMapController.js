@@ -54,12 +54,16 @@ EventMapController.prototype.close=function(){
 	}
 };
 EventMapController.prototype.mapShow=function(mapIndex){
-	var self = this;console.log("EventMapController.prototype.addMap:"+mapIndex);
-	self.view.addMap(mapIndex);
+	this.view.mapShow(mapIndex);
 };
-EventMapController.prototype.loadMapFileOver=function(){
-	var self = this;
-	
+EventMapController.prototype.messageShow=function(msg, speed){
+	this.view.messageShow(msg, speed);
+};
+EventMapController.prototype.addCharacter=function(id,x,y,animation){
+	this.view.addCharacter(id,x,y,animation);
+};
+EventMapController.prototype.talk=function(id,message){
+	this.view.talk(id,message);
 };
 /*
 
@@ -69,11 +73,6 @@ EventMapController.prototype.addCoordinateCheck=function(index,startX,startY,end
 EventMapController.prototype.loadMapFileOver=function(){
 	var self = this;
 	self.imagesLoad();
-};
-EventMapController.prototype.addCharacter=function(index,action,direction,x,y,ishero,callback){
-	var self = this;
-	self.view.addCharaLayer(index,action,direction,x,y,ishero);
-	if(typeof callback == "function")callback();
 };
 EventMapController.prototype.removeCharacter=function(index,callback){
 	var self = this;

@@ -19,9 +19,26 @@ EventMapView.prototype.layerInit=function(){
 	//人物层
 	self.charaLayer = new LSprite();
 	self.baseLayer.addChild(self.charaLayer);
+	
+	self.messageLayer = new LSprite();
+	self.baseLayer.addChild(self.messageLayer);
+	
+	self.clickLayer = new LSprite();
+	self.clickLayer.addShape(LShape.RECT,[0,0,LGlobal.width,LGlobal.height]);
+	self.clickLayer.addEventListener(LMouseEvent.MOUSE_UP, self.clickToNextScript);
+	self.baseLayer.addChild(self.clickLayer);
+	self.clickLayer.visible = false;
 	//遮挡层
 	self.menuLayer = new LSprite();
 	self.baseLayer.addChild(self.menuLayer);
+};
+EventMapView.prototype.clickToNextScript=function(event){
+	var self = event.currentTarget.getParentByConstructor(EventMapView);
+	self.clickLayer.visible = false;
+	if(self.messageLayer.numChildren > 0){
+		self.messageLayer.removeAllChild();
+	}
+	LGlobal.script.analysis();
 };
 EventMapView.prototype.menuLayerInit=function(){
 	var self = this;
@@ -34,43 +51,70 @@ EventMapView.prototype.onClickSkipButton=function(event){
 	var self = event.currentTarget.getParentByConstructor(EventMapView);
 	
 };
-/**
- * 添加人物
- * */
-EventMapView.prototype.addCharaLayer=function(index,action,direction,x,y,ishero){
+EventMapView.prototype.addCharacter=function(id,x,y,animation,waitClick){
 	var self = this;
-	var map = self.model.map;
-	var grids = map.data;
-	var stepWidth = map.width/grids[0].length;
-	//var stepHeight = map.height/grids.length;
-	var stepHeight = stepWidth * 2 / 3;
-	
-	var chara = new RPGCharacterView(self.controller,index,stepWidth,stepHeight,action,direction);
-	//chara.setActionDirection(action,direction);
-	chara.setCoordinate(parseInt(x)*stepWidth,parseInt(y)*stepHeight);
-	self.charaLayer.addChild(chara);
-	if(JSON.parse(ishero))self.hero = chara;
-};
-/**
- * 移除人物
- * */
-EventMapView.prototype.removeCharaLayer=function(index){
-	var self = this;
-	var childList = self.charaLayer.childList,child;
-	for(var i=0,l=childList.length;i<l;i++){
-		child = childList[i];
-		if(index == child.index){
-			self.charaLayer.removeChildAt(i);
-			break;
-		}
+	var characterModel = CharacterModel.getChara(id);
+	var face = characterModel.face();
+	face.characterId = characterModel.id();
+	face.y = y;
+	self.charaLayer.addChild(face);
+	var animationObj = {ease:LEasing.Strong.easeIn};
+	if(waitClick){
+		animationObj.onComplete = function(){
+			self.clickLayer.visible = true;
+		};
+	}else{
+		animationObj.onComplete = LGlobal.script.analysis;
 	}
+	switch(animation){
+		case "fade":
+		default:
+			face.x = x;
+			face.alpha = 0;
+			animationObj.alpha = 1;
+			break;
+	}
+	LTweenLite.to(face,0.5,animationObj);
 };
-EventMapView.prototype.addMap=function(mapIndex){
+EventMapView.prototype.removeCharacter=function(index){
+	var self = this;
+	
+};
+EventMapView.prototype.mapShow=function(mapIndex){
 	var self = this;
 	var path = self.model.mapPath(mapIndex);
 	var bitmapSprite = new BitmapSprite(path);
-	
+	bitmapSprite.alpha = 0;
+	bitmapSprite.addEventListener(LEvent.COMPLETE, self.loadMapOver);
 	self.mapLayer.addChild(bitmapSprite);
+};
+EventMapView.prototype.loadMapOver=function(event){
+	var bitmapSprite = event.currentTarget;
+	bitmapSprite.removeEventListener(LEvent.COMPLETE);
+	LTweenLite.to(bitmapSprite,0.5,{alpha:1,ease:LEasing.Strong.easeIn,onComplete:LGlobal.script.analysis});
+};
+EventMapView.prototype.messageShow=function(msg, speed){
+	var self = this;
+	var panel = getPanel("win05",360,300);
+	panel.x = (LGlobal.width - 360) * 0.5;
+	panel.y = (LGlobal.height - 300) * 0.5;
+	var label = getStrokeLabel(msg,20,"#FFFFFF","#000000",4);
+	label.width = 320;
+	label.x = label.y = 20;
+	label.setWordWrap(true,27);
+	panel.addChild(label);
+	label.speed = speed;
+	label.wind();
+    label.addEventListener(LTextEvent.WIND_COMPLETE, self.messageWindOver);
+	self.messageLayer.addChild(panel);
+};
+EventMapView.prototype.messageWindOver=function(event){
+	var self = event.currentTarget.getParentByConstructor(EventMapView);
+	self.clickLayer.visible = true;
+};
+EventMapView.prototype.talk=function(id,message){
+	var self = this;
+	var characterModel = CharacterModel.getChara(id);
 };
 /**
  * 建筑层实现

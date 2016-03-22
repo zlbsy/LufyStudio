@@ -1,3 +1,7 @@
 SGJEvent.init();
 SGJEvent.mapShow(1);
+SGJEvent.messageShow(这是一个文字显示的测试。,3);
+SGJEvent.addCharacter(1,50,100,fade);
+//SGJEvent.messageShow(这是一个文字显示的测试。,3);
+SGJEvent.talk(1,这是一个对话显示的测试。);
 //SGJEvent.end();
