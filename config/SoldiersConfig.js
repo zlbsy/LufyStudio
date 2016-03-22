@@ -146,7 +146,7 @@ var SoldierDatas = [
 	{id:8,value:90,moveCost:2},{id:9,value:80,moveCost:2},{id:11,value:110,moveCost:2}],
 	rangeAttack:[{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0}],
 	rangeAttackTarget:[{x:0,y:0}],
-	strategy:[{id:33,lv:0},{id:34,lv:5},{id:35,lv:10},{id:36,lv:15},{id:37,lv:20},{id:38,lv:25},{id:39,lv:30},{id:40,lv:35},{id:41,lv:5},{id:42,lv:20},{id:48,lv:20}],
+	strategy:[{id:33,lv:0},{id:34,lv:0},{id:35,lv:5},{id:36,lv:10},{id:37,lv:15},{id:38,lv:20},{id:39,lv:25},{id:40,lv:30},{id:41,lv:5},{id:42,lv:20},{id:48,lv:20}],
 	explanation:"explanation_cs",
 	next:[{id:7,lv:20}]
 	},
