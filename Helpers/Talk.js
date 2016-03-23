@@ -16,9 +16,11 @@ function TalkRun(layer,y,index,faceindex,msg,callback){
 	talkLayer.y = y;
 	//talkLayer.x = 50;
 	var model = CharacterModel.getChara(index);
-	var face = model.face();
-	face.x = 200;
-	talkLayer.addChild(face);
+	if(faceindex >= 0){
+		var face = model.face();
+		face.x = 200;
+		talkLayer.addChild(face);
+	}
 	
 	var back = new LBitmap(new LBitmapData(LMvc.datalist["talkbox"]));
 	back.y = 130;
@@ -33,6 +35,7 @@ function TalkRun(layer,y,index,faceindex,msg,callback){
 	talkLayer.addChild(nameText);
 	
 	var msgText = new LTextField();
+	msgText.name = "message";
 	msgText.x = 25;
 	msgText.y = 225;
 	msgText.text = msg;
@@ -43,7 +46,11 @@ function TalkRun(layer,y,index,faceindex,msg,callback){
 	//msgText.speed = 4;
 	msgText.wind(callback);
 	talkLayer.addChild(msgText);
-	LMvc.layer.addChild(talkLayer);
+	if(layer){
+		layer.addChild(talkLayer);
+	}else{
+		LMvc.layer.addChild(talkLayer);
+	}
 	LMvc.talkOver = false;
 	LMvc.talkLayer = talkLayer;
 	talkLayer.addShape(LShape.RECT,[-talkLayer.x,-talkLayer.y,LGlobal.width,LGlobal.height]);
@@ -51,6 +58,12 @@ function TalkRun(layer,y,index,faceindex,msg,callback){
 	talkLayer.addEventListener(LMouseEvent.MOUSE_UP, TalkRemove);
 }
 function TalkRemove(){
+	var msgText = LMvc.talkLayer.getChildByName("message");
+	console.log(msgText.constructor.name , "msgText.windRunning = " + msgText.windRunning);
+	if(msgText.windRunning){
+		msgText.windComplete();
+		return;
+	}
 	LMvc.talkLayer.remove();
 	LMvc.talkOver = false;
 	LMvc.talkLayer = null;

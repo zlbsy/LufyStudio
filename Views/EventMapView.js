@@ -34,10 +34,16 @@ EventMapView.prototype.layerInit=function(){
 };
 EventMapView.prototype.clickToNextScript=function(event){
 	var self = event.currentTarget.getParentByConstructor(EventMapView);
-	self.clickLayer.visible = false;
 	if(self.messageLayer.numChildren > 0){
+		var msgText = self.messageLayer.getChildAt(0).getChildByName("message");
+		console.log("msgText.windRunning = "+msgText.windRunning);
+		if(msgText.windRunning){
+			msgText.windComplete();
+			return;
+		}
 		self.messageLayer.removeAllChild();
 	}
+	self.clickLayer.visible = false;
 	LGlobal.script.analysis();
 };
 EventMapView.prototype.menuLayerInit=function(){
@@ -99,22 +105,26 @@ EventMapView.prototype.messageShow=function(msg, speed){
 	panel.x = (LGlobal.width - 360) * 0.5;
 	panel.y = (LGlobal.height - 300) * 0.5;
 	var label = getStrokeLabel(msg,20,"#FFFFFF","#000000",4);
+	label.name = "message";
 	label.width = 320;
 	label.x = label.y = 20;
 	label.setWordWrap(true,27);
 	panel.addChild(label);
 	label.speed = speed;
 	label.wind();
-    label.addEventListener(LTextEvent.WIND_COMPLETE, self.messageWindOver);
+	self.clickLayer.visible = true;
+    //label.addEventListener(LTextEvent.WIND_COMPLETE, self.messageWindOver);
 	self.messageLayer.addChild(panel);
 };
-EventMapView.prototype.messageWindOver=function(event){
+/*EventMapView.prototype.messageWindOver=function(event){
 	var self = event.currentTarget.getParentByConstructor(EventMapView);
 	self.clickLayer.visible = true;
-};
+};*/
 EventMapView.prototype.talk=function(id,message){
 	var self = this;
-	var characterModel = CharacterModel.getChara(id);
+	Talk(id, -1, message, function() {
+		LMvc.talkOver = true;
+	});
 };
 /**
  * 建筑层实现
