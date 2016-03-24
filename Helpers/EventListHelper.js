@@ -53,9 +53,12 @@ function checkEventList() {
 	}
 	return false;
 }
-function dispatchEventList(currentEvent) {console.log("dispatchEventList");
+function dispatchEventList(currentEvent) {
 	var script = "Var.set(eventId,"+currentEvent.id+");";
+	script += "SGJEvent.init();";
 	script += "Load.script("+currentEvent.script+");";
+	script += "Mark.EventEnd;";
+	script += "SGJEvent.end();";
 	script += "SGJEvent.dispatchEventListResult("+currentEvent.id+");";
 	LGlobal.script.addScript(script);
 }

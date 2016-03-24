@@ -55,7 +55,7 @@ LScript.prototype = {
 	},
 	addScript : function(data) {
 		var self = this;
-		self.saveList();
+		self.saveList();console.log("self.dataList",self.dataList);
 		self.dataList.unshift([data]);
 		self.toList(data);
 	},
@@ -1249,10 +1249,13 @@ ScriptMark.goto = function(value, start, end) {
 	var mark = LMath.trim(value.substring(start + 1, end));
 	//copyList是当前正在解析的脚本序列的副本，再复制一个脚本序列的副本
 	var copyArray = LGlobal.script.copyList.concat();
+		console.log("copyArray:",copyArray);
 	var foundStr;
 	while (copyArray.length) {
 		//从复制的脚本序列中开始查找标签，没查找一行，则将其删除
 		foundStr = copyArray.shift();
+		console.log("foundStr:",foundStr);
+		console.log("mark:",mark,foundStr.indexOf("Mark." + mark));
 		if (foundStr.indexOf("Mark." + mark) >= 0) {
 			//如果找到标签，则将当前正在解析的脚本序列替换为复制序列
 			LGlobal.script.lineList = copyArray;

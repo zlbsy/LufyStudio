@@ -48,14 +48,16 @@ EventMapView.prototype.clickToNextScript=function(event){
 };
 EventMapView.prototype.menuLayerInit=function(){
 	var self = this;
-	var buttonSkip = getButton(Language.get("跳过剧情"),100);
+	var buttonSkip = getButton(Language.get("skip_drama"),100);
 	buttonSkip.x = LGlobal.width - 100;
 	self.menuLayer.addChild(buttonSkip);
 	buttonSkip.addEventListener(LMouseEvent.MOUSE_UP, self.onClickSkipButton);
 };
 EventMapView.prototype.onClickSkipButton=function(event){
 	var self = event.currentTarget.getParentByConstructor(EventMapView);
-	
+	console.log("onClickSkipButton", self);
+	var script = "Mark.goto(EventEnd);";
+	LGlobal.script.addScript(script);
 };
 EventMapView.prototype.addCharacter=function(id,x,y,animation,waitClick){
 	var self = this;
@@ -122,7 +124,7 @@ EventMapView.prototype.messageShow=function(msg, speed){
 };*/
 EventMapView.prototype.talk=function(id,message){
 	var self = this;
-	Talk(id, -1, message, function() {
+	Talk(self.messageLayer, id, -1, message, function() {
 		LMvc.talkOver = true;
 	});
 };

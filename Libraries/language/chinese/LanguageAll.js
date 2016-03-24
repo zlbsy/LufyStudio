@@ -74,6 +74,7 @@ Language.data = {
 	"bout_label":"第{0}回合",
 	"battle_title":"{0}之战",
 	
+	"skip_drama":"跳过剧情",
 	"return":"返回",
 	"execute":"执行",
 	"who_can_do":"派谁去?",
