@@ -57,7 +57,6 @@ function dispatchEventList(currentEvent) {
 	var script = "Var.set(eventId,"+currentEvent.id+");";
 	script += "SGJEvent.init();";
 	script += "Load.script("+currentEvent.script+");";
-	script += "Mark.EventEnd;";
 	script += "SGJEvent.end();";
 	script += "SGJEvent.dispatchEventListResult("+currentEvent.id+");";
 	LGlobal.script.addScript(script);
@@ -70,7 +69,29 @@ function dispatchEventListResult(eventId) {
 		SeigniorExecute.run();
 		return;
 	}
-	
+	for(var i=0,l=currentEvent.result.length;i<l;i++){
+		var child = currentEvent.result[i];
+		switch(type){
+			case "stopBattle":
+				dispatchEventListResultStopBattle(child);
+				break;
+		}
+	}
+}
+function dispatchEventListResultStopBattle(child) {
+	var seigniors = child.seigniors;
+	var month = child.month;
+	for(var i=0,l=seigniors.length;i<l;i++){
+		var iId = seigniors[i];
+		var seignior = SeigniorModel.getSeignior(iId);
+		for(var j=0;j<l;j++){
+			var jId = seigniors[j];
+			if(iId == jId){
+				continue;
+			}
+			seignior.stopBattle(jId, month);
+		}
+	}
 }
 /*{
 	id:1,

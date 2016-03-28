@@ -18,7 +18,7 @@ var EventListConfig = [
 },
 {
 	id:2,
-	name:"讨伐董卓",
+	name:"反董卓联盟",
 	condition:{
 		from:{year:190,month:1},
 		to:{year:190,month:2},
@@ -30,7 +30,9 @@ var EventListConfig = [
 		]
 	},
 	script:"Data/Event/fdzlm.txt",
-	result:[]
+	result:[
+		{type:"stopBattle", seigniors:[], month:12}
+	]
 },
 {
 	id:3,

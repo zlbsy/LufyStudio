@@ -201,9 +201,11 @@ SeigniorModel.prototype.isSpyCity = function(id){
 		return child.id == id;
 	}) >= 0;
 };
-SeigniorModel.prototype.stopBattle = function(id){
+SeigniorModel.prototype.stopBattle = function(id, max){
 	var self = this;
-	var max = 6;
+	if(!max){
+		max = 6;
+	}
 	var seignior = self.data.stopBattleSeigniors.find(function(child){
 		return child.id == id;
 	});

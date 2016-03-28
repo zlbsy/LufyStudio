@@ -1772,10 +1772,10 @@ LSGJEventScript.analysis = function(value) {
 		case "SGJEvent.dispatchEventListResult":
 			LSGJEventScript.dispatchEventListResult(value, start, end);
 			break;
-		/*case "SGJEvent.end":
+		case "SGJEvent.end":
 			LMvc.EventMapController.close();
 			break;
-		case "SGJEvent.addCharacter":
+		/*case "SGJEvent.addCharacter":
 			LSGJEventScript.addCharacter(value, start, end);
 			break;
 		case "SGJEvent.mapShow":
