@@ -31,7 +31,7 @@ var EventListConfig = [
 	},
 	script:"Data/Event/fdzlm.txt",
 	result:[
-		{type:"stopBattle", seigniors:[], month:12}
+		{type:"stopBattle", seigniors:[160,602,451,39,375,1,453,237,8,495,562,446,484,367,408,21,75,144], month:12}
 	]
 },
 {

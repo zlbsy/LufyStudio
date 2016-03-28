@@ -67,40 +67,46 @@ SeigniorListChildView.prototype.set=function(){
 	var faceW = 220;
 	var faceH = 320;
 	var faceSize = 100;
+	var selectSeignor = self.controller.getValue("selectSeignor");
 	var character = self.seigniorModel.character();
 	var layer = new LSprite();
 	layer.x = 40;
 	var win = new LPanel(new LBitmapData(LMvc.datalist["win05"]),400,winH);
 	layer.addChild(win);
-	var name = getStrokeLabel(character.name(),22,"#000000","#CCCCCC",1);
+	var name = getStrokeLabel(character.name(),22,String.format("rgb({0})",self.seigniorModel.color()),self.seigniorModel.color()=="1,1,1"?"#CCCCCC":"#000000",1);
+	//var name = getStrokeLabel(character.name(),22,"#000000","#CCCCCC",1);
 	name.x = 5 + faceW;
 	name.y = 20;
 	win.addChild(name);
 	
-	var colorLabel = getStrokeLabel(Language.get("seignior_color"),20,"#000000","#CCCCCC",1);
+	var colorLabel = getStrokeLabel(Language.get("关系"),22,"#999999","#000000",2);
 	colorLabel.x = name.x;
-	colorLabel.y = 57;
+	colorLabel.y = 82;
 	win.addChild(colorLabel);
-	var colorSprite = new LShape();
+	var city_count = getStrokeLabel(selectSeignor.isStopBattle(character.id())?"停战":"敌对",20,"#ffffff","#000000",2);
+	city_count.x = name.x;
+	city_count.y = 109;
+	win.addChild(city_count);
+	/*var colorSprite = new LShape();
 	colorSprite.graphics.drawRect(0, "#000000", [0, 0, colorLabel.getWidth(), 20],true,self.seigniorModel.color());
 	colorSprite.x = colorLabel.x;
 	colorSprite.y = 84;
-	win.addChild(colorSprite);
+	win.addChild(colorSprite);*/
 	
-	var city_count_label = getStrokeLabel(Language.get("city"),20,"#000000","#CCCCCC",1);
+	var city_count_label = getStrokeLabel(Language.get("city"),22,"#999999","#000000",2);
 	city_count_label.x = 320;
 	city_count_label.y = 20;
 	win.addChild(city_count_label);
-	var city_count = getStrokeLabel(self.seigniorModel.areas().length,20,"#000000","#CCCCCC",1);
+	var city_count = getStrokeLabel(self.seigniorModel.areas().length,20,"#ffffff","#000000",2);
 	city_count.x = city_count_label.x;
 	city_count.y = 47;
 	win.addChild(city_count);
 	
-	var general_count_label = getStrokeLabel(Language.get("generals"),20,"#000000","#CCCCCC",1);
+	var general_count_label = getStrokeLabel(Language.get("generals"),22,"#999999","#000000",2);
 	general_count_label.x = 320;
 	general_count_label.y = 82;
 	win.addChild(general_count_label);
-	var general_count = getStrokeLabel(self.seigniorModel.generalsCount(),20,"#000000","#CCCCCC",1);
+	var general_count = getStrokeLabel(self.seigniorModel.generalsCount(),20,"#ffffff","#000000",2);
 	general_count.x = general_count_label.x;
 	general_count.y = 109;
 	win.addChild(general_count);

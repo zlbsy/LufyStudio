@@ -40,7 +40,6 @@ SeigniorListView.prototype.updateMap=function(){
 		var city = citys[i];
 		var color = seigniorModel.color();
 		var colorData = GameCacher.getColorBitmapData(color,w,h);
-		//var colorData = new LBitmapData(color,0,0,size,size,LBitmapData.DATA_CANVAS);
 		self.mapData.bitmapData.copyPixels(colorData,new LRectangle(0,0,colorData.width,colorData.height),new LPoint(city.position().x*miniMapData.mapScaleX,city.position().y*miniMapData.mapScaleY));
 	}
 };
@@ -62,34 +61,6 @@ SeigniorListView.prototype.mapLayerInit=function(){
 	var miniMapData = GameCacher.getAreaMiniMap("area-map-1");
 	var miniMap = new LBitmap(miniMapData);
 	
-	//var bitmapData = new LBitmapData(LMvc.datalist["area-map-1"],null,null,null,null,LBitmapData.DATA_CANVAS);
-	//self.areaMap = new LBitmapData(null,0,0,400,240,LBitmapData.DATA_CANVAS);
-	//self.mapScaleX = self.areaMap.width/bitmapData.width;
-	//self.mapScaleY = self.areaMap.height/bitmapData.height;
-	//var matrix = new LMatrix();
-	//matrix.scale(self.mapScaleX, self.mapScaleY);
-	//self.areaMap.draw(bitmapData, matrix);
-	/*
-	var size = 10;
-	var colorData = GameCacher.getColorBitmapData("255,255,255",size,size);
-	for(var i=0,l=AreaModel.list.length;i<l;i++){
-		var city = AreaModel.list[i];
-		var size = 10;
-		miniMapData.copyPixels(colorData,new LRectangle(0,0,colorData.width,colorData.height),new LPoint(city.position().x*self.mapScaleX,city.position().y*self.mapScaleY));
-	}
-	var seigniors = SeigniorModel.list;
-	for(var i=0,l=seigniors.length;i<l;i++){
-		var seigniorModel = seigniors[i];
-		var size = 10;
-		var citys = seigniorModel.areas();
-		for(var j=0,ll=citys.length;j<ll;j++){
-			var city = citys[j];
-			var color = seigniorModel.color();
-			colorData = GameCacher.getColorBitmapData(color,size,size);
-			//var colorData = new LBitmapData(color,0,0,size,size,LBitmapData.DATA_CANVAS);
-			miniMapData.copyPixels(colorData,new LRectangle(0,0,colorData.width,colorData.height),new LPoint(city.position().x*miniMapData.mapScaleX,city.position().y*miniMapData.mapScaleY));
-		}
-	}*/
 	self.miniMapData = miniMapData;
 	var mapBitmapData = new LBitmapData(null,0,0,400,240,LBitmapData.DATA_CANVAS);
 	self.mapData = new LBitmap(mapBitmapData);
