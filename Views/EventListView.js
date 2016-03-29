@@ -68,7 +68,9 @@ EventListView.prototype.stampClickUp = function(event) {
 		return;
 	}
 	if (stamp.offsetX && stamp.offsetY && Math.abs(stamp.offsetX - event.offsetX) < 5 && Math.abs(stamp.offsetY - event.offsetY) < 5) {
-		var script = "Load.script("+stamp.eventObject.script+");";
+		var script = "SGJEvent.init();";
+		script += "Load.script("+stamp.eventObject.script+");";
+		script += "SGJEvent.end();";
 		console.log(script);
 		LGlobal.script.addScript(script);
 	}

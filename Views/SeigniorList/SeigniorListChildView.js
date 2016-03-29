@@ -62,7 +62,6 @@ SeigniorListChildView.prototype.onframe=function(event){
 };
 SeigniorListChildView.prototype.set=function(){
 	var self = this;
-	//0,0,220,320
 	var winH = 160;
 	var faceW = 220;
 	var faceH = 320;
@@ -74,24 +73,20 @@ SeigniorListChildView.prototype.set=function(){
 	var win = new LPanel(new LBitmapData(LMvc.datalist["win05"]),400,winH);
 	layer.addChild(win);
 	var name = getStrokeLabel(character.name(),22,String.format("rgb({0})",self.seigniorModel.color()),self.seigniorModel.color()=="1,1,1"?"#CCCCCC":"#000000",1);
-	//var name = getStrokeLabel(character.name(),22,"#000000","#CCCCCC",1);
 	name.x = 5 + faceW;
 	name.y = 20;
 	win.addChild(name);
-	
-	var colorLabel = getStrokeLabel(Language.get("关系"),22,"#999999","#000000",2);
-	colorLabel.x = name.x;
-	colorLabel.y = 82;
-	win.addChild(colorLabel);
-	var city_count = getStrokeLabel(selectSeignor.isStopBattle(character.id())?"停战":"敌对",20,"#ffffff","#000000",2);
-	city_count.x = name.x;
-	city_count.y = 109;
-	win.addChild(city_count);
-	/*var colorSprite = new LShape();
-	colorSprite.graphics.drawRect(0, "#000000", [0, 0, colorLabel.getWidth(), 20],true,self.seigniorModel.color());
-	colorSprite.x = colorLabel.x;
-	colorSprite.y = 84;
-	win.addChild(colorSprite);*/
+	if(character.id() != LMvc.selectSeignorId){
+		var relationshipLabel = getStrokeLabel(Language.get("relationship"),22,"#999999","#000000",2);
+		relationshipLabel.x = name.x;
+		relationshipLabel.y = 82;
+		win.addChild(relationshipLabel);
+		var str = Language.get(selectSeignor.isStopBattle(character.id())?"stop_battleing":"hostility");
+		var relationshipText = getStrokeLabel(str,20,"#ffffff","#000000",2);
+		relationshipText.x = name.x;
+		relationshipText.y = 109;
+		win.addChild(relationshipText);
+	}
 	
 	var city_count_label = getStrokeLabel(Language.get("city"),22,"#999999","#000000",2);
 	city_count_label.x = 320;

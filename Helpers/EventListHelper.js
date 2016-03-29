@@ -57,8 +57,8 @@ function dispatchEventList(currentEvent) {
 	var script = "Var.set(eventId,"+currentEvent.id+");";
 	script += "SGJEvent.init();";
 	script += "Load.script("+currentEvent.script+");";
-	script += "SGJEvent.end();";
 	script += "SGJEvent.dispatchEventListResult("+currentEvent.id+");";
+	script += "SGJEvent.end();";
 	LGlobal.script.addScript(script);
 }
 function dispatchEventListResult(eventId) {
@@ -71,12 +71,13 @@ function dispatchEventListResult(eventId) {
 	}
 	for(var i=0,l=currentEvent.result.length;i<l;i++){
 		var child = currentEvent.result[i];
-		switch(type){
+		switch(child.type){
 			case "stopBattle":
 				dispatchEventListResultStopBattle(child);
 				break;
 		}
 	}
+	LGlobal.script.analysis();
 }
 function dispatchEventListResultStopBattle(child) {
 	var seigniors = child.seigniors;

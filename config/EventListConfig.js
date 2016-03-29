@@ -3,18 +3,22 @@ var EventListConfig = [
 	id:1,
 	name:"桃园结义",
 	condition:{
-		from:{year:195,month:2},
-		to:{year:195,month:2},
+		from:{year:184,month:2},
+		to:{year:184,month:2},
 		seignior:1,
 		generals:[
-			{id:1,seignior:1},
-			{id:2,seignior:1},
-			{id:3,seignior:1}
+			{id:21,seignior:0},
+			{id:4,seignior:0},
+			{id:19,seignior:0}
 		],
 		citys:[]
 	},
 	script:"Data/Event/tyjy.txt",
-	result:[]
+	result:[
+		{type:"changeSeignior", id:21,seignior:604, city:45},
+		{type:"changeSeignior", id:4,seignior:604, city:45},
+		{type:"changeSeignior", id:19,seignior:604, city:45},
+	]
 },
 {
 	id:2,

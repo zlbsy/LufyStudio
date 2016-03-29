@@ -39,8 +39,8 @@ SeigniorListView.prototype.updateMap=function(){
 	for(var i=0,l=citys.length;i<l;i++){
 		var city = citys[i];
 		var color = seigniorModel.color();
-		var colorData = GameCacher.getColorBitmapData(color,w,h);
-		self.mapData.bitmapData.copyPixels(colorData,new LRectangle(0,0,colorData.width,colorData.height),new LPoint(city.position().x*miniMapData.mapScaleX,city.position().y*miniMapData.mapScaleY));
+		var colorData = GameCacher.getCircleBitmapData(color, h * 0.5);
+		self.mapData.bitmapData.copyPixels(colorData,new LRectangle(0,0,colorData.height,colorData.height),new LPoint((city.position().x + (colorData.width - colorData.height) * 0.5)*miniMapData.mapScaleX,city.position().y*miniMapData.mapScaleY));
 	}
 };
 SeigniorListView.prototype.listLayerInit=function(){
@@ -89,6 +89,7 @@ SeigniorListView.prototype.ctrlLayerInit=function(){
 	var leftBitmapData = new LBitmapData(LMvc.datalist["arrow"]);
 	var left = new LBitmap(leftBitmapData);
 	var leftButton = new LButton(left);
+	leftButton.name = "leftButton";
 	leftButton.x = 10;
 	leftButton.y = LGlobal.height - 160 + (160 - leftBitmapData.height) * 0.5;
 	self.ctrlLayer.addChild(leftButton);
@@ -100,6 +101,7 @@ SeigniorListView.prototype.ctrlLayerInit=function(){
 	rightBitmapData.draw(left, matrix);
 	var right = new LBitmap(rightBitmapData);
 	var rightButton = new LButton(right);
+	rightButton.name = "rightButton";
 	rightButton.x = LGlobal.width - leftButton.x - leftBitmapData.width;
 	rightButton.y = leftButton.y;
 	self.ctrlLayer.addChild(rightButton);
@@ -112,6 +114,7 @@ SeigniorListView.prototype.ctrlLayerInit=function(){
 	
 	self.ctrlLayer.addChild(buttonClose);
 	buttonClose.addEventListener(LMouseEvent.MOUSE_UP,self.onClickCloseButton);
+	self.ctrlButton();
 };
 
 SeigniorListView.prototype.clickLeftArrow=function(event){
@@ -168,7 +171,16 @@ SeigniorListView.prototype.moveRight=function(){
 };
 SeigniorListView.prototype.moveComplete=function(event){
 	var listLayer = event.target;
+	var self = listLayer.getParentByConstructor(SeigniorListView);
+	self.ctrlButton();
 	listLayer.isMoving = false;
 	var self = listLayer.parent;
 	self.updateMap();
+};
+SeigniorListView.prototype.ctrlButton=function(){
+	var self = this;
+	var leftButton = self.ctrlLayer.getChildByName("leftButton");
+	leftButton.visible = (self.listLayer.x < 0);
+	var rightButton = self.ctrlLayer.getChildByName("rightButton");
+	rightButton.visible = (self.listLayer.x > -(self.listLayer.numChildren - 1)*LGlobal.width);
 };

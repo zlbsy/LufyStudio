@@ -39,6 +39,17 @@ GameCacher.getAreaMiniMap = function(key){
 	
 	return miniBitmapData;
 };
+GameCacher.getCircleBitmapData = function(color, radius){
+	var key = "" + color + "_" + radius;
+	if(!GameCacher._colorBitmapDatas[key]){
+		var shape = new LShape();
+		shape.graphics.drawArc(0, "#000000", [radius, radius, radius, 0, 2*Math.PI],true,String.format("rgba({0},0.7)",color));
+		var whiteData = new LBitmapData(null, 0, 0, radius * 2, radius * 2, LBitmapData.DATA_CANVAS);
+		whiteData.draw(shape);
+		GameCacher._colorBitmapDatas[key] = whiteData;
+	}
+	return GameCacher._colorBitmapDatas[key];
+};
 GameCacher.getColorBitmapData = function(color, width, height){
 	var key = "" + color + "_" + width + "_" + height;
 	if(!GameCacher._colorBitmapDatas[key]){

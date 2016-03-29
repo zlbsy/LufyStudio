@@ -31,7 +31,7 @@ LPlugin.openStamp = function(key){
 	LPlugin.stamps()[key] = 1;
 	LPlugin.SetData(LPlugin.KEY_STAMP_LIST, LPlugin.stamps());
 };
-LPlugin.eventIsOpen = function(key){
+LPlugin.eventIsOpen = function(key){console.log("LPlugin.events()",LPlugin.events());
 	return LPlugin.events()[key] ? true : false;
 };
 LPlugin.openEvent = function(key){
