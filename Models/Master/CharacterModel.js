@@ -475,7 +475,7 @@ CharacterModel.prototype.maxHP = function(init) {
 };
 CharacterModel.prototype.maxMP = function(init) {
 	var self = this;
-	if(init){
+	if(init || !self.data._maxStrategy){
 		self.data._maxStrategy = self.initStrategy() + self.currentSoldiers().property().strategy * self.level();
 	}
 	return self.data._maxStrategy;

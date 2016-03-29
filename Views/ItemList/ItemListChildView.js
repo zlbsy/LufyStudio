@@ -49,7 +49,7 @@ ItemListChildView.prototype.set=function(){
 	var layer = new LSprite();
 	layer.visible = false;
 	self.layer.addChild(layer);
-	
+	console.log("self.itemModel",self.itemModel);
 	var icon;
 	if(self.lock){
 		var winPanel = new LPanel(new LBitmapData(LMvc.datalist["win06"]),width,height);
@@ -60,7 +60,7 @@ ItemListChildView.prototype.set=function(){
 		layer.addChild(icon);
 		return;
 	}else{
-		icon = self.itemModel.icon();
+		icon = self.itemModel.icon(new LPoint(100, 100));
 		icon.addEventListener(LEvent.COMPLETE,self.loadOver);
 		layer.addChild(icon);
 	}

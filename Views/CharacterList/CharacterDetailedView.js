@@ -53,7 +53,6 @@ CharacterDetailedView.prototype.changeCharacter=function(value){
 	var self = this;
 	var characterList= self.controller.characterList;
 	var characterModel = self.controller.getValue("selectedCharacter");
-	console.log("changeCharacter",characterList);
 	var index = characterList.findIndex(function(child){
 		var model = child.constructor.name == "CharacterModel"?child:child.data;
 		return model.id() == characterModel.id();

@@ -76,7 +76,15 @@ CharacterDetailedTabEquipmentView.prototype.removeEquipment=function(event){
 	var equipment = characterModel.equipments().find(function(child){
 		return child.id() == removeItemId;
 	});
-	var obj = {title:Language.get("confirm"),message:String.format(Language.get("dialog_remove_equipment_confirm"),equipment.name()),height:200,
+	var msg = String.format(Language.get("dialog_remove_equipment_confirm"),equipment.name());
+	var params = equipment.params();
+	for(var i = 0;i < params.length;i++){
+		var key = params[i];
+		var format = "<font size='22' color='#FFFFFF'>{0} -{1}</font>";
+		msg += "\n" + String.format(format, Language.get(key), equipment.getParam(key));
+	}
+	
+	var obj = {title:Language.get("confirm"),messageHtml:msg,height:270,
 		okEvent:self.removeEquipmentRun,cancelEvent:null};
 	var windowLayer = ConfirmWindow(obj);
 	var detailedView = self.getParentByConstructor(CharacterDetailedView);

@@ -26,11 +26,11 @@ SoldierDetailedView.prototype.set=function(){
 	hpIcon.x = hpBack.x + 140 - hpSize + 2;
 	hpIcon.y = icon.y + 2;
 	layer.addChild(hpIcon);
-	var lblHp = getStrokeLabel(String.format("{0}/{1} ",1000,1000),16,"#FFFFFF","#000000",1);
+	var characterModel = self.controller.getValue("selectedCharacter");
+	var lblHp = getStrokeLabel(characterModel.maxTroops(),16,"#FFFFFF","#000000",1);
 	lblHp.x = icon.x + width + 30 + 140 - lblHp.getWidth();
 	lblHp.y = hpBack.y + hpBack.getHeight() - lblHp.getHeight();
 	layer.addChild(lblHp);
-	
 	var yellowBallIcon = new LBitmap(new LBitmapData(LMvc.datalist["yellow_ball"]));
 	yellowBallIcon.scaleX = yellowBallIcon.scaleY = 16 / yellowBallIcon.getHeight();
 	yellowBallIcon.x = icon.x + width + 15 + 1;
@@ -45,7 +45,7 @@ SoldierDetailedView.prototype.set=function(){
 	mpIcon.x = mpBack.x + 140 - mpSize + 2;
 	mpIcon.y = mpBack.y + 2;
 	layer.addChild(mpIcon);
-	var lblMp = getStrokeLabel(String.format("{0}/{1} ",430* 0.8 >>> 0,430),16,"#FFFFFF","#000000",1);
+	var lblMp = getStrokeLabel(characterModel.maxMP(),16,"#FFFFFF","#000000",1);
 	lblMp.x = icon.x + width + 30 + 140 - lblMp.getWidth();
 	lblMp.y = mpBack.y + mpBack.getHeight() - lblMp.getHeight();
 	layer.addChild(lblMp);

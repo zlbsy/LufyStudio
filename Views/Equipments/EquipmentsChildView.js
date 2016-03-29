@@ -80,21 +80,4 @@ EquipmentsChildView.prototype.onClick = function(event) {
 	var listView = event.currentTarget;
 	var equipmentsView = listView.getParentByConstructor(EquipmentsView);
 	equipmentsView.equipmentDetailedDialog(self.itemModel);
-	return;
-	var canSelect = (!LMvc.BattleController && self.characterModel.seigniorId() == LMvc.selectSeignorId);
-	if(canSelect && event.offsetX > self.checkbox.x - 10){
-		self.toSelected(listView);
-		return;
-	}
-	var soldierDetailed = new SoldierDetailedView(null,self.soldierModel);
-	var obj = {title:self.soldierModel.name(),subWindow:soldierDetailed,width:400,height:480};
-	if(canSelect){
-		obj.okEvent = function(e){
-			self.toSelected(listView);
-			e.currentTarget.parent.remove();
-		};
-		obj.cancelEvent = null;
-	}
-	var windowLayer = ConfirmWindow(obj);
-	LMvc.layer.addChild(windowLayer);
 };

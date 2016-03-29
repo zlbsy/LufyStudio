@@ -1,4 +1,4 @@
-function ItemMasterModel(controller,data){
+                                                                                                                                 function ItemMasterModel(controller,data){
 	var self = this;
 	base(self,MyModel,[controller]);
 	self.data = data;
@@ -110,4 +110,16 @@ ItemMasterModel.prototype.luck = function(){
 };
 ItemMasterModel.prototype.explanation = function(){
 	return Language.getItem("item_explanation_" + this.data.id);
+};
+ItemMasterModel.prototype.icon=function(size,callback){
+	if(!size){
+		size = new LPoint(60, 60);
+	}
+	var icon = new BitmapSprite(LMvc.IMG_PATH + "item/" + this.id() + ".png", null,size);
+	//var icon = new BitmapSprite(LMvc.IMG_PATH + "item/1.png", null,size);
+	if(typeof callback == "function")icon.addEventListener(LEvent.COMPLETE, callback);
+	var winPanel = new LPanel(new LBitmapData(LMvc.datalist["win06"]),size.x,size.y);
+	winPanel.cacheAsBitmap(true);
+	icon.addChild(winPanel);
+	return icon;
 };
