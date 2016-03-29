@@ -705,6 +705,7 @@ CharacterModel.prototype.face = function() {
 		CharacterModel.faceCacher[self.data.faceImg] = characterFace;
 	}
 	characterFace.x = characterFace.y = 0;
+	characterFace.alpha = 1;
 	return characterFace;
 };
 CharacterModel.prototype.getBasicProperties = function(key) {

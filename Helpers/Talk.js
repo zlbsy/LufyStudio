@@ -39,7 +39,7 @@ function TalkRun(layer,y,index,faceindex,msg,callback){
 	msgText.x = 25;
 	msgText.y = 225;
 	msgText.text = msg;
-	msgText.size = 12;
+	msgText.size = 18;
 	msgText.color = "#FFFFFF";
 	msgText.width = 430;
 	msgText.setWordWrap(true,23);

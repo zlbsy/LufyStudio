@@ -64,7 +64,7 @@ EventMapView.prototype.addCharacter=function(id,x,y,animation,waitClick){
 	face.characterId = characterModel.id();
 	face.y = y;
 	self.charaLayer.addChild(face);
-	var animationObj = {ease:LEasing.Strong.easeIn};
+	var animationObj = {ease:LEasing.None.easeIn};
 	if(waitClick){
 		animationObj.onComplete = function(){
 			self.clickLayer.visible = true;
@@ -91,7 +91,7 @@ EventMapView.prototype.removeCharacter=function(id,animation){
 		LGlobal.script.analysis();
 		return;
 	}
-	var animationObj = {ease:LEasing.Strong.easeIn};
+	var animationObj = {ease:LEasing.None.easeIn};
 	switch(animation){
 		case "fade":
 		default:
@@ -115,7 +115,7 @@ EventMapView.prototype.mapShow=function(mapIndex){
 EventMapView.prototype.loadMapOver=function(event){
 	var bitmapSprite = event.currentTarget;
 	bitmapSprite.removeEventListener(LEvent.COMPLETE);
-	LTweenLite.to(bitmapSprite,0.5,{alpha:1,ease:LEasing.Strong.easeIn,onComplete:LGlobal.script.analysis});
+	LTweenLite.to(bitmapSprite,0.5,{alpha:1,ease:LEasing.None.easeIn,onComplete:LGlobal.script.analysis});
 };
 EventMapView.prototype.messageShow=function(msg, speed){
 	var self = this;
@@ -135,6 +135,17 @@ EventMapView.prototype.messageShow=function(msg, speed){
 };
 EventMapView.prototype.talk=function(id,message){
 	var self = this;
+	var face = self.charaLayer.childList.find(function(child){
+		return child.characterId == id;
+	});
+	self.charaLayer.setChildIndex(face, self.charaLayer.numChildren - 1);
+	self.charaLayer.childList.forEach(function(face){
+		if(face.characterId == id && face.alpha < 1){
+			LTweenLite.to(face,0.5,{alpha:1,scaleX:1,scaleY:1,ease:LEasing.None.easeIn});
+		}else if(face.characterId != id && face.alpha == 1){
+			LTweenLite.to(face,0.5,{alpha:0.7,scaleX:0.9,scaleY:0.9,ease:LEasing.None.easeIn});
+		}
+	});
 	Talk(self.messageLayer, id, -1, message, function() {
 		LMvc.talkOver = true;
 	});

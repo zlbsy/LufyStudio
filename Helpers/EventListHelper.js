@@ -75,6 +75,9 @@ function dispatchEventListResult(eventId) {
 			case "stopBattle":
 				dispatchEventListResultStopBattle(child);
 				break;
+			case "changeSeignior":
+				dispatchEventListResultChangeSeignior(child);
+				break;
 		}
 	}
 	LGlobal.script.analysis();
@@ -93,6 +96,13 @@ function dispatchEventListResultStopBattle(child) {
 			seignior.stopBattle(jId, month);
 		}
 	}
+}
+function dispatchEventListResultChangeSeignior(child) {
+	var character = CharacterModel.getChara(child.id);
+	character.seigniorId(child.seignior);
+	character.loyalty(child.loyalty);
+	character.moveTo(child.city);
+	character.moveTo();
 }
 /*{
 	id:1,
