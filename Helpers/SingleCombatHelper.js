@@ -68,23 +68,11 @@ function getSingleCombatCommand(commands, angry, force, oldCommand) {
 	return RandomSingleCombatCommands[index];
 }
 function getSingleCombatCommandFromOldCommand(oldCommand) {
-	switch(oldCommand){
-		case SingleCombatCommand.ATTACK:
-			return Math.random() > 0.5 ? SingleCombatCommand.BIG_ATTACK : SingleCombatCommand.CHARGE;
-		case SingleCombatCommand.DOUBLE_ATTACK:
-			return Math.random() > 0.5 ? SingleCombatCommand.ATTACK : SingleCombatCommand.DODGE;
-		case SingleCombatCommand.BIG_ATTACK:
-			return Math.random() > 0.5 ? SingleCombatCommand.DOUBLE_ATTACK : SingleCombatCommand.DEFENCE;
-		case SingleCombatCommand.DEFENCE:
-			return Math.random() > 0.5 ? SingleCombatCommand.BIG_ATTACK : SingleCombatCommand.DOUBLE_ATTACK;
-		case SingleCombatCommand.DODGE:
-			return Math.random() > 0.5 ? SingleCombatCommand.DOUBLE_ATTACK : SingleCombatCommand.DEFENCE;
-		case SingleCombatCommand.CHARGE:
-			return Math.random() > 0.5 ? SingleCombatCommand.ATTACK : SingleCombatCommand.DODGE;
-		case SingleCombatCommand.BACKSTROKE_ATTACK:
-		case SingleCombatCommand.SPECIAL_ATTACK:
-			return RandomSingleCombatCommands[Math.random() * RandomSingleCombatCommands.length >> 0];
+	var commands = SingleCombatCommandChange[oldCommand];
+	if(commands){
+		return commands[Math.random() * commands.length >> 0];
 	}
+	return RandomSingleCombatCommands[Math.random() * RandomSingleCombatCommands.length >> 0];
 }
 function singleCombatCommandExecute(leftCharacter, rightCharacter) {
 	leftCharacter.commandExecute();

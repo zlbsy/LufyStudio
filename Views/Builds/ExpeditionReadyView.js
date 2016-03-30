@@ -11,6 +11,7 @@ ExpeditionReadyView.prototype.set=function(img,name){
 	var rangeBackground = getBitmap(new LPanel(new LBitmapData(LMvc.datalist["win04"]),300,40));
 	var rangeSelect = new LBitmap(new LBitmapData(LMvc.datalist["range"]));
 	var layer = new LSprite();
+	layer.x = (LGlobal.width - rangeBackground.getWidth())*0.5;
 	self.addChild(layer);
 	var cityModel = self.controller.getValue("cityData");
 	var foodLayer = new LSprite();
@@ -20,7 +21,7 @@ ExpeditionReadyView.prototype.set=function(img,name){
 	foodLabel.x = 10;
 	foodLayer.addChild(foodLabel);
 	self.foodSum = cityModel.food();
-	var food = getStrokeLabel( String.format("{0}/{1}",0,self.foodSum), 18, "#FFFFFF", "#000000", 4);
+	var food = getStrokeLabel(String.format("{0}/{1}", 0, self.foodSum), 18, "#FFFFFF", "#000000", 4);
 	food.x = 60;
 	foodLayer.addChild(food);
 	self.food = food;
@@ -69,22 +70,16 @@ ExpeditionReadyView.prototype.set=function(img,name){
 	rangeTroops.y = 20;
 	troopsLayer.addChild(rangeTroops);
 	rangeTroops.addEventListener(LRange.ON_CHANGE, self.onTroopsChange);
-	
-	return;
-	var armListLayer = new LSprite();
-	armListLayer.y = 70;
-	layer.addChild(armListLayer);
-	
-	//self.controller.addEventListener(ArmListEvent.SHOW, self.showArmList);
-	//self.controller.addEventListener(ArmListEvent.CLOSE, self.hideArmList);
-	self.controller.setValue("armListLayer", armListLayer);
-	self.controller.loadArmList(ArmListType.EXPEDITION);
 };
 ExpeditionReadyView.prototype.onFoodChange=function(event){
 	var rangeFood = event.currentTarget;
 	var self = rangeFood.parent.parent.parent;
 	self.selectFood = self.foodSum*rangeFood.value*0.01>>0;
-	self.food.text = String.format("{0}/{1}",self.selectFood,self.foodSum);	
+	self.updateFoodLabel();
+};
+ExpeditionReadyView.prototype.updateFoodLabel=function(){
+	var self = this;
+	self.food.text = String.format(Language.get("expedition_ready_food"),self.selectFood,self.foodSum, 0);
 };
 ExpeditionReadyView.prototype.onMoneyChange=function(event){
 	var rangeMoney = event.currentTarget;
@@ -97,7 +92,8 @@ ExpeditionReadyView.prototype.onTroopsChange=function(event){
 	var rangeTroops = event.currentTarget;
 	var self = rangeTroops.parent.parent.parent;
 	self.selectTroops = self.troopsSum*rangeTroops.value*0.01>>0;
-	self.troops.text = String.format("{0}/{1}",self.selectTroops,self.troopsSum);	
+	self.troops.text = String.format("{0}/{1}",self.selectTroops,self.troopsSum);
+	self.updateFoodLabel();
 };
 ExpeditionReadyView.prototype.getData=function(event){
 	var self = this;

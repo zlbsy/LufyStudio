@@ -217,7 +217,7 @@ Language.data = {
 	"behead":"斩首",
 	"persuade":"劝降",
 	"persuade_character":"劝降武将",
-	
+	"expedition_ready_food":"{0}/{1} ({2}天)",
 	"battle_win":"战斗胜利",
 	"battle_fail":"战斗失败",
 	

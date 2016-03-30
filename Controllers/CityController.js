@@ -43,7 +43,7 @@ CityController.prototype.init=function(){
 	if(selfCity){
 		self.setValue("isAppoint",cityData.isAppoint());
 	}
-	//TODO::
+	//TODO::测试用
 	//self.setValue("cityFree",true);
 	LMvc.keepLoading(false);
 	LMvc.CityController = self;

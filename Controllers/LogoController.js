@@ -46,7 +46,7 @@ LogoController.prototype.startAnimation=function(){
 };
 LogoController.prototype.start=function(event){
 	var self = event.target.parent.controller;
-	//TODO::test
+	//TODO::测试用
 	/*LPlugin.openStamp(17);
 	LPlugin.openStamp(18);
 	LPlugin.openStamp(19);
