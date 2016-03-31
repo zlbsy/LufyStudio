@@ -32,11 +32,6 @@ SingleCombatCharacterView.prototype.setCommands=function(){
 	}
 	while(self.commands.length < self.maxCommand){
 		command = getSingleCombatCommand(self.commands,0,self.data.force());
-		/*if(self.isLeft){
-			command = SingleCombatCommand.SPECIAL_ATTACK;
-		}else{
-			command = SingleCombatCommand.BACKSTROKE_ATTACK;
-		}*/
 		self.commands.push(command);
 	}
 };
@@ -78,6 +73,7 @@ SingleCombatCharacterView.prototype.actionComplete = function(event){
 		self.changeAction(CharacterAction.STAND);
 		return;
 	}
+	//TODO::版本升级后，需做事件化调整
 	switch(self.action){
 		case CharacterAction.ATTACK:
 			console.log("self.singleMode="+self.singleMode + ",self.attackCount="+self.attackCount);
@@ -165,7 +161,6 @@ SingleCombatCharacterView.prototype.showRunningCommand = function(index){
 };
 SingleCombatCharacterView.prototype.commandExecute = function(){
 	var self = this;
-	//TODO::Bug:怒击对连击失败
 	switch(self.currentCommand){
 		case SingleCombatCommand.ATTACK:
 			self.changeAction(CharacterAction.ATTACK);

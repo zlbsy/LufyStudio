@@ -109,6 +109,7 @@ function singleCombatHert(leftCharacter, rightCharacter) {
 	}
 	rightCharacter.changeHp(hertValue);
 }
+//TODO::版本升级后，需做事件化调整
 function singleCombatAttackActionComplete(currentCharacter, targetCharacter) {
 	console.log("check" , currentCharacter.data.name() , ">" , targetCharacter.data.name());
 	switch(currentCharacter.currentCommand){
@@ -236,6 +237,7 @@ function singleCombatCommandCheckDoubleAttack(currentCharacter, targetCharacter)
 			targetCharacter.addBackstrokeScript();
 			break;
 		case SingleCombatCommand.SPECIAL_ATTACK:
+			currentCharacter.attackCount++;
 			break;
 	}
 }
