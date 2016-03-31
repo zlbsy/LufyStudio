@@ -69,11 +69,11 @@ var SingleCombatCommandChange = (function(){
 	//躲闪->连击,集气
 	//集气->重击,防御
 	var data = [];
-	data[CharacterDisposition.ATTACK] = [SingleCombatCommand.DOUBLE_ATTACK, SingleCombatCommand.DEFENCE];
-	data[CharacterDisposition.DOUBLE_ATTACK] = [SingleCombatCommand.BIG_ATTACK, SingleCombatCommand.DODGE];
-	data[CharacterDisposition.BIG_ATTACK] = [SingleCombatCommand.ATTACK, SingleCombatCommand.CHARGE];
-	data[CharacterDisposition.DEFENCE] = [SingleCombatCommand.ATTACK, SingleCombatCommand.DODGE];
-	data[CharacterDisposition.DODGE] = [SingleCombatCommand.DOUBLE_ATTACK, SingleCombatCommand.CHARGE];
-	data[CharacterDisposition.CHARGE] = [SingleCombatCommand.BIG_ATTACK, SingleCombatCommand.DEFENCE];
+	data[SingleCombatCommand.ATTACK] = [SingleCombatCommand.DOUBLE_ATTACK, SingleCombatCommand.DEFENCE];
+	data[SingleCombatCommand.DOUBLE_ATTACK] = [SingleCombatCommand.BIG_ATTACK, SingleCombatCommand.DODGE];
+	data[SingleCombatCommand.BIG_ATTACK] = [SingleCombatCommand.ATTACK, SingleCombatCommand.CHARGE];
+	data[SingleCombatCommand.DEFENCE] = [SingleCombatCommand.ATTACK, SingleCombatCommand.DODGE];
+	data[SingleCombatCommand.DODGE] = [SingleCombatCommand.DOUBLE_ATTACK, SingleCombatCommand.CHARGE];
+	data[SingleCombatCommand.CHARGE] = [SingleCombatCommand.BIG_ATTACK, SingleCombatCommand.DEFENCE];
 	return data;
 })();

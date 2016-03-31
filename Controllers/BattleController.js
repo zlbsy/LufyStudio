@@ -1,28 +1,21 @@
 function BattleController(battleData, fromController){
 	var self = this;
-	base(self,OpenCharacterListController,[]);
 	self.fromController = fromController;
 	self.fromController.view.visible = false;
-	/*
-	//TODO::
-	self.loadLayer = new LSprite();
-	self.loadLayer.addChild(getBlackBitmap());
-	var label = getStrokeLabel("XXXXX",20,"#FFFFFF","#000000",4);
-	label.x = (LGlobal.width - label.getWidth())*0.5;
-	label.y = LGlobal.height*0.3;
-	self.loadLayer.addChild(label);
-	self.fromController.view.parent.addChild(self.loadLayer);
-	*/
 	self.battleData = battleData;
-	self.setValue("bout", 0);
+	base(self,OpenCharacterListController,[]);
 }
 BattleController.prototype.construct=function(){
 	var self = this;
 	self.downX = self.downY = 0;
+	self.setValue("bout", 0);
 	self.initOver = false;
 	LMvc.keepLoading(true);
 	LMvc.changeLoading(BattleLoading);
-	LMvc.loading.setTitle("XXXX之战");
+	console.log("self.battleData="+self.battleData);
+	var city = self.battleData.toCity;
+	console.log("city="+city);
+	LMvc.loading.setTitle(String.format(Language.get("battle_title"), city.name()));
 	if(Toast.layer){
 		Toast.layer.removeAllChild();
 	}

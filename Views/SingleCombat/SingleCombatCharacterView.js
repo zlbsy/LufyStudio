@@ -96,7 +96,10 @@ SingleCombatCharacterView.prototype.actionComplete = function(event){
 			}
 			break;
 		case CharacterAction.HERT:
-			if(self.currentCommand == SingleCombatCommand.DOUBLE_ATTACK && self.attackCount++ == 0){
+			var targetCommand = self.targetCharacter.currentCommand;
+			if(self.currentCommand == SingleCombatCommand.DOUBLE_ATTACK &&
+				targetCommand != SingleCombatCommand.SPECIAL_ATTACK &&
+				self.attackCount++ == 0){
 				self.changeAction(CharacterAction.ATTACK);
 			}else{
 				self.changeAction(CharacterAction.STAND);
