@@ -139,7 +139,7 @@ CharacterListChildView.prototype.setArmProperties = function() {
 	//var soldiers = self.charaModel.soldiers();
 	var soldierModel = self.charaModel.currentSoldiers();
 	
-	var name = getStrokeLabel( String.format("{0}/{1}",self.charaModel.troops(),self.charaModel.maxTroops()), 18, "#FFFFFF", "#000000", 4);
+	var name = getStrokeLabel( String.format("{0}/{1}",self.charaModel.troops(),soldierModel.maxTroops(self.charaModel)), 18, "#FFFFFF", "#000000", 4);
 	name.x = 2;
 	name.y = 10;
 	layer.addChild(name);

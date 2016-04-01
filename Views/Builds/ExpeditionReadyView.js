@@ -8,6 +8,12 @@ function ExpeditionReadyView(controller){
 }
 ExpeditionReadyView.prototype.set=function(img,name){
 	var self = this;
+	var charas = self.controller.getValue("expeditionCharacterList");
+	var sumTroops = 0;
+	for (var i = 0, l = charas.length; i < l; i++) {
+		sumTroops += charas[i].troops();
+	}
+	self.sumTroops= sumTroops;
 	var rangeBackground = getBitmap(new LPanel(new LBitmapData(LMvc.datalist["win04"]),300,40));
 	var rangeSelect = new LBitmap(new LBitmapData(LMvc.datalist["range"]));
 	var layer = new LSprite();
@@ -79,7 +85,8 @@ ExpeditionReadyView.prototype.onFoodChange=function(event){
 };
 ExpeditionReadyView.prototype.updateFoodLabel=function(){
 	var self = this;
-	self.food.text = String.format(Language.get("expedition_ready_food"),self.selectFood,self.foodSum, 0);
+	var unitFood = self.selectTroops + self.sumTroops * 2;
+	self.food.text = String.format(Language.get("expedition_ready_food"),self.selectFood,self.foodSum, self.selectFood / unitFood >>> 0);
 };
 ExpeditionReadyView.prototype.onMoneyChange=function(event){
 	var rangeMoney = event.currentTarget;

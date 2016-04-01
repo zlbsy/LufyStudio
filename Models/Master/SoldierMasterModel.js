@@ -118,5 +118,11 @@ SoldierMasterModel.prototype.img=function(){
 	return this.data.img;
 };
 SoldierMasterModel.prototype.maxTroops = function(charaModel) {
-	return charaModel.initTroops() + this.property().troops * charaModel.lv();
+	var self = this;
+	var currentId = charaModel.currentSoldierId();
+	charaModel.currentSoldiers(self.id());
+	var troops = charaModel.maxTroops(true);
+	charaModel.currentSoldiers(currentId);
+	charaModel.maxTroops(true);
+	return troops;
 };
