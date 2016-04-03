@@ -67,7 +67,7 @@ BattleResultView.prototype.winInit=function(){
 		experienceToFeat(battleData.expeditionEnemyCharacterList);
 		self.failSeigniorId = battleData.toCity.seigniorCharaId();
 		var city = battleData.toCity;
-		if(city.seignior().isTribe()){
+		if(city.seigniorCharaId() > 0 && city.seignior().isTribe()){
 			//外族资源重设
 			resetTribeCity(city);
 		}

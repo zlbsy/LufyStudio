@@ -107,11 +107,6 @@ BattleView.prototype.layerInit=function(){
 	//天气层
 	self.weatherLayer = new BattleWeatherView();
 	self.addChild(self.weatherLayer);
-	//TODO::
-	self.weatherLayer.show(BattleWeatherConfig.SNOW);
-	/*//遮挡层
-	self.buildLayer = new LSprite();
-	self.baseLayer.addChild(self.buildLayer);*/
 	//预览层
 	self.miniLayer = new BattleMiniPreviewView(self.controller);
 	self.addChild(self.miniLayer);
@@ -124,29 +119,6 @@ BattleView.prototype.layerInit=function(){
 	
 	self.contentLayer = new LSprite();
 	self.addChild(self.contentLayer);
-	return;
-	//Test code
-	self.buildLayer = new LSprite();
-	self.baseLayer.addChild(self.buildLayer);
-	self.buildLayer.alpha = 0.4;
-	var layer = new LSprite();
-    layer.graphics.add(function (){
-    	var stepHeight = self.model.stepHeight;
-    	var stepWidth = self.model.stepWidth;
-    	var c = LGlobal.canvas;
-		c.beginPath();
-		c.strokeStyle = "#ffffff";
-		for(var i=1;i<20;i++){
-			c.moveTo(0,stepHeight*i);
-			c.lineTo(1000,stepHeight*i);
-		}
-		for(var i=1;i<20;i++){
-			c.moveTo(stepWidth*i,0);
-			c.lineTo(stepWidth*i,1000);
-		}
-		c.stroke();
-	});
-	self.buildLayer.addChild(layer);
 };
 BattleView.prototype.addCharacterListView=function(characterListView){
 	var self = this;
@@ -171,10 +143,7 @@ BattleView.prototype.resetMapPosition=function(chara){
 		return;
 	}
 	var baseLayer = self.baseLayer;
-	//baseLayer.x = LGlobal.width*0.5 - chara.x;
-	//baseLayer.y = LGlobal.height*0.5 - chara.y;
 	LTweenLite.to(baseLayer,0.2,{x:LGlobal.width*0.5 - chara.x,y:LGlobal.height*0.5 - chara.y,});
-	//self.checkPosition();
 };
 BattleView.prototype.checkPosition=function(){
 	var self = this;
@@ -193,19 +162,6 @@ BattleView.prototype.checkPosition=function(){
 };
 BattleView.prototype.onframe=function(event){
 	event.currentTarget.checkPosition();
-	/*var self = event.currentTarget.controller;
-	self.checkPosition();
-	var baseLayer = self.view.baseLayer;
-	if(baseLayer.x > 0){
-		baseLayer.x = 0;
-	}else if(baseLayer.x < LGlobal.width - map.width){
-		baseLayer.x = LGlobal.width - map.width;
-	}
-	if(baseLayer.y > 0){
-		baseLayer.y = 0;
-	}else if(baseLayer.y < LGlobal.height - map.height){
-		baseLayer.y = LGlobal.height - map.height;
-	}*/
 };
 BattleView.prototype.updateView = function(){
 	var self = this;

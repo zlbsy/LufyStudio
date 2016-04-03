@@ -1,5 +1,40 @@
-function belongLabel(){
-	
+function cloudWeatherCharacterShow(characterId){
+	var characters;
+	var weatherLayer = LMvc.BattleController.view.weatherLayer;
+	var charaLayer = LMvc.BattleController.view.charaLayer;
+	if(characterId){
+		var character = charaLayer.getCharacter(Belong.ENEMY,characterId);
+		characters = [character];
+	}else{
+		characters = charaLayer.getCharactersFromBelong(Belong.ENEMY);
+	}
+	if(!weatherLayer.isWeather(BattleWeatherConfig.CLOUD)){
+		for(var i=0,l=characters.length;i<l;i++){
+			var character = characters[i];
+			if(character.alpha == 1){
+				continue;
+			}
+			character.alpha = 1;
+			character.toStatic(false);
+			character.toStatic(true);
+		}
+	}
+	var selfCharacters = charaLayer.getCharactersFromBelong(Belong.SELF);
+	for(var i=0,l=characters.length;i<l;i++){
+		var character = characters[i];
+		var findIndex = selfCharacters.findIndex(function(child){
+			var x = Math.abs(child.locationX() - character.locationX());
+			var y = Math.abs(child.locationY() - character.locationY());
+			return x + y <= child.data.movePower();
+		});
+		if(findIndex >= 0){
+			character.alpha = 1;
+		}else{
+			character.alpha = 0;
+		}
+		character.toStatic(false);
+		character.toStatic(true);
+	}
 }
 function getDirectionFromTarget(chara, target, angleFlag){
 	var self = this, direction = chara.direction;

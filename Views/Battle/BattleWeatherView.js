@@ -3,6 +3,10 @@ function BattleWeatherView(controller){
 	LExtends(self,LView,[controller]);
 	self.weathers = {};
 };
+//TODO::天气随机变化
+BattleWeatherView.prototype.change = function(){
+	this.show(BattleWeatherConfig.CLOUD);
+};
 BattleWeatherView.prototype.create = function(weather){
 	var self = this;
 	var layer;
@@ -13,6 +17,9 @@ BattleWeatherView.prototype.create = function(weather){
 		case BattleWeatherConfig.SNOW:
 			layer = self.createSnow();
 			break;
+		case BattleWeatherConfig.CLOUD:
+			layer = self.createCloud();
+			break;
 		default:
 			layer = new LSprite();
 	}
@@ -20,17 +27,19 @@ BattleWeatherView.prototype.create = function(weather){
 	self.addChild(layer);
 	return layer;
 };
+BattleWeatherView.prototype.createCloud = function(){
+	var layer = new LSprite();
+	layer.graphics.drawRect(0,"#000000",[0,0,LGlobal.width,LGlobal.height], true, "#ffffff");
+	layer.alpha = 0.6;
+	layer.cacheAsBitmap(true);
+	return layer;
+};
 BattleWeatherView.prototype.createSnow = function(){
 	var datas = [], listChild = [];
 	for(var i=0;i<4;i++){
 		var layer = new LSprite();
 		layer.graphics.drawRect(0,"#000000",[0,0,LGlobal.width,LGlobal.height]);
-		/*var layerChild = new LSprite();
-		layerChild.graphics.drawRect(0,"#000000",[0,0,LGlobal.width,LGlobal.height],true,"#ffffff");
-		layerChild.alpha = 0.2;
-		layer.addChild(layerChild);*/
-		layer.graphics.add(function (){
-			var c = LGlobal.canvas;
+		layer.graphics.add(function (c){
 			c.fillStyle = "#ffffff";
 			c.beginPath();
 			for(var i=0;i<50;i++){
@@ -55,8 +64,7 @@ BattleWeatherView.prototype.createRain = function(){
 	for(var i=0;i<4;i++){
 		var layer = new LSprite();
 		layer.graphics.drawRect(0,"#000000",[0,0,LGlobal.width * 1.3,LGlobal.height * 1.3]);
-		layer.graphics.add(function (){
-	    	var c = LGlobal.canvas;
+		layer.graphics.add(function (c){
 	    	c.strokeStyle = "#ffffff";
 			c.beginPath();
 			for(var i=0;i<50;i++){
@@ -88,6 +96,9 @@ BattleWeatherView.prototype.show = function(weather){
 	}
 	self.currentWeather = self.weathers[weather];
 	self.currentWeather.visible = true;
+	if(weather == BattleWeatherConfig.CLOUD){
+		cloudWeatherCharacterShow();
+	}
 };
 BattleWeatherView.prototype.isWeather = function(weather){
 	var self = this;

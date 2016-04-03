@@ -14,7 +14,7 @@ function BattleLoading(data){
 	s.layer.x = LGlobal.width * 0.5;
 	s.layer.y = LGlobal.height * 0.7;
 	
-	var title = getStrokeLabel("",34,"#FFFFFF","#FFFF00",4);
+	var title = getStrokeLabel("",34,"#FFFFFF","#FFFF00",2);
 	s.title = title;
 	title.y = 50;
 	s.addChild(title);
