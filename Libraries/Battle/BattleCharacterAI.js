@@ -546,6 +546,9 @@ BattleCharacterAI.prototype.endAction = function() {
 	chara.toStatic(true);
 	chara.inteAI.init();
 	LMvc.running = false;
+	if(LMvc.BattleController.view.weatherLayer.isWeather(BattleWeatherConfig.CLOUD)){
+		cloudWeatherCharacterShow(chara.data.id());
+	}
 	self.endBoutCheck();
 };
 BattleCharacterAI.prototype.endBoutCheck = function() {

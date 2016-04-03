@@ -8,16 +8,19 @@ function cloudWeatherCharacterShow(characterId){
 	}else{
 		characters = charaLayer.getCharactersFromBelong(Belong.ENEMY);
 	}
+	console.log("CLOUD : " + weatherLayer.isWeather(BattleWeatherConfig.CLOUD));
 	if(!weatherLayer.isWeather(BattleWeatherConfig.CLOUD)){
 		for(var i=0,l=characters.length;i<l;i++){
 			var character = characters[i];
-			if(character.alpha == 1){
+			if(!character.hideByCloud){
 				continue;
 			}
-			character.alpha = 1;
+			character.anime.visible = true;
+			character.hideByCloud = false;
 			character.toStatic(false);
 			character.toStatic(true);
 		}
+		return;
 	}
 	var selfCharacters = charaLayer.getCharactersFromBelong(Belong.SELF);
 	for(var i=0,l=characters.length;i<l;i++){
@@ -27,13 +30,17 @@ function cloudWeatherCharacterShow(characterId){
 			var y = Math.abs(child.locationY() - character.locationY());
 			return x + y <= child.data.movePower();
 		});
+		console.log("findIndex : " + findIndex + ", " + character.data.name());
 		if(findIndex >= 0){
-			character.alpha = 1;
+			character.hideByCloud = false;
+			character.anime.visible = true;
+			character.toStatic(false);
+			character.toStatic(true);
 		}else{
-			character.alpha = 0;
+			character.hideByCloud = true;
+			character.toStatic(false);
+			character.anime.visible = false;
 		}
-		character.toStatic(false);
-		character.toStatic(true);
 	}
 }
 function getDirectionFromTarget(chara, target, angleFlag){
@@ -442,6 +449,7 @@ function getBattleSaveData(){
 		var obj = model.enemyMinusStrategyCharas[i];
 		data.enemyMinusStrategyCharas.push(obj.chara.data.id());
 	}
+	data.weather = LMvc.BattleController.view.weatherLayer.getData();
 	return data;
 }
 function setBattleSaveData(){
@@ -512,6 +520,7 @@ function setBattleSaveData(){
 		data.enemyMinusStrategyCharas.push({chara:chara,skill:chara.data.skill()});
 	}
 	LMvc.BattleController.view.charaLayer.resetCharacterPositions();
+	LMvc.BattleController.view.weatherLayer.setData(data.weather);
 	LMvc.BattleController.view.mainMenu.visible = true;
 	LMvc.BattleController.view.miniLayer.visible = true;
 	if(BattleSelectMenuController._instance){

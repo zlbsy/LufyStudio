@@ -3,9 +3,27 @@ function BattleWeatherView(controller){
 	LExtends(self,LView,[controller]);
 	self.weathers = {};
 };
-//TODO::天气随机变化
 BattleWeatherView.prototype.change = function(){
-	this.show(BattleWeatherConfig.CLOUD);
+	var self = this;
+	var probability = 1;
+	if(self.currentWeather){
+		self.currentWeather.probability += 0.1;
+		probability = self.currentWeather.probability;
+	}
+	if(Math.random() > probability){
+		return;
+	}
+	var weatherProbabilitys = WeatherProbabilityConfig[LMvc.chapterData.month];
+	var rand = Math.random(), sum = 0;
+	for(var i=0, l=weatherProbabilitys.length; i<l; i++){
+		var weatherProbability = weatherProbabilitys[i];
+		sum += weatherProbability.probability;
+		if(rand > sum){
+			continue;
+		}
+		self.show(weatherProbability.weather);
+		break;
+	}
 };
 BattleWeatherView.prototype.create = function(weather){
 	var self = this;
@@ -96,14 +114,25 @@ BattleWeatherView.prototype.show = function(weather){
 	}
 	self.currentWeather = self.weathers[weather];
 	self.currentWeather.visible = true;
-	if(weather == BattleWeatherConfig.CLOUD){
-		cloudWeatherCharacterShow();
-	}
+	self.currentWeather.probability = 0;
+	cloudWeatherCharacterShow();
 };
 BattleWeatherView.prototype.isWeather = function(weather){
 	var self = this;
 	if(!self.weathers[weather]){
-		return false;
+		return weather == BattleWeatherConfig.CLOUD;
 	}
 	return self.currentWeather.objectIndex == self.weathers[weather].objectIndex;
+};
+BattleWeatherView.prototype.getData = function(){
+	var self = this;
+	if(self.currentWeather){
+		return {weather:self.currentWeather.weather, probability:self.currentWeather.probability};
+	}
+	return {weather:BattleWeatherConfig.CLOUD, probability:0};
+};
+BattleWeatherView.prototype.setData = function(obj){
+	var self = this;
+	self.show(obj.weather);
+	self.currentWeather.probability = obj.probability;
 };
