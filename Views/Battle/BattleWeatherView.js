@@ -4,7 +4,7 @@ function BattleWeatherView(controller){
 	self.weathers = {};
 };
 BattleWeatherView.prototype.change = function(){
-	var self = this;
+	var self = this;self.show(BattleWeatherConfig.CLOUD);return;
 	var probability = 1;
 	if(self.currentWeather){
 		self.currentWeather.probability += 0.1;

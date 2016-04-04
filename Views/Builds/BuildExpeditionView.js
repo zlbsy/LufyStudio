@@ -10,6 +10,9 @@ BuildExpeditionView.prototype.showMenu=function(){
 };
 BuildExpeditionView.prototype.run=function(){
 	var self = this;
+	if(SeigniorExecute.running){
+		return;
+	}
 	self.characterListType = CharacterListType.EXPEDITION;
 	self.controller.addEventListener(LCityEvent.SELECT_CITY, self.expeditionSelectCharacter);
 	self.controller.addEventListener(LCityEvent.CLOSE_SELECT_CITY, self.closeSelectCity);

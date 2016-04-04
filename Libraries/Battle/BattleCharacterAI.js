@@ -541,13 +541,14 @@ BattleCharacterAI.prototype.endAction = function() {
 	chara.removeAllEventListener();
 	chara.changeAction(chara.data.isPantTroops()?CharacterAction.PANT:CharacterAction.STAND);
 	chara.mode = CharacterMode.END_ACTION;
-	LMvc.BattleController.view.charaLayer.resetCharacterPositions();
+	var view = LMvc.BattleController.view;
+	view.charaLayer.resetCharacterPositions();
 	chara.currentSelectStrategy = null;
 	chara.toStatic(true);
 	chara.inteAI.init();
 	LMvc.running = false;
-	if(LMvc.BattleController.view.weatherLayer.isWeather(BattleWeatherConfig.CLOUD)){
-		cloudWeatherCharacterShow(chara.data.id());
+	if(view.weatherLayer.isWeather(BattleWeatherConfig.CLOUD)){
+		cloudWeatherCharacterShow(chara.belong == Belong.SELF ? null : chara.data.id());
 	}
 	self.endBoutCheck();
 };

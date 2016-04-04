@@ -47,10 +47,9 @@ BattleMapView.prototype.onframe = function(event){
 };
 BattleMapView.prototype.characterIn = function(chara){
 	var self = this;
-	/*if(!self.loadMapComplete){
-		self.staticCharacters.push(chara);
-		return false;
-	}*/
+	if(!chara.hideByCloud){
+		return true;
+	}
 	var bitmapData = self.datas[0];
 	bitmapData.copyPixels(chara.getBitmapData(),new LRectangle(8,8,BattleCharacterSize.width,BattleCharacterSize.height),new LPoint(chara.x,chara.y));
 	chara.anime.onframe();

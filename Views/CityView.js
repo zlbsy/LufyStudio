@@ -77,6 +77,9 @@ CityView.prototype.showBuildView=function(name){
 		case "citygate":
 			build = new BuildCitygateView(self.controller);
 			break;
+		case "expedition":
+			build = new BuildExpeditionView(self.controller);
+			break;
 	}
 	self.contentLayer.addChild(build);
 	return build;

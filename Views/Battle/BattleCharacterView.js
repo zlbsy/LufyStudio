@@ -47,6 +47,9 @@ BattleCharacterView.getAnimationData = function(){
 };
 BattleCharacterView.prototype.getBitmapData = function() {
 	var self = this;
+	if(self.hideByCloud){
+		return null;
+	}
 	var rowIndex = self.anime.rowIndex, colIndex = self.anime.colIndex;
 	if(self.mode == CharacterMode.END_ACTION){
 		colIndex = 0;

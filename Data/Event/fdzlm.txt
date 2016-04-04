@@ -1,6 +1,6 @@
 SGJEvent.mapShow(1);
 SGJEvent.messageShow(董卓在洛阳。,3);
-SGJEvent.addCharacter(1,100,100,fade);
+/*SGJEvent.addCharacter(1,100,100,fade);
 SGJEvent.talk(1,董卓实在罪大恶极，我要邀请各路诸侯一起讨伐这个逆贼。);
 SGJEvent.messageShow(曹操向各个诸侯发出邀请了。,3);
 SGJEvent.addCharacter(8,200,100,fade);
@@ -28,5 +28,5 @@ SGJEvent.talk(75,这位是刘备，汉室宗亲。);
 SGJEvent.talk(39,既然是汉室宗亲，那就此坐吧。);
 SGJEvent.talk(21,多谢盟主。);
 SGJEvent.messageShow(紧接着，马腾，陶谦，孔由等诸侯陆续赶到。,3);
-SGJEvent.messageShow(曹操袁绍等共十八路诸侯成立了反董卓联盟。,3);
+SGJEvent.messageShow(曹操袁绍等共十八路诸侯成立了反董卓联盟。,3);*/
 Mark.EventEnd;

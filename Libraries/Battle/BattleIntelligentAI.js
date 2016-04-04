@@ -165,6 +165,13 @@ BattleIntelligentAI.prototype.run = function() {
 	BattleIntelligentAI.timer.reset();
 	BattleIntelligentAI.timer.start();
 };
+BattleIntelligentAI.prototype.cloudWeatherCharacterShow = function() {
+	var self = this;
+	var weatherLayer = LMvc.BattleController.view.weatherLayer;
+	if(weatherLayer.isWeather(BattleWeatherConfig.CLOUD)){
+		cloudWeatherCharacterShow(self.chara.data.id());
+	}
+};
 BattleIntelligentAI.prototype.moveRoadsShow = function() {
 	var self = this;
 	var view = LMvc.BattleController.view;
@@ -363,8 +370,10 @@ BattleIntelligentAI.prototype.moveStart = function() {
 	}
 	if(self.chara.currentSelectStrategy){
 		self.chara.mode = CharacterMode.STRATEGY_SELECT;
+		self.cloudWeatherCharacterShow();
 	}else{
 		self.chara.mode = CharacterMode.ATTACK;
+		self.cloudWeatherCharacterShow();
 	}
 	if(returnList.length == 0){
 		self.run();
