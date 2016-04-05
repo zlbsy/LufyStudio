@@ -271,6 +271,11 @@ Language.data = {
 	"persuadeRefuseMessage":"{0}拒绝了{1}的邀请，劝降失败了。",
 	"persuadeSuccessMessage":"{0}成功说服了{1}，{2}加入我军!",
 	
+	"rain":"雨",
+	"cloud":"雾",
+	"snow":"雪",
+	"sunny":"晴",
+
 	"label_equip":"装备",
 	"label_use":"使用",
 	"label_sale":"出售",

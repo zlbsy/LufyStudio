@@ -14,7 +14,8 @@ BattleFieldView.prototype.outlineData = function(){
 	var label = getStrokeLabel("攻击方:"+self.controller.battleData.fromCity.seignior().character().name(),20,"#FFFFFF","#000000",4);
 	label.x = 0;
 	self.outlineLayer.addChild(label);
-	label = getStrokeLabel("天气:晴",20,"#FFFFFF","#000000",4);
+	var weather = String.format("天气:{0}", self.controller.view.weatherLayer.getLavel());
+	label = getStrokeLabel(weather,20,"#FFFFFF","#000000",4);
 	label.x = 150;
 	self.outlineLayer.addChild(label);
 	label = getStrokeLabel("回合:"+self.controller.getValue("bout"),20,"#FFFFFF","#000000",4);
