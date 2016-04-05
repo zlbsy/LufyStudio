@@ -116,9 +116,9 @@ LogoView.prototype.showChapterList=function(list){
 	var i = 0;
 	for(; i < list.length*0.5; i++){
 		var chapter = list[i];
-		var buttonChapter = getButton(Language.get("chapter_"+chapter.id),150);
+		var buttonChapter = getButton(Language.get("chapter_"+chapter.id),200);
 		buttonChapter.chapterId = chapter.id;
-		buttonChapter.x = (200 - buttonChapter.getWidth()) * 0.5 - 90;
+		buttonChapter.x = (200 - buttonChapter.getWidth()) * 0.5 - 110;
 		buttonChapter.y = menuY;
 		menuLayer.addChild(buttonChapter);
 		buttonChapter.addEventListener(LMouseEvent.MOUSE_UP, self.showChapter.bind(self));
@@ -127,9 +127,9 @@ LogoView.prototype.showChapterList=function(list){
 	menuY = 0;
 	for(; i < list.length; i++){
 		var chapter = list[i];
-		var buttonChapter = getButton(Language.get("chapter_"+chapter.id),150);
+		var buttonChapter = getButton(Language.get("chapter_"+chapter.id),200);
 		buttonChapter.chapterId = chapter.id;
-		buttonChapter.x = (200 - buttonChapter.getWidth()) * 0.5 + 90;
+		buttonChapter.x = (200 - buttonChapter.getWidth()) * 0.5 + 110;
 		buttonChapter.y = menuY;
 		menuLayer.addChild(buttonChapter);
 		buttonChapter.addEventListener(LMouseEvent.MOUSE_UP, self.showChapter.bind(self));
