@@ -195,6 +195,9 @@ BattleIntelligentAI.prototype.moveRoadsShow = function() {
 	}console.log("moveRoadsShow self.roadList="+self.roadList);
 	view.roadLayer.setMoveRoads(path, self.chara.belong);
 	view.roadLayer.addRangeAttack(self.chara);
+	if(self.chara.hideByCloud){
+		view.roadLayer.alpha = 0;
+	}
 	self.chara.mode = CharacterMode.SHOW_MOVE_ROAD;
 	
 };
@@ -322,7 +325,12 @@ BattleIntelligentAI.prototype.magicAttack = function() {
 	this.chara.AI.magicAttack(this.target);
 };
 BattleIntelligentAI.prototype.physicalAttack = function() {
-	this.chara.AI.physicalAttack(this.target);
+	var self = this;
+	if(calculateAskSingleCombat(self.chara, self.target)){
+	
+	}else{
+		self.chara.AI.physicalAttack(self.target);
+	}
 };
 BattleIntelligentAI.prototype.useAddHpStrategy = function() {
 	var self = this, chara = self.chara, strategy, strategys = [], node;

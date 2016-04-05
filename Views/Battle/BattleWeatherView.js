@@ -4,7 +4,7 @@ function BattleWeatherView(controller){
 	self.weathers = {};
 };
 BattleWeatherView.prototype.change = function(){
-	var self = this;//self.show(BattleWeatherConfig.CLOUD);return;
+	var self = this;
 	var probability = 1;
 	if(self.currentWeather){
 		self.currentWeather.probability += 0.1;
@@ -113,6 +113,7 @@ BattleWeatherView.prototype.show = function(weather){
 		self.weathers[weather] = self.create(weather);
 	}
 	self.currentWeather = self.weathers[weather];
+
 	self.currentWeather.visible = true;
 	self.currentWeather.probability = 0;
 	cloudWeatherCharacterShow();
@@ -123,6 +124,11 @@ BattleWeatherView.prototype.isWeather = function(weather){
 		return weather == BattleWeatherConfig.SUNNY;
 	}
 	return self.currentWeather.objectIndex == self.weathers[weather].objectIndex;
+};
+BattleWeatherView.prototype.getLavel = function(){
+	var self = this;
+	var weather = self.currentWeather ? self.currentWeather.weather : BattleWeatherConfig.SUNNY;
+	return Language.get(weather);
 };
 BattleWeatherView.prototype.getData = function(){
 	var self = this;

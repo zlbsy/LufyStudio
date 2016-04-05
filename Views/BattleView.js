@@ -139,6 +139,9 @@ BattleView.prototype.clearContentLayer=function(event){
 };
 BattleView.prototype.resetMapPosition=function(chara){
 	var self = this;
+	if(chara.hideByCloud){
+		return;
+	}
 	if(LGlobal.height >= self.model.map.height){
 		return;
 	}

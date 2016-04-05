@@ -15,6 +15,7 @@ function BattleRoadView(controller){
 }
 BattleRoadView.prototype.setMoveRoads = function(nodes,belong){
 	var self = this;
+	self.alpha = 1;
 	self.clear();
 	self.roadList = nodes;
 	self.setRoads(nodes, belong == Belong.SELF ? self.blueData : self.greenData);
@@ -32,6 +33,7 @@ BattleRoadView.prototype.setRangeSingleCombat = function(chara){
 };
 BattleRoadView.prototype.setRangeAttack = function(chara){
 	var self = this,solider,ranges,range,x,y,nodes = [];
+	self.alpha = 1;
 	x = chara.locationX();
 	y = chara.locationY();
 	ranges = chara.data.rangeAttack();
@@ -46,7 +48,7 @@ BattleRoadView.prototype.setRangeAttack = function(chara){
 	for(var i=0;i<nodes.length;i++){
 		var node = nodes[i];
 		var target = chara.controller.view.charaLayer.getCharacterFromLocation(node.x, node.y);
-		if(!target || isSameBelong(chara.belong, target.belong)){
+		if(!target || target.hideByCloud || isSameBelong(chara.belong, target.belong)){
 			continue;
 		}
 		var layer = new LSprite();

@@ -490,3 +490,12 @@ function calculateExp(attChara,hertChara){
 	}
 	return exp;
 }
+function calculateAskSingleCombat(chara, target){
+	var charaValue = chara.data.force()*2 + chara.data.HP();
+	var targetValue = target.data.force()*2 + target.data.HP();
+	var value = charaValue - targetValue;
+	if(value < -10){
+		return false; 
+	}
+	return true;
+}

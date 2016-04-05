@@ -8,6 +8,12 @@ BattleWeatherConfig.CLOUD = "cloud";
 BattleWeatherConfig.SNOW = "snow";
 BattleWeatherConfig.SUNNY = "sunny";
 
+var BattleWeatherObstacle = {};
+BattleWeatherObstacle[BattleWeatherConfig.SUNNY] = 0;
+BattleWeatherObstacle[BattleWeatherConfig.SNOW] = 1;
+BattleWeatherObstacle[BattleWeatherConfig.RAIN] = 1;
+BattleWeatherObstacle[BattleWeatherConfig.CLOUD] = 2;
+
 //天气随机变化
 var _weatherList;
 var WeatherProbabilityConfig = [];

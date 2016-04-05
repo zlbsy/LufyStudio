@@ -70,7 +70,7 @@ BattleController.prototype.showCharacterDetailed = function(){
 		return;
 	}
 	var chara = self.view.charaLayer.getCharacterFromCoordinate(self.selfX, self.selfY);
-	if(!chara){
+	if(!chara || chara.hideByCloud){
 		return;
 	}
 	self.view.baseLayer.stopDrag();
@@ -322,7 +322,7 @@ BattleController.prototype.mapMouseDown = function(event){
 BattleController.prototype.singleCombat = function(event){
 	var self = event.currentTarget.parent.controller;
 	var chara = self.view.charaLayer.getCharacterFromCoordinate(event.selfX,event.selfY);
-	if(!chara || chara.belong != Belong.ENEMY){
+	if(!chara || chara.hideByCloud || chara.belong != Belong.ENEMY){
 		return;
 	}
 	self.view.roadLayer.clear();
@@ -331,7 +331,7 @@ BattleController.prototype.singleCombat = function(event){
 BattleController.prototype.physicalAttack = function(event){
 	var self = event.currentTarget.parent.controller;
 	var chara = self.view.charaLayer.getCharacterFromCoordinate(event.selfX,event.selfY);
-	if(!chara || chara.belong != Belong.ENEMY){
+	if(!chara || chara.hideByCloud || chara.belong != Belong.ENEMY){
 		return;
 	}
 	self.view.roadLayer.clear();
@@ -339,7 +339,7 @@ BattleController.prototype.physicalAttack = function(event){
 };
 BattleController.prototype.clickStrategyRange = function(chara){
 	var self = this;
-	if(!chara){
+	if(!chara || chara.hideByCloud){
 		return;
 	}
 	if(!isSameBelong(BattleController.ctrlChara.currentSelectStrategy.belong(),chara.belong)){
@@ -414,6 +414,9 @@ BattleController.prototype.characterClick = function(cx,cy){
 		return false;
 	}
 	BattleController.ctrlChara = chara;
+	if(chara.hideByCloud){
+		return false;
+	}
 	self.view.resetMapPosition(chara);
 	switch(chara.belong){
 		case Belong.SELF:
