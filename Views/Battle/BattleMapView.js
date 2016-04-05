@@ -47,7 +47,7 @@ BattleMapView.prototype.onframe = function(event){
 };
 BattleMapView.prototype.characterIn = function(chara){
 	var self = this;
-	if(!chara.hideByCloud){
+	if(chara.hideByCloud){
 		return true;
 	}
 	var bitmapData = self.datas[0];

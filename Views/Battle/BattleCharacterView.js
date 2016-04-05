@@ -46,7 +46,7 @@ BattleCharacterView.getAnimationData = function(){
 	return data;
 };
 BattleCharacterView.prototype.getBitmapData = function() {
-	var self = this;
+	var self = this;console.log(self.data.name()+"="+self.hideByCloud);
 	if(self.hideByCloud){
 		return null;
 	}

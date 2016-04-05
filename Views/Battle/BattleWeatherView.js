@@ -4,7 +4,7 @@ function BattleWeatherView(controller){
 	self.weathers = {};
 };
 BattleWeatherView.prototype.change = function(){
-	var self = this;self.show(BattleWeatherConfig.CLOUD);return;
+	var self = this;//self.show(BattleWeatherConfig.CLOUD);return;
 	var probability = 1;
 	if(self.currentWeather){
 		self.currentWeather.probability += 0.1;
@@ -120,7 +120,7 @@ BattleWeatherView.prototype.show = function(weather){
 BattleWeatherView.prototype.isWeather = function(weather){
 	var self = this;
 	if(!self.weathers[weather]){
-		return weather == BattleWeatherConfig.CLOUD;
+		return weather == BattleWeatherConfig.SUNNY;
 	}
 	return self.currentWeather.objectIndex == self.weathers[weather].objectIndex;
 };

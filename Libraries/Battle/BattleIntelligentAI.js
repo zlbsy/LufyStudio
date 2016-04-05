@@ -275,7 +275,7 @@ BattleIntelligentAI.prototype.getNestNode = function(target) {
 			sLength = Math.abs(child.x - self.locationX) + Math.abs(child.y - self.locationY);
 		}
 		node = child;
-	}console.log("getNestNode:"+node);
+	}console.error("getNestNode:"+node);
 	return node;
 };
 BattleIntelligentAI.prototype.getStrategyNodeTarget = function(strategy, target) {
@@ -619,10 +619,11 @@ BattleIntelligentAI.prototype.findMoveTarget = function() {
 		LMvc.BattleController.query.checkDistance = false;
 		LMvc.BattleController.query.checkCharacter = false;
 		var currentDistance = roads.length;
-		if(currentDistance < distance){
+		if(currentDistance > 0 && currentDistance < distance){
 			distance = currentDistance;
 			targetRoads = roads;
 		}
+		console.log("targetRoads = " , targetRoads, "distance="+distance);
 	}
 	for(var i = 0,l=targetRoads.length;i<l;i++){
 		var node = targetRoads[i];
@@ -644,5 +645,6 @@ BattleIntelligentAI.prototype.findMoveTarget = function() {
 		self.targetNode = new LPoint(targetX, targetY);
 	}
 	self.chara.mode = CharacterMode.MOVING;
+	console.log("self.chara.mode="+self.chara.mode);
 };
 
