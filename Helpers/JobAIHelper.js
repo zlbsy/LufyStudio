@@ -8,7 +8,7 @@ function getWeakBattleCity(areaModel){
 	var enemyCitys = [];
 	for(var i = 0;i < neighbors.length;i++){
 		var child = AreaModel.getArea(neighbors[i]);
-		if(child.seigniorCharaId() != areaModel.seigniorCharaId()){
+		if(child.seigniorCharaId() != areaModel.seigniorCharaId() && !areaModel.seignior().isStopBattle(child.seigniorCharaId())){
 			enemyCitys.push(child);
 		}
 	}
@@ -21,12 +21,12 @@ function getWeakBattleCity(areaModel){
 /*检索可攻击城池*/
 function getCanBattleCity(areaModel,characters,enlistFlag){
 	//console.log("getCanBattleCity :: 检索可攻击城池");
-	if(enlistFlag == AiEnlistFlag.Must || enlistFlag == AiEnlistFlag.MustResource){
+	if(enlistFlag != AiEnlistFlag.Free && enlistFlag != AiEnlistFlag.None && enlistFlag != AiEnlistFlag.BattleResource){
 		return null;
 	}
 	var generalCount = areaModel.generalsSum();
 	if(characters.length < BattleMapConfig.DetachmentQuantity || generalCount < BattleMapConfig.DetachmentQuantity * 2 || generalCount - BattleMapConfig.DetachmentQuantity > characters.length){
-		return;
+		return null;
 	}
 	var weakCity = getWeakBattleCity(areaModel);
 	//console.log("weakCity="+weakCity);
@@ -182,13 +182,13 @@ function jobAiNeedToEnlist(areaModel){
 	if(areaModel.agriculture() < areaModel.maxAgriculture()*0.3 || areaModel.business() < areaModel.maxBusiness()*0.3 || areaModel.cityDefense() < areaModel.maxCityDefense()*0.3){
 		return AiEnlistFlag.MustResource;
 	}
-	if(areaModel.troops() < minToops * 2){
+	if(areaModel.troops() < minToops * 1.5){
 		return AiEnlistFlag.Need;
 	}
 	if(areaModel.agriculture() < areaModel.maxAgriculture()*0.6 || areaModel.business() < areaModel.maxBusiness()*0.6 || areaModel.cityDefense() < areaModel.maxCityDefense()*0.6){
 		return AiEnlistFlag.NeedResource;
 	}
-	if(areaModel.troops() < minToops * 3){
+	if(areaModel.troops() < minToops * 2){
 		return AiEnlistFlag.Battle;
 	}
 	if(areaModel.agriculture() < areaModel.maxAgriculture() || areaModel.business() < areaModel.maxBusiness() || areaModel.cityDefense() < areaModel.maxCityDefense()){

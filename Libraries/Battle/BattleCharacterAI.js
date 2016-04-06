@@ -299,7 +299,9 @@ BattleCharacterAI.prototype.singleCombat = function(target) {
 	target.changeDirection(directionTarget);
 	target.toStatic(true);
 	self.chara.changeDirection(direction);
-	battleSingleCombatCheck(self.chara);
+	if(self.chara.belong == Belong.SELF){
+		battleSingleCombatCheck(self.chara);
+	}
 };
 BattleCharacterAI.prototype.attackActionComplete = function(event) {
 	var chara = event.currentTarget,selfSkill,skill;

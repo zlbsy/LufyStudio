@@ -169,6 +169,7 @@ Language.data = {
 	"dialog_spy_generals_confirm":"要对{0}进行谍报吗？",
 	"dialog_spy_generals_error":"无法对己方城池进行谍报！",
 	"dialog_expedition_select_error":"无法攻击此城池！",
+	"dialog_expedition_stop_battle_error":"该势力与我军停战中，无法攻击此城池！",
 	"dialog_persuade_belong_error":"无法劝降己方城池的武将！",
 	"dialog_persuade_select_city_toast":"请选择目标武将所在城池！",
 	"dialog_common_select_city_toast":"请选择目标城池！",

@@ -46,6 +46,13 @@ AreaIconView.prototype.onUp=function(event){
 				self.showDialogKey(params.belongError);
 				return;
 			}
+			if(typeof params.stopBattle != UNDEFINED){
+				var isStopBattle = SeigniorModel.getSeignior(LMvc.selectSeignorId).isStopBattle(self.areaStatus.seigniorCharaId());
+				if(isStopBattle != params.stopBattle){
+					self.showDialogKey(params.stopBattleError);
+					return;
+				}
+			}
 			if(params.spy){
 				var cityFree = SeigniorModel.getSeignior(LMvc.selectSeignorId).isSpyCity(self.areaStatus.id());
 				if(!cityFree){

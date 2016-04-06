@@ -491,11 +491,19 @@ function calculateExp(attChara,hertChara){
 	return exp;
 }
 function calculateAskSingleCombat(chara, target){
-	var charaValue = chara.data.force()*2 + chara.data.HP();
-	var targetValue = target.data.force()*2 + target.data.HP();
+	var charaValue = chara.data.force()*3 + chara.data.HP();
+	var targetValue = target.data.force()*3 + target.data.HP();
 	var value = charaValue - targetValue;
-	if(value < -10){
+	if(value < -15){
 		return false; 
+	}else if(value <= 0){
+		return Math.random() < 0.05; 
+	}else if(value <= 15){
+		return Math.random() < 1; 
+	}else if(value <= 30){
+		return Math.random() < 0.05; 
+	}else if(value <= 50){
+		return Math.random() < 0.01; 
 	}
-	return true;
+	return false;
 }

@@ -324,10 +324,36 @@ BattleIntelligentAI.prototype.getStrategyNodeTarget = function(strategy, target)
 BattleIntelligentAI.prototype.magicAttack = function() {
 	this.chara.AI.magicAttack(this.target);
 };
+BattleIntelligentAI.prototype.askSingleCombat = function() {
+	var self = BattleController.ctrlChara.inteAI;
+	var targetModel = self.target.data;
+	var message = String.format( "是否接受与敌将单挑？\n敌 {0} 武力:{1}\n我 {2} 武力:{3}", self.chara.data.name(), self.chara.data.force(), targetModel.name(), targetModel.force());
+	var obj = {title:Language.get("确认"), message:message, width:360, height:330, okEvent:self.singleCombatSuccess, cancelEvent:self.singleCombatFail};
+	var windowLayer = ConfirmWindow(obj);
+	LMvc.layer.addChild(windowLayer);
+};
+BattleIntelligentAI.prototype.singleCombatSuccess = function(event) {
+	event.currentTarget.parent.remove();
+	var self = BattleController.ctrlChara.inteAI;
+	self.chara.AI.singleCombat(self.target);
+	var targetModel = self.target.data;
+	script = "SGJTalk.show(" + targetModel.id() + ",0," + Language.get("single_combat_answer_ok") + ");" + 
+		"SGJBattleCharacter.singleCombatStart(" + self.chara.belong + "," + self.chara.data.id() + ");";
+	LGlobal.script.addScript(script);
+};
+BattleIntelligentAI.prototype.singleCombatFail = function(event) {
+	event.currentTarget.parent.remove();
+	var self = BattleController.ctrlChara.inteAI;
+	var script = "SGJTalk.show(" + self.target.data.id() + ",0," + Language.get("single_combat_answer_no") + ");" + 
+		"SGJBattleCharacter.endAction(" + self.chara.belong + "," + self.chara.data.id() + ");";
+	LGlobal.script.addScript(script);
+};
 BattleIntelligentAI.prototype.physicalAttack = function() {
-	var self = this;
+	var self = this;trace("physicalAttack run");
 	if(calculateAskSingleCombat(self.chara, self.target)){
-	
+		var script = "SGJTalk.show(" + self.chara.data.id() + ",0," + String.format(Language.get("single_combat_ask"), self.target.data.name()) + ");";
+		script += "SGJBattleCharacter.askSingleCombat();";
+		LGlobal.script.addScript(script);
 	}else{
 		self.chara.AI.physicalAttack(self.target);
 	}
@@ -361,29 +387,27 @@ BattleIntelligentAI.prototype.useAddHpStrategy = function() {
 };
 BattleIntelligentAI.prototype.moveStart = function() {
 	var self = this, chara = self.chara;
-	console.log("moveStart : " + self.targetNode);
 	var returnList = self.targetNode ? LMvc.BattleController.query.queryPath(new LPoint(self.locationX, self.locationY),new LPoint(self.targetNode.x,self.targetNode.y)) : [];
-	console.log("returnList=",returnList);
+	var length = returnList.length;
 	LMvc.BattleController.view.roadLayer.clear();
-	if(returnList.length > 0){
+	if(length > 0){
 		self.chara.addEventListener(CharacterActionEvent.MOVE_COMPLETE,self.run);
 		self.chara.setRoad(returnList);//move
 	}
 	if(!self.target){
 		self.chara.mode = CharacterMode.END_MOVE;
-		if(returnList.length == 0){
+		if(length == 0){
 			self.run();
 		}
 		return;
 	}
 	if(self.chara.currentSelectStrategy){
 		self.chara.mode = CharacterMode.STRATEGY_SELECT;
-		self.cloudWeatherCharacterShow();
 	}else{
 		self.chara.mode = CharacterMode.ATTACK;
-		self.cloudWeatherCharacterShow();
 	}
-	if(returnList.length == 0){
+	self.cloudWeatherCharacterShow();
+	if(length == 0){
 		self.run();
 	}
 };

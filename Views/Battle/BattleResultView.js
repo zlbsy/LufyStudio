@@ -241,6 +241,7 @@ BattleResultView.prototype.selfCaptiveFail=function(event){
 };
 BattleResultView.prototype.enemyCaptiveFail=function(event){
 	var self = event.currentTarget;
+	var battleData = self.controller.battleData;
 	if(event.eventType == BattleResultEvent.CLOSE_EXP){
 		experienceToFeat(battleData.expeditionEnemyCharacterList);
 	}

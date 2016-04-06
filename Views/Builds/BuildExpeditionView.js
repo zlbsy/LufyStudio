@@ -16,7 +16,7 @@ BuildExpeditionView.prototype.run=function(){
 	self.characterListType = CharacterListType.EXPEDITION;
 	self.controller.addEventListener(LCityEvent.SELECT_CITY, self.expeditionSelectCharacter);
 	self.controller.addEventListener(LCityEvent.CLOSE_SELECT_CITY, self.closeSelectCity);
-	self.controller.toSelectMap(CharacterListType.EXPEDITION, {isSelf:false,toast:"dialog_common_select_city_toast",belongError:"dialog_expedition_select_error",confirmMessage:"dialog_expedition_select_confirm"});
+	self.controller.toSelectMap(CharacterListType.EXPEDITION, {isSelf:false, toast:"dialog_common_select_city_toast", belongError:"dialog_expedition_select_error", stopBattle:false, stopBattleError:"dialog_expedition_stop_battle_error", confirmMessage:"dialog_expedition_select_confirm"});
 };
 BuildExpeditionView.prototype.closeSelectCity=function(event){
 	var controller = event.currentTarget;

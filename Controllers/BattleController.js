@@ -463,6 +463,11 @@ BattleController.prototype.loadSingleCombat = function(){
 };
 BattleController.prototype.loadSingleCombatComplete=function(){
 	var self = this;
-	var singleCombat = new SingleCombatController(self,BattleController.ctrlChara.data.id(),BattleController.ctrlChara.AI.attackTarget.data.id());
+	var singleCombat;
+	if(self,BattleController.ctrlChara.belong == Belong.SELF){
+		singleCombat = new SingleCombatController(self,BattleController.ctrlChara.data.id(),BattleController.ctrlChara.AI.attackTarget.data.id());
+	}else{
+		singleCombat = new SingleCombatController(self, BattleController.ctrlChara.AI.attackTarget.data.id(), BattleController.ctrlChara.data.id());
+	}
 	LMvc.stageLayer.addChild(singleCombat.view);
 };

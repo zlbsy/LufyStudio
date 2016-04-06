@@ -1892,6 +1892,9 @@ LSGJBattleCharacterScript.analysis = function(value) {
 		case "SGJBattleCharacter.boutSkillRun":
 			LSGJBattleCharacterScript.boutSkillRun(value, start, end);
 			break;
+		case "SGJBattleCharacter.askSingleCombat":
+			BattleController.ctrlChara.inteAI.askSingleCombat();
+			break;
 		default:
 			LGlobal.script.analysis();
 	}
