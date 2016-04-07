@@ -16,6 +16,9 @@ ItemModel.prototype.id = function(){
 ItemModel.prototype.count = function(value){
 	return this._dataValue("count", value, 0);
 };
+ItemModel.prototype.rarity = function(){
+	return this.master().rarity();
+};
 ItemModel.prototype.name = function(){
 	return this.master().name();
 };

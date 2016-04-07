@@ -62,6 +62,9 @@ ItemMasterModel.prototype.stamp = function(){
 ItemMasterModel.prototype.itemType = function(){
 	return this.data.type;
 };
+ItemMasterModel.prototype.rarity = function(){
+	return this.data.rarity;
+};
 ItemMasterModel.prototype.position = function(){
 	return this.data.position;
 };

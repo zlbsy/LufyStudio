@@ -110,15 +110,19 @@ CharacterListView.prototype.onChangeList=function(event){
 	console.log("onChangeList=", event);
 	var self = event.currentTarget;
 	var characterId = event.characterModel.id();
-	var characterListChildView = self.listView.getItems().find(function(child){
+	var items = self.listView.getItems();
+	var index = items.findIndex(function(child){
 		return child.charaModel.id() == characterId;
 	});
-	if(!characterListChildView){
+	if(index < 0){
 		return;
 	}
+	var characterListChildView = items[index];
 	characterListChildView.set(event.characterModel);
 	characterListChildView.cacheAsBitmap(false);
 	characterListChildView.updateView();
+	
+	characterListChildView.cutover(self.showingTabName, self.listView.isInClipping(index));
 };
 CharacterListView.prototype.onChangeChildSelect=function(event){
 	var self = event.currentTarget,selectedCount=0;

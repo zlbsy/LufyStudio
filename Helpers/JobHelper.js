@@ -244,11 +244,13 @@ function exploreAgricultureRun(characterModel){
 	}
 	cityModel.itemsFarmland(items);
 	var item = new ItemModel(null,{item_id:itemId,count:1});
-	if(!toEquipmentItem(item, characterModel)){
-		cityModel.addItem(item);
-	}
 	if(characterModel.seigniorId() == LMvc.selectSeignorId){
+		cityModel.addItem(item);
 		SeigniorExecute.addMessage(String.format(Language.get("exploreAgricultureSuccess"),characterModel.name(),item.name()));
+	}else{
+		if(!toEquipmentCityItem(item, cityModel)){
+			cityModel.addItem(item);
+		}
 	}
 	characterModel.featPlus(JobFeatCoefficient.NORMAL);
 }
@@ -656,7 +658,7 @@ function toEquipmentItem(item, characterModel){
 		return false;
 	}
 	characterModel.equip(item);
-	return false;
+	return true;
 }
 //装备
 function toEquipmentCityItem(item, cityModel){

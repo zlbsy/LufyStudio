@@ -217,9 +217,61 @@ CityView.prototype.init=function(){
 	self.buildLayerInit();
 	self.footerLayerInit();
 	self.statusLayerInit();
+	self.autoTalkCheck();
 };
 CityView.prototype.updateView = function(){
 	var self = this;
 	self.statusLayer.getChildAt(0).updateView();
 	self.iconAppoint.visible = self.controller.getValue("isAppoint");
+};
+CityView.prototype.autoTalkCheck = function(){
+	var self = this;
+	if(!self.controller.getValue("selfCity")){
+		return;
+	}
+	var cityModel = self.controller.getValue("cityData");
+	var generals = cityModel.generals();
+	var idleGenerals = cityModel.generals(Job.IDLE);
+	if(generals.length > idleGenerals.length){
+		return;
+	}
+	var general = idleGenerals[idleGenerals.length * Math.random() >>> 0];
+	
+	//未登场武将
+	var notDebut = cityModel.notDebut();
+	if(notDebut.length > 0 && Math.random() < 0.2){
+		Talk(self, general.id(), 0, "最近在酒馆好像有特殊的人出没，到酒馆去访问一下说不定会发现不错的人才哦!", function() {
+			LMvc.talkOver = true;
+		});
+		return;
+	}
+	//TODO::ver1.1 在野武将推荐
+	/*var outOfOffice = cityModel.outOfOffice();
+	if(outOfOffice.length > 0){
+	
+	}*/
+	var itemModelList = [cityModel.itemsFarmlandModel(), cityModel.itemsMarketModel()];
+	var items = [];
+	for(var i=0,l=itemModelList.length;i<l;i++){
+		var itemModels = itemModelList[i];
+		for(var j=0,jl=itemModels.length;j<jl;j++){
+			var item = itemModels[j];
+			if(item.rarity() > 4){
+				items.push(item);
+			}
+		}
+	}
+	if(items.length > 0 && Math.random() < 0.1){
+		var item = items[items.length*Math.random()];
+		var msg = String.format("据说这座城的某个地方埋着稀有的装备{0}，但是想找到恐怕没那么容易!", item.name());
+		Talk(self, general.id(), 0, msg, function() {
+			LMvc.talkOver = true;
+		});
+		return;
+	}
+	if(notDebut.length == 0 && Math.random() < 0.05){
+		Talk(self, general.id(), 0, "这座城里目前好像没什么人才啊!", function() {
+			LMvc.talkOver = true;
+		});
+	}
 };

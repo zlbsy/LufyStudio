@@ -61,12 +61,16 @@ CharacterDetailedTabEquipmentView.prototype.dressEquipment=function(event){
 	var itemCount = selectItemModel.count();
 	var characterModel = self.controller.getValue("selectedCharacter");
 	characterModel.equip(selectItemModel);
-	
+	characterModel.calculation();
 	var cityData = LMvc.CityController.getValue("cityData");
 	cityData.removeItem(selectItemModel);
 	
 	var detailedView = self.getParentByConstructor(CharacterDetailedView);
 	detailedView.changeCharacter(0);
+	var characterListView = self.getParentByConstructor(CharacterListView);
+	var e = new LEvent(CharacterListEvent.LIST_CHANGE);
+	e.characterModel = characterModel;
+	characterListView.dispatchEvent(e);
 };
 CharacterDetailedTabEquipmentView.prototype.removeEquipment=function(event){
 	var icon = event.currentTarget;
@@ -96,6 +100,11 @@ CharacterDetailedTabEquipmentView.prototype.removeEquipmentRun=function(event){
 	event.currentTarget.parent.remove();
 	var characterModel = detailedView.controller.getValue("selectedCharacter");
 	characterModel.equipOff(detailedView.removeItemId);
+	characterModel.calculation();
 	delete detailedView.removeItemId;
 	detailedView.changeCharacter(0);
+	var characterListView = self.getParentByConstructor(CharacterListView);
+	var e = new LEvent(CharacterListEvent.LIST_CHANGE);
+	e.characterModel = characterModel;
+	characterListView.dispatchEvent(e);
 };

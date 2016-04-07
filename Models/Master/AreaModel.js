@@ -327,6 +327,34 @@ AreaModel.prototype.seignior=function(){
 	}
 	return SeigniorModel.getSeignior(self.seigniorCharaId());
 };
+AreaModel.prototype.itemsFarmlandModel=function(){
+	var self = this;
+	var items_farmland = self.itemsFarmland();
+	var length = items_farmland.length;
+	if(self.data._itemsFarmlandModel && self.data._itemsFarmlandModel.length == length){
+		return self.data._itemsFarmlandModel;
+	}
+	self.data._itemsFarmlandModel = [];
+	for(var i=0;i<length;i++){
+		var item = new ItemModel(null,{item_id:items_farmland[i].item_id,count:1});
+		self.data._itemsFarmlandModel.push(item);
+	}
+	return self.data._itemsFarmlandModel;
+};
+AreaModel.prototype.itemsMarketModel=function(){
+	var self = this;
+	var items_market = self.itemsMarket();
+	var length = items_market.length;
+	if(self.data._itemsMarketModel && self.data._itemsMarketModel.length == length){
+		return self.data._itemsMarketModel;
+	}
+	self.data._itemsMarketModel = [];
+	for(var i=0;i<length;i++){
+		var item = new ItemModel(null,{item_id:items_market[i].item_id,count:1});
+		self.data._itemsMarketModel.push(item);
+	}
+	return self.data._itemsMarketModel;
+};
 AreaModel.prototype.itemsFarmland=function(value){
 	return this._dataValue("items_farmland", value, []);
 };
