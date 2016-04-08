@@ -356,14 +356,16 @@ CharacterListView.prototype.charactersPush = function(charas,characterIndex) {
 	var child,length = charas.length < characterIndex + maxNum ? charas.length : characterIndex + maxNum;
 	//console.log("charactersPush:"+characterIndex+",length:"+length);
 	var cityModel = self.controller.getValue("cityData");
-	var items = self.listView.getItems();
+	//var items = self.listView.getItems();
+	var items = [];
+	self.listView.updateList(items);
 	for(var i=characterIndex;i<length;i++){
 		var charaModel = charas[i];
 		var childLayer = new CharacterListChildView(self.controller,charaModel,cityModel,self);
 		childLayer.y = 50 * i;
 		items.push(childLayer);
 	}
-	self.listView.updateList(items);
+	self.listView.updateList(items);return;
 	if(length < charas.length){
 		setTimeout(function(){
 			self.charactersPush(charas, length);

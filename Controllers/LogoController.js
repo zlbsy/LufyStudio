@@ -63,6 +63,8 @@ LogoController.prototype.start=function(event){
 		{name:"city",path:LMvc.MVC_PATH+"Sound/city.mp3"},
 		{name:"map",path:LMvc.MVC_PATH+"Sound/map.mp3"},
 		{name:"Se_battle_loading",path:LMvc.MVC_PATH+"Sound/Se_battle_loading.wav"},
+		{name:"Se_big_block",path:LMvc.MVC_PATH+"Sound/Se_big_block.wav"},
+		{name:"Se_big_hert",path:LMvc.MVC_PATH+"Sound/Se_big_hert.wav"},
 		{name:"Se_block",path:LMvc.MVC_PATH+"Sound/Se_block.wav"},
 		{name:"Se_cancel",path:LMvc.MVC_PATH+"Sound/Se_cancel.wav"},
 		{name:"Se_charge",path:LMvc.MVC_PATH+"Sound/Se_charge.wav"},
@@ -85,6 +87,7 @@ LogoController.prototype.start=function(event){
 		{name:"Se_strategy_hert2",path:LMvc.MVC_PATH+"Sound/Se_strategy_hert2.wav"},
 		{name:"Se_strategy_warter",path:LMvc.MVC_PATH+"Sound/Se_strategy_warter.wav"},
 		{name:"Se_strategy_wind",path:LMvc.MVC_PATH+"Sound/Se_strategy_wind.wav"},
+		{name:"Se_swing",path:LMvc.MVC_PATH+"Sound/Se_swing.wav"},
 		];
 		LLoadManage.load(soundDatas, null, self.soundComplete);
 	}

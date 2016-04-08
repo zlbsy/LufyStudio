@@ -15,7 +15,7 @@ SingleCombatArenaView.prototype.init=function(){
 	self.arenaLayer = new LSprite();
 	self.addChild(self.arenaLayer);
 	
-	self.controller.loadCharacterList(CharacterListType.TEST,self);
+	self.controller.loadCharacterList(CharacterListType.TEST,CharacterModel.list, {isOnlyOne:true, buttonLabel:"execute"});
 };
 SingleCombatArenaView.prototype.addCharacterListView=function(characterListView){
 	this.contentLayer.addChild(characterListView);

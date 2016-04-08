@@ -410,6 +410,9 @@ CharacterModel.prototype.seigniorName = function(){
 CharacterModel.prototype.seigniorLevel = function(){
 	var self = this;
 	if(self.seigniorId() == 0){
+		if(!LMvc.selectSeignorId){
+			return 1;
+		}
 		return SeigniorModel.getSeignior(LMvc.selectSeignorId).level();
 	}
 	return self.seignior().level();

@@ -31,7 +31,7 @@ CityView.prototype.layerInit=function(){
 	self.addChild(self.contentLayer);
 };
 CityView.prototype.clearContentLayer=function(event){
-	var self = this;console.log("clearContentLayer");
+	var self = this;
 	self.contentLayer.die();
 	self.contentLayer.removeAllChild();
 	self.contentMask.visible = false;
@@ -133,7 +133,7 @@ CityView.prototype.footerLayerInit=function(){
 	var self = this;
 	var buttonWidth = 100, buttonHeight = 60;
 	self.footerLayer.y = LGlobal.height - buttonHeight;
-	var buttonMap = self.getIconButton(Language.get("大地图"), buttonWidth, buttonHeight, "icon-map");
+	var buttonMap = self.getIconButton(Language.get("big_map"), buttonWidth, buttonHeight, "icon-map");
 	buttonMap.name = "bigMap";
 	buttonMap.x = (LGlobal.width - buttonWidth * 4 - 30) * 0.5;
 	self.footerLayer.addChild(buttonMap);
@@ -240,7 +240,7 @@ CityView.prototype.autoTalkCheck = function(){
 	//未登场武将
 	var notDebut = cityModel.notDebut();
 	if(notDebut.length > 0 && Math.random() < 0.2){
-		Talk(self, general.id(), 0, "最近在酒馆好像有特殊的人出没，到酒馆去访问一下说不定会发现不错的人才哦!", function() {
+		Talk(self, general.id(), 0, Language.get("auto_talk_not_debut"), function() {
 			LMvc.talkOver = true;
 		});
 		return;
@@ -262,15 +262,15 @@ CityView.prototype.autoTalkCheck = function(){
 		}
 	}
 	if(items.length > 0 && Math.random() < 0.1){
-		var item = items[items.length*Math.random()];
-		var msg = String.format("据说这座城的某个地方埋着稀有的装备{0}，但是想找到恐怕没那么容易!", item.name());
+		var item = items[items.length*Math.random() >>> 0];
+		var msg = String.format(Language.get("auto_talk_equipment"), item.name());
 		Talk(self, general.id(), 0, msg, function() {
 			LMvc.talkOver = true;
 		});
 		return;
 	}
 	if(notDebut.length == 0 && Math.random() < 0.05){
-		Talk(self, general.id(), 0, "这座城里目前好像没什么人才啊!", function() {
+		Talk(self, general.id(), 0, Language.get("auto_talk_no_generals"), function() {
 			LMvc.talkOver = true;
 		});
 	}
