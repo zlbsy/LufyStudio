@@ -24,7 +24,7 @@ MapView.prototype.layerInit=function(){
 };
 MapView.prototype.backLayerInit=function(){
 	var self = this;
-	//TODO::春夏秋冬
+	//TODO::ver1.1春夏秋冬
 	var bitmapData = GameCacher.getAreaMap("area-map-1");//new LBitmapData(LMvc.datalist["area-map-1"],null,null,null,null,LBitmapData.DATA_CANVAS);
 	self.backgroundWidth = bitmapData.width;
 	self.backgroundHeight = bitmapData.height;

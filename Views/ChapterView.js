@@ -122,6 +122,9 @@ ChapterView.prototype.okEvent=function(event){
 	self.removeChildAt(self.numChildren - 1);
 	LMvc.chapterData.isCreateDebut = self.checkboxDebut.checked;
 	self.controller.loadMap(self.select_chara_id);
+	if(!LPlugin.native){
+		LPlugin.readyBGM("map");
+	}
 };
 ChapterView.prototype.ctrlLayerInit=function(){
 	var self = this;

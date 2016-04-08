@@ -75,7 +75,7 @@ function getJobResult(realValue,coefficient){
 	return value;
 }
 function trainingRun(characterModel, soldierId){
-	//TODO::训练加成城池技术
+	//TODO::ver1.1训练加成城池技术
 	var soldier = characterModel.soldiers().find(function(child){
 		return child.id() == soldierId;
 	});
@@ -589,7 +589,7 @@ function hireRun2(characterModel, hireCharacter,area){
 	characterModel.featPlus(JobFeatCoefficient.NORMAL);
 }
 function SeigniorExecuteChangeCityResources(area){
-	//TODO::自然灾害
+	//TODO::ver1.1自然灾害
 	var minPopulation = AreaModel.populationList[0][0];
 	var maxPopulation = AreaModel.populationList[AreaModel.populationList.length - 1][1];
 	var population = area.population();

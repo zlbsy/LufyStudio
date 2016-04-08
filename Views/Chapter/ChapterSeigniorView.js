@@ -78,4 +78,5 @@ ChapterSeigniorView.prototype.onClick=function(event){
 	okEvent:chapterView.okEvent,cancelEvent:null};
 	var windowLayer = ConfirmWindow(obj);
 	chapterView.addChild(windowLayer);
+	LPlugin.playSE("Se_ok");
 };

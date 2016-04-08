@@ -8,7 +8,7 @@ MapModel.prototype.construct=function(){
 MapModel.prototype.getImages=function(){
 	var self = this;
 	var list = [];
-	//TODO::四季 list.push({name:"area-map-1",path:LMvc.IMG_PATH+"area/map-1.png"});
+	//TODO::ver1.1四季 list.push({name:"area-map-1",path:LMvc.IMG_PATH+"area/map-1.png"});
 	
 	list.push({name:"talkbox",path:LMvc.IMG_PATH+"common/talkbox.png"});
 	

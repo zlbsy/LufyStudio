@@ -135,35 +135,9 @@ BattleResultConfirmView.prototype.citySelected=function(event){
 	var battleData = self.controller.battleData;
 	if(self.retreatCityId){
 		self.parent.retreatCityId = self.retreatCityId;
-		/*var city = self.controller.battleData.toCity;
-		self.retreatCity = AreaModel.getArea(self.retreatCityId);
-		if(!self.retreatCity.seigniorCharaId()){
-			var seignior = SeigniorModel.getSeignior(self.failSeigniorId);
-			seignior.addCity(self.retreatCity);
-			self.retreatCity.seigniorCharaId(self.failSeigniorId);
-		}
-		//战斗失败后资源移动
-		battleExpeditionMove(city, self.retreatCity);*/
 	}
 	battleCityChange(self.winSeigniorId, self.failSeigniorId, self.retreatCityId,  battleData.expeditionEnemyCharacterList, battleData.toCity, self.model.enemyCaptive);
 	self.retreatCityId = battleCheckRetreatCity(self.retreatCity, self.failSeigniorId, battleData.toCity);
-	/*if(!self.retreatCityId){
-		//无相邻可以撤退
-		var seignior = SeigniorModel.getSeignior(self.failSeigniorId);
-		var seigniorCharacter = seignior.character();
-		if(seigniorCharacter.cityId() != battleData.toCity.id()){
-			//如果君主未被擒,则撤退到君主所在城池
-			self.parent.retreatCityId = seigniorCharacter.cityId();
-		}else{
-			//TODO::君主被擒，暂时随机决定撤退城池
-			//TODO::版本升级后需调整为最近城池
-			var citys = seignior.areas();
-			if(citys.length > 0){
-				self.parent.retreatCityId = citys[(citys.length * Math.random()) >>> 0].id();
-				console.log("君主被擒，暂时随机决定撤退城池 : " + self.parent.retreatCityId);
-			}
-		}
-	}*/
 	self.parent.dispatchEvent(BattleResultEvent.LOSE_CITY);
 };
 BattleResultConfirmView.prototype.citySelectOnClick=function(event){

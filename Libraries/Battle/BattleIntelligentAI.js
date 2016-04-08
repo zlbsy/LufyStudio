@@ -374,7 +374,7 @@ BattleIntelligentAI.prototype.useAddHpStrategy = function() {
 		self.strategyFlag = BattleIntelligentAI.WAKE;
 		return;
 	}
-	//TODO::判断可以使用策略的优先级
+	//TODO::ver1.1判断可以使用策略的优先级
 	var obj = strategys[(strategys.length * Math.random()) >>> 0];
 	strategy = obj.strategy;
 	var target = obj.target;
@@ -430,7 +430,7 @@ BattleIntelligentAI.prototype.useWakeStrategy = function() {
 		self.strategyFlag = BattleIntelligentAI.RESTORE_STATE;
 		return;
 	}
-	//TODO::判断可以使用策略的优先级
+	//TODO::ver1.1判断可以使用策略的优先级
 	var obj = strategys[(strategys.length * Math.random()) >>> 0];
 	strategy = obj.strategy;
 	var target = obj.target;
@@ -466,7 +466,7 @@ BattleIntelligentAI.prototype.useAidStrategy = function(charas, strategyEffectTy
 		self.strategyFlag = strategyFlag;
 		return;
 	}
-	//TODO::判断可以使用策略的优先级
+	//TODO::ver1.1判断可以使用策略的优先级
 	var obj = strategys[(strategys.length * Math.random()) >>> 0];
 	strategy = obj.strategy;
 	var target = obj.target;
@@ -505,7 +505,7 @@ BattleIntelligentAI.prototype.useHertStrategy = function() {
 		chara.mode = CharacterMode.WAIT_ATTACK;
 		return;
 	}
-	//TODO::判断可以使用策略的优先级
+	//TODO::ver1.1判断可以使用策略的优先级
 	var obj = strategys[(strategys.length * Math.random()) >>> 0];
 	strategy = obj.strategy;
 	var target = obj.target;

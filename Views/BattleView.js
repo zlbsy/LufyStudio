@@ -169,7 +169,6 @@ BattleView.prototype.onframe=function(event){
 BattleView.prototype.updateView = function(){
 	var self = this;
 	/*
-	//TODO::
 	self.model.enemyCaptive.push(1);
 	self.model.enemyCaptive.push(2);
 	self.model.enemyCaptive.push(3);

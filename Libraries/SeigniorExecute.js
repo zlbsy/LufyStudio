@@ -388,7 +388,7 @@ SeigniorExecute.prototype.areaAIRun=function(areaModel){
 	//俘虏处理
 	jobAiCaptives(areaModel);
 	
-	//TODO::是否进行停战：下个版本对应
+	//TODO::ver1.1是否进行停战：下个版本对应
 	
 	//是否需要征兵
 	var needEnlistFlag = jobAiNeedToEnlist(areaModel);

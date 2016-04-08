@@ -83,7 +83,7 @@ BattleCharacterStatusView.prototype.showCharacterStatus=function(confirmStatus){
 	self.getCharacterStatusChild(BattleCharacterStatusConfig.MP, mpStatus);
 	layer.addChild(mpStatus);
 	/*
-	TODO::版本升级后再加入体力设定
+	TODO::ver1.1版本升级后再加入体力设定
 	setH += 20;
 	var spStatus = new LSprite();
 	spStatus.x = 10;

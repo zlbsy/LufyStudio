@@ -53,10 +53,12 @@ CityController.prototype.init=function(){
 	if(self.initFunc){
 		self.initFunc();
 	}
+	LPlugin.playBGM("city");
 };
 CityController.prototype.gotoMap=function(){
 	var self = this;
 	self.view.remove();
+	LPlugin.playBGM("map");
 	LMvc.CityController = null;
 	LMvc.MapController.view.visible = true;
 	LMvc.MapController.view.changeMode(MapController.MODE_MAP);

@@ -109,7 +109,7 @@ function singleCombatHert(leftCharacter, rightCharacter) {
 	}
 	rightCharacter.changeHp(hertValue);
 }
-//TODO::版本升级后，需做事件化调整
+//TODO::ver1.1版本升级后，需做事件化调整
 function singleCombatAttackActionComplete(currentCharacter, targetCharacter) {
 	console.log("check" , currentCharacter.data.name() , ">" , targetCharacter.data.name());
 	switch(currentCharacter.currentCommand){
@@ -123,12 +123,12 @@ function singleCombatAttackActionComplete(currentCharacter, targetCharacter) {
 			singleCombatCommandBigAttack(currentCharacter, targetCharacter);
 			break;
 		case SingleCombatCommand.DEFENCE:
-			console.log("轻伤音效");
+			LPlugin.playSE("Se_hert");//轻伤音效
 			targetCharacter.changeAction(CharacterAction.HERT);
 			singleCombatHert(currentCharacter, targetCharacter);
 			break;
 		case SingleCombatCommand.DODGE:
-			console.log("轻伤音效");
+			LPlugin.playSE("Se_hert");//轻伤音效
 			targetCharacter.changeAction(CharacterAction.HERT);
 			singleCombatHert(currentCharacter, targetCharacter);
 			break;
@@ -146,25 +146,21 @@ function singleCombatCommandCheckAttack(currentCharacter, targetCharacter) {
 	switch(targetCharacter.currentCommand){
 		case SingleCombatCommand.ATTACK:
 			if(currentCharacter.isLeft){
-				//TODO::挡格音效
-				console.log("挡格音效");
+				LPlugin.playSE("Se_block");//挡格音效
 			}
 			break;
 		case SingleCombatCommand.DOUBLE_ATTACK:
-			//TODO::轻伤音效
-			console.log("轻伤音效");
+			LPlugin.playSE("Se_hert");//轻伤音效
 			targetCharacter.changeAction(CharacterAction.HERT);
 			singleCombatHert(currentCharacter, targetCharacter);
 			break;
 		case SingleCombatCommand.BIG_ATTACK:
-			//TODO::轻伤音效
-			console.log("轻伤音效");
+			LPlugin.playSE("Se_hert");//轻伤音效
 			targetCharacter.changeAction(CharacterAction.HERT);
 			singleCombatHert(currentCharacter, targetCharacter);
 			break;
 		case SingleCombatCommand.DEFENCE:
-			//TODO::挡格音效
-			console.log("挡格音效");
+			LPlugin.playSE("Se_block");//挡格音效
 			targetCharacter.changeAction(CharacterAction.BLOCK);
 			singleCombatHert(currentCharacter, targetCharacter);
 			break;
@@ -174,8 +170,7 @@ function singleCombatCommandCheckAttack(currentCharacter, targetCharacter) {
 			targetCharacter.addDodgeScript(true);
 			break;
 		case SingleCombatCommand.CHARGE:
-			//TODO::轻伤音效
-			console.log("轻伤音效");
+			LPlugin.playSE("Se_hert");//轻伤音效
 			targetCharacter.changeAction(CharacterAction.HERT);
 			singleCombatHert(currentCharacter, targetCharacter);
 			break;
@@ -199,19 +194,16 @@ function singleCombatCommandCheckDoubleAttack(currentCharacter, targetCharacter)
 			break;
 		case SingleCombatCommand.DOUBLE_ATTACK:
 			if(currentCharacter.isLeft){
-				//TODO::挡格音效
-				console.log("挡格音效");
+				LPlugin.playSE("Se_block");//挡格音效
 			}
 			break;
 		case SingleCombatCommand.BIG_ATTACK:
-			//TODO::轻伤音效
-			console.log("轻伤音效");
+			LPlugin.playSE("Se_hert");//轻伤音效
 			targetCharacter.changeAction(CharacterAction.HERT);
 			singleCombatHert(currentCharacter, targetCharacter);
 			break;
 		case SingleCombatCommand.DEFENCE:
-			//TODO::挡格音效
-			console.log("挡格音效");
+			LPlugin.playSE("Se_block");//挡格音效
 			targetCharacter.changeAction(CharacterAction.BLOCK);
 			break;
 		case SingleCombatCommand.DODGE:
@@ -220,15 +212,13 @@ function singleCombatCommandCheckDoubleAttack(currentCharacter, targetCharacter)
 				console.log("抡空音效");
 				targetCharacter.addDodgeScript(false);
 			}else{
-				//TODO::轻伤音效
-				console.log("轻伤音效");
+				LPlugin.playSE("Se_hert");//轻伤音效
 				targetCharacter.changeAction(CharacterAction.HERT);
 				singleCombatHert(currentCharacter, targetCharacter);
 			}
 			break;
 		case SingleCombatCommand.CHARGE:
-			//TODO::轻伤音效
-			console.log("轻伤音效");
+			LPlugin.playSE("Se_hert");//轻伤音效
 			targetCharacter.changeAction(CharacterAction.HERT);
 			singleCombatHert(currentCharacter, targetCharacter);
 			break;
@@ -254,8 +244,7 @@ function singleCombatCommandBigAttack(currentCharacter, targetCharacter) {
 			}
 			break;
 		case SingleCombatCommand.DEFENCE:
-			//TODO::挡格音效
-			console.log("挡格音效");
+			LPlugin.playSE("Se_block");//挡格音效
 			targetCharacter.changeAction(CharacterAction.BLOCK);
 			singleCombatHert(currentCharacter, targetCharacter);
 			break;

@@ -13,76 +13,12 @@ and open the template in the editor.
 	    <meta name="apple-mobile-web-app-capable" content="yes">
 	    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
         <script src="./js/lufylegend-1.10.1.js" type="text/javascript"></script>
-        <script src="./js/lufylegend.lsharp.js" type="text/javascript"></script>
         <script src="./js/lufylegend.mvc-0.3.1.min.js" type="text/javascript"></script>
-        <script src="./js/lufylegend.ui-0.14.1.min.js" type="text/javascript"></script>
     </head>
     <body style="margin:0px 0px 0px 0px;padding:0px 0px 0px 0px;font-size: 0;">
         <div id="mvclegend">loading</div>
         <script>
-        /*LController._notify_over = {};
-		LController.prototype.notify = function(event){
-			var self = event.currentTarget;
-			LController._notify(self.view, false);
-			LController._notify_over = {};
-		};
-		LController.prototype.notifyAll = function(event){
-			var self = event.currentTarget;
-			LController._notify(self.view, true);
-			for(var i=0,l=self.ll_viewList.length;i<l;i++){
-				LController._notify(self.ll_viewList[i], true);
-			}
-			self.ll_viewList.length = 0;
-			LController._notify_over = {};
-		};
-		LController._notify=function(view,depth){
-			if(view && view.visible){
-				if(view.mvcType=="view"){
-					if(LController._notify_over[""+view.objectIndex]){
-						return;
-					}
-					LController._notify_over[""+view.objectIndex] = true;
-					view.updateView();
-				}
-				if(!depth){return;}
-				var childList=view.childList;
-				if(!childList||!childList.length){return;}
-				for(var i=0;i<childList.length;i++){
-					var child=childList[i];
-					LController._notify(child,depth);
-				}
-			}
-		};*/
-		/*LController._notify = function(view, depth){
-			if(view && view.visible && view.mvcType == "view"){
-				view.updateView();
-			}
-		};*/
-		/*LView.prototype.addController = function(controller){
-			if(self.controller){
-				return;
-			}
-			self.controller = controller;
-			self.model = controller.model;
-			self.controller.addView(self);
-		};
-        LDisplayObject.prototype.getParentByConstructor = function(value){
-        	var parent = this.parent;
-        	while(typeof parent == "object"){
-        		if(parent instanceof value){
-        			return parent;
-        		}
-        		parent = parent.parent;
-        	}
-        	return null;
-        };*/
-		LTextField.prototype.windComplete = function(){
-			var s = this;
-			s._speedIndex = s.speed;
-			s.text = s._ll_wind_text;
-			s._ll_wind_length = s._ll_wind_text.length + 1;
-			s._ll_windRun();
-       };
+		/*临时代码*/
         if(LGlobal.mobile){
         	var protocol = location.protocol;
 			if (protocol == "http:" || protocol == "https:") {
@@ -91,13 +27,12 @@ and open the template in the editor.
 				//console.log=function(){};
 			}
 		}
-        //LGlobal.keepClear = false;
+		//////////////////////华丽的分界线////////////////////
+        LGlobal.keepClear = false;
 		LGlobal.aspectRatio = PORTRAIT;
         init(1000/30,"mvclegend",480,800,main);
 		function main(){
 			LGlobal.setDebug(true);
-			//alert(window.innerWidth+","+window.innerHeight);
-			//console.log = trace;
 			if(LGlobal.mobile){
 				LGlobal.width = 480;
 				LGlobal.height = 480*window.innerHeight/window.innerWidth;
@@ -107,21 +42,19 @@ and open the template in the editor.
 			LGlobal.align = LStageAlign.TOP_LEFT;
 			LGlobal.stageScale = LStageScaleMode.SHOW_ALL;
 			LSystem.screen(LStage.FULL_SCREEN);
-			//LMouseEventContainer.dispatchAllEvent = true;
-			LMouseEventContainer.set(LMouseEvent.MOUSE_DOWN,true);
-			LMouseEventContainer.set(LMouseEvent.MOUSE_UP,true);
-			LMouseEventContainer.set(LMouseEvent.MOUSE_MOVE,true);
 			
 			var loadData = [
 					{name:"logo_bg_1",path:LMvc.IMG_PATH+"logo/logo_bg_1.jpg"},
 					{name:"logo_bg_2",path:LMvc.IMG_PATH+"logo/logo_bg_2.png"},
 					{name:"logo_ryofu",path:LMvc.IMG_PATH+"logo/logo_ryofu.png"},
-					//{path:"./js/lufylegend.ui-0.13.0.min.js",type:"js"},
 					{path:"./core/MyController.js",type:"js"},
-					{path:"./core/MyModel.js",type:"js"}
+					{path:"./core/MyModel.js",type:"js"},
+					{path:"./js/lufylegend.lsharp.js",type:"js"},
+					{path:"./js/lufylegend.ui-0.14.1.min.js",type:"js"},
+					{path:"./js/lufylegend.extension.js",type:"js"}
 			];
 		
-			loadingLayer = new LoadingSample3();
+			var loadingLayer = new LoadingSample3();
 			addChild(loadingLayer);	
 			LLoadManage.load(
 				loadData,
@@ -136,7 +69,7 @@ and open the template in the editor.
 					LMvc.init();
 					//return;
 					var fps = new FPS();
-					LTweenLiteTimeline.to(fps,5,{alpha:0,loop:true}).to(fps,5,{alpha:1});
+					LTweenLiteTimeline.to(fps,1,{delay:1,alpha:0,loop:true}).to(fps,1,{delay:5,alpha:1});
 					addChild(fps);
 				}
 			);

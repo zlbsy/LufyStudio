@@ -518,8 +518,10 @@ function jobAiCaptivesRescue(areaModel,characters){//解救俘虏
 	if(captives.length == 0){
 		return false;
 	}
-	//TODO::执行解救俘虏概率
-	
+	//TODO::ver1.1执行解救俘虏概率
+	if(Math.random() < 0.5){
+		return false;
+	}
 	
 	var captiveIndex = captives.length * Math.random() >>> 0;
 	var captive = captives[captiveIndex];

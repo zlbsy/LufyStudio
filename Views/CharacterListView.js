@@ -54,7 +54,7 @@ CharacterListView.prototype.listInit=function(){
 	self.listLayer.addChild(buttonClose);
 	buttonClose.addEventListener(LMouseEvent.MOUSE_UP, self.onClickCloseButton.bind(self));
 
-	//TODO::参数控制
+	//TODO::ver1.1参数控制
 	if((SeigniorExecute.running && self.controller.characterListType == CharacterListType.EXPEDITION)
 	|| self.controller.characterListType == CharacterListType.SELECT_MONARCH){
 		buttonClose.visible = false;

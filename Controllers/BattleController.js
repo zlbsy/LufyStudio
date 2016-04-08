@@ -147,7 +147,6 @@ BattleController.prototype.charactersInit = function(){
 			if(sumTroops > 0 || i == enemyCharas.length - 1){
 				continue;
 			}
-			//TODO::
 			enemyCharas = enemyCharas.splice(0, i + 1);
 			break;
 		}

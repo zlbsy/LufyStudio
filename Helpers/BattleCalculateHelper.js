@@ -317,7 +317,6 @@ function calculateHertValue(attChara,hertChara,correctionFactor, isView){
 		//随即系数
 		r = (11 - Math.random() * 2) * 0.1 * r;
 	}
-	//TODO:: 宝物修正
 	if(r < 1){
 		r = 1;
 	}

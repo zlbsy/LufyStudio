@@ -31,7 +31,7 @@ LPlugin.openStamp = function(key){
 	LPlugin.stamps()[key] = 1;
 	LPlugin.SetData(LPlugin.KEY_STAMP_LIST, LPlugin.stamps());
 };
-LPlugin.eventIsOpen = function(key){console.log("LPlugin.events()",LPlugin.events());
+LPlugin.eventIsOpen = function(key){
 	return LPlugin.events()[key] ? true : false;
 };
 LPlugin.openEvent = function(key){
@@ -59,4 +59,44 @@ LPlugin.GetData = function(key){
 		return {};
 	}
 	return JSON.parse(data);
+};
+LPlugin.sounds = {};
+LPlugin.playingBGM = null;
+LPlugin.playSE = function(name){
+	LPlugin.playSound(name, 1);
+};
+LPlugin.closeBGM = function(){
+	if(LPlugin.playingBGM){
+		LPlugin.playingBGM.close();
+		LPlugin.playingBGM = null;
+	}
+};
+LPlugin.playBGM = function(name){
+	LPlugin.closeBGM();
+	LPlugin.playingBGM = LPlugin.playSound(name, 1000);
+};
+LPlugin.readyBGM = function(name){
+	if(LPlugin.sounds[name]){
+		return;
+	}
+	LPlugin.playBGM(name);
+	LPlugin.closeBGM();
+};
+LPlugin.playSound = function(name, count){
+	if(!LPlugin.soundData || !LPlugin.soundData[name]){
+		return null;
+	}
+	if(!count){
+		count = 1;
+	}
+	var sound;
+	if(LPlugin.sounds[name]){
+		sound = LPlugin.sounds[name];
+	}else{
+		sound = new LSound();
+		sound.load(LPlugin.soundData[name]);
+		LPlugin.sounds[name] = sound;
+	}
+	sound.play(0, count);
+	return sound;
 };

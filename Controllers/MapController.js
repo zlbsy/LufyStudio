@@ -68,7 +68,7 @@ MapController.prototype.init=function(status){
 		}
 	}
 	self.dispatchEvent(LController.NOTIFY);
-	
+	LPlugin.playBGM("map");
 	self.addEventListener(CharacterListEvent.SHOW, self.view.hideMapLayer);
 	self.addEventListener(CharacterListEvent.CLOSE, self.view.showMapLayer);
 };

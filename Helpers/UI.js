@@ -45,6 +45,9 @@ function getSizeButton(text,width,height,img){
 function getButton(text,width,img){
 	return getSizeButton(text,width,50,img);
 }
+function playButtonSe(e){
+	LPlugin.playSE(e.currentTarget.se);
+}
 function getTranslucentMask(){
 	var layer = new LSprite();
 	var windowBackgrond = getTranslucentBitmap();
@@ -137,6 +140,7 @@ function ConfirmWindow(obj){
 	
 	if(typeof obj.cancelEvent != UNDEFINED){
 		var cancelPanel = new LButton(new LBitmap(new LBitmapData(LMvc.datalist["close"])));
+		cancelPanel.se = "Se_cancel";
 		cancelPanel.y = panel.y + panel.getHeight() - cancelPanel.getHeight() - 20;
 		windowLayer.addChild(cancelPanel);
 		

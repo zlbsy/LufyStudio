@@ -669,8 +669,7 @@ function battleCheckRetreatCity(retreatCity, failSeigniorId, toCity){
 			console.log("如果君主未被擒,则撤退到君主所在城池");
 			retreatCityId = seigniorCharacter.cityId();
 		}else{
-			//TODO::君主被擒，暂时随机决定撤退城池
-			//TODO::版本升级后需调整为最近城池
+			//TODO::ver1.1君主被擒，暂时随机决定撤退城池,版本升级后需调整为最近城池
 			var citys = seignior.areas();
 			if(citys.length > 0){
 				retreatCityId = citys[(citys.length * Math.random()) >>> 0].id();

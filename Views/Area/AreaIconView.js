@@ -19,6 +19,7 @@ AreaIconView.prototype.onDown=function(event){
 	self.saveTouch = {dx:mouseX,dy:mouseY,touchMove:false};
 	var baseView = self.parent.parent;
 	baseView.startDrag(event.touchPointID);
+	LPlugin.playSE("Se_ok");
 };
 AreaIconView.prototype.onUp=function(event){
 	var self = event.currentTarget;
@@ -71,6 +72,9 @@ AreaIconView.prototype.onUp=function(event){
 			}
 		}else{
 			self.controller.showCity(self.areaStatus.id());
+			if(!LPlugin.native){
+				LPlugin.readyBGM("city");
+			}
 		}
 	}
 };

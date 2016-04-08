@@ -430,7 +430,7 @@ BattleAIExecute.prototype.physicalAttack = function(currentChara, targetChara) {
 				hertValues = doubleAtt ? [1,1] : [1];
 			}
 			if(skill && skill.isSubType(SkillSubType.AMBUSH_INVERSE)){
-				//TODO::暂时增加0.1，需计算得出
+				//TODO::ver1.1暂时增加0.1，需计算得出
 				hertValues[0] += 0.1;
 			}
 			if(skill && skill.isSubType(SkillSubType.NO_COUNTER)){
@@ -446,7 +446,7 @@ BattleAIExecute.prototype.physicalAttack = function(currentChara, targetChara) {
 					}else{
 						rangeAttackTarget = currentChara.data.currentSoldiers().rangeAttackTarget();
 				}
-				//TODO::蔓延，穿透等效果暂时未加入
+				//TODO::ver1.1蔓延，穿透等效果暂时未加入
 				var rangeLength = (rangeAttackTarget.length / 4) >>> 0;
 				if(rangeLength){
 					var targetCharas = self.getTargetCharacters(currentChara);
