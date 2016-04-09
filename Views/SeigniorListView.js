@@ -94,11 +94,7 @@ SeigniorListView.prototype.ctrlLayerInit=function(){
 	leftButton.y = LGlobal.height - 160 + (160 - leftBitmapData.height) * 0.5;
 	self.ctrlLayer.addChild(leftButton);
 	leftButton.addEventListener(LMouseEvent.MOUSE_UP,self.clickLeftArrow);
-	var rightBitmapData = new LBitmapData(null,0,0,leftBitmapData.width,leftBitmapData.height,LBitmapData.DATA_CANVAS);
-	var matrix = new LMatrix();
-	matrix.scale(-1,1);
-	matrix.translate(leftBitmapData.width,0);
-	rightBitmapData.draw(left, matrix);
+	var rightBitmapData = GameCacher.getScaleBitmapData("arrow", -1, 1);
 	var right = new LBitmap(rightBitmapData);
 	var rightButton = new LButton(right);
 	rightButton.name = "rightButton";

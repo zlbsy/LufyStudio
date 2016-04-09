@@ -6,6 +6,25 @@ LTextField.prototype.windComplete = function(){
 	s._ll_wind_length = s._ll_wind_text.length + 1;
 	s._ll_windRun();
 };
+LListView.prototype.clear = function(){
+	var self = this;
+	for(var i=0,l=self._ll_items.length;i<l;i++){
+		self._ll_items[i].die();
+	}
+	self._ll_items.splice(0, self._ll_items.length);
+	self.resizeScrollBar();
+};
+LListView.prototype.deleteChildView = function(child){
+	var self = this, c = self._ll_items, i, l;
+	for (i = 0, l = c.length; i < l; i++) {
+		if (child.objectIndex == c[i].objectIndex) {
+			c[i].die();
+			self._ll_items.splice(i, 1);
+			break;
+		}
+	}
+	self.resizeScrollBar();
+};
 //////////////////////华丽的分界线////////////////////
 
 /*不需要加到引擎中，只在本游戏中使用*/

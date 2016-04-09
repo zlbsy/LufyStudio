@@ -5,6 +5,20 @@ GameCacher._areaMiniMaps = {};
 GameCacher._colorBitmapDatas = {};
 GameCacher._panelBitmapDatas = {};
 GameCacher._grayBitmapDatas = {};
+GameCacher._scaleBitmapDatas = {};
+GameCacher.getScaleBitmapData = function(name, scaleX, scaleY){
+	var key = name+"_" + scaleX + "_" + scaleY;
+	if(!GameCacher._scaleBitmapDatas[key]){
+		var baseData = new LBitmapData(LMvc.datalist[name]);
+		var bitmapData = new LBitmapData(null, 0, 0, baseData.width, baseData.height, LBitmapData.DATA_CANVAS);
+		var matrix = new LMatrix();
+		matrix.scale(scaleX, scaleY);
+		matrix.translate(scaleX == -1 ? baseData.width : 0, scaleY == -1 ? baseData.height:0);
+		bitmapData.draw(new LBitmap(baseData), matrix);
+		GameCacher._scaleBitmapDatas[key] = bitmapData;
+	}
+	return GameCacher._scaleBitmapDatas[key];
+};
 GameCacher.getGrayDisplayObject = function(key, width, height){
 	if(!GameCacher._grayBitmapDatas[key]){
 		var layer = new LSprite();

@@ -15,13 +15,26 @@ SingleCombatArenaView.prototype.init=function(){
 	self.arenaLayer = new LSprite();
 	self.addChild(self.arenaLayer);
 	
-	self.controller.loadCharacterList(CharacterListType.TEST,CharacterModel.list, {isOnlyOne:true, buttonLabel:"execute"});
+	var charas = [];
+	for(var i=0; i<MaxHistoryCharacterIndex; i++){
+		var chara = CharacterModel.list[i];
+		if(chara.data.force >= 80){
+			charas.push(chara);
+		}
+	}
+	charas = charas.sort(function(a, b){return b.data.force - a.data.force;});
+	self.characters = charas;
+	self.controller.loadCharacterList(CharacterListType.GAME_SINGLE_COMBAT, charas, {isOnlyOne:true, buttonLabel:"execute", noCutover:true, noDetailed:true});
 };
 SingleCombatArenaView.prototype.addCharacterListView=function(characterListView){
 	this.contentLayer.addChild(characterListView);
 };
 SingleCombatArenaView.prototype.closeCharacterList=function(event){
 	var self = event.currentTarget.view;
+	if(event.subEventType == "return"){
+		self.controller.closeSelf();
+		return;
+	}
 	if(event.characterList.length > 1){
 		var obj = {title:Language.get("confirm"),message:Language.get("dialog_select_onlyone_error"),height:200,okEvent:null};
 		var windowLayer = ConfirmWindow(obj);
@@ -32,7 +45,7 @@ SingleCombatArenaView.prototype.closeCharacterList=function(event){
 	self.controller.setValue("selectCharacterId",selectCharacterId);
 	var enemyList = [];
 	var killedEnemyList = [];
-	CharacterModel.list.forEach(function(child){
+	self.characters.forEach(function(child){
 		if(child.id() == selectCharacterId){
 			return;
 		}

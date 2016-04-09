@@ -35,9 +35,6 @@ CharacterListChildView.prototype.setCheckBox = function() {
 CharacterListChildView.prototype.onClick = function(event) {
 	var self = event.target;
 	var listView = event.currentTarget;
-	if(self.alpha < 1){
-		return;
-	}
 	if(self.checkbox && event.offsetX < 70){
 		if(self.controller.params.isOnlyOne){
 			var items = listView.getItems();
@@ -55,6 +52,9 @@ CharacterListChildView.prototype.onClick = function(event) {
 		self.cacheAsBitmap(false);
 		self.updateView();
 		self.parentView.dispatchEvent(LCheckBox.ON_CHANGE);
+		return;
+	}
+	if(self.controller.params.noDetailed){
 		return;
 	}
 	if(self.controller.characterListType == CharacterListType.EXPEDITION && self.armProperties.visible){
@@ -116,7 +116,9 @@ CharacterListChildView.prototype.setStatus = function() {
 	bitmapName.x = 20;
 	bitmapName.y = 10;
 	self.addChild(bitmapName);
-	self.setBasicProperties();
+	if(self.controller.characterListType != CharacterListType.GAME_SINGLE_COMBAT){
+		self.setBasicProperties();
+	}
 	self.setAbilityProperties();
 	if(self.controller.characterListType == CharacterListType.EXPEDITION){
 		self.setArmProperties();
@@ -127,6 +129,8 @@ CharacterListChildView.prototype.setStatus = function() {
 			self.checkbox.setChecked(true);
 			self.parentView.dispatchEvent(LCheckBox.ON_CHANGE);
 		}
+	}else if(self.controller.characterListType == CharacterListType.GAME_SINGLE_COMBAT){
+		self.abilityProperties.visible = true;
 	}
 }; 
 CharacterListChildView.prototype.setArmProperties = function() {

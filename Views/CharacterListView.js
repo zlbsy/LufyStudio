@@ -45,9 +45,9 @@ CharacterListView.prototype.listInit=function(){
 	title.x = 15;
 	title.y = 10;
 	self.listLayer.addChild(title);
-	
-	self.getCutoverButton(self.controller.characterListType == CharacterListType.EXPEDITION ? CharacterListView.CUTOVER_ARM : CharacterListView.CUTOVER_BASIC);
-	
+	if(!self.controller.params.noCutover){
+		self.getCutoverButton(self.controller.characterListType == CharacterListType.EXPEDITION ? CharacterListView.CUTOVER_ARM : CharacterListView.CUTOVER_BASIC);
+	}
 	var bitmapClose = new LBitmap(new LBitmapData(LMvc.datalist["close"]));
 	var buttonClose = new LButton(bitmapClose);
 	buttonClose.x = LGlobal.width - bitmapClose.getWidth() - 5;
@@ -69,7 +69,6 @@ CharacterListView.prototype.listInit=function(){
 	self.contentLayer.y = 110;
 	self.listLayer.addChild(self.contentLayer);
 	
-	//title.text = Language.get(self.controller.characterListType);
 	self.dataList = self.controller.characterList;
 	
 	if(self.controller.params.toast){
@@ -78,20 +77,11 @@ CharacterListView.prototype.listInit=function(){
 	
 	var buttonLabel = self.controller.params.buttonLabel;
 	var showMoney = self.controller.params.showMoney;
-	/* TODO::调整中
-	switch(self.controller.characterListType){
-		case CharacterListType.TEST:
-			buttonLabel = "execute";
-			self.dataList = generals;
-			break;
-	}
-	*/
-	//console.log("listInit datalist="+self.dataList);
-	//console.log("listInit buttonLabel="+buttonLabel);
+	
 	if(buttonLabel){
-		var button = getButton(Language.get(buttonLabel),200);
+		var button = getButton(Language.get(buttonLabel),160);
 		self.executeButton = button;
-		button.x = (LGlobal.width - 200) * 0.5;
+		button.x = (LGlobal.width - 160) * 0.5;
 		button.y = LGlobal.height - button.getHeight() - 15;
 		self.listLayer.addChild(button);
 		button.addEventListener(LMouseEvent.MOUSE_UP, self.onClickExecuteButton);
@@ -104,10 +94,43 @@ CharacterListView.prototype.listInit=function(){
 			self.listLayer.addChild(lblMoney);
 		}
 	}
+	self.setFooter();
+	
 	self.showList();
 };
+CharacterListView.prototype.setFooter=function(){
+	var self = this;
+	self.pageLabel = getStrokeLabel("1/1",30,"#FFFFFF","#000000",4);
+	self.pageLabel.x = 10;
+	self.pageLabel.y = LGlobal.height - self.pageLabel.getHeight() - 15;
+	self.listLayer.addChild(self.pageLabel);
+	
+	var leftBitmapData = new LBitmapData(LMvc.datalist["arrow"]);
+	var left = new LBitmap(leftBitmapData);
+	var leftButton = new LButton(left);
+	leftButton.name = "leftButton";
+	leftButton.x = LGlobal.width - leftBitmapData.width * 2 - 20;
+	leftButton.y = LGlobal.height - leftBitmapData.height - 15;
+	self.listLayer.addChild(leftButton);
+	leftButton.addEventListener(LMouseEvent.MOUSE_UP,self.clickLeftArrow);
+	var rightBitmapData = GameCacher.getScaleBitmapData("arrow", -1, 1);
+	var right = new LBitmap(rightBitmapData);
+	var rightButton = new LButton(right);
+	rightButton.name = "rightButton";
+	rightButton.x = LGlobal.width - leftBitmapData.width - 10;
+	rightButton.y = leftButton.y;
+	self.listLayer.addChild(rightButton);
+	rightButton.addEventListener(LMouseEvent.MOUSE_UP,self.clickRightArrow);
+};
+CharacterListView.prototype.clickLeftArrow=function(event){
+	var self = event.currentTarget.getParentByConstructor(CharacterListView);
+	self.charactersPush(self.pageIndex - 1);
+};
+CharacterListView.prototype.clickRightArrow=function(event){
+	var self = event.currentTarget.getParentByConstructor(CharacterListView);
+	self.charactersPush(self.pageIndex + 1);
+};
 CharacterListView.prototype.onChangeList=function(event){
-	console.log("onChangeList=", event);
 	var self = event.currentTarget;
 	var characterId = event.characterModel.id();
 	var items = self.listView.getItems();
@@ -227,11 +250,7 @@ CharacterListView.prototype.onClickCutoverButton=function(event){
 	}
 };
 CharacterListView.prototype.onClickCloseButton=function(event){
-	var self = this;
-	if(self.controller.characterListType == CharacterListType.CHARACTER_HIRE){
-		//fromController.hireCharacter = null;
-	}
-	self.controller.closeCharacterList({subEventType:"return"});
+	this.controller.closeCharacterList({subEventType:"return"});
 };
 CharacterListView.prototype.showTabMenu=function(){
 	var self = this;
@@ -247,11 +266,12 @@ CharacterListView.prototype.showTabMenu=function(){
 	buttonCharacterName.name = "characterName";
 	self.commonTab.addChild(buttonCharacterName);
 	self.commonTab.addEventListener(LMouseEvent.MOUSE_UP, self.onClickSortButton);
-	
 	self.setBasicTab();
 	self.setAbilityTab();
 	if(self.controller.characterListType == CharacterListType.EXPEDITION){
 		self.setArmTab();
+	}else if(self.controller.characterListType == CharacterListType.GAME_SINGLE_COMBAT){
+		self.abilityTab.visible = true;
 	}
 };
 CharacterListView.prototype.setBasicTab=function(){
@@ -304,14 +324,12 @@ CharacterListView.prototype.onClickSortButton=function(event){
 		case "belong":
 			break;
 		default:
-			var items = self.listView.getItems().sort(function(a,b){
-				var va = a.charaModel[self.sortType]();
-				var vb = b.charaModel[self.sortType]();
+			self.dataList = self.dataList.sort(function(a,b){
+				var va = a[self.sortType]();
+				var vb = b[self.sortType]();
 				return self.sortValue*((typeof va == "number" ? va : 0) - (typeof vb == "number" ? vb : 0));
 			});
-			self.listView.updateList(items);
-			self.listView.clipping.y = 0;
-			self.listView.updateView();
+			self.charactersPush(0);
 	}
 };
 CharacterListView.prototype.setArmTab=function(){
@@ -332,11 +350,9 @@ CharacterListView.prototype.setArmTab=function(){
 CharacterListView.prototype.showList=function(){
 	var self = this;
 	var listHeight = LGlobal.height - self.contentLayer.y;
-	var minusHeight = 0;
+	var minusHeight = 70;
 	if(self.controller.params.showMoney){
 		minusHeight = 100;
-	}else if(self.controller.params.buttonLabel){
-		minusHeight = 70;
 	}
 	listHeight = LGlobal.height - self.contentLayer.y - minusHeight;
 	var panel = getBitmap(new LPanel(new LBitmapData(LMvc.datalist["win05"]),LGlobal.width, LGlobal.height - self.contentLayer.y));
@@ -348,29 +364,29 @@ CharacterListView.prototype.showList=function(){
 	self.listView.cellWidth = LGlobal.width - 20;
 	self.listView.cellHeight = 50;
 	self.contentLayer.addChild(self.listView);
-	self.charactersPush(self.dataList, 0);
+	self.charactersPush(0);
 };
-CharacterListView.prototype.charactersPush = function(charas,characterIndex) {
+CharacterListView.prototype.charactersPush = function(pageIndex) {
 	var self = this;
+	self.pageIndex = pageIndex;
 	var scHeight = 0, maxNum = 50;
-	var child,length = charas.length < characterIndex + maxNum ? charas.length : characterIndex + maxNum;
-	//console.log("charactersPush:"+characterIndex+",length:"+length);
+	var child, length = self.dataList.length < pageIndex * maxNum + maxNum ? self.dataList.length : pageIndex * maxNum + maxNum;
 	var cityModel = self.controller.getValue("cityData");
-	//var items = self.listView.getItems();
 	var items = [];
-	self.listView.updateList(items);
-	for(var i=characterIndex;i<length;i++){
-		var charaModel = charas[i];
+	self.listView.clear();
+	for(var i=pageIndex * maxNum;i<length;i++){
+		var charaModel = self.dataList[i];
 		var childLayer = new CharacterListChildView(self.controller,charaModel,cityModel,self);
 		childLayer.y = 50 * i;
 		items.push(childLayer);
 	}
-	self.listView.updateList(items);return;
-	if(length < charas.length){
-		setTimeout(function(){
-			self.charactersPush(charas, length);
-		},LGlobal.speed);
-	}
+	self.listView.updateList(items);
+	var maxPageIndex = self.dataList.length / maxNum >>> 0;
+	self.pageLabel.text = String.format("{0} / {1}", pageIndex + 1, maxPageIndex + 1);
+	var leftButton = self.listLayer.getChildByName("leftButton");
+	leftButton.visible = (pageIndex > 0);
+	var rightButton = self.listLayer.getChildByName("rightButton");
+	rightButton.visible = (pageIndex < maxPageIndex);
 };
 CharacterListView.prototype.showCharacterDetailed=function(param){
 	var self = this;

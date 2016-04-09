@@ -34,3 +34,10 @@ SingleCombatArenaController.prototype.init=function(){
 	self.dispatchEvent(LEvent.COMPLETE);
 	self.dispatchEvent(LController.NOTIFY);
 };
+SingleCombatArenaController.prototype.closeSelf=function(){
+	var self = this;
+	self.fromController.view.visible = true;
+	self.fromController = null;
+	LMvc.SingleCombatArenaController = null;
+	self.view.remove();
+};

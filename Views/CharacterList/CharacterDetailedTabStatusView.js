@@ -22,7 +22,7 @@ CharacterDetailedTabStatusView.prototype.showStatus=function(){
 	characterModel.seigniorName(),
 	characterModel.identity(),
 	characterModel.age(),
-	characterModel.city().name(),
+	characterModel.cityId() > 0 ? characterModel.city().name() : "--",
 	loyaltyLabel,
 	battleStatus ? battleStatus : characterModel.jobLabel()
 	];
@@ -56,7 +56,7 @@ CharacterDetailedTabStatusView.prototype.setCtrlButtons=function(backLayer){
 	var self = this;
 	var characterModel = self.controller.getValue("selectedCharacter");
 	var battleStatus = self.controller.getValue("battleStatus");
-	if(battleStatus || characterModel.city().seigniorCharaId() != LMvc.selectSeignorId){
+	if(battleStatus || !characterModel.city() || characterModel.city().seigniorCharaId() != LMvc.selectSeignorId){
 		return;
 	}
 	if(characterModel.seigniorId() == 0){

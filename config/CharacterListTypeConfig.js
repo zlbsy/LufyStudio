@@ -30,4 +30,4 @@ CharacterListType.TRAINING = "training";//训练
 CharacterListType.LEVEL_UP = "levelUp";//升级
 CharacterListType.PERSUADE = "persuade";//劝降执行
 CharacterListType.PERSUADE_TARGET = "persuade_target";//劝降对象
-CharacterListType.TEST = "test";
+CharacterListType.GAME_SINGLE_COMBAT = "game_single_combat";

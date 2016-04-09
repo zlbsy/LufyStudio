@@ -57,6 +57,9 @@ LogoController.prototype.start=function(event){
 	self.dispatchEvent(LController.NOTIFY);
 	
 	if(!LPlugin.native && LSound.webAudioEnabled){
+		if(LPlugin.soundData){
+			return;
+		}
 		var soundDatas = [
 		{name:"battle1",path:LMvc.MVC_PATH+"Sound/battle1.mp3"},
 		{name:"battle2",path:LMvc.MVC_PATH+"Sound/battle2.mp3"},

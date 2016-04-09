@@ -332,7 +332,7 @@ CharacterModel.prototype.life = function() {
 	return this.data.life;
 };
 CharacterModel.prototype.age = function() {
-	if(this.data.born == 0){
+	if(this.data.born == 0 || !LMvc.chapterData){
 		return "--";
 	}
 	return LMvc.chapterData.year - this.data.born;

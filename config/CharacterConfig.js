@@ -75,6 +75,7 @@ var DefCharacterImage = {
 	"soldier_4":20,
 	"soldier_6":6
 };
+var MaxHistoryCharacterIndex = 620;
 var TribeCharacter = [621,670];
 var DefenseCharacterCost = 500;//每个防御设施所需城防
 var BattleCharacterStatusConfig = {};
