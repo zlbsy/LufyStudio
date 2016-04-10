@@ -55,7 +55,7 @@ LScript.prototype = {
 	},
 	addScript : function(data) {
 		var self = this;
-		self.saveList();console.log("self.dataList",self.dataList);
+		self.saveList();
 		self.dataList.unshift([data]);
 		self.toList(data);
 	},
@@ -1728,7 +1728,6 @@ var LScriptSGJ = function() {
 };
 LScriptSGJ.analysis = function(childType, lineValue) {
 	var start, end, params;
-	console.log("LScriptSGJ.analysis " + childType);
 	switch(childType) {
 		case "SGJTalk":
 			LSGJTalkScript.analysis(lineValue);
@@ -1958,6 +1957,9 @@ LSGJSingleCombatScript.analysis = function(value) {
 		case "SGJSingleCombat.talk":
 			LSGJSingleCombatScript.talk(value, start, end);
 			break;
+		case "SGJSingleCombat.playSE":
+			LSGJSingleCombatScript.playSE(value, start, end);
+			break;
 		case "SGJSingleCombat.changeDirection":
 			LSGJSingleCombatScript.changeDirection(value, start, end);
 			break;
@@ -2029,6 +2031,11 @@ LSGJSingleCombatScript.changeAction = function(value, start, end) {
 	if(parseInt(params[2]) == 0){
 		LGlobal.script.analysis();
 	}
+};
+LSGJSingleCombatScript.playSE = function(value, start, end) {
+	var params = value.substring(start + 1, end).split(",");
+	LPlugin.playSE(params[0]);
+	LGlobal.script.analysis();
 };
 LSGJSingleCombatScript.moveComplete = function(event) {
 	event.currentTarget.addEventListener(CharacterActionEvent.MOVE_COMPLETE,LSGJSingleCombatScript.moveComplete);

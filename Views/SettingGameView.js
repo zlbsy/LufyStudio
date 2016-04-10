@@ -55,6 +55,7 @@ SettingGameView.prototype.init=function(){
 	soundLabel.y = 12;
 	soundLayer.addChild(soundLabel);
 	var rangeSound = new LRange(rangeBackground, rangeSelect);
+	rangeSound.setValue(LPlugin.volumeSE * 100);
 	rangeSound.x = 130;
 	soundLayer.addChild(rangeSound);
 	rangeSound.addEventListener(LRange.ON_CHANGE, self.onSoundChange);
@@ -69,6 +70,7 @@ SettingGameView.prototype.init=function(){
 	bgmLabel.y = 12;
 	bgmLayer.addChild(bgmLabel);
 	var rangeBgm = new LRange(rangeBackground, rangeSelect);
+	rangeBgm.setValue(LPlugin.volumeBGM * 100);
 	rangeBgm.x = 130;
 	bgmLayer.addChild(rangeBgm);
 	rangeBgm.addEventListener(LRange.ON_CHANGE, self.onBgmChange);
@@ -109,10 +111,14 @@ SettingGameView.prototype.closeSelf=function(event){
 	event.currentTarget.parent.parent.remove();
 };
 SettingGameView.prototype.onSoundChange=function(event){
-	console.log(event.currentTarget.value);
+	//console.log(event.currentTarget.value);
+	LPlugin.volumeSE = event.currentTarget.value * 0.01;
+	LPlugin.SetData("volumeSetting", {SE:LPlugin.volumeSE, BGM:LPlugin.volumeBGM});
 };
 SettingGameView.prototype.onBgmChange=function(event){
-	console.log(event.currentTarget.value);
+	//console.log(event.currentTarget.value);
+	LPlugin.volumeBGM = event.currentTarget.value * 0.01;console.log(LPlugin.volumeBGM);
+	LPlugin.SetData("volumeSetting", {SE:LPlugin.volumeSE, BGM:LPlugin.volumeBGM});
 };
 SettingGameView.prototype.onSpeedChange=function(event){
 	console.log(event.currentTarget.value);

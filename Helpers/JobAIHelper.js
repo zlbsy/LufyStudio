@@ -99,8 +99,8 @@ function jobAiToBattle(areaModel,characters,targetCity){
 	data.troops = sumTroops;
 	sumTroops = sumTroops + data.troops;
 	data.money = areaModel.money() * 0.2 >>> 0;
-	//TODO::带多少回合粮食
-	data.food = sumTroops * 10;
+	//带15回合粮食
+	data.food = sumTroops * 15;
 	areaModel.food(-data.food);
 	areaModel.money(-data.money);
 	areaModel.troops(areaModel.troops() - sumTroops);

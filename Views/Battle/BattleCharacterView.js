@@ -85,8 +85,6 @@ BattleCharacterView.prototype.attackToHert = function(anime) {
 };
 BattleCharacterView.prototype.attackSpecialCheck = function(anime) {
 	var self = anime.parent.parent;
-	console.log("self.isAngry",self.isAngry);
-	console.log("self.groupSkill",self.groupSkill);
 	if(self.isAngry){
 		self.attackAngry();
 	}else if(self.groupSkill){

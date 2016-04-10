@@ -76,7 +76,6 @@ SingleCombatCharacterView.prototype.actionComplete = function(event){
 	//TODO::版本升级后，需做事件化调整
 	switch(self.action){
 		case CharacterAction.ATTACK:
-			console.log("self.singleMode="+self.singleMode + ",self.attackCount="+self.attackCount);
 			if(self.singleMode == SingleCombatCharacterConfig.INIT){
 				self.anime.stop();
 				self.dispatchEvent(LEvent.COMPLETE);
@@ -155,7 +154,7 @@ SingleCombatCharacterView.prototype.showRunningCommand = function(index){
 	self.selectedButtons.forEach(function(child){
 		child.alpha = 0.5;
 	});
-	console.log("showRunningCommand index="+index);
+	//console.log("showRunningCommand index="+index);
 	self.selectedButtons[index].alpha = 1;
 	self.currentCommand = self.selectedCommands[index];
 };
@@ -213,7 +212,6 @@ SingleCombatCharacterView.prototype.changeHp = function(value){
 };
 SingleCombatCharacterView.prototype.singleCombatEnd = function(event){
 	var self = this, obj;
-	console.log("singleCombatEnd");
 	var dieChara = LMvc.BattleController.view.charaLayer.getCharacter(null,self.data.id());
 	self.controller.over();
 	dieChara.data.troops(0);
@@ -256,6 +254,7 @@ SingleCombatCharacterView.prototype.addBackstrokeScript = function(){
 	script += "SGJSingleCombat.talk("+self.data.id()+","+SingleCombatTalkMode.BACK_ATTACK+");";
 	script += "SGJSingleCombat.changeDirection("+self.data.id()+",forward);";
 	script += "SGJSingleCombat.changeAction("+self.data.id()+","+CharacterAction.ATTACK+",1);";
+	script += "SGJSingleCombat.playSE(Se_hert);";
 	script += "Wait.time(0.5);";
 	script += "SGJSingleCombat.moveTo("+self.targetCharacter.data.id()+",absolute,"+self.targetCharacter.startPosition()+");";
 	script += "SGJSingleCombat.changeDirection("+self.targetCharacter.data.id()+",forward);";

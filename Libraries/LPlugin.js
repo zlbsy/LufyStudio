@@ -60,10 +60,12 @@ LPlugin.GetData = function(key){
 	}
 	return JSON.parse(data);
 };
+LPlugin.volumeSE = 0;
+LPlugin.volumeBGM = 0;
 LPlugin.sounds = {};
 LPlugin.playingBGM = null;
 LPlugin.playSE = function(name){
-	LPlugin.playSound(name, 1);
+	LPlugin.playSound(name, 1, LPlugin.volumeSE);
 };
 LPlugin.closeBGM = function(){
 	if(LPlugin.playingBGM){
@@ -73,16 +75,16 @@ LPlugin.closeBGM = function(){
 };
 LPlugin.playBGM = function(name){
 	LPlugin.closeBGM();
-	LPlugin.playingBGM = LPlugin.playSound(name, 1000);
+	LPlugin.playingBGM = LPlugin.playSound(name, 1000, LPlugin.volumeBGM);
 };
 LPlugin.readyBGM = function(name){
 	if(LPlugin.sounds[name]){
 		return;
 	}
-	LPlugin.playBGM(name);
+	LPlugin.playBGM(name, 1, LPlugin.playingBGM);
 	LPlugin.closeBGM();
 };
-LPlugin.playSound = function(name, count){
+LPlugin.playSound = function(name, count, volume){
 	if(!LPlugin.soundData || !LPlugin.soundData[name]){
 		return null;
 	}
@@ -97,6 +99,7 @@ LPlugin.playSound = function(name, count){
 		sound.load(LPlugin.soundData[name]);
 		LPlugin.sounds[name] = sound;
 	}
+	sound.setVolume(volume);
 	sound.play(0, count);
 	return sound;
 };

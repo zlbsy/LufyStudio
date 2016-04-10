@@ -11,7 +11,6 @@ SingleCombatView.prototype.construct=function(){
 SingleCombatView.prototype.init=function(){
 	var self = this;
 	self.backLayer = new LSprite();
-
 	self.characterLayer = new LSprite();
 	self.addChild(self.characterLayer);
 	self.backLayerInit();
@@ -47,7 +46,10 @@ SingleCombatView.prototype.backLayerInit=function(){
 SingleCombatView.prototype.characterLayerInit=function(){
 	var self = this;
 	
+	var selectCharacter = CharacterModel.getChara(self.controller.currentCharacterId);
+	var hp = selectCharacter.HP();
 	var currentCharacter = new SingleCombatCharacterView(self.controller, self.controller.currentCharacterId, BattleCharacterSize.width, BattleCharacterSize.height, true);
+	currentCharacter.data.HP(hp);
 	currentCharacter.scaleX = currentCharacter.scaleY = 2;
 	self.characterLayer.addChild(currentCharacter);
 	currentCharacter.setCoordinate(self.leftCharacterX - 96,self.characterY);
@@ -121,7 +123,6 @@ SingleCombatView.prototype.buttonMoveComplete=function(event){
 	if(self.leftCharacter.selectedButtons.length < 2){
 		return;
 	}
-	console.log("start");
 	LGlobal.destroy = false;
 	for(var i = self.ctrlLayer.numChildren - 1;i>=0;i--){
 		var child = self.ctrlLayer.childList[i];
@@ -152,7 +153,7 @@ SingleCombatView.prototype.buttonMoveComplete=function(event){
 		//child.alpha = 0;
 		//LTweenLite.to(child,0.2,{alpha:1});
 	}
-	console.log("selectedCommands",self.leftCharacter.selectedCommands,self.rightCharacter.selectedCommands);
+	//console.log("selectedCommands",self.leftCharacter.selectedCommands,self.rightCharacter.selectedCommands);
 	/*var effect = new SpecialEffectView(self.controller);self.addChild(effect);*/
 };
 SingleCombatView.prototype.execute=function(event){
@@ -227,8 +228,6 @@ SingleCombatView.prototype.faceLayerInit=function(characterModel,isLeft){
 	dispositionLabel.x = force.x;
 	dispositionLabel.y = force.y + 30;
 	self.backLayer.addChild(dispositionLabel);
-	console.log("characterModel.maxHP()="+characterModel.maxHP());
-	console.log("characterModel.HP()="+characterModel.HP());
 	var barHp = new StatusBarView(self.controller);
 	barHp.y = faceLayer.y + faceSize + 20;
 	var obj = {maxValue:characterModel.maxHP(),currentValue:characterModel.HP(),name:"HP",icon:"icon_hert",frontBar:"red_bar",barSize:170};

@@ -51,15 +51,15 @@ SingleCombatArenaView.prototype.closeCharacterList=function(event){
 		}
 		enemyList.push(child.id());
 	});
+	enemyList = enemyList.sort(function(a,b){return Math.random() > 0.5 ? 1 : -1;});
 	self.controller.setValue("enemyList",enemyList);
 	self.controller.setValue("killedEnemyList",killedEnemyList);
 	self.singleCombatStart();
 	self.contentLayer.visible = false;
 	return true;
 };
-SingleCombatArenaView.prototype.singleCombatStart=function(){
+SingleCombatArenaView.prototype.singleCombatStart=function(hp){
 	var self = this;
-	self.arenaLayer.removeAllChild();
 	var selectCharacterId = self.controller.getValue("selectCharacterId");
 	var enemyList = self.controller.getValue("enemyList");
 	var currentEnemyId = enemyList.splice(enemyList.length * Math.random() >>> 0, 1)[0];
@@ -67,22 +67,26 @@ SingleCombatArenaView.prototype.singleCombatStart=function(){
 	self.currentEnemyId = currentEnemyId;
 	var selectCharacter = CharacterModel.getChara(selectCharacterId);
 	selectCharacter.maxHP(100);
-	selectCharacter.HP(100);
+	selectCharacter.HP(hp ? hp : 100);
 	var currentEnemy = CharacterModel.getChara(currentEnemyId);
 	currentEnemy.maxHP(100);
 	currentEnemy.HP(100);
 	var combat = new SingleCombatController(self.controller,selectCharacterId,currentEnemyId);
-	self.arenaLayer.addChild(combat.view);
+	self.parent.addChild(combat.view);
 };
 SingleCombatArenaView.prototype.keepUp=function(){
 	var self = this;
 	var killedEnemyList = self.controller.getValue("killedEnemyList");
 	killedEnemyList.push(self.currentEnemyId);
 	self.controller.setValue("killedEnemyList",killedEnemyList);
-	self.singleCombatStart();
+	var selectCharacterId = self.controller.getValue("selectCharacterId");
+	var selectCharacter = CharacterModel.getChara(selectCharacterId);
+	var hp = LMvc.SingleCombatController.view.leftCharacter.barHp.value;
+	LMvc.SingleCombatController.over();
+	self.singleCombatStart(hp + Math.floor((100 - hp) * 0.5));
 };
 SingleCombatArenaView.prototype.restart=function(){
 	var self = this;
-	self.arenaLayer.removeAllChild();
+	LMvc.SingleCombatController.over();
 	self.contentLayer.visible = true;
 };

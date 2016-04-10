@@ -34,6 +34,13 @@ LogoController.prototype.libraryLoad=function(){
 };
 LogoController.prototype.modelLoad=function(){
 	var self = this;
+	var volumeSetting = LPlugin.GetData("volumeSetting");
+	if(!volumeSetting || typeof volumeSetting.SE == UNDEFINED){
+		volumeSetting = {SE:1, BGM:1};
+		LPlugin.SetData("volumeSetting", volumeSetting);
+	}
+	LPlugin.volumeSE = volumeSetting.SE;
+	LPlugin.volumeBGM = volumeSetting.BGM;console.log(volumeSetting);
 	self.load.model(["Master/Area"],self.startAnimation);
 };
 LogoController.prototype.startAnimation=function(){
