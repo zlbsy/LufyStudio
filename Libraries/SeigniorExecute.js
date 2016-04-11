@@ -473,8 +473,8 @@ SeigniorExecute.prototype.areaAIRun=function(areaModel){
 		if(!areaModel.isMaxBusiness()){
 			interiorList.push({fun:jobAiMarket,params:["intelligence","agility"],v:(areaModel.business() / areaModel.maxBusiness())});//市场
 		}
-		if(interiorList.length > 0){
-			interiorList = interiorList.sort(function(a,b){return Math.random() > 0.5 ? 1 : -1;});
+		if(interiorList.length > 0){console.log("s",interiorList);
+			interiorList = interiorList.sort(function(a,b){return a.v - b.v;});console.log("e",interiorList);
 			for(var i = 0;i<interiorList.length;i++){
 				child = interiorList[i];
 				self.jobAiFunction(areaModel,self.characters,child.fun,child.params);

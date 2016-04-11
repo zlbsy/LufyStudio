@@ -138,7 +138,7 @@ Language.data = {
 	"create_seignior":"势力作成",
 	"update_seignior":"势力编辑",
 	"auto_talk_not_debut":"最近在酒馆好像有特殊的人出没，到酒馆去访问一下说不定会发现不错的人才哦!",
-	"auto_talk_equipment":"据说这座城的某个地方埋着稀有的装备{0}，但是想找到恐怕没那么容易!",
+	"auto_talk_equipment":"据说这座城的某个地方埋着稀有的装备《{0}》，但是想找到恐怕没那么容易!",
 	"auto_talk_no_generals":"这座城里目前好像没什么人才啊!",
 	"create_seignior_no_character_error":"已经没有可选的武将了！",
 	"create_seignior_delete_error":"<font size='22' color='#FFFFFF'>要删除君主 <font color='#FF0000'>{0}</font> 吗？</font>",

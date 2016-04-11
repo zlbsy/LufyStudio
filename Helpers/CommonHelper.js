@@ -282,10 +282,16 @@ function updateCanPersuadeCharacters(characterModel){
 			characters.splice(index, 1);
 		}
 	}else{
+		var year = LMvc.chapterData.year;
+		var month = LMvc.chapterData.month;
 		if(index < 0){
-			characters.push({i:id, l:validLoyalty});
+			characters.push({i:id, l:validLoyalty, s:characterModel.seigniorId(), y:year, m:month});
 		}else{
 			characters[index].l = validLoyalty;
+			if(characters[index].s != characterModel.seigniorId()){
+				characters[index].y = year;
+				characters[index].m = month;
+			}
 		}
 		characters = characters.sort(function(a,b){return b.l - a.l;});
 	}

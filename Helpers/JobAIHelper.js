@@ -20,17 +20,19 @@ function getWeakBattleCity(areaModel){
 }
 /*检索可攻击城池*/
 function getCanBattleCity(areaModel,characters,enlistFlag){
-	//console.log("getCanBattleCity :: 检索可攻击城池");
 	if(enlistFlag != AiEnlistFlag.Free && enlistFlag != AiEnlistFlag.None && enlistFlag != AiEnlistFlag.BattleResource){
+		console.error("检索可攻击城池("+areaModel.name()+") enlistFlag:",enlistFlag);
 		return null;
 	}
 	var generalCount = areaModel.generalsSum();
 	if(characters.length < BattleMapConfig.DetachmentQuantity || generalCount < BattleMapConfig.DetachmentQuantity * 2 || generalCount - BattleMapConfig.DetachmentQuantity > characters.length){
+		console.error("检索可攻击城池("+areaModel.name()+") generalCount:",generalCount);
 		return null;
 	}
 	var weakCity = getWeakBattleCity(areaModel);
 	//console.log("weakCity="+weakCity);
 	if(!weakCity){
+		console.error("检索可攻击城池("+areaModel.name()+") no weakCity");
 		return null;
 	}
 	var weakCityGeneralCount = weakCity.generalsSum();
@@ -179,16 +181,17 @@ function jobAiNeedToEnlist(areaModel){
 	if(areaModel.troops() < minToops){ 
 		return AiEnlistFlag.Must ;
 	}
-	if(areaModel.agriculture() < areaModel.maxAgriculture()*0.3 || areaModel.business() < areaModel.maxBusiness()*0.3 || areaModel.technology() < areaModel.maxTechnology()*0.3){
+	console.error("("+areaModel.name()+")", areaModel.agriculture() / areaModel.maxAgriculture(), areaModel.business() / areaModel.maxBusiness(), areaModel.technology() / areaModel.maxTechnology());
+	if(areaModel.agriculture() < areaModel.maxAgriculture()*0.2 || areaModel.business() < areaModel.maxBusiness()*0.2 || areaModel.technology() < areaModel.maxTechnology()*0.2){
 		return AiEnlistFlag.MustResource;
 	}
-	if(areaModel.troops() < minToops * 1.5){
+	if(areaModel.troops() < minToops * 2){
 		return AiEnlistFlag.Need;
 	}
-	if(areaModel.agriculture() < areaModel.maxAgriculture()*0.6 || areaModel.business() < areaModel.maxBusiness()*0.6 || areaModel.technology() < areaModel.maxTechnology()*0.6){
+	if(areaModel.agriculture() < areaModel.maxAgriculture()*0.4 || areaModel.business() < areaModel.maxBusiness()*0.4 || areaModel.technology() < areaModel.maxTechnology()*0.4){
 		return AiEnlistFlag.NeedResource;
 	}
-	if(areaModel.troops() < minToops * 2){
+	if(areaModel.troops() < minToops * 3){
 		return AiEnlistFlag.Battle;
 	}
 	if(areaModel.agriculture() < areaModel.maxAgriculture() || areaModel.business() < areaModel.maxBusiness() || areaModel.technology() < areaModel.maxTechnology()){
@@ -239,15 +242,26 @@ function jobAiPersuade(areaModel,characters){//劝降
 	if(length == 0){
 		return;
 	}
+	var charas = [];
+	for(var i=0,l=length;i<length;i++){
+		var chara = persuadeCharacters[i];
+		if(chara.y != LMvc.chapterData.year || chara.m != LMvc.chapterData.month){
+			charas.push(chara);
+		}
+	}
+	persuadeCharacters = charas;
+	var length = persuadeCharacters.length;
+	if(length == 0){
+		return;
+	}
 	var minLoyalty = persuadeCharacters[length - 1].l;
 	var p = Math.ceil((90 - minLoyalty) / 5) * 0.1;
 	var r = Math.random();
 	if(r > p){
 		return;
 	}
-	console.log("+++++++++++++++++++++++",r,p,persuadeCharacters);
 	var sum = 0;
-	for(var i = 0;i<length;i++){console.log(persuadeCharacters[i].i);
+	for(var i = 0;i<length;i++){
 		sum += (i + 1);
 	}
 	var v = sum * Math.random();
