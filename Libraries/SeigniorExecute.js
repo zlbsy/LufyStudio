@@ -465,13 +465,13 @@ SeigniorExecute.prototype.areaAIRun=function(areaModel){
 	if(toInterior){//内政
 		var interiorList = [];
 		if(!areaModel.isMaxTechnology()){
-			interiorList.push({fun:jobAiInstitute,params:["intelligence","command"]});//太学院
+			interiorList.push({fun:jobAiInstitute,params:["intelligence","command"],v:(areaModel.technology() / areaModel.maxTechnology())});//太学院
 		}
 		if(!areaModel.isMaxAgriculture()){
-			interiorList.push({fun:jobAiFarmland,params:["intelligence","force"]});//农地
+			interiorList.push({fun:jobAiFarmland,params:["intelligence","force"],v:(areaModel.agriculture() / areaModel.maxAgriculture())});//农地
 		}
 		if(!areaModel.isMaxBusiness()){
-			interiorList.push({fun:jobAiMarket,params:["intelligence","agility"]});//市场
+			interiorList.push({fun:jobAiMarket,params:["intelligence","agility"],v:(areaModel.business() / areaModel.maxBusiness())});//市场
 		}
 		if(interiorList.length > 0){
 			interiorList = interiorList.sort(function(a,b){return Math.random() > 0.5 ? 1 : -1;});
