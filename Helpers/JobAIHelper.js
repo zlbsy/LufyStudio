@@ -179,19 +179,19 @@ function jobAiNeedToEnlist(areaModel){
 	if(areaModel.troops() < minToops){ 
 		return AiEnlistFlag.Must ;
 	}
-	if(areaModel.agriculture() < areaModel.maxAgriculture()*0.3 || areaModel.business() < areaModel.maxBusiness()*0.3 || areaModel.cityDefense() < areaModel.maxCityDefense()*0.3){
+	if(areaModel.agriculture() < areaModel.maxAgriculture()*0.3 || areaModel.business() < areaModel.maxBusiness()*0.3 || areaModel.technology() < areaModel.maxTechnology()*0.3){
 		return AiEnlistFlag.MustResource;
 	}
 	if(areaModel.troops() < minToops * 1.5){
 		return AiEnlistFlag.Need;
 	}
-	if(areaModel.agriculture() < areaModel.maxAgriculture()*0.6 || areaModel.business() < areaModel.maxBusiness()*0.6 || areaModel.cityDefense() < areaModel.maxCityDefense()*0.6){
+	if(areaModel.agriculture() < areaModel.maxAgriculture()*0.6 || areaModel.business() < areaModel.maxBusiness()*0.6 || areaModel.technology() < areaModel.maxTechnology()*0.6){
 		return AiEnlistFlag.NeedResource;
 	}
 	if(areaModel.troops() < minToops * 2){
 		return AiEnlistFlag.Battle;
 	}
-	if(areaModel.agriculture() < areaModel.maxAgriculture() || areaModel.business() < areaModel.maxBusiness() || areaModel.cityDefense() < areaModel.maxCityDefense()){
+	if(areaModel.agriculture() < areaModel.maxAgriculture() || areaModel.business() < areaModel.maxBusiness() || areaModel.technology() < areaModel.maxTechnology()){
 		return AiEnlistFlag.BattleResource;
 	}
 	return AiEnlistFlag.Free;
