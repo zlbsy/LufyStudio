@@ -63,7 +63,7 @@ ArmListView.prototype.cancelDetailed=function(event){
 	event.currentTarget.parent.remove();
 	self.toSelectCharacter();
 };
-ArmListView.prototype.enlist=function(event){console.log("ArmListView.prototype.enlist");
+ArmListView.prototype.enlist=function(event){
 	var self = event.currentTarget.parent.parent.parent;
 	var selectCharacters = self.controller.getValue("selectCharacters");
 	var armDetailed = self.armDetailedLayer.getChildAt(0).childList.find(function(child){

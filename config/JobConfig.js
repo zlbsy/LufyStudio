@@ -84,4 +84,5 @@ var HarvestMonths = {
 	Food:[7],
 	Money:[3,6,9,12]
 };
-var TribeAIProbability = 0.2;
+var TribeAIProbability = 0.1;
+var TribeFriendlyCharacters = [23, 43, 73, 141, 145, 317, 336, 351, 516];

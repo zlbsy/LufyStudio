@@ -29,7 +29,7 @@ HeaderStatusView.prototype.set=function(){
 	var prefectureCharacterName = "***";
 	if(cityModel.prefecture()){
 		 prefectureCharacterName = CharacterModel.getChara(cityModel.prefecture()).name();
-	}console.log(cityModel);
+	}
 	self.setStatus(Language.get("seignior"), seigniorCharacterName, self.stepWidth * 2 + 5, 0, self.stepWidth);
 	self.setStatus(Language.get("prefecture"), prefectureCharacterName, self.stepWidth * 2 + 5, self.stepHeight, self.stepWidth);
 	

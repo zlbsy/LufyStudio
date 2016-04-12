@@ -408,6 +408,9 @@ function enlistRun(characterModel, targetEnlist){
 	var area = characterModel.city();
 	var population = area.population();
 	var minPopulation = AreaModel.populationList[area.level()][0];
+	if(population <= minPopulation){
+		return;
+	}
 	var troop = area.troops();
 	var value01 = getJobResult(characterModel.luck(),JobCoefficient.ENLIST);
 	var value02 = getJobResult(characterModel.command(),JobCoefficient.ENLIST);
