@@ -22,6 +22,8 @@ BattleCharacterAI.prototype.magicAttack = function(target){
 	self.attackTarget = target;
 	LMvc.currentAttackCharacter = self.chara;
 	LMvc.currentAttackTarget = target;
+	var soldier = self.chara.data.currentSoldiers();
+	soldier.proficiency(soldier.proficiency() + 1);
 	//console.log("target.AI.attackTarget" ,target.AI.attackTarget);
 	var direction = getDirectionFromTarget(self.chara, target);
 	self.chara.setActionDirection(CharacterAction.MAGIC_ATTACK, direction);
@@ -114,6 +116,8 @@ BattleCharacterAI.prototype.physicalAttack = function(target) {
 	LMvc.running = true;
 	LMvc.currentAttackCharacter = self.chara;
 	LMvc.currentAttackTarget = target;
+	var soldier = self.chara.data.currentSoldiers();
+	soldier.proficiency(soldier.proficiency() + 1);
 	self.attackTarget = target;
 	var direction = getDirectionFromTarget(self.chara, target);
 	var skill;

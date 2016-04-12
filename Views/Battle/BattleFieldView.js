@@ -5,6 +5,7 @@ function BattleFieldView(controller){
 	var self = this;
 	LExtends(self,LView,[controller]);
 	self.windowWidth = LGlobal.width - 60;
+	self.x = 30;
 	self.layerInit();
 	self.outlineData();
 	self.setData();

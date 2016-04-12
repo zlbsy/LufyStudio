@@ -42,7 +42,7 @@ ArmListView.prototype.troopsSelect=function(event){
 };
 ArmListView.prototype.showArmDetailed=function(soldierModel){
 	var self = this;
-	console.log("self.controller.armListType="+self.controller.armListType);
+	//console.log("self.controller.armListType="+self.controller.armListType);
 	//console.error("ArmListView.prototype.showArmDetailed"+self.controller.armListType,ArmListType.EXPEDITION,soldierData);
 	//var armDetailed = new ArmDetailedView(self.controller, soldierModel);
 	var armDetailed = new ArmDetailedView(self.controller);
@@ -103,8 +103,7 @@ ArmListView.prototype.characterListShow=function(event){
 	self.listLayer.visible = false;
 };
 ArmListView.prototype.characterListClose=function(event){
-	
-	console.log("ArmListView.prototype.characterListClose",event,event.subEventType);
+	//console.log("ArmListView.prototype.characterListClose",event,event.subEventType);
 	var self = event.currentTarget.view;
 	var subEventType = event.subEventType;
 	if(subEventType == "return"){

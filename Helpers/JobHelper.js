@@ -195,7 +195,7 @@ function accessRun(characterModel){
 	hireRun2(characterModel, targetModel,area);
 }
 function exploreItems(items){
-	if(items.length == 0){
+	if(items.length == 0 || Math.random() < 0.5){
 		return -1;
 	}
 	var proportionSum = 0;
@@ -416,10 +416,12 @@ function enlistRun(characterModel, targetEnlist){
 	if(quantity > population - minPopulation){
 		quantity = (population - minPopulation)*Math.random();
 	}
+	quantity = (quantity >>> 0);
 	area.population(-quantity);
 	troop += quantity;
 	area.troops(troop);
 	characterModel.job(Job.IDLE);
+	area.police(-(quantity * 0.05 >>> 0));
 	var feat = JobFeatCoefficient.NORMAL * quantity / JobFeatCoefficient.ENLIST;
 	characterModel.featPlus(feat);
 }

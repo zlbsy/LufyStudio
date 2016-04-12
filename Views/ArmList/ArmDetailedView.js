@@ -66,8 +66,9 @@ ArmDetailedView.prototype.setArmEnlist=function(){
 	layer.addChild(enlistConfrim);
 	
 	self.addChild(layer);
-	r.addEventListener(LRange.ON_CHANGE, self.onChange);
+	r.addEventListener(LRange.ON_CHANGE, self.onChangeEvent);
 	//self.addEventListener(LEvent.ENTER_FRAME, self.onframe);
+	self.onChange();
 };
 ArmDetailedView.prototype.setArmExpedition=function(){
 	var self = this;
@@ -118,9 +119,14 @@ ArmDetailedView.prototype.getSelectQuantity = function(){
 	var self = this;
 	return self.soldierModel.quantity() * self.range.value * 0.01 >> 0;
 };
-ArmDetailedView.prototype.onChange = function(event){
+ArmDetailedView.prototype.onChangeEvent = function(event){
 	var range = event.currentTarget;
 	var self = range.parent.parent;
+	self.onChange();
+};
+ArmDetailedView.prototype.onChange = function(){
+	var self = this;
+	var range = self.range;
 	if(self.controller.armListType == ArmListType.EXPEDITION){
 		var selectQuantity = self.soldierModel.quantity() * range.value * 0.01 >> 0;
 		self.quantity.text = String.format("{0}/{1}人",selectQuantity,self.soldierModel.quantity());

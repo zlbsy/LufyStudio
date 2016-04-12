@@ -1,6 +1,6 @@
 function checkEventList() {
 	var eventListFinished = LMvc.chapterData.eventListFinished || [];
-	console.log("checkEventList"+eventListFinished.length);
+	//console.log("checkEventList"+eventListFinished.length);
 	for(var i = 0,l = EventListConfig.length;i<l;i++){
 		var currentEvent = EventListConfig[i];
 		if(eventListFinished.findIndex(function(child){

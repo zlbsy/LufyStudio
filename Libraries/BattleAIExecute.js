@@ -318,6 +318,8 @@ BattleAIExecute.prototype.toWake = function(currentCharacter,currentCharacters){
 	if(strategys == 0){
 		return false;
 	}
+	var soldier = currentCharacter.data.currentSoldiers();
+	soldier.proficiency(soldier.proficiency() + 1);
 	var obj = strategys[(strategys.length * Math.random()) >>> 0];
 	obj.target.status.wake();
 	return true;
@@ -347,6 +349,8 @@ BattleAIExecute.prototype.useHertStrategy = function(chara, target, attack) {
 	if(!hitrate){
 		return true;
 	}
+	var soldier = chara.data.currentSoldiers();
+	soldier.proficiency(soldier.proficiency() + 1);
 	var strategy = strategys[(strategys.length * Math.random()) >>> 0];
 	var effectType = strategy.strategyType();
 	chara.data.MP(chara.data.MP() - strategy.cost());
@@ -378,6 +382,8 @@ BattleAIExecute.prototype.useAidStrategy = function(chara, charas, strategyEffec
 	if(strategys.length == 0){
 		return false;
 	}
+	var soldier = chara.data.currentSoldiers();
+	soldier.proficiency(soldier.proficiency() + 1);
 	var obj = strategys[(strategys.length * Math.random()) >>> 0];
 	var target = obj.target;
 	var currentSelectStrategy = obj.strategy;
@@ -401,6 +407,8 @@ BattleAIExecute.prototype.attackExec=function(currentCharacter, targetChara, att
 BattleAIExecute.prototype.physicalAttack = function(currentChara, targetChara) {
 	var self = this;
 	console.log("physicalAttack:"+currentChara.data.name() + "("+currentChara.data.troops() + ")->" + targetChara.data.name()+"("+targetChara.data.troops() + ")");
+	var soldier = currentChara.data.currentSoldiers();
+	soldier.proficiency(soldier.proficiency() + 1);
 	var groupSkill;
 	var skill;
 	if(currentChara.herts == null){

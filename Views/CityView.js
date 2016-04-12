@@ -54,7 +54,7 @@ CityView.prototype.onBuildClick=function(event){
 };
 CityView.prototype.showBuildView=function(name){
 	var self = this, build;
-	console.log("showBuildView :"+name);
+	//console.log("showBuildView :"+name);
 	switch(name){
 		case "official":
 			build = new BuildOfficialView(self.controller);
@@ -261,7 +261,7 @@ CityView.prototype.autoTalkCheck = function(){
 			}
 		}
 	}
-	if(items.length > 0 && Math.random() < 0.1){
+	if(items.length > 0 && Math.random() < 0.2){
 		var item = items[items.length*Math.random() >>> 0];
 		var msg = String.format(Language.get("auto_talk_equipment"), item.name());
 		Talk(self, general.id(), 0, msg, function() {
@@ -269,7 +269,7 @@ CityView.prototype.autoTalkCheck = function(){
 		});
 		return;
 	}
-	if(notDebut.length == 0 && Math.random() < 0.05){
+	if(notDebut.length == 0 && cityModel.outOfOffice().length == 0 && Math.random() < 0.05){
 		Talk(self, general.id(), 0, Language.get("auto_talk_no_generals"), function() {
 			LMvc.talkOver = true;
 		});

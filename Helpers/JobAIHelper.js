@@ -185,13 +185,13 @@ function jobAiNeedToEnlist(areaModel){
 	if(areaModel.agriculture() < areaModel.maxAgriculture()*0.2 || areaModel.business() < areaModel.maxBusiness()*0.2 || areaModel.technology() < areaModel.maxTechnology()*0.2){
 		return AiEnlistFlag.MustResource;
 	}
-	if(areaModel.troops() < minToops * 2){
+	if(areaModel.troops() < minToops * 1.5){
 		return AiEnlistFlag.Need;
 	}
 	if(areaModel.agriculture() < areaModel.maxAgriculture()*0.4 || areaModel.business() < areaModel.maxBusiness()*0.4 || areaModel.technology() < areaModel.maxTechnology()*0.4){
 		return AiEnlistFlag.NeedResource;
 	}
-	if(areaModel.troops() < minToops * 3){
+	if(areaModel.troops() < minToops * 2){
 		return AiEnlistFlag.Battle;
 	}
 	if(areaModel.agriculture() < areaModel.maxAgriculture() || areaModel.business() < areaModel.maxBusiness() || areaModel.technology() < areaModel.maxTechnology()){
@@ -233,7 +233,6 @@ function jobAiToEnlish(areaModel,characters){
 	SeigniorExecute.Instance().areaMessage(areaModel, "jobai_enlish_message");//{0}的{1}在招兵买马!
 }
 function jobAiPersuade(areaModel,characters){//劝降
-	console.log("+++++++++++++++++++++++劝降"+characters.length);
 	if(characters.length == 0){
 		return;
 	}
@@ -245,7 +244,7 @@ function jobAiPersuade(areaModel,characters){//劝降
 	var charas = [];
 	for(var i=0,l=length;i<length;i++){
 		var chara = persuadeCharacters[i];
-		if(chara.y != LMvc.chapterData.year || chara.m != LMvc.chapterData.month){
+		if(chara.y * 100 +  chara.m  < LMvc.chapterData.year * 100 + LMvc.chapterData.month - 3){
 			charas.push(chara);
 		}
 	}
@@ -254,6 +253,7 @@ function jobAiPersuade(areaModel,characters){//劝降
 	if(length == 0){
 		return;
 	}
+	console.log("+++++++++++++++++++++++劝降"+persuadeCharacters[0].l);
 	var minLoyalty = persuadeCharacters[length - 1].l;
 	var p = Math.ceil((90 - minLoyalty) / 5) * 0.1;
 	var r = Math.random();

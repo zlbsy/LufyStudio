@@ -30,6 +30,7 @@ var JobPrice = {
 	LEVEL_UP:50000,
 	TRAINING:200,
 	ENLIST:500,//征兵价格
+	PRIZE:200,//褒奖
 };
 var JobCoefficient = {
 	NORMAL:90,

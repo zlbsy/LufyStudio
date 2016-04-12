@@ -401,7 +401,9 @@ SeigniorExecute.prototype.areaAIRun=function(areaModel){
 	var canEnlish = jobAiCanToEnlish(areaModel);
 	if(needEnlistFlag == AiEnlistFlag.Must || needEnlistFlag == AiEnlistFlag.Need){
 		if(canEnlish){
-			self.jobAiFunction(areaModel,self.characters,jobAiToEnlish,["luck","command"]);
+			for(var i=0;i<2;i++){
+				self.jobAiFunction(areaModel,self.characters,jobAiToEnlish,["luck","command"]);
+			}
 		}
 	}
 	//修补
@@ -473,18 +475,25 @@ SeigniorExecute.prototype.areaAIRun=function(areaModel){
 		if(!areaModel.isMaxBusiness()){
 			interiorList.push({fun:jobAiMarket,params:["intelligence","agility"],v:(areaModel.business() / areaModel.maxBusiness())});//市场
 		}
-		if(interiorList.length > 0){console.log("s",interiorList);
-			interiorList = interiorList.sort(function(a,b){return a.v - b.v;});console.log("e",interiorList);
-			for(var i = 0;i<interiorList.length;i++){
-				child = interiorList[i];
+		if(interiorList.length > 0){
+			interiorList = interiorList.sort(function(a,b){return a.v - b.v;});
+			for(var i=0;i<2;i++){
+				var child = interiorList[0];
 				self.jobAiFunction(areaModel,self.characters,child.fun,child.params);
 			}
+			/*for(var i = 0;i<interiorList.length;i++){
+				child = interiorList[i];
+				self.jobAiFunction(areaModel,self.characters,child.fun,child.params);
+			}*/
 		}else{
 			//升级城池
 			jobAiLevelUpCity(areaModel,self.characters);
 		}
 	}
-	
+	if(self.characters.length > 1 && areaModel.money() > 500 && Math.random() > 0.7){
+		SeigniorExecute.run();
+		return;
+	}
 	//如果有剩余无分配工作的人员,则执行探索
 	while(self.characters > 0){
 		if(Math.random() > 0.5){

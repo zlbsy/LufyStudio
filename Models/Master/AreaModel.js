@@ -542,7 +542,14 @@ AreaModel.prototype.troopsSum=function(){
 	return LString.numberFormat(this.troops(),3);
 };
 AreaModel.prototype.troops=function(value){
-	return this._dataValue("troops", value, 0);
+	if(typeof value != UNDEFINED){
+		console.error(this.data.troops, value);
+	}
+	var result = this._dataValue("troops", value, 0, 0, this.maxTroops());
+	if(result){
+		result = result >>> 0;
+	}
+	return result;
 };
 AreaModel.prototype.maxTroops=function(){
 	return AreaModel.troopsList[this.level()-1];
