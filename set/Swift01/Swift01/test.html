@@ -1,0 +1,26 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+    </head>
+    <body>
+        <div>ローカルhtmlですよ</div>
+        <p><a href="javascript:void(0)" onclick="GetTest();" >Push me!</a></p>
+        <br>
+        <p><a href="javascript:void(0)" onclick="GetTest2();" >Push me!2</a></p>
+        <br>
+        <p><a href="javascript:void(0)" onclick="GetTest3();" >Push me!3</a></p>
+        <script>
+            function GetTest(){
+                window.testLoad("nativecall://abcdef?x=a&y=b",function(data){alert("callback:"+data);});
+            }
+        function GetTest2(){
+            window.testLoad("./Data/smap/1.txt",function(data){alert("callback:"+data);});
+        }
+        function GetTest3(){
+            alert("value=" + (value));
+        }
+
+
+        </script>
+    </body>
+</html>
