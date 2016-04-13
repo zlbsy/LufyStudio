@@ -41,6 +41,7 @@ AreaModel.getPowerfulCharacters = function(generals){
 	//console.log("AreaModel.getPowerfulCharacters:",generals);
 	for(var i=0,l=generals.length;i<l;i++){
 		var child = generals[i];
+		child.calculation(true);
 		var data;
 		if(child.constructor.name == "BattleCharacterView"){
 			data = child.data;

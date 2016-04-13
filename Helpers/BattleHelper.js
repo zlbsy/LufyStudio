@@ -35,7 +35,7 @@ function cloudWeatherCharacterShow(characterId){
 			character.anime.alpha = 1;
 			character.hideByCloud = false;
 			character.toStatic(false);
-			if(character.mode == CharacterMode.END_ACTION){
+			if(character.isStatic){
 				character.toStatic(true);
 			}
 		}else{
@@ -330,11 +330,19 @@ function battleHealTroops(currentSelectStrategy, currentTargetCharacter){
 	return battleHealTroopsRun(troopsAdd, woundedAdd, currentTargetCharacter);
 }
 function battleHealTroopsRun(troopsAdd, woundedAdd, currentTargetCharacter){
+	var troops = currentTargetCharacter.data.troops();
+	var maxTroops = currentTargetCharacter.data.maxTroops();
+	if(troops == maxTroops){
+		return 0;
+	}
 	var wounded = currentTargetCharacter.data.wounded();
 	if(woundedAdd < 1){
 		woundedAdd = wounded * woundedAdd >>> 0;
 	}else if(woundedAdd > wounded){
 		woundedAdd = wounded;
+	}
+	if(troops + woundedAdd > maxTroops){
+		woundedAdd = maxTroops - troops;
 	}
 	var battleData = currentTargetCharacter.controller.battleData;
 	var reservist = 0;
@@ -346,19 +354,20 @@ function battleHealTroopsRun(troopsAdd, woundedAdd, currentTargetCharacter){
 	if(troopsAdd > reservist){
 		troopsAdd = reservist;
 	}
-	if(battleData.fromCity.seigniorCharaId() == currentTargetCharacter.data.seigniorId()){
-		battleData.troops -= troopsAdd;
-	}else{
-		battleData.toCity.troops(reservist - troopsAdd);
+	
+	if(troops + troopsAdd + woundedAdd > maxTroops){
+		troopsAdd = maxTroops - troops - woundedAdd;
+	}
+	if(troopsAdd > 0){
+		if(battleData.fromCity.seigniorCharaId() == currentTargetCharacter.data.seigniorId()){
+			battleData.troops -= troopsAdd;
+		}else{
+			battleData.toCity.troops(reservist - troopsAdd);
+		}
 	}
 	if(woundedAdd > 0){
 		currentTargetCharacter.data.wounded(wounded - woundedAdd);
 		troopsAdd += woundedAdd;
-	}
-	var troops = currentTargetCharacter.data.troops();
-	var maxTroops = currentTargetCharacter.data.maxTroops();
-	if(troops + troopsAdd > maxTroops){
-		troopsAdd = maxTroops - troops;
 	}
 	return troopsAdd;
 }
@@ -799,7 +808,7 @@ function attackResourcesReturnToCity(characters, battleData, city){
 	city.food(battleData.food);
 	city.money(battleData.money);
 };
-/*外族入侵，资源损失0.5*/
+/*外族入侵，资源损失*/
 function lossOfResourcesByTribe(toCity, fromCity){
 	var food = toCity.food()*0.5 >>> 0;//粮食掠夺
 	toCity.food(-food);
@@ -807,10 +816,10 @@ function lossOfResourcesByTribe(toCity, fromCity){
 	var money = toCity.money()*0.5 >>> 0;//金钱掠夺
 	toCity.money(-money);
 	fromCity.money(money);
-	toCity.troops(toCity.troops()*0.5 >>> 0);//兵力损失
-	toCity.cityDefense(-(toCity.cityDefense()*0.4 >>> 0));//防御损失
+	toCity.troops(toCity.troops()*0.2 >>> 0);//兵力损失
+	toCity.cityDefense(-(toCity.cityDefense()*0.5 >>> 0));//防御损失
 	toCity.population(-(toCity.population()*0.1 >>> 0));//人口损失
-	toCity.police(-(toCity.police()*0.3 >>> 0));//治安损失
+	toCity.police(-(toCity.police()*0.2 >>> 0));//治安损失
 	toCity.agriculture(-(toCity.agriculture()*0.1 >>> 0));//农业损失
 	toCity.business(-(toCity.business()*0.1 >>> 0));//商业损失
 	toCity.technology(-(toCity.technology()*0.1 >>> 0));//技术损失

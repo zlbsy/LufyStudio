@@ -22,12 +22,14 @@ function BattleMiniPreviewView(controller){
 	self.characterLayer = new LSprite();
 	self.characterLayer.x = self.characterLayer.y = 10;
 	self.addChild(self.characterLayer);
-	self.characterLayer.graphics.add(function(){
-		var c = LGlobal.canvas;
+	
+	self.characterLayer.graphics.add(function(c){
 		var view = LMvc.BattleController.view;
+		var weatherLayer = view.weatherLayer;
 		var miniLayer = view.miniLayer;
 		var charaLayer = view.charaLayer;
 		var charas = [charaLayer.getCharactersFromBelong(Belong.SELF),charaLayer.getCharactersFromBelong(Belong.ENEMY)];
+		var isCloud = weatherLayer.isWeather(BattleWeatherConfig.CLOUD);
 		var colors = ["#ff0000", "#008800"];
 		for(var j = 0, jl = charas.length; j < jl; j++){
 			var childs = charas[j];
@@ -35,6 +37,9 @@ function BattleMiniPreviewView(controller){
 			c.fillStyle = colors[j];
 			for(var i = 0, l = childs.length; i < l; i++){
 				var child = childs[i];
+				if(isCloud && child.hideByCloud){
+					continue;
+				}
 				c.rect(child.x * miniLayer.scaleValue + 1, child.y * miniLayer.scaleValue + 1, miniLayer.stepW - 2, miniLayer.stepH - 2);
 			}
 			c.fill();

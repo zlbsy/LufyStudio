@@ -226,6 +226,7 @@ BattleCharacterView.prototype.toStatic = function(value){
 	if(self.controller.constructor.name != "BattleController"){
 		return;
 	}
+	self.isStatic = value;
 	console.log(self.data.name() , "toStatic",value,self.anime.visible);
 	if(value){
 		if(self.anime.visible){
