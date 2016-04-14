@@ -41,13 +41,14 @@ AreaModel.getPowerfulCharacters = function(generals){
 	//console.log("AreaModel.getPowerfulCharacters:",generals);
 	for(var i=0,l=generals.length;i<l;i++){
 		var child = generals[i];
-		child.calculation(true);
 		var data;
 		if(child.constructor.name == "BattleCharacterView"){
 			data = child.data;
 		}else{
 			data = child;
 		}
+		//TODO::是否需要重新计算
+		data.calculation(true);
 		var value = data.force() + data.intelligence() + data.agility() + data.luck() + data.command();
 		value += value * data.lv() * 0.1;
 		value += data.maxProficiencySoldier().proficiency() * 0.1;
