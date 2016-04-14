@@ -8,7 +8,28 @@
 
 import UIKit
 import Foundation
+import AVFoundation
 import JavaScriptCore;
+typealias ID = AnyObject!
+
+extension JSContext {
+    func fetch(key:String)->JSValue {
+        return getJSVinJSC(self, key)
+    }
+    func store(key:String, _ val:ID) {
+        setJSVinJSC(self, key, val)
+    }
+    // Yikes.  Swift 1.2 and its JavaScriptCore no longer allows method overloding by type
+    func setb0(key:String, _ blk:()->ID) {
+        setB0JSVinJSC(self, key, blk)
+    }
+    func setb1(key:String, _ blk:(ID)->ID) {
+        setB1JSVinJSC(self, key, blk)
+    }
+    func setb2(key:String, _ blk:(ID,ID)->ID) {
+        setB2JSVinJSC(self, key, blk)
+    }
+}
 class ViewController: UIViewController, UIWebViewDelegate {
     let myWebView : UIWebView = UIWebView()
     override func viewDidLoad() {
@@ -31,6 +52,31 @@ class ViewController: UIViewController, UIWebViewDelegate {
             context.evaluateScript(script)
             let value:JSValue = context.objectForKeyedSubscript("value")
             print(value.toString())
+            let function = {(values:AnyObject!)->AnyObject in
+                var sum:Int = 0
+                for value in values as! NSArray
+                {
+                    sum += value.integerValue
+                }
+                return sum
+            }
+            //context.setObject(function, forKeyedSubscript: "sum")
+            context.setb1("sum", function)
+            print(context.evaluateScript("sum([1,2,3])"))
+            var audioPlayer:AVAudioPlayer = AVAudioPlayer()
+            context.setb1("playSE", {(value:AnyObject!)->AnyObject in
+                
+                let coinSound = NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource("Sound/Se_ok", ofType: "wav")!)
+                do{print(coinSound)
+                    audioPlayer = try AVAudioPlayer(contentsOfURL:coinSound)
+                    audioPlayer.prepareToPlay()
+                    audioPlayer.play()
+                }catch {
+                    print("Error getting the audio file")
+                }
+                
+                return "";
+            })
         }
 
     }

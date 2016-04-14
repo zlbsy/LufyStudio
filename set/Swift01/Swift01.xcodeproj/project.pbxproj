@@ -17,6 +17,9 @@
 		A06B2A531C17D47000CB68AF /* test.html in Resources */ = {isa = PBXBuildFile; fileRef = A06B2A521C17D47000CB68AF /* test.html */; };
 		A06B2A551C17DC4B00CB68AF /* Lufylegend.swift in Sources */ = {isa = PBXBuildFile; fileRef = A06B2A541C17DC4B00CB68AF /* Lufylegend.swift */; };
 		A06B2A571C17F09B00CB68AF /* data.js in Resources */ = {isa = PBXBuildFile; fileRef = A06B2A561C17F09B00CB68AF /* data.js */; };
+		AD8B67981CBFDD0800195B8D /* jsc.m in Sources */ = {isa = PBXBuildFile; fileRef = AD8B67971CBFDD0800195B8D /* jsc.m */; };
+		AD8B679B1CBFFAD100195B8D /* Sound in Resources */ = {isa = PBXBuildFile; fileRef = AD8B679A1CBFFAD100195B8D /* Sound */; };
+		AD8B679D1CBFFDFD00195B8D /* lufylegend-1.10.1.js in Resources */ = {isa = PBXBuildFile; fileRef = AD8B679C1CBFFDFD00195B8D /* lufylegend-1.10.1.js */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +56,10 @@
 		A06B2A521C17D47000CB68AF /* test.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = test.html; sourceTree = "<group>"; };
 		A06B2A541C17DC4B00CB68AF /* Lufylegend.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Lufylegend.swift; sourceTree = "<group>"; };
 		A06B2A561C17F09B00CB68AF /* data.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = data.js; sourceTree = "<group>"; };
+		AD8B67971CBFDD0800195B8D /* jsc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = jsc.m; sourceTree = "<group>"; };
+		AD8B67991CBFDD2500195B8D /* jsc.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = jsc.h; sourceTree = "<group>"; };
+		AD8B679A1CBFFAD100195B8D /* Sound */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Sound; sourceTree = "<group>"; };
+		AD8B679C1CBFFDFD00195B8D /* lufylegend-1.10.1.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = "lufylegend-1.10.1.js"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,6 +110,8 @@
 		A06B2A1F1C17CACD00CB68AF /* Swift01 */ = {
 			isa = PBXGroup;
 			children = (
+				AD8B679C1CBFFDFD00195B8D /* lufylegend-1.10.1.js */,
+				AD8B679A1CBFFAD100195B8D /* Sound */,
 				A06B2A201C17CACD00CB68AF /* AppDelegate.swift */,
 				A06B2A221C17CACD00CB68AF /* ViewController.swift */,
 				A06B2A241C17CACD00CB68AF /* Main.storyboard */,
@@ -112,6 +121,8 @@
 				A06B2A521C17D47000CB68AF /* test.html */,
 				A06B2A541C17DC4B00CB68AF /* Lufylegend.swift */,
 				A06B2A561C17F09B00CB68AF /* data.js */,
+				AD8B67971CBFDD0800195B8D /* jsc.m */,
+				AD8B67991CBFDD2500195B8D /* jsc.h */,
 			);
 			path = Swift01;
 			sourceTree = "<group>";
@@ -196,7 +207,7 @@
 		A06B2A151C17CACD00CB68AF /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0710;
+				LastSwiftUpdateCheck = 0730;
 				LastUpgradeCheck = 0710;
 				ORGANIZATIONNAME = "張路斌";
 				TargetAttributes = {
@@ -238,7 +249,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AD8B679B1CBFFAD100195B8D /* Sound in Resources */,
 				A06B2A2B1C17CACD00CB68AF /* LaunchScreen.storyboard in Resources */,
+				AD8B679D1CBFFDFD00195B8D /* lufylegend-1.10.1.js in Resources */,
 				A06B2A281C17CACD00CB68AF /* Assets.xcassets in Resources */,
 				A06B2A261C17CACD00CB68AF /* Main.storyboard in Resources */,
 				A06B2A531C17D47000CB68AF /* test.html in Resources */,
@@ -267,6 +280,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AD8B67981CBFDD0800195B8D /* jsc.m in Sources */,
 				A06B2A551C17DC4B00CB68AF /* Lufylegend.swift in Sources */,
 				A06B2A231C17CACD00CB68AF /* ViewController.swift in Sources */,
 				A06B2A211C17CACD00CB68AF /* AppDelegate.swift in Sources */,
@@ -409,10 +423,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = Swift01/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = test.Swift01;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = Swift01/jsc.h;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
@@ -420,10 +437,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = Swift01/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = test.Swift01;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = Swift01/jsc.h;
 			};
 			name = Release;
 		};

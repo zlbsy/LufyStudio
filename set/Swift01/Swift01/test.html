@@ -1,26 +1,26 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
     <head>
-        <meta charset="UTF-8">
+        <meta charset="utf-8" />
+        <title>LButton</title>
+        <script type="text/javascript" src="./lufylegend-1.10.1.js"></script>
     </head>
-    <body>
-        <div>ローカルhtmlですよ</div>
-        <p><a href="javascript:void(0)" onclick="GetTest();" >Push me!</a></p>
-        <br>
-        <p><a href="javascript:void(0)" onclick="GetTest2();" >Push me!2</a></p>
-        <br>
-        <p><a href="javascript:void(0)" onclick="GetTest3();" >Push me!3</a></p>
-        <script>
-            function GetTest(){
-                window.testLoad("nativecall://abcdef?x=a&y=b",function(data){alert("callback:"+data);});
-            }
-        function GetTest2(){
-            window.testLoad("./Data/smap/1.txt",function(data){alert("callback:"+data);});
+    <body style="margin:0;padding:0;">
+        <div id="legend">
+        </div>
+        <script type="text/javascript">
+            init(1000/60,"legend",800,600,gameInit);
+            
+        function gameInit(){
+            var backLayer = new LSprite();
+            addChild(backLayer);
+            backLayer.graphics.drawRect(2, "#ff0000", [10, 10, 100, 50]);
+            backLayer.graphics.drawRect(1, "#000000", [10, 100, 50, 100], true, "#880088");
+            
+            backLayer.addEventListener(LMouseEvent.MOUSE_DOWN,function(e){
+                                      playSE("button02 click");
+                                      });
         }
-        function GetTest3(){
-            alert("value=" + (value));
-        }
-
-
         </script>
     </body>
 </html>
