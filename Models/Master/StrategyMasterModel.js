@@ -29,6 +29,12 @@ StrategyMasterModel.getMaster=function(id){
 StrategyMasterModel.prototype.id = function() {
 	return this.data.id;
 };
+StrategyMasterModel.prototype.se = function() {
+	if(!this.data.se){
+		return "Se_strategy_hert2";
+	}
+	return this.data.se;
+};
 StrategyMasterModel.prototype.troops = function() {
 	return this.data.troops;
 };

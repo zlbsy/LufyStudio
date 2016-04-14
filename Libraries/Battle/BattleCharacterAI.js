@@ -421,9 +421,11 @@ BattleCharacterAI.prototype.attackActionComplete = function(event) {
 				}
 			}
 			obj.chara.changeAction(CharacterAction.HERT);
+			LPlugin.playSE("Se_hert");
 			obj.chara.addEventListener(BattleCharacterActionEvent.HERT_ACTION_COMPLETE,obj.chara.AI.hertActionComplete);
 		}else{
 			obj.chara.changeAction(CharacterAction.BLOCK);
+			LPlugin.playSE("Se_block");
 			obj.chara.addEventListener(BattleCharacterActionEvent.BLOCK_ACTION_COMPLETE,obj.chara.AI.blockActionComplete);
 		}
 	}

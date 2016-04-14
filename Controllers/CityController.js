@@ -92,6 +92,7 @@ CityController.prototype.toSelectMap=function(eventType, params){
 CityController.prototype.gotoBattle=function(){
 	var self = this;
 	LMvc.CityController = null;
+	LPlugin.playSE("Se_goto_battle");
 	LMvc.keepLoading(true);
 	self.loadMvc("Battle",self.battleLoadComplete);
 };

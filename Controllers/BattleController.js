@@ -122,6 +122,7 @@ BattleController.prototype.init = function(){
 	}else{
 		self.charactersInit();
 	}
+	LPlugin.playBGM("battle" + ((2 * Math.random() >>> 0) + 1));
 };
 BattleController.prototype.charactersInit = function(){
 	var self = this;

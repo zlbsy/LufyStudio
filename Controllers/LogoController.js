@@ -72,7 +72,7 @@ LogoController.prototype.start=function(event){
 		{name:"battle2",path:LMvc.MVC_PATH+"Sound/battle2.mp3"},
 		{name:"city",path:LMvc.MVC_PATH+"Sound/city.mp3"},
 		{name:"map",path:LMvc.MVC_PATH+"Sound/map.mp3"},
-		{name:"Se_battle_loading",path:LMvc.MVC_PATH+"Sound/Se_battle_loading.wav"},
+		{name:"Se_loading",path:LMvc.MVC_PATH+"Sound/Se_loading.wav"},
 		{name:"Se_big_block",path:LMvc.MVC_PATH+"Sound/Se_big_block.wav"},
 		{name:"Se_big_hert",path:LMvc.MVC_PATH+"Sound/Se_big_hert.wav"},
 		{name:"Se_block",path:LMvc.MVC_PATH+"Sound/Se_block.wav"},

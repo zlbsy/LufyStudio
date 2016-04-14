@@ -638,6 +638,7 @@ BattleIntelligentAI.prototype.findMoveTarget = function() {
 	}
 	//没有可以攻击到的人，向最近目标移动
 	var distance = 100000, lX, lY, targetX = self.locationX, targetY = self.locationY, targetRoads;
+	//console.log("BattleIntelligentAI.targetCharacters.length = " , BattleIntelligentAI.targetCharacters.length);
 	for(var i = 0,l = BattleIntelligentAI.targetCharacters.length;i<l;i++){
 		var child = BattleIntelligentAI.targetCharacters[i];
 		if(child.data.isDefCharacter()){
@@ -646,16 +647,35 @@ BattleIntelligentAI.prototype.findMoveTarget = function() {
 		lX = child.locationX(), lY = child.locationY();
 		LMvc.BattleController.query.checkDistance = true;
 		LMvc.BattleController.query.checkCharacter = true;
-		var roads = LMvc.BattleController.query.queryPath(new LPoint(self.locationX, self.locationY),new LPoint(lX,lY));
-		console.log("findMoveTarget:"+new LPoint(self.locationX, self.locationY)+","+new LPoint(lX,lY)+"="+roads);
+		//var roads = LMvc.BattleController.query.queryPath(new LPoint(self.locationX, self.locationY),new LPoint(lX,lY));
+		//console.log("findMoveTarget:"+new LPoint(self.locationX, self.locationY)+","+new LPoint(lX,lY)+"="+roads);
+		var roads;
+		var ii = 0;
+		do{
+			ii++;
+			roads = LMvc.BattleController.query.queryPath(new LPoint(self.locationX, self.locationY),new LPoint(lX,lY));
+			//console.log("findMoveTarget:"+new LPoint(self.locationX, self.locationY)+","+new LPoint(lX,lY)+"="+roads);
+			var noRoad = (!roads || roads.length == 0);
+			var absX = Math.abs(self.locationX - lX);
+			var absY = Math.abs(self.locationY - lY);
+			if(absX > absY){
+				lX += (self.locationX > lX ? 1 : -1);
+			}else if(absX < absY){
+				lY += (self.locationY > lY ? 1 : -1);
+			}else if(noRoad){
+				roads = [new LPoint(self.locationX, self.locationY)];
+				break;
+			}
+		}while(noRoad && ii < 4);
 		LMvc.BattleController.query.checkDistance = false;
 		LMvc.BattleController.query.checkCharacter = false;
 		var currentDistance = roads.length;
+		//console.log("currentDistance = " , currentDistance, "distance="+distance);
 		if(currentDistance > 0 && currentDistance < distance){
 			distance = currentDistance;
 			targetRoads = roads;
 		}
-		console.log("targetRoads = " , targetRoads, "distance="+distance);
+		//console.log("targetRoads = " , targetRoads, "distance="+distance);
 	}
 	for(var i = 0,l=targetRoads.length;i<l;i++){
 		var node = targetRoads[i];
@@ -677,6 +697,6 @@ BattleIntelligentAI.prototype.findMoveTarget = function() {
 		self.targetNode = new LPoint(targetX, targetY);
 	}
 	self.chara.mode = CharacterMode.MOVING;
-	console.log("self.chara.mode="+self.chara.mode);
+	//console.log("self.chara.mode="+self.chara.mode);
 };
 

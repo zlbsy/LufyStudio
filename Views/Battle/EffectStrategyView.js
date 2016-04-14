@@ -30,6 +30,8 @@ EffectStrategyView.prototype.becomeEffective = function(anime){
 	anime.removeFrameScript("effect");
 	self.currentTargetCharacter.toStatic(false);
 	self.effectType = self.currentCharacter.currentSelectStrategy.effectType();
+	var se = self.currentCharacter.currentSelectStrategy.se();
+	LPlugin.playSE(se);
 	if(self.effectType == StrategyEffectType.Attack){
 		self.toAttack();
 	}else if(self.effectType == StrategyEffectType.Status){
@@ -47,55 +49,6 @@ EffectStrategyView.prototype.toSupply = function(){
 	self.currentTargetCharacter.changeAction(CharacterAction.WAKE);
 	var healTroops = battleHealTroops(self.currentCharacter.currentSelectStrategy, self.currentTargetCharacter);
 	BattleCharacterStatusView.healCharactersPush(self.currentTargetCharacter, healTroops);
-	/*
-	var currentSelectStrategy = self.currentCharacter.currentSelectStrategy;
-	self.currentTargetCharacter.changeAction(CharacterAction.WAKE);
-	var troopsAdd = currentSelectStrategy.troops();
-	var woundedAdd = currentSelectStrategy.wounded();
-	var wounded = self.currentTargetCharacter.data.wounded();
-	if(woundedAdd < 1){
-		woundedAdd = wounded*woundedAdd >>> 0;
-	}else if(woundedAdd > wounded){
-		woundedAdd = wounded;
-	}
-	var battleData = LMvc.BattleController.battleData;
-	var reservist = 0;
-	if(battleData.fromCity.seigniorCharaId() == self.currentTargetCharacter.data.seigniorId()){
-		reservist = battleData.troops;
-	}else{
-		reservist = battleData.toCity.troops();
-	}
-	if(troopsAdd > reservist){
-		troopsAdd = reservist;
-	}
-	console.log("troopsAdd,reservist",troopsAdd,reservist);
-	if(woundedAdd > 0){
-		self.currentTargetCharacter.data.wounded(wounded - woundedAdd);
-		troopsAdd += woundedAdd;
-	}
-	var troops = self.currentTargetCharacter.data.troops();
-	//console.log("troops="+troops);
-	var maxTroops = self.currentTargetCharacter.data.maxTroops();
-	if(troops + troopsAdd > maxTroops){
-		troopsAdd = maxTroops - troops;
-	}
-	if(battleData.fromCity.seigniorCharaId() == self.currentTargetCharacter.data.seigniorId()){
-		battleData.troops -= troopsAdd;
-	}else{
-		battleData.toCity.troops(reservist - troopsAdd);
-	}
-	//console.log("maxTroops="+maxTroops);
-	//console.log("troopsAdd="+troopsAdd);
-	//console.log(troops+","+troopsAdd+","+maxTroops);
-	var troopsValue = troops + troopsAdd;
-	self.currentTargetCharacter.data.troops(troopsValue);
-	var tweenSupply = getStrokeLabel(String.format(Language.get("troops_plus"),troopsValue - troops),12,"#FF0000","#000000",2);
-	tweenSupply.x = self.currentTargetCharacter.x + (BattleCharacterSize.width - tweenSupply.getWidth()) * 0.5;
-	tweenSupply.y = self.currentTargetCharacter.y;
-	self.currentTargetCharacter.controller.view.baseLayer.addChild(tweenSupply);
-	LTweenLite.to(tweenSupply,1.5,{y:tweenSupply.y - 20,alpha:0,onComplete:function(e){
-		e.target.remove();
-	}});*/
 };
 EffectStrategyView.prototype.toChangeStatus = function(){
 	var self = this, hitrate;

@@ -5,7 +5,8 @@ var SoldierType = {
 };
 var MoveType = {
 	INFANTRY:0,//步兵
-	CAVALRY:1//骑兵
+	CAVALRY:1,//骑兵
+	CAR:2,//炮车
 };
 var AttackType = {
 	NEAR:0,//近战
@@ -47,7 +48,7 @@ var SoldierDatas = [
 	explanation:"explanation_jj",
 	next:[{id:2,lv:20}]
 	},
-	{id:2,name:"步兵",type:SoldierType.Physical,attackType:AttackType.NEAR,moveType:MoveType.CAVALRY,movePower:4,
+	{id:2,name:"步兵",type:SoldierType.Physical,attackType:AttackType.NEAR,moveType:MoveType.INFANTRY,movePower:4,
 	property:{attack:"B",spirit:"A",defense:"S",breakout:"B",morale:"B",troops:6,strategy:1},
 	equipment:{head:0,hand:0,body:0,foot:0,accessories:0},
 	restrain:[{id:2,value:110},{id:3,value:80}],
@@ -71,7 +72,7 @@ var SoldierDatas = [
 	explanation:"explanation_qqb",
 	next:[{id:7,lv:20}]
 	},
-	{id:4,name:"弓兵",type:SoldierType.Physical,attackType:AttackType.FAR,moveType:MoveType.CAVALRY,movePower:4,
+	{id:4,name:"弓兵",type:SoldierType.Physical,attackType:AttackType.FAR,moveType:MoveType.INFANTRY,movePower:4,
 	property:{attack:"A",spirit:"B",defense:"B",breakout:"B",morale:"S",troops:4,strategy:1},
 	equipment:{head:0,hand:0,body:0,foot:0,accessories:0},
 	restrain:[{id:2,value:110},{id:3,value:80}],
@@ -95,7 +96,7 @@ var SoldierDatas = [
 	explanation:"explanation_gqb",
 	next:[{id:7,lv:20}]
 	},
-	{id:6,name:"炮车",type:SoldierType.Physical,attackType:AttackType.FAR,moveType:MoveType.CAVALRY,movePower:3,
+	{id:6,name:"炮车",type:SoldierType.Physical,attackType:AttackType.FAR,moveType:MoveType.CAR,movePower:3,
 	property:{attack:"S",spirit:"B",defense:"A",breakout:"C",morale:"A",troops:4,strategy:1},
 	equipment:{head:0,hand:0,body:0,foot:0,accessories:0},
 	restrain:[{id:2,value:110},{id:3,value:80}],
@@ -109,7 +110,7 @@ var SoldierDatas = [
 	explanation:"explanation_qpc",
 	next:[{id:7,lv:20}]
 	},
-	{id:7,name:"武术家",type:SoldierType.Physical,attackType:AttackType.NEAR,moveType:MoveType.CAVALRY,movePower:5,
+	{id:7,name:"武术家",type:SoldierType.Physical,attackType:AttackType.NEAR,moveType:MoveType.INFANTRY,movePower:5,
 	property:{attack:"A",spirit:"C",defense:"A",breakout:"S",morale:"B",troops:4,strategy:1},
 	equipment:{head:0,hand:0,body:0,foot:0,accessories:0},
 	restrain:[{id:2,value:110},{id:3,value:80}],
@@ -122,7 +123,7 @@ var SoldierDatas = [
 	explanation:"explanation_whj",
 	next:[{id:7,lv:20}]
 	},
-	{id:8,name:"贼兵",type:SoldierType.Physical,attackType:AttackType.NEAR,moveType:MoveType.CAVALRY,movePower:5,
+	{id:8,name:"贼兵",type:SoldierType.Physical,attackType:AttackType.NEAR,moveType:MoveType.INFANTRY,movePower:5,
 	property:{attack:"S",spirit:"C",defense:"B",breakout:"B",morale:"S",troops:5,strategy:1},
 	equipment:{head:0,hand:0,body:0,foot:0,accessories:0},
 	restrain:[{id:2,value:110},{id:3,value:80}],
@@ -136,7 +137,7 @@ var SoldierDatas = [
 	explanation:"explanation_zb",
 	next:[{id:7,lv:20}]
 	},
-	{id:9,name:"策士",type:SoldierType.Magic,attackType:AttackType.MAGIC,moveType:MoveType.CAVALRY,movePower:4,
+	{id:9,name:"策士",type:SoldierType.Magic,attackType:AttackType.MAGIC,moveType:MoveType.INFANTRY,movePower:4,
 	property:{attack:"B",spirit:"S",defense:"B",breakout:"B",morale:"B",troops:5,strategy:2},
 	equipment:{head:0,hand:0,body:0,foot:0,accessories:0},
 	restrain:[{id:2,value:110},{id:3,value:80}],
@@ -150,7 +151,7 @@ var SoldierDatas = [
 	explanation:"explanation_cs",
 	next:[{id:7,lv:20}]
 	},
-	{id:10,name:"风水士",type:SoldierType.Magic,attackType:AttackType.MAGIC,moveType:MoveType.CAVALRY,movePower:4,
+	{id:10,name:"风水士",type:SoldierType.Magic,attackType:AttackType.MAGIC,moveType:MoveType.INFANTRY,movePower:4,
 	property:{attack:"C",spirit:"S",defense:"C",breakout:"A",morale:"A",troops:3,strategy:2},
 	equipment:{head:0,hand:0,body:0,foot:0,accessories:0},
 	restrain:[{id:2,value:110},{id:3,value:80}],
@@ -164,7 +165,7 @@ var SoldierDatas = [
 	explanation:"explanation_fsis",
 	next:[{id:7,lv:20}]
 	},
-	{id:11,name:"道士",type:SoldierType.Magic,attackType:AttackType.MAGIC,moveType:MoveType.CAVALRY,movePower:4,
+	{id:11,name:"道士",type:SoldierType.Magic,attackType:AttackType.MAGIC,moveType:MoveType.INFANTRY,movePower:4,
 	property:{attack:"C",spirit:"S",defense:"B",breakout:"A",morale:"B",troops:3,strategy:2},
 	equipment:{head:0,hand:0,body:0,foot:0,accessories:0},
 	restrain:[{id:2,value:110},{id:3,value:80}],
@@ -194,7 +195,7 @@ var SoldierDatas = [
 	explanation:"explanation_qcs",
 	next:[{id:7,lv:20}]
 	},
-	{id:13,name:"女兵",type:SoldierType.Physical,attackType:AttackType.NEAR,moveType:MoveType.CAVALRY,movePower:5,
+	{id:13,name:"女兵",type:SoldierType.Physical,attackType:AttackType.NEAR,moveType:MoveType.INFANTRY,movePower:5,
 	property:{attack:"A",spirit:"B",defense:"B",breakout:"S",morale:"B",troops:3,strategy:1},
 	equipment:{head:0,hand:0,body:0,foot:0,accessories:0},
 	restrain:[{id:2,value:110},{id:3,value:80}],
@@ -207,7 +208,7 @@ var SoldierDatas = [
 	explanation:"explanation_wun",
 	next:[{id:7,lv:20}]
 	},
-	{id:14,name:"海盗",type:SoldierType.Physical,attackType:AttackType.NEAR,moveType:MoveType.CAVALRY,movePower:5,
+	{id:14,name:"海盗",type:SoldierType.Physical,attackType:AttackType.NEAR,moveType:MoveType.INFANTRY,movePower:5,
 	property:{attack:"S",spirit:"B",defense:"B",breakout:"A",morale:"B",troops:4,strategy:1},
 	equipment:{head:0,hand:0,body:0,foot:0,accessories:0},
 	restrain:[{id:2,value:110},{id:3,value:80}],
@@ -221,7 +222,7 @@ var SoldierDatas = [
 	explanation:"explanation_hd",
 	next:[{id:7,lv:20}]
 	},
-	{id:15,name:"都督",type:SoldierType.Comprehensive,attackType:AttackType.MAGIC,moveType:MoveType.CAVALRY,movePower:5,
+	{id:15,name:"都督",type:SoldierType.Comprehensive,attackType:AttackType.MAGIC,moveType:MoveType.INFANTRY,movePower:5,
 	property:{attack:"A",spirit:"S",defense:"B",breakout:"B",morale:"B",troops:4,strategy:2},
 	equipment:{head:0,hand:0,body:0,foot:0,accessories:0},
 	restrain:[{id:2,value:110},{id:3,value:80}],
@@ -234,7 +235,7 @@ var SoldierDatas = [
 	explanation:"explanation_dd",
 	next:[{id:8,lv:40}]
 	},
-	{id:16,name:"咒术士",type:SoldierType.Magic,attackType:AttackType.MAGIC,moveType:MoveType.CAVALRY,movePower:5,
+	{id:16,name:"咒术士",type:SoldierType.Magic,attackType:AttackType.MAGIC,moveType:MoveType.INFANTRY,movePower:5,
 	property:{attack:"C",spirit:"S",defense:"B",breakout:"B",morale:"A",troops:3,strategy:3},
 	equipment:{head:0,hand:0,body:0,foot:0,accessories:0},
 	restrain:[{id:2,value:110},{id:3,value:80}],
@@ -264,7 +265,7 @@ var SoldierDatas = [
 	explanation:"explanation_xlqb",
 	next:[{id:7,lv:20}]
 	},
-	{id:18,name:"驯熊师",type:SoldierType.Physical,attackType:AttackType.NEAR,moveType:MoveType.CAVALRY,movePower:4,
+	{id:18,name:"驯熊师",type:SoldierType.Physical,attackType:AttackType.NEAR,moveType:MoveType.INFANTRY,movePower:4,
 	property:{attack:"S",spirit:"C",defense:"A",breakout:"B",morale:"B",troops:6,strategy:1},
 	equipment:{head:0,hand:0,body:0,foot:0,accessories:0},
 	restrain:[{id:2,value:110},{id:3,value:80}],
@@ -278,7 +279,7 @@ var SoldierDatas = [
 	explanation:"explanation_xxs",
 	next:[{id:8,lv:40}]
 	},
-	{id:19,name:"驯虎师",type:SoldierType.Physical,attackType:AttackType.NEAR,moveType:MoveType.CAVALRY,movePower:5,
+	{id:19,name:"驯虎师",type:SoldierType.Physical,attackType:AttackType.NEAR,moveType:MoveType.INFANTRY,movePower:5,
 	property:{attack:"A",spirit:"C",defense:"A",breakout:"S",morale:"C",troops:4,strategy:1},
 	equipment:{head:0,hand:0,body:0,foot:0,accessories:0},
 	restrain:[{id:2,value:110},{id:3,value:80}],

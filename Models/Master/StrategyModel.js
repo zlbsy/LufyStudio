@@ -17,6 +17,9 @@ StrategyModel.prototype.id = function() {
 StrategyModel.prototype.level = function() {
 	return this.data.lv;
 };
+StrategyModel.prototype.se = function() {
+	return this.master().se();
+};
 StrategyModel.prototype.cost = function() {
 	return this.master().cost();
 };

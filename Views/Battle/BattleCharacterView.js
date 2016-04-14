@@ -326,6 +326,29 @@ BattleCharacterView.prototype.toDie = function(isSingleCombat) {
 	script += "SGJBattleCharacter.characterToDie(" + self.belong + ","+ self.data.id() + ");";
 	LGlobal.script.addScript(script);
 };
+BattleCharacterView.prototype.setTo = function(){
+	var self = this;
+	self.callParent("setTo", arguments);
+	if(self.x != self.to.x || self.y != self.to.y){
+		//TODO::水地形的时候
+		/*if(warter){
+			LPlugin.playSE("Se_move_warter");
+			return;	
+		}*/
+		var soldier = self.data.currentSoldiers();
+		switch(soldier.moveType()){
+			case MoveType.INFANTRY:
+				LPlugin.playSE("Se_move_infantry");
+				break;
+			case MoveType.CAVALRY:
+				LPlugin.playSE("Se_move_cavalry");
+				break;
+			case MoveType.CAR:
+				LPlugin.playSE("Se_move_car");
+				break;
+		}
+	}
+};
 BattleCharacterView.prototype.showStatusView = function() {
 	var self = this;
 	if(LMvc.characterStatusView && LMvc.characterStatusView.parent){
