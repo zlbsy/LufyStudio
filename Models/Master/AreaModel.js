@@ -36,7 +36,16 @@ AreaModel.getArea=function(area_id){
 	}
 	return null;
 };
-AreaModel.getPowerfulCharacters = function(generals){
+/*
+ ./Helpers/JobAIHelper.js:43:	var generals = AreaModel.getPowerfulCharacters(characters);
+./Helpers/JobAIHelper.js:81:	var generals = AreaModel.getPowerfulCharacters(characters);
+./Helpers/JobAIHelper.js:416:	var generals = AreaModel.getPowerfulCharacters(characters);
+./Helpers/BattleHelper.js:267:				var list = AreaModel.getPowerfulCharacters(charas);
+./Models/Master/AreaModel.js:39:AreaModel.getPowerfulCharacters = function(generals){
+./Models/Master/AreaModel.js:41:	//console.log("AreaModel.getPowerfulCharacters:",generals);
+./Models/Master/AreaModel.js:92:	var list = AreaModel.getPowerfulCharacters(generals);
+*/
+AreaModel.getPowerfulCharacters = function(generals, init){
 	var list = [],result = [];
 	//console.log("AreaModel.getPowerfulCharacters:",generals);
 	for(var i=0,l=generals.length;i<l;i++){
@@ -48,7 +57,7 @@ AreaModel.getPowerfulCharacters = function(generals){
 			data = child;
 		}
 		//TODO::是否需要重新计算
-		data.calculation(true);
+		data.calculation(init);
 		var value = data.force() + data.intelligence() + data.agility() + data.luck() + data.command();
 		value += value * data.lv() * 0.1;
 		value += data.maxProficiencySoldier().proficiency() * 0.1;
@@ -86,10 +95,14 @@ AreaModel.prototype.datas=function(){
 	}
 	return saveData;
 };
+/*
+ ./Models/Master/AreaModel.js:89:AreaModel.prototype.getDefenseEnemiesAndPowerful = function(){
+./Models/Master/AreaModel.js:110:	var list = self.getDefenseEnemiesAndPowerful();
+./Models/Master/AreaModel.js:120:	var list = self.getDefenseEnemiesAndPowerful();*/
 AreaModel.prototype.getDefenseEnemiesAndPowerful = function(){
 	var city = this;
 	var generals = city.generals(),result = [];
-	var list = AreaModel.getPowerfulCharacters(generals);
+	var list = AreaModel.getPowerfulCharacters(generals, true);
 	var index = list.findIndex(function(child){
 		return child.general.id() == city.seigniorCharaId();
 	});

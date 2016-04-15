@@ -234,6 +234,19 @@ CharacterModel.prototype.basicPropertiesSum = function(){
 	var self = this;
 	return self.force() + self.intelligence() + self.command() + self.agility() + self.luck();
 };
+/*
+ ./Controllers/BattleController.js:211:		chara.calculation(true);
+./Views/Battle/BattleCharacterLayerView.js:140:		CharacterModel.getChara(id).calculation(true);
+./Views/CharacterList/CharacterDetailedTabEquipmentView.js:64:	characterModel.calculation();
+./Views/CharacterList/CharacterDetailedTabEquipmentView.js:103:	characterModel.calculation();
+./Views/CharacterList/CharacterDetailedTabPropertiesView.js:17: 		characterModel.calculation(true); 
+./Views/Common/CharacterView.js:6:	self.data.calculation(true);
+./Models/Master/CharacterModel.js:237:CharacterModel.prototype.calculation = function(init) {
+./Models/Master/CharacterModel.js:717:		self.calculation(false);
+./Models/Master/AreaModel.js:51:		data.calculation(true);
+./Libraries/BattleAIExecute.js:158:		child.calculation(true);
+./Libraries/BattleAIExecute.js:167:		child.calculation(true);
+*/
 CharacterModel.prototype.calculation = function(init) {
 	var self = this;
 	var currentSoldiers = self.currentSoldiers();
