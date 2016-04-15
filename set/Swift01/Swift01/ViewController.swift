@@ -27,80 +27,12 @@ class ViewController: UIViewController, UIWebViewDelegate {
             myWebView.loadRequest(NSURLRequest(URL: url))
         }
         let file_name = "/sgj_data.txt"
-        //var text = "12345" //保存する内容
-        //var read_text = ""
         let lufy = Lufylegend()
         print(lufy.readFile(file_name))
-        /*let paths1 = NSSearchPathForDirectoriesInDomains(
-            .DocumentDirectory,
-            .UserDomainMask, true)
-        let dir = paths1.first!
-        let path_file_name =  dir.stringByAppendingString(file_name as String)
-        print(path_file_name)
-        do {
-            
-            read_text += (try NSString( contentsOfFile: path_file_name, encoding: NSUTF8StringEncoding )) as String
-            print( "read :: " + read_text )
-            
-        } catch {
-            print("エラー")
-        }
         
-        do {
-            text += read_text
-            try text.writeToFile( path_file_name, atomically: false, encoding: NSUTF8StringEncoding )
-            print("OK")
-        } catch {
-             print("エラー")
-        }*/
-        /*if let dir : NSString = NSSearchPathForDirectoriesInDomains( NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.AllDomainsMask, true ).first {
-            
-            let path_file_name = dir.stringByAppendingPathComponent( file_name )
-            
-            do {
-                
-                try text.writeToFile( path_file_name, atomically: false, encoding: NSUTF8StringEncoding )
-                
-            } catch {
-                //エラー処理
-                print("エラー")
-            }
-        }*/
-        //JSContext *ctx = [webView valueForKeyPath:@”documentView.webView.mainFrame.javaScriptContext”];
         if let ctx = myWebView.valueForKeyPath("documentView.webView.mainFrame.javaScriptContext") {
             let context = ctx as! JSContext
             lufy.contextInit(context)
-            /*
-            let script = "value = encodeURI('<name>');"
-            context.evaluateScript(script)
-            let value:JSValue = context.objectForKeyedSubscript("value")
-            print(value.toString())
-            let function = {(values:AnyObject!)->AnyObject in
-                var sum:Int = 0
-                for value in values as! NSArray
-                {
-                    sum += value.integerValue
-                }
-                return sum
-            }
-            //context.setObject(function, forKeyedSubscript: "sum")
-            context.setb1("sum", function)
-            print(context.evaluateScript("sum([1,2,3])"))
-            var audioPlayer:AVAudioPlayer = AVAudioPlayer()
-            context.setb1("playSE", {(value:AnyObject!)->AnyObject in
-                
-                let coinSound = NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource("Sound/Se_ok", ofType: "wav")!)
-                do{print(coinSound)
-                    audioPlayer = try AVAudioPlayer(contentsOfURL:coinSound)
-                    audioPlayer.prepareToPlay()
-                    audioPlayer.play()
-                }catch {
-                    print("Error getting the audio file")
-                }
-                
-                return "";
-            })
-            */
         }
 
     }
