@@ -10,26 +10,7 @@ import UIKit
 import Foundation
 import AVFoundation
 import JavaScriptCore;
-typealias ID = AnyObject!
 
-extension JSContext {
-    func fetch(key:String)->JSValue {
-        return getJSVinJSC(self, key)
-    }
-    func store(key:String, _ val:ID) {
-        setJSVinJSC(self, key, val)
-    }
-    // Yikes.  Swift 1.2 and its JavaScriptCore no longer allows method overloding by type
-    func setb0(key:String, _ blk:()->ID) {
-        setB0JSVinJSC(self, key, blk)
-    }
-    func setb1(key:String, _ blk:(ID)->ID) {
-        setB1JSVinJSC(self, key, blk)
-    }
-    func setb2(key:String, _ blk:(ID,ID)->ID) {
-        setB2JSVinJSC(self, key, blk)
-    }
-}
 class ViewController: UIViewController, UIWebViewDelegate {
     let myWebView : UIWebView = UIWebView()
     override func viewDidLoad() {
@@ -45,9 +26,51 @@ class ViewController: UIViewController, UIWebViewDelegate {
             print("loadRequest！")
             myWebView.loadRequest(NSURLRequest(URL: url))
         }
+        let file_name = "/sgj_data.txt"
+        //var text = "12345" //保存する内容
+        //var read_text = ""
+        let lufy = Lufylegend()
+        print(lufy.readFile(file_name))
+        /*let paths1 = NSSearchPathForDirectoriesInDomains(
+            .DocumentDirectory,
+            .UserDomainMask, true)
+        let dir = paths1.first!
+        let path_file_name =  dir.stringByAppendingString(file_name as String)
+        print(path_file_name)
+        do {
+            
+            read_text += (try NSString( contentsOfFile: path_file_name, encoding: NSUTF8StringEncoding )) as String
+            print( "read :: " + read_text )
+            
+        } catch {
+            print("エラー")
+        }
+        
+        do {
+            text += read_text
+            try text.writeToFile( path_file_name, atomically: false, encoding: NSUTF8StringEncoding )
+            print("OK")
+        } catch {
+             print("エラー")
+        }*/
+        /*if let dir : NSString = NSSearchPathForDirectoriesInDomains( NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.AllDomainsMask, true ).first {
+            
+            let path_file_name = dir.stringByAppendingPathComponent( file_name )
+            
+            do {
+                
+                try text.writeToFile( path_file_name, atomically: false, encoding: NSUTF8StringEncoding )
+                
+            } catch {
+                //エラー処理
+                print("エラー")
+            }
+        }*/
         //JSContext *ctx = [webView valueForKeyPath:@”documentView.webView.mainFrame.javaScriptContext”];
         if let ctx = myWebView.valueForKeyPath("documentView.webView.mainFrame.javaScriptContext") {
             let context = ctx as! JSContext
+            lufy.contextInit(context)
+            /*
             let script = "value = encodeURI('<name>');"
             context.evaluateScript(script)
             let value:JSValue = context.objectForKeyedSubscript("value")
@@ -77,6 +100,7 @@ class ViewController: UIViewController, UIWebViewDelegate {
                 
                 return "";
             })
+            */
         }
 
     }
