@@ -8,11 +8,18 @@ function checkEventList() {
 			}) >= 0){
 			continue;
 		}
-		var month = LMvc.chapterData.month;
-		var year = LMvc.chapterData.year;
-		var timeIn = (currentEvent.condition.from.year <= year && currentEvent.condition.to.year >= year && currentEvent.condition.from.month <= month && currentEvent.condition.to.month >= month);
-		if(!timeIn){
-			continue;
+		if(currentEvent.condition.from && currentEvent.condition.to){
+			var month = LMvc.chapterData.month;
+			var year = LMvc.chapterData.year;
+			var from = currentEvent.condition.from.year * 12 + currentEvent.condition.from.month;
+			var to = currentEvent.condition.to.year * 12 + currentEvent.condition.to.month;
+			var now = LMvc.chapterData.year * 12 + LMvc.chapterData.month;
+			var yearOk = (currentEvent.condition.from.year <= year && currentEvent.condition.to.year >= year);
+			var monthOk = (currentEvent.condition.from.month <= month && currentEvent.condition.to.month >= month);
+			var timeIn = (yearOk && monthOk);
+			if(!timeIn){
+				continue;
+			}
 		}
 		if(currentEvent.condition.seignior > 0 && LMvc.selectSeignorId != currentEvent.condition.seignior){
 			continue;
@@ -43,6 +50,29 @@ function checkEventList() {
 		if(!citysOk){
 			continue;
 		}
+		var feat_generals = currentEvent.condition.feat_generals;
+		if(feat_generals){
+			if(SeigniorModel.list[SeigniorExecute.Instance().seigniorIndex].chara_id() != LMvc.selectSeignorId){
+				continue;
+			}
+			var feat = feat_generals.feat;
+			var force = feat_generals.force;
+			var count = feat_generals.count;
+			var seignior = SeigniorModel.getSeignior(LMvc.selectSeignorId);
+			var charas = seignior.generals();
+			var characters = [];
+			for(var j=0;j<charas.length;j++){
+				var character = charas[j];
+				if(character.feat() >= feat && character.force() >= force){
+					characters.push(character);
+				}
+			}
+			if(characters.length < count){
+				continue;
+			}
+			characters = characters.sort(function(a,b){return b.feat() - a.feat();});
+			currentEvent.feat_characters = characters;
+		}
 		if(!LPlugin.eventIsOpen(currentEvent.id)){
 			LPlugin.openEvent(currentEvent.id);
 		}
@@ -55,6 +85,13 @@ function checkEventList() {
 }
 function dispatchEventList(currentEvent) {
 	var script = "Var.set(eventId,"+currentEvent.id+");";
+	if(currentEvent.feat_characters){
+		script += String.format("Var.set(id0,{0});", LMvc.selectSeignorId);
+		for(var i=0, l=currentEvent.condition.feat_generals.count;i<l;i++){
+			var character = currentEvent.feat_characters[i];
+			script += String.format("Var.set(id{0},{1});", i + 1, character.id());
+		}
+	}
 	script += "SGJEvent.init();";
 	script += "Load.script("+currentEvent.script+");";
 	script += "SGJEvent.dispatchEventListResult("+currentEvent.id+");";

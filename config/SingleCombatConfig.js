@@ -1,4 +1,5 @@
 var SingleCombatCommand = {
+	//TODO::ver1.1增加［回复］指令
 	ATTACK:"single_command_attack",//轻击 3
 	DOUBLE_ATTACK:"single_command_double_attack",//连击 2
 	BIG_ATTACK:"single_command_big_attack",//重击 5

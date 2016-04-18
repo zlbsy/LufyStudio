@@ -1,0 +1,17 @@
+SGJEvent.mapShow(1);
+SGJEvent.messageShow(这是五虎上将的测试。,3);
+SGJEvent.addCharacter(@id0,0,100,fade);
+SGJEvent.talk(@id0,这是五虎上将的测试。);
+SGJEvent.addCharacter(@id1,50,100,fade);
+SGJEvent.talk(@id1,这是五虎上将的测试。);
+SGJEvent.addCharacter(@id2,150,100,fade);
+SGJEvent.talk(@id2,这是五虎上将的测试。);
+SGJEvent.addCharacter(@id3,250,100,fade);
+SGJEvent.talk(@id3,这是五虎上将的测试。);
+SGJEvent.addCharacter(@id4,350,100,fade);
+SGJEvent.talk(@id4,这是五虎上将的测试。);
+SGJEvent.addCharacter(@id5,450,100,fade);
+SGJEvent.talk(@id5,这是五虎上将的测试。);
+//SGJEvent.removeCharacter(1,fade);
+SGJEvent.messageShow(这是一个文字显示的测试。,3);
+Mark.EventEnd;

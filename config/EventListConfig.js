@@ -42,21 +42,16 @@ var EventListConfig = [
 },
 {
 	id:3,
-	name:"二顾茅庐",
+	name:"五虎上将",
 	condition:{
-		from:{year:194,month:1},
-		to:{year:194,month:1},
-		seignior:1,
+		seignior:0,
 		generals:[
-			{id:4,seignior:0,city:25},
-			{id:2,seignior:1},
-			{id:3,seignior:1}
 		],
+		feat_generals:{feat:0,count:5,force:80},
 		citys:[
-			{id:25,seignior:1},
 		]
 	},
-	script:"Data/Event/sgml2.txt",
+	script:"Data/Event/whsj.txt",
 	result:[]
 },
 {

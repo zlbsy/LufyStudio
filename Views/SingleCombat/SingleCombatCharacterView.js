@@ -206,6 +206,7 @@ SingleCombatCharacterView.prototype.changeHp = function(value){
 	self.barHp.changeValue(-value);
 	self.barAngry.changeValue(value);
 	if(self.barHp.value == 0 && !self.isFail){
+		LMvc.SingleCombatController.view.commandEnd = true;
 		self.isFail = true;
 		self.barHp.addEventListener(LEvent.COMPLETE,self.fail.bind(self));
 	}
@@ -215,7 +216,8 @@ SingleCombatCharacterView.prototype.singleCombatEnd = function(event){
 	var dieChara = LMvc.BattleController.view.charaLayer.getCharacter(null,self.data.id());
 	self.controller.over();
 	dieChara.data.troops(0);
-	dieChara.toDie(true);
+	BattleController.ctrlChara.AI.endAction();
+	//dieChara.toDie(true);
 };
 SingleCombatCharacterView.prototype.fail = function(event){
 	var self = this, obj;

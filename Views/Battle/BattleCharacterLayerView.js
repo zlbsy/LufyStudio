@@ -49,7 +49,7 @@ BattleCharacterLayerView.prototype.resetCharacterPositions=function(){
 };
 BattleCharacterLayerView.prototype.hasCharacterInPosition=function(lx,ly){
 	var self = this;
-	return self.charasPositions[lx+","+ly] != null;
+	return self.charasPositions[lx+","+ly];
 };
 BattleCharacterLayerView.prototype.isHasActiveCharacter=function(belong){
 	var self = this;

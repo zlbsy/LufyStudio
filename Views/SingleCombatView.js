@@ -80,7 +80,6 @@ SingleCombatView.prototype.addCtrlButton=function(){
 		child.addEventListener(LMouseEvent.MOUSE_UP,self.onButtonSelect);
 		LTweenLite.to(child,0.4 - i * 0.05,{x:i * 80});
 	}
-	//alert(self.ctrlLayer.numChildren);
 };
 SingleCombatView.prototype.onButtonSelect=function(event){
 	var button = event.currentTarget;
@@ -101,7 +100,7 @@ SingleCombatView.prototype.onButtonSelect=function(event){
 				return child.name == SingleCombatCommand.BACKSTROKE_ATTACK || child.name == SingleCombatCommand.SPECIAL_ATTACK;
 			});
 			if(specialIndex >= 0){
-				obj = {title:Language.get("提示"),message:"怒击和诈败不可同时使用!",width:300,height:240};
+				obj = {title:Language.get("prompt"),message:Language.get("single_combat_error"),width:300,height:240};
 				var windowLayer = ConfirmWindow(obj);
 				self.addChild(windowLayer);
 				return;
