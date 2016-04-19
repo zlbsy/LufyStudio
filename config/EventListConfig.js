@@ -52,7 +52,7 @@ var EventListConfig = [
 		]
 	},
 	script:"Data/Event/whsj.txt",
-	result:[]
+	result:[{type:"reputation",generals:[],reputation:"tiger"}]
 },
 {
 	id:4,

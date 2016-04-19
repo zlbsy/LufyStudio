@@ -84,13 +84,16 @@ function checkEventList() {
 	return false;
 }
 function dispatchEventList(currentEvent) {
+	//result:[{type:"reputation",generals:[],reputation:"tiger"}]
 	var script = "Var.set(eventId,"+currentEvent.id+");";
 	if(currentEvent.feat_characters){
 		script += String.format("Var.set(id0,{0});", LMvc.selectSeignorId);
 		for(var i=0, l=currentEvent.condition.feat_generals.count;i<l;i++){
 			var character = currentEvent.feat_characters[i];
 			script += String.format("Var.set(id{0},{1});", i + 1, character.id());
+			script += String.format("Var.set(name{0},{1});", i + 1, character.name());
 		}
+		currentEvent.result.generals.push(character.id());
 	}
 	script += "SGJEvent.init();";
 	script += "Load.script("+currentEvent.script+");";
@@ -115,9 +118,20 @@ function dispatchEventListResult(eventId) {
 			case "changeSeignior":
 				dispatchEventListResultChangeSeignior(child);
 				break;
+			case "reputation":
+				dispatchEventListResultReputation(child);
+				break;
 		}
 	}
 	LGlobal.script.analysis();
+}
+function dispatchEventListResultReputation(child) {
+	var generals = child.generals;
+	for(var i=0,l=generals.length;i<l;i++){
+		var id = generals[i];
+		var character = CharacterModel.getChara(id);
+		character.data.reputation = child.reputation;
+	}
 }
 function dispatchEventListResultStopBattle(child) {
 	var seigniors = child.seigniors;

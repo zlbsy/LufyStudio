@@ -91,6 +91,7 @@ CharacterModel.prototype.datas=function(){
 		loyalty:self.loyalty(),//忠诚度
 		soldiers:self.data.soldiers,//所有兵种熟练度
 		isPrized:self.isPrized(),
+		reputation:self.data.reputation,
 		equipments:self.equipmentsData()
 	};
 	if(self.data.currentSoldierId){
@@ -134,6 +135,9 @@ CharacterModel.prototype.setDatas=function(charaData){
 	}
 	if(charaData.soldiers){
 		self.data.soldiers = charaData.soldiers;
+	}
+	if(charaData.reputation){
+		self.data.reputation = charaData.reputation;
 	}
 	if(charaData.currentSoldierId){
 		self.data.currentSoldierId = charaData.currentSoldierId;
