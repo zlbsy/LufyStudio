@@ -103,7 +103,7 @@ CharacterDetailedTabEquipmentView.prototype.removeEquipmentRun=function(event){
 	characterModel.calculation();
 	delete detailedView.removeItemId;
 	detailedView.changeCharacter(0);
-	var characterListView = self.getParentByConstructor(CharacterListView);
+	var characterListView = detailedView.getParentByConstructor(CharacterListView);
 	var e = new LEvent(CharacterListEvent.LIST_CHANGE);
 	e.characterModel = characterModel;
 	characterListView.dispatchEvent(e);

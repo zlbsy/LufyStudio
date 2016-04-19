@@ -74,6 +74,9 @@ Language.data = {
 	"bout_label":"第{0}回合",
 	"battle_title":"{0}之战",
 	
+	"reputation":"称号",
+	"reputation_tiger":"五虎上将",
+	
 	"prompt":"提示",
 	"single_combat_error":"怒击和诈败不可同时使用!",
 	"skip_drama":"跳过剧情",

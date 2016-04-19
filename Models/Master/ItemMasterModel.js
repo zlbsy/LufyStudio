@@ -124,5 +124,6 @@ ItemMasterModel.prototype.icon=function(size,callback){
 	var winPanel = new LPanel(new LBitmapData(LMvc.datalist["win06"]),size.x,size.y);
 	winPanel.cacheAsBitmap(true);
 	icon.addChild(winPanel);
+	LPlugin.openStamp(this.id());
 	return icon;
 };

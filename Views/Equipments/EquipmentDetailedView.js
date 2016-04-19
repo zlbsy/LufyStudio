@@ -12,7 +12,7 @@ EquipmentDetailedView.prototype.layerInit=function(){
 	self.translucentLayer.addChild(getTranslucentBitmap());
 	self.translucentLayer.addEventListener(LMouseEvent.MOUSE_DOWN, self.click);
 	self.translucentLayer.addEventListener(LMouseEvent.MOUSE_UP, self.closeClick);
-	var width = 320, height = 340;
+	var width = 320, height = 240;
 	self.backLayer = new LSprite();
 	self.addChild(self.backLayer);
 	var backgroundData = new LBitmapData(LMvc.datalist["win05"]);
@@ -73,18 +73,19 @@ EquipmentDetailedView.prototype.set=function(){
 	additionLayer.y = equipment.y;
 	layer.addChild(additionLayer);
 	
-	var explanation = self.itemModel.explanation();
+	//TODO::ver1.1增加物品介绍
+	/*var explanation = self.itemModel.explanation();
 	var lblExplanation = getStrokeLabel(explanation,18,"#FFFFFF","#000000",4);
 	lblExplanation.width = 280;
 	lblExplanation.setWordWrap(true, 25);
 	lblExplanation.x = equipment.x;
 	lblExplanation.y = equipment.y + height + 10;
 	layer.addChild(lblExplanation);
-		
+	*/
 	if(self.fromView.constructor.name != "ItemListView"){
 		var btnEquip = getButton(Language.get("label_equip"), 120);
 		btnEquip.x = (320 - btnEquip.getWidth())*0.5;
-		btnEquip.y = 280;
+		btnEquip.y = 170;
 		layer.addChild(btnEquip);
 		btnEquip.addEventListener(LMouseEvent.MOUSE_UP, self.equip.bind(self));
 	}

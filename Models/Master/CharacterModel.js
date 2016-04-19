@@ -285,14 +285,21 @@ CharacterModel.prototype.calculation = function(init) {
 	for(var i=0,l=keys.length;i<l;i++){
 		var key = keys[i];
 		self.data["_equipment_"+key] = self.getEquipmentPlus(key);
+		self.data["_skill_add_status_prop_"+key] = 1;
+		self.data["_skill_add_status_num_"+key] = 0;
 	}
+	self.data["_skill_add_status_prop_maxTroops"] = 1;
+	self.data["_skill_add_status_num_maxTroops"] = 0;
+	
 	var skill = self.skill(SkillType.CREATE);
 	self.data.moveAssault = (skill && skill.isSubType(SkillSubType.MOVE_ASSAULT));
 	self.data.moveKnow = (skill && skill.isSubType(SkillSubType.MOVE_KNOW));
 	if(skill && skill.isSubType(SkillSubType.STATUS_ADD_NUM)){
-		self.data[skill.statusName()] += skill.statusValue();
+		//self.data[skill.statusName()] += skill.statusValue();
+		self.data["_skill_add_status_num_" + skill.statusName()] = skill.statusValue();
 	}else if(skill && skill.isSubType(SkillSubType.STATUS_ADD_PROP)){
-		self.data[skill.statusName()] = self.data[skill.statusName()] * (1 + skill.statusValue()) >>> 0;
+		//self.data[skill.statusName()] = self.data[skill.statusName()] * (1 + skill.statusValue()) >>> 0;
+		self.data["_skill_add_status_prop_" + skill.statusName()] = 1 + skill.statusValue();
 	}else if (skill && skill.isSubType(SkillSubType.HERT_VS_STATUS)) {
 		self.data.hertVsStatus = skill.hertVsStatus();
 	}else if (skill && skill.isSubType(SkillSubType.SOLDIERS_ATTACK_RECT)) {
@@ -382,28 +389,40 @@ CharacterModel.prototype.disposition = function(){//0胆小，1冷静，2勇敢�
 CharacterModel.prototype.proficiency = function(){
 	return 0.5 + this.currentSoldiers().proficiency() * 0.0005;
 };
+CharacterModel.prototype.skillAmend = function(value, key){
+	var self = this;
+	value *= self.data["_skill_add_status_prop_" + key];
+	value += self.data["_skill_add_status_num_" + key];
+	return value >>> 0;
+};
 CharacterModel.prototype.attack = function(){
 	var self = this;
-	return (self.data.attack * self.proficiency() * self.statusChange("attack") + self.data._equipment_attack) >>> 0;
+	var value = self.data.attack * self.proficiency() * self.statusChange("attack") + self.data._equipment_attack;
+	return self.skillAmend(value, "attack");
 };
 CharacterModel.prototype.spirit = function(){
 	var self = this;
-	return (self.data.spirit * self.proficiency() + self.data._equipment_spirit) >>> 0;
+	var value = self.data.spirit * self.proficiency() + self.data._equipment_spirit;
+	return self.skillAmend(value, "spirit");
 };
 CharacterModel.prototype.defense = function(){
 	var self = this;
-	return (self.data.defense * self.proficiency() * self.statusChange("defense") + self.data._equipment_defense) >>> 0;
+	var value = self.data.defense * self.proficiency() * self.statusChange("defense") + self.data._equipment_defense;
+	return self.skillAmend(value, "defense");
 };
 CharacterModel.prototype.breakout = function(){
 	var self = this;
-	return (self.data.breakout * self.proficiency() + self.data._equipment_breakout) >>> 0;
+	var value = self.data.breakout * self.proficiency() + self.data._equipment_breakout;
+	return self.skillAmend(value, "breakout");
 };
 CharacterModel.prototype.morale = function(){
 	var self = this;
-	return (self.data.morale * self.proficiency() + self.data._equipment_morale) >>> 0;
+	var value = self.data.morale * self.proficiency() + self.data._equipment_morale;
+	return self.skillAmend(value, "morale");
 };
 CharacterModel.prototype.movePower = function() {
-	return this.data.movePower;
+	var self = this;
+	return self.skillAmend(self.data.movePower, "movePower");
 };
 CharacterModel.prototype.dispositionLabel = function(){
 	return Language.get("disposition_"+this.data.disposition);
@@ -501,7 +520,7 @@ CharacterModel.prototype.maxTroops = function(init) {
 	if(init || !self.data._maxTroops){
 		self.data._maxTroops = self.initTroops() + self.currentSoldiers().property().troops * 2 * self.level();
 	}
-	return self.data._maxTroops;
+	return self.skillAmend(self.data._maxTroops, "maxTroops");
 };
 CharacterModel.prototype.maxHP = function(init) {
 	return 100;
