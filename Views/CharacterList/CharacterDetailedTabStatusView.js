@@ -26,6 +26,10 @@ CharacterDetailedTabStatusView.prototype.showStatus=function(){
 	loyaltyLabel,
 	battleStatus ? battleStatus : characterModel.jobLabel()
 	];
+	if(characterModel.reputation()){
+		labels.push("reputation");
+		datas.push(characterModel.reputationLabel());
+	}
 	var skill = characterModel.skill();
 	if(skill){
 		labels.push("stunt");

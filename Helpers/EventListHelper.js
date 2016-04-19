@@ -51,6 +51,7 @@ function checkEventList() {
 			continue;
 		}
 		var feat_generals = currentEvent.condition.feat_generals;
+		console.log("feat_generals", feat_generals,currentEvent.name);
 		if(feat_generals){
 			if(SeigniorModel.list[SeigniorExecute.Instance().seigniorIndex].chara_id() != LMvc.selectSeignorId){
 				continue;
@@ -92,8 +93,8 @@ function dispatchEventList(currentEvent) {
 			var character = currentEvent.feat_characters[i];
 			script += String.format("Var.set(id{0},{1});", i + 1, character.id());
 			script += String.format("Var.set(name{0},{1});", i + 1, character.name());
+			currentEvent.result[0].generals.push(character.id());
 		}
-		currentEvent.result.generals.push(character.id());
 	}
 	script += "SGJEvent.init();";
 	script += "Load.script("+currentEvent.script+");";
@@ -127,10 +128,14 @@ function dispatchEventListResult(eventId) {
 }
 function dispatchEventListResultReputation(child) {
 	var generals = child.generals;
+	console.log("generals=", generals);
 	for(var i=0,l=generals.length;i<l;i++){
 		var id = generals[i];
 		var character = CharacterModel.getChara(id);
-		character.data.reputation = child.reputation;
+		if(!character.data.reputation){
+			character.data.reputation = [];
+		}
+		character.data.reputation.push(child.reputation);
 	}
 }
 function dispatchEventListResultStopBattle(child) {

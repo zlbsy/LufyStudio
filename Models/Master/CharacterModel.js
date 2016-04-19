@@ -320,6 +320,19 @@ CharacterModel.prototype.statusChange = function(name) {
 CharacterModel.prototype.isTribeCharacter = function() {
 	return this.id() >= TribeCharacter[0] && this.id() <= TribeCharacter[1];
 };
+CharacterModel.prototype.reputation = function() {
+	return this.data.reputation;
+};
+CharacterModel.prototype.reputationLabel = function() {
+	var self = this;
+	var reputation = self.reputation();
+	var label = "", add = "";
+	for(var i=0;i<reputation.length;i++){
+		label += (add + Language.get(reputation[i]));
+		add = "、";
+	}
+	return label;
+};
 CharacterModel.prototype.rangeAttack = function() {
 	var self = this;
 	if(self.data.rangeAttack){
