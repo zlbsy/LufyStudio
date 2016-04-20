@@ -196,15 +196,15 @@ seigniors : [
   items_market:[{"item_id":60,"quantity":999,"proportion":40},{"item_id":59,"quantity":999,"proportion":40},{"item_id":58,"quantity":999,"proportion":30},{"item_id":57,"quantity":999,"proportion":30},{"item_id":56,"quantity":999,"proportion":20},{"item_id":55,"quantity":999,"proportion":20},{"item_id":54,"quantity":999,"proportion":20},{"item_id":80,"quantity":999,"proportion":80},{"item_id":79,"quantity":999,"proportion":60},{"item_id":78,"quantity":999,"proportion":40},{"item_id":77,"quantity":999,"proportion":20},{"item_id":90,"quantity":999,"proportion":80},{"item_id":89,"quantity":999,"proportion":60},{"item_id":88,"quantity":999,"proportion":40},{"item_id":87,"quantity":999,"proportion":20},{"item_id":83,"quantity":1,"proportion":10}],
   items:[],
   generals:[
-    {chara_id:4,name:"关羽",feat:0,loyalty:100,equipments:[{"item_id":18,"count":1}]},
-    {chara_id:19,name:"张飞",feat:0,loyalty:100,equipments:[{"item_id":17,"count":1}]},
-    {chara_id:21,name:"刘备",feat:0,loyalty:100,equipments:[{"item_id":22,"count":1}]},
     {chara_id:203,name:"邹靖",feat:0,loyalty:100},
     {chara_id:367,name:"刘焉",feat:0,loyalty:100},
     {chara_id:616,name:"刘璋",feat:0,loyalty:100},
     ],
     out_of_offices:[
     {chara_id:558,name:"吴巨"},
+    {chara_id:4,name:"关羽",feat:0,loyalty:100,equipments:[{"item_id":18,"count":1}]},
+    {chara_id:19,name:"张飞",feat:0,loyalty:100,equipments:[{"item_id":17,"count":1}]},
+    {chara_id:21,name:"刘备",feat:0,loyalty:100,equipments:[{"item_id":22,"count":1}]},
     ],
     not_debut:[
     {chara_id:59,name:"田豫",year:189},

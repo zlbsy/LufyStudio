@@ -26,6 +26,7 @@ EventListController.prototype.init=function(){
 EventListController.prototype.close=function(){
 	var self = this;
 	LMvc.MapController.view.visible = true;
+	LMvc.EventListController = null;
 	self.view.remove();
 };
 EventListController.prototype.eventMapLoad=function(){

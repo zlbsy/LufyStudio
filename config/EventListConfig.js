@@ -47,7 +47,7 @@ var EventListConfig = [
 		seignior:0,
 		generals:[
 		],
-		feat_generals:{feat:0,count:5,force:80},
+		feat_generals:{feat:0,count:5,force:70},
 		citys:[
 		]
 	},
@@ -56,28 +56,29 @@ var EventListConfig = [
 },
 {
 	id:4,
-	name:"三顾茅庐",
+	name:"吕布殒命",
 	condition:{
 		from:{year:194,month:1},
 		to:{year:194,month:1},
-		seignior:1,
+		seignior:[1,21],
 		generals:[
-			{id:4,seignior:0,city:25},
-			{id:2,seignior:1},
-			{id:3,seignior:1}
+			{id:265,seignior:0},//下坯有俘虏吕布
 		],
 		citys:[
-			{id:25,seignior:1},
+			{id:25,seignior:1},//下坯属曹操
+		]
+		stopBattle:[
+			[1,21],//曹操刘备属停战状态
 		]
 	},
 	script:"Data/Event/sgml3.txt",
 	result:[
-		{id:4,seignior:1,city:25},
+		{type:"kill_generals",generals:[265]},//吕布死
 	]
 },
 {
 	id:5,
-	name:"三顾茅庐",
+	name:"官渡之战",
 	condition:{
 		from:{year:194,month:1},
 		to:{year:194,month:1},
@@ -98,7 +99,7 @@ var EventListConfig = [
 },
 {
 	id:6,
-	name:"三顾茅庐",
+	name:"失荆州",
 	condition:{
 		from:{year:194,month:1},
 		to:{year:194,month:1},
@@ -119,7 +120,7 @@ var EventListConfig = [
 },
 {
 	id:7,
-	name:"三顾茅庐",
+	name:"出师表",
 	condition:{
 		from:{year:194,month:1},
 		to:{year:194,month:1},
@@ -140,7 +141,7 @@ var EventListConfig = [
 },
 {
 	id:8,
-	name:"三顾茅庐",
+	name:"一顾茅庐",
 	condition:{
 		from:{year:194,month:1},
 		to:{year:194,month:1},
@@ -161,7 +162,7 @@ var EventListConfig = [
 },
 {
 	id:9,
-	name:"三顾茅庐",
+	name:"二顾茅庐",
 	condition:{
 		from:{year:194,month:1},
 		to:{year:194,month:1},
@@ -203,7 +204,7 @@ var EventListConfig = [
 },
 {
 	id:11,
-	name:"三顾茅庐",
+	name:"结局",//远征蛮族,平定蛮族,蛮族年年进贡
 	condition:{
 		from:{year:194,month:1},
 		to:{year:194,month:1},
@@ -224,7 +225,7 @@ var EventListConfig = [
 },
 {
 	id:12,
-	name:"三顾茅庐",
+	name:"结局",//蛮族入侵,战乱四起,最终灭亡
 	condition:{
 		from:{year:194,month:1},
 		to:{year:194,month:1},
@@ -245,7 +246,7 @@ var EventListConfig = [
 },
 {
 	id:13,
-	name:"三顾茅庐",
+	name:"结局",//天下太平
 	condition:{
 		from:{year:194,month:1},
 		to:{year:194,month:1},

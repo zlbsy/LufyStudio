@@ -64,6 +64,9 @@ function checkEventList() {
 			var characters = [];
 			for(var j=0;j<charas.length;j++){
 				var character = charas[j];
+				if(character.id() == LMvc.selectSeignorId){
+					continue;
+				}
 				if(character.feat() >= feat && character.force() >= force){
 					characters.push(character);
 				}
@@ -85,15 +88,28 @@ function checkEventList() {
 	return false;
 }
 function dispatchEventList(currentEvent) {
-	//result:[{type:"reputation",generals:[],reputation:"tiger"}]
-	var script = "Var.set(eventId,"+currentEvent.id+");";
-	if(currentEvent.feat_characters){
-		script += String.format("Var.set(id0,{0});", LMvc.selectSeignorId);
+	//var script = "Var.set(eventId,"+currentEvent.id+");";
+	var script = "";
+	var params;
+	if(currentEvent.feat_characters && SeigniorExecute.running){
+		params = [];
+		params.push({n:"id0",v:LMvc.selectSeignorId});
+		//script += String.format("Var.set(id0,{0});", LMvc.selectSeignorId);
 		for(var i=0, l=currentEvent.condition.feat_generals.count;i<l;i++){
 			var character = currentEvent.feat_characters[i];
-			script += String.format("Var.set(id{0},{1});", i + 1, character.id());
-			script += String.format("Var.set(name{0},{1});", i + 1, character.name());
+			params.push({n:"id"+(i + 1),v:character.id()});
+			params.push({n:"name"+(i + 1),v:character.name()});
+			//script += String.format("Var.set(id{0},{1});", i + 1, character.id());
+			//script += String.format("Var.set(name{0},{1});", i + 1, character.name());
 			currentEvent.result[0].generals.push(character.id());
+		}
+		LPlugin.SetData("event_params_"+currentEvent.id, params);
+	}
+	params = LPlugin.GetData("event_params_"+currentEvent.id);
+	if(params && params.length){
+		for(var i=0;i<params.length;i++){
+			var param = params[i];
+			script += String.format("Var.set({0},{1});", param.n, param.v);
 		}
 	}
 	script += "SGJEvent.init();";
@@ -103,13 +119,14 @@ function dispatchEventList(currentEvent) {
 	LGlobal.script.addScript(script);
 }
 function dispatchEventListResult(eventId) {
+	if(!SeigniorExecute.running){
+		LGlobal.script.analysis();
+		return;
+	}
 	var currentEvent = EventListConfig.find(function(child) {
 		return child.id == eventId;
 	});
-	if(currentEvent.result.length == 0){
-		SeigniorExecute.run();
-		return;
-	}
+	
 	for(var i=0,l=currentEvent.result.length;i<l;i++){
 		var child = currentEvent.result[i];
 		switch(child.type){
@@ -124,7 +141,8 @@ function dispatchEventListResult(eventId) {
 				break;
 		}
 	}
-	LGlobal.script.analysis();
+	
+	SeigniorExecute.run();
 }
 function dispatchEventListResultReputation(child) {
 	var generals = child.generals;
