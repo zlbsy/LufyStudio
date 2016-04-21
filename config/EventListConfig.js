@@ -66,7 +66,7 @@ var EventListConfig = [
 		],
 		citys:[
 			{id:25,seignior:1},//下坯属曹操
-		]
+		],
 		stopBattle:[
 			[1,21],//曹操刘备属停战状态
 		]

@@ -141,8 +141,7 @@ function dispatchEventListResult(eventId) {
 				break;
 		}
 	}
-	
-	SeigniorExecute.run();
+	LGlobal.script.analysis();
 }
 function dispatchEventListResultReputation(child) {
 	var generals = child.generals;

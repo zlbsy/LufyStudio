@@ -75,9 +75,10 @@ EventMapView.prototype.addCharacter=function(id,x,y,animation,waitClick){
 	switch(animation){
 		case "fade":
 		default:
-			face.x = x;
+			face.x = parseFloat(x) - 1;
 			face.alpha = 0;
 			animationObj.alpha = 1;
+			animationObj.x = parseFloat(x);
 			break;
 	}
 	LTweenLite.to(face,0.5,animationObj);
