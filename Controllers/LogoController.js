@@ -40,7 +40,13 @@ LogoController.prototype.modelLoad=function(){
 		LPlugin.SetData("volumeSetting", volumeSetting);
 	}
 	LPlugin.volumeSE = volumeSetting.SE;
-	LPlugin.volumeBGM = volumeSetting.BGM;console.log(volumeSetting);
+	LPlugin.volumeBGM = volumeSetting.BGM;
+	var speedSetting = LPlugin.GetData("speedSetting");
+	if(!speedSetting || typeof speedSetting.value == UNDEFINED){
+		speedSetting = {value:1};
+		LPlugin.SetData("speedSetting", speedSetting);
+	}
+	LPlugin.gameSpeed = speedSetting.value;
 	self.load.model(["Master/Area"],self.startAnimation);
 };
 LogoController.prototype.startAnimation=function(){

@@ -1,15 +1,10 @@
-function EventListChildView(controller, eventObject, bitmapData, x, y) {
+function EventListChildView(eventObject) {
 	var self = this;
-	base(self, LView, [controller]);
+	base(self, LListChildView, []);
 	self.eventObject = eventObject;
-	self.parentBitmapData = bitmapData;
-	self.x = x;
-	self.y = y;
 	self.lock = !LPlugin.eventIsOpen(eventObject.id);
 	self.set();
-	if(self.lock){
-		self.toBitmap(bitmapData);
-	}
+
 }
 EventListChildView.prototype.layerInit=function(){
 	var self = this;
@@ -17,24 +12,12 @@ EventListChildView.prototype.layerInit=function(){
 	self.addChild(self.layer);
 };
 EventListChildView.prototype.loadOver=function(event){
-	var self = event.currentTarget.parent.parent.parent;
-	self.loadCompleteCount++;
-	if(self.loadCompleteCount < 1){
-		return;
-	}
-	self.toBitmap();
-};
-EventListChildView.prototype.toBitmap=function(){
-	var self = this;
-	var layer = self.layer.getChildAt(0);
-	layer.visible = true;
-	layer.cacheAsBitmap(true);
-	var bitmap = layer._ll_cacheAsBitmap;
-	self.parentBitmapData.copyPixels(bitmap.bitmapData,new LRectangle(0, 0, bitmap.getWidth(), bitmap.getHeight()), new LPoint(self.x,self.y));
-	self.layer.remove();
+	var self = event.currentTarget.parent.parent;
+	self.cacheAsBitmap(false);
+	self.updateView();
 };
 EventListChildView.prototype.getWidth=function(){
-	return 200;
+	return 220;
 };
 EventListChildView.prototype.getHeight=function(){
 	return 100;
@@ -44,32 +27,37 @@ EventListChildView.prototype.set=function(){
 	self.layerInit();
 	self.loadCompleteCount = 0;
 	
-	var width = 200, height = 100;
-	self.addShape(LShape.RECT,[0,0,width + 10,height + 10]);
-	var layer = new LSprite();
-	layer.visible = false;
-	self.layer.addChild(layer);
+	var width = self.getWidth(), height = self.getHeight();
 	
-	var winPanel = new LPanel(new LBitmapData(LMvc.datalist["win05"]),width + 10,height + 10);
-	layer.addChild(winPanel);
+	var winPanel = new LPanel(new LBitmapData(LMvc.datalist["win05"]),width,height);
+	self.layer.addChild(winPanel);
 	var icon;
 	if(self.lock){
-		layer.addChild(getTranslucentBitmap(width + 10,height + 10));
+		self.layer.addChild(getTranslucentBitmap(width,height));
 		icon = new LBitmap(new LBitmapData(LMvc.datalist["lock"]));
-		icon.x = (width - icon.getWidth())*0.5 + 5;
-		icon.y = (height - icon.getHeight())*0.5 + 5;
-		layer.addChild(icon);
+		icon.x = (width - icon.getWidth())*0.5;
+		icon.y = (height - icon.getHeight())*0.5;
+		self.layer.addChild(icon);
 		return;
 	}else{
-		icon = new BitmapSprite(LMvc.IMG_PATH + "event_list/"+self.eventObject.id+".png", null,new LPoint(width,height));
+		icon = new BitmapSprite(LMvc.IMG_PATH + "event_list/"+self.eventObject.id+".png", null,new LPoint(width - 10,height - 10));
 		icon.x = 5;
 		icon.y = 5;
 		icon.addEventListener(LEvent.COMPLETE,self.loadOver);
-		layer.addChild(icon);
+		self.layer.addChild(icon);
 	}
 	
 	var name = getStrokeLabel(self.eventObject.name,16,"#FFFFFF","#000000",4);
 	name.x = 10;
 	name.y = 10;
-	layer.addChild(name);
+	self.layer.addChild(name);
+};
+EventListChildView.prototype.onClick = function(event) {
+	var self = event.target;
+	if(self.lock){
+		return;
+	}
+	var listView = event.currentTarget;
+	var parentView = listView.getParentByConstructor(EventListView);;
+	parentView.showDetailed(self.eventObject);
 };

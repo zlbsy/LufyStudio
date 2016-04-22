@@ -95,8 +95,8 @@ SettingGameView.prototype.init=function(){
 	speedRadio = new LRadio();
 	speedRadio.x = 160;
 	speedRadio.setChildRadio(1,0,0,radioBackground,radioSelect);
-	speedRadio.setChildRadio(2,100,0,radioBackground,radioSelect);
-	speedRadio.setValue(2);
+	speedRadio.setChildRadio(0,100,0,radioBackground,radioSelect);
+	speedRadio.setValue(LPlugin.gameSpeed);
 	speedLayer.addChild(speedRadio);
 	speedRadio.addEventListener(LMouseEvent.MOUSE_UP,self.onSpeedChange);
 	
@@ -122,4 +122,6 @@ SettingGameView.prototype.onBgmChange=function(event){
 };
 SettingGameView.prototype.onSpeedChange=function(event){
 	console.log(event.currentTarget.value);
+	LPlugin.gameSpeed = event.currentTarget.value;
+	LPlugin.SetData("speedSetting", {value:LPlugin.gameSpeed});
 };

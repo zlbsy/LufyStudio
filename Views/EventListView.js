@@ -31,56 +31,37 @@ EventListView.prototype.onClickCloseButton=function(event){
 };
 EventListView.prototype.listLayerInit=function(){
 	var self = this;
-	var backLayer = new LSprite();
-	var bitmapData = new LBitmapData(null,0,0,430, 120 * ((EventListConfig.length / 2 >>> 0) + 1) - 10,LBitmapData.DATA_CANVAS);
-	backLayer.addChild(new LBitmap(bitmapData));
+	self.listView = new LListView();
+	self.listView.y = 15;
+	self.listView.resize(440, LGlobal.height - 100);
+	self.listView.maxPerLine = 2;
+	self.listView.cellWidth = 220;
+	self.listView.cellHeight = 100;
+	self.listLayer.addChild(self.listView);
+	self.listView.x = 20;
+	self.listView.y = 80;
+	var items = [];
 	for(var i=0,l=EventListConfig.length;i<l;i++){
 		var eventObject = EventListConfig[i];
-		var child = new EventListChildView(self.controller, eventObject, bitmapData, 220 * (i % 2), 120 * (i / 2 >>> 0));
-		backLayer.addChild(child);
+		var child = new EventListChildView(eventObject);
+		items.push(child);
 	}
-	
-	self.listLayer.listLayer = backLayer;
-	var left = backLayer.graphics.startX(), right = left + backLayer.graphics.getWidth();
-	var sc = new LScrollbar(backLayer, 430, LGlobal.height - 100, 10);
-	sc.x = 25;
-	sc.y = 80;
-	self.listLayer.addChild(sc);
-	sc.excluding = true;
-	backLayer.addEventListener(LMouseEvent.MOUSE_DOWN, self.stampClickDown.bind(self));
-	backLayer.addEventListener(LMouseEvent.MOUSE_UP, self.stampClickUp.bind(self));
-	
+	self.listView.updateList(items);
 };
-EventListView.prototype.stampClickDown = function(event) {
+EventListView.prototype.showDetailed = function(eventObject) {
 	var self = this;
-	var stamp = event.target;
-	self.clickIndex = stamp.objectIndex;
-	stamp.offsetX = event.offsetX;
-	stamp.offsetY = event.offsetY;
-};
-EventListView.prototype.stampClickUp = function(event) {
-	if(event.target.constructor.name != "EventListChildView"){
-		return;
-	}
-	var self = this;
-	var stamp = event.target;
-	if(self.clickIndex != stamp.objectIndex || stamp.lock){
-		return;
-	}
-	if (stamp.offsetX && stamp.offsetY && Math.abs(stamp.offsetX - event.offsetX) < 5 && Math.abs(stamp.offsetY - event.offsetY) < 5) {
-		var script = "";
-		var params = LPlugin.GetData("event_params_"+stamp.eventObject.id);
-		if(params && params.length){
-			for(var i=0;i<params.length;i++){
-				var param = params[i];
-				script += String.format("Var.set({0},{1});", param.n, param.v);
-			}
+	var script = "";
+	var params = LPlugin.GetData("event_params_"+eventObject.id);
+	if(params && params.length){
+		for(var i=0;i<params.length;i++){
+			var param = params[i];
+			script += String.format("Var.set({0},{1});", param.n, param.v);
 		}
-		script += "SGJEvent.init();";
-		script += "Load.script("+stamp.eventObject.script+");";
-		script += "SGJEvent.end();";
-		LGlobal.script.addScript(script);
 	}
+	script += "SGJEvent.init();";
+	script += "Load.script("+eventObject.script+");";
+	script += "SGJEvent.end();";
+	LGlobal.script.addScript(script);
 };
 EventListView.prototype.ctrlLayerInit=function(){
 	var self = this;

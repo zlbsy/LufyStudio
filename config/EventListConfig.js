@@ -47,7 +47,7 @@ var EventListConfig = [
 		seignior:0,
 		generals:[
 		],
-		feat_generals:{feat:0,count:5,force:70},
+		feat_generals:{feat:10000,count:5,force:90},
 		citys:[
 		]
 	},
@@ -58,7 +58,7 @@ var EventListConfig = [
 	id:4,
 	name:"吕布殒命",
 	condition:{
-		from:{year:194,month:1},
+		from:{year:2194,month:1},
 		to:{year:194,month:1},
 		seignior:[1,21],
 		generals:[
@@ -80,7 +80,7 @@ var EventListConfig = [
 	id:5,
 	name:"官渡之战",
 	condition:{
-		from:{year:194,month:1},
+		from:{year:2194,month:1},
 		to:{year:194,month:1},
 		seignior:1,
 		generals:[
@@ -101,7 +101,7 @@ var EventListConfig = [
 	id:6,
 	name:"失荆州",
 	condition:{
-		from:{year:194,month:1},
+		from:{year:2194,month:1},
 		to:{year:194,month:1},
 		seignior:1,
 		generals:[
@@ -122,7 +122,7 @@ var EventListConfig = [
 	id:7,
 	name:"出师表",
 	condition:{
-		from:{year:194,month:1},
+		from:{year:2194,month:1},
 		to:{year:194,month:1},
 		seignior:1,
 		generals:[
@@ -143,7 +143,7 @@ var EventListConfig = [
 	id:8,
 	name:"一顾茅庐",
 	condition:{
-		from:{year:194,month:1},
+		from:{year:2194,month:1},
 		to:{year:194,month:1},
 		seignior:1,
 		generals:[
@@ -164,7 +164,7 @@ var EventListConfig = [
 	id:9,
 	name:"二顾茅庐",
 	condition:{
-		from:{year:194,month:1},
+		from:{year:2194,month:1},
 		to:{year:194,month:1},
 		seignior:1,
 		generals:[
@@ -185,7 +185,7 @@ var EventListConfig = [
 	id:10,
 	name:"三顾茅庐",
 	condition:{
-		from:{year:194,month:1},
+		from:{year:2194,month:1},
 		to:{year:194,month:1},
 		seignior:1,
 		generals:[
@@ -204,65 +204,64 @@ var EventListConfig = [
 },
 {
 	id:11,
-	name:"结局",//远征蛮族,平定蛮族,蛮族年年进贡
+	name:"结局:蛮族入侵",//蛮族入侵,战乱四起,最终灭亡
 	condition:{
-		from:{year:194,month:1},
-		to:{year:194,month:1},
-		seignior:1,
+		seignior:0,
 		generals:[
-			{id:4,seignior:0,city:25},
-			{id:2,seignior:1},
-			{id:3,seignior:1}
 		],
 		citys:[
-			{id:25,seignior:1},
-		]
+		],
+		clear:1,
+		tribe:{from:5, to:10}
 	},
-	script:"Data/Event/sgml3.txt",
-	result:[
-		{id:4,seignior:1,city:25},
-	]
+	script:"Data/Event/jieju2.txt",
+	result:[{type:"gameClear"}]
 },
 {
 	id:12,
-	name:"结局",//蛮族入侵,战乱四起,最终灭亡
+	name:"结局:远征蛮族",//远征蛮族,平定蛮族,蛮族年年进贡
 	condition:{
-		from:{year:194,month:1},
-		to:{year:194,month:1},
-		seignior:1,
+		seignior:0,
 		generals:[
-			{id:4,seignior:0,city:25},
-			{id:2,seignior:1},
-			{id:3,seignior:1}
 		],
 		citys:[
-			{id:25,seignior:1},
-		]
+		],
+		clear:1,
+		tribe:{from:1,to:2}
 	},
-	script:"Data/Event/sgml3.txt",
-	result:[
-		{id:4,seignior:1,city:25},
-	]
+	script:"Data/Event/jieju1.txt",
+	result:[{type:"gameClear"}]
 },
 {
 	id:13,
-	name:"结局",//天下太平
+	name:"结局:昏君",//平均治安90以下,纸醉金迷，灭亡
 	condition:{
-		from:{year:194,month:1},
-		to:{year:194,month:1},
-		seignior:1,
+		seignior:0,
 		generals:[
-			{id:4,seignior:0,city:25},
-			{id:2,seignior:1},
-			{id:3,seignior:1}
 		],
 		citys:[
-			{id:25,seignior:1},
-		]
+		],
+		clear:1,
+		tribe:{from:0,to:0},
+		police:{from:0,to:89}
 	},
-	script:"Data/Event/sgml3.txt",
-	result:[
-		{id:4,seignior:1,city:25},
-	]
+	script:"Data/Event/jieju3.txt",
+	result:[{type:"gameClear"}]
+},
+{
+	id:14,
+	name:"结局:贤君",//平均治安90以上,天下太平
+	condition:{
+		seignior:0,
+		generals:[
+		],
+		citys:[
+		],
+		clear:1,
+		tribe:{from:0,to:0},
+		police:{from:90,to:100}
+	},
+	script:"Data/Event/jieju3.txt",
+	result:[{type:"gameClear"}]
 }
 ];

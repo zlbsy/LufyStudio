@@ -1,12 +1,45 @@
 function checkEventList() {
 	var eventListFinished = LMvc.chapterData.eventListFinished || [];
-	//console.log("checkEventList"+eventListFinished.length);
+	var tribeSeignior = 0, gameClear = true;
+	for(var i=0,l=SeigniorModel.list.length;i<l;i++){
+		var seignior = SeigniorModel.list[i];
+		if(seignior.isTribe()){
+			tribeSeignior++;
+		}else if(seignior.chara_id() != LMvc.selectSeignorId){
+			gameClear = false;
+			break;
+		}
+		
+	}
 	for(var i = 0,l = EventListConfig.length;i<l;i++){
 		var currentEvent = EventListConfig[i];
 		if(eventListFinished.findIndex(function(child){
 			return child == currentEvent.id;
 			}) >= 0){
 			continue;
+		}
+		if(currentEvent.condition.clear){
+			if(!gameClear){
+				continue;
+			}
+			if(currentEvent.condition.tribe.from > tribeSeignior ||  currentEvent.condition.tribe.to < tribeSeignior){
+				continue;
+			}
+			if(currentEvent.condition.police){
+				var seignior = SeigniorModel.getSeignior(LMvc.selectSeignorId);
+				var areas = seignior.areas();
+				var policeOk = true;
+				for(var i = 0, l = areas.length;i<l;i++){
+					var police = areas[i].police();
+					if(currentEvent.condition.police.from > police ||  currentEvent.condition.police.to < police){
+						policeOk = false;
+						break;
+					}
+				}
+				if(!policeOk){
+					continue;
+				}
+			}
 		}
 		if(currentEvent.condition.from && currentEvent.condition.to){
 			var month = LMvc.chapterData.month;
@@ -51,7 +84,6 @@ function checkEventList() {
 			continue;
 		}
 		var feat_generals = currentEvent.condition.feat_generals;
-		console.log("feat_generals", feat_generals,currentEvent.name);
 		if(feat_generals){
 			if(SeigniorModel.list[SeigniorExecute.Instance().seigniorIndex].chara_id() != LMvc.selectSeignorId){
 				continue;
