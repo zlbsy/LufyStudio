@@ -99,8 +99,11 @@ class Lufylegend : XXXPurchaseManagerDelegate{
             return ""
         })
         context.setb1("productInformation", {(productIds:AnyObject!)->AnyObject in
-            print("productInformation" )
             self.fetchProductInformationForIds(productIds as! [String])
+            return ""
+        })
+        context.setb1("purchase", {(productId:AnyObject!)->AnyObject in
+            self.purchase(productId as! String)
             return ""
         })
         context.setb1("myPrint", {(data:AnyObject!)->AnyObject in
@@ -135,6 +138,8 @@ class Lufylegend : XXXPurchaseManagerDelegate{
                 } catch {
                     // Error Handling
                     print("NSJSONSerialization Error")
+                    let _ll_dispatchEvent = "LPurchase._ll_dispatchEventError('Json Error', LPurchase.PURCHASE_LOG_COMPLETE);"
+                    self.context.evaluateScript(_ll_dispatchEvent)
                     return
                 }
                 let configuration = NSURLSessionConfiguration.defaultSessionConfiguration()
@@ -153,10 +158,12 @@ class Lufylegend : XXXPurchaseManagerDelegate{
     
     ///プロダクト情報取得
     private func fetchProductInformationForIds(productIds:[String]) {
-        print("fetchProductInformationForIds" )
         XXXProductManager.productsWithProductIdentifiers(productIds,
                                                          completion: {[weak self] (products : [SKProduct]!, error : NSError?) -> Void in
-                                                            if error != nil {                                                                print(error?.localizedDescription)
+                                                            if error != nil {
+                                                                print(error?.localizedDescription)
+                                                                let _ll_dispatchEvent = "LPurchase._ll_dispatchEventError('"+(error?.localizedDescription)!+"', LPurchase.PRODUCT_INFORMATION_COMPLETE);"
+                                                                self!.context.evaluateScript(_ll_dispatchEvent)
                                                                 return
                                                             }
                                                             var str : String = "["
@@ -180,8 +187,6 @@ class Lufylegend : XXXPurchaseManagerDelegate{
                                                             str += "]"
                                                             let _ll_dispatchEvent = "LPurchase._ll_dispatchEvent("+str+", LPurchase.PRODUCT_INFORMATION_COMPLETE);"
                                                             self!.context.evaluateScript(_ll_dispatchEvent)
-                                                            //self!.purchase("newWujiang")
-                                                            //self!.purchase("com.lufylegend.sgj.id01")
             })
         
         
@@ -199,6 +204,8 @@ class Lufylegend : XXXPurchaseManagerDelegate{
                                                                     weakSelf.purchaseManager(XXXPurchaseManager.sharedManager(), didFailWithError: error)
                                                                 }
                                                                 print(error?.localizedDescription)
+                                                                let _ll_dispatchEvent = "LPurchase._ll_dispatchEventError('"+(error?.localizedDescription)!+"', LPurchase.PURCHASE_COMPLETE);"
+                                                                self!.context.evaluateScript(_ll_dispatchEvent)
                                                                 return
                                                             }
                                                             
@@ -223,87 +230,50 @@ class Lufylegend : XXXPurchaseManagerDelegate{
         //課金終了時に呼び出される
         /*
          TODO: コンテンツ解放処理
-         
-         
-         
-         
          */
         print("purchase finish!")
-        /*let ac = UIAlertController(title: "purchase finish!", message: nil, preferredStyle: .Alert)
-        ac.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
-        self.presentViewController(ac, animated: true, completion: nil)
-        */
         //コンテンツ解放が終了したら、この処理を実行(true: 課金処理全部完了, false 課金処理中断)
         decisionHandler(complete: true)
+        let _ll_dispatchEvent = "LPurchase._ll_dispatchEvent('purchase success!', LPurchase.PURCHASE_COMPLETE);"
+        self.context.evaluateScript(_ll_dispatchEvent)
     }
     
     @objc func purchaseManager(purchaseManager: XXXPurchaseManager!, didFinishUntreatedPurchaseWithTransaction transaction: SKPaymentTransaction!, decisionHandler: ((complete: Bool) -> Void)!) {
         //課金終了時に呼び出される(startPurchaseで指定したプロダクトID以外のものが課金された時。)
         /*
          TODO: コンテンツ解放処理
-         
-         
-         
-         
-         
          */
         print("purchase finish!(Untreated.)")
-        /*let ac = UIAlertController(title: "purchase finish!(Untreated.)", message: nil, preferredStyle: .Alert)
-        ac.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
-        self.presentViewController(ac, animated: true, completion: nil)
-        */
-        
         //コンテンツ解放が終了したら、この処理を実行(true: 課金処理全部完了, false 課金処理中断)
         decisionHandler(complete: true)
+        let _ll_dispatchEvent = "LPurchase._ll_dispatchEvent('purchase success (Untreated)!', LPurchase.PURCHASE_COMPLETE);"
+        self.context.evaluateScript(_ll_dispatchEvent)
     }
     
     func purchaseManager(purchaseManager: XXXPurchaseManager!, didFailWithError error: NSError!) {
         //課金失敗時に呼び出される
         /*
          TODO: errorを使ってアラート表示
-         
-         
-         
-         
-         
          */
         print("purchase fail...")
-        /*let ac = UIAlertController(title: "purchase fail...", message: error.localizedDescription, preferredStyle: .Alert)
-        ac.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
-        self.presentViewController(ac, animated: true, completion: nil)
-        */
+        let _ll_dispatchEvent = "LPurchase._ll_dispatchEventError('purchase fail!', LPurchase.PURCHASE_COMPLETE);"
+        self.context.evaluateScript(_ll_dispatchEvent)
     }
     
     func purchaseManagerDidFinishRestore(purchaseManager: XXXPurchaseManager!) {
         //リストア終了時に呼び出される(個々のトランザクションは”課金終了”で処理)
         /*
-         TODO: インジケータなどを表示していたら非表示に
-         
-         
-         
-         
-         
+         TODO: インジケータなどを表示していたら非表示に         
          */
         print("restore finish!")
-        /*let ac = UIAlertController(title: "restore finish!", message: nil, preferredStyle: .Alert)
-        ac.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
-        self.presentViewController(ac, animated: true, completion: nil)*/
     }
     
     func purchaseManagerDidDeferred(purchaseManager: XXXPurchaseManager!) {
         //承認待ち状態時に呼び出される(ファミリー共有)
         /*
          TODO: インジケータなどを表示していたら非表示に
-         
-         
-         
-         
-         
          */
         print("purcase defferd.")
-        /*let ac = UIAlertController(title: "purcase defferd.", message: nil, preferredStyle: .Alert)
-        ac.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
-        self.presentViewController(ac, animated: true, completion: nil)*/
     }
     
 }

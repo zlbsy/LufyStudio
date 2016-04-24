@@ -69,6 +69,24 @@
                 purchase.productInformation(["newWujiang","saveReport","com.lufylegend.sgj.id01"]);
             });
             
+            var button05 = new LButtonSample1("purchase");
+            button05.x = 50;
+            button05.y = 250;
+            backLayer.addChild(button05);
+            button05.addEventListener(LMouseEvent.MOUSE_DOWN,function(e){
+                                      var purchase = LPurchase.Instance();
+                                      purchase.addEventListener(LPurchase.PURCHASE_COMPLETE,function(event){
+                                                                if(event.status == 0){
+                                                                LPlugin.print("event.message= " + (event.message));
+                                                                return;
+                                                                }
+                                                                var data = event.target;
+                                                                LPlugin.print("data= " + data);
+                                                                });
+                                      purchase.purchase("com.lufylegend.sgj.id01");
+                                      });
+
+
         }
         </script>
     </body>
