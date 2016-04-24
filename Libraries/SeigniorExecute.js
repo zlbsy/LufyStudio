@@ -1,3 +1,5 @@
+
+
 function SeigniorExecute(){
 	var self = this;
 	base(self,LMvcObject,[]);
@@ -69,7 +71,7 @@ SeigniorExecute.run=function(){
 		self.loadSeigniorExecute();
 		return;
 	}
-	if(jobAiEvent()){
+	if(self.seigniorIndex == 0 && jobAiEvent()){
 		return;
 	}
 	if(!self.backLayer){

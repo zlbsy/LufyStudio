@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 46;
+	objectVersion = 47;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -16,7 +16,11 @@
 		A06B2A411C17CACF00CB68AF /* Swift01UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A06B2A401C17CACF00CB68AF /* Swift01UITests.swift */; };
 		A06B2A531C17D47000CB68AF /* test.html in Resources */ = {isa = PBXBuildFile; fileRef = A06B2A521C17D47000CB68AF /* test.html */; };
 		A06B2A551C17DC4B00CB68AF /* Lufylegend.swift in Sources */ = {isa = PBXBuildFile; fileRef = A06B2A541C17DC4B00CB68AF /* Lufylegend.swift */; };
-		A06B2A571C17F09B00CB68AF /* data.js in Resources */ = {isa = PBXBuildFile; fileRef = A06B2A561C17F09B00CB68AF /* data.js */; };
+		A06B2A571C17F09B00CB68AF /* lufylegend.swift.js in Resources */ = {isa = PBXBuildFile; fileRef = A06B2A561C17F09B00CB68AF /* lufylegend.swift.js */; };
+		AD6B39CB1CCBDCE6005C2DF8 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD6B39CA1CCBDCE6005C2DF8 /* StoreKit.framework */; };
+		AD6B39CF1CCC5E95005C2DF8 /* XXXPurchaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD6B39CE1CCC5E95005C2DF8 /* XXXPurchaseManager.swift */; };
+		AD6B39D11CCC62EB005C2DF8 /* XXXProductManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD6B39D01CCC62EB005C2DF8 /* XXXProductManager.swift */; };
+		AD6B39D31CCCE7EE005C2DF8 /* lufylegend.ui-0.14.1.min.js in Resources */ = {isa = PBXBuildFile; fileRef = AD6B39D21CCCE7EE005C2DF8 /* lufylegend.ui-0.14.1.min.js */; };
 		AD8B67981CBFDD0800195B8D /* jsc.m in Sources */ = {isa = PBXBuildFile; fileRef = AD8B67971CBFDD0800195B8D /* jsc.m */; };
 		AD8B679B1CBFFAD100195B8D /* Sound in Resources */ = {isa = PBXBuildFile; fileRef = AD8B679A1CBFFAD100195B8D /* Sound */; };
 		AD8B679D1CBFFDFD00195B8D /* lufylegend-1.10.1.js in Resources */ = {isa = PBXBuildFile; fileRef = AD8B679C1CBFFDFD00195B8D /* lufylegend-1.10.1.js */; };
@@ -55,7 +59,11 @@
 		A06B2A421C17CACF00CB68AF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A06B2A521C17D47000CB68AF /* test.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = test.html; sourceTree = "<group>"; };
 		A06B2A541C17DC4B00CB68AF /* Lufylegend.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Lufylegend.swift; sourceTree = "<group>"; };
-		A06B2A561C17F09B00CB68AF /* data.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = data.js; sourceTree = "<group>"; };
+		A06B2A561C17F09B00CB68AF /* lufylegend.swift.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = lufylegend.swift.js; sourceTree = "<group>"; };
+		AD6B39CA1CCBDCE6005C2DF8 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		AD6B39CE1CCC5E95005C2DF8 /* XXXPurchaseManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XXXPurchaseManager.swift; sourceTree = "<group>"; };
+		AD6B39D01CCC62EB005C2DF8 /* XXXProductManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XXXProductManager.swift; sourceTree = "<group>"; };
+		AD6B39D21CCCE7EE005C2DF8 /* lufylegend.ui-0.14.1.min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = "lufylegend.ui-0.14.1.min.js"; sourceTree = "<group>"; };
 		AD8B67971CBFDD0800195B8D /* jsc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = jsc.m; sourceTree = "<group>"; };
 		AD8B67991CBFDD2500195B8D /* jsc.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = jsc.h; sourceTree = "<group>"; };
 		AD8B679A1CBFFAD100195B8D /* Sound */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Sound; sourceTree = "<group>"; };
@@ -67,6 +75,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AD6B39CB1CCBDCE6005C2DF8 /* StoreKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -90,6 +99,7 @@
 		A06B2A141C17CACD00CB68AF = {
 			isa = PBXGroup;
 			children = (
+				AD6B39CA1CCBDCE6005C2DF8 /* StoreKit.framework */,
 				A06B2A1F1C17CACD00CB68AF /* Swift01 */,
 				A06B2A341C17CACE00CB68AF /* Swift01Tests */,
 				A06B2A3F1C17CACE00CB68AF /* Swift01UITests */,
@@ -120,9 +130,12 @@
 				A06B2A2C1C17CACD00CB68AF /* Info.plist */,
 				A06B2A521C17D47000CB68AF /* test.html */,
 				A06B2A541C17DC4B00CB68AF /* Lufylegend.swift */,
-				A06B2A561C17F09B00CB68AF /* data.js */,
+				A06B2A561C17F09B00CB68AF /* lufylegend.swift.js */,
 				AD8B67971CBFDD0800195B8D /* jsc.m */,
 				AD8B67991CBFDD2500195B8D /* jsc.h */,
+				AD6B39CE1CCC5E95005C2DF8 /* XXXPurchaseManager.swift */,
+				AD6B39D01CCC62EB005C2DF8 /* XXXProductManager.swift */,
+				AD6B39D21CCCE7EE005C2DF8 /* lufylegend.ui-0.14.1.min.js */,
 			);
 			path = Swift01;
 			sourceTree = "<group>";
@@ -213,6 +226,12 @@
 				TargetAttributes = {
 					A06B2A1C1C17CACD00CB68AF = {
 						CreatedOnToolsVersion = 7.1.1;
+						DevelopmentTeam = 487MZ6R5X8;
+						SystemCapabilities = {
+							com.apple.InAppPurchase = {
+								enabled = 1;
+							};
+						};
 					};
 					A06B2A301C17CACD00CB68AF = {
 						CreatedOnToolsVersion = 7.1.1;
@@ -225,7 +244,7 @@
 				};
 			};
 			buildConfigurationList = A06B2A181C17CACD00CB68AF /* Build configuration list for PBXProject "Swift01" */;
-			compatibilityVersion = "Xcode 3.2";
+			compatibilityVersion = "Xcode 6.3";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -251,11 +270,12 @@
 			files = (
 				AD8B679B1CBFFAD100195B8D /* Sound in Resources */,
 				A06B2A2B1C17CACD00CB68AF /* LaunchScreen.storyboard in Resources */,
+				AD6B39D31CCCE7EE005C2DF8 /* lufylegend.ui-0.14.1.min.js in Resources */,
 				AD8B679D1CBFFDFD00195B8D /* lufylegend-1.10.1.js in Resources */,
 				A06B2A281C17CACD00CB68AF /* Assets.xcassets in Resources */,
 				A06B2A261C17CACD00CB68AF /* Main.storyboard in Resources */,
 				A06B2A531C17D47000CB68AF /* test.html in Resources */,
-				A06B2A571C17F09B00CB68AF /* data.js in Resources */,
+				A06B2A571C17F09B00CB68AF /* lufylegend.swift.js in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -281,6 +301,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				AD8B67981CBFDD0800195B8D /* jsc.m in Sources */,
+				AD6B39CF1CCC5E95005C2DF8 /* XXXPurchaseManager.swift in Sources */,
+				AD6B39D11CCC62EB005C2DF8 /* XXXProductManager.swift in Sources */,
 				A06B2A551C17DC4B00CB68AF /* Lufylegend.swift in Sources */,
 				A06B2A231C17CACD00CB68AF /* ViewController.swift in Sources */,
 				A06B2A211C17CACD00CB68AF /* AppDelegate.swift in Sources */,
@@ -355,6 +377,7 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
@@ -377,6 +400,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				PROVISIONING_PROFILE = "967d66e8-0e3f-4d56-8921-a4e51d43c42f";
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -399,9 +423,10 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer: lubin zhang (66X4HC73B2)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -414,6 +439,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
+				PROVISIONING_PROFILE = "967d66e8-0e3f-4d56-8921-a4e51d43c42f";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -424,10 +450,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = Swift01/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = test.Swift01;
+				PRODUCT_BUNDLE_IDENTIFIER = com.lufylegend.sgj;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "967d66e8-0e3f-4d56-8921-a4e51d43c42f";
+				"PROVISIONING_PROFILE[sdk=*]" = "967d66e8-0e3f-4d56-8921-a4e51d43c42f";
 				SWIFT_OBJC_BRIDGING_HEADER = Swift01/jsc.h;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -438,10 +467,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = Swift01/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = test.Swift01;
+				PRODUCT_BUNDLE_IDENTIFIER = com.lufylegend.sgj;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "967d66e8-0e3f-4d56-8921-a4e51d43c42f";
+				"PROVISIONING_PROFILE[sdk=*]" = "967d66e8-0e3f-4d56-8921-a4e51d43c42f";
 				SWIFT_OBJC_BRIDGING_HEADER = Swift01/jsc.h;
 			};
 			name = Release;

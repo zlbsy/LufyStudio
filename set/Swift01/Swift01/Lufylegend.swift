@@ -1,5 +1,6 @@
 import UIKit
 import AVFoundation
+import StoreKit
 
 typealias ID = AnyObject!
 extension JSContext {
@@ -20,10 +21,11 @@ extension JSContext {
         setB2JSVinJSC(self, key, blk)
     }
 }
-class Lufylegend {
+class Lufylegend : XXXPurchaseManagerDelegate{
     let PATH_SOUND = "Sound/"
     let TYPE_SE = "wav"
     let TYPE_BGM = "mp3"
+    var context : JSContext = JSContext()
     var audioSEPlayer:AVAudioPlayer = AVAudioPlayer()
     var audioBGMPlayer:AVAudioPlayer = AVAudioPlayer()
     func playSE(name : String, volume : Float){
@@ -76,7 +78,8 @@ class Lufylegend {
         }
         return data;
     }
-    func contextInit(context : JSContext){
+    func contextInit(c : JSContext){
+        context = c
         context.setb2("playSE", {(seName:AnyObject!, volume:AnyObject!)->AnyObject in
             self.playSE(seName as! String, volume: volume as! Float)
             return ""
@@ -91,13 +94,216 @@ class Lufylegend {
         context.setb2("writeToFile", {(name:AnyObject!, data:AnyObject!)->AnyObject in
             return self.writeToFile(name as! String, data: data as! String)
         })
+        context.setb1("purchaseLog", {(complete:AnyObject!)->AnyObject in
+            self.purchaseLog()
+            return ""
+        })
+        context.setb1("productInformation", {(productIds:AnyObject!)->AnyObject in
+            print("productInformation" )
+            self.fetchProductInformationForIds(productIds as! [String])
+            return ""
+        })
+        context.setb1("myPrint", {(data:AnyObject!)->AnyObject in
+            print(data as! String)
+            return ""
+        })
         
-        context.evaluateScript("function LPlugin(){}")
-        context.evaluateScript("LPlugin.playSE = playSE;")
-        context.evaluateScript("LPlugin.playBGM = playBGM;")
-        context.evaluateScript("LPlugin.readFile = readFile;")
-        context.evaluateScript("LPlugin.writeToFile = writeToFile;")
-        //let value:JSValue = context.objectForKeyedSubscript("LPlugin")
+        let path = NSBundle.mainBundle().pathForResource("lufylegend.swift", ofType: "js")!
+        if let data = NSData(contentsOfFile: path){
+            var strScript = String(NSString(data: data, encoding: NSUTF8StringEncoding)!)
+            strScript = strScript.stringByReplacingOccurrencesOfString("\n", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
+            print(strScript)
+            context.evaluateScript(strScript)
+        }
+        //let value:JSValue = context.objectForKeyedSubscript("console")
         //print(value.toString())
     }
+    func purchaseLog(){
+        if let receiptUrl: NSURL = NSBundle.mainBundle().appStoreReceiptURL {
+            if let receiptData: NSData = NSData(contentsOfURL: receiptUrl) {
+                let receiptBase64Str: String = receiptData.base64EncodedStringWithOptions(NSDataBase64EncodingOptions())
+                let requestContents: NSDictionary = ["receipt-data": receiptBase64Str] as NSDictionary
+                
+                let sandboxUrl: NSURL = NSURL(string: "https://sandbox.itunes.apple.com/verifyReceipt")!
+                let request: NSMutableURLRequest = NSMutableURLRequest(URL: sandboxUrl)
+                
+                request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField:"content-type")
+                request.timeoutInterval = 5.0
+                request.HTTPMethod = "POST"
+                do {
+                    request.HTTPBody = try NSJSONSerialization.dataWithJSONObject(requestContents, options: NSJSONWritingOptions.init(rawValue: 2))
+                } catch {
+                    // Error Handling
+                    print("NSJSONSerialization Error")
+                    return
+                }
+                let configuration = NSURLSessionConfiguration.defaultSessionConfiguration()
+                let session = NSURLSession(configuration: configuration, delegate:nil, delegateQueue:NSOperationQueue.mainQueue())
+                 let task = session.dataTaskWithRequest(request, completionHandler: {
+                    (data, response, error) -> Void in
+                    let myData:NSString = NSString(data: data!, encoding: NSUTF8StringEncoding)!
+                    let _ll_dispatchEvent = "LPurchase._ll_dispatchEvent("+(myData as String)+", LPurchase.PURCHASE_LOG_COMPLETE);"
+                    self.context.evaluateScript(_ll_dispatchEvent)
+                })
+                
+                task.resume()
+            }
+        }
+    }
+    
+    ///プロダクト情報取得
+    private func fetchProductInformationForIds(productIds:[String]) {
+        print("fetchProductInformationForIds" )
+        XXXProductManager.productsWithProductIdentifiers(productIds,
+                                                         completion: {[weak self] (products : [SKProduct]!, error : NSError?) -> Void in
+                                                            if error != nil {                                                                print(error?.localizedDescription)
+                                                                return
+                                                            }
+                                                            var str : String = "["
+                                                            var add = ""
+                                                            for product in products {
+                                                                //価格を抽出
+                                                                let priceLabel = XXXProductManager.priceStringFromProduct(product)
+                                                                
+                                                                str += add
+                                                                str += "{"
+                                                                str += ("'title':'" + product.localizedTitle + "',")
+                                                                str += ("'priceLabel':'" + priceLabel + "',")
+                                                                str += ("'price':'" + product.price.stringValue + "',")
+                                                                str += ("'productId':'" + (product.productIdentifier as! String) + "'")
+                                                                str += "}"
+                                                                add = ","
+                                                                /*
+                                                                 TODO: UI更新*/
+                                                                
+                                                            }
+                                                            str += "]"
+                                                            let _ll_dispatchEvent = "LPurchase._ll_dispatchEvent("+str+", LPurchase.PRODUCT_INFORMATION_COMPLETE);"
+                                                            self!.context.evaluateScript(_ll_dispatchEvent)
+                                                            //self!.purchase("newWujiang")
+                                                            //self!.purchase("com.lufylegend.sgj.id01")
+            })
+        
+        
+    }
+    ///課金開始
+    private func purchase(productId:String) {
+        //デリゲード設定
+        XXXPurchaseManager.sharedManager().delegate = self
+        
+        //プロダクト情報を取得
+        XXXProductManager.productsWithProductIdentifiers([productId],
+                                                         completion: {[weak self]  (products : [SKProduct]!, error : NSError?) -> Void in
+                                                            if error != nil {
+                                                                if let weakSelf = self {
+                                                                    weakSelf.purchaseManager(XXXPurchaseManager.sharedManager(), didFailWithError: error)
+                                                                }
+                                                                print(error?.localizedDescription)
+                                                                return
+                                                            }
+                                                            
+                                                            if products.count > 0 {
+                                                                //課金処理開始
+                                                                XXXPurchaseManager.sharedManager().startWithProduct(products[0])
+                                                            }
+            })
+    }
+    /// リストア開始
+    func startRestore() {
+        //デリゲード設定
+        XXXPurchaseManager.sharedManager().delegate = self
+        
+        //リストア開始
+        XXXPurchaseManager.sharedManager().startRestore()
+    }
+    
+    
+    // MARK: - XXXPurchaseManager Delegate
+    @objc func purchaseManager(purchaseManager: XXXPurchaseManager!, didFinishPurchaseWithTransaction transaction: SKPaymentTransaction!, decisionHandler: ((complete: Bool) -> Void)!) {
+        //課金終了時に呼び出される
+        /*
+         TODO: コンテンツ解放処理
+         
+         
+         
+         
+         */
+        print("purchase finish!")
+        /*let ac = UIAlertController(title: "purchase finish!", message: nil, preferredStyle: .Alert)
+        ac.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
+        self.presentViewController(ac, animated: true, completion: nil)
+        */
+        //コンテンツ解放が終了したら、この処理を実行(true: 課金処理全部完了, false 課金処理中断)
+        decisionHandler(complete: true)
+    }
+    
+    @objc func purchaseManager(purchaseManager: XXXPurchaseManager!, didFinishUntreatedPurchaseWithTransaction transaction: SKPaymentTransaction!, decisionHandler: ((complete: Bool) -> Void)!) {
+        //課金終了時に呼び出される(startPurchaseで指定したプロダクトID以外のものが課金された時。)
+        /*
+         TODO: コンテンツ解放処理
+         
+         
+         
+         
+         
+         */
+        print("purchase finish!(Untreated.)")
+        /*let ac = UIAlertController(title: "purchase finish!(Untreated.)", message: nil, preferredStyle: .Alert)
+        ac.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
+        self.presentViewController(ac, animated: true, completion: nil)
+        */
+        
+        //コンテンツ解放が終了したら、この処理を実行(true: 課金処理全部完了, false 課金処理中断)
+        decisionHandler(complete: true)
+    }
+    
+    func purchaseManager(purchaseManager: XXXPurchaseManager!, didFailWithError error: NSError!) {
+        //課金失敗時に呼び出される
+        /*
+         TODO: errorを使ってアラート表示
+         
+         
+         
+         
+         
+         */
+        print("purchase fail...")
+        /*let ac = UIAlertController(title: "purchase fail...", message: error.localizedDescription, preferredStyle: .Alert)
+        ac.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
+        self.presentViewController(ac, animated: true, completion: nil)
+        */
+    }
+    
+    func purchaseManagerDidFinishRestore(purchaseManager: XXXPurchaseManager!) {
+        //リストア終了時に呼び出される(個々のトランザクションは”課金終了”で処理)
+        /*
+         TODO: インジケータなどを表示していたら非表示に
+         
+         
+         
+         
+         
+         */
+        print("restore finish!")
+        /*let ac = UIAlertController(title: "restore finish!", message: nil, preferredStyle: .Alert)
+        ac.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
+        self.presentViewController(ac, animated: true, completion: nil)*/
+    }
+    
+    func purchaseManagerDidDeferred(purchaseManager: XXXPurchaseManager!) {
+        //承認待ち状態時に呼び出される(ファミリー共有)
+        /*
+         TODO: インジケータなどを表示していたら非表示に
+         
+         
+         
+         
+         
+         */
+        print("purcase defferd.")
+        /*let ac = UIAlertController(title: "purcase defferd.", message: nil, preferredStyle: .Alert)
+        ac.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
+        self.presentViewController(ac, animated: true, completion: nil)*/
+    }
+    
 }

@@ -10,8 +10,10 @@ import UIKit
 import Foundation
 import AVFoundation
 import JavaScriptCore;
+import StoreKit
 
-class ViewController: UIViewController, UIWebViewDelegate {
+class ViewController: UIViewController, UIWebViewDelegate{
+    
     let myWebView : UIWebView = UIWebView()
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,31 +36,21 @@ class ViewController: UIViewController, UIWebViewDelegate {
             let context = ctx as! JSContext
             lufy.contextInit(context)
         }
-
+        
+        
+        
+        //プロダクトID達
+        //let productIdentifiers = ["newWujiang","saveReport","com.lufylegend.sgj.id01"]
+        //プロダクト情報取得
+        //lufy.fetchProductInformationForIds(productIdentifiers)
+        
     }
+    
+    
     func webViewDidFinishLoad(webView: UIWebView) {
-        print("webViewDidFinishLoad")
-        let path = NSBundle.mainBundle().pathForResource("data", ofType: "js")!
-        if let data = NSData(contentsOfFile: path){
-            var str = String(NSString(data: data, encoding: NSUTF8StringEncoding)!)
-            str = str.stringByReplacingOccurrencesOfString("\n", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
-            print("jsload="+str)
-            myWebView.stringByEvaluatingJavaScriptFromString(str)
-        }else{
-            print("データなし")
-        }
-        //myWebView.stringByEvaluatingJavaScriptFromString("if(typeof window.testLoad == 'undefined'){window.mylist={};window.testLoad=function(url,callback){var f=function(){if(!window.mylist[url]){setTimeout(f,100);}else{callback(window.mylist[url]);}};f();location.href=url;};}")
+        
     }
     func webView(webView: UIWebView, shouldStartLoadWithRequest request: NSURLRequest, navigationType: UIWebViewNavigationType) -> Bool {
-        
-        print("request.URL : " + String(request.URL))
-        if let r = request.URL!.absoluteString.rangeOfString("nativecall") {
-            print("nativecallを発見しました。ここでネイティブコールを実行します。");
-            print("r : " + String(r))
-            myWebView.stringByEvaluatingJavaScriptFromString("window.mylist['nativecall://abcdef?x=a&y=b']='abcdefg';")
-            return false;
-        }
-        
         return true
     }
     override func didReceiveMemoryWarning() {
@@ -66,6 +58,10 @@ class ViewController: UIViewController, UIWebViewDelegate {
         // Dispose of any resources that can be recreated.
     }
 
-
+    
+    
+    
+    
+    
 }
 

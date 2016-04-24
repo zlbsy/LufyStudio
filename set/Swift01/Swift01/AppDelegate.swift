@@ -7,15 +7,22 @@
 //
 
 import UIKit
+import StoreKit
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate,XXXPurchaseManagerDelegate {
 
     var window: UIWindow?
 
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
+        // デリゲート設定
+        XXXPurchaseManager.sharedManager().delegate = self
+        
+        // オブザーバー登録
+        SKPaymentQueue.defaultQueue().addTransactionObserver(XXXPurchaseManager.sharedManager())
+        
         return true
     }
 
@@ -31,6 +38,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationWillEnterForeground(application: UIApplication) {
         // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
+        // オブザーバー登録解除
+        SKPaymentQueue.defaultQueue().removeTransactionObserver(XXXPurchaseManager.sharedManager());
     }
 
     func applicationDidBecomeActive(application: UIApplication) {
@@ -40,7 +49,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillTerminate(application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
-
+    func purchaseManager(purchaseManager: XXXPurchaseManager!, didFinishUntreatedPurchaseWithTransaction transaction: SKPaymentTransaction!, decisionHandler: ((complete: Bool) -> Void)!) {
+        //課金終了(前回アプリ起動時課金処理が中断されていた場合呼ばれる)
+        /*
+         
+         
+         TODO: コンテンツ解放処理
+         
+         
+         */
+        //コンテンツ解放が終了したら、この処理を実行(true: 課金処理全部完了, false 課金処理中断)
+        decisionHandler(complete: true)
+        
+    }
 
 }
 
