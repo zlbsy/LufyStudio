@@ -116,11 +116,13 @@ function ConfirmWindow(obj){
 		msg = obj.subWindow;
 	}else if(obj.messageHtml){
 		msg = getStrokeLabel(obj.messageHtml,16,"#FFFFFF","#000000",2,"htmlText");
+		msg.width = obj.width - 60;
+		msg.setWordWrap(true,27);
 	}else{
 		msg = getStrokeLabel(obj.message,16,"#FFFFFF","#000000",4);
+		msg.width = obj.width - 60;
+		msg.setWordWrap(true,27);
 	}
-	msg.width = obj.width - 60;
-	msg.setWordWrap(true,27);
 	if(obj.width < LGlobal.width){
 		msg.x = panel.x + 30;
 	}

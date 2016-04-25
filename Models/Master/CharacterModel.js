@@ -391,8 +391,14 @@ CharacterModel.prototype.proficiency = function(){
 };
 CharacterModel.prototype.skillAmend = function(value, key){
 	var self = this;
-	value *= self.data["_skill_add_status_prop_" + key];
-	value += self.data["_skill_add_status_num_" + key];
+	var prop = self.data["_skill_add_status_prop_" + key];
+	if(prop){
+		value *= prop;
+	}
+	var num = self.data["_skill_add_status_num_" + key];
+	if(num){
+		value += num;
+	}
 	return value >>> 0;
 };
 CharacterModel.prototype.attack = function(){
