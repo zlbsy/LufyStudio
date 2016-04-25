@@ -68,7 +68,7 @@ BattleMainMenuView.prototype.setMenu=function(){
 	self.addChildAt(menuLayer, 0);
 	self.menuLayer = menuLayer;
 	
-	var layer = new LSprite(), menuY = 10, menuWidth = 120, menuHeight = 50;
+	var layer = new LSprite(), menuY = 10, menuWidth = 160, menuHeight = 50;
 	self.backLayer = getTranslucentMask();
 	self.addChildAt(self.backLayer, 0);
 	
@@ -165,36 +165,16 @@ BattleMainMenuView.prototype.onClickGameSave=function(event){
 BattleMainMenuView.prototype.toGameSave=function(button){
 	var self = this;
 	if(button.getChildByName("lock")){
-		var obj = {title:Language.get("confirm"),width:340,height:240,cancelEvent:null};
 		if(LPlugin.native){
-			var productInformation = GameCacher.getData("productInformation");
-			if (!productInformation) {
-				purchaseProductInformation(function() {
-					self.toGameSave(button);
-				});
-				return;
-			}
-			var product = productInformation.find(function(child){
-				return child.productId == productIdConfig.saveReport;
+			purchaseConfirm(productIdConfig.saveReport, "战场保存", function(){
+				LMvc.changeLoading(TranslucentLoading);
+				self.load.library(["GameManager"],self.gameSave);
 			});
-			obj.messageHtml = String.format("<font size='21' color='#FFFFFF'>开通新建武将功能需要花费<font color='#FF0000'>{0}</font>，要开通此功能吗?</font>", product.priceLabel);
-			obj.okEvent = function(e){
-				e.currentTarget.parent.remove();
-				purchaseStart(productIdConfig.saveReport, function(){
-					var lock = button.getChildByName("lock");
-					lock.remove();
-					self.toGameSave(button);
-				});
-			};
 		}else{
-			obj.messageHtml = "<font size='21' color='#FFFFFF'>当前版本无法使用自创武将功能，请下载<font color='#FF0000'>手机安装版本</font>!</font>";
-			obj.okEvent = function(e){
-				e.currentTarget.parent.remove();
+			purchaseConfirm(null, "战场保存", function(){
 				window.open("http://lufylegend.com/sgj");
-			};
+			});
 		}
-		var windowLayer = ConfirmWindow(obj);
-		LMvc.layer.addChild(windowLayer);
 		return;
 	}
 	LMvc.changeLoading(TranslucentLoading);

@@ -69,13 +69,13 @@ function purchaseConfirm(productId, name, callback) {
 		var product = productInformation.find(function(child) {
 			return child.productId == productId;
 		});
-		obj.messageHtml = String.format("<font size='21' color='#FFFFFF'>开通{0}功能需要花费<font color='#FF0000'>{1}</font>，要开通此功能吗?</font>", name, product.priceLabel);
+		obj.messageHtml = String.format("<font size='21' color='#FFFFFF'>开通<font color='#FF0000'>{0}</font>功能需要花费<font color='#FF0000'>{1}</font>，要开通此功能吗?</font>", name, product.priceLabel);
 		obj.okEvent = function(e) {
 			e.currentTarget.parent.remove();
 			purchaseStart(productId, callback);
 		};
 	} else {
-		obj.messageHtml = String.format("<font size='21' color='#FFFFFF'>当前版本无法使用{0}功能，请下载<font color='#FF0000'>手机安装版本</font>!</font>", name);
+		obj.messageHtml = String.format("<font size='21' color='#FFFFFF'>当前版本无法使用<font color='#FF0000'>{0}</font>功能，请下载<font color='#FF0000'>手机安装版本</font>!</font>", name);
 		obj.okEvent = function(e) {
 			e.currentTarget.parent.remove();
 			callback();

@@ -48,9 +48,9 @@ function getButton(text,width,img){
 function lockedButton(button){
 	var lock = new LBitmap(new LBitmapData(LMvc.datalist["lock"]));
 	lock.name = "lock";
-	lock.scaleX = lock.scaleY = (button.getHeight() - 10) / lock.getHeight();
-	lock.x = button.getWidth() - lock.getWidth() - 5;
-	lock.y = 5;
+	lock.scaleX = lock.scaleY = (button.getHeight() - 20) / lock.getHeight();
+	lock.x = button.getWidth() - lock.getWidth() - 10;
+	lock.y = 10;
 	button.addChild(lock);
 }
 function playButtonSe(e){
