@@ -51,10 +51,19 @@ LPlugin.setCharacter = function(charaData){
 	LPlugin.SetData(LPlugin.KEY_CHARACTER_LIST, data);
 };
 LPlugin.SetData = function(key,data){
-	window.localStorage.setItem(key, JSON.stringify(data));
+	if(LPlugin.writeToFile){
+		LPlugin.writeToFile(key, data);
+	}else{
+		window.localStorage.setItem(key, JSON.stringify(data));
+	}
 };
 LPlugin.GetData = function(key){
-	var data = window.localStorage.getItem(key);
+	var data;
+	if(LPlugin.readFile){
+		data = LPlugin.readFile(key);
+	}else{
+		data = window.localStorage.getItem(key);
+	}
 	if(!data){
 		return {};
 	}
@@ -64,21 +73,25 @@ LPlugin.volumeSE = 0;
 LPlugin.volumeBGM = 0;
 LPlugin.sounds = {};
 LPlugin.playingBGM = null;
-LPlugin.playSE = function(name){
-	LPlugin.playSound(name, 1, LPlugin.volumeSE);
-};
+if(!LPlugin.playSE){
+	LPlugin.playSE = function(name){
+		LPlugin.playSound(name, 1, LPlugin.volumeSE);
+	};
+}
 LPlugin.closeBGM = function(){
-	if(LPlugin.playingBGM){
+	if(!LPlugin.native && LPlugin.playingBGM){
 		LPlugin.playingBGM.close();
 		LPlugin.playingBGM = null;
 	}
 };
-LPlugin.playBGM = function(name){
-	LPlugin.closeBGM();
-	LPlugin.playingBGM = LPlugin.playSound(name, 1000, LPlugin.volumeBGM);
-};
+if(!LPlugin.playBGM){
+	LPlugin.playBGM = function(name){
+		LPlugin.closeBGM();
+		LPlugin.playingBGM = LPlugin.playSound(name, 1000, LPlugin.volumeBGM);
+	};
+}
 LPlugin.readyBGM = function(name){
-	if(LPlugin.sounds[name]){
+	if(LPlugin.native || LPlugin.sounds[name]){
 		return;
 	}
 	LPlugin.playBGM(name, 1, LPlugin.playingBGM);

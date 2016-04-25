@@ -92,6 +92,9 @@ BattleMainMenuView.prototype.setMenu=function(){
 	menuButton.addEventListener(LMouseEvent.MOUSE_UP, self.clickCharacterList);
 	menuY += menuHeight;
 	var menuButton = getButton("保存进度",menuWidth);
+	if(!purchaseHasBuy(productIdConfig.saveReport)){
+		lockedButton(menuButton);
+	}
 	menuButton.y = menuY;
 	layer.addChild(menuButton);
 	menuButton.addEventListener(LMouseEvent.MOUSE_UP, self.onClickGameSave);
@@ -154,15 +157,51 @@ BattleMainMenuView.prototype.boutEnd=function(event){
 	self.hideMenu();
 };
 BattleMainMenuView.prototype.onClickGameSave=function(event){
-	var self = event.currentTarget.parent.parent.parent;
+	var button = event.currentTarget;
+	var self = button.getParentByConstructor(BattleMainMenuView);
 	self.hideMenu();
+	self.toGameSave(button);
+};
+BattleMainMenuView.prototype.toGameSave=function(button){
+	var self = this;
+	if(button.getChildByName("lock")){
+		var obj = {title:Language.get("confirm"),width:340,height:240,cancelEvent:null};
+		if(LPlugin.native){
+			var productInformation = GameCacher.getData("productInformation");
+			if (!productInformation) {
+				purchaseProductInformation(function() {
+					self.toGameSave(button);
+				});
+				return;
+			}
+			var product = productInformation.find(function(child){
+				return child.productId == productIdConfig.saveReport;
+			});
+			obj.messageHtml = String.format("<font size='21' color='#FFFFFF'>开通新建武将功能需要花费<font color='#FF0000'>{0}</font>，要开通此功能吗?</font>", product.priceLabel);
+			obj.okEvent = function(e){
+				e.currentTarget.parent.remove();
+				purchaseStart(productIdConfig.saveReport, function(){
+					var lock = button.getChildByName("lock");
+					lock.remove();
+					self.toGameSave(button);
+				});
+			};
+		}else{
+			obj.messageHtml = "<font size='21' color='#FFFFFF'>当前版本无法使用自创武将功能，请下载<font color='#FF0000'>手机安装版本</font>!</font>";
+			obj.okEvent = function(e){
+				e.currentTarget.parent.remove();
+				window.open("http://lufylegend.com/sgj");
+			};
+		}
+		var windowLayer = ConfirmWindow(obj);
+		LMvc.layer.addChild(windowLayer);
+		return;
+	}
 	LMvc.changeLoading(TranslucentLoading);
 	self.load.library(["GameManager"],self.gameSave);
 };
 BattleMainMenuView.prototype.gameSave=function(){
-	var self = this;
 	RecordController.instance().show(RecordController.SAVE_MODE);
-	//GameManager.save();
 };
 BattleMainMenuView.prototype.onClickGameRead=function(event){
 	var self = event.currentTarget.parent.parent.parent;

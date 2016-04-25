@@ -1,11 +1,18 @@
 function GameCacher(){
 }
+GameCacher._datas = {};
 GameCacher._areaMaps = {};
 GameCacher._areaMiniMaps = {};
 GameCacher._colorBitmapDatas = {};
 GameCacher._panelBitmapDatas = {};
 GameCacher._grayBitmapDatas = {};
 GameCacher._scaleBitmapDatas = {};
+GameCacher.getData = function(key){
+	return GameCacher._datas[key];
+};
+GameCacher.setData = function(key, data){
+	GameCacher._datas[key] = data;
+};
 GameCacher.getScaleBitmapData = function(name, scaleX, scaleY){
 	var key = name+"_" + scaleX + "_" + scaleY;
 	if(!GameCacher._scaleBitmapDatas[key]){

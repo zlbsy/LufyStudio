@@ -82,15 +82,65 @@ LogoView.prototype.showMenu=function(){
 	var buttonCreate = getButton(Language.get("create_character"),200);
 	buttonCreate.y = menuY;
 	menuLayer.addChild(buttonCreate);
-	buttonCreate.addEventListener(LMouseEvent.MOUSE_UP, self.createCharacter.bind(self));
+	if(!purchaseHasBuy(productIdConfig.createCharacter)){
+		lockedButton(buttonCreate);
+	}
+	buttonCreate.addEventListener(LMouseEvent.MOUSE_UP, self.createCharacterChick);
 	
 	menuY += menuHeight * 2;
 	menuLayer.y = LGlobal.height - menuY;
 	
 	self.topMenuLayer = menuLayer;
 };
-LogoView.prototype.createCharacter=function(event){
-	this.controller.loadCreateCharacter();
+LogoView.prototype.createCharacterChick=function(event){
+	var button = event.currentTarget;
+	var self = button.getParentByConstructor(LogoView);
+	self.createCharacter(button);
+};
+LogoView.prototype.createCharacter=function(button){
+	var self = this;
+	if(button.getChildByName("lock")){
+		//var obj = {title:Language.get("confirm"),width:340,height:240,cancelEvent:null};
+		if(LPlugin.native){
+			purchaseConfirm(productIdConfig.createCharacter, "自创武将", function(){
+				var lock = button.getChildByName("lock");
+				lock.remove();
+				self.createCharacter(button);
+			});
+			/*var productInformation = GameCacher.getData("productInformation");
+			if (!productInformation) {
+				purchaseProductInformation(function() {
+					self.createCharacter(button);
+				});
+				return;
+			}
+			var product = productInformation.find(function(child){
+				return child.productId == productIdConfig.createCharacter;
+			});
+			obj.messageHtml = String.format("<font size='21' color='#FFFFFF'>开通新建武将功能需要花费<font color='#FF0000'>{0}</font>，要开通此功能吗?</font>", product.priceLabel);
+			obj.okEvent = function(e){
+				e.currentTarget.parent.remove();
+				purchaseStart(productIdConfig.createCharacter, function(){
+					var lock = button.getChildByName("lock");
+					lock.remove();
+					self.createCharacter(button);
+				});
+			};*/
+		}else{
+			purchaseConfirm(null, "自创武将", function(){
+				window.open("http://lufylegend.com/sgj");
+			});
+			/*obj.messageHtml = "<font size='21' color='#FFFFFF'>当前版本无法使用自创武将功能，请下载<font color='#FF0000'>手机安装版本</font>!</font>";
+			obj.okEvent = function(e){
+				e.currentTarget.parent.remove();
+				window.open("http://lufylegend.com/sgj");
+			};*/
+		}
+		//var windowLayer = ConfirmWindow(obj);
+		//LMvc.layer.addChild(windowLayer);
+		return;
+	}
+	self.controller.loadCreateCharacter();
 };
 LogoView.prototype.showSingleCombatArena=function(event){
 	this.controller.showSingleCombatArena();

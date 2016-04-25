@@ -17,17 +17,17 @@ LogoController.prototype.baseControllersLoad=function(){
 };
 LogoController.prototype.configLoad=function(){
 	var self = this;
-	self.load.config(["Position","Belong"],self.helperLoad);
+	self.load.config(["Position","Belong","Purchase"],self.helperLoad);
 };
 LogoController.prototype.helperLoad=function(){
 	var self = this;
-	self.load.helper(["Label","UI"],self.libraryLoad);
+	self.load.helper(["Label","UI","PurchaseHelper"],self.libraryLoad);
 };
 LogoController.prototype.libraryLoad=function(){
 	var self = this;
-	var list = ["TranslucentLoading","BitmapSprite","BattleLoading","GameCacher"];
+	var list = ["TranslucentLoading","BitmapSprite","BattleLoading","GameCacher","LPluginExtension"];
 	if(typeof LPlugin == UNDEFINED){
-		list.push("LPlugin");
+		window["LPlugin"] = function(){}; 
 	}
 	list.push("language/chinese/LanguageSimple");
 	self.load.library(list,self.modelLoad);
@@ -67,8 +67,17 @@ LogoController.prototype.start=function(event){
 	LPlugin.openEvent(2);
 	LPlugin.openEvent(3);*/
 	
-	self.dispatchEvent(LController.NOTIFY);
-	
+	if(LPlugin.native){
+		if(!LPlugin.GetData("purchaseLog")){
+			LMvc.keepLoading(true);
+			LMvc.changeLoading(TranslucentLoading);
+			purchaseLogGet(function(){
+				LMvc.keepLoading(false);
+			});
+		}
+	}else{
+		LPlugin.SetData("purchaseLog", []);
+	}
 	if(!LPlugin.native && LSound.webAudioEnabled){
 		if(LPlugin.soundData){
 			return;
@@ -107,6 +116,7 @@ LogoController.prototype.start=function(event){
 		];
 		LLoadManage.load(soundDatas, null, self.soundComplete);
 	}
+	self.dispatchEvent(LController.NOTIFY);
 };
 LogoController.prototype.soundComplete = function(result){
 	LPlugin.soundData = result;
