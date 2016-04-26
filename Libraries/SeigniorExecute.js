@@ -71,6 +71,7 @@ SeigniorExecute.run=function(){
 		self.loadSeigniorExecute();
 		return;
 	}
+	SeigniorExecute.running = true;
 	if(self.seigniorIndex == 0 && jobAiEvent()){
 		return;
 	}
@@ -83,8 +84,8 @@ SeigniorExecute.run=function(){
 			var deleteModels = SeigniorModel.list.splice(selectIndex, 1);
 			SeigniorModel.list.unshift(deleteModels[0]);
 		}
-		if(!SeigniorExecute.running){
-			SeigniorExecute.running = true;
+		if(!self.timeAdded){
+			self.timeAdded = true;
 			self.seigniors = [];
 			self.citys = [];
 			LMvc.chapterData.month += 1;
@@ -128,6 +129,7 @@ SeigniorExecute.run=function(){
 	//self.maskHide();
 	self.seigniorIndex = 0;
 	self.areaIndex = 0;
+	self.timeAdded = false;
 	SeigniorExecute.running = false;
 	var buttonClose = self.backLayer.childList.find(function(child){
 		return child.constructor.name == "LButton";
