@@ -8,7 +8,6 @@ function cloudWeatherCharacterShow(characterId){
 	}else{
 		characters = charaLayer.getCharactersFromBelong(Belong.ENEMY);
 	}
-	console.log("CLOUD : " + weatherLayer.isWeather(BattleWeatherConfig.CLOUD));
 	if(!weatherLayer.isWeather(BattleWeatherConfig.CLOUD)){
 		for(var i=0,l=characters.length;i<l;i++){
 			var character = characters[i];

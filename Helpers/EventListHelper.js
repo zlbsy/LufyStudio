@@ -120,19 +120,15 @@ function checkEventList() {
 	return false;
 }
 function dispatchEventList(currentEvent) {
-	//var script = "Var.set(eventId,"+currentEvent.id+");";
 	var script = "";
 	var params;
 	if(currentEvent.feat_characters && SeigniorExecute.running){
 		params = [];
 		params.push({n:"id0",v:LMvc.selectSeignorId});
-		//script += String.format("Var.set(id0,{0});", LMvc.selectSeignorId);
 		for(var i=0, l=currentEvent.condition.feat_generals.count;i<l;i++){
 			var character = currentEvent.feat_characters[i];
 			params.push({n:"id"+(i + 1),v:character.id()});
 			params.push({n:"name"+(i + 1),v:character.name()});
-			//script += String.format("Var.set(id{0},{1});", i + 1, character.id());
-			//script += String.format("Var.set(name{0},{1});", i + 1, character.name());
 			currentEvent.result[0].generals.push(character.id());
 		}
 		LPlugin.SetData("event_params_"+currentEvent.id, params);
@@ -177,7 +173,6 @@ function dispatchEventListResult(eventId) {
 }
 function dispatchEventListResultReputation(child) {
 	var generals = child.generals;
-	console.log("generals=", generals);
 	for(var i=0,l=generals.length;i<l;i++){
 		var id = generals[i];
 		var character = CharacterModel.getChara(id);
@@ -193,11 +188,13 @@ function dispatchEventListResultStopBattle(child) {
 	for(var i=0,l=seigniors.length;i<l;i++){
 		var iId = seigniors[i];
 		var seignior = SeigniorModel.getSeignior(iId);
+		if(!seignior)continue;
 		for(var j=0;j<l;j++){
 			var jId = seigniors[j];
 			if(iId == jId){
 				continue;
 			}
+			if(!SeigniorModel.getSeignior(jId))continue;
 			seignior.stopBattle(jId, month);
 		}
 	}

@@ -42,7 +42,6 @@ ArmListChildView.prototype.setStatus = function() {
 ArmListChildView.prototype.setExpeditionStatus = function() {
 	var self = this;
 	var soldierModel = self.soldierModel;
-	//var soldierMaster = SoldierMasterModel.getMaster(self.soldierData.id);
 	var layer = new LSprite();
 	layer.graphics.drawRect(0, "#ff0000", [0, 0, 390, 50]);
 	var bitmapLine = new LBitmap(new LBitmapData(LMvc.datalist["icon-line"]));
@@ -61,6 +60,5 @@ ArmListChildView.prototype.setExpeditionStatus = function() {
 	
 	var bitmapLayer = getBitmap(layer);
 	bitmapLayer.x = 10;
-	//bitmapLayer.y = 10;
 	self.addChild(bitmapLayer);
 }; 

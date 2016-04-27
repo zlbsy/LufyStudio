@@ -10,7 +10,6 @@ function BattleResultConfirmView(controller, params){
 	self.failSeigniorId = params.failSeigniorId;
 	self.leaderId = params.leaderId;
 	self.retreatCityId = params.retreatCityId;
-	console.log("BattleResultConfirmView", params.confirmType);
 	switch(self.confirmType){
 		case BattleWinConfirmType.selfCaptive:
 			self.setSelfCaptive();
@@ -131,7 +130,6 @@ BattleResultConfirmView.prototype.setSelectMoveCity = function(){
 };
 BattleResultConfirmView.prototype.citySelected=function(event){
 	var self = event.currentTarget;
-	console.log("self.retreatCityId = " + self.retreatCityId);
 	var battleData = self.controller.battleData;
 	if(self.retreatCityId){
 		self.parent.retreatCityId = self.retreatCityId;
@@ -178,7 +176,6 @@ BattleResultConfirmView.prototype.setOnlyMessage = function(msg, eventType){
 	lblMsg.x = (self.windowWidth - lblMsg.getWidth())*0.5;
 	lblMsg.y = 30;
 	self.baseLayer.addChild(lblMsg);
-	//buttonLayer.y = 355;
 	var btnConfirm = getButton(Language.get("confirm"),100);//确认按钮
 	btnConfirm.x = (self.windowWidth - 100)*0.5;
 	btnConfirm.eventType = eventType;
@@ -246,31 +243,6 @@ BattleResultConfirmView.prototype.setFailEnemyCaptive = function(){
 	var toCity = self.controller.battleData.toCity;
 	var fromCity = self.controller.battleData.fromCity;
 	var message = captiveAutomatedProcessing(self.characterModel, self.leaderId, self.retreatCityId, toCity, fromCity);
-	/*
-	var seigniorId = toCity.seigniorCharaId();
-	var isSeignior = self.characterModel.id() == self.characterModel.seigniorId();
-	if(!isSeignior && calculateHitrateSurrender(seigniorId, self.characterModel)){//投降
-		generalSurrender(self.characterModel, toCity);
-		message = String.format(Language.get("surrender_dialog_msg"),self.characterModel.name());//{0}投降了敌军!
-	}else if(calculateHitrateBehead(self.leaderId, self.characterModel)){//斩首
-		message = String.format(Language.get("beheaded_dialog_msg"),self.characterModel.name());//{0}被敌军斩首了!
-		self.characterModel.toDie();
-	}else if(isSeignior || calculateHitrateRelease(self.leaderId, self.characterModel)){//释放
-		if(self.retreatCityId){
-			if(self.characterModel.cityId() != self.retreatCityId){
-				self.characterModel.moveTo(self.retreatCityId);
-				self.characterModel.moveTo();
-			}
-			message = String.format(Language.get("released_dialog_msg"),self.characterModel.name());//{0}被敌军释放了!
-		}else{
-			self.characterModel.toOutOfOffice();
-			message = String.format(Language.get("shimono_dialog_msg"),self.characterModel.name());//{0}下野了!
-		}
-	}else{//俘虏
-		toCity.addCaptives(self.characterModel);
-		message = String.format(Language.get("captived_dialog_msg"),self.characterModel.name());//{0}被敌军俘虏了!
-	}
-	*/
 	self.setOnlyMessage(message, BattleResultEvent.CLOSE_FAIL_CAPTIVE);
 };
 BattleResultConfirmView.prototype.captiveSurrender=function(event){

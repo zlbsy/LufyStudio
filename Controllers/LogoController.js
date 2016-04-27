@@ -77,6 +77,13 @@ LogoController.prototype.start=function(event){
 		}
 	}else{
 		LPlugin.SetData("purchaseLog", []);
+		if(LGlobal.traceDebug){
+			var datas = [];
+			["newWujiang","saveReport"].forEach(function(c){
+				datas.push({product_id:c});
+			});
+			LPlugin.SetData("purchaseLog", datas);
+		}
 	}
 	if(!LPlugin.native && LSound.webAudioEnabled){
 		if(LPlugin.soundData){

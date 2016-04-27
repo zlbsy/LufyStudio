@@ -57,12 +57,10 @@ CreateCharacterAbilityItemView.prototype.init=function(value){
 	minusButton.x = 90;
 	self.addChild(minusButton);
 	self.minusButton = minusButton;
-	//minusButton.addEventListener(LMouseEvent.MOUSE_UP, self.onMinusStatus);
 	var plusButton = getSizeButton("+",40,40);
 	plusButton.status = text;
 	plusButton.x = 130;
 	self.addChild(plusButton);
-	//plusButton.addEventListener(LMouseEvent.MOUSE_UP, self.onPlusStatus);
 	self.plusButton = plusButton;
 	self.textField = text;
 };

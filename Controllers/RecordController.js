@@ -51,3 +51,8 @@ RecordController.prototype.showRecordList=function(){
 		self.gameRecord.records = records;
 	}*/
 };
+RecordController.prototype.autoSaveRecord=function(){
+	var self = this;console.log("autoSaveRecord");
+	var items = self.view.listView.getItems();
+	items[0].toSaveData();
+};

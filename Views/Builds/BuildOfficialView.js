@@ -84,7 +84,6 @@ BuildOfficialView.prototype.transportSelectCharacter=function(event){
 		return child.constructor.name == "BuildOfficialView";
 	});
 	self.controller.setValue("cityId", event.cityId);
-	console.log("event.cityId = " + event.cityId);
 	controller.removeEventListener(LCityEvent.SELECT_CITY, self.transportSelectCharacter);
 	self.toTransport();
 };
@@ -104,7 +103,6 @@ BuildOfficialView.prototype.spySelectCharacter=function(event){
 		return child.constructor.name == "BuildOfficialView";
 	});
 	self.controller.setValue("cityId", event.cityId);
-	console.log("spy event.cityId = " + event.cityId);
 	controller.removeEventListener(LCityEvent.SELECT_CITY, self.spySelectCharacter);
 	var cityModel = self.controller.getValue("cityData");
 	self.controller.loadCharacterList(CharacterListType.CHARACTER_SPY, cityModel.generals(Job.IDLE), {showMoney:true, buttonLabel:"execute"});

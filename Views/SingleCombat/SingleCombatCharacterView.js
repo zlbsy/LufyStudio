@@ -113,7 +113,6 @@ SingleCombatCharacterView.prototype.actionComplete = function(event){
 };
 SingleCombatCharacterView.prototype.attackActionComplete = function(event){
 	var self = event.currentTarget;
-	//console.log("S ",self.data.name(),self.anime.colIndex,self.anime.isMirror,self.currentCommand);
 	singleCombatAttackActionComplete(self, self.targetCharacter);
 };
 SingleCombatCharacterView.prototype.showLight = function(){
@@ -154,7 +153,6 @@ SingleCombatCharacterView.prototype.showRunningCommand = function(index){
 	self.selectedButtons.forEach(function(child){
 		child.alpha = 0.5;
 	});
-	//console.log("showRunningCommand index="+index);
 	self.selectedButtons[index].alpha = 1;
 	self.currentCommand = self.selectedCommands[index];
 };
@@ -228,9 +226,9 @@ SingleCombatCharacterView.prototype.fail = function(event){
 	var view = LMvc.SingleCombatController.view;
 	var arena = LMvc.SingleCombatArenaController;
 	if(self.isLeft || arena.getValue("enemyList").length == 0){
-		obj = {title:Language.get("最终战绩"),message:String.format("连胜次数:{0}",arena.getValue("killedEnemyList").length + (arena.getValue("enemyList").length == 0 ? 1 : 0)),width:300,height:240,okEvent:view.restart};
+		obj = {title:Language.get("final_record"),message:String.format(Language.get("consecutive_wins"),arena.getValue("killedEnemyList").length + (arena.getValue("enemyList").length == 0 ? 1 : 0)),width:300,height:240,okEvent:view.restart};
 	}else{
-		obj = {title:Language.get("战斗胜利"),message:String.format("已经连胜了{0}场，要继续挑战吗？",arena.getValue("killedEnemyList").length + 1),width:300,height:240,okEvent:view.keepUp,cancelEvent:view.restart};
+		obj = {title:Language.get("battle_win"),message:String.format(Language.get("continue_challenge_question"),arena.getValue("killedEnemyList").length + 1),width:300,height:240,okEvent:view.keepUp,cancelEvent:view.restart};
 	}
 	var windowLayer = ConfirmWindow(obj);
 	LMvc.SingleCombatController.view.addChild(windowLayer);

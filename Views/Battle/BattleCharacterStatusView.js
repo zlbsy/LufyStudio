@@ -21,7 +21,6 @@ BattleCharacterStatusView.healCharactersStrategy = function(){
 	BattleCharacterStatusView.healCharactersCheck();
 };
 BattleCharacterStatusView.healCharactersCheck = function(){
-	console.log("healCharactersCheck", BattleCharacterStatusView.healCharacters.length);
 	if(BattleCharacterStatusView.healCharacters.length == 0){
 		var callback = BattleCharacterStatusView.callback;
 		BattleCharacterStatusView.callback = null;
@@ -61,12 +60,7 @@ BattleCharacterStatusView.prototype.startShow=function(){
 BattleCharacterStatusView.prototype.showCharacterStatus=function(confirmStatus){
 	var self = this;
 	self.statusLayer = new LSprite();
-	//self.statusTextLayer = new LSprite();
-	
 	var characterModel = self.character.data, belong = self.belong;
-	/*var face = characterModel.face();
-	self.addChild(face);
-	*/
 	var layer = new LSprite();
 	
 	var setH = 30;
@@ -148,23 +142,8 @@ BattleCharacterStatusView.prototype.showCharacterStatus=function(confirmStatus){
 		terrainLabel.y = confirmLabel.y;
 		layer.addChild(terrainLabel);
 	}
-	//setH += 18;
-	/*
-	var weaponStatus = new LSprite();
-	weaponStatus.x = 10;
-	weaponStatus.y = setH;
-	self.getCharacterTextStatusChild(BattleCharacterStatusConfig.EXP_WEAPON, weaponStatus);
-	layer.addChild(weaponStatus);
-	
-	var armorStatus = new LSprite();
-	armorStatus.x = 130;
-	armorStatus.y = setH;
-	self.getCharacterTextStatusChild(BattleCharacterStatusConfig.EXP_ARMOR, armorStatus);
-	layer.addChild(armorStatus);
-	*/
 	layer = getBitmap(layer);
 	
-	//layer.y = 315 - layer.getHeight();
 	self.addChild(layer);
 	if(self.statusLayer.numChildren > 0){
 		self.statusLayer.x += layer.x;
@@ -177,62 +156,7 @@ BattleCharacterStatusView.prototype.showCharacterStatus=function(confirmStatus){
 	self.treen = LTweenLite.to(self, 
 		(LMvc.characterStatusView && self.objectIndex == LMvc.characterStatusView.objectIndex) ? BattleCharacterStatusConfig.CONFIRM_STATUS_TIME : BattleCharacterStatusConfig.SHOW_TIME,
 		{onComplete:self.onComplete});
-	/*if(self.statusTextLayer.numChildren > 0){
-		self.statusTextLayer.x += layer.x;
-		self.statusTextLayer.y += layer.y;
-		self.addChild(self.statusTextLayer);
-	}*/
 };
-/*
-BattleCharacterStatusView.prototype.getCharacterTextStatusChild=function(mode,layer){
-	var self = this,item,equipment,statusLayer;
-	var statusObject = self.get(mode);
-	var equipments = self.character.data.equipments();
-	switch(mode){
-		case BattleCharacterStatusConfig.EXP_WEAPON:
-		item = new LBitmap(new LBitmapData(LMvc.datalist["icon-weapon"]));
-		equipment = equipments.find(function(child){
-			return child.position() == PositionConfig.Hand;
-		});
-		break;
-		case BattleCharacterStatusConfig.EXP_ARMOR:
-		item = new LBitmap(new LBitmapData(LMvc.datalist["icon-armor"]));
-		equipment = equipments.find(function(child){
-			return child.position() == PositionConfig.Body;
-		});
-		break;
-	}
-	item.scaleX = item.scaleY = 20/item.getHeight();
-	if(statusObject){
-		statusLayer = self.statusTextLayer;
-		statusLayer.x = layer.x;
-		statusLayer.y = layer.y;
-	}else{
-		statusLayer = layer;
-	}
-	statusLayer.addChild(item);
-	var lblExp = getStrokeLabel(equipment?equipment.exp():"x",14,"#FFFFFF","#000000",1);
-	lblExp.x = 30;
-	if(statusObject){
-		statusLayer.addChild(lblExp);
-	}else{
-		statusLayer.addChild(lblExp);
-		return;
-	}
-	var changeObject = {};
-	if(equipment){
-		changeObject.text = equipment.exp() + parseInt(statusObject.value);
-		changeObject.onUpdate=function(e){
-			e.target.text = (lblExp.text >>> 0);
-		};
-	}
-	if(!self.treen){
-		changeObject.onComplete=function(){
-			self.onComplete();
-		};
-	}
-	LTweenLite.to(lblExp,BattleCharacterStatusConfig.SHOW_TIME,changeObject);
-};*/
 BattleCharacterStatusView.prototype.getCharacterStatusChild=function(mode,layer){
 	var self = this;
 	var icon, frontBar, label, value, maxValue, currentValue,statusLayer;
@@ -364,7 +288,6 @@ BattleCharacterStatusView.prototype.setStatus=function(){
 BattleCharacterStatusView.prototype.setPosition=function(character){
 	var self = this, w = 200, h = self.getHeight();
 	self.x = character.x + (BattleCharacterSize.width - w) * 0.5;
-	//self.y = character.y - h * 0.5;
 	self.y = character.y + BattleCharacterSize.height;
 	var root = self.getRootCoordinate();
 	if(root.x < 0){

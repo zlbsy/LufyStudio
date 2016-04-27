@@ -102,7 +102,7 @@ LogoView.prototype.createCharacter=function(button){
 	if(button.getChildByName("lock")){
 		//var obj = {title:Language.get("confirm"),width:340,height:240,cancelEvent:null};
 		if(LPlugin.native){
-			purchaseConfirm(productIdConfig.createCharacter, "自创武将", function(){
+			purchaseConfirm(productIdConfig.createCharacter, Language.get("create_character"), function(){
 				var lock = button.getChildByName("lock");
 				lock.remove();
 				self.createCharacter(button);
@@ -127,7 +127,7 @@ LogoView.prototype.createCharacter=function(button){
 				});
 			};*/
 		}else{
-			purchaseConfirm(null, "自创武将", function(){
+			purchaseConfirm(null, Language.get("create_character"), function(){
 				window.open("http://lufylegend.com/sgj");
 			});
 			/*obj.messageHtml = "<font size='21' color='#FFFFFF'>当前版本无法使用自创武将功能，请下载<font color='#FF0000'>手机安装版本</font>!</font>";

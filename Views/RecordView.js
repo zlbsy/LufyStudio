@@ -6,18 +6,17 @@ RecordView.prototype.construct=function(){
 };
 RecordView.prototype.getTitle=function(){
 	var self = this;
-	return  self.controller.mode == RecordController.SAVE_MODE ? "保存进度":"读取进度";
+	return  self.controller.mode == RecordController.SAVE_MODE ? "game_save":"game_read";
 };
 RecordView.prototype.init=function(){
 	var self = this;
 	if(self.listView){
-		self.title.text = self.getTitle();
+		self.title.text = Language.get(self.getTitle());
 		return;
 	}
 	self.layerInit();
 	var records = [];
-	for(var i=0;i<RecordController.RECORD_MAX;i++){
-		//var record = LPlugin.GetData("gameRecord_" + i);
+	for(var i=0;i<=RecordController.RECORD_MAX;i++){
 		var child = new RecordChildView(i);
 		records.push(child);
 	}

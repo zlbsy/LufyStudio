@@ -8,10 +8,6 @@ MapController.prototype.construct=function(){
 	var self = this;
 	self.configLoad();
 };
-/*MapController.prototype.baseControllersLoad=function(){
-	var self = this;
-	self.load.controller(["OpenCharacterList"],self.configLoad);
-};*/
 MapController.prototype.configLoad=function(){
 	var self = this;
 	self.load.config(["Character","characterList","Job","Items","Event","Strategy","Soldiers"],self.helperLoad);

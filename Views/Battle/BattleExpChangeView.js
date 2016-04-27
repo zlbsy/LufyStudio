@@ -45,33 +45,6 @@ BattleExpChangeView.prototype.initData = function(){
 	
 	var battleData = LMvc.BattleController.battleData;
 	self.datas = experienceToFeat(battleData.expeditionCharacterList);
-	/*
-	var model = LMvc.BattleController.model;
-	var datas = [];
-	var sumExp = 0;
-	for(var i=0,l=battleData.expeditionCharacterList.length;i<l;i++){
-		var character = battleData.expeditionCharacterList[i];
-		datas.push({name:character.name(), exp:character.exp()});
-		sumExp += character.exp();
-	}
-	self.average = sumExp / datas.length;
-	var feat = self.average * 0.1;
-	var minFeat = feat > 20 ? 10 : 5;
-	var rewardValue = 1.5;
-	self.datas = datas.sort(function(a,b){return b.exp - a.exp;});
-	for(var i=0,l=self.datas.length;i<l;i++){
-		var data = self.datas[i];
-		data.feat = feat;
-		if(data.feat < 10){
-			data.feat = 10;
-		}
-		if(data.exp >= self.average * rewardValue){
-			data.feat += feat * (data.exp / self.average  - rewardValue);
-			data.reward = true;
-		}
-		feat -= 5;
-		data.feat = data.feat >>> 0;
-	}*/
 	var xs = self.xs;
 	label = getStrokeLabel(Language.get("generals"),20,"#FFFFFF","#000000",4);
 	label.x = xs[0];

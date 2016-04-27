@@ -7,11 +7,9 @@ EquipmentsView.prototype.construct = function() {
 };
 EquipmentsView.prototype.layerInit = function() {
 	var self = this;
-	//var bitmapData = new LBitmapData(LMvc.datalist["common-black"]);
 	var bitmapData = new LBitmapData(LMvc.datalist["translucent"]);
 	var panel = new LPanel(bitmapData,LGlobal.width, LGlobal.height);
 	self.addChild(getBitmap(panel));
-	//self.graphics.drawRect(0, "#000000", [0, 0, LGlobal.width, LGlobal.height], true, "#000000");
 	self.baseLayer = new LSprite();
 	self.addChild(self.baseLayer);
 

@@ -29,7 +29,6 @@ SoldiersView.prototype.setSoldierList = function(characterModel) {
 };
 SoldiersView.prototype.updateView = function() {
 	var self = this;
-	console.log("SoldiersView.prototype.updateView");
 	var characterModel = self.controller.getValue("selectedCharacter");
 	this.setSoldierList(characterModel);
 };

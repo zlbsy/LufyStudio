@@ -77,15 +77,26 @@ SeigniorListChildView.prototype.set=function(){
 	name.y = 20;
 	win.addChild(name);
 	if(character.id() != LMvc.selectSeignorId){
+		var stopBattleSeignior = selectSeignor.getStopBattleSeignior(character.id());
 		var relationshipLabel = getStrokeLabel(Language.get("relationship"),22,"#999999","#000000",2);
 		relationshipLabel.x = name.x;
 		relationshipLabel.y = 82;
 		win.addChild(relationshipLabel);
-		var str = Language.get(selectSeignor.isStopBattle(character.id())?"stop_battleing":"hostility");
+		
+		var str = Language.get(stopBattleSeignior?"stop_battleing":"hostility");
 		var relationshipText = getStrokeLabel(str,20,"#ffffff","#000000",2);
 		relationshipText.x = name.x;
 		relationshipText.y = 109;
 		win.addChild(relationshipText);
+		if(stopBattleSeignior){
+			//relationshipLabel.y -= 25;
+			//relationshipText.y -= 25;
+			str = String.format(Language.get("quantity_of_month"),stopBattleSeignior.month); 
+			var relationshipTime = getStrokeLabel(str,12,"#ffffff","#000000",2);
+			relationshipTime.x = relationshipText.x;
+			relationshipTime.y = 132;
+			win.addChild(relationshipTime);
+		}
 	}
 	
 	var city_count_label = getStrokeLabel(Language.get("city"),22,"#999999","#000000",2);

@@ -12,14 +12,14 @@ function BattleFieldView(controller){
 };
 BattleFieldView.prototype.outlineData = function(){
 	var self = this;
-	var label = getStrokeLabel("攻击方:"+self.controller.battleData.fromCity.seignior().character().name(),20,"#FFFFFF","#000000",4);
+	var label = getStrokeLabel(Language.get("attacker")+":"+self.controller.battleData.fromCity.seignior().character().name(),20,"#FFFFFF","#000000",4);
 	label.x = 0;
 	self.outlineLayer.addChild(label);
-	var weather = String.format("天气:{0}", self.controller.view.weatherLayer.getLavel());
+	var weather = String.format("{0}:{1}", Language.get("weather"),self.controller.view.weatherLayer.getLavel());
 	label = getStrokeLabel(weather,20,"#FFFFFF","#000000",4);
 	label.x = 150;
 	self.outlineLayer.addChild(label);
-	label = getStrokeLabel("回合:"+self.controller.getValue("bout"),20,"#FFFFFF","#000000",4);
+	label = getStrokeLabel(Language.get("bout")+":"+self.controller.getValue("bout"),20,"#FFFFFF","#000000",4);
 	label.x = 300;
 	self.outlineLayer.addChild(label);
 };
@@ -70,14 +70,14 @@ BattleFieldView.prototype.setData = function(){
 		return child.isLeader;
 	});
 	y+=h;
-	self.showLine("主将", selfLeader.data.name(), enemyLeader.data.name(),y);
+	self.showLine(Language.get("leader"), selfLeader.data.name(), enemyLeader.data.name(),y);
 	y+=h;
-	self.showLine("武将人数", selfCharas.length, enemyCharas.length,y);
+	self.showLine(Language.get("number_of_generals"), selfCharas.length, enemyCharas.length,y);
 	y+=h;
 	var troopsSelf = 0, troopsEnemy = 0;
 	selfCharas.forEach(function(c){troopsSelf += c.data.troops();});
 	enemyCharas.forEach(function(c){troopsEnemy += c.data.troops();});
-	self.showLine("兵力", troopsSelf, troopsEnemy,y);
+	self.showLine(Language.get("troops"), troopsSelf, troopsEnemy,y);
 	var moneySelf, moneyEnemy;
 	var foodSelf, foodEnemy;
 	var troopsSelf, troopsEnemy;
@@ -98,11 +98,11 @@ BattleFieldView.prototype.setData = function(){
 		troopsEnemy = battleData.troops;
 	}
 	y+=h;
-	self.showLine("金钱", moneySelf, moneyEnemy,y);
+	self.showLine(Language.get("money"), moneySelf, moneyEnemy,y);
 	y+=h;
-	self.showLine("粮食", foodSelf, foodEnemy,y);
+	self.showLine(Language.get("food"), foodSelf, foodEnemy,y);
 	y+=h;
-	self.showLine("预备兵力", troopsSelf, troopsEnemy,y);
+	self.showLine(Language.get("arm_expedition"), troopsSelf, troopsEnemy,y);
 	y+=h;
-	self.showLine("俘虏", self.model.selfCaptive.length, self.model.enemyCaptive.length,y);
+	self.showLine(Language.get("captive"), self.model.selfCaptive.length, self.model.enemyCaptive.length,y);
 };

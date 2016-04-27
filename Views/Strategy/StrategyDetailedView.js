@@ -95,7 +95,7 @@ StrategyDetailedView.prototype.set=function(){
 StrategyDetailedView.prototype.getRangeAttack=function(){
 	var self = this;
 	var layer = new LSprite();
-	var label = getStrokeLabel("攻击范围",16,"#FFFFFF","#000000",2);
+	var label = getStrokeLabel(Language.get("attack_range"),16,"#FFFFFF","#000000",2);
 	layer.addChild(label);
 	var labelHeight = 20,maxLength = 5,step = 11;
 	var rangeAttack = self.soldierModel.rangeAttack();
@@ -118,7 +118,7 @@ StrategyDetailedView.prototype.getRangeAttack=function(){
 StrategyDetailedView.prototype.getRangeAttackTarget=function(){
 	var self = this;
 	var layer = new LSprite();
-	var label = getStrokeLabel("攻击效果",16,"#FFFFFF","#000000",2);
+	var label = getStrokeLabel(Language.get("attack_effect"),16,"#FFFFFF","#000000",2);
 	layer.addChild(label);
 	var labelHeight = 20,maxLength = 5,step = 11;
 	var rangeAttack = self.soldierModel.rangeAttackTarget();

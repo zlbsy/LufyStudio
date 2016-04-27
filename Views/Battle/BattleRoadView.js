@@ -55,7 +55,7 @@ BattleRoadView.prototype.setRangeAttack = function(chara){
 		var m = new LTextField();
 		m.setWordWrap(true, 14);
 		m.size = 12;
-		m.text = "伤:"+calculateHertValue(chara,target,1,true)+"\n命:"+calculateHitrate(chara,target,true)+"%";
+		m.text = String.format(Language.get("hurt_preview"), calculateHertValue(chara,target,1,true), calculateHitrate(chara,target,true));
 		m.color = "#ffffff";
 		m.lineColor = "#000000";
 		m.lineWidth = 2;

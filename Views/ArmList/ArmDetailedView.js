@@ -1,10 +1,6 @@
 function ArmDetailedView(controller){
 	var self = this;
 	base(self,LView,[controller]);
-	//self.soldierData = soldierData;
-	//self.soldierModel = new SoldierModel(null,soldierData);
-	//console.error("ArmDetailedView",soldierModel);
-	//self.soldierModel = soldierModel;
 	self.set();
 }
 ArmDetailedView.prototype.setArmEnlist=function(){
@@ -14,37 +10,25 @@ ArmDetailedView.prototype.setArmEnlist=function(){
 	var layer = new LSprite();
 	
 	var width = 48, height = 48;
-	/*var icon = soldierModel.icon(new LPoint(width,height), true);
-	//icon.x = 50;
-	//icon.y = 20;
-	layer.addChild(icon);
 	
-	var name = getStrokeLabel(soldierModel.name(), 20, "#FFFFFF", "#000000", 4);
-	name.x = icon.x + icon.getWidth() + 10;
-	name.y = icon.y + 5;
-	layer.addChild(name);*/
-	
-	var quantity = getStrokeLabel(String.format("{0} 兵力 : {1}人",cityModel.name(),cityModel.troops()), 20, "#FFFFFF", "#000000", 4);
-	//quantity.x = name.x + name.getWidth() + 50;
-	//quantity.y = name.y;
+	var quantity = getStrokeLabel(String.format(Language.get("city_of_troops"),cityModel.name(),cityModel.troops()), 20, "#FFFFFF", "#000000", 4);
 	quantity.x = 50;
 	quantity.y = 20;
 	layer.addChild(quantity);
 	
-	//self.enlistPrice = soldierModel.enlistPrice();
 	self.enlistPrice = JobPrice.ENLIST;
 	
-	var enlistConfrim = getStrokeLabel("要招募多少士兵？", 20, "#FFFFFF", "#000000", 4);
+	var enlistConfrim = getStrokeLabel(Language.get("recruit_many_soldiers"), 20, "#FFFFFF", "#000000", 4);
 	enlistConfrim.x = 50;
 	enlistConfrim.y = 100;
 	layer.addChild(enlistConfrim);
 	
-	var enlistFrom = getStrokeLabel(String.format("{0}人",EnlistSetting.ENLIST_FROM), 20, "#FFFFFF", "#000000", 4);
+	var enlistFrom = getStrokeLabel(String.format(Language.get("number_of_people"),EnlistSetting.ENLIST_FROM), 20, "#FFFFFF", "#000000", 4);
 	enlistFrom.x = 50;
 	enlistFrom.y = 150;
 	layer.addChild(enlistFrom);
 	
-	var enlistTo = getStrokeLabel(String.format("{0}人",EnlistSetting.ENLIST_TO), 20, "#FFFFFF", "#000000", 4);
+	var enlistTo = getStrokeLabel(String.format(Language.get("number_of_people"),EnlistSetting.ENLIST_TO), 20, "#FFFFFF", "#000000", 4);
 	enlistTo.x = enlistFrom.x + 240 - enlistTo.getWidth();
 	enlistTo.y = enlistFrom.y;
 	layer.addChild(enlistTo);
@@ -67,7 +51,6 @@ ArmDetailedView.prototype.setArmEnlist=function(){
 	
 	self.addChild(layer);
 	r.addEventListener(LRange.ON_CHANGE, self.onChangeEvent);
-	//self.addEventListener(LEvent.ENTER_FRAME, self.onframe);
 	self.onChange();
 };
 ArmDetailedView.prototype.setArmExpedition=function(){
@@ -76,7 +59,7 @@ ArmDetailedView.prototype.setArmExpedition=function(){
 	
 	var layer = new LSprite();
 	
-	var quantity = getStrokeLabel(String.format("{0}/{1}人",soldierModel.readyQuantity(),soldierModel.quantity()), 20, "#FFFFFF", "#000000", 4);
+	var quantity = getStrokeLabel(String.format(Language.get("proportion_of_people"),soldierModel.readyQuantity(),soldierModel.quantity()), 20, "#FFFFFF", "#000000", 4);
 	quantity.x = 300 - quantity.getWidth();
 	self.quantity = quantity;
 	layer.addChild(quantity);
@@ -92,11 +75,9 @@ ArmDetailedView.prototype.setArmExpedition=function(){
 	
 	self.addChild(layer);
 	r.addEventListener(LRange.ON_CHANGE, self.onChange);
-	//self.addEventListener(LEvent.ENTER_FRAME, self.onframe);
 };
 ArmDetailedView.prototype.set=function(){
 	var self = this;
-	//self.layerInit();
 	if(self.controller.armListType == ArmListType.ARM_ENLIST){
 		self.setArmEnlist();
 	}else if(self.controller.armListType == ArmListType.EXPEDITION){
@@ -129,7 +110,7 @@ ArmDetailedView.prototype.onChange = function(){
 	var range = self.range;
 	if(self.controller.armListType == ArmListType.EXPEDITION){
 		var selectQuantity = self.soldierModel.quantity() * range.value * 0.01 >> 0;
-		self.quantity.text = String.format("{0}/{1}人",selectQuantity,self.soldierModel.quantity());
+		self.quantity.text = String.format(Language.get("proportion_of_people"),selectQuantity,self.soldierModel.quantity());
 	}else{
 		self.enlistChange();
 	}
@@ -138,6 +119,6 @@ ArmDetailedView.prototype.enlistChange = function(){
 	var self = this;
 	var enlistCount = self.getEnlistCount();
 	var enlistPrice = self.getEnlistPrice(enlistCount);
-	self.enlistConfrim.text = String.format("花费金钱:{0}\n招募{1}人", enlistPrice, enlistCount);
+	self.enlistConfrim.text = String.format(Language.get("expedition_troops", enlistPrice, enlistCount);
 };
 

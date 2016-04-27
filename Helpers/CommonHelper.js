@@ -135,7 +135,6 @@ function getCreateSeigniorAsType(noneSeignior,child){
 	seignior.chara_id = child.id;
 	seignior.color = child.color;
 	seignior.areas = [];
-	console.log("getCreateSeigniorAsType",child);
 	for(var j=0,jl=child.citys.length;j<jl;j++){
 		var city = child.citys[j];
 		console.log("city",city);
@@ -223,7 +222,6 @@ function monarchChange(seigniorId, characterId){
 	var seignior = SeigniorModel.getSeignior(seigniorId);
 	if(!characterId){
 		characterId = getMonarchChangeId(seignior);
-		//console.log("getMonarchChangeId .characterId="+characterId);
 		if(!characterId){
 			return;
 		}
@@ -234,7 +232,6 @@ function monarchChange(seigniorId, characterId){
 		var captive = captives[i];
 		captive.seigniorId(characterId);
 	}
-	//console.log("seignior.chara="+seignior.character().name());
 	var areas = seignior.areas();
 	for(var i=0,l=areas.length;i<l;i++){
 		var city = areas[i];

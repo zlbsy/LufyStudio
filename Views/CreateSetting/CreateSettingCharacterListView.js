@@ -5,7 +5,6 @@ function CreateSettingCharacterListView(controller, title, isOnlyOne, characters
 	self.isOnlyOne = isOnlyOne;
 	self.characters = characters ? characters : null;
 	self.excludeCharacters = excludeCharacters ? excludeCharacters : [];
-	console.log("existedCharacters", self.existedCharacters);
 	self.init();
 }
 CreateSettingCharacterListView.prototype.init=function(){

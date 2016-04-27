@@ -153,7 +153,6 @@ EffectStrategyView.prototype.removeSelf = function(event){
 		}
 		self.currentTargetCharacter.toStatic(true);
 	}
-	console.log("self.effectType="+self.effectType,StrategyEffectType.Supply,isCurrentAttackTarget(self.currentTargetCharacter),self.currentCharacter.data.name(),self.currentTargetCharacter.data.name());
 	if(self.effectType == StrategyEffectType.Attack){
 		LTweenLite.to(self.currentTargetCharacter, self.currentTargetCharacter.hertIndex * stepTime,
 		{onComplete:function(e){
@@ -162,7 +161,6 @@ EffectStrategyView.prototype.removeSelf = function(event){
 			e.target.controller.view.baseLayer.addChild(statusView);
 			statusView.startTween();
 			if(!isCurrentAttackTarget(e.target)){
-			//if(!e.target.AI.attackTarget){
 				return;
 			}
 			statusView.addEventListener(BattleCharacterStatusEvent.CHANGE_COMPLETE,LMvc.currentAttackCharacter.AI.plusExp);
@@ -172,14 +170,5 @@ EffectStrategyView.prototype.removeSelf = function(event){
 	}else if(isCurrentAttackTarget(self.currentTargetCharacter)){
 		LMvc.currentAttackCharacter.AI.plusExp();
 	}
-	/*else if(self.effectType == StrategyEffectType.Status && isCurrentAttackTarget(self.currentTargetCharacter)){
-		LMvc.currentAttackCharacter.AI.plusExp();
-	}else if(self.effectType == StrategyEffectType.Aid && isCurrentAttackTarget(self.currentTargetCharacter)){
-		LMvc.currentAttackCharacter.AI.plusExp();
-	}else if(self.effectType == StrategyEffectType.Wake && isCurrentAttackTarget(self.currentTargetCharacter)){
-		LMvc.currentAttackCharacter.AI.plusExp();
-	}else if(self.effectType == StrategyEffectType.Supply && isCurrentAttackTarget(self.currentTargetCharacter)){
-		LMvc.currentAttackCharacter.AI.plusExp();
-	}*/
 	self.remove();
 };

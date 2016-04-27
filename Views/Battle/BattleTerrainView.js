@@ -11,13 +11,13 @@ BattleTerrainView.prototype.init = function(){
 	self.bitmap = new LBitmap(new LBitmapData("#ffffff",0,0,BattleCharacterSize.width,BattleCharacterSize.height,LBitmapData.DATA_CANVAS));
 	self.bitmap.x = self.bitmap.y = 10;
 	self.addChild(self.bitmap);
-	var lblName = getStrokeLabel("地形",20,"#FFFFFF","#000000",4);
+	var lblName = getStrokeLabel(Language.get("terrain"),20,"#FFFFFF","#000000",4);
 	lblName.x = self.bitmap.x + BattleCharacterSize.width + 10;
 	lblName.y = self.bitmap.y;
 	self.addChild(lblName);
 	self.nameLabel = lblName;
 	
-	var lblComment = getStrokeLabel("可以恢复",16,"#FF0000","#000000",4);
+	var lblComment = getStrokeLabel(Language.get("terrain_comment_heal"),16,"#FF0000","#000000",4);
 	lblComment.x = lblName.x;
 	lblComment.y = lblName.y + lblName.getHeight() + 5;
 	self.addChild(lblComment);
@@ -47,7 +47,6 @@ BattleTerrainView.prototype.show = function(sx,sy,mapData){
 	self.nameLabel.text = terrainModel.name();
 	var strategy = terrainModel.strategy();
 	for(var i=0;i<strategy.length;i++){
-		//self.bitmapStrategys[i].alpha = strategy[i] ? 1 : 0.3;
 		self.setChildIndex(self.bitmapStrategys[i], strategy[i] ? self.numChildren - 1 : 0);
 	}
 	var comment = terrainModel.comment();

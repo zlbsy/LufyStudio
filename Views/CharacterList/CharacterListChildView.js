@@ -140,7 +140,6 @@ CharacterListChildView.prototype.setArmProperties = function() {
 	}
 	var layer = new LSprite();
 	layer.graphics.drawRect(0, "#ff0000", [0, 0, LGlobal.width - 200, 50]);
-	//var soldiers = self.charaModel.soldiers();
 	var soldierModel = self.charaModel.currentSoldiers();
 	
 	var name = getStrokeLabel( String.format("{0}/{1}",self.charaModel.troops(),soldierModel.maxTroops(self.charaModel)), 18, "#FFFFFF", "#000000", 4);

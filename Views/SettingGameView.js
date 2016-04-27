@@ -26,7 +26,7 @@ SettingGameView.prototype.backgroundInit=function(){
 	titlePanel.y = panel.y - 10;
 	self.baseLayer.addChild(titlePanel);
 	
-	var title = getStrokeLabel("环境设定",20,"#FFFFFF","#000000",4);
+	var title = getStrokeLabel(Language.get("game_setting"),20,"#FFFFFF","#000000",4);
 	title.x = (LGlobal.width - title.getWidth())*0.5;
 	title.y = panel.y + 8;
 	self.baseLayer.addChild(title);
@@ -51,7 +51,7 @@ SettingGameView.prototype.init=function(){
 	var rangeSelect = new LBitmap(new LBitmapData(LMvc.datalist["range"]));
 	var soundLayer = new LSprite();
 	self.contentLayer.addChild(soundLayer);
-	var soundLabel = getStrokeLabel("音效大小",20,"#FFFFFF","#000000",4);
+	var soundLabel = getStrokeLabel(Language.get("se_volume"),20,"#FFFFFF","#000000",4);
 	soundLabel.y = 12;
 	soundLayer.addChild(soundLabel);
 	var rangeSound = new LRange(rangeBackground, rangeSelect);
@@ -66,7 +66,7 @@ SettingGameView.prototype.init=function(){
 	var bgmLayer = new LSprite();
 	bgmLayer.y = 80;
 	self.contentLayer.addChild(bgmLayer);
-	var bgmLabel = getStrokeLabel("音乐大小",20,"#FFFFFF","#000000",4);
+	var bgmLabel = getStrokeLabel(Language.get("bgm_volume"),20,"#FFFFFF","#000000",4);
 	bgmLabel.y = 12;
 	bgmLayer.addChild(bgmLabel);
 	var rangeBgm = new LRange(rangeBackground, rangeSelect);
@@ -78,15 +78,15 @@ SettingGameView.prototype.init=function(){
 	var speedLayer = new LSprite();
 	speedLayer.y = 160;
 	self.contentLayer.addChild(speedLayer);
-	var speedLabel = getStrokeLabel("游戏速度",20,"#FFFFFF","#000000",4);
+	var speedLabel = getStrokeLabel(Language.get("game_speed"),20,"#FFFFFF","#000000",4);
 	speedLabel.y = 3;
 	speedLayer.addChild(speedLabel);
 	
-	var normalLabel = getStrokeLabel("正常",20,"#FFFFFF","#000000",4);
+	var normalLabel = getStrokeLabel(Language.get("speed_normal"),20,"#FFFFFF","#000000",4);
 	normalLabel.x = 120;
 	normalLabel.y = 3;
 	speedLayer.addChild(normalLabel);
-	var fastLabel = getStrokeLabel("快速",20,"#FFFFFF","#000000",4);
+	var fastLabel = getStrokeLabel(Language.get("speed_fast"),20,"#FFFFFF","#000000",4);
 	fastLabel.x = 220;
 	fastLabel.y = 3;
 	speedLayer.addChild(fastLabel);
@@ -111,17 +111,14 @@ SettingGameView.prototype.closeSelf=function(event){
 	event.currentTarget.parent.parent.remove();
 };
 SettingGameView.prototype.onSoundChange=function(event){
-	//console.log(event.currentTarget.value);
 	LPlugin.volumeSE = event.currentTarget.value * 0.01;
 	LPlugin.SetData("volumeSetting", {SE:LPlugin.volumeSE, BGM:LPlugin.volumeBGM});
 };
 SettingGameView.prototype.onBgmChange=function(event){
-	//console.log(event.currentTarget.value);
 	LPlugin.volumeBGM = event.currentTarget.value * 0.01;console.log(LPlugin.volumeBGM);
 	LPlugin.SetData("volumeSetting", {SE:LPlugin.volumeSE, BGM:LPlugin.volumeBGM});
 };
 SettingGameView.prototype.onSpeedChange=function(event){
-	console.log(event.currentTarget.value);
 	LPlugin.gameSpeed = event.currentTarget.value;
 	LPlugin.SetData("speedSetting", {value:LPlugin.gameSpeed});
 };

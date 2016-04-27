@@ -23,7 +23,6 @@ SelectSeigniorCityChildView.prototype.onClick = function(event) {
 };
 SelectSeigniorCityChildView.prototype.setData = function(cityData) {
 	var self = this;
-	console.log("SelectSeigniorCityChildView.prototype.setData",cityData);
 	self.cityData = cityData;
 	self.cityModel = AreaModel.getArea(cityData.id);
 	self.cityLabel.text = self.cityModel.name();

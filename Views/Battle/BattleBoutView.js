@@ -47,7 +47,6 @@ BattleBoutView.prototype.removeSelf=function(event){
 	self.remove();
 	self.controller.view.weatherLayer.change();
 	if(battleFoodCheck(belong)){
-		//view.charaLayer.boutSkillRun(belong, BattleCharacterStatusView.healCharactersSkill);
 		var terrainHeal = view.charaLayer.terrainHeal;
 		view.charaLayer.boutSkillRun(belong, terrainHeal);
 	}

@@ -8,7 +8,6 @@ function CreateSeigniorCityDetailedView(seigniorData, cityData, seigniorCitys){
 }
 CreateSeigniorCityDetailedView.prototype.init=function(){
 	var self = this;
-	console.log("CreateSeigniorCityDetailedView init");
 	self.layerInit();
 	self.titleInit();
 	self.cityInit();
@@ -181,7 +180,6 @@ CreateSeigniorCityDetailedView.prototype.generalsInit=function(){
 	self.generalsLayer.addChild(self.listView);
 	var items = [], child;
 	var generals = self.cityData ? self.cityData.generals : [];
-	//var characters = GameManager.getNoSetCharacters(LMvc.chapterId);
 	var characters = LPlugin.characters().list;
 	for(var i=0,l=generals.length;i<l;i++){
 		var generalId = generals[i];
@@ -205,8 +203,6 @@ CreateSeigniorCityDetailedView.prototype.showSelectCharacter=function(event){
 	for(var i=0,l=self.seigniorCitys.length;i<l;i++){
 		characters = characters.concat(self.seigniorCitys[i].generals);
 	}
-	console.log("list",list);
-	console.log("characters",characters);
 	self.characterListView = new CreateSettingCharacterListView(null, Language.get("can_select_generals"), false, list, characters);
 	self.addChild(self.characterListView);
 	self.baseLayer.visible = false;

@@ -26,8 +26,8 @@ var EventListConfig = [
 	id:2,
 	name:"反董卓联盟",
 	condition:{
-		from:{year:190,month:1},
-		to:{year:190,month:2},
+		from:{year:190,month:3},
+		to:{year:190,month:3},
 		seignior:0,
 		generals:[
 			{id:265,seignior:265},
@@ -37,7 +37,7 @@ var EventListConfig = [
 	},
 	script:"Data/Event/fdzlm.txt",
 	result:[
-		{type:"stopBattle", seigniors:[160,602,451,39,375,1,453,237,8,495,562,446,484,367,408,21,75,144], month:12}
+		{type:"stopBattle", seigniors:[160,602,451,39,375,1,453,237,8,495,562,446,484,367,408,21,75,144], month:7}
 	]
 },
 {

@@ -30,34 +30,7 @@ BattleResultView.prototype.selfChangeCity=function(){
 	self.retreatCity = battleFailChangeCity(battleData.toCity, self.failSeigniorId);
 	if(self.retreatCity){
 		self.retreatCityId = self.retreatCity.id();
-		//battleExpeditionMove(battleData.toCity, self.retreatCity);
 	}
-	/*
-	var city = battleData.toCity;
-	var neighbors = city.neighbor();
-	var enemyCitys = [];
-	var canMoveCitys = [];
-	for(var i = 0; i < neighbors.length; i++){
-		var child = AreaModel.getArea(neighbors[i]);
-		if(child.seigniorCharaId() == self.failSeigniorId){
-			enemyCitys.push(child);
-		}else if(child.seigniorCharaId() == 0){
-			canMoveCitys.push(child);
-		}
-	}
-	self.retreatCity = null;
-	if(enemyCitys.length > 0){
-		self.retreatCity = enemyCitys[enemyCitys.length*Math.random() >>> 0];
-	}else if(canMoveCitys.length > 0){
-		self.retreatCity = canMoveCitys[canMoveCitys.length*Math.random() >>> 0];
-		var seignior = SeigniorModel.getSeignior(self.failSeigniorId);
-		seignior.addCity(self.retreatCity);
-		self.retreatCity.seigniorCharaId(self.failSeigniorId);
-	}
-	if(self.retreatCity){
-		self.retreatCityId = self.retreatCity.id();
-		battleExpeditionMove(city, self.retreatCity);
-	}*/
 };
 BattleResultView.prototype.winInit=function(){
 	var self = this;
@@ -82,16 +55,14 @@ BattleResultView.prototype.winInit=function(){
 			city.prefecture(battleData.expeditionLeader.id());
 		}else{
 			var selfCharas = self.controller.view.charaLayer.getCharactersFromBelong(Belong.SELF);
-			console.log("selfCharas", selfCharas);
 			var chara = selfCharas.find(function(child){
 				return child.isLeader;
-			});console.log("chara", chara);
+			});
 			if(!chara)return;
 			city.prefecture(chara.data.id());
 		}
 	}else{
 		self.failSeigniorId = battleData.fromCity.seigniorCharaId();
-		console.log("nothing");
 	}
 	self.showResultTitle("battle_win");
 };
@@ -104,12 +75,10 @@ BattleResultView.prototype.failInit=function(){
 	self.showResultTitle("battle_fail");
 	self.failSeigniorId = LMvc.selectSeignorId;
 	if(battleData.fromCity.seigniorCharaId() == LMvc.selectSeignorId){
-		console.log("nothing");
 		self.winSeigniorId = battleData.toCity.seigniorCharaId();
 		self.retreatCityId = battleData.fromCity.id();
 		self.addEventListener(BattleResultEvent.CLOSE_EXP, self.enemyCaptiveFail);
 	}else{
-		console.log("enemy change city");
 		self.winSeigniorId = battleData.fromCity.seigniorCharaId();
 		if(self.enemyLeader.data.isTribeCharacter()){
 			self.addEventListener(BattleResultEvent.CLOSE_EXP, self.lossOfResources);

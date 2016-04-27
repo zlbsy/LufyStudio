@@ -28,8 +28,6 @@ CharacterExpeditionView.prototype.set=function(){
 	var bitmapOn = new LBitmap(new LBitmapData(LMvc.datalist["combobox_arraw"]));
 	var bitmapOff = new LBitmap(new LBitmapData(LMvc.datalist["combobox_arraw"]));
 	
-	//var soldiers = self.characterModel.soldiers();
-	
 	var layer = new LSprite();
 	self.addChild(layer);
 	
@@ -39,17 +37,9 @@ CharacterExpeditionView.prototype.set=function(){
 	var cityModel = self.controller.getValue("cityData");
 	var soldiers = self.characterModel.soldiers();
 	self.canUseTroops = cityModel.troops() + self.currentTroops;
-	/*self.troopsList = [];
-	for(var i=0;i<troopsList.length;i++){
-		self.troopsList.push({id:troopsList[i].id,quantity:troopsList[i].quantity});
-	}*/
-	console.log("self.currentTroops="+self.currentTroops);
+	
 	var currentSoldierModel = self.characterModel.currentSoldiers();
 	self.currentSoldierModel = currentSoldierModel;
-	/*var currentTroopsIndex = self.troopsList.findIndex(function(child){
-		return child.id == currentSoldierModel.id();
-	});
-	self.troopsList[currentTroopsIndex].quantity += currentTroops;*/
 	
 	self.currentTroopsIndex = soldiers.findIndex(function(child){
 		return child.id() == self.currentSoldierModel.id();
@@ -64,7 +54,6 @@ CharacterExpeditionView.prototype.set=function(){
 		var soldierModel = soldiers[i];
 		var label = String.format("{0} {1}({2})", soldierModel.name(), Language.get("proficiency"),soldierModel.proficiency());
 		com.setChild({label:label,value:i});
-		//com.setChild({label:soldierModel.name(),value:i});
 	}
 	com.x = 70;
 	layer.addChild(com);
@@ -138,8 +127,8 @@ CharacterExpeditionView.prototype.onchangeTroop=function(event){
 CharacterExpeditionView.prototype.setTroops=function(){
 	var self = this;
 	self.currentTroops = (self.maxTroops * self.troopRange.value * 0.01) >> 0;
-	self.troopLabel.text = String.format("{0}：{1}/{2}","分配兵力",self.currentTroops,self.maxTroops);
-	self.canUseTroopsLabel.text = String.format("可用兵力：{0}", self.canUseTroops - self.currentTroops);
+	self.troopLabel.text = String.format("{0}：{1}/{2}",Language.get("distribution_troops"),self.currentTroops,self.maxTroops);
+	self.canUseTroopsLabel.text = String.format(Language.get("can_use_troops") + "：{0}", self.canUseTroops - self.currentTroops);
 };
 CharacterExpeditionView.prototype.apply=function(){
 	var self = this;
@@ -148,20 +137,4 @@ CharacterExpeditionView.prototype.apply=function(){
 	self.characterModel.currentSoldierId(self.currentSoldierModel.id());
 	cityModel.troops(troops - self.currentTroops);
 	self.characterModel.troops(self.currentTroops);
-	/*
-	var troop = (self.maxTroops * self.troopRange.value * 0.01) >> 0;
-	self.characterModel.troops(troop);
-	var soldiers = self.characterModel.soldiers();
-	var soldier = soldiers.splice(self.currentTroopsIndex,1);
-	soldier = soldier[0];
-	soldiers.unshift(soldier);
-	var cityModel = self.controller.getValue("cityData");
-	var troops = cityModel.troops();
-	for(var i=0;i<troops.length;i++){
-		if(troops[i].id == soldier.id()){
-			troops[i].quantity = self.troopsList[i].quantity - troop;
-		}else{
-			troops[i].quantity = self.troopsList[i].quantity;
-		}
-	}*/
 };

@@ -66,12 +66,10 @@ CreateCharacterArmItemView.prototype.init=function(){
 	minusButton.x = 175;
 	self.addChild(minusButton);
 	self.minusButton = minusButton;
-	//minusButton.addEventListener(LMouseEvent.MOUSE_UP, self.onMinusStatus);
 	var plusButton = getSizeButton("+",40,40);
 	plusButton.status = text;
 	plusButton.x = 215;
 	self.addChild(plusButton);
-	//plusButton.addEventListener(LMouseEvent.MOUSE_UP, self.onPlusStatus);
 	self.plusButton = plusButton;
 	self.textField = text;
 };

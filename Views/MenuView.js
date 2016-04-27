@@ -79,7 +79,6 @@ MenuView.prototype.onClickOperatingEnd=function(event){
 	var self = event.currentTarget.parent.parent.parent;
 	self.hide();
 	SeigniorExecute.run();
-	//self.loadSeigniorExecute();
 };
 MenuView.prototype.onClickAllSeignior=function(event){
 	var self = event.currentTarget.parent.parent.parent;
@@ -104,7 +103,6 @@ MenuView.prototype.gameSave=function(){
 	var self = this;
 	self.hide();
 	RecordController.instance().show(RecordController.SAVE_MODE);
-	//GameManager.save();
 };
 MenuView.prototype.onClickGameRead=function(event){
 	var self = event.currentTarget.parent.parent.parent;
@@ -114,7 +112,6 @@ MenuView.prototype.gameRead=function(){
 	var self = this;
 	self.hide();
 	RecordController.instance().show(RecordController.READ_MODE);
-	//GameManager.read();
 };
 MenuView.prototype.onClickReturnTop=function(event){
 	var self = event.currentTarget.parent.parent.parent;
@@ -125,37 +122,3 @@ MenuView.prototype.onClickReturnTop=function(event){
 	LMvc.logoStage.chapterMenuLayer.mouseChildren = true;
 	LMvc.stageLayer.x = 0;
 };
-/*
-MenuView.prototype.loadSeigniorExecute=function(){
-	var self = this;
-	self.hide();
-	self.loadMvc("EventMap",self.loadSeigniorExecuteLoadSkill);
-};
-MenuView.prototype.loadSeigniorExecuteLoadSkill=function(){
-	var self = this;
-	self.load.model(["Master/SkillMaster","Master/SoldierMaster","Master/Soldier","Master/StrategyMaster","Master/Strategy"],self.loadSeigniorExecuteConfig);
-};
-MenuView.prototype.loadSeigniorExecuteConfig=function(){
-	var self = this;
-	self.load.config(["CharacterListType","Skills","EventList","BattleMap","Soldiers","Strategy"],self.loadSeigniorExecuteHelper);
-};
-MenuView.prototype.loadSeigniorExecuteHelper=function(){
-	var self = this;
-	self.load.helper(["JobHelper","JobAIHelper","BattleHelper","BattleCalculateHelper","CommonHelper"],self.loadSeigniorExecuteLibrary);
-};
-MenuView.prototype.loadSeigniorExecuteLibrary=function(){
-	var self = this;
-	self.load.library(["BattleAIExecute","Battle/HertParams","Battle/BattleIntelligentAI"],self.loadSeigniorExecuteView);
-};
-MenuView.prototype.loadSeigniorExecuteView=function(){
-	var self = this;
-	self.load.view(["Common/Character", "Battle/CharacterStatusIcon", "Battle/BattleCharacter"],self.seigniorExecute);
-};
-MenuView.prototype.seigniorExecute=function(){
-	var self = this;
-	StrategyMasterModel.setMaster(StrategyDatas);
-	SoldierMasterModel.setMaster(SoldierDatas);
-	SkillMasterModel.setMaster(SkillsData);
-	SeigniorExecute.run();
-};
-*/

@@ -74,24 +74,24 @@ BattleMainMenuView.prototype.setMenu=function(){
 	
 	self.menuLayer.addChild(layer);
 	layer.x = menuY;
-	var menuButton = getButton("预览图",menuWidth);
+	var menuButton = getButton(Language.get("preview"),menuWidth);
 	menuButton.y = menuY;
 	layer.addChild(menuButton);
 	menuButton.addEventListener(LMouseEvent.MOUSE_UP, self.showOrHideMiniMap);
 	
 	menuY += menuHeight;
-	var menuButton = getButton("战况",menuWidth);
+	var menuButton = getButton(Language.get("battleField"),menuWidth);
 	menuButton.y = menuY;
 	layer.addChild(menuButton);
 	menuButton.addEventListener(LMouseEvent.MOUSE_UP, self.clickBattleField);
 	
 	menuY += menuHeight;
-	var menuButton = getButton("武将一览",menuWidth);
+	var menuButton = getButton(Language.get("generals_list"),menuWidth);
 	menuButton.y = menuY;
 	layer.addChild(menuButton);
 	menuButton.addEventListener(LMouseEvent.MOUSE_UP, self.clickCharacterList);
 	menuY += menuHeight;
-	var menuButton = getButton("保存进度",menuWidth);
+	var menuButton = getButton(Language.get("game_save"),menuWidth);
 	if(!purchaseHasBuy(productIdConfig.saveReport)){
 		lockedButton(menuButton);
 	}
@@ -99,19 +99,19 @@ BattleMainMenuView.prototype.setMenu=function(){
 	layer.addChild(menuButton);
 	menuButton.addEventListener(LMouseEvent.MOUSE_UP, self.onClickGameSave);
 	menuY += menuHeight;
-	var menuButton = getButton("读取进度",menuWidth);
+	var menuButton = getButton(Language.get("game_read"),menuWidth);
 	menuButton.y = menuY;
 	layer.addChild(menuButton);
 	menuButton.addEventListener(LMouseEvent.MOUSE_UP, self.onClickGameRead);
 	
 	menuY += menuHeight;
-	var menuButton = getButton(Language.get("全军撤退"),menuWidth);
+	var menuButton = getButton(Language.get("army_retreat"),menuWidth);
 	menuButton.y = menuY;
 	layer.addChild(menuButton);
 	menuButton.addEventListener(LMouseEvent.MOUSE_UP, self.toRetreat);
 	
 	menuY += menuHeight;
-	var menuButton = getButton(Language.get("回合结束"),menuWidth);
+	var menuButton = getButton(Language.get("end_bout"),menuWidth);
 	menuButton.y = menuY;
 	layer.addChild(menuButton);
 	menuButton.addEventListener(LMouseEvent.MOUSE_UP, self.boutEnd);
@@ -142,7 +142,7 @@ BattleMainMenuView.prototype.showOrHideMiniMap=function(event){
 BattleMainMenuView.prototype.toRetreat=function(event){
 	var self = event.currentTarget.getParentByConstructor(BattleMainMenuView);
 	self.hideMenu();
-	var obj = {title:Language.get("confirm"),message:Language.get("确定全军撤离战场吗？"),height:200,
+	var obj = {title:Language.get("confirm"),message:Language.get("army_retreat_confirm"),height:200,
 		okEvent:self.retreatRun,cancelEvent:null};
 	var windowLayer = ConfirmWindow(obj);
 	LMvc.layer.addChild(windowLayer);
@@ -166,12 +166,12 @@ BattleMainMenuView.prototype.toGameSave=function(button){
 	var self = this;
 	if(button.getChildByName("lock")){
 		if(LPlugin.native){
-			purchaseConfirm(productIdConfig.saveReport, "战场保存", function(){
+			purchaseConfirm(productIdConfig.saveReport, Language.get("battle_save_record"), function(){
 				LMvc.changeLoading(TranslucentLoading);
 				self.load.library(["GameManager"],self.gameSave);
 			});
 		}else{
-			purchaseConfirm(null, "战场保存", function(){
+			purchaseConfirm(null, Language.get("battle_save_record"), function(){
 				window.open("http://lufylegend.com/sgj");
 			});
 		}
@@ -192,7 +192,6 @@ BattleMainMenuView.prototype.onClickGameRead=function(event){
 BattleMainMenuView.prototype.gameRead=function(){
 	var self = this;
 	RecordController.instance().show(RecordController.READ_MODE);
-	//GameManager.read();
 };
 
 BattleMainMenuView.prototype.clickCharacterList=function(event){

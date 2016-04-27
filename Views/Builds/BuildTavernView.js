@@ -23,7 +23,6 @@ BuildTavernView.prototype.showMenu=function(){
 };
 BuildTavernView.prototype.onClickAccessButton=function(event){
 	var self = event.currentTarget.parent.parent.parent;
-	//self.controller.loadCharacterList(CharacterListType.ACCESS,self);
 	var cityModel = self.controller.getValue("cityData");
 	self.controller.loadCharacterList(CharacterListType.ACCESS, cityModel.generals(Job.IDLE), {buttonLabel:"execute"});
 };
@@ -45,7 +44,6 @@ BuildTavernView.prototype.showBuild=function(event){
 	if(!result){
 		return;
 	}
-	console.log("event.subEventType = " ,event.subEventType,"event.characterListType =",event.characterListType);
 	if(event.subEventType == "return"){
 		if(event.characterListType == CharacterListType.CHARACTER_HIRE){
 			self.toHire();
@@ -59,7 +57,6 @@ BuildTavernView.prototype.showBuild=function(event){
 };
 BuildTavernView.prototype.selectComplete=function(event){
 	var self = this;
-	console.log("BuildOfficialView.prototype.selectComplete event = " , event);
 	var characterList = event.characterList;
 	if(!characterList){
 		self.cityId = null;

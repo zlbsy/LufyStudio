@@ -27,12 +27,6 @@ EquipmentDetailedView.prototype.layerInit=function(){
 	self.layer.x = panel.x;
 	self.layer.y = panel.y;
 	self.addChild(self.layer);
-	
-	/*var closeButton = new LButton(new LBitmap(new LBitmapData(LMvc.datalist["close"])));
-	closeButton.x = panel.x + width - closeButton.getWidth() * 0.7;
-	closeButton.y = panel.y - closeButton.getHeight() * 0.2;
-	self.addChild(closeButton);
-	closeButton.addEventListener(LMouseEvent.MOUSE_UP, self.closeClick);*/
 };
 EquipmentDetailedView.prototype.click=function(event){};
 EquipmentDetailedView.prototype.closeClick=function(event){

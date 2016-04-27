@@ -83,7 +83,7 @@ SoldiersChildView.prototype.set=function(){
 
 	if(LMvc.BattleController){
 		var lblCurrent = self.getCurrent();
-		lblCurrent.text = self.soldierModel.id() == self.characterModel.currentSoldierId() ? "当前" : "";
+		lblCurrent.text = self.soldierModel.id() == self.characterModel.currentSoldierId() ? Language.get("current") : "";
 	}else{
 		var check = self.getCheckBox();
 		check.setChecked(self.soldierModel.id() == self.characterModel.currentSoldierId());

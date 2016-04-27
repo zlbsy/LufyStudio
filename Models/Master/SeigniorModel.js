@@ -230,6 +230,11 @@ SeigniorModel.prototype.isStopBattle = function(id){
 		return child.id == id;
 	}) >= 0;
 };
+SeigniorModel.prototype.getStopBattleSeignior = function(id){
+	return this.data.stopBattleSeigniors.find(function(child){
+		return child.id == id;
+	});
+};
 SeigniorModel.prototype.addCity = function(area){
 	var self = this;
 	for(var i=0,l=self.data.areas.length;i<l;i++){

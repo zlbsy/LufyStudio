@@ -3,7 +3,6 @@ function EquipmentsView(controller, equipmentListType, size) {
 	base(self, LView, [controller]);
 	self.equipmentListType = equipmentListType;
 	self.size = size;
-	//self.getEquipmentListData();
 	self.layerInit();
 	
 	self.setEquipmentList();

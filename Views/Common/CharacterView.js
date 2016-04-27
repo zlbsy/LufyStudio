@@ -14,7 +14,6 @@ function CharacterView(controller,id,w,h){
 	self.w = w;
 	self.h = h;
 	self.step = self.moveStep = 2;
-	//self.moveBevelStep = self.moveStep*Math.sin(45*Math.PI/180);
 	self.moveBevelStep = self.moveStep*Math.sqrt(w*w + h*h)/w;
 	self.moveBevelStep = (self.moveBevelStep*100 >>> 0)/100;
 	
@@ -97,34 +96,6 @@ CharacterView.prototype.getValue = function(v1,v2){
 	if(v1 == v2)return 0;
 	return v1 < v2 ? 1 : -1;
 };
-/*
-CharacterView.prototype.checkCoordinate = function(controller,initFlag){
-	var self = this;
-	var model=controller.model,i,obj,rect,rects = model.atRect,coor;
-	for(i=0;i<rects.length;i++){
-		obj = rects[i];
-		rect = obj.rect;
-		if(obj.index != self.index){
-			continue;
-		}
-		coor = self.getTo();
-		if(coor[0] >= rect.x && coor[0] <= rect.right && 
-			coor[1] >= rect.y && coor[1] <= rect.bottom){
-			if(self.coordinateRects[obj.fun]){
-				continue;
-			}
-			self.coordinateRects[obj.fun] = true;
-			if(initFlag){
-				continue;
-			}
-			if(ScriptFunction){
-				ScriptFunction.analysis("Call."+obj.fun + "();");
-			}
-		}else if(self.coordinateRects[obj.fun]){
-			self.coordinateRects[obj.fun]= null;
-		}
-	}
-};*/
 CharacterView.prototype.isMoving = function(){
 	var self = this;
 	return self.roads.length > 0 || self.x != self.to.x || self.y != self.to.y;
@@ -149,7 +120,6 @@ CharacterView.prototype.move = function(){
 			self.changeAction(CharacterAction.STAND);
 			if(controller){
 				if(controller.mapMove)controller.mapMove();
-				//self.checkCoordinate(controller);
 			}
 			self.dispatchEvent(CharacterActionEvent.MOVE_COMPLETE);
 			return;
@@ -162,7 +132,6 @@ CharacterView.prototype.move = function(){
 		}
 		if(self.roads.length > 0){
 			self.setTo();
-			//self.checkCoordinate(controller);
 		}
 		
 	}

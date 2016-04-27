@@ -8,9 +8,6 @@ function CreateSeigniorListChildView(data) {
 CreateSeigniorListChildView.prototype.set = function(data) {
 	var self = this;
 	self.data = data;
-	/*self.seignior = LPlugin.characters().list.find(function(child){
-		return child.id == data.id;
-	});*/
 	self.removeAllChild();
 	self.setStatus();
 };
@@ -47,10 +44,6 @@ CreateSeigniorListChildView.prototype.setStatus = function() {
 	city.x = 120;
 	city.y = 5;
 	self.addChild(city);
-	/*var generalCount = 0;
-	for(var i = 0;i<cityCount;i++){
-		generalCount += self.data.citys[i].generals.length;
-	}*/
 	var general = getStrokeLabel(self.data.general_count, 20, "#FFFFFF", "#000000", 4);
 	general.x = 190;
 	general.y = 5;

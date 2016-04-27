@@ -57,7 +57,6 @@ CreateSeigniorFaceView.prototype.changeMonarch=function(event){
 };
 CreateSeigniorFaceView.prototype.setData=function(data, color){
 	var self = this;
-	console.log("CreateSeigniorFaceView.prototype.setData", data, color);
 	if(!data){
 		self.buttonChangeColor.visible = false;
 		return;
@@ -68,7 +67,6 @@ CreateSeigniorFaceView.prototype.setData=function(data, color){
 	self.changeFace(data.faceImg);
 	self.nameTextField.text = Language.get("monarch") + ": " + data.name;
 	self.nameTextField.x = (176 - self.nameTextField.getWidth()) * 0.5;
-	console.log("data.color",data.color);
 	self.graphics.clear();
 	self.graphics.drawRect(0, "#ff0000", [58, 350, 60, 30],true,String.format("rgb({0})",color));
 };

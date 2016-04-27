@@ -10,18 +10,23 @@ RecordChildView.prototype.init=function(){
 	var self = this;
 	self.backLayer = new LPanel(new LBitmapData(LMvc.datalist["win03"]), LGlobal.width - 100, 80);
 	self.addChild(self.backLayer);
-	var lblIndex = getStrokeLabel((self.recordIndex + 1)+".",25,"#FFFFFF","#000000",4);
-	lblIndex.x = 10;
-	lblIndex.y = 7;
-	self.backLayer.addChild(lblIndex);
-	
+	if(self.recordIndex > 0){
+		var lblIndex = getStrokeLabel(self.recordIndex+".",25,"#FFFFFF","#000000",4);
+		lblIndex.x = 10;
+		lblIndex.y = 7;
+		self.backLayer.addChild(lblIndex);
+	}else{
+		var lblIndex = getStrokeLabel(Language.get("auto_save"),18,"#FF0000","#000000",4);
+		lblIndex.x = self.backLayer.getWidth() - lblIndex.getWidth() - 10;
+		lblIndex.y = 7;
+		self.backLayer.addChild(lblIndex);
+	}
 	self.labelsLayer = new LSprite();
 	self.addChild(self.labelsLayer);
 };
 RecordChildView.prototype.set=function(record){
 	var self = this;
 	self.labelsLayer.removeAllChild();
-	//console.log("RecordChildView.prototype.set="+self.record);
 	if(!record || !record.labels){
 		return;
 	}
@@ -65,13 +70,23 @@ RecordChildView.prototype.onClick=function(event){
 	}
 	self.load.library(["SeigniorExecute"],self.readRecordData);
 };
+RecordChildView.prototype.toSaveData=function(){
+	var self = this;
+	self.record = GameManager.save(self.recordIndex);
+	self.set(self.record);
+	self.cacheAsBitmap(false);
+	self.updateView();
+};
 RecordChildView.prototype.readRecordData=function(){
 	var self = this;
 	if(RecordController.instance().mode == RecordController.SAVE_MODE){
-		self.record = GameManager.save(self.recordIndex);
-		self.set(self.record);
-		self.cacheAsBitmap(false);
-		self.updateView();
+		if(self.recordIndex == 0){
+			var obj = {title:Language.get("confirm"),message:Language.get("save_record_error"),height:200,okEvent:null};
+			var windowLayer = ConfirmWindow(obj);
+			LMvc.layer.addChild(windowLayer);
+			return;
+		}
+		self.toSaveData();
 	}else{
 		if(!self.record){
 			return;

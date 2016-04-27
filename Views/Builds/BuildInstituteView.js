@@ -33,7 +33,6 @@ BuildInstituteView.prototype.onClickLevelUpButton=function(event){
 };
 BuildInstituteView.prototype.selectComplete=function(event){
 	var self = this;
-	console.log("BuildInstituteView.prototype.selectComplete event = " , event.characterListType);
 	if(event.characterList && event.characterListType == CharacterListType.LEVEL_UP){
 		if(event.characterList.length > 1){
 			var obj = {title:Language.get("confirm"),message:Language.get("dialog_select_onlyone_error"),height:200,okEvent:null};

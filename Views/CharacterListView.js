@@ -243,10 +243,14 @@ CharacterListView.prototype.onClickCutoverButton=function(event){
 	}
 	buttonCutover.remove();
 	self.getCutoverButton(cutoverName);
+	self.cutoverChilds();
+};
+CharacterListView.prototype.cutoverChilds=function(){
+	var self = this;
 	var items = self.listView.getItems();
 	for(var i=0,l=items.length;i<l;i++){
 		var child = items[i];
-		child.cutover(cutoverName, self.listView.isInClipping(i));
+		child.cutover(self.showingTabName, self.listView.isInClipping(i));
 	}
 };
 CharacterListView.prototype.onClickCloseButton=function(event){
@@ -330,6 +334,7 @@ CharacterListView.prototype.onClickSortButton=function(event){
 				return self.sortValue*((typeof va == "number" ? va : 0) - (typeof vb == "number" ? vb : 0));
 			});
 			self.charactersPush(0);
+			self.cutoverChilds();
 	}
 };
 CharacterListView.prototype.setArmTab=function(){

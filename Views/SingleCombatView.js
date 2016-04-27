@@ -27,7 +27,6 @@ SingleCombatView.prototype.init=function(){
 	self.addChild(self.ctrlLayer);
 	
 	self.commandLayer = new LSprite();
-	//self.commandLayer.y = self.characterY - self.ctrlLayer.y + 96 + i*50;
 	self.addChild(self.commandLayer);
 	
 	self.startSingleCombat();
@@ -143,17 +142,12 @@ SingleCombatView.prototype.buttonMoveComplete=function(event){
 	for(var i = 0;i<self.rightCharacter.selectedCommands.length;i++){
 		var child = getButton(Language.get(self.rightCharacter.selectedCommands[i]),80);
 		child.x = LGlobal.width;
-		//child.x = self.commandLayer.getChildAt(i).x + 96;
 		child.y = self.commandLayer.getChildAt(i).y;
 		self.commandLayer.addChild(child);
 		self.rightCharacter.selectedButtons.push(child);
 		child.die();
 		LTweenLite.to(child,0.2,{x:self.commandLayer.getChildAt(i).x + 96,onComplete:i==0?null:self.execute});
-		//child.alpha = 0;
-		//LTweenLite.to(child,0.2,{alpha:1});
 	}
-	//console.log("selectedCommands",self.leftCharacter.selectedCommands,self.rightCharacter.selectedCommands);
-	/*var effect = new SpecialEffectView(self.controller);self.addChild(effect);*/
 };
 SingleCombatView.prototype.execute=function(event){
 	var self = LMvc.SingleCombatController.view;

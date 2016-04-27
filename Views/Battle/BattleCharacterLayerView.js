@@ -8,13 +8,6 @@ function BattleCharacterLayerView(controller) {
 	    .to(self.charasPositionsLayer,1,{alpha:1});
 	}
 	self.charasPositions = {};
-	/*for(var i = 0;i<15;i++){
-		for(var j=0;j<12;j++){
-		self.addCharaLayer(1,CharacterAction.MOVE,CharacterDirection.DOWN,i,j);
-		}
-	}
-	*/
-	//self.addEventListener(LEvent.ENTER_FRAME, self.onframe);
 	self.controller.addEventListener(BattleBoutEvent.END, self.charactersBoutEnd);
 };
 BattleCharacterLayerView.prototype.charactersBoutEnd = function(event) {

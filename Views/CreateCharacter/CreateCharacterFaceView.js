@@ -36,7 +36,6 @@ CreateCharacterFaceView.prototype.init=function(data){
 	genderRadio.setValue(data.gender);
 	self.addChild(genderRadio);
 	self.genderRadio = genderRadio;
-	//speedRadio.addEventListener(LMouseEvent.MOUSE_UP,self.onSpeedChange);
 };
 CreateCharacterFaceView.prototype.changeFace=function(event){
 	var self = event.currentTarget.parent;

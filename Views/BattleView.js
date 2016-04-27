@@ -128,7 +128,7 @@ BattleView.prototype.addCharacterListView=function(characterListView){
 BattleView.prototype.showBattleField=function(){
 	var self = this;
 	var battleField = new BattleFieldView(self.controller);
-	var obj = {title:self.controller.battleData.toCity.name()+Language.get("战况"),subWindow:battleField,width:480,height:540,okEvent:null};
+	var obj = {title:self.controller.battleData.toCity.name()+Language.get("battleField"),subWindow:battleField,width:480,height:540,okEvent:null};
 	var windowLayer = ConfirmWindow(obj);
 	self.addChild(windowLayer);
 };
