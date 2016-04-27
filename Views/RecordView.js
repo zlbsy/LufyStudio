@@ -6,12 +6,12 @@ RecordView.prototype.construct=function(){
 };
 RecordView.prototype.getTitle=function(){
 	var self = this;
-	return  self.controller.mode == RecordController.SAVE_MODE ? "game_save":"game_read";
+	return  Language.get(self.controller.mode == RecordController.SAVE_MODE ? "game_save":"game_read");
 };
 RecordView.prototype.init=function(){
 	var self = this;
 	if(self.listView){
-		self.title.text = Language.get(self.getTitle());
+		self.title.text = self.getTitle();
 		return;
 	}
 	self.layerInit();

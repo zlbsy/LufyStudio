@@ -333,8 +333,22 @@ CharacterListView.prototype.onClickSortButton=function(event){
 				var vb = b[self.sortType]();
 				return self.sortValue*((typeof va == "number" ? va : 0) - (typeof vb == "number" ? vb : 0));
 			});
+			var selects = [];
+			self.listView.getItems().forEach(function(child){
+				if(!child.checkbox.checked){
+					return;
+				}
+				selects.push(child.charaModel.id());
+			});
 			self.charactersPush(0);
 			self.cutoverChilds();
+			self.listView.getItems().forEach(function(child){
+				if(selects.indexOf(child.charaModel.id()) >= 0){
+					child.checkbox.setChecked(true);
+					child.cacheAsBitmap(false);
+					child.updateView();
+				}
+			});
 	}
 };
 CharacterListView.prototype.setArmTab=function(){

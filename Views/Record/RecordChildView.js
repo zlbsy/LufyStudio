@@ -11,9 +11,9 @@ RecordChildView.prototype.init=function(){
 	self.backLayer = new LPanel(new LBitmapData(LMvc.datalist["win03"]), LGlobal.width - 100, 80);
 	self.addChild(self.backLayer);
 	if(self.recordIndex > 0){
-		var lblIndex = getStrokeLabel(self.recordIndex+".",25,"#FFFFFF","#000000",4);
+		var lblIndex = getStrokeLabel(self.recordIndex+".",18,"#999999","#000000",4);
 		lblIndex.x = 10;
-		lblIndex.y = 7;
+		lblIndex.y = 6;
 		self.backLayer.addChild(lblIndex);
 	}else{
 		var lblIndex = getStrokeLabel(Language.get("auto_save"),18,"#FF0000","#000000",4);
@@ -88,7 +88,7 @@ RecordChildView.prototype.readRecordData=function(){
 		}
 		self.toSaveData();
 	}else{
-		if(!self.record){
+		if(!self.record || !self.record.labels){
 			return;
 		}
 		RecordController.instance().hide();

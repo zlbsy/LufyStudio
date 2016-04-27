@@ -30,7 +30,7 @@ RecordController.prototype.hide=function(){
 };
 RecordController.prototype.loadLibrary=function(){
 	var self = this;
-	self.load.library(["GameManager"],self.loadView);
+	self.load.library(["GameManager", "language/chinese/LanguageAll"],self.loadView);
 };
 RecordController.prototype.loadView=function(){
 	var self = this;
