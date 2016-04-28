@@ -2,7 +2,6 @@ function CreateSeigniorDetailedView(controller, data){
 	var self = this;
 	base(self,LView,[controller]);
 	self.data = data;
-	console.log(self.data);
 	self.init();
 }
 CreateSeigniorDetailedView.prototype.init=function(){
@@ -232,12 +231,6 @@ CreateSeigniorDetailedView.prototype.closeCityDetailed=function(isSave){
 	self.cityDetailedView.remove();
 	self.cityDetailedView = null;
 };
-CreateSeigniorDetailedView.prototype.faceSave=function(){
-	var self = this;
-	var canvasData = self.faceLayer.getFaceData();
-	console.log(canvasData);
-	GameManager.saveFaceData(self.data.id, canvasData);
-};
 CreateSeigniorDetailedView.prototype.getCitys=function(){
 	var self = this, citys = [];
 	var cityItems = self.listView.getItems();
@@ -255,5 +248,5 @@ CreateSeigniorDetailedView.prototype.getData=function(){
 	for(var i = 0,l=citys.length;i<l;i++){
 		generalCount += citys[i].generals.length;
 	}
-	return {id:self.data.id,name:self.faceLayer.data.name,color:self.data.color,general_count:generalCount,citys:self.getCitys()};
+	return {id:self.data.id,name:self.faceLayer.data.name,faceImg:self.faceLayer.data.faceImg,color:self.data.color,general_count:generalCount,citys:self.getCitys()};
 };

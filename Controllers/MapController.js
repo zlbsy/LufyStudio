@@ -22,7 +22,7 @@ MapController.prototype.modelLoad=function(){
 };
 MapController.prototype.libraryLoad=function(){
 	var self = this;
-	var libraris = ["language/chinese/LanguageAll","Face/CharacterFace","Face/Component","SeigniorExecute","SgjComboBoxChild"];
+	var libraris = ["language/chinese/LanguageAll","SeigniorExecute","SgjComboBoxChild"];
 	self.load.library(libraris,self.viewLoad);
 };
 MapController.prototype.viewLoad=function(){

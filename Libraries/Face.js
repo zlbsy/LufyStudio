@@ -1,32 +1,22 @@
-function Face(path,rect){
+function Face(id){
 	var self = this;
 	base(self,LSprite,[]);
-	self.type = "Face";
-	self.rect = rect;
-	self.layer = new LSprite();
-	self.addChild(self.layer);
-	if(typeof path == "string"){
-		loader = new LLoader();
-		loader.parent = self;
-		loader.addEventListener(LEvent.COMPLETE,self.loadOver);
-		loader.load(path,"bitmapData");
-	}else{
-		var bitmapData = new LBitmapData(path);
-		self.bitmapData = bitmapData;
-		self.set(bitmapData);
-	}
+	//console.log("id="+id);
+	self.id = id;
+	self.loadData(LMvc.IMG_PATH + "face/"+id+".png");
 }
-Face.prototype.loadOver = function(event){
-	var self = event.currentTarget.parent;
-	var bitmapData = new LBitmapData(event.target);
-	self.set(bitmapData);
-};
-Face.prototype.set = function(bitmapData){
+Face.prototype.loadData = function(path){
 	var self = this;
-	if(self.rect){
-		bitmapData.setProperties(self.rect[0],self.rect[1],self.rect[2],self.rect[3]);
-	}
-	var bitmap = new LBitmap(bitmapData);
-	self.layer.addChild(bitmap);
+	var loader = new LLoader();
+	loader.parent = self;
+    loader.addEventListener(LEvent.COMPLETE, self.loadDataComplete);
+    path += LGlobal.traceDebug ? "?t="+(new Date()).getTime() : "";
+    loader.load(path, "bitmapData");
+};
+Face.prototype.loadDataComplete = function(event){
+	var loader = event.currentTarget;
+	var self = loader.parent;
+    var bitmapdata = new LBitmapData(event.target);
+	self.addChild(new LBitmap(bitmapdata));
 	self.dispatchEvent(LEvent.COMPLETE);
 };

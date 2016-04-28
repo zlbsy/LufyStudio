@@ -9,7 +9,7 @@ ChapterController.prototype.construct=function(){
 };
 ChapterController.prototype.libraryLoad=function(){
 	var self = this;
-	var libraris = ["GameManager","GameCacher"];
+	var libraris = ["Face","GameManager","GameCacher"];
 	self.load.library(libraris,self.viewLoad);
 };
 ChapterController.prototype.viewLoad=function(){

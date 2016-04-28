@@ -50,7 +50,6 @@ CreateCharacterView.prototype.init=function(){
 	self.layerInit();
 	self.titleInit();
 	var characters = LPlugin.characters();
-	console.log("characters.list.length="+characters.list.length);
 	self.listView = new LListView();
 	self.listView.x = 10;
 	self.listView.y = 90;
@@ -105,11 +104,7 @@ CreateCharacterView.prototype.saveCharacter=function(event){
 	if(charaData == null){
 		return;
 	}
-	var faceData = GameManager.readFaceData(charaData.id);
-	if(faceData){
-		faceData = detailedView.faceLayer.getFaceData();
-		GameManager.saveFaceData(charaData.id, faceData);
-	}
+	
 	var length = LPlugin.characters().list.length;
 	LPlugin.setCharacter(charaData);
 	var characters = LPlugin.characters();

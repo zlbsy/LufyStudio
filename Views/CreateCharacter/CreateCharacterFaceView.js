@@ -59,17 +59,8 @@ CreateCharacterFaceView.prototype.randomFace=function(faceIndex){
 		}
 	}
 	self.faceIndex = faceIndex;
-	self.face = new CharacterFace(faceIndex);
+	self.face = new Face(faceIndex);
 	self.face.x = self.face.y = 5;
 	self.face.scaleX = self.face.scaleY = 0.8;
 	self.addChild(self.face);
-};
-CreateCharacterFaceView.prototype.getFaceData=function(){
-	var self = this;
-	var layer = new LSprite();
-	var face = self.face.clone();
-	face.x = face.y = 0;
-	face.scaleX = face.scaleY = 100 / 220;
-	layer.addChild(face);
-	return layer.getDataURL();
 };

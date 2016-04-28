@@ -163,6 +163,5 @@ CreateCharacterDetailedView.prototype.getData=function(){
 		var child = items[i];
 		data[child.name] = child.comboBox.value;
 	}
-	console.error(data);
 	return data;
 };

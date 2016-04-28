@@ -17,7 +17,7 @@ CreateSettingController.prototype.configLoad2=function(){
 };
 CreateSettingController.prototype.libraryLoad=function(){
 	var self = this;
-	var libraris = ["Face/CharacterFace","Face/Component","SgjComboBoxChild"];
+	var libraris = ["Face","SgjComboBoxChild"];
 	libraris.push("language/chinese/LanguageAll");
 	self.load.library(libraris, self.modelLoad);
 };

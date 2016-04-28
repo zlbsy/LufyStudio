@@ -108,7 +108,6 @@ CreateSettingView.prototype.closeSeigniorDetailed=function(isSave){
 		}
 		self.saveSeignior();
 	}
-	self.detailedView.faceSave();
 	self.detailedView.remove();
 	self.detailedView = null;
 };
@@ -133,6 +132,6 @@ CreateSettingView.prototype.saveSeignior=function(){
 	var seigniorItems = self.listView.getItems();
 	for(var i=0,l=seigniorItems.length;i<l;i++){
 		data.list.push(seigniorItems[i].data);
-	}console.log(data);
+	}
 	GameManager.setCreateSeigniorList(LMvc.chapterId, data);
 };
