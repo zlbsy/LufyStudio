@@ -24,13 +24,13 @@ class ViewController: UIViewController, UIWebViewDelegate{
         myWebView.delegate = self
         myWebView.frame = self.view.bounds
         self.view.addSubview(myWebView)
-        if let url = NSBundle.mainBundle().URLForResource("test", withExtension: "html") {
-            print("loadRequest！")
+        if let url = NSBundle.mainBundle().URLForResource("game/index", withExtension: "html") {
+            //print("loadRequest！")
             myWebView.loadRequest(NSURLRequest(URL: url))
         }
-        let file_name = "/sgj_data.txt"
+        //let file_name = "/sgj_data.txt"
         let lufy = Lufylegend()
-        print(lufy.readFile(file_name))
+        //print(lufy.readFile(file_name))
         
         if let ctx = myWebView.valueForKeyPath("documentView.webView.mainFrame.javaScriptContext") {
             let context = ctx as! JSContext
