@@ -119,6 +119,6 @@ ArmDetailedView.prototype.enlistChange = function(){
 	var self = this;
 	var enlistCount = self.getEnlistCount();
 	var enlistPrice = self.getEnlistPrice(enlistCount);
-	self.enlistConfrim.text = String.format(Language.get("expedition_troops", enlistPrice, enlistCount);
+	self.enlistConfrim.text = String.format(Language.get("expedition_troops"), enlistPrice, enlistCount);
 };
 

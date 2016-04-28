@@ -100,44 +100,17 @@ LogoView.prototype.createCharacterChick=function(event){
 LogoView.prototype.createCharacter=function(button){
 	var self = this;
 	if(button.getChildByName("lock")){
-		//var obj = {title:Language.get("confirm"),width:340,height:240,cancelEvent:null};
 		if(LPlugin.native){
 			purchaseConfirm(productIdConfig.createCharacter, Language.get("create_character"), function(){
 				var lock = button.getChildByName("lock");
 				lock.remove();
 				self.createCharacter(button);
 			});
-			/*var productInformation = GameCacher.getData("productInformation");
-			if (!productInformation) {
-				purchaseProductInformation(function() {
-					self.createCharacter(button);
-				});
-				return;
-			}
-			var product = productInformation.find(function(child){
-				return child.productId == productIdConfig.createCharacter;
-			});
-			obj.messageHtml = String.format("<font size='21' color='#FFFFFF'>开通新建武将功能需要花费<font color='#FF0000'>{0}</font>，要开通此功能吗?</font>", product.priceLabel);
-			obj.okEvent = function(e){
-				e.currentTarget.parent.remove();
-				purchaseStart(productIdConfig.createCharacter, function(){
-					var lock = button.getChildByName("lock");
-					lock.remove();
-					self.createCharacter(button);
-				});
-			};*/
 		}else{
 			purchaseConfirm(null, Language.get("create_character"), function(){
 				window.open("http://lufylegend.com/sgj");
 			});
-			/*obj.messageHtml = "<font size='21' color='#FFFFFF'>当前版本无法使用自创武将功能，请下载<font color='#FF0000'>手机安装版本</font>!</font>";
-			obj.okEvent = function(e){
-				e.currentTarget.parent.remove();
-				window.open("http://lufylegend.com/sgj");
-			};*/
 		}
-		//var windowLayer = ConfirmWindow(obj);
-		//LMvc.layer.addChild(windowLayer);
 		return;
 	}
 	self.controller.loadCreateCharacter();
@@ -156,6 +129,25 @@ LogoView.prototype.loadChapterList=function(event){
 	self.topMenuLayer.mouseChildren = false;
 	self.controller.loadChapterList();
 };
+LogoView.prototype.showChapterListChild=function(chapter, menuLayer, x, y){
+	var self = this, title;
+	if(chapter.preparing){
+		title = Language.get("preparing");
+	}else{
+		title = chapter.year + " " + Language.get("chapter_"+chapter.id);
+	}
+	var buttonChapter = getButton(title,200);
+	buttonChapter.chapterId = chapter.preparing ? 0 : chapter.id;
+	if(!chapter.preparing && chapter.lock){
+		if(!purchaseHasBuy(productIdConfig["chapter_" + chapter.id])){
+			lockedButton(buttonChapter);
+		}
+	}
+	buttonChapter.x = (200 - buttonChapter.getWidth()) * 0.5 + x;
+	buttonChapter.y = y;
+	menuLayer.addChild(buttonChapter);
+	buttonChapter.addEventListener(LMouseEvent.MOUSE_UP, self.showChapter);
+};
 LogoView.prototype.showChapterList=function(list){
 	var self = this;
 	var menuHeight = 55;
@@ -166,23 +158,13 @@ LogoView.prototype.showChapterList=function(list){
 	var i = 0;
 	for(; i < list.length*0.5; i++){
 		var chapter = list[i];
-		var buttonChapter = getButton(Language.get("chapter_"+chapter.id),200);
-		buttonChapter.chapterId = chapter.id;
-		buttonChapter.x = (200 - buttonChapter.getWidth()) * 0.5 - 110;
-		buttonChapter.y = menuY;
-		menuLayer.addChild(buttonChapter);
-		buttonChapter.addEventListener(LMouseEvent.MOUSE_UP, self.showChapter.bind(self));
+		self.showChapterListChild(chapter, menuLayer, -110, menuY);
 		menuY += menuHeight;
 	}
 	menuY = 0;
 	for(; i < list.length; i++){
 		var chapter = list[i];
-		var buttonChapter = getButton(Language.get("chapter_"+chapter.id),200);
-		buttonChapter.chapterId = chapter.id;
-		buttonChapter.x = (200 - buttonChapter.getWidth()) * 0.5 + 110;
-		buttonChapter.y = menuY;
-		menuLayer.addChild(buttonChapter);
-		buttonChapter.addEventListener(LMouseEvent.MOUSE_UP, self.showChapter.bind(self));
+		self.showChapterListChild(chapter, menuLayer, 110, menuY);
 		menuY += menuHeight;
 	}
 	var buttonReturn = getButton(Language.get("return"),200);
@@ -211,11 +193,30 @@ LogoView.prototype.returnTopMenu=function(event){
 	LTweenLite.to(self.chapterMenuLayer,0.5,{x:self.chapterMenuLayer.tx+210, alpha:0,onComplete:self.chapterMenuClosed.bind(self)});
 };
 LogoView.prototype.showChapter=function(event){
+	var button = event.currentTarget;
+	var self = button.getParentByConstructor(LogoView);
+	self.showChapterRun(button);
+};
+LogoView.prototype.showChapterRun=function(button){
 	var self = this;
-	//console.log(typeof event.currentTarget.chapterId, event.currentTarget.chapterId);
-	if(typeof event.currentTarget.chapterId !== "number"){
+	if(!button.chapterId){
+		return;
+	}
+	if(button.getChildByName("lock")){
+		var name = String.format(Language.get("new_script"), Language.get("chapter_"+button.chapterId));
+		if(LPlugin.native){
+			purchaseConfirm(productIdConfig["chapter_"+button.chapterId], name, function(){
+				var lock = button.getChildByName("lock");
+				lock.remove();
+				self.showChapterRun(button);
+			});
+		}else{
+			purchaseConfirm(null, name, function(){
+				window.open("http://lufylegend.com/sgj");
+			});
+		}
 		return;
 	}
 	self.chapterMenuLayer.mouseChildren = false;
-	self.controller.showChapter(event.currentTarget.chapterId);
+	self.controller.showChapter(button.chapterId);
 };
