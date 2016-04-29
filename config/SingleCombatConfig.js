@@ -6,6 +6,8 @@ var SingleCombatCommand = {
 	DEFENCE:"single_command_defence",//防御 3
 	DODGE:"single_command_dodge",//躲闪 3
 	CHARGE:"single_command_charge",//集气 0
+	HEAL:"single_command_heal",//回复 0
+	BUFFER:"single_command_buffer",//燃烧 0
 	BACKSTROKE_ATTACK:"single_command_backstroke_attack",//回马攻击 6
 	SPECIAL_ATTACK:"single_command_special_attack",//全力一击 8
 };

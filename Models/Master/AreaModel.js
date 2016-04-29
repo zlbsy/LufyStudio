@@ -58,13 +58,13 @@ AreaModel.getPowerfulCharacters = function(generals, init){
 		}
 		//TODO::是否需要重新计算
 		data.calculation(init);
-		var value = data.force() + data.intelligence() + data.agility() + data.luck() + data.command();
-		value += value * data.lv() * 0.1;
-		value += data.maxProficiencySoldier().proficiency() * 0.1;
+		var value = data.basicPropertiesSum() * data.lv() * 0.1;
+		value += data.propertiesSum();
+		//value += data.maxProficiencySoldier().proficiency() * 0.1;
 		value += data.skill() > 0 ? 100 : 0;
 		list.push({general:child,value:value});
 	}
-	list = list.sort(function(a,b){return a.value - b.value;});
+	list = list.sort(function(a,b){return b.value - a.value;});
 	return list;
 };
 

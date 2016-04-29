@@ -46,15 +46,12 @@ BattleCharacterView.getAnimationData = function(){
 	return data;
 };
 BattleCharacterView.prototype.getBitmapData = function() {
-	var self = this;console.log(self.data.name()+"="+self.hideByCloud);
+	var self = this;
 	if(self.hideByCloud){
 		return null;
 	}
-	var rowIndex = self.anime.rowIndex, colIndex = self.anime.colIndex;
-	if(self.mode == CharacterMode.END_ACTION){
-		colIndex = 0;
-	}
-	var key = self.data.currentSoldiers().img() + "_" + rowIndex+"_"+colIndex, endKey = key + "_end";
+	//var key = self.data.currentSoldiers().img() + "_" + rowIndex+"_"+colIndex, endKey = key + "_end";
+	var key = self.data.currentSoldiers().img() + "_" + self.action+"_"+self.direction, endKey = key + "_end";
 	var resultBitmapData;
 	if(self.mode == CharacterMode.END_ACTION){
 		if(BattleCharacterView.cacheBitmapDatas[endKey]){
@@ -227,11 +224,9 @@ BattleCharacterView.prototype.toStatic = function(value){
 		return;
 	}
 	self.isStatic = value;
-	console.log(self.data.name() , "toStatic",value,self.anime.visible);
 	if(value){
 		if(self.anime.visible){
 			var result = self.controller.view.mapLayer.characterIn(self);
-			console.log(self.data.name() ,"characterIn", result);
 			if(result){
 				self.anime.visible = false;
 			}
