@@ -1,5 +1,3 @@
-function LPlugin(){
-}
 LPlugin.KEY_STAMP_LIST = "stampList";
 LPlugin.KEY_EVENT_LIST = "eventList";
 LPlugin.KEY_CHARACTER_LIST = "eventList";
