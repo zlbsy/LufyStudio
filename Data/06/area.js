@@ -756,7 +756,7 @@ seigniors : [
     ]
   },
 ]},
-{chara_id : 523,name:"公孙恭",color : "",generals_count:1,areas : [
+{chara_id : 523,name:"公孙恭",color : "173,255,47",generals_count:1,areas : [
   {  area_id : 47,name:"襄平",prefecture : 523,
   level : 2,money : 3000,food : 20000,population : 44000,business : 9000,agriculture : 9000,technology : 5000,police : 85,city_defense : 1200,troops : 1000,
   items_farmland:[{"item_id":43,"quantity":999,"proportion":60},{"item_id":42,"quantity":999,"proportion":60},{"item_id":41,"quantity":999,"proportion":60},{"item_id":40,"quantity":999,"proportion":60},{"item_id":39,"quantity":999,"proportion":45},{"item_id":38,"quantity":999,"proportion":45},{"item_id":37,"quantity":999,"proportion":45},{"item_id":36,"quantity":999,"proportion":45},{"item_id":35,"quantity":999,"proportion":30},{"item_id":34,"quantity":999,"proportion":30},{"item_id":33,"quantity":999,"proportion":30},{"item_id":32,"quantity":999,"proportion":30},{"item_id":31,"quantity":999,"proportion":20},{"item_id":30,"quantity":999,"proportion":20},{"item_id":29,"quantity":999,"proportion":20},{"item_id":70,"quantity":999,"proportion":80},{"item_id":69,"quantity":999,"proportion":60},{"item_id":68,"quantity":999,"proportion":40},{"item_id":67,"quantity":999,"proportion":20}],
