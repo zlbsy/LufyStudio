@@ -5,7 +5,7 @@ title : "群雄逐鹿"
 ,exp : 0, level : 1, eventList : []
 ,seigniors : [
 {id:1,name:"曹操",faceImg:1,color:"0,0,255",general_count:58, citys:[22,46,24,39,42,45,14,43,41,12,26,36,38,40,35],city_count:15},
-{id:17,name:"孙权",faceImg:17,color:"255,0,0",general_count:46, citys:[28,33,29,32,31],city_count:5},
+{id:17,name:"孙权",faceImg:17,color:"255,0,0",general_count:46, citys:[28,30,29,32,31],city_count:5},
 {id:21,name:"刘备",faceImg:21,color:"0,128,0",general_count:14, citys:[25],city_count:1},
 {id:137,name:"公孙康",faceImg:137,color:"173,255,47",general_count:4, citys:[47],city_count:1},
 {id:160,name:"马腾",faceImg:160,color:"184,134,11",general_count:16, citys:[2,4,3,1],city_count:4},
