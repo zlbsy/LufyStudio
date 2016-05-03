@@ -1,116 +1,13 @@
 LMvc.areaData = {
 seigniors : [
-{chara_id : 1,name:"曹操",color : "0,0,255",generals_count:66,areas : [
-  {  area_id : 44,name:"南皮",prefecture : 1,
-  level : 2,money : 5000,food : 25000,population : 50000,business : 6000,agriculture : 6000,technology : 3500,police : 100,city_defense : 1300,troops : 2500,
-  items_farmland:[{"item_id":43,"quantity":999,"proportion":60},{"item_id":42,"quantity":999,"proportion":60},{"item_id":41,"quantity":999,"proportion":60},{"item_id":40,"quantity":999,"proportion":60},{"item_id":39,"quantity":999,"proportion":45},{"item_id":38,"quantity":999,"proportion":45},{"item_id":37,"quantity":999,"proportion":45},{"item_id":36,"quantity":999,"proportion":45},{"item_id":35,"quantity":999,"proportion":30},{"item_id":34,"quantity":999,"proportion":30},{"item_id":33,"quantity":999,"proportion":30},{"item_id":32,"quantity":999,"proportion":30},{"item_id":31,"quantity":999,"proportion":20},{"item_id":30,"quantity":999,"proportion":20},{"item_id":29,"quantity":999,"proportion":20},{"item_id":70,"quantity":999,"proportion":80},{"item_id":69,"quantity":999,"proportion":60},{"item_id":68,"quantity":999,"proportion":40},{"item_id":67,"quantity":999,"proportion":20},{"item_id":65,"quantity":1,"proportion":10}],
-  items_market:[{"item_id":60,"quantity":999,"proportion":40},{"item_id":59,"quantity":999,"proportion":40},{"item_id":58,"quantity":999,"proportion":30},{"item_id":57,"quantity":999,"proportion":30},{"item_id":56,"quantity":999,"proportion":20},{"item_id":55,"quantity":999,"proportion":20},{"item_id":54,"quantity":999,"proportion":20},{"item_id":80,"quantity":999,"proportion":80},{"item_id":79,"quantity":999,"proportion":60},{"item_id":78,"quantity":999,"proportion":40},{"item_id":77,"quantity":999,"proportion":20},{"item_id":90,"quantity":999,"proportion":80},{"item_id":89,"quantity":999,"proportion":60},{"item_id":88,"quantity":999,"proportion":40},{"item_id":87,"quantity":999,"proportion":20}],
-  items:[],
-  generals:[
-    {chara_id:1,name:"曹操",feat:0,loyalty:100,equipments:[{"item_id":25,"count":1},{"item_id":46,"count":1}]},
-    {chara_id:78,name:"刘晔",feat:0,loyalty:100},
-    {chara_id:93,name:"程昱",feat:0,loyalty:100},
-    {chara_id:116,name:"荀攸",feat:0,loyalty:100},
-    {chara_id:129,name:"曹彰",feat:0,loyalty:100},
-    {chara_id:135,name:"阎柔",feat:0,loyalty:100},
-    {chara_id:206,name:"王凌",feat:0,loyalty:100},
-    {chara_id:293,name:"曹纯",feat:0,loyalty:100},
-    {chara_id:415,name:"陈琳",feat:0,loyalty:100},
-    ],
-    out_of_offices:[
-    {chara_id:346,name:"陈震"},
-    ],
-    not_debut:[
-    {chara_id:132,name:"毋丘俭",year:220},
-    {chara_id:166,name:"孙礼",year:198},
-    {chara_id:472,name:"毋丘秀",year:224},
-    {chara_id:500,name:"张华",year:250},
-    {chara_id:584,name:"曹宇",year:217},
-    ]
-  },
-  {  area_id : 46,name:"北平",prefecture : 31,
-  level : 2,money : 2400,food : 17000,population : 45000,business : 5000,agriculture : 5000,technology : 3000,police : 90,city_defense : 1200,troops : 2000,
-  items_farmland:[{"item_id":43,"quantity":999,"proportion":60},{"item_id":42,"quantity":999,"proportion":60},{"item_id":41,"quantity":999,"proportion":60},{"item_id":40,"quantity":999,"proportion":60},{"item_id":39,"quantity":999,"proportion":45},{"item_id":38,"quantity":999,"proportion":45},{"item_id":37,"quantity":999,"proportion":45},{"item_id":36,"quantity":999,"proportion":45},{"item_id":35,"quantity":999,"proportion":30},{"item_id":34,"quantity":999,"proportion":30},{"item_id":33,"quantity":999,"proportion":30},{"item_id":32,"quantity":999,"proportion":30},{"item_id":31,"quantity":999,"proportion":20},{"item_id":30,"quantity":999,"proportion":20},{"item_id":29,"quantity":999,"proportion":20},{"item_id":70,"quantity":999,"proportion":80},{"item_id":69,"quantity":999,"proportion":60},{"item_id":68,"quantity":999,"proportion":40},{"item_id":67,"quantity":999,"proportion":20},{"item_id":20,"quantity":1,"proportion":10}],
-  items_market:[{"item_id":60,"quantity":999,"proportion":40},{"item_id":59,"quantity":999,"proportion":40},{"item_id":58,"quantity":999,"proportion":30},{"item_id":57,"quantity":999,"proportion":30},{"item_id":56,"quantity":999,"proportion":20},{"item_id":55,"quantity":999,"proportion":20},{"item_id":54,"quantity":999,"proportion":20},{"item_id":80,"quantity":999,"proportion":80},{"item_id":79,"quantity":999,"proportion":60},{"item_id":78,"quantity":999,"proportion":40},{"item_id":77,"quantity":999,"proportion":20},{"item_id":90,"quantity":999,"proportion":80},{"item_id":89,"quantity":999,"proportion":60},{"item_id":88,"quantity":999,"proportion":40},{"item_id":87,"quantity":999,"proportion":20},{"item_id":47,"quantity":1,"proportion":10}],
-  items:[],
-  generals:[
-    {chara_id:5,name:"张辽",feat:0,loyalty:100},
-    {chara_id:12,name:"徐晃",feat:0,loyalty:100},
-    {chara_id:31,name:"于禁",feat:0,loyalty:100},
-    {chara_id:33,name:"许褚",feat:0,loyalty:100},
-    {chara_id:148,name:"郭嘉",feat:0,loyalty:100},
-    ],
-    out_of_offices:[
-    ],
-    not_debut:[
-    {chara_id:577,name:"王业",year:238},
-    {chara_id:579,name:"王沈",year:235},
-    ]
-  },
-  {  area_id : 24,name:"许昌",prefecture : 14,
-  level : 1,money : 2000,food : 8000,population : 24000,business : 3000,agriculture : 3000,technology : 2000,police : 85,city_defense : 800,troops : 1000,
-  items_farmland:[{"item_id":43,"quantity":999,"proportion":60},{"item_id":42,"quantity":999,"proportion":60},{"item_id":41,"quantity":999,"proportion":60},{"item_id":40,"quantity":999,"proportion":60},{"item_id":39,"quantity":999,"proportion":45},{"item_id":38,"quantity":999,"proportion":45},{"item_id":37,"quantity":999,"proportion":45},{"item_id":36,"quantity":999,"proportion":45},{"item_id":35,"quantity":999,"proportion":30},{"item_id":34,"quantity":999,"proportion":30},{"item_id":33,"quantity":999,"proportion":30},{"item_id":32,"quantity":999,"proportion":30},{"item_id":31,"quantity":999,"proportion":20},{"item_id":30,"quantity":999,"proportion":20},{"item_id":29,"quantity":999,"proportion":20},{"item_id":70,"quantity":999,"proportion":80},{"item_id":69,"quantity":999,"proportion":60},{"item_id":68,"quantity":999,"proportion":40},{"item_id":67,"quantity":999,"proportion":20}],
-  items_market:[{"item_id":60,"quantity":999,"proportion":40},{"item_id":59,"quantity":999,"proportion":40},{"item_id":58,"quantity":999,"proportion":30},{"item_id":57,"quantity":999,"proportion":30},{"item_id":56,"quantity":999,"proportion":20},{"item_id":55,"quantity":999,"proportion":20},{"item_id":54,"quantity":999,"proportion":20},{"item_id":80,"quantity":999,"proportion":80},{"item_id":79,"quantity":999,"proportion":60},{"item_id":78,"quantity":999,"proportion":40},{"item_id":77,"quantity":999,"proportion":20},{"item_id":90,"quantity":999,"proportion":80},{"item_id":89,"quantity":999,"proportion":60},{"item_id":88,"quantity":999,"proportion":40},{"item_id":87,"quantity":999,"proportion":20},{"item_id":52,"quantity":1,"proportion":10}],
-  items:[],
-  generals:[
-    {chara_id:14,name:"夏侯敦",feat:0,loyalty:100},
-    {chara_id:201,name:"夏侯恩",feat:0,loyalty:100},
-    {chara_id:492,name:"荀彧",feat:0,loyalty:100},
-    {chara_id:495,name:"孔融",feat:0,loyalty:100},
-    ],
-    out_of_offices:[
-    ],
-    not_debut:[
-    {chara_id:157,name:"刘劭",year:213},
-    {chara_id:220,name:"司马攸",year:266},
-    {chara_id:298,name:"荀愷",year:227},
-    {chara_id:361,name:"荀勗",year:243},
-    {chara_id:531,name:"何曾",year:217},
-    {chara_id:601,name:"曹熊",year:213},
-    ]
-  },
-  {  area_id : 39,name:"陈留",prefecture : 522,
-  level : 2,money : 3500,food : 20000,population : 45000,business : 4000,agriculture : 4000,technology : 2500,police : 100,city_defense : 900,troops : 2000,
-  items_farmland:[{"item_id":43,"quantity":999,"proportion":60},{"item_id":42,"quantity":999,"proportion":60},{"item_id":41,"quantity":999,"proportion":60},{"item_id":40,"quantity":999,"proportion":60},{"item_id":39,"quantity":999,"proportion":45},{"item_id":38,"quantity":999,"proportion":45},{"item_id":37,"quantity":999,"proportion":45},{"item_id":36,"quantity":999,"proportion":45},{"item_id":35,"quantity":999,"proportion":30},{"item_id":34,"quantity":999,"proportion":30},{"item_id":33,"quantity":999,"proportion":30},{"item_id":32,"quantity":999,"proportion":30},{"item_id":31,"quantity":999,"proportion":20},{"item_id":30,"quantity":999,"proportion":20},{"item_id":29,"quantity":999,"proportion":20},{"item_id":70,"quantity":999,"proportion":80},{"item_id":69,"quantity":999,"proportion":60},{"item_id":68,"quantity":999,"proportion":40},{"item_id":67,"quantity":999,"proportion":20},{"item_id":24,"quantity":1,"proportion":10}],
-  items_market:[{"item_id":60,"quantity":999,"proportion":40},{"item_id":59,"quantity":999,"proportion":40},{"item_id":58,"quantity":999,"proportion":30},{"item_id":57,"quantity":999,"proportion":30},{"item_id":56,"quantity":999,"proportion":20},{"item_id":55,"quantity":999,"proportion":20},{"item_id":54,"quantity":999,"proportion":20},{"item_id":80,"quantity":999,"proportion":80},{"item_id":79,"quantity":999,"proportion":60},{"item_id":78,"quantity":999,"proportion":40},{"item_id":77,"quantity":999,"proportion":20},{"item_id":90,"quantity":999,"proportion":80},{"item_id":89,"quantity":999,"proportion":60},{"item_id":88,"quantity":999,"proportion":40},{"item_id":87,"quantity":999,"proportion":20}],
-  items:[],
-  generals:[
-    {chara_id:522,name:"司马朗",feat:0,loyalty:100},
-    ],
-    out_of_offices:[
-    ],
-    not_debut:[
-    {chara_id:16,name:"司马懿",year:200},
-    {chara_id:211,name:"司马孚",year:198},
-    {chara_id:260,name:"程武",year:219},
-    {chara_id:425,name:"夏侯惠",year:224},
-    {chara_id:434,name:"夏侯和",year:225},
-    ]
-  },
-  {  area_id : 42,name:"晋阳",prefecture : 128,
-  level : 1,money : 2000,food : 12000,population : 24000,business : 3000,agriculture : 3000,technology : 2000,police : 85,city_defense : 800,troops : 1200,
-  items_farmland:[{"item_id":43,"quantity":999,"proportion":60},{"item_id":42,"quantity":999,"proportion":60},{"item_id":41,"quantity":999,"proportion":60},{"item_id":40,"quantity":999,"proportion":60},{"item_id":39,"quantity":999,"proportion":45},{"item_id":38,"quantity":999,"proportion":45},{"item_id":37,"quantity":999,"proportion":45},{"item_id":36,"quantity":999,"proportion":45},{"item_id":35,"quantity":999,"proportion":30},{"item_id":34,"quantity":999,"proportion":30},{"item_id":33,"quantity":999,"proportion":30},{"item_id":32,"quantity":999,"proportion":30},{"item_id":31,"quantity":999,"proportion":20},{"item_id":30,"quantity":999,"proportion":20},{"item_id":29,"quantity":999,"proportion":20},{"item_id":70,"quantity":999,"proportion":80},{"item_id":69,"quantity":999,"proportion":60},{"item_id":68,"quantity":999,"proportion":40},{"item_id":67,"quantity":999,"proportion":20}],
-  items_market:[{"item_id":60,"quantity":999,"proportion":40},{"item_id":59,"quantity":999,"proportion":40},{"item_id":58,"quantity":999,"proportion":30},{"item_id":57,"quantity":999,"proportion":30},{"item_id":56,"quantity":999,"proportion":20},{"item_id":55,"quantity":999,"proportion":20},{"item_id":54,"quantity":999,"proportion":20},{"item_id":80,"quantity":999,"proportion":80},{"item_id":79,"quantity":999,"proportion":60},{"item_id":78,"quantity":999,"proportion":40},{"item_id":77,"quantity":999,"proportion":20},{"item_id":90,"quantity":999,"proportion":80},{"item_id":89,"quantity":999,"proportion":60},{"item_id":88,"quantity":999,"proportion":40},{"item_id":87,"quantity":999,"proportion":20}],
-  items:[],
-  generals:[
-    {chara_id:23,name:"郝昭",feat:0,loyalty:100},
-    {chara_id:128,name:"张燕",feat:0,loyalty:100},
-    {chara_id:225,name:"高柔",feat:0,loyalty:100},
-    ],
-    out_of_offices:[
-    ],
-    not_debut:[
-    {chara_id:113,name:"王浑",year:241},
-    {chara_id:219,name:"王昶",year:206},
-    {chara_id:306,name:"秦朗",year:210},
-    ]
-  },
+{chara_id : 1,name:"曹操",color : "0,0,255",generals_count:58,areas : [
   {  area_id : 22,name:"洛阳",prefecture : 432,
-  level : 3,money : 500,food : 2000,population : 40000,business : 5000,agriculture : 5000,technology : 4000,police : 60,city_defense : 1000,troops : 100,
+  level : 4,money : 6000,food : 40000,population : 110000,business : 15000,agriculture : 15000,technology : 10000,police : 60,city_defense : 2100,troops : 3000,
   items_farmland:[{"item_id":43,"quantity":999,"proportion":60},{"item_id":42,"quantity":999,"proportion":60},{"item_id":41,"quantity":999,"proportion":60},{"item_id":40,"quantity":999,"proportion":60},{"item_id":39,"quantity":999,"proportion":45},{"item_id":38,"quantity":999,"proportion":45},{"item_id":37,"quantity":999,"proportion":45},{"item_id":36,"quantity":999,"proportion":45},{"item_id":35,"quantity":999,"proportion":30},{"item_id":34,"quantity":999,"proportion":30},{"item_id":33,"quantity":999,"proportion":30},{"item_id":32,"quantity":999,"proportion":30},{"item_id":31,"quantity":999,"proportion":20},{"item_id":30,"quantity":999,"proportion":20},{"item_id":29,"quantity":999,"proportion":20},{"item_id":70,"quantity":999,"proportion":80},{"item_id":69,"quantity":999,"proportion":60},{"item_id":68,"quantity":999,"proportion":40},{"item_id":67,"quantity":999,"proportion":20},{"item_id":61,"quantity":1,"proportion":10}],
   items_market:[{"item_id":60,"quantity":999,"proportion":40},{"item_id":59,"quantity":999,"proportion":40},{"item_id":58,"quantity":999,"proportion":30},{"item_id":57,"quantity":999,"proportion":30},{"item_id":56,"quantity":999,"proportion":20},{"item_id":55,"quantity":999,"proportion":20},{"item_id":54,"quantity":999,"proportion":20},{"item_id":80,"quantity":999,"proportion":80},{"item_id":79,"quantity":999,"proportion":60},{"item_id":78,"quantity":999,"proportion":40},{"item_id":77,"quantity":999,"proportion":20},{"item_id":90,"quantity":999,"proportion":80},{"item_id":89,"quantity":999,"proportion":60},{"item_id":88,"quantity":999,"proportion":40},{"item_id":87,"quantity":999,"proportion":20},{"item_id":45,"quantity":1,"proportion":10},{"item_id":75,"quantity":1,"proportion":10}],
   items:[],
   generals:[
+    {chara_id:1,name:"曹操",feat:0,loyalty:100,equipments:[{"item_id":25,"count":1},{"item_id":46,"count":1}]},
     {chara_id:68,name:"贾逵",feat:0,loyalty:100},
     {chara_id:105,name:"夏侯尚",feat:0,loyalty:100},
     {chara_id:370,name:"杨修",feat:0,loyalty:100},
@@ -137,8 +34,85 @@ seigniors : [
     {chara_id:614,name:"曹训",year:230},
     ]
   },
+  {  area_id : 46,name:"北平",prefecture : 31,
+  level : 3,money : 4400,food : 37000,population : 65000,business : 12000,agriculture : 12000,technology : 6500,police : 90,city_defense : 1700,troops : 2000,
+  items_farmland:[{"item_id":43,"quantity":999,"proportion":60},{"item_id":42,"quantity":999,"proportion":60},{"item_id":41,"quantity":999,"proportion":60},{"item_id":40,"quantity":999,"proportion":60},{"item_id":39,"quantity":999,"proportion":45},{"item_id":38,"quantity":999,"proportion":45},{"item_id":37,"quantity":999,"proportion":45},{"item_id":36,"quantity":999,"proportion":45},{"item_id":35,"quantity":999,"proportion":30},{"item_id":34,"quantity":999,"proportion":30},{"item_id":33,"quantity":999,"proportion":30},{"item_id":32,"quantity":999,"proportion":30},{"item_id":31,"quantity":999,"proportion":20},{"item_id":30,"quantity":999,"proportion":20},{"item_id":29,"quantity":999,"proportion":20},{"item_id":70,"quantity":999,"proportion":80},{"item_id":69,"quantity":999,"proportion":60},{"item_id":68,"quantity":999,"proportion":40},{"item_id":67,"quantity":999,"proportion":20},{"item_id":20,"quantity":1,"proportion":10}],
+  items_market:[{"item_id":60,"quantity":999,"proportion":40},{"item_id":59,"quantity":999,"proportion":40},{"item_id":58,"quantity":999,"proportion":30},{"item_id":57,"quantity":999,"proportion":30},{"item_id":56,"quantity":999,"proportion":20},{"item_id":55,"quantity":999,"proportion":20},{"item_id":54,"quantity":999,"proportion":20},{"item_id":80,"quantity":999,"proportion":80},{"item_id":79,"quantity":999,"proportion":60},{"item_id":78,"quantity":999,"proportion":40},{"item_id":77,"quantity":999,"proportion":20},{"item_id":90,"quantity":999,"proportion":80},{"item_id":89,"quantity":999,"proportion":60},{"item_id":88,"quantity":999,"proportion":40},{"item_id":87,"quantity":999,"proportion":20},{"item_id":47,"quantity":1,"proportion":10}],
+  items:[],
+  generals:[
+    {chara_id:5,name:"张辽",feat:0,loyalty:100},
+    {chara_id:12,name:"徐晃",feat:0,loyalty:100},
+    {chara_id:31,name:"于禁",feat:0,loyalty:100},
+    {chara_id:33,name:"许褚",feat:0,loyalty:100},
+    {chara_id:148,name:"郭嘉",feat:0,loyalty:100},
+    ],
+    out_of_offices:[
+    ],
+    not_debut:[
+    {chara_id:577,name:"王业",year:238},
+    {chara_id:579,name:"王沈",year:235},
+    ]
+  },
+  {  area_id : 24,name:"许昌",prefecture : 14,
+  level : 3,money : 4000,food : 30000,population : 60000,business : 12000,agriculture : 12000,technology : 6500,police : 85,city_defense : 1700,troops : 1600,
+  items_farmland:[{"item_id":43,"quantity":999,"proportion":60},{"item_id":42,"quantity":999,"proportion":60},{"item_id":41,"quantity":999,"proportion":60},{"item_id":40,"quantity":999,"proportion":60},{"item_id":39,"quantity":999,"proportion":45},{"item_id":38,"quantity":999,"proportion":45},{"item_id":37,"quantity":999,"proportion":45},{"item_id":36,"quantity":999,"proportion":45},{"item_id":35,"quantity":999,"proportion":30},{"item_id":34,"quantity":999,"proportion":30},{"item_id":33,"quantity":999,"proportion":30},{"item_id":32,"quantity":999,"proportion":30},{"item_id":31,"quantity":999,"proportion":20},{"item_id":30,"quantity":999,"proportion":20},{"item_id":29,"quantity":999,"proportion":20},{"item_id":70,"quantity":999,"proportion":80},{"item_id":69,"quantity":999,"proportion":60},{"item_id":68,"quantity":999,"proportion":40},{"item_id":67,"quantity":999,"proportion":20}],
+  items_market:[{"item_id":60,"quantity":999,"proportion":40},{"item_id":59,"quantity":999,"proportion":40},{"item_id":58,"quantity":999,"proportion":30},{"item_id":57,"quantity":999,"proportion":30},{"item_id":56,"quantity":999,"proportion":20},{"item_id":55,"quantity":999,"proportion":20},{"item_id":54,"quantity":999,"proportion":20},{"item_id":80,"quantity":999,"proportion":80},{"item_id":79,"quantity":999,"proportion":60},{"item_id":78,"quantity":999,"proportion":40},{"item_id":77,"quantity":999,"proportion":20},{"item_id":90,"quantity":999,"proportion":80},{"item_id":89,"quantity":999,"proportion":60},{"item_id":88,"quantity":999,"proportion":40},{"item_id":87,"quantity":999,"proportion":20},{"item_id":52,"quantity":1,"proportion":10}],
+  items:[],
+  generals:[
+    {chara_id:14,name:"夏侯敦",feat:0,loyalty:100},
+    {chara_id:201,name:"夏侯恩",feat:0,loyalty:100},
+    {chara_id:492,name:"荀彧",feat:0,loyalty:100},
+    {chara_id:495,name:"孔融",feat:0,loyalty:100},
+    ],
+    out_of_offices:[
+    ],
+    not_debut:[
+    {chara_id:157,name:"刘劭",year:213},
+    {chara_id:220,name:"司马攸",year:266},
+    {chara_id:298,name:"荀愷",year:227},
+    {chara_id:361,name:"荀勗",year:243},
+    {chara_id:531,name:"何曾",year:217},
+    {chara_id:601,name:"曹熊",year:213},
+    ]
+  },
+  {  area_id : 39,name:"陈留",prefecture : 522,
+  level : 2,money : 3500,food : 20000,population : 45000,business : 9000,agriculture : 9000,technology : 5000,police : 100,city_defense : 1200,troops : 4400,
+  items_farmland:[{"item_id":43,"quantity":999,"proportion":60},{"item_id":42,"quantity":999,"proportion":60},{"item_id":41,"quantity":999,"proportion":60},{"item_id":40,"quantity":999,"proportion":60},{"item_id":39,"quantity":999,"proportion":45},{"item_id":38,"quantity":999,"proportion":45},{"item_id":37,"quantity":999,"proportion":45},{"item_id":36,"quantity":999,"proportion":45},{"item_id":35,"quantity":999,"proportion":30},{"item_id":34,"quantity":999,"proportion":30},{"item_id":33,"quantity":999,"proportion":30},{"item_id":32,"quantity":999,"proportion":30},{"item_id":31,"quantity":999,"proportion":20},{"item_id":30,"quantity":999,"proportion":20},{"item_id":29,"quantity":999,"proportion":20},{"item_id":70,"quantity":999,"proportion":80},{"item_id":69,"quantity":999,"proportion":60},{"item_id":68,"quantity":999,"proportion":40},{"item_id":67,"quantity":999,"proportion":20},{"item_id":24,"quantity":1,"proportion":10}],
+  items_market:[{"item_id":60,"quantity":999,"proportion":40},{"item_id":59,"quantity":999,"proportion":40},{"item_id":58,"quantity":999,"proportion":30},{"item_id":57,"quantity":999,"proportion":30},{"item_id":56,"quantity":999,"proportion":20},{"item_id":55,"quantity":999,"proportion":20},{"item_id":54,"quantity":999,"proportion":20},{"item_id":80,"quantity":999,"proportion":80},{"item_id":79,"quantity":999,"proportion":60},{"item_id":78,"quantity":999,"proportion":40},{"item_id":77,"quantity":999,"proportion":20},{"item_id":90,"quantity":999,"proportion":80},{"item_id":89,"quantity":999,"proportion":60},{"item_id":88,"quantity":999,"proportion":40},{"item_id":87,"quantity":999,"proportion":20}],
+  items:[],
+  generals:[
+    {chara_id:522,name:"司马朗",feat:0,loyalty:100},
+    ],
+    out_of_offices:[
+    ],
+    not_debut:[
+    {chara_id:16,name:"司马懿",year:200},
+    {chara_id:211,name:"司马孚",year:198},
+    {chara_id:260,name:"程武",year:219},
+    {chara_id:425,name:"夏侯惠",year:224},
+    {chara_id:434,name:"夏侯和",year:225},
+    ]
+  },
+  {  area_id : 42,name:"晋阳",prefecture : 128,
+  level : 1,money : 2000,food : 22000,population : 24000,business : 4000,agriculture : 4000,technology : 2000,police : 85,city_defense : 800,troops : 1200,
+  items_farmland:[{"item_id":43,"quantity":999,"proportion":60},{"item_id":42,"quantity":999,"proportion":60},{"item_id":41,"quantity":999,"proportion":60},{"item_id":40,"quantity":999,"proportion":60},{"item_id":39,"quantity":999,"proportion":45},{"item_id":38,"quantity":999,"proportion":45},{"item_id":37,"quantity":999,"proportion":45},{"item_id":36,"quantity":999,"proportion":45},{"item_id":35,"quantity":999,"proportion":30},{"item_id":34,"quantity":999,"proportion":30},{"item_id":33,"quantity":999,"proportion":30},{"item_id":32,"quantity":999,"proportion":30},{"item_id":31,"quantity":999,"proportion":20},{"item_id":30,"quantity":999,"proportion":20},{"item_id":29,"quantity":999,"proportion":20},{"item_id":70,"quantity":999,"proportion":80},{"item_id":69,"quantity":999,"proportion":60},{"item_id":68,"quantity":999,"proportion":40},{"item_id":67,"quantity":999,"proportion":20}],
+  items_market:[{"item_id":60,"quantity":999,"proportion":40},{"item_id":59,"quantity":999,"proportion":40},{"item_id":58,"quantity":999,"proportion":30},{"item_id":57,"quantity":999,"proportion":30},{"item_id":56,"quantity":999,"proportion":20},{"item_id":55,"quantity":999,"proportion":20},{"item_id":54,"quantity":999,"proportion":20},{"item_id":80,"quantity":999,"proportion":80},{"item_id":79,"quantity":999,"proportion":60},{"item_id":78,"quantity":999,"proportion":40},{"item_id":77,"quantity":999,"proportion":20},{"item_id":90,"quantity":999,"proportion":80},{"item_id":89,"quantity":999,"proportion":60},{"item_id":88,"quantity":999,"proportion":40},{"item_id":87,"quantity":999,"proportion":20}],
+  items:[],
+  generals:[
+    {chara_id:23,name:"郝昭",feat:0,loyalty:100},
+    {chara_id:128,name:"张燕",feat:0,loyalty:100},
+    {chara_id:225,name:"高柔",feat:0,loyalty:100},
+    ],
+    out_of_offices:[
+    ],
+    not_debut:[
+    {chara_id:113,name:"王浑",year:241},
+    {chara_id:219,name:"王昶",year:206},
+    {chara_id:306,name:"秦朗",year:210},
+    ]
+  },
   {  area_id : 45,name:"蓟",prefecture : 28,
-  level : 1,money : 2000,food : 10000,population : 24000,business : 3000,agriculture : 3000,technology : 2000,police : 85,city_defense : 800,troops : 1200,
+  level : 1,money : 2000,food : 20000,population : 24000,business : 4000,agriculture : 4000,technology : 2000,police : 85,city_defense : 800,troops : 3000,
   items_farmland:[{"item_id":43,"quantity":999,"proportion":60},{"item_id":42,"quantity":999,"proportion":60},{"item_id":41,"quantity":999,"proportion":60},{"item_id":40,"quantity":999,"proportion":60},{"item_id":39,"quantity":999,"proportion":45},{"item_id":38,"quantity":999,"proportion":45},{"item_id":37,"quantity":999,"proportion":45},{"item_id":36,"quantity":999,"proportion":45},{"item_id":35,"quantity":999,"proportion":30},{"item_id":34,"quantity":999,"proportion":30},{"item_id":33,"quantity":999,"proportion":30},{"item_id":32,"quantity":999,"proportion":30},{"item_id":31,"quantity":999,"proportion":20},{"item_id":30,"quantity":999,"proportion":20},{"item_id":29,"quantity":999,"proportion":20},{"item_id":70,"quantity":999,"proportion":80},{"item_id":69,"quantity":999,"proportion":60},{"item_id":68,"quantity":999,"proportion":40},{"item_id":67,"quantity":999,"proportion":20}],
   items_market:[{"item_id":60,"quantity":999,"proportion":40},{"item_id":59,"quantity":999,"proportion":40},{"item_id":58,"quantity":999,"proportion":30},{"item_id":57,"quantity":999,"proportion":30},{"item_id":56,"quantity":999,"proportion":20},{"item_id":55,"quantity":999,"proportion":20},{"item_id":54,"quantity":999,"proportion":20},{"item_id":80,"quantity":999,"proportion":80},{"item_id":79,"quantity":999,"proportion":60},{"item_id":78,"quantity":999,"proportion":40},{"item_id":77,"quantity":999,"proportion":20},{"item_id":90,"quantity":999,"proportion":80},{"item_id":89,"quantity":999,"proportion":60},{"item_id":88,"quantity":999,"proportion":40},{"item_id":87,"quantity":999,"proportion":20},{"item_id":83,"quantity":1,"proportion":10}],
   items:[],
@@ -156,7 +130,7 @@ seigniors : [
     ]
   },
   {  area_id : 14,name:"宛",prefecture : 124,
-  level : 2,money : 2000,food : 10000,population : 45000,business : 5000,agriculture : 5000,technology : 3000,police : 85,city_defense : 1200,troops : 2000,
+  level : 2,money : 3000,food : 20000,population : 45000,business : 9000,agriculture : 9000,technology : 5000,police : 85,city_defense : 1200,troops : 3600,
   items_farmland:[{"item_id":43,"quantity":999,"proportion":60},{"item_id":42,"quantity":999,"proportion":60},{"item_id":41,"quantity":999,"proportion":60},{"item_id":40,"quantity":999,"proportion":60},{"item_id":39,"quantity":999,"proportion":45},{"item_id":38,"quantity":999,"proportion":45},{"item_id":37,"quantity":999,"proportion":45},{"item_id":36,"quantity":999,"proportion":45},{"item_id":35,"quantity":999,"proportion":30},{"item_id":34,"quantity":999,"proportion":30},{"item_id":33,"quantity":999,"proportion":30},{"item_id":32,"quantity":999,"proportion":30},{"item_id":31,"quantity":999,"proportion":20},{"item_id":30,"quantity":999,"proportion":20},{"item_id":29,"quantity":999,"proportion":20},{"item_id":70,"quantity":999,"proportion":80},{"item_id":69,"quantity":999,"proportion":60},{"item_id":68,"quantity":999,"proportion":40},{"item_id":67,"quantity":999,"proportion":20},{"item_id":27,"quantity":1,"proportion":10}],
   items_market:[{"item_id":60,"quantity":999,"proportion":40},{"item_id":59,"quantity":999,"proportion":40},{"item_id":58,"quantity":999,"proportion":30},{"item_id":57,"quantity":999,"proportion":30},{"item_id":56,"quantity":999,"proportion":20},{"item_id":55,"quantity":999,"proportion":20},{"item_id":54,"quantity":999,"proportion":20},{"item_id":80,"quantity":999,"proportion":80},{"item_id":79,"quantity":999,"proportion":60},{"item_id":78,"quantity":999,"proportion":40},{"item_id":77,"quantity":999,"proportion":20},{"item_id":90,"quantity":999,"proportion":80},{"item_id":89,"quantity":999,"proportion":60},{"item_id":88,"quantity":999,"proportion":40},{"item_id":87,"quantity":999,"proportion":20},{"item_id":86,"quantity":1,"proportion":10}],
   items:[],
@@ -177,7 +151,7 @@ seigniors : [
     ]
   },
   {  area_id : 43,name:"平原",prefecture : 34,
-  level : 1,money : 2000,food : 8000,population : 24000,business : 3000,agriculture : 3000,technology : 2000,police : 85,city_defense : 800,troops : 1000,
+  level : 1,money : 2000,food : 20000,population : 24000,business : 4000,agriculture : 4000,technology : 2000,police : 85,city_defense : 800,troops : 1000,
   items_farmland:[{"item_id":43,"quantity":999,"proportion":60},{"item_id":42,"quantity":999,"proportion":60},{"item_id":41,"quantity":999,"proportion":60},{"item_id":40,"quantity":999,"proportion":60},{"item_id":39,"quantity":999,"proportion":45},{"item_id":38,"quantity":999,"proportion":45},{"item_id":37,"quantity":999,"proportion":45},{"item_id":36,"quantity":999,"proportion":45},{"item_id":35,"quantity":999,"proportion":30},{"item_id":34,"quantity":999,"proportion":30},{"item_id":33,"quantity":999,"proportion":30},{"item_id":32,"quantity":999,"proportion":30},{"item_id":31,"quantity":999,"proportion":20},{"item_id":30,"quantity":999,"proportion":20},{"item_id":29,"quantity":999,"proportion":20},{"item_id":70,"quantity":999,"proportion":80},{"item_id":69,"quantity":999,"proportion":60},{"item_id":68,"quantity":999,"proportion":40},{"item_id":67,"quantity":999,"proportion":20}],
   items_market:[{"item_id":60,"quantity":999,"proportion":40},{"item_id":59,"quantity":999,"proportion":40},{"item_id":58,"quantity":999,"proportion":30},{"item_id":57,"quantity":999,"proportion":30},{"item_id":56,"quantity":999,"proportion":20},{"item_id":55,"quantity":999,"proportion":20},{"item_id":54,"quantity":999,"proportion":20},{"item_id":80,"quantity":999,"proportion":80},{"item_id":79,"quantity":999,"proportion":60},{"item_id":78,"quantity":999,"proportion":40},{"item_id":77,"quantity":999,"proportion":20},{"item_id":90,"quantity":999,"proportion":80},{"item_id":89,"quantity":999,"proportion":60},{"item_id":88,"quantity":999,"proportion":40},{"item_id":87,"quantity":999,"proportion":20},{"item_id":51,"quantity":1,"proportion":10}],
   items:[],
@@ -194,7 +168,7 @@ seigniors : [
     ]
   },
   {  area_id : 41,name:"邺",prefecture : 45,
-  level : 2,money : 3500,food : 20000,population : 45000,business : 4000,agriculture : 4000,technology : 2500,police : 100,city_defense : 900,troops : 2000,
+  level : 2,money : 5500,food : 40000,population : 55000,business : 9000,agriculture : 9000,technology : 5000,police : 100,city_defense : 1200,troops : 6000,
   items_farmland:[{"item_id":43,"quantity":999,"proportion":60},{"item_id":42,"quantity":999,"proportion":60},{"item_id":41,"quantity":999,"proportion":60},{"item_id":40,"quantity":999,"proportion":60},{"item_id":39,"quantity":999,"proportion":45},{"item_id":38,"quantity":999,"proportion":45},{"item_id":37,"quantity":999,"proportion":45},{"item_id":36,"quantity":999,"proportion":45},{"item_id":35,"quantity":999,"proportion":30},{"item_id":34,"quantity":999,"proportion":30},{"item_id":33,"quantity":999,"proportion":30},{"item_id":32,"quantity":999,"proportion":30},{"item_id":31,"quantity":999,"proportion":20},{"item_id":30,"quantity":999,"proportion":20},{"item_id":29,"quantity":999,"proportion":20},{"item_id":70,"quantity":999,"proportion":80},{"item_id":69,"quantity":999,"proportion":60},{"item_id":68,"quantity":999,"proportion":40},{"item_id":67,"quantity":999,"proportion":20}],
   items_market:[{"item_id":60,"quantity":999,"proportion":40},{"item_id":59,"quantity":999,"proportion":40},{"item_id":58,"quantity":999,"proportion":30},{"item_id":57,"quantity":999,"proportion":30},{"item_id":56,"quantity":999,"proportion":20},{"item_id":55,"quantity":999,"proportion":20},{"item_id":54,"quantity":999,"proportion":20},{"item_id":80,"quantity":999,"proportion":80},{"item_id":79,"quantity":999,"proportion":60},{"item_id":78,"quantity":999,"proportion":40},{"item_id":77,"quantity":999,"proportion":20},{"item_id":90,"quantity":999,"proportion":80},{"item_id":89,"quantity":999,"proportion":60},{"item_id":88,"quantity":999,"proportion":40},{"item_id":87,"quantity":999,"proportion":20}],
   items:[],
@@ -222,7 +196,7 @@ seigniors : [
     ]
   },
   {  area_id : 12,name:"长安",prefecture : 171,
-  level : 3,money : 6000,food : 30000,population : 80000,business : 12000,agriculture : 12000,technology : 5000,police : 85,city_defense : 1700,troops : 3000,
+  level : 4,money : 6000,food : 30000,population : 110000,business : 15000,agriculture : 15000,technology : 10000,police : 85,city_defense : 2100,troops : 3000,
   items_farmland:[{"item_id":43,"quantity":999,"proportion":60},{"item_id":42,"quantity":999,"proportion":60},{"item_id":41,"quantity":999,"proportion":60},{"item_id":40,"quantity":999,"proportion":60},{"item_id":39,"quantity":999,"proportion":45},{"item_id":38,"quantity":999,"proportion":45},{"item_id":37,"quantity":999,"proportion":45},{"item_id":36,"quantity":999,"proportion":45},{"item_id":35,"quantity":999,"proportion":30},{"item_id":34,"quantity":999,"proportion":30},{"item_id":33,"quantity":999,"proportion":30},{"item_id":32,"quantity":999,"proportion":30},{"item_id":31,"quantity":999,"proportion":20},{"item_id":30,"quantity":999,"proportion":20},{"item_id":29,"quantity":999,"proportion":20},{"item_id":70,"quantity":999,"proportion":80},{"item_id":69,"quantity":999,"proportion":60},{"item_id":68,"quantity":999,"proportion":40},{"item_id":67,"quantity":999,"proportion":20},{"item_id":23,"quantity":1,"proportion":10},{"item_id":62,"quantity":1,"proportion":10}],
   items_market:[{"item_id":60,"quantity":999,"proportion":40},{"item_id":59,"quantity":999,"proportion":40},{"item_id":58,"quantity":999,"proportion":30},{"item_id":57,"quantity":999,"proportion":30},{"item_id":56,"quantity":999,"proportion":20},{"item_id":55,"quantity":999,"proportion":20},{"item_id":54,"quantity":999,"proportion":20},{"item_id":80,"quantity":999,"proportion":80},{"item_id":79,"quantity":999,"proportion":60},{"item_id":78,"quantity":999,"proportion":40},{"item_id":77,"quantity":999,"proportion":20},{"item_id":90,"quantity":999,"proportion":80},{"item_id":89,"quantity":999,"proportion":60},{"item_id":88,"quantity":999,"proportion":40},{"item_id":87,"quantity":999,"proportion":20}],
   items:[],
@@ -244,7 +218,7 @@ seigniors : [
     ]
   },
   {  area_id : 26,name:"汝南",prefecture : 41,
-  level : 1,money : 2000,food : 8000,population : 24000,business : 3000,agriculture : 3000,technology : 2000,police : 85,city_defense : 800,troops : 1000,
+  level : 1,money : 2000,food : 20000,population : 24000,business : 4000,agriculture : 4000,technology : 2000,police : 85,city_defense : 800,troops : 3400,
   items_farmland:[{"item_id":43,"quantity":999,"proportion":60},{"item_id":42,"quantity":999,"proportion":60},{"item_id":41,"quantity":999,"proportion":60},{"item_id":40,"quantity":999,"proportion":60},{"item_id":39,"quantity":999,"proportion":45},{"item_id":38,"quantity":999,"proportion":45},{"item_id":37,"quantity":999,"proportion":45},{"item_id":36,"quantity":999,"proportion":45},{"item_id":35,"quantity":999,"proportion":30},{"item_id":34,"quantity":999,"proportion":30},{"item_id":33,"quantity":999,"proportion":30},{"item_id":32,"quantity":999,"proportion":30},{"item_id":31,"quantity":999,"proportion":20},{"item_id":30,"quantity":999,"proportion":20},{"item_id":29,"quantity":999,"proportion":20},{"item_id":70,"quantity":999,"proportion":80},{"item_id":69,"quantity":999,"proportion":60},{"item_id":68,"quantity":999,"proportion":40},{"item_id":67,"quantity":999,"proportion":20},{"item_id":26,"quantity":1,"proportion":10}],
   items_market:[{"item_id":60,"quantity":999,"proportion":40},{"item_id":59,"quantity":999,"proportion":40},{"item_id":58,"quantity":999,"proportion":30},{"item_id":57,"quantity":999,"proportion":30},{"item_id":56,"quantity":999,"proportion":20},{"item_id":55,"quantity":999,"proportion":20},{"item_id":54,"quantity":999,"proportion":20},{"item_id":80,"quantity":999,"proportion":80},{"item_id":79,"quantity":999,"proportion":60},{"item_id":78,"quantity":999,"proportion":40},{"item_id":77,"quantity":999,"proportion":20},{"item_id":90,"quantity":999,"proportion":80},{"item_id":89,"quantity":999,"proportion":60},{"item_id":88,"quantity":999,"proportion":40},{"item_id":87,"quantity":999,"proportion":20}],
   items:[],
@@ -267,7 +241,7 @@ seigniors : [
     ]
   },
   {  area_id : 36,name:"下邳",prefecture : 79,
-  level : 2,money : 3000,food : 16000,population : 40000,business : 4500,agriculture : 4500,technology : 3000,police : 100,city_defense : 1200,troops : 1400,
+  level : 2,money : 2000,food : 16000,population : 40000,business : 9000,agriculture : 9000,technology : 5000,police : 100,city_defense : 1200,troops : 2000,
   items_farmland:[{"item_id":43,"quantity":999,"proportion":60},{"item_id":42,"quantity":999,"proportion":60},{"item_id":41,"quantity":999,"proportion":60},{"item_id":40,"quantity":999,"proportion":60},{"item_id":39,"quantity":999,"proportion":45},{"item_id":38,"quantity":999,"proportion":45},{"item_id":37,"quantity":999,"proportion":45},{"item_id":36,"quantity":999,"proportion":45},{"item_id":35,"quantity":999,"proportion":30},{"item_id":34,"quantity":999,"proportion":30},{"item_id":33,"quantity":999,"proportion":30},{"item_id":32,"quantity":999,"proportion":30},{"item_id":31,"quantity":999,"proportion":20},{"item_id":30,"quantity":999,"proportion":20},{"item_id":29,"quantity":999,"proportion":20},{"item_id":70,"quantity":999,"proportion":80},{"item_id":69,"quantity":999,"proportion":60},{"item_id":68,"quantity":999,"proportion":40},{"item_id":67,"quantity":999,"proportion":20},{"item_id":16,"quantity":1,"proportion":10}],
   items_market:[{"item_id":60,"quantity":999,"proportion":40},{"item_id":59,"quantity":999,"proportion":40},{"item_id":58,"quantity":999,"proportion":30},{"item_id":57,"quantity":999,"proportion":30},{"item_id":56,"quantity":999,"proportion":20},{"item_id":55,"quantity":999,"proportion":20},{"item_id":54,"quantity":999,"proportion":20},{"item_id":80,"quantity":999,"proportion":80},{"item_id":79,"quantity":999,"proportion":60},{"item_id":78,"quantity":999,"proportion":40},{"item_id":77,"quantity":999,"proportion":20},{"item_id":90,"quantity":999,"proportion":80},{"item_id":89,"quantity":999,"proportion":60},{"item_id":88,"quantity":999,"proportion":40},{"item_id":87,"quantity":999,"proportion":20},{"item_id":53,"quantity":1,"proportion":10}],
   items:[],
@@ -294,7 +268,7 @@ seigniors : [
     ]
   },
   {  area_id : 38,name:"北海",prefecture : 393,
-  level : 1,money : 2000,food : 13000,population : 24000,business : 3000,agriculture : 3000,technology : 2000,police : 100,city_defense : 800,troops : 1200,
+  level : 2,money : 3000,food : 25000,population : 44000,business : 9000,agriculture : 9000,technology : 5000,police : 100,city_defense : 1200,troops : 600,
   items_farmland:[{"item_id":43,"quantity":999,"proportion":60},{"item_id":42,"quantity":999,"proportion":60},{"item_id":41,"quantity":999,"proportion":60},{"item_id":40,"quantity":999,"proportion":60},{"item_id":39,"quantity":999,"proportion":45},{"item_id":38,"quantity":999,"proportion":45},{"item_id":37,"quantity":999,"proportion":45},{"item_id":36,"quantity":999,"proportion":45},{"item_id":35,"quantity":999,"proportion":30},{"item_id":34,"quantity":999,"proportion":30},{"item_id":33,"quantity":999,"proportion":30},{"item_id":32,"quantity":999,"proportion":30},{"item_id":31,"quantity":999,"proportion":20},{"item_id":30,"quantity":999,"proportion":20},{"item_id":29,"quantity":999,"proportion":20},{"item_id":70,"quantity":999,"proportion":80},{"item_id":69,"quantity":999,"proportion":60},{"item_id":68,"quantity":999,"proportion":40},{"item_id":67,"quantity":999,"proportion":20}],
   items_market:[{"item_id":60,"quantity":999,"proportion":40},{"item_id":59,"quantity":999,"proportion":40},{"item_id":58,"quantity":999,"proportion":30},{"item_id":57,"quantity":999,"proportion":30},{"item_id":56,"quantity":999,"proportion":20},{"item_id":55,"quantity":999,"proportion":20},{"item_id":54,"quantity":999,"proportion":20},{"item_id":80,"quantity":999,"proportion":80},{"item_id":79,"quantity":999,"proportion":60},{"item_id":78,"quantity":999,"proportion":40},{"item_id":77,"quantity":999,"proportion":20},{"item_id":90,"quantity":999,"proportion":80},{"item_id":89,"quantity":999,"proportion":60},{"item_id":88,"quantity":999,"proportion":40},{"item_id":87,"quantity":999,"proportion":20},{"item_id":84,"quantity":1,"proportion":10}],
   items:[],
@@ -311,7 +285,7 @@ seigniors : [
     ]
   },
   {  area_id : 40,name:"濮阳",prefecture : 254,
-  level : 2,money : 3500,food : 20000,population : 45000,business : 5000,agriculture : 5000,technology : 3000,police : 100,city_defense : 1200,troops : 2500,
+  level : 2,money : 3500,food : 20000,population : 45000,business : 9000,agriculture : 9000,technology : 5000,police : 100,city_defense : 1200,troops : 600,
   items_farmland:[{"item_id":43,"quantity":999,"proportion":60},{"item_id":42,"quantity":999,"proportion":60},{"item_id":41,"quantity":999,"proportion":60},{"item_id":40,"quantity":999,"proportion":60},{"item_id":39,"quantity":999,"proportion":45},{"item_id":38,"quantity":999,"proportion":45},{"item_id":37,"quantity":999,"proportion":45},{"item_id":36,"quantity":999,"proportion":45},{"item_id":35,"quantity":999,"proportion":30},{"item_id":34,"quantity":999,"proportion":30},{"item_id":33,"quantity":999,"proportion":30},{"item_id":32,"quantity":999,"proportion":30},{"item_id":31,"quantity":999,"proportion":20},{"item_id":30,"quantity":999,"proportion":20},{"item_id":29,"quantity":999,"proportion":20},{"item_id":70,"quantity":999,"proportion":80},{"item_id":69,"quantity":999,"proportion":60},{"item_id":68,"quantity":999,"proportion":40},{"item_id":67,"quantity":999,"proportion":20}],
   items_market:[{"item_id":60,"quantity":999,"proportion":40},{"item_id":59,"quantity":999,"proportion":40},{"item_id":58,"quantity":999,"proportion":30},{"item_id":57,"quantity":999,"proportion":30},{"item_id":56,"quantity":999,"proportion":20},{"item_id":55,"quantity":999,"proportion":20},{"item_id":54,"quantity":999,"proportion":20},{"item_id":80,"quantity":999,"proportion":80},{"item_id":79,"quantity":999,"proportion":60},{"item_id":78,"quantity":999,"proportion":40},{"item_id":77,"quantity":999,"proportion":20},{"item_id":90,"quantity":999,"proportion":80},{"item_id":89,"quantity":999,"proportion":60},{"item_id":88,"quantity":999,"proportion":40},{"item_id":87,"quantity":999,"proportion":20},{"item_id":48,"quantity":1,"proportion":10}],
   items:[],
@@ -326,7 +300,7 @@ seigniors : [
     ]
   },
   {  area_id : 35,name:"小沛",prefecture : 350,
-  level : 1,money : 800,food : 5000,population : 24000,business : 3000,agriculture : 3000,technology : 2000,police : 100,city_defense : 800,troops : 500,
+  level : 1,money : 1000,food : 8000,population : 24000,business : 4000,agriculture : 4000,technology : 2000,police : 100,city_defense : 800,troops : 600,
   items_farmland:[{"item_id":43,"quantity":999,"proportion":60},{"item_id":42,"quantity":999,"proportion":60},{"item_id":41,"quantity":999,"proportion":60},{"item_id":40,"quantity":999,"proportion":60},{"item_id":39,"quantity":999,"proportion":45},{"item_id":38,"quantity":999,"proportion":45},{"item_id":37,"quantity":999,"proportion":45},{"item_id":36,"quantity":999,"proportion":45},{"item_id":35,"quantity":999,"proportion":30},{"item_id":34,"quantity":999,"proportion":30},{"item_id":33,"quantity":999,"proportion":30},{"item_id":32,"quantity":999,"proportion":30},{"item_id":31,"quantity":999,"proportion":20},{"item_id":30,"quantity":999,"proportion":20},{"item_id":29,"quantity":999,"proportion":20},{"item_id":70,"quantity":999,"proportion":80},{"item_id":69,"quantity":999,"proportion":60},{"item_id":68,"quantity":999,"proportion":40},{"item_id":67,"quantity":999,"proportion":20}],
   items_market:[{"item_id":60,"quantity":999,"proportion":40},{"item_id":59,"quantity":999,"proportion":40},{"item_id":58,"quantity":999,"proportion":30},{"item_id":57,"quantity":999,"proportion":30},{"item_id":56,"quantity":999,"proportion":20},{"item_id":55,"quantity":999,"proportion":20},{"item_id":54,"quantity":999,"proportion":20},{"item_id":80,"quantity":999,"proportion":80},{"item_id":79,"quantity":999,"proportion":60},{"item_id":78,"quantity":999,"proportion":40},{"item_id":77,"quantity":999,"proportion":20},{"item_id":90,"quantity":999,"proportion":80},{"item_id":89,"quantity":999,"proportion":60},{"item_id":88,"quantity":999,"proportion":40},{"item_id":87,"quantity":999,"proportion":20}],
   items:[],
@@ -344,7 +318,7 @@ seigniors : [
 ]},
 {chara_id : 17,name:"孙权",color : "255,0,0",generals_count:46,areas : [
   {  area_id : 28,name:"柴桑",prefecture : 2,
-  level : 1,money : 200,food : 1000,population : 20000,business : 1000,agriculture : 1000,technology : 800,police : 50,city_defense : 500,troops : 0,
+  level : 1,money : 2000,food : 10000,population : 20000,business : 4000,agriculture : 4000,technology : 2000,police : 50,city_defense : 800,troops : 2400,
   items_farmland:[{"item_id":43,"quantity":999,"proportion":60},{"item_id":42,"quantity":999,"proportion":60},{"item_id":41,"quantity":999,"proportion":60},{"item_id":40,"quantity":999,"proportion":60},{"item_id":39,"quantity":999,"proportion":45},{"item_id":38,"quantity":999,"proportion":45},{"item_id":37,"quantity":999,"proportion":45},{"item_id":36,"quantity":999,"proportion":45},{"item_id":35,"quantity":999,"proportion":30},{"item_id":34,"quantity":999,"proportion":30},{"item_id":33,"quantity":999,"proportion":30},{"item_id":32,"quantity":999,"proportion":30},{"item_id":31,"quantity":999,"proportion":20},{"item_id":30,"quantity":999,"proportion":20},{"item_id":29,"quantity":999,"proportion":20},{"item_id":70,"quantity":999,"proportion":80},{"item_id":69,"quantity":999,"proportion":60},{"item_id":68,"quantity":999,"proportion":40},{"item_id":67,"quantity":999,"proportion":20}],
   items_market:[{"item_id":60,"quantity":999,"proportion":40},{"item_id":59,"quantity":999,"proportion":40},{"item_id":58,"quantity":999,"proportion":30},{"item_id":57,"quantity":999,"proportion":30},{"item_id":56,"quantity":999,"proportion":20},{"item_id":55,"quantity":999,"proportion":20},{"item_id":54,"quantity":999,"proportion":20},{"item_id":80,"quantity":999,"proportion":80},{"item_id":79,"quantity":999,"proportion":60},{"item_id":78,"quantity":999,"proportion":40},{"item_id":77,"quantity":999,"proportion":20},{"item_id":90,"quantity":999,"proportion":80},{"item_id":89,"quantity":999,"proportion":60},{"item_id":88,"quantity":999,"proportion":40},{"item_id":87,"quantity":999,"proportion":20},{"item_id":85,"quantity":1,"proportion":10}],
   items:[],
@@ -372,10 +346,10 @@ seigniors : [
     {chara_id:587,name:"董朝",year:239},
     ]
   },
-  {  area_id : 33,name:"谯",prefecture : 17,
-  level : 1,money : 2000,food : 8000,population : 24000,business : 3000,agriculture : 3000,technology : 2000,police : 85,city_defense : 800,troops : 1000,
-  items_farmland:[{"item_id":43,"quantity":999,"proportion":60},{"item_id":42,"quantity":999,"proportion":60},{"item_id":41,"quantity":999,"proportion":60},{"item_id":40,"quantity":999,"proportion":60},{"item_id":39,"quantity":999,"proportion":45},{"item_id":38,"quantity":999,"proportion":45},{"item_id":37,"quantity":999,"proportion":45},{"item_id":36,"quantity":999,"proportion":45},{"item_id":35,"quantity":999,"proportion":30},{"item_id":34,"quantity":999,"proportion":30},{"item_id":33,"quantity":999,"proportion":30},{"item_id":32,"quantity":999,"proportion":30},{"item_id":31,"quantity":999,"proportion":20},{"item_id":30,"quantity":999,"proportion":20},{"item_id":29,"quantity":999,"proportion":20},{"item_id":70,"quantity":999,"proportion":80},{"item_id":69,"quantity":999,"proportion":60},{"item_id":68,"quantity":999,"proportion":40},{"item_id":67,"quantity":999,"proportion":20}],
-  items_market:[{"item_id":60,"quantity":999,"proportion":40},{"item_id":59,"quantity":999,"proportion":40},{"item_id":58,"quantity":999,"proportion":30},{"item_id":57,"quantity":999,"proportion":30},{"item_id":56,"quantity":999,"proportion":20},{"item_id":55,"quantity":999,"proportion":20},{"item_id":54,"quantity":999,"proportion":20},{"item_id":80,"quantity":999,"proportion":80},{"item_id":79,"quantity":999,"proportion":60},{"item_id":78,"quantity":999,"proportion":40},{"item_id":77,"quantity":999,"proportion":20},{"item_id":90,"quantity":999,"proportion":80},{"item_id":89,"quantity":999,"proportion":60},{"item_id":88,"quantity":999,"proportion":40},{"item_id":87,"quantity":999,"proportion":20}],
+  {  area_id : 30,name:"建业",prefecture : 17,
+  level : 3,money : 4000,food : 30000,population : 60000,business : 12000,agriculture : 12000,technology : 6500,police : 85,city_defense : 1700,troops : 5200,
+  items_farmland:[{"item_id":43,"quantity":999,"proportion":60},{"item_id":42,"quantity":999,"proportion":60},{"item_id":41,"quantity":999,"proportion":60},{"item_id":40,"quantity":999,"proportion":60},{"item_id":39,"quantity":999,"proportion":45},{"item_id":38,"quantity":999,"proportion":45},{"item_id":37,"quantity":999,"proportion":45},{"item_id":36,"quantity":999,"proportion":45},{"item_id":35,"quantity":999,"proportion":30},{"item_id":34,"quantity":999,"proportion":30},{"item_id":33,"quantity":999,"proportion":30},{"item_id":32,"quantity":999,"proportion":30},{"item_id":31,"quantity":999,"proportion":20},{"item_id":30,"quantity":999,"proportion":20},{"item_id":29,"quantity":999,"proportion":20},{"item_id":70,"quantity":999,"proportion":80},{"item_id":69,"quantity":999,"proportion":60},{"item_id":68,"quantity":999,"proportion":40},{"item_id":67,"quantity":999,"proportion":20},{"item_id":64,"quantity":1,"proportion":10}],
+  items_market:[{"item_id":60,"quantity":999,"proportion":40},{"item_id":59,"quantity":999,"proportion":40},{"item_id":58,"quantity":999,"proportion":30},{"item_id":57,"quantity":999,"proportion":30},{"item_id":56,"quantity":999,"proportion":20},{"item_id":55,"quantity":999,"proportion":20},{"item_id":54,"quantity":999,"proportion":20},{"item_id":80,"quantity":999,"proportion":80},{"item_id":79,"quantity":999,"proportion":60},{"item_id":78,"quantity":999,"proportion":40},{"item_id":77,"quantity":999,"proportion":20},{"item_id":90,"quantity":999,"proportion":80},{"item_id":89,"quantity":999,"proportion":60},{"item_id":88,"quantity":999,"proportion":40},{"item_id":87,"quantity":999,"proportion":20},{"item_id":49,"quantity":1,"proportion":10}],
   items:[],
   generals:[
     {chara_id:9,name:"陆逊",feat:0,loyalty:100},
@@ -398,11 +372,22 @@ seigniors : [
     ],
     not_debut:[
     {chara_id:92,name:"朱拠",year:208},
+    {chara_id:120,name:"沈莹",year:244},
+    {chara_id:134,name:"张悌",year:254},
+    {chara_id:230,name:"鲁淑",year:230},
+    {chara_id:240,name:"孙休",year:253},
+    {chara_id:413,name:"全端",year:222},
+    {chara_id:458,name:"王惇",year:216},
+    {chara_id:464,name:"孙亮",year:261},
+    {chara_id:483,name:"全懌",year:230},
+    {chara_id:508,name:"濮阳兴",year:242},
+    {chara_id:542,name:"张布",year:243},
     {chara_id:564,name:"张温",year:209},
+    {chara_id:610,name:"何植",year:244},
     ]
   },
   {  area_id : 29,name:"庐江",prefecture : 156,
-  level : 2,money : 3500,food : 22000,population : 45000,business : 5000,agriculture : 5000,technology : 3000,police : 100,city_defense : 1200,troops : 2500,
+  level : 2,money : 3500,food : 22000,population : 45000,business : 9000,agriculture : 9000,technology : 5000,police : 100,city_defense : 1200,troops : 3000,
   items_farmland:[{"item_id":43,"quantity":999,"proportion":60},{"item_id":42,"quantity":999,"proportion":60},{"item_id":41,"quantity":999,"proportion":60},{"item_id":40,"quantity":999,"proportion":60},{"item_id":39,"quantity":999,"proportion":45},{"item_id":38,"quantity":999,"proportion":45},{"item_id":37,"quantity":999,"proportion":45},{"item_id":36,"quantity":999,"proportion":45},{"item_id":35,"quantity":999,"proportion":30},{"item_id":34,"quantity":999,"proportion":30},{"item_id":33,"quantity":999,"proportion":30},{"item_id":32,"quantity":999,"proportion":30},{"item_id":31,"quantity":999,"proportion":20},{"item_id":30,"quantity":999,"proportion":20},{"item_id":29,"quantity":999,"proportion":20},{"item_id":70,"quantity":999,"proportion":80},{"item_id":69,"quantity":999,"proportion":60},{"item_id":68,"quantity":999,"proportion":40},{"item_id":67,"quantity":999,"proportion":20}],
   items_market:[{"item_id":60,"quantity":999,"proportion":40},{"item_id":59,"quantity":999,"proportion":40},{"item_id":58,"quantity":999,"proportion":30},{"item_id":57,"quantity":999,"proportion":30},{"item_id":56,"quantity":999,"proportion":20},{"item_id":55,"quantity":999,"proportion":20},{"item_id":54,"quantity":999,"proportion":20},{"item_id":80,"quantity":999,"proportion":80},{"item_id":79,"quantity":999,"proportion":60},{"item_id":78,"quantity":999,"proportion":40},{"item_id":77,"quantity":999,"proportion":20},{"item_id":90,"quantity":999,"proportion":80},{"item_id":89,"quantity":999,"proportion":60},{"item_id":88,"quantity":999,"proportion":40},{"item_id":87,"quantity":999,"proportion":20}],
   items:[],
@@ -435,7 +420,7 @@ seigniors : [
     ]
   },
   {  area_id : 32,name:"会稽",prefecture : 136,
-  level : 1,money : 2000,food : 8000,population : 24000,business : 3000,agriculture : 3000,technology : 2000,police : 85,city_defense : 800,troops : 1000,
+  level : 1,money : 2000,food : 10000,population : 24000,business : 4000,agriculture : 4000,technology : 2000,police : 85,city_defense : 800,troops : 1600,
   items_farmland:[{"item_id":43,"quantity":999,"proportion":60},{"item_id":42,"quantity":999,"proportion":60},{"item_id":41,"quantity":999,"proportion":60},{"item_id":40,"quantity":999,"proportion":60},{"item_id":39,"quantity":999,"proportion":45},{"item_id":38,"quantity":999,"proportion":45},{"item_id":37,"quantity":999,"proportion":45},{"item_id":36,"quantity":999,"proportion":45},{"item_id":35,"quantity":999,"proportion":30},{"item_id":34,"quantity":999,"proportion":30},{"item_id":33,"quantity":999,"proportion":30},{"item_id":32,"quantity":999,"proportion":30},{"item_id":31,"quantity":999,"proportion":20},{"item_id":30,"quantity":999,"proportion":20},{"item_id":29,"quantity":999,"proportion":20},{"item_id":70,"quantity":999,"proportion":80},{"item_id":69,"quantity":999,"proportion":60},{"item_id":68,"quantity":999,"proportion":40},{"item_id":67,"quantity":999,"proportion":20}],
   items_market:[{"item_id":60,"quantity":999,"proportion":40},{"item_id":59,"quantity":999,"proportion":40},{"item_id":58,"quantity":999,"proportion":30},{"item_id":57,"quantity":999,"proportion":30},{"item_id":56,"quantity":999,"proportion":20},{"item_id":55,"quantity":999,"proportion":20},{"item_id":54,"quantity":999,"proportion":20},{"item_id":80,"quantity":999,"proportion":80},{"item_id":79,"quantity":999,"proportion":60},{"item_id":78,"quantity":999,"proportion":40},{"item_id":77,"quantity":999,"proportion":20},{"item_id":90,"quantity":999,"proportion":80},{"item_id":89,"quantity":999,"proportion":60},{"item_id":88,"quantity":999,"proportion":40},{"item_id":87,"quantity":999,"proportion":20}],
   items:[],
@@ -457,7 +442,7 @@ seigniors : [
     ]
   },
   {  area_id : 31,name:"吴",prefecture : 145,
-  level : 1,money : 2000,food : 8000,population : 24000,business : 3000,agriculture : 3000,technology : 2000,police : 85,city_defense : 800,troops : 1000,
+  level : 1,money : 2000,food : 10000,population : 24000,business : 4000,agriculture : 4000,technology : 2000,police : 85,city_defense : 800,troops : 2000,
   items_farmland:[{"item_id":43,"quantity":999,"proportion":60},{"item_id":42,"quantity":999,"proportion":60},{"item_id":41,"quantity":999,"proportion":60},{"item_id":40,"quantity":999,"proportion":60},{"item_id":39,"quantity":999,"proportion":45},{"item_id":38,"quantity":999,"proportion":45},{"item_id":37,"quantity":999,"proportion":45},{"item_id":36,"quantity":999,"proportion":45},{"item_id":35,"quantity":999,"proportion":30},{"item_id":34,"quantity":999,"proportion":30},{"item_id":33,"quantity":999,"proportion":30},{"item_id":32,"quantity":999,"proportion":30},{"item_id":31,"quantity":999,"proportion":20},{"item_id":30,"quantity":999,"proportion":20},{"item_id":29,"quantity":999,"proportion":20},{"item_id":70,"quantity":999,"proportion":80},{"item_id":69,"quantity":999,"proportion":60},{"item_id":68,"quantity":999,"proportion":40},{"item_id":67,"quantity":999,"proportion":20}],
   items_market:[{"item_id":60,"quantity":999,"proportion":40},{"item_id":59,"quantity":999,"proportion":40},{"item_id":58,"quantity":999,"proportion":30},{"item_id":57,"quantity":999,"proportion":30},{"item_id":56,"quantity":999,"proportion":20},{"item_id":55,"quantity":999,"proportion":20},{"item_id":54,"quantity":999,"proportion":20},{"item_id":80,"quantity":999,"proportion":80},{"item_id":79,"quantity":999,"proportion":60},{"item_id":78,"quantity":999,"proportion":40},{"item_id":77,"quantity":999,"proportion":20},{"item_id":90,"quantity":999,"proportion":80},{"item_id":89,"quantity":999,"proportion":60},{"item_id":88,"quantity":999,"proportion":40},{"item_id":87,"quantity":999,"proportion":20},{"item_id":50,"quantity":1,"proportion":10}],
   items:[],
@@ -479,7 +464,7 @@ seigniors : [
 ]},
 {chara_id : 21,name:"刘备",color : "0,128,0",generals_count:14,areas : [
   {  area_id : 25,name:"新野",prefecture : 21,
-  level : 1,money : 200,food : 1000,population : 20000,business : 1000,agriculture : 1000,technology : 800,police : 50,city_defense : 500,troops : 0,
+  level : 1,money : 2000,food : 10000,population : 20000,business : 4000,agriculture : 4000,technology : 2000,police : 50,city_defense : 800,troops : 3000,
   items_farmland:[{"item_id":43,"quantity":999,"proportion":60},{"item_id":42,"quantity":999,"proportion":60},{"item_id":41,"quantity":999,"proportion":60},{"item_id":40,"quantity":999,"proportion":60},{"item_id":39,"quantity":999,"proportion":45},{"item_id":38,"quantity":999,"proportion":45},{"item_id":37,"quantity":999,"proportion":45},{"item_id":36,"quantity":999,"proportion":45},{"item_id":35,"quantity":999,"proportion":30},{"item_id":34,"quantity":999,"proportion":30},{"item_id":33,"quantity":999,"proportion":30},{"item_id":32,"quantity":999,"proportion":30},{"item_id":31,"quantity":999,"proportion":20},{"item_id":30,"quantity":999,"proportion":20},{"item_id":29,"quantity":999,"proportion":20},{"item_id":70,"quantity":999,"proportion":80},{"item_id":69,"quantity":999,"proportion":60},{"item_id":68,"quantity":999,"proportion":40},{"item_id":67,"quantity":999,"proportion":20}],
   items_market:[{"item_id":60,"quantity":999,"proportion":40},{"item_id":59,"quantity":999,"proportion":40},{"item_id":58,"quantity":999,"proportion":30},{"item_id":57,"quantity":999,"proportion":30},{"item_id":56,"quantity":999,"proportion":20},{"item_id":55,"quantity":999,"proportion":20},{"item_id":54,"quantity":999,"proportion":20},{"item_id":80,"quantity":999,"proportion":80},{"item_id":79,"quantity":999,"proportion":60},{"item_id":78,"quantity":999,"proportion":40},{"item_id":77,"quantity":999,"proportion":20},{"item_id":90,"quantity":999,"proportion":80},{"item_id":89,"quantity":999,"proportion":60},{"item_id":88,"quantity":999,"proportion":40},{"item_id":87,"quantity":999,"proportion":20}],
   items:[],
@@ -510,9 +495,9 @@ seigniors : [
     ]
   },
 ]},
-{chara_id : 137,name:"公孙康",color : "",generals_count:4,areas : [
+{chara_id : 137,name:"公孙康",color : "173,255,47",generals_count:4,areas : [
   {  area_id : 47,name:"襄平",prefecture : 137,
-  level : 1,money : 2000,food : 15000,population : 24000,business : 3000,agriculture : 3000,technology : 2000,police : 85,city_defense : 800,troops : 1400,
+  level : 2,money : 3000,food : 20000,population : 44000,business : 9000,agriculture : 9000,technology : 5000,police : 85,city_defense : 1200,troops : 2000,
   items_farmland:[{"item_id":43,"quantity":999,"proportion":60},{"item_id":42,"quantity":999,"proportion":60},{"item_id":41,"quantity":999,"proportion":60},{"item_id":40,"quantity":999,"proportion":60},{"item_id":39,"quantity":999,"proportion":45},{"item_id":38,"quantity":999,"proportion":45},{"item_id":37,"quantity":999,"proportion":45},{"item_id":36,"quantity":999,"proportion":45},{"item_id":35,"quantity":999,"proportion":30},{"item_id":34,"quantity":999,"proportion":30},{"item_id":33,"quantity":999,"proportion":30},{"item_id":32,"quantity":999,"proportion":30},{"item_id":31,"quantity":999,"proportion":20},{"item_id":30,"quantity":999,"proportion":20},{"item_id":29,"quantity":999,"proportion":20},{"item_id":70,"quantity":999,"proportion":80},{"item_id":69,"quantity":999,"proportion":60},{"item_id":68,"quantity":999,"proportion":40},{"item_id":67,"quantity":999,"proportion":20}],
   items_market:[{"item_id":60,"quantity":999,"proportion":40},{"item_id":59,"quantity":999,"proportion":40},{"item_id":58,"quantity":999,"proportion":30},{"item_id":57,"quantity":999,"proportion":30},{"item_id":56,"quantity":999,"proportion":20},{"item_id":55,"quantity":999,"proportion":20},{"item_id":54,"quantity":999,"proportion":20},{"item_id":80,"quantity":999,"proportion":80},{"item_id":79,"quantity":999,"proportion":60},{"item_id":78,"quantity":999,"proportion":40},{"item_id":77,"quantity":999,"proportion":20},{"item_id":90,"quantity":999,"proportion":80},{"item_id":89,"quantity":999,"proportion":60},{"item_id":88,"quantity":999,"proportion":40},{"item_id":87,"quantity":999,"proportion":20},{"item_id":72,"quantity":1,"proportion":10}],
   items:[],
@@ -535,7 +520,7 @@ seigniors : [
 ]},
 {chara_id : 160,name:"马腾",color : "184,134,11",generals_count:16,areas : [
   {  area_id : 2,name:"天水",prefecture : 95,
-  level : 1,money : 2000,food : 15000,population : 20000,business : 3000,agriculture : 3000,technology : 2000,police : 85,city_defense : 800,troops : 1400,
+  level : 1,money : 1500,food : 10000,population : 20000,business : 4000,agriculture : 4000,technology : 2000,police : 85,city_defense : 800,troops : 1500,
   items_farmland:[{"item_id":43,"quantity":999,"proportion":60},{"item_id":42,"quantity":999,"proportion":60},{"item_id":41,"quantity":999,"proportion":60},{"item_id":40,"quantity":999,"proportion":60},{"item_id":39,"quantity":999,"proportion":45},{"item_id":38,"quantity":999,"proportion":45},{"item_id":37,"quantity":999,"proportion":45},{"item_id":36,"quantity":999,"proportion":45},{"item_id":35,"quantity":999,"proportion":30},{"item_id":34,"quantity":999,"proportion":30},{"item_id":33,"quantity":999,"proportion":30},{"item_id":32,"quantity":999,"proportion":30},{"item_id":31,"quantity":999,"proportion":20},{"item_id":30,"quantity":999,"proportion":20},{"item_id":29,"quantity":999,"proportion":20},{"item_id":70,"quantity":999,"proportion":80},{"item_id":69,"quantity":999,"proportion":60},{"item_id":68,"quantity":999,"proportion":40},{"item_id":67,"quantity":999,"proportion":20}],
   items_market:[{"item_id":60,"quantity":999,"proportion":40},{"item_id":59,"quantity":999,"proportion":40},{"item_id":58,"quantity":999,"proportion":30},{"item_id":57,"quantity":999,"proportion":30},{"item_id":56,"quantity":999,"proportion":20},{"item_id":55,"quantity":999,"proportion":20},{"item_id":54,"quantity":999,"proportion":20},{"item_id":80,"quantity":999,"proportion":80},{"item_id":79,"quantity":999,"proportion":60},{"item_id":78,"quantity":999,"proportion":40},{"item_id":77,"quantity":999,"proportion":20},{"item_id":90,"quantity":999,"proportion":80},{"item_id":89,"quantity":999,"proportion":60},{"item_id":88,"quantity":999,"proportion":40},{"item_id":87,"quantity":999,"proportion":20},{"item_id":74,"quantity":1,"proportion":10}],
   items:[],
@@ -560,7 +545,7 @@ seigniors : [
     ]
   },
   {  area_id : 4,name:"安定",prefecture : 43,
-  level : 1,money : 200,food : 1000,population : 20000,business : 1000,agriculture : 1000,technology : 800,police : 50,city_defense : 500,troops : 0,
+  level : 2,money : 2500,food : 20000,population : 40000,business : 9000,agriculture : 9000,technology : 5000,police : 85,city_defense : 1200,troops : 2100,
   items_farmland:[{"item_id":43,"quantity":999,"proportion":60},{"item_id":42,"quantity":999,"proportion":60},{"item_id":41,"quantity":999,"proportion":60},{"item_id":40,"quantity":999,"proportion":60},{"item_id":39,"quantity":999,"proportion":45},{"item_id":38,"quantity":999,"proportion":45},{"item_id":37,"quantity":999,"proportion":45},{"item_id":36,"quantity":999,"proportion":45},{"item_id":35,"quantity":999,"proportion":30},{"item_id":34,"quantity":999,"proportion":30},{"item_id":33,"quantity":999,"proportion":30},{"item_id":32,"quantity":999,"proportion":30},{"item_id":31,"quantity":999,"proportion":20},{"item_id":30,"quantity":999,"proportion":20},{"item_id":29,"quantity":999,"proportion":20},{"item_id":70,"quantity":999,"proportion":80},{"item_id":69,"quantity":999,"proportion":60},{"item_id":68,"quantity":999,"proportion":40},{"item_id":67,"quantity":999,"proportion":20}],
   items_market:[{"item_id":60,"quantity":999,"proportion":40},{"item_id":59,"quantity":999,"proportion":40},{"item_id":58,"quantity":999,"proportion":30},{"item_id":57,"quantity":999,"proportion":30},{"item_id":56,"quantity":999,"proportion":20},{"item_id":55,"quantity":999,"proportion":20},{"item_id":54,"quantity":999,"proportion":20},{"item_id":80,"quantity":999,"proportion":80},{"item_id":79,"quantity":999,"proportion":60},{"item_id":78,"quantity":999,"proportion":40},{"item_id":77,"quantity":999,"proportion":20},{"item_id":90,"quantity":999,"proportion":80},{"item_id":89,"quantity":999,"proportion":60},{"item_id":88,"quantity":999,"proportion":40},{"item_id":87,"quantity":999,"proportion":20}],
   items:[],
@@ -586,7 +571,7 @@ seigniors : [
     ]
   },
   {  area_id : 3,name:"武威",prefecture : 160,
-  level : 1,money : 1400,food : 10000,population : 20000,business : 3000,agriculture : 3000,technology : 2000,police : 90,city_defense : 800,troops : 800,
+  level : 1,money : 1000,food : 10000,population : 20000,business : 4000,agriculture : 4000,technology : 2000,police : 90,city_defense : 800,troops : 800,
   items_farmland:[{"item_id":43,"quantity":999,"proportion":60},{"item_id":42,"quantity":999,"proportion":60},{"item_id":41,"quantity":999,"proportion":60},{"item_id":40,"quantity":999,"proportion":60},{"item_id":39,"quantity":999,"proportion":45},{"item_id":38,"quantity":999,"proportion":45},{"item_id":37,"quantity":999,"proportion":45},{"item_id":36,"quantity":999,"proportion":45},{"item_id":35,"quantity":999,"proportion":30},{"item_id":34,"quantity":999,"proportion":30},{"item_id":33,"quantity":999,"proportion":30},{"item_id":32,"quantity":999,"proportion":30},{"item_id":31,"quantity":999,"proportion":20},{"item_id":30,"quantity":999,"proportion":20},{"item_id":29,"quantity":999,"proportion":20},{"item_id":70,"quantity":999,"proportion":80},{"item_id":69,"quantity":999,"proportion":60},{"item_id":68,"quantity":999,"proportion":40},{"item_id":67,"quantity":999,"proportion":20}],
   items_market:[{"item_id":60,"quantity":999,"proportion":40},{"item_id":59,"quantity":999,"proportion":40},{"item_id":58,"quantity":999,"proportion":30},{"item_id":57,"quantity":999,"proportion":30},{"item_id":56,"quantity":999,"proportion":20},{"item_id":55,"quantity":999,"proportion":20},{"item_id":54,"quantity":999,"proportion":20},{"item_id":80,"quantity":999,"proportion":80},{"item_id":79,"quantity":999,"proportion":60},{"item_id":78,"quantity":999,"proportion":40},{"item_id":77,"quantity":999,"proportion":20},{"item_id":90,"quantity":999,"proportion":80},{"item_id":89,"quantity":999,"proportion":60},{"item_id":88,"quantity":999,"proportion":40},{"item_id":87,"quantity":999,"proportion":20}],
   items:[],
@@ -600,7 +585,7 @@ seigniors : [
     ]
   },
   {  area_id : 1,name:"西凉",prefecture : 321,
-  level : 2,money : 3000,food : 15000,population : 40000,business : 5000,agriculture : 5000,technology : 3000,police : 95,city_defense : 1200,troops : 1400,
+  level : 3,money : 3000,food : 25000,population : 60000,business : 12000,agriculture : 12000,technology : 6500,police : 95,city_defense : 1700,troops : 800,
   items_farmland:[{"item_id":43,"quantity":999,"proportion":60},{"item_id":42,"quantity":999,"proportion":60},{"item_id":41,"quantity":999,"proportion":60},{"item_id":40,"quantity":999,"proportion":60},{"item_id":39,"quantity":999,"proportion":45},{"item_id":38,"quantity":999,"proportion":45},{"item_id":37,"quantity":999,"proportion":45},{"item_id":36,"quantity":999,"proportion":45},{"item_id":35,"quantity":999,"proportion":30},{"item_id":34,"quantity":999,"proportion":30},{"item_id":33,"quantity":999,"proportion":30},{"item_id":32,"quantity":999,"proportion":30},{"item_id":31,"quantity":999,"proportion":20},{"item_id":30,"quantity":999,"proportion":20},{"item_id":29,"quantity":999,"proportion":20},{"item_id":70,"quantity":999,"proportion":80},{"item_id":69,"quantity":999,"proportion":60},{"item_id":68,"quantity":999,"proportion":40},{"item_id":67,"quantity":999,"proportion":20},{"item_id":19,"quantity":1,"proportion":10}],
   items_market:[{"item_id":60,"quantity":999,"proportion":40},{"item_id":59,"quantity":999,"proportion":40},{"item_id":58,"quantity":999,"proportion":30},{"item_id":57,"quantity":999,"proportion":30},{"item_id":56,"quantity":999,"proportion":20},{"item_id":55,"quantity":999,"proportion":20},{"item_id":54,"quantity":999,"proportion":20},{"item_id":80,"quantity":999,"proportion":80},{"item_id":79,"quantity":999,"proportion":60},{"item_id":78,"quantity":999,"proportion":40},{"item_id":77,"quantity":999,"proportion":20},{"item_id":90,"quantity":999,"proportion":80},{"item_id":89,"quantity":999,"proportion":60},{"item_id":88,"quantity":999,"proportion":40},{"item_id":87,"quantity":999,"proportion":20}],
   items:[],
@@ -616,7 +601,7 @@ seigniors : [
 ]},
 {chara_id : 446,name:"刘表",color : "255,192,203",generals_count:21,areas : [
   {  area_id : 15,name:"襄阳",prefecture : 446,
-  level : 2,money : 3500,food : 12000,population : 45000,business : 5000,agriculture : 5000,technology : 3000,police : 100,city_defense : 1200,troops : 2000,
+  level : 3,money : 3500,food : 25000,population : 65000,business : 12000,agriculture : 12000,technology : 6500,police : 100,city_defense : 1700,troops : 3600,
   items_farmland:[{"item_id":43,"quantity":999,"proportion":60},{"item_id":42,"quantity":999,"proportion":60},{"item_id":41,"quantity":999,"proportion":60},{"item_id":40,"quantity":999,"proportion":60},{"item_id":39,"quantity":999,"proportion":45},{"item_id":38,"quantity":999,"proportion":45},{"item_id":37,"quantity":999,"proportion":45},{"item_id":36,"quantity":999,"proportion":45},{"item_id":35,"quantity":999,"proportion":30},{"item_id":34,"quantity":999,"proportion":30},{"item_id":33,"quantity":999,"proportion":30},{"item_id":32,"quantity":999,"proportion":30},{"item_id":31,"quantity":999,"proportion":20},{"item_id":30,"quantity":999,"proportion":20},{"item_id":29,"quantity":999,"proportion":20},{"item_id":70,"quantity":999,"proportion":80},{"item_id":69,"quantity":999,"proportion":60},{"item_id":68,"quantity":999,"proportion":40},{"item_id":67,"quantity":999,"proportion":20}],
   items_market:[{"item_id":60,"quantity":999,"proportion":40},{"item_id":59,"quantity":999,"proportion":40},{"item_id":58,"quantity":999,"proportion":30},{"item_id":57,"quantity":999,"proportion":30},{"item_id":56,"quantity":999,"proportion":20},{"item_id":55,"quantity":999,"proportion":20},{"item_id":54,"quantity":999,"proportion":20},{"item_id":80,"quantity":999,"proportion":80},{"item_id":79,"quantity":999,"proportion":60},{"item_id":78,"quantity":999,"proportion":40},{"item_id":77,"quantity":999,"proportion":20},{"item_id":90,"quantity":999,"proportion":80},{"item_id":89,"quantity":999,"proportion":60},{"item_id":88,"quantity":999,"proportion":40},{"item_id":87,"quantity":999,"proportion":20}],
   items:[],
@@ -647,7 +632,7 @@ seigniors : [
     ]
   },
   {  area_id : 27,name:"江夏",prefecture : 374,
-  level : 1,money : 600,food : 6000,population : 24000,business : 3000,agriculture : 3000,technology : 2000,police : 85,city_defense : 800,troops : 500,
+  level : 1,money : 1600,food : 10000,population : 24000,business : 4000,agriculture : 4000,technology : 2000,police : 85,city_defense : 800,troops : 900,
   items_farmland:[{"item_id":43,"quantity":999,"proportion":60},{"item_id":42,"quantity":999,"proportion":60},{"item_id":41,"quantity":999,"proportion":60},{"item_id":40,"quantity":999,"proportion":60},{"item_id":39,"quantity":999,"proportion":45},{"item_id":38,"quantity":999,"proportion":45},{"item_id":37,"quantity":999,"proportion":45},{"item_id":36,"quantity":999,"proportion":45},{"item_id":35,"quantity":999,"proportion":30},{"item_id":34,"quantity":999,"proportion":30},{"item_id":33,"quantity":999,"proportion":30},{"item_id":32,"quantity":999,"proportion":30},{"item_id":31,"quantity":999,"proportion":20},{"item_id":30,"quantity":999,"proportion":20},{"item_id":29,"quantity":999,"proportion":20},{"item_id":70,"quantity":999,"proportion":80},{"item_id":69,"quantity":999,"proportion":60},{"item_id":68,"quantity":999,"proportion":40},{"item_id":67,"quantity":999,"proportion":20},{"item_id":66,"quantity":1,"proportion":10}],
   items_market:[{"item_id":60,"quantity":999,"proportion":40},{"item_id":59,"quantity":999,"proportion":40},{"item_id":58,"quantity":999,"proportion":30},{"item_id":57,"quantity":999,"proportion":30},{"item_id":56,"quantity":999,"proportion":20},{"item_id":55,"quantity":999,"proportion":20},{"item_id":54,"quantity":999,"proportion":20},{"item_id":80,"quantity":999,"proportion":80},{"item_id":79,"quantity":999,"proportion":60},{"item_id":78,"quantity":999,"proportion":40},{"item_id":77,"quantity":999,"proportion":20},{"item_id":90,"quantity":999,"proportion":80},{"item_id":89,"quantity":999,"proportion":60},{"item_id":88,"quantity":999,"proportion":40},{"item_id":87,"quantity":999,"proportion":20}],
   items:[],
@@ -670,7 +655,7 @@ seigniors : [
     ]
   },
   {  area_id : 16,name:"江陵",prefecture : 558,
-  level : 1,money : 200,food : 1000,population : 20000,business : 1000,agriculture : 1000,technology : 800,police : 50,city_defense : 500,troops : 0,
+  level : 1,money : 1000,food : 10000,population : 20000,business : 4000,agriculture : 4000,technology : 2000,police : 50,city_defense : 800,troops : 1800,
   items_farmland:[{"item_id":43,"quantity":999,"proportion":60},{"item_id":42,"quantity":999,"proportion":60},{"item_id":41,"quantity":999,"proportion":60},{"item_id":40,"quantity":999,"proportion":60},{"item_id":39,"quantity":999,"proportion":45},{"item_id":38,"quantity":999,"proportion":45},{"item_id":37,"quantity":999,"proportion":45},{"item_id":36,"quantity":999,"proportion":45},{"item_id":35,"quantity":999,"proportion":30},{"item_id":34,"quantity":999,"proportion":30},{"item_id":33,"quantity":999,"proportion":30},{"item_id":32,"quantity":999,"proportion":30},{"item_id":31,"quantity":999,"proportion":20},{"item_id":30,"quantity":999,"proportion":20},{"item_id":29,"quantity":999,"proportion":20},{"item_id":70,"quantity":999,"proportion":80},{"item_id":69,"quantity":999,"proportion":60},{"item_id":68,"quantity":999,"proportion":40},{"item_id":67,"quantity":999,"proportion":20}],
   items_market:[{"item_id":60,"quantity":999,"proportion":40},{"item_id":59,"quantity":999,"proportion":40},{"item_id":58,"quantity":999,"proportion":30},{"item_id":57,"quantity":999,"proportion":30},{"item_id":56,"quantity":999,"proportion":20},{"item_id":55,"quantity":999,"proportion":20},{"item_id":54,"quantity":999,"proportion":20},{"item_id":80,"quantity":999,"proportion":80},{"item_id":79,"quantity":999,"proportion":60},{"item_id":78,"quantity":999,"proportion":40},{"item_id":77,"quantity":999,"proportion":20},{"item_id":90,"quantity":999,"proportion":80},{"item_id":89,"quantity":999,"proportion":60},{"item_id":88,"quantity":999,"proportion":40},{"item_id":87,"quantity":999,"proportion":20}],
   items:[],
@@ -702,7 +687,7 @@ seigniors : [
 ]},
 {chara_id : 453,name:"张鲁",color : "165,42,42",generals_count:7,areas : [
   {  area_id : 11,name:"汉中",prefecture : 453,
-  level : 3,money : 3500,food : 20000,population : 75000,business : 8000,agriculture : 8000,technology : 4000,police : 100,city_defense : 1400,troops : 2000,
+  level : 4,money : 3500,food : 30000,population : 100000,business : 14500,agriculture : 14500,technology : 9500,police : 100,city_defense : 2100,troops : 2800,
   items_farmland:[{"item_id":43,"quantity":999,"proportion":60},{"item_id":42,"quantity":999,"proportion":60},{"item_id":41,"quantity":999,"proportion":60},{"item_id":40,"quantity":999,"proportion":60},{"item_id":39,"quantity":999,"proportion":45},{"item_id":38,"quantity":999,"proportion":45},{"item_id":37,"quantity":999,"proportion":45},{"item_id":36,"quantity":999,"proportion":45},{"item_id":35,"quantity":999,"proportion":30},{"item_id":34,"quantity":999,"proportion":30},{"item_id":33,"quantity":999,"proportion":30},{"item_id":32,"quantity":999,"proportion":30},{"item_id":31,"quantity":999,"proportion":20},{"item_id":30,"quantity":999,"proportion":20},{"item_id":29,"quantity":999,"proportion":20},{"item_id":70,"quantity":999,"proportion":80},{"item_id":69,"quantity":999,"proportion":60},{"item_id":68,"quantity":999,"proportion":40},{"item_id":67,"quantity":999,"proportion":20}],
   items_market:[{"item_id":60,"quantity":999,"proportion":40},{"item_id":59,"quantity":999,"proportion":40},{"item_id":58,"quantity":999,"proportion":30},{"item_id":57,"quantity":999,"proportion":30},{"item_id":56,"quantity":999,"proportion":20},{"item_id":55,"quantity":999,"proportion":20},{"item_id":54,"quantity":999,"proportion":20},{"item_id":80,"quantity":999,"proportion":80},{"item_id":79,"quantity":999,"proportion":60},{"item_id":78,"quantity":999,"proportion":40},{"item_id":77,"quantity":999,"proportion":20},{"item_id":90,"quantity":999,"proportion":80},{"item_id":89,"quantity":999,"proportion":60},{"item_id":88,"quantity":999,"proportion":40},{"item_id":87,"quantity":999,"proportion":20}],
   items:[],
@@ -725,9 +710,9 @@ seigniors : [
     ]
   },
 ]},
-{chara_id : 501,name:"金旋",color : "",generals_count:2,areas : [
+{chara_id : 501,name:"金旋",color : "1,1,1",generals_count:2,areas : [
   {  area_id : 17,name:"武陵",prefecture : 501,
-  level : 1,money : 200,food : 1000,population : 20000,business : 1000,agriculture : 1000,technology : 800,police : 50,city_defense : 500,troops : 0,
+  level : 1,money : 1000,food : 10000,population : 20000,business : 4000,agriculture : 4000,technology : 2000,police : 50,city_defense : 800,troops : 500,
   items_farmland:[{"item_id":43,"quantity":999,"proportion":60},{"item_id":42,"quantity":999,"proportion":60},{"item_id":41,"quantity":999,"proportion":60},{"item_id":40,"quantity":999,"proportion":60},{"item_id":39,"quantity":999,"proportion":45},{"item_id":38,"quantity":999,"proportion":45},{"item_id":37,"quantity":999,"proportion":45},{"item_id":36,"quantity":999,"proportion":45},{"item_id":35,"quantity":999,"proportion":30},{"item_id":34,"quantity":999,"proportion":30},{"item_id":33,"quantity":999,"proportion":30},{"item_id":32,"quantity":999,"proportion":30},{"item_id":31,"quantity":999,"proportion":20},{"item_id":30,"quantity":999,"proportion":20},{"item_id":29,"quantity":999,"proportion":20},{"item_id":70,"quantity":999,"proportion":80},{"item_id":69,"quantity":999,"proportion":60},{"item_id":68,"quantity":999,"proportion":40},{"item_id":67,"quantity":999,"proportion":20}],
   items_market:[{"item_id":60,"quantity":999,"proportion":40},{"item_id":59,"quantity":999,"proportion":40},{"item_id":58,"quantity":999,"proportion":30},{"item_id":57,"quantity":999,"proportion":30},{"item_id":56,"quantity":999,"proportion":20},{"item_id":55,"quantity":999,"proportion":20},{"item_id":54,"quantity":999,"proportion":20},{"item_id":80,"quantity":999,"proportion":80},{"item_id":79,"quantity":999,"proportion":60},{"item_id":78,"quantity":999,"proportion":40},{"item_id":77,"quantity":999,"proportion":20},{"item_id":90,"quantity":999,"proportion":80},{"item_id":89,"quantity":999,"proportion":60},{"item_id":88,"quantity":999,"proportion":40},{"item_id":87,"quantity":999,"proportion":20}],
   items:[],
@@ -746,9 +731,9 @@ seigniors : [
     ]
   },
 ]},
-{chara_id : 594,name:"赵范",color : "",generals_count:3,areas : [
+{chara_id : 594,name:"赵范",color : "255,165,0",generals_count:3,areas : [
   {  area_id : 20,name:"桂阳",prefecture : 594,
-  level : 1,money : 200,food : 1000,population : 20000,business : 1000,agriculture : 1000,technology : 800,police : 50,city_defense : 500,troops : 0,
+  level : 1,money : 1000,food : 10000,population : 20000,business : 4000,agriculture : 4000,technology : 2000,police : 50,city_defense : 800,troops : 700,
   items_farmland:[{"item_id":43,"quantity":999,"proportion":60},{"item_id":42,"quantity":999,"proportion":60},{"item_id":41,"quantity":999,"proportion":60},{"item_id":40,"quantity":999,"proportion":60},{"item_id":39,"quantity":999,"proportion":45},{"item_id":38,"quantity":999,"proportion":45},{"item_id":37,"quantity":999,"proportion":45},{"item_id":36,"quantity":999,"proportion":45},{"item_id":35,"quantity":999,"proportion":30},{"item_id":34,"quantity":999,"proportion":30},{"item_id":33,"quantity":999,"proportion":30},{"item_id":32,"quantity":999,"proportion":30},{"item_id":31,"quantity":999,"proportion":20},{"item_id":30,"quantity":999,"proportion":20},{"item_id":29,"quantity":999,"proportion":20},{"item_id":70,"quantity":999,"proportion":80},{"item_id":69,"quantity":999,"proportion":60},{"item_id":68,"quantity":999,"proportion":40},{"item_id":67,"quantity":999,"proportion":20}],
   items_market:[{"item_id":60,"quantity":999,"proportion":40},{"item_id":59,"quantity":999,"proportion":40},{"item_id":58,"quantity":999,"proportion":30},{"item_id":57,"quantity":999,"proportion":30},{"item_id":56,"quantity":999,"proportion":20},{"item_id":55,"quantity":999,"proportion":20},{"item_id":54,"quantity":999,"proportion":20},{"item_id":80,"quantity":999,"proportion":80},{"item_id":79,"quantity":999,"proportion":60},{"item_id":78,"quantity":999,"proportion":40},{"item_id":77,"quantity":999,"proportion":20},{"item_id":90,"quantity":999,"proportion":80},{"item_id":89,"quantity":999,"proportion":60},{"item_id":88,"quantity":999,"proportion":40},{"item_id":87,"quantity":999,"proportion":20}],
   items:[],
@@ -769,9 +754,9 @@ seigniors : [
     ]
   },
 ]},
-{chara_id : 605,name:"刘度",color : "",generals_count:3,areas : [
+{chara_id : 605,name:"刘度",color : "255,255,0",generals_count:3,areas : [
   {  area_id : 19,name:"零陵",prefecture : 605,
-  level : 1,money : 200,food : 1000,population : 20000,business : 1000,agriculture : 1000,technology : 800,police : 50,city_defense : 500,troops : 0,
+  level : 1,money : 1000,food : 10000,population : 20000,business : 4000,agriculture : 4000,technology : 2000,police : 50,city_defense : 800,troops : 700,
   items_farmland:[{"item_id":43,"quantity":999,"proportion":60},{"item_id":42,"quantity":999,"proportion":60},{"item_id":41,"quantity":999,"proportion":60},{"item_id":40,"quantity":999,"proportion":60},{"item_id":39,"quantity":999,"proportion":45},{"item_id":38,"quantity":999,"proportion":45},{"item_id":37,"quantity":999,"proportion":45},{"item_id":36,"quantity":999,"proportion":45},{"item_id":35,"quantity":999,"proportion":30},{"item_id":34,"quantity":999,"proportion":30},{"item_id":33,"quantity":999,"proportion":30},{"item_id":32,"quantity":999,"proportion":30},{"item_id":31,"quantity":999,"proportion":20},{"item_id":30,"quantity":999,"proportion":20},{"item_id":29,"quantity":999,"proportion":20},{"item_id":70,"quantity":999,"proportion":80},{"item_id":69,"quantity":999,"proportion":60},{"item_id":68,"quantity":999,"proportion":40},{"item_id":67,"quantity":999,"proportion":20}],
   items_market:[{"item_id":60,"quantity":999,"proportion":40},{"item_id":59,"quantity":999,"proportion":40},{"item_id":58,"quantity":999,"proportion":30},{"item_id":57,"quantity":999,"proportion":30},{"item_id":56,"quantity":999,"proportion":20},{"item_id":55,"quantity":999,"proportion":20},{"item_id":54,"quantity":999,"proportion":20},{"item_id":80,"quantity":999,"proportion":80},{"item_id":79,"quantity":999,"proportion":60},{"item_id":78,"quantity":999,"proportion":40},{"item_id":77,"quantity":999,"proportion":20},{"item_id":90,"quantity":999,"proportion":80},{"item_id":89,"quantity":999,"proportion":60},{"item_id":88,"quantity":999,"proportion":40},{"item_id":87,"quantity":999,"proportion":20}],
   items:[],
@@ -792,9 +777,9 @@ seigniors : [
     ]
   },
 ]},
-{chara_id : 615,name:"韩玄",color : "",generals_count:4,areas : [
+{chara_id : 615,name:"韩玄",color : "128,0,0",generals_count:4,areas : [
   {  area_id : 18,name:"长沙",prefecture : 615,
-  level : 1,money : 200,food : 1000,population : 20000,business : 1000,agriculture : 1000,technology : 800,police : 50,city_defense : 500,troops : 0,
+  level : 1,money : 1000,food : 10000,population : 20000,business : 4000,agriculture : 4000,technology : 2000,police : 50,city_defense : 800,troops : 1200,
   items_farmland:[{"item_id":43,"quantity":999,"proportion":60},{"item_id":42,"quantity":999,"proportion":60},{"item_id":41,"quantity":999,"proportion":60},{"item_id":40,"quantity":999,"proportion":60},{"item_id":39,"quantity":999,"proportion":45},{"item_id":38,"quantity":999,"proportion":45},{"item_id":37,"quantity":999,"proportion":45},{"item_id":36,"quantity":999,"proportion":45},{"item_id":35,"quantity":999,"proportion":30},{"item_id":34,"quantity":999,"proportion":30},{"item_id":33,"quantity":999,"proportion":30},{"item_id":32,"quantity":999,"proportion":30},{"item_id":31,"quantity":999,"proportion":20},{"item_id":30,"quantity":999,"proportion":20},{"item_id":29,"quantity":999,"proportion":20},{"item_id":70,"quantity":999,"proportion":80},{"item_id":69,"quantity":999,"proportion":60},{"item_id":68,"quantity":999,"proportion":40},{"item_id":67,"quantity":999,"proportion":20},{"item_id":21,"quantity":1,"proportion":10},{"item_id":28,"quantity":1,"proportion":10}],
   items_market:[{"item_id":60,"quantity":999,"proportion":40},{"item_id":59,"quantity":999,"proportion":40},{"item_id":58,"quantity":999,"proportion":30},{"item_id":57,"quantity":999,"proportion":30},{"item_id":56,"quantity":999,"proportion":20},{"item_id":55,"quantity":999,"proportion":20},{"item_id":54,"quantity":999,"proportion":20},{"item_id":80,"quantity":999,"proportion":80},{"item_id":79,"quantity":999,"proportion":60},{"item_id":78,"quantity":999,"proportion":40},{"item_id":77,"quantity":999,"proportion":20},{"item_id":90,"quantity":999,"proportion":80},{"item_id":89,"quantity":999,"proportion":60},{"item_id":88,"quantity":999,"proportion":40},{"item_id":87,"quantity":999,"proportion":20}],
   items:[],
@@ -815,7 +800,7 @@ seigniors : [
 ]},
 {chara_id : 616,name:"刘璋",color : "0,128,128",generals_count:20,areas : [
   {  area_id : 7,name:"江州",prefecture : 119,
-  level : 1,money : 800,food : 6000,population : 22000,business : 3000,agriculture : 3000,technology : 2000,police : 85,city_defense : 800,troops : 500,
+  level : 1,money : 1500,food : 10000,population : 24000,business : 4000,agriculture : 4000,technology : 2000,police : 85,city_defense : 800,troops : 1200,
   items_farmland:[{"item_id":43,"quantity":999,"proportion":60},{"item_id":42,"quantity":999,"proportion":60},{"item_id":41,"quantity":999,"proportion":60},{"item_id":40,"quantity":999,"proportion":60},{"item_id":39,"quantity":999,"proportion":45},{"item_id":38,"quantity":999,"proportion":45},{"item_id":37,"quantity":999,"proportion":45},{"item_id":36,"quantity":999,"proportion":45},{"item_id":35,"quantity":999,"proportion":30},{"item_id":34,"quantity":999,"proportion":30},{"item_id":33,"quantity":999,"proportion":30},{"item_id":32,"quantity":999,"proportion":30},{"item_id":31,"quantity":999,"proportion":20},{"item_id":30,"quantity":999,"proportion":20},{"item_id":29,"quantity":999,"proportion":20},{"item_id":70,"quantity":999,"proportion":80},{"item_id":69,"quantity":999,"proportion":60},{"item_id":68,"quantity":999,"proportion":40},{"item_id":67,"quantity":999,"proportion":20}],
   items_market:[{"item_id":60,"quantity":999,"proportion":40},{"item_id":59,"quantity":999,"proportion":40},{"item_id":58,"quantity":999,"proportion":30},{"item_id":57,"quantity":999,"proportion":30},{"item_id":56,"quantity":999,"proportion":20},{"item_id":55,"quantity":999,"proportion":20},{"item_id":54,"quantity":999,"proportion":20},{"item_id":80,"quantity":999,"proportion":80},{"item_id":79,"quantity":999,"proportion":60},{"item_id":78,"quantity":999,"proportion":40},{"item_id":77,"quantity":999,"proportion":20},{"item_id":90,"quantity":999,"proportion":80},{"item_id":89,"quantity":999,"proportion":60},{"item_id":88,"quantity":999,"proportion":40},{"item_id":87,"quantity":999,"proportion":20}],
   items:[],
@@ -838,7 +823,7 @@ seigniors : [
     ]
   },
   {  area_id : 6,name:"成都",prefecture : 616,
-  level : 3,money : 4000,food : 22000,population : 75000,business : 8000,agriculture : 8000,technology : 4000,police : 100,city_defense : 1400,troops : 2000,
+  level : 4,money : 4000,food : 30000,population : 100000,business : 14500,agriculture : 14500,technology : 9500,police : 100,city_defense : 2100,troops : 4400,
   items_farmland:[{"item_id":43,"quantity":999,"proportion":60},{"item_id":42,"quantity":999,"proportion":60},{"item_id":41,"quantity":999,"proportion":60},{"item_id":40,"quantity":999,"proportion":60},{"item_id":39,"quantity":999,"proportion":45},{"item_id":38,"quantity":999,"proportion":45},{"item_id":37,"quantity":999,"proportion":45},{"item_id":36,"quantity":999,"proportion":45},{"item_id":35,"quantity":999,"proportion":30},{"item_id":34,"quantity":999,"proportion":30},{"item_id":33,"quantity":999,"proportion":30},{"item_id":32,"quantity":999,"proportion":30},{"item_id":31,"quantity":999,"proportion":20},{"item_id":30,"quantity":999,"proportion":20},{"item_id":29,"quantity":999,"proportion":20},{"item_id":70,"quantity":999,"proportion":80},{"item_id":69,"quantity":999,"proportion":60},{"item_id":68,"quantity":999,"proportion":40},{"item_id":67,"quantity":999,"proportion":20},{"item_id":63,"quantity":1,"proportion":10}],
   items_market:[{"item_id":60,"quantity":999,"proportion":40},{"item_id":59,"quantity":999,"proportion":40},{"item_id":58,"quantity":999,"proportion":30},{"item_id":57,"quantity":999,"proportion":30},{"item_id":56,"quantity":999,"proportion":20},{"item_id":55,"quantity":999,"proportion":20},{"item_id":54,"quantity":999,"proportion":20},{"item_id":80,"quantity":999,"proportion":80},{"item_id":79,"quantity":999,"proportion":60},{"item_id":78,"quantity":999,"proportion":40},{"item_id":77,"quantity":999,"proportion":20},{"item_id":90,"quantity":999,"proportion":80},{"item_id":89,"quantity":999,"proportion":60},{"item_id":88,"quantity":999,"proportion":40},{"item_id":87,"quantity":999,"proportion":20},{"item_id":82,"quantity":1,"proportion":10}],
   items:[],
@@ -875,7 +860,7 @@ seigniors : [
     ]
   },
   {  area_id : 5,name:"梓橦",prefecture : 320,
-  level : 1,money : 1500,food : 10000,population : 24000,business : 3000,agriculture : 3000,technology : 2000,police : 85,city_defense : 800,troops : 800,
+  level : 1,money : 1500,food : 10000,population : 24000,business : 4000,agriculture : 4000,technology : 2000,police : 85,city_defense : 800,troops : 1500,
   items_farmland:[{"item_id":43,"quantity":999,"proportion":60},{"item_id":42,"quantity":999,"proportion":60},{"item_id":41,"quantity":999,"proportion":60},{"item_id":40,"quantity":999,"proportion":60},{"item_id":39,"quantity":999,"proportion":45},{"item_id":38,"quantity":999,"proportion":45},{"item_id":37,"quantity":999,"proportion":45},{"item_id":36,"quantity":999,"proportion":45},{"item_id":35,"quantity":999,"proportion":30},{"item_id":34,"quantity":999,"proportion":30},{"item_id":33,"quantity":999,"proportion":30},{"item_id":32,"quantity":999,"proportion":30},{"item_id":31,"quantity":999,"proportion":20},{"item_id":30,"quantity":999,"proportion":20},{"item_id":29,"quantity":999,"proportion":20},{"item_id":70,"quantity":999,"proportion":80},{"item_id":69,"quantity":999,"proportion":60},{"item_id":68,"quantity":999,"proportion":40},{"item_id":67,"quantity":999,"proportion":20}],
   items_market:[{"item_id":60,"quantity":999,"proportion":40},{"item_id":59,"quantity":999,"proportion":40},{"item_id":58,"quantity":999,"proportion":30},{"item_id":57,"quantity":999,"proportion":30},{"item_id":56,"quantity":999,"proportion":20},{"item_id":55,"quantity":999,"proportion":20},{"item_id":54,"quantity":999,"proportion":20},{"item_id":80,"quantity":999,"proportion":80},{"item_id":79,"quantity":999,"proportion":60},{"item_id":78,"quantity":999,"proportion":40},{"item_id":77,"quantity":999,"proportion":20},{"item_id":90,"quantity":999,"proportion":80},{"item_id":89,"quantity":999,"proportion":60},{"item_id":88,"quantity":999,"proportion":40},{"item_id":87,"quantity":999,"proportion":20}],
   items:[],
@@ -1026,9 +1011,9 @@ seigniors : [
     ]
   },
 ]},
-{chara_id : 0,name:"",color : "",generals_count:0,areas : [
+{chara_id : 0,name:"",color : "",generals_count:8,areas : [
   {  area_id : 13,name:"永安",prefecture : 0,
-  level : 1,money : 200,food : 1000,population : 20000,business : 1000,agriculture : 1000,technology : 2000,police : 50,city_defense : 500,troops : 0,
+  level : 1,money : 200,food : 1000,population : 20000,business : 1000,agriculture : 1000,technology : 800,police : 50,city_defense : 500,troops : 0,
   items_farmland:[{"item_id":43,"quantity":999,"proportion":60},{"item_id":42,"quantity":999,"proportion":60},{"item_id":41,"quantity":999,"proportion":60},{"item_id":40,"quantity":999,"proportion":60},{"item_id":39,"quantity":999,"proportion":45},{"item_id":38,"quantity":999,"proportion":45},{"item_id":37,"quantity":999,"proportion":45},{"item_id":36,"quantity":999,"proportion":45},{"item_id":35,"quantity":999,"proportion":30},{"item_id":34,"quantity":999,"proportion":30},{"item_id":33,"quantity":999,"proportion":30},{"item_id":32,"quantity":999,"proportion":30},{"item_id":31,"quantity":999,"proportion":20},{"item_id":30,"quantity":999,"proportion":20},{"item_id":29,"quantity":999,"proportion":20},{"item_id":70,"quantity":999,"proportion":80},{"item_id":69,"quantity":999,"proportion":60},{"item_id":68,"quantity":999,"proportion":40},{"item_id":67,"quantity":999,"proportion":20}],
   items_market:[{"item_id":60,"quantity":999,"proportion":40},{"item_id":59,"quantity":999,"proportion":40},{"item_id":58,"quantity":999,"proportion":30},{"item_id":57,"quantity":999,"proportion":30},{"item_id":56,"quantity":999,"proportion":20},{"item_id":55,"quantity":999,"proportion":20},{"item_id":54,"quantity":999,"proportion":20},{"item_id":80,"quantity":999,"proportion":80},{"item_id":79,"quantity":999,"proportion":60},{"item_id":78,"quantity":999,"proportion":40},{"item_id":77,"quantity":999,"proportion":20},{"item_id":90,"quantity":999,"proportion":80},{"item_id":89,"quantity":999,"proportion":60},{"item_id":88,"quantity":999,"proportion":40},{"item_id":87,"quantity":999,"proportion":20}],
   items:[],
@@ -1044,6 +1029,32 @@ seigniors : [
     {chara_id:407,name:"樊建",year:243},
     {chara_id:418,name:"阎宇",year:227},
     {chara_id:544,name:"刘巴",year:204},
+    ]
+  },
+  {  area_id : 44,name:"南皮",prefecture : 0,
+  level : 3,money : 5000,food : 35000,population : 60000,business : 12000,agriculture : 12000,technology : 6500,police : 100,city_defense : 1700,troops : 6000,
+  items_farmland:[{"item_id":43,"quantity":999,"proportion":60},{"item_id":42,"quantity":999,"proportion":60},{"item_id":41,"quantity":999,"proportion":60},{"item_id":40,"quantity":999,"proportion":60},{"item_id":39,"quantity":999,"proportion":45},{"item_id":38,"quantity":999,"proportion":45},{"item_id":37,"quantity":999,"proportion":45},{"item_id":36,"quantity":999,"proportion":45},{"item_id":35,"quantity":999,"proportion":30},{"item_id":34,"quantity":999,"proportion":30},{"item_id":33,"quantity":999,"proportion":30},{"item_id":32,"quantity":999,"proportion":30},{"item_id":31,"quantity":999,"proportion":20},{"item_id":30,"quantity":999,"proportion":20},{"item_id":29,"quantity":999,"proportion":20},{"item_id":70,"quantity":999,"proportion":80},{"item_id":69,"quantity":999,"proportion":60},{"item_id":68,"quantity":999,"proportion":40},{"item_id":67,"quantity":999,"proportion":20},{"item_id":65,"quantity":1,"proportion":10}],
+  items_market:[{"item_id":60,"quantity":999,"proportion":40},{"item_id":59,"quantity":999,"proportion":40},{"item_id":58,"quantity":999,"proportion":30},{"item_id":57,"quantity":999,"proportion":30},{"item_id":56,"quantity":999,"proportion":20},{"item_id":55,"quantity":999,"proportion":20},{"item_id":54,"quantity":999,"proportion":20},{"item_id":80,"quantity":999,"proportion":80},{"item_id":79,"quantity":999,"proportion":60},{"item_id":78,"quantity":999,"proportion":40},{"item_id":77,"quantity":999,"proportion":20},{"item_id":90,"quantity":999,"proportion":80},{"item_id":89,"quantity":999,"proportion":60},{"item_id":88,"quantity":999,"proportion":40},{"item_id":87,"quantity":999,"proportion":20}],
+  items:[],
+  generals:[
+    {chara_id:78,name:"刘晔",feat:0,loyalty:100},
+    {chara_id:93,name:"程昱",feat:0,loyalty:100},
+    {chara_id:116,name:"荀攸",feat:0,loyalty:100},
+    {chara_id:129,name:"曹彰",feat:0,loyalty:100},
+    {chara_id:135,name:"阎柔",feat:0,loyalty:100},
+    {chara_id:206,name:"王凌",feat:0,loyalty:100},
+    {chara_id:293,name:"曹纯",feat:0,loyalty:100},
+    {chara_id:415,name:"陈琳",feat:0,loyalty:100},
+    ],
+    out_of_offices:[
+    {chara_id:346,name:"陈震"},
+    ],
+    not_debut:[
+    {chara_id:132,name:"毋丘俭",year:220},
+    {chara_id:166,name:"孙礼",year:198},
+    {chara_id:472,name:"毋丘秀",year:224},
+    {chara_id:500,name:"张华",year:250},
+    {chara_id:584,name:"曹宇",year:217},
     ]
   },
   {  area_id : 8,name:"建宁",prefecture : 0,
@@ -1101,31 +1112,8 @@ seigniors : [
     {chara_id:498,name:"薛莹",year:241},
     ]
   },
-  {  area_id : 30,name:"建业",prefecture : 0,
-  level : 2,money : 200,food : 2000,population : 45000,business : 1500,agriculture : 1500,technology : 1000,police : 60,city_defense : 700,troops : 50,
-  items_farmland:[{"item_id":43,"quantity":999,"proportion":60},{"item_id":42,"quantity":999,"proportion":60},{"item_id":41,"quantity":999,"proportion":60},{"item_id":40,"quantity":999,"proportion":60},{"item_id":39,"quantity":999,"proportion":45},{"item_id":38,"quantity":999,"proportion":45},{"item_id":37,"quantity":999,"proportion":45},{"item_id":36,"quantity":999,"proportion":45},{"item_id":35,"quantity":999,"proportion":30},{"item_id":34,"quantity":999,"proportion":30},{"item_id":33,"quantity":999,"proportion":30},{"item_id":32,"quantity":999,"proportion":30},{"item_id":31,"quantity":999,"proportion":20},{"item_id":30,"quantity":999,"proportion":20},{"item_id":29,"quantity":999,"proportion":20},{"item_id":70,"quantity":999,"proportion":80},{"item_id":69,"quantity":999,"proportion":60},{"item_id":68,"quantity":999,"proportion":40},{"item_id":67,"quantity":999,"proportion":20},{"item_id":64,"quantity":1,"proportion":10}],
-  items_market:[{"item_id":60,"quantity":999,"proportion":40},{"item_id":59,"quantity":999,"proportion":40},{"item_id":58,"quantity":999,"proportion":30},{"item_id":57,"quantity":999,"proportion":30},{"item_id":56,"quantity":999,"proportion":20},{"item_id":55,"quantity":999,"proportion":20},{"item_id":54,"quantity":999,"proportion":20},{"item_id":80,"quantity":999,"proportion":80},{"item_id":79,"quantity":999,"proportion":60},{"item_id":78,"quantity":999,"proportion":40},{"item_id":77,"quantity":999,"proportion":20},{"item_id":90,"quantity":999,"proportion":80},{"item_id":89,"quantity":999,"proportion":60},{"item_id":88,"quantity":999,"proportion":40},{"item_id":87,"quantity":999,"proportion":20},{"item_id":49,"quantity":1,"proportion":10}],
-  items:[],
-  generals:[
-    ],
-    out_of_offices:[
-    ],
-    not_debut:[
-    {chara_id:120,name:"沈莹",year:244},
-    {chara_id:134,name:"张悌",year:254},
-    {chara_id:230,name:"鲁淑",year:230},
-    {chara_id:240,name:"孙休",year:253},
-    {chara_id:413,name:"全端",year:222},
-    {chara_id:458,name:"王惇",year:216},
-    {chara_id:464,name:"孙亮",year:261},
-    {chara_id:483,name:"全懌",year:230},
-    {chara_id:508,name:"濮阳兴",year:242},
-    {chara_id:542,name:"张布",year:243},
-    {chara_id:610,name:"何植",year:244},
-    ]
-  },
   {  area_id : 34,name:"寿春",prefecture : 0,
-  level : 2,money : 3500,food : 12000,population : 45000,business : 5000,agriculture : 5000,technology : 3000,police : 100,city_defense : 1200,troops : 2000,
+  level : 2,money : 300,food : 2000,population : 20000,business : 1500,agriculture : 1500,technology : 900,police : 100,city_defense : 800,troops : 50,
   items_farmland:[{"item_id":43,"quantity":999,"proportion":60},{"item_id":42,"quantity":999,"proportion":60},{"item_id":41,"quantity":999,"proportion":60},{"item_id":40,"quantity":999,"proportion":60},{"item_id":39,"quantity":999,"proportion":45},{"item_id":38,"quantity":999,"proportion":45},{"item_id":37,"quantity":999,"proportion":45},{"item_id":36,"quantity":999,"proportion":45},{"item_id":35,"quantity":999,"proportion":30},{"item_id":34,"quantity":999,"proportion":30},{"item_id":33,"quantity":999,"proportion":30},{"item_id":32,"quantity":999,"proportion":30},{"item_id":31,"quantity":999,"proportion":20},{"item_id":30,"quantity":999,"proportion":20},{"item_id":29,"quantity":999,"proportion":20},{"item_id":70,"quantity":999,"proportion":80},{"item_id":69,"quantity":999,"proportion":60},{"item_id":68,"quantity":999,"proportion":40},{"item_id":67,"quantity":999,"proportion":20}],
   items_market:[{"item_id":60,"quantity":999,"proportion":40},{"item_id":59,"quantity":999,"proportion":40},{"item_id":58,"quantity":999,"proportion":30},{"item_id":57,"quantity":999,"proportion":30},{"item_id":56,"quantity":999,"proportion":20},{"item_id":55,"quantity":999,"proportion":20},{"item_id":54,"quantity":999,"proportion":20},{"item_id":80,"quantity":999,"proportion":80},{"item_id":79,"quantity":999,"proportion":60},{"item_id":78,"quantity":999,"proportion":40},{"item_id":77,"quantity":999,"proportion":20},{"item_id":90,"quantity":999,"proportion":80},{"item_id":89,"quantity":999,"proportion":60},{"item_id":88,"quantity":999,"proportion":40},{"item_id":87,"quantity":999,"proportion":20}],
   items:[],
@@ -1205,6 +1193,18 @@ seigniors : [
     ],
     not_debut:[
     {chara_id:591,name:"郤正",year:226},
+    ]
+  },
+  {  area_id : 33,name:"谯",prefecture : 0,
+  level : 2,money : 300,food : 2000,population : 20000,business : 1500,agriculture : 1500,technology : 900,police : 100,city_defense : 800,troops : 50,
+  items_farmland:[{"item_id":43,"quantity":999,"proportion":60},{"item_id":42,"quantity":999,"proportion":60},{"item_id":41,"quantity":999,"proportion":60},{"item_id":40,"quantity":999,"proportion":60},{"item_id":39,"quantity":999,"proportion":45},{"item_id":38,"quantity":999,"proportion":45},{"item_id":37,"quantity":999,"proportion":45},{"item_id":36,"quantity":999,"proportion":45},{"item_id":35,"quantity":999,"proportion":30},{"item_id":34,"quantity":999,"proportion":30},{"item_id":33,"quantity":999,"proportion":30},{"item_id":32,"quantity":999,"proportion":30},{"item_id":31,"quantity":999,"proportion":20},{"item_id":30,"quantity":999,"proportion":20},{"item_id":29,"quantity":999,"proportion":20},{"item_id":70,"quantity":999,"proportion":80},{"item_id":69,"quantity":999,"proportion":60},{"item_id":68,"quantity":999,"proportion":40},{"item_id":67,"quantity":999,"proportion":20}],
+  items_market:[{"item_id":60,"quantity":999,"proportion":40},{"item_id":59,"quantity":999,"proportion":40},{"item_id":58,"quantity":999,"proportion":30},{"item_id":57,"quantity":999,"proportion":30},{"item_id":56,"quantity":999,"proportion":20},{"item_id":55,"quantity":999,"proportion":20},{"item_id":54,"quantity":999,"proportion":20},{"item_id":80,"quantity":999,"proportion":80},{"item_id":79,"quantity":999,"proportion":60},{"item_id":78,"quantity":999,"proportion":40},{"item_id":77,"quantity":999,"proportion":20},{"item_id":90,"quantity":999,"proportion":80},{"item_id":89,"quantity":999,"proportion":60},{"item_id":88,"quantity":999,"proportion":40},{"item_id":87,"quantity":999,"proportion":20}],
+  items:[],
+  generals:[
+    ],
+    out_of_offices:[
+    ],
+    not_debut:[
     ]
   },
 ]},
