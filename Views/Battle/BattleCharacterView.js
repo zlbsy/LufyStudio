@@ -50,8 +50,8 @@ BattleCharacterView.prototype.getBitmapData = function() {
 	if(self.hideByCloud){
 		return null;
 	}
-	//var key = self.data.currentSoldiers().img() + "_" + rowIndex+"_"+colIndex, endKey = key + "_end";
-	var key = self.data.currentSoldiers().img() + "_" + self.action+"_"+self.direction, endKey = key + "_end";
+	var key = self.data.currentSoldiers().img() + "_" + self.action+"_"+self.direction + "_" + self.anime.colIndex, 
+	endKey = key + "_end";
 	var resultBitmapData;
 	if(self.mode == CharacterMode.END_ACTION){
 		if(BattleCharacterView.cacheBitmapDatas[endKey]){
@@ -327,19 +327,19 @@ BattleCharacterView.prototype.setTo = function(){
 	if(self.x != self.to.x || self.y != self.to.y){
 		//TODO::水地形的时候
 		/*if(warter){
-			LPlugin.playSE("Se_move_warter");
+			LPlugin.playSE("Se_move_warter", LPlugin.volumeSE);
 			return;	
 		}*/
 		var soldier = self.data.currentSoldiers();
 		switch(soldier.moveType()){
 			case MoveType.INFANTRY:
-				LPlugin.playSE("Se_move_infantry");
+				LPlugin.playSE("Se_move_infantry", LPlugin.volumeSE);
 				break;
 			case MoveType.CAVALRY:
-				LPlugin.playSE("Se_move_cavalry");
+				LPlugin.playSE("Se_move_cavalry", LPlugin.volumeSE);
 				break;
 			case MoveType.CAR:
-				LPlugin.playSE("Se_move_car");
+				LPlugin.playSE("Se_move_car", LPlugin.volumeSE);
 				break;
 		}
 	}

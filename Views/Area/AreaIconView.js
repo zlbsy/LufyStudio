@@ -19,7 +19,7 @@ AreaIconView.prototype.onDown=function(event){
 	self.saveTouch = {dx:mouseX,dy:mouseY,touchMove:false};
 	var baseView = self.parent.parent;
 	baseView.startDrag(event.touchPointID);
-	LPlugin.playSE("Se_ok");
+	LPlugin.playSE("Se_ok", LPlugin.volumeSE);
 };
 AreaIconView.prototype.onUp=function(event){
 	var self = event.currentTarget;

@@ -1,5 +1,6 @@
 function LPlugin() {
 }
+
 LPlugin.native = true;
 LPlugin.playSE = playSE;
 LPlugin.playBGM = playBGM;
@@ -37,3 +38,11 @@ function LPurchaseInit() {
 	};
 	window['LPurchase'] = LPurchase;
 }
+
+(function LPurchaseInitReady() {
+	if (document.readyState === "complete") {
+		LPurchaseInit();
+		return;
+	}
+	setTimeout(LPurchaseInitReady, 10);
+})();

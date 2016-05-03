@@ -72,7 +72,7 @@ var ItemDatas = [
 	{id:57,name:"七星剑",type:ItemType.EQUIPMENT,rarity:2,stamp:1,position:PositionConfig.Hand,intelligence:2},
 	{id:58,name:"圣者宝剑",type:ItemType.EQUIPMENT,rarity:2,stamp:1,position:PositionConfig.Hand,intelligence:2},
 	{id:59,name:"圣拂尘",type:ItemType.EQUIPMENT,rarity:1,stamp:1,position:PositionConfig.Hand,intelligence:1},
-	{id:60,name:"拂尘",type:ItemType.EQUIPMENT,rarity:1,stamp:1,position:PositionConfig.Hand,intelligence:1},
+	{id:60,name:"暗拂尘",type:ItemType.EQUIPMENT,rarity:1,stamp:1,position:PositionConfig.Hand,intelligence:1},
 	{id:61,name:"乌金甲",type:ItemType.EQUIPMENT,rarity:10,stamp:1,position:PositionConfig.Body,command:10},
 	{id:62,name:"黄金铠",type:ItemType.EQUIPMENT,rarity:9,stamp:1,position:PositionConfig.Body,command:9},
 	{id:63,name:"白银铠",type:ItemType.EQUIPMENT,rarity:8,stamp:1,position:PositionConfig.Body,command:8},

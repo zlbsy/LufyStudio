@@ -79,7 +79,7 @@ LogoController.prototype.start=function(event){
 		LPlugin.SetData("purchaseLog", []);
 		if(LGlobal.traceDebug){
 			var datas = [];
-			["newWujiang","saveReport"].forEach(function(c){
+			productIdConfig.productIds.forEach(function(c){
 				datas.push({product_id:c});
 			});
 			LPlugin.SetData("purchaseLog", datas);

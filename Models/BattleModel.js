@@ -21,12 +21,12 @@ BattleModel.prototype.loadMapFile=function(mapPath,callback){
 	urlloader.addEventListener(LEvent.COMPLETE,function(event){
 		self.loadMapFileOver(event,callback);
 	});
-	urlloader.load("./Data/maps/"+mapPath+(LGlobal.traceDebug?("?"+(new Date()).getTime()):""),"text");
+	urlloader.load("./Data/maps/"+mapPath+(LGlobal.traceDebug?("?"+(new Date()).getTime()):""),"js");
 };
 BattleModel.prototype.loadMapFileOver=function(event,callback){
 	var self = event.currentTarget.parent;
 	//保存战场地图文件内容
-	self.map = JSON.parse(event.target);
+	self.map = LMvc.mapData;
 	
 
 	self.stepWidth = BattleCharacterSize.width;

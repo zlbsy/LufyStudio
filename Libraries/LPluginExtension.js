@@ -50,12 +50,12 @@ LPlugin.setCharacter = function(charaData){
 };
 LPlugin.SetData = function(key,data){
 	if(LPlugin.writeToFile){
-		LPlugin.writeToFile(key, data);
+		LPlugin.writeToFile(key, JSON.stringify(data));
 	}else{
 		window.localStorage.setItem(key, JSON.stringify(data));
 	}
 };
-LPlugin.GetData = function(key){
+LPlugin.GetData = function(key, defaultData){
 	var data;
 	if(LPlugin.readFile){
 		data = LPlugin.readFile(key);
@@ -63,7 +63,7 @@ LPlugin.GetData = function(key){
 		data = window.localStorage.getItem(key);
 	}
 	if(!data){
-		return {};
+		return defaultData ? defaultData : {};
 	}
 	return JSON.parse(data);
 };

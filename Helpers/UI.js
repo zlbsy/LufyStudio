@@ -54,7 +54,7 @@ function lockedButton(button){
 	button.addChild(lock);
 }
 function playButtonSe(e){
-	LPlugin.playSE(e.currentTarget.se);
+	LPlugin.playSE(e.currentTarget.se, LPlugin.volumeSE);
 }
 function getTranslucentMask(){
 	var layer = new LSprite();

@@ -43,7 +43,7 @@ function purchaseStart(productId, callback) {
 }
 
 function purchaseHasBuy(productId) {
-	var purchaseLog = LPlugin.GetData("purchaseLog");
+	var purchaseLog = LPlugin.GetData("purchaseLog", []);
 	var child = purchaseLog.find(function(c){
 		return c.product_id == productId;
 	});

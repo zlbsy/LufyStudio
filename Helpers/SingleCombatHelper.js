@@ -122,17 +122,17 @@ function singleCombatAttackActionComplete(currentCharacter, targetCharacter) {
 			singleCombatCommandBigAttack(currentCharacter, targetCharacter);
 			break;
 		case SingleCombatCommand.DEFENCE:
-			LPlugin.playSE("Se_hert");//轻伤音效
+			LPlugin.playSE("Se_hert", LPlugin.volumeSE);//轻伤音效
 			targetCharacter.changeAction(CharacterAction.HERT);
 			singleCombatHert(currentCharacter, targetCharacter);
 			break;
 		case SingleCombatCommand.DODGE:
-			LPlugin.playSE("Se_hert");//轻伤音效
+			LPlugin.playSE("Se_hert", LPlugin.volumeSE);//轻伤音效
 			targetCharacter.changeAction(CharacterAction.HERT);
 			singleCombatHert(currentCharacter, targetCharacter);
 			break;
 		case SingleCombatCommand.BACKSTROKE_ATTACK:
-			console.log("重伤音效");
+			LPlugin.playSE("Se_big_hert", LPlugin.volumeSE);//重伤音效
 			targetCharacter.changeAction(CharacterAction.HERT);
 			singleCombatHert(currentCharacter, targetCharacter);
 			break;
@@ -145,30 +145,30 @@ function singleCombatCommandCheckAttack(currentCharacter, targetCharacter) {
 	switch(targetCharacter.currentCommand){
 		case SingleCombatCommand.ATTACK:
 			if(currentCharacter.isLeft){
-				LPlugin.playSE("Se_block");//挡格音效
+				LPlugin.playSE("Se_block", LPlugin.volumeSE);//挡格音效
 			}
 			break;
 		case SingleCombatCommand.DOUBLE_ATTACK:
-			LPlugin.playSE("Se_hert");//轻伤音效
+			LPlugin.playSE("Se_hert", LPlugin.volumeSE);//轻伤音效
 			targetCharacter.changeAction(CharacterAction.HERT);
 			singleCombatHert(currentCharacter, targetCharacter);
 			break;
 		case SingleCombatCommand.BIG_ATTACK:
-			LPlugin.playSE("Se_hert");//轻伤音效
+			LPlugin.playSE("Se_hert", LPlugin.volumeSE);//轻伤音效
 			targetCharacter.changeAction(CharacterAction.HERT);
 			singleCombatHert(currentCharacter, targetCharacter);
 			break;
 		case SingleCombatCommand.DEFENCE:
-			LPlugin.playSE("Se_block");//挡格音效
+			LPlugin.playSE("Se_block", LPlugin.volumeSE);//挡格音效
 			targetCharacter.changeAction(CharacterAction.BLOCK);
 			singleCombatHert(currentCharacter, targetCharacter);
 			break;
 		case SingleCombatCommand.DODGE:
-			LPlugin.playSE("Se_swing");//抡空音效
+			LPlugin.playSE("Se_swing", LPlugin.volumeSE);//抡空音效
 			targetCharacter.addDodgeScript(true);
 			break;
 		case SingleCombatCommand.CHARGE:
-			LPlugin.playSE("Se_hert");//轻伤音效
+			LPlugin.playSE("Se_hert", LPlugin.volumeSE);//轻伤音效
 			targetCharacter.changeAction(CharacterAction.HERT);
 			singleCombatHert(currentCharacter, targetCharacter);
 			break;
@@ -192,30 +192,30 @@ function singleCombatCommandCheckDoubleAttack(currentCharacter, targetCharacter)
 			break;
 		case SingleCombatCommand.DOUBLE_ATTACK:
 			if(currentCharacter.isLeft){
-				LPlugin.playSE("Se_block");//挡格音效
+				LPlugin.playSE("Se_block", LPlugin.volumeSE);//挡格音效
 			}
 			break;
 		case SingleCombatCommand.BIG_ATTACK:
-			LPlugin.playSE("Se_hert");//轻伤音效
+			LPlugin.playSE("Se_hert", LPlugin.volumeSE);//轻伤音效
 			targetCharacter.changeAction(CharacterAction.HERT);
 			singleCombatHert(currentCharacter, targetCharacter);
 			break;
 		case SingleCombatCommand.DEFENCE:
-			LPlugin.playSE("Se_block");//挡格音效
+			LPlugin.playSE("Se_block", LPlugin.volumeSE);//挡格音效
 			targetCharacter.changeAction(CharacterAction.BLOCK);
 			break;
 		case SingleCombatCommand.DODGE:
 			if(currentCharacter.attackCount == 0){
-				LPlugin.playSE("Se_swing");//抡空音效
+				LPlugin.playSE("Se_swing", LPlugin.volumeSE);//抡空音效
 				targetCharacter.addDodgeScript(false);
 			}else{
-				LPlugin.playSE("Se_hert");//轻伤音效
+				LPlugin.playSE("Se_hert", LPlugin.volumeSE);//轻伤音效
 				targetCharacter.changeAction(CharacterAction.HERT);
 				singleCombatHert(currentCharacter, targetCharacter);
 			}
 			break;
 		case SingleCombatCommand.CHARGE:
-			LPlugin.playSE("Se_hert");//轻伤音效
+			LPlugin.playSE("Se_hert", LPlugin.volumeSE);//轻伤音效
 			targetCharacter.changeAction(CharacterAction.HERT);
 			singleCombatHert(currentCharacter, targetCharacter);
 			break;
@@ -236,21 +236,21 @@ function singleCombatCommandBigAttack(currentCharacter, targetCharacter) {
 			break;
 		case SingleCombatCommand.BIG_ATTACK:
 			if(currentCharacter.isLeft){
-				LPlugin.playSE("Se_big_block");//重挡格音效
+				LPlugin.playSE("Se_big_block", LPlugin.volumeSE);//重挡格音效
 			}
 			break;
 		case SingleCombatCommand.DEFENCE:
-			LPlugin.playSE("Se_block");//挡格音效
+			LPlugin.playSE("Se_block", LPlugin.volumeSE);//挡格音效
 			targetCharacter.changeAction(CharacterAction.BLOCK);
 			singleCombatHert(currentCharacter, targetCharacter);
 			break;
 		case SingleCombatCommand.DODGE:
-			LPlugin.playSE("Se_big_hert");//重伤音效
+			LPlugin.playSE("Se_big_hert", LPlugin.volumeSE);//重伤音效
 			targetCharacter.changeAction(CharacterAction.HERT);
 			singleCombatHert(currentCharacter, targetCharacter);
 			break;
 		case SingleCombatCommand.CHARGE:
-			LPlugin.playSE("Se_big_hert");//重伤音效
+			LPlugin.playSE("Se_big_hert", LPlugin.volumeSE);//重伤音效
 			targetCharacter.changeAction(CharacterAction.HERT);
 			singleCombatHert(currentCharacter, targetCharacter);
 			break;
@@ -264,28 +264,28 @@ function singleCombatCommandBigAttack(currentCharacter, targetCharacter) {
 function singleCombatCommandSpecialAttack(currentCharacter, targetCharacter) {
 	switch(targetCharacter.currentCommand){
 		case SingleCombatCommand.ATTACK:
-			LPlugin.playSE("Se_big_hert");//重伤音效
+			LPlugin.playSE("Se_big_hert", LPlugin.volumeSE);//重伤音效
 			targetCharacter.changeAction(CharacterAction.HERT);
 			singleCombatHert(currentCharacter, targetCharacter);
 			break;
 		case SingleCombatCommand.DOUBLE_ATTACK:
-			LPlugin.playSE("Se_big_hert");//重伤音效
+			LPlugin.playSE("Se_big_hert", LPlugin.volumeSE);//重伤音效
 			targetCharacter.changeAction(CharacterAction.HERT);
 			singleCombatHert(currentCharacter, targetCharacter);
 			break;
 		case SingleCombatCommand.BIG_ATTACK:
-			LPlugin.playSE("Se_big_hert");//重伤音效
+			LPlugin.playSE("Se_big_hert", LPlugin.volumeSE);//重伤音效
 			targetCharacter.changeAction(CharacterAction.HERT);
 			singleCombatHert(currentCharacter, targetCharacter);
 			break;
 		case SingleCombatCommand.DEFENCE:
-			LPlugin.playSE("Se_big_block");//重挡格音效
+			LPlugin.playSE("Se_big_block", LPlugin.volumeSE);//重挡格音效
 			targetCharacter.changeAction(CharacterAction.BLOCK);
 			singleCombatHert(currentCharacter, targetCharacter);
 			break;
 		case SingleCombatCommand.DODGE:
 			if(Math.random() > 0.5){
-				LPlugin.playSE("Se_swing");//抡空音效
+				LPlugin.playSE("Se_swing", LPlugin.volumeSE);//抡空音效
 				targetCharacter.addDodgeScript(false);
 			}else{
 				targetCharacter.changeAction(CharacterAction.HERT);
@@ -293,7 +293,7 @@ function singleCombatCommandSpecialAttack(currentCharacter, targetCharacter) {
 			}
 			break;
 		case SingleCombatCommand.CHARGE:
-			LPlugin.playSE("Se_big_hert");//重伤音效
+			LPlugin.playSE("Se_big_hert", LPlugin.volumeSE);//重伤音效
 			targetCharacter.changeAction(CharacterAction.HERT);
 			singleCombatHert(currentCharacter, targetCharacter);
 			break;
@@ -302,7 +302,7 @@ function singleCombatCommandSpecialAttack(currentCharacter, targetCharacter) {
 			break;
 		case SingleCombatCommand.SPECIAL_ATTACK:
 			if(currentCharacter.isLeft){
-				LPlugin.playSE("Se_big_block");//重挡格音效
+				LPlugin.playSE("Se_big_block", LPlugin.volumeSE);//重挡格音效
 			}
 			break;
 	}

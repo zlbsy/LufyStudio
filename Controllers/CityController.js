@@ -53,12 +53,12 @@ CityController.prototype.init=function(){
 	if(self.initFunc){
 		self.initFunc();
 	}
-	LPlugin.playBGM("city");
+	LPlugin.playBGM("city", LPlugin.volumeBGM);
 };
 CityController.prototype.gotoMap=function(){
 	var self = this;
 	self.view.remove();
-	LPlugin.playBGM("map");
+	LPlugin.playBGM("map", LPlugin.volumeBGM);
 	LMvc.CityController = null;
 	LMvc.MapController.view.visible = true;
 	LMvc.MapController.view.changeMode(MapController.MODE_MAP);
@@ -92,7 +92,7 @@ CityController.prototype.toSelectMap=function(eventType, params){
 CityController.prototype.gotoBattle=function(){
 	var self = this;
 	LMvc.CityController = null;
-	LPlugin.playSE("Se_goto_battle");
+	LPlugin.playSE("Se_goto_battle", LPlugin.volumeSE);
 	LMvc.keepLoading(true);
 	self.loadMvc("Battle",self.battleLoadComplete);
 };

@@ -49,7 +49,7 @@ BattleController.prototype.viewLoad=function(){
 };
 BattleController.prototype.addMap=function(){
 	var self = this;
-	var mapPath = String.format("{0}.smap", self.battleData.toCity.smap());
+	var mapPath = String.format("{0}.js", self.battleData.toCity.smap());
 	self.model.loadMapFile(mapPath,self.globalFilesLoad);
 };
 BattleController.prototype.globalFilesLoad = function(){
@@ -122,7 +122,7 @@ BattleController.prototype.init = function(){
 	}else{
 		self.charactersInit();
 	}
-	LPlugin.playBGM("battle" + ((2 * Math.random() >>> 0) + 1));
+	LPlugin.playBGM("battle" + ((2 * Math.random() >>> 0) + 1), LPlugin.volumeBGM);
 };
 BattleController.prototype.charactersInit = function(){
 	var self = this;

@@ -130,15 +130,11 @@ LogoView.prototype.loadChapterList=function(event){
 	self.controller.loadChapterList();
 };
 LogoView.prototype.showChapterListChild=function(chapter, menuLayer, x, y){
-	var self = this, title;
-	if(chapter.preparing){
-		title = Language.get("preparing");
-	}else{
-		title = chapter.year + " " + Language.get("chapter_"+chapter.id);
-	}
+	var self = this;
+	var title = chapter.year + " " + Language.get("chapter_"+chapter.id);
 	var buttonChapter = getButton(title,200);
-	buttonChapter.chapterId = chapter.preparing ? 0 : chapter.id;
-	if(!chapter.preparing && chapter.lock){
+	buttonChapter.chapterId = chapter.id;
+	if(chapter.lock){
 		if(!purchaseHasBuy(productIdConfig["chapter_" + chapter.id])){
 			lockedButton(buttonChapter);
 		}

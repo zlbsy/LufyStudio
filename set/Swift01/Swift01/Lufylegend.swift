@@ -22,12 +22,30 @@ extension JSContext {
     }
 }
 class Lufylegend : XXXPurchaseManagerDelegate{
-    let PATH_SOUND = "Sound/"
+    var GAME_PATH = ""
+    var PATH_SOUND = ""
     let TYPE_SE = "wav"
     let TYPE_BGM = "mp3"
+    let webView : UIWebView = UIWebView()
     var context : JSContext = JSContext()
     var audioSEPlayer:AVAudioPlayer = AVAudioPlayer()
     var audioBGMPlayer:AVAudioPlayer = AVAudioPlayer()
+    func initialize(gamePath: String, viewController: UIViewController, delegate: UIWebViewDelegate){
+        GAME_PATH = gamePath
+        PATH_SOUND = GAME_PATH + "Sound/"
+        
+        webView.delegate = delegate
+        webView.frame = viewController.view.bounds
+        viewController.view.addSubview(webView)
+        
+        if let url = NSBundle.mainBundle().URLForResource(GAME_PATH + "index", withExtension: "html") {
+            webView.loadRequest(NSURLRequest(URL: url))
+        }
+        if let ctx = webView.valueForKeyPath("documentView.webView.mainFrame.javaScriptContext") {
+            let context = ctx as! JSContext
+            self.contextInit(context)
+        }
+    }
     func playSE(name : String, volume : Float){
         let coinSound = NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource(PATH_SOUND + name, ofType: TYPE_SE)!)
         do{
@@ -55,12 +73,29 @@ class Lufylegend : XXXPurchaseManagerDelegate{
             .DocumentDirectory,
             .UserDomainMask, true)
         let dir = paths.first!
-        let file_name =  dir.stringByAppendingString(name as String)
+        let file_name =  dir.stringByAppendingString("/" + name + ".txt")
         do {
             try data.writeToFile( file_name, atomically: false, encoding: NSUTF8StringEncoding )
             return true
         } catch {
-            print("Error :: can't save to file : " + name)
+            print("Error :: can't save to file : " + file_name)
+        }
+        return false
+    }
+    func deleteFile(name : String) -> Bool{
+        let paths = NSSearchPathForDirectoriesInDomains(
+            .DocumentDirectory,
+            .UserDomainMask, true)
+        let dir = paths.first!
+        let file_name =  dir.stringByAppendingString("/" + name + ".txt")
+        let manager = NSFileManager()
+        if(!manager.fileExistsAtPath(file_name)){
+            do {
+                try manager.removeItemAtPath(file_name)
+                return true
+            } catch {
+                print("Error :: can't delete file : " + file_name)
+            }
         }
         return false
     }
@@ -69,12 +104,16 @@ class Lufylegend : XXXPurchaseManagerDelegate{
             .DocumentDirectory,
             .UserDomainMask, true)
         let dir = paths.first!
-        let file_name =  dir.stringByAppendingString(name as String)
+        let file_name =  dir.stringByAppendingString("/" + name + ".txt")
         var data = "";
+        let manager = NSFileManager()
+        if(!manager.fileExistsAtPath(file_name)){
+            return data;
+        }
         do {
             data = (try NSString( contentsOfFile: file_name, encoding: NSUTF8StringEncoding )) as String
         } catch {
-            print("Error :: getting the file : " + name)
+            print("Error :: getting the file : " + file_name)
         }
         return data;
     }
@@ -115,7 +154,6 @@ class Lufylegend : XXXPurchaseManagerDelegate{
         if let data = NSData(contentsOfFile: path){
             var strScript = String(NSString(data: data, encoding: NSUTF8StringEncoding)!)
             strScript = strScript.stringByReplacingOccurrencesOfString("\n", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
-            print(strScript)
             context.evaluateScript(strScript)
         }
         //let value:JSValue = context.objectForKeyedSubscript("console")
@@ -157,7 +195,7 @@ class Lufylegend : XXXPurchaseManagerDelegate{
     }
     
     ///プロダクト情報取得
-    private func fetchProductInformationForIds(productIds:[String]) {
+    private func fetchProductInformationForIds(productIds:[String]) {print("fetchProductInformationForIds run ")
         XXXProductManager.productsWithProductIdentifiers(productIds,
                                                          completion: {[weak self] (products : [SKProduct]!, error : NSError?) -> Void in
                                                             if error != nil {
@@ -185,6 +223,7 @@ class Lufylegend : XXXPurchaseManagerDelegate{
                                                                 
                                                             }
                                                             str += "]"
+                                                            print("fetchProductInformationForIds str = " + str)
                                                             let _ll_dispatchEvent = "LPurchase._ll_dispatchEvent("+str+", LPurchase.PRODUCT_INFORMATION_COMPLETE);"
                                                             self!.context.evaluateScript(_ll_dispatchEvent)
             })
@@ -193,6 +232,7 @@ class Lufylegend : XXXPurchaseManagerDelegate{
     }
     ///課金開始
     private func purchase(productId:String) {
+        print("purchase productId="+productId)
         //デリゲード設定
         XXXPurchaseManager.sharedManager().delegate = self
         

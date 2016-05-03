@@ -1,4 +1,4 @@
-                                                                                                                                 function ItemMasterModel(controller,data){
+function ItemMasterModel(controller,data){
 	var self = this;
 	base(self,MyModel,[controller]);
 	self.data = data;
@@ -53,7 +53,7 @@ ItemMasterModel.prototype.initEquipmentData = function(){
 ItemMasterModel.prototype.id = function(){
 	return this.data.id;
 };
-ItemMasterModel.prototype.name = function(){return this.data.name;
+ItemMasterModel.prototype.name = function(){
 	return Language.getItem("item_name_"+this.data.id);
 };
 ItemMasterModel.prototype.stamp = function(){
