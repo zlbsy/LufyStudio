@@ -29,7 +29,11 @@ LogoController.prototype.libraryLoad=function(){
 	if(typeof LPlugin == UNDEFINED){
 		window["LPlugin"] = function(){}; 
 	}
-	list.push("language/chinese/LanguageSimple");
+	self.load.library(list,self.languageLoad);
+};
+LogoController.prototype.languageLoad=function(){
+	var self = this;
+	var list = [String.format("language/{0}/LanguageSimple",LPlugin.language())];
 	self.load.library(list,self.modelLoad);
 };
 LogoController.prototype.modelLoad=function(){
@@ -68,7 +72,7 @@ LogoController.prototype.start=function(event){
 	LPlugin.openEvent(3);*/
 	
 	if(LPlugin.native){
-		if(!LPlugin.GetData("purchaseLog")){
+		if(!LPlugin.GetData("purchaseLog"), null){
 			LMvc.keepLoading(true);
 			LMvc.changeLoading(TranslucentLoading);
 			purchaseLogGet(function(){
@@ -169,18 +173,6 @@ LogoController.prototype.singleCombatArenaLoadComplete=function(){
 	var self = this;
 	var singleCombatArena = new SingleCombatArenaController(self);
 	self.view.parent.addChild(singleCombatArena.view);
-};
-LogoController.prototype.loadTest = function(){
-	var self = this;
-	LMvc.keepLoading(true);
-	LMvc.changeLoading(TranslucentLoading);
-	self.loadMvc("Test",self.testLoadComplete);
-};
-LogoController.prototype.testLoadComplete=function(){
-	var self = this;
-	self.view.visible = false;
-	var test = new TestController();
-	LMvc.stageLayer.addChild(test.view);
 };
 LogoController.prototype.read = function(){
 	var self = this;

@@ -116,11 +116,12 @@ EventMapView.prototype.mapShow=function(mapIndex){
 EventMapView.prototype.loadMapOver=function(event){
 	var bitmapSprite = event.currentTarget;
 	bitmapSprite.removeEventListener(LEvent.COMPLETE);
+	bitmapSprite.y = (LGlobal.height - bitmapSprite.getHeight()) * 0.5;
 	LTweenLite.to(bitmapSprite,0.5,{alpha:1,ease:LEasing.None.easeIn,onComplete:LGlobal.script.analysis});
 };
 EventMapView.prototype.messageShow=function(msg, speed){
 	var self = this;
-	var panel = getPanel("win05",360,300);
+	var panel = getPanel("win03",360,300);
 	panel.x = (LGlobal.width - 360) * 0.5;
 	panel.y = (LGlobal.height - 300) * 0.5;
 	var label = getStrokeLabel(msg,20,"#FFFFFF","#000000",4);

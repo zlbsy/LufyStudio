@@ -1,0 +1,3 @@
+LMvc.startEvent = {
+	result:[]
+};

@@ -1,0 +1,16 @@
+SGJEvent.mapShow(1);
+SGJEvent.addCharacter(604,50,100,fade);
+SGJEvent.addCharacter(618,250,100,fade);
+SGJEvent.messageShow(黃巾之乱平定后、朝廷中拥立少帝的何进握有最大的权利，与其政权对立的十常侍之间的矛盾激化的十分严重。,3);
+SGJEvent.messageShow(最后，何进被暗杀，十常侍也被何进的属下袁绍铲除了。,3);
+SGJEvent.removeCharacter(604,fade);
+SGJEvent.removeCharacter(618,fade);
+SGJEvent.messageShow(失去领导者的洛阳变得十分混乱，但是，此时另一个男人掌握了政权。,3);
+SGJEvent.addCharacter(265,50,100,fade);
+SGJEvent.messageShow(这个人就是董卓。,3);
+SGJEvent.addCharacter(18,250,100,fade);
+SGJEvent.messageShow(董卓又收服了天下无双的猛将・呂布，每天横行街市，百姓惶惶不安。,3);
+SGJEvent.removeCharacter(18,fade);
+SGJEvent.messageShow(董卓为了巩固政权，随后废了少帝，拥立了献帝。,3);
+SGJEvent.messageShow(董卓每天奸淫宫女，夜宿龙床，屠杀百姓。群雄都对董卓飞扬跋扈、野蛮残忍的行为极为不满。,3);
+Mark.EventEnd;

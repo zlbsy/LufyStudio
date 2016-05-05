@@ -33,11 +33,13 @@ EventMapController.prototype.init=function(){
 EventMapController.prototype.close=function(){
 	var self = this;
 	self.view.remove();
-	if(!LMvc.EventListController){
+	if(SeigniorExecute.running){
 		LMvc.MapController.view.visible = true;
 		SeigniorExecute.run();
-	}else{
+	}else if(LMvc.EventListController){
 		LMvc.EventListController.view.visible = true;
+	}else{
+		LMvc.MapController.view.visible = true;
 	}
 };
 EventMapController.prototype.mapShow=function(mapIndex){

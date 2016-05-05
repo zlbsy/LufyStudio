@@ -8,7 +8,7 @@ SettingGameController.prototype.construct=function(){
 };
 SettingGameController.prototype.libraryLoad=function(){
 	var self = this;
-	var libraris = ["language/chinese/LanguageAll"];
+	var libraris = [String.format("language/{0}/LanguageAll",LPlugin.language())];
 	self.load.library(libraris,self.init);
 };
 SettingGameController.prototype.init=function(){

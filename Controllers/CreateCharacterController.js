@@ -18,7 +18,7 @@ CreateCharacterController.prototype.configLoad2=function(){
 CreateCharacterController.prototype.libraryLoad=function(){
 	var self = this;
 	var libraris = ["Face","SgjComboBoxChild", "GameManager"];
-	libraris.push("language/chinese/LanguageAll");
+	libraris.push(String.format("language/{0}/LanguageAll",LPlugin.language()));
 	self.load.library(libraris, self.modelLoad);
 };
 CreateCharacterController.prototype.modelLoad=function(){

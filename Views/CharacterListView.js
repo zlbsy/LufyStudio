@@ -193,9 +193,6 @@ CharacterListView.prototype.selectExecute=function(){
 		characterList.push(child.charaModel);
 	});
 	self.controller.fromController.closeCharacterList({characterList : characterList, usedMoney : self.usedMoney, characterListType : self.controller.characterListType});
-	if(characterListType == CharacterListType.TEST){
-		return;
-	}
 	if(LMvc.CityController){
 		LMvc.CityController.dispatchEvent(LController.NOTIFY_ALL);
 	}

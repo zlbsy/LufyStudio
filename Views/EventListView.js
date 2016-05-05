@@ -58,8 +58,9 @@ EventListView.prototype.showDetailed = function(eventObject) {
 			script += String.format("Var.set({0},{1});", param.n, param.v);
 		}
 	}
+	var path = String.format(eventObject.script,LPlugin.language());
 	script += "SGJEvent.init();";
-	script += "Load.script("+eventObject.script+");";
+	script += "Load.script("+path+");";
 	script += "SGJEvent.end();";
 	LGlobal.script.addScript(script);
 };

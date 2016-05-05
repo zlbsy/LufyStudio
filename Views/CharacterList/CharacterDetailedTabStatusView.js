@@ -26,7 +26,8 @@ CharacterDetailedTabStatusView.prototype.showStatus=function(){
 	loyaltyLabel,
 	battleStatus ? battleStatus : characterModel.jobLabel()
 	];
-	if(characterModel.reputation()){
+	var reputation = characterModel.reputation();
+	if(reputation && reputation.length > 0){
 		labels.push("reputation");
 		datas.push(characterModel.reputationLabel());
 	}

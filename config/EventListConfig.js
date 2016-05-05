@@ -15,7 +15,7 @@ var EventListConfig = [
 			{id:45,seignior:604}
 		]
 	},
-	script:"Data/Event/tyjy.txt",
+	script:"Data/Event/{0}/tyjy.txt",
 	result:[
 		{type:"changeSeignior", id:21, seignior:604, loyalty:100, city:45},
 		{type:"changeSeignior", id:4, seignior:604, loyalty:100, city:45},
@@ -35,34 +35,113 @@ var EventListConfig = [
 		citys:[
 		]
 	},
-	script:"Data/Event/fdzlm.txt",
+	script:"Data/Event/{0}/fdzlm.txt",
 	result:[
 		{type:"stopBattle", seigniors:[160,602,451,39,375,1,453,237,8,495,562,446,484,367,408,21,75,144], month:7}
 	]
 },
 {
 	id:3,
-	name:"五虎上将",
+	name:"迁都长安",
 	condition:{
+		from:{year:191,month:1},
+		to:{year:191,month:1},
 		seignior:0,
 		generals:[
+			{id:265,seignior:265,cityId:22},
 		],
-		feat_generals:{feat:10000,count:5,force:90},
 		citys:[
+			{id:12,seignior:265},
+			{id:22,seignior:265}
 		]
 	},
-	script:"Data/Event/whsj.txt",
-	result:[{type:"reputation",generals:[],reputation:"reputation_tiger"}]
+	script:"Data/Event/{0}/hsly.txt",
+	result:[
+		{type:"moveGeneralsToCity", generals:[], from:22, to:12},//洛阳武将全部移往长安
+		{type:"moveCityResources", from:22, to:12},//洛阳资源全部移往长安
+		{type:"changeCitySeignior", cityId:22, seignior:0},//洛阳变成无势力状态
+		{type:"changeCityResources", cityId:22, food:0, money:0, business:10000, agriculture:10000, technology:5000, police:50, city_defense:1000, troops:0}//洛阳资源变更
+	]
 },
 {
 	id:4,
-	name:"吕布殒命",
+	name:"连环计",
 	condition:{
-		from:{year:2194,month:1},
+		from:{year:191,month:6},
+		to:{year:191,month:6},
+		noSeignior:265,
+		generals:[
+			{id:18,seignior:265,cityId:12},
+			{id:265,seignior:265,cityId:12},
+			{id:380,seignior:265,cityId:12},
+			{id:543,seignior:265,cityId:12},
+		],
+		citys:[
+			{id:12,seignior:265}
+		]
+	},
+	script:"Data/Event/{0}/lhj.txt",
+	result:[
+		{type:"generalsDie", generals:543},//王允死亡
+		{type:"moveGeneralsToSeignior", generals:[18,380], to:237},//吕布貂蝉移动到张扬手下
+		{type:"monarchDie", monarch:265, newMonarch:[465,485,422,381]}//董卓死亡，由李郭张樊四将依次继承
+	]
+},
+{
+	id:5,
+	name:"报仇雪恨",
+	condition:{
+		from:{year:2000,month:1},
 		to:{year:194,month:1},
 		seignior:[1,21],
 		generals:[
-			{id:265,seignior:0},//下坯有俘虏吕布
+			{id:451,seignior:0,cityId:25, captive:1},//下坯有俘虏吕布
+			{id:21,seignior:21},//刘备未灭亡
+		],
+		citys:[
+			{id:25,seignior:451},//下坯属陶谦
+			{id:35,seignior:[0,451]},//小沛属陶谦或者无势力
+		]
+	},
+	script:"Data/Event/{0}/lbym.txt",
+	result:[
+		{type:"changeCitySeignior", cityId:25, seignior:21},//小沛属刘备
+		{type:"moveGeneralsToCity", generals:[4,19,21], to:25},//刘关张移往小沛
+		{type:"stopBattle", seigniors:[21,451], month:12}//刘备和陶谦停战1年
+	]
+},
+{
+	id:6,
+	name:"三让徐州",
+	condition:{
+		from:{year:2000,month:1},
+		to:{year:194,month:1},
+		seignior:[1,21],
+		generals:[
+			{id:451,seignior:0,cityId:25, captive:1},//下坯有俘虏吕布
+			{id:21,seignior:21},//刘备未灭亡
+		],
+		citys:[
+			{id:25,seignior:451},//下坯属陶谦
+			{id:35,seignior:[0,451]},//小沛属陶谦或者无势力
+		]
+	},
+	script:"Data/Event/{0}/lbym.txt",
+	result:[
+		{type:"changeCitySeignior", cityId:25, seignior:21},//小沛属刘备
+		{type:"moveGeneralsToCity", generals:[4,19,21], to:25},//刘关张移往小沛
+		{type:"stopBattle", seigniors:[21,451], month:12}//刘备和陶谦停战1年
+	]
+},
+{
+	id:7,
+	name:"白门楼",
+	condition:{
+		from:{year:2000,month:1},
+		to:{year:194,month:1},
+		seignior:[1,21],
+		generals:[
+			{id:18,seignior:0,cityId:25, captive:1},//下坯有俘虏吕布
 		],
 		citys:[
 			{id:25,seignior:1},//下坯属曹操
@@ -71,16 +150,62 @@ var EventListConfig = [
 			[1,21],//曹操刘备属停战状态
 		]
 	},
-	script:"Data/Event/sgml3.txt",
+	script:"Data/Event/{0}/lbym.txt",
 	result:[
 		{type:"kill_generals",generals:[265]},//吕布死
 	]
 },
 {
-	id:5,
+	id:8,
+	name:"宛城失名将",
+	condition:{
+		from:{year:2000,month:1},
+		to:{year:194,month:1},
+		seignior:[1,21],
+		generals:[
+			{id:451,seignior:0,cityId:25, captive:1},//下坯有俘虏吕布
+			{id:21,seignior:21},//刘备未灭亡
+		],
+		citys:[
+			{id:25,seignior:451},//下坯属陶谦
+			{id:35,seignior:[0,451]},//小沛属陶谦或者无势力
+		]
+	},
+	script:"Data/Event/{0}/lbym.txt",
+	result:[
+		{type:"changeCitySeignior", cityId:25, seignior:21},//小沛属刘备
+		{type:"moveGeneralsToCity", generals:[4,19,21], to:25},//刘关张移往小沛
+		{type:"stopBattle", seigniors:[21,451], month:12}//刘备和陶谦停战1年
+	]
+},
+{
+	id:9,
+	name:"煮酒论英雄",
+	condition:{
+		from:{year:2000,month:1},
+		to:{year:194,month:1},
+		seignior:[1,21],
+		generals:[
+			{id:451,seignior:0,cityId:25, captive:1},//下坯有俘虏吕布
+			{id:21,seignior:21},//刘备未灭亡
+		],
+		citys:[
+			{id:25,seignior:451},//下坯属陶谦
+			{id:35,seignior:[0,451]},//小沛属陶谦或者无势力
+		]
+	},
+	script:"Data/Event/{0}/lbym.txt",
+	result:[
+		{type:"changeCitySeignior", cityId:25, seignior:21},//小沛属刘备
+		{type:"moveGeneralsToCity", generals:[4,19,21], to:25},//刘关张移往小沛
+		{type:"stopBattle", seigniors:[21,451], month:12}//刘备和陶谦停战1年
+	]
+},
+{
+	id:10,
 	name:"官渡之战",
 	condition:{
-		from:{year:2194,month:1},
+		from:{year:2000,month:1},
 		to:{year:194,month:1},
 		seignior:1,
 		generals:[
@@ -92,55 +217,36 @@ var EventListConfig = [
 			{id:25,seignior:1},
 		]
 	},
-	script:"Data/Event/sgml3.txt",
+	script:"Data/Event/{0}/sgml3.txt",
 	result:[
 		{id:4,seignior:1,city:25},
 	]
 },
 {
-	id:6,
-	name:"失荆州",
+	id:11,
+	name:"乌巢急袭",
 	condition:{
-		from:{year:2194,month:1},
+		from:{year:2000,month:1},
 		to:{year:194,month:1},
-		seignior:1,
+		seignior:[1,21],
 		generals:[
-			{id:4,seignior:0,city:25},
-			{id:2,seignior:1},
-			{id:3,seignior:1}
+			{id:451,seignior:0,cityId:25, captive:1},//下坯有俘虏吕布
+			{id:21,seignior:21},//刘备未灭亡
 		],
 		citys:[
-			{id:25,seignior:1},
+			{id:25,seignior:451},//下坯属陶谦
+			{id:35,seignior:[0,451]},//小沛属陶谦或者无势力
 		]
 	},
-	script:"Data/Event/sgml3.txt",
+	script:"Data/Event/{0}/lbym.txt",
 	result:[
-		{id:4,seignior:1,city:25},
+		{type:"changeCitySeignior", cityId:25, seignior:21},//小沛属刘备
+		{type:"moveGeneralsToCity", generals:[4,19,21], to:25},//刘关张移往小沛
+		{type:"stopBattle", seigniors:[21,451], month:12}//刘备和陶谦停战1年
 	]
 },
 {
-	id:7,
-	name:"出师表",
-	condition:{
-		from:{year:2194,month:1},
-		to:{year:194,month:1},
-		seignior:1,
-		generals:[
-			{id:4,seignior:0,city:25},
-			{id:2,seignior:1},
-			{id:3,seignior:1}
-		],
-		citys:[
-			{id:25,seignior:1},
-		]
-	},
-	script:"Data/Event/sgml3.txt",
-	result:[
-		{id:4,seignior:1,city:25},
-	]
-},
-{
-	id:8,
+	id:12,
 	name:"一顾茅庐",
 	condition:{
 		from:{year:2194,month:1},
@@ -155,13 +261,13 @@ var EventListConfig = [
 			{id:25,seignior:1},
 		]
 	},
-	script:"Data/Event/sgml3.txt",
+	script:"Data/Event/{0}/sgml3.txt",
 	result:[
 		{id:4,seignior:1,city:25},
 	]
 },
 {
-	id:9,
+	id:13,
 	name:"二顾茅庐",
 	condition:{
 		from:{year:2194,month:1},
@@ -176,13 +282,13 @@ var EventListConfig = [
 			{id:25,seignior:1},
 		]
 	},
-	script:"Data/Event/sgml3.txt",
+	script:"Data/Event/{0}/sgml3.txt",
 	result:[
 		{id:4,seignior:1,city:25},
 	]
 },
 {
-	id:10,
+	id:14,
 	name:"三顾茅庐",
 	condition:{
 		from:{year:2194,month:1},
@@ -197,13 +303,214 @@ var EventListConfig = [
 			{id:25,seignior:1},
 		]
 	},
-	script:"Data/Event/sgml3.txt",
+	script:"Data/Event/{0}/sgml3.txt",
 	result:[
 		{id:4,seignior:1,city:25},
 	]
 },
 {
-	id:11,
+	id:15,
+	name:"刘表之死",
+	condition:{
+		from:{year:2000,month:1},
+		to:{year:194,month:1},
+		seignior:[1,21],
+		generals:[
+			{id:451,seignior:0,cityId:25, captive:1},//下坯有俘虏吕布
+			{id:21,seignior:21},//刘备未灭亡
+		],
+		citys:[
+			{id:25,seignior:451},//下坯属陶谦
+			{id:35,seignior:[0,451]},//小沛属陶谦或者无势力
+		]
+	},
+	script:"Data/Event/{0}/lbym.txt",
+	result:[
+		{type:"changeCitySeignior", cityId:25, seignior:21},//小沛属刘备
+		{type:"moveGeneralsToCity", generals:[4,19,21], to:25},//刘关张移往小沛
+		{type:"stopBattle", seigniors:[21,451], month:12}//刘备和陶谦停战1年
+	]
+},
+{
+	id:16,
+	name:"舌战群儒",
+	condition:{
+		from:{year:2000,month:1},
+		to:{year:194,month:1},
+		seignior:[1,21],
+		generals:[
+			{id:451,seignior:0,cityId:25, captive:1},//下坯有俘虏吕布
+			{id:21,seignior:21},//刘备未灭亡
+		],
+		citys:[
+			{id:25,seignior:451},//下坯属陶谦
+			{id:35,seignior:[0,451]},//小沛属陶谦或者无势力
+		]
+	},
+	script:"Data/Event/{0}/lbym.txt",
+	result:[
+		{type:"changeCitySeignior", cityId:25, seignior:21},//小沛属刘备
+		{type:"moveGeneralsToCity", generals:[4,19,21], to:25},//刘关张移往小沛
+		{type:"stopBattle", seigniors:[21,451], month:12}//刘备和陶谦停战1年
+	]
+},
+{
+	id:17,
+	name:"赤壁之战",
+	condition:{
+		from:{year:2000,month:1},
+		to:{year:194,month:1},
+		seignior:[1,21],
+		generals:[
+			{id:451,seignior:0,cityId:25, captive:1},//下坯有俘虏吕布
+			{id:21,seignior:21},//刘备未灭亡
+		],
+		citys:[
+			{id:25,seignior:451},//下坯属陶谦
+			{id:35,seignior:[0,451]},//小沛属陶谦或者无势力
+		]
+	},
+	script:"Data/Event/{0}/lbym.txt",
+	result:[
+		{type:"changeCitySeignior", cityId:25, seignior:21},//小沛属刘备
+		{type:"moveGeneralsToCity", generals:[4,19,21], to:25},//刘关张移往小沛
+		{type:"stopBattle", seigniors:[21,451], month:12}//刘备和陶谦停战1年
+	]
+},
+{
+	id:18,
+	name:"士别三日",
+	condition:{
+		from:{year:207,month:1},
+		to:{year:210,month:12},
+		seignior:17,
+		generals:[
+			{id:13,seignior:17},
+			{id:82,seignior:17}
+		],
+		citys:[
+		]
+	},
+	script:"Data/Event/{0}/sbsr.txt",
+	result:[{type:"reputation",generals:[13],reputation:2}],
+},
+{
+	id:19,
+	name:"西凉锦马超",
+	condition:{
+		from:{year:2000,month:1},
+		to:{year:210,month:12},
+		seignior:17,
+		generals:[
+			{id:13,seignior:17},
+			{id:82,seignior:17}
+		],
+		citys:[
+		]
+	},
+	script:"Data/Event/{0}/sbsr.txt",
+	result:[{type:"reputation",generals:[13],reputation:2}],
+},
+{
+	id:20,
+	name:"失荆州",
+	condition:{
+		from:{year:2000,month:1},
+		to:{year:194,month:1},
+		seignior:1,
+		generals:[
+			{id:4,seignior:0,city:25},
+			{id:2,seignior:1},
+			{id:3,seignior:1}
+		],
+		citys:[
+			{id:25,seignior:1},
+		]
+	},
+	script:"Data/Event/{0}/sgml3.txt",
+	result:[
+		{id:4,seignior:1,city:25},
+	]
+},
+{
+	id:21,
+	name:"七擒孟获",
+	condition:{
+		from:{year:2000,month:1},
+		to:{year:194,month:1},
+		seignior:1,
+		generals:[
+			{id:4,seignior:0,city:25},
+			{id:2,seignior:1},
+			{id:3,seignior:1}
+		],
+		citys:[
+			{id:25,seignior:1},
+		]
+	},
+	script:"Data/Event/{0}/sgml3.txt",
+	result:[
+		{id:4,seignior:1,city:25},
+	]
+},
+{
+	id:22,
+	name:"出师表",
+	condition:{
+		from:{year:2000,month:1},
+		to:{year:194,month:1},
+		seignior:1,
+		generals:[
+			{id:4,seignior:0,city:25},
+			{id:2,seignior:1},
+			{id:3,seignior:1}
+		],
+		citys:[
+			{id:25,seignior:1},
+		]
+	},
+	script:"Data/Event/{0}/sgml3.txt",
+	result:[
+		{id:4,seignior:1,city:25},
+	]
+},
+{
+	id:23,
+	name:"蜀灭亡",
+	condition:{
+		from:{year:2000,month:1},
+		to:{year:194,month:1},
+		seignior:1,
+		generals:[
+			{id:4,seignior:0,city:25},
+			{id:2,seignior:1},
+			{id:3,seignior:1}
+		],
+		citys:[
+			{id:25,seignior:1},
+		]
+	},
+	script:"Data/Event/{0}/sgml3.txt",
+	result:[
+		{id:4,seignior:1,city:25},
+	]
+},
+{
+	id:24,
+	name:"五虎上将",
+	condition:{
+		seignior:0,
+		generals:[
+		],
+		feat_generals:{feat:10000,count:5,force:90},
+		citys:[
+		]
+	},
+	script:"Data/Event/{0}/whsj.txt",
+	result:[{type:"reputation",generals:[],reputation:1}]
+},
+{
+	id:25,
 	name:"结局:蛮族入侵",//蛮族入侵,战乱四起,最终灭亡
 	condition:{
 		seignior:0,
@@ -214,11 +521,11 @@ var EventListConfig = [
 		clear:1,
 		tribe:{from:5, to:10}
 	},
-	script:"Data/Event/jieju2.txt",
+	script:"Data/Event/{0}/jieju2.txt",
 	result:[{type:"gameClear"}]
 },
 {
-	id:12,
+	id:26,
 	name:"结局:远征蛮族",//远征蛮族,平定蛮族,蛮族年年进贡
 	condition:{
 		seignior:0,
@@ -229,11 +536,11 @@ var EventListConfig = [
 		clear:1,
 		tribe:{from:1,to:2}
 	},
-	script:"Data/Event/jieju1.txt",
+	script:"Data/Event/{0}/jieju1.txt",
 	result:[{type:"gameClear"}]
 },
 {
-	id:13,
+	id:27,
 	name:"结局:昏君",//平均治安90以下,纸醉金迷，灭亡
 	condition:{
 		seignior:0,
@@ -245,11 +552,11 @@ var EventListConfig = [
 		tribe:{from:0,to:0},
 		police:{from:0,to:89}
 	},
-	script:"Data/Event/jieju3.txt",
+	script:"Data/Event/{0}/jieju3.txt",
 	result:[{type:"gameClear"}]
 },
 {
-	id:14,
+	id:28,
 	name:"结局:贤君",//平均治安90以上,天下太平
 	condition:{
 		seignior:0,
@@ -261,7 +568,7 @@ var EventListConfig = [
 		tribe:{from:0,to:0},
 		police:{from:90,to:100}
 	},
-	script:"Data/Event/jieju3.txt",
+	script:"Data/Event/{0}/jieju3.txt",
 	result:[{type:"gameClear"}]
 }
 ];

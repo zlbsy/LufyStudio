@@ -319,14 +319,23 @@ CharacterModel.prototype.isTribeCharacter = function() {
 	return this.id() >= TribeCharacter[0] && this.id() <= TribeCharacter[1];
 };
 CharacterModel.prototype.reputation = function() {
-	return this.data.reputation;
+	var self = this;
+	var reputation = self.data.reputation || [];
+	if(!self._reputation || self._reputation.length != reputation.length){
+		self._reputation = [];
+		for(var i=0;i<reputation.length;i++){
+			var reputationModel = ReputationModel.getReputation(reputation[i]);
+			self._reputation.push(reputationModel);
+		}
+	}
+	return self._reputation;
 };
 CharacterModel.prototype.reputationLabel = function() {
 	var self = this;
 	var reputation = self.reputation();
 	var label = "", add = "";
 	for(var i=0;i<reputation.length;i++){
-		label += (add + Language.get(reputation[i]));
+		label += (add + Language.get(reputation[i].name()));
 		add = "、";
 	}
 	return label;

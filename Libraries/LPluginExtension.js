@@ -50,7 +50,7 @@ LPlugin.setCharacter = function(charaData){
 };
 LPlugin.SetData = function(key,data){
 	if(LPlugin.writeToFile){
-		LPlugin.writeToFile(key, JSON.stringify(data));
+		LPlugin.writeToFileInDomain(key, JSON.stringify(data));
 	}else{
 		window.localStorage.setItem(key, JSON.stringify(data));
 	}
@@ -58,15 +58,42 @@ LPlugin.SetData = function(key,data){
 LPlugin.GetData = function(key, defaultData){
 	var data;
 	if(LPlugin.readFile){
-		data = LPlugin.readFile(key);
+		data = LPlugin.readFileInDomain(key);
 	}else{
 		data = window.localStorage.getItem(key);
 	}
 	if(!data){
-		return defaultData ? defaultData : {};
+		return (typeof defaultData != UNDEFINED) ? defaultData : {};
 	}
 	return JSON.parse(data);
 };
+LPlugin.languageDefault = "chinese";
+LPlugin.language = function(value){
+	if(typeof value !== UNDEFINED){
+		LPlugin.SetData("language", value);
+		return;
+	}
+	if(LPlugin._language){
+		return LPlugin._language;
+	}
+	LPlugin._language = LPlugin.GetData("language", null);
+	if(!LPlugin._language){
+		var languages = {
+			"japanese":"japanese",
+			"ja-JP":"japanese"
+		};
+		LPlugin._language = languages[LPlugin.preferredLanguage()];
+		if(!LPlugin._language){
+			return LPlugin.languageDefault;
+		}
+	}
+	return LPlugin._language;
+};
+if(!LPlugin.preferredLanguage){
+	LPlugin.preferredLanguage = function(){
+		return LPlugin.languageDefault;
+	};
+}
 LPlugin.volumeSE = 0;
 LPlugin.volumeBGM = 0;
 LPlugin.sounds = {};

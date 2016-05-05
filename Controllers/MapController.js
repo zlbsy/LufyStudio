@@ -10,19 +10,19 @@ MapController.prototype.construct=function(){
 };
 MapController.prototype.configLoad=function(){
 	var self = this;
-	self.load.config(["Character","characterList","Job","Items","Event","Strategy","Soldiers"],self.helperLoad);
+	self.load.config(["Character","characterList","Job","Items","Event","Strategy","Soldiers","Reputation"],self.helperLoad);
 };
 MapController.prototype.helperLoad=function(){
 	var self = this;
-	self.load.helper(["Talk","CommonHelper"],self.modelLoad);
+	self.load.helper(["Talk","CommonHelper","EventListHelper"],self.modelLoad);
 };
 MapController.prototype.modelLoad=function(){
 	var self = this;
-	self.load.model(["Master/Area","Master/Seignior","Master/Character","Master/ItemMaster","Items/Item","Master/StrategyMaster","Master/Strategy"],self.libraryLoad);
+	self.load.model(["Master/Area","Master/Seignior","Master/Character","Master/ItemMaster","Items/Item","Master/StrategyMaster","Master/Strategy","Master/Reputation"],self.libraryLoad);
 };
 MapController.prototype.libraryLoad=function(){
 	var self = this;
-	var libraris = ["language/chinese/LanguageAll","SeigniorExecute","SgjComboBoxChild"];
+	var libraris = [String.format("language/{0}/LanguageAll",LPlugin.language()),"SeigniorExecute","SgjComboBoxChild"];
 	self.load.library(libraris,self.viewLoad);
 };
 MapController.prototype.viewLoad=function(){
@@ -38,6 +38,7 @@ MapController.prototype.getAreaData=function(){
 	CharacterModel.setChara(characterList);
 	ItemMasterModel.setMaster(ItemDatas);
 	StrategyMasterModel.setMaster(StrategyDatas);
+	ReputationModel.setReputation(reputationConfig);
 	if(LMvc.isRead){
 		gameDataInit();
 		self.getImages();
@@ -67,6 +68,34 @@ MapController.prototype.init=function(status){
 	LPlugin.playBGM("map", LPlugin.volumeBGM);
 	self.addEventListener(CharacterListEvent.SHOW, self.view.hideMapLayer);
 	self.addEventListener(CharacterListEvent.CLOSE, self.view.showMapLayer);
+	
+	if(!LMvc.chapterData.eventEnd){
+		LMvc.keepLoading(true);
+		self.loadMvc("EventMap",self.eventMapComplete);
+		LMvc.chapterData.eventEnd = true;
+	}
+};
+MapController.prototype.eventMapComplete = function() {
+	var self = this;
+	var urlloader = new LURLLoader();
+	urlloader.parent = self;
+	urlloader.addEventListener(LEvent.COMPLETE, self.eventEndRun);
+	urlloader.load("Data/"+LMvc.dataFolder+"/event.js" + (LGlobal.traceDebug ? ("?" + (new Date()).getTime()) : ""), LURLLoader.TYPE_JS);
+};
+MapController.prototype.eventEndRun = function(event) {
+	var urlloader = event.currentTarget;
+	var self = urlloader.parent;
+	urlloader.removeEventListener(LEvent.COMPLETE, self.eventEndRun);
+	LMvc.keepLoading(false);
+	dispatchEventListResult(null, LMvc.startEvent);
+	if(LMvc.startEvent.script){
+		var path = String.format(LMvc.startEvent.script,LPlugin.language());
+		var script = "";
+		script += "SGJEvent.init();";
+		script += "Load.script("+path+");";
+		script += "SGJEvent.end();";
+		LGlobal.script.addScript(script);
+	}
 };
 MapController.prototype.returnToChapter=function(event){
 	var self = event.currentTarget.parent.parent.controller;

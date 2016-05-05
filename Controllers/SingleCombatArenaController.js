@@ -14,7 +14,7 @@ SingleCombatArenaController.prototype.configLoad=function(){
 };
 SingleCombatArenaController.prototype.libraryLoad=function(){
 	var self = this;
-	var libraris = ["BitmapSprite","Face","SeigniorExecute","language/chinese/LanguageAll"];
+	var libraris = ["BitmapSprite","Face","SeigniorExecute",String.format("language/{0}/LanguageAll",LPlugin.language())];
 	self.load.library(libraris,self.modelLoad);
 };
 SingleCombatArenaController.prototype.modelLoad=function(){

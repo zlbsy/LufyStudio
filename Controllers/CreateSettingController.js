@@ -18,7 +18,7 @@ CreateSettingController.prototype.configLoad2=function(){
 CreateSettingController.prototype.libraryLoad=function(){
 	var self = this;
 	var libraris = ["Face","SgjComboBoxChild"];
-	libraris.push("language/chinese/LanguageAll");
+	libraris.push(String.format("language/{0}/LanguageAll",LPlugin.language()));
 	self.load.library(libraris, self.modelLoad);
 };
 CreateSettingController.prototype.modelLoad=function(){

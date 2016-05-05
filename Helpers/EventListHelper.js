@@ -57,6 +57,9 @@ function checkEventList() {
 		if(currentEvent.condition.seignior > 0 && LMvc.selectSeignorId != currentEvent.condition.seignior){
 			continue;
 		}
+		if(currentEvent.condition.noSeignior > 0 && LMvc.selectSeignorId == currentEvent.condition.noSeignior){
+			continue;
+		}
 		var generalsOk = true;
 		var generals = currentEvent.condition.generals;
 		for(var j=0;j<generals.length;j++){
@@ -65,6 +68,23 @@ function checkEventList() {
 			if(character.seigniorId() != general.seignior){
 				generalsOk = false;
 				break;
+			}
+			if(general.cityId){
+				if(character.cityId() != general.cityId){
+					generalsOk = false;
+					break;
+				}
+				if(general.captive){
+					var city = character.city();
+					var captives = city.captives();
+					var index = captives.findIndex(function(child){
+						return child.id() == general.id;
+					});
+					if(index < 0){
+						generalsOk = false;
+						break;
+					}
+				}
 			}
 		}
 		if(!generalsOk){
@@ -75,9 +95,19 @@ function checkEventList() {
 		for(var j=0;j<citys.length;j++){
 			var city = citys[j];
 			var cityModel = AreaModel.getArea(city.id);
-			if(cityModel.seigniorCharaId() != city.seignior){
-				citysOk = false;
-				break;
+			if(typeof city.seignior == "number"){
+				if(cityModel.seigniorCharaId() != city.seignior){
+					citysOk = false;
+					break;
+				}
+			}else{
+				var index = city.seignior.findIndex(function(child){
+					return child === city.id;
+				});
+				if(index < 0){
+					citysOk = false;
+					break;
+				}
 			}
 		}
 		if(!citysOk){
@@ -140,21 +170,23 @@ function dispatchEventList(currentEvent) {
 			script += String.format("Var.set({0},{1});", param.n, param.v);
 		}
 	}
+	var path = String.format(currentEvent.script,LPlugin.language());
 	script += "SGJEvent.init();";
-	script += "Load.script("+currentEvent.script+");";
+	script += "Load.script("+path+");";
 	script += "SGJEvent.dispatchEventListResult("+currentEvent.id+");";
 	script += "SGJEvent.end();";
 	LGlobal.script.addScript(script);
 }
-function dispatchEventListResult(eventId) {
-	if(!SeigniorExecute.running){
+function dispatchEventListResult(eventId, currentEvent) {
+	/*if(!SeigniorExecute.running){
 		LGlobal.script.analysis();
 		return;
+	}*/
+	if(eventId){
+		currentEvent = EventListConfig.find(function(child) {
+			return child.id == eventId;
+		});
 	}
-	var currentEvent = EventListConfig.find(function(child) {
-		return child.id == eventId;
-	});
-	
 	for(var i=0,l=currentEvent.result.length;i<l;i++){
 		var child = currentEvent.result[i];
 		switch(child.type){
@@ -169,7 +201,9 @@ function dispatchEventListResult(eventId) {
 				break;
 		}
 	}
-	LGlobal.script.analysis();
+	if(eventId){
+		LGlobal.script.analysis();
+	}
 }
 function dispatchEventListResultReputation(child) {
 	var generals = child.generals;

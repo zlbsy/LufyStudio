@@ -381,7 +381,6 @@ function calculateStrategyCharasCorrection(currentChara){
  特技的法术蔓延范围计算
  **************************************************************/
 function calculateSpreadPoints(skill, ranges){
-	testCount = 0;
 	var points = ranges.concat();
 	var speadRects = skill.speadRects();
 	var speadProbability = skill.speadProbability();
@@ -395,7 +394,6 @@ function calculateSpreadPoints(skill, ranges){
 	return points;
 }
 function calculateSpreadPointsLoop(x, y, points, speadRects, speadProbability, loops, pointsCheck){
-	//console.log("PointsLoop("+(testCount++)+"):"+x+","+y+":"+speadProbability+"l="+points.length);
 	if(loops > 2 || pointsCheck[x+","+y])return;
 	if(Math.random() > speadProbability){
 		return;
