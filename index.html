@@ -33,6 +33,9 @@ and open the template in the editor.
 		LGlobal.aspectRatio = PORTRAIT;
         init(1000/30,"mvclegend",480,800,main);
 		function main(){
+			if(typeof LPurchaseInit == "function"){
+				LPurchaseInit();
+			}
 			LGlobal.setDebug(true);
 			if(LGlobal.mobile){
 				LGlobal.width = 480;
