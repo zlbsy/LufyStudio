@@ -31,10 +31,18 @@ LogoView.prototype.construct=function(){
 	layerChara.addChild(bitmapChara);
 	self.layerChara = layerChara;
 	
+	self.mainMenuLayer = new LSprite();
+	self.addChild(self.mainMenuLayer);
 };
 LogoView.prototype.updateView = function(){
 	var self = this;
+	self.mainMenuLayer.removeAllChild();
 	self.showMenu();
+};
+LogoView.prototype.changeLanguage=function(event){
+	var button = event.currentTarget;
+	var self = button.getParentByConstructor(LogoView);
+	self.controller.changeLanguage(button.language);
 };
 LogoView.prototype.showMenu=function(){
 	var self = this;
@@ -49,11 +57,13 @@ LogoView.prototype.showMenu=function(){
 	layer.addChild(title);
 	
 	layer.graphics.drawRect(0,"#000000",[0,0,layer.getWidth() * 1.2,layer.getHeight()*1.2]);
-	self.addChild(getBitmap(layer));
+	layer.cacheAsBitmap(true);
+	self.mainMenuLayer.addChild(layer);
+	//self.mainMenuLayer.addChild(getBitmap(layer));
 	
 	var menuLayer = new LSprite();
 	menuLayer.x = menuLayer.tx = (LGlobal.width - 200) * 0.5;
-	self.addChild(menuLayer);
+	self.mainMenuLayer.addChild(menuLayer);
 	
 	var buttonStart = getButton(Language.get("game_start"),200);
 	buttonStart.y = menuY;
@@ -88,6 +98,23 @@ LogoView.prototype.showMenu=function(){
 	buttonCreate.addEventListener(LMouseEvent.MOUSE_UP, self.createCharacterChick);
 	
 	menuY += menuHeight * 2;
+	var buttonChinese = getButton(Language.get("chinese"),100,LPlugin.language() == LPlugin.languageDefault?"win07":"win01");
+	buttonChinese.language = "chinese";
+	buttonChinese.x = 100 - LGlobal.width*0.5;
+	buttonChinese.y = menuY-buttonChinese.getHeight();
+	menuLayer.addChild(buttonChinese);
+	var buttonJapanese = getButton(Language.get("japanese"),100,LPlugin.language() == LPlugin.languageDefault?"win01":"win07");
+	buttonJapanese.language = "japanese";
+	buttonJapanese.x = 200 - LGlobal.width*0.5;
+	buttonJapanese.y = menuY-buttonJapanese.getHeight();
+	menuLayer.addChild(buttonJapanese);
+	if(LPlugin.language() == LPlugin.languageDefault){
+		buttonChinese.staticMode = true;
+		buttonJapanese.addEventListener(LMouseEvent.MOUSE_UP, self.changeLanguage);
+	}else{
+		buttonJapanese.staticMode = true;
+		buttonChinese.addEventListener(LMouseEvent.MOUSE_UP, self.changeLanguage);
+	}
 	menuLayer.y = LGlobal.height - menuY;
 	
 	self.topMenuLayer = menuLayer;

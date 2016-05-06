@@ -36,6 +36,15 @@ LogoController.prototype.languageLoad=function(){
 	var list = [String.format("language/{0}/LanguageSimple",LPlugin.language())];
 	self.load.library(list,self.modelLoad);
 };
+LogoController.prototype.changeLanguage=function(language){
+	var self = this;
+	LPlugin.language(language);
+	var list = [String.format("language/{0}/LanguageSimple",language)];
+	self.load.library(list,self.changeLanguageComplete);
+};
+LogoController.prototype.changeLanguageComplete=function(){
+	this.dispatchEvent(LController.NOTIFY);
+};
 LogoController.prototype.modelLoad=function(){
 	var self = this;
 	var volumeSetting = LPlugin.GetData("volumeSetting");

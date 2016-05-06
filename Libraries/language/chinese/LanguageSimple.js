@@ -13,6 +13,8 @@ Language.dataSimple = {
 	"create_character":"武将作成",
 	"create_character_debut":"新武将登场",
 	"create_character_setting":"新势力设置",
+	"chinese":"中文",
+	"japanese":"日本語",
 	"return":"返回",
 	"city":"城池",
 	"generals":"武将",

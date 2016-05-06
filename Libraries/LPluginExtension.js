@@ -71,6 +71,7 @@ LPlugin.languageDefault = "chinese";
 LPlugin.language = function(value){
 	if(typeof value !== UNDEFINED){
 		LPlugin.SetData("language", value);
+		LPlugin._language = value;
 		return;
 	}
 	if(LPlugin._language){
