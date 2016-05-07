@@ -55,7 +55,7 @@ var EventListConfig = [
 			{id:22,seignior:265}
 		]
 	},
-	script:"Data/Event/{0}/hsly.txt",
+	script:"Data/Event/{0}/qdca.txt",
 	result:[
 		{type:"moveGeneralsToCity", generals:[], from:22, to:12},//洛阳武将全部移往长安
 		{type:"moveCityResources", from:22, to:12},//洛阳资源全部移往长安
@@ -103,7 +103,7 @@ var EventListConfig = [
 			{id:35,seignior:[0,451]},//小沛属陶谦或者无势力
 		]
 	},
-	script:"Data/Event/{0}/lbym.txt",
+	script:"Data/Event/{0}/bcxh.txt",
 	result:[
 		{type:"changeCitySeignior", cityId:25, seignior:21},//小沛属刘备
 		{type:"moveGeneralsToCity", generals:[4,19,21], to:25},//刘关张移往小沛

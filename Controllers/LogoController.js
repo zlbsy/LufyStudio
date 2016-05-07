@@ -81,12 +81,15 @@ LogoController.prototype.start=function(event){
 	LPlugin.openEvent(3);*/
 	
 	if(LPlugin.native){
+		LMvc.keepLoading(true);
 		if(!LPlugin.GetData("purchaseLog"), null){
-			LMvc.keepLoading(true);
 			LMvc.changeLoading(TranslucentLoading);
 			purchaseLogGet(function(){
-				LMvc.keepLoading(false);
+				self.updateCheck();
+				//LMvc.keepLoading(false);
 			});
+		}else{
+			self.updateCheck();
 		}
 	}else{
 		LPlugin.SetData("purchaseLog", []);
@@ -141,6 +144,11 @@ LogoController.prototype.start=function(event){
 LogoController.prototype.soundComplete = function(result){
 	LPlugin.soundData = result;
 	console.log(result);
+};
+LogoController.prototype.updateCheck = function(){
+	LAjax.post("http://d.lufylegend.com/update/test.php",{},function(data){
+		console.log(data);
+	});
 };
 LogoController.prototype.loadChapterList = function(){
 	var self = this;

@@ -12,3 +12,4 @@ void setJSVinJSC(JSContext *ctx, NSString *key, id val);
 void setB0JSVinJSC(JSContext *ctx, NSString *key,id(^block)());
 void setB1JSVinJSC(JSContext *ctx, NSString *key,id(^block)(id));
 void setB2JSVinJSC(JSContext *ctx, NSString *key,id(^block)(id,id));
+void setB3JSVinJSC(JSContext *ctx, NSString *key,id(^block)(id,id,id));

@@ -6,10 +6,13 @@ LPlugin.playSE = playSE;
 LPlugin.playBGM = playBGM;
 LPlugin.readFile = readFile;
 LPlugin.writeToFile = writeToFile;
+LPlugin.readFileInDomain = readFileInDomain;
+LPlugin.writeToFileInDomain = writeToFileInDomain;
+LPlugin.preferredLanguage = preferredLanguage;
 LPlugin.print = myPrint;
 
 function LPurchaseInit() {
-	function LPurchase() {
+    function LPurchase() {
 		LExtends(this, LEventDispatcher, []);
 	}
 	LPurchase.Instance = function() {
@@ -36,13 +39,27 @@ function LPurchaseInit() {
 		event.message = data;
 		LPurchase.Instance().dispatchEvent(event);
 	};
-	window['LPurchase'] = LPurchase;
+	LURLLoader.prototype.ll_load_base = LURLLoader.prototype.load;
+	LURLLoader.prototype.load = function(u, t){
+		var s = this;
+		if (t == LURLLoader.TYPE_TEXT || (!t && getExtension(u) == "txt")) {
+			s.loadtype = LURLLoader.TYPE_TEXT;
+			var extension = getExtension(u);
+			var extensionIndex = u.indexOf("." + extension);
+			var pathIndex = u.indexOf("./");
+			if(pathIndex == 0){
+				pathIndex = 2;
+			}
+			var data = LPlugin.readFile(u.substring(pathIndex, extensionIndex), extension);
+			var event = new LEvent(LEvent.COMPLETE);
+			s.data = data;
+			event.currentTarget = s;
+			event.target = data;
+			s.dispatchEvent(event);
+			delete s.content;
+			delete s.data;
+		}else{
+			s.ll_load_base(u, t);
+		}
+	};
 }
-
-(function LPurchaseInitReady() {
-	if (document.readyState === "complete") {
-		LPurchaseInit();
-		return;
-	}
-	setTimeout(LPurchaseInitReady, 10);
-})();

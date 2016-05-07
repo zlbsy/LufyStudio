@@ -20,6 +20,9 @@ extension JSContext {
     func setb2(key:String, _ blk:(ID,ID)->ID) {
         setB2JSVinJSC(self, key, blk)
     }
+    func setb3(key:String, _ blk:(ID,ID,ID)->ID) {
+        setB3JSVinJSC(self, key, blk)
+    }
 }
 class Lufylegend : XXXPurchaseManagerDelegate{
     var GAME_PATH = ""
@@ -68,7 +71,7 @@ class Lufylegend : XXXPurchaseManagerDelegate{
             print("Error :: getting the audio file : " + name)
         }
     }
-    func writeToFile(name : String, data : String) -> Bool{
+    func writeToFileInDomain(name : String, data : String) -> Bool{
         let paths = NSSearchPathForDirectoriesInDomains(
             .DocumentDirectory,
             .UserDomainMask, true)
@@ -82,7 +85,7 @@ class Lufylegend : XXXPurchaseManagerDelegate{
         }
         return false
     }
-    func deleteFile(name : String) -> Bool{
+    func deleteFileInDomain(name : String) -> Bool{
         let paths = NSSearchPathForDirectoriesInDomains(
             .DocumentDirectory,
             .UserDomainMask, true)
@@ -99,7 +102,7 @@ class Lufylegend : XXXPurchaseManagerDelegate{
         }
         return false
     }
-    func readFile(name : String) -> String{
+    func readFileInDomain(name : String) -> String{
         let paths = NSSearchPathForDirectoriesInDomains(
             .DocumentDirectory,
             .UserDomainMask, true)
@@ -108,14 +111,54 @@ class Lufylegend : XXXPurchaseManagerDelegate{
         var data = "";
         let manager = NSFileManager()
         if(!manager.fileExistsAtPath(file_name)){
-            return data;
+            return data
         }
         do {
             data = (try NSString( contentsOfFile: file_name, encoding: NSUTF8StringEncoding )) as String
         } catch {
             print("Error :: getting the file : " + file_name)
         }
-        return data;
+        return data
+    }
+    func readFile(name : String, extensionType : String) -> String{
+        print("readFile GAME_PATH + name : " + (GAME_PATH + name))
+        let path = NSBundle.mainBundle().pathForResource(GAME_PATH + name, ofType: extensionType)!
+        print("readFile path : " + path)
+
+        let manager = NSFileManager()
+        if(!manager.fileExistsAtPath(path)){
+            return ""
+        }
+        if let data = NSData(contentsOfFile: path){
+            var data = String(NSString(data: data, encoding: NSUTF8StringEncoding)!)
+            data = data.stringByReplacingOccurrencesOfString("\n", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
+            print("readFile data : " + data)
+            return data;
+        }
+        print("Error :: getting the file : " + path)
+        return ""
+    }
+    func writeToFile(name : String, extensionType : String, data : String) -> Bool{
+        print("writeToFile name : " + name)
+        print("writeToFile extensionType : " + extensionType)
+        print("writeToFile data : " + data)
+        print("writeToFile GAME_PATH + name : " + (GAME_PATH + name))
+        let path = NSBundle.mainBundle().pathForResource(GAME_PATH + name, ofType: extensionType)!
+        print("writeToFile path : " + path)
+        do {
+            try data.writeToFile( path, atomically: false, encoding: NSUTF8StringEncoding )
+            return true
+        } catch {
+            print("Error :: can't save to file : " + path)
+        }
+        return false
+    }
+    func preferredLanguage() -> String{
+        print("preferredLanguage Run")
+        let languages = NSLocale.preferredLanguages()
+        let language = languages.first!
+        print("preferredLanguage language="+language)
+        return language
     }
     func contextInit(c : JSContext){
         context = c
@@ -127,11 +170,17 @@ class Lufylegend : XXXPurchaseManagerDelegate{
             self.playBGM(seName as! String, volume: volume as! Float)
             return ""
         })
-        context.setb1("readFile", {(name:AnyObject!)->AnyObject in
-            return self.readFile(name as! String)
+        context.setb2("readFile", {(name:AnyObject!, extensionType:AnyObject!)->AnyObject in
+            return self.readFile(name as! String, extensionType: extensionType as! String)
         })
-        context.setb2("writeToFile", {(name:AnyObject!, data:AnyObject!)->AnyObject in
-            return self.writeToFile(name as! String, data: data as! String)
+        context.setb3("writeToFile", {(name:AnyObject!, extensionType:AnyObject!, data:AnyObject!)->AnyObject in
+            return self.writeToFile(name as! String, extensionType: extensionType as! String, data: data as! String)
+        })
+        context.setb1("readFileInDomain", {(name:AnyObject!)->AnyObject in
+            return self.readFileInDomain(name as! String)
+        })
+        context.setb2("writeToFileInDomain", {(name:AnyObject!, data:AnyObject!)->AnyObject in
+            return self.writeToFileInDomain(name as! String, data: data as! String)
         })
         context.setb1("purchaseLog", {(complete:AnyObject!)->AnyObject in
             self.purchaseLog()
@@ -149,6 +198,10 @@ class Lufylegend : XXXPurchaseManagerDelegate{
             print(data as! String)
             return ""
         })
+        context.setb0("preferredLanguage", {()->AnyObject in
+            print("setb0 preferredLanguage")
+            return self.preferredLanguage()
+        })
         
         let path = NSBundle.mainBundle().pathForResource("lufylegend.swift", ofType: "js")!
         if let data = NSData(contentsOfFile: path){
@@ -156,8 +209,7 @@ class Lufylegend : XXXPurchaseManagerDelegate{
             strScript = strScript.stringByReplacingOccurrencesOfString("\n", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
             context.evaluateScript(strScript)
         }
-        //let value:JSValue = context.objectForKeyedSubscript("console")
-        //print(value.toString())
+        
     }
     func purchaseLog(){
         if let receiptUrl: NSURL = NSBundle.mainBundle().appStoreReceiptURL {

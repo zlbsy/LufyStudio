@@ -28,3 +28,8 @@ void setB2JSVinJSC(
                    ){
     ctx[key] = block;
 }
+void setB3JSVinJSC(
+                   JSContext *ctx, NSString *key, id (^block)(id, id, id)
+                   ){
+    ctx[key] = block;
+}
