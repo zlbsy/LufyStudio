@@ -6,7 +6,14 @@ function BitmapSprite(src, rect, size){
 	loader = new LLoader();
 	loader.parent = self;
 	loader.addEventListener(LEvent.COMPLETE,self.loadOver);
-	loader.load((src.indexOf(LMvc.IMG_PATH) >= 0 ? "" : LMvc.IMG_PATH)+src + (src.indexOf('?') >= 0 ? '&' : '?') + 't=' + (new Date()).getTime(),"bitmapData");
+	var isBase64 = (src.indexOf(";base64,") > 0);
+	if(!isBase64){
+		src = (src.indexOf(LMvc.IMG_PATH) >= 0 ? "" : LMvc.IMG_PATH) + src;
+		if(LGlobal.traceDebug){
+			src += (src.indexOf('?') >= 0 ? '&' : '?') + 't=' + getTimer();
+		}
+	}
+	loader.load(src,"bitmapData");
 }
 BitmapSprite.prototype.loadOver = function(event){
 	var self = event.currentTarget.parent;

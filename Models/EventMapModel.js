@@ -5,7 +5,7 @@ EventMapModel.prototype.construct=function(){
 	var self = this;
 };
 EventMapModel.prototype.mapPath=function(mapIndex){
-	return String.format("./images/rmap/{0}.png", mapIndex);
+	return String.format("{0}rmap/{1}.png", LMvc.IMG_PATH, mapIndex);
 };
 /*
 

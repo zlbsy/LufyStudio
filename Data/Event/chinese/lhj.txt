@@ -1,0 +1,3 @@
+SGJEvent.mapShow(1);
+SGJEvent.messageShow(王允连环计。,3);
+Mark.EventEnd;

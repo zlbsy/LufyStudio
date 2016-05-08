@@ -74,16 +74,20 @@ function checkEventList() {
 					generalsOk = false;
 					break;
 				}
-				if(general.captive){
-					var city = character.city();
-					var captives = city.captives();
-					var index = captives.findIndex(function(child){
-						return child.id() == general.id;
-					});
-					if(index < 0){
-						generalsOk = false;
-						break;
-					}
+			}
+			if(general.captive){
+				var city = character.city();
+				if(city.seigniorCharaId() != general.captive){
+					generalsOk = false;
+					break;
+				}
+				var captives = city.captives();
+				var index = captives.findIndex(function(child){
+					return child.id() == general.id;
+				});
+				if(index < 0){
+					generalsOk = false;
+					break;
 				}
 			}
 		}
@@ -113,6 +117,24 @@ function checkEventList() {
 		if(!citysOk){
 			continue;
 		}
+		
+		var stopBattleOk = true;
+		var stopBattle = currentEvent.condition.stopBattle;
+		if(stopBattle){
+			for(var j=0;j<stopBattle.length;j++){
+				var seignior1 = stopBattle[j][0];
+				var seignior2 = stopBattle[j][1];
+				var seignior = SeigniorModel.getSeignior(seignior1);
+				if(!seignior.isStopBattle(seignior2)){
+					stopBattleOk = false;
+					break;
+				}
+			}
+		}
+		if(!stopBattleOk){
+			continue;
+		}
+		
 		var feat_generals = currentEvent.condition.feat_generals;
 		if(feat_generals){
 			if(SeigniorModel.list[SeigniorExecute.Instance().seigniorIndex].chara_id() != LMvc.selectSeignorId){
@@ -178,10 +200,6 @@ function dispatchEventList(currentEvent) {
 	LGlobal.script.addScript(script);
 }
 function dispatchEventListResult(eventId, currentEvent) {
-	/*if(!SeigniorExecute.running){
-		LGlobal.script.analysis();
-		return;
-	}*/
 	if(eventId){
 		currentEvent = EventListConfig.find(function(child) {
 			return child.id == eventId;
@@ -190,19 +208,158 @@ function dispatchEventListResult(eventId, currentEvent) {
 	for(var i=0,l=currentEvent.result.length;i<l;i++){
 		var child = currentEvent.result[i];
 		switch(child.type){
-			case "stopBattle":
+			case "stopBattle"://停战
 				dispatchEventListResultStopBattle(child);
 				break;
-			case "changeSeignior":
+			case "changeSeignior"://武将势力变更
 				dispatchEventListResultChangeSeignior(child);
 				break;
-			case "reputation":
+			case "reputation"://称号
 				dispatchEventListResultReputation(child);
+				break;
+			case "moveGeneralsToCity"://武将移动到城池
+				dispatchEventListResultMoveGeneralsToCity(child);
+				break;
+			case "moveCityResources"://资源移动
+				dispatchEventListResultMoveCityResources(child);
+				break;
+			case "changeCitySeignior"://城池势力变更
+				dispatchEventListResultChangeCitySeignior(child);
+				break;
+			case "changeCityResources"://资源变更
+				dispatchEventListResultChangeCityResources(child);
+				break;
+			case "generalsDie"://武将死亡
+				dispatchEventListResultGeneralsDie(child);
+				break;
+			case "monarchDie"://君主死亡
+				dispatchEventListResultMonarchDie(child);
+				break;
+			case "captiveDie"://处死俘虏
+				dispatchEventListResultCaptiveDie(child);
+				break;
+			case "moveGeneralsToSeignior"://武将移动到势力
+				dispatchEventListResultMoveGeneralsToSeignior(child);
+				break;
+			case "seigniorToSeignior"://势力归属到另一势力
+				dispatchEventListResultSeigniorToSeignior(child);
+				break;
+			case "changePrefecture"://太守变更
+				dispatchEventListResultChangePrefecture(child);
 				break;
 		}
 	}
 	if(eventId){
 		LGlobal.script.analysis();
+	}
+}
+function dispatchEventListResultCaptiveDie(child) {
+	for(var i=0,l=child.captives.length;i<l;i++){
+		var chara = CharacterModel.getChara(child.captives[i]);
+		chara.toDie();
+	}
+}
+function dispatchEventListResultChangePrefecture(child) {
+	var city = AreaModel.getArea(child.cityId);
+	city.prefecture(child.prefecture);
+}
+function dispatchEventListResultSeigniorToSeignior(child) {
+	var seigniorFrom = SeigniorModel.getSeignior(child.from);
+	var seigniorTo = SeigniorModel.getSeignior(child.to);
+	var citys = seigniorFrom.areas();
+	for(var i=0,l=citys.length;i<l;i++){
+		var city = citys[i];
+		var generals = city.generals();
+		for(var j=0,jl=generals.length;j<jl;j++){
+			var general = generals[j];
+			general.seigniorId(child.to);
+		}
+		seigniorTo.addCity(city);
+	}
+	SeigniorModel.removeSeignior(child.from);
+}
+function dispatchEventListResultMoveGeneralsToSeignior(child) {
+	var seignior = SeigniorModel.getSeignior(child.to);
+	if(!seignior || !seignior.chara_id()){
+		for(var i=0,l=child.generals.length;i<l;i++){
+			var general = CharacterModel.getChara(child.generals[i]);
+			general.toOutOfOffice();
+		}
+		return;
+	}
+	var seigniorChara = CharacterModel.getChara(child.to);
+	for(var i=0,l=child.generals.length;i<l;i++){
+		var general = CharacterModel.getChara(child.generals[i]);
+		general.seigniorId(child.to);
+		general.moveTo(seigniorChara.cityId());
+		general.moveTo();
+	}
+}
+function dispatchEventListResultMonarchDie(child) {
+	var general = CharacterModel.getChara(child.monarch);
+	general.toDie();
+	for(var i=0,l=child.newMonarch.length;i<l;i++){
+		var character = CharacterModel.getChara(child.newMonarch[i]);
+		if(character.seigniorId() == child.monarch){
+			monarchChange(child.monarch, character.id());
+			break;
+		}
+	}
+	LMvc.MapController.view.areaLayerInit();
+}
+function dispatchEventListResultGeneralsDie(child) {
+	for(var i=0,l=child.generals.length;i<l;i++){
+		var general = CharacterModel.getChara(child.generals[i]);
+		general.toDie();
+	}
+}
+function dispatchEventListResultChangeCityResources(child) {
+	var city = AreaModel.getArea(child.cityId);
+	city.food(child.food - city.food());
+	city.money(child.money - city.money());
+	city.business(child.business - city.business());
+	city.agriculture(child.agriculture - city.agriculture());
+	city.technology(child.technology - city.technology());
+	city.police(child.police - city.police());
+	city.cityDefense(child.city_defense - city.cityDefense());
+	city.troops(child.troops);
+}
+function dispatchEventListResultChangeCitySeignior(child) {
+	var city = AreaModel.getArea(child.cityId);
+	city.seigniorCharaId(child.seignior);
+	LMvc.MapController.view.areaLayerInit();
+}
+function dispatchEventListResultMoveCityResources(child) {
+	var fromCity = AreaModel.getArea(child.from);
+	var toCity = AreaModel.getArea(child.to);
+	var food = fromCity.food();
+	var money = fromCity.money();
+	toCity.food(food);
+	toCity.money(money);
+	toCity.troops(toCity.troops() + fromCity.troops());
+	fromCity.food(-food);
+	fromCity.money(-money);
+	fromCity.troops(0);
+}
+function dispatchEventListResultMoveGeneralsToCity(child) {
+	var fromCity = AreaModel.getArea(child.from);
+	var generals = [];
+	if(child.generals.length == 0){
+		generals = fromCity.generals();
+	}else{
+		var cityGenerals = fromCity.generals();
+		for(var i=0, l=cityGenerals.length;i<l;i++){
+			var general = cityGenerals[0];
+			if(child.generals.indexOf(general.id()) < 0){
+				continue;
+			}
+			generals.push(general);
+		}
+	}
+	for(var i=0,l=generals.length;i<l;i++){
+		var general = generals[i];
+		general.moveTo(child.to);
+		general.moveTo();
 	}
 }
 function dispatchEventListResultReputation(child) {
@@ -240,22 +397,3 @@ function dispatchEventListResultChangeSeignior(child) {
 	character.moveTo(child.city);
 	character.moveTo();
 }
-/*{
-	id:1,
-	name:"桃园结义",
-	condition:{
-		from:{year:184,month:1},
-		to:{year:184,month:1},
-		seignior:1,
-		generals:[
-			{id:1,seignior:1},
-			{id:2,seignior:1},
-			{id:3,seignior:1}
-		],
-		citys:[
-			{id:25,seignior:1},
-		]
-	},
-	stript:"Data/Event/tyjy.txt",
-	result:[]
-}*/

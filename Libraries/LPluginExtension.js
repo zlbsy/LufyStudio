@@ -48,8 +48,19 @@ LPlugin.setCharacter = function(charaData){
 	}
 	LPlugin.SetData(LPlugin.KEY_CHARACTER_LIST, data);
 };
+LPlugin.dataVer = function(ver){
+	if(typeof ver == UNDEFINED){
+		ver = LMvc.ver;
+		var GameData = LPlugin.GetData("GameData", null);
+		if(GameData && GameData.ver >= ver){
+			ver = GameData.ver;
+		}
+	}
+	var arr = ver.split(".");
+	return parseInt(arr[0]) * 100000 + parseInt(arr[1]) * 1000 + parseInt(arr[2]);
+};
 LPlugin.SetData = function(key,data){
-	if(LPlugin.writeToFile){
+	if(LPlugin.writeToFileInDomain){
 		LPlugin.writeToFileInDomain(key, JSON.stringify(data));
 	}else{
 		window.localStorage.setItem(key, JSON.stringify(data));
@@ -57,7 +68,7 @@ LPlugin.SetData = function(key,data){
 };
 LPlugin.GetData = function(key, defaultData){
 	var data;
-	if(LPlugin.readFile){
+	if(LPlugin.readFileInDomain){
 		data = LPlugin.readFileInDomain(key);
 	}else{
 		data = window.localStorage.getItem(key);
@@ -66,6 +77,13 @@ LPlugin.GetData = function(key, defaultData){
 		return (typeof defaultData != UNDEFINED) ? defaultData : {};
 	}
 	return JSON.parse(data);
+};
+LPlugin.DeleteData = function(key){
+	if(LPlugin.deleteFileInDomain){
+		LPlugin.deleteFileInDomain(key);
+	}else{
+		window.localStorage.setItem(key, null);
+	}
 };
 LPlugin.languageDefault = "chinese";
 LPlugin.language = function(value){
@@ -94,6 +112,9 @@ if(!LPlugin.preferredLanguage){
 	LPlugin.preferredLanguage = function(){
 		return LPlugin.languageDefault;
 	};
+}
+if(!LPlugin.print){
+	LPlugin.print = trace;
 }
 LPlugin.volumeSE = 0;
 LPlugin.volumeBGM = 0;

@@ -184,6 +184,9 @@ AreaModel.prototype.removeCharacter = function(charaId){
 	if(self.removeOutOfOffice(charaId)){
 		return true;
 	}
+	if(self.removeCaptives(charaId)){
+		return true;
+	}
 	return false;
 };
 AreaModel.prototype.removeOutOfOffice = function(param){
@@ -314,11 +317,15 @@ AreaModel.prototype.setSeignor = function(seignior,areaData){
 };
 AreaModel.prototype.seigniorCharaId=function(seigniorCharaId){
 	var self = this;
-	if(seigniorCharaId){
+	if(typeof seigniorCharaId != UNDEFINED){
 		var currentCharaId = self.seigniorCharaId();
 		if(currentCharaId && currentCharaId != seigniorCharaId){
 			var seignior = SeigniorModel.getSeignior(currentCharaId);
 			seignior.removeCity(self.id());
+		}
+		if(seigniorCharaId > 0){
+			var seignior = SeigniorModel.getSeignior(seigniorCharaId);
+			seignior.addCity(self);
 		}
 	}
 	return self._dataValue("seignior_chara_id", seigniorCharaId, 0);

@@ -33,6 +33,9 @@ and open the template in the editor.
 		LGlobal.aspectRatio = PORTRAIT;
         init(1000/30,"mvclegend",480,800,main);
 		function main(){
+			LMvc.IMG_PATH = "images/";
+			LMvc.ver = "1.0.0";
+			LMvc.updateURL = "http://sgj.lufylegend.com/update/iMahm5Z_Mhr2HaAFPuU2/";
 			if(typeof LPurchaseInit == "function"){
 				LPurchaseInit();
 			}

@@ -100,12 +100,12 @@ LogoView.prototype.showMenu=function(){
 	menuY += menuHeight * 2;
 	var buttonChinese = getButton(Language.get("chinese"),100,LPlugin.language() == LPlugin.languageDefault?"win07":"win01");
 	buttonChinese.language = "chinese";
-	buttonChinese.x = 100 - LGlobal.width*0.5;
+	buttonChinese.x = -menuLayer.x;
 	buttonChinese.y = menuY-buttonChinese.getHeight();
 	menuLayer.addChild(buttonChinese);
 	var buttonJapanese = getButton(Language.get("japanese"),100,LPlugin.language() == LPlugin.languageDefault?"win01":"win07");
 	buttonJapanese.language = "japanese";
-	buttonJapanese.x = 200 - LGlobal.width*0.5;
+	buttonJapanese.x = -menuLayer.x + 100;
 	buttonJapanese.y = menuY-buttonJapanese.getHeight();
 	menuLayer.addChild(buttonJapanese);
 	if(LPlugin.language() == LPlugin.languageDefault){
@@ -115,6 +115,10 @@ LogoView.prototype.showMenu=function(){
 		buttonJapanese.staticMode = true;
 		buttonChinese.addEventListener(LMouseEvent.MOUSE_UP, self.changeLanguage);
 	}
+	var verLabel = getStrokeLabel("Ver." + LMvc.ver,20,"#FFFFFF","#000000",4);
+	verLabel.x = LGlobal.width - menuLayer.x - verLabel.getWidth() - 10;
+	verLabel.y = menuY - verLabel.getHeight() - 10;
+	menuLayer.addChild(verLabel);
 	menuLayer.y = LGlobal.height - menuY;
 	
 	self.topMenuLayer = menuLayer;

@@ -86,7 +86,6 @@ LogoController.prototype.start=function(event){
 			LMvc.changeLoading(TranslucentLoading);
 			purchaseLogGet(function(){
 				self.updateCheck();
-				//LMvc.keepLoading(false);
 			});
 		}else{
 			self.updateCheck();
@@ -99,6 +98,7 @@ LogoController.prototype.start=function(event){
 				datas.push({product_id:c});
 			});
 			LPlugin.SetData("purchaseLog", datas);
+			self.updateCheck();
 		}
 	}
 	if(!LPlugin.native && LSound.webAudioEnabled){
@@ -143,12 +143,56 @@ LogoController.prototype.start=function(event){
 };
 LogoController.prototype.soundComplete = function(result){
 	LPlugin.soundData = result;
-	console.log(result);
 };
 LogoController.prototype.updateCheck = function(){
-	LAjax.post("http://d.lufylegend.com/update/test.php",{},function(data){
-		console.log(data);
+	var self = this;
+	LAjax.post(LMvc.updateURL + "index.php",{},function(data){
+		data = JSON.parse(data);
+		if(LPlugin.dataVer() >= data.ver){
+			LMvc.keepLoading(false);
+			return;
+		}
+		self.needUpdateData = data;
+		self.needUpdateFiles = {};
+		self.updateFile(0);
+	},function(){
+		LPlugin.print("updateCheck Error");
+		LMvc.keepLoading(false);
 	});
+};
+LogoController.prototype.updateFile = function(index){
+	var self = this;
+	if(index >= self.needUpdateData.files.length){
+		self.updateComplete();
+		return;
+	}
+	var ver = self.needUpdateData.ver;
+	var path = self.needUpdateData.files[index];
+	LAjax.post(LMvc.updateURL + ver + "/" + path,{},function(data){
+		self.needUpdateFiles[path] = data;
+		self.updateFile(index + 1);
+	});
+};
+LogoController.prototype.updateComplete = function(){
+	var self = this;
+	var GameData = LPlugin.GetData("GameData", null);
+	self.needUpdateData.files.forEach(function(path){
+		var key = path.replace(/\//g,"_");
+		LPlugin.SetData(key, self.needUpdateFiles[path]);
+	});
+	if(GameData){
+		GameData.files.forEach(function(path){
+			var index = self.needUpdateData.files.findIndex(function(child){
+				return child == path;
+			});
+			if(index < 0){
+				var key = path.replace(/\//g,"_");
+				LPlugin.DeleteData(key);
+			}
+		});
+	}
+	LPlugin.SetData("GameData", self.needUpdateData);
+	LMvc.keepLoading(false);
 };
 LogoController.prototype.loadChapterList = function(){
 	var self = this;

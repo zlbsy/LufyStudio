@@ -190,6 +190,18 @@ ScriptLoad.loadImgOver = function(event) {
 	script.analysis();
 };
 ScriptLoad.loadScript = function() {
+	var path = ScriptLoad.data[0];
+	var GameData = LPlugin.GetData("GameData", null);
+	if(GameData && LPlugin.dataVer(GameData.ver) > LPlugin.dataVer(LMvc.ver) && GameData.files.findIndex(function(child){return path == child;}) > 0){
+		var key = path.replace(/\//g,"_");
+		var data = LPlugin.GetData(key, null);
+		if(data){
+			var event = {target:data};
+			ScriptLoad.loadScriptOver(event);
+			return;
+		}
+	}
+	
 	ScriptLoad.urlloader = new LURLLoader();
 	ScriptLoad.urlloader.addEventListener(LEvent.COMPLETE, ScriptLoad.loadScriptOver);
 	ScriptLoad.urlloader.load(ScriptLoad.data[0] + (LGlobal.traceDebug ? ("?" + (new Date()).getTime()) : ""), "text");
@@ -197,9 +209,12 @@ ScriptLoad.loadScript = function() {
 ScriptLoad.loadScriptOver = function(event) {
 	var script = LGlobal.script;
 	var data = script.removeComment(event.target);
-	if (ScriptLoad.urlloader.die)
-		ScriptLoad.urlloader.die();
-	ScriptLoad.urlloader = null;
+	if (ScriptLoad.urlloader){
+		if(ScriptLoad.urlloader.die){
+			ScriptLoad.urlloader.die();
+		}
+		ScriptLoad.urlloader = null;
+	}
 	script.saveList();
 	script.dataList.unshift([data]);
 	script.toList(data);

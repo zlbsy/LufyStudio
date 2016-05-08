@@ -1,4 +1,4 @@
 LMvc.startEvent = {
-	script:"Data/Event/{0}/hjzl.txt",
+	script:"Data/Event/{0}/chapter01.txt",
 	result:[]
 };

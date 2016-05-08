@@ -22,20 +22,18 @@ MapView.prototype.layerInit=function(){
 	self.characterLayer = new LSprite();
 	self.addChild(self.characterLayer);
 };
-MapView.prototype.backLayerInit=function(){
+MapView.prototype.mapInit=function(){
 	var self = this;
+	self.backLayer.removeAllChild();
+	self.backLayer.die();
+	self.mapLayer.removeAllChild();
+	self.mapLayer.die();
 	//TODO::ver1.1春夏秋冬
 	var bitmapData = GameCacher.getAreaMap("area-map-1");//new LBitmapData(LMvc.datalist["area-map-1"],null,null,null,null,LBitmapData.DATA_CANVAS);
 	self.backgroundWidth = bitmapData.width;
 	self.backgroundHeight = bitmapData.height;
-	//var roadBitmapData = new LBitmapData(null,0,0,bitmapData.width,bitmapData.height,LBitmapData.DATA_CANVAS);
-	//bitmapData.copyPixels(roadBitmapData, new LRectangle(0, 0, 28, 28), new LPoint(50,50));
 	var roadLayer = new LShape();
 	roadLayer.alpha = 0.7;
-	//"checkbox-background"
-	//self.x = self.areaStatus.position().x;
-	//self.y = self.areaStatus.position().y;
-	//neighbor:[1,3,4,50]
 	roadLayer.graphics.drawRect(0,"#FFFFFF",[0, 0, self.backgroundWidth, self.backgroundHeight]);
 	for(var i=0,l=AreaModel.list.length;i<l;i++){
 		var areaStatus = AreaModel.list[i];
@@ -55,7 +53,6 @@ MapView.prototype.backLayerInit=function(){
 	var background = new BackgroundView();
 	background.set(bitmapData, self.baseLayer);
 	self.mapLayer.addChild(background);
-	//self.backLayer.addChild(roadLayer);
 	self.backLayer.addShape(LShape.RECT,[0,0,self.backgroundWidth,self.backgroundHeight]);
 };
 MapView.prototype.areaDragStart=function(event){
@@ -100,8 +97,6 @@ MapView.prototype.toPosition=function(x, y){
 MapView.prototype.init=function(){
 	var self = this;
 	self.layerInit();
-	self.backLayerInit();
-	//self.areaLayerInit();
 	self.ctrlLayerInit();
 
 	self.baseLayer.dragRange = new LRectangle(
@@ -145,6 +140,7 @@ MapView.prototype.readDataToBattle = function(){
 };
 MapView.prototype.areaLayerInit=function(){
 	var self = this;
+	self.mapInit();
 	self.areaLayer.removeAllChild();
 	for(var i=0,l=AreaModel.list.length;i<l;i++){
 		var areaStatus = AreaModel.list[i];
