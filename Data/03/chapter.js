@@ -15,7 +15,7 @@ title : "群雄逐鹿"
 {id:237,name:"张扬",faceImg:237,color:"70,130,180",general_count:6, citys:[42],city_count:1},
 {id:333,name:"严白虎",faceImg:333,color:"102,205,170",general_count:2, citys:[31],city_count:1},
 {id:375,name:"袁术",faceImg:375,color:"128,0,0",general_count:14, citys:[26,34],city_count:2},
-{id:431,name:"刘繇",faceImg:431,color:"127,255,212",general_count:6, citys:[33],city_count:1},
+{id:431,name:"刘繇",faceImg:431,color:"127,255,212",general_count:6, citys:[30],city_count:1},
 {id:446,name:"刘表",faceImg:446,color:"255,192,203",general_count:16, citys:[15,16,27],city_count:3},
 {id:451,name:"陶谦",faceImg:451,color:"135,206,235",general_count:7, citys:[36],city_count:1},
 {id:453,name:"张鲁",faceImg:453,color:"165,42,42",general_count:6, citys:[11],city_count:1},
