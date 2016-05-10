@@ -54,6 +54,15 @@ MapView.prototype.mapInit=function(){
 	background.set(bitmapData, self.baseLayer);
 	self.mapLayer.addChild(background);
 	self.backLayer.addShape(LShape.RECT,[0,0,self.backgroundWidth,self.backgroundHeight]);
+	
+	self.baseLayer.dragRange = new LRectangle(
+		LGlobal.width - self.backgroundWidth,
+		LGlobal.height - self.backgroundHeight,
+		self.backgroundWidth - LGlobal.width,
+		self.backgroundHeight - LGlobal.height
+	);
+	self.backLayer.addEventListener(LMouseEvent.MOUSE_DOWN,self.areaDragStart);
+	self.backLayer.addEventListener(LMouseEvent.MOUSE_UP,self.areaDragStop);
 };
 MapView.prototype.areaDragStart=function(event){
 	event.currentTarget.parent.startDrag(event.touchPointID);
@@ -99,14 +108,6 @@ MapView.prototype.init=function(){
 	self.layerInit();
 	self.ctrlLayerInit();
 
-	self.baseLayer.dragRange = new LRectangle(
-		LGlobal.width - self.backgroundWidth,
-		LGlobal.height - self.backgroundHeight,
-		self.backgroundWidth - LGlobal.width,
-		self.backgroundHeight - LGlobal.height
-	);
-	self.backLayer.addEventListener(LMouseEvent.MOUSE_DOWN,self.areaDragStart);
-	self.backLayer.addEventListener(LMouseEvent.MOUSE_UP,self.areaDragStop);
 	self.updateMapCoordinate();
 };
 MapView.prototype.updateMapCoordinate = function(){

@@ -236,8 +236,8 @@ var EventListConfig = [
 	},
 	script:"Data/Event/{0}/wcqx.txt",
 	result:[
-		{type:"moveGeneralsToCity", generals:[],from:41, to:44},//刘关张移往小沛
-		{type:"moveGeneralsToCity", generals:[],from:43, to:44},//刘关张移往小沛
+		{type:"moveGeneralsToCity", generals:[],from:41, to:44},//邺城武将移往南皮
+		{type:"moveGeneralsToCity", generals:[],from:43, to:44},//平原武将移往南皮
 		{type:"changeCitySeignior", cityId:41, seignior:1},//邺属曹操
 		{type:"changeCitySeignior", cityId:43, seignior:1},//平原曹操
 	]
@@ -415,63 +415,82 @@ var EventListConfig = [
 	id:20,
 	name:"失荆州",
 	condition:{
-		from:{year:2000,month:1},
-		to:{year:194,month:1},
-		seignior:1,
+		from:{year:219,month:12},
+		to:{year:219,month:12},
+		seignior:0,
 		generals:[
-			{id:4,seignior:0,city:25},
-			{id:2,seignior:1},
-			{id:3,seignior:1}
+			{id:17,seignior:17},//孙权未灭亡
+			{id:13,seignior:17},//吕蒙属孙权
+			{id:9,seignior:17},//陆逊属孙权
+			{id:4,seignior:21,city:16},//关羽在江陵属刘备
+			{id:21,seignior:21},//刘备未灭亡
+			{id:89,seignior:21},//关平属刘备
+			{id:77,seignior:21},//周仓属刘备
+			{id:363,seignior:21},//王甫属刘备
+			{id:482,seignior:21},//糜芳属刘备
+			{id:536,seignior:21}//傅仕仁属刘备
 		],
 		citys:[
-			{id:25,seignior:1},
+			{id:16,seignior:21},//江陵属刘备
+			{id:17,seignior:21},//武陵属刘备
+			{id:19,seignior:21},//零陵属刘备
 		]
 	},
 	script:"Data/Event/{0}/sgml3.txt",
 	result:[
-		{id:4,seignior:1,city:25},
+		{type:"moveGeneralsToSeignior", generals:[482,536], to:17},//糜芳傅仕仁移动到孙权手下
+		{type:"moveGeneralsToCity", generals:[],from:16, to:6},//江陵武将移往成都
+		{type:"moveGeneralsToCity", generals:[],from:17, to:6},//武陵武将移往成都
+		{type:"moveGeneralsToCity", generals:[],from:19, to:6},//零陵武将移往成都
+		{type:"generalsDie", generals:[4,89,77,363]},//关羽，关平，周仓，王甫死亡
+		{type:"changeCitySeignior", cityId:16, seignior:17},//江陵属孙权
+		{type:"changeCitySeignior", cityId:17, seignior:17},//武陵属孙权
+		{type:"changeCitySeignior", cityId:19, seignior:17},//零陵属孙权
+		{type:"moveGeneralsToCity", generals:[13，9], to:16},//吕蒙，陆逊移往江陵
+		{type:"moveGeneralsToCity", generals:[482], to:17},//糜芳移往武陵
+		{type:"moveGeneralsToCity", generals:[536], to:19},//傅仕仁移往零陵
 	]
 },
 {
 	id:21,
 	name:"七擒孟获",
 	condition:{
-		from:{year:2000,month:1},
-		to:{year:194,month:1},
-		seignior:1,
+		from:{year:225,month:5},
+		to:{year:225,month:6},
+		seignior:620,
 		generals:[
-			{id:4,seignior:0,city:25},
-			{id:2,seignior:1},
-			{id:3,seignior:1}
+			{id:620,seignior:620},//刘禅未灭亡
+			{id:336,seignior:336},//孟获未灭亡
+			{id:10,seignior:620}//诸葛亮属刘禅
 		],
 		citys:[
-			{id:25,seignior:1},
+			{id:6,seignior:620},//成都属刘禅
+			{id:8,seignior:336},//建宁属孟获
+			{id:9,seignior:336},//云南属孟获
 		]
 	},
 	script:"Data/Event/{0}/sgml3.txt",
 	result:[
-		{id:4,seignior:1,city:25},
+		{type:"seigniorToSeignior", from:336, to:620},//孟获城池归属刘禅
 	]
 },
 {
 	id:22,
 	name:"出师表",
 	condition:{
-		from:{year:2000,month:1},
-		to:{year:194,month:1},
-		seignior:1,
+		from:{year:228,month:1},
+		to:{year:228,month:1},
+		seignior:620,
 		generals:[
-			{id:4,seignior:0,city:25},
-			{id:2,seignior:1},
-			{id:3,seignior:1}
+			{id:620,seignior:620},//刘禅未灭亡
+			{id:10,seignior:620}//诸葛亮属刘禅
 		],
 		citys:[
-			{id:25,seignior:1},
+			{id:6,seignior:620},//成都属刘禅
 		]
 	},
 	script:"Data/Event/{0}/sgml3.txt",
 	result:[
-		{id:4,seignior:1,city:25},
 	]
 },
 {
@@ -480,19 +499,21 @@ var EventListConfig = [
 	condition:{
 		from:{year:2000,month:1},
 		to:{year:194,month:1},
-		seignior:1,
+		noSeignior:620,
 		generals:[
-			{id:4,seignior:0,city:25},
-			{id:2,seignior:1},
-			{id:3,seignior:1}
+			{id:611,seignior:611},//曹奂未灭亡
+			{id:620,seignior:620},//刘禅未灭亡
 		],
 		citys:[
-			{id:25,seignior:1},
+			{id:6,seignior:620},//成都属刘禅
+		],
+		cityCount:[
+			{id:620,from:1,to:3},//刘禅未灭亡
 		]
 	},
 	script:"Data/Event/{0}/sgml3.txt",
 	result:[
-		{id:4,seignior:1,city:25},
+		{type:"seigniorToSeignior", from:620, to:611},//刘禅城池归属曹奂
 	]
 },
 {
