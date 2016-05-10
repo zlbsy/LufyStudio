@@ -244,6 +244,7 @@ SeigniorModel.prototype.addCity = function(area){
 		}
 	}
 	self.data.areas.push(area);
+	area.seigniorCharaId(self.chara_id());
 };
 SeigniorModel.prototype.removeCity = function(areaId){
 	var self = this;

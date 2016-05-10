@@ -366,7 +366,7 @@ SeigniorExecute.prototype.areaAIRun=function(areaModel){
 		self.timer.reset();
 		self.timer.start();
 		return;
-	}
+	}console.log("areaModel = " + areaModel.name(), areaModel.seigniorCharaId(), areaModel.seignior());
 	if(areaModel.seignior().isTribe()){
 		//外族只在每年收获粮食时随机进行侵略行动一次，其他时间不行动
 		if(HarvestMonths.Food.indexOf(LMvc.chapterData.month) >= 0 && Math.random() < TribeAIProbability && self.characters.length == areaModel.generalsSum()){

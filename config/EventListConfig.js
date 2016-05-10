@@ -436,7 +436,7 @@ var EventListConfig = [
 			{id:19,seignior:21},//零陵属刘备
 		]
 	},
-	script:"Data/Event/{0}/sgml3.txt",
+	script:"Data/Event/{0}/sjz.txt",
 	result:[
 		{type:"moveGeneralsToSeignior", generals:[482,536], to:17},//糜芳傅仕仁移动到孙权手下
 		{type:"moveGeneralsToCity", generals:[],from:16, to:6},//江陵武将移往成都
@@ -446,7 +446,7 @@ var EventListConfig = [
 		{type:"changeCitySeignior", cityId:16, seignior:17},//江陵属孙权
 		{type:"changeCitySeignior", cityId:17, seignior:17},//武陵属孙权
 		{type:"changeCitySeignior", cityId:19, seignior:17},//零陵属孙权
-		{type:"moveGeneralsToCity", generals:[13，9], to:16},//吕蒙，陆逊移往江陵
+		{type:"moveGeneralsToCity", generals:[13,9], to:16},//吕蒙，陆逊移往江陵
 		{type:"moveGeneralsToCity", generals:[482], to:17},//糜芳移往武陵
 		{type:"moveGeneralsToCity", generals:[536], to:19},//傅仕仁移往零陵
 	]
@@ -469,7 +469,7 @@ var EventListConfig = [
 			{id:9,seignior:336},//云南属孟获
 		]
 	},
-	script:"Data/Event/{0}/sgml3.txt",
+	script:"Data/Event/{0}/qqmh.txt",
 	result:[
 		{type:"seigniorToSeignior", from:336, to:620},//孟获城池归属刘禅
 	]
@@ -489,7 +489,7 @@ var EventListConfig = [
 			{id:6,seignior:620},//成都属刘禅
 		]
 	},
-	script:"Data/Event/{0}/sgml3.txt",
+	script:"Data/Event/{0}/csb.txt",
 	result:[
 	]
 },
@@ -497,23 +497,27 @@ var EventListConfig = [
 	id:23,
 	name:"蜀灭亡",
 	condition:{
-		from:{year:2000,month:1},
-		to:{year:194,month:1},
 		noSeignior:620,
 		generals:[
 			{id:611,seignior:611},//曹奂未灭亡
+			{id:52,seignior:611},//司马昭属曹奂
+			{id:6,seignior:611},//邓艾属曹奂
+			{id:86,seignior:611},//钟会属曹奂
 			{id:620,seignior:620},//刘禅未灭亡
+			{id:54,seignior:620},//诸葛瞻属刘禅
+			{id:7,seignior:620},//姜维属刘禅
 		],
 		citys:[
 			{id:6,seignior:620},//成都属刘禅
 		],
 		cityCount:[
-			{id:620,from:1,to:3},//刘禅未灭亡
+			{id:620,from:1,to:3},//刘禅城池个数小于等于3
 		]
 	},
-	script:"Data/Event/{0}/sgml3.txt",
+	script:"Data/Event/{0}/smw.txt",
 	result:[
 		{type:"seigniorToSeignior", from:620, to:611},//刘禅城池归属曹奂
+		{type:"generalsDie", generals:[6,86,54,7]},//邓艾,钟会,诸葛瞻,姜维死亡
 	]
 },
 {

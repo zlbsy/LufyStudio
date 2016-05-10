@@ -19,10 +19,8 @@ RecordController.prototype.show=function(mode){
 	var self = this;
 	self.mode = mode;
 	LMvc.layer.setChildIndex(self.view,LMvc.layer.numChildren - 1);
-	//self.view.y = LGlobal.height;
 	var list = self.model.getImages();
 	self.load.image(list,self.loadLibrary);
-	//self.load.view(["Record/RecordChild"],self.showRecordList);
 };
 RecordController.prototype.hide=function(){
 	var self = this;
@@ -40,19 +38,13 @@ RecordController.prototype.showRecordList=function(){
 	var self = this;
 	self.view.visible = true;
 	self.dispatchEvent(LEvent.COMPLETE);
-	/*var records = [];
-	for(var i=0;i<RecordController.RECORD_MAX;i++){
-		var record = LPlugin.GetData("gameRecord_" + i);
-		
-	}*/
-	/*self.gameRecord = LPlugin.GetData("gameRecord");
-	if(!self.gameRecord.records){
-		var records = [];
-		self.gameRecord.records = records;
-	}*/
 };
 RecordController.prototype.autoSaveRecord=function(){
-	var self = this;console.log("autoSaveRecord");
-	var items = self.view.listView.getItems();
-	items[0].toSaveData();
+	var self = this;
+	if(self.view.listView){
+		var items = self.view.listView.getItems();
+		items[0].toSaveData();
+	}else{
+		GameManager.save(0);
+	}
 };

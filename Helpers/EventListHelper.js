@@ -117,7 +117,21 @@ function checkEventList() {
 		if(!citysOk){
 			continue;
 		}
-		
+		var cityCountOk = true;
+		var cityCount = currentEvent.condition.cityCount;
+		if(cityCount){
+			for(var j=0;j<cityCount.length;j++){
+				var seignior = SeigniorModel.getSeignior(cityCount[j].id);
+				var areaCount = seignior.areas().length;
+				if(areaCount < cityCount[j].from || areaCount > cityCount[j].to){
+					cityCountOk = false;
+					break;
+				}
+			}
+		}
+		if(!cityCount){
+			continue;
+		}
 		var stopBattleOk = true;
 		var stopBattle = currentEvent.condition.stopBattle;
 		if(stopBattle){
@@ -207,6 +221,7 @@ function dispatchEventListResult(eventId, currentEvent) {
 	}
 	for(var i=0,l=currentEvent.result.length;i<l;i++){
 		var child = currentEvent.result[i];
+		console.log("dispatchEventListResult .type="+child.type);
 		switch(child.type){
 			case "stopBattle"://停战
 				dispatchEventListResultStopBattle(child);
@@ -247,11 +262,17 @@ function dispatchEventListResult(eventId, currentEvent) {
 			case "changePrefecture"://太守变更
 				dispatchEventListResultChangePrefecture(child);
 				break;
+			case "gameClear"://游戏通关
+				dispatchEventListResultGameClear(child);
+				break;
 		}
 	}
 	if(eventId){
 		LGlobal.script.analysis();
 	}
+}
+function dispatchEventListResultGameClear(child) {
+	SeigniorExecute.running = false;
 }
 function dispatchEventListResultCaptiveDie(child) {
 	for(var i=0,l=child.captives.length;i<l;i++){
@@ -266,7 +287,7 @@ function dispatchEventListResultChangePrefecture(child) {
 function dispatchEventListResultSeigniorToSeignior(child) {
 	var seigniorFrom = SeigniorModel.getSeignior(child.from);
 	var seigniorTo = SeigniorModel.getSeignior(child.to);
-	var citys = seigniorFrom.areas();
+	var citys = seigniorFrom.areas().concat(); 
 	for(var i=0,l=citys.length;i<l;i++){
 		var city = citys[i];
 		var generals = city.generals();
@@ -277,6 +298,7 @@ function dispatchEventListResultSeigniorToSeignior(child) {
 		seigniorTo.addCity(city);
 	}
 	SeigniorModel.removeSeignior(child.from);
+	LMvc.MapController.view.areaLayerInit();
 }
 function dispatchEventListResultMoveGeneralsToSeignior(child) {
 	var seignior = SeigniorModel.getSeignior(child.to);
@@ -310,7 +332,13 @@ function dispatchEventListResultMonarchDie(child) {
 function dispatchEventListResultGeneralsDie(child) {
 	for(var i=0,l=child.generals.length;i<l;i++){
 		var general = CharacterModel.getChara(child.generals[i]);
+		var city = general.city();
+		var prefecture = city.prefecture();
+		var prefectureDie = (prefecture == general.id());
 		general.toDie();
+		if(prefectureDie){
+			appointPrefecture(city);
+		}
 	}
 }
 function dispatchEventListResultChangeCityResources(child) {
