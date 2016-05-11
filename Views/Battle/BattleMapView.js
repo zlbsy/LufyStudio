@@ -54,6 +54,19 @@ BattleMapView.prototype.characterOut = function(chara){
 	self.datas[0].copyPixels(tileData,new LRectangle(0, 0, BattleCharacterSize.width, BattleCharacterSize.height),new LPoint(chara.x,chara.y));
 	self.datas[1].copyPixels(tileData,new LRectangle(0, 0, BattleCharacterSize.width, BattleCharacterSize.height),new LPoint(chara.x,chara.y));
 };
+BattleMapView.prototype.canUseStrategyOnTerrain=function(currentSelectStrategy, locationX, locationY){
+	var self = this;
+	var data = self.getTerrainData(locationX,locationY);
+	var terrainId = getTerrainId(data);
+	var terrainModel = TerrainMasterModel.getMaster(terrainId);
+	var strategyType = currentSelectStrategy.strategyType();
+	var index = TerrainStrategyConfig.indexOf(strategyType);
+	if(index < 0){
+		return true;
+	}
+	var strategy = terrainModel.strategy();
+	return strategy[index];
+};
 BattleMapView.prototype.showTerrain=function(x,y){
 	var self = this;
 	var locationX = x / BattleCharacterSize.width >>> 0;

@@ -29,7 +29,7 @@
 	hert:伤害强度参数,
 	rangeAttack:攻击距离,
 	rangeAttackTarget:攻击范围,
-	explanation:详解
+	explanation:详解[火，风，水，地]
 	}*/
 var StrategyType = {
 	Fire:1,//火

@@ -571,12 +571,16 @@ BattleCharacterAI.prototype.endBoutCheck = function() {
 		BattleIntelligentAI.execute();
 		return;
 	}
+	try{
 	if(chara.belong == Belong.SELF){
 		var obj = {title:Language.get("确认"),message:Language.get("结束本回合吗？"),width:300,height:200,okEvent:self.boutEnd,cancelEvent:null};
 		var windowLayer = ConfirmWindow(obj);
 		LMvc.layer.addChild(windowLayer);
 	}else{
 		self.boutEnd();
+	}
+	}catch(e){
+		console.error("Error::");
 	}
 };
 BattleCharacterAI.prototype.boutEnd = function(event) {

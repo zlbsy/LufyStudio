@@ -428,6 +428,9 @@ CharacterModel.prototype.morale = function(){
 };
 CharacterModel.prototype.movePower = function() {
 	var self = this;
+	if(self.isDefCharacter()){
+		return 1;
+	}
 	return self.skillAmend(self.data.movePower, "movePower");
 };
 CharacterModel.prototype.dispositionLabel = function(){

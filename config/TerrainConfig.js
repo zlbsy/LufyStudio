@@ -26,6 +26,7 @@ var TerrainConfig = [
 {id:23,name:"火",strategy:[0,0,0,0],comment:"terrain_comment_nomove"},
 {id:24,name:"船",strategy:[0,0,0,0],comment:"terrain_comment_nomove"}
 ];
+var TerrainStrategyConfig = [StrategyType.Fire, StrategyType.Wind, StrategyType.Warter, StrategyType.Earth];
 /*
 0:"平原",1:"草原",2:"森林",3:"荒地",4:"山地",5:"雪原",6:"桥梁",7:"浅滩",8:"沼泽",9:"大河",10:"城内",11:"民居"
 terrain:[

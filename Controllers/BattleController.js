@@ -343,10 +343,11 @@ BattleController.prototype.clickStrategyRange = function(chara){
 		return;
 	}
 	if(!isSameBelong(BattleController.ctrlChara.currentSelectStrategy.belong(),chara.belong)){
-		//Todo::
 		Toast.makeText(String.format(Language.get("不可对{0}使用!"), Language.get(BattleController.ctrlChara.belong))).show();
 		return;
-	
+	}else if(!self.view.mapLayer.canUseStrategyOnTerrain(BattleController.ctrlChara.currentSelectStrategy, chara.locationX(), chara.locationY())){
+		Toast.makeText(String.format(Language.get("{0}无法在此地形下使用!"), BattleController.ctrlChara.currentSelectStrategy.name())).show();
+		return;
 	}
 	self.view.roadLayer.clear();
 	BattleController.ctrlChara.AI.magicAttack(chara);

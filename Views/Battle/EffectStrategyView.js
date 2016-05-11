@@ -128,6 +128,7 @@ EffectStrategyView.prototype.toAttack = function(){
 		}
 	}else{
 		self.currentTargetCharacter.changeAction(CharacterAction.BLOCK);
+		self.currentTargetCharacter.hertValue = 0;
 		tweenObj = getStrokeLabel("MISS",22,"#FFFFFF","#000000",2);
 		tweenObj.x = self.currentTargetCharacter.x + (BattleCharacterSize.width - tweenObj.getWidth()) * 0.5;
 	}
