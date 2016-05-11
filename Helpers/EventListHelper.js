@@ -47,9 +47,7 @@ function checkEventList() {
 			var from = currentEvent.condition.from.year * 12 + currentEvent.condition.from.month;
 			var to = currentEvent.condition.to.year * 12 + currentEvent.condition.to.month;
 			var now = LMvc.chapterData.year * 12 + LMvc.chapterData.month;
-			var yearOk = (currentEvent.condition.from.year <= year && currentEvent.condition.to.year >= year);
-			var monthOk = (currentEvent.condition.from.month <= month && currentEvent.condition.to.month >= month);
-			var timeIn = (yearOk && monthOk);
+			var timeIn = (from<=now && to>=now);
 			if(!timeIn){
 				continue;
 			}
@@ -92,6 +90,7 @@ function checkEventList() {
 			}
 		}
 		if(!generalsOk){
+			console.log(currentEvent.name + " generalsOk");
 			continue;
 		}
 		var citysOk = true;
@@ -101,20 +100,23 @@ function checkEventList() {
 			var cityModel = AreaModel.getArea(city.id);
 			if(typeof city.seignior == "number"){
 				if(cityModel.seigniorCharaId() != city.seignior){
+					console.log(currentEvent.name +": citys number,"+cityModel.seigniorCharaId()+","+city.seignior);
 					citysOk = false;
 					break;
 				}
 			}else{
 				var index = city.seignior.findIndex(function(child){
-					return child === city.id;
+					return child === cityModel.seigniorCharaId();
 				});
 				if(index < 0){
+					console.log(currentEvent.name +": citys index");
 					citysOk = false;
 					break;
 				}
 			}
 		}
 		if(!citysOk){
+			console.log(currentEvent.name + " citysOk");
 			continue;
 		}
 		var cityCountOk = true;
@@ -129,7 +131,8 @@ function checkEventList() {
 				}
 			}
 		}
-		if(!cityCount){
+		if(!cityCountOk){
+			console.log(currentEvent.name + " cityCountOk");
 			continue;
 		}
 		var stopBattleOk = true;
@@ -146,6 +149,7 @@ function checkEventList() {
 			}
 		}
 		if(!stopBattleOk){
+			console.log(currentEvent.name + " stopBattleOk");
 			continue;
 		}
 		
@@ -298,6 +302,7 @@ function dispatchEventListResultSeigniorToSeignior(child) {
 		seigniorTo.addCity(city);
 	}
 	SeigniorModel.removeSeignior(child.from);
+	GameCacher.resetAreaMap("area-map-1");
 	LMvc.MapController.view.areaLayerInit();
 }
 function dispatchEventListResultMoveGeneralsToSeignior(child) {
@@ -313,6 +318,7 @@ function dispatchEventListResultMoveGeneralsToSeignior(child) {
 	for(var i=0,l=child.generals.length;i<l;i++){
 		var general = CharacterModel.getChara(child.generals[i]);
 		general.seigniorId(child.to);
+		general.loyalty(child.loyalty);
 		general.moveTo(seigniorChara.cityId());
 		general.moveTo();
 	}
@@ -327,6 +333,7 @@ function dispatchEventListResultMonarchDie(child) {
 			break;
 		}
 	}
+	GameCacher.resetAreaMap("area-map-1");
 	LMvc.MapController.view.areaLayerInit();
 }
 function dispatchEventListResultGeneralsDie(child) {
@@ -355,6 +362,7 @@ function dispatchEventListResultChangeCityResources(child) {
 function dispatchEventListResultChangeCitySeignior(child) {
 	var city = AreaModel.getArea(child.cityId);
 	city.seigniorCharaId(child.seignior);
+	GameCacher.resetAreaMap("area-map-1");
 	LMvc.MapController.view.areaLayerInit();
 }
 function dispatchEventListResultMoveCityResources(child) {
@@ -372,15 +380,11 @@ function dispatchEventListResultMoveCityResources(child) {
 function dispatchEventListResultMoveGeneralsToCity(child) {
 	var fromCity = AreaModel.getArea(child.from);
 	var generals = [];
-	if(child.generals.length == 0){
-		generals = fromCity.generals();
+	if(!child.generals || child.generals.length == 0){
+		generals = fromCity.generals().concat();
 	}else{
-		var cityGenerals = fromCity.generals();
-		for(var i=0, l=cityGenerals.length;i<l;i++){
-			var general = cityGenerals[0];
-			if(child.generals.indexOf(general.id()) < 0){
-				continue;
-			}
+		for(var i=0;i<child.generals.length;i++){
+			var general = CharacterModel.getChara(child.generals[i]);
 			generals.push(general);
 		}
 	}

@@ -99,6 +99,7 @@ SeigniorModel.getSaveData=function(){
 SeigniorModel.prototype.chara_id = function(value){
 	if(value){
 		CharacterModel.getChara(value).city().prefecture(value);
+		this._flag = null;
 	}
 	return this._dataValue("chara_id", value);
 };

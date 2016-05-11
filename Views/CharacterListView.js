@@ -150,7 +150,7 @@ CharacterListView.prototype.onChangeList=function(event){
 CharacterListView.prototype.onChangeChildSelect=function(event){
 	var self = event.currentTarget,selectedCount=0;
 	self.listView.getItems().forEach(function(child){
-		if(!child.checkbox.checked){
+		if(!child.checkbox || !child.checkbox.checked){
 			return;
 		}
 		selectedCount++;

@@ -36,6 +36,11 @@ GameCacher.getGrayDisplayObject = function(key, width, height){
 	}
 	return GameCacher._grayBitmapDatas[key];
 };
+GameCacher.resetAreaMap = function(key){
+	var bitmapData = GameCacher.getAreaMap(key);
+	var bitmapDataBase = new LBitmapData(LMvc.datalist[key]);
+	bitmapData.copyPixels(bitmapDataBase, new LRectangle(0, 0, bitmapDataBase.width, bitmapDataBase.height), new LPoint(0,0));
+};
 GameCacher.getAreaMap = function(key){
 	if(GameCacher._areaMaps[key]){
 		return GameCacher._areaMaps[key];

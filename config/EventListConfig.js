@@ -73,7 +73,7 @@ var EventListConfig = [
 		generals:[
 			{id:18,seignior:265},
 			{id:265,seignior:265},
-			{id:380,seignior:265},
+			{id:380,seignior:0},
 			{id:543,seignior:265},
 			{id:465,seignior:265},
 		],
@@ -84,7 +84,7 @@ var EventListConfig = [
 	script:"Data/Event/{0}/lhj.txt",
 	result:[
 		{type:"generalsDie", generals:[543]},//王允死亡
-		{type:"moveGeneralsToSeignior", generals:[18,380], to:237},//吕布貂蝉移动到张扬手下
+		{type:"moveGeneralsToSeignior", generals:[18,380], to:237, loyalty:90},//吕布貂蝉移动到张扬手下
 		{type:"monarchDie", monarch:265, newMonarch:[465]}//董卓死亡，由李郭继承
 	]
 },
@@ -132,8 +132,8 @@ var EventListConfig = [
 	script:"Data/Event/{0}/srxz.txt",
 	result:[
 		{type:"seigniorToSeignior", from:451, to:21},//陶谦城池归属刘备
-		{type:"moveGeneralsToCity", generals:[4], to:25},//关羽移往下坯
-		{type:"changePrefecture",cityId:25,prefecture:4},
+		{type:"moveGeneralsToCity", generals:[4], to:36},//关羽移往下坯
+		{type:"changePrefecture",cityId:36,prefecture:4},
 		{type:"generalsDie", generals:[451]},//陶谦死亡
 	]
 },
@@ -186,7 +186,7 @@ var EventListConfig = [
 	name:"煮酒论英雄",
 	condition:{
 		from:{year:194,month:1},
-		to:{year:220,month:12},
+		to:{year:206,month:12},
 		seignior:1,
 		generals:[
 			{id:1,seignior:1},//曹操未灭亡
