@@ -162,27 +162,6 @@ var EventListConfig = [
 },
 {
 	id:8,
-	name:"宛城失名将",
-	condition:{
-		from:{year:200,month:4},
-		to:{year:200,month:6},
-		seignior:[1,559],
-		generals:[
-			{id:1,seignior:1},//曹操未灭亡
-			{id:74,seignior:1},//典韦属曹操
-			{id:559,seignior:559},//张绣未灭亡
-		],
-		citys:[
-			{id:14,seignior:559},//宛属张绣
-		]
-	},
-	script:"Data/Event/{0}/wcsmj.txt",
-	result:[
-		{type:"generalsDie", generals:[74]},//典韦死亡
-	]
-},
-{
-	id:9,
 	name:"煮酒论英雄",
 	condition:{
 		from:{year:194,month:1},
@@ -200,7 +179,7 @@ var EventListConfig = [
 	]
 },
 {
-	id:10,
+	id:9,
 	name:"官渡之战",
 	condition:{
 		from:{year:200,month:3},
@@ -218,7 +197,7 @@ var EventListConfig = [
 	]
 },
 {
-	id:11,
+	id:10,
 	name:"乌巢急袭",
 	condition:{
 		from:{year:200,month:10},
@@ -243,7 +222,7 @@ var EventListConfig = [
 	]
 },
 {
-	id:12,
+	id:11,
 	name:"一顾茅庐",
 	condition:{
 		from:{year:207,month:2},
@@ -264,7 +243,7 @@ var EventListConfig = [
 	]
 },
 {
-	id:13,
+	id:12,
 	name:"二顾茅庐",
 	condition:{
 		from:{year:207,month:4},
@@ -285,7 +264,7 @@ var EventListConfig = [
 	]
 },
 {
-	id:14,
+	id:13,
 	name:"三顾茅庐",
 	condition:{
 		from:{year:207,month:6},
@@ -307,7 +286,7 @@ var EventListConfig = [
 	]
 },
 {
-	id:15,
+	id:14,
 	name:"刘表之死",
 	condition:{
 		from:{year:208,month:2},
@@ -335,16 +314,18 @@ var EventListConfig = [
 	]
 },
 {
-	id:16,
+	id:15,
 	name:"舌战群儒",
 	condition:{
 		from:{year:208,month:4},
 		to:{year:208,month:5},
 		seignior:[17,21],
 		generals:[
-			{id:1,seignior:1},//孙权未灭亡
+			{id:1,seignior:1},//曹操未灭亡
 			{id:17,seignior:17},//孙权未灭亡
 			{id:21,seignior:21},//刘备未灭亡
+			{id:10,seignior:21},//诸葛亮属刘备
+			{id:2,seignior:17},//周瑜属孙权
 		],
 		citys:[
 		]
@@ -352,6 +333,27 @@ var EventListConfig = [
 	script:"Data/Event/{0}/szqr.txt",
 	result:[
 		{type:"stopBattle", seigniors:[17,21], month:12}
+	]
+},
+{
+	id:16,
+	name:"苦肉の計",
+	condition:{
+		from:{year:208,month:7},
+		to:{year:208,month:8},
+		seignior:[17],
+		generals:[
+			{id:1,seignior:1},//曹操未灭亡
+			{id:17,seignior:17},//孙权未灭亡
+			{id:21,seignior:21},//刘备未灭亡
+			{id:2,seignior:17},//周瑜属孙权
+			{id:123,seignior:17},//黄盖属孙权
+		],
+		citys:[
+		]
+	},
+	script:"Data/Event/{0}/krj.txt",
+	result:[
 	]
 },
 {
@@ -365,6 +367,8 @@ var EventListConfig = [
 			{id:1,seignior:1},//孙权未灭亡
 			{id:17,seignior:17},//孙权未灭亡
 			{id:21,seignior:21},//刘备未灭亡
+			{id:10,seignior:21},//诸葛亮属刘备
+			{id:2,seignior:17},//周瑜属孙权
 		],
 		citys:[
 		]
