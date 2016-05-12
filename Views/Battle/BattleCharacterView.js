@@ -93,7 +93,7 @@ BattleCharacterView.prototype.groupSkillExec = function() {
 	self.anime.stop();
 	var members = self.groupSkill.members();
 	var script = "";
-	script += "SGJTalk.show(" + self.data.id() + ",0," + Language.getSkillName(String.format("group_{0}", self.groupSkill.id())) + ");";
+	script += "SGJTalk.show(" + self.data.id() + ",0," + Language.getSkill(String.format("group_{0}", self.groupSkill.id())) + ");";
 	for (var i = 0; i < members.length; i++) {
 		if(members[i] == self.data.id()){
 			continue;

@@ -683,7 +683,14 @@ Language.underArrestTalkData = {
 	"under_arrest_talk_0_2":"糟糕了!"
 };
 Language.skillData = {
-	"group_1":"桃园情谊!",
+	"group_1":"父子同心!",
+	"group_2":"桃园情谊!",
+	"group_3":"让你尝尝河北名将<颜良文丑>的厉害。",
+	"group_4":"虎痴恶来!",
+	"group_5":"将门虎子，承我父志！",
+	"group_6":"虎痴何在？",
+	"group_7":"冰释前嫌!",
+	"group_8":"珠联璧合!",
 	
 	"s_1":"雷霆怒击",
 	"se_1":"连续攻击三次。",
