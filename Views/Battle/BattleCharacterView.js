@@ -102,6 +102,7 @@ BattleCharacterView.prototype.groupSkillExec = function() {
 	}
 	script += "SGJBattleCharacter.attackAngryExec(" + self.belong + ","+ self.data.id() + ");";
 	LGlobal.script.addScript(script);
+	self.groupSkill.data.members = null;
 	self.groupSkill = null;
 };
 BattleCharacterView.prototype.attackAngry = function() {

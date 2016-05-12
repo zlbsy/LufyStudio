@@ -47,7 +47,7 @@ GroupSkillModel.prototype.members=function(){
 	if(group){
 		return group;
 	}
-	var members = self.members();
+	var members = self.data.members;
 	if(members){
 		return members;
 	}

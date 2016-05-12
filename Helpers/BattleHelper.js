@@ -155,7 +155,7 @@ function battleCanAffectionGroupSkill(chara, targerChara){
 		if(battleCanAttack(chara.belong, chara.data.father(), targerChara)){
 			members.push(chara.data.id(), chara.data.father());
 			var groupSkill = GroupSkillModel.getMaster(GroupSkillAffectionId);
-			groupSkill.members = members;
+			groupSkill.data.members = members;
 			return groupSkill;
 		}
 	}
@@ -165,7 +165,7 @@ function battleCanAffectionGroupSkill(chara, targerChara){
 		if(battleCanAttack(chara.belong, charaId, targerChara)){
 			members.push(chara.data.id(), charaId);
 			var groupSkill = GroupSkillModel.getMaster(GroupSkillAffectionId);
-			groupSkill.members = members;
+			groupSkill.data.members = members;
 			return groupSkill;
 		}
 	}
