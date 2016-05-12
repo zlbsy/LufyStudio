@@ -59,6 +59,10 @@ Language.data = {
 	"status_Chaos":"混乱",
 	"status_BanIncantation":"禁咒",
 	
+	"can_not_move":"现在无法移动!",
+	"use_strategy_terrain_error":"{0}无法在此地形下使用!",
+	"use_strategy_belong_error":"不可对{0}使用!",
+	
 	"quantity_of_month":"({0}个月)",
 	"exp":"经验",
 	"treat":"治疗",

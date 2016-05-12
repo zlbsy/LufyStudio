@@ -343,10 +343,10 @@ BattleController.prototype.clickStrategyRange = function(chara){
 		return;
 	}
 	if(!isSameBelong(BattleController.ctrlChara.currentSelectStrategy.belong(),chara.belong)){
-		Toast.makeText(String.format(Language.get("不可对{0}使用!"), Language.get(BattleController.ctrlChara.belong))).show();
+		Toast.makeText(String.format(Language.get("use_strategy_belong_error"), Language.get(BattleController.ctrlChara.belong))).show();
 		return;
 	}else if(!self.view.mapLayer.canUseStrategyOnTerrain(BattleController.ctrlChara.currentSelectStrategy, chara.locationX(), chara.locationY())){
-		Toast.makeText(String.format(Language.get("{0}无法在此地形下使用!"), BattleController.ctrlChara.currentSelectStrategy.name())).show();
+		Toast.makeText(String.format(Language.get("use_strategy_terrain_error"), BattleController.ctrlChara.currentSelectStrategy.name())).show();
 		return;
 	}
 	self.view.roadLayer.clear();
@@ -355,7 +355,7 @@ BattleController.prototype.clickStrategyRange = function(chara){
 BattleController.prototype.clickOnRoadLayer = function(event){
 	var self = event.currentTarget.parent.controller;
 	if(!self.getValue("currentBelong")){
-		Toast.makeText("现在无法移动!").show();
+		Toast.makeText(Language.get("can_not_move")).show();
 		return;
 	}else if(BattleController.ctrlChara.belong != Belong.SELF){
 		Toast.makeText(String.format(Language.get("can_not_operating"), Language.get(BattleController.ctrlChara.belong))).show();
