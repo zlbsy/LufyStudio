@@ -7,6 +7,7 @@ function SeigniorExecute(){
 	self.messageCitys = [];
 	self.areaIndex = 0;
 	self.areaAIIndex = 0;
+	self.eventCitys = [];
 	if(!self.timer){
 		self.timer = new LTimer(LGlobal.speed, 1);
 	}
@@ -138,6 +139,7 @@ SeigniorExecute.run=function(){
 	self.seigniorIndex = 0;
 	self.areaIndex = 0;
 	self.timeAdded = false;
+	self.eventCitys = [];
 	SeigniorExecute.running = false;
 	var buttonClose = self.backLayer.childList.find(function(child){
 		return child.constructor.name == "LButton";

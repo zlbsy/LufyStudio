@@ -8,6 +8,9 @@ function getWeakBattleCity(areaModel){
 	var enemyCitys = [];
 	for(var i = 0;i < neighbors.length;i++){
 		var child = AreaModel.getArea(neighbors[i]);
+		if(SeigniorExecute.Instance().eventCitys.indexOf(neighbors[i])>=0){
+			continue;
+		}
 		if(child.seigniorCharaId() != areaModel.seigniorCharaId() && !areaModel.seignior().isStopBattle(child.seigniorCharaId())){
 			enemyCitys.push(child);
 		}

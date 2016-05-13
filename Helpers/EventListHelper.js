@@ -300,6 +300,7 @@ function dispatchEventListResultSeigniorToSeignior(child) {
 			general.seigniorId(child.to);
 		}
 		seigniorTo.addCity(city);
+		SeigniorExecute.Instance().eventCitys.push(city.id());
 	}
 	SeigniorModel.removeSeignior(child.from);
 	GameCacher.resetAreaMap("area-map-1");
@@ -361,6 +362,7 @@ function dispatchEventListResultChangeCityResources(child) {
 }
 function dispatchEventListResultChangeCitySeignior(child) {
 	var city = AreaModel.getArea(child.cityId);
+	SeigniorExecute.Instance().eventCitys.push(child.cityId);
 	city.seigniorCharaId(child.seignior);
 	GameCacher.resetAreaMap("area-map-1");
 	LMvc.MapController.view.areaLayerInit();
