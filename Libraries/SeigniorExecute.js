@@ -65,6 +65,7 @@ SeigniorExecute.removeSeignior=function(seigniorId){
 	}
 };
 SeigniorExecute.run=function(){
+	console.log("SeigniorExecute.run");
 	var self = SeigniorExecute.Instance();
 	if(!self.load){
 		self.load = new LMvcLoader(self);
@@ -73,6 +74,7 @@ SeigniorExecute.run=function(){
 	}
 	SeigniorExecute.running = true;
 	if(self.seigniorIndex == 0 && jobAiEvent()){
+		console.log("jobAiEvent over");
 		return;
 	}
 	if(!self.backLayer){
@@ -95,8 +97,14 @@ SeigniorExecute.run=function(){
 			}
 		}
 	}
+	console.log("self.stop="+self.stop);
 	if(self.stop){
 		return;
+	}
+	if(SeigniorExecute.messageCache){
+		var message = SeigniorExecute.messageCache;
+		SeigniorExecute.messageCache = null;
+		SeigniorExecute.addMessage(message);
 	}
 	if(self.seigniorIndex < SeigniorModel.list.length){
 		var seigniorModel = SeigniorModel.list[self.seigniorIndex];
@@ -185,7 +193,11 @@ SeigniorExecute.prototype.generalsPrizedRun=function(area){
 };
 SeigniorExecute.addMessage = function(value){
 	console.error("addMessage :", value);
-	MessageView.Instance().add(value);
+	if(typeof MessageView == UNDEFINED){
+		SeigniorExecute.messageCache = value;
+	}else{
+		MessageView.Instance().add(value);
+	}
 };
 SeigniorExecute.prototype.areaJobRun=function(area){
 	var self = this, chara, job;
