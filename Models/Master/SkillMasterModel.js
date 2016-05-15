@@ -54,7 +54,8 @@ SkillMasterModel.prototype.rects = function() {
 	return this.data.rects;
 };
 SkillMasterModel.prototype.probability = function() {
-	return this.data.probability;
+	var probability = this.data.probability;
+	return probability ? probability : 100;
 };
 SkillMasterModel.prototype.hert = function() {
 	return this.data.hert;

@@ -19,7 +19,8 @@ StatusBarView.prototype.setData = function(obj){
 		var index = obj.currentValue.indexOf("(");
 		var indexEnd = obj.currentValue.indexOf(")");
 		self.currentValue = parseInt(obj.currentValue.substring(0,index));
-		self.subCurrentValue = parseInt(obj.currentValue.substring(index+1, indexEnd));
+		var subCurrentValue = obj.currentValue.substring(index+1, indexEnd);
+		self.subCurrentValue = LMath.isInt(subCurrentValue) ? parseInt(subCurrentValue) : subCurrentValue;
 	}else {
 		self.currentValue = obj.currentValue;
 		self.subCurrentValue = undefined;

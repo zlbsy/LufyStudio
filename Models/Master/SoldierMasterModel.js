@@ -30,7 +30,10 @@ SoldierMasterModel.prototype.id = function() {
 	return this.data.id;
 };
 SoldierMasterModel.prototype.name = function() {
-	return this.data.name;
+	return Language.getSoldier("name_" + this.data.sign);
+};
+SoldierMasterModel.prototype.explanation = function() {
+	return Language.getSoldier("explanation_" + this.data.sign);
 };
 SoldierMasterModel.prototype.technology = function() {
 	return this.data.technology;
@@ -107,9 +110,6 @@ SoldierMasterModel.prototype.strategy = function() {
 		}
 	}
 	return self._strategies;
-};
-SoldierMasterModel.prototype.explanation = function() {
-	return Language.getSoldier(this.data.explanation);
 };
 SoldierMasterModel.prototype.next = function() {
 	return this.data.next;

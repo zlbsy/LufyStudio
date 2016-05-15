@@ -78,6 +78,7 @@ CharacterDetailedView.prototype.set=function(param){
 		self.character = param;
 		characterModel = param.data;
 		self.controller.setValue("selectedCharacter", characterModel);
+		self.controller.setValue("charaStatus", self.character.status);
 		self.controller.setValue("battleStatus", self.character.status.statusLabel());
 		self.controller.setValue("battleBelong", self.character.belong);
 	}

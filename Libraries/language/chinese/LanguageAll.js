@@ -474,7 +474,9 @@ Language.data = {
 	"single_combat_answer_no":"你还不配和我交手!",
 	
 	"leader_change_talk":"糟糕!因为主将撤退，军队一盘散沙，能力都下降了。那就由我暂代主将来指挥战斗吧！",
-	"gameover":"游戏结束"
+	"bout_end_confirm":"结束本回合吗？",
+	"gameover":"游戏结束",
+	"skill_explanation":"【️{0}】{1}(发动率:{2}％)"
 };
 Language.itemData = {
 	"item_name_1":"草药",
@@ -556,7 +558,7 @@ Language.itemData = {
 	"item_name_77":"照夜玉狮子",
 	"item_name_78":"黄骠马",
 	"item_name_79":"大宛马",
-	"item_name_70":"白马",
+	"item_name_80":"白马",
 	"item_name_81":"凤翅紫金冠",
 	"item_name_82":"黄金盔",
 	"item_name_83":"夜明盔",
@@ -625,6 +627,30 @@ Language.cityData = {
 	"city_53":"西城"
 };
 Language.soldierData = {
+	"name_jj":"君主",
+	"name_qbb":"步兵",
+	"name_gb":"弓兵",
+	"name_qqb":"骑兵",
+	"name_gqb":"弓骑兵",
+	"name_qpc":"炮车",
+	"name_whj":"武术家",
+	"name_zb":"贼兵",
+	"name_cs":"策士",
+	"name_fsis":"风水士",
+	"name_ds":"道士",
+	"name_qcs":"骑马策士",
+	"name_wun":"女兵",
+	"name_xlqb":"西凉骑兵",
+	"name_hjz":"黄巾贼",
+	"name_hd":"海盗",
+	"name_xxs":"驯熊师",
+	"name_xhs":"驯虎师",
+	"name_dd":"都督",
+	"name_zss":"咒术士",
+	"name_qlq":"青龙骑兵",
+	"name_bhq":"白虎步兵",
+	"name_xwn":"玄武弩兵",
+	"name_zqn":"朱雀弩骑",
 	"explanation_jj":"均衡发展的万能型部队。在攻击、策略两方面都相当活跃。",
 	"explanation_qbb":"防御力优秀的部队。对付弓兵类时，以强大的攻击力为傲；但是攻击骑兵类的部队时，表现一般。",
 	"explanation_gb":"擅长远距攻击的部队。对骑兵类的攻击效果极高，但相反地对步兵类的防御效果极弱，这点还请留意。",

@@ -221,16 +221,28 @@ BattleIntelligentAI.prototype.findMagicAttackTarget = function() {
 			break;
 	}
 };
-BattleIntelligentAI.prototype.getCanUseStrategy = function(target,type, node) {
+BattleIntelligentAI.prototype.getCanUseStrategy = function(target, type, node, checkFun) {
 	var self = this, chara = self.chara;
 	var lX = target.locationX();
 	var lY = target.locationY(); 
 	var strategyList = BattleIntelligentAI.strategyList;
 	for (var i = 0, l = strategyList.length; i < l; i++) {
 		var strategy = strategyList[i];
-		console.log("strategy="+strategy.name()+" : "+strategy.effectType()+"!="+type);
-		if(strategy.effectType() != type || strategy.belong() != target.belong){
+		console.log("getCanUseStrategy : "+strategy.name());
+		if(checkFun && checkFun(strategy)){
 			continue;
+		}
+		if(strategy.effectType() != type){
+			continue;
+		}
+		if(strategy.belong() == Belong.SELF){
+			if(!isSameBelong(chara.belong, target.belong)){
+				continue;
+			}
+		}else{
+			if(isSameBelong(chara.belong, target.belong)){
+				continue;
+			}
 		}
 		//TODO::地形判断
 		var weathers = strategy.weathers();
@@ -254,12 +266,35 @@ BattleIntelligentAI.prototype.getCanUseStrategy = function(target,type, node) {
 	}
 	return null;
 };
-BattleIntelligentAI.prototype.getNestNode = function(target) {
+BattleIntelligentAI.prototype.getNestLocation = function(fromLocations, x, y) {
+	var length = 10000;
+	for(var i=0;i<fromLocations.length;i++){
+		var location = fromLocations[i];
+		var l = Math.abs(x - location[0]) + Math.abs(y - location[1]);
+		if(length > l){
+			length = l;
+		}
+	}
+	return length;
+};
+BattleIntelligentAI.prototype.getNestNode = function(target, targetLength) {
 	var self = this, chara = self.chara;
 	var roadList = self.roadList;
 	var node, length = 10000, sLength;
 	var lX = target.locationX();
 	var lY = target.locationY();
+	if(typeof targetLength == UNDEFINED){
+		targetLength = 0;
+	}
+	var sortFunc = function(a, b){
+		var al = Math.abs(a.x - lX) + Math.abs(a.y - lY);
+		al = Math.abs(al - targetLength);
+		var bl = Math.abs(b.x - lX) + Math.abs(b.y - lY);
+		bl = Math.abs(bl - targetLength);
+		return al - bl;
+	};
+	self.roadList.sort(sortFunc);
+	return self.roadList[0];
 	for (var i = 0, l = roadList.length; i < l; i++) {
 		var child = roadList[i];
 		var cLength = Math.abs(child.x - lX) + Math.abs(child.y - lY);
@@ -349,7 +384,7 @@ BattleIntelligentAI.prototype.singleCombatFail = function(event) {
 	LGlobal.script.addScript(script);
 };
 BattleIntelligentAI.prototype.physicalAttack = function() {
-	var self = this;trace("physicalAttack run");
+	var self = this;
 	if(calculateAskSingleCombat(self.chara, self.target)){
 		var script = "SGJTalk.show(" + self.chara.data.id() + ",0," + String.format(Language.get("single_combat_ask"), self.target.data.name()) + ");";
 		script += "SGJBattleCharacter.askSingleCombat();";
@@ -363,23 +398,36 @@ BattleIntelligentAI.prototype.useAddHpStrategy = function() {
 	for(var i = 0,l = BattleIntelligentAI.ownPantCharacters.length;i<l;i++){
 		var child = BattleIntelligentAI.ownPantCharacters[i];
 		node = self.getNestNode(child);
-		console.log(child.data.name() + " : node",node);
 		strategy = self.getCanUseStrategy(child,StrategyEffectType.Supply,node);
-		console.log("find strategy",strategy);
 		if(strategy){
 			strategys.push({target:child,strategy:strategy});
 		}
 	}
 	if(strategys.length == 0){
-		self.strategyFlag = BattleIntelligentAI.WAKE;
-		return;
+		var f = function(s){
+			return s.wounded() == 0;
+		};
+		for(var i = 0,l = BattleIntelligentAI.ownCharacters.length;i<l;i++){
+			var child = BattleIntelligentAI.ownCharacters[i];
+			if(child.data.wounded() < 20){
+				continue;
+			}
+			node = self.getNestNode(child);
+			strategy = self.getCanUseStrategy(child,StrategyEffectType.Supply,node,f);
+			if(strategy){
+				strategys.push({target:child,strategy:strategy});
+			}
+		}
+		if(strategys.length == 0){
+			self.strategyFlag = BattleIntelligentAI.WAKE;
+			return;
+		}
 	}
 	//TODO::ver1.1判断可以使用策略的优先级
 	var obj = strategys[(strategys.length * Math.random()) >>> 0];
 	strategy = obj.strategy;
 	var target = obj.target;
 	node = self.getStrategyNodeTarget(strategy, target);
-	console.log("To : node="+node);
 	self.chara.currentSelectStrategy = strategy;
 	self.target = target;
 	self.targetNode = node;
@@ -519,20 +567,25 @@ BattleIntelligentAI.prototype.useHertStrategy = function() {
 BattleIntelligentAI.prototype.findPhysicalAttackTarget = function() {
 	var self = this, chara = self.chara;
 	console.log("self.physicalFlag = " + self.physicalFlag);
+	var rangeAttack = chara.data.currentSoldiers().rangeAttack();
+	rangeAttack = rangeAttack.sort(function(a, b){
+		return Math.abs(b.x) + Math.abs(b.y) - Math.abs(a.x) - Math.abs(a.y);
+	});
+	var targetLength = Math.abs(rangeAttack[0].x) + Math.abs(rangeAttack[0].y) - 1;
 	switch(self.physicalFlag){
 		case BattleIntelligentAI.PHYSICAL_PANT:
-			self.findPhysicalPant();
+			self.findPhysicalPant(targetLength);
 			break;
 		case BattleIntelligentAI.PHYSICAL_OTHER:
-			self.findPhysicalOther();
+			self.findPhysicalOther(targetLength);
 			break;
 	}
 };
-BattleIntelligentAI.prototype.findPhysicalPant = function() {
+BattleIntelligentAI.prototype.findPhysicalPant = function(targetLength) {
 	var self = this, chara = self.chara,node,targets = [];
 	for(var i = 0,l = BattleIntelligentAI.targetPantCharacters.length;i<l;i++){
 		var child = BattleIntelligentAI.targetPantCharacters[i];
-		node = self.getNestNode(child);
+		node = self.getNestNode(child, targetLength);
 		console.log(child.data.name() + " : node",node);
 		var can = self.canAttackTarget(child,node);
 		if(can){
@@ -551,18 +604,23 @@ BattleIntelligentAI.prototype.findPhysicalPant = function() {
 	self.targetNode = node;
 	self.chara.mode = CharacterMode.MOVING;
 };
-BattleIntelligentAI.prototype.findPhysicalOther = function() {
+BattleIntelligentAI.prototype.findPhysicalOther = function(targetLength) {
+	console.log("findPhysicalOther targetLength",targetLength);
 	var self = this, chara = self.chara,node,targets = [];
+	var fromLocations = [[self.locationX, self.locationY]];
+	if(chara.data.currentSoldiers().attackType() == AttackType.FAR){
+		
+	}
 	for(var i = 0,l = BattleIntelligentAI.targetCharacters.length;i<l;i++){
 		var child = BattleIntelligentAI.targetCharacters[i];
 		if(child.data.isPantTroops()){
 			continue;
 		}
-		node = self.getNestNode(child);
+		node = self.getNestNode(child, targetLength);
 		console.log(child.data.name() + " : node",node);
 		var can = self.canAttackTarget(child,node);
+		console.log("findPhysicalOther can",can,child);
 		if(can){
-			console.log("findPhysicalOther",child);
 			targets.push(child);
 		}
 	}
@@ -638,7 +696,6 @@ BattleIntelligentAI.prototype.findMoveTarget = function() {
 	}
 	//没有可以攻击到的人，向最近目标移动
 	var distance = 100000, lX, lY, targetX = self.locationX, targetY = self.locationY, targetRoads;
-	//console.log("BattleIntelligentAI.targetCharacters.length = " , BattleIntelligentAI.targetCharacters.length);
 	for(var i = 0,l = BattleIntelligentAI.targetCharacters.length;i<l;i++){
 		var child = BattleIntelligentAI.targetCharacters[i];
 		if(child.data.isDefCharacter()){
@@ -647,14 +704,11 @@ BattleIntelligentAI.prototype.findMoveTarget = function() {
 		lX = child.locationX(), lY = child.locationY();
 		LMvc.BattleController.query.checkDistance = true;
 		LMvc.BattleController.query.checkCharacter = true;
-		//var roads = LMvc.BattleController.query.queryPath(new LPoint(self.locationX, self.locationY),new LPoint(lX,lY));
-		//console.log("findMoveTarget:"+new LPoint(self.locationX, self.locationY)+","+new LPoint(lX,lY)+"="+roads);
 		var roads;
 		var ii = 0;
 		do{
 			ii++;
 			roads = LMvc.BattleController.query.queryPath(new LPoint(self.locationX, self.locationY),new LPoint(lX,lY));
-			//console.log("findMoveTarget:"+new LPoint(self.locationX, self.locationY)+","+new LPoint(lX,lY)+"="+roads);
 			var noRoad = (!roads || roads.length == 0);
 			var absX = Math.abs(self.locationX - lX);
 			var absY = Math.abs(self.locationY - lY);
@@ -670,12 +724,10 @@ BattleIntelligentAI.prototype.findMoveTarget = function() {
 		LMvc.BattleController.query.checkDistance = false;
 		LMvc.BattleController.query.checkCharacter = false;
 		var currentDistance = roads.length;
-		//console.log("currentDistance = " , currentDistance, "distance="+distance);
 		if(currentDistance > 0 && currentDistance < distance){
 			distance = currentDistance;
 			targetRoads = roads;
 		}
-		//console.log("targetRoads = " , targetRoads, "distance="+distance);
 	}
 	for(var i = 0,l=targetRoads.length;i<l;i++){
 		var node = targetRoads[i];
@@ -697,6 +749,5 @@ BattleIntelligentAI.prototype.findMoveTarget = function() {
 		self.targetNode = new LPoint(targetX, targetY);
 	}
 	self.chara.mode = CharacterMode.MOVING;
-	//console.log("self.chara.mode="+self.chara.mode);
 };
 

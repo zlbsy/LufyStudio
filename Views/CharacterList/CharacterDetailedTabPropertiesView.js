@@ -46,11 +46,11 @@ CharacterDetailedTabPropertiesView.prototype.showRight=function(characterModel){
 	[characterModel.MP(),characterModel.maxMP(),characterModel.maxMP()],
 	LMvc.BattleController ? [characterModel.exp(),characterModel.maxExp(),characterModel.maxExp()] : [characterModel.feat(),characterModel.maxFeat(),characterModel.maxFeat()],
 	[characterModel.currentSoldiers().proficiency(),characterModel.currentSoldiers().proficiency(),1000],
-	[characterModel.attack(),characterModel.attack(),1000],
-	[characterModel.spirit(),characterModel.spirit(),1000],
-	[characterModel.defense(),characterModel.defense(),1000],
-	[characterModel.breakout(),characterModel.breakout(),1000],
-	[characterModel.morale(),characterModel.morale(),1000],
+	self.getStatusAsList(characterModel, "attack", "AttackAid"),
+	self.getStatusAsList(characterModel, "spirit", "ApiritAid"),
+	self.getStatusAsList(characterModel, "defense", "DefenseAid"),
+	self.getStatusAsList(characterModel, "breakout", "BreakoutAid"),
+	self.getStatusAsList(characterModel, "morale", "MoraleAid"),
 	[characterModel.currentSoldiers().movePower(),characterModel.currentSoldiers().movePower(),10]
 	];
 	for(var i=0;i<self.rightLayer.numChildren;i++){
@@ -59,6 +59,26 @@ CharacterDetailedTabPropertiesView.prototype.showRight=function(characterModel){
 		bar.setData({maxValue:obj[2],currentValue:obj[0],normalValue:obj[1]});
 		bar.setStatus();
 	}
+};
+CharacterDetailedTabPropertiesView.prototype.getStatusAsList=function(characterModel, key, aidKey, maxValue){
+	var self = this;
+	var charaStatus = self.controller.getValue("charaStatus");
+	var value = characterModel[key]();
+	var valueCurrent = value;
+	var aid = charaStatus.getStatus(StrategyType[aidKey]);
+	if(aid){
+		valueCurrent *= (1 + aid.value);
+	}
+	if(typeof maxValue == UNDEFINED){
+		maxValue = 1000;
+	}
+	return [self.getCurrentStatus(valueCurrent,value),value,maxValue];
+};
+CharacterDetailedTabPropertiesView.prototype.getCurrentStatus=function(currentValue, value){
+	if(currentValue == value){
+		return value;
+	}
+	return String.format("{0}({1})",currentValue,(currentValue > value ? "↑":"↓") );
 };
 CharacterDetailedTabPropertiesView.prototype.setProperties=function(){
 	var self = this;

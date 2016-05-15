@@ -34,7 +34,7 @@ CharacterDetailedTabStatusView.prototype.showStatus=function(){
 	var skill = characterModel.skill();
 	if(skill){
 		labels.push("stunt");
-		datas.push(String.format("{0} ({1})",skill.name(),skill.explanation()));
+		datas.push(String.format(Language.get("skill_explanation"),skill.name(),skill.explanation(),skill.probability()));
 	}
 	for(var i=0;i<labels.length;i++){
 		var height = txtHeight;

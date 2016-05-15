@@ -50,7 +50,7 @@ BattleCharacterView.prototype.getBitmapData = function() {
 	if(self.hideByCloud){
 		return null;
 	}
-	var key = self.data.currentSoldiers().img() + "_" + self.action+"_"+self.direction + "_" + self.anime.colIndex, 
+	var key = self.data.currentSoldiers().img() + "_" + self.belong+ + "_" + self.action+"_"+self.direction + "_" + self.anime.colIndex, 
 	endKey = key + "_end";
 	var resultBitmapData;
 	if(self.mode == CharacterMode.END_ACTION){
