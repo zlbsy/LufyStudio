@@ -475,7 +475,8 @@ Language.data = {
 	"leader_change_talk":"やばい、主将が撤退したため、軍隊が混乱していて、能力がダウンしています。それでは、私が主将をやります！",
 	"bout_end_confirm":"回合を終了しますか？",
 	"gameover":"ゲームオーバー",
-	"skill_explanation":"【️{0}】{1}(発動率:{2}％)"
+	"skill_explanation":"【️{0}】{1}(発動率:{2}％)",
+	"building":"建筑"
 };
 Language.itemData = {
 	"item_name_1":"草薬",

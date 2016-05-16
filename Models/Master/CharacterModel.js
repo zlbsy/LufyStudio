@@ -566,7 +566,9 @@ CharacterModel.prototype.identity = function(value) {
 		return Language.get("out_of_office");
 	}
 	var identity = "general";
-	if(self.id() == seigniorId){
+	if(self.isDefCharacter()){
+		identity = "building";
+	} else if(self.id() == seigniorId){
 		identity = "monarch";
 	}else if(self.id() == self.city().prefecture()){
 		identity = "prefecture";

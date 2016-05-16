@@ -29,6 +29,7 @@ CharacterStatusIconView.prototype.onframe = function(event){
 	}
 	var status = self.status[self.index++];
 	self.bitmap.bitmapData.setCoordinate(self.statusPositions[status.mode] * 16, 0);
+	self.bitmap.visible = true;
 };
 CharacterStatusIconView.prototype.downloadAidStatusRandom = function(){
 	var self = this;

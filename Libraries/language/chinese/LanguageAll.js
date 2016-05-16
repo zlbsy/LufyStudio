@@ -251,7 +251,6 @@ Language.data = {
 	"select_monarch":"选择继承武将",
 	"leader":"主将",
 	"number_of_generals":"武将人数",
-	//"dialog_remove_equipment_confirm":"要解除装备{0}吗？",
 	"dialog_remove_equipment_confirm":"<font size='22' color='#FFFFFF'>要解除装备 <font color='#FF0000'>{0}</font> 吗？</font>",
 	"dialog_select_seignior_confirm":"选择{0}吗？",
 	"dialog_training_confirm":"训练哪个兵种？",
@@ -476,7 +475,8 @@ Language.data = {
 	"leader_change_talk":"糟糕!因为主将撤退，军队一盘散沙，能力都下降了。那就由我暂代主将来指挥战斗吧！",
 	"bout_end_confirm":"结束本回合吗？",
 	"gameover":"游戏结束",
-	"skill_explanation":"【️{0}】{1}(发动率:{2}％)"
+	"skill_explanation":"【️{0}】{1}(发动率:{2}％)",
+	"building":"建築物"
 };
 Language.itemData = {
 	"item_name_1":"草药",

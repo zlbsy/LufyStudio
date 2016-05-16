@@ -376,3 +376,32 @@ BattleCharacterLayerView.prototype.terrainHeal = function(){
 	}
 	BattleCharacterStatusView.healCharactersBout();
 };
+BattleCharacterLayerView.prototype.abnormalState = function(){
+	var self = LMvc.BattleController.view.charaLayer;
+	var belong = LMvc.BattleController.getValue("currentBelong");
+	var charas = self.getCharactersFromBelong(belong);
+	for(var index = 0,l = charas.length;index<l;index++){
+		var chara = charas[index];
+		if(chara.status.hasStatus(StrategyType.Poison)){
+			var troops = chara.data.troops();
+			var hertTroops = chara.data.maxTroops() * 0.1 >>> 0;
+			if(hertTroops >= troops){
+				hertTroops = troops - 1;
+			}
+			if(hertTroops > 0){
+				BattleCharacterStatusView.healCharactersPush(chara, -hertTroops);
+			}
+		}else if(chara.status.hasStatus(StrategyType.Burn)){
+			var troops = chara.data.troops();
+			var hertTroops = chara.data.maxTroops() * 0.12 >>> 0;
+			if(hertTroops >= troops){
+				hertTroops = troops - 1;
+			}
+			if(hertTroops > 0){
+				BattleCharacterStatusView.healCharactersPush(chara, -hertTroops);
+			}
+		}
+	}
+	self.terrainHeal();
+};
+
