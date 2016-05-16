@@ -277,21 +277,31 @@ BattleIntelligentAI.prototype.getNestLocation = function(fromLocations, x, y) {
 	}
 	return length;
 };
-BattleIntelligentAI.prototype.getNestNode = function(target, targetLength) {
+BattleIntelligentAI.prototype.getNestNode = function(target, rangeAttack) {
 	var self = this, chara = self.chara;
 	var roadList = self.roadList;
 	var node, length = 10000, sLength;
 	var lX = target.locationX();
 	var lY = target.locationY();
-	if(typeof targetLength == UNDEFINED){
-		targetLength = 0;
+	//targetLength
+	if(typeof rangeAttack == UNDEFINED){
+		rangeAttack = [{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0}];
 	}
 	var sortFunc = function(a, b){
+		var aIndex = rangeAttack.findIndex(function(p){return p.x + a.x == lX && p.y + a.y == lY;});
+		var bIndex = rangeAttack.findIndex(function(p){return p.x + b.x == lX && p.y + b.y == lY;});
+		if(aIndex >= 0 && bIndex < 0){
+			return -1;
+		}else if(aIndex < 0 && bIndex >= 0){
+			return 1;
+		}
 		var al = Math.abs(a.x - lX) + Math.abs(a.y - lY);
-		al = Math.abs(al - targetLength);
 		var bl = Math.abs(b.x - lX) + Math.abs(b.y - lY);
-		bl = Math.abs(bl - targetLength);
-		return al - bl;
+		if(aIndex >= 0 && bIndex >= 0){
+			return bl - al;
+		}else{
+			return al - bl;
+		}
 	};
 	self.roadList.sort(sortFunc);
 	return self.roadList[0];
@@ -585,7 +595,7 @@ BattleIntelligentAI.prototype.findPhysicalPant = function(targetLength) {
 	var self = this, chara = self.chara,node,targets = [];
 	for(var i = 0,l = BattleIntelligentAI.targetPantCharacters.length;i<l;i++){
 		var child = BattleIntelligentAI.targetPantCharacters[i];
-		node = self.getNestNode(child, targetLength);
+		node = self.getNestNode(child, chara.data.currentSoldiers().rangeAttack());
 		console.log(child.data.name() + " : node",node);
 		var can = self.canAttackTarget(child,node);
 		if(can){
@@ -616,7 +626,7 @@ BattleIntelligentAI.prototype.findPhysicalOther = function(targetLength) {
 		if(child.data.isPantTroops()){
 			continue;
 		}
-		node = self.getNestNode(child, targetLength);
+		node = self.getNestNode(child, chara.data.currentSoldiers().rangeAttack());
 		console.log(child.data.name() + " : node",node);
 		var can = self.canAttackTarget(child,node);
 		console.log("findPhysicalOther can",can,child);

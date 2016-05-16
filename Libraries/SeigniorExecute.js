@@ -563,15 +563,15 @@ SeigniorExecute.prototype.maskHide=function(){
 
 SeigniorExecute.prototype.loadSeigniorExecute=function(){
 	var self = this;
-	self.loadMvc("EventMap",self.loadSeigniorExecuteLoadSkill);
+	self.loadMvc("EventMap",self.loadSeigniorExecuteModel);
 };
-SeigniorExecute.prototype.loadSeigniorExecuteLoadSkill=function(){
+SeigniorExecute.prototype.loadSeigniorExecuteModel=function(){
 	var self = this;
-	self.load.model(["Master/SkillMaster","Master/SoldierMaster","Master/Soldier","Master/StrategyMaster","Master/Strategy"],self.loadSeigniorExecuteConfig);
+	self.load.model(["Master/SkillMaster","Master/SoldierMaster","Master/Soldier","Master/GroupSkill","Master/StrategyMaster","Master/Strategy"],self.loadSeigniorExecuteConfig);
 };
 SeigniorExecute.prototype.loadSeigniorExecuteConfig=function(){
 	var self = this;
-	self.load.config(["CharacterListType","Skills","EventList","BattleMap","Soldiers","Strategy"],self.loadSeigniorExecuteHelper);
+	self.load.config(["CharacterListType","Skills","GroupSkills","EventList","BattleMap","Soldiers","Strategy"],self.loadSeigniorExecuteHelper);
 };
 SeigniorExecute.prototype.loadSeigniorExecuteHelper=function(){
 	var self = this;
@@ -590,5 +590,6 @@ SeigniorExecute.prototype.seigniorExecute=function(){
 	StrategyMasterModel.setMaster(StrategyDatas);
 	SoldierMasterModel.setMaster(SoldierDatas);
 	SkillMasterModel.setMaster(SkillsData);
+	GroupSkillModel.setMaster(GroupSkillsData);
 	SeigniorExecute.run();
 };

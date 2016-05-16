@@ -594,6 +594,7 @@ BattleAIExecute.prototype.counterAttack = function(currentChara, targetChara) {
 	}
 };
 BattleAIExecute.prototype.battleCanGroupSkill = function(chara, targerChara){
+	var self = this;
 	var groupSkill = chara.data.groupSkill();
 	if(!groupSkill){
 		return null;
