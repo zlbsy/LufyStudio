@@ -485,6 +485,8 @@ function setBattleSaveData(){
 		if(charaData.isDefCharacter){
 			var chara = CharacterModel.getChara(charaData.id);
 			chara.isDefCharacter(1);
+			chara.seigniorId(battleData.toCity.seigniorCharaId());
+			chara.cityId(battleData.toCity.id());
 			chara.setDatas(charaData.data);
 		}
 		var chara = charaLayer.addOurCharacter(charaData.id,charaData.action,charaData.direction,charaData.x,charaData.y);
@@ -501,6 +503,8 @@ function setBattleSaveData(){
 		if(charaData.isDefCharacter){
 			var chara = CharacterModel.getChara(charaData.id);
 			chara.isDefCharacter(1);
+			chara.seigniorId(battleData.toCity.seigniorCharaId());
+			chara.cityId(battleData.toCity.id());
 			chara.setDatas(charaData.data);
 		}
 		var chara = charaLayer.addEnemyCharacter(charaData.id,charaData.action,charaData.direction,charaData.x,charaData.y);

@@ -110,6 +110,9 @@ SeigniorModel.prototype.character = function(){
 	}
 	return self.data._chara;
 };
+SeigniorModel.prototype.name = function(){
+	return this.character().name();
+};
 SeigniorModel.prototype.isTribe = function(){
 	return this.character().isTribeCharacter();
 };

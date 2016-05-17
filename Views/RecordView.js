@@ -16,7 +16,11 @@ RecordView.prototype.init=function(){
 	}
 	self.layerInit();
 	var records = [];
-	for(var i=0;i<=RecordController.RECORD_MAX;i++){
+	var recortMax = RecordController.RECORD_MAX;
+	if(!LPlugin.native){
+		recortMax = RecordController.RECORD_MAX_WEB;
+	}
+	for(var i=0;i<=recortMax;i++){
 		var child = new RecordChildView(i);
 		records.push(child);
 	}

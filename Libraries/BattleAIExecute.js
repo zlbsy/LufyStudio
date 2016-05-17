@@ -604,7 +604,7 @@ BattleAIExecute.prototype.battleCanGroupSkill = function(chara, targerChara){
 	for(var i=0;i<group.length;i++){
 		var charaId = group[i];
 		var chara = selfCharas.find(function(child){
-			return child.id() == charaId;
+			return child.data.id() == charaId;
 		});
 		if(!chara){
 			return null;

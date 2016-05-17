@@ -16,7 +16,7 @@ BuildOfficialView.prototype.showMenu=function(){
 		buttonPrefecture.addEventListener(LMouseEvent.MOUSE_UP, self.onClickPrefectureButton.bind(self));
 		menuY += menuHeight;
 	}
-	menuY += menuHeight;
+	//menuY += menuHeight;
 	var buttonGeneralsMove = getButton(Language.get("transport"),200);
 	buttonGeneralsMove.y = menuY;
 	layer.addChild(buttonGeneralsMove);

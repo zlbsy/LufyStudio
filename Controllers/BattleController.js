@@ -119,6 +119,7 @@ BattleController.prototype.init = function(){
 	console.log("LMvc.areaData.battleData --",LMvc.areaData.battleData);
 	if(LMvc.areaData.battleData){
 		setBattleSaveData();
+		LMvc.areaData.battleData = null;
 	}else{
 		self.charactersInit();
 	}

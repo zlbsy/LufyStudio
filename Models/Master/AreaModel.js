@@ -240,6 +240,9 @@ AreaModel.prototype.addGenerals = function(param){
 	}
 	self.removeGenerals(chara.id());
 	self.data.generals.push(chara);
+	if(self.data.generals.length == 1){
+		self.prefecture(chara.id());
+	}
 };
 AreaModel.prototype.isAppoint = function(value){
 	var self = this;

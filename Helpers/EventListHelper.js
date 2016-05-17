@@ -290,6 +290,9 @@ function dispatchEventListResultChangePrefecture(child) {
 }
 function dispatchEventListResultSeigniorToSeignior(child) {
 	var seigniorFrom = SeigniorModel.getSeignior(child.from);
+	if(!seigniorFrom){
+		return;
+	}
 	var seigniorTo = SeigniorModel.getSeignior(child.to);
 	var citys = seigniorFrom.areas().concat(); 
 	for(var i=0,l=citys.length;i<l;i++){
@@ -362,6 +365,28 @@ function dispatchEventListResultChangeCityResources(child) {
 }
 function dispatchEventListResultChangeCitySeignior(child) {
 	var city = AreaModel.getArea(child.cityId);
+	if(city.seigniorCharaId() == child.seignior){
+		return;
+	}
+	var fromSeignior = city.seignior();
+	var fromCitys = fromSeignior.areas();
+	if(fromCitys.length == 1){
+		return;
+	}
+	var generals = city.generals();
+	if(generals.length > 0){
+		var canMoveCitys = [];
+		for(var i=0,l=fromCitys.length;i<l;i++){
+			if(fromCitys[i].id() != child.cityId){
+				canMoveCitys.push(fromCitys[i]);
+			}
+		}
+		while(generals.length > 0){
+			var moveCity = canMoveCitys[canMoveCitys.length * Math.random() >>> 0];
+			generals[0].moveTo(moveCity.id());
+			generals[0].moveTo();
+		}
+	}
 	SeigniorExecute.Instance().eventCitys.push(child.cityId);
 	city.seigniorCharaId(child.seignior);
 	GameCacher.resetAreaMap("area-map-1");
@@ -381,6 +406,7 @@ function dispatchEventListResultMoveCityResources(child) {
 }
 function dispatchEventListResultMoveGeneralsToCity(child) {
 	var fromCity = AreaModel.getArea(child.from);
+	var toCity = AreaModel.getArea(child.to);
 	var generals = [];
 	if(!child.generals || child.generals.length == 0){
 		generals = fromCity.generals().concat();
@@ -392,6 +418,9 @@ function dispatchEventListResultMoveGeneralsToCity(child) {
 	}
 	for(var i=0,l=generals.length;i<l;i++){
 		var general = generals[i];
+		if(general.seigniorId() != toCity.seigniorCharaId()){
+			continue;
+		}
 		general.moveTo(child.to);
 		general.moveTo();
 	}

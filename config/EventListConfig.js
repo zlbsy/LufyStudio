@@ -232,7 +232,7 @@ var EventListConfig = [
 			{id:4,seignior:21},//关羽属刘备
 			{id:19,seignior:21},//张飞属刘备
 			{id:21,seignior:21},//刘备未灭亡
-			{id:11,seignior:0},//诸葛亮在野
+			{id:10,seignior:0},//诸葛亮在野
 		],
 		citys:[
 			{id:25,seignior:21},//新野属刘备
@@ -253,7 +253,7 @@ var EventListConfig = [
 			{id:4,seignior:21},//关羽属刘备
 			{id:19,seignior:21},//张飞属刘备
 			{id:21,seignior:21},//刘备未灭亡
-			{id:11,seignior:0},//诸葛亮在野
+			{id:10,seignior:0},//诸葛亮在野
 		],
 		citys:[
 			{id:25,seignior:21},//新野属刘备
@@ -274,7 +274,7 @@ var EventListConfig = [
 			{id:4,seignior:21},//关羽属刘备
 			{id:19,seignior:21},//张飞属刘备
 			{id:21,seignior:21},//刘备未灭亡
-			{id:11,seignior:0},//诸葛亮在野
+			{id:10,seignior:0},//诸葛亮在野
 		],
 		citys:[
 			{id:25,seignior:21},//新野属刘备
@@ -282,7 +282,7 @@ var EventListConfig = [
 	},
 	script:"Data/Event/{0}/sgml3.txt",
 	result:[
-		{type:"changeSeignior", id:11, seignior:21, loyalty:100, city:25},
+		{type:"changeSeignior", id:10, seignior:21, loyalty:100, city:25},
 	]
 },
 {
@@ -379,6 +379,12 @@ var EventListConfig = [
 		{type:"seigniorToSeignior", from:594, to:21},//赵范城池归属刘备
 		{type:"seigniorToSeignior", from:605, to:21},//刘度城池归属刘备
 		{type:"seigniorToSeignior", from:615, to:21},//韩玄城池归属刘备
+		{type:"changeCitySeignior", cityId:16, seignior:21},//江陵属刘备
+		{type:"changeCitySeignior", cityId:17, seignior:21},//武陵属刘备
+		{type:"changeCitySeignior", cityId:20, seignior:21},//桂阳属刘备
+		{type:"changeCitySeignior", cityId:19, seignior:21},//零陵属刘备
+		{type:"changeCitySeignior", cityId:18, seignior:21},//长沙属刘备
+		{type:"moveGeneralsToCity", generals:[4,89,77,358,482], to:16},//关羽关平周仓糜氏兄弟移往江陵
 	]
 },
 {

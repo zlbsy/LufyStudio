@@ -65,7 +65,7 @@ CharacterDetailedTabPropertiesView.prototype.getStatusAsList=function(characterM
 	var charaStatus = self.controller.getValue("charaStatus");
 	var value = characterModel[key]();
 	var valueCurrent = value;
-	var aid = charaStatus.getStatus(StrategyType[aidKey]);
+	var aid = charaStatus ? charaStatus.getStatus(StrategyType[aidKey]) : null;
 	if(aid){
 		valueCurrent *= (1 + aid.value);
 	}

@@ -549,21 +549,21 @@ function jobAiCaptivesRescue(areaModel,characters){//解救俘虏
 	if(areaModel.money() < money){
 		return false;
 	}
-	areaModel.money(-money);
 	var captiveArea = captive.city();
 	if(captiveArea.seigniorCharaId() == LMvc.selectSeignorId){
 		character.job(Job.End);
 		//"{0}的{1}想用金钱{2}赎回{3}，是否答应？"
-		var obj = {title:Language.get("confirm"),message:String.format(Language.get("jobai_rescue_confirm_message"),captiveArea.seignior().name(),character.name(),money,captive.name()),height:200
+		var obj = {title:Language.get("confirm"),message:String.format(Language.get("jobai_rescue_confirm_message"),character.seignior().name(),character.name(),money,captive.name()),height:200
 		,okEvent:function(event){
 			event.currentTarget.parent.remove();
-			areaModel.removeCaptives(character.id());
-			charaModel.moveTo(character.cityId());
-			charaModel.moveTo();
+			captiveArea.removeCaptives(captive.id());
+			captive.moveTo(areaModel.id());
+			captive.moveTo();
+			areaModel.money(-money);
+			captiveArea.money(money);
 			SeigniorExecute.run();
 		},cancelEvent:function(event){
 			event.currentTarget.parent.remove();
-			areaModel.money(money);
 			SeigniorExecute.run();
 		}};
 		var windowLayer = ConfirmWindow(obj);

@@ -545,7 +545,7 @@ CharacterModel.prototype.lv = function() {
 	return this.level();
 };
 CharacterModel.prototype.level = function() {
-	return (this.data.feat / CharacterExpConfig.general >>> 0) + 1;
+	return (this.data.feat / CharacterExpConfig.general >>> 0) + 3;
 };
 CharacterModel.prototype.strategies = function(isAll) {
 	var self = this;
@@ -686,7 +686,9 @@ CharacterModel.prototype.moveTo = function(cityId) {
 	var self = this;
 	if(typeof cityId == UNDEFINED){
 		var areaFrom = self.city();
-		areaFrom.removeCharacter(self);
+		if(areaFrom){
+			areaFrom.removeCharacter(self);
+		}
 		var area = AreaModel.getArea(self.data.targetCity);
 		if(self.seigniorId() > 0){
 			area.addGenerals(self);
@@ -699,7 +701,7 @@ CharacterModel.prototype.moveTo = function(cityId) {
 		if(self.id() == area.seigniorCharaId()){
 			area.prefecture(self.id());
 		}
-		if(areaFrom.prefecture() == self.id()){
+		if(areaFrom && areaFrom.prefecture() == self.id()){
 			appointPrefecture(areaFrom);
 		}
 	}else{

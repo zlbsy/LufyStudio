@@ -102,6 +102,9 @@ SeigniorExecute.run=function(){
 	if(self.stop){
 		return;
 	}
+	if(!self.backLayer.visible){
+		self.backLayer.visible = true;
+	}
 	if(SeigniorExecute.messageCache){
 		var message = SeigniorExecute.messageCache;
 		SeigniorExecute.messageCache = null;
