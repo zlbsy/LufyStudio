@@ -45,6 +45,15 @@ BattleCharacterView.getAnimationData = function(){
 	];
 	return data;
 };
+BattleCharacterView.prototype.boat = function() {
+	var self = this;
+	if(self._boat){
+		return self._boat;
+	}
+	var list = LGlobal.divideCoordinate(64,64,2,1);
+    var data = new LBitmapData(LMvc.datalist["boat"],0,0,64,32);
+    self._boat = new LAnimation(self,data,[[list[0][0], list[1][0]]]);
+};
 BattleCharacterView.prototype.getBitmapData = function() {
 	var self = this;
 	if(self.hideByCloud){

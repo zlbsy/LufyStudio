@@ -3,7 +3,6 @@ function EventMapController(){
 }
 EventMapController.prototype.construct=function(){
 	var self = this;
-	self.initOver = false;
 	LMvc.keepLoading(true);
 	self.configLoad();
 };

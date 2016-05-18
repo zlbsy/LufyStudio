@@ -1510,7 +1510,6 @@ LRPGMapScript.analysis = function() {
 
 				}
 				LMvc.EventMapController.mapMove();
-				LMvc.EventMapController.initOver = true;
 				LGlobal.script.analysis();
 			}, 100);
 			return;

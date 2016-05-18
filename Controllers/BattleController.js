@@ -9,7 +9,6 @@ BattleController.prototype.construct=function(){
 	var self = this;
 	self.downX = self.downY = 0;
 	self.setValue("bout", 0);
-	self.initOver = false;
 	LMvc.keepLoading(true);
 	LMvc.changeLoading(BattleLoading);
 	var city = self.battleData.toCity;
