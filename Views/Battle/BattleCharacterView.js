@@ -377,6 +377,11 @@ BattleCharacterView.prototype.getTerrain = function() {
 	var terrainId = self.controller.view.mapLayer.getTerrainId(self.locationX(), self.locationY());
 	return self.data.currentSoldiers().terrain(terrainId);
 };
+BattleCharacterView.prototype.boatInit = function(){
+	var self = this;
+	var terrainModel = self.controller.view.mapLayer.getTerrainModel(self.locationX(), self.locationY());
+	self.boat(terrainModel.boat());
+};
 BattleCharacterView.prototype.hideStatusView = function() {
 	LMvc.characterStatusView = null;
 };

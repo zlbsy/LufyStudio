@@ -8,6 +8,7 @@ function SeigniorExecute(){
 	self.areaIndex = 0;
 	self.areaAIIndex = 0;
 	self.eventCitys = [];
+	self.childsCheckedCitys = [];
 	if(!self.timer){
 		self.timer = new LTimer(LGlobal.speed, 1);
 	}
@@ -143,6 +144,7 @@ SeigniorExecute.run=function(){
 	self.areaIndex = 0;
 	self.timeAdded = false;
 	self.eventCitys = [];
+	self.childsCheckedCitys = [];
 	SeigniorExecute.running = false;
 	var buttonClose = self.backLayer.childList.find(function(child){
 		return child.constructor.name == "LButton";
@@ -372,6 +374,17 @@ SeigniorExecute.prototype.areaCharacterDieRun=function(area){
 };
 SeigniorExecute.prototype.areaAIRun=function(areaModel){
 	var self = this;
+	if(LMvc.chapterData.month == 2){
+		if(self.childsCheckedCitys.indexOf() < 0){
+			var growup = childsHasGrowup(areaModel);
+			if(growup){
+				self.stop = true;
+				return;
+			}else{
+				self.childsCheckedCitys.push(areaModel.id());
+			}
+		}
+	}
 	if(areaModel.seigniorCharaId() == LMvc.selectSeignorId && !areaModel.isAppoint()){
 		self.characters = [];
 	}else{

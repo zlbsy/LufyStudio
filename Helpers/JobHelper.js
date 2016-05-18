@@ -50,10 +50,6 @@ function getJobPrice(jobType) {
 	console.error("Can't get JobPrice");
 	return 0;
 }
-/*function getIdentity(value){
-	console.error("getIdentity");
-	var identitis = ["在野","一般","太守"];
-}*/
 /*
 外交:智力+运气
 访问：智力+统率+运气
@@ -183,7 +179,7 @@ function accessRun(characterModel){
 		return;
 	}
 	var charaId = notDebut[notDebut.length*Math.random() >>> 0];
-	
+	cityModel.removeNotDebut(charaId);
 	var targetModel = CharacterModel.getChara(charaId);
 	var area = characterModel.city();
 	var outOfOffice = area.outOfOffice();

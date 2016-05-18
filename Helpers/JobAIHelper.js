@@ -573,3 +573,63 @@ function jobAiCaptivesRescue(areaModel,characters){//解救俘虏
 	character.redeem(captive.id(), money);
 	return false;
 }
+function childHasNotGenerals(childModel){
+	if(childModel.seigniorId() > 0){
+		return false;
+	}
+	if(childModel.age() != 16){
+		return false;
+	}
+	for(var i=0,l=AreaModel.list.length;i<l;i++){
+		var area = AreaModel.list[i];
+		//获取所有未登场武将ID
+		var notDebut = area.notDebut(true);
+		var index = notDebut.indexOf(childModel.id());
+		if(index >= 0){
+			//删除未登场武将信息
+			area.removeNotDebut(childModel.id());
+			return true;
+		}
+	}
+	return false;
+}
+function childsHasGrowup(areaModel){
+	var generals = areaModel.generals();
+	for(var i=0;i<generals.length;i++){
+		var chara = generals[i];
+		var childs = chara.childs();
+		if(childs.length == 0){
+			continue;
+		}
+		for(var j=0;j<childs.length;j++){
+			var childId = childs[j];
+			var childModel = CharacterModel.getChara(childId);
+			if(!childHasNotGenerals(childModel)){
+				continue;
+			}
+			//出仕处理
+			childModel.cityId(areaModel.id());
+			childModel.seigniorId(areaModel.seigniorCharaId());
+			childModel.loyalty(chara.loyalty());
+			childModel.feat(0);
+			areaModel.addGenerals(childModel);
+			if(areaModel.seigniorCharaId() == LMvc.selectSeignorId){
+				var obj = {title:Language.get("confirm"),messageHtml:String.format(Language.get("child_growup"), childModel.name(), chara.name()),height:240, okEvent:function(event){
+					event.currentTarget.parent.remove();
+					SeigniorExecute.Instance().stop = false;
+					SeigniorExecute.run();
+				}};
+				var windowLayer = ConfirmWindow(obj);
+				LMvc.layer.addChild(windowLayer);
+			}else{
+				LMvc.MapController.nextFrameExecute(function(){
+					SeigniorExecute.Instance().stop = false;
+					SeigniorExecute.run();
+				});
+			}
+			return true;
+		}
+		
+	}
+	return false;
+}

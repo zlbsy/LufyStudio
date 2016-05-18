@@ -653,7 +653,18 @@ AreaModel.prototype.outOfOfficeData=function(){
 AreaModel.prototype.outOfOffice=function(){
 	return this.data.out_of_offices;
 };
-AreaModel.prototype.notDebut=function(){
+AreaModel.prototype.removeNotDebut=function(charaId){
+	var self = this;
+	var notDebut = self.data.not_debut;
+	for(var i = 0, l = notDebut.length;i<l;i++){
+		var child = notDebut[i];
+		if(child.chara_id == charaId){
+			self.data.not_debut.splice(i, 1);
+			break;
+		}
+	}
+};
+AreaModel.prototype.notDebut=function(force){
 	var notDebut = this.data.not_debut;
 	var charas = [];
 	if(!notDebut || notDebut.length == 0){
@@ -664,7 +675,7 @@ AreaModel.prototype.notDebut=function(){
 	for(var i = 0, l = notDebut.length;i<l;i++){
 		var child = notDebut[i];
 		//console.log(child.year +"<="+ year +"&&"+ child.month +"<="+ month);
-		if(child.year <= year && child.month <= month){
+		if(force || (child.year <= year && child.month <= month)){
 			charas.push(child.chara_id);
 		}
 	}

@@ -86,9 +86,6 @@ function calculateHitrateRelease(leaderId, charaModel){
 	}
 	return Math.random() > compatibility/sum;;
 }
-function getIdentity(value){
-	var identitis = ["在野","一般","太守"];
-}
 function gameDataInit(){
 	var data = LMvc.areaData;
 	if(LMvc.chapterData.isCreateDebut){

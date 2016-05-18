@@ -477,7 +477,8 @@ Language.data = {
 	"bout_end_confirm":"回合を終了しますか？",
 	"gameover":"ゲームオーバー",
 	"skill_explanation":"【{0}】{1}(発動率:{2}％)",
-	"building":"建筑"
+	"building":"建筑",
+	"child_growup":"<font size='22' color='#FFFFFF'><font color='#FF0000'> {0} </font>が大人になったから、<font color='#FF0000'> {1} </font>に従って、味方に参加しました！</font>"
 };
 Language.itemData = {
 	"item_name_1":"草薬",

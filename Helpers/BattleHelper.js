@@ -14,7 +14,7 @@ function cloudWeatherCharacterShow(characterId){
 			if(!character.hideByCloud){
 				continue;
 			};
-			character.anime.alpha = 1;
+			character.anime.parent.alpha = 1;
 			character.hideByCloud = false;
 			character.toStatic(false);
 			character.toStatic(true);
@@ -29,16 +29,15 @@ function cloudWeatherCharacterShow(characterId){
 			var y = Math.abs(child.locationY() - character.locationY());
 			return x + y <= child.data.movePower();
 		});
-		console.log("findIndex : " + findIndex + ", " + character.data.name());
 		if(findIndex >= 0){
-			character.anime.alpha = 1;
+			character.anime.parent.alpha = 1;
 			character.hideByCloud = false;
 			character.toStatic(false);
 			if(character.isStatic){
 				character.toStatic(true);
 			}
 		}else{
-			character.anime.alpha = 0.01;
+			character.anime.parent.alpha = 0.01;
 			character.hideByCloud = true;
 			character.toStatic(false);
 		}

@@ -258,6 +258,7 @@ BattleCharacterLayerView.prototype.addCharaLayer=function(index,action,direction
 	chara.setCoordinate(parseInt(x)*stepWidth,parseInt(y)*stepHeight);
 	self.addChild(chara);
 	chara.setActionDirection(action,direction);
+	chara.boatInit();
 	return chara;
 };
 BattleCharacterLayerView.prototype.boutSkillRun=function(belong,callback){

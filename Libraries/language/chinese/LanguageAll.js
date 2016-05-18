@@ -477,7 +477,8 @@ Language.data = {
 	"bout_end_confirm":"结束本回合吗？",
 	"gameover":"游戏结束",
 	"skill_explanation":"【{0}】{1}(发动率:{2}％)",
-	"building":"建築物"
+	"building":"建築物",
+	"child_growup":"<font size='22' color='#FFFFFF'><font color='#FF0000'> {0} </font>成年了，随<font color='#FF0000'> {1} </font>加入我军！</font>"
 };
 Language.itemData = {
 	"item_name_1":"草药",
