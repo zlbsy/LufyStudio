@@ -80,6 +80,14 @@ BattleMapView.prototype.showTerrain=function(x,y){
 BattleMapView.prototype.getTerrainData=function(locationX,locationY){
 	return this.model.map.data[locationY][locationX];
 };
+BattleMapView.prototype.getTerrainModel=function(locationX,locationY){
+	var terrainId = this.getTerrainId(locationX,locationY);
+	return TerrainMasterModel.getMaster(terrainId);
+};
+BattleMapView.prototype.getTerrainId=function(locationX,locationY){
+	var terrainData = this.getTerrainData(locationX,locationY);
+	return getTerrainId(terrainData);
+};
 BattleMapView.prototype.wakeRoadsClear=function(belong){
 	if(belong == Belong.FRIEND){
 		return;

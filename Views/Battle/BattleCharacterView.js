@@ -45,14 +45,20 @@ BattleCharacterView.getAnimationData = function(){
 	];
 	return data;
 };
-BattleCharacterView.prototype.boat = function() {
+BattleCharacterView.prototype.boat = function(value) {
 	var self = this;
-	if(self._boat){
-		return self._boat;
+	if(!self._boat){
+		if(!value){
+			return;
+		}
+		var list = LGlobal.divideCoordinate(64,64,2,1);
+	    var data = new LBitmapData(LMvc.datalist["boat"],0,0,64,32);
+	    self._boat = new LAnimationTimeline(data,[[list[0][0], list[1][0]]]);
+	    self._boat.y = 24;
+	    self._boat.speed = BattleMapConfig.SPEED * 3;
+	    self.layer.addChild(self._boat);
 	}
-	var list = LGlobal.divideCoordinate(64,64,2,1);
-    var data = new LBitmapData(LMvc.datalist["boat"],0,0,64,32);
-    self._boat = new LAnimation(self,data,[[list[0][0], list[1][0]]]);
+	self._boat.visible = value;
 };
 BattleCharacterView.prototype.getBitmapData = function() {
 	var self = this;
@@ -335,11 +341,13 @@ BattleCharacterView.prototype.setTo = function(){
 	var self = this;
 	self.callParent("setTo", arguments);
 	if(self.x != self.to.x || self.y != self.to.y){
-		//TODO::水地形的时候
-		/*if(warter){
-			LPlugin.playSE("Se_move_warter", LPlugin.volumeSE);
-			return;	
-		}*/
+		var to = self.getTo();
+		var terrainModel = self.controller.view.mapLayer.getTerrainModel(to[0], to[1]);
+		self.boat(terrainModel.boat());
+		if(terrainModel.se()){
+			LPlugin.playSE(terrainModel.se(), LPlugin.volumeSE);
+			return;
+		}
 		var soldier = self.data.currentSoldiers();
 		switch(soldier.moveType()){
 			case MoveType.INFANTRY:
@@ -366,9 +374,7 @@ BattleCharacterView.prototype.showStatusView = function() {
 };
 BattleCharacterView.prototype.getTerrain = function() {
 	var self = this;
-	var map = self.controller.model.map.data;
-	var mapData = map[self.locationY()][self.locationX()];
-	var terrainId = getTerrainId(mapData);
+	var terrainId = self.controller.view.mapLayer.getTerrainId(self.locationX(), self.locationY());
 	return self.data.currentSoldiers().terrain(terrainId);
 };
 BattleCharacterView.prototype.hideStatusView = function() {

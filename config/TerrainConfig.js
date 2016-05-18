@@ -9,7 +9,7 @@ var TerrainConfig = [
 {id:6,name:"桥梁",strategy:[1,1,1,0]},
 {id:7,name:"浅滩",strategy:[0,1,1,0]},
 {id:8,name:"沼泽",strategy:[0,1,1,0]},
-{id:9,name:"大河",strategy:[0,1,1,0]},
+{id:9,name:"大河",strategy:[0,1,1,0],boat:true},
 {id:10,name:"城内",strategy:[1,0,0,0]},
 {id:11,name:"民居",strategy:[1,0,0,0]},
 {id:12,name:"城池",strategy:[1,0,0,0],heal:0.15,comment:"terrain_comment_heal"},

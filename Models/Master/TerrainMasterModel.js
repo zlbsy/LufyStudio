@@ -40,6 +40,12 @@ TerrainMasterModel.getMasterFromValue=function(id){
 TerrainMasterModel.prototype.id = function() {
 	return this.data.id;
 };
+TerrainMasterModel.prototype.se = function() {
+	return this.data.se;
+};
+TerrainMasterModel.prototype.boat = function() {
+	return this.data.boat;
+};
 TerrainMasterModel.prototype.name = function() {
 	return Language.get("terrain_"+this.data.id);
 };
