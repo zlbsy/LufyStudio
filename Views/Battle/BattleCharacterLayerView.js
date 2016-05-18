@@ -267,6 +267,9 @@ BattleCharacterLayerView.prototype.boutSkillRun=function(belong,callback){
 	
 	for(var index = 0,l = charas.length;index<l;index++){
 		var chara = charas[index];
+		if(chara.status.hasStatus(StrategyType.Chaos)){
+			continue;
+		}
 		var skill = chara.data.skill(SkillType.BOUT_START);
 		if(!skill){
 			continue;

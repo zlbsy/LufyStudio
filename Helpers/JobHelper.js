@@ -403,7 +403,7 @@ function enlistRun(characterModel, targetEnlist){
 	//console.log("enlistRun招募 : ",characterModel.id());
 	var area = characterModel.city();
 	var population = area.population();
-	var minPopulation = AreaModel.populationList[area.level()][0];
+	var minPopulation = AreaModel.populationList[area.level() - 1][0];
 	if(population <= minPopulation){
 		return;
 	}
@@ -616,7 +616,7 @@ function SeigniorExecuteChangeCityResources(area){
 		area.population(addPopulation);
 	}else if (police < 40) {
 		var minusValue = (minPolice - police)/minPolice;
-		var nowMin = AreaModel.populationList[area.level()][0];
+		var nowMin = AreaModel.populationList[area.level() - 1][0];
 		if(population > nowMin*0.9){
 			//人口流失
 			var minusPopulation = population*0.01*minusValue;

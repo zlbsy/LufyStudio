@@ -425,8 +425,8 @@ var EventListConfig = [
 	id:20,
 	name:"失荆州",
 	condition:{
-		from:{year:219,month:12},
-		to:{year:219,month:12},
+		from:{year:219,month:6},
+		to:{year:219,month:7},
 		seignior:0,
 		generals:[
 			{id:17,seignior:17},//孙权未灭亡

@@ -133,34 +133,38 @@ BattleIntelligentAI.prototype.init = function(){
 };
 BattleIntelligentAI.prototype.run = function() {
 	var self = BattleController.ctrlChara.inteAI;
-	console.log(BattleController.ctrlChara.data.name() +" run : " + self.chara.mode);
-	switch(self.chara.mode){
-		case CharacterMode.NONE:
-			self.moveRoadsShow();
-			break;
-		case CharacterMode.SHOW_MOVE_ROAD:
-			self.findMagicAttackTarget();
-			break;
-		case CharacterMode.WAIT_SINGLE_COMBAT:
-			break;
-		case CharacterMode.WAIT_ATTACK:
-			self.findPhysicalAttackTarget();
-			break;
-		case CharacterMode.TO_MOVE:
-			self.findMoveTarget();
-			break;
-		case CharacterMode.END_MOVE:
-			self.chara.AI.endAction();
-			return;
-		case CharacterMode.ATTACK:
-			self.physicalAttack();
-			return;
-		case CharacterMode.MOVING:
-			self.moveStart();
-			return;
-		case CharacterMode.STRATEGY_SELECT:
-			self.magicAttack();
-			return;
+	if(self.chara.status.hasStatus(StrategyType.Chaos)){
+		self.chara.AI.endAction();
+	}else{
+		console.log(BattleController.ctrlChara.data.name() +" run : " + self.chara.mode);
+		switch(self.chara.mode){
+			case CharacterMode.NONE:
+				self.moveRoadsShow();
+				break;
+			case CharacterMode.SHOW_MOVE_ROAD:
+				self.findMagicAttackTarget();
+				break;
+			case CharacterMode.WAIT_SINGLE_COMBAT:
+				break;
+			case CharacterMode.WAIT_ATTACK:
+				self.findPhysicalAttackTarget();
+				break;
+			case CharacterMode.TO_MOVE:
+				self.findMoveTarget();
+				break;
+			case CharacterMode.END_MOVE:
+				self.chara.AI.endAction();
+				return;
+			case CharacterMode.ATTACK:
+				self.physicalAttack();
+				return;
+			case CharacterMode.MOVING:
+				self.moveStart();
+				return;
+			case CharacterMode.STRATEGY_SELECT:
+				self.magicAttack();
+				return;
+		}
 	}
 	BattleIntelligentAI.timer.reset();
 	BattleIntelligentAI.timer.start();
