@@ -136,7 +136,6 @@ BattleIntelligentAI.prototype.run = function() {
 	if(self.chara.status.hasStatus(StrategyType.Chaos)){
 		self.chara.AI.endAction();
 	}else{
-		console.log(BattleController.ctrlChara.data.name() +" run : " + self.chara.mode);
 		switch(self.chara.mode){
 			case CharacterMode.NONE:
 				self.moveRoadsShow();
@@ -196,7 +195,7 @@ BattleIntelligentAI.prototype.moveRoadsShow = function() {
 			}
 		}
 		self.roadList.push(node);
-	}console.log("moveRoadsShow self.roadList="+self.roadList);
+	}
 	view.roadLayer.setMoveRoads(path, self.chara.belong);
 	view.roadLayer.addRangeAttack(self.chara);
 	if(self.chara.hideByCloud){
@@ -232,7 +231,6 @@ BattleIntelligentAI.prototype.getCanUseStrategy = function(target, type, node, c
 	var strategyList = BattleIntelligentAI.strategyList;
 	for (var i = 0, l = strategyList.length; i < l; i++) {
 		var strategy = strategyList[i];
-		console.log("getCanUseStrategy : "+strategy.name());
 		if(checkFun && checkFun(strategy)){
 			continue;
 		}
@@ -327,12 +325,11 @@ BattleIntelligentAI.prototype.getNestNode = function(target, rangeAttack) {
 			sLength = Math.abs(child.x - self.locationX) + Math.abs(child.y - self.locationY);
 		}
 		node = child;
-	}console.error("getNestNode:"+node);
+	}
 	return node;
 };
 BattleIntelligentAI.prototype.getStrategyNodeTarget = function(strategy, target) {
 	var self = this, chara = self.chara;
-	console.log("getStrategyNodeTarget",strategy,target);
 	var roadList = self.roadList;
 	var range, rangeAttack = strategy.rangeAttack(), jl = rangeAttack.length;
 	var node, length = 10000, sLength;
@@ -481,9 +478,7 @@ BattleIntelligentAI.prototype.useWakeStrategy = function() {
 			continue;
 		}
 		node = self.getNestNode(child);
-		console.log(child.data.name() + " : node",node);
 		strategy = self.getCanUseStrategy(child,StrategyEffectType.Wake,node);
-		console.log("find strategy",strategy);
 		if(strategy){
 			strategys.push({target:child,strategy:strategy});
 		}
@@ -497,7 +492,6 @@ BattleIntelligentAI.prototype.useWakeStrategy = function() {
 	strategy = obj.strategy;
 	var target = obj.target;
 	node = self.getStrategyNodeTarget(strategy, target);
-	console.log("To : node="+node);
 	self.chara.currentSelectStrategy = strategy;
 	self.target = target;
 	self.targetNode = node;
@@ -533,7 +527,6 @@ BattleIntelligentAI.prototype.useAidStrategy = function(charas, strategyEffectTy
 	strategy = obj.strategy;
 	var target = obj.target;
 	node = self.getStrategyNodeTarget(strategy, target);
-	console.log("To : node="+node);
 	self.chara.currentSelectStrategy = strategy;
 	self.target = target;
 	self.targetNode = node;
@@ -549,16 +542,13 @@ BattleIntelligentAI.prototype.useHertStrategy = function() {
 	for(var i = 0,l = BattleIntelligentAI.targetCharacters.length;i<l;i++){
 		var child = BattleIntelligentAI.targetCharacters[i];
 		node = self.getNestNode(child);
-		console.log(child.data.name() + " : node",node);
 		strategy = self.getCanUseStrategy(child,StrategyEffectType.Status,node);
 		if(strategy){
-			console.log("find strategy",strategy);
 			strategys.push({target:child,strategy:strategy});
 			//continue;
 		}
 		strategy = self.getCanUseStrategy(child,StrategyEffectType.Attack,node);
 		if(strategy){
-			console.log("find strategy",strategy);
 			strategys.push({target:child,strategy:strategy});
 			//continue;
 		}
@@ -572,7 +562,6 @@ BattleIntelligentAI.prototype.useHertStrategy = function() {
 	strategy = obj.strategy;
 	var target = obj.target;
 	node = self.getStrategyNodeTarget(strategy, target);
-	console.log("To : node="+node);
 	self.chara.currentSelectStrategy = strategy;
 	self.target = target;
 	self.targetNode = node;
@@ -580,7 +569,6 @@ BattleIntelligentAI.prototype.useHertStrategy = function() {
 };
 BattleIntelligentAI.prototype.findPhysicalAttackTarget = function() {
 	var self = this, chara = self.chara;
-	console.log("self.physicalFlag = " + self.physicalFlag);
 	var rangeAttack = chara.data.currentSoldiers().rangeAttack();
 	rangeAttack = rangeAttack.sort(function(a, b){
 		return Math.abs(b.x) + Math.abs(b.y) - Math.abs(a.x) - Math.abs(a.y);
@@ -600,10 +588,8 @@ BattleIntelligentAI.prototype.findPhysicalPant = function(targetLength) {
 	for(var i = 0,l = BattleIntelligentAI.targetPantCharacters.length;i<l;i++){
 		var child = BattleIntelligentAI.targetPantCharacters[i];
 		node = self.getNestNode(child, chara.data.currentSoldiers().rangeAttack());
-		console.log(child.data.name() + " : node",node);
 		var can = self.canAttackTarget(child,node);
 		if(can){
-			console.log("findPhysicalPant",child);
 			targets.push(child);
 		}
 	}
@@ -613,13 +599,11 @@ BattleIntelligentAI.prototype.findPhysicalPant = function(targetLength) {
 	}
 	var target = targets[(targets.length * Math.random()) >>> 0];
 	node = self.getPhysicalNodeTarget(target);
-	console.log("To : node="+node);
 	self.target = target;
 	self.targetNode = node;
 	self.chara.mode = CharacterMode.MOVING;
 };
 BattleIntelligentAI.prototype.findPhysicalOther = function(targetLength) {
-	console.log("findPhysicalOther targetLength",targetLength);
 	var self = this, chara = self.chara,node,targets = [];
 	var fromLocations = [[self.locationX, self.locationY]];
 	if(chara.data.currentSoldiers().attackType() == AttackType.FAR){
@@ -631,21 +615,17 @@ BattleIntelligentAI.prototype.findPhysicalOther = function(targetLength) {
 			continue;
 		}
 		node = self.getNestNode(child, chara.data.currentSoldiers().rangeAttack());
-		console.log(child.data.name() + " : node",node);
 		var can = self.canAttackTarget(child,node);
-		console.log("findPhysicalOther can",can,child);
 		if(can){
 			targets.push(child);
 		}
 	}
-	console.log("findPhysicalOther targets:",targets);
 	if(targets.length == 0){
 		self.chara.mode = CharacterMode.TO_MOVE;
 		return;
 	}
 	var target = targets[(targets.length * Math.random()) >>> 0];
 	node = self.getPhysicalNodeTarget(target);
-	console.log("To : node="+node);
 	self.target = target;
 	self.targetNode = node;
 	self.chara.mode = CharacterMode.MOVING;
@@ -720,10 +700,11 @@ BattleIntelligentAI.prototype.findMoveTarget = function() {
 		LMvc.BattleController.query.checkCharacter = true;
 		var roads;
 		var ii = 0;
+		var noRoad;
 		do{
 			ii++;
 			roads = LMvc.BattleController.query.queryPath(new LPoint(self.locationX, self.locationY),new LPoint(lX,lY));
-			var noRoad = (!roads || roads.length == 0);
+			noRoad = (!roads || roads.length == 0);
 			var absX = Math.abs(self.locationX - lX);
 			var absY = Math.abs(self.locationY - lY);
 			if(absX > absY){
@@ -738,7 +719,7 @@ BattleIntelligentAI.prototype.findMoveTarget = function() {
 		LMvc.BattleController.query.checkDistance = false;
 		LMvc.BattleController.query.checkCharacter = false;
 		var currentDistance = roads.length;
-		if(currentDistance > 0 && currentDistance < distance){
+		if(!noRoad && currentDistance > 0 && currentDistance < distance){
 			distance = currentDistance;
 			targetRoads = roads;
 		}

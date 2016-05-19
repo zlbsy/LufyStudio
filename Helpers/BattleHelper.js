@@ -3,7 +3,7 @@ function cloudWeatherCharacterShow(characterId){
 	var weatherLayer = LMvc.BattleController.view.weatherLayer;
 	var charaLayer = LMvc.BattleController.view.charaLayer;
 	if(characterId){
-		var character = charaLayer.getCharacter(Belong.ENEMY,characterId);
+		var character = charaLayer.getCharacter(Belong.ENEMY,characterId, true);
 		characters = [character];
 	}else{
 		characters = charaLayer.getCharactersFromBelong(Belong.ENEMY);

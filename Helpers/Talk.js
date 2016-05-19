@@ -59,7 +59,6 @@ function TalkRun(layer,y,index,faceindex,msg,callback){
 }
 function TalkRemove(){
 	var msgText = LMvc.talkLayer.getChildByName("message");
-	console.log(msgText.constructor.name , "msgText.windRunning = " + msgText.windRunning);
 	if(msgText.windRunning){
 		msgText.windComplete();
 		return;

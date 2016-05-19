@@ -310,7 +310,7 @@ BattleCharacterView.prototype.returnShowMoveRoadObject = function() {
 	self.setActionDirection(self.showMoveRoadObject.action,self.showMoveRoadObject.direction);
 	LMvc.BattleController.clickSelfCharacter(self);
 };
-BattleCharacterView.prototype.toDie = function(isSingleCombat) {
+BattleCharacterView.prototype.toDie = function() {
 	var self = this;
 	var script = "";
 	self.data.wounded(0);
@@ -320,7 +320,8 @@ BattleCharacterView.prototype.toDie = function(isSingleCombat) {
 	}
 	if(!self.data.isDefCharacter() && !self.data.isTribeCharacter()){
 		var talkMsg;
-		if(isSingleCombat || calculateHitrateCaptive(self)){
+		if(self.isSingleCombat || calculateHitrateCaptive(self)){
+			self.isSingleCombat = false;
 			if(self.belong == Belong.ENEMY){
 				LMvc.BattleController.model.selfCaptive.push(self.data.id());
 			}else{
@@ -341,12 +342,14 @@ BattleCharacterView.prototype.setTo = function(){
 	var self = this;
 	self.callParent("setTo", arguments);
 	if(self.x != self.to.x || self.y != self.to.y){
-		var to = self.getTo();
-		var terrainModel = self.controller.view.mapLayer.getTerrainModel(to[0], to[1]);
-		self.boat(terrainModel.boat());
-		if(terrainModel.se()){
-			LPlugin.playSE(terrainModel.se(), LPlugin.volumeSE);
-			return;
+		if(self.controller.constructor.name == "BattleController"){
+			var to = self.getTo();
+			var terrainModel = self.controller.view.mapLayer.getTerrainModel(to[0], to[1]);
+			self.boat(terrainModel.boat());
+			if(terrainModel.se()){
+				LPlugin.playSE(terrainModel.se(), LPlugin.volumeSE);
+				return;
+			}
 		}
 		var soldier = self.data.currentSoldiers();
 		switch(soldier.moveType()){

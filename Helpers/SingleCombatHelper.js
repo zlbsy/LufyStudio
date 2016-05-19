@@ -183,10 +183,8 @@ function singleCombatCommandCheckDoubleAttack(currentCharacter, targetCharacter)
 	switch(targetCharacter.currentCommand){
 		case SingleCombatCommand.ATTACK:
 			if(targetCharacter.action == CharacterAction.ATTACK){
-				console.log("-");
 				break;
 			}
-			console.log("HERT");
 			targetCharacter.changeAction(CharacterAction.HERT);
 			singleCombatHert(currentCharacter, targetCharacter);
 			break;

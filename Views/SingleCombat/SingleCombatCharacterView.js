@@ -213,6 +213,7 @@ SingleCombatCharacterView.prototype.singleCombatEnd = function(event){
 	var self = this, obj;
 	var dieChara = LMvc.BattleController.view.charaLayer.getCharacter(null,self.data.id());
 	self.controller.over();
+	dieChara.isSingleCombat = true;
 	dieChara.data.troops(0);
 	BattleController.ctrlChara.AI.endAction();
 	//dieChara.toDie(true);
