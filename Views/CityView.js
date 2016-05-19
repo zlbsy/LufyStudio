@@ -226,7 +226,7 @@ CityView.prototype.updateView = function(){
 };
 CityView.prototype.autoTalkCheck = function(){
 	var self = this;
-	if(!self.controller.getValue("selfCity")){
+	if(!self.controller.getValue("selfCity") || SeigniorExecute.running){
 		return;
 	}
 	var cityModel = self.controller.getValue("cityData");

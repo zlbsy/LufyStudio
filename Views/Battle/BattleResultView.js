@@ -288,6 +288,9 @@ BattleResultView.prototype.showMap=function(event){
 	var toCity = self.controller.battleData.toCity;
 	var cityId = toCity.id();
 	self.controller.view.remove();
+	
+	BattleSelectMenuController._instance = null;
+	
 	LMvc.BattleController = null;
 	LMvc.MapController.view.visible = true;
 	LMvc.MapController.view.positionChangeToCity(toCity);
