@@ -17,7 +17,7 @@ BattleCharacterAI.prototype.magicAttack = function(target){
 		self.chara.currentSelectStrategy.strategyImageLoad(self,self.magicAttack,[target]);
 		return;
 	}
-	console.log("magicAttack",self.chara.data.name(),target.data.name());
+	//console.log("magicAttack",self.chara.data.name(),target.data.name());
 	LMvc.running = true;
 	self.attackTarget = target;
 	LMvc.currentAttackCharacter = self.chara;
@@ -84,9 +84,9 @@ BattleCharacterAI.prototype.magicAttack = function(target){
 			}
 			self.herts.push(hertParams);
 		}
-		console.log("self.herts.length : "+(self.herts.length));
+		//console.log("self.herts.length : "+(self.herts.length));
 		var groupSkill = skill ? null : battleCanGroupSkill(self.chara, target);
-		console.log("groupSkill : "+(groupSkill));
+		//console.log("groupSkill : "+(groupSkill));
 		if(groupSkill){
 			hertParams = self.herts[0];
 			correctionFactor = groupSkill.correctionFactor();
@@ -204,11 +204,11 @@ BattleCharacterAI.prototype.physicalAttack = function(target) {
 					}
 					if(hertParamObj){
 						hertParamObj.aids = Array.getRandomArrays(aids,aidCount);
-						console.log("hertParamObj.aids="+hertParamObj.aids.length);
+						//console.log("hertParamObj.aids="+hertParamObj.aids.length);
 					}
 				}
 			}
-			console.log("battleCanGroupSkill");
+			//console.log("battleCanGroupSkill");
 			var groupSkill = battleCanGroupSkill(self.chara, target);
 			if(groupSkill){
 				self.chara.groupSkill = groupSkill;
@@ -497,7 +497,7 @@ BattleCharacterAI.prototype.plusExp = function(event) {
 };
 BattleCharacterAI.prototype.counterAttack = function(event) {
 	var attackChatacter = event.currentTarget.character;
-	console.error("counterAttack" ,attackChatacter.data.name());
+	//console.error("counterAttack" ,attackChatacter.data.name());
 	if(!isCurrentAttackCharacter(attackChatacter) && !isCurrentAttackTarget(attackChatacter)){
 		return;
 	}
@@ -516,8 +516,7 @@ BattleCharacterAI.prototype.counterAttack = function(event) {
 };
 BattleCharacterAI.prototype.counterMagicAttack = function(event) {
 	var attackChatacter = event.currentTarget.character;
-	console.error("counterMagicAttack" ,attackChatacter.data.name());
-	//BattleController.ctrlChara.AI.endAction();
+	//console.error("counterMagicAttack" ,attackChatacter.data.name());
 	if(!isCurrentAttackCharacter(attackChatacter) && !isCurrentAttackTarget(attackChatacter)){
 		return;
 	}
@@ -525,18 +524,11 @@ BattleCharacterAI.prototype.counterMagicAttack = function(event) {
 		attackChatacter.AI.magicAttack(isCurrentAttackCharacter(attackChatacter) ? LMvc.currentAttackTarget : LMvc.currentAttackCharacter);
 		return;
 	}
-	/*if(attackChatacter.data.id() == BattleController.ctrlChara.data.id()){
-		var chara = LMvc.currentAttackTarget;
-		if(chara.data.troops() > 0 && battleCanAttackCharacter(chara, attackChatacter)){
-			chara.AI.physicalAttack(attackChatacter);
-			return;
-		}
-	}*/
 	BattleController.ctrlChara.AI.endAction();
 };
 BattleCharacterAI.prototype.endAction = function() {
 	var self = this, chara = self.chara, target = chara.AI.attackTarget;
-	console.error("endAction",chara.data.name());
+	//console.error("endAction",chara.data.name());
 	if(target && target.objectIndex != chara.objectIndex){
 		target.currentSelectStrategy = null;
 		target.AI.attackTarget = null;
@@ -587,7 +579,7 @@ BattleCharacterAI.prototype.boutEnd = function(event) {
 };
 BattleCharacterAI.prototype.singleCombatStart = function() {
 	var self = this;
-	console.log("BattleCharacterAI.prototype.singleCombatStart");
+	//console.log("BattleCharacterAI.prototype.singleCombatStart");
 	LMvc.BattleController.loadSingleCombat();
 };
 BattleCharacterAI.prototype.strategySelect = function(strategyModel) {

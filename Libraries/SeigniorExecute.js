@@ -67,7 +67,6 @@ SeigniorExecute.removeSeignior=function(seigniorId){
 	}
 };
 SeigniorExecute.run=function(){
-	console.log("SeigniorExecute.run");
 	var self = SeigniorExecute.Instance();
 	if(!self.load){
 		self.load = new LMvcLoader(self);
@@ -76,7 +75,6 @@ SeigniorExecute.run=function(){
 	}
 	SeigniorExecute.running = true;
 	if(self.seigniorIndex == 0 && jobAiEvent()){
-		console.log("jobAiEvent over");
 		return;
 	}
 	if(!self.backLayer){
@@ -99,7 +97,6 @@ SeigniorExecute.run=function(){
 			}
 		}
 	}
-	console.log("self.stop="+self.stop);
 	if(self.stop){
 		return;
 	}
@@ -199,7 +196,6 @@ SeigniorExecute.prototype.generalsPrizedRun=function(area){
 	}
 };
 SeigniorExecute.addMessage = function(value){
-	console.error("addMessage :", value);
 	if(typeof MessageView == UNDEFINED){
 		SeigniorExecute.messageCache = value;
 	}else{
@@ -331,7 +327,6 @@ SeigniorExecute.prototype.jobNumberOfCharacter=function(characters){
 };
 SeigniorExecute.prototype.jobAiFunction=function(areaModel, characters, func,params,maxNum){
 	var self = this;
-	//console.log("jobAiFunction "+func.name);
 	var length = self.jobNumberOfCharacter(characters);
 	if(maxNum && maxNum < length){
 		length = maxNum;
@@ -396,7 +391,7 @@ SeigniorExecute.prototype.areaAIRun=function(areaModel){
 		self.timer.reset();
 		self.timer.start();
 		return;
-	}console.log("areaModel = " + areaModel.name(), areaModel.seigniorCharaId(), areaModel.seignior());
+	}
 	if(areaModel.seignior().isTribe()){
 		//外族只在每年收获粮食时随机进行侵略行动一次，其他时间不行动
 		if(HarvestMonths.Food.indexOf(LMvc.chapterData.month) >= 0 && Math.random() < TribeAIProbability && self.characters.length == areaModel.generalsSum()){

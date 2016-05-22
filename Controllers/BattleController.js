@@ -89,20 +89,18 @@ BattleController.prototype.init = function(){
 	SoldierMasterModel.setMaster(SoldierDatas);
 	GroupSkillModel.setMaster(GroupSkillsData);
 	self.queryInit();
-	
+	BattleMapConfig.SPEED = (LPlugin.gameSpeed == 1 ? BattleMapConfig.SPEED_NORMAL : BattleMapConfig.SPEED_FAST);
 	LMvc.keepLoading(false);
 	self.fromController.view.parent.addChild(self.view);
 	self.fromController.view.remove();
 	LMvc.CityController = null;
 	LMvc.BattleController = self;
-	console.log("BattleController.prototype.init -- start --");
 	if(!BattleController.timer){
 		BattleController.timer = new LTimer(1000, 1);
 	}
 	BattleController.timer.removeAllEventListener();
 	BattleController.timer.addEventListener(LTimerEvent.TIMER, self.showCharacterDetailed);
 
-	console.log("self.battleData.toCity --"+self.battleData.toCity);
 	var enemyTroops = self.battleData.toCity.troops();
 	var generals = self.battleData.toCity.generals();
 	for(var i=0,l=generals.length;i<l;i++){
@@ -115,7 +113,6 @@ BattleController.prototype.init = function(){
 		return;
 	}
 	self.dispatchEvent(LEvent.COMPLETE);
-	console.log("LMvc.areaData.battleData --",LMvc.areaData.battleData);
 	if(LMvc.areaData.battleData){
 		setBattleSaveData();
 		LMvc.areaData.battleData = null;
@@ -166,7 +163,6 @@ BattleController.prototype.charactersInit = function(){
 		}
 		return v;
 	});
-	console.log("enemyCharas",enemyCharas);
 	self.battleData.expeditionEnemyCharacterList = enemyCharas;
 	for(var i = 0;i<enemyCharas.length;i++){
 		var child = enemyPositions[i];
@@ -259,29 +255,23 @@ BattleController.prototype.queryInit=function(){
 	self.query = new BattleQuery(self.model.map.data);
 };
 BattleController.prototype.mapMouseUp = function(event){
-	console.log("mapMouseUp");
 	if(LMvc.running || BattleSelectMenuController.instance().view.visible){
-		console.log("LMvc.running = " + LMvc.running + ", visible = " + BattleSelectMenuController.instance().view.visible);
 		return;
 	}
 	if(BattleController.ctrlChara && BattleController.ctrlChara.isMoving()){
-		console.log("ctrlChara  isMoving");
 		return;
 	}
 	var self = event.currentTarget.parent.controller;
 	if(!self.draging){
-		console.log("self.draging = " + self.draging);
 		return;
 	}
 	self.draging = false;
 	event.currentTarget.stopDrag();
 	BattleController.timer.stop();
 	if(Math.abs(self.downX - event.offsetX) > 12 || Math.abs(self.downY - event.offsetY) > 12){
-		console.log("Math.abs");
 		return;
 	}
 	if(self.getValue("currentBelong") && self.getValue("currentBelong") != Belong.SELF){
-		console.log("currentBelong = " + self.getValue("currentBelong"));
 		return;
 	}
 	if(!self.view.roadLayer.visible){
@@ -391,7 +381,6 @@ BattleController.prototype.clickOnRoadLayer = function(event){
 	}
 };
 BattleController.prototype.notClickOnRoadLayer = function(event){
-	console.log("BattleController.prototype.notClickOnRoadLayer ",BattleController.ctrlChara.mode);
 	var self = event.currentTarget.parent.controller;
 	self.view.roadLayer.clear();
 	switch(BattleController.ctrlChara.mode){

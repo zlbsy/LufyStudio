@@ -290,7 +290,7 @@ function battleFoodCheck(belong){
 		(belong == Belong.ENEMY && battleData.fromCity.seigniorCharaId() == LMvc.selectSeignorId);
 	if(cityFood){
 		needFood = (needFood * thrift >>> 0);
-		console.log("cityFood ",battleData.toCity.food() +">"+ needFood);
+		//console.log("cityFood ",battleData.toCity.food() +">"+ needFood);
 		if(battleData.toCity.food() > needFood){
 			battleData.toCity.food(-needFood);
 			return true;
@@ -299,7 +299,7 @@ function battleFoodCheck(belong){
 	}else{
 		needFood += (battleData.troops * 0.5);
 		needFood = (needFood * thrift >>> 0);
-		console.log("food ",battleData.food +">"+ needFood);
+		//console.log("food ",battleData.food +">"+ needFood);
 		if(battleData.food > needFood){
 			battleData.food -= needFood;
 			return true;
@@ -464,7 +464,7 @@ function getBattleSaveData(){
 function setBattleSaveData(){
 	var data = LMvc.areaData.battleData;
 	var battleData = LMvc.BattleController.battleData;
-	console.log("setBattleSaveData",battleData);
+	//console.log("setBattleSaveData",battleData);
 	LMvc.BattleController.setValue("bout", data.bout);
 	LMvc.BattleController.setValue("currentBelong", Belong.SELF);
 	battleData.expeditionCharacterList = [];
@@ -560,7 +560,7 @@ function battleExpeditionMove(city, retreatCity){
  * 战斗后移动到指定城池
  */
 function battleCityChange(winSeigniorId, failSeigniorId, retreatCityId, expeditionList, city, captives){
-	console.error(winSeigniorId, failSeigniorId, retreatCityId, expeditionList, city, captives);
+	//console.error(winSeigniorId, failSeigniorId, retreatCityId, expeditionList, city, captives);
 	//var battleData = controller.battleData;
 	//var city = battleData.toCity;
 	var generals = city.generals();
@@ -593,7 +593,7 @@ function battleCityChange(winSeigniorId, failSeigniorId, retreatCityId, expediti
 			chara.moveTo();
 		}
 	}else{
-		console.log("无撤退城市");
+		//console.log("无撤退城市");
 		var generals = city.generals();
 		if(city.seigniorCharaId() > 0 && city.seignior().character().isTribeCharacter()){
 			//外族消亡
@@ -609,7 +609,7 @@ function battleCityChange(winSeigniorId, failSeigniorId, retreatCityId, expediti
 				}
 				captives.push(child.id());
 			}
-			console.log("全员被俘虏 : " + captives);
+			//console.log("全员被俘虏 : " + captives);
 		}
 	}
 	//generals.splice(0, generals.length);
@@ -619,7 +619,7 @@ function battleCityChange(winSeigniorId, failSeigniorId, retreatCityId, expediti
 	}
 	var seigniorWin = SeigniorModel.getSeignior(winSeigniorId);
 	seigniorWin.addCity(city);
-	console.log("winSeigniorId="+winSeigniorId);
+	//console.log("winSeigniorId="+winSeigniorId);
 	city.seigniorCharaId(winSeigniorId);
 	city.prefecture(expeditionList[0].id());
 	generals = expeditionList.slice();
@@ -677,14 +677,14 @@ function battleCheckRetreatCity(retreatCity, failSeigniorId, toCity){
 		var seigniorCharacter = seignior.character();
 		if(seigniorCharacter.cityId() != toCity.id()){
 			//如果君主未被擒,则撤退到君主所在城池
-			console.log("如果君主未被擒,则撤退到君主所在城池");
+			//console.log("如果君主未被擒,则撤退到君主所在城池");
 			retreatCityId = seigniorCharacter.cityId();
 		}else{
 			//TODO::ver1.1君主被擒，暂时随机决定撤退城池,版本升级后需调整为最近城池
 			var citys = seignior.areas();
 			if(citys.length > 0){
 				retreatCityId = citys[(citys.length * Math.random()) >>> 0].id();
-				console.log("敌军君主被擒，暂时随机决定撤退城池 : " + retreatCityId);
+				//console.log("敌军君主被擒，暂时随机决定撤退城池 : " + retreatCityId);
 			}
 		}
 	}
@@ -746,11 +746,11 @@ function captiveAutomatedProcessing(characterModel, leaderId, retreatCityId, toC
 		generalSurrender(characterModel, toCity);
 		message = String.format(Language.get("surrender_dialog_msg"), characterModel.name());//{0}投降了敌军!
 	}else if(calculateHitrateBehead(leaderId, characterModel)){//斩首
-		console.log("斩首:"+characterModel.name());
+		//console.log("斩首:"+characterModel.name());
 		message = String.format(Language.get("beheaded_dialog_msg"), characterModel.name());//{0}被敌军斩首了!
 		characterModel.toDie();
 	}else if(isSeignior || calculateHitrateRelease(leaderId, characterModel)){//释放
-		console.log("释放:"+characterModel.name());
+		//console.log("释放:"+characterModel.name());
 		if(retreatCityId){
 			if(characterModel.cityId() != retreatCityId){
 				characterModel.moveTo(retreatCityId);
@@ -765,7 +765,7 @@ function captiveAutomatedProcessing(characterModel, leaderId, retreatCityId, toC
 		toCity.addCaptives(characterModel);
 		message = String.format(Language.get("captived_dialog_msg"), characterModel.name());//{0}被敌军俘虏了!
 	}
-	console.log("俘虏自动化处理",message);
+	//console.log("俘虏自动化处理",message);
 	return message;
 }
 /*俘虏自动化处理AI(多个)*/

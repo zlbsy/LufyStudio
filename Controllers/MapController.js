@@ -121,7 +121,7 @@ MapController.prototype.cityLoadComplete=function(){
 };
 MapController.prototype.returnToCity=function(cityId){
 	var self = this;
-	console.log("returnToCity cityId="+cityId);
+	//console.log("returnToCity cityId="+cityId);
 	LTweenLite.removeAll();
 	LMvc.MapController.view.clearBattleMark();
 	LMvc.MapController.view.visible = false;
@@ -138,7 +138,6 @@ MapController.prototype.returnToCity=function(cityId){
 MapController.prototype.checkSeigniorChange=function(seigniorId){
 	var self = this;
 	if(checkSeigniorIsDie(seigniorId)){
-		console.log("checkSeigniorIsDie true");
 		if(seigniorId == LMvc.selectSeignorId){
 			var seignior = SeigniorModel.getSeignior(seigniorId);
 			self.loadCharacterList(CharacterListType.SELECT_MONARCH,seignior.generals(), {isOnlyOne:true,buttonLabel:"execute"});

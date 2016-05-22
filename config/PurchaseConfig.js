@@ -1,6 +1,6 @@
 var productIdConfig = {
-	productIds : ["newWujiang",
-	"saveReport",
+	productIds : ["com.lufylegend.sgj.newWujiang",
+	"com.lufylegend.sgj.saveReport",
 	"com.lufylegend.sgj.chapter_3",
 	"com.lufylegend.sgj.chapter_4",
 	"com.lufylegend.sgj.chapter_5",
@@ -10,8 +10,8 @@ var productIdConfig = {
 	"com.lufylegend.sgj.chapter_9",
 	"com.lufylegend.sgj.chapter_10"
 	],
-	createCharacter : "newWujiang",
-	saveReport : "saveReport",
+	createCharacter : "com.lufylegend.sgj.newWujiang",
+	saveReport : "com.lufylegend.sgj.saveReport",
 	chapter_3 : "com.lufylegend.sgj.chapter_3",
 	chapter_4 : "com.lufylegend.sgj.chapter_4",
 	chapter_5 : "com.lufylegend.sgj.chapter_5",

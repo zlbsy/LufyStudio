@@ -306,7 +306,6 @@ CharacterListView.prototype.setAbilityTab=function(){
 };
 CharacterListView.prototype.onClickSortButton=function(event){
 	var self = event.currentTarget.parent.parent.parent;
-	console.log("onClickSortButton", event.target.name);
 	if(self.sortType == event.target.name){
 		self.sortValue *= -1;
 	}

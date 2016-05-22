@@ -279,6 +279,7 @@ Language.data = {
 	"refresh":"刷新",
 	"change_face":"头像变更",
 	"change_monarch":"选择君主",
+	"monarch_die":"{0}病逝了，{1}成了新君主！",
 	"gender_male":"男",
 	"gender_female":"女",
 	"terrain":"地形",
@@ -478,6 +479,13 @@ Language.data = {
 	"gameover":"游戏结束",
 	"skill_explanation":"【{0}】{1}(发动率:{2}％)",
 	"building":"建築物",
+	"buy_food":"买进粮食",
+	"sell_food":"卖出粮食",
+	"buy_food_message":"买进多少粮食？",
+	"sell_food_message":"卖出多少粮食？",
+	"use_money":"消耗金钱:{0}/{1}",
+	"get_money":"获得金钱:{0}",
+	"riot_message":"{0}的百姓发生暴动了!",
 	"child_growup":"<font size='22' color='#FFFFFF'><font color='#FF0000'> {0} </font>成年了，随<font color='#FF0000'> {1} </font>加入我军！</font>"
 };
 Language.itemData = {

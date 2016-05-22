@@ -27,7 +27,7 @@ function characterListType2JobType(characterListType) {
 		case CharacterListType.PERSUADE:
 			return Job.PERSUADE;
 	}
-	console.error("Can't change to jobType");
+	//console.error("Can't change to jobType");
 	return Job.IDLE;
 }
 function getJobPrice(jobType) {
@@ -95,7 +95,7 @@ function levelUpCityRun(characterModel){
 }
 function redeemRun(characterModel, data){
 	//赎回俘虏:智力+运气
-	console.log("redeemRun 赎回俘虏 : ",characterModel.id(), data);
+	//console.log("redeemRun 赎回俘虏 : ",characterModel.id(), data);
 	characterModel.job(Job.IDLE);
 	var value01 = getJobResult(characterModel.intelligence(),JobCoefficient.DIPLOMACY);
 	var value02 = getJobResult(characterModel.luck(),JobCoefficient.DIPLOMACY);
@@ -103,9 +103,9 @@ function redeemRun(characterModel, data){
 	var targetCharacter = CharacterModel.getChara(data.chara_id);
 	var sum = (targetCharacter.force() + targetCharacter.intelligence() + targetCharacter.command() + targetCharacter.agility() + targetCharacter.luck()) * JobCoefficient.REDEEM;
 	sum += (sum * targetCharacter.skillCoefficient() * 0.1);
-	console.log("data.money/sum :"+data.money+"/"+sum+" :  ",(data.money/sum) * 100 , "value : ",value);
+	//console.log("data.money/sum :"+data.money+"/"+sum+" :  ",(data.money/sum) * 100 , "value : ",value);
 	if((data.money/sum) * 100 + value < 100){
-		console.log("赎回俘虏 : 失败");
+		//console.log("赎回俘虏 : 失败");
 		if(characterModel.seigniorId() == LMvc.selectSeignorId){
 			SeigniorExecute.addMessage(String.format(Language.get("redeemFailMessage"),characterModel.name()));
 		}
@@ -119,7 +119,7 @@ function redeemRun(characterModel, data){
 	targetCharacter.moveTo();
 	targetCity.removeCaptives(data.chara_id);
 	characterModel.featPlus(JobFeatCoefficient.NORMAL);
-	console.log("赎回俘虏 : 成功");
+	//console.log("赎回俘虏 : 成功");
 	if(characterModel.seigniorId() == LMvc.selectSeignorId){
 		SeigniorExecute.addMessage(String.format(Language.get("redeemSuccessMessage"),characterModel.name()));
 		SeigniorExecute.addMessage(String.format(Language.get("redeemReturnMessage"),targetCharacter.name(),city.name()));
@@ -127,14 +127,14 @@ function redeemRun(characterModel, data){
 }
 function stopBattleRun(characterModel, data){
 	//停战协议:智力+运气
-	console.log("stopBattleRun停战协议 : ",characterModel.id());
+	//console.log("stopBattleRun停战协议 : ",characterModel.id());
 	characterModel.job(Job.IDLE);
 	var value01 = getJobResult(characterModel.intelligence(),JobCoefficient.DIPLOMACY);
 	var value02 = getJobResult(characterModel.luck(),JobCoefficient.DIPLOMACY);
 	var value = value01 + value02;
 	var sum = (11 - SeigniorModel.list.length) * JobCoefficient.STOP_BATTLE;
 	if(data.money/sum + value < 100){
-		console.log("停战协议 : 失败");
+		//console.log("停战协议 : 失败");
 		if(characterModel.seigniorId() == LMvc.selectSeignorId){
 			SeigniorExecute.addMessage(String.format(Language.get("stopBattleFailMessage"),characterModel.name()));
 		}
@@ -160,19 +160,19 @@ function accessRun(characterModel){
 	var value = value01 + value02 + value03;
 	var rand = Math.random();
 	
+	var cityModel = characterModel.city();
 	if(rand > value){
 		//console.log("accessRun : 失败 能力不够");
-		if(characterModel.seigniorId() == LMvc.selectSeignorId){
+		if(characterModel.seigniorId() == LMvc.selectSeignorId && !cityModel.isAppoint()){
 			SeigniorExecute.addMessage(String.format(Language.get("accessFailMessage"),characterModel.name()));
 		}
 		characterModel.featPlus(JobFeatCoefficient.NORMAL * 0.5);
 		return;
 	}
-	var cityModel = characterModel.city();
 	var notDebut = cityModel.notDebut();
 	if(notDebut.length == 0){
 		//console.log("accessRun : 失败");
-		if(characterModel.seigniorId() == LMvc.selectSeignorId){
+		if(characterModel.seigniorId() == LMvc.selectSeignorId && !cityModel.isAppoint()){
 			SeigniorExecute.addMessage(String.format(Language.get("accessFailMessage"),characterModel.name()));
 		}
 		characterModel.featPlus(JobFeatCoefficient.NORMAL * 0.5);
@@ -185,7 +185,7 @@ function accessRun(characterModel){
 	var outOfOffice = area.outOfOffice();
 	outOfOffice.push(targetModel);
 	characterModel.featPlus(JobFeatCoefficient.NORMAL);
-	if(characterModel.seigniorId() == LMvc.selectSeignorId){
+	if(characterModel.seigniorId() == LMvc.selectSeignorId && !cityModel.isAppoint()){
 		SeigniorExecute.addMessage(String.format(Language.get("accessSuccessMessage"),characterModel.name(),targetModel.name()));
 	}
 	hireRun2(characterModel, targetModel,area);
@@ -240,7 +240,7 @@ function exploreAgricultureRun(characterModel){
 	}
 	cityModel.itemsFarmland(items);
 	var item = new ItemModel(null,{item_id:itemId,count:1});
-	if(characterModel.seigniorId() == LMvc.selectSeignorId){
+	if(characterModel.seigniorId() == LMvc.selectSeignorId && !cityModel.isAppoint()){
 		cityModel.addItem(item);
 		SeigniorExecute.addMessage(String.format(Language.get("exploreAgricultureSuccess"),characterModel.name(),item.name()));
 	}else{
@@ -271,7 +271,7 @@ function getValueByExploreFail(baseValue, randomValue){
 function exploreAgricultureFailRun(cityModel, characterModel, food){
 	cityModel.food(food);
 	characterModel.featPlus(JobFeatCoefficient.NORMAL * 0.5);
-	if(characterModel.seigniorId() == LMvc.selectSeignorId){
+	if(characterModel.seigniorId() == LMvc.selectSeignorId && !cityModel.isAppoint()){
 		var msg = "";
 		if(food>0){
 			msg = String.format(Language.get("exploreAgricultureFood"),characterModel.name(),food);
@@ -284,7 +284,7 @@ function exploreAgricultureFailRun(cityModel, characterModel, food){
 function exploreBusinessFailRun(cityModel, characterModel, money){
 	cityModel.money(money);
 	characterModel.featPlus(JobFeatCoefficient.NORMAL * 0.5);
-	if(characterModel.seigniorId() == LMvc.selectSeignorId){
+	if(characterModel.seigniorId() == LMvc.selectSeignorId && !cityModel.isAppoint()){
 		var msg = "";
 		if(money>0){
 			msg = String.format(Language.get("exploreBusinessMoney"),characterModel.name(),money);
@@ -327,7 +327,7 @@ function exploreBusinessRun(characterModel){
 	cityModel.itemsFarmland(items);
 	
 	var item = new ItemModel(null,{item_id:itemId,count:1});
-	if(characterModel.seigniorId() == LMvc.selectSeignorId){
+	if(characterModel.seigniorId() == LMvc.selectSeignorId && !cityModel.isAppoint()){
 		cityModel.addItem(item);
 		SeigniorExecute.addMessage(String.format(Language.get("exploreBusinessSuccess"),characterModel.name(),item.name()));
 	}else{
@@ -426,7 +426,7 @@ function enlistRun(characterModel, targetEnlist){
 }
 function persuadeRun(characterModel, targetPersuadeId){
 	//劝降：忠诚度+义气+运气+武将相性
-	console.error("劝降 : ",characterModel.id());
+	//console.error("劝降 : ",characterModel.id());
 	characterModel.job(Job.IDLE);
 	var targetPersuade = CharacterModel.getChara(targetPersuadeId);
 	if(!targetPersuade || targetPersuade.seigniorId() == characterModel.seigniorId()){
@@ -454,7 +454,7 @@ function persuadeRun(characterModel, targetPersuadeId){
 	
 	var rand = Math.random();
 	if(rand > percentage){
-		if(characterModel.seigniorId() == LMvc.selectSeignorId){
+		if(characterModel.seigniorId() == LMvc.selectSeignorId && !characterModel.city().isAppoint()){
 			SeigniorExecute.addMessage(String.format(Language.get("persuadeRefuseMessage"),targetPersuade.name(),characterModel.name()));
 		}
 		characterModel.featPlus(JobFeatCoefficient.NORMAL * 0.5);
@@ -466,7 +466,7 @@ function persuadeRun(characterModel, targetPersuadeId){
 	targetPersuade.moveTo(characterModel.cityId());
 	targetPersuade.moveTo();
 	
-	if(characterModel.seigniorId() == LMvc.selectSeignorId){
+	if(characterModel.seigniorId() == LMvc.selectSeignorId && !characterModel.city().isAppoint()){
 		SeigniorExecute.addMessage(String.format(Language.get("persuadeSuccessMessage"),characterModel.name(),targetPersuade.name(),targetPersuade.name()));
 	}
 	characterModel.featPlus(JobFeatCoefficient.NORMAL);
@@ -485,7 +485,7 @@ function spyRun(characterModel, cityId){
 	if(spyValue<JobCoefficient.SPY){
 		if(spyValue < Math.random()*JobCoefficient.SPY){
 			//console.log("spyRun : 失败 能力不够");
-			if(characterModel.seigniorId() == LMvc.selectSeignorId){
+			if(characterModel.seigniorId() == LMvc.selectSeignorId && !characterModel.city().isAppoint()){
 				SeigniorExecute.addMessage(String.format(Language.get("spyFailMessage"),characterModel.name(),area.name()));
 			}
 			characterModel.featPlus(JobFeatCoefficient.NORMAL * 0.5);
@@ -499,7 +499,7 @@ function spyRun(characterModel, cityId){
 	var seignior = characterModel.seignior();
 	seignior.addSpyCity(cityId);
 	characterModel.featPlus(JobFeatCoefficient.NORMAL);
-	if(characterModel.seigniorId() == LMvc.selectSeignorId){
+	if(characterModel.seigniorId() == LMvc.selectSeignorId && !characterModel.city().isAppoint()){
 		SeigniorExecute.addMessage(String.format(Language.get("spySuccessMessage"),characterModel.name(),area.name()));
 	}
 	num -= 1;
@@ -533,7 +533,7 @@ function spyRun(characterModel, cityId){
 }
 function hireRun(characterModel, hireCharacterId){
 	//录用：运气+相性
-	console.log("hireRun录用 : ",characterModel.id());
+	//console.log("hireRun录用 : ",characterModel.id());
 	var area = characterModel.city();
 	var outOfOffice = area.outOfOffice();
 	var hireCharacterIndex = outOfOffice.findIndex(function(child){
@@ -542,7 +542,7 @@ function hireRun(characterModel, hireCharacterId){
 	characterModel.job(Job.IDLE);
 	if(hireCharacterIndex < 0){
 		//console.log("hireRun : 失败 null");
-		if(characterModel.seigniorId() == LMvc.selectSeignorId){
+		if(characterModel.seigniorId() == LMvc.selectSeignorId && !area.isAppoint()){
 			SeigniorExecute.addMessage(String.format(Language.get("hireFailMessage"),characterModel.name()));
 		}
 		characterModel.featPlus(JobFeatCoefficient.NORMAL * 0.5);
@@ -566,7 +566,7 @@ function hireRun2(characterModel, hireCharacter,area){
 	var rand = Math.random();
 	if(rand > percentage){
 		//console.log("hireRun : 失败 " + rand + " > " + percentage + " = " + (rand > percentage));
-		if(characterModel.seigniorId() == LMvc.selectSeignorId){
+		if(characterModel.seigniorId() == LMvc.selectSeignorId && !area.isAppoint()){
 			SeigniorExecute.addMessage(String.format(Language.get("hireRefuseMessage"),hireCharacter.name(),characterModel.name()));
 		}
 		characterModel.featPlus(JobFeatCoefficient.NORMAL * 0.5);
@@ -584,7 +584,7 @@ function hireRun2(characterModel, hireCharacter,area){
 	hireCharacter.seigniorId(characterModel.seigniorId());
 	hireCharacter.cityId(characterModel.cityId());
 	area.addGenerals(hireCharacter);
-	if(characterModel.seigniorId() == LMvc.selectSeignorId){
+	if(characterModel.seigniorId() == LMvc.selectSeignorId && !area.isAppoint()){
 		SeigniorExecute.addMessage(String.format(Language.get("hireSuccessMessage"),characterModel.name(),hireCharacter.name(),hireCharacter.name()));
 	}
 	characterModel.featPlus(JobFeatCoefficient.NORMAL);
@@ -641,7 +641,9 @@ function SeigniorExecuteChangeCityResources(area){
 			var cityDefense = area.cityDefense();
 			var minusCityDefense = cityDefense*0.01*minusValue;
 			area.cityDefense(-minusCityDefense);
-			SeigniorExecute.addMessage(String.format(Language.get("{0}的百姓发生暴动了!"),area.name()));
+			if(area.seigniorCharaId() == LMvc.selectSeignorId){
+				SeigniorExecute.addMessage(String.format(Language.get("riot_message"),area.name()));
+			}
 		}
 	}
 	//武将忠诚随相性随机降低
@@ -748,8 +750,8 @@ function charactersNaturalDeath(area){
 			continue;
 		}
 		var value = general.age() - general.life();
-		//TODO::Test
-		console.log("---------------年龄：：" + general.name() + ","+general.age()+"<="+general.life());
+		//TODO::武将到达年龄，几率死亡
+		//console.log("---------------年龄：：" + general.name() + ","+general.age()+"<="+general.life());
 		if(Math.random() > 0.5 + 0.1 * value){
 			continue;
 		}
@@ -766,7 +768,7 @@ function charactersNaturalDeath(area){
 		monarchChange(seigniorCharaId);
 		//console.error("seignior="+seignior.character().name(),area.seigniorCharaId());
 		var obj = {title:Language.get("confirm"),
-		message:String.format(Language.get("{0}病逝了，{1}成了新君主！"), seigniorName, seignior.character().name()),
+		message:String.format(Language.get("monarch_die"), seigniorName, seignior.character().name()),
 		height:200,okEvent:function(event){
 			event.currentTarget.parent.remove();
 			SeigniorExecute.run();

@@ -279,6 +279,7 @@ Language.data = {
 	"refresh":"リフレッシュ",
 	"change_face":"顔画像変更",
 	"change_monarch":"君主選択",
+	"monarch_die":"{0}亡くなりました、{1}が新しい君主になりました！",
 	"gender_male":"男",
 	"gender_female":"女",
 	"terrain":"地形",
@@ -477,7 +478,14 @@ Language.data = {
 	"bout_end_confirm":"回合を終了しますか？",
 	"gameover":"ゲームオーバー",
 	"skill_explanation":"【{0}】{1}(発動率:{2}％)",
-	"building":"建筑",
+	"building":"建筑物",
+	"buy_food":"食糧購入",
+	"sell_food":"食糧売却",
+	"buy_food_message":"どのぐらい購入しますか？",
+	"sell_food_message":"どのぐらい売却しますか？",
+	"use_money":"使用金銭:{0}/{1}",
+	"get_money":"獲得金銭:{0}",
+	"riot_message":"{0}にいる群衆は不満が爆発して、暴動起きました!",
 	"child_growup":"<font size='22' color='#FFFFFF'><font color='#FF0000'> {0} </font>が大人になったから、<font color='#FF0000'> {1} </font>に従って、味方に参加しました！</font>"
 };
 Language.itemData = {

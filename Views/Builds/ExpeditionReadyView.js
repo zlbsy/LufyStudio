@@ -1,14 +1,15 @@
-function ExpeditionReadyView(controller){
+function ExpeditionReadyView(controller, characterListType){
 	var self = this;
 	base(self,LView,[controller]);
 	self.selectFood = 0;
 	self.selectMoney = 0;
 	self.selectTroops = 0;
+	self.characterListType = characterListType;
 	self.set();
 }
 ExpeditionReadyView.prototype.set=function(img,name){
 	var self = this;
-	var charas = self.controller.getValue("expeditionCharacterList");
+	var charas = self.controller.getValue(self.characterListType == CharacterListType.TRANSPORT ? "transportCharacter" : "expeditionCharacterList");
 	var sumTroops = 0;
 	for (var i = 0, l = charas.length; i < l; i++) {
 		sumTroops += charas[i].troops();

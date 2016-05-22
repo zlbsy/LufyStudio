@@ -16,7 +16,6 @@ function Toast(message){
 	self.addChild(back);
 }
 Toast.makeText = function(message){
-	console.log("Toast.makeText = " + message);
 	var toast = new Toast(message);
 	return toast;
 };

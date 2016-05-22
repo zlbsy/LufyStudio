@@ -493,7 +493,7 @@ AreaModel.prototype.populationLabel=function(){
 	return LString.numberFormat(this.data.population >>> 0,3);
 };
 AreaModel.prototype.population=function(value){
-	return this._plusData("population",value);
+	return this._plusData("population",value,this.minPopulation(),this.maxPopulation());
 };
 AreaModel.prototype.police=function(value){
 	return this._plusData("police",value,0,100);
@@ -567,9 +567,6 @@ AreaModel.prototype.troopsSum=function(){
 	return LString.numberFormat(this.troops(),3);
 };
 AreaModel.prototype.troops=function(value){
-	if(typeof value != UNDEFINED){
-		console.error(this.data.troops, value);
-	}
 	var result = this._dataValue("troops", value, 0, 0, this.maxTroops());
 	if(result){
 		result = result >>> 0;
@@ -583,7 +580,7 @@ AreaModel.prototype.technologyLabel=function(){
 	return LString.numberFormat(this.data.technology,3);
 };
 AreaModel.prototype.technology=function(value){
-	return this._plusData("technology",value);
+	return this._plusData("technology",value,0,this.maxTechnology());
 };
 AreaModel.prototype.maxTechnology=function(){
 	return AreaModel.technologyList[this.level()-1];
@@ -592,7 +589,7 @@ AreaModel.prototype.isMaxTechnology=function(){
 	return this.technology() >= this.maxTechnology();
 };
 AreaModel.prototype.agriculture=function(value){
-	return this._plusData("agriculture",value);
+	return this._plusData("agriculture",value,0,this.maxAgriculture());
 };
 AreaModel.prototype.maxAgriculture=function(){
 	return AreaModel.agricultureList[this.level()-1];
@@ -601,7 +598,7 @@ AreaModel.prototype.isMaxAgriculture=function(){
 	return this.agriculture() >= this.maxAgriculture();
 };
 AreaModel.prototype.business=function(value){
-	return this._plusData("business",value);
+	return this._plusData("business",value,0,this.maxBusiness());
 };
 AreaModel.prototype.maxBusiness=function(){
 	return AreaModel.businessList[this.level()-1];

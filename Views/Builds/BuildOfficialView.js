@@ -162,7 +162,7 @@ BuildOfficialView.prototype.showBuild=function(event){
 };
 BuildOfficialView.prototype.expeditionReady=function(){
 	var self = this;
-	var readyView = new ExpeditionReadyView(self.controller);
+	var readyView = new ExpeditionReadyView(self.controller,CharacterListType.TRANSPORT);
 	var obj = {title:Language.get("transport"),subWindow:readyView,width:480,height:540,okEvent:self.expeditionReadyComplete,cancelEvent:self.expeditionCancel};
 	var windowLayer = ConfirmWindow(obj);
 	self.addChild(windowLayer);

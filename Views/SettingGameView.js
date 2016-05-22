@@ -119,6 +119,6 @@ SettingGameView.prototype.onBgmChange=function(event){
 	LPlugin.SetData("volumeSetting", {SE:LPlugin.volumeSE, BGM:LPlugin.volumeBGM});
 };
 SettingGameView.prototype.onSpeedChange=function(event){
-	LPlugin.gameSpeed = event.currentTarget.value;
+	LPlugin.gameSpeed = event.currentTarget.value;console.log(LPlugin.gameSpeed);
 	LPlugin.SetData("speedSetting", {value:LPlugin.gameSpeed});
 };

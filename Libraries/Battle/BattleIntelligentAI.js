@@ -106,7 +106,7 @@ BattleIntelligentAI.execute = function() {
 	}
 	chara = chatacters[0];
 	BattleController.ctrlChara = chara;
-	console.log("ctrlChara",chara.data.name());
+	//console.log("ctrlChara",chara.data.name());
 	BattleIntelligentAI.strategyList = chara.data.strategies();
 	chara.inteAI.locationX = chara.locationX();
 	chara.inteAI.locationY = chara.locationY();
