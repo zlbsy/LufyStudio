@@ -46,8 +46,9 @@ BattleBoutView.prototype.removeSelf=function(event){
 	LMvc.running = false;
 	self.remove();
 	self.controller.view.weatherLayer.change();
+	var currentCharacters = view.charaLayer.getCharactersFromBelong(belong);
+	charactersHealMP(currentCharacters);
 	if(battleFoodCheck(belong)){
-		//var terrainHeal = view.charaLayer.terrainHeal;
 		var abnormalState = view.charaLayer.abnormalState;
 		view.charaLayer.boutSkillRun(belong, abnormalState);
 	}

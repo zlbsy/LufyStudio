@@ -166,8 +166,11 @@ BattleController.prototype.charactersInit = function(){
 	self.battleData.expeditionEnemyCharacterList = enemyCharas;
 	for(var i = 0;i<enemyCharas.length;i++){
 		var child = enemyPositions[i];
-		var charaId = enemyCharas[i].id();
+		var chara = enemyCharas[i];
+		var charaId = chara.id();
 		self.addEnemyCharacter(charaId,child.direction,child.x,child.y);
+		chara.HP(chara.maxHP());
+		chara.MP(chara.maxMP());
 		var battleCharacter = self.view.charaLayer.getCharacter(Belong.ENEMY, charaId);
 		if(child.index > 0 && selfAttack){
 			battleCharacter.mission = BattleCharacterMission.Passive;

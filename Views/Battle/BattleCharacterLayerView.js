@@ -130,8 +130,11 @@ BattleCharacterLayerView.prototype.addOurCharacterOnClick=function(locationX,loc
 			continue;
 		}
 		var id = self.controller.battleData.expeditionCharacterList[length].id();
-		CharacterModel.getChara(id).calculation(true);
+		var chara = CharacterModel.getChara(id);
+		//chara.calculation(true);
 		self.addOurCharacter(id,CharacterAction.MOVE,child.direction,locationX,locationY);
+		chara.HP(chara.maxHP());
+		chara.MP(chara.maxMP());
 		child.remove();
 		break;
 	}

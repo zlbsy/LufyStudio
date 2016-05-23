@@ -486,6 +486,7 @@ Language.data = {
 	"use_money":"消耗金钱:{0}/{1}",
 	"get_money":"获得金钱:{0}",
 	"riot_message":"{0}的百姓发生暴动了!",
+	"no_food_talk":"糟糕！没有兵粮了，士兵的战斗力开始下降了。",
 	"child_growup":"<font size='22' color='#FFFFFF'><font color='#FF0000'> {0} </font>成年了，随<font color='#FF0000'> {1} </font>加入我军！</font>"
 };
 Language.itemData = {

@@ -43,6 +43,21 @@ function cloudWeatherCharacterShow(characterId){
 		}
 	}
 }
+function charactersHealMP(currentCharacters){
+	for(var i=0,l=currentCharacters.length;i<l;i++){
+		var character = currentCharacters[i];
+		var mp = character.data.MP();
+		var maxMP = character.data.maxMP();
+		if(mp == maxMP){
+			continue;
+		}
+		if(mp >= maxMP * 0.2){
+			character.data.MP(mp + 1);
+		}else{
+			character.data.MP(mp + 2);
+		}
+	}
+}
 function getDirectionFromTarget(chara, target, angleFlag){
 	var self = this, direction = chara.direction;
 	var coordinate = chara.getTo();
@@ -317,7 +332,7 @@ function battleFoodCheck(belong){
 			break;
 		}
 	}
-	var script = "SGJTalk.show(" + chara.data.id() + ",0,糟糕！没有兵粮了，士兵的战斗力开始下降了。);";
+	var script = "SGJTalk.show(" + chara.data.id() + ",0,"+Language.get("no_food_talk")+");";
 	script += "SGJBattleCharacter.boutSkillRun("+belong+");";
 	LGlobal.script.addScript(script);
 	return false;

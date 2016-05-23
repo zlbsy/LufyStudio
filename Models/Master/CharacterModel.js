@@ -269,8 +269,8 @@ CharacterModel.prototype.calculation = function(init) {
 		self.maxTroops(init);
 		self.maxHP(init);
 		self.maxMP(init);
-		self.data.hp = self.maxHP();
-		self.data.mp = self.maxMP();
+		//self.data.hp = self.maxHP();
+		//self.data.mp = self.maxMP();
 	}
 	var keys = ["attack","spirit","defense","breakout","morale"];
 	for(var i=0,l=keys.length;i<l;i++){
@@ -703,6 +703,20 @@ CharacterModel.prototype.moveTo = function(cityId) {
 		}
 		if(areaFrom && areaFrom.prefecture() == self.id()){
 			appointPrefecture(areaFrom);
+		}
+		
+		if(self.id() == area.seigniorCharaId() || area.prefecture() == area.seigniorCharaId()){
+			return;
+		}
+		var generals = area.generals();
+		if(generals.length == 1){
+			return;
+		}
+		var prefectureCharacter = generals.find(function(child){
+			return child.id() == area.prefecture();
+		});
+		if(self.feat() - 200 > prefectureCharacter.feat()){
+			area.prefecture(self.id());
 		}
 	}else{
 		self.data.targetCity = cityId;

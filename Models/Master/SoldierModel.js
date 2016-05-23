@@ -4,9 +4,6 @@ function SoldierModel(controller, data) {
 	self.type = "SoldierModel";
 	self.data = data;
 }
-SoldierModel.createModel = function(id){console.error("SoldierModel.createModel");
-	return new SoldierModel(null,{id:id,proficiency:0});
-};
 SoldierModel.prototype.master=function(){
 	var self = this;
 	if(!self._master){

@@ -118,6 +118,7 @@ SeigniorExecute.run=function(){
 		if(self.seigniors.indexOf(self.seigniorIndex) < 0){
 			self.msgView.setSeignior(seigniorModel.chara_id());
 			self.seigniors.push(self.seigniorIndex);
+			seigniorModel.character().featPlus(5);
 			//势力行动消息取消
 			//self.msgView.add(seigniorModel.character().name() + "势力行动!");
 			/*if(seigniorModel.chara_id() != LMvc.selectSeignorId){
@@ -162,6 +163,8 @@ SeigniorExecute.prototype.areaRun=function(area){
 	if(!self.areaJobOver){//任务
 		self.areaJobRun(area);
 	}
+	var prefectureCharacter = CharacterModel.getChara(area.prefecture());
+	prefectureCharacter.featPlus(5);
 	self.areaIndex++;
 	self.areaGainOver = false;
 	self.areaJobOver = false;

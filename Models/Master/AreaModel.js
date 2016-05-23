@@ -36,15 +36,6 @@ AreaModel.getArea=function(area_id){
 	}
 	return null;
 };
-/*
- ./Helpers/JobAIHelper.js:43:	var generals = AreaModel.getPowerfulCharacters(characters);
-./Helpers/JobAIHelper.js:81:	var generals = AreaModel.getPowerfulCharacters(characters);
-./Helpers/JobAIHelper.js:416:	var generals = AreaModel.getPowerfulCharacters(characters);
-./Helpers/BattleHelper.js:267:				var list = AreaModel.getPowerfulCharacters(charas);
-./Models/Master/AreaModel.js:39:AreaModel.getPowerfulCharacters = function(generals){
-./Models/Master/AreaModel.js:41:	//console.log("AreaModel.getPowerfulCharacters:",generals);
-./Models/Master/AreaModel.js:92:	var list = AreaModel.getPowerfulCharacters(generals);
-*/
 AreaModel.getPowerfulCharacters = function(generals, init){
 	var list = [],result = [];
 	//console.log("AreaModel.getPowerfulCharacters:",generals);
@@ -95,10 +86,6 @@ AreaModel.prototype.datas=function(){
 	}
 	return saveData;
 };
-/*
- ./Models/Master/AreaModel.js:89:AreaModel.prototype.getDefenseEnemiesAndPowerful = function(){
-./Models/Master/AreaModel.js:110:	var list = self.getDefenseEnemiesAndPowerful();
-./Models/Master/AreaModel.js:120:	var list = self.getDefenseEnemiesAndPowerful();*/
 AreaModel.prototype.getDefenseEnemiesAndPowerful = function(){
 	var city = this;
 	var generals = city.generals(),result = [];
