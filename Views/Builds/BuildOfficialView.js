@@ -75,6 +75,7 @@ BuildOfficialView.prototype.onClickPrefectureButton=function(event){
 BuildOfficialView.prototype.onClickTransportButton=function(event){
 	var self = this;
 	self.characterListType = CharacterListType.TRANSPORT;
+	self.controller.removeEventListener(LCityEvent.SELECT_CITY);
 	self.controller.addEventListener(LCityEvent.SELECT_CITY, self.transportSelectCharacter);
 	self.controller.toSelectMap(CharacterListType.TRANSPORT, {isSelf:true,toast:"dialog_common_select_city_toast",belongError:"dialog_transport_select_error",confirmMessage:"dialog_transport_select_confirm"});
 };
@@ -94,6 +95,7 @@ BuildOfficialView.prototype.toTransport=function(){
 };
 BuildOfficialView.prototype.onClickSpyButton=function(event){
 	var self = this;
+	self.controller.removeEventListener(LCityEvent.SELECT_CITY);
 	self.controller.addEventListener(LCityEvent.SELECT_CITY, self.spySelectCharacter);
 	self.controller.toSelectMap(CharacterListType.CHARACTER_SPY, {isSelf:false,toast:"dialog_common_select_city_toast", belongError:"dialog_spy_generals_error",confirmMessage:"dialog_spy_generals_confirm"});
 };

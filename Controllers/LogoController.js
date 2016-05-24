@@ -92,6 +92,7 @@ LogoController.prototype.start=function(event){
 		}
 	}else{
 		LPlugin.SetData("purchaseLog", []);
+		//TODO::测试用
 		if(LGlobal.traceDebug){
 			var datas = [];
 			productIdConfig.productIds.forEach(function(c){

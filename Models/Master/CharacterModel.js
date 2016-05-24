@@ -738,7 +738,14 @@ CharacterModel.prototype.targetCity = function() {
 };
 CharacterModel.prototype.toDie = function() {
 	var self = this;
-	self.city().removeCharacter(self.id());
+	var equipments = self.equipments();
+	var city = self.city();
+	for(var i=0;i<equipments.length;i++){
+		var item = equipments[i];
+		city.addItem(item);
+	}
+	self.data.equipments = [];
+	city.removeCharacter(self.id());
 	self.seigniorId(0);
 };
 CharacterModel.prototype.toOutOfOffice = function() {

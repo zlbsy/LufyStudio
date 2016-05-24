@@ -37,6 +37,7 @@ BuildGeneralsView.prototype.showMenu=function(){
 BuildGeneralsView.prototype.onClickPersuade=function(event){
 	var self = event.currentTarget.getParentByConstructor(BuildGeneralsView);
 	self.characterListType = CharacterListType.PERSUADE_TARGET;
+	self.controller.removeEventListener(LCityEvent.SELECT_CITY);
 	self.controller.addEventListener(LCityEvent.SELECT_CITY, self.persuadeTargetSelectCharacter);
 	self.controller.toSelectMap(CharacterListType.PERSUADE_TARGET, {isSelf:false,toast:"dialog_persuade_select_city_toast",spy:true, belongError:"dialog_persuade_belong_error", spyError:"dialog_persuade_spy_error"});
 };
@@ -60,6 +61,7 @@ BuildGeneralsView.prototype.onClickGeneralsListButton=function(event){
 };
 BuildGeneralsView.prototype.onClickGeneralsMoveButton=function(event){
 	var self = event.currentTarget.getParentByConstructor(BuildGeneralsView);
+	self.controller.removeEventListener(LCityEvent.SELECT_CITY);
 	self.controller.addEventListener(LCityEvent.SELECT_CITY, self.moveSelectCharacter);
 	self.controller.toSelectMap(CharacterListType.CHARACTER_MOVE, {isSelf:true,toast:"dialog_common_select_city_toast",belongError:"dialog_move_generals_error",confirmMessage:"dialog_move_generals_confirm"});
 };
