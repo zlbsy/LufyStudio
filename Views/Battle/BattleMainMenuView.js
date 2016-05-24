@@ -36,14 +36,18 @@ BattleMainMenuView.prototype.onClickUp = function(event){
 	}
 	var self = button.parent;
 	if(self.menuLayer){
-		self.menuLayer.visible = !self.menuLayer.visible;
-		self.backLayer.visible = self.menuLayer.visible;
-		self.miniMapVisible = self.menuLayer.visible;
-		if(self.menuLayer.visible){
-			self.setMenuPosition();
-		}
+		self.changeMenuStatus();
 	}else{
 		self.setMenu();
+	}
+};
+BattleMainMenuView.prototype.changeMenuStatus = function(){
+	var self = this;
+	self.menuLayer.visible = !self.menuLayer.visible;
+	self.backLayer.visible = self.menuLayer.visible;
+	self.miniMapVisible = self.menuLayer.visible;
+	if(self.menuLayer.visible){
+		self.setMenuPosition();
 	}
 };
 BattleMainMenuView.prototype.getMainMenu = function(){
@@ -70,6 +74,10 @@ BattleMainMenuView.prototype.setMenu=function(){
 	
 	var layer = new LSprite(), menuY = 10, menuWidth = 160, menuHeight = 50;
 	self.backLayer = getTranslucentMask();
+	//self.backLayer.removeEventListener(LMouseEvent.MOUSE_UP);
+	self.backLayer.addEventListener(LMouseEvent.MOUSE_UP, function(e){
+		e.currentTarget.parent.changeMenuStatus();
+	});
 	self.addChildAt(self.backLayer, 0);
 	
 	self.menuLayer.addChild(layer);
@@ -172,7 +180,7 @@ BattleMainMenuView.prototype.toGameSave=function(button){
 			});
 		}else{
 			purchaseConfirm(null, Language.get("battle_save_record"), function(){
-				window.open("http://lufylegend.com/sgj");
+				window.open(LMvc.homeURL);
 			});
 		}
 		return;

@@ -747,6 +747,10 @@ function battleChangeCharactersStatus(winSeigniorId, fromCity, characters){
 	for(var i=0,l=characters.length;i<l;i++){
 		characters[i].job(Job.END);
 	}
+	if(fromCity.prefecture() == 0){
+		appointPrefecture(fromCity);
+		return;
+	}
 	var prefectureChara = CharacterModel.getChara(fromCity.prefecture());
 	if(!prefectureChara.seigniorId() || prefectureChara.cityId() != fromCity.id()){
 		appointPrefecture(fromCity);

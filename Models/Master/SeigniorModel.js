@@ -94,6 +94,15 @@ SeigniorModel.getSaveData=function(){
 			stopBattleSeigniors:seignior.data.stopBattleSeigniors//停战城池
 		});
 	}
+	var noSeignior = {chara_id:0,areas:[]};
+	for(var i=0,l=AreaModel.list.length;i<l;i++){
+		var area = AreaModel.list[i];
+		if(area.seigniorCharaId() > 0){
+			continue;
+		}
+		noSeignior.areas.push(area.datas());
+	}
+	saveData.push(noSeignior);
 	return saveData;
 };
 SeigniorModel.prototype.chara_id = function(value){

@@ -139,7 +139,7 @@ LogoView.prototype.createCharacter=function(button){
 			});
 		}else{
 			purchaseConfirm(null, Language.get("create_character"), function(){
-				window.open("http://lufylegend.com/sgj");
+				window.open(LMvc.homeURL);
 			});
 		}
 		return;
@@ -239,7 +239,7 @@ LogoView.prototype.showChapterRun=function(button){
 			});
 		}else{
 			purchaseConfirm(null, name, function(){
-				window.open("http://lufylegend.com/sgj");
+				window.open(LMvc.homeURL);
 			});
 		}
 		return;
