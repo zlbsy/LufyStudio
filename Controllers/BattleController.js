@@ -79,7 +79,12 @@ BattleController.prototype.showCharacterDetailed = function(){
 };
 BattleController.prototype.showCharacterDetailedView=function(){
 	var self = this;
-	var charaList = new CharacterListController(CharacterListType.BATTLE_SINGLE, self);
+	
+	var selfCharas = self.view.charaLayer.getCharactersFromBelong(Belong.SELF);
+	var enemyCharas = self.view.charaLayer.getCharactersFromBelong(Belong.ENEMY);
+	//self.controller.loadCharacterList(CharacterListType.BATTLE_CHARACTER_LIST,selfCharas.concat(enemyCharas), {showOnly:true});
+	
+	var charaList = new CharacterListController(CharacterListType.BATTLE_SINGLE, self,selfCharas.concat(enemyCharas), {showOnly:true});
 	self.view.parent.addChild(charaList.view);
 };
 BattleController.prototype.init = function(){

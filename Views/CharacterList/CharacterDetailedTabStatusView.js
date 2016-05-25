@@ -14,7 +14,7 @@ CharacterDetailedTabStatusView.prototype.showStatus=function(){
 	var statusLayer = new LSprite();
 	var characterModel = self.controller.getValue("selectedCharacter");
 	var battleStatus = self.controller.getValue("battleStatus");
-	var txtHeight = 25, startY = 5, startX = 5;
+	var txtHeight = 27, startY = 5, startX = 5;
 	var labels = ["belong","identity","age","city","loyalty","status"];
 	var seigniorId = characterModel.seigniorId();
  	var loyaltyLabel = seigniorId > 0 ? characterModel.loyalty() : "--";
@@ -68,12 +68,12 @@ CharacterDetailedTabStatusView.prototype.setCtrlButtons=function(backLayer){
 		return;
 	}
 	if(characterModel.seigniorId() != LMvc.selectSeignorId){
-		var btnRecruit = getButton(Language.get("recruit"),200);//招降
+		var btnRecruit = getButton(Language.get("recruit"),200, characterModel.job() == Job.END ? "win07" : "win01");//招降
 		btnRecruit.x = LGlobal.width - 260;
 		btnRecruit.y = 5;
 		backLayer.addChild(btnRecruit);
 		if(characterModel.job() == Job.END){
-			btnRecruit.alpha = 0.4;
+			btnRecruit.staticMode = true;
 		}else{
 			btnRecruit.addEventListener(LMouseEvent.MOUSE_UP,self.clickRecruit);
 		}
@@ -122,12 +122,11 @@ CharacterDetailedTabStatusView.prototype.clickPrized=function(event){
 CharacterDetailedTabStatusView.prototype.clickRecruit=function(event){
 	var btnRecruit = event.currentTarget;
 	var self = btnRecruit.getParentByConstructor(CharacterDetailedTabStatusView);
-	btnRecruit.removeEventListener(LMouseEvent.MOUSE_UP,self.clickRecruit);
+	//btnRecruit.removeEventListener(LMouseEvent.MOUSE_UP,self.clickRecruit);
 	var detailedView = self.getParentByConstructor(CharacterDetailedView);
 	var characterModel = self.controller.getValue("selectedCharacter");
 	var cityData = self.controller.getValue("cityData");
 	characterModel.job(Job.END);
-	btnRecruit.alpha = 0.4;
 	var script;
 	if(calculateHitrateSurrender(LMvc.selectSeignorId, characterModel)){
 		var cityData = self.controller.getValue("cityData");
@@ -138,7 +137,7 @@ CharacterDetailedTabStatusView.prototype.clickRecruit=function(event){
 		var listView = self.controller.view.listView;
 		var items = listView.getItems();
 		var item = items.find(function(child){
-			return characterId == child.charaModel.id();
+			return characterModel.id() == child.charaModel.id();
 		});
 		item.set(characterModel);
 		item.cacheAsBitmap(false);
@@ -148,6 +147,15 @@ CharacterDetailedTabStatusView.prototype.clickRecruit=function(event){
 		script = "SGJTalk.show(" + characterModel.id() + ",0,"+Language.get("dialog_recruit_success_message")+");";//愿效犬马之劳!
 		script += "SGJBattleResult.selfCaptiveWin();";
 	}else{
+		var buttonParent = btnRecruit.parent;
+		var index = buttonParent.getChildIndex(btnRecruit);
+		var disableButton = getButton(Language.get("recruit"),200, "win07");
+		disableButton.x = btnRecruit.x;
+		disableButton.y = btnRecruit.y;
+		btnRecruit.remove();
+		buttonParent.addChildAt(disableButton, index);
+		disableButton.staticMode = true;
+		
 		script = "SGJTalk.show(" + characterModel.id() + ",0,"+Language.get("dialog_recruit_fail_message")+");";//少废话!忠臣不事二主!
 		script += "SGJBattleResult.selfCaptiveWin(1);";
 	}

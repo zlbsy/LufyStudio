@@ -18,6 +18,12 @@ CharacterListView.prototype.init=function(){
 	self.addChild(self.listLayer);
 	self.charaDetailedLayer = new LSprite();
 	self.addChild(self.charaDetailedLayer);
+	self.listInit();
+	if(self.controller.characterListType == CharacterListType.BATTLE_SINGLE){
+		var chara = self.controller.fromController.currentCharacter;
+		self.showCharacterDetailed(chara);
+	}
+	return;
 	switch(self.controller.characterListType){
 		case CharacterListType.BATTLE_SINGLE:
 			var chara = self.controller.fromController.currentCharacter;
