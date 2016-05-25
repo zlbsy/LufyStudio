@@ -484,6 +484,9 @@ function calculateExp(attChara,hertChara){
 	if(exp < 1){
 		exp = 1;
 	}
+	if(hertCharaModel.troops() == 0){
+		exp = (exp*1.5 >>> 0);
+	}
 	return exp;
 }
 function calculateAskSingleCombat(chara, target){

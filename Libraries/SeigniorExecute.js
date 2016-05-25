@@ -163,8 +163,10 @@ SeigniorExecute.prototype.areaRun=function(area){
 	if(!self.areaJobOver){//任务
 		self.areaJobRun(area);
 	}
-	var prefectureCharacter = CharacterModel.getChara(area.prefecture());
-	prefectureCharacter.featPlus(5);
+	if(area.prefecture() > 0){
+		var prefectureCharacter = CharacterModel.getChara(area.prefecture());
+		prefectureCharacter.featPlus(5);
+	}
 	self.areaIndex++;
 	self.areaGainOver = false;
 	self.areaJobOver = false;

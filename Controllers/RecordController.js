@@ -2,7 +2,7 @@ function RecordController(){
 	base(this,MyController,[]);
 }
 RecordController.RECORD_MAX = 20;
-RecordController.RECORD_MAX_WEB = 8;
+RecordController.RECORD_MAX_WEB = 5;
 RecordController.SAVE_MODE = "saveMode";
 RecordController.READ_MODE = "readMode";
 RecordController.instance = function(){

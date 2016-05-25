@@ -99,7 +99,7 @@ LogoController.prototype.start=function(event){
 				datas.push({product_id:c});
 			});
 			LPlugin.SetData("purchaseLog", datas);
-			self.updateCheck();
+			//self.updateCheck();
 		}
 	}
 	if(!LPlugin.native && LSound.webAudioEnabled){

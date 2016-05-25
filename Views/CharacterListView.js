@@ -331,7 +331,7 @@ CharacterListView.prototype.onClickSortButton=function(event){
 			});
 			var selects = [];
 			self.listView.getItems().forEach(function(child){
-				if(!child.checkbox.checked){
+				if(!child.checkbox || !child.checkbox.checked){
 					return;
 				}
 				selects.push(child.charaModel.id());

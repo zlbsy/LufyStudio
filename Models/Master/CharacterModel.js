@@ -519,7 +519,7 @@ CharacterModel.prototype.HP = function(value) {
 	return this._dataValue("hp", value);
 };
 CharacterModel.prototype.MP = function(value) {
-	return this._dataValue("mp", value);
+	return this._dataValue("mp", value, 0);
 };
 CharacterModel.prototype.isPantTroops = function() {
 	return this.troops() < this.maxTroops() * CharacterModel.PANT_PROBABILITY;
