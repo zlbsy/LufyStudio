@@ -225,6 +225,14 @@ CharacterModel.prototype.getEquipmentPlus = function(key) {
 	}
 	return value;
 };
+CharacterModel.prototype.getReputationPlus = function(key) {
+	var reputation = this.reputation();
+	var value = 0;
+	for(var i=0,l=reputation.length;i<l;i++){
+		value += reputation[i][key]();
+	}
+	return value;
+};
 CharacterModel.prototype.basicPropertiesCalculation = function() {
 	var self = this;
 	var keys = ["command","force","intelligence","agility","luck"];
@@ -232,6 +240,7 @@ CharacterModel.prototype.basicPropertiesCalculation = function() {
 		var key = keys[i];
 		self.data["_"+key] = self.data[key];
 		self.data["_"+key] += self.getEquipmentPlus(key);
+		self.data["_"+key] += self.getReputationPlus(key);
 	}
 };
 CharacterModel.prototype.basicPropertiesSum = function(){

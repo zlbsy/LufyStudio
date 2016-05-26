@@ -434,6 +434,21 @@ function dispatchEventListResultReputation(child) {
 			character.data.reputation = [];
 		}
 		character.data.reputation.push(child.reputation);
+		var reputationModel = ReputationModel.getReputation(child.reputation);
+		var soldiers = reputationModel.data.soldiers;
+		if(soldiers){
+			for(var j=0,jl=soldiers.length;j<jl;j++){
+				console.log("j="+j);
+				var reputationSoldier = soldiers[j];
+				var soldier = character.soldiers().find(function(child){
+					return child.id() == reputationSoldier.id;
+				});console.log("soldier="+soldier);
+				var proficiency = soldier.proficiency();
+				if(proficiency < reputationSoldier.proficiency){
+					soldier.proficiency(reputationSoldier.proficiency);
+				}
+			}
+		}
 	}
 }
 function dispatchEventListResultStopBattle(child) {
