@@ -130,6 +130,7 @@ CharacterDetailedTabStatusView.prototype.clickRecruit=function(event){
 	var script;
 	if(calculateHitrateSurrender(LMvc.selectSeignorId, characterModel)){
 		var cityData = self.controller.getValue("cityData");
+		calculateLoyalty(characterModel, LMvc.selectSeignorId);
 		characterModel.seigniorId(LMvc.selectSeignorId);
 		cityData.removeCaptives(characterModel.id());
 		cityData.addGenerals(characterModel);

@@ -31,6 +31,16 @@ function calculateHitrateCaptive(chara, nearCharas){
 	}
 	return Math.random() < 0.1*rate;
 }
+function calculateLoyalty(characterModel, seignorId){
+	var seignorCharacter = CharacterModel.getChara(seignorId);
+	var compatibility = Math.abs(seignorCharacter.compatibility() - characterModel.compatibility());
+	if(compatibility > JobCoefficient.COMPATIBILITY){
+		compatibility -= JobCoefficient.COMPATIBILITY;
+	}
+	var percentageCompatibility = (JobCoefficient.COMPATIBILITY - compatibility) / JobCoefficient.COMPATIBILITY;
+	var loyalty = 50 + 50 * percentageCompatibility >> 0;
+	characterModel.loyalty(loyalty > 100 ? 100 : loyalty);
+}
 /**
  * 投降概率
  */
@@ -39,17 +49,34 @@ function calculateHitrateSurrender(seignorId, charaModel){
 		return child.id == charaModel.id();
 	});
 	if(parentConfig){
-		return parentConfig.parent == seignorId;
+		var parentCharacter = CharacterModel.getChara(parentConfig.parent);
+		if(parentCharacter.seigniorId() == parentCharacter.id()){
+			//关联君主在位
+			return parentConfig.parent == seignorId;
+		}
+		//return parentConfig.parent == seignorId;
 	}
+	var seignorCharacter = CharacterModel.getChara(seignorId);
+	//义气忠诚 60
+	//相性忠诚 20
 	var maxPersonalLoyalty = 15;
 	var personalLoyalty = charaModel.personalLoyalty();
-	var maxLoyalty = 80;
+	var plusLoyalty = 30;
 	if(maxPersonalLoyalty == personalLoyalty){
-		maxLoyalty = 1;
+		plusLoyalty = 0;
 	}
-	var surrebderLoyalty = maxLoyalty*personalLoyalty/maxPersonalLoyalty;
+	var compatibility = Math.abs(charaModel.compatibility() - seignorCharacter.compatibility());
+	if(compatibility > JobCoefficient.COMPATIBILITY){
+		compatibility -= JobCoefficient.COMPATIBILITY;
+	}
+	var compatibilityLoyalty = 30 * (JobCoefficient.COMPATIBILITY - compatibility) / JobCoefficient.COMPATIBILITY;
+	var surrebderLoyalty = 40 * (maxPersonalLoyalty - personalLoyalty)/maxPersonalLoyalty;
 	var loyalty = charaModel.loyalty();
-	if(surrebderLoyalty >= loyalty){
+	console.log("compatibilityLoyalty="+ compatibilityLoyalty);
+	console.log("surrebderLoyalty="+ surrebderLoyalty);
+	console.log("plusLoyalty="+ plusLoyalty);
+	console.log("loyalty="+ loyalty);
+	if(compatibilityLoyalty + surrebderLoyalty + plusLoyalty >= loyalty){
 		return true;
 	}
 	return false;

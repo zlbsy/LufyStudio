@@ -497,6 +497,7 @@ function jobAiCaptive(areaModel, seigniorId, charaModel){
 		if(charaModel.seigniorId() == LMvc.selectSeignorId){
 			SeigniorExecute.addMessage(String.format(Language.get("surrender_dialog_msg"),charaModel.name()));
 		}
+		calculateLoyalty(charaModel, seigniorId);
 		charaModel.seigniorId(seigniorId);
 		areaModel.removeCaptives(charaModel.id());
 		areaModel.addGenerals(charaModel);
