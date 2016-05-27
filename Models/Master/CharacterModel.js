@@ -595,6 +595,9 @@ CharacterModel.prototype.loyalty = function(value) {
 	if(LMvc.isRead || self.seigniorId() == 0 || self.validLoyalty() >= 90){
 		return;
 	}
+	if(self.seigniorId() != self.city().seigniorCharaId()){
+		return;
+	}
 	var v = self.validLoyalty();
 	if(v < 90 || v - value < 90){
 		updateCanPersuadeCharacters(self);

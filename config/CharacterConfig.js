@@ -113,3 +113,8 @@ SingleCombatCharacterConfig.START = "start";
 var RPGCharacterConfig = {
 	SPEED : 4
 };
+//俘虏忠诚度以及劝降关联
+var charactersParentConfig = [
+	{id:4,parent:21},//关羽-刘备
+	{id:19,parent:21},//张飞-刘备
+];

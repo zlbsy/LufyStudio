@@ -210,6 +210,10 @@ SeigniorExecute.addMessage = function(value){
 SeigniorExecute.prototype.areaJobRun=function(area){
 	var self = this, chara, job;
 	var generals = area.generals();
+	if(LMvc.chapterData.month == 3){
+		//每年3月份，武将忠诚度变化一次
+		generalsChangeLoyalty(generals);
+	}
 	var list = [];
 	for(var i=0;i<generals.length;i++){
 		chara = generals[i];
@@ -286,11 +290,7 @@ SeigniorExecute.prototype.areaJobRun=function(area){
 			}
 		}
 	}
-	var captives = area.captives();
-	for(var i=0;i<captives.length;i++){
-		chara = captives[i];
-		chara.job(Job.IDLE);
-	}
+	captivesChangeLoyalty(area);
 	self.areaJobOver = true;
 };
 SeigniorExecute.prototype.areasRun=function(seigniorModel){

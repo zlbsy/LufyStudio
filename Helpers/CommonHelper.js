@@ -35,6 +35,12 @@ function calculateHitrateCaptive(chara, nearCharas){
  * 投降概率
  */
 function calculateHitrateSurrender(seignorId, charaModel){
+	var parentConfig = charactersParentConfig.find(function(child){
+		return child.id == charaModel.id();
+	});
+	if(parentConfig){
+		return parentConfig.parent == seignorId;
+	}
 	var maxPersonalLoyalty = 15;
 	var personalLoyalty = charaModel.personalLoyalty();
 	var maxLoyalty = 80;

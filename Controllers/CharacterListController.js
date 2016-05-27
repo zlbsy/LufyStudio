@@ -21,7 +21,7 @@ CharacterListController.prototype.helperLoad=function(){
 };
 CharacterListController.prototype.modelLoad=function(){
 	var self = this;
-	self.load.model(["Master/SkillMaster","Master/SoldierMaster","Items/Item","Master/SoldierMaster","Master/Soldier","Master/StrategyMaster","Master/Strategy"],self.viewLoad);
+	self.load.model(["Master/SkillMaster","Items/Item","Master/SoldierMaster","Master/Soldier","Master/StrategyMaster","Master/Strategy"],self.viewLoad);
 };
 CharacterListController.prototype.viewLoad=function(){
 	var self = this;

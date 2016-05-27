@@ -821,3 +821,52 @@ function toPrizedByMoney(characterModel){
 	characterModel.isPrized(true);
 	return upValue;
 }
+//俘虏忠诚度变化
+function captivesChangeLoyalty(area){
+	var captives = area.captives();
+	for(var i=0;i<captives.length;i++){
+		var chara = captives[i];
+		chara.job(Job.IDLE);
+		var parentConfig = charactersParentConfig.find(function(child){
+			return child.id == chara.id();
+		});
+		if(parentConfig && chara.seigniorId() == parentConfig.parent){
+			return;
+			/*var parentCharacter = CharacterModel.getChara(parentConfig.parent);
+			if(parentCharacter.seigniorId() == parentCharacter.id()){
+				return;
+			}*/
+		}
+		var personalLoyalty = chara.personalLoyalty();
+		var minus = 16 - personalLoyalty;
+		if(LMvc.chapterData.month % 2 == 0){
+			minus = (minus / 2) >>> 0;
+		}
+		if(minus == 0){
+			continue;
+		}
+		var loyalty = chara.loyalty();
+		var toLoyalty = loyalty - minus > 0 ? loyalty - minus : 0;
+		chara.loyalty(toLoyalty);
+	}
+}
+//武将忠诚度变化
+function generalsChangeLoyalty(generals){
+	for(var i=0;i<generals.length;i++){
+		var chara = generals[i];
+		var parentConfig = charactersParentConfig.find(function(child){
+			return child.id == chara.id();
+		});
+		if(parentConfig && chara.seigniorId() == parentConfig.parent){
+			return;
+		}
+		var personalLoyalty = chara.personalLoyalty();
+		if((personalLoyalty > 5 && chara.loyalty() == 100) || chara.loyalty() + (personalLoyalty - 5) >= 100){
+			continue;
+		}
+		var minus = (15 - personalLoyalty) / 3 >>> 0;
+		var loyalty = chara.loyalty();
+		var toLoyalty = loyalty - minus > 0 ? loyalty - minus : 0;
+		chara.loyalty(toLoyalty);
+	}
+}

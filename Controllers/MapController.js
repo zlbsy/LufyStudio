@@ -18,7 +18,7 @@ MapController.prototype.helperLoad=function(){
 };
 MapController.prototype.modelLoad=function(){
 	var self = this;
-	self.load.model(["Master/Area","Master/Seignior","Master/Character","Master/ItemMaster","Items/Item","Master/StrategyMaster","Master/Strategy","Master/Reputation"],self.libraryLoad);
+	self.load.model(["Master/Area","Master/SoldierMaster","Master/Soldier","Master/Seignior","Master/Character","Master/ItemMaster","Items/Item","Master/StrategyMaster","Master/Strategy","Master/Reputation"],self.libraryLoad);
 };
 MapController.prototype.libraryLoad=function(){
 	var self = this;
@@ -35,6 +35,7 @@ MapController.prototype.menuLoad=function(){
 };
 MapController.prototype.getAreaData=function(){
 	var self = this;
+	SoldierMasterModel.setMaster(SoldierDatas);
 	CharacterModel.setChara(characterList);
 	ItemMasterModel.setMaster(ItemDatas);
 	StrategyMasterModel.setMaster(StrategyDatas);
