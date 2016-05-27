@@ -35,7 +35,7 @@ CharacterListChildView.prototype.setCheckBox = function() {
 CharacterListChildView.prototype.onClick = function(event) {
 	var self = event.target;
 	var listView = event.currentTarget;
-	if(self.checkbox && event.offsetX < 70){
+	if(self.checkbox && event.offsetX < 100){
 		if(self.controller.params.isOnlyOne){
 			var items = listView.getItems();
 			for(var i=0,l=items.length;i<l;i++){

@@ -279,8 +279,9 @@ CharacterDetailedView.prototype.ctrlLayerInit=function(){
 	var buttonClose = getButton(Language.get("return"),60);
 	buttonClose.x = LGlobal.width - buttonClose.getWidth() - 5;
 	self.ctrlLayer.addChild(buttonClose);
-	buttonClose.addEventListener(LMouseEvent.MOUSE_UP, self.closeCharacterDetailed.bind(self));
+	buttonClose.addEventListener(LMouseEvent.MOUSE_UP, self.closeCharacterDetailed);
 };
-CharacterDetailedView.prototype.closeCharacterDetailed=function(){
-	this.controller.closeCharacterDetailed();
+CharacterDetailedView.prototype.closeCharacterDetailed=function(event){
+	var self = event ?  event.currentTarget.getParentByConstructor(CharacterDetailedView) : this;
+	self.controller.closeCharacterDetailed();
 };

@@ -420,6 +420,7 @@ CharacterListView.prototype.showCharacterDetailed=function(param){
 };
 CharacterListView.prototype.showCharacterList=function(){
 	var self = this;
+	self.charaDetailedLayer.die();
 	self.charaDetailedLayer.removeAllChild();
 	switch(self.controller.characterListType){
 		case CharacterListType.BATTLE_SINGLE:
