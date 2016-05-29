@@ -38,7 +38,7 @@ seigniors : [
     ]
   },
 ]},
-{chara_id : 8,name:"孙坚",color : "255,0,0",generals_count:10,areas : [
+{chara_id : 8,name:"孙坚",color : "255,0,0",generals_count:9,areas : [
   {  area_id : 18,name:"长沙",prefecture : 8,
   level : 1,money : 3500,food : 20000,population : 26000,business : 4000,agriculture : 4000,technology : 2500,police : 100,city_defense : 900,troops : 2000,
   items_farmland:[{"item_id":43,"quantity":999,"proportion":60},{"item_id":42,"quantity":999,"proportion":60},{"item_id":41,"quantity":999,"proportion":60},{"item_id":40,"quantity":999,"proportion":60},{"item_id":39,"quantity":999,"proportion":45},{"item_id":38,"quantity":999,"proportion":45},{"item_id":37,"quantity":999,"proportion":45},{"item_id":36,"quantity":999,"proportion":45},{"item_id":35,"quantity":999,"proportion":30},{"item_id":34,"quantity":999,"proportion":30},{"item_id":33,"quantity":999,"proportion":30},{"item_id":32,"quantity":999,"proportion":30},{"item_id":31,"quantity":999,"proportion":20},{"item_id":30,"quantity":999,"proportion":20},{"item_id":29,"quantity":999,"proportion":20},{"item_id":70,"quantity":999,"proportion":80},{"item_id":69,"quantity":999,"proportion":60},{"item_id":68,"quantity":999,"proportion":40},{"item_id":67,"quantity":999,"proportion":20},{"item_id":21,"quantity":1,"proportion":10}],
@@ -48,7 +48,6 @@ seigniors : [
     {chara_id:2,name:"周瑜",feat:0,loyalty:100},
     {chara_id:8,name:"孙坚",feat:0,loyalty:100,equipments:[{"item_id":28,"count":1}]},
     {chara_id:24,name:"孙策",feat:0,loyalty:100},
-    {chara_id:71,name:"张宝",feat:0,loyalty:100},
     {chara_id:72,name:"程普",feat:0,loyalty:100},
     {chara_id:80,name:"韩当",feat:0,loyalty:100},
     {chara_id:123,name:"黄盖",feat:0,loyalty:100},
