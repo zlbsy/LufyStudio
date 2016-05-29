@@ -52,7 +52,7 @@ CharacterDetailedFaceView.prototype.showLabel=function(characterModel){
 	var self = this;
 	self.textFieldName.text = characterModel.name();
 	var battleBelong = self.controller.getValue("battleBelong");
-	if(!battleBelong){
+	if(battleBelong){
 		self.textFieldBelong.text = Language.get(battleBelong);
 	}
 	self.textLayer.cacheAsBitmap(false);

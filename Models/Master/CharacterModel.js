@@ -47,6 +47,18 @@ CharacterModel.upValue = function(type, value) {
 	}
 	return 0;
 };
+CharacterModel.getSoldierType = function(type, value){
+	var types = [];
+	types[1] = "C";
+	types[2] = "B";
+	types[3] = "A";
+	types[4] = "S";
+	var endType = types[CharacterModel.upValue(type, value)];
+	if(type == endType){
+		return type;
+	}
+	return String.format("{0}({1})",type,endType);
+};
 CharacterModel.setChara=function(list){
 	var fathers = [];
 	for(var i=0,l=list.length;i<l;i++){

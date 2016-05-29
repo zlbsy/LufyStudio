@@ -1,5 +1,3 @@
-
-
 function SeigniorExecute(){
 	var self = this;
 	base(self,LMvcObject,[]);
@@ -23,7 +21,7 @@ SeigniorExecute.Instance = function(){
 	return SeigniorExecute._Instance;
 };
 SeigniorExecute.close = function(event){
-	if(event.currentTarget.alpha < 1){
+	if(event && event.currentTarget.alpha < 1){
 		return;
 	}
 	SeigniorExecute.Instance().maskHide();
@@ -150,7 +148,9 @@ SeigniorExecute.run=function(){
 	buttonClose.visible = true;
 	self.msgView.clearSeignior();
 	LMvc.MapController.view.positionChangeToCity(CharacterModel.getChara(LMvc.selectSeignorId).city());
-	RecordController.instance().autoSaveRecord();
+	if(!LMvc.TutorialController){
+		RecordController.instance().autoSaveRecord();
+	}
 };
 SeigniorExecute.prototype.areaRun=function(area){
 	var self = this;
@@ -565,6 +565,7 @@ SeigniorExecute.prototype.maskShow=function(){
 	buttonClose.addEventListener(LMouseEvent.MOUSE_UP, SeigniorExecute.close);
 	buttonClose.visible = false;
 	LMvc.MapController.view.ctrlLayer.visible = false;
+	buttonClose.name = "closeButton";
 };
 SeigniorExecute.prototype.maskHide=function(){
 	var self = this;

@@ -27,7 +27,7 @@ SoldierDetailedView.prototype.set=function(){
 	hpIcon.y = icon.y + 2;
 	layer.addChild(hpIcon);
 	var characterModel = self.controller.getValue("selectedCharacter");
-	var lblHp = getStrokeLabel(characterModel.maxTroops(),16,"#FFFFFF","#000000",1);
+	var lblHp = getStrokeLabel(self.soldierModel.maxTroops(characterModel),16,"#FFFFFF","#000000",1);
 	lblHp.x = icon.x + width + 30 + 140 - lblHp.getWidth();
 	lblHp.y = hpBack.y + hpBack.getHeight() - lblHp.getHeight();
 	layer.addChild(lblHp);
@@ -40,12 +40,12 @@ SoldierDetailedView.prototype.set=function(){
 	mpBack.x = icon.x + width + 35;
 	mpBack.y = icon.y + 20;
 	layer.addChild(mpBack);
-	var mpSize = 140 * 0.8;
+	var mpSize = 140 * 1;
 	var mpIcon = new LPanel(new LBitmapData(LMvc.datalist["yellow_bar"]),mpSize,10);
 	mpIcon.x = mpBack.x + 140 - mpSize + 2;
 	mpIcon.y = mpBack.y + 2;
 	layer.addChild(mpIcon);
-	var lblMp = getStrokeLabel(characterModel.maxMP(),16,"#FFFFFF","#000000",1);
+	var lblMp = getStrokeLabel(self.soldierModel.maxMP(characterModel),16,"#FFFFFF","#000000",1);
 	lblMp.x = icon.x + width + 30 + 140 - lblMp.getWidth();
 	lblMp.y = mpBack.y + mpBack.getHeight() - lblMp.getHeight();
 	layer.addChild(lblMp);
@@ -54,13 +54,12 @@ SoldierDetailedView.prototype.set=function(){
 	lblProficiency.x = icon.x + width + 15;
 	lblProficiency.y = icon.y + 40;
 	layer.addChild(lblProficiency);
-	
 	var dataList = [
-		["attack",self.soldierModel.property().attack],
-		["spirit",self.soldierModel.property().spirit],
-		["defense",self.soldierModel.property().defense],
-		["breakout",self.soldierModel.property().breakout],
-		["morale",self.soldierModel.property().morale],
+		["attack",CharacterModel.getSoldierType(self.soldierModel.property().attack,characterModel.force())],
+		["spirit",CharacterModel.getSoldierType(self.soldierModel.property().spirit,characterModel.intelligence())],
+		["defense",CharacterModel.getSoldierType(self.soldierModel.property().defense,characterModel.command())],
+		["breakout",CharacterModel.getSoldierType(self.soldierModel.property().breakout,characterModel.agility())],
+		["morale",CharacterModel.getSoldierType(self.soldierModel.property().morale,characterModel.luck())],
 		["movePower",self.soldierModel.movePower()]
 	];
 	for(var i=0;i<dataList.length;i++){

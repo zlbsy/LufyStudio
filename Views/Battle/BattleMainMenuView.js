@@ -143,9 +143,10 @@ BattleMainMenuView.prototype.setMenuPosition=function(){
 	}
 };
 BattleMainMenuView.prototype.showOrHideMiniMap=function(event){
-	var self = event.currentTarget.parent.parent.parent;
+	var self = event ? event.currentTarget.parent.parent.parent : this;
 	var miniLayer = self.controller.view.miniLayer;
 	miniLayer.visible = !miniLayer.visible;
+	self.miniMapVisible = miniLayer.visible;
 };
 BattleMainMenuView.prototype.toRetreat=function(event){
 	var self = event.currentTarget.getParentByConstructor(BattleMainMenuView);

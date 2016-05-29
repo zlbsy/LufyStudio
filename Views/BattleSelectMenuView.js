@@ -59,18 +59,21 @@ BattleSelectMenuView.prototype.setMenu=function(){
 	self.mainLayer.addChild(layer);
 	layer.x = menuY;
 	var menuButton = getIconButton("battle-menu",new LRectangle(0,0,35,35),Language.get("attack"),menuWidth);
+	menuButton.name = "attack";
 	menuButton.y = menuY;
 	layer.addChild(menuButton);
 	menuButton.addEventListener(LMouseEvent.MOUSE_UP, self.clickAttack);
 	
 	menuY += menuHeight;
 	var menuButton = getIconButton("battle-menu",new LRectangle(35,0,35,35),Language.get("spirit"),menuWidth);
+	menuButton.name = "spirit";
 	menuButton.y = menuY;
 	layer.addChild(menuButton);
 	menuButton.addEventListener(LMouseEvent.MOUSE_UP, self.clickMagicSelect);
 	
 	menuY += menuHeight;
 	var menuButton = getIconButton("battle-menu",new LRectangle(70,0,35,35),Language.get("singleCombat"),menuWidth);
+	menuButton.name = "singleCombat";
 	menuButton.y = menuY;
 	layer.addChild(menuButton);
 	menuButton.addEventListener(LMouseEvent.MOUSE_UP, self.clickSingleCombat);
@@ -83,6 +86,7 @@ BattleSelectMenuView.prototype.setMenu=function(){
 
 	menuY += menuHeight;
 	var menuButton = getIconButton("battle-menu",new LRectangle(175,0,35,35),Language.get("standby"),menuWidth);
+	menuButton.name = "standby";
 	menuButton.y = menuY;
 	layer.addChild(menuButton);
 	menuButton.addEventListener(LMouseEvent.MOUSE_UP, self.clickStandby);
@@ -92,7 +96,7 @@ BattleSelectMenuView.prototype.setMenu=function(){
 	self.mainLayer.addChildAt(winBitmap, 0);
 };
 BattleSelectMenuView.prototype.clickAttack=function(event){
-	var self = event.currentTarget.parent.parent.parent;
+	var self = event ? event.currentTarget.parent.parent.parent : this;
 	self.closeSelectMenu();
 	self.controller.dispatchEvent(BattleSelectMenuEvent.ATTACK);
 };
@@ -107,7 +111,7 @@ BattleSelectMenuView.prototype.clickSingleCombat=function(event){
 	self.controller.dispatchEvent(BattleSelectMenuEvent.SINGLE_COMBAT);
 };
 BattleSelectMenuView.prototype.clickStandby=function(event){
-	var self = event.currentTarget.parent.parent.parent;
+	var self = event ? event.currentTarget.parent.parent.parent : this;
 	self.closeSelectMenu();
 	self.controller.dispatchEvent(BattleSelectMenuEvent.STANDBY);
 };

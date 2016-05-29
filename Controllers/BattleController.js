@@ -188,7 +188,7 @@ BattleController.prototype.charactersInit = function(){
 	self.defCharactersInit();
 	for(var i=0,l=selfPositions.length;i<l;i++){
 		var charaObjs = selfPositions[i];
-		self.view.charaLayer.addCharacterPosition(charaObjs.direction,charaObjs.x,charaObjs.y);
+		self.view.charaLayer.addCharacterPosition(charaObjs.direction,charaObjs.x,charaObjs.y,i);
 	}
 };
 BattleController.prototype.defCharactersInit=function(){
@@ -328,7 +328,11 @@ BattleController.prototype.singleCombat = function(event){
 };
 BattleController.prototype.physicalAttack = function(event){
 	var self = event.currentTarget.parent.controller;
-	var chara = self.view.charaLayer.getCharacterFromCoordinate(event.selfX,event.selfY);
+	var chara = self.physicalAttackCharacter(event.selfX,event.selfY);
+};
+BattleController.prototype.physicalAttackCharacter = function(x, y){
+	var self = this;
+	var chara = self.view.charaLayer.getCharacterFromCoordinate(x, y);
 	if(!chara || chara.hideByCloud || chara.belong != Belong.ENEMY){
 		return;
 	}
@@ -378,11 +382,23 @@ BattleController.prototype.clickOnRoadLayer = function(event){
 		}
 		return;
 	}
-	chara = BattleController.ctrlChara;
+	self.charaToMove(event.selfX/self.model.stepWidth >>> 0,event.selfY/self.model.stepHeight >>> 0);
+	/*chara = BattleController.ctrlChara;
 		
 	var coordinate = chara.getTo();
 	var fx = coordinate[0] , fy = coordinate[1];
 	var returnList = self.query.queryPath(new LPoint(fx,fy),new LPoint(event.selfX/self.model.stepWidth >>> 0,event.selfY/self.model.stepHeight >>> 0));
+	if(returnList.length > 0){
+		self.view.roadLayer.clear();
+		chara.setRoad(returnList);//move
+	}*/
+};
+BattleController.prototype.charaToMove = function(lx,ly){
+	var self = this;
+	var chara = BattleController.ctrlChara;
+	var coordinate = chara.getTo();
+	var fx = coordinate[0] , fy = coordinate[1];
+	var returnList = self.query.queryPath(new LPoint(fx,fy),new LPoint(lx,ly));
 	if(returnList.length > 0){
 		self.view.roadLayer.clear();
 		chara.setRoad(returnList);//move

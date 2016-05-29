@@ -41,6 +41,9 @@ SoldierModel.prototype.name = function() {
 SoldierModel.prototype.maxTroops = function(charaModel) {
 	return this.master().maxTroops(charaModel);
 };
+SoldierModel.prototype.maxMP = function(charaModel) {
+	return this.master().maxMP(charaModel);
+};
 SoldierModel.prototype.technology = function() {
 	return this.master().technology();
 };

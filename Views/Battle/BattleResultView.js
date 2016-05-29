@@ -283,7 +283,7 @@ BattleResultView.prototype.showResultTitle=function(value){
 	self.addChild(title);
 };
 BattleResultView.prototype.showMap=function(event){
-	var self = event.currentTarget;
+	var self = event ? event.currentTarget : this;
 	self.changeCharactersStatus();
 	var toCity = self.controller.battleData.toCity;
 	var cityId = toCity.id();

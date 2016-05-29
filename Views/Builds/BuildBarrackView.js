@@ -11,12 +11,14 @@ BuildBarrackView.prototype.showMenu=function(){
 	
 	var buttonEnlist = getButton(Language.get("enlist"),200);
 	buttonEnlist.y = menuY;
+	buttonEnlist.name = "buttonEnlist";
 	layer.addChild(buttonEnlist);
 	buttonEnlist.addEventListener(LMouseEvent.MOUSE_UP, self.onClickEnlistButton);
 	
 	menuY += menuHeight;
 	var buttonTraining = getButton(Language.get("training"),200);
 	buttonTraining.y = menuY;
+	buttonTraining.name = "buttonTraining";
 	layer.addChild(buttonTraining);
 	buttonTraining.addEventListener(LMouseEvent.MOUSE_UP, self.onClickTrainingButton);
 	return layer;
@@ -57,7 +59,7 @@ BuildBarrackView.prototype.showBuild=function(event){
 	}
 };
 BuildBarrackView.prototype.onClickEnlistButton=function(event){
-	var self = event.currentTarget.parent.parent.parent;
+	var self = event ? event.currentTarget.parent.parent.parent : this;
 	var armListLayer = new LSprite();
 	self.addChild(armListLayer);
 	self.controller.setValue("armListLayer", armListLayer);

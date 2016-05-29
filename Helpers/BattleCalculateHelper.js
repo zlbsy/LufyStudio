@@ -6,6 +6,9 @@
  如果Sa/Sd>=3，那么H=100；
  *********************************************/
 function calculateDoubleAtt(attChara,hertChara){
+	if(LMvc.TutorialController){
+		return false;
+	}
 	var attCharaModel = attChara.data;
 	var hertCharaModel = hertChara.data;
 	var h;
@@ -49,6 +52,9 @@ function calculateDoubleAtt(attChara,hertChara){
  如果Sa/Sd>=3，那么H=100；
  *********************************************/
 function calculateFatalAtt(attChara,hertChara){
+	if(LMvc.TutorialController){
+		return false;
+	}
 	var attCharaModel = attChara.data;
 	var hertCharaModel = hertChara.data;
 	var h;
@@ -103,8 +109,17 @@ function calculateFatalAtt(attChara,hertChara){
  最后，不同的法术还会有具体的权重系数，比如还要乘以1.5、0.9等等。
  *********************************************/
 function calculateHitrate(attChara,hertChara,isView){
+	if(LMvc.TutorialController){
+		if(isView){
+			return 100;
+		}
+		return true;
+	}
 	//对方混乱
 	if(hertChara.status.hasStatus(StrategyType.Chaos)){
+		if(isView){
+			return 100;
+		}
 		return true;
 	}
 	var attCharaModel = attChara.data;

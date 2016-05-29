@@ -25,6 +25,9 @@ ChapterController.prototype.init=function(status){
 	if(LMvc.isRead){
 		self.loadMvc("Map",self.mapLoadComplete);
 		return;
+	}else if(LMvc.TutorialController){
+		self.loadMap(21);
+		return;
 	}
 	self.dispatchEvent(LEvent.COMPLETE);
 	self.dispatchEvent(LController.NOTIFY);

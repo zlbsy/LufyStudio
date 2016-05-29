@@ -13,6 +13,7 @@ MenuView.prototype.init=function(){
 	self.mainLayer.addChild(layer);
 	layer.x = 20;
 	var buttonOperatingEnd = getButton(Language.get("operating_end"),200);
+	buttonOperatingEnd.name = "operating_end";
 	buttonOperatingEnd.y = menuY;
 	layer.addChild(buttonOperatingEnd);
 	buttonOperatingEnd.addEventListener(LMouseEvent.MOUSE_UP, self.onClickOperatingEnd);
@@ -49,6 +50,7 @@ MenuView.prototype.init=function(){
 	
 	menuY += menuHeight;
 	var buttonReturnTop = getButton(Language.get("return_top"),200);
+	buttonReturnTop.name = "return_top";
 	buttonReturnTop.y = menuY;
 	layer.addChild(buttonReturnTop);
 	buttonReturnTop.addEventListener(LMouseEvent.MOUSE_UP, self.onClickReturnTop);
@@ -76,7 +78,7 @@ MenuView.prototype.hide=function(event){
 	MenuController.instance().hide();
 };
 MenuView.prototype.onClickOperatingEnd=function(event){
-	var self = event.currentTarget.parent.parent.parent;
+	var self = event ? event.currentTarget.parent.parent.parent : this;
 	self.hide();
 	SeigniorExecute.run();
 };
@@ -114,11 +116,13 @@ MenuView.prototype.gameRead=function(){
 	RecordController.instance().show(RecordController.READ_MODE);
 };
 MenuView.prototype.onClickReturnTop=function(event){
-	var self = event.currentTarget.parent.parent.parent;
+	var self = event ? event.currentTarget.parent.parent.parent : this;
 	self.hide();
 	LMvc.MapController.view.remove();
 	
 	LMvc.logoStage.visible = true;
-	LMvc.logoStage.chapterMenuLayer.mouseChildren = true;
+	if(LMvc.logoStage.chapterMenuLayer){
+		LMvc.logoStage.chapterMenuLayer.mouseChildren = true;
+	}
 	LMvc.stageLayer.x = 0;
 };

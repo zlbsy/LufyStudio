@@ -533,12 +533,13 @@ function spyRun(characterModel, cityId){
 }
 function hireRun(characterModel, hireCharacterId){
 	//录用：运气+相性
-	//console.log("hireRun录用 : ",characterModel.id());
 	var area = characterModel.city();
 	var outOfOffice = area.outOfOffice();
+	//console.log("hireRun录用 : ",characterModel.id(),outOfOffice);
 	var hireCharacterIndex = outOfOffice.findIndex(function(child){
 		return child.id() == hireCharacterId;
 	});
+	//console.log("hireRun录用 hireCharacterIndex : ",CharacterModel.getChara(19).cityId(),hireCharacterId, hireCharacterIndex);
 	characterModel.job(Job.IDLE);
 	if(hireCharacterIndex < 0){
 		//console.log("hireRun : 失败 null");
@@ -553,24 +554,37 @@ function hireRun(characterModel, hireCharacterId){
 	hireRun2(characterModel, hireCharacter, area);
 }
 function hireRun2(characterModel, hireCharacter,area){
-	var compatibility;
-	var percentage = (JobCoefficient.NORMAL + characterModel.luck()) * 0.5 / JobCoefficient.NORMAL;
-	var seigniorId = characterModel.seigniorId();
-	var seigniorChara = CharacterModel.getChara(seigniorId);
-	compatibility = Math.abs(seigniorChara.compatibility() - hireCharacter.compatibility());
-	if(compatibility > JobCoefficient.COMPATIBILITY){
-		compatibility -= JobCoefficient.COMPATIBILITY;
-	}
-	percentage *= (JobCoefficient.COMPATIBILITY - compatibility) / JobCoefficient.COMPATIBILITY;
-	
-	var rand = Math.random();
-	if(rand > percentage){
-		//console.log("hireRun : 失败 " + rand + " > " + percentage + " = " + (rand > percentage));
-		if(characterModel.seigniorId() == LMvc.selectSeignorId && !area.isAppoint()){
-			SeigniorExecute.addMessage(String.format(Language.get("hireRefuseMessage"),hireCharacter.name(),characterModel.name()));
+	var parentConfig = charactersParentConfig.find(function(child){
+		return child.id == hireCharacter.id();
+	});
+	var parentIsOk = false;
+	if(parentConfig){
+		var parentCharacter = CharacterModel.getChara(parentConfig.parent);
+		if(parentCharacter.seigniorId() == characterModel.seigniorId()){
+			//关联君主在位
+			parentIsOk = true;
 		}
-		characterModel.featPlus(JobFeatCoefficient.NORMAL * 0.5);
-		return;
+	}
+	if(!parentIsOk){
+		var compatibility;
+		var percentage = (JobCoefficient.NORMAL + characterModel.luck()) * 0.5 / JobCoefficient.NORMAL;
+		var seigniorId = characterModel.seigniorId();
+		var seigniorChara = CharacterModel.getChara(seigniorId);
+		compatibility = Math.abs(seigniorChara.compatibility() - hireCharacter.compatibility());
+		if(compatibility > JobCoefficient.COMPATIBILITY){
+			compatibility -= JobCoefficient.COMPATIBILITY;
+		}
+		percentage *= (JobCoefficient.COMPATIBILITY - compatibility) / JobCoefficient.COMPATIBILITY;
+		
+		var rand = Math.random();
+		if(rand > percentage){
+			//console.log("hireRun : 失败 " + rand + " > " + percentage + " = " + (rand > percentage));
+			if(characterModel.seigniorId() == LMvc.selectSeignorId && !area.isAppoint()){
+				SeigniorExecute.addMessage(String.format(Language.get("hireRefuseMessage"),hireCharacter.name(),characterModel.name()));
+			}
+			characterModel.featPlus(JobFeatCoefficient.NORMAL * 0.5);
+			return;
+		}
 	}
 	hireCharacter.seigniorId(characterModel.seigniorId());
 	var loyalty = 50 + 50 * percentage >> 0;
@@ -782,6 +796,9 @@ function charactersNaturalDeath(area){
 }
 //在野武将移动
 function outOfOfficeCharactersMove(area){
+	if(LMvc.TutorialController){
+		return;
+	}
 	var characters = area.outOfOffice();
 	var length = characters.length;
 	var neighbor = length > 0 ? area.neighbor() : null;
@@ -791,7 +808,8 @@ function outOfOfficeCharactersMove(area){
 			character.job(Job.IDLE);
 			continue;
 		}
-		if(Math.random() < 0.1){
+		var rand = Math.random();
+		if(rand > 0.2){
 			continue;
 		}
 		var neighborCityId = neighbor[(Math.random() * neighbor.length) >>> 0];

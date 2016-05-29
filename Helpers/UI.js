@@ -145,7 +145,7 @@ function ConfirmWindow(obj){
 	var okPanel = new LButton(new LBitmap(new LBitmapData(LMvc.datalist["ok"])));
 	okPanel.y = panel.y + panel.getHeight() - okPanel.getHeight() - 20;
 	windowLayer.addChild(okPanel);
-	
+	okPanel.name = "okButton";
 	if(typeof obj.cancelEvent != UNDEFINED){
 		var cancelPanel = new LButton(new LBitmap(new LBitmapData(LMvc.datalist["close"])));
 		cancelPanel.se = "Se_cancel";
@@ -164,5 +164,6 @@ function ConfirmWindow(obj){
 	okPanel.addEventListener(LMouseEvent.MOUSE_UP, obj.okEvent?obj.okEvent:function(event){
 		event.currentTarget.parent.remove();
 	});
+	windowLayer.name = "ConfirmWindow";
 	return windowLayer;
 }

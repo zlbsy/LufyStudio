@@ -182,3 +182,6 @@ BattleView.prototype.showResult = function(result){
 	var r = new BattleResultView(self.controller, result);
 	self.addChild(r);
 };
+BattleView.prototype.boutEnd = function() {
+	BattleController.ctrlChara.AI.boutEnd();
+};

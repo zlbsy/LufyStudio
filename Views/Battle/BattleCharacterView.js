@@ -15,6 +15,7 @@ function BattleCharacterView(controller, id, w, h) {
 	}
 	self.addShape(LShape.RECT,[0,0,BattleCharacterSize.width,BattleCharacterSize.height]);
 	self.mode = CharacterMode.NONE;
+	self.name = "character_" + id;
 }
 BattleCharacterView.cacheBitmapDatas = {};
 BattleCharacterView.DEFAULT_IMG = "character-s-default";
@@ -335,7 +336,9 @@ BattleCharacterView.prototype.toDie = function() {
 	}else{
 		talkMsg = self.data.dieTalk();
 	}
-	script += "SGJTalk.show(" + self.data.id() + ",0," + talkMsg + ");";
+	if(!LMvc.TutorialController){
+		script += "SGJTalk.show(" + self.data.id() + ",0," + talkMsg + ");";
+	}
 	script += "SGJBattleCharacter.characterToDie(" + self.belong + ","+ self.data.id() + ");";
 	LGlobal.script.addScript(script);
 };

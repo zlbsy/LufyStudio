@@ -4,6 +4,7 @@ function CharacterExpeditionView(controller,characterModel){
 	base(self,LView,[controller]);
 	self.characterModel = characterModel;
 	self.set();
+	self.name = "CharacterExpeditionView";
 }
 CharacterExpeditionView.prototype.layerInit=function(){
 	var self = this;
@@ -69,11 +70,18 @@ CharacterExpeditionView.prototype.set=function(){
 	var rangeBackground = getBitmap(new LPanel(new LBitmapData(LMvc.datalist["win04"]),220,40));
 	var rangeSelect = new LBitmap(new LBitmapData(LMvc.datalist["range"]));
 	var r = new LRange(rangeBackground, rangeSelect);
-	r.x = 70;
+	r.x = 10;
 	r.y = 50;
 	layer.addChild(r);
 	r.setValue(self.currentTroops * 100 / self.maxTroops);
 	self.troopRange = r;
+	
+	var buttonMax = getButton(Language.get("max"),80);
+	buttonMax.x = 250;
+	buttonMax.y = r.y;
+	buttonMax.name = "buttonMax";
+	layer.addChild(buttonMax);
+	buttonMax.addEventListener(LMouseEvent.MOUSE_UP, self.onClickMaxButton);
 
 	var troopLabel = getStrokeLabel( self.currentTroops, 18, "#FFFFFF", "#000000", 4);
 	troopLabel.x = 10;
@@ -89,6 +97,10 @@ CharacterExpeditionView.prototype.set=function(){
 	self.setTroops();
 	r.addEventListener(LRange.ON_CHANGE,self.onchangeTroop);
 	com.addEventListener(LComboBox.ON_CHANGE,self.onchangeSoldier);
+};
+CharacterExpeditionView.prototype.onClickMaxButton=function(event){
+	var self = event ? event.currentTarget.getParentByConstructor(CharacterExpeditionView) : this;
+	self.troopRange.setValue(100);
 };
 CharacterExpeditionView.prototype.setIcon=function(){
 	var self = this;

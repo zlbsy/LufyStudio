@@ -11,6 +11,7 @@ Language.dataSimple = {
 	"game_setting":"環境設定",
 	"game_single_combat":"一騎打ち挑戦",
 	"create_character":"武将作成",
+	"game_tutorial":"チュートリアル",
 	"create_character_debut":"新武将作成",
 	"create_character_setting":"新勢力設置",
 	"chinese":"中文",

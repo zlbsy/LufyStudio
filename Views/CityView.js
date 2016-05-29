@@ -164,7 +164,7 @@ CityView.prototype.footerLayerInit=function(){
 	}
 };
 CityView.prototype.onClickExpeditionButton=function(event){
-	var self = event.currentTarget.getParentByConstructor(CityView);
+	var self = event ? event.currentTarget.getParentByConstructor(CityView):this;
 	var build = new BuildExpeditionView(self.controller);
 	self.contentLayer.addChild(build);
 };
@@ -179,7 +179,7 @@ CityView.prototype.onClickGeneralsButton=function(event){
 	self.contentLayer.addChild(build);
 };
 CityView.prototype.onClickMapButton=function(event){
-	var self = event.currentTarget.getParentByConstructor(CityView);
+	var self = event ? event.currentTarget.getParentByConstructor(CityView) : this;
 	self.controller.gotoMap();
 };
 CityView.prototype.getIconButton=function(text,width,height,icon, belong){
@@ -226,7 +226,7 @@ CityView.prototype.updateView = function(){
 };
 CityView.prototype.autoTalkCheck = function(){
 	var self = this;
-	if(!self.controller.getValue("selfCity") || SeigniorExecute.running){
+	if(!self.controller.getValue("selfCity") || SeigniorExecute.running || LMvc.TutorialController){
 		return;
 	}
 	var cityModel = self.controller.getValue("cityData");

@@ -6,6 +6,7 @@ function ExpeditionReadyView(controller, characterListType){
 	self.selectTroops = 0;
 	self.characterListType = characterListType;
 	self.set();
+	self.name = "ExpeditionReadyView";
 }
 ExpeditionReadyView.prototype.set=function(img,name){
 	var self = this;
@@ -33,6 +34,7 @@ ExpeditionReadyView.prototype.set=function(img,name){
 	foodLayer.addChild(food);
 	self.food = food;
 	var rangeFood = new LRange(rangeBackground, rangeSelect);
+	self.rangeFood = rangeFood;
 	rangeFood.x = 10;
 	rangeFood.y = 20;
 	foodLayer.addChild(rangeFood);
@@ -81,7 +83,17 @@ ExpeditionReadyView.prototype.set=function(img,name){
 ExpeditionReadyView.prototype.onFoodChange=function(event){
 	var rangeFood = event.currentTarget;
 	var self = rangeFood.parent.parent.parent;
-	self.selectFood = self.foodSum*rangeFood.value*0.01>>0;
+	self.setFoodValue(rangeFood.value);
+	//self.selectFood = self.foodSum*rangeFood.value*0.01>>0;
+	//self.updateFoodLabel();
+};
+ExpeditionReadyView.prototype.setFoodValue=function(value){
+	var self = this;
+	if(typeof value == "string"){
+		self.rangeFood.setValue(parseInt(value));
+		return;
+	}
+	self.selectFood = self.foodSum * value * 0.01 >> 0;
 	self.updateFoodLabel();
 };
 ExpeditionReadyView.prototype.updateFoodLabel=function(){

@@ -1758,9 +1758,25 @@ LScriptSGJ.analysis = function(childType, lineValue) {
 		case "SGJEvent":
 			LSGJEventScript.analysis(lineValue);
 			break;
+		case "SGJTutorial":
+			LSGJTutorialScript.analysis(lineValue);
+			break;
 		default:
 			LGlobal.script.analysis();
 	}
+};
+/*
+ * LSGJTutorialScript.js
+ **/
+LSGJTutorialScript = function() {
+};
+LSGJTutorialScript.analysis = function(value) {
+	var start = value.indexOf("(");
+	var end = value.indexOf(")");
+	var startMethod = value.indexOf(".");
+	var method = value.substring(startMethod + 1, start);
+	var argumentsArray = value.substring(start + 1, end).split(",");
+	LMvc.TutorialController[method].apply(LMvc.TutorialController, argumentsArray);
 };
 /*
  * LSGJEventScript.js

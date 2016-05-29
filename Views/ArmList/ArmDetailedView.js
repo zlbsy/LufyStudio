@@ -2,6 +2,7 @@ function ArmDetailedView(controller){
 	var self = this;
 	base(self,LView,[controller]);
 	self.set();
+	self.name = "ArmDetailedView";
 }
 ArmDetailedView.prototype.setArmEnlist=function(){
 	var self = this;
@@ -29,17 +30,24 @@ ArmDetailedView.prototype.setArmEnlist=function(){
 	layer.addChild(enlistFrom);
 	
 	var enlistTo = getStrokeLabel(String.format(Language.get("number_of_people"),EnlistSetting.ENLIST_TO), 20, "#FFFFFF", "#000000", 4);
-	enlistTo.x = enlistFrom.x + 240 - enlistTo.getWidth();
+	enlistTo.x = enlistFrom.x + 200 - enlistTo.getWidth();
 	enlistTo.y = enlistFrom.y;
 	layer.addChild(enlistTo);
 	
-	var rangeBackground = getBitmap(new LPanel(new LBitmapData(LMvc.datalist["win04"]),240,40));
+	var rangeBackground = getBitmap(new LPanel(new LBitmapData(LMvc.datalist["win04"]),200,40));
 	var rangeSelect = new LBitmap(new LBitmapData(LMvc.datalist["range"]));
 	var r = new LRange(rangeBackground, rangeSelect);
-	r.x = 50;
+	r.x = 30;
 	r.y = enlistFrom.y + enlistFrom.getHeight();
 	self.enlistRange = r;
 	layer.addChild(r);
+	
+	var buttonMax = getButton(Language.get("max"),80);
+	buttonMax.x = 250;
+	buttonMax.y = r.y;
+	buttonMax.name = "buttonMax";
+	layer.addChild(buttonMax);
+	buttonMax.addEventListener(LMouseEvent.MOUSE_UP, self.onClickMaxButton);
 
 	var enlistConfrim = getStrokeLabel("", 20, "#FFFFFF", "#000000", 4);
 	enlistConfrim.setWordWrap(true);
@@ -52,6 +60,10 @@ ArmDetailedView.prototype.setArmEnlist=function(){
 	self.addChild(layer);
 	r.addEventListener(LRange.ON_CHANGE, self.onChangeEvent);
 	self.onChange();
+};
+ArmDetailedView.prototype.onClickMaxButton=function(event){
+	var self = event ? event.currentTarget.getParentByConstructor(ArmDetailedView) : this;
+	self.enlistRange.setValue(100);
 };
 ArmDetailedView.prototype.setArmExpedition=function(){
 	var self = this;

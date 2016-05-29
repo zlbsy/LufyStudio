@@ -9,12 +9,14 @@ function BuildTavernView(controller){
 BuildTavernView.prototype.showMenu=function(){
 	var self = this, layer = new LSprite(), menuY = 0, menuHeight = 55;
 	var buttonAccess = getButton(Language.get("access"),200);
+	buttonAccess.name = "buttonAccess";
 	buttonAccess.y = menuY;
 	layer.addChild(buttonAccess);
 	buttonAccess.addEventListener(LMouseEvent.MOUSE_UP, self.onClickAccessButton);
 	
 	menuY += menuHeight;
 	var buttonHire = getButton(Language.get("hire"),200);
+	buttonHire.name = "buttonHire";
 	buttonHire.y = menuY;
 	layer.addChild(buttonHire);
 	buttonHire.addEventListener(LMouseEvent.MOUSE_UP, self.onClickHireButton);

@@ -70,7 +70,7 @@ CharacterListChildView.prototype.onClick = function(event) {
 };
 CharacterListChildView.prototype.updateArmProperties = function(event) {
 	var self = this;
-	var windowLayer = event.currentTarget.parent;
+	var windowLayer = self.controller.view.getChildByName("ConfirmWindow");
 	var characterExpedition = windowLayer.childList.find(function(child){
 		return child.constructor.name == "CharacterExpeditionView";
 	});

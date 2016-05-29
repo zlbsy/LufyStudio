@@ -90,7 +90,7 @@ function checkEventList() {
 			}
 		}
 		if(!generalsOk){
-			console.log(currentEvent.name + " generalsOk");
+			//console.log(currentEvent.name + " generalsOk");
 			continue;
 		}
 		var citysOk = true;
@@ -100,7 +100,7 @@ function checkEventList() {
 			var cityModel = AreaModel.getArea(city.id);
 			if(typeof city.seignior == "number"){
 				if(cityModel.seigniorCharaId() != city.seignior){
-					console.log(currentEvent.name +": citys number,"+cityModel.seigniorCharaId()+","+city.seignior);
+					//console.log(currentEvent.name +": citys number,"+cityModel.seigniorCharaId()+","+city.seignior);
 					citysOk = false;
 					break;
 				}
@@ -109,14 +109,14 @@ function checkEventList() {
 					return child === cityModel.seigniorCharaId();
 				});
 				if(index < 0){
-					console.log(currentEvent.name +": citys index");
+					//console.log(currentEvent.name +": citys index");
 					citysOk = false;
 					break;
 				}
 			}
 		}
 		if(!citysOk){
-			console.log(currentEvent.name + " citysOk");
+			//console.log(currentEvent.name + " citysOk");
 			continue;
 		}
 		var cityCountOk = true;
@@ -132,7 +132,7 @@ function checkEventList() {
 			}
 		}
 		if(!cityCountOk){
-			console.log(currentEvent.name + " cityCountOk");
+			//console.log(currentEvent.name + " cityCountOk");
 			continue;
 		}
 		var stopBattleOk = true;
@@ -149,7 +149,7 @@ function checkEventList() {
 			}
 		}
 		if(!stopBattleOk){
-			console.log(currentEvent.name + " stopBattleOk");
+			//console.log(currentEvent.name + " stopBattleOk");
 			continue;
 		}
 		
@@ -225,7 +225,7 @@ function dispatchEventListResult(eventId, currentEvent) {
 	}
 	for(var i=0,l=currentEvent.result.length;i<l;i++){
 		var child = currentEvent.result[i];
-		console.log("dispatchEventListResult .type="+child.type);
+		//console.log("dispatchEventListResult .type="+child.type);
 		switch(child.type){
 			case "stopBattle"://停战
 				dispatchEventListResultStopBattle(child);
@@ -438,11 +438,10 @@ function dispatchEventListResultReputation(child) {
 		var soldiers = reputationModel.data.soldiers;
 		if(soldiers){
 			for(var j=0,jl=soldiers.length;j<jl;j++){
-				console.log("j="+j);
 				var reputationSoldier = soldiers[j];
 				var soldier = character.soldiers().find(function(child){
 					return child.id() == reputationSoldier.id;
-				});console.log("soldier="+soldier);
+				});
 				var proficiency = soldier.proficiency();
 				if(proficiency < reputationSoldier.proficiency){
 					soldier.proficiency(reputationSoldier.proficiency);

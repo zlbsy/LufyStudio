@@ -126,3 +126,12 @@ SoldierMasterModel.prototype.maxTroops = function(charaModel) {
 	charaModel.maxTroops(true);
 	return troops;
 };
+SoldierMasterModel.prototype.maxMP = function(charaModel) {
+	var self = this;
+	var currentId = charaModel.currentSoldierId();
+	charaModel.currentSoldiers(self.id());
+	var mp = charaModel.maxMP(true);
+	charaModel.currentSoldiers(currentId);
+	charaModel.maxMP(true);
+	return mp;
+};

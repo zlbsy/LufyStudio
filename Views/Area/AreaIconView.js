@@ -1,6 +1,7 @@
 function AreaIconView(controller,areaStatus){
 	var self = this;
 	base(self,LView,[controller]);
+	self.name = "areaIcon_" + areaStatus.id();
 	self.areaStatus = areaStatus;
 	self.x = self.areaStatus.position().x;
 	self.y = self.areaStatus.position().y;

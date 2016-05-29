@@ -4,6 +4,7 @@ function BuildBaseView(controller, buildName){
 	base(self,LView,[controller]);
 	self.setBackground();
 	self.buildName = buildName;
+	self.name = "build_"+buildName;
 	var view = controller.view;
 	var build = view.buildLayer.childList.find(function(child){
 		return child.name == buildName;
@@ -67,10 +68,15 @@ BuildBaseView.prototype.setMenuPosition=function(build, menuLayer){
 	}
 };
 BuildBaseView.prototype.hideBuild=function(event){
-	var contentLayer = event.currentTarget.view.contentLayer;
-	var self = contentLayer.childList.find(function(child){
-		return child.isBuildBaseView;
-	});
+	var self;
+	if(event){
+		var contentLayer = event.currentTarget.view.contentLayer;
+		self = contentLayer.childList.find(function(child){
+			return child.isBuildBaseView;
+		});
+	}else{
+		self = this;
+	}
 	self.menuLayer.visible = false;
 	self.controller.view.baseLayer.visible = false;
 };

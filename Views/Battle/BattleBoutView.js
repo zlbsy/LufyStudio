@@ -2,6 +2,7 @@ function BattleBoutView(controller, belong){
 	var self = this;
 	LExtends(self,LView,[controller]);
 	self.set(belong);
+	self.name = "BattleBoutView";
 };
 BattleBoutView.prototype.set=function(belong){
 	var self = this;

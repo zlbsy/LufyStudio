@@ -46,7 +46,7 @@ LogoView.prototype.changeLanguage=function(event){
 };
 LogoView.prototype.showMenu=function(){
 	var self = this;
-	var menuHeight = 55;
+	var menuHeight = 48;
 	var menuY = 0;
 	var layer = new LSprite();
 	var title = getStrokeLabel(Language.get("game_title"),80,"#FFFFFF","#000000",4);
@@ -65,31 +65,31 @@ LogoView.prototype.showMenu=function(){
 	menuLayer.x = menuLayer.tx = (LGlobal.width - 200) * 0.5;
 	self.mainMenuLayer.addChild(menuLayer);
 	
-	var buttonStart = getButton(Language.get("game_start"),200);
+	var buttonStart = getSizeButton(Language.get("game_start"),200, 45);
 	buttonStart.y = menuY;
 	menuLayer.addChild(buttonStart);
 	buttonStart.addEventListener(LMouseEvent.MOUSE_UP, self.loadChapterList.bind(self));
 	
 	menuY += menuHeight;
-	var buttonRead = getButton(Language.get("game_read"),200);
+	var buttonRead = getSizeButton(Language.get("game_read"),200, 45);
 	buttonRead.y = menuY;
 	menuLayer.addChild(buttonRead);
 	buttonRead.addEventListener(LMouseEvent.MOUSE_UP, self.readGame.bind(self));
 	
 	menuY += menuHeight;
-	var buttonSetting = getButton(Language.get("game_setting"),200);
+	var buttonSetting = getSizeButton(Language.get("game_setting"),200, 45);
 	buttonSetting.y = menuY;
 	menuLayer.addChild(buttonSetting);
 	buttonSetting.addEventListener(LMouseEvent.MOUSE_UP, self.settingGame.bind(self));
 	
 	menuY += menuHeight;
-	var buttonSingleCombat = getButton(Language.get("game_single_combat"),200);
+	var buttonSingleCombat = getSizeButton(Language.get("game_single_combat"),200, 45);
 	buttonSingleCombat.y = menuY;
 	menuLayer.addChild(buttonSingleCombat);
 	buttonSingleCombat.addEventListener(LMouseEvent.MOUSE_UP, self.showSingleCombatArena.bind(self));
 	
 	menuY += menuHeight;
-	var buttonCreate = getButton(Language.get("create_character"),200);
+	var buttonCreate = getSizeButton(Language.get("create_character"),200, 45);
 	buttonCreate.y = menuY;
 	menuLayer.addChild(buttonCreate);
 	if(!purchaseHasBuy(productIdConfig.createCharacter)){
@@ -97,13 +97,19 @@ LogoView.prototype.showMenu=function(){
 	}
 	buttonCreate.addEventListener(LMouseEvent.MOUSE_UP, self.createCharacterChick);
 	
+	menuY += menuHeight;
+	var buttonTutorial = getSizeButton(Language.get("game_tutorial"),200, 45);
+	buttonTutorial.y = menuY;
+	menuLayer.addChild(buttonTutorial);
+	buttonTutorial.addEventListener(LMouseEvent.MOUSE_UP, self.tutorialChick);
+	
 	menuY += menuHeight * 2;
-	var buttonChinese = getButton(Language.get("chinese"),100,LPlugin.language() == LPlugin.languageDefault?"win07":"win01");
+	var buttonChinese = getSizeButton(Language.get("chinese"),100, 45,LPlugin.language() == LPlugin.languageDefault?"win07":"win01");
 	buttonChinese.language = "chinese";
 	buttonChinese.x = -menuLayer.x;
 	buttonChinese.y = menuY-buttonChinese.getHeight();
 	menuLayer.addChild(buttonChinese);
-	var buttonJapanese = getButton(Language.get("japanese"),100,LPlugin.language() == LPlugin.languageDefault?"win01":"win07");
+	var buttonJapanese = getSizeButton(Language.get("japanese"),100, 45,LPlugin.language() == LPlugin.languageDefault?"win01":"win07");
 	buttonJapanese.language = "japanese";
 	buttonJapanese.x = -menuLayer.x + 100;
 	buttonJapanese.y = menuY-buttonJapanese.getHeight();
@@ -122,6 +128,11 @@ LogoView.prototype.showMenu=function(){
 	menuLayer.y = LGlobal.height - menuY;
 	
 	self.topMenuLayer = menuLayer;
+};
+LogoView.prototype.tutorialChick=function(event){
+	var button = event.currentTarget;
+	var self = button.getParentByConstructor(LogoView);
+	self.controller.loadTutorial();
 };
 LogoView.prototype.createCharacterChick=function(event){
 	var button = event.currentTarget;
@@ -163,7 +174,7 @@ LogoView.prototype.loadChapterList=function(event){
 LogoView.prototype.showChapterListChild=function(chapter, menuLayer, x, y){
 	var self = this;
 	var title = chapter.year + " " + Language.get("chapter_"+chapter.id);
-	var buttonChapter = getButton(title,200);
+	var buttonChapter = getSizeButton(title,200, 45);
 	buttonChapter.chapterId = chapter.id;
 	if(chapter.lock){
 		if(!purchaseHasBuy(productIdConfig["chapter_" + chapter.id])){
@@ -177,7 +188,7 @@ LogoView.prototype.showChapterListChild=function(chapter, menuLayer, x, y){
 };
 LogoView.prototype.showChapterList=function(list){
 	var self = this;
-	var menuHeight = 55;
+	var menuHeight = 48;
 	var menuY = 0;
 	var menuLayer = new LSprite();
 	menuLayer.tx = (LGlobal.width - 200) * 0.5;
@@ -194,7 +205,7 @@ LogoView.prototype.showChapterList=function(list){
 		self.showChapterListChild(chapter, menuLayer, 110, menuY);
 		menuY += menuHeight;
 	}
-	var buttonReturn = getButton(Language.get("return"),200);
+	var buttonReturn = getSizeButton(Language.get("return"),200,45);
 	buttonReturn.y = menuY;
 	menuLayer.addChild(buttonReturn);
 	buttonReturn.addEventListener(LMouseEvent.MOUSE_UP, self.returnTopMenu.bind(self));

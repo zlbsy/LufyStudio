@@ -23,15 +23,7 @@ CharacterListView.prototype.init=function(){
 		var chara = self.controller.fromController.currentCharacter;
 		self.showCharacterDetailed(chara);
 	}
-	return;
-	switch(self.controller.characterListType){
-		case CharacterListType.BATTLE_SINGLE:
-			var chara = self.controller.fromController.currentCharacter;
-			self.showCharacterDetailed(chara);
-			break;
-		default:
-			self.listInit();
-	}
+	self.name = "characterListView";
 };
 CharacterListView.prototype.listInit=function(){
 	var self = this;
@@ -87,6 +79,7 @@ CharacterListView.prototype.listInit=function(){
 	if(buttonLabel){
 		var button = getButton(Language.get(buttonLabel),160);
 		self.executeButton = button;
+		button.name = "executeButton";
 		button.x = (LGlobal.width - 160) * 0.5;
 		button.y = LGlobal.height - button.getHeight() - 15;
 		self.listLayer.addChild(button);
@@ -174,7 +167,7 @@ CharacterListView.prototype.onChangeChildSelect=function(event){
 	self.lblMoney.x = (LGlobal.width - self.lblMoney.getWidth()) * 0.5;
 };
 CharacterListView.prototype.onClickExecuteButton=function(event){
-	var self = event.currentTarget.parent.parent;
+	var self = event ? event.currentTarget.parent.parent : this;
 	if(self.selectedCount <= 0){
 		var obj = {title:Language.get("confirm"),message:Language.get("dialog_select_generals"),height:200,okEvent:null};
 		var windowLayer = ConfirmWindow(obj);
@@ -386,6 +379,7 @@ CharacterListView.prototype.showList=function(){
 	self.listView.cellHeight = 50;
 	self.contentLayer.addChild(self.listView);
 	self.charactersPush(0);
+	self.listView.name = "character_list";
 };
 CharacterListView.prototype.charactersPush = function(pageIndex) {
 	var self = this;
@@ -408,6 +402,18 @@ CharacterListView.prototype.charactersPush = function(pageIndex) {
 	leftButton.visible = (pageIndex > 0);
 	var rightButton = self.listLayer.getChildByName("rightButton");
 	rightButton.visible = (pageIndex < maxPageIndex);
+};
+CharacterListView.prototype.chickChild=function(index, offsetX){
+	var self = this;
+	var items = self.listView.getItems();
+	var item = items[parseInt(index)];
+	item.onClick({target:item, currentTarget:self.listView, offsetX:parseInt(offsetX)});
+};
+CharacterListView.prototype.updateArmProperties=function(index){
+	var self = this;
+	var items = self.listView.getItems();
+	var item = items[parseInt(index)];
+	item.updateArmProperties();
 };
 CharacterListView.prototype.showCharacterDetailed=function(param){
 	var self = this;

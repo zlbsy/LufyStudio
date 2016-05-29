@@ -187,8 +187,12 @@ ChapterView.prototype.loadCreateSetting=function(event){
 ChapterView.prototype.returnToChapterMenu=function(event){
 	var self = this;
 	LMvc.logoStage.visible = true;
-	LMvc.logoStage.chapterMenuLayer.mouseChildren = true;
-	LTweenLite.to(LMvc.stageLayer,0.5,{x:0, onComplete:self.deleteView.bind(self)});
+	if(LMvc.logoStage.chapterMenuLayer){
+		LMvc.logoStage.chapterMenuLayer.mouseChildren = true;
+		LTweenLite.to(LMvc.stageLayer,0.5,{x:0, onComplete:self.deleteView.bind(self)});
+	}else{
+		self.remove();
+	}
 };
 ChapterView.prototype.deleteView=function(event){
 	var self = this;

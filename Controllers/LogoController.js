@@ -203,7 +203,14 @@ LogoController.prototype.loadChapterList = function(){
 };
 LogoController.prototype.configLoadComplete = function(){
 	var self = this;
-	self.view.showChapterList(chapterListSetting);
+	var list = [];
+	for(var i=0;i<chapterListSetting.length;i++){
+		var chapter = chapterListSetting[i];
+		if(chapter.id > 0){
+			list.push(chapter);
+		}
+	}
+	self.view.showChapterList(list);
 	AreaModel.setArea(MapSetting);
 	LMvc.keepLoading(false);
 };
@@ -278,4 +285,16 @@ LogoController.prototype.createCharacterLoadComplete = function(){
 	var self = this;
 	var createCharacter = new CreateCharacterController();
 	self.view.parent.addChild(createCharacter.view);
+};
+LogoController.prototype.loadTutorial = function(){
+	var self = this;
+	LMvc.keepLoading(true);
+	LMvc.changeLoading(TranslucentLoading);
+	self.loadMvc("Tutorial",self.loadTutorialComplete);
+};
+LogoController.prototype.loadTutorialComplete = function(){
+	var self = this;
+	var tutorial = new TutorialController();
+	//self.showChapter(0);return;
+	//self.view.parent.addChild(tutorial.view);
 };

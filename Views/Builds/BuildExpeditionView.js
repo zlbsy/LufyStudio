@@ -3,7 +3,7 @@
  */
 function BuildExpeditionView(controller){
 	var self = this;
-	base(self,BuildBaseView,[controller,"barrack"]);
+	base(self,BuildBaseView,[controller,"expedition"]);
 }
 BuildExpeditionView.prototype.showMenu=function(){
 	return null;
@@ -174,8 +174,14 @@ BuildExpeditionView.prototype.toSelectLeader=function(){
 		{isOnlyOne:true, toast:"dialog_expedition_select_leader", buttonLabel:"execute", showMoney:false});
 };
 BuildExpeditionView.prototype.expeditionReadyComplete=function(event){
-	var windowLayer = event.currentTarget.parent;
-	var self = windowLayer.parent;
+	var self, windowLayer;
+	if(event){
+		windowLayer = event.currentTarget.parent;
+		self = windowLayer.parent;
+	}else{
+		self = this;
+		windowLayer = self.getChildByName("ConfirmWindow");
+	}
 	var readyView = windowLayer.childList.find(function(child){
 		return child.constructor.name == "ExpeditionReadyView";
 	});

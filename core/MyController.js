@@ -16,11 +16,15 @@ MyController.prototype.nextFrameExecute=function(func){
 	MyController.waitExecuteFuncs.push(func);
 };
 MyController.waitExecuteFuncsExecute=function(){
+	var funcs = [];
 	for (var i = 0, l=MyController.waitExecuteFuncs.length; i < l; i++) {
 		var func = MyController.waitExecuteFuncs[i];
 		if(typeof func == "function"){
-			func();
+			funcs.push(func);
 		}
 	}
 	MyController.waitExecuteFuncs.length = 0;
+	for (var i = 0, l=funcs.length; i < l; i++) {
+		funcs[i]();
+	}
 };

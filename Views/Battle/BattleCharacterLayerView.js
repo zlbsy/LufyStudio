@@ -183,13 +183,21 @@ BattleCharacterLayerView.prototype.getCharacterFromeList=function(childList,id){
 	}
 	return null;
 };
-BattleCharacterLayerView.prototype.addCharacterPosition=function(direction,x,y){
+BattleCharacterLayerView.prototype.clickOnPosition=function(index){
+	var self = this;
+	var positionLayer = self.charasPositionsLayer.getChildByName("position_" + index);
+	var locationX = positionLayer.x / BattleCharacterSize.width >>> 0;
+	var locationY = positionLayer.y / BattleCharacterSize.height >>> 0;
+	self.addOurCharacterOnClick(locationX,locationY);
+};
+BattleCharacterLayerView.prototype.addCharacterPosition=function(direction,x,y,index){
 	var self = this;
 	var positionLayer = new LSprite();
 	var bitmap = new LBitmap(new LBitmapData(LMvc.datalist["light"]));
 	bitmap.x = (BattleCharacterSize.width - bitmap.getWidth()) * 0.5;
 	bitmap.y = (BattleCharacterSize.height - bitmap.getHeight()) * 0.5;
 	positionLayer.addChild(bitmap);
+	positionLayer.name = "position_" + index;
 	self.charasPositionsLayer.addChild(positionLayer);
 	//self.charasPositions.push(positionLayer);
 	positionLayer.direction = direction;
@@ -410,5 +418,15 @@ BattleCharacterLayerView.prototype.abnormalState = function(){
 		}
 	}
 	self.terrainHeal();
+};
+BattleCharacterLayerView.prototype.clickOnCharacter=function(id){
+	var self = this;
+	var chara = self.getCharacter(null,id,true);
+	self.controller.characterClick(chara.x, chara.y);
+};
+BattleCharacterLayerView.prototype.physicalAttackCharacter = function(id){
+	var self = this;
+	var chara = self.getCharacter(null,id,true);
+	self.controller.physicalAttackCharacter(chara.x, chara.y);
 };
 

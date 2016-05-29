@@ -11,6 +11,7 @@ Language.dataSimple = {
 	"game_setting":"环境设定",
 	"game_single_combat":"单挑挑战",
 	"create_character":"武将作成",
+	"game_tutorial":"新手教学",
 	"create_character_debut":"新武将登场",
 	"create_character_setting":"新势力设置",
 	"chinese":"中文",

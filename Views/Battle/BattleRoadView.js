@@ -129,3 +129,7 @@ BattleRoadView.prototype.onframe = function(event){
 	self.bitmap.y = -self.parent.y;
 	self.bitmap.bitmapData.setProperties(self.bitmap.x,self.bitmap.y,LGlobal.width,LGlobal.height);
 };
+BattleRoadView.prototype.charaToMove = function(lx,ly){
+	var self = this;
+	self.controller.charaToMove(lx,ly);
+};

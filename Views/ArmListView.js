@@ -15,6 +15,7 @@ ArmListView.prototype.init=function(){
 	self.characterListLayer = new LSprite();
 	self.addChild(self.characterListLayer);
 	self.toSelectCharacter();
+	self.name = "ArmListView";
 };
 ArmListView.prototype.onClickCloseButton=function(event){
 	var doEnlist = this.doEnlist;
@@ -64,7 +65,8 @@ ArmListView.prototype.cancelDetailed=function(event){
 	self.toSelectCharacter();
 };
 ArmListView.prototype.enlist=function(event){
-	var self = event.currentTarget.parent.parent.parent;
+	var self = event ? event.currentTarget.parent.parent.parent : this;
+	console.log("ArmListView.prototype.enlist",self);
 	var selectCharacters = self.controller.getValue("selectCharacters");
 	var armDetailed = self.armDetailedLayer.getChildAt(0).childList.find(function(child){
 		return child.constructor.name == "ArmDetailedView";

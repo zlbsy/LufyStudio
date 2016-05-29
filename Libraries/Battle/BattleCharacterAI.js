@@ -574,6 +574,9 @@ BattleCharacterAI.prototype.endBoutCheck = function() {
 BattleCharacterAI.prototype.boutEnd = function(event) {
 	if(event){
 		event.currentTarget.parent.remove();
+	}else if(BattleController.ctrlChara.belong == Belong.SELF){
+		var windowLayer = LMvc.layer.getChildByName("ConfirmWindow");
+		windowLayer.remove();
 	}
 	LMvc.BattleController.boutEnd();
 };
