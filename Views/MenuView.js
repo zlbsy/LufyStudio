@@ -119,7 +119,8 @@ MenuView.prototype.onClickReturnTop=function(event){
 	var self = event ? event.currentTarget.parent.parent.parent : this;
 	self.hide();
 	LMvc.MapController.view.remove();
-	
+	CharacterModel.list = [];
+	AreaModel.list = [];
 	LMvc.logoStage.visible = true;
 	if(LMvc.logoStage.chapterMenuLayer){
 		LMvc.logoStage.chapterMenuLayer.mouseChildren = true;

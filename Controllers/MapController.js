@@ -57,6 +57,9 @@ MapController.prototype.init=function(status){
 	LMvc.MapController = self;
 	self.dispatchEvent(LEvent.COMPLETE);
 	LMvc.keepLoading(false);
+	if(LMvc.logoStage.visible){
+		LMvc.logoStage.visible = false;
+	}
 	LMvc.chapterController.view.visible = false;
 	LMvc.stageLayer.x = 0;
 	if(LMvc.isRead){

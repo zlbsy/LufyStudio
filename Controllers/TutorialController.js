@@ -14,6 +14,9 @@ TutorialController.prototype.end=function(){
 	var self = this;
 	self.view.remove();
 	LMvc.TutorialController = null;
+	CharacterModel.list = [];
+	AreaModel.list = [];
+	LMvc.logoStage.visible = true;
 };
 TutorialController.prototype.init=function(){
 	var self = this;
