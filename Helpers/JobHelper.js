@@ -324,7 +324,7 @@ function exploreBusinessRun(characterModel){
 	if(items[index].quantity == 0){
 		items.splice(index, 1);
 	}
-	cityModel.itemsFarmland(items);
+	cityModel.itemsMarket(items);
 	
 	var item = new ItemModel(null,{item_id:itemId,count:1});
 	if(characterModel.seigniorId() == LMvc.selectSeignorId && !cityModel.isAppoint()){

@@ -62,13 +62,13 @@ CreateCharacterBasicView.prototype.statusInit=function(data){
 		data = {born:132, life:20, personalLoyalty:1, disposition:0, ambition:1, compatibility:0};
 	}
 	var items = [], list;
-	for(var i=0, list = [], bornStart = 132; i<100; i++,bornStart++){
+	for(var i=0, list = [], bornStart = 130; i<100; i+=5,bornStart+=5){
 		list.push({label:bornStart, value:bornStart});
 	}
 	var childLayer = new CreateCharacterBasicItemView(self.listView, "born", list);
 	childLayer.comboBox.setValue(data.born);
 	items.push(childLayer);
-	for(var i=0, list = [], lifeStart = 20; i<100; i++,lifeStart++){
+	for(var i=0, list = [], lifeStart = 20; i<100; i+=5,lifeStart+=5){
 		list.push({label:lifeStart, value:lifeStart});
 	}
 	var childLayer = new CreateCharacterBasicItemView(self.listView, "life", list);
@@ -89,7 +89,7 @@ CreateCharacterBasicView.prototype.statusInit=function(data){
 	var childLayer = new CreateCharacterBasicItemView(self.listView, "ambition", list);
 	childLayer.comboBox.setValue(data.ambition);
 	items.push(childLayer);
-	for(var i=0, list = [], compatibilityStart = 0; i<150; i++,compatibilityStart++){
+	for(var i=0, list = [], compatibilityStart = 0; i<150; i+=10,compatibilityStart+=10){
 		list.push({label:compatibilityStart, value:compatibilityStart});
 	}
 	var childLayer = new CreateCharacterBasicItemView(self.listView, "compatibility", list);

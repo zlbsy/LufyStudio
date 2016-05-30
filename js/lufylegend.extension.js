@@ -25,6 +25,14 @@ LListView.prototype.deleteChildView = function(child) {
 	}
 	self.resizeScrollBar();
 };
+LListView.prototype.die = function(){
+	var self = this;
+	for(var i=0,l=self._ll_items.length;i<l;i++){
+		self._ll_items[i].die();
+	}
+	self._ll_items = [];
+	self.callParent("die",arguments);
+};
 LView.prototype.die = function() {
 	var self = this;
 	if (self.controller) {
