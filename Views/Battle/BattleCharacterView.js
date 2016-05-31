@@ -318,7 +318,7 @@ BattleCharacterView.prototype.toDie = function() {
 	self.data.wounded(0);
 	if(self.data.isDefCharacter()){
 		//防御设施被摧毁,城防降低
-		self.data.city.cityDefense(-DefenseCharacterCost * 0.5);
+		self.data.city().cityDefense(-DefenseCharacterCost * 0.5);
 	}
 	if(!self.data.isDefCharacter() && !self.data.isTribeCharacter()){
 		var talkMsg;

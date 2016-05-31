@@ -71,7 +71,6 @@ function getJobResult(realValue,coefficient){
 	return value;
 }
 function trainingRun(characterModel, soldierId){
-	//TODO::ver1.1训练加成城池技术
 	var soldier = characterModel.soldiers().find(function(child){
 		return child.id() == soldierId;
 	});
@@ -80,7 +79,11 @@ function trainingRun(characterModel, soldierId){
 	if(proficiency + proficiencyPlus > TrainingSetting.MAX){
 		proficiencyPlus = TrainingSetting.MAX - proficiency;
 	}
-	soldier.proficiency(proficiency + proficiencyPlus);
+	//训练加成城池技术
+	var technology = characterModel.city().technology();
+	var maxTechnology = AreaModel.technologyList[AreaModel.technologyList.length - 1];
+	var toValue = proficiency + proficiencyPlus * (1 + technology / maxTechnology);
+	soldier.proficiency(toValue >>> 0);
 	var feat = JobFeatCoefficient.NORMAL * proficiencyPlus / JobFeatCoefficient.TRAINING;
 	characterModel.featPlus(feat);
 	characterModel.job(Job.IDLE);

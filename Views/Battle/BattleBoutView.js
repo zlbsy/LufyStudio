@@ -46,6 +46,7 @@ BattleBoutView.prototype.removeSelf=function(event){
 	var belong = self.belong;
 	LMvc.running = false;
 	self.remove();
+	battleCharacterStatusUpdate(belong);
 	self.controller.view.weatherLayer.change();
 	var currentCharacters = view.charaLayer.getCharactersFromBelong(belong);
 	charactersHealMP(currentCharacters);

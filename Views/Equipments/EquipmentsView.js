@@ -40,6 +40,13 @@ EquipmentsView.prototype.setEquipmentList = function() {
 	var self = this;
 	var cityData = LMvc.CityController.getValue("cityData");
 	var equipmentList = cityData.equipments();
+	equipmentList = equipmentList.sort(function(a, b){
+		var v = b.rarity() - a.rarity();
+		if(v != 0){
+			return v;
+		}
+		return b.id() - a.id();
+	});
 	if(self.listView){
 		if(self.isSameList(equipmentList)){
 			self.updateItems(equipmentList);
