@@ -14,7 +14,7 @@ ChapterController.prototype.libraryLoad=function(){
 };
 ChapterController.prototype.viewLoad=function(){
 	var self = this;
-	self.load.view(["Chapter/ChapterSeignior"],self.getChapterData);
+	self.load.view(["Chapter/ChapterSeignior","Chapter/TroubleSelect"],self.getChapterData);
 };
 ChapterController.prototype.getChapterData=function(){
 	var self = this;

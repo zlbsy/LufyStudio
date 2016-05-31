@@ -71,23 +71,3 @@ BattleResultEvent.CLOSE_FAIL_CAPTIVE = "close_fail_captive";
 BattleResultEvent.CLOSE_FAIL_CAPTIVE_ENEMY = "close_fail_captive_enemy";
 BattleResultEvent.CLOSE_FAIL_CAPTIVE_SELF = "close_fail_captive_self";
 BattleResultEvent.LOSS_OF_OCCUPY = "lose_of_occupy";
-
-if (!Array.getRandomArrays){
-	Array.getRandomArrays = function(list,num){
-		var result = [], length = list.length < num ? list.length : num;
-		while (result.length < length){
-			var i = Math.random() * list.length >>> 0;
-			var index = result.findIndex(function(child){
-				return child == i;
-			});
-			if(index >= 0){
-				continue;
-			}
-			result.push(i);
-		}
-		for(var i=0;i<result.length;i++){
-			result[i] = list[result[i]];
-		}
-		return result;
-	};
-}

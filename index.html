@@ -19,62 +19,6 @@ and open the template in the editor.
     <body style="margin:0px 0px 0px 0px;padding:0px 0px 0px 0px;font-size: 0;">
         <div id="mvclegend">loading</div>
         <script>
-
-		// in order to work 'Math.seed' must NOT be undefined,
-		// so in any case, you HAVE to provide a Math.seed
-		Math.seededRandom = function(max, min) {
-		    max = max || 1;
-		    min = min || 0;
-		
-		    Math.seed = (Math.seed * 9301 + 49297) % 233280;
-		    var rnd = Math.seed / 233280;
-		
-		    return min + rnd * (max - min);
-		}
-        Math.seed = 1;
-		var max = 0;
-		var min = 100;
-		for(var i=0;i<100;i++){
-			var v = Math.seededRandom(i);
-			max = max < v ? v : max;
-			min = min > v ? v : min;
-			//console.log(v);
-		}
-		//console.log("--");
-		//console.log(max,min);
-        Math.seed = 1;
-		var max = 0;
-		var min = 100;
-		for(var i=0;i<1000;i++){
-			var v = Math.seededRandom(i);
-			max = max < v ? v : max;
-			min = min > v ? v : min;
-			//console.log(v);
-		}
-		//console.log("--");
-		//console.log(max,min);
-        Math.seed = 1;
-		var max = 0;
-		var min = 100;
-		for(var i=0;i<10000;i++){
-			var v = Math.seededRandom(i);
-			max = max < v ? v : max;
-			min = min > v ? v : min;
-			//console.log(v);
-		}
-		//console.log("--");
-		//console.log(max,min);
-		var y = 2
-		
-		function xorshift64(){
-		  y = y ^ (y >> 13)
-		  y = y ^ (y << 7)
-		  y = y ^ (y >> 17)
-		  return y
-		 }
-		for(var i=0;i<10;i++){
-			console.log(xorshift64() / 114514114514);
-		}
 		/*临时代码*/
         if(LGlobal.mobile){
         	var protocol = location.protocol;

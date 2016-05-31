@@ -73,4 +73,31 @@ LButton.prototype.setCursorEnabled = function(event) {
 		self.se = "Se_ok";
 		self.addEventListener(LMouseEvent.MOUSE_DOWN, playButtonSe);
 	}
-}; 
+};
+if (!Array.getRandomArrays){
+	Array.getRandomArrays = function(list,num){
+		var result = [], length = list.length < num ? list.length : num;
+		while (result.length < length){
+			var i = Math.random() * list.length >>> 0;
+			var index = result.findIndex(function(child){
+				return child == i;
+			});
+			if(index >= 0){
+				continue;
+			}
+			result.push(i);
+		}
+		for(var i=0;i<result.length;i++){
+			result[i] = list[result[i]];
+		}
+		return result;
+	};
+}
+Math.fakeSeed = 1;
+Math.fakeRandom = function(max, min) {
+	max = max || 1;
+	min = min || 0;
+	Math.fakeSeed = (Math.fakeSeed * 9301 + 49297) % 233280;
+	var rnd = Math.fakeSeed / 233280;
+	return min + rnd * (max - min);
+}

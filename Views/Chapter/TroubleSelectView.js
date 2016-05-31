@@ -1,0 +1,37 @@
+function TroubleSelectView(controller){
+	var self = this;
+	base(self, LListChildView, []);
+	self.name = "TroubleSelectView";
+	self.set();
+}
+TroubleSelectView.prototype.set=function(){
+	var self = this;
+	var bitmap = new LBitmap(new LBitmapData(LMvc.datalist["checkbox-background"]));
+	var bitmapSelect = new LBitmap(new LBitmapData(LMvc.datalist["checkbox-on"]));
+	var radio = new LRadio();
+	radio.setChildRadio(0,0,0,bitmap,bitmapSelect);
+	radio.setChildRadio(1,0,50,bitmap,bitmapSelect);
+	radio.setChildRadio(2,0,100,bitmap,bitmapSelect);
+	radio.setValue(0);
+	self.addChild(radio);
+	self.radioTrouble = radio;
+	for(var i=0;i<radio.numChildren;i++){
+		var child = radio.getChildAt(i);
+		child.addShape(LShape.RECT,[0,0,240,50]);
+	}
+	
+	var label = getStrokeLabel(Language.get("简单"),20,"#FFFFFF","#000000",3);
+	label.x = 50;
+	label.y = 5;
+	self.addChild(label);
+	
+	label = getStrokeLabel(Language.get("一般"),20,"#FFFFFF","#000000",3);
+	label.x = 50;
+	label.y = 55;
+	self.addChild(label);
+	
+	label = getStrokeLabel(Language.get("困难"),20,"#FFFFFF","#000000",3);
+	label.x = 50;
+	label.y = 105;
+	self.addChild(label);
+};
