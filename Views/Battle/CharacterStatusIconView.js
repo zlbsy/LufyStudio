@@ -95,8 +95,7 @@ CharacterStatusIconView.prototype.removeStatus = function(status){
 		return;
 	}
 	for(var i = status.length-1;i>=0;i--){
-		var child = self.status[i];
-		console.log(child);
+		var child = status[i];
 		if(Math.random() < child.p){
 			status.splice(i, 1);
 		}else{

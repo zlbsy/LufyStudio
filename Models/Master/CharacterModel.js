@@ -494,7 +494,11 @@ CharacterModel.prototype.seigniorLevel = function(){
 		}
 		return SeigniorModel.getSeignior(LMvc.selectSeignorId).level();
 	}
-	return self.seignior().level();
+	var seigniorModel = self.seignior();
+	if(seigniorModel){
+		return seigniorModel.level();
+	}
+	return SeigniorModel.getSeignior(LMvc.selectSeignorId).level();
 };
 CharacterModel.prototype.isPrized = function(value) {
 	return this._dataValue("isPrized", value, 0);

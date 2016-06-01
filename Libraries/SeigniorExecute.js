@@ -149,6 +149,7 @@ SeigniorExecute.run=function(){
 	self.msgView.clearSeignior();
 	LMvc.MapController.view.positionChangeToCity(CharacterModel.getChara(LMvc.selectSeignorId).city());
 	if(!LMvc.TutorialController){
+		SeigniorLevelUpdate();
 		RecordController.instance().autoSaveRecord();
 	}
 };
@@ -219,6 +220,9 @@ SeigniorExecute.prototype.areaJobRun=function(area){
 		chara = generals[i];
 		chara.isPrized(false);
 		job = chara.job();
+		if(chara.seigniorId() == 1){
+			console.log(chara.name(), job);
+		}
 		switch(job){
 			case Job.MOVE:
 				list.push(chara);
@@ -530,7 +534,7 @@ SeigniorExecute.prototype.areaAIRun=function(areaModel){
 		return;
 	}
 	//如果有剩余无分配工作的人员,则执行探索
-	while(self.characters > 0){
+	while(self.characters.length > 0){
 		if(Math.random() > 0.5){
 			//农地探索
 			self.jobAiFunction(areaModel,self.characters,jobAiFarmlandExplore,["intelligence","force","luck"]);

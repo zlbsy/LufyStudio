@@ -169,11 +169,21 @@ CharacterDetailedTabStatusView.prototype.clickRelease=function(event){
 	var cityData = self.controller.getValue("cityData");
 	cityData.removeCaptives(characterModel.id());
 	var targetSeignior = characterModel.seignior();
-	var areas = targetSeignior.areas();
-	var city = areas[areas.length * Math.random() >>> 0];
-	characterModel.moveTo(city.id());
-	characterModel.moveTo();
-	detailedView.deleteChildFromList(characterModel.id());
+	
+	if(targetSeignior){
+		var areas = targetSeignior.areas();
+		var city = areas[areas.length * Math.random() >>> 0];
+		characterModel.moveTo(city.id());
+		characterModel.moveTo();
+		detailedView.deleteChildFromList(characterModel.id());
+	}else{
+		characterModel.seignior(0);
+	}
+	//var areas = targetSeignior ? targetSeignior.areas() : [cityData];
+	//var city = areas[areas.length * Math.random() >>> 0];
+	//characterModel.moveTo(city.id());
+	//characterModel.moveTo();
+	//detailedView.deleteChildFromList(characterModel.id());
 	//武将{0}被释放了!
 	var obj = {title:Language.get("confirm"),message:String.format(Language.get("dialog_release_message"), characterModel.name()),height:200,okEvent:null};
 	var windowLayer = ConfirmWindow(obj);

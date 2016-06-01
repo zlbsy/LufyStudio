@@ -129,7 +129,21 @@ SeigniorModel.prototype.exp = function(value){
 	return this._dataValue("exp", value, 0);
 };
 SeigniorModel.prototype.level = function(){
-	return (this.exp() / CharacterExpConfig.seignior >>> 0) + 1;
+	var self = this;
+	if(self.chara_id() == LMvc.selectSeignorId){
+		return LMvc.chapterData.level;
+	}
+	var plusLevel = 0;
+	switch(LMvc.chapterData.trouble){
+		case TroubleConfig.HARD:
+			plusLevel = 4;
+			break;
+		case TroubleConfig.NORMAL:
+			plusLevel = 2;
+			break;
+		default:
+	}
+	return LMvc.chapterData.level + plusLevel;
 };
 SeigniorModel.cloths = [];
 SeigniorModel.getColorCloth = function(color){

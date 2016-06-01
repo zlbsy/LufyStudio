@@ -717,8 +717,8 @@ function experienceToFeat(characterModels){
 		datas.push({name:character.name(), exp:character.exp(), character:character});
 		sumExp += character.exp();
 	}
-	var seignior = characterModels[0].seignior();
-	seignior.exp(seignior.exp() + sumExp);
+	//var seignior = characterModels[0].seignior();
+	//seignior.exp(seignior.exp() + sumExp);
 	average = sumExp / datas.length;
 	var feat = average * 0.1;
 	var minFeat = feat > 20 ? 10 : 5;

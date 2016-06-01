@@ -9,9 +9,9 @@ TroubleSelectView.prototype.set=function(){
 	var bitmap = new LBitmap(new LBitmapData(LMvc.datalist["checkbox-background"]));
 	var bitmapSelect = new LBitmap(new LBitmapData(LMvc.datalist["checkbox-on"]));
 	var radio = new LRadio();
-	radio.setChildRadio(0,0,0,bitmap,bitmapSelect);
-	radio.setChildRadio(1,0,50,bitmap,bitmapSelect);
-	radio.setChildRadio(2,0,100,bitmap,bitmapSelect);
+	radio.setChildRadio(TroubleConfig.EASE,0,0,bitmap,bitmapSelect);
+	radio.setChildRadio(TroubleConfig.NORMAL,0,50,bitmap,bitmapSelect);
+	radio.setChildRadio(TroubleConfig.HARD,0,100,bitmap,bitmapSelect);
 	radio.setValue(0);
 	self.addChild(radio);
 	self.radioTrouble = radio;

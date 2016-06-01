@@ -17,7 +17,7 @@ LogoController.prototype.baseControllersLoad=function(){
 };
 LogoController.prototype.configLoad=function(){
 	var self = this;
-	self.load.config(["Position","Belong","Purchase"],self.helperLoad);
+	self.load.config(["Position","Belong","Purchase","Trouble"],self.helperLoad);
 };
 LogoController.prototype.helperLoad=function(){
 	var self = this;

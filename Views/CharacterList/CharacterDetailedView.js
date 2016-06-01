@@ -254,6 +254,17 @@ CharacterDetailedView.prototype.deleteChildFromList=function(characterId){
 	listView.deleteChildView(item);
 	self.closeCharacterDetailed();
 };
+CharacterDetailedView.prototype.updateChildFromList=function(characterId){
+	var self = this;
+	var listView = self.controller.view.listView;
+	var items = listView.getItems();
+	var item = items.find(function(child){
+		return characterId == child.charaModel.id();
+	});
+	var characterModel = CharacterModel.getChara(characterId);
+	item.set(characterModel);
+	self.closeCharacterDetailed();
+};
 CharacterDetailedView.prototype.ctrlLayerInit=function(){
 	var self = this;
 	

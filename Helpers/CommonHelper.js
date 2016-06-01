@@ -72,10 +72,6 @@ function calculateHitrateSurrender(seignorId, charaModel){
 	var compatibilityLoyalty = 30 * (JobCoefficient.COMPATIBILITY - compatibility) / JobCoefficient.COMPATIBILITY;
 	var surrebderLoyalty = 40 * (maxPersonalLoyalty - personalLoyalty)/maxPersonalLoyalty;
 	var loyalty = charaModel.loyalty();
-	console.log("compatibilityLoyalty="+ compatibilityLoyalty);
-	console.log("surrebderLoyalty="+ surrebderLoyalty);
-	console.log("plusLoyalty="+ plusLoyalty);
-	console.log("loyalty="+ loyalty);
 	if(compatibilityLoyalty + surrebderLoyalty + plusLoyalty >= loyalty){
 		return true;
 	}
@@ -323,4 +319,19 @@ function updateCanPersuadeCharacters(characterModel){
 		characters = characters.sort(function(a,b){return b.l - a.l;});
 	}
 	LMvc.chapterData.persuadeCharacters = characters;
+}
+/***
+ * 势力等级更新，我军平均等级
+ */
+function SeigniorLevelUpdate(){
+	var seignior = SeigniorModel.getSeignior(LMvc.selectSeignorId);
+	var generals = seignior.generals();
+	var levelSum = 0;
+	for(var i=0,l=generals.length;i<l;i++){
+		levelSum += generals[i].level();
+	}
+	var levelAverage = (levelSum / generals.length) >>> 0;
+	if(LMvc.chapterData.level < levelAverage){
+		LMvc.chapterData.level = levelAverage;
+	}
 }
