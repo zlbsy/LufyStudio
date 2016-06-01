@@ -73,7 +73,7 @@ MapController.prototype.init=function(status){
 	self.addEventListener(CharacterListEvent.SHOW, self.view.hideMapLayer);
 	self.addEventListener(CharacterListEvent.CLOSE, self.view.showMapLayer);
 	
-	if(!LMvc.chapterData.eventEnd){
+	if(!LMvc.TutorialController && !LMvc.chapterData.eventEnd){
 		LMvc.keepLoading(true);
 		self.loadMvc("EventMap",self.eventMapComplete);
 		LMvc.chapterData.eventEnd = true;

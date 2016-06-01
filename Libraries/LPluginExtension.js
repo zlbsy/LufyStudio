@@ -63,7 +63,11 @@ LPlugin.SetData = function(key,data){
 	if(LPlugin.writeToFileInDomain){
 		LPlugin.writeToFileInDomain(key, JSON.stringify(data));
 	}else{
-		window.localStorage.setItem(key, JSON.stringify(data));
+		try{
+			window.localStorage.setItem(key, JSON.stringify(data));
+		}catch(e){
+			console.error("not supported window.localStorage");
+		}
 	}
 };
 LPlugin.GetData = function(key, defaultData){
@@ -71,7 +75,11 @@ LPlugin.GetData = function(key, defaultData){
 	if(LPlugin.readFileInDomain){
 		data = LPlugin.readFileInDomain(key);
 	}else{
-		data = window.localStorage.getItem(key);
+		try{
+			data = window.localStorage.getItem(key);
+		}catch(e){
+			console.error("not supported window.localStorage");
+		}
 	}
 	if(!data){
 		return (typeof defaultData != UNDEFINED) ? defaultData : {};
