@@ -78,7 +78,7 @@ if (!Array.getRandomArrays){
 	Array.getRandomArrays = function(list,num){
 		var result = [], length = list.length < num ? list.length : num;
 		while (result.length < length){
-			var i = Math.random() * list.length >>> 0;
+			var i = Math.fakeRandom() * list.length >>> 0;
 			var index = result.findIndex(function(child){
 				return child == i;
 			});
@@ -94,10 +94,14 @@ if (!Array.getRandomArrays){
 	};
 }
 Math.fakeSeed = 1;
+Math.fakeReset = function() {
+	Math.fakeSeed = 233280 * Math.random() >>> 0;
+};
 Math.fakeRandom = function(max, min) {
 	max = max || 1;
 	min = min || 0;
 	Math.fakeSeed = (Math.fakeSeed * 9301 + 49297) % 233280;
 	var rnd = Math.fakeSeed / 233280;
 	return min + rnd * (max - min);
-}
+};
+Math.fakeReset();

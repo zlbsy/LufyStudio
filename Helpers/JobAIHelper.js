@@ -259,7 +259,7 @@ function jobAiPersuade(areaModel,characters){//劝降
 	//console.log("+++++++++++++++++++++++劝降"+persuadeCharacters[0].l);
 	var minLoyalty = persuadeCharacters[length - 1].l;
 	var p = Math.ceil((90 - minLoyalty) / 5) * 0.1;
-	var r = Math.random();
+	var r = Math.fakeRandom();
 	if(r > p){
 		return;
 	}
@@ -267,7 +267,7 @@ function jobAiPersuade(areaModel,characters){//劝降
 	for(var i = 0;i<length;i++){
 		sum += (i + 1);
 	}
-	var v = sum * Math.random();
+	var v = sum * Math.fakeRandom();
 	sum = 0, targetId = persuadeCharacters[length - 1].i;
 	for(var i = 0;i<length;i++){
 		sum += (i + 1);
@@ -289,7 +289,7 @@ function jobAiTavern(areaModel,characters){//录用
 		return;
 	}
 	var character = characters.shift();
-	var hireCharacterIndex = Math.random()*outOfOfficeCharas.length >>> 0;
+	var hireCharacterIndex = Math.fakeRandom()*outOfOfficeCharas.length >>> 0;
 	character.hire(outOfOfficeCharas[hireCharacterIndex].id());
 }
 function jobAiAccess(areaModel,characters){//访问
@@ -415,7 +415,7 @@ function jobAiGeneralMove(areaModel,characters){//武将移动
 	if(citys.length == 0 || citys[0].battleDistance > areaModel.battleDistance){
 		return;
 	}
-	var targetCity = citys[citys.length * Math.random() >>> 0];
+	var targetCity = citys[citys.length * Math.fakeRandom() >>> 0];
 	var generals = AreaModel.getPowerfulCharacters(characters);
 	var charaId = generals[0].general.id();
 	var index = characters.findIndex(function(child){
@@ -472,7 +472,7 @@ function jobAiTransport(areaModel,characters){//运输物资
 		food : food,
 		troops : troops
 	};
-	var index = characters.length * Math.random() >>> 0;
+	var index = characters.length * Math.fakeRandom() >>> 0;
 	var character = characters[index];
 	characters.splice(index, 1);
 	character.transport(data);
@@ -514,7 +514,7 @@ function jobAiCaptive(areaModel, seigniorId, charaModel){
 		}else{
 			//回归自己势力
 			var areas = charaModel.seignior().areas();
-			var city = areas[areas.length * Math.random() >>> 0];
+			var city = areas[areas.length * Math.fakeRandom() >>> 0];
 			charaModel.moveTo(city.id());
 			charaModel.moveTo();
 		}
@@ -537,11 +537,11 @@ function jobAiCaptivesRescue(areaModel,characters){//解救俘虏
 		return false;
 	}
 	//TODO::ver1.1执行解救俘虏概率
-	if(Math.random() < 0.5){
+	if(Math.fakeRandom() < 0.5){
 		return false;
 	}
 	
-	var captiveIndex = captives.length * Math.random() >>> 0;
+	var captiveIndex = captives.length * Math.fakeRandom() >>> 0;
 	var captive = captives[captiveIndex];
 	var character = characters.shift();
 	var money = (captive.force() + captive.intelligence() + captive.command() + captive.agility() + captive.luck()) * JobCoefficient.REDEEM;

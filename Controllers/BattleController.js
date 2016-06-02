@@ -122,6 +122,7 @@ BattleController.prototype.init = function(){
 		setBattleSaveData();
 		LMvc.areaData.battleData = null;
 	}else{
+		Math.fakeReset();
 		self.charactersInit();
 	}
 	LPlugin.playBGM("battle" + ((2 * Math.random() >>> 0) + 1), LPlugin.volumeBGM);
@@ -164,7 +165,7 @@ BattleController.prototype.charactersInit = function(){
 	enemyPositions = enemyPositions.sort(function(a,b){
 		var v = b.index - a.index;
 		if(v == 0){
-			return Math.random() - 0.5;
+			return Math.fakeRandom() - 0.5;
 		}
 		return v;
 	});

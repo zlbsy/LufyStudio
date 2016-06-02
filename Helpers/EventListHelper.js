@@ -382,7 +382,7 @@ function dispatchEventListResultChangeCitySeignior(child) {
 			}
 		}
 		while(generals.length > 0){
-			var moveCity = canMoveCitys[canMoveCitys.length * Math.random() >>> 0];
+			var moveCity = canMoveCitys[canMoveCitys.length * Math.fakeRandom() >>> 0];
 			generals[0].moveTo(moveCity.id());
 			generals[0].moveTo();
 		}

@@ -2,6 +2,7 @@ function GameManager(){
 }
 GameManager.save = function(index){
 	var data = {};
+	data.fakeSeed = Math.fakeSeed;
 	data.seigniors = SeigniorModel.getSaveData();
 	data.chapterData = LMvc.chapterData;
 	data.selectSeignorId = LMvc.selectSeignorId;

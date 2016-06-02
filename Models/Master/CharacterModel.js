@@ -981,7 +981,7 @@ CharacterModel.prototype.groupSkill = function() {
 		return null;
 	}
 	var groupSkill = GroupSkillModel.getMaster(self.data.groupSkill);
-	if(Math.random() > groupSkill.probability()/100){
+	if(Math.fakeRandom() > groupSkill.probability()/100){
 		return null;
 	}
 	return groupSkill;
@@ -998,7 +998,8 @@ CharacterModel.prototype.skill = function(type) {
 	if(type && skill.mainType() != type){
 		return null;
 	}
-	if(type && Math.random() > skill.probability()*0.01){
+	var rand = Math.fakeRandom();
+	if(type && rand > skill.probability()*0.01){
 		return null;
 	}
 	return skill;

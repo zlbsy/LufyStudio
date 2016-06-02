@@ -39,7 +39,7 @@ function calculateDoubleAtt(attChara,hertChara){
 	}else if(rate >= 3){
 		h = 100;
 	}
-	if(Math.random()*100 <= h){
+	if(Math.fakeRandom()*100 <= h){
 		return true;
 	}
 	return false;
@@ -86,7 +86,7 @@ function calculateFatalAtt(attChara,hertChara){
 	}else if(rate >= 3){
 		h = 100;
 	}
-	if(Math.random()*100 <= h){
+	if(Math.fakeRandom()*100 <= h){
 		return true;
 	}
 	return false;
@@ -154,7 +154,7 @@ function calculateHitrate(attChara,hertChara,isView){
 	if(isView){
 		return r >>> 0;
 	}
-	if(Math.random()*100 <= r){
+	if(Math.fakeRandom()*100 <= r){
 		return true;
 	}
 	return false;
@@ -219,7 +219,7 @@ function calculateHitrateStrategy(attChara,hertChara){
 	}else{
 		r=(attX-hertY/3)*30/(hertY/3)+30;
 	}
-	if(Math.random()*100 <= r){
+	if(Math.fakeRandom()*100 <= r){
 		return true;
 	}	
 	return false;
@@ -330,7 +330,7 @@ function calculateHertValue(attChara,hertChara,correctionFactor, isView){
 	r *= correctionFactor;
 	if(!isView){
 		//随即系数
-		r = (11 - Math.random() * 2) * 0.1 * r;
+		r = (11 - Math.fakeRandom() * 2) * 0.1 * r;
 	}
 	if(r < 1){
 		r = 1;
@@ -410,7 +410,7 @@ function calculateSpreadPoints(skill, ranges){
 }
 function calculateSpreadPointsLoop(x, y, points, speadRects, speadProbability, loops, pointsCheck){
 	if(loops > 2 || pointsCheck[x+","+y])return;
-	if(Math.random() > speadProbability){
+	if(Math.fakeRandom() > speadProbability){
 		return;
 	}
 	pointsCheck[x+","+y]=1;
@@ -484,7 +484,7 @@ function calculatePenetratePoints(chara, target, ranges){
 	return ranges;
 }
 function calculateWounded(value, range){
-	return value + range * (1 - 2 * Math.random()); 
+	return value + range * (1 - 2 * Math.fakeRandom()); 
 }
 function calculateExp(attChara,hertChara){
 	var attCharaModel = attChara.data;
@@ -511,13 +511,13 @@ function calculateAskSingleCombat(chara, target){
 	if(value < -15){
 		return false; 
 	}else if(value <= 0){
-		return Math.random() < 0.05; 
+		return Math.fakeRandom() < 0.05; 
 	}else if(value <= 15){
-		return Math.random() < 1; 
+		return Math.fakeRandom() < 1; 
 	}else if(value <= 30){
-		return Math.random() < 0.05; 
+		return Math.fakeRandom() < 0.05; 
 	}else if(value <= 50){
-		return Math.random() < 0.01; 
+		return Math.fakeRandom() < 0.01; 
 	}
 	return false;
 }

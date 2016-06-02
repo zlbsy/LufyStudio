@@ -87,7 +87,7 @@ BattleIntelligentAI.execute = function() {
 		}
 	}
 	if(BattleIntelligentAI.ownPantCharacters.length > 1){
-		BattleIntelligentAI.ownPantCharacters = BattleIntelligentAI.ownPantCharacters.sort(function(a,b){return Math.random() > 0.5 ? 1: -1;}); 
+		BattleIntelligentAI.ownPantCharacters = BattleIntelligentAI.ownPantCharacters.sort(function(a,b){return Math.fakeRandom() > 0.5 ? 1: -1;}); 
 	}
 	if(currentBelong == Belong.ENEMY){
 		BattleIntelligentAI.targetCharacters = LMvc.BattleController.view.charaLayer.getCharactersFromBelong(Belong.SELF);
@@ -435,7 +435,7 @@ BattleIntelligentAI.prototype.useAddHpStrategy = function() {
 		}
 	}
 	//TODO::ver1.1判断可以使用策略的优先级
-	var obj = strategys[(strategys.length * Math.random()) >>> 0];
+	var obj = strategys[(strategys.length * Math.fakeRandom()) >>> 0];
 	strategy = obj.strategy;
 	var target = obj.target;
 	node = self.getStrategyNodeTarget(strategy, target);
@@ -488,7 +488,7 @@ BattleIntelligentAI.prototype.useWakeStrategy = function() {
 		return;
 	}
 	//TODO::ver1.1判断可以使用策略的优先级
-	var obj = strategys[(strategys.length * Math.random()) >>> 0];
+	var obj = strategys[(strategys.length * Math.fakeRandom()) >>> 0];
 	strategy = obj.strategy;
 	var target = obj.target;
 	node = self.getStrategyNodeTarget(strategy, target);
@@ -505,7 +505,7 @@ BattleIntelligentAI.prototype.useDownStatusStrategy = function() {
 };
 BattleIntelligentAI.prototype.useAidStrategy = function(charas, strategyEffectType, strategyFlag) {
 	var self = this, chara = self.chara;
-	if((chara.data.currentSoldiers().soldierType() == SoldierType.Physical) || (chara.data.currentSoldiers().soldierType() == SoldierType.Comprehensive && Math.random() < 0.5) || Math.random() < 0.8){
+	if((chara.data.currentSoldiers().soldierType() == SoldierType.Physical) || (chara.data.currentSoldiers().soldierType() == SoldierType.Comprehensive && Math.fakeRandom() < 0.5) || Math.fakeRandom() < 0.8){
 		self.strategyFlag = strategyFlag;
 		return;
 	}
@@ -523,7 +523,7 @@ BattleIntelligentAI.prototype.useAidStrategy = function(charas, strategyEffectTy
 		return;
 	}
 	//TODO::ver1.1判断可以使用策略的优先级
-	var obj = strategys[(strategys.length * Math.random()) >>> 0];
+	var obj = strategys[(strategys.length * Math.fakeRandom()) >>> 0];
 	strategy = obj.strategy;
 	var target = obj.target;
 	node = self.getStrategyNodeTarget(strategy, target);
@@ -534,7 +534,7 @@ BattleIntelligentAI.prototype.useAidStrategy = function(charas, strategyEffectTy
 };
 BattleIntelligentAI.prototype.useHertStrategy = function() {
 	var self = this, chara = self.chara;
-	if((chara.data.currentSoldiers().soldierType() == SoldierType.Physical) || (chara.data.currentSoldiers().soldierType() == SoldierType.Comprehensive && Math.random() < 0.5)){
+	if((chara.data.currentSoldiers().soldierType() == SoldierType.Physical) || (chara.data.currentSoldiers().soldierType() == SoldierType.Comprehensive && Math.fakeRandom() < 0.5)){
 		chara.mode = CharacterMode.WAIT_ATTACK;
 		return;
 	}
@@ -558,7 +558,7 @@ BattleIntelligentAI.prototype.useHertStrategy = function() {
 		return;
 	}
 	//TODO::ver1.1判断可以使用策略的优先级
-	var obj = strategys[(strategys.length * Math.random()) >>> 0];
+	var obj = strategys[(strategys.length * Math.fakeRandom()) >>> 0];
 	strategy = obj.strategy;
 	var target = obj.target;
 	node = self.getStrategyNodeTarget(strategy, target);
@@ -597,7 +597,7 @@ BattleIntelligentAI.prototype.findPhysicalPant = function(targetLength) {
 		self.physicalFlag = BattleIntelligentAI.PHYSICAL_OTHER;
 		return;
 	}
-	var target = targets[(targets.length * Math.random()) >>> 0];
+	var target = targets[(targets.length * Math.fakeRandom()) >>> 0];
 	node = self.getPhysicalNodeTarget(target);
 	self.target = target;
 	self.targetNode = node;
@@ -624,7 +624,7 @@ BattleIntelligentAI.prototype.findPhysicalOther = function(targetLength) {
 		self.chara.mode = CharacterMode.TO_MOVE;
 		return;
 	}
-	var target = targets[(targets.length * Math.random()) >>> 0];
+	var target = targets[(targets.length * Math.fakeRandom()) >>> 0];
 	node = self.getPhysicalNodeTarget(target);
 	self.target = target;
 	self.targetNode = node;

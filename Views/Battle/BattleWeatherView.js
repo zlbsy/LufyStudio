@@ -10,11 +10,11 @@ BattleWeatherView.prototype.change = function(){
 		self.currentWeather.probability += 0.1;
 		probability = self.currentWeather.probability;
 	}
-	if(Math.random() > probability){
+	if(Math.fakeRandom() > probability){
 		return;
 	}
 	var weatherProbabilitys = WeatherProbabilityConfig[LMvc.chapterData.month];
-	var rand = Math.random(), sum = 0;
+	var rand = Math.fakeRandom(), sum = 0;
 	for(var i=0, l=weatherProbabilitys.length; i<l; i++){
 		var weatherProbability = weatherProbabilitys[i];
 		sum += weatherProbability.probability;

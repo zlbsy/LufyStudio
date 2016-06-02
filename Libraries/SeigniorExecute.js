@@ -150,6 +150,7 @@ SeigniorExecute.run=function(){
 	LMvc.MapController.view.positionChangeToCity(CharacterModel.getChara(LMvc.selectSeignorId).city());
 	if(!LMvc.TutorialController){
 		SeigniorLevelUpdate();
+		Math.fakeReset();
 		RecordController.instance().autoSaveRecord();
 	}
 };
@@ -403,9 +404,9 @@ SeigniorExecute.prototype.areaAIRun=function(areaModel){
 	}
 	if(areaModel.seignior().isTribe()){
 		//外族只在每年收获粮食时随机进行侵略行动一次，其他时间不行动
-		if(HarvestMonths.Food.indexOf(LMvc.chapterData.month) >= 0 && Math.random() < TribeAIProbability && self.characters.length == areaModel.generalsSum()){
+		if(HarvestMonths.Food.indexOf(LMvc.chapterData.month) >= 0 && Math.fakeRandom() < TribeAIProbability && self.characters.length == areaModel.generalsSum()){
 			var neighbors = areaModel.neighbor();
-			var cityId = neighbors[neighbors.length * Math.random() >>> 0];
+			var cityId = neighbors[neighbors.length * Math.fakeRandom() >>> 0];
 			var city = AreaModel.getArea(cityId);
 			if(city.seigniorCharaId()){
 				jobAiToBattle(areaModel, self.characters, city);
@@ -433,7 +434,7 @@ SeigniorExecute.prototype.areaAIRun=function(areaModel){
 	var needEnlistFlag = jobAiNeedToEnlist(areaModel);
 	//治安
 	var police = areaModel.police();
-	var toPolice = police < 70 || (police < 80 && Math.random() < 0.5) || (police < 90 && Math.random() < 0.3) || (police < 100 && Math.random() < 0.1);
+	var toPolice = police < 70 || (police < 80 && Math.fakeRandom() < 0.5) || (police < 90 && Math.fakeRandom() < 0.3) || (police < 100 && Math.fakeRandom() < 0.1);
 	if(toPolice){
 		self.jobAiFunction(areaModel,self.characters,jobAiPolice,["force","agility"]);//治安
 	}
@@ -451,7 +452,7 @@ SeigniorExecute.prototype.areaAIRun=function(areaModel){
 		needEnlistFlag == AiEnlistFlag.Need || 
 		needEnlistFlag == AiEnlistFlag.MustResource || 
 		needEnlistFlag == AiEnlistFlag.NeedResource
-		) && Math.random() > 0.5){
+		) && Math.fakeRandom() > 0.5){
 		self.jobAiFunction(areaModel,self.characters,jobAiRepair,["force","command"]);//修补
 	}
 	//判断是否有可攻击的城池
@@ -479,10 +480,10 @@ SeigniorExecute.prototype.areaAIRun=function(areaModel){
 		needEnlistFlag == AiEnlistFlag.NeedResource
 	) || 
 	(
-		(needEnlistFlag == AiEnlistFlag.Battle || needEnlistFlag == AiEnlistFlag.BattleResource) && Math.random() > 0.2
+		(needEnlistFlag == AiEnlistFlag.Battle || needEnlistFlag == AiEnlistFlag.BattleResource) && Math.fakeRandom() > 0.2
 	) || 
 	(
-		(needEnlistFlag == AiEnlistFlag.Free || needEnlistFlag == AiEnlistFlag.None) && Math.random() > 0.5
+		(needEnlistFlag == AiEnlistFlag.Free || needEnlistFlag == AiEnlistFlag.None) && Math.fakeRandom() > 0.5
 	));
 	if(toTavern){
 		if(areaModel.outOfOffice().length > 0){
@@ -498,10 +499,10 @@ SeigniorExecute.prototype.areaAIRun=function(areaModel){
 	needEnlistFlag == AiEnlistFlag.MustResource || 
 	needEnlistFlag == AiEnlistFlag.NeedResource || 
 	(
-		(needEnlistFlag == AiEnlistFlag.Battle || needEnlistFlag == AiEnlistFlag.BattleResource) && Math.random() > 0.2
+		(needEnlistFlag == AiEnlistFlag.Battle || needEnlistFlag == AiEnlistFlag.BattleResource) && Math.fakeRandom() > 0.2
 	) || 
 	(
-		needEnlistFlag == AiEnlistFlag.Free && Math.random() > 0.5
+		needEnlistFlag == AiEnlistFlag.Free && Math.fakeRandom() > 0.5
 	);
 	if(toInterior){//内政
 		var interiorList = [];
@@ -529,13 +530,13 @@ SeigniorExecute.prototype.areaAIRun=function(areaModel){
 			jobAiLevelUpCity(areaModel,self.characters);
 		}
 	}
-	if(self.characters.length > 1 && areaModel.money() > 500 && Math.random() > 0.7){
+	if(self.characters.length > 1 && areaModel.money() > 500 && Math.fakeRandom() > 0.7){
 		SeigniorExecute.run();
 		return;
 	}
 	//如果有剩余无分配工作的人员,则执行探索
 	while(self.characters.length > 0){
-		if(Math.random() > 0.5){
+		if(Math.fakeRandom() > 0.5){
 			//农地探索
 			self.jobAiFunction(areaModel,self.characters,jobAiFarmlandExplore,["intelligence","force","luck"]);
 		}else{

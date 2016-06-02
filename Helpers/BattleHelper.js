@@ -117,14 +117,14 @@ function battleSingleCombatCheck(attChara){
 			case CharacterDisposition.TIMID:
 				if(forceDifference > 10){
 					result = true;
-				}else if(forceDifference >= 0 && Math.random()*12 < forceDifference){
+				}else if(forceDifference >= 0 && Math.fakeRandom()*12 < forceDifference){
 					result = true;
 				}
 				break;
 			case CharacterDisposition.CALM:
 				if(forceDifference > 0){
 					result = true;
-				}else if(forceDifference >= -10 && Math.random()*12 < forceDifference + 10){
+				}else if(forceDifference >= -10 && Math.fakeRandom()*12 < forceDifference + 10){
 					result = true;
 				}
 				break;
@@ -150,7 +150,7 @@ function battleSingleCombatCheck(attChara){
 		}
 		if(forceDifference > 20){
 			result = true;
-		}else if(forceDifference >= -20 && Math.random()*50 < forceDifference + 20){
+		}else if(forceDifference >= -20 && Math.fakeRandom()*50 < forceDifference + 20){
 			result = true;
 		}
 	}
@@ -665,9 +665,9 @@ function battleFailChangeCity(city, failSeigniorId){
 	}
 	var retreatCity = null;
 	if(enemyCitys.length > 0){
-		retreatCity = enemyCitys[enemyCitys.length*Math.random() >>> 0];
+		retreatCity = enemyCitys[enemyCitys.length*Math.fakeRandom() >>> 0];
 	}else if(canMoveCitys.length > 0){
-		retreatCity = canMoveCitys[canMoveCitys.length*Math.random() >>> 0];
+		retreatCity = canMoveCitys[canMoveCitys.length*Math.fakeRandom() >>> 0];
 		var seignior = SeigniorModel.getSeignior(failSeigniorId);
 		seignior.addCity(retreatCity);
 		retreatCity.seigniorCharaId(failSeigniorId);
@@ -698,7 +698,7 @@ function battleCheckRetreatCity(retreatCity, failSeigniorId, toCity){
 			//TODO::ver1.1君主被擒，暂时随机决定撤退城池,版本升级后需调整为最近城池
 			var citys = seignior.areas();
 			if(citys.length > 0){
-				retreatCityId = citys[(citys.length * Math.random()) >>> 0].id();
+				retreatCityId = citys[(citys.length * Math.fakeRandom()) >>> 0].id();
 				//console.log("敌军君主被擒，暂时随机决定撤退城池 : " + retreatCityId);
 			}
 		}

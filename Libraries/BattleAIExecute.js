@@ -47,7 +47,7 @@ BattleAIExecute.run=function(){
 		}else if(self.targetIndex >= targetCharacters.length){
 			rand = 0;
 		}else{
-			rand = Math.random();
+			rand = Math.fakeRandom();
 		}
 		if(rand < 0.5){
 			//console.log("attackIndex:"+self.attackIndex + ",currentChara:"+attackCharacters[self.attackIndex]);
@@ -265,8 +265,8 @@ BattleAIExecute.prototype.characterExec=function(currentCharacter, currentData, 
 	var enemyCharacters = enemyData.expeditionCharacterList;
 	var enemyPants = self.getPantCharacter(enemyCharacters);
 	//有虚弱敌军->攻击
-	if(enemyPants.length > 0 && Math.random() > 0.8){
-		var targetChara = enemyPants[enemyPants.length*Math.random() >>> 0];
+	if(enemyPants.length > 0 && Math.fakeRandom() > 0.8){
+		var targetChara = enemyPants[enemyPants.length*Math.fakeRandom() >>> 0];
 		//console.log("有虚弱敌军->攻击:"+currentCharacter.data.name() + " > " + targetChara.data.name());
 		currentCharacter.attackTarget = targetChara;
 		self.attackExec(currentCharacter, targetChara, true);
@@ -275,7 +275,7 @@ BattleAIExecute.prototype.characterExec=function(currentCharacter, currentData, 
 	//有虚弱友军->回复
 	var currentPants = self.getPantCharacter(currentCharacters);
 	if(currentPants.length > 0){
-		var targetChara = currentPants[currentPants.length*Math.random() >>> 0];
+		var targetChara = currentPants[currentPants.length*Math.fakeRandom() >>> 0];
 		if(self.healExec(currentCharacter, targetChara)){
 			//console.log("有虚弱友军->回复:"+currentCharacter.data.name() + " > " + targetChara.data.name());
 			return;
@@ -297,7 +297,7 @@ BattleAIExecute.prototype.characterExec=function(currentCharacter, currentData, 
 		return;
 	}
 	//攻击
-	var targetChara = enemyCharacters[enemyCharacters.length*Math.random() >>> 0];
+	var targetChara = enemyCharacters[enemyCharacters.length*Math.fakeRandom() >>> 0];
 	//console.log("攻击:"+currentCharacter.data.name() + " > " + targetChara.data.name());
 	currentCharacter.attackTarget = targetChara;
 	self.attackExec(currentCharacter, targetChara, false);
@@ -320,14 +320,14 @@ BattleAIExecute.prototype.toWake = function(currentCharacter,currentCharacters){
 	}
 	var soldier = currentCharacter.data.currentSoldiers();
 	soldier.proficiency(soldier.proficiency() + 1);
-	var obj = strategys[(strategys.length * Math.random()) >>> 0];
+	var obj = strategys[(strategys.length * Math.fakeRandom()) >>> 0];
 	obj.target.status.wake();
 	return true;
 };
 BattleAIExecute.prototype.useHertStrategy = function(chara, target, attack) {
 	var self = this;
 	//console.log("chara:"+chara.data.troops() + " -> " + target.data.troops());
-	if((chara.data.currentSoldiers().soldierType() == SoldierType.Physical) || (chara.data.currentSoldiers().soldierType() == SoldierType.Comprehensive && Math.random() < 0.5)){
+	if((chara.data.currentSoldiers().soldierType() == SoldierType.Physical) || (chara.data.currentSoldiers().soldierType() == SoldierType.Comprehensive && Math.fakeRandom() < 0.5)){
 		return false;
 	}
 	var strategy, strategys = [];
@@ -351,7 +351,7 @@ BattleAIExecute.prototype.useHertStrategy = function(chara, target, attack) {
 	}
 	var soldier = chara.data.currentSoldiers();
 	soldier.proficiency(soldier.proficiency() + 1);
-	var strategy = strategys[(strategys.length * Math.random()) >>> 0];
+	var strategy = strategys[(strategys.length * Math.fakeRandom()) >>> 0];
 	var effectType = strategy.strategyType();
 	chara.data.MP(chara.data.MP() - strategy.cost());
 	if(effectType == StrategyEffectType.Attack){
@@ -368,7 +368,7 @@ BattleAIExecute.prototype.useHertStrategy = function(chara, target, attack) {
 BattleAIExecute.prototype.useAidStrategy = function(chara, charas, strategyEffectType, strategyFlag) {
 	var self = this;
 	//console.error("useAidStrategy",chara);
-	if((chara.data.currentSoldiers().soldierType() == SoldierType.Physical) || (chara.data.currentSoldiers().soldierType() == SoldierType.Comprehensive && Math.random() < 0.5) || Math.random() < 0.8){
+	if((chara.data.currentSoldiers().soldierType() == SoldierType.Physical) || (chara.data.currentSoldiers().soldierType() == SoldierType.Comprehensive && Math.fakeRandom() < 0.5) || Math.fakeRandom() < 0.8){
 		return false;
 	}
 	var strategy, strategys = [], node;
@@ -384,7 +384,7 @@ BattleAIExecute.prototype.useAidStrategy = function(chara, charas, strategyEffec
 	}
 	var soldier = chara.data.currentSoldiers();
 	soldier.proficiency(soldier.proficiency() + 1);
-	var obj = strategys[(strategys.length * Math.random()) >>> 0];
+	var obj = strategys[(strategys.length * Math.fakeRandom()) >>> 0];
 	var target = obj.target;
 	var currentSelectStrategy = obj.strategy;
 	if(currentSelectStrategy.belong() == Belong.SELF){
@@ -459,7 +459,7 @@ BattleAIExecute.prototype.physicalAttack = function(currentChara, targetChara) {
 				if(rangeLength){
 					var targetCharas = self.getTargetCharacters(currentChara);
 					for(var i = 0, l = targetCharas.length;i<rangeLength && i < l;i++){
-						if(Math.random() > 0.5){
+						if(Math.fakeRandom() > 0.5){
 							continue;
 						}
 						var chara = targetCharas[i];
@@ -505,7 +505,7 @@ BattleAIExecute.prototype.physicalAttack = function(currentChara, targetChara) {
 			if(rangeLength){
 				var targetCharas = self.getTargetCharacters(currentChara);
 				for(var i = 0, l = targetCharas.length;i<rangeLength && i < l;i++){
-					if(Math.random() > 0.5){
+					if(Math.fakeRandom() > 0.5){
 						continue;
 					}
 					var chara = targetCharas[i];
@@ -689,7 +689,7 @@ BattleAIExecute.prototype.getCanUseStrategy = function(chara, target,type) {
 		list.push(strategy);
 	}
 	if(list.length > 0){
-		return list[list.length*Math.random()>>>0];
+		return list[list.length*Math.fakeRandom()>>>0];
 	}
 	return null;
 };

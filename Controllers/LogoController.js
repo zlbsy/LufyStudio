@@ -79,7 +79,6 @@ LogoController.prototype.start=function(event){
 	LPlugin.openEvent(1);
 	LPlugin.openEvent(2);
 	LPlugin.openEvent(3);*/
-	
 	if(LPlugin.native){
 		LMvc.keepLoading(true);
 		if(!LPlugin.GetData("purchaseLog"), null){

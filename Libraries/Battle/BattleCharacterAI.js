@@ -383,7 +383,7 @@ BattleCharacterAI.prototype.attackActionComplete = function(event) {
 					LTweenLite.to(tweenObj,0.5,{y:tweenObj.y - 20,alpha:0,onComplete:function(obj){
 						obj.remove();
 					}});
-				}else if(Math.random() > skill.changeProbability()*0.01){
+				}else if(Math.fakeRandom() > skill.changeProbability()*0.01){
 					var emptyMp = obj.chara.data.maxMP() - obj.chara.data.MP();
 					var plusMp = obj.hertValue > emptyMp ? emptyMp : obj.hertValue;
 					obj.chara.data.MP(obj.chara.data.MP() + plusMp);

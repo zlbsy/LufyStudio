@@ -29,7 +29,7 @@ function calculateHitrateCaptive(chara, nearCharas){
 			break;
 		}
 	}
-	return Math.random() < 0.1*rate;
+	return Math.fakeRandom() < 0.1*rate;
 }
 function calculateLoyalty(characterModel, seignorId){
 	var seignorCharacter = CharacterModel.getChara(seignorId);
@@ -89,7 +89,7 @@ function generalSurrender(characterModel, city){
  * 斩首概率
  */
 function calculateHitrateBehead(leaderId, charaModel){
-	if(Math.random() > 0.1){
+	if(Math.fakeRandom() > 0.1){
 		return false;
 	}
 	var sum = 75;
@@ -98,13 +98,13 @@ function calculateHitrateBehead(leaderId, charaModel){
 	if(compatibility > sum){
 		compatibility = sum;
 	}
-	return Math.random() < compatibility/sum;
+	return Math.fakeRandom() < compatibility/sum;
 }
 /**
  * 释放概率
  */
 function calculateHitrateRelease(leaderId, charaModel){
-	if(Math.random() > 0.2){
+	if(Math.fakeRandom() > 0.2){
 		return false;
 	}
 	var sum = 75;
@@ -113,7 +113,7 @@ function calculateHitrateRelease(leaderId, charaModel){
 	if(compatibility > sum){
 		compatibility = sum;
 	}
-	return Math.random() > compatibility/sum;;
+	return Math.fakeRandom() > compatibility/sum;;
 }
 function gameDataInit(){
 	var data = LMvc.areaData;

@@ -34,7 +34,7 @@ CharacterStatusIconView.prototype.onframe = function(event){
 CharacterStatusIconView.prototype.downloadAidStatusRandom = function(){
 	var self = this;
 	var aids =[StrategyType.AttackAid,StrategyType.DefenseAid,StrategyType.ApiritAid,StrategyType.BreakoutAid,StrategyType.MoraleAid];
-	var mode = aids[aids.length * Math.random() >>> 0];
+	var mode = aids[aids.length * Math.fakeRandom() >>> 0];
 	self.addStatus(mode,-0.2);
 };
 CharacterStatusIconView.prototype.addStatus = function(mode,value){
@@ -96,7 +96,7 @@ CharacterStatusIconView.prototype.removeStatus = function(status){
 	}
 	for(var i = status.length-1;i>=0;i--){
 		var child = status[i];
-		if(Math.random() < child.p){
+		if(Math.fakeRandom() < child.p){
 			status.splice(i, 1);
 		}else{
 			child.p += (child.p < 0.5 ? 0.1 : 0);

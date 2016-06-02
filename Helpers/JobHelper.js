@@ -161,7 +161,7 @@ function accessRun(characterModel){
 	var value02 = getJobResult(characterModel.command(),JobCoefficient.ACCESS);
 	var value03 = getJobResult(characterModel.luck(),JobCoefficient.ACCESS);
 	var value = value01 + value02 + value03;
-	var rand = Math.random();
+	var rand = Math.fakeRandom();
 	
 	var cityModel = characterModel.city();
 	if(rand > value){
@@ -181,7 +181,7 @@ function accessRun(characterModel){
 		characterModel.featPlus(JobFeatCoefficient.NORMAL * 0.5);
 		return;
 	}
-	var charaId = notDebut[notDebut.length*Math.random() >>> 0];
+	var charaId = notDebut[notDebut.length*Math.fakeRandom() >>> 0];
 	cityModel.removeNotDebut(charaId);
 	var targetModel = CharacterModel.getChara(charaId);
 	var area = characterModel.city();
@@ -194,14 +194,14 @@ function accessRun(characterModel){
 	hireRun2(characterModel, targetModel,area);
 }
 function exploreItems(items){
-	if(items.length == 0 || Math.random() < 0.5){
+	if(items.length == 0 || Math.fakeRandom() < 0.5){
 		return -1;
 	}
 	var proportionSum = 0;
 	for(var i=0,l=items.length;i<l;i++){
 		proportionSum += items[i].proportion;
 	}
-	var proportion = Math.random() * proportionSum;
+	var proportion = Math.fakeRandom() * proportionSum;
 	proportionSum = 0;
 	for(var i=0,l=items.length;i<l;i++){
 		proportionSum += items[i].proportion;
@@ -219,7 +219,7 @@ function exploreAgricultureRun(characterModel){
 	var value02 = getJobResult(characterModel.force(),JobCoefficient.EXPLORE_AGRICULTURE);
 	var value03 = getJobResult(characterModel.luck(),JobCoefficient.EXPLORE_AGRICULTURE);
 	var value = value01 + value02 + value03;
-	var rand = Math.random();
+	var rand = Math.fakeRandom();
 	
 	var cityModel = characterModel.city();
 	if(rand > value){
@@ -254,12 +254,12 @@ function exploreAgricultureRun(characterModel){
 	characterModel.featPlus(JobFeatCoefficient.NORMAL);
 }
 function getValueByExploreFail(baseValue, randomValue){
-	if(Math.random() > 0.5){
+	if(Math.fakeRandom() > 0.5){
 		return 0;
 	}
 	var value = 0;
-	var r = Math.random();
-	var m = randomValue*Math.random();;
+	var r = Math.fakeRandom();
+	var m = randomValue*Math.fakeRandom();;
 	if(r < 0.1){
 		value = baseValue + m;
 	}else if(r < 0.3){
@@ -305,7 +305,7 @@ function exploreBusinessRun(characterModel){
 	var value02 = getJobResult(characterModel.agility(),JobCoefficient.EXPLORE_BUSINESS);
 	var value03 = getJobResult(characterModel.luck(),JobCoefficient.EXPLORE_BUSINESS);
 	var value = value01 + value02 + value03;
-	var rand = Math.random();
+	var rand = Math.fakeRandom();
 	
 	var cityModel = characterModel.city();
 	if(rand > value){
@@ -416,7 +416,7 @@ function enlistRun(characterModel, targetEnlist){
 	var value = (value01 + value02) * (characterModel.hasSkill(SkillSubType.ENLIST) ? 1.5 : 1);
 	var quantity = (targetEnlist.quantity * value / JobCoefficient.NORMAL) >> 0;
 	if(quantity > population - minPopulation){
-		quantity = (population - minPopulation)*Math.random();
+		quantity = (population - minPopulation)*Math.fakeRandom();
 	}
 	quantity = (quantity >>> 0);
 	area.population(-quantity);
@@ -455,7 +455,7 @@ function persuadeRun(characterModel, targetPersuadeId){
 	var percentageCompatibility = (JobCoefficient.COMPATIBILITY - compatibility) / JobCoefficient.COMPATIBILITY;
 	percentage *= (0.5 + 0.5 * percentageCompatibility);
 	
-	var rand = Math.random();
+	var rand = Math.fakeRandom();
 	if(rand > percentage){
 		if(characterModel.seigniorId() == LMvc.selectSeignorId && !characterModel.city().isAppoint()){
 			SeigniorExecute.addMessage(String.format(Language.get("persuadeRefuseMessage"),targetPersuade.name(),characterModel.name()));
@@ -486,7 +486,7 @@ function spyRun(characterModel, cityId){
 	}
 	var spyValue = characterModel.force() + characterModel.luck();
 	if(spyValue<JobCoefficient.SPY){
-		if(spyValue < Math.random()*JobCoefficient.SPY){
+		if(spyValue < Math.fakeRandom()*JobCoefficient.SPY){
 			//console.log("spyRun : 失败 能力不够");
 			if(characterModel.seigniorId() == LMvc.selectSeignorId && !characterModel.city().isAppoint()){
 				SeigniorExecute.addMessage(String.format(Language.get("spyFailMessage"),characterModel.name(),area.name()));
@@ -507,7 +507,7 @@ function spyRun(characterModel, cityId){
 	}
 	num -= 1;
 	spyValue = spyValue % JobCoefficient.SPY;
-	if(spyValue>JobCoefficient.SPY || spyValue > Math.random()*JobCoefficient.SPY){
+	if(spyValue>JobCoefficient.SPY || spyValue > Math.fakeRandom()*JobCoefficient.SPY){
 		num += 1;
 	}
 	if(num = 0){
@@ -579,7 +579,7 @@ function hireRun2(characterModel, hireCharacter,area){
 		}
 		percentage *= (JobCoefficient.COMPATIBILITY - compatibility) / JobCoefficient.COMPATIBILITY;
 		
-		var rand = Math.random();
+		var rand = Math.fakeRandom();
 		if(rand > percentage){
 			//console.log("hireRun : 失败 " + rand + " > " + percentage + " = " + (rand > percentage));
 			if(characterModel.seigniorId() == LMvc.selectSeignorId && !area.isAppoint()){
@@ -640,7 +640,7 @@ function SeigniorExecuteChangeCityResources(area){
 			area.population(-minusPopulation);
 		}
 		//暴动
-		if(Math.random() < 0.2){
+		if(Math.fakeRandom() < 0.2){
 			var troops = area.troops();
 			if(troops > 0){
 				var minusTroops = troops * 0.1*minusValue;
@@ -745,7 +745,7 @@ function charactersLoyaltyToDown(area){
 		}
 		compatibility = compatibility * 0.2;
 		var loyalty = general.loyalty();
-		if((loyalty == 100 && Math.random() > compatibility * 0.1) || Math.random() > compatibility){
+		if((loyalty == 100 && Math.fakeRandom() > compatibility * 0.1) || Math.fakeRandom() > compatibility){
 			continue;
 		}
 		general.loyalty(loyalty - 1);
@@ -769,7 +769,7 @@ function charactersNaturalDeath(area){
 		var value = general.age() - general.life();
 		//TODO::武将到达年龄，几率死亡
 		//console.log("---------------年龄：：" + general.name() + ","+general.age()+"<="+general.life());
-		if(Math.random() > 0.5 + 0.1 * value){
+		if(Math.fakeRandom() > 0.5 + 0.1 * value){
 			continue;
 		}
 		//console.error("---------------武将死亡：：" + general.name() + ","+general.age()+"<="+general.life());
@@ -811,11 +811,11 @@ function outOfOfficeCharactersMove(area){
 			character.job(Job.IDLE);
 			continue;
 		}
-		var rand = Math.random();
+		var rand = Math.fakeRandom();
 		if(rand > 0.2){
 			continue;
 		}
-		var neighborCityId = neighbor[(Math.random() * neighbor.length) >>> 0];
+		var neighborCityId = neighbor[(Math.fakeRandom() * neighbor.length) >>> 0];
 		character.moveTo(neighborCityId);
 		character.moveTo();
 		character.job(Job.END);
@@ -833,7 +833,7 @@ function toPrizedByMoney(characterModel){
 	var value2 = compatibilityValue * (150 - Math.abs(characterModel.compatibility() - characterModel.seignior().character().compatibility())) / 150;
 	var upValue = (value1 + value2) >>> 0;
 	var value = (value1 + value2 - upValue)*0.5 + 0.5;
-	if(value > Math.random()){
+	if(value > Math.fakeRandom()){
 		upValue += 1;
 	}
 	var loyalty = characterModel.loyalty() + upValue;

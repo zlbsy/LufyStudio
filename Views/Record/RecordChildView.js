@@ -93,6 +93,7 @@ RecordChildView.prototype.readRecordData=function(){
 		}
 		RecordController.instance().hide();
 		LMvc.isRead = true;
+		Math.fakeSeed = self.record.fakeSeed;
 		LMvc.mapX = self.record.mapX;
 		LMvc.mapY = self.record.mapY;
 		SeigniorExecute.setSaveData(self.record.seigniorExecute);
