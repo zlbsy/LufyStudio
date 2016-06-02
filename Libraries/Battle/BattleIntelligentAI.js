@@ -246,7 +246,10 @@ BattleIntelligentAI.prototype.getCanUseStrategy = function(target, type, node, c
 				continue;
 			}
 		}
-		//TODO::地形判断
+		//地形判断
+		if(!LMvc.BattleController.view.mapLayer.canUseStrategyOnTerrain(strategy, lX, lY)){
+			continue;
+		}
 		var weathers = strategy.weathers();
 		if(weathers && weathers.length > 0 && weathers.indexOf(LMvc.BattleController.view.weatherLayer.currentWeather.weather) < 0){
 			continue;

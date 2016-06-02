@@ -45,7 +45,7 @@ BattleMainMenuView.prototype.changeMenuStatus = function(){
 	var self = this;
 	self.menuLayer.visible = !self.menuLayer.visible;
 	self.backLayer.visible = self.menuLayer.visible;
-	self.miniMapVisible = self.menuLayer.visible;
+	//self.miniMapVisible = self.menuLayer.visible;
 	if(self.menuLayer.visible){
 		self.setMenuPosition();
 	}

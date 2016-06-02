@@ -560,16 +560,23 @@ BattleCharacterAI.prototype.endBoutCheck = function() {
 		return;
 	}
 	if(LMvc.BattleController.view.charaLayer.isHasActiveCharacter(chara.belong)){
+		if(chara.belong == Belong.SELF){
+			LMvc.BattleController.view.mainMenu.visible = true;
+		}
 		BattleIntelligentAI.execute();
 		return;
 	}
 	if(chara.belong == Belong.SELF){
-		var obj = {title:Language.get("confirm"),message:Language.get("bout_end_confirm"),width:300,height:200,okEvent:self.boutEnd,cancelEvent:null};
+		var obj = {title:Language.get("confirm"),message:Language.get("bout_end_confirm"),width:300,height:200,okEvent:self.boutEnd,cancelEvent:self.boutEndCancel};
 		var windowLayer = ConfirmWindow(obj);
 		LMvc.layer.addChild(windowLayer);
 	}else{
 		self.boutEnd();
 	}
+};
+BattleCharacterAI.prototype.boutEndCancel = function(event) {
+	event.currentTarget.parent.remove();
+	LMvc.BattleController.view.mainMenu.visible = true;
 };
 BattleCharacterAI.prototype.boutEnd = function(event) {
 	if(event){

@@ -44,8 +44,8 @@ BattleView.prototype.boutShow = function(event){
 	var boutView = new BattleBoutView(self.controller,event.belong);
 	self.addChild(boutView);
 	if(event.belong == Belong.SELF){
-		self.mainMenu.visible = true;
-		self.miniLayer.visible = self.mainMenu.miniMapVisible;
+		//self.mainMenu.visible = true;
+		//self.miniLayer.visible = self.mainMenu.miniMapVisible;
 	}else{
 		self.mainMenu.visible = false;
 		self.miniLayer.visible = false;

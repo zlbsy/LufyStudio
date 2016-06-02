@@ -45,6 +45,10 @@ BattleBoutView.prototype.removeSelf=function(event){
 	var view = self.parent;
 	var belong = self.belong;
 	LMvc.running = false;
+	if(belong == Belong.SELF){
+		self.controller.view.mainMenu.visible = true;
+		self.controller.view.miniLayer.visible = self.controller.view.mainMenu.miniMapVisible;
+	}
 	self.remove();
 	battleCharacterStatusUpdate(belong);
 	self.controller.view.weatherLayer.change();

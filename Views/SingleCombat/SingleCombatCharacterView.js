@@ -211,12 +211,12 @@ SingleCombatCharacterView.prototype.changeHp = function(value){
 };
 SingleCombatCharacterView.prototype.singleCombatEnd = function(event){
 	var self = this, obj;
+	self.targetCharacter.data.HP(self.targetCharacter.barHp.value);
 	var dieChara = LMvc.BattleController.view.charaLayer.getCharacter(null,self.data.id());
 	self.controller.over();
 	dieChara.isSingleCombat = true;
 	dieChara.data.troops(0);
 	BattleController.ctrlChara.AI.endAction();
-	//dieChara.toDie(true);
 };
 SingleCombatCharacterView.prototype.fail = function(event){
 	var self = this, obj;

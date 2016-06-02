@@ -113,6 +113,7 @@ BattleController.prototype.init = function(){
 	}
 	if(self.battleData.toCity.seigniorCharaId() == 0 || enemyTroops == 0 || 
 		self.battleData.toCity.generalsSum() == 0){
+		console.log("noBattle",self.battleData.toCity,self.battleData.toCity.seigniorCharaId(),enemyTroops,self.battleData.toCity.generalsSum());
 		self.noBattle = true;
 		self.dispatchEvent(LEvent.COMPLETE);
 		return;
@@ -286,6 +287,7 @@ BattleController.prototype.mapMouseUp = function(event){
 	if(!self.view.roadLayer.visible){
 		var onChara = self.characterClick(event.selfX,event.selfY);
 		if(onChara){
+			self.view.mainMenu.visible = false;
 			return;
 		}
 		self.view.mapLayer.showTerrain(event.selfX,event.selfY);
@@ -420,6 +422,7 @@ BattleController.prototype.notClickOnRoadLayer = function(event){
 		default:
 			BattleController.ctrlChara.removeAllEventListener();
 			BattleController.ctrlChara.toStatic(true);
+			self.view.mainMenu.visible = true;
 	}
 };
 BattleController.prototype.characterClick = function(cx,cy){

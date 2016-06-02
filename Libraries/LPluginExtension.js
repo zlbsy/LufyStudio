@@ -66,7 +66,12 @@ LPlugin.SetData = function(key,data){
 		try{
 			window.localStorage.setItem(key, JSON.stringify(data));
 		}catch(e){
-			console.error("not supported window.localStorage");
+			try{
+				window.localStorage.removeItem(key);
+				window.localStorage.setItem(key, JSON.stringify(data));
+			}catch(e){
+				console.error("not supported window.localStorage");
+			}
 		}
 	}
 };

@@ -614,16 +614,16 @@ function SeigniorExecuteChangeCityResources(area){
 	//金钱
 	var maxBusiness = AreaModel.businessList[AreaModel.businessList.length - 1];
 	if(HarvestMonths.Money.indexOf(LMvc.chapterData.month) >= 0){
-		var addMoney = 500 + 5000*area.business()/maxBusiness;
-		addMoney *= (1 + population/maxPopulation);
-		area.money(addMoney);
+		var addMoney = 500 + 3500*area.business()/maxBusiness;
+		addMoney *= (1 + population * 0.3 / maxPopulation);
+		area.money(addMoney >>> 0);
 	}
 	//粮食
 	var maxAgriculture = AreaModel.agricultureList[AreaModel.agricultureList.length - 1];
 	if(HarvestMonths.Food.indexOf(LMvc.chapterData.month)  >= 0){
-		var addFood = 10000 + 50000*area.agriculture()/maxAgriculture;
-		addFood *= (1 + population/maxPopulation);
-		area.food(addFood);
+		var addFood = 10000 + 40000*area.agriculture()/maxAgriculture;
+		addFood *= (1 + population * 0.3 / maxPopulation);
+		area.food(addFood >>> 0);
 	}
 	var police = area.police();
 	var minPolice = 40;

@@ -121,11 +121,16 @@ function gameDataInit(){
 		addCreateCharactersToGame();
 	}
 	SeigniorModel.setSeignior(data.seigniors);
+	var setAreas = [];
 	for(var i=0,l=data.seigniors.length;i<l;i++){
 		var seignior = data.seigniors[i];
 		var areas = seignior.areas;
 		var areaList = [];
 		areas.forEach(function(child){
+			if(setAreas.indexOf(child.area_id) >= 0){
+				return;
+			}
+			setAreas.push(child.area_id);
 			var area = AreaModel.getArea(child.area_id);
 			area.setSeignor(seignior,child);
 			areaList.push(area);
@@ -163,7 +168,6 @@ function getCreateSeigniorAsType(noneSeignior,child){
 	seignior.areas = [];
 	for(var j=0,jl=child.citys.length;j<jl;j++){
 		var city = child.citys[j];
-		console.log("city",city);
 		var cityIndex = noneSeignior.areas.findIndex(function(c){
 			return c.area_id == city.id;
 		});

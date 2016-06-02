@@ -83,6 +83,7 @@ SeigniorModel.getCharactersIsCaptives = function(seigniorId){
 };
 SeigniorModel.getSaveData=function(){
 	var saveData = [];
+	var areaIds = [];
 	for(var i=0,l=SeigniorModel.list.length;i<l;i++){
 		var seignior = SeigniorModel.list[i];
 		saveData.push({
@@ -93,11 +94,15 @@ SeigniorModel.getSaveData=function(){
 			items:seignior.itemsData(),//
 			stopBattleSeigniors:seignior.data.stopBattleSeigniors//停战城池
 		});
+		var areas = seignior.areas();
+		for(var j=0,jl=areas.length;j<jl;j++){
+			areaIds.push(areas[j].id());
+		}
 	}
 	var noSeignior = {chara_id:0,areas:[]};
 	for(var i=0,l=AreaModel.list.length;i<l;i++){
 		var area = AreaModel.list[i];
-		if(area.seigniorCharaId() > 0){
+		if(area.seigniorCharaId() > 0 || areaIds.indexOf(area.id()) >= 0){
 			continue;
 		}
 		noSeignior.areas.push(area.datas());
