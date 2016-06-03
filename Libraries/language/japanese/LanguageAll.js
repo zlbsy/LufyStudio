@@ -116,6 +116,7 @@ Language.data = {
 	"skip_drama":"スキップ",
 	"return":"戻る",
 	"execute":"実行",
+	"go":"進行",
 	"who_can_do":"誰を派遣する?",
 	"tab_equipment":"装備",
 	"tab_skill":"技能",
@@ -487,8 +488,13 @@ Language.data = {
 	"sell_food_message":"どのぐらい売却しますか？",
 	"use_money":"使用金銭:{0}/{1}",
 	"get_money":"獲得金銭:{0}",
+	"goto_execute_message":"戦略フェイズを終了します\nよろしいですか？",
+	"expedition_attack_quantity_message":"攻城戦は最大武将数が{0}になります",
+	"expedition_defense_quantity_message":"防衛戦は最大武将数が{0}になります",
 	"riot_message":"{0}にいる群衆は不満が爆発して、暴動起きました!",
 	"no_food_talk":"やばい！食糧がなくなったから、兵士の戦闘力が下降しました。",
+	"purchase_confirm_native_message":"<font size='21' color='#FFFFFF'><font color='#FF0000'>{0}</font>を解放する、必要なお金は<font color='#FF0000'>{1}</font>です、よろしいですか?</font>",
+	"purchase_confirm_web_message":"<font size='21' color='#FFFFFF'>今のバージョンは<font color='#FF0000'>{0}</font>という機能が使えません、ネーティブ版<font color='#FF0000'>をダウンロードしてください。</font>!</font>",
 	"child_growup":"<font size='22' color='#FFFFFF'><font color='#FF0000'> {0} </font>が大人になったから、<font color='#FF0000'> {1} </font>に従って、味方に参加しました！</font>"
 };
 Language.itemData = {

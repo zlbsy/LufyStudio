@@ -5,7 +5,7 @@ function EffectStrategyView(controller, chara, target, correctionFactor, skill){
 	self.currentTargetCharacter = target;
 	self.correctionFactor = correctionFactor;
 	self.currentSkill = skill;
-	console.log("EffectStrategyView="+self.currentTargetCharacter.data.name());
+	//console.log("EffectStrategyView="+self.currentTargetCharacter.data.name());
 	self.init();
 }
 EffectStrategyView.prototype.init = function(){

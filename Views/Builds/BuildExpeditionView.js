@@ -48,7 +48,7 @@ BuildExpeditionView.prototype.selectComplete=function(event){
 		var characterList = event.characterList;
 		var quantity = SeigniorExecute.running ? BattleMapConfig.DefenseQuantity : BattleMapConfig.AttackQuantity;
 		if(characterList.length > quantity){
-			var obj = {title:Language.get("confirm"),messageHtml:String.format(Language.get(SeigniorExecute.running ? "出征时，武将最多只能选择{0}人!" : "出征时，武将最多只能选择{0}人!"),quantity),height:200,okEvent:null};
+			var obj = {title:Language.get("confirm"),messageHtml:String.format(Language.get(SeigniorExecute.running ? "expedition_defense_quantity_message" : "expedition_attack_quantity_message"),quantity),height:200,okEvent:null};
 			var windowLayer = ConfirmWindow(obj);
 			LMvc.layer.addChild(windowLayer);
 			return false;

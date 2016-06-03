@@ -234,6 +234,9 @@ BattleIntelligentAI.prototype.getCanUseStrategy = function(target, type, node, c
 		if(checkFun && checkFun(strategy)){
 			continue;
 		}
+		if(chara.data.MP() < strategy.cost()){
+			continue;
+		}
 		if(strategy.effectType() != type){
 			continue;
 		}

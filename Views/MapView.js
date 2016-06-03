@@ -153,7 +153,7 @@ MapView.prototype.changeMode=function(mode){
 	var self = this;
 	self.ctrlLayer.childList.forEach(function(child){
 		child.visible = false;
-		if(mode == MapController.MODE_MAP && child.name == "menu"){
+		if(mode == MapController.MODE_MAP && (child.name == "menu" || child.name == "go")){
 			child.visible = true;
 		}else if(mode == MapController.MODE_CHARACTER_MOVE && child.name == "close"){
 			child.visible = true;
@@ -173,6 +173,12 @@ MapView.prototype.ctrlLayerInit=function(){
 	buttonMenu.name = "menu";
 	buttonMenu.x = LGlobal.width - buttonMenu.getWidth();
 	self.ctrlLayer.addChild(buttonMenu);
+	var buttonGo = getButton(Language.get("go"),100);
+	buttonGo.addEventListener(LMouseEvent.MOUSE_UP,self.gotoExecute);
+	buttonGo.name = "go";
+	buttonGo.x = LGlobal.width - buttonGo.getWidth();
+	buttonGo.y = 50;
+	self.ctrlLayer.addChild(buttonGo);
 	
 	var bitmapClose = new LBitmap(new LBitmapData(LMvc.datalist["close"]));
 	var buttonClose = new LButton(bitmapClose);
@@ -182,6 +188,19 @@ MapView.prototype.ctrlLayerInit=function(){
 	buttonClose.y = 5;
 	self.ctrlLayer.addChild(buttonClose);
 	self.changeMode(MapController.MODE_MAP);
+};
+MapView.prototype.gotoExecute=function(event){
+	var self = event ? event.currentTarget.getParentByConstructor(MapView) : this;
+	var obj = {title:Language.get("confirm"),message:Language.get("goto_execute_message"),height:220,
+	okEvent:self.gotoExecuteStart,cancelEvent:null};
+	var windowLayer = ConfirmWindow(obj);
+	self.addChild(windowLayer);
+};
+MapView.prototype.gotoExecuteStart=function(event){
+	var self = LMvc.MapController.view;
+	var windowLayer = self.getChildByName("ConfirmWindow");
+	windowLayer.remove();
+	SeigniorExecute.run();
 };
 MapView.prototype.resetAreaIcon=function(cityId){
 	var self = this;

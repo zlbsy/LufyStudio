@@ -12,13 +12,14 @@ MenuView.prototype.init=function(){
 	
 	self.mainLayer.addChild(layer);
 	layer.x = 20;
+	/*
 	var buttonOperatingEnd = getButton(Language.get("operating_end"),200);
 	buttonOperatingEnd.name = "operating_end";
 	buttonOperatingEnd.y = menuY;
 	layer.addChild(buttonOperatingEnd);
 	buttonOperatingEnd.addEventListener(LMouseEvent.MOUSE_UP, self.onClickOperatingEnd);
 	
-	menuY += menuHeight;
+	menuY += menuHeight;*/
 	var buttonGameSave = getButton(Language.get("game_save"),200);
 	buttonGameSave.y = menuY;
 	layer.addChild(buttonGameSave);
@@ -77,11 +78,12 @@ MenuView.prototype.layerInit=function(){
 MenuView.prototype.hide=function(event){
 	MenuController.instance().hide();
 };
+/*
 MenuView.prototype.onClickOperatingEnd=function(event){
 	var self = event ? event.currentTarget.parent.parent.parent : this;
 	self.hide();
 	SeigniorExecute.run();
-};
+};*/
 MenuView.prototype.onClickAllSeignior=function(event){
 	var self = event.currentTarget.parent.parent.parent;
 	self.hide();

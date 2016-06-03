@@ -116,6 +116,7 @@ Language.data = {
 	"skip_drama":"跳过剧情",
 	"return":"返回",
 	"execute":"执行",
+	"go":"进行",
 	"who_can_do":"派谁去?",
 	"tab_equipment":"装备",
 	"tab_skill":"技能",
@@ -487,8 +488,13 @@ Language.data = {
 	"sell_food_message":"卖出多少粮食？",
 	"use_money":"消耗金钱:{0}/{1}",
 	"get_money":"获得金钱:{0}",
+	"goto_execute_message":"结束战略部署\n确定吗？",
+	"expedition_attack_quantity_message":"攻城战最多只能{0}人出战！",
+	"expedition_defense_quantity_message":"防守战最多只能{0}人出战！",
 	"riot_message":"{0}的百姓发生暴动了!",
 	"no_food_talk":"糟糕！没有兵粮了，士兵的战斗力开始下降了。",
+	"purchase_confirm_native_message":"<font size='21' color='#FFFFFF'>开通<font color='#FF0000'>{0}</font>功能需要花费<font color='#FF0000'>{1}</font>，要开通此功能吗?</font>",
+	"purchase_confirm_web_message":"<font size='21' color='#FFFFFF'>当前版本无法使用<font color='#FF0000'>{0}</font>功能，请下载<font color='#FF0000'>手机安装版本</font>!</font>",
 	"child_growup":"<font size='22' color='#FFFFFF'><font color='#FF0000'> {0} </font>成年了，随<font color='#FF0000'> {1} </font>加入我军！</font>"
 };
 Language.itemData = {

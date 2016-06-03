@@ -110,7 +110,7 @@ BattleResultConfirmView.prototype.setSelectMoveCity = function(){
 				}
 				self.model.enemyCaptive.push(child.id());
 			}
-			console.error("全员被俘");
+			///console.error("全员被俘");
 			message = String.format(Language.get("lose_city_dialog_msg"), city.name(), fromSeignior.name());//{0}被{1}军占领了
 		}else{
 			cityButtonLayer.x = (self.windowWidth - cityButtonLayer.getWidth())*0.5;
