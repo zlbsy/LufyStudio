@@ -486,7 +486,11 @@ BattleCharacterAI.prototype.plusExp = function(event) {
 	chara = LMvc.currentAttackCharacter;
 	self = chara.AI;
 	var statusView = new BattleCharacterStatusView(chara.controller,chara);
-	statusView.push(BattleCharacterStatusConfig.EXP, calculateExp(chara, self.attackTarget));
+	var exp = calculateExp(chara, self.attackTarget);
+	if(self.attackTarget.data.troops() == 0){
+		exp *= 3;
+	}
+	statusView.push(BattleCharacterStatusConfig.EXP, exp);
 	/*
 	//TODO::取消装备经验，以后版本升级可能加入
 	statusView.push(BattleCharacterStatusConfig.EXP_WEAPON, 20);

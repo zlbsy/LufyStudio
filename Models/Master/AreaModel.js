@@ -285,14 +285,14 @@ AreaModel.prototype.setSeignor = function(seignior,areaData){
 			this.data[key] = captives;
 			continue;
 		}else if(key == "items_farmland"){
-			var items_farmland = this.data[key] || [];
+			var items_farmland = [];//this.data[key] || [];
 			for(var i=0,l=areaData[key].length;i<l;i++){
 				items_farmland.push(areaData[key][i]);
 			}
 			this.data[key] = items_farmland;
 			continue;
 		}else if(key == "items_market"){
-			var items_market = this.data[key] || [];
+			var items_market = [];//this.data[key] || [];
 			for(var i=0,l=areaData[key].length;i<l;i++){
 				items_market.push(areaData[key][i]);
 			}

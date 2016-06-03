@@ -216,7 +216,20 @@ SingleCombatCharacterView.prototype.singleCombatEnd = function(event){
 	self.controller.over();
 	dieChara.isSingleCombat = true;
 	dieChara.data.troops(0);
-	BattleController.ctrlChara.AI.endAction();
+	if(dieChara.data.id() == BattleController.ctrlChara.data.id()){
+		BattleController.ctrlChara.AI.endAction();
+	}else{
+		var statusView = new BattleCharacterStatusView(LMvc.BattleController,BattleController.ctrlChara);
+		var exp = calculateExp(BattleController.ctrlChara, dieChara) * 3;
+		statusView.push(BattleCharacterStatusConfig.EXP, exp);
+		
+		statusView.addEventListener(BattleCharacterStatusEvent.CHANGE_COMPLETE,function(){
+			BattleController.ctrlChara.AI.endAction();
+		});
+		LMvc.BattleController.view.baseLayer.addChild(statusView);
+		statusView.startTween();
+	}
+	//BattleController.ctrlChara.AI.endAction();
 };
 SingleCombatCharacterView.prototype.fail = function(event){
 	var self = this, obj;

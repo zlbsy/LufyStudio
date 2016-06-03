@@ -221,9 +221,6 @@ SeigniorExecute.prototype.areaJobRun=function(area){
 		chara = generals[i];
 		chara.isPrized(false);
 		job = chara.job();
-		if(chara.seigniorId() == 1){
-			console.log(chara.name(), job);
-		}
 		switch(job){
 			case Job.MOVE:
 				list.push(chara);

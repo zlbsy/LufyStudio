@@ -719,16 +719,16 @@ function experienceToFeat(characterModels){
 	}
 	//var seignior = characterModels[0].seignior();
 	//seignior.exp(seignior.exp() + sumExp);
-	average = sumExp / datas.length;
-	var feat = average * 0.1;
-	var minFeat = feat > 20 ? 10 : 5;
+	var average = sumExp / datas.length;
+	var feat = average * 0.2;
+	var minFeat = feat > 20 ? 15 : 10;
 	var rewardValue = 1.5;
 	datas = datas.sort(function(a,b){return b.exp - a.exp;});
 	for(var i=0,l=datas.length;i<l;i++){
 		var data = datas[i];
 		data.feat = feat;
-		if(data.feat < 10){
-			data.feat = 10;
+		if(data.feat < minFeat){
+			data.feat = minFeat;
 		}
 		if(data.exp >= average * rewardValue && data.exp > 50){
 			data.feat += feat * (data.exp / average  - rewardValue);

@@ -1,7 +1,7 @@
 var GroupSkillAffectionId = 1;
 var GroupSkillsData = [
 {id:1,name:"父子同心",members:[],probability:40,correctionFactor:1.3}//父子
-,{id:2,name:"桃园情谊",group:[1,2,3],probability:20,correctionFactor:1.6}//刘关张
+,{id:2,name:"桃园情谊",group:[4,19,21],probability:35,correctionFactor:1.6}//刘关张
 ,{id:3,name:"让你尝尝河北名将<颜良文丑>的厉害。",group:[147,205],probability:30,correctionFactor:1.4}//颜良文丑
 ,{id:4,name:"虎痴恶来",group:[33,74],probability:30,correctionFactor:1.4}//许褚典韦
 ,{id:5,name:"将门虎子，承我父志！",group:[153,154],probability:30,correctionFactor:1.4}//张苞关兴
