@@ -6,6 +6,7 @@ function SeigniorExecute(){
 	self.areaIndex = 0;
 	self.areaAIIndex = 0;
 	self.eventCitys = [];
+	self.captivesChecked = [];
 	self.childsCheckedCitys = [];
 	if(!self.timer){
 		self.timer = new LTimer(LGlobal.speed, 1);
@@ -38,7 +39,9 @@ SeigniorExecute.getSaveData = function(){
 		areaIndex:self.areaIndex,
 		stop:self.stop,
 		seigniors:self.seigniors,
-		citys:self.citys
+		citys:self.citys,
+		childsCheckedCitys:self.childsCheckedCitys,
+		captivesChecked:self.captivesChecked
 	};
 	return data;
 };
@@ -53,6 +56,8 @@ SeigniorExecute.setSaveData = function(data){
 	self.stop = data.stop;
 	self.seigniors = data.seigniors;
 	self.citys = data.citys;
+	self.childsCheckedCitys = data.childsCheckedCitys;
+	self.captivesChecked = data.captivesChecked;
 };
 SeigniorExecute.removeSeignior=function(seigniorId){
 	var self = SeigniorExecute.Instance();
@@ -141,6 +146,7 @@ SeigniorExecute.run=function(){
 	self.timeAdded = false;
 	self.eventCitys = [];
 	self.childsCheckedCitys = [];
+	self.captivesChecked = [];
 	SeigniorExecute.running = false;
 	var buttonClose = self.backLayer.childList.find(function(child){
 		return child.constructor.name == "LButton";
@@ -377,7 +383,7 @@ SeigniorExecute.prototype.areaCharacterDieRun=function(area){
 SeigniorExecute.prototype.areaAIRun=function(areaModel){
 	var self = this;
 	if(LMvc.chapterData.month == 2){
-		if(self.childsCheckedCitys.indexOf() < 0){
+		if(self.childsCheckedCitys.indexOf(areaModel.id()) < 0){
 			var growup = childsHasGrowup(areaModel);
 			if(growup){
 				self.stop = true;

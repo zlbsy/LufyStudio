@@ -62,9 +62,9 @@ var BattleCharacterSize = {
 var CharacterFaceSize = {
 	width:220,height:320
 };
-var CharacterExpConfig = {
-	seignior:2000,
-	general:200
+var CharacterLevelConfig = {
+	initLevel:3,
+	exp:100
 };
 
 var DefCharacterList = {

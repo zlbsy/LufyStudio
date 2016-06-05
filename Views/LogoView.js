@@ -90,6 +90,7 @@ LogoView.prototype.showMenu=function(){
 	
 	menuY += menuHeight;
 	var buttonCreate = getSizeButton(Language.get("create_character"),200, 45);
+	buttonCreate.name = productIdConfig.createCharacter;
 	buttonCreate.y = menuY;
 	menuLayer.addChild(buttonCreate);
 	if(!purchaseHasBuy(productIdConfig.createCharacter)){
@@ -143,10 +144,11 @@ LogoView.prototype.createCharacter=function(button){
 	var self = this;
 	if(button.getChildByName("lock")){
 		if(LPlugin.native){
-			purchaseConfirm(productIdConfig.createCharacter, Language.get("create_character"), function(){
-				var lock = button.getChildByName("lock");
-				lock.remove();
-				self.createCharacter(button);
+			purchaseConfirm(productIdConfig.createCharacter, Language.get("create_character"), function(productId){
+				var currentButton = self.topMenuLayer.getChildByName(productId);
+				var currentLock = currentButton.getChildByName("lock");
+				currentLock.remove();
+				self.createCharacter(currentButton);
 			});
 		}else{
 			purchaseConfirm(null, Language.get("create_character"), function(){
@@ -176,6 +178,7 @@ LogoView.prototype.showChapterListChild=function(chapter, menuLayer, x, y){
 	var title = chapter.year + " " + Language.get("chapter_"+chapter.id);
 	var buttonChapter = getSizeButton(title,200, 45);
 	buttonChapter.chapterId = chapter.id;
+	buttonChapter.name = productIdConfig["chapter_"+chapter.id];
 	if(chapter.lock){
 		if(!purchaseHasBuy(productIdConfig["chapter_" + chapter.id])){
 			lockedButton(buttonChapter);
@@ -191,6 +194,7 @@ LogoView.prototype.showChapterList=function(list){
 	var menuHeight = 48;
 	var menuY = 0;
 	var menuLayer = new LSprite();
+	menuLayer.name = "menuLayer";
 	menuLayer.tx = (LGlobal.width - 200) * 0.5;
 	self.addChild(menuLayer);
 	var i = 0;
@@ -240,13 +244,16 @@ LogoView.prototype.showChapterRun=function(button){
 	if(!button.chapterId){
 		return;
 	}
-	if(button.getChildByName("lock")){
+	var lockMark = button.getChildByName("lock");
+	if(lockMark){
 		var name = String.format(Language.get("new_script"), Language.get("chapter_"+button.chapterId));
 		if(LPlugin.native){
-			purchaseConfirm(productIdConfig["chapter_"+button.chapterId], name, function(){
-				var lock = button.getChildByName("lock");
-				lock.remove();
-				self.showChapterRun(button);
+			purchaseConfirm(button.name, name, function(productId){
+				var menuLayer = self.getChildByName("menuLayer");
+				var currentButton = menuLayer.getChildByName(productId);
+				var currentLock = currentButton.getChildByName("lock");
+				currentLock.remove();
+				self.showChapterRun(currentButton);
 			});
 		}else{
 			purchaseConfirm(null, name, function(){

@@ -473,6 +473,8 @@ Language.data = {
 	
 	
 	"null":"无",
+	"confirm":"确认",
+	"ask_single_combat_confirm":"是否接受与敌将单挑？\n敌 {0} 武力:{1} HP:{2}\n我 {3} 武力:{4} HP:{5}",
 	"single_combat_ask":"敌将{0}敢与我大战三百回合吗？",
 	"single_combat_answer_ok":"那就让你做我的刀下鬼吧！",
 	"single_combat_answer_no":"你还不配和我交手!",

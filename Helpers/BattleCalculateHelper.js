@@ -505,6 +505,12 @@ function calculateExp(attChara,hertChara){
 	return exp;
 }
 function calculateAskSingleCombat(chara, target){
+	if(chara.data.force() < 60){
+		return false;
+	}
+	if(!battleCanAttackCharacter(target, chara)){
+		return false;
+	}
 	var charaValue = chara.data.force()*3 + chara.data.HP();
 	var targetValue = target.data.force()*3 + target.data.HP();
 	var value = charaValue - targetValue;
@@ -513,7 +519,7 @@ function calculateAskSingleCombat(chara, target){
 	}else if(value <= 0){
 		return Math.fakeRandom() < 0.05; 
 	}else if(value <= 15){
-		return Math.fakeRandom() < 1; 
+		return Math.fakeRandom() < 0.2; 
 	}else if(value <= 30){
 		return Math.fakeRandom() < 0.05; 
 	}else if(value <= 50){

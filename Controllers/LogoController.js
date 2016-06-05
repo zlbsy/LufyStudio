@@ -72,21 +72,17 @@ LogoController.prototype.startAnimation=function(){
 };
 LogoController.prototype.start=function(event){
 	var self = event.target.parent.controller;
-	//TODO::测试用
-	/*LPlugin.openStamp(17);
-	LPlugin.openStamp(18);
-	LPlugin.openStamp(19);
-	LPlugin.openEvent(1);
-	LPlugin.openEvent(2);
-	LPlugin.openEvent(3);*/
 	if(LPlugin.native){
 		LMvc.keepLoading(true);
-		if(!LPlugin.GetData("purchaseLog"), null){
+		var purchaseLog = LPlugin.GetData("purchaseLog", null);
+		if(!purchaseLog){
 			LMvc.changeLoading(TranslucentLoading);
 			purchaseLogGet(function(){
+				self.dispatchEvent(LController.NOTIFY);
 				self.updateCheck();
 			});
 		}else{
+			self.dispatchEvent(LController.NOTIFY);
 			self.updateCheck();
 		}
 	}else{
@@ -100,6 +96,7 @@ LogoController.prototype.start=function(event){
 			LPlugin.SetData("purchaseLog", datas);
 			//self.updateCheck();
 		}
+		self.dispatchEvent(LController.NOTIFY);
 	}
 	if(!LPlugin.native && LSound.webAudioEnabled){
 		if(LPlugin.soundData){
@@ -139,7 +136,6 @@ LogoController.prototype.start=function(event){
 		];
 		LLoadManage.load(soundDatas, null, self.soundComplete);
 	}
-	self.dispatchEvent(LController.NOTIFY);
 };
 LogoController.prototype.soundComplete = function(result){
 	LPlugin.soundData = result;
@@ -148,7 +144,7 @@ LogoController.prototype.updateCheck = function(){
 	var self = this;
 	LAjax.post(LMvc.updateURL + "index.php",{},function(data){
 		data = JSON.parse(data);
-		if(LPlugin.dataVer() >= data.ver){
+		if(LPlugin.dataVer() >= LPlugin.dataVer(data.ver)){
 			LMvc.keepLoading(false);
 			return;
 		}

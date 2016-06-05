@@ -80,7 +80,8 @@ BattleResultView.prototype.failInit=function(){
 		self.addEventListener(BattleResultEvent.CLOSE_EXP, self.enemyCaptiveFail);
 	}else{
 		self.winSeigniorId = battleData.fromCity.seigniorCharaId();
-		if(self.enemyLeader.data.isTribeCharacter()){
+		var isTribeCharacter = battleData.fromCity.seignior().character().isTribeCharacter();
+		if(isTribeCharacter){
 			self.addEventListener(BattleResultEvent.CLOSE_EXP, self.lossOfResources);
 			self.addEventListener(BattleResultEvent.LOSS_OF_OCCUPY, self.showMap);
 		}else{
@@ -96,11 +97,12 @@ BattleResultView.prototype.lossOfResources=function(event){
 	//外族兵力及资源撤回
 	var characters = self.controller.view.charaLayer.getCharactersFromBelong(Belong.ENEMY);
 	attackResourcesReturnToCity(characters, battleData, battleData.fromCity);
+	self.message = String.format(Language.get("dialog_tribe_invasion_self_message"), battleData.toCity.name());
 	//{0}被外族入侵，城池遭到破坏，资源损失严重!
 	var view = new BattleResultConfirmView(self.controller, 
 		{
 			confirmType : BattleFailConfirmType.lossOfResources, 
-			message : String.format(Language.get("dialog_tribe_invasion_self_message"), battleData.toCity.name())
+			message : self.message
 		}
 	);
 	self.addChild(view);
@@ -312,6 +314,10 @@ BattleResultView.prototype.showMap=function(event){
 BattleResultView.prototype.changeCharactersStatus=function(){
 	var self = this;
 	var battleData = self.controller.battleData;
+	var isTribeCharacter = battleData.fromCity.seignior().character().isTribeCharacter();
+	if(isTribeCharacter){
+		return;
+	}
 	var characters;
 	if(battleData.fromCity.seigniorCharaId() == LMvc.selectSeignorId){
 		characters = battleData.expeditionCharacterList;

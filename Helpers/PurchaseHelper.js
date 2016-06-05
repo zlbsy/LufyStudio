@@ -7,7 +7,9 @@ function purchaseLogGet(callback) {
 			log = data.receipt.in_app;
 		}
 		LPlugin.SetData("purchaseLog", log);
-		callback();
+		if(callback){
+			callback();
+		}
 	});
 	purchase.purchaseLog();
 }
@@ -24,22 +26,18 @@ function purchaseProductInformation(callback) {
 }
 
 function purchaseStart(productId, callback) {
-	if (!GameCacher.getData("productInformation")) {
-		purchaseProductInformation(function() {
-			purchaseCreateCharacter(callback);
-		});
-		return;
-	}
 	var purchase = LPurchase.Instance();
 	purchase.addEventListener(LPurchase.PURCHASE_COMPLETE,function(event){
 		if(event.status == 0){
 			//error
 		}
-		var data = event.target;
 		//success
-		callback();
+		var data = event.target;
+		callback(data.productId);
+		//purchase log update
+		purchaseLogGet();
 	});
-	purchase.purchase(productIdConfig.createCharacter);
+	purchase.purchase(productId);
 }
 
 function purchaseHasBuy(productId) {

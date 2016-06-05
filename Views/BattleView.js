@@ -34,6 +34,7 @@ BattleView.prototype.init=function(){
 		self.addEventListener(LEvent.ENTER_FRAME, self.onframe);
 		return;
 	}
+	return;
 	self.addChildAt(getBlackBitmap(LGlobal.width, LGlobal.height), 0);
 	var baseLayer = self.baseLayer;
 	baseLayer.y = (LGlobal.height - map.height) * 0.5;

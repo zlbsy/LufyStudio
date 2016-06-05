@@ -95,9 +95,9 @@ CityView.prototype.buildLayerInit=function(){
 	self.buildLayer.addChild(official);
 	var iconAppoint = new LBitmap(new LBitmapData(LMvc.datalist["icon-appoint"]));
 	iconAppoint.name = "official";
-	iconAppoint.x = official.x + (official.getWidth() - iconAppoint.getWidth()) * 0.5;
-	iconAppoint.y = official.y + (official.getHeight() - iconAppoint.getHeight()) * 0.5;
-	self.buildLayer.addChild(iconAppoint);
+	iconAppoint.x = (official.getWidth() - iconAppoint.getWidth()) * 0.5;
+	iconAppoint.y = (official.getHeight() - iconAppoint.getHeight()) * 0.5;
+	official.addChild(iconAppoint);
 	self.iconAppoint = iconAppoint;
 	self.iconAppoint.visible = self.controller.getValue("isAppoint");
 	

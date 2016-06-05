@@ -100,6 +100,7 @@ BattleMainMenuView.prototype.setMenu=function(){
 	menuButton.addEventListener(LMouseEvent.MOUSE_UP, self.clickCharacterList);
 	menuY += menuHeight;
 	var menuButton = getButton(Language.get("game_save"),menuWidth);
+	self.gameSaveButton = menuButton;
 	if(!purchaseHasBuy(productIdConfig.saveReport)){
 		lockedButton(menuButton);
 	}
@@ -168,16 +169,17 @@ BattleMainMenuView.prototype.boutEnd=function(event){
 BattleMainMenuView.prototype.onClickGameSave=function(event){
 	var button = event.currentTarget;
 	var self = button.getParentByConstructor(BattleMainMenuView);
-	self.hideMenu();
 	self.toGameSave(button);
 };
 BattleMainMenuView.prototype.toGameSave=function(button){
 	var self = this;
-	if(button.getChildByName("lock")){
+	var lockMark = button.getChildByName("lock");
+	if(lockMark){
 		if(LPlugin.native){
-			purchaseConfirm(productIdConfig.saveReport, Language.get("battle_save_record"), function(){
-				LMvc.changeLoading(TranslucentLoading);
-				self.load.library(["GameManager"],self.gameSave);
+			purchaseConfirm(productIdConfig.saveReport, Language.get("battle_save_record"), function(productId){
+				var currentLock = self.gameSaveButton.getChildByName("lock");
+				currentLock.remove();
+				self.toGameSave(self.gameSaveButton);
 			});
 		}else{
 			purchaseConfirm(null, Language.get("battle_save_record"), function(){
@@ -186,7 +188,7 @@ BattleMainMenuView.prototype.toGameSave=function(button){
 		}
 		return;
 	}
-	LMvc.changeLoading(TranslucentLoading);
+	self.hideMenu();
 	self.load.library(["GameManager"],self.gameSave);
 };
 BattleMainMenuView.prototype.gameSave=function(){

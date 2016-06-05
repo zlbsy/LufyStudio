@@ -61,6 +61,7 @@ MapView.prototype.mapInit=function(){
 		self.backgroundWidth - LGlobal.width,
 		self.backgroundHeight - LGlobal.height
 	);
+	self.toPosition();
 	self.backLayer.addEventListener(LMouseEvent.MOUSE_DOWN,self.areaDragStart);
 	self.backLayer.addEventListener(LMouseEvent.MOUSE_UP,self.areaDragStop);
 };
@@ -90,8 +91,10 @@ MapView.prototype.positionChangeToCity=function(city){
 };
 MapView.prototype.toPosition=function(x, y){
 	var self = this;
-	self.baseLayer.x = LGlobal.width * 0.5 - x - CityIconConfig.width * 0.5;
-	self.baseLayer.y = LGlobal.height * 0.5 - y - CityIconConfig.height * 0.3;
+	if(typeof x != UNDEFINED && typeof y != UNDEFINED){
+		self.baseLayer.x = LGlobal.width * 0.5 - x - CityIconConfig.width * 0.5;
+		self.baseLayer.y = LGlobal.height * 0.5 - y - CityIconConfig.height * 0.3;
+	}
 	if(self.baseLayer.x > 0){
 		self.baseLayer.x = 0;
 	}else if(self.baseLayer.x < LGlobal.width - self.backgroundWidth){

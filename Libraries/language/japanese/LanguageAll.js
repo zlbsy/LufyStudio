@@ -473,6 +473,8 @@ Language.data = {
 	
 	
 	"null":"无",
+	"confirm":"確認",
+	"ask_single_combat_confirm":"一騎討ちを受け取りますか？\n敵方 {0} 武力:{1} HP:{2}\n味方 {3} 武力:{4} HP:{5}",
 	"single_combat_ask":"敵将{0}、勝負せよ！",
 	"single_combat_answer_ok":"おおっ、心得だ！",
 	"single_combat_answer_no":"今はその時間ではない!",
@@ -493,8 +495,6 @@ Language.data = {
 	"expedition_defense_quantity_message":"防衛戦は最大武将数が{0}になります",
 	"riot_message":"{0}にいる群衆は不満が爆発して、暴動起きました!",
 	"no_food_talk":"やばい！食糧がなくなったから、兵士の戦闘力が下降しました。",
-	"purchase_confirm_native_message":"<font size='21' color='#FFFFFF'><font color='#FF0000'>{0}</font>を解放する、必要なお金は<font color='#FF0000'>{1}</font>です、よろしいですか?</font>",
-	"purchase_confirm_web_message":"<font size='21' color='#FFFFFF'>今のバージョンは<font color='#FF0000'>{0}</font>という機能が使えません、ネーティブ版<font color='#FF0000'>をダウンロードしてください。</font>!</font>",
 	"child_growup":"<font size='22' color='#FFFFFF'><font color='#FF0000'> {0} </font>が大人になったから、<font color='#FF0000'> {1} </font>に従って、味方に参加しました！</font>"
 };
 Language.itemData = {

@@ -158,6 +158,7 @@ CharacterModel.prototype.setDatas=function(charaData){
 		self.data.isPrized = charaData.isPrized;
 	}
 	if(charaData.equipments){
+		self.data.equipments = [];
 		self.equip(charaData.equipments);
 	}
 };
@@ -269,7 +270,7 @@ CharacterModel.prototype.calculation = function(init) {
 	var property = currentSoldiers.property();
 	/*************
 	兵力,MP,策略,使用武将等级,功绩100一级
-	五围,使用君主等级,总功绩2000一级
+	五围,使用君主等级
 	简单:敌军君主等级低于我军
 	普通:敌军君主等级等于我军
 	困难:敌军君主等级高于我军
@@ -570,7 +571,7 @@ CharacterModel.prototype.lv = function() {
 	return this.level();
 };
 CharacterModel.prototype.level = function() {
-	return (this.data.feat / CharacterExpConfig.general >>> 0) + 3;
+	return (this.data.feat / CharacterLevelConfig.exp >>> 0) + CharacterLevelConfig.initLevel;
 };
 CharacterModel.prototype.strategies = function(isAll) {
 	var self = this;
@@ -743,7 +744,7 @@ CharacterModel.prototype.moveTo = function(cityId) {
 		var prefectureCharacter = generals.find(function(child){
 			return child.id() == area.prefecture();
 		});
-		if(self.feat() - 200 > prefectureCharacter.feat()){
+		if(!prefectureCharacter || self.feat() - 200 > prefectureCharacter.feat()){
 			area.prefecture(self.id());
 		}
 	}else{
@@ -998,9 +999,11 @@ CharacterModel.prototype.skill = function(type) {
 	if(type && skill.mainType() != type){
 		return null;
 	}
-	var rand = Math.fakeRandom();
-	if(type && rand > skill.probability()*0.01){
-		return null;
+	if(skill.probability() < 100){
+		var rand = Math.fakeRandom();
+		if(type && rand > skill.probability()*0.01){
+			return null;
+		}
 	}
 	return skill;
 };

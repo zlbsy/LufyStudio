@@ -21,6 +21,8 @@ Language.dataSimple = {
 	"generals":"武将",
 	"confirm":"确认",
 	"preparing":"準備中",
+	"purchase_confirm_native_message":"<font size='21' color='#FFFFFF'><font color='#FF0000'>{0}</font>を解放する、必要なお金は<font color='#FF0000'>{1}</font>です、よろしいですか?</font>",
+	"purchase_confirm_web_message":"<font size='21' color='#FFFFFF'>今のバージョンは<font color='#FF0000'>{0}</font>という機能が使えません、ネーティブ版<font color='#FF0000'>をダウンロードしてください。</font>!</font>",
 	"select_seignior_message":"<font size='22' color='#FFFFFF'>勢力 <font color='#FF0000'>{0}</font> を選択しますか？</font>",
 	"chapter_1":"黄巾の乱",
 	"chapter_2":"反董卓連合",

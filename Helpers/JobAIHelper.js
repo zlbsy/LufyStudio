@@ -127,8 +127,12 @@ function jobAiToBattle(areaModel,characters,targetCity){
 				LMvc.CityController.setValue("cityData",areaModel);
 				LMvc.CityController.setValue("toCity",targetCity);
 				LMvc.CityController.setValue("expeditionEnemyData",data);
-				
-				LMvc.CityController.loadCharacterList(CharacterListType.EXPEDITION,targetCity.generals(Job.IDLE), {buttonLabel:"execute"});
+				if(targetCity.troops() > 0){
+					LMvc.CityController.loadCharacterList(CharacterListType.EXPEDITION,targetCity.generals(Job.IDLE), {buttonLabel:"execute"});
+				}else{
+					LMvc.CityController.setValue("battleData",{food:0, money:0, troops:0});
+					LMvc.CityController.gotoBattle();
+				}
 			});
 		}};
 		var windowLayer = ConfirmWindow(obj);
@@ -296,7 +300,7 @@ function jobAiAccess(areaModel,characters){//访问
 	if(characters.length == 0){
 		return;
 	}
-	SeigniorExecute.Instance().areaMessage(areaModel, "jobai_tavern_message");
+	//SeigniorExecute.Instance().areaMessage(areaModel, "jobai_tavern_message");
 	jobAiInternal(areaModel,characters,0,Job.ACCESS);
 }
 function jobAiLevelUpCity(areaModel,characters){//升级城池
@@ -330,7 +334,7 @@ function jobAiInternal(areaModel,characters,price,job){//内政
 	if(price > 0 && areaModel.money() < price){
 		return;
 	}
-	SeigniorExecute.Instance().areaMessage(areaModel, "jobai_internal_message");//{0}的{1}在发展内政!
+	//SeigniorExecute.Instance().areaMessage(areaModel, "jobai_internal_message");//{0}的{1}在发展内政!
 	var character = characters.shift();
 	character.job(job);
 	if(price > 0){
@@ -533,6 +537,14 @@ function jobAiCaptivesRescue(areaModel,characters){//解救俘虏
 	}
 	//console.log("jobAiCaptivesRescue :: 解救俘虏");
 	var captives = SeigniorModel.getCharactersIsCaptives(areaModel.seigniorCharaId());
+	var captivesChecked = SeigniorExecute.Instance().captivesChecked;
+	var noCheckedCaptives = [];
+	for(var i=0, l=captives.length;i<l;i++){
+		if(captivesChecked.indexOf(captives[i].id()) < 0){
+			noCheckedCaptives.push(captives[i]);
+		}
+	}
+	captives = noCheckedCaptives;
 	if(captives.length == 0){
 		return false;
 	}
@@ -550,6 +562,7 @@ function jobAiCaptivesRescue(areaModel,characters){//解救俘虏
 	if(areaModel.money() < money){
 		return false;
 	}
+	SeigniorExecute.Instance().captivesChecked.push(captive.id());
 	var captiveArea = captive.city();
 	if(captiveArea.seigniorCharaId() == LMvc.selectSeignorId){
 		character.job(Job.End);
