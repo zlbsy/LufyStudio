@@ -487,7 +487,7 @@ seigniors : [
     out_of_offices:[
     ],
     not_debut:[
-    {chara_id:10,name:"诸葛亮",year:207},
+    {chara_id:10,name:"诸葛亮",year:207,equipments:[{"item_id":44,"count":1}]},
     {chara_id:47,name:"司马师",year:225},
     {chara_id:52,name:"司马昭",year:230},
     {chara_id:209,name:"杨济",year:244},

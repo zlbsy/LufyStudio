@@ -27,7 +27,7 @@ seigniors : [
     not_debut:[
     {chara_id:16,name:"司马懿",year:200},
     {chara_id:46,name:"满宠",year:189},
-    {chara_id:74,name:"典韦",year:190},
+    {chara_id:74,name:"典韦",year:190,equipments:[{"item_id":27,"count":1}]},
     {chara_id:211,name:"司马孚",year:198},
     {chara_id:260,name:"程武",year:219},
     {chara_id:311,name:"毛玠",year:190},
@@ -519,7 +519,7 @@ seigniors : [
     {chara_id:78,name:"刘晔",year:193},
     {chara_id:93,name:"程昱",year:190},
     {chara_id:121,name:"马隆",year:248},
-    {chara_id:148,name:"郭嘉",year:188},
+    {chara_id:148,name:"郭嘉",year:188,equipments:[{"item_id":47,"count":1}]},
     {chara_id:201,name:"夏侯恩",year:198},
     {chara_id:254,name:"吕虔",year:191},
     {chara_id:461,name:"伊籍",year:190},
@@ -920,7 +920,7 @@ seigniors : [
     out_of_offices:[
     ],
     not_debut:[
-    {chara_id:10,name:"诸葛亮",year:207},
+    {chara_id:10,name:"诸葛亮",year:207,equipments:[{"item_id":44,"count":1}]},
     {chara_id:20,name:"徐庶",year:200},
     {chara_id:47,name:"司马师",year:225},
     {chara_id:52,name:"司马昭",year:230},

@@ -19,7 +19,7 @@ seigniors : [
     {chara_id:31,name:"于禁",year:184},
     {chara_id:40,name:"吴懿",year:184},
     {chara_id:46,name:"满宠",year:189},
-    {chara_id:74,name:"典韦",year:184},
+    {chara_id:74,name:"典韦",year:184,equipments:[{"item_id":27,"count":1}]},
     {chara_id:103,name:"曹昂",year:191},
     {chara_id:141,name:"臧霸",year:184},
     {chara_id:172,name:"吴班",year:189},
@@ -104,7 +104,7 @@ seigniors : [
     out_of_offices:[
     ],
     not_debut:[
-    {chara_id:148,name:"郭嘉",year:188},
+    {chara_id:148,name:"郭嘉",year:188,equipments:[{"item_id":47,"count":1}]},
     {chara_id:157,name:"刘劭",year:213},
     {chara_id:192,name:"辛毗",year:184},
     {chara_id:220,name:"司马攸",year:266},
@@ -201,9 +201,9 @@ seigniors : [
     {chara_id:616,name:"刘璋",feat:0,loyalty:100},
     ],
     out_of_offices:[
-    {chara_id:4,name:"关羽"},
-    {chara_id:19,name:"张飞"},
-    {chara_id:21,name:"刘备"},
+    {chara_id:4,name:"关羽",equipments:[{"item_id":18,"count":1}]},
+    {chara_id:19,name:"张飞",equipments:[{"item_id":17,"count":1}]},
+    {chara_id:21,name:"刘备",equipments:[{"item_id":22,"count":1}]},
     {chara_id:558,name:"吴巨"},
     ],
     not_debut:[
@@ -238,7 +238,7 @@ seigniors : [
     not_debut:[
     {chara_id:5,name:"张辽",year:188},
     {chara_id:12,name:"徐晃",year:186},
-    {chara_id:18,name:"吕布",year:184},
+    {chara_id:18,name:"吕布",year:184,equipments:[{"item_id":16,"count":1},{"item_id":71,"count":1}]},
     {chara_id:27,name:"高顺",year:184},
     {chara_id:30,name:"李典",year:190},
     {chara_id:55,name:"韩浩",year:184},
@@ -604,7 +604,7 @@ seigniors : [
     out_of_offices:[
     ],
     not_debut:[
-    {chara_id:10,name:"诸葛亮",year:207},
+    {chara_id:10,name:"诸葛亮",year:207,equipments:[{"item_id":44,"count":1}]},
     {chara_id:20,name:"徐庶",year:200},
     {chara_id:47,name:"司马师",year:225},
     {chara_id:52,name:"司马昭",year:230},
