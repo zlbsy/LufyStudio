@@ -125,6 +125,11 @@ if(!LPlugin.preferredLanguage){
 if(!LPlugin.print){
 	LPlugin.print = trace;
 }
+if(!LPlugin.openURL){
+	LPlugin.openURL = function(url){trace("open");
+		window.open(url);
+	};
+}
 LPlugin.volumeSE = 0;
 LPlugin.volumeBGM = 0;
 LPlugin.sounds = {};

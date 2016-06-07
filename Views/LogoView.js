@@ -122,13 +122,28 @@ LogoView.prototype.showMenu=function(){
 		buttonJapanese.staticMode = true;
 		buttonChinese.addEventListener(LMouseEvent.MOUSE_UP, self.changeLanguage);
 	}
+	var forumLayer = new LSprite();
+	var forumLabel = getStrokeLabel("交流/意見",20,"#FFFFFF","#000000",4);
+	forumLayer.graphics.drawRect(0,"#000000",[0,0,forumLabel.getWidth(),forumLabel.getHeight()]);
+	forumLayer.graphics.drawLine(2,"#000000",[0,forumLabel.getHeight()+2,forumLabel.getWidth(),forumLabel.getHeight()+2]);
+	forumLayer.addChild(forumLabel);
+	forumLayer.x = LGlobal.width - menuLayer.x - forumLabel.getWidth() - 10;
+	forumLayer.y = menuY - 60;
+	menuLayer.addChild(forumLayer);
+	forumLayer.addEventListener(LMouseEvent.MOUSE_UP, self.clickForum);
+	
 	var verLabel = getStrokeLabel("Ver." + LMvc.ver,20,"#FFFFFF","#000000",4);
 	verLabel.x = LGlobal.width - menuLayer.x - verLabel.getWidth() - 10;
-	verLabel.y = menuY - verLabel.getHeight() - 10;
+	verLabel.y = menuY - 25;
 	menuLayer.addChild(verLabel);
+	
+	
 	menuLayer.y = LGlobal.height - menuY;
 	
 	self.topMenuLayer = menuLayer;
+};
+LogoView.prototype.clickForum=function(event){
+	LPlugin.openURL(LMvc.forumURL);
 };
 LogoView.prototype.tutorialChick=function(event){
 	var button = event.currentTarget;
