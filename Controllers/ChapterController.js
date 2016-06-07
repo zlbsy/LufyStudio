@@ -53,7 +53,7 @@ ChapterController.prototype.mapLoadComplete=function(){
 	var self = this;
 	LMvc.chapterController = self;
 	var map = new MapController();
-	self.view.parent.addChild(map.view);
+	LMvc.stageLayer.addChild(map.view);
 };
 ChapterController.prototype.loadCreateSetting=function(){
 	var self = this;
@@ -65,5 +65,5 @@ ChapterController.prototype.loadCreateSettingComplete=function(){
 	LMvc.chapterController = self;
 	var createSetting = new CreateSettingController();
 	createSetting.view.x = self.view.x;
-	self.view.parent.addChild(createSetting.view);
+	LMvc.stageLayer.addChild(createSetting.view);
 };

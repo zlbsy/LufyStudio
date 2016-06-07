@@ -34,9 +34,7 @@ CharacterDetailedTabEquipmentView.prototype.showEquipments=function(){
 		if(equipment){
 			icon = equipment.icon(new LPoint(iconSize,iconSize));
 			icon.removeItemId = equipment.id();
-			if(!LMvc.BattleController && characterModel.seigniorId() == LMvc.selectSeignorId){
-				icon.addEventListener(LMouseEvent.MOUSE_UP,self.removeEquipment);
-			}
+			icon.addEventListener(LMouseEvent.MOUSE_UP,self.confirmEquipment);
 		}else{
 			icon = new LPanel(new LBitmapData(LMvc.datalist["win03"]),iconSize,iconSize);
 		}
@@ -72,7 +70,7 @@ CharacterDetailedTabEquipmentView.prototype.dressEquipment=function(event){
 	e.characterModel = characterModel;
 	characterListView.dispatchEvent(e);
 };
-CharacterDetailedTabEquipmentView.prototype.removeEquipment=function(event){
+CharacterDetailedTabEquipmentView.prototype.confirmEquipment=function(event){
 	var icon = event.currentTarget;
 	var self = icon.getParentByConstructor(CharacterDetailedTabEquipmentView);
 	var characterModel = self.controller.getValue("selectedCharacter");
@@ -80,16 +78,26 @@ CharacterDetailedTabEquipmentView.prototype.removeEquipment=function(event){
 	var equipment = characterModel.equipments().find(function(child){
 		return child.id() == removeItemId;
 	});
+	var canRemove = (!LMvc.BattleController && characterModel.seigniorId() == LMvc.selectSeignorId);
 	var msg = String.format(Language.get("dialog_remove_equipment_confirm"),equipment.name());
+	if(!canRemove){
+		msg = String.format("<font color='#FF0000'>{0}</font>",equipment.name());
+	}
 	var params = equipment.params();
 	for(var i = 0;i < params.length;i++){
 		var key = params[i];
-		var format = "<font size='22' color='#FFFFFF'>{0} -{1}</font>";
+		var format = "<font size='22' color='#FFFFFF'>{0} "+(canRemove ? "-" : "+")+"{1}</font>";
 		msg += "\n" + String.format(format, Language.get(key), equipment.getParam(key));
 	}
 	
-	var obj = {title:Language.get("confirm"),messageHtml:msg,height:270,
-		okEvent:self.removeEquipmentRun,cancelEvent:null};
+	var obj = {title:Language.get("confirm"),messageHtml:msg,height:270};
+		
+	if(canRemove){
+		obj.okEvent = self.removeEquipmentRun;
+		obj.cancelEvent = null;
+	}else{
+		obj.okEvent = null;
+	}
 	var windowLayer = ConfirmWindow(obj);
 	var detailedView = self.getParentByConstructor(CharacterDetailedView);
 	detailedView.removeItemId = removeItemId;

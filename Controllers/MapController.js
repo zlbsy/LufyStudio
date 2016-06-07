@@ -36,7 +36,7 @@ MapController.prototype.menuLoad=function(){
 MapController.prototype.getAreaData=function(){
 	var self = this;
 	SoldierMasterModel.setMaster(SoldierDatas);
-	CharacterModel.setChara(characterList);
+	CharacterModel.setChara(characterListConfig);
 	ItemMasterModel.setMaster(ItemDatas);
 	StrategyMasterModel.setMaster(StrategyDatas);
 	ReputationModel.setReputation(reputationConfig);
