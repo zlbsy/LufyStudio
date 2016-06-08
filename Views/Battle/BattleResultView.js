@@ -16,6 +16,7 @@ function BattleResultView(controller, result){
 	//self.model.enemyList[0].isLeader = true;
 	//self.model.enemyCaptive.push(4);
 	
+	experienceToFeat(self.controller.battleData.expeditionEnemyCharacterList);
 	self.setEvent();
 	if(result){
 		self.winInit();
@@ -37,7 +38,6 @@ BattleResultView.prototype.winInit=function(){
 	var battleData = self.controller.battleData;
 	self.winSeigniorId = LMvc.selectSeignorId;
 	if(battleData.fromCity.seigniorCharaId() == LMvc.selectSeignorId){
-		experienceToFeat(battleData.expeditionEnemyCharacterList);
 		self.failSeigniorId = battleData.toCity.seigniorCharaId();
 		var city = battleData.toCity;
 		if(city.seigniorCharaId() > 0 && city.seignior().isTribe()){
@@ -212,10 +212,6 @@ BattleResultView.prototype.selfCaptiveFail=function(event){
 };
 BattleResultView.prototype.enemyCaptiveFail=function(event){
 	var self = event.currentTarget;
-	var battleData = self.controller.battleData;
-	if(event.eventType == BattleResultEvent.CLOSE_EXP){
-		experienceToFeat(battleData.expeditionEnemyCharacterList);
-	}
 	if(self.model.enemyCaptive.length == 0){
 		self.dispatchEvent(BattleResultEvent.CLOSE_FAIL_CAPTIVE_ENEMY);
 		return;

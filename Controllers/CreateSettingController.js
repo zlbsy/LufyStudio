@@ -45,7 +45,7 @@ CreateSettingController.prototype.getAreaData=function(){
 CreateSettingController.prototype.init=function(){
 	var self = this;
 	SoldierMasterModel.setMaster(SoldierDatas);
-	CharacterModel.setChara(characterList);
+	CharacterModel.setChara(characterListConfig);
 	SkillMasterModel.setMaster(SkillsData);
 	
 	LMvc.keepLoading(false);

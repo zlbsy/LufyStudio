@@ -490,6 +490,7 @@ Language.data = {
 	"sell_food_message":"卖出多少粮食？",
 	"use_money":"消耗金钱:{0}/{1}",
 	"get_money":"获得金钱:{0}",
+	"forum":"交流/意见",
 	"goto_execute_message":"结束战略部署\n确定吗？",
 	"expedition_attack_quantity_message":"攻城战最多只能{0}人出战！",
 	"expedition_defense_quantity_message":"防守战最多只能{0}人出战！",

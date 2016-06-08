@@ -37,11 +37,11 @@ and open the template in the editor.
 			LMvc.ver = "1.0.0";
 			LMvc.homeURL = "http://sgj.lufylegend.com/";
 			LMvc.updateURL = "http://sgj.lufylegend.com/update/iMahm5Z_Mhr2HaAFPuU2/";
-			LMvc.forumURL = "http://sgj.lufylegend.com/";
+			LMvc.forumURL = "http://lufylegend.com/forum/forum.php?mod=forumdisplay&fid=38";
 			if(typeof LPurchaseInit == "function"){
 				LPurchaseInit();
 			}
-			LGlobal.setDebug(true);
+			//LGlobal.setDebug(true);
 			if(LGlobal.mobile){
 				LGlobal.width = 480;
 				LGlobal.height = 480*window.innerHeight/window.innerWidth;
@@ -75,7 +75,7 @@ and open the template in the editor.
 					loadingLayer = null;
 					
 					LMvc.init();
-					//return;
+					return;
 					var fps = new FPS();
 					LTweenLiteTimeline.to(fps,1,{delay:1,alpha:0,loop:true}).to(fps,1,{delay:5,alpha:1});
 					addChild(fps);

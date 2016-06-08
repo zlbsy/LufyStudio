@@ -27,7 +27,7 @@ SingleCombatArenaController.prototype.mvcLoad=function(){
 };
 SingleCombatArenaController.prototype.init=function(){
 	var self = this;
-	CharacterModel.setChara(characterList);
+	CharacterModel.setChara(characterListConfig);
 	LMvc.keepLoading(false);
 	LMvc.SingleCombatArenaController = self;
 	self.fromController.view.visible = false;

@@ -64,6 +64,11 @@ LView.prototype.die = function() {
 	}
 };
 //////////////////////华丽的分界线////////////////////
+/*引擎中需调整*/
+LButton.prototype.ll_button_mode = function(){
+	return;
+};
+//////////////////////华丽的分界线////////////////////
 
 /*不需要加到引擎中，只在本游戏中使用*/
 LButton.prototype.setCursorEnabled = function(event) {

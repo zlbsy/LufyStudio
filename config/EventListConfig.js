@@ -537,7 +537,7 @@ var EventListConfig = [
 		seignior:0,
 		generals:[
 		],
-		feat_generals:{feat:10000,count:5,force:90},
+		feat_generals:{feat:5000,count:5,force:90},
 		citys:[
 		]
 	},
