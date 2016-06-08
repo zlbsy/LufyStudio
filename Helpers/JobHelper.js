@@ -164,8 +164,8 @@ function accessRun(characterModel){
 	var rand = Math.fakeRandom();
 	
 	var cityModel = characterModel.city();
+	console.log("accessRun : "+rand+">"+value + ","+value01 + ","+value02 + ","+value03);
 	if(rand > value){
-		//console.log("accessRun : 失败 能力不够");
 		if(characterModel.seigniorId() == LMvc.selectSeignorId && !cityModel.isAppoint()){
 			SeigniorExecute.addMessage(String.format(Language.get("accessFailMessage"),characterModel.name()));
 		}
@@ -174,7 +174,7 @@ function accessRun(characterModel){
 	}
 	var notDebut = cityModel.notDebut();
 	if(notDebut.length == 0){
-		//console.log("accessRun : 失败");
+		console.log("accessRun : 失败 notDebut.length="+notDebut.length+","+cityModel.data.not_debut);
 		if(characterModel.seigniorId() == LMvc.selectSeignorId && !cityModel.isAppoint()){
 			SeigniorExecute.addMessage(String.format(Language.get("accessFailMessage"),characterModel.name()));
 		}
@@ -875,6 +875,9 @@ function captivesChangeLoyalty(area){
 function generalsChangeLoyalty(generals){
 	for(var i=0;i<generals.length;i++){
 		var chara = generals[i];
+		if(chara.id() == chara.seigniorId()){
+			continue;
+		}
 		var parentConfig = charactersParentConfig.find(function(child){
 			return child.id == chara.id();
 		});

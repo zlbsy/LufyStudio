@@ -654,12 +654,14 @@ AreaModel.prototype.notDebut=function(force){
 	if(!notDebut || notDebut.length == 0){
 		return charas;
 	}
-	var month = LMvc.chapterController.getValue("month");
-	var year = LMvc.chapterController.getValue("year");
+	//var month = LMvc.chapterController.getValue("month");
+	//var year = LMvc.chapterController.getValue("year");
+	var month = LMvc.chapterData.month;
+	var year = LMvc.chapterData.year;
 	for(var i = 0, l = notDebut.length;i<l;i++){
 		var child = notDebut[i];
-		//console.log(child.year +"<="+ year +"&&"+ child.month +"<="+ month);
-		if(force || (child.year <= year && child.month <= month)){
+		//console.log(child.year+","+child.month+","+(child.year*100 + child.month) +"<="+ (year*100+month));
+		if(force || (child.year*100 + (child.month ? child.month : 0) <= year*100+month)){
 			charas.push(child.chara_id);
 		}
 	}

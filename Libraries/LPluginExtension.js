@@ -126,7 +126,7 @@ if(!LPlugin.print){
 	LPlugin.print = trace;
 }
 if(!LPlugin.openURL){
-	LPlugin.openURL = function(url){trace("open");
+	LPlugin.openURL = function(url){
 		window.open(url);
 	};
 }
