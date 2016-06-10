@@ -571,7 +571,11 @@ CharacterModel.prototype.lv = function() {
 	return this.level();
 };
 CharacterModel.prototype.level = function() {
-	return (this.data.feat / CharacterLevelConfig.exp >>> 0) + CharacterLevelConfig.initLevel;
+	var self = this;
+	if(self.isDefCharacter()){
+		return self.seigniorLevel();
+	}
+	return (self.data.feat / CharacterLevelConfig.exp >>> 0) + CharacterLevelConfig.initLevel;
 };
 CharacterModel.prototype.strategies = function(isAll) {
 	var self = this;
