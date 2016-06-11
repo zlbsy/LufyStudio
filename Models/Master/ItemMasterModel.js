@@ -121,8 +121,9 @@ ItemMasterModel.prototype.icon=function(size,callback){
 	var icon = new BitmapSprite(LMvc.IMG_PATH + "item/" + this.id() + ".png", null,size);
 	//var icon = new BitmapSprite(LMvc.IMG_PATH + "item/1.png", null,size);
 	if(typeof callback == "function")icon.addEventListener(LEvent.COMPLETE, callback);
-	var winPanel = new LPanel(new LBitmapData(LMvc.datalist["win06"]),size.x,size.y);
-	winPanel.cacheAsBitmap(true);
+	var winPanel = getPanel("win06",size.x,size.y);
+	//new LPanel(new LBitmapData(LMvc.datalist["win06"]),size.x,size.y);
+	//winPanel.cacheAsBitmap(true);
 	icon.addChild(winPanel);
 	LPlugin.openStamp(this.id());
 	return icon;

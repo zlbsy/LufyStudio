@@ -17,6 +17,7 @@ function BitmapSprite(src, rect, size){
 }
 BitmapSprite.prototype.loadOver = function(event){
 	var self = event.currentTarget.parent;
+	event.currentTarget.removeEventListener(LEvent.COMPLETE,self.loadOver);
 	var bitmapData = new LBitmapData(event.target);
 	if(self.rect){
 		bitmapData.setProperties(self.rect[0],self.rect[1],self.rect[2],self.rect[3]);

@@ -107,8 +107,9 @@ SoldierModel.prototype.icon=function(size,callback){
 	}
 	var icon = new BitmapSprite(LMvc.IMG_PATH + "character/s/"+imgIndex+".png", [64*18,0,64,64],size);
 	if(typeof callback == "function")icon.addEventListener(LEvent.COMPLETE, callback);
-	var winPanel = new LPanel(new LBitmapData(LMvc.datalist["win06"]),size.x,size.y);
-	winPanel.cacheAsBitmap(true);
+	var winPanel = getPanel("win06",size.x,size.y);
+	//var winPanel = new LPanel(new LBitmapData(LMvc.datalist["win06"]),size.x,size.y);
+	//winPanel.cacheAsBitmap(true);
 	icon.addChild(winPanel);
 	return icon;
 };

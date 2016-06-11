@@ -6,12 +6,19 @@ function EquipmentsChildView(itemModel, width){
 	self.iconWidth = 50;
 	self.iconHeight = 50;
 	self.layerInit();
-	self.set();
+	//self.set();
 }
 EquipmentsChildView.prototype.layerInit=function(){
 	var self = this;
 	self.layer = new LSprite();
 	self.addChild(self.layer);
+};
+EquipmentsChildView.prototype.updateView = function(bitmap, rectangle, point){
+	var self = this;
+	if(!self._ll_cacheAsBitmap){
+		self.set();
+	}
+	self.callParent("updateView",arguments);
 };
 EquipmentsChildView.prototype.getName=function(){
 	var self = this;
@@ -64,11 +71,14 @@ EquipmentsChildView.prototype.set=function(){
 	lblParams.text = txtParams;
 	self.drawLine();
 	
-	if(self.icon){
-		return;
+	if(!self.itemId || self.itemId != self.itemModel.id()){
+		if(self.icon){
+			self.icon.remove();
+		}
+		self.itemId =self.itemModel.id();
+		self.icon = self.itemModel.icon(new LPoint(self.iconWidth, self.iconHeight),self.iconComplete);
+		self.layer.addChild(self.icon);
 	}
-	self.icon = self.itemModel.icon(new LPoint(self.iconWidth, self.iconHeight),self.iconComplete);
-	self.layer.addChild(self.icon);
 };
 EquipmentsChildView.prototype.iconComplete=function(event){
 	var self = event.currentTarget.parent.parent;

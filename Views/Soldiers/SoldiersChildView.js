@@ -1,14 +1,23 @@
-function SoldiersChildView(soldierModel, characterModel,width){
+function SoldiersChildView(soldierModel, characterModel,width, soldiersView, index){
 	var self = this;
 	base(self, LListChildView, []);
 	self.soldierModel = soldierModel;
 	self.characterModel = characterModel;
+	self.soldiersView = soldiersView;
+	self.index = index;
 	self.fullWidth = width;
 	self.iconWidth = 50;
 	self.iconHeight = 50;
 	self.layerInit();
-	self.set();
 }
+
+SoldiersChildView.prototype.updateView = function(bitmap, rectangle, point){
+	var self = this;
+	if(!self._ll_cacheAsBitmap){
+		self.set();
+	}
+	self.callParent("updateView",arguments);
+};
 SoldiersChildView.prototype.layerInit=function(){
 	var self = this;
 	self.layer = new LSprite();
@@ -84,20 +93,26 @@ SoldiersChildView.prototype.set=function(){
 	if(LMvc.BattleController){
 		var lblCurrent = self.getCurrent();
 		lblCurrent.text = self.soldierModel.id() == self.characterModel.currentSoldierId() ? Language.get("current") : "";
-	}else{
+	}else if(!self.checkbox){
 		var check = self.getCheckBox();
 		check.setChecked(self.soldierModel.id() == self.characterModel.currentSoldierId());
 	}
-	if(self.icon){
-		self.icon.remove();
+	var iconImg = self.soldierModel.img();
+	if(!self.iconImg || iconImg != self.iconImg){
+		if(self.icon){
+			self.icon.remove();
+		}
+		self.iconImg =iconImg;
+		self.icon = self.soldierModel.icon(new LPoint(self.iconWidth, self.iconHeight),self.iconComplete);
+		self.layer.addChild(self.icon);
 	}
-	self.icon = self.soldierModel.icon(new LPoint(self.iconWidth, self.iconHeight),self.iconComplete);
-	self.layer.addChild(self.icon);
 };
 SoldiersChildView.prototype.iconComplete=function(event){
 	var self = event.currentTarget.parent.parent;
 	self.cacheAsBitmap(false);
-	self.updateView();
+	if(self.soldiersView.listView.isInClipping(self.index)){
+		self.updateView();
+	}
 };
 SoldiersChildView.prototype.toSelected=function(listView){
 	var self = this;
@@ -107,7 +122,7 @@ SoldiersChildView.prototype.toSelected=function(listView){
 	var items = listView.getItems();
 	for(var i = 0, l = items.length; i < l; i++){
 		var child = items[i];
-		if(!child.checkbox.checked){
+		if(!child.checkbox || !child.checkbox.checked){
 			continue;
 		}
 		child.checkbox.setChecked(false);

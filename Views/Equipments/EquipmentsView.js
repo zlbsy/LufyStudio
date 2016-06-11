@@ -3,15 +3,7 @@ function EquipmentsView(controller, equipmentListType, size) {
 	base(self, LView, [controller]);
 	self.equipmentListType = equipmentListType;
 	self.size = size;
-	self.layerInit();
-	
-	self.setEquipmentList();
 }
-EquipmentsView.prototype.getEquipmentListData = function() {
-	var self = this;
-	var cityData = LMvc.CityController.getValue("cityData");
-	self.equipmentList = cityData.equipments();
-};
 EquipmentsView.prototype.isSameList = function(equipmentList) {
 	var self = this;
 	var items = self.listView.getItems();
@@ -25,18 +17,7 @@ EquipmentsView.prototype.isSameList = function(equipmentList) {
 	}
 	return true;
 };
-EquipmentsView.prototype.updateItems = function(equipmentList) {
-	var self = this;
-	var items = self.listView.getItems();
-	for(var i=0,l=items.length;i<l;i++){
-		items[i].itemModel = equipmentList[i];
-		items[i].cacheAsBitmap(false);
-		items[i].set();
-		items[i].updateView();
-		items[i].cacheAsBitmap(true);
-	}
-};
-EquipmentsView.prototype.setEquipmentList = function() {
+EquipmentsView.prototype.getEquipmentList = function() {
 	var self = this;
 	var cityData = LMvc.CityController.getValue("cityData");
 	var equipmentList = cityData.equipments();
@@ -47,13 +28,43 @@ EquipmentsView.prototype.setEquipmentList = function() {
 		}
 		return b.id() - a.id();
 	});
+	return equipmentList;
+};
+EquipmentsView.prototype.updateItems = function(equipmentList) {
+	var self = this;
+	var items = self.listView.getItems();
+	while(items.length > equipmentList.length){
+		self.listView.deleteChildView(items[items.length - 1]);
+	}
+	for(var i=0,l=equipmentList.length;i<l;i++){
+		var item;
+		if(i < items.length){
+			item = items[i];
+		}else{
+			item = new EquipmentsChildView(equipmentList[i], self.size.x);
+			self.listView.insertChildView(item);
+		}
+		item.itemModel = equipmentList[i];
+		item.cacheAsBitmap(false);
+		if(!self.listView.isInClipping(i)){
+			continue;
+		}
+		item.set();
+		item.updateView();
+	}
+};
+EquipmentsView.prototype.setEquipmentList = function() {
+	var self = this;
+	var equipmentList = self.getEquipmentList();
 	if(self.listView){
-		if(self.isSameList(equipmentList)){
+		self.updateItems(equipmentList);
+		/*if(self.isSameList(equipmentList)){
 			self.updateItems(equipmentList);
 			return;
 		}else{
 			self.listView.remove();
-		}
+		}*/
+		return;
 	}
 	self.listView = new LListView();
 	self.listView.resize(self.size.x, self.size.y);
@@ -70,31 +81,6 @@ EquipmentsView.prototype.setEquipmentList = function() {
 EquipmentsView.prototype.updateView = function() {
 	this.setEquipmentList();
 };
-EquipmentsView.prototype.set = function() {
-	var self = this;
-	self.layerInit();
-	self.ctrlLayerInit();
-	self.statusLayerInit();
-};
-EquipmentsView.prototype.layerInit = function() {
-	var self = this;
-
-	self.baseLayer = new LSprite();
-	self.addChild(self.baseLayer);
-
-	self.equipmentListLayer = new LSprite();
-	self.baseLayer.addChild(self.equipmentListLayer);
-};
-EquipmentsView.prototype.ctrlLayerInit = function() {
-	var self = this;
-	var returnBitmapData = new LBitmapData(LMvc.datalist["icon-return"]);
-	var returnBitmap = new LBitmap(returnBitmapData);
-	var returnButton = new LButton(returnBitmap);
-	returnButton.x = 20;
-	returnButton.y = LGlobal.height - returnBitmapData.height - 20;
-	self.ctrlLayer.addChild(returnButton);
-	returnButton.addEventListener(LMouseEvent.MOUSE_UP, self.controller.close.bind(self.controller));
-};
 EquipmentsView.prototype.equipmentDetailedDialog = function(itemModel) {
 	var self = this;
 	var equipmentDetailed = new EquipmentDetailedView(self.controller,itemModel,self);
@@ -109,12 +95,4 @@ EquipmentsView.prototype.equipmentDress = function(event) {
 	var e = new LEvent(EquipmentEvent.Dress);
 	e.selectItemModel = selectItemModel;
 	self.dispatchEvent(e);
-};
-EquipmentsView.prototype.statusLayerInit=function(){
-	var self = this;
-	if(!self.statusLayer){
-		return;
-	}
-	var status = new HeaderStatusView(self.controller);
-	self.statusLayer.addChild(status);
 };

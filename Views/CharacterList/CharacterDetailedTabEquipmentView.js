@@ -1,6 +1,8 @@
 function CharacterDetailedTabEquipmentView(controller, w, h){
 	var self = this;
 	base(self,LView,[controller]);
+	self.equipmentLayer = new LSprite();
+	self.addChild(self.equipmentLayer);
 	self.tabWidth = w;
 	self.tabHeight = h;
 }
@@ -13,7 +15,7 @@ CharacterDetailedTabEquipmentView.prototype.updateView=function(){
 };
 CharacterDetailedTabEquipmentView.prototype.showEquipments=function(){
 	var self = this;
-	self.removeAllChild();
+	self.equipmentLayer.removeAllChild();
 	var characterModel = self.controller.getValue("selectedCharacter");
 	var detailedView = self.getParentByConstructor(CharacterDetailedView);
 	var faceW = CharacterFaceSize.width + 20, faceH = CharacterFaceSize.height + 20;
@@ -36,11 +38,12 @@ CharacterDetailedTabEquipmentView.prototype.showEquipments=function(){
 			icon.removeItemId = equipment.id();
 			icon.addEventListener(LMouseEvent.MOUSE_UP,self.confirmEquipment);
 		}else{
-			icon = new LPanel(new LBitmapData(LMvc.datalist["win03"]),iconSize,iconSize);
+			icon = getPanel("win03",iconSize,iconSize);
+			//icon = new LPanel(new LBitmapData(LMvc.datalist["win03"]),iconSize,iconSize);
 		}
 		icon.x = detailedView.faceView.x + coordinate.x - detailedView.tabLayer.x - self.x;
 		icon.y = detailedView.faceView.y + coordinate.y - detailedView.tabLayer.y - self.y;
-		self.addChild(icon);
+		self.equipmentLayer.addChild(icon);
 	}
 };
 CharacterDetailedTabEquipmentView.prototype.showEquipmentList=function(){
@@ -49,9 +52,16 @@ CharacterDetailedTabEquipmentView.prototype.showEquipmentList=function(){
 	if(characterModel.seigniorId() != LMvc.selectSeignorId){
 		return;
 	}
-	var equipmentsView = new EquipmentsView(self.controller, "equipment", new LPoint(self.tabWidth, self.tabHeight));
+	var equipmentsView = self.childList.find(function(child){
+		return child instanceof EquipmentsView;
+	});
+	if(equipmentsView){
+		return;
+	}
+	equipmentsView = new EquipmentsView(self.controller, "equipment", new LPoint(self.tabWidth, self.tabHeight));
 	self.addChild(equipmentsView);
 	equipmentsView.addEventListener(EquipmentEvent.Dress,self.dressEquipment);
+	equipmentsView.updateView();
 };
 CharacterDetailedTabEquipmentView.prototype.dressEquipment=function(event){
 	var self = event.currentTarget.getParentByConstructor(CharacterDetailedTabEquipmentView);
