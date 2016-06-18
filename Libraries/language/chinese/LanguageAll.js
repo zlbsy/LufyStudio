@@ -60,6 +60,8 @@ Language.data = {
 	"status_BanIncantation":"禁咒",
 	"status_Burn":"燃烧",
 	
+	"battle_generals_list":"武将一览",
+	
 	"can_not_move":"现在无法移动!",
 	"use_strategy_terrain_error":"{0}无法在此地形下使用!",
 	"use_strategy_belong_error":"不可对{0}使用!",
@@ -201,8 +203,10 @@ Language.data = {
 	"stunt":"特技",
 	"menu":"菜单",
 	"max":"最大",
-	"se_volume":"音效大小",
-	"bgm_volume":"音乐大小",
+	"se_set":"音效",
+	"bgm_set":"音乐",
+	"enabled":"有効",
+	"disabled":"无効",
 	"game_speed":"游戏速度",
 	"speed_normal":"正常",
 	"speed_fast":"快速",

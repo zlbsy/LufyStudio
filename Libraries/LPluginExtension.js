@@ -130,13 +130,15 @@ if(!LPlugin.openURL){
 		window.open(url);
 	};
 }
-LPlugin.volumeSE = 0;
-LPlugin.volumeBGM = 0;
 LPlugin.sounds = {};
+LPlugin.volumeSE = 1;
+LPlugin.volumeBGM = 1;
 LPlugin.playingBGM = null;
 if(!LPlugin.playSE){
 	LPlugin.playSE = function(name){
-		LPlugin.playSound(name, 1, LPlugin.volumeSE);
+		if(LPlugin.gameSetting.SE){
+			LPlugin.playSound(name, 1, 1);
+		}
 	};
 }
 LPlugin.closeBGM = function(){
@@ -147,8 +149,10 @@ LPlugin.closeBGM = function(){
 };
 if(!LPlugin.playBGM){
 	LPlugin.playBGM = function(name){
-		LPlugin.closeBGM();
-		LPlugin.playingBGM = LPlugin.playSound(name, 1000, LPlugin.volumeBGM);
+		if(LPlugin.gameSetting.BGM){
+			LPlugin.closeBGM();
+			LPlugin.playingBGM = LPlugin.playSound(name, 1000, 1);
+		}
 	};
 }
 LPlugin.readyBGM = function(name){

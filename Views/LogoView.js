@@ -105,6 +105,13 @@ LogoView.prototype.showMenu=function(){
 	buttonTutorial.addEventListener(LMouseEvent.MOUSE_UP, self.tutorialChick);
 	
 	menuY += menuHeight * 2;
+	if(LPlugin.native){
+		var buttonRestore = getSizeButton(Language.get("restore_buy"),100, 45);
+		buttonRestore.x = -menuLayer.x;
+		buttonRestore.y = menuY - buttonRestore.getHeight() - menuHeight;
+		menuLayer.addChild(buttonRestore);
+		buttonRestore.addEventListener(LMouseEvent.MOUSE_UP, self.restoreChick);
+	}
 	var buttonChinese = getSizeButton(Language.get("chinese"),100, 45,LPlugin.language() == LPlugin.languageDefault?"win07":"win01");
 	buttonChinese.language = "chinese";
 	buttonChinese.x = -menuLayer.x;
@@ -123,7 +130,7 @@ LogoView.prototype.showMenu=function(){
 		buttonChinese.addEventListener(LMouseEvent.MOUSE_UP, self.changeLanguage);
 	}
 	var forumLayer = new LSprite();
-	var forumLabel = getStrokeLabel("交流/意見",20,"#FFFFFF","#000000",4);
+	var forumLabel = getStrokeLabel(Language.get("opinion"),20,"#FFFFFF","#000000",4);
 	forumLayer.graphics.drawRect(0,"#000000",[0,0,forumLabel.getWidth(),forumLabel.getHeight()]);
 	forumLayer.graphics.drawLine(2,"#000000",[0,forumLabel.getHeight()+2,forumLabel.getWidth(),forumLabel.getHeight()+2]);
 	forumLayer.addChild(forumLabel);
@@ -131,12 +138,13 @@ LogoView.prototype.showMenu=function(){
 	forumLayer.y = menuY - 60;
 	menuLayer.addChild(forumLayer);
 	forumLayer.addEventListener(LMouseEvent.MOUSE_UP, self.clickForum);
+	self.forumLayer = forumLayer;
+	self.forumLayer.visible = false;
 	
 	var verLabel = getStrokeLabel("Ver." + LMvc.ver,20,"#FFFFFF","#000000",4);
 	verLabel.x = LGlobal.width - menuLayer.x - verLabel.getWidth() - 10;
 	verLabel.y = menuY - 25;
 	menuLayer.addChild(verLabel);
-	
 	
 	menuLayer.y = LGlobal.height - menuY;
 	
@@ -144,6 +152,23 @@ LogoView.prototype.showMenu=function(){
 };
 LogoView.prototype.clickForum=function(event){
 	LPlugin.openURL(LMvc.forumURL);
+};
+LogoView.prototype.restoreChick=function(event){
+	var button = event.currentTarget;
+	var self = button.getParentByConstructor(LogoView);
+	var obj = {
+		title : Language.get("confirm"),
+		messageHtml : Language.get("restore_confirm_message"),
+		width : 340,
+		height : 260,
+		okEvent : function(e) {
+			e.currentTarget.parent.remove();
+			self.controller.restore();
+		},
+		cancelEvent : null
+	};
+	var windowLayer = ConfirmWindow(obj);
+	LMvc.layer.addChild(windowLayer);
 };
 LogoView.prototype.tutorialChick=function(event){
 	var button = event.currentTarget;

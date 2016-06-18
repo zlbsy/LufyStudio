@@ -46,34 +46,72 @@ SettingGameView.prototype.init=function(){
 	self.contentLayer.x = (LGlobal.width - self.size.x) * 0.5 + 20;
 	self.contentLayer.y = (LGlobal.height - self.size.y) * 0.5 + 60;
 	
-	var rangeBackground = new LPanel(new LBitmapData(LMvc.datalist["win04"]),250,40);
+	var checkboxBackgroundData = new LBitmapData(LMvc.datalist["checkbox-background"]);
+	var checkboxOnData = new LBitmapData(LMvc.datalist["checkbox-on"]);
+	var radioBackground, radioSelect;
+	/*var rangeBackground = new LPanel(new LBitmapData(LMvc.datalist["win04"]),250,40);
 	rangeBackground.cacheAsBitmap(true);
-	var rangeSelect = new LBitmap(new LBitmapData(LMvc.datalist["range"]));
+	var rangeSelect = new LBitmap(new LBitmapData(LMvc.datalist["range"]));*/
 	var soundLayer = new LSprite();
 	self.contentLayer.addChild(soundLayer);
-	var soundLabel = getStrokeLabel(Language.get("se_volume"),20,"#FFFFFF","#000000",4);
+	var soundLabel = getStrokeLabel(Language.get("se_set"),20,"#FFFFFF","#000000",4);
 	soundLabel.y = 12;
 	soundLayer.addChild(soundLabel);
-	var rangeSound = new LRange(rangeBackground, rangeSelect);
+	
+	var enabledLabel = getStrokeLabel(Language.get("enabled"),20,"#FFFFFF","#000000",4);
+	enabledLabel.x = 120;
+	enabledLabel.y = 13;
+	soundLayer.addChild(enabledLabel);
+	var disabledLabel = getStrokeLabel(Language.get("disabled"),20,"#FFFFFF","#000000",4);
+	disabledLabel.x = 220;
+	disabledLabel.y = 13;
+	soundLayer.addChild(disabledLabel);
+	
+	radioBackground = new LBitmap(checkboxBackgroundData);
+	radioSelect = new LBitmap(checkboxOnData);
+	seRadio = new LRadio();
+	seRadio.x = 160;
+	seRadio.setChildRadio(1,0,10,radioBackground,radioSelect);
+	seRadio.setChildRadio(0,100,10,radioBackground,radioSelect);
+	seRadio.setValue(LPlugin.gameSetting.SE);
+	soundLayer.addChild(seRadio);
+	seRadio.addEventListener(LMouseEvent.MOUSE_UP,self.onSEChange);
+	/*var rangeSound = new LRange(rangeBackground, rangeSelect);
 	rangeSound.setValue(LPlugin.volumeSE * 100);
 	rangeSound.x = 130;
 	soundLayer.addChild(rangeSound);
-	rangeSound.addEventListener(LRange.ON_CHANGE, self.onSoundChange);
+	rangeSound.addEventListener(LRange.ON_CHANGE, self.onSoundChange);*/
 	
-	var rangeBackground = new LPanel(new LBitmapData(LMvc.datalist["win04"]),250,40);
+	/*var rangeBackground = new LPanel(new LBitmapData(LMvc.datalist["win04"]),250,40);
 	rangeBackground.cacheAsBitmap(true);
-	var rangeSelect = new LBitmap(new LBitmapData(LMvc.datalist["range"]));
+	var rangeSelect = new LBitmap(new LBitmapData(LMvc.datalist["range"]));*/
 	var bgmLayer = new LSprite();
-	bgmLayer.y = 80;
+	bgmLayer.y = 70;
 	self.contentLayer.addChild(bgmLayer);
-	var bgmLabel = getStrokeLabel(Language.get("bgm_volume"),20,"#FFFFFF","#000000",4);
+	var bgmLabel = getStrokeLabel(Language.get("bgm_set"),20,"#FFFFFF","#000000",4);
 	bgmLabel.y = 12;
 	bgmLayer.addChild(bgmLabel);
-	var rangeBgm = new LRange(rangeBackground, rangeSelect);
+	
+	var enabledLabel = getStrokeLabel(Language.get("enabled"),20,"#FFFFFF","#000000",4);
+	enabledLabel.x = 120;
+	enabledLabel.y = 13;
+	bgmLayer.addChild(enabledLabel);
+	var disabledLabel = getStrokeLabel(Language.get("disabled"),20,"#FFFFFF","#000000",4);
+	disabledLabel.x = 220;
+	disabledLabel.y = 13;
+	bgmLayer.addChild(disabledLabel);
+	bgmRadio = new LRadio();
+	bgmRadio.x = 160;
+	bgmRadio.setChildRadio(1,0,10,radioBackground,radioSelect);
+	bgmRadio.setChildRadio(0,100,10,radioBackground,radioSelect);
+	bgmRadio.setValue(LPlugin.gameSetting.BGM);
+	bgmLayer.addChild(bgmRadio);
+	bgmRadio.addEventListener(LMouseEvent.MOUSE_UP,self.onBgmChange);
+	/*var rangeBgm = new LRange(rangeBackground, rangeSelect);
 	rangeBgm.setValue(LPlugin.volumeBGM * 100);
 	rangeBgm.x = 130;
 	bgmLayer.addChild(rangeBgm);
-	rangeBgm.addEventListener(LRange.ON_CHANGE, self.onBgmChange);
+	rangeBgm.addEventListener(LRange.ON_CHANGE, self.onBgmChange);*/
 	
 	var speedLayer = new LSprite();
 	speedLayer.y = 160;
@@ -90,13 +128,13 @@ SettingGameView.prototype.init=function(){
 	fastLabel.x = 220;
 	fastLabel.y = 3;
 	speedLayer.addChild(fastLabel);
-	var radioBackground = new LBitmap(new LBitmapData(LMvc.datalist["checkbox-background"]));
-	var radioSelect = new LBitmap(new LBitmapData(LMvc.datalist["checkbox-on"]));
+	var radioBackground = new LBitmap(checkboxBackgroundData);
+	var radioSelect = new LBitmap(checkboxOnData);
 	speedRadio = new LRadio();
 	speedRadio.x = 160;
 	speedRadio.setChildRadio(1,0,0,radioBackground,radioSelect);
 	speedRadio.setChildRadio(0,100,0,radioBackground,radioSelect);
-	speedRadio.setValue(LPlugin.gameSpeed);
+	speedRadio.setValue(LPlugin.gameSetting.speed);
 	speedLayer.addChild(speedRadio);
 	speedRadio.addEventListener(LMouseEvent.MOUSE_UP,self.onSpeedChange);
 	
@@ -110,15 +148,15 @@ SettingGameView.prototype.init=function(){
 SettingGameView.prototype.closeSelf=function(event){
 	event.currentTarget.parent.parent.remove();
 };
-SettingGameView.prototype.onSoundChange=function(event){
-	LPlugin.volumeSE = event.currentTarget.value * 0.01;
-	LPlugin.SetData("volumeSetting", {SE:LPlugin.volumeSE, BGM:LPlugin.volumeBGM});
+SettingGameView.prototype.onSEChange=function(event){
+	LPlugin.gameSetting.SE = event.currentTarget.value;
+	LPlugin.SetData("gameSetting", {SE:LPlugin.gameSetting.SE, BGM:LPlugin.gameSetting.BGM, speed:LPlugin.gameSetting.speed});
 };
 SettingGameView.prototype.onBgmChange=function(event){
-	LPlugin.volumeBGM = event.currentTarget.value * 0.01;
-	LPlugin.SetData("volumeSetting", {SE:LPlugin.volumeSE, BGM:LPlugin.volumeBGM});
+	LPlugin.gameSetting.BGM = event.currentTarget.value;
+	LPlugin.SetData("gameSetting", {SE:LPlugin.gameSetting.SE, BGM:LPlugin.gameSetting.BGM, speed:LPlugin.gameSetting.speed});
 };
 SettingGameView.prototype.onSpeedChange=function(event){
-	LPlugin.gameSpeed = event.currentTarget.value;console.log(LPlugin.gameSpeed);
-	LPlugin.SetData("speedSetting", {value:LPlugin.gameSpeed});
+	LPlugin.gameSetting.speed = event.currentTarget.value;
+	LPlugin.SetData("gameSetting", {SE:LPlugin.gameSetting.SE, BGM:LPlugin.gameSetting.BGM, speed:LPlugin.gameSetting.speed});
 };

@@ -62,7 +62,7 @@ BattleCharacterAI.prototype.magicAttack = function(target){
 			hertParams = new HertParams();
 			var ranges;
 			if(j == 0 && skill && skill.isSubType(SkillSubType.SPREAD)){//蔓延
-				ranges = calculateSpreadPoints(skill, rangeAttackTarget);
+				ranges = calculateSpreadPoints(skill, rangeAttackTarget, target);
 			}else if(j == 0 && skill && skill.isSubType(SkillSubType.PENETRATE)){//穿透
 				ranges = calculatePenetratePoints(self.chara,target, rangeAttackTarget);
 			}else{
@@ -160,7 +160,7 @@ BattleCharacterAI.prototype.physicalAttack = function(target) {
 				hertParams.push(target, value > 1 ? value : 1);
 				if(j == 0 && skill && skill.isSubType(SkillSubType.SPREAD)){//蔓延
 					var ranges = self.chara.data.currentSoldiers().rangeAttackTarget();
-					rangeAttackTarget = calculateSpreadPoints(skill, ranges);
+					rangeAttackTarget = calculateSpreadPoints(skill, ranges, target);
 					//rangeAttackTarget = ranges;
 				}else if(j == 0 && skill && skill.isSubType(SkillSubType.PENETRATE)){//穿透
 					var ranges = self.chara.data.currentSoldiers().rangeAttackTarget();
@@ -212,8 +212,7 @@ BattleCharacterAI.prototype.physicalAttack = function(target) {
 			var groupSkill = battleCanGroupSkill(self.chara, target);
 			if(groupSkill){
 				self.chara.groupSkill = groupSkill;
-				var hertParamObj = 
-				self.herts[0].value = self.herts[0].value * groupSkill.correctionFactor() >>> 0;
+				hertParams.list[0].hertValue = hertParams.list[0].hertValue*groupSkill.correctionFactor()>>>0;
 			}
 			if(skill && skill.isSubType(SkillSubType.SURPRISE)){
 				var amendValue = calculateSkillSurpriseAmend(self.chara, target, skill.attacks());

@@ -395,7 +395,7 @@ function calculateStrategyCharasCorrection(currentChara){
 /*****************************************************************
  特技的法术蔓延范围计算
  **************************************************************/
-function calculateSpreadPoints(skill, ranges){
+function calculateSpreadPoints(skill, ranges, targetCharacter){
 	var points = ranges.concat();
 	var speadRects = skill.speadRects();
 	var speadProbability = skill.speadProbability();
@@ -403,21 +403,25 @@ function calculateSpreadPoints(skill, ranges){
 	ranges.forEach(function(child){
 		for(var i = 0; i < speadRects.length; i++){
 			var point = speadRects[i];
-			calculateSpreadPointsLoop(child.x + point.x, child.y + point.y, points, speadRects, speadProbability, 0, pointsCheck);
+			calculateSpreadPointsLoop(targetCharacter, child.x + point.x, child.y + point.y, points, speadRects, speadProbability, 0, pointsCheck);
 		}
 	});
 	return points;
 }
-function calculateSpreadPointsLoop(x, y, points, speadRects, speadProbability, loops, pointsCheck){
+function calculateSpreadPointsLoop(targetCharacter, x, y, points, speadRects, speadProbability, loops, pointsCheck){
 	if(loops > 2 || pointsCheck[x+","+y])return;
 	if(Math.fakeRandom() > speadProbability){
 		return;
 	}
 	pointsCheck[x+","+y]=1;
+	var targetChara = LMvc.BattleController.view.charaLayer.hasCharacterInPosition(targetCharacter.locationX() + x, targetCharacter.locationY() + y);
+	if(!targetChara || !isSameBelong(targetCharacter.belong, targetChara.belong)){
+		return;
+	}
 	points.push({x:x,y:y});
 	for(var i = 0; i < speadRects.length; i++){
 		var point = speadRects[i];
-		calculateSpreadPointsLoop(x + point.x, y + point.y, points, speadRects, speadProbability, loops + 1, pointsCheck);
+		calculateSpreadPointsLoop(targetCharacter, x + point.x, y + point.y, points, speadRects, speadProbability, loops + 1, pointsCheck);
 	}
 }
 /*****************************************************************

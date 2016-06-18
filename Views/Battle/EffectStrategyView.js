@@ -47,7 +47,7 @@ EffectStrategyView.prototype.becomeEffective = function(anime){
 EffectStrategyView.prototype.toSupply = function(){
 	var self = this;
 	self.currentTargetCharacter.changeAction(CharacterAction.WAKE);
-	var healTroops = battleHealTroops(self.currentCharacter.currentSelectStrategy, self.currentTargetCharacter);
+	var healTroops = battleHealTroops(self.currentCharacter.currentSelectStrategy, self.currentTargetCharacter, self.currentCharacter.data.proficiency());
 	BattleCharacterStatusView.healCharactersPush(self.currentTargetCharacter, healTroops);
 };
 EffectStrategyView.prototype.toChangeStatus = function(){
@@ -59,7 +59,8 @@ EffectStrategyView.prototype.toChangeStatus = function(){
 		return;
 	}
 	var mapLayer = LMvc.BattleController.view.mapLayer;
-	if(mapLayer.isOnWakeRoad(self.currentTargetCharacter)){
+	var isOnWakeRoad = mapLayer.isOnWakeRoad(self.currentTargetCharacter);
+	if(isOnWakeRoad){
 		hitrate = false;
 	}else{
 		hitrate = calculateHitrateStrategy(self.currentCharacter, self.currentTargetCharacter);

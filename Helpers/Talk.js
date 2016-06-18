@@ -43,7 +43,7 @@ function TalkRun(layer,y,index,faceindex,msg,callback){
 	msgText.color = "#FFFFFF";
 	msgText.width = 430;
 	msgText.setWordWrap(true,23);
-	msgText.speed = LPlugin.gameSpeed;
+	msgText.speed = LPlugin.gameSetting.speed;
 	msgText.wind(callback);
 	talkLayer.addChild(msgText);
 	if(layer){

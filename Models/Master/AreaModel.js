@@ -215,7 +215,13 @@ AreaModel.prototype.addOutOfOfficeCharacter=function(param){
 	}else{
 		chara = param;
 	}
+	if(chara.cityId() > 0){
+		chara.city().removeCharacter(chara.id());
+	}
 	self.removeOutOfOffice(chara.id());
+	if(chara.seigniorId() > 0){
+		chara.seigniorId(0);
+	}
 	self.data.out_of_offices.push(chara);
 };
 AreaModel.prototype.addGenerals = function(param){
@@ -224,6 +230,9 @@ AreaModel.prototype.addGenerals = function(param){
 		chara = CharacterModel.getChara(param);
 	}else{
 		chara = param;
+	}
+	if(chara.cityId() > 0){
+		chara.city().removeCharacter(chara.id());
 	}
 	self.removeGenerals(chara.id());
 	self.data.generals.push(chara);
@@ -263,6 +272,7 @@ AreaModel.prototype.setSeignor = function(seignior,areaData){
 			for(var i=0,l=areaData[key].length;i<l;i++){
 				var charaData = areaData[key][i];
 				var chara = CharacterModel.getChara(charaData.chara_id);
+				chara.seigniorId(0);
 				charaData.cityId = areaData.area_id;
 				chara.setDatas(charaData);
 				out_of_offices.push(chara);
@@ -628,8 +638,9 @@ AreaModel.prototype.generals=function(job){
 AreaModel.prototype.outOfOfficeData=function(){
 	var self = this;
 	var list = [];
-	for(var i=0,l=self.data.out_of_offices.length;i<l;i++){
-		var chara = self.data.out_of_offices[i];
+	var out_of_offices = self.outOfOffice();
+	for(var i=0,l=out_of_offices.length;i<l;i++){
+		var chara = out_of_offices[i];
 		list.push(chara.datas());
 	}
 	return list;

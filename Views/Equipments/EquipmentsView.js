@@ -4,19 +4,6 @@ function EquipmentsView(controller, equipmentListType, size) {
 	self.equipmentListType = equipmentListType;
 	self.size = size;
 }
-EquipmentsView.prototype.isSameList = function(equipmentList) {
-	var self = this;
-	var items = self.listView.getItems();
-	if(equipmentList.length != items.length){
-		return false;
-	}
-	for(var i=0,l=items.length;i<l;i++){
-		if(items[i].itemModel.id() != equipmentList[i].id()){
-			return false;
-		}
-	}
-	return true;
-};
 EquipmentsView.prototype.getEquipmentList = function() {
 	var self = this;
 	var cityData = LMvc.CityController.getValue("cityData");
@@ -58,12 +45,6 @@ EquipmentsView.prototype.setEquipmentList = function() {
 	var equipmentList = self.getEquipmentList();
 	if(self.listView){
 		self.updateItems(equipmentList);
-		/*if(self.isSameList(equipmentList)){
-			self.updateItems(equipmentList);
-			return;
-		}else{
-			self.listView.remove();
-		}*/
 		return;
 	}
 	self.listView = new LListView();

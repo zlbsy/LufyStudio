@@ -99,19 +99,19 @@ BattleMapView.prototype.setWakeRoad=function(belong,x,y){
 	if(belong == Belong.FRIEND){
 		belong = Belong.SELF;
 	}
-	this.wakeRoads[belong].push([x,y]);
+	self.wakeRoads[belong].push([x,y]);
 };
 BattleMapView.prototype.setWakeRoads=function(belong,rects,x,y){
 	var self = this, obj;
 	if(typeof x == UNDEFINED){
 		for(var i = 0,l = rects.length;i < l; i++){
 			obj = rects[i];
-			self.setWakeRoad(belong, obj[0], obj[1]);
+			self.setWakeRoad(belong, obj.x, obj.y);
 		}
 	}else{
 		for(var i = 0,l = rects.length;i < l; i++){
 			obj = rects[i];
-			self.setWakeRoad(belong, obj[0] + x, obj[1] + y);
+			self.setWakeRoad(belong, obj.x + x, obj.y + y);
 		}
 	}
 };

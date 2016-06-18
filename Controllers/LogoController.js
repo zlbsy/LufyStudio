@@ -47,19 +47,11 @@ LogoController.prototype.changeLanguageComplete=function(){
 };
 LogoController.prototype.modelLoad=function(){
 	var self = this;
-	var volumeSetting = LPlugin.GetData("volumeSetting");
-	if(!volumeSetting || typeof volumeSetting.SE == UNDEFINED){
-		volumeSetting = {SE:1, BGM:1};
-		LPlugin.SetData("volumeSetting", volumeSetting);
+	LPlugin.gameSetting = LPlugin.GetData("gameSetting");
+	if(!LPlugin.gameSetting || typeof LPlugin.gameSetting.speed == UNDEFINED){
+		LPlugin.gameSetting = {SE:1, BGM:1, speed:1};
+		LPlugin.SetData("gameSetting", LPlugin.gameSetting);
 	}
-	LPlugin.volumeSE = volumeSetting.SE;
-	LPlugin.volumeBGM = volumeSetting.BGM;
-	var speedSetting = LPlugin.GetData("speedSetting");
-	if(!speedSetting || typeof speedSetting.value == UNDEFINED){
-		speedSetting = {value:1};
-		LPlugin.SetData("speedSetting", speedSetting);
-	}
-	LPlugin.gameSpeed = speedSetting.value;
 	self.load.model(["Master/Area"],self.startAnimation);
 };
 LogoController.prototype.startAnimation=function(){
@@ -70,21 +62,17 @@ LogoController.prototype.startAnimation=function(){
 	.to(self.view.layerChara,2,{y:200,loop:true})
 	.to(self.view.layerChara,2,{y:180});
 };
+LogoController.prototype.restore=function(){
+	var self = this;
+	purchaseRestore(function(){
+		self.dispatchEvent(LController.NOTIFY);
+	});
+};
 LogoController.prototype.start=function(event){
 	var self = event.target.parent.controller;
 	if(LPlugin.native){
-		LMvc.keepLoading(true);
-		var purchaseLog = LPlugin.GetData("purchaseLog", null);
-		if(!purchaseLog){
-			LMvc.changeLoading(TranslucentLoading);
-			purchaseLogGet(function(){
-				self.dispatchEvent(LController.NOTIFY);
-				self.updateCheck();
-			});
-		}else{
-			self.dispatchEvent(LController.NOTIFY);
-			self.updateCheck();
-		}
+		self.dispatchEvent(LController.NOTIFY);
+		self.updateCheck();
 	}else{
 		LPlugin.SetData("purchaseLog", []);
 		//TODO::测试用
@@ -94,7 +82,7 @@ LogoController.prototype.start=function(event){
 				datas.push({product_id:c});
 			});
 			LPlugin.SetData("purchaseLog", datas);
-			//self.updateCheck();
+			self.updateCheck();
 		}
 		self.dispatchEvent(LController.NOTIFY);
 	}
@@ -142,8 +130,12 @@ LogoController.prototype.soundComplete = function(result){
 };
 LogoController.prototype.updateCheck = function(){
 	var self = this;
+	LMvc.keepLoading(true);
+	LMvc.changeLoading(TranslucentLoading);
 	LAjax.post(LMvc.updateURL + "index.php",{},function(data){
 		data = JSON.parse(data);
+		LPlugin.SetData("opinion", data.opinion);
+		self.view.forumLayer.visible = data.opinion;
 		if(LPlugin.dataVer() >= LPlugin.dataVer(data.ver)){
 			LMvc.keepLoading(false);
 			return;
@@ -152,8 +144,10 @@ LogoController.prototype.updateCheck = function(){
 		self.needUpdateFiles = {};
 		self.updateFile(0);
 	},function(){
-		LPlugin.print("updateCheck Error");
+		//LPlugin.print("updateCheck Error");
 		LMvc.keepLoading(false);
+		var opinion = LPlugin.GetData("opinion", 0);
+		self.view.forumLayer.visible = opinion;
 	});
 };
 LogoController.prototype.updateFile = function(index){

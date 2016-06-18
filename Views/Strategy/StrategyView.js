@@ -12,6 +12,32 @@ function StrategyView(controller, characterModel, size, fromView) {
 		self.setStrategyList();
 	}
 }
+StrategyView.prototype.updateItems = function(strategyList) {
+	var self = this;
+	var items = self.listView.getItems();
+	while(items.length > strategyList.length){
+		self.listView.deleteChildView(items[items.length - 1]);
+	}
+	for(var i=0,l=strategyList.length;i<l;i++){
+		var item;
+		var strategy = strategyList[i];
+		var isLearned = strategy.level() < self.characterModel.level();
+		if(i < items.length){
+			item = items[i];
+			item.strategyModel = strategy;
+			item.isLearned = isLearned;
+		}else{
+			item = new StrategyChildView(strategy, isLearned, self.listView.cellWidth);
+			self.listView.insertChildView(item);
+		}
+		item.cacheAsBitmap(false);
+		if(!self.listView.isInClipping(i)){
+			continue;
+		}
+		item.set();
+		item.updateView();
+	}
+};
 StrategyView.prototype.updateView = function() {
 	var self = this;
 	var characterModel = self.controller.getValue("selectedCharacter");
@@ -20,8 +46,11 @@ StrategyView.prototype.updateView = function() {
 };
 StrategyView.prototype.setStrategyList = function() {
 	var self = this;
-	self.strategyListLayer.removeAllChild();
 	var strategyList = self.characterModel.strategies(self.fromCharacterDetailed);
+	if(self.listView){
+		self.updateItems(strategyList);
+		return;
+	}
 	self.listView = new LListView();
 	if(self.fromCharacterDetailed){
 		self.listView.resize(self.size.x, self.size.y);
@@ -132,7 +161,7 @@ StrategyView.prototype.strategySelect = function(strategyModel) {
 		}else{
 			reservist = battleData.toCity.troops();
 		}
-		if(reservist <= 0){
+		if(reservist <= 0 && strategyModel.wounded() == 0 && strategyModel.troops() != 0){
 			Toast.makeText(Language.get("strategy_troops_error")).show();
 			return;
 		}

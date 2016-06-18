@@ -94,7 +94,7 @@ BattleController.prototype.init = function(){
 	SoldierMasterModel.setMaster(SoldierDatas);
 	GroupSkillModel.setMaster(GroupSkillsData);
 	self.queryInit();
-	BattleMapConfig.SPEED = (LPlugin.gameSpeed == 1 ? BattleMapConfig.SPEED_NORMAL : BattleMapConfig.SPEED_FAST);
+	BattleMapConfig.SPEED = (LPlugin.gameSetting.speed == 1 ? BattleMapConfig.SPEED_NORMAL : BattleMapConfig.SPEED_FAST);
 	LMvc.keepLoading(false);
 	self.fromController.view.parent.addChild(self.view);
 	self.fromController.view.remove();
@@ -265,7 +265,7 @@ BattleController.prototype.queryInit=function(){
 	self.query = new BattleQuery(self.model.map.data);
 };
 BattleController.prototype.mapMouseUp = function(event){
-	console.error("mapMouseUp",event.target,event.currentTarget);
+	//console.error("mapMouseUp",event.target,event.currentTarget);
 	if(LMvc.running || BattleSelectMenuController.instance().view.visible){
 		return;
 	}
@@ -452,9 +452,12 @@ BattleController.prototype.characterClick = function(cx,cy){
 	return true;
 };
 BattleController.prototype.clickSelfCharacter = function(chara){
-	var self = this;
-	
-	var path = self.query.makePath(chara);
+	var self = this, path;
+	if(chara.status.hasStatus(StrategyType.Fixed)){
+		path = [new LPoint(chara.locationX(), chara.locationY())];
+	}else{
+		path = self.query.makePath(chara);
+	}
 	self.view.roadLayer.setMoveRoads(path, chara.belong);
 	self.view.roadLayer.addRangeAttack(chara);
 	chara.showStatusView();

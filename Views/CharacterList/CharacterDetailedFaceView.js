@@ -5,7 +5,6 @@ function CharacterDetailedFaceView(controller){
 }
 CharacterDetailedFaceView.prototype.init=function(){
 	var self = this;
-	
 	var faceW = CharacterFaceSize.width + 20, faceH = CharacterFaceSize.height + 20;
 	
 	var win = new LPanel(new LBitmapData(LMvc.datalist["win05"]),faceW,faceH);
@@ -26,8 +25,7 @@ CharacterDetailedFaceView.prototype.init=function(){
 	name.y = face.y + 10;
 	self.textLayer.addChild(name);
 	self.textFieldName = name;
-	var battleBelong = self.controller.getValue("battleBelong");
-	if(!battleBelong){
+	if(LMvc.BattleController){
 		var belongLabel = getStrokeLabel("", 20, "#FFFFFF", "#000000", 4);
 		belongLabel.x = name.x;
 		belongLabel.y = name.y + 30;
@@ -52,7 +50,7 @@ CharacterDetailedFaceView.prototype.showLabel=function(characterModel){
 	var self = this;
 	self.textFieldName.text = characterModel.name();
 	var battleBelong = self.controller.getValue("battleBelong");
-	if(battleBelong){
+	if(LMvc.BattleController && battleBelong){
 		self.textFieldBelong.text = Language.get(battleBelong);
 	}
 	self.textLayer.cacheAsBitmap(false);

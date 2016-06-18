@@ -128,6 +128,9 @@ CharacterExpeditionView.prototype.setSoldier=function(){
 	var currentSoldierModel = soldiers[self.currentTroopsIndex];
 	self.currentSoldierModel = currentSoldierModel;
 	self.maxTroops = self.currentSoldierModel.maxTroops(self.characterModel);
+	if(self.maxTroops > self.canUseTroops){
+		self.maxTroops = self.canUseTroops;
+	}
 	self.troopRange.setValue(0); 
 	self.setTroops();
 };

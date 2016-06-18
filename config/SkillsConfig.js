@@ -217,7 +217,7 @@ var SkillsData = [
 {id:24,name:"决胜(司马懿)",type:SkillType.STRATEGY_ATTACK,subType:[SkillSubType.STRATEGY_COUNT,SkillSubType.THRIFT_MP],strategy_attacks:[2],aidCount:1,thrift:1,probability:50,explanation:"{probability}几率在使用法术攻击敌军时2倍暴击，且不消化MP。"},
 {id:25,name:"摆尾(荀彧)",type:SkillType.STRATEGY_ATTACK,subType:[SkillSubType.PENETRATE],probability:30,explanation:"使用法术攻击时附带穿透效果。"},
 {id:26,name:"毒箭(夏侯渊)",type:SkillType.ATTACK,subType:[SkillSubType.ENEMY_AID],condition:{type:"AttackType",value:AttackType.FAR},aids:[23],aidCount:1,aidRects:[{x:0,y:0}],probability:100,explanation:"{probability}几率在使用弓箭类兵种攻击时令敌军中毒。"},
-{id:27,name:"毒计(徐庶,审配)",type:SkillType.STRATEGY_ATTACK,subType:[SkillSubType.ENEMY_AID],aids:[23],aidCount:1,aidRects:[{x:0,y:0}],probability:100,explanation:"{probability}几率在使用法术攻击时令敌军中毒。"},
+{id:27,name:"毒计(徐庶,审配)",type:SkillType.STRATEGY_ATTACK,subType:[SkillSubType.ENEMY_AID],aids:[23],aidCount:1,aidRects:[{x:0,y:0}],probability:60,explanation:"{probability}几率在使用法术攻击时令敌军中毒。"},
 {id:28,name:"灵敏(魏延,文鸳)",type:SkillType.ATTACK_END,subType:[SkillSubType.SELF_AID],aids:[9],aidCount:1,aidRects:[{x:0,y:0}],probability:100,explanation:"{probability}几率攻击结束时提升自身爆发力。"},
 {id:29,name:"猛攻(姜维)",type:SkillType.BOUT_START,subType:[SkillSubType.SELF_AID],aids:[1],aidCount:1,aidRects:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],probability:50,explanation:"{probability}几率回合开始时提升自身及周围友军的攻击力。"},
 {id:30,name:"坚固(邓艾)",type:SkillType.BOUT_START,subType:[SkillSubType.SELF_AID],aids:[3],aidCount:1,aidRects:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],probability:50,explanation:"{probability}几率回合开始时提升自身及周围友军的防御力。"},

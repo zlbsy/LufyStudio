@@ -75,6 +75,7 @@ MapController.prototype.init=function(status){
 	
 	if(!LMvc.TutorialController && !LMvc.chapterData.eventEnd){
 		LMvc.keepLoading(true);
+		SeigniorLevelUpdate();
 		self.loadMvc("EventMap",self.eventMapComplete);
 		LMvc.chapterData.eventEnd = true;
 	}

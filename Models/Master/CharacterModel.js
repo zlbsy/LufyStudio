@@ -515,6 +515,17 @@ CharacterModel.prototype.father = function(){
 };
 CharacterModel.prototype.featPlus = function(value){
 	var self = this, feat = self.feat();
+	if(self.seigniorId() != LMvc.selectSeignorId){
+		switch(LMvc.chapterData.trouble){
+			case TroubleConfig.HARD:
+				value = (value * 1.4 >>> 0);
+				break;
+			case TroubleConfig.NORMAL:
+				value = (value * 1.2 >>> 0);
+				break;
+			default:
+		}
+	}
 	self.feat((feat + value) >>> 0);
 };
 CharacterModel.prototype.feat = function(value){
@@ -723,7 +734,8 @@ CharacterModel.prototype.moveTo = function(cityId) {
 			areaFrom.removeCharacter(self);
 		}
 		var area = AreaModel.getArea(self.data.targetCity);
-		if(self.seigniorId() > 0){
+		var seigniorId = self.seigniorId();
+		if(seigniorId > 0){
 			area.addGenerals(self);
 		}else{
 			area.addOutOfOfficeCharacter(self);
@@ -783,7 +795,7 @@ CharacterModel.prototype.toDie = function() {
 };
 CharacterModel.prototype.toOutOfOffice = function() {
 	var self = this;
-	self.city().removeGenerals(self.id());
+	self.city().removeCharacter(self.id());
 	self.city().addOutOfOfficeCharacter(self);
 	self.seigniorId(0);
 };

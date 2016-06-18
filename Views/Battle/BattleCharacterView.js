@@ -1,7 +1,7 @@
 function BattleCharacterView(controller, id, w, h) {
 	var self = this;
 	LExtends(self, CharacterView, [controller, id, w, h]);
-	var moveStep = (LPlugin.gameSpeed == 1 ? 4 : 8);
+	var moveStep = (LPlugin.gameSetting.speed == 1 ? 8 : 12);
 	self.step = self.moveStep = moveStep;
 	self.layer.x = self.layer.y = -8;
 	self.belong = null;

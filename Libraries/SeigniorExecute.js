@@ -121,7 +121,7 @@ SeigniorExecute.run=function(){
 		if(self.seigniors.indexOf(self.seigniorIndex) < 0){
 			self.msgView.setSeignior(seigniorModel.chara_id());
 			self.seigniors.push(self.seigniorIndex);
-			seigniorModel.character().featPlus(5);
+			seigniorModel.character().featPlus(3);
 			//势力行动消息取消
 			//self.msgView.add(seigniorModel.character().name() + "势力行动!");
 			/*if(seigniorModel.chara_id() != LMvc.selectSeignorId){

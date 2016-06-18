@@ -20,7 +20,10 @@ Language.dataSimple = {
 	"city":"城",
 	"generals":"武将",
 	"confirm":"确认",
+	"opinion":"交流/意見",
 	"preparing":"準備中",
+	"restore_buy":"リストア",
+	"restore_confirm_message":"<font size='21' color='#FFFFFF'>既に<font color='#FF0000'>購入した</font>機能を復元しますか？（この操作は<font color='#FF0000'>無料</font>です）</font>",
 	"purchase_confirm_native_message":"<font size='21' color='#FFFFFF'><font color='#FF0000'>{0}</font>を解放する、必要なお金は<font color='#FF0000'>{1}</font>です、よろしいですか?</font>",
 	"purchase_confirm_web_message":"<font size='21' color='#FFFFFF'>今のバージョンは<font color='#FF0000'>{0}</font>という機能が使えません、ネーティブ版<font color='#FF0000'>をダウンロードしてください。</font>!</font>",
 	"select_seignior_message":"<font size='22' color='#FFFFFF'>勢力 <font color='#FF0000'>{0}</font> を選択しますか？</font>",
@@ -34,5 +37,5 @@ Language.dataSimple = {
 	"chapter_8":"諸葛亮の南征",
 	"chapter_9":"諸葛亮の死",
 	"chapter_10":"蜀の滅亡",
-	"new_script":"新剧本({0})",
+	"new_script":"シナリオ({0})",
 };

@@ -337,9 +337,12 @@ function battleFoodCheck(belong){
 	LGlobal.script.addScript(script);
 	return false;
 }
-function battleHealTroops(currentSelectStrategy, currentTargetCharacter){
-	var troopsAdd = currentSelectStrategy.troops();
-	var woundedAdd = currentSelectStrategy.wounded();
+function battleHealTroops(currentSelectStrategy, currentTargetCharacter, proficiency){
+	if(typeof proficiency == UNDEFINED){
+		proficiency = 1;
+	}
+	var troopsAdd = currentSelectStrategy.troops() * proficiency >>> 0;
+	var woundedAdd = currentSelectStrategy.wounded() * proficiency >>> 0;
 	return battleHealTroopsRun(troopsAdd, woundedAdd, currentTargetCharacter);
 }
 function battleHealTroopsRun(troopsAdd, woundedAdd, currentTargetCharacter){
@@ -736,7 +739,8 @@ function experienceToFeat(characterModels){
 		}
 		feat -= 5;
 		data.feat = data.feat >>> 0;
-		data.character.feat(data.character.feat() + data.feat);
+		//data.character.feat(data.character.feat() + data.feat);
+		data.character.featPlus(data.feat);
 		data.character.exp(0);
 		delete data.character;
 	}

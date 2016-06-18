@@ -1,3 +1,11 @@
-SGJEvent.mapShow(1);
-SGJEvent.messageShow(结局:贤君。,3);
+SGJEvent.mapShow(7);
+SGJEvent.addCharacter(21,150,100,fade);
+SGJEvent.messageShow(長年の闘争を経て、〇〇が天下を統一して、新王朝を作りました。,3);
+SGJEvent.messageShow(新王朝を作った〇〇は常に自らを律するように勤めた。,3);
+SGJEvent.messageShow(賦役・刑罰の軽減、三省六部制の整備などを行い、軍事面においても兵の訓練を自ら視察し、成績優秀者には褒賞を与えたため軍事力は強力になった。,3);
+SGJEvent.addCharacter(622,0,200,fade);
+SGJEvent.messageShow(充実した国力を背景に異民族討伐を実施する。,3);
+SGJEvent.removeCharacter(622,fade);
+SGJEvent.messageShow(異民族は崩壊し、遊牧諸部族が新王朝の支配下に入ることとなった。,3);
+SGJEvent.messageShow(〇〇は新王朝の基礎を固める善政を行い、中国史上最高の名君の一人と称えられる。,3);
 Mark.EventEnd;

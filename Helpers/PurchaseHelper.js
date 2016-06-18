@@ -1,5 +1,6 @@
 function purchaseLogGet(callback) {
 	var purchase = LPurchase.Instance();
+	purchase.removeAllEventListener();
 	purchase.addEventListener(LPurchase.PURCHASE_LOG_COMPLETE, function(event) {
 		var data = event.target;
 		var log = [];
@@ -13,10 +14,19 @@ function purchaseLogGet(callback) {
 	});
 	purchase.purchaseLog();
 }
-
+function purchaseRestore(callback) {
+	var purchase = LPurchase.Instance();
+	purchase.removeAllEventListener();
+	purchase.addEventListener(LPurchase.PURCHASE_COMPLETE,purchaseComplete);
+	purchase.addEventListener(LPurchase.PURCHASE_RESTORE_COMPLETE, function(event) {
+		callback();
+	});
+	purchase.purchaseRestore();
+}
 
 function purchaseProductInformation(callback) {
 	var purchase = LPurchase.Instance();
+	purchase.removeAllEventListener();
 	purchase.addEventListener(LPurchase.PRODUCT_INFORMATION_COMPLETE, function(event) {
 		var data = event.target;
 		GameCacher.setData("productInformation", data);
@@ -25,17 +35,30 @@ function purchaseProductInformation(callback) {
 	purchase.productInformation(productIdConfig.productIds);
 }
 
+function purchaseComplete(event, callback) {
+	if(event.status == 0){
+		//error
+		if(callback){
+			callback(null);
+		}
+	}else{
+		//success
+		var data = event.target ? event.target : {};
+		if(callback){
+			callback(data.productId);
+		}
+		//purchase log update
+		var purchaseLog = LPlugin.GetData("purchaseLog", []);
+		purchaseLog.push({"product_id":data.productId});
+		LPlugin.SetData("purchaseLog", purchaseLog);
+	}
+}
+
 function purchaseStart(productId, callback) {
 	var purchase = LPurchase.Instance();
+	purchase.removeAllEventListener();
 	purchase.addEventListener(LPurchase.PURCHASE_COMPLETE,function(event){
-		if(event.status == 0){
-			//error
-		}
-		//success
-		var data = event.target;
-		callback(data.productId);
-		//purchase log update
-		purchaseLogGet();
+		purchaseComplete(event, callback);
 	});
 	purchase.purchase(productId);
 }
@@ -53,7 +76,7 @@ function purchaseConfirm(productId, name, callback) {
 	var obj = {
 		title : Language.get("confirm"),
 		width : 340,
-		height : 240,
+		height : 260,
 		cancelEvent : null
 	};
 	if (LPlugin.native) {

@@ -277,6 +277,9 @@ function dispatchEventListResult(eventId, currentEvent) {
 }
 function dispatchEventListResultGameClear(child) {
 	SeigniorExecute.running = false;
+	MenuController.instance().nextFrameExecute(function(){
+		MenuController.instance().view.onClickReturnTop();
+	});
 }
 function dispatchEventListResultCaptiveDie(child) {
 	for(var i=0,l=child.captives.length;i<l;i++){
