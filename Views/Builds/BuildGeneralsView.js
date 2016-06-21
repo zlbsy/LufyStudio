@@ -44,7 +44,7 @@ BuildGeneralsView.prototype.onClickPersuade=function(event){
 BuildGeneralsView.prototype.persuadeTargetSelectCharacter=function(event){
 	var controller = event.currentTarget;
 	var self = controller.view.contentLayer.childList.find(function(child){
-		return child.constructor.name == "BuildOfficialView";
+		return child.constructor.name == "BuildGeneralsView";
 	});
 	self.controller.setValue("cityId", event.cityId);
 	controller.removeEventListener(LCityEvent.SELECT_CITY, self.persuadeTargetSelectCharacter);

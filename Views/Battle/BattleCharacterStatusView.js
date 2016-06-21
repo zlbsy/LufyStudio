@@ -37,9 +37,6 @@ BattleCharacterStatusView.healCharactersCheck = function(){
 };
 BattleCharacterStatusView.prototype.push=function(mode,value){
 	var self = this;
-	if(mode == BattleCharacterStatusConfig.HP){
-		console.error("BattleCharacterStatusConfig.HP");
-	}
 	self.datas.push({mode:mode,value:value});
 };
 BattleCharacterStatusView.prototype.get=function(mode){

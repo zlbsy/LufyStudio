@@ -1,3 +1,12 @@
 SGJEvent.mapShow(1);
-SGJEvent.messageShow(三顾茅庐3。,3);
+SGJEvent.addCharacter(21,150,100,fade);
+SGJEvent.messageShow(諸葛亮在宅の噂を聞いた劉備は、三度草庵を訪れる。,3);
+SGJEvent.addCharacter(10,350,100,fade);
+SGJEvent.messageShow(そして、ようやく諸葛亮との対面を果たす。,3);
+SGJEvent.messageShow(切々と、自らの心情を訴える劉備。,3);
+SGJEvent.messageShow(その天下を想う言葉は何よりも強く、眠れる竜の心に響いた。,3);
+SGJEvent.messageShow(諸葛亮もまた、天下を救う君子の到来を待ち望んでいたのである。,3);
+SGJEvent.messageShow(静かに頷きながら、劉備を仰ぎ見る諸葛亮。,3);
+SGJEvent.messageShow(今、劉備の時間が急速に動き始めようとしていた。,3);
+SGJEvent.messageShow(これが世に言う「三顧の礼」である。,3);
 Mark.EventEnd;

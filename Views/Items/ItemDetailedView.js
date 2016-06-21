@@ -34,7 +34,6 @@ ItemDetailedView.prototype.close=function(event){
 ItemDetailedView.prototype.set=function(){
 	var self = this;
 	self.layerInit();
-	console.log("self.itemModel",self.itemModel,self.itemModel.name());
 	var title = getStrokeLabel(self.itemModel.name(),20,"#FFFFFF","#000000",4);
 	title.x = (LGlobal.width - title.getWidth())*0.5;
 	title.y = self.backLayer.getChildByName("windowBackground").y + 8;

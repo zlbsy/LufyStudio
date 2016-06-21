@@ -184,6 +184,7 @@ function accessRun(characterModel){
 	var charaId = notDebut[notDebut.length*Math.fakeRandom() >>> 0];
 	cityModel.removeNotDebut(charaId);
 	var targetModel = CharacterModel.getChara(charaId);
+	targetModel.cityId(characterModel.cityId());
 	var area = characterModel.city();
 	var outOfOffice = area.outOfOffice();
 	outOfOffice.push(targetModel);
@@ -429,9 +430,13 @@ function enlistRun(characterModel, targetEnlist){
 }
 function persuadeRun(characterModel, targetPersuadeId){
 	//劝降：忠诚度+义气+运气+武将相性
-	//console.error("劝降 : ",characterModel.id());
 	characterModel.job(Job.IDLE);
 	var targetPersuade = CharacterModel.getChara(targetPersuadeId);
+	if(!targetPersuade.seignior() || !targetPersuade.city()){
+		removeCanPersuadeCharacters(targetPersuadeId);
+		characterModel.featPlus(JobFeatCoefficient.NORMAL * 0.5);
+		return;
+	}
 	if(!targetPersuade || targetPersuade.seigniorId() == characterModel.seigniorId()){
 		characterModel.featPlus(JobFeatCoefficient.NORMAL * 0.5);
 		return;
@@ -590,12 +595,16 @@ function hireRun2(characterModel, hireCharacter,area){
 			return;
 		}
 	}
-	/*var outOfOffice = area.outOfOffice();
+	var outOfOffice = area.outOfOffice();
 	var hireCharacterIndex = outOfOffice.findIndex(function(child){
 		return child.id() == hireCharacter.id();
 	});
+	if(hireCharacterIndex < 0){
+		SeigniorExecute.addMessage(String.format(Language.get("hireRefuseMessage"),hireCharacter.name(),characterModel.name()));
+		characterModel.featPlus(JobFeatCoefficient.NORMAL * 0.5);
+		return;
+	}
 	
-	outOfOffice.splice(hireCharacterIndex, 1);*/
 	hireCharacter.seigniorId(characterModel.seigniorId());
 	area.addGenerals(hireCharacter);
 	hireCharacter.cityId(characterModel.cityId());
@@ -773,11 +782,9 @@ function charactersNaturalDeath(area){
 		}
 		var value = general.age() - general.life();
 		//TODO::武将到达年龄，几率死亡
-		//console.log("---------------年龄：：" + general.name() + ","+general.age()+"<="+general.life());
 		if(Math.fakeRandom() > 0.5 + 0.1 * value){
 			continue;
 		}
-		//console.error("---------------武将死亡：：" + general.name() + ","+general.age()+"<="+general.life());
 		general.toDie();
 		if(general.id() == prefecture){
 			prefectureDie = true;
@@ -788,7 +795,6 @@ function charactersNaturalDeath(area){
 	}
 	if(seigniorCharaDie){
 		monarchChange(seigniorCharaId);
-		//console.error("seignior="+seignior.character().name(),area.seigniorCharaId());
 		var obj = {title:Language.get("confirm"),
 		message:String.format(Language.get("monarch_die"), seigniorName, seignior.character().name()),
 		height:200,okEvent:function(event){
@@ -810,6 +816,7 @@ function outOfOfficeCharactersMove(area){
 	var characters = area.outOfOffice();
 	var length = characters.length;
 	var neighbor = length > 0 ? area.neighbor() : null;
+	var moveCount = 0;
 	for(var i=length-1;i>=0;i--){
 		var character = characters[i];
 		if(character.seigniorId() > 0){
@@ -828,6 +835,7 @@ function outOfOfficeCharactersMove(area){
 		character.moveTo(neighborCityId);
 		character.moveTo();
 		character.job(Job.END);
+		moveCount++;
 	}
 }
 //褒奖

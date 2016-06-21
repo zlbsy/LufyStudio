@@ -23,19 +23,16 @@ function getWeakBattleCity(areaModel){
 }
 /*检索可攻击城池*/
 function getCanBattleCity(areaModel,characters,enlistFlag){
-	if(enlistFlag != AiEnlistFlag.Free && enlistFlag != AiEnlistFlag.None && enlistFlag != AiEnlistFlag.BattleResource){
-		//console.error("检索可攻击城池("+areaModel.name()+") enlistFlag:",enlistFlag);
+	if((enlistFlag != AiEnlistFlag.Free && enlistFlag != AiEnlistFlag.None && enlistFlag != AiEnlistFlag.BattleResource) 
+	|| ((enlistFlag == AiEnlistFlag.Battle || enlistFlag == AiEnlistFlag.NeedResource) && Math.fakeRandom() < 0.5)){
 		return null;
 	}
 	var generalCount = areaModel.generalsSum();
-	if(characters.length < BattleMapConfig.DetachmentQuantity || generalCount < BattleMapConfig.DetachmentQuantity * 2 || generalCount - BattleMapConfig.DetachmentQuantity > characters.length){
-		//console.error("检索可攻击城池("+areaModel.name()+") generalCount:",generalCount);
+	if(characters.length < BattleMapConfig.DetachmentQuantity || generalCount < BattleMapConfig.DetachmentQuantity * 2 || generalCount - characters.length < BattleMapConfig.DetachmentQuantity){
 		return null;
 	}
 	var weakCity = getWeakBattleCity(areaModel);
-	//console.log("weakCity="+weakCity);
 	if(!weakCity){
-		//console.error("检索可攻击城池("+areaModel.name()+") no weakCity");
 		return null;
 	}
 	var weakCityGeneralCount = weakCity.generalsSum();
@@ -44,14 +41,11 @@ function getCanBattleCity(areaModel,characters,enlistFlag){
 		return null;
 	}
 	var generals = AreaModel.getPowerfulCharacters(characters);
-	//console.log("getCanBattleCity generals.length="+generals.length);
 	var needFood = 0;
 	for(var i=0,l=generals.length;i<l && i<BattleMapConfig.AttackQuantity;i++){
 		var charaModel = generals[i].general;
 		needFood += charaModel.maxTroops();
 	}
-	//console.log("areaModel.food()="+areaModel.food());
-	//console.log("needFood * 20="+(needFood * 20));
 	if(areaModel.food() < needFood * 20){
 		return null;
 	}
@@ -111,7 +105,7 @@ function jobAiToBattle(areaModel,characters,targetCity){
 	areaModel.troops(areaModel.troops() - sumTroops);
 	data.cityId = targetCity.id();
 	data.toCity = targetCity;
-	if(targetCity.seigniorCharaId() == LMvc.selectSeignorId){
+	if(targetCity.seigniorCharaId() == LMvc.selectSeignorId && (targetCity.troops() > 0 && targetCity.generals().length > 0)){
 		SeigniorExecute.Instance().stop = true;
 		//进入战斗
 		var attackSeignior = areaModel.seignior();
@@ -127,12 +121,14 @@ function jobAiToBattle(areaModel,characters,targetCity){
 				LMvc.CityController.setValue("cityData",areaModel);
 				LMvc.CityController.setValue("toCity",targetCity);
 				LMvc.CityController.setValue("expeditionEnemyData",data);
-				if(targetCity.troops() > 0){
+				LMvc.CityController.loadCharacterList(CharacterListType.EXPEDITION,targetCity.generals(Job.IDLE), {buttonLabel:"execute"});
+				/*
+				if(targetCity.troops() > 0 && targetCity.generals().length > 0){
 					LMvc.CityController.loadCharacterList(CharacterListType.EXPEDITION,targetCity.generals(Job.IDLE), {buttonLabel:"execute"});
 				}else{
 					LMvc.CityController.setValue("battleData",{food:0, money:0, troops:0});
 					LMvc.CityController.gotoBattle();
-				}
+				}*/
 			});
 		}};
 		var windowLayer = ConfirmWindow(obj);
@@ -154,7 +150,9 @@ function jobAiBattleExecute(areaModel,data,targetCity){
 	SeigniorExecute.addMessage(String.format(Language.get("to_attack_seignior_city"),attackSeignior.character().name(),areaModel.name(),defSeignior.character().name(),targetCity.name()));
 	var targetData = {};
 	var enemyCharas = targetCity.getDefenseEnemies();
-	enemyCharas[0].isLeader = true;
+	if(enemyCharas.length > 0){
+		enemyCharas[0].isLeader = true;
+	}
 	var sumTroops = targetCity.troops();
 	for(var i = 0;i<enemyCharas.length;i++){
 		var charaId = enemyCharas[i].id();
@@ -342,11 +340,11 @@ function jobAiInternal(areaModel,characters,price,job){//内政
 	}
 }
 function jobAiSetCityBattleDistance(seigniorModel){
-	if(seigniorModel.chara_id() == LMvc.selectSeignorId){
+	/*if(seigniorModel.chara_id() == LMvc.selectSeignorId){
 		SeigniorExecute.Instance().timer.reset();
 		SeigniorExecute.Instance().timer.start();
 		return;
-	}
+	}*/
 	var areas = seigniorModel.areas();
 	areas.forEach(function(area){
 		area.battleDistanceCheckOver = false;

@@ -46,8 +46,7 @@ PerishView.prototype.removeSelf = function(event){
 	var self = event.currentTarget.parent.parent;
 	var charaId = self.charaId;
 	if(LMvc.selectSeignorId == charaId){
-		//TODO::GameOver
-		console.log("Game Over");
+		//GameOver
 	}else{
 		self.remove();
 		if(SeigniorExecute.running){

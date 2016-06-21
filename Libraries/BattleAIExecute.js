@@ -367,7 +367,6 @@ BattleAIExecute.prototype.useHertStrategy = function(chara, target, attack) {
 };
 BattleAIExecute.prototype.useAidStrategy = function(chara, charas, strategyEffectType, strategyFlag) {
 	var self = this;
-	//console.error("useAidStrategy",chara);
 	if((chara.data.currentSoldiers().soldierType() == SoldierType.Physical) || (chara.data.currentSoldiers().soldierType() == SoldierType.Comprehensive && Math.fakeRandom() < 0.5) || Math.fakeRandom() < 0.8){
 		return false;
 	}

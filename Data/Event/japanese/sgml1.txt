@@ -1,3 +1,13 @@
 SGJEvent.mapShow(1);
-SGJEvent.messageShow(三顾茅庐1。,3);
+SGJEvent.messageShow(漢の再興を志す劉備は、雌伏の時を余儀なくされていた。,3);
+SGJEvent.messageShow(その陣容に、天下の秘策を巡らす「軍師」を欠いていたのである。,3);
+SGJEvent.addCharacter(20,150,100,fade);
+SGJEvent.messageShow(軍師・徐庶の噂を聞きつけた曹操は母からの手紙を偽り、劉備のもとから徐庶を引き抜くことに成功した。,3);
+SGJEvent.removeCharacter(20,fade);
+SGJEvent.messageShow(曹操の策で徐庶を失った劉備だったが、徐庶は去り際に臥龍・諸葛亮を推挙していた。,3);
+SGJEvent.addCharacter(21,250,100,fade);
+SGJEvent.addCharacter(4,150,100,fade);
+SGJEvent.addCharacter(19,350,100,fade);
+SGJEvent.messageShow(「伏竜を得る者、天下を制す」と謳われる逸材である。,3);
+SGJEvent.messageShow(劉備は急ぎ関羽・張飛を伴って、諸葛亮の庵を訪ねたが、諸葛亮は不在だった。,3);
 Mark.EventEnd;

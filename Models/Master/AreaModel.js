@@ -116,7 +116,7 @@ AreaModel.prototype.getDefenseEnemies = function(){
 };
 AreaModel.prototype.powerful = function(){
 	var self = this;
-	var power = [];
+	var power = 0;
 	var list = self.getDefenseEnemiesAndPowerful();
 	//console.log("powerful list:",list);
 	var needTroops = 0;
@@ -209,7 +209,7 @@ AreaModel.prototype.removeGenerals = function(param){
 	return false;
 };
 AreaModel.prototype.addOutOfOfficeCharacter=function(param){
-	var self = this;
+	var self = this, chara;
 	if(typeof param == "number"){
 		chara = CharacterModel.getChara(param);
 	}else{
@@ -651,7 +651,8 @@ AreaModel.prototype.outOfOffice=function(){
 AreaModel.prototype.removeNotDebut=function(charaId){
 	var self = this;
 	var notDebut = self.data.not_debut;
-	for(var i = 0, l = notDebut.length;i<l;i++){
+	var length = notDebut.length;
+	for(var i = 0;i<length;i++){
 		var child = notDebut[i];
 		if(child.chara_id == charaId){
 			self.data.not_debut.splice(i, 1);

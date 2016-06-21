@@ -1,3 +1,12 @@
 SGJEvent.mapShow(1);
-SGJEvent.messageShow(三顾茅庐3。,3);
+SGJEvent.addCharacter(21,150,100,fade);
+SGJEvent.messageShow(刘备听到诸葛亮的回家的消息后，又第三次来到了诸葛亮的草庐。,3);
+SGJEvent.addCharacter(10,350,100,fade);
+SGJEvent.messageShow(而且，这次终于见到了诸葛亮。,3);
+SGJEvent.messageShow(刘备向诸葛亮诉说了自己的志向和心情。,3);
+SGJEvent.messageShow(一颗想着天下苍生的心，深深的打动了这条睡梦中的龙。,3);
+SGJEvent.messageShow(其实诸葛亮也一直在等待这样一个真正的明主，于是诸葛亮给刘备分析了天下的形势。,3);
+SGJEvent.talk(10,北让曹操占天时，南让孙权占地利，将军可占人和，拿下西川成大业，和曹、孙成三足鼎立之势。);
+SGJEvent.messageShow(刘备听了诸葛亮的分析，非常的佩服，诸葛亮也终于答应去帮助刘备。,3);
+SGJEvent.messageShow(这就是历史上著名的「三顾茅庐」。,3);
 Mark.EventEnd;

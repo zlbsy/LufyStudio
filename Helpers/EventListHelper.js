@@ -372,7 +372,10 @@ function dispatchEventListResultChangeCitySeignior(child) {
 		return;
 	}
 	var fromSeignior = city.seignior();
-	var fromCitys = fromSeignior.areas();
+	var fromCitys = [];
+	if(fromSeignior){
+		fromCitys = fromSeignior.areas();
+	}
 	if(fromCitys.length == 1){
 		return;
 	}

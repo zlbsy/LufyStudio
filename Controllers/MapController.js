@@ -112,7 +112,6 @@ MapController.prototype.returnToChapter=function(event){
 };
 MapController.prototype.showCity=function(cityId, initFunc){
 	var self = this;
-	//console.log("MapController.prototype.showCity " + cityId);
 	LMvc.cityId = cityId;
 	self.initFunc = initFunc;
 	LMvc.keepLoading(true);
@@ -126,7 +125,6 @@ MapController.prototype.cityLoadComplete=function(){
 };
 MapController.prototype.returnToCity=function(cityId){
 	var self = this;
-	//console.log("returnToCity cityId="+cityId);
 	LTweenLite.removeAll();
 	LMvc.MapController.view.clearBattleMark();
 	LMvc.MapController.view.visible = false;
@@ -137,7 +135,6 @@ MapController.prototype.returnToCity=function(cityId){
 	}
 	var event = new LEvent(LCityEvent.SELECT_CITY);
     event.cityId = cityId;
-    //console.log("LMvc.CityController._eventList",LMvc.CityController._eventList);
 	LMvc.CityController.dispatchEvent(event);
 };
 MapController.prototype.checkSeigniorChange=function(seigniorId){
@@ -153,7 +150,6 @@ MapController.prototype.checkSeigniorChange=function(seigniorId){
 			}
 		}
 	}else{
-		//console.log("checkSeigniorIsDie false");
 		if(SeigniorExecute.running){
 			SeigniorExecute.run();
 		}
@@ -168,7 +164,6 @@ MapController.prototype.checkSeigniorFail=function(seigniorId){
 		return;
 	}
 	var seignior = SeigniorModel.getSeignior(seigniorId);
-	//console.log("seignior.areas().length="+seignior.areas().length);
 	if(seignior.areas().length > 0){
 		self.checkSeigniorChange(seigniorId);
 		return;

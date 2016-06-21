@@ -113,8 +113,11 @@ BattleController.prototype.init = function(){
 	}
 	if(self.battleData.toCity.seigniorCharaId() == 0 || enemyTroops == 0 || 
 		self.battleData.toCity.generalsSum() == 0){
-		//console.log("noBattle",self.battleData.toCity,self.battleData.toCity.seigniorCharaId(),enemyTroops,self.battleData.toCity.generalsSum());
 		self.noBattle = true;
+		var selfAttack = (self.battleData.fromCity.seigniorCharaId() == LMvc.selectSeignorId);
+		if(!selfAttack){
+			self.battleData.expeditionEnemyCharacterList = self.battleData.expeditionEnemyData.expeditionCharacterList;
+		}
 		self.dispatchEvent(LEvent.COMPLETE);
 		return;
 	}
@@ -265,7 +268,6 @@ BattleController.prototype.queryInit=function(){
 	self.query = new BattleQuery(self.model.map.data);
 };
 BattleController.prototype.mapMouseUp = function(event){
-	//console.error("mapMouseUp",event.target,event.currentTarget);
 	if(LMvc.running || BattleSelectMenuController.instance().view.visible){
 		return;
 	}
@@ -314,7 +316,7 @@ BattleController.prototype.mapMouseDown = function(event){
 	self.downY = event.offsetY;
 	self.selfX = event.selfX;
 	self.selfY = event.selfY;
-	if(LGlobal.height < self.model.map.height){
+	if(LGlobal.height < self.model.map.height || LGlobal.width < self.model.map.width){
 		event.currentTarget.startDrag(event.touchPointID);
 	}
 	self.draging = true;

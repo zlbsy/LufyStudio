@@ -70,7 +70,6 @@ SingleCombatCharacter.prototype.setActionDirection = function(action, direction)
 	}
 
 	var label = action + "_" + direction;
-	//console.error("label",label);
 	self.anime.gotoAndPlay(label);
 	var data = self.anime.imageArray[self.anime.rowIndex][self.anime.colIndex];
 	self.clearShape();
@@ -88,8 +87,8 @@ SingleCombatCharacter.prototype.setActionDirection = function(action, direction)
 			self.attackShapes = self.addShape(LShape.ARC, [0, 0, BattleMapConfig.STEP_WIDTH*0.5]);
 			//self.graphics.drawArc(2, "#000000", [0, 0, BattleMapConfig.STEP_WIDTH*0.5]);
 			break;
-	}console.log(data);
-			self.graphics.drawRect(2, "#ff0000", [self.layer.x, self.layer.y, 320, 240]);
+	}
+	self.graphics.drawRect(2, "#ff0000", [self.layer.x, self.layer.y, 320, 240]);
 	self.leftX = self.layer.x + data.sx;
 	self.topY = self.layer.y + data.sy;
 	self.rightX = self.layer.x + data.sx + data.width;

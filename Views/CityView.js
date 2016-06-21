@@ -231,6 +231,9 @@ CityView.prototype.autoTalkCheck = function(){
 	}
 	var cityModel = self.controller.getValue("cityData");
 	var generals = cityModel.generals();
+	if(generals.length == 0){
+		return;
+	}
 	var idleGenerals = cityModel.generals(Job.IDLE);
 	if(generals.length > idleGenerals.length){
 		return;

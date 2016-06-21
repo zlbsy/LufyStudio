@@ -110,6 +110,7 @@ var EventListConfig = [
 		{type:"moveGeneralsToCity", generals:[], from:35, to:36},//小沛武将全部移往下坯
 		{type:"changeCitySeignior", cityId:35, seignior:21},//小沛势力变为刘备
 		{type:"moveGeneralsToCity", generals:[4,19,21], to:35},//刘关张移往小沛
+		{type:"changeCityResources", cityId:35, food:10000, money:2000, business:3000, agriculture:3000, technology:2000, police:90, city_defense:1000, troops:1100},//洛阳资源变更
 		{type:"stopBattle", seigniors:[21,451], month:12}//刘备和陶谦停战1年
 	]
 },

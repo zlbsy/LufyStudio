@@ -43,9 +43,6 @@ ArmListView.prototype.troopsSelect=function(event){
 };
 ArmListView.prototype.showArmDetailed=function(soldierModel){
 	var self = this;
-	//console.log("self.controller.armListType="+self.controller.armListType);
-	//console.error("ArmListView.prototype.showArmDetailed"+self.controller.armListType,ArmListType.EXPEDITION,soldierData);
-	//var armDetailed = new ArmDetailedView(self.controller, soldierModel);
 	var armDetailed = new ArmDetailedView(self.controller);
 	if(self.controller.armListType == ArmListType.EXPEDITION){
 		var title = soldierModel.name();

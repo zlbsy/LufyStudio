@@ -415,6 +415,7 @@ Language.data = {
 	"generals_list":"武将一览",
 	"generals_move":"武将移动",
 	"generals_hire":"登用执行",
+	"generals_spy":"谍报",
 	"move_start":"移动开始",
 	"arm_properties":"备战属性",
 	"basic_properties":"基本属性",

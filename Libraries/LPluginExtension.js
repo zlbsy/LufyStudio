@@ -64,7 +64,6 @@ LPlugin.SetData = function(key,data){
 		LPlugin.writeToFileInDomain(key, JSON.stringify(data));
 	}else{
 		try{
-			//console.error(JSON.stringify(data));
 			window.localStorage.setItem(key, JSON.stringify(data));
 		}catch(e){
 			console.error("not supported window.localStorage", data);

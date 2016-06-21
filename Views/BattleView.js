@@ -29,11 +29,7 @@ BattleView.prototype.init=function(){
 	self.miniLayer.addEventListener(LMouseEvent.MOUSE_DOWN, self.miniLayerStartDrag);
 	self.miniLayer.addEventListener(LMouseEvent.MOUSE_UP, self.miniLayerStopDrag);
 	
-	var map = self.model.map;
-	if(LGlobal.height < map.height){
-		self.addEventListener(LEvent.ENTER_FRAME, self.onframe);
-		return;
-	}
+	self.addEventListener(LEvent.ENTER_FRAME, self.onframe);
 	return;
 	self.addChildAt(getBlackBitmap(LGlobal.width, LGlobal.height), 0);
 	var baseLayer = self.baseLayer;
@@ -153,15 +149,23 @@ BattleView.prototype.checkPosition=function(){
 	var self = this;
 	var map = self.model.map;
 	var baseLayer = self.baseLayer;
-	if(baseLayer.x > 0){
+	if(LGlobal.width < map.width){
+		if(baseLayer.x > 0){
+			baseLayer.x = 0;
+		}else if(baseLayer.x < LGlobal.width - map.width){
+			baseLayer.x = LGlobal.width - map.width;
+		}
+	}else{
 		baseLayer.x = 0;
-	}else if(baseLayer.x < LGlobal.width - map.width){
-		baseLayer.x = LGlobal.width - map.width;
 	}
-	if(baseLayer.y > 0){
+	if(LGlobal.height < map.height){
+		if(baseLayer.y > 0){
+			baseLayer.y = 0;
+		}else if(baseLayer.y < LGlobal.height - map.height){
+			baseLayer.y = LGlobal.height - map.height;
+		}
+	}else{
 		baseLayer.y = 0;
-	}else if(baseLayer.y < LGlobal.height - map.height){
-		baseLayer.y = LGlobal.height - map.height;
 	}
 };
 BattleView.prototype.onframe=function(event){

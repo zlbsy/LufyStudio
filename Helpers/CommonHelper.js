@@ -296,6 +296,17 @@ function itemExchangeLoyalty(item){
 function getCanPersuadeCharacters(){
 	return LMvc.chapterData.persuadeCharacters || [];
 }
+function removeCanPersuadeCharacters(id){
+	var characters = getCanPersuadeCharacters();
+	for(var i=0,l=characters.length;i<l;i++){
+		var child = characters[i];
+		if(child.i == id){
+			characters.splice(i, 1);
+			break;
+		}
+	}
+	LMvc.chapterData.persuadeCharacters = characters;
+}
 //更新可劝降武将列表,忠诚度降序
 function updateCanPersuadeCharacters(characterModel){
 	var characters = getCanPersuadeCharacters();

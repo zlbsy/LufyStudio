@@ -500,7 +500,6 @@ BattleCharacterAI.prototype.plusExp = function(event) {
 };
 BattleCharacterAI.prototype.counterAttack = function(event) {
 	var attackChatacter = event.currentTarget.character;
-	//console.error("counterAttack" ,attackChatacter.data.name());
 	if(!isCurrentAttackCharacter(attackChatacter) && !isCurrentAttackTarget(attackChatacter)){
 		return;
 	}
@@ -519,7 +518,6 @@ BattleCharacterAI.prototype.counterAttack = function(event) {
 };
 BattleCharacterAI.prototype.counterMagicAttack = function(event) {
 	var attackChatacter = event.currentTarget.character;
-	//console.error("counterMagicAttack" ,attackChatacter.data.name());
 	if(!isCurrentAttackCharacter(attackChatacter) && !isCurrentAttackTarget(attackChatacter)){
 		return;
 	}
@@ -531,7 +529,6 @@ BattleCharacterAI.prototype.counterMagicAttack = function(event) {
 };
 BattleCharacterAI.prototype.endAction = function() {
 	var self = this, chara = self.chara, target = chara.AI.attackTarget;
-	//console.error("endAction",chara.data.name());
 	if(target && target.objectIndex != chara.objectIndex){
 		target.currentSelectStrategy = null;
 		target.AI.attackTarget = null;

@@ -18,7 +18,6 @@ ItemsChildView.prototype.set=function(){
 	
 	var width = 100, height = 100;
 	var item = self.itemModel.icon(new LPoint(width,height));
-	console.log("item icon ",item.getWidth(),item.getHeight());
 	layer.addChild(item);
 	
 	

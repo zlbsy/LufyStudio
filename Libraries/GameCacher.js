@@ -79,7 +79,6 @@ GameCacher.getCircleBitmapData = function(color, radius){
 GameCacher.getColorBitmapData = function(color, width, height){
 	var key = "" + color + "_" + width + "_" + height;
 	if(!GameCacher._colorBitmapDatas[key]){
-		console.log("color key = " + key);
 		var colorData = new LBitmapData(String.format("rgb({0})",color),0,0,width, height,LBitmapData.DATA_CANVAS);
 		GameCacher._colorBitmapDatas[key] = colorData;
 	}

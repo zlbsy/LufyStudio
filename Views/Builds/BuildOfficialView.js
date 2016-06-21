@@ -129,6 +129,8 @@ BuildOfficialView.prototype.selectComplete=function(event){
 		self.controller.setValue("cityId", null);
 		event.characterList.forEach(function(child){
 			child.spy(cityId);
+			var city = self.controller.getValue("cityData");
+			city.money(-JobPrice.SPY);
 		});
 	}else if(event.characterListType == CharacterListType.TRANSPORT){
 		if(event.characterList.length > 1){

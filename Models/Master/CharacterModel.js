@@ -63,6 +63,8 @@ CharacterModel.setChara=function(list){
 	var fathers = [];
 	for(var i=0,l=list.length;i<l;i++){
 		var chara = new CharacterModel(null,list[i]);
+		chara.job(Job.IDLE);
+		chara.feat(0);
 		if(chara.childs().length > 0){
 			fathers.push(chara);
 		}
@@ -730,9 +732,6 @@ CharacterModel.prototype.moveTo = function(cityId) {
 	var self = this;
 	if(typeof cityId == UNDEFINED){
 		var areaFrom = self.city();
-		if(areaFrom){
-			areaFrom.removeCharacter(self);
-		}
 		var area = AreaModel.getArea(self.data.targetCity);
 		var seigniorId = self.seigniorId();
 		if(seigniorId > 0){

@@ -148,9 +148,10 @@ SeigniorExecute.run=function(){
 	self.childsCheckedCitys = [];
 	self.captivesChecked = [];
 	SeigniorExecute.running = false;
-	var buttonClose = self.backLayer.childList.find(function(child){
+	/*var buttonClose = self.backLayer.childList.find(function(child){
 		return child.constructor.name == "LButton";
-	});
+	});*/
+	var buttonClose = self.backLayer.getChildByName("closeButton");
 	buttonClose.visible = true;
 	self.msgView.clearSeignior();
 	LMvc.MapController.view.positionChangeToCity(CharacterModel.getChara(LMvc.selectSeignorId).city());
@@ -158,6 +159,15 @@ SeigniorExecute.run=function(){
 		SeigniorLevelUpdate();
 		Math.fakeReset();
 		RecordController.instance().autoSaveRecord();
+	}
+	//TODO::测试用
+	if(LGlobal.traceDebug){
+		setTimeout(function(){
+			if(self.backLayer && buttonClose.visible){
+				SeigniorExecute.close();
+				SeigniorExecute.run();
+			}
+		},3000);
 	}
 };
 SeigniorExecute.prototype.areaRun=function(area){
@@ -169,7 +179,10 @@ SeigniorExecute.prototype.areaRun=function(area){
 		self.areaGainRun(area);
 	}
 	if(!self.areaJobOver){//任务
-		self.areaJobRun(area);
+		var areaJobReturn= self.areaJobRun(area);
+		if(areaJobReturn){
+			return;
+		}
 	}
 	if(area.prefecture() > 0){
 		var prefectureCharacter = CharacterModel.getChara(area.prefecture());
@@ -217,7 +230,7 @@ SeigniorExecute.addMessage = function(value){
 };
 SeigniorExecute.prototype.areaJobRun=function(area){
 	var self = this, chara, job;
-	var generals = area.generals();
+	var generals = area.generals().concat();
 	if(LMvc.chapterData.month == 3){
 		//每年3月份，武将忠诚度变化一次
 		generalsChangeLoyalty(generals);
@@ -282,6 +295,8 @@ SeigniorExecute.prototype.areaJobRun=function(area){
 			case Job.PERSUADE:
 				chara.persuade();
 				break;
+			case Job.END:
+				break;
 			default:
 				chara.featPlus(JobFeatCoefficient.NORMAL * 0.25);
 				chara.job(Job.IDLE);
@@ -300,6 +315,7 @@ SeigniorExecute.prototype.areaJobRun=function(area){
 	}
 	captivesChangeLoyalty(area);
 	self.areaJobOver = true;
+	return false;
 };
 SeigniorExecute.prototype.areasRun=function(seigniorModel){
 	var self = this;
@@ -324,7 +340,6 @@ SeigniorExecute.prototype.areasAIRun=function(seigniorModel){
 	var areas = seigniorModel.areas();
 	if(self.areaAIIndex < areas.length){
 		var areaModel = areas[self.areaAIIndex];
-		//console.error("*****" + areaModel.name() + "*****");
 		self.areaAIRun(areaModel);
 		return false;
 	}
@@ -442,7 +457,8 @@ SeigniorExecute.prototype.areaAIRun=function(areaModel){
 		self.jobAiFunction(areaModel,self.characters,jobAiPolice,["force","agility"]);//治安
 	}
 	var canEnlish = jobAiCanToEnlish(areaModel);
-	if(needEnlistFlag == AiEnlistFlag.Must || needEnlistFlag == AiEnlistFlag.Need){
+	if(needEnlistFlag == AiEnlistFlag.Must || needEnlistFlag == AiEnlistFlag.Need 
+		|| needEnlistFlag == AiEnlistFlag.Battle || Math.fakeRandom() < 0.1){
 		if(canEnlish){
 			for(var i=0;i<2;i++){
 				self.jobAiFunction(areaModel,self.characters,jobAiToEnlish,["luck","command"]);

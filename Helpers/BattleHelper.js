@@ -305,7 +305,6 @@ function battleFoodCheck(belong){
 		(belong == Belong.ENEMY && battleData.fromCity.seigniorCharaId() == LMvc.selectSeignorId);
 	if(cityFood){
 		needFood = (needFood * thrift >>> 0);
-		//console.log("cityFood ",battleData.toCity.food() +">"+ needFood);
 		if(battleData.toCity.food() > needFood){
 			battleData.toCity.food(-needFood);
 			return true;
@@ -314,7 +313,6 @@ function battleFoodCheck(belong){
 	}else{
 		needFood += (battleData.troops * 0.5);
 		needFood = (needFood * thrift >>> 0);
-		//console.log("food ",battleData.food +">"+ needFood);
 		if(battleData.food > needFood){
 			battleData.food -= needFood;
 			return true;
@@ -482,7 +480,6 @@ function getBattleSaveData(){
 function setBattleSaveData(){
 	var data = LMvc.areaData.battleData;
 	var battleData = LMvc.BattleController.battleData;
-	//console.log("setBattleSaveData",battleData);
 	LMvc.BattleController.setValue("bout", data.bout);
 	LMvc.BattleController.setValue("currentBelong", Belong.SELF);
 	battleData.expeditionCharacterList = [];
@@ -578,7 +575,6 @@ function battleExpeditionMove(city, retreatCity){
  * 战斗后移动到指定城池
  */
 function battleCityChange(winSeigniorId, failSeigniorId, retreatCityId, expeditionList, city, captives){
-	//console.error(winSeigniorId, failSeigniorId, retreatCityId, expeditionList, city, captives);
 	//var battleData = controller.battleData;
 	//var city = battleData.toCity;
 	var generals = city.generals();
@@ -611,7 +607,7 @@ function battleCityChange(winSeigniorId, failSeigniorId, retreatCityId, expediti
 			chara.moveTo();
 		}
 	}else{
-		//console.log("无撤退城市");
+		//无撤退城市
 		var generals = city.generals();
 		if(city.seigniorCharaId() > 0 && city.seignior().character().isTribeCharacter()){
 			//外族消亡
@@ -627,7 +623,6 @@ function battleCityChange(winSeigniorId, failSeigniorId, retreatCityId, expediti
 				}
 				captives.push(child.id());
 			}
-			//console.log("全员被俘虏 : " + captives);
 		}
 	}
 	//generals.splice(0, generals.length);
@@ -637,7 +632,6 @@ function battleCityChange(winSeigniorId, failSeigniorId, retreatCityId, expediti
 	}
 	var seigniorWin = SeigniorModel.getSeignior(winSeigniorId);
 	seigniorWin.addCity(city);
-	//console.log("winSeigniorId="+winSeigniorId);
 	city.seigniorCharaId(winSeigniorId);
 	city.prefecture(expeditionList[0].id());
 	generals = expeditionList.slice();
