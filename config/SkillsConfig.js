@@ -191,10 +191,10 @@ var SkillSubType = {
 	ENLIST:"enlist",
 };
 var SkillsData = [
-{id:1,name:"雷霆怒击(张飞)",type:SkillType.ATTACK,subType:[SkillSubType.ATTACK_COUNT],attacks:[1,1,1],probability:40,explanation:"{probability}几率连续攻击三次。"},
+{id:1,name:"雷霆怒击(张飞)",type:SkillType.ATTACK,subType:[SkillSubType.ATTACK_COUNT],attacks:[1,0.8,0.7],probability:40,explanation:"{probability}几率连续攻击三次。"},
 {id:2,name:"真龙之气(刘备,曹操,孙权,曹丕,司马炎)",type:SkillType.HERT,subType:[SkillSubType.HERT_MINUS],hert:0,probability:30,explanation:"{probability}%几率将受到的伤害减少为0。"},
 {id:3,name:"隔山打牛(关羽)",type:SkillType.ATTACK,subType:[SkillSubType.ATTACK_RECT],rects:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],probability:40,explanation:"{probability}几率使攻击波及到目标敌人相邻的敌军。"},
-{id:4,name:"天下无双(吕布)",type:SkillType.ATTACK,subType:[SkillSubType.ATTACK_COUNT,SkillSubType.ENEMY_AID],attacks:[1.2,1.2],aids:[4],aidCount:1,aidRects:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],probability:60,explanation:"{probability}几率重击敌军两次，并且使得目标敌人相邻的敌军防御力降低。"},
+{id:4,name:"天下无双(吕布)",type:SkillType.ATTACK,subType:[SkillSubType.ATTACK_COUNT,SkillSubType.ENEMY_AID],attacks:[1.1,1.1],aids:[4],aidCount:1,aidRects:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],probability:60,explanation:"{probability}几率重击敌军两次，并且使得目标敌人相邻的敌军防御力降低。"},
 {id:5,name:"愈战愈勇(颜良,杜预)",type:SkillType.ATTACK_END,subType:[SkillSubType.SELF_AID],aids:[1],aidCount:1,aidRects:[{x:0,y:0}],probability:40,explanation:"{probability}几率在攻击结束时提升自身攻击力。"},
 {id:6,name:"愈战愈坚(文丑,郝昭)",type:SkillType.ATTACK_END,subType:[SkillSubType.SELF_AID],aids:[3],aidCount:1,aidRects:[{x:0,y:0}],probability:40,explanation:"{probability}几率在攻击结束时提升自身防御力。"},
 {id:7,name:"鼓舞(张辽,张任)",type:SkillType.BOUT_START,subType:[SkillSubType.SELF_AID],aids:[5],aidCount:1,aidRects:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],probability:50,explanation:"{probability}几率在回合开始时提升自身以及周围友军的士气。"},

@@ -178,20 +178,31 @@ SeigniorExecute.prototype.areaRun=function(area){
 	if(!self.areaGainOver){//城池收获
 		self.areaGainRun(area);
 	}
+	if(!self.areaChangeLoyaltyOver){//每年3月份，武将忠诚度变化一次
+		if(LMvc.chapterData.month == 3){
+			generalsChangeLoyalty(area.generals());
+		}
+		self.areaChangeLoyaltyOver = true;
+	}
+	if(!self.areaPrefectureFeatOver){//太守功绩
+		if(area.prefecture() > 0){
+			var prefectureCharacter = CharacterModel.getChara(area.prefecture());
+			prefectureCharacter.featPlus(5);
+		}
+		self.areaPrefectureFeatOver = true;
+	}
 	if(!self.areaJobOver){//任务
 		var areaJobReturn= self.areaJobRun(area);
 		if(areaJobReturn){
 			return;
 		}
 	}
-	if(area.prefecture() > 0){
-		var prefectureCharacter = CharacterModel.getChara(area.prefecture());
-		prefectureCharacter.featPlus(5);
-	}
 	self.areaIndex++;
 	self.areaGainOver = false;
 	self.areaJobOver = false;
 	self.areaPrizedOver = false;
+	self.areaChangeLoyaltyOver = false;
+	self.areaPrefectureFeatOver = false;
 	self.areaDieOver = false;
 	self.timer.reset();
 	self.timer.start();
@@ -231,10 +242,10 @@ SeigniorExecute.addMessage = function(value){
 SeigniorExecute.prototype.areaJobRun=function(area){
 	var self = this, chara, job;
 	var generals = area.generals().concat();
-	if(LMvc.chapterData.month == 3){
+	/*if(LMvc.chapterData.month == 3){
 		//每年3月份，武将忠诚度变化一次
 		generalsChangeLoyalty(generals);
-	}
+	}*/
 	var list = [];
 	for(var i=0;i<generals.length;i++){
 		chara = generals[i];
@@ -260,7 +271,22 @@ SeigniorExecute.prototype.areaJobRun=function(area){
 				repairRun(chara);
 				break;
 			case Job.ACCESS:
-				accessRun(chara);
+				var stop = accessRun(chara);
+				if(stop){
+					return true;
+				}
+				break;
+			case Job.HIRE:
+				var stop = chara.hire();
+				if(stop){
+					return true;
+				}
+				break;
+			case Job.PERSUADE:
+				var stop = chara.persuade();
+				if(stop){
+					return true;
+				}
 				break;
 			case Job.EXPLORE_BUSINESS:
 				exploreBusinessRun(chara);
@@ -283,19 +309,14 @@ SeigniorExecute.prototype.areaJobRun=function(area){
 			case Job.ENLIST:
 				chara.enlist();
 				break;
-			case Job.HIRE:
-				chara.hire();
-				break;
 			case Job.SPY:
 				chara.spy();
 				break;
 			case Job.TRANSPORT:
 				chara.transport();
 				break;
-			case Job.PERSUADE:
-				chara.persuade();
-				break;
 			case Job.END:
+			case Job.IDLE:
 				break;
 			default:
 				chara.featPlus(JobFeatCoefficient.NORMAL * 0.25);

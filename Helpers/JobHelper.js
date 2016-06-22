@@ -170,7 +170,7 @@ function accessRun(characterModel){
 			SeigniorExecute.addMessage(String.format(Language.get("accessFailMessage"),characterModel.name()));
 		}
 		characterModel.featPlus(JobFeatCoefficient.NORMAL * 0.5);
-		return;
+		return false;
 	}
 	var notDebut = cityModel.notDebut();
 	if(notDebut.length == 0){
@@ -179,7 +179,7 @@ function accessRun(characterModel){
 			SeigniorExecute.addMessage(String.format(Language.get("accessFailMessage"),characterModel.name()));
 		}
 		characterModel.featPlus(JobFeatCoefficient.NORMAL * 0.5);
-		return;
+		return false;
 	}
 	var charaId = notDebut[notDebut.length*Math.fakeRandom() >>> 0];
 	cityModel.removeNotDebut(charaId);
@@ -192,7 +192,7 @@ function accessRun(characterModel){
 	if(characterModel.seigniorId() == LMvc.selectSeignorId && !cityModel.isAppoint()){
 		SeigniorExecute.addMessage(String.format(Language.get("accessSuccessMessage"),characterModel.name(),targetModel.name()));
 	}
-	hireRun2(characterModel, targetModel,area);
+	return hireRun2(characterModel, targetModel, area, true);
 }
 function exploreItems(items){
 	if(items.length == 0 || Math.fakeRandom() < 0.5){
@@ -435,19 +435,19 @@ function persuadeRun(characterModel, targetPersuadeId){
 	if(!targetPersuade.seignior() || !targetPersuade.city()){
 		removeCanPersuadeCharacters(targetPersuadeId);
 		characterModel.featPlus(JobFeatCoefficient.NORMAL * 0.5);
-		return;
+		return false;
 	}
 	if(!targetPersuade || targetPersuade.seigniorId() == characterModel.seigniorId()){
 		characterModel.featPlus(JobFeatCoefficient.NORMAL * 0.5);
-		return;
+		return false;
 	}
 	var loyalty = targetPersuade.validLoyalty(), compatibility, percentage;
 	if(loyalty >= 100){
-		if(characterModel.seigniorId() == LMvc.selectSeignorId){
+		if(characterModel.seigniorId() == LMvc.selectSeignorId && !characterModel.city().isAppoint()){
 			SeigniorExecute.addMessage(String.format(Language.get("persuadeRefuseMessage"),targetPersuade.name(),characterModel.name()));
 		}
 		characterModel.featPlus(JobFeatCoefficient.NORMAL * 0.5);
-		return;
+		return false;
 	}
 	percentage = (100 - loyalty) * 0.01;
 	var percentageLuck = (JobCoefficient.NORMAL + characterModel.luck()) * 0.5 / JobCoefficient.NORMAL;
@@ -466,8 +466,9 @@ function persuadeRun(characterModel, targetPersuadeId){
 			SeigniorExecute.addMessage(String.format(Language.get("persuadeRefuseMessage"),targetPersuade.name(),characterModel.name()));
 		}
 		characterModel.featPlus(JobFeatCoefficient.NORMAL * 0.5);
-		return;
+		return false;
 	}
+	var targetSeigniorId = targetPersuade.seigniorId();
 	targetPersuade.seigniorId(characterModel.seigniorId());
 	var loyalty = 50 + 50 * percentage >> 0;
 	targetPersuade.loyalty(loyalty > 100 ? 100 : loyalty);
@@ -478,6 +479,18 @@ function persuadeRun(characterModel, targetPersuadeId){
 		SeigniorExecute.addMessage(String.format(Language.get("persuadeSuccessMessage"),characterModel.name(),targetPersuade.name(),targetPersuade.name()));
 	}
 	characterModel.featPlus(JobFeatCoefficient.NORMAL);
+	if(targetSeigniorId == LMvc.selectSeignorId){
+		var persuadeMessage = String.format(Language.get("dialogPersuadeMessage"), targetPersuade.name(), characterModel.seignior().character().name());
+		SeigniorExecute.addMessage(persuadeMessage);
+		var obj = {title:Language.get("confirm"),message:persuadeMessage,height:200,okEvent:function(e){
+			e.currentTarget.parent.remove();
+			SeigniorExecute.run();
+		}};
+		var windowLayer = ConfirmWindow(obj);
+		LMvc.layer.addChild(windowLayer);
+		return true;
+	}
+	return false;
 }
 function spyRun(characterModel, cityId){
 	//谍报：武力+运气
@@ -555,13 +568,24 @@ function hireRun(characterModel, hireCharacterId){
 			SeigniorExecute.addMessage(String.format(Language.get("hireFailMessage"),characterModel.name()));
 		}
 		characterModel.featPlus(JobFeatCoefficient.NORMAL * 0.5);
-		return;
+		return false;
 	}
 	//var hireCharacter = outOfOffice[hireCharacterIndex];
 	var hireCharacter = CharacterModel.getChara(hireCharacterId);
-	hireRun2(characterModel, hireCharacter, area);
+	return hireRun2(characterModel, hireCharacter, area);
 }
-function hireRun2(characterModel, hireCharacter,area){
+function hireRun2(characterModel, hireCharacter, area, isAccess){
+	
+	var outOfOffice = area.outOfOffice();
+	var hireCharacterIndex = outOfOffice.findIndex(function(child){
+		return child.id() == hireCharacter.id();
+	});
+	if(hireCharacterIndex < 0){
+		SeigniorExecute.addMessage(String.format(Language.get("hireRefuseMessage"),hireCharacter.name(),characterModel.name()));
+		characterModel.featPlus(JobFeatCoefficient.NORMAL * 0.5);
+		return false;
+	}
+	
 	var parentConfig = charactersParentConfig.find(function(child){
 		return child.id == hireCharacter.id();
 	});
@@ -592,17 +616,12 @@ function hireRun2(characterModel, hireCharacter,area){
 				SeigniorExecute.addMessage(String.format(Language.get("hireRefuseMessage"),hireCharacter.name(),characterModel.name()));
 			}
 			characterModel.featPlus(JobFeatCoefficient.NORMAL * 0.5);
-			return;
+			if(isAccess && characterModel.seigniorId() == LMvc.selectSeignorId && !area.isAppoint()){
+				Talk(LMvc.layer, hireCharacter.id(), 1, Language.get("hireFailTalk"), SeigniorExecute.run);
+				return true;
+			}
+			return false;
 		}
-	}
-	var outOfOffice = area.outOfOffice();
-	var hireCharacterIndex = outOfOffice.findIndex(function(child){
-		return child.id() == hireCharacter.id();
-	});
-	if(hireCharacterIndex < 0){
-		SeigniorExecute.addMessage(String.format(Language.get("hireRefuseMessage"),hireCharacter.name(),characterModel.name()));
-		characterModel.featPlus(JobFeatCoefficient.NORMAL * 0.5);
-		return;
 	}
 	
 	hireCharacter.seigniorId(characterModel.seigniorId());
@@ -613,8 +632,16 @@ function hireRun2(characterModel, hireCharacter,area){
 	hireCharacter.loyalty(loyalty > 100 ? 100 : loyalty);
 	if(characterModel.seigniorId() == LMvc.selectSeignorId && !area.isAppoint()){
 		SeigniorExecute.addMessage(String.format(Language.get("hireSuccessMessage"),characterModel.name(),hireCharacter.name(),hireCharacter.name()));
+		var script = String.format("SGJTalk.show({0},{1},{2});", hireCharacter.id(), 1, Language.get("hireSuccessTalk"));
+		script += "SGJJobHelper.execute();";
+		LGlobal.script.addScript(script);
+		/*Talk(LMvc.layer, hireCharacter.id(), 1, Language.get("hireSuccessTalk"), function(){
+			console.log("hireSuccessTalk");
+			SeigniorExecute.run();
+		});*/
 	}
 	characterModel.featPlus(JobFeatCoefficient.NORMAL);
+	return true;
 }
 function SeigniorExecuteChangeCityResources(area){
 	//TODO::ver1.1自然灾害

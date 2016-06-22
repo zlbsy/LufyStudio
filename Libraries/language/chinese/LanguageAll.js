@@ -346,9 +346,12 @@ Language.data = {
 	"spyFailMessage":"{0}在{1}的谍报任务失败了。",
 	"hireSuccessMessage":"{0}成功说服了{1}，{2}加入我军!",
 	"hireFailMessage":"{0}录用失败了。",
+	"hireFailTalk":"请容许我再考虑一下......",
+	"hireSuccessTalk":"愿效犬马之劳！",
 	"hireRefuseMessage":"{0}拒绝了{1}的邀请，录用失败了。",
 	"persuadeRefuseMessage":"{0}拒绝了{1}的邀请，劝降失败了。",
 	"persuadeSuccessMessage":"{0}成功说服了{1}，{2}加入我军!",
+	"dialogPersuadeMessage":"{0}投靠了{1}了。",
 	
 	"rain":"雨",
 	"cloud":"雾",

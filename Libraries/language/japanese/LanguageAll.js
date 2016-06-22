@@ -346,9 +346,12 @@ Language.data = {
 	"spyFailMessage":"{0}が{1}に諜報失敗しました。",
 	"hireSuccessMessage":"{0}は{1}が説得できて、{2}が仲間に入れた!",
 	"hireFailMessage":"{0}登用失敗しました。",
+	"hireFailTalk":"ちょっと、今出仕するつもりはないですが......",
+	"hireSuccessTalk":"晴天を見た思いです、嬉んで臣下となりましょう!!",
 	"hireRefuseMessage":"{0}は{1}の説得を拒否しました。",
 	"persuadeRefuseMessage":"{0}は{1}の説得を拒否しました。",
 	"persuadeSuccessMessage":"{0}は{1}が説得できて、{2}が仲間に入れた!",
+	"dialogPersuadeMessage":"{0}が{1}軍に寝返ったようです。",
 	
 	"rain":"雨",
 	"cloud":"雾",

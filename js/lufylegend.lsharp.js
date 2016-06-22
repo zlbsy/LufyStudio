@@ -1830,8 +1830,11 @@ LSGJJobHelperScript.analysis = function(value) {
 	var start = value.indexOf("(");
 	var end = value.indexOf(")");
 	switch(value.substr(0,start)) {
-		case "SGJJobHelperScript.dispatchEventListResult":
+		case "SGJJobHelper.dispatchEventListResult":
 			LSGJJobHelperScript.dispatchEventListResult(value, start, end);
+			break;
+		case "SGJJobHelper.execute":
+			SeigniorExecute.run();
 			break;
 		default:
 			LGlobal.script.analysis();

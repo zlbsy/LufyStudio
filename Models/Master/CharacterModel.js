@@ -654,8 +654,9 @@ CharacterModel.prototype.jobLabel = function() {
 CharacterModel.prototype.persuade = function(targetId) {
 	var self = this;
 	if(typeof targetId == UNDEFINED){
-		persuadeRun(self,self.data.targetPersuadeId);
+		var result = persuadeRun(self,self.data.targetPersuadeId);
 		self.data.targetPersuadeId = null;
+		return result;
 	}else{
 		self.data.targetPersuadeId = targetId;
 		self.job(Job.PERSUADE);

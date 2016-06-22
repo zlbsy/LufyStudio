@@ -69,7 +69,7 @@ MessageView.prototype.clearSeignior = function(){
 };
 MessageView.prototype.setSeignior = function(seigniorId){
 	var self = this;
-	var waitTime = 1000;
+	var waitTime = (LPlugin.gameSetting.speed == 1 ? 1000 : 300);
 	if(self.time){
 		var time = getTimer();
 		if(time - self.time < waitTime){
