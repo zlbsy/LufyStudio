@@ -750,7 +750,7 @@ CharacterModel.prototype.moveTo = function(cityId) {
 			appointPrefecture(areaFrom);
 		}
 		
-		if(self.id() == area.seigniorCharaId() || area.prefecture() == area.seigniorCharaId()){
+		if(self.seigniorId() != area.seigniorCharaId() || self.id() == area.seigniorCharaId() || area.prefecture() == area.seigniorCharaId()){
 			return;
 		}
 		var generals = area.generals();

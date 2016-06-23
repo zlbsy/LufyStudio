@@ -630,6 +630,7 @@ function hireRun2(characterModel, hireCharacter, area, isAccess){
 	hireCharacter.job(Job.END);
 	var loyalty = 50 + 50 * percentage >> 0;
 	hireCharacter.loyalty(loyalty > 100 ? 100 : loyalty);
+	characterModel.featPlus(JobFeatCoefficient.NORMAL);
 	if(characterModel.seigniorId() == LMvc.selectSeignorId && !area.isAppoint()){
 		SeigniorExecute.addMessage(String.format(Language.get("hireSuccessMessage"),characterModel.name(),hireCharacter.name(),hireCharacter.name()));
 		var script = String.format("SGJTalk.show({0},{1},{2});", hireCharacter.id(), 1, Language.get("hireSuccessTalk"));
@@ -639,9 +640,9 @@ function hireRun2(characterModel, hireCharacter, area, isAccess){
 			console.log("hireSuccessTalk");
 			SeigniorExecute.run();
 		});*/
+		return true;
 	}
-	characterModel.featPlus(JobFeatCoefficient.NORMAL);
-	return true;
+	return false;
 }
 function SeigniorExecuteChangeCityResources(area){
 	//TODO::ver1.1自然灾害

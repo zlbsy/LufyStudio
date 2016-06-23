@@ -317,6 +317,7 @@ SeigniorExecute.prototype.areaJobRun=function(area){
 				break;
 			case Job.END:
 			case Job.IDLE:
+				chara.job(Job.IDLE);
 				break;
 			default:
 				chara.featPlus(JobFeatCoefficient.NORMAL * 0.25);

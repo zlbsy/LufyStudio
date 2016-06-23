@@ -20,6 +20,7 @@ AreaModel.defenseList = [1000,1500,2000,2500,3000];
 AreaModel.list = [];
 AreaModel.setArea=function(list){
 	var self = this;
+	AreaModel.list.length = 0;
 	for(var i=0,l=list.length;i<l;i++){
 		var area = new AreaModel(null,list[i]);
 		AreaModel.list.push(area);
