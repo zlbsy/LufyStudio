@@ -78,6 +78,7 @@ CreateCharacterBasicView.prototype.statusInit=function(data){
 		list.push({label:perStart + 1, value:perStart + 1});
 	}
 	var childLayer = new CreateCharacterBasicItemView(self.listView, "personalLoyalty", list);
+	childLayer.comboBox.setValue(data.personalLoyalty);
 	items.push(childLayer);
 	list = [{label:Language.get("disposition_0"),value:0}, {label:Language.get("disposition_1"),value:1}, {label:Language.get("disposition_2"),value:2}, {label:Language.get("disposition_3"),value:3}];
 	var childLayer = new CreateCharacterBasicItemView(self.listView, "disposition", list);

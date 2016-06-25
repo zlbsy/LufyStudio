@@ -17,7 +17,7 @@ LogoController.prototype.baseControllersLoad=function(){
 };
 LogoController.prototype.configLoad=function(){
 	var self = this;
-	self.load.config(["Position","Belong","Purchase","Trouble"],self.helperLoad);
+	self.load.config(["Position","Belong","Purchase","Trouble","Job"],self.helperLoad);
 };
 LogoController.prototype.helperLoad=function(){
 	var self = this;
@@ -28,6 +28,8 @@ LogoController.prototype.libraryLoad=function(){
 	var list = ["TranslucentLoading","BitmapSprite","BattleLoading","GameCacher","LPluginExtension"];
 	if(typeof LPlugin == UNDEFINED){
 		window["LPlugin"] = function(){}; 
+	}else{
+		LMvc.ver = LPlugin.getSystemVersion();
 	}
 	self.load.library(list,self.languageLoad);
 };
@@ -67,6 +69,32 @@ LogoController.prototype.restore=function(){
 	purchaseRestore(function(){
 		self.dispatchEvent(LController.NOTIFY);
 	});
+};
+LogoController.prototype.loadReport = function(){
+	var self = this;
+	self.load.view(["Common/BugReport"],self.openReport);
+};
+LogoController.prototype.loadReportUpdate = function(){
+	var self = this;
+	self.load.view(["Common/ReportUpdate"],self.loadReportUpdateLibrary);
+};
+LogoController.prototype.loadReportUpdateLibrary = function(){
+	var self = this;
+	self.load.library(["SeigniorExecute"],self.openReportUpdate);
+};
+LogoController.prototype.openReport=function(){
+	var self = this;
+	var reportView = new BugReportView();
+	var obj = {width:440, height:500, subWindow:reportView, title:Language.get("bug_report"), okEvent:reportView.toUpdate, cancelEvent:null};
+	var reportDialog = ConfirmWindow(obj);
+	self.view.addChild(reportDialog);
+};
+LogoController.prototype.openReportUpdate=function(){
+	var self = this;
+	var reportView = new ReportUpdateView();
+	var obj = {width:440, height:300, subWindow:reportView, title:Language.get("update_report"), okEvent:reportView.toUpdate, cancelEvent:null};
+	var reportDialog = ConfirmWindow(obj);
+	self.view.addChild(reportDialog);
 };
 LogoController.prototype.start=function(event){
 	var self = event.target.parent.controller;
@@ -134,8 +162,11 @@ LogoController.prototype.updateCheck = function(){
 	LMvc.changeLoading(TranslucentLoading);
 	LAjax.post(LMvc.updateURL + "index.php",{},function(data){
 		data = JSON.parse(data);
-		LPlugin.SetData("opinion", data.opinion);
-		self.view.forumLayer.visible = data.opinion;
+		LPlugin.SetData("reviewing", data.reviewing);
+		self.view.forumLayer.visible = data.reviewing ? false : true;
+		if(!data.reviewing && data.newsURL){
+			self.view.showNews(data.newsURL + "&l=" + LPlugin.language());
+		}
 		if(LPlugin.dataVer() >= LPlugin.dataVer(data.ver)){
 			LMvc.keepLoading(false);
 			return;
@@ -146,8 +177,8 @@ LogoController.prototype.updateCheck = function(){
 	},function(){
 		//LPlugin.print("updateCheck Error");
 		LMvc.keepLoading(false);
-		var opinion = LPlugin.GetData("opinion", 0);
-		self.view.forumLayer.visible = opinion;
+		var reviewing = LPlugin.GetData("reviewing", 0);
+		self.view.forumLayer.visible = reviewing ? false : true;
 	});
 };
 LogoController.prototype.updateFile = function(index){

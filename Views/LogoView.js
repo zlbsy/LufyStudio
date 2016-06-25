@@ -62,34 +62,34 @@ LogoView.prototype.showMenu=function(){
 	//self.mainMenuLayer.addChild(getBitmap(layer));
 	
 	var menuLayer = new LSprite();
-	menuLayer.x = menuLayer.tx = (LGlobal.width - 200) * 0.5;
+	menuLayer.x = menuLayer.tx = (LGlobal.width - 180) * 0.5;
 	self.mainMenuLayer.addChild(menuLayer);
 	
-	var buttonStart = getSizeButton(Language.get("game_start"),200, 45);
+	var buttonStart = getSizeButton(Language.get("game_start"),180, 45);
 	buttonStart.y = menuY;
 	menuLayer.addChild(buttonStart);
 	buttonStart.addEventListener(LMouseEvent.MOUSE_UP, self.loadChapterList.bind(self));
 	
 	menuY += menuHeight;
-	var buttonRead = getSizeButton(Language.get("game_read"),200, 45);
+	var buttonRead = getSizeButton(Language.get("game_read"),180, 45);
 	buttonRead.y = menuY;
 	menuLayer.addChild(buttonRead);
 	buttonRead.addEventListener(LMouseEvent.MOUSE_UP, self.readGame.bind(self));
 	
 	menuY += menuHeight;
-	var buttonSetting = getSizeButton(Language.get("game_setting"),200, 45);
+	var buttonSetting = getSizeButton(Language.get("game_setting"),180, 45);
 	buttonSetting.y = menuY;
 	menuLayer.addChild(buttonSetting);
 	buttonSetting.addEventListener(LMouseEvent.MOUSE_UP, self.settingGame.bind(self));
 	
 	menuY += menuHeight;
-	var buttonSingleCombat = getSizeButton(Language.get("game_single_combat"),200, 45);
+	var buttonSingleCombat = getSizeButton(Language.get("game_single_combat"),180, 45);
 	buttonSingleCombat.y = menuY;
 	menuLayer.addChild(buttonSingleCombat);
 	buttonSingleCombat.addEventListener(LMouseEvent.MOUSE_UP, self.showSingleCombatArena.bind(self));
 	
 	menuY += menuHeight;
-	var buttonCreate = getSizeButton(Language.get("create_character"),200, 45);
+	var buttonCreate = getSizeButton(Language.get("create_character"),180, 45);
 	buttonCreate.name = productIdConfig.createCharacter;
 	buttonCreate.y = menuY;
 	menuLayer.addChild(buttonCreate);
@@ -99,12 +99,24 @@ LogoView.prototype.showMenu=function(){
 	buttonCreate.addEventListener(LMouseEvent.MOUSE_UP, self.createCharacterChick);
 	
 	menuY += menuHeight;
-	var buttonTutorial = getSizeButton(Language.get("game_tutorial"),200, 45);
+	var buttonTutorial = getSizeButton(Language.get("game_tutorial"),180, 45);
 	buttonTutorial.y = menuY;
 	menuLayer.addChild(buttonTutorial);
 	buttonTutorial.addEventListener(LMouseEvent.MOUSE_UP, self.tutorialChick);
 	
 	menuY += menuHeight * 2;
+	
+	var buttonBug = getSizeButton(Language.get("bug_report"),140, 45);
+	buttonBug.x = -menuLayer.x;
+	buttonBug.y = menuY - buttonBug.getHeight() - menuHeight * 3 - 2;
+	menuLayer.addChild(buttonBug);
+	buttonBug.addEventListener(LMouseEvent.MOUSE_UP, self.bugReportChick);
+	var buttonUpdate = getSizeButton(Language.get("update_report"),140, 45);
+	buttonUpdate.x = -menuLayer.x;
+	buttonUpdate.y = menuY - buttonUpdate.getHeight() - menuHeight * 2 - 2;
+	menuLayer.addChild(buttonUpdate);
+	buttonUpdate.addEventListener(LMouseEvent.MOUSE_UP, self.reportUpdateChick);
+	
 	if(LPlugin.native){
 		var buttonRestore = getSizeButton(Language.get("restore_buy"),100, 45);
 		buttonRestore.x = -menuLayer.x;
@@ -139,7 +151,7 @@ LogoView.prototype.showMenu=function(){
 	menuLayer.addChild(forumLayer);
 	forumLayer.addEventListener(LMouseEvent.MOUSE_UP, self.clickForum);
 	self.forumLayer = forumLayer;
-	self.forumLayer.visible = false;
+	self.forumLayer.visible = LPlugin.GetData("reviewing") ? false : true;
 	
 	var verLabel = getStrokeLabel("Ver." + LMvc.ver,20,"#FFFFFF","#000000",4);
 	verLabel.x = LGlobal.width - menuLayer.x - verLabel.getWidth() - 10;
@@ -149,6 +161,16 @@ LogoView.prototype.showMenu=function(){
 	menuLayer.y = LGlobal.height - menuY;
 	
 	self.topMenuLayer = menuLayer;
+};
+LogoView.prototype.reportUpdateChick=function(event){
+	var button = event.currentTarget;
+	var self = button.getParentByConstructor(LogoView);
+	self.controller.loadReportUpdate();
+};
+LogoView.prototype.bugReportChick=function(event){
+	var button = event.currentTarget;
+	var self = button.getParentByConstructor(LogoView);
+	self.controller.loadReport();
 };
 LogoView.prototype.clickForum=function(event){
 	LPlugin.openURL(LMvc.forumURL);
@@ -304,4 +326,27 @@ LogoView.prototype.showChapterRun=function(button){
 	}
 	self.chapterMenuLayer.mouseChildren = false;
 	self.controller.showChapter(button.chapterId);
+};
+LogoView.prototype.showNews=function(newsURL){
+	var self = this;
+	var w = 400, h = 400, x, y;
+	x = (LGlobal.width - w) * 0.5;
+	y = (LGlobal.height - h) * 0.5;
+	var newsBackground = getPanel("win02", w + 20, h + 20);
+	newsBackground.x = x - 10;
+	newsBackground.y = y - 10;
+	self.addChild(newsBackground);
+	var webview = new LStageWebView();
+	webview.setViewPort(new LRectangle(x, y, w, h));
+	webview.loadURL(newsURL);
+	webview.show();
+	var closeButton = new LButton(new LBitmap(new LBitmapData(LMvc.datalist["close"])));
+	closeButton.x = x + w - closeButton.getWidth();
+	closeButton.y = y - closeButton.getWidth();
+	self.addChild(closeButton);
+	closeButton.addEventListener(LMouseEvent.MOUSE_UP,function(event){
+		event.currentTarget.remove();
+		newsBackground.remove();
+		webview.hide();
+	});
 };

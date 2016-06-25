@@ -65,6 +65,18 @@ RecordChildView.prototype.set=function(record){
 };
 RecordChildView.prototype.onClick=function(event){
 	var self = event.target;
+	var listView = event.currentTarget;
+	var recordView = listView.getParentByConstructor(RecordView);
+	if(recordView.controller.mode == RecordController.REPORT_MODE){
+		if(!self.record || !self.record.labels){
+			return;
+		}
+		var recordWindow = LMvc.logoStage.getChildByName("ConfirmWindow");
+		var bugReportView = recordWindow.getChildByName("BugReportView");
+		bugReportView.setReport(self.record);
+		RecordController.instance().hide();
+		return;
+	}
 	if(!self.load){
 		self.load = new LMvcLoader(self);
 	}

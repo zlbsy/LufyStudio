@@ -5,6 +5,7 @@ RecordController.RECORD_MAX = 20;
 RecordController.RECORD_MAX_WEB = 5;
 RecordController.SAVE_MODE = "saveMode";
 RecordController.READ_MODE = "readMode";
+RecordController.REPORT_MODE = "reportMode";
 RecordController.instance = function(){
 	if(!RecordController._instance){
 		RecordController._instance = new RecordController();

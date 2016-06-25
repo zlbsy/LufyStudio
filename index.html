@@ -37,11 +37,14 @@ and open the template in the editor.
 			LMvc.ver = "1.0.0";
 			LMvc.homeURL = "http://sgj.lufylegend.com/";
 			LMvc.updateURL = "http://sgj.lufylegend.com/update/iMahm5Z_Mhr2HaAFPuU2/";
+			LMvc.uploadURL = "http://sgj.lufylegend.com/upload/iMahm5Z_Mhr2HaAFPuU2/";
+			LMvc.downloadURL = "http://sgj.lufylegend.com/download/iMahm5Z_Mhr2HaAFPuU2/index.php";
 			LMvc.forumURL = "http://lufylegend.com/forum/forum.php?mod=forumdisplay&fid=38";
 			if(typeof LPurchaseInit == "function"){
 				LPurchaseInit();
+			}else{
+				LGlobal.setDebug(true);
 			}
-			//LGlobal.setDebug(true);
 			if(LGlobal.mobile){
 				LGlobal.width = 480;
 				LGlobal.height = 480*window.innerHeight/window.innerWidth;

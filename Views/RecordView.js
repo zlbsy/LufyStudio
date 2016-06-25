@@ -6,7 +6,19 @@ RecordView.prototype.construct=function(){
 };
 RecordView.prototype.getTitle=function(){
 	var self = this;
-	return  Language.get(self.controller.mode == RecordController.SAVE_MODE ? "game_save":"game_read");
+	var key = "game_save";
+	switch(self.controller.mode){
+		case RecordController.SAVE_MODE:
+			key = "game_save";
+			break;
+		case RecordController.READ_MODE:
+			key = "game_read";
+			break;
+		case RecordController.REPORT_MODE:
+			key = "report_select";
+			break;
+	}
+	return  Language.get(key);
 };
 RecordView.prototype.init=function(){
 	var self = this;

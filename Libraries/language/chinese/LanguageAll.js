@@ -224,7 +224,7 @@ Language.data = {
 	"army_retreat_confirm":"确定全军撤离战场吗？",
 	"auto_save":"(自动存档)",
 	"game_save":"保存进度",
-	"game_read":"读取进度",
+	"report_select":"选择错误存档",
 	"army_retreat":"全军撤退",
 	"end_bout":"回合结束",
 	"battle_save_record":"战场保存",
