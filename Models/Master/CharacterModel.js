@@ -125,7 +125,9 @@ CharacterModel.prototype.setDatas=function(charaData){
 	self.HP(charaData.hp);
 	self.isDefCharacter(charaData.isDefCharacter);
 	self.loyalty(charaData.loyalty);
-	self.setJobData(charaData.job);
+	if(charaData.job){
+		self.setJobData(charaData.job);
+	}
 	self.feat(charaData.feat);
 	if(charaData.soldiers){
 		self.data.soldiers = charaData.soldiers;

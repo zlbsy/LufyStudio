@@ -207,6 +207,7 @@ var EventListConfig = [
 		generals:[
 			{id:1,seignior:1},//曹操未灭亡
 			{id:39,seignior:39},//袁绍未灭亡
+			{id:580,seignior:39},//许攸属袁绍
 		],
 		citys:[
 			{id:44,seignior:39},//南皮属袁绍
@@ -220,6 +221,7 @@ var EventListConfig = [
 		{type:"moveGeneralsToCity", generals:[],from:43, to:44},//平原武将移往南皮
 		{type:"changeCitySeignior", cityId:41, seignior:1},//邺属曹操
 		{type:"changeCitySeignior", cityId:43, seignior:1},//平原曹操
+		{type:"moveGeneralsToSeignior", generals:[580], to:1, loyalty:90},//许攸移动到曹操手下
 	]
 },
 {
