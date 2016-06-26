@@ -88,6 +88,7 @@ ReportUpdateView.prototype.toUpdate = function(event){
 			return;
 		}
 		if(data.success && data.record){
+			LGlobal.preventDefault = true;
 			self.parent.remove();
 			RecordController.instance().hide();
 			LMvc.isRead = true;

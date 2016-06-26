@@ -23,12 +23,13 @@ function getWeakBattleCity(areaModel){
 }
 /*检索可攻击城池*/
 function getCanBattleCity(areaModel,characters,enlistFlag){
+	
 	if((enlistFlag != AiEnlistFlag.Free && enlistFlag != AiEnlistFlag.None && enlistFlag != AiEnlistFlag.BattleResource) 
 	|| ((enlistFlag == AiEnlistFlag.Battle || enlistFlag == AiEnlistFlag.NeedResource) && Math.fakeRandom() < 0.5)){
 		return null;
 	}
 	var generalCount = areaModel.generalsSum();
-	if(characters.length < BattleMapConfig.DetachmentQuantity || generalCount < BattleMapConfig.DetachmentQuantity * 2 || generalCount - characters.length < BattleMapConfig.DetachmentQuantity){
+	if(characters.length < BattleMapConfig.DetachmentQuantity || generalCount < BattleMapConfig.DetachmentQuantity * 2){
 		return null;
 	}
 	var weakCity = getWeakBattleCity(areaModel);
@@ -175,7 +176,7 @@ function jobAiBattleExecute(areaModel,data,targetCity){
 }
 function jobAiNeedToEnlist(areaModel){
 	if(areaModel.troops() >= areaModel.maxTroops()){
-		return AiEnlistFlag.Node;
+		return AiEnlistFlag.None;
 	}
 	var charas = areaModel.getDefenseEnemies();
 	var minToops = 0;

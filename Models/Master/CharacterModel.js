@@ -117,36 +117,16 @@ CharacterModel.prototype.datas=function(){
 CharacterModel.prototype.setDatas=function(charaData){
 	var self = this;
 	self.cityId(charaData.cityId);
-	if(charaData.seignior_id){
-		self.seigniorId(charaData.seignior_id);
-	}
-	if(charaData.troops){
-		self.troops(charaData.troops);
-	}
-	if(charaData.wounded){
-		self.wounded(charaData.wounded);
-	}
-	if(charaData.exp){
-		self.exp(charaData.exp);
-	}
-	if(charaData.mp){
-		self.MP(charaData.mp);
-	}
-	if(charaData.hp){
-		self.HP(charaData.hp);
-	}
-	if(charaData.isDefCharacter){
-		self.isDefCharacter(charaData.isDefCharacter);
-	}
-	if(charaData.loyalty){
-		self.loyalty(charaData.loyalty);
-	}
-	if(charaData.job){
-		self.setJobData(charaData.job);
-	}
-	if(charaData.feat){
-		self.feat(charaData.feat);
-	}
+	self.seigniorId(charaData.seignior_id);
+	self.troops(charaData.troops);
+	self.wounded(charaData.wounded);
+	self.exp(charaData.exp);
+	self.MP(charaData.mp);
+	self.HP(charaData.hp);
+	self.isDefCharacter(charaData.isDefCharacter);
+	self.loyalty(charaData.loyalty);
+	self.setJobData(charaData.job);
+	self.feat(charaData.feat);
 	if(charaData.soldiers){
 		self.data.soldiers = charaData.soldiers;
 	}
@@ -159,8 +139,8 @@ CharacterModel.prototype.setDatas=function(charaData){
 	if(charaData.isPrized){
 		self.data.isPrized = charaData.isPrized;
 	}
+	self.data.equipments = [];
 	if(charaData.equipments){
-		self.data.equipments = [];
 		self.equip(charaData.equipments);
 	}
 };
@@ -707,8 +687,9 @@ CharacterModel.prototype.stopBattle = function(id, money) {
 CharacterModel.prototype.hire = function(id) {
 	var self = this;
 	if(typeof id == UNDEFINED){
-		hireRun(self,self.data.targetHireId);
+		var hireResult = hireRun(self,self.data.targetHireId);
 		self.data.targetHireId = null;
+		return hireResult;
 	}else{
 		self.data.targetHireId = id;
 		self.job(Job.HIRE);
@@ -781,13 +762,22 @@ CharacterModel.prototype.spy = function(id) {
 CharacterModel.prototype.targetCity = function() {
 	return this.data.targetCity;
 };
-CharacterModel.prototype.toDie = function() {
+CharacterModel.prototype.toDie = function(ageOver) {
 	var self = this;
+	
 	var equipments = self.equipments();
 	var city = self.city();
 	for(var i=0;i<equipments.length;i++){
 		var item = equipments[i];
 		city.addItem(item);
+		/*
+		if(self.seigniorId() == LMvc.selectSeignorId || !ageOver){
+			city.addItem(item);
+		}else{
+			if(!toEquipmentCityItem(item, city)){
+				city.addItem(item);
+			}
+		}*/
 	}
 	self.data.equipments = [];
 	city.removeCharacter(self.id());

@@ -29,7 +29,7 @@ LogoController.prototype.libraryLoad=function(){
 	if(typeof LPlugin == UNDEFINED){
 		window["LPlugin"] = function(){}; 
 	}else{
-		LMvc.ver = LPlugin.getSystemVersion();
+		LMvc.ver = LPlugin.bundleVersion();
 	}
 	self.load.library(list,self.languageLoad);
 };
@@ -85,14 +85,20 @@ LogoController.prototype.loadReportUpdateLibrary = function(){
 LogoController.prototype.openReport=function(){
 	var self = this;
 	var reportView = new BugReportView();
-	var obj = {width:440, height:500, subWindow:reportView, title:Language.get("bug_report"), okEvent:reportView.toUpdate, cancelEvent:null};
+	var obj = {width:440, height:500, subWindow:reportView, title:Language.get("bug_report"), okEvent:reportView.toUpdate, cancelEvent:function(event){
+		event.currentTarget.parent.remove();
+		LGlobal.preventDefault = true;
+	}};
 	var reportDialog = ConfirmWindow(obj);
 	self.view.addChild(reportDialog);
 };
 LogoController.prototype.openReportUpdate=function(){
 	var self = this;
 	var reportView = new ReportUpdateView();
-	var obj = {width:440, height:300, subWindow:reportView, title:Language.get("update_report"), okEvent:reportView.toUpdate, cancelEvent:null};
+	var obj = {width:440, height:300, subWindow:reportView, title:Language.get("update_report"), okEvent:reportView.toUpdate, cancelEvent:function(event){
+		event.currentTarget.parent.remove();
+		LGlobal.preventDefault = true;
+	}};
 	var reportDialog = ConfirmWindow(obj);
 	self.view.addChild(reportDialog);
 };

@@ -611,7 +611,7 @@ function battleCityChange(winSeigniorId, failSeigniorId, retreatCityId, expediti
 		var generals = city.generals();
 		if(city.seigniorCharaId() > 0 && city.seignior().character().isTribeCharacter()){
 			//外族消亡
-			for(var i=0,l=generals.length;i<l;i++){
+			for(var i=generals.length-1;i>=0;i--){
 				generals[i].toDie();
 			}
 		}else{

@@ -617,7 +617,9 @@ function hireRun2(characterModel, hireCharacter, area, isAccess){
 			}
 			characterModel.featPlus(JobFeatCoefficient.NORMAL * 0.5);
 			if(isAccess && characterModel.seigniorId() == LMvc.selectSeignorId && !area.isAppoint()){
-				Talk(LMvc.layer, hireCharacter.id(), 1, Language.get("hireFailTalk"), SeigniorExecute.run);
+				var script = String.format("SGJTalk.show({0},{1},{2});", hireCharacter.id(), 1, Language.get("hireFailTalk"));
+				script += "SGJJobHelper.execute();";
+				LGlobal.script.addScript(script);
 				return true;
 			}
 			return false;
@@ -813,7 +815,7 @@ function charactersNaturalDeath(area){
 		if(Math.fakeRandom() > 0.5 + 0.1 * value){
 			continue;
 		}
-		general.toDie();
+		general.toDie(true);
 		if(general.id() == prefecture){
 			prefectureDie = true;
 		}

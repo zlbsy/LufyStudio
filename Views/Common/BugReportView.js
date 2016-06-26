@@ -43,10 +43,12 @@ BugReportView.prototype.set = function(){
 BugReportView.prototype.selectReport = function(event){
 	var button = event.currentTarget;
 	var self = button.getParentByConstructor(BugReportView);
+	LGlobal.preventDefault = true;
 	RecordController.instance().show(RecordController.REPORT_MODE);
 };
 BugReportView.prototype.setReport = function(record){
 	var self = this;
+	LGlobal.preventDefault = false;
 	self.record = record;
 	var labels = record.labels;
 	self.labelsLayer.removeAllChild();
@@ -108,6 +110,7 @@ BugReportView.prototype.toUpdate = function(event){
 		var obj;
 		if(parseInt(data)>0){
 			obj = {width:300, height:240, message:Language.get("dialog_success_report"), title:Language.get("dialog_success_report_title"), okEvent:function(e){
+				LGlobal.preventDefault = true;
 				recordWindow.remove();
 				e.currentTarget.parent.remove();
 			}};
