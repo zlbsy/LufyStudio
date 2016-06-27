@@ -404,6 +404,10 @@ function technologyRun(characterModel){
 }
 function enlistRun(characterModel, targetEnlist){
 	//招募：运气+统率
+	if(!targetEnlist){
+		characterModel.job(Job.IDLE);
+		return;
+	}
 	//console.log("enlistRun招募 : ",characterModel.id());
 	var area = characterModel.city();
 	var population = area.population();

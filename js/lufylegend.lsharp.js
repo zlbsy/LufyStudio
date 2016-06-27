@@ -2064,7 +2064,7 @@ LSGJSingleCombatScript.changeAction = function(value, start, end) {
 };
 LSGJSingleCombatScript.playSE = function(value, start, end) {
 	var params = value.substring(start + 1, end).split(",");
-	LPlugin.playSE(params[0], LPlugin.volumeSE);
+	LPlugin.playSE(params[0], LPlugin.gameSetting.SE);
 	LGlobal.script.analysis();
 };
 LSGJSingleCombatScript.moveComplete = function(event) {

@@ -129,7 +129,7 @@ BattleController.prototype.init = function(){
 		Math.fakeReset();
 		self.charactersInit();
 	}
-	LPlugin.playBGM("battle" + ((2 * Math.random() >>> 0) + 1), LPlugin.volumeBGM);
+	LPlugin.playBGM("battle" + ((2 * Math.random() >>> 0) + 1), LPlugin.gameSetting.BGM);
 };
 BattleController.prototype.charactersInit = function(){
 	var self = this;

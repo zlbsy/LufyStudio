@@ -379,7 +379,7 @@ BattleIntelligentAI.prototype.magicAttack = function() {
 BattleIntelligentAI.prototype.askSingleCombat = function() {
 	var self = BattleController.ctrlChara.inteAI;
 	var targetModel = self.target.data;
-	var message = String.format( "ask_single_combat_confirm", self.chara.data.name(), self.chara.data.force(), self.chara.data.HP(), targetModel.name(), targetModel.force(), targetModel.HP());
+	var message = String.format( Language.get("ask_single_combat_confirm"), self.chara.data.name(), self.chara.data.force(), self.chara.data.HP(), targetModel.name(), targetModel.force(), targetModel.HP());
 	var obj = {title:Language.get("confirm"), message:message, width:360, height:330, okEvent:self.singleCombatSuccess, cancelEvent:self.singleCombatFail};
 	var windowLayer = ConfirmWindow(obj);
 	LMvc.layer.addChild(windowLayer);

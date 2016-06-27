@@ -139,7 +139,7 @@ BattleCharacterLayerView.prototype.addOurCharacterOnClick=function(locationX,loc
 		break;
 	}
 	length++;
-	LPlugin.playSE("Se_set", LPlugin.volumeSE);
+	LPlugin.playSE("Se_set", LPlugin.gameSetting.SE);
 	if(length == self.controller.battleData.expeditionCharacterList.length){
 		self.charasPositionsLayer.remove();
 		self.charasPositionsLayer = null;

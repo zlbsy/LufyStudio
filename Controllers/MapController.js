@@ -69,7 +69,7 @@ MapController.prototype.init=function(status){
 		}
 	}
 	self.dispatchEvent(LController.NOTIFY);
-	LPlugin.playBGM("map", LPlugin.volumeBGM);
+	LPlugin.playBGM("map", LPlugin.gameSetting.BGM);
 	self.addEventListener(CharacterListEvent.SHOW, self.view.hideMapLayer);
 	self.addEventListener(CharacterListEvent.CLOSE, self.view.showMapLayer);
 	
@@ -169,10 +169,10 @@ MapController.prototype.checkSeigniorFail=function(seigniorId){
 		return;
 	}
 	self.removeSeigniorId = seigniorId;
-	SeigniorModel.removeSeignior(seigniorId);
 	if(SeigniorExecute.running){
 		SeigniorExecute.removeSeignior(seigniorId);
 	}
+	SeigniorModel.removeSeignior(seigniorId);
 	self.load.view(["Seignior/Perish"],self.seigniorPerish);
 };
 MapController.prototype.seigniorPerish=function(){

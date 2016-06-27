@@ -680,7 +680,9 @@ function battleCheckRetreatCity(retreatCity, failSeigniorId, toCity){
 	if(retreatCity){
 		if(!retreatCity.prefecture()){
 			var enemyCharas = retreatCity.getDefenseEnemies();
-			retreatCity.prefecture(enemyCharas[0].id());
+			if(enemyCharas.length > 0){
+				retreatCity.prefecture(enemyCharas[0].id());
+			}
 		}
 		retreatCityId = retreatCity.id();
 	}else{

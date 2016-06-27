@@ -342,6 +342,16 @@ function calculateHertValue(attChara,hertChara,correctionFactor, isView){
  劫营特技的伤害加成值计算
  **************************************************************/
 function calculateSkillSurpriseAmend(chara, target, attacks){
+	if(!chara.locationX || !target.locationX){
+		//AI自动战斗，随机
+		var rand = Math.fakeRandom();
+		if(rand < 0.2){
+			return attacks[0];
+		}else if(rand < 0.5){
+			return attacks[1];
+		}
+		return 1;
+	}
 	if(chara.locationX() != target.locationX() && chara.locationY() != target.locationY()){
 		return 1;
 	}

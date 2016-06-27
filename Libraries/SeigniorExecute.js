@@ -64,7 +64,7 @@ SeigniorExecute.removeSeignior=function(seigniorId){
 	var index = SeigniorModel.list.findIndex(function(seigniorModel){
 		return seigniorModel.chara_id() == seigniorId;
 	});
-	if(index < self.seigniorIndex){
+	if(index >= 0 && index < self.seigniorIndex){
 		self.seigniorIndex -= 1;
 		self.seigniors.shift();
 	}
@@ -117,6 +117,8 @@ SeigniorExecute.run=function(){
 			self.seigniorIndex++;
 			SeigniorExecute.run();
 			return;
+		}else if(seigniorModel.character().seigniorId() == 0){
+			monarchChange(seigniorModel.chara_id());
 		}
 		if(self.seigniors.indexOf(self.seigniorIndex) < 0){
 			self.msgView.setSeignior(seigniorModel.chara_id());

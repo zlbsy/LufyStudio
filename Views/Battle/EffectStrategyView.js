@@ -31,7 +31,7 @@ EffectStrategyView.prototype.becomeEffective = function(anime){
 	self.currentTargetCharacter.toStatic(false);
 	self.effectType = self.currentCharacter.currentSelectStrategy.effectType();
 	var se = self.currentCharacter.currentSelectStrategy.se();
-	LPlugin.playSE(se, LPlugin.volumeSE);
+	LPlugin.playSE(se, LPlugin.gameSetting.SE);
 	if(self.effectType == StrategyEffectType.Attack){
 		self.toAttack();
 	}else if(self.effectType == StrategyEffectType.Status){

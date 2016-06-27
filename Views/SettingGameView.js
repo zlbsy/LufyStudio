@@ -76,15 +76,7 @@ SettingGameView.prototype.init=function(){
 	seRadio.setValue(LPlugin.gameSetting.SE);
 	soundLayer.addChild(seRadio);
 	seRadio.addEventListener(LMouseEvent.MOUSE_UP,self.onSEChange);
-	/*var rangeSound = new LRange(rangeBackground, rangeSelect);
-	rangeSound.setValue(LPlugin.volumeSE * 100);
-	rangeSound.x = 130;
-	soundLayer.addChild(rangeSound);
-	rangeSound.addEventListener(LRange.ON_CHANGE, self.onSoundChange);*/
-	
-	/*var rangeBackground = new LPanel(new LBitmapData(LMvc.datalist["win04"]),250,40);
-	rangeBackground.cacheAsBitmap(true);
-	var rangeSelect = new LBitmap(new LBitmapData(LMvc.datalist["range"]));*/
+
 	var bgmLayer = new LSprite();
 	bgmLayer.y = 70;
 	self.contentLayer.addChild(bgmLayer);
@@ -107,11 +99,6 @@ SettingGameView.prototype.init=function(){
 	bgmRadio.setValue(LPlugin.gameSetting.BGM);
 	bgmLayer.addChild(bgmRadio);
 	bgmRadio.addEventListener(LMouseEvent.MOUSE_UP,self.onBgmChange);
-	/*var rangeBgm = new LRange(rangeBackground, rangeSelect);
-	rangeBgm.setValue(LPlugin.volumeBGM * 100);
-	rangeBgm.x = 130;
-	bgmLayer.addChild(rangeBgm);
-	rangeBgm.addEventListener(LRange.ON_CHANGE, self.onBgmChange);*/
 	
 	var speedLayer = new LSprite();
 	speedLayer.y = 160;
@@ -154,6 +141,9 @@ SettingGameView.prototype.onSEChange=function(event){
 };
 SettingGameView.prototype.onBgmChange=function(event){
 	LPlugin.gameSetting.BGM = event.currentTarget.value;
+	if(!LPlugin.gameSetting.BGM){
+		LPlugin.playBGM("map", 0);
+	}
 	LPlugin.SetData("gameSetting", {SE:LPlugin.gameSetting.SE, BGM:LPlugin.gameSetting.BGM, speed:LPlugin.gameSetting.speed});
 };
 SettingGameView.prototype.onSpeedChange=function(event){

@@ -322,7 +322,7 @@ BattleCharacterView.prototype.toDie = function() {
 	}
 	if(!self.data.isDefCharacter() && !self.data.isTribeCharacter()){
 		var talkMsg;
-		if(self.isSingleCombat || calculateHitrateCaptive(self)){
+		if(true || self.isSingleCombat || calculateHitrateCaptive(self)){
 			self.isSingleCombat = false;
 			if(self.belong == Belong.ENEMY){
 				LMvc.BattleController.model.selfCaptive.push(self.data.id());
@@ -351,20 +351,20 @@ BattleCharacterView.prototype.setTo = function(){
 			var terrainModel = self.controller.view.mapLayer.getTerrainModel(to[0], to[1]);
 			self.boat(terrainModel.boat());
 			if(terrainModel.se()){
-				LPlugin.playSE(terrainModel.se(), LPlugin.volumeSE);
+				LPlugin.playSE(terrainModel.se(), LPlugin.gameSetting.SE);
 				return;
 			}
 		}
 		var soldier = self.data.currentSoldiers();
 		switch(soldier.moveType()){
 			case MoveType.INFANTRY:
-				LPlugin.playSE("Se_move_infantry", LPlugin.volumeSE);
+				LPlugin.playSE("Se_move_infantry", LPlugin.gameSetting.SE);
 				break;
 			case MoveType.CAVALRY:
-				LPlugin.playSE("Se_move_cavalry", LPlugin.volumeSE);
+				LPlugin.playSE("Se_move_cavalry", LPlugin.gameSetting.SE);
 				break;
 			case MoveType.CAR:
-				LPlugin.playSE("Se_move_car", LPlugin.volumeSE);
+				LPlugin.playSE("Se_move_car", LPlugin.gameSetting.SE);
 				break;
 		}
 	}
