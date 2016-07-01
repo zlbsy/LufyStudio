@@ -27,7 +27,6 @@ function characterListType2JobType(characterListType) {
 		case CharacterListType.PERSUADE:
 			return Job.PERSUADE;
 	}
-	//console.error("Can't change to jobType");
 	return Job.IDLE;
 }
 function getJobPrice(jobType) {
@@ -47,7 +46,6 @@ function getJobPrice(jobType) {
 		case Job.LEVEL_UP:
 			return JobPrice.LEVEL_UP;
 	}
-	console.error("Can't get JobPrice");
 	return 0;
 }
 /*

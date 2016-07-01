@@ -465,6 +465,7 @@ SeigniorExecute.prototype.areaAIRun=function(areaModel){
 		if(self.areaCharacterDieRun(areaModel)){
 			return;
 		}
+		self.characters = getIdleCharacters(areaModel);
 	}
 	
 	//俘虏处理
