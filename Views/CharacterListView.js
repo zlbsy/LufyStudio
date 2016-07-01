@@ -421,7 +421,6 @@ CharacterListView.prototype.showCharacterDetailed=function(param){
 	if(CharacterDetailedView.instance){
 		characterDetailed = CharacterDetailedView.instance;
 		characterDetailed.addController(self.controller);
-		console.log("showCharacterDetailed",characterDetailed.controller, self.controller);
 		characterDetailed.set(param);
 	}else{
 		characterDetailed = new CharacterDetailedView(self.controller, param);

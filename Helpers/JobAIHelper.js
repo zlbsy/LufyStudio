@@ -59,6 +59,7 @@ function getIdleCharacters(areaModel){
 	for(var i=0;i<generals.length;i++){
 		chara = generals[i];
 		if(chara.job() == Job.IDLE){
+			console.log("getIdleCharacters",chara.id());
 			charas.push(chara);
 		}
 	}
@@ -534,7 +535,7 @@ function jobAiCaptivesRescue(areaModel,characters){//解救俘虏
 	if(characters.length == 0){
 		return false;
 	}
-	//console.log("jobAiCaptivesRescue :: 解救俘虏");
+	console.error("解救俘虏",areaModel, characters.length,characters,characters[0]);
 	var captives = SeigniorModel.getCharactersIsCaptives(areaModel.seigniorCharaId());
 	var captivesChecked = SeigniorExecute.Instance().captivesChecked;
 	var noCheckedCaptives = [];
@@ -566,6 +567,7 @@ function jobAiCaptivesRescue(areaModel,characters){//解救俘虏
 	if(captiveArea.seigniorCharaId() == LMvc.selectSeignorId){
 		character.job(Job.End);
 		//"{0}的{1}想用金钱{2}赎回{3}，是否答应？"
+		console.error(character.name(), character,character.seignior());
 		var obj = {title:Language.get("confirm"),message:String.format(Language.get("jobai_rescue_confirm_message"),character.seignior().name(),character.name(),money,captive.name()),height:200
 		,okEvent:function(event){
 			event.currentTarget.parent.remove();

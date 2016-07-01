@@ -118,6 +118,9 @@ CharacterModel.prototype.setDatas=function(charaData){
 	var self = this;
 	self.cityId(charaData.cityId);
 	self.seigniorId(charaData.seignior_id);
+	if(charaData.soldiers){
+		self.data.soldiers = charaData.soldiers;
+	}
 	self.troops(charaData.troops);
 	self.wounded(charaData.wounded);
 	self.exp(charaData.exp);
@@ -129,9 +132,6 @@ CharacterModel.prototype.setDatas=function(charaData){
 	self.feat(charaData.feat);
 	if(charaData.job){
 		self.setJobData(charaData.job);
-	}
-	if(charaData.soldiers){
-		self.data.soldiers = charaData.soldiers;
 	}
 	if(charaData.reputation){
 		self.data.reputation = charaData.reputation;
@@ -815,8 +815,8 @@ CharacterModel.prototype.face = function() {
 		var icon = self.currentSoldiers().icon();
 		var soldierIcon = new LSprite();
 		soldierIcon.addChild(icon);
-		icon.x = (CharacterFaceSize.width - BattleCharacterSize.width) * 0.5;
-		icon.y = (CharacterFaceSize.height - BattleCharacterSize.height) * 0.5;
+		icon.x = (CharacterFaceSize.width - icon.getWidth()) * 0.5;
+		icon.y = (CharacterFaceSize.height - icon.getHeight()) * 0.5;
 		return soldierIcon;
 	}
 	var face = new Face(self.data.faceImg);
