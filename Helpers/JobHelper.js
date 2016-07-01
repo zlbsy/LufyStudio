@@ -404,8 +404,8 @@ function technologyRun(characterModel){
 }
 function enlistRun(characterModel, targetEnlist){
 	//招募：运气+统率
+	characterModel.job(Job.IDLE);
 	if(!targetEnlist){
-		characterModel.job(Job.IDLE);
 		return;
 	}
 	//console.log("enlistRun招募 : ",characterModel.id());
@@ -427,7 +427,6 @@ function enlistRun(characterModel, targetEnlist){
 	area.population(-quantity);
 	troop += quantity;
 	area.troops(troop);
-	characterModel.job(Job.IDLE);
 	area.police(-(quantity * 0.05 >>> 0));
 	var feat = JobFeatCoefficient.NORMAL * quantity / JobFeatCoefficient.ENLIST;
 	characterModel.featPlus(feat);
@@ -639,14 +638,12 @@ function hireRun2(characterModel, hireCharacter, area, isAccess){
 	characterModel.featPlus(JobFeatCoefficient.NORMAL);
 	if(characterModel.seigniorId() == LMvc.selectSeignorId && !area.isAppoint()){
 		SeigniorExecute.addMessage(String.format(Language.get("hireSuccessMessage"),characterModel.name(),hireCharacter.name(),hireCharacter.name()));
-		var script = String.format("SGJTalk.show({0},{1},{2});", hireCharacter.id(), 1, Language.get("hireSuccessTalk"));
-		script += "SGJJobHelper.execute();";
-		LGlobal.script.addScript(script);
-		/*Talk(LMvc.layer, hireCharacter.id(), 1, Language.get("hireSuccessTalk"), function(){
-			console.log("hireSuccessTalk");
-			SeigniorExecute.run();
-		});*/
-		return true;
+		if(!LMvc.TutorialController){
+			var script = String.format("SGJTalk.show({0},{1},{2});", hireCharacter.id(), 1, Language.get("hireSuccessTalk"));
+			script += "SGJJobHelper.execute();";
+			LGlobal.script.addScript(script);
+			return true;
+		}
 	}
 	return false;
 }

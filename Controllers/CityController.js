@@ -31,7 +31,7 @@ CityController.prototype.viewLoad=function(){
 	"Builds/BuildFarmland","Builds/BuildTavern","Builds/BuildInstitute","Builds/BuildDiplomacy",
 	"Builds/BuildGenerals","Builds/BuildExpedition"],self.init);
 };
-CityController.prototype.init=function(){
+CityController.prototype.init=function(initFunc){
 	var self = this;
 	var cityData = AreaModel.getArea(LMvc.cityId);
 	self.setValue("cityData",cityData);
@@ -49,18 +49,20 @@ CityController.prototype.init=function(){
 	LMvc.keepLoading(false);
 	LMvc.CityController = self;
 	LMvc.MapController.view.visible = false;
+	self.view.visible = true;
 	self.dispatchEvent(LEvent.COMPLETE);
 	self.dispatchEvent(LController.NOTIFY_ALL);
 	if(self.initFunc){
 		self.initFunc();
+	}else if(initFunc){
+		initFunc();
 	}
 	LPlugin.playBGM("city", LPlugin.gameSetting.BGM);
 };
 CityController.prototype.gotoMap=function(){
 	var self = this;
-	self.view.remove();
+	self.view.visible = false;
 	LPlugin.playBGM("map", LPlugin.gameSetting.BGM);
-	LMvc.CityController = null;
 	LMvc.MapController.view.visible = true;
 	LMvc.MapController.view.changeMode(MapController.MODE_MAP);
 };
@@ -92,7 +94,7 @@ CityController.prototype.toSelectMap=function(eventType, params){
 };
 CityController.prototype.gotoBattle=function(){
 	var self = this;
-	LMvc.CityController = null;
+	LMvc.CityController.view.visible = false;
 	LPlugin.playSE("Se_goto_battle", LPlugin.gameSetting.SE);
 	LMvc.keepLoading(true);
 	self.loadMvc("Battle",self.battleLoadComplete);

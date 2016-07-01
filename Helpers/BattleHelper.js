@@ -46,6 +46,10 @@ function cloudWeatherCharacterShow(characterId){
 function charactersHealMP(currentCharacters){
 	for(var i=0,l=currentCharacters.length;i<l;i++){
 		var character = currentCharacters[i];
+		var soldierType = character.data.currentSoldiers().soldierType();
+		if(soldierType == SoldierType.Physical){
+			continue;
+		}
 		var mp = character.data.MP();
 		var maxMP = character.data.maxMP();
 		if(mp == maxMP){

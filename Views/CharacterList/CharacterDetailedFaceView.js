@@ -3,29 +3,34 @@ function CharacterDetailedFaceView(controller){
 	base(self,LView,[controller]);
 	self.init();
 }
-CharacterDetailedFaceView.prototype.init=function(){
+CharacterDetailedFaceView.prototype.init=function(controller){
 	var self = this;
+	if(controller){
+		self.addController(controller);
+	}
 	var faceW = CharacterFaceSize.width + 20, faceH = CharacterFaceSize.height + 20;
-	
-	var win = new LPanel(new LBitmapData(LMvc.datalist["win05"]),faceW,faceH);
-	self.addChild(win);
-	win.cacheAsBitmap(true);
-	
-	var face = new LSprite();
-	face.x = 10;
-	face.y = 10;
-	self.faceLayer = face;
-	self.addChild(face);
-	
-	self.textLayer = new LSprite();
-	self.addChild(self.textLayer);
-	
-	var name = getStrokeLabel("", 20, "#FFFFFF", "#000000", 4);
-	name.x = face.x + 10;
-	name.y = face.y + 10;
-	self.textLayer.addChild(name);
-	self.textFieldName = name;
-	if(LMvc.BattleController){
+	if(!self.faceLayer){
+		var win = new LPanel(new LBitmapData(LMvc.datalist["win05"]),faceW,faceH);
+		self.addChild(win);
+		win.cacheAsBitmap(true);
+		
+		var face = new LSprite();
+		face.x = 10;
+		face.y = 10;
+		self.faceLayer = face;
+		self.addChild(face);
+	}
+	if(!self.textFieldName){
+		self.textLayer = new LSprite();
+		self.addChild(self.textLayer);
+		
+		var name = getStrokeLabel("", 20, "#FFFFFF", "#000000", 4);
+		name.x = face.x + 10;
+		name.y = face.y + 10;
+		self.textLayer.addChild(name);
+		self.textFieldName = name;
+	}
+	if(!self.textFieldBelong){
 		var belongLabel = getStrokeLabel("", 20, "#FFFFFF", "#000000", 4);
 		belongLabel.x = name.x;
 		belongLabel.y = name.y + 30;
@@ -35,6 +40,11 @@ CharacterDetailedFaceView.prototype.init=function(){
 };
 CharacterDetailedFaceView.prototype.updateView=function(){
 	var self = this;
+	if(LMvc.BattleController){
+		self.textFieldBelong.visible = true;
+	}else{
+		self.textFieldBelong.visible = false;
+	}
 	var characterModel = self.controller.getValue("selectedCharacter");
 	self.showLabel(characterModel);
 	self.faceLayer.removeAllChild();

@@ -20,17 +20,17 @@ TroubleSelectView.prototype.set=function(){
 		child.addShape(LShape.RECT,[0,0,240,50]);
 	}
 	
-	var label = getStrokeLabel(Language.get("简单"),20,"#FFFFFF","#000000",3);
+	var label = getStrokeLabel(Language.get("trouble_easy"),20,"#FFFFFF","#000000",3);
 	label.x = 50;
 	label.y = 5;
 	self.addChild(label);
 	
-	label = getStrokeLabel(Language.get("一般"),20,"#FFFFFF","#000000",3);
+	label = getStrokeLabel(Language.get("trouble_normail"),20,"#FFFFFF","#000000",3);
 	label.x = 50;
 	label.y = 55;
 	self.addChild(label);
 	
-	label = getStrokeLabel(Language.get("困难"),20,"#FFFFFF","#000000",3);
+	label = getStrokeLabel(Language.get("trouble_hard"),20,"#FFFFFF","#000000",3);
 	label.x = 50;
 	label.y = 105;
 	self.addChild(label);

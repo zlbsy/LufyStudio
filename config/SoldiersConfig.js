@@ -37,7 +37,7 @@ var SoldierDatas = [
 	{id:1,name:"君主",type:SoldierType.Physical,attackType:AttackType.NEAR,moveType:MoveType.CAVALRY,movePower:6,
 	property:{attack:"A",spirit:"A",defense:"A",breakout:"A",morale:"A",troops:5,strategy:1},
 	equipment:{head:0,hand:0,body:0,foot:0,accessories:0},
-	restrain:[{id:2,value:110},{id:3,value:80}],
+	restrain:[],
 	terrain:[
 	{id:1,value:110,moveCost:1},{id:2,value:90,moveCost:2},{id:3,value:90,moveCost:2},{id:4,value:80,moveCost:3},
 	{id:5,value:100,moveCost:2},{id:6,value:110,moveCost:1},{id:7,value:90,moveCost:2},{id:8,value:80,moveCost:3},
@@ -51,7 +51,7 @@ var SoldierDatas = [
 	{id:2,name:"步兵",type:SoldierType.Physical,attackType:AttackType.NEAR,moveType:MoveType.INFANTRY,movePower:4,
 	property:{attack:"B",spirit:"A",defense:"S",breakout:"B",morale:"B",troops:6,strategy:1},
 	equipment:{head:0,hand:0,body:0,foot:0,accessories:0},
-	restrain:[{id:2,value:110},{id:3,value:80}],
+	restrain:[{id:4,value:150},{id:6,value:150},{id:3,value:50}],
 	terrain:[{id:7,value:100,moveCost:2},{id:8,value:100,moveCost:2},{id:10,value:110,moveCost:1},{id:11,value:110,moveCost:2}],
 	rangeAttack:[{x:-1,y:-1},{x:-1,y:1},{x:1,y:1},{x:1,y:-1},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0}],
 	rangeAttackTarget:[{x:0,y:0}],
@@ -62,7 +62,7 @@ var SoldierDatas = [
 	{id:3,name:"骑兵",type:SoldierType.Physical,attackType:AttackType.NEAR,moveType:MoveType.CAVALRY,movePower:6,
 	property:{attack:"S",spirit:"B",defense:"A",breakout:"B",morale:"B",troops:5,strategy:1},
 	equipment:{head:0,hand:0,body:0,foot:0,accessories:0},
-	restrain:[{id:2,value:110},{id:3,value:80}],
+	restrain:[],
 	terrain:[
 	{id:0,value:110,moveCost:1},{id:1,value:110,moveCost:1},{id:2,value:90,moveCost:2},{id:3,value:90,moveCost:2},{id:4,value:80,moveCost:3},
 	{id:5,value:100,moveCost:2},{id:6,value:110,moveCost:1},{id:7,value:90,moveCost:2},{id:8,value:80,moveCost:3},{id:9,value:80,moveCost:2},{id:11,value:90,moveCost:3}],
@@ -75,7 +75,7 @@ var SoldierDatas = [
 	{id:4,name:"弓兵",type:SoldierType.Physical,attackType:AttackType.FAR,moveType:MoveType.INFANTRY,movePower:4,
 	property:{attack:"A",spirit:"B",defense:"B",breakout:"B",morale:"S",troops:4,strategy:1},
 	equipment:{head:0,hand:0,body:0,foot:0,accessories:0},
-	restrain:[{id:2,value:110},{id:3,value:80}],
+	restrain:[{id:3,value:150},{id:18,value:150},{id:19,value:150}],
 	terrain:[{id:7,value:100,moveCost:2},{id:8,value:100,moveCost:2},{id:10,value:110,moveCost:1},{id:11,value:110,moveCost:2}],
 	rangeAttack:[{x:-1,y:-1},{x:-1,y:1},{x:1,y:1},{x:1,y:-1},{x:0,y:-2},{x:0,y:2},{x:-2,y:0},{x:2,y:0}],
 	rangeAttackTarget:[{x:0,y:0}],
@@ -86,7 +86,7 @@ var SoldierDatas = [
 	{id:5,name:"弓骑兵",type:SoldierType.Physical,attackType:AttackType.FAR,moveType:MoveType.CAVALRY,movePower:6,
 	property:{attack:"S",spirit:"B",defense:"B",breakout:"B",morale:"A",troops:5,strategy:1},
 	equipment:{head:0,hand:0,body:0,foot:0,accessories:0},
-	restrain:[{id:2,value:110},{id:3,value:80}],
+	restrain:[{id:3,value:150},{id:18,value:150},{id:19,value:150}],
 	terrain:[
 	{id:1,value:110,moveCost:1},{id:2,value:90,moveCost:2},{id:3,value:90,moveCost:2},{id:4,value:80,moveCost:3},
 	{id:5,value:100,moveCost:2},{id:6,value:110,moveCost:1},{id:7,value:90,moveCost:2},{id:8,value:80,moveCost:3},{id:9,value:80,moveCost:2},{id:11,value:90,moveCost:3}],
@@ -99,7 +99,7 @@ var SoldierDatas = [
 	{id:6,name:"炮车",type:SoldierType.Physical,attackType:AttackType.FAR,moveType:MoveType.CAR,movePower:3,
 	property:{attack:"S",spirit:"B",defense:"A",breakout:"C",morale:"A",troops:4,strategy:1},
 	equipment:{head:0,hand:0,body:0,foot:0,accessories:0},
-	restrain:[{id:2,value:110},{id:3,value:80}],
+	restrain:[{id:3,value:150},{id:18,value:150},{id:19,value:150}],
 	terrain:[
 	{id:2,value:90,moveCost:1},{id:3,value:90,moveCost:1},
 	{id:4,value:80,moveCost:2},{id:6,value:110,moveCost:1},{id:7,value:80,moveCost:2},
@@ -113,7 +113,7 @@ var SoldierDatas = [
 	{id:7,name:"武术家",type:SoldierType.Physical,attackType:AttackType.NEAR,moveType:MoveType.INFANTRY,movePower:5,
 	property:{attack:"A",spirit:"C",defense:"A",breakout:"S",morale:"B",troops:4,strategy:1},
 	equipment:{head:0,hand:0,body:0,foot:0,accessories:0},
-	restrain:[{id:2,value:110},{id:3,value:80}],
+	restrain:[],
 	terrain:[
 	{id:4,value:90,moveCost:1},{id:5,value:90,moveCost:1},
 	{id:8,value:100,moveCost:2},{id:9,value:110,moveCost:1},{id:11,value:100,moveCost:2}],
@@ -126,7 +126,7 @@ var SoldierDatas = [
 	{id:8,name:"贼兵",type:SoldierType.Physical,attackType:AttackType.NEAR,moveType:MoveType.INFANTRY,movePower:5,
 	property:{attack:"S",spirit:"C",defense:"B",breakout:"B",morale:"S",troops:5,strategy:1},
 	equipment:{head:0,hand:0,body:0,foot:0,accessories:0},
-	restrain:[{id:2,value:110},{id:3,value:80}],
+	restrain:[],
 	terrain:[
 	{id:2,value:110,moveCost:1},{id:3,value:110,moveCost:1},
 	{id:4,value:110,moveCost:1},{id:5,value:80,moveCost:1},{id:7,value:80,moveCost:2},
@@ -140,7 +140,7 @@ var SoldierDatas = [
 	{id:9,name:"策士",type:SoldierType.Magic,attackType:AttackType.MAGIC,moveType:MoveType.INFANTRY,movePower:4,
 	property:{attack:"B",spirit:"S",defense:"B",breakout:"B",morale:"B",troops:5,strategy:2},
 	equipment:{head:0,hand:0,body:0,foot:0,accessories:0},
-	restrain:[{id:2,value:110},{id:3,value:80}],
+	restrain:[],
 	terrain:[
 	{id:3,value:90,moveCost:1},
 	{id:4,value:80,moveCost:2},{id:5,value:90,moveCost:1},{id:7,value:100,moveCost:2},
@@ -154,7 +154,7 @@ var SoldierDatas = [
 	{id:10,name:"风水士",type:SoldierType.Magic,attackType:AttackType.MAGIC,moveType:MoveType.INFANTRY,movePower:4,
 	property:{attack:"C",spirit:"S",defense:"C",breakout:"A",morale:"A",troops:3,strategy:2},
 	equipment:{head:0,hand:0,body:0,foot:0,accessories:0},
-	restrain:[{id:2,value:110},{id:3,value:80}],
+	restrain:[],
 	terrain:[
 	{id:3,value:90,moveCost:1},{id:4,value:80,moveCost:2},{id:7,value:100,moveCost:2},
 	{id:8,value:90,moveCost:2},{id:9,value:100,moveCost:2},{id:11,value:110,moveCost:2}],
@@ -168,7 +168,7 @@ var SoldierDatas = [
 	{id:11,name:"道士",type:SoldierType.Magic,attackType:AttackType.MAGIC,moveType:MoveType.INFANTRY,movePower:4,
 	property:{attack:"C",spirit:"S",defense:"B",breakout:"A",morale:"B",troops:3,strategy:2},
 	equipment:{head:0,hand:0,body:0,foot:0,accessories:0},
-	restrain:[{id:2,value:110},{id:3,value:80}],
+	restrain:[],
 	terrain:[
 	{id:2,value:110,moveCost:1},{id:3,value:110,moveCost:1},
 	{id:4,value:110,moveCost:2},{id:5,value:90,moveCost:1},{id:7,value:90,moveCost:2},
@@ -184,7 +184,7 @@ var SoldierDatas = [
 	{id:12,name:"骑马策士",type:SoldierType.Magic,attackType:AttackType.MAGIC,moveType:MoveType.CAVALRY,movePower:6,
 	property:{attack:"A",spirit:"S",defense:"B",breakout:"B",morale:"C",troops:5,strategy:2},
 	equipment:{head:0,hand:0,body:0,foot:0,accessories:0},
-	restrain:[{id:2,value:110},{id:3,value:80}],
+	restrain:[],
 	terrain:[
 	{id:1,value:110,moveCost:1},{id:2,value:90,moveCost:2},{id:3,value:90,moveCost:2},
 	{id:4,value:80,moveCost:3},{id:5,value:100,moveCost:2},{id:6,value:110,moveCost:1},{id:7,value:90,moveCost:2},
@@ -198,7 +198,7 @@ var SoldierDatas = [
 	{id:13,name:"女兵",type:SoldierType.Physical,attackType:AttackType.NEAR,moveType:MoveType.INFANTRY,movePower:5,
 	property:{attack:"A",spirit:"B",defense:"B",breakout:"S",morale:"B",troops:3,strategy:1},
 	equipment:{head:0,hand:0,body:0,foot:0,accessories:0},
-	restrain:[{id:2,value:110},{id:3,value:80}],
+	restrain:[],
 	terrain:[
 	{id:3,value:90,moveCost:1},{id:4,value:90,moveCost:2},{id:5,value:90,moveCost:1},
 	{id:7,value:110,moveCost:1},{id:8,value:110,moveCost:1},{id:9,value:110,moveCost:1},{id:11,value:110,moveCost:2}],
@@ -211,7 +211,7 @@ var SoldierDatas = [
 	{id:14,name:"海盗",type:SoldierType.Physical,attackType:AttackType.NEAR,moveType:MoveType.INFANTRY,movePower:5,
 	property:{attack:"S",spirit:"B",defense:"B",breakout:"A",morale:"B",troops:4,strategy:1},
 	equipment:{head:0,hand:0,body:0,foot:0,accessories:0},
-	restrain:[{id:2,value:110},{id:3,value:80}],
+	restrain:[],
 	terrain:[
 	{id:0,value:90,moveCost:1},{id:1,value:90,moveCost:1},{id:2,value:90,moveCost:1},{id:3,value:80,moveCost:2},
 	{id:4,value:80,moveCost:2},{id:7,value:110,moveCost:1},
@@ -225,7 +225,7 @@ var SoldierDatas = [
 	{id:15,name:"都督",type:SoldierType.Comprehensive,attackType:AttackType.MAGIC,moveType:MoveType.INFANTRY,movePower:5,
 	property:{attack:"A",spirit:"S",defense:"B",breakout:"B",morale:"B",troops:4,strategy:2},
 	equipment:{head:0,hand:0,body:0,foot:0,accessories:0},
-	restrain:[{id:2,value:110},{id:3,value:80}],
+	restrain:[],
 	terrain:[
 	{id:1,value:90,moveCost:1},{id:2,value:90,moveCost:1},{id:3,value:80,moveCost:2},{id:4,value:80,moveCost:2},
 	{id:7,value:110,moveCost:1},{id:8,value:110,moveCost:1},{id:9,value:110,moveCost:1},{id:11,value:110,moveCost:2}],
@@ -238,7 +238,7 @@ var SoldierDatas = [
 	{id:16,name:"咒术士",type:SoldierType.Magic,attackType:AttackType.MAGIC,moveType:MoveType.INFANTRY,movePower:5,
 	property:{attack:"C",spirit:"S",defense:"B",breakout:"B",morale:"A",troops:3,strategy:3},
 	equipment:{head:0,hand:0,body:0,foot:0,accessories:0},
-	restrain:[{id:2,value:110},{id:3,value:80}],
+	restrain:[],
 	terrain:[
 	{id:3,value:90,moveCost:2},{id:4,value:80,moveCost:2},{id:7,value:80,moveCost:2},
 	{id:8,value:80,moveCost:2},{id:9,value:80,moveCost:1},{id:11,value:110,moveCost:2}],
@@ -253,7 +253,7 @@ var SoldierDatas = [
 	{id:17,name:"西凉骑兵",type:SoldierType.Physical,attackType:AttackType.NEAR,moveType:MoveType.CAVALRY,movePower:5,
 	property:{attack:"S",spirit:"C",defense:"S",breakout:"B",morale:"B",troops:6,strategy:1},
 	equipment:{head:0,hand:0,body:0,foot:0,accessories:0},
-	restrain:[{id:2,value:110},{id:3,value:80}],
+	restrain:[],
 	terrain:[
 	{id:2,value:80,moveCost:2},{id:3,value:110,moveCost:1},
 	{id:4,value:110,moveCost:1},{id:5,value:110,moveCost:1},{id:7,value:80,moveCost:2},
@@ -268,7 +268,7 @@ var SoldierDatas = [
 	{id:18,name:"驯熊师",type:SoldierType.Physical,attackType:AttackType.NEAR,moveType:MoveType.INFANTRY,movePower:4,
 	property:{attack:"S",spirit:"C",defense:"A",breakout:"B",morale:"B",troops:6,strategy:1},
 	equipment:{head:0,hand:0,body:0,foot:0,accessories:0},
-	restrain:[{id:2,value:110},{id:3,value:80}],
+	restrain:[],
 	terrain:[
 	{id:2,value:110,moveCost:1},{id:3,value:110,moveCost:1},{id:4,value:110,moveCost:1},{id:7,value:90,moveCost:1},
 	{id:8,value:90,moveCost:1},{id:9,value:80,moveCost:1},{id:11,value:110,moveCost:2}],
@@ -282,7 +282,7 @@ var SoldierDatas = [
 	{id:19,name:"驯虎师",type:SoldierType.Physical,attackType:AttackType.NEAR,moveType:MoveType.INFANTRY,movePower:5,
 	property:{attack:"A",spirit:"C",defense:"A",breakout:"S",morale:"C",troops:4,strategy:1},
 	equipment:{head:0,hand:0,body:0,foot:0,accessories:0},
-	restrain:[{id:2,value:110},{id:3,value:80}],
+	restrain:[],
 	terrain:[
 	{id:2,value:110,moveCost:1},{id:3,value:110,moveCost:1},{id:4,value:110,moveCost:1},{id:7,value:90,moveCost:1},
 	{id:8,value:90,moveCost:1},{id:9,value:80,moveCost:1},{id:11,value:110,moveCost:2}],

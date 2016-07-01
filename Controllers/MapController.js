@@ -67,6 +67,8 @@ MapController.prototype.init=function(status){
 		if(!LMvc.areaData.battleData){
 			LMvc.isRead = false;
 		}
+	}else{
+		LMvc.areaData = null;
 	}
 	self.dispatchEvent(LController.NOTIFY);
 	LPlugin.playBGM("map", LPlugin.gameSetting.BGM);
@@ -79,6 +81,14 @@ MapController.prototype.init=function(status){
 		self.loadMvc("EventMap",self.eventMapComplete);
 		LMvc.chapterData.eventEnd = true;
 	}
+    LMvc.logoStage.die();
+    LMvc.logoStage = null;
+    if(!LMvc.native){
+    	return;
+    }
+    for(var k in LMvc){
+    	console.log("-------",typeof LMvc[k],k,LMvc[k]);
+    }
 };
 MapController.prototype.eventMapComplete = function() {
 	var self = this;
@@ -119,9 +129,15 @@ MapController.prototype.showCity=function(cityId, initFunc){
 };
 MapController.prototype.cityLoadComplete=function(){
 	var self = this;
-	var city = new CityController(self.initFunc);
+	if(LMvc.CityController){
+		LMvc.CityController.view.visible = true;
+		LMvc.CityController.init(self.initFunc);
+	}else{
+		var city = new CityController(self.initFunc);
+		self.view.parent.addChild(city.view);
+	}
+	
 	self.initFunc = null;
-	self.view.parent.addChild(city.view);
 };
 MapController.prototype.returnToCity=function(cityId){
 	var self = this;

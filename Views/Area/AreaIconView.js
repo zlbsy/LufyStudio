@@ -28,7 +28,7 @@ AreaIconView.prototype.onUp=function(event){
 	var baseView = self.parent.parent;
 	baseView.stopDrag();
 	if(LPoint.distance2(self.offsetX,self.offsetY,event.offsetX,event.offsetY) < 5){
-		if(LMvc.CityController){
+		if(LMvc.MapController.mode !== MapController.MODE_MAP){
 			if(LMvc.cityId == self.areaStatus.id()){
 				self.showDialogKey("dialog_select_city_common_error");
 				return;

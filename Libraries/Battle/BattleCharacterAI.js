@@ -371,10 +371,19 @@ BattleCharacterAI.prototype.attackActionComplete = function(event) {
 					e.target.remove();
 				}});
 			}else if(skill && skill.isSubType(SkillSubType.HP_MP_CHANGE)){
+				var skillName = null;
 				if(obj.chara.data.MP() > 0){
 					var minusMp = obj.hertValue > obj.chara.data.MP() ? obj.chara.data.MP() : obj.hertValue;
 					obj.hertValue = 0;
 					obj.chara.data.MP(obj.chara.data.MP() - minusMp);
+					skillName = skill.name();
+				}else if(Math.fakeRandom() > skill.changeProbability()*0.01){
+					var emptyMp = obj.chara.data.maxMP() - obj.chara.data.MP();
+					var plusMp = obj.hertValue > emptyMp ? emptyMp : obj.hertValue;
+					obj.chara.data.MP(obj.chara.data.MP() + plusMp);
+					skillName = skill.name();
+				}
+				if(skillName){
 					var tweenObj = getStrokeLabel(skill.name(),22,"#FFFFFF","#000000",2);
 					tweenObj.x = obj.chara.x + (BattleCharacterSize.width - tweenObj.getWidth()) * 0.5;
 					tweenObj.y = obj.chara.y;
@@ -382,10 +391,6 @@ BattleCharacterAI.prototype.attackActionComplete = function(event) {
 					LTweenLite.to(tweenObj,0.5,{y:tweenObj.y - 20,alpha:0,onComplete:function(obj){
 						obj.remove();
 					}});
-				}else if(Math.fakeRandom() > skill.changeProbability()*0.01){
-					var emptyMp = obj.chara.data.maxMP() - obj.chara.data.MP();
-					var plusMp = obj.hertValue > emptyMp ? emptyMp : obj.hertValue;
-					obj.chara.data.MP(obj.chara.data.MP() + plusMp);
 				}
 			}
 			

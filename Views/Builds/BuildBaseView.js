@@ -6,7 +6,10 @@ function BuildBaseView(controller, buildName){
 	self.buildName = buildName;
 	self.name = "build_"+buildName;
 	var view = controller.view;
-	var build = view.buildLayer.childList.find(function(child){
+	var visibleLayer = view.buildLayer.childList.find(function(child){
+		return child.visible;
+	});
+	var build = visibleLayer.childList.find(function(child){
 		return child.name == buildName;
 	});
 	self.menuLayer = new LSprite();
@@ -24,7 +27,7 @@ function BuildBaseView(controller, buildName){
 			self.setMenuPosition(build, menuLayer);
 		}else{
 			var button = view.footerLayer.childList.find(function(child){
-				return child.name == buildName;
+				return child.visible && child.name.indexOf(buildName) >= 0;
 			});
 			self.setMenuPositionByFooter(button, menuLayer);
 		}

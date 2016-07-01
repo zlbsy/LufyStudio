@@ -125,10 +125,11 @@ CharacterModel.prototype.setDatas=function(charaData){
 	self.HP(charaData.hp);
 	self.isDefCharacter(charaData.isDefCharacter);
 	self.loyalty(charaData.loyalty);
+	self.data.isPrized = charaData.isPrized;
+	self.feat(charaData.feat);
 	if(charaData.job){
 		self.setJobData(charaData.job);
 	}
-	self.feat(charaData.feat);
 	if(charaData.soldiers){
 		self.data.soldiers = charaData.soldiers;
 	}
@@ -137,9 +138,6 @@ CharacterModel.prototype.setDatas=function(charaData){
 	}
 	if(charaData.currentSoldierId){
 		self.data.currentSoldierId = charaData.currentSoldierId;
-	}
-	if(charaData.isPrized){
-		self.data.isPrized = charaData.isPrized;
 	}
 	self.data.equipments = [];
 	if(charaData.equipments){
@@ -540,7 +538,8 @@ CharacterModel.prototype.HP = function(value) {
 	return this._dataValue("hp", value);
 };
 CharacterModel.prototype.MP = function(value) {
-	return this._dataValue("mp", value, 0);
+	var self = this;
+	return self._dataValue("mp", value, 0, 0, self.maxMP());
 };
 CharacterModel.prototype.isPantTroops = function() {
 	return this.troops() < this.maxTroops() * CharacterModel.PANT_PROBABILITY;
@@ -567,7 +566,7 @@ CharacterModel.prototype.lv = function() {
 };
 CharacterModel.prototype.level = function() {
 	var self = this;
-	if(self.isDefCharacter()){
+	if(self.isDefCharacter() || self.isTribeCharacter()){
 		return self.seigniorLevel();
 	}
 	return (self.data.feat / CharacterLevelConfig.exp >>> 0) + CharacterLevelConfig.initLevel;
@@ -1004,7 +1003,10 @@ CharacterModel.prototype.skill = function(type) {
 		return null;
 	}
 	var skill = SkillMasterModel.getMaster(self.data.skill);
-	if(type && skill.mainType() != type){
+	var skillType = skill.mainType();
+	if(type && (
+		(typeof skillType == "string" && skillType != type) || 
+		(Array.isArray(skillType) && skillType.indexOf(type) < 0))){
 		return null;
 	}
 	if(skill.probability() < 100){

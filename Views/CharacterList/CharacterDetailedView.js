@@ -5,7 +5,7 @@ function CharacterDetailedView(controller,param){
 	self.layerInit();
 	self.ctrlLayerInit();
 	self.tabs = [CharacterDetailedView.TAB_STATUS,CharacterDetailedView.TAB_PROPERTIES,CharacterDetailedView.TAB_SKILL,CharacterDetailedView.TAB_ARMS,CharacterDetailedView.TAB_EQUIPMENT];
-	self.setFaceLayer();
+	
 	self.setTabButtons();
 	self.tabLayerInit();
 	self.set(param);
@@ -18,8 +18,8 @@ CharacterDetailedView.TAB_STATUS = "tab_status";
 CharacterDetailedView.TAB_PROPERTIES = "tab_properties";
 CharacterDetailedView.prototype.layerInit=function(){
 	var self = this;
-	var backLayer = getTranslucentMask();
-	self.addChild(backLayer);
+	self.backLayer = getTranslucentMask();
+	self.addChild(self.backLayer);
 	self.layer = new LSprite();
 	self.addChild(self.layer);
 	
@@ -66,6 +66,24 @@ CharacterDetailedView.prototype.changeCharacter=function(value){
 	var characterModel = characterList[index];
 	self.set(characterModel);
 };
+CharacterDetailedView.prototype.die=function(){
+	var self = this;
+	self.controller = null;
+	self.model = null;
+	if(self.faceView){
+		self.faceView.controller.removeView(self.faceView);
+		self.faceView.controller = null;
+		self.faceView.model = null;
+	}
+	for(var i=0;i<self.tabLayer.numChildren;i++){
+		var tab = self.tabLayer.childList[i];
+		if(tab.controller){
+			tab.controller.removeView(tab);
+		}
+		tab.controller = null;
+		tab.model = null;
+	}
+};
 CharacterDetailedView.prototype.set=function(param){
 	var self = this;
 	var characterModel;
@@ -82,11 +100,16 @@ CharacterDetailedView.prototype.set=function(param){
 		self.controller.setValue("battleStatus", self.character.status.statusLabel());
 		self.controller.setValue("battleBelong", self.character.belong);
 	}
+	self.setFaceLayer();
 	self.TabShow(self.nowTab);
 	self.controller.dispatchEvent(LController.NOTIFY_ALL);
 };
 CharacterDetailedView.prototype.setFaceLayer=function(){
 	var self = this;
+	if(self.faceView){
+		self.faceView.init(self.controller);
+		return;
+	}
 	self.faceView = new CharacterDetailedFaceView(self.controller);
 	self.faceView.x = (LGlobal.width - CharacterFaceSize.width - 20) * 0.5;
 	self.faceView.y = 0;
@@ -187,6 +210,7 @@ CharacterDetailedView.prototype.showEquipment=function(){
 		return child instanceof CharacterDetailedTabEquipmentView;
 	});
 	if(equipmentView){
+		equipmentView.addController(self.controller);
 		equipmentView.visible = true;
 		return;
 	}
@@ -199,6 +223,7 @@ CharacterDetailedView.prototype.showStrategy=function(){
 		return child instanceof StrategyView;
 	});
 	if(strategyView){
+		strategyView.addController(self.controller);
 		strategyView.visible = true;
 		return;
 	}
@@ -212,6 +237,7 @@ CharacterDetailedView.prototype.showArms=function(){
 		return child instanceof SoldiersView;
 	});
 	if(soldiersView){
+		soldiersView.addController(self.controller);
 		soldiersView.visible = true;
 		return;
 	}
@@ -226,6 +252,7 @@ CharacterDetailedView.prototype.showStatus=function(){
 		return child instanceof CharacterDetailedTabStatusView;
 	});
 	if(statusView){
+		statusView.addController(self.controller);
 		statusView.visible = true;
 		return;
 	}
@@ -238,6 +265,7 @@ CharacterDetailedView.prototype.showProperties=function(){
 		return child instanceof CharacterDetailedTabPropertiesView;
 	});
 	if(propertiesView){
+		propertiesView.addController(self.controller);
 		propertiesView.visible = true;
 		return;
 	}

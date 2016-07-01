@@ -417,7 +417,16 @@ CharacterListView.prototype.updateArmProperties=function(index){
 };
 CharacterListView.prototype.showCharacterDetailed=function(param){
 	var self = this;
-	var characterDetailed = new CharacterDetailedView(self.controller, param);
+	var characterDetailed;
+	if(CharacterDetailedView.instance){
+		characterDetailed = CharacterDetailedView.instance;
+		characterDetailed.addController(self.controller);
+		console.log("showCharacterDetailed",characterDetailed.controller, self.controller);
+		characterDetailed.set(param);
+	}else{
+		characterDetailed = new CharacterDetailedView(self.controller, param);
+		CharacterDetailedView.instance = characterDetailed;
+	}
 	self.charaDetailedLayer.addChild(characterDetailed);
 	if(!self.listView){
 		return;
@@ -426,7 +435,7 @@ CharacterListView.prototype.showCharacterDetailed=function(param){
 };
 CharacterListView.prototype.showCharacterList=function(){
 	var self = this;
-	self.charaDetailedLayer.die();
+	//self.charaDetailedLayer.die();
 	self.charaDetailedLayer.removeAllChild();
 	switch(self.controller.characterListType){
 		case CharacterListType.BATTLE_SINGLE:

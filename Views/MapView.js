@@ -126,6 +126,7 @@ MapView.prototype.updateView = function(){
 	var self = this;
 	self.areaLayerInit();
 	if(!LMvc.isRead){
+		LMvc.areaData = null;
 		return;
 	}
 	LMvc.MapController.showCity(LMvc.areaData.battleData.toCityId, self.readDataToBattle);
@@ -154,6 +155,7 @@ MapView.prototype.areaLayerInit=function(){
 };
 MapView.prototype.changeMode=function(mode){
 	var self = this;
+	LMvc.MapController.mode = mode; 
 	self.ctrlLayer.childList.forEach(function(child){
 		child.visible = false;
 		if(mode == MapController.MODE_MAP && (child.name == "menu" || child.name == "go")){

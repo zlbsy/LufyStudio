@@ -97,8 +97,7 @@ BattleController.prototype.init = function(){
 	BattleMapConfig.SPEED = (LPlugin.gameSetting.speed == 1 ? BattleMapConfig.SPEED_NORMAL : BattleMapConfig.SPEED_FAST);
 	LMvc.keepLoading(false);
 	self.fromController.view.parent.addChild(self.view);
-	self.fromController.view.remove();
-	LMvc.CityController = null;
+	self.fromController.view.visible = false;
 	LMvc.BattleController = self;
 	if(!BattleController.timer){
 		BattleController.timer = new LTimer(1000, 1);
@@ -122,9 +121,9 @@ BattleController.prototype.init = function(){
 		return;
 	}
 	self.dispatchEvent(LEvent.COMPLETE);
-	if(LMvc.areaData.battleData){
+	if(LMvc.areaData && LMvc.areaData.battleData){
 		setBattleSaveData();
-		LMvc.areaData.battleData = null;
+		LMvc.areaData = null;
 	}else{
 		Math.fakeReset();
 		self.charactersInit();

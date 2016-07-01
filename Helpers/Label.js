@@ -1,5 +1,5 @@
 function getStrokeLabel(txt,size,color,lineColor,lineWidth,type){
-	var label = new LTextField();
+	var label = LTextField.getLabel();//new LTextField();
 	if(type == "htmlText"){
 		label.htmlText = txt;
 	}else{
@@ -12,9 +12,10 @@ function getStrokeLabel(txt,size,color,lineColor,lineWidth,type){
 	label.lineWidth = lineWidth;
 	label.heightMode = LTextField.HEIGHT_MODE_BASELINE;
 	if(type == "bitmap"){
-		var layer = new LSprite();
+		label.cacheAsBitmap(true);
+		/*var layer = new LSprite();
 		layer.addChild(label);
-		return getBitmap(label);
+		return getBitmap(label);*/
 	}
 	return label;
 }
@@ -27,5 +28,6 @@ function getLabelWindow(text,size,width,height,img){
 	textLabel.x = (width - textLabel.getWidth()) * 0.5;
 	textLabel.y = (height - textLabel.getHeight()) * 0.5;
 	bitmapWin.addChild(textLabel);
-	return getBitmap(bitmapWin);
+	bitmapWin.cacheAsBitmap(true);
+	return bitmapWin;
 }

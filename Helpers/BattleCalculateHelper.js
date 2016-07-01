@@ -302,30 +302,58 @@ function calculateHertValue(attChara,hertChara,correctionFactor, isView){
 	var hertDefenseAddition = hertDefense * terrainHert.value * 0.01;
 	//物理攻击的伤害值计算
 	r = attLv + 25 + (attAttackAddition - hertDefenseAddition)/2;
-	var skill = hertCharaModel.skill(SkillType.IGNORE_RESTRAINT);
+	
+	//兵种相克
+	var restrain = attCharaModel.currentSoldiers().restrain(hertCharaModel.currentSoldiers().id()).value;
 	var ignore = false;
-	if(skill){
-		var skillIgnore = skill.ignore();
-		if(!skillIgnore){
-		}else if(skillIgnore.type == "AttackType"){
-			if(skillIgnore.value == attCharaModel.currentSoldiers().attackType()){
-				ignore = true;
+	if(restrain > 100){
+		var skill = hertCharaModel.skill(SkillType.IGNORE_RESTRAINT);
+		if(skill){
+			var skillIgnore = skill.ignore();
+			if(!skillIgnore){
+			}else if(skillIgnore.type == "AttackType"){
+				if(skillIgnore.value == attCharaModel.currentSoldiers().attackType()){
+					ignore = true;
+				}
+			}else if(skillIgnore.type == "MoveType"){
+				if(skillIgnore.value == attCharaModel.currentSoldiers().moveType()){
+					ignore = true;
+				}
+			}else if(skillIgnore.type == "SoldierType"){
+				if(skillIgnore.value == attCharaModel.currentSoldiers().soldierType()){
+					ignore = true;
+				}
 			}
-		}else if(skillIgnore.type == "MoveType"){
-			if(skillIgnore.value == attCharaModel.currentSoldiers().moveType()){
-				ignore = true;
-			}
-		}else if(skillIgnore.type == "SoldierType"){
-			if(skillIgnore.value == attCharaModel.currentSoldiers().soldierType()){
-				ignore = true;
+		}
+	}else if(restrain < 100){
+		var skill = attCharaModel.skill(SkillType.IGNORE_RESTRAINT);
+		if(skill){
+			var skillIgnore = skill.ignore();
+			if(!skillIgnore){
+			}else if(skillIgnore.type == "AttackType"){
+				if(skillIgnore.value == hertCharaModel.currentSoldiers().attackType()){
+					ignore = true;
+				}
+			}else if(skillIgnore.type == "MoveType"){
+				if(skillIgnore.value == hertCharaModel.currentSoldiers().moveType()){
+					ignore = true;
+				}
+			}else if(skillIgnore.type == "SoldierType"){
+				if(skillIgnore.value == hertCharaModel.currentSoldiers().soldierType()){
+					ignore = true;
+				}
 			}
 		}
 	}
 	if(!ignore){
-		//兵种相克
-		var restrain = attCharaModel.currentSoldiers().restrain(hertCharaModel.currentSoldiers().id()).value * 0.01;
-		r = r * restrain;
+		r = r * restrain * 0.01;
 	}
+	/*
+	//兵种相克
+	var restrain = attCharaModel.currentSoldiers().restrain(hertCharaModel.currentSoldiers().id()).value * 0.01;
+	if(!ignore && restrain < 1){
+		r = r * restrain;
+	}*/
 	//修正系数
 	r *= correctionFactor;
 	if(!isView){

@@ -6,6 +6,19 @@ LTextField.prototype.windComplete = function() {
 	s._ll_wind_length = s._ll_wind_text.length + 1;
 	s._ll_windRun();
 };
+LDisplayObjectContainer.prototype.removeAllChild = function () {
+	var s  = this, c = s.childList, i, l;
+	for (i = 0, l = c.length; i < l; i++) {
+		if (LGlobal.destroy && c[i].die) {
+			c[i].die();
+		}
+		delete c[i].parent;
+	}
+	s.childList.length = 0;
+	s.width = 0;
+	s.height = 0;
+	s.numChildren = 0;
+};
 LListView.prototype.clear = function() {
 	var self = this;
 	for (var i = 0, l = self._ll_items.length; i < l; i++) {
@@ -32,6 +45,15 @@ LListView.prototype.die = function(){
 	}
 	self._ll_items = [];
 	self.callParent("die",arguments);
+};
+LView.prototype.addController = function(controller){
+	var self = this;
+	if(self.controller){
+		return;
+	}
+	self.controller = controller;
+	self.model = controller.model;
+	self.controller.addView(self);
 };
 LView.prototype.die = function() {
 	var self = this;
@@ -63,6 +85,13 @@ LView.prototype.die = function() {
 		}
 	}
 };
+LComboBox.prototype._showChildList = function (event) {
+	var s = event.currentTarget;
+	if(!s.list || s.list.length == 0){
+		return;
+	}
+	s.showChildList();
+};
 //////////////////////华丽的分界线////////////////////
 /*引擎中需调整*/
 LButton.prototype.ll_button_mode = function(){
@@ -71,6 +100,35 @@ LButton.prototype.ll_button_mode = function(){
 //////////////////////华丽的分界线////////////////////
 
 /*不需要加到引擎中，只在本游戏中使用*/
+LTextField._labels = [];
+LTextField.getLabel = function(){
+	if(LTextField._labels.length > 0){
+		var label = LTextField._labels.shift();
+		return label;
+	}
+	return new LTextField();
+};
+LTextField.prototype.die = function(){
+	var self = this;
+	self.text = "";
+	self.htmlText = "";
+	self.filters = null;
+	self.visible = true;
+	self.x = 0;
+	self.y = 0;
+	self.texttype = null;
+	self.styleSheet = "";
+	self.lineWidth = 1;
+	self.weight = "normal";
+	self.stroke = false;
+	self.width = 150;
+	self.wordWrap = false;
+	self.multiline = false;
+	self.numLines = 1;
+	self.cacheAsBitmap(false);
+	LTextField._labels.push(self);
+	LMouseEventContainer.removeInputBox(self);
+};
 LButton.prototype.setCursorEnabled = function(event) {
 	var self = this;
 	self.callParent("setCursorEnabled", arguments);

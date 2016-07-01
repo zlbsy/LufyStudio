@@ -28,7 +28,8 @@ LogoController.prototype.libraryLoad=function(){
 	var list = ["TranslucentLoading","BitmapSprite","BattleLoading","GameCacher","LPluginExtension"];
 	if(typeof LPlugin == UNDEFINED){
 		window["LPlugin"] = function(){}; 
-	}else{
+	}
+	if(LPlugin.native){
 		LMvc.ver = LPlugin.bundleVersion();
 	}
 	self.load.library(list,self.languageLoad);

@@ -299,6 +299,7 @@ var LMouseEventContainer = (function () {
 		},
 		_mouseEnabled : function (sp) {
 			var self = this;
+			var name = sp.name;
 			if (!sp || !sp.parent) {
 				return false;
 			}
@@ -332,6 +333,10 @@ var LMouseEventContainer = (function () {
 				event.selfX = (event.offsetX - o.co.x - o.sp.x) / (o.co.scaleX * o.sp.scaleX);
 				event.selfY = (event.offsetY - o.co.y - o.sp.y) / (o.co.scaleY * o.sp.scaleY);
 				o.listener(event, o.sp);
+				/*if(!LMvc.BattleController){
+					return;
+				}
+				console.error(o.sp);*/
 			}
 		},
 		dispatchEvent : function (event, list, type) {
@@ -2586,6 +2591,7 @@ var LDisplayObjectContainer = (function () {
 				if (LGlobal.destroy && c[i].die) {
 					c[i].die();
 				}
+				delete c[i].parent;
 			}
 			s.childList.length = 0;
 			s.width = 0;

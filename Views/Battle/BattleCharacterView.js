@@ -322,7 +322,7 @@ BattleCharacterView.prototype.toDie = function() {
 	}
 	if(!self.data.isDefCharacter() && !self.data.isTribeCharacter()){
 		var talkMsg;
-		if(true || self.isSingleCombat || calculateHitrateCaptive(self)){
+		if(self.isSingleCombat || calculateHitrateCaptive(self)){
 			self.isSingleCombat = false;
 			if(self.belong == Belong.ENEMY){
 				LMvc.BattleController.model.selfCaptive.push(self.data.id());

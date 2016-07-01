@@ -57,10 +57,23 @@ SeigniorModel.removeSeignior = function(seigniorId){
 	var self = this;
 	for(var i=0,l=SeigniorModel.list.length;i<l;i++){
 		var seignior = SeigniorModel.list[i];
-		if(seignior.chara_id() == seigniorId){
-			SeigniorModel.list.splice(i, 1);
-			break;
+		if(seignior.chara_id() != seigniorId){
+			continue;
 		}
+		if(self.lastCityId){
+			var city = AreaModel.getArea(self.lastCityId);
+			if(city && city.seigniorCharaId() > 0){
+				var items = seignior.items();
+				for(var j=0;j<items.length;j++){
+					var item = items[j];
+					if(item.rarity() > 4){
+						city.addItem(item);
+					}
+				}
+			}
+		}
+		SeigniorModel.list.splice(i, 1);
+		break;
 	}
 };
 SeigniorModel.getCharactersIsCaptives = function(seigniorId){
@@ -280,12 +293,18 @@ SeigniorModel.prototype.addCity = function(area){
 };
 SeigniorModel.prototype.removeCity = function(areaId){
 	var self = this;
+	if(self.data.areas.length == 0){
+		return;
+	}
 	for(var i=0,l=self.data.areas.length;i<l;i++){
 		var child = self.data.areas[i];
 		if(child.id() == areaId){
 			self.data.areas.splice(i, 1);
 			break;
 		}
+	}
+	if(self.data.areas.length == 0){
+		self.lastCityId = areaId;
 	}
 };
 SeigniorModel.prototype.getCaptivedList = function(){

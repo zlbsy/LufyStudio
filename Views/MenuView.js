@@ -126,9 +126,10 @@ MenuView.prototype.onClickReturnTop=function(event){
 	CharacterModel.setChara(characterListConfig);
 	AreaModel.list = [];
 	AreaModel.setArea(MapSetting);
-	LMvc.logoStage.visible = true;
+	LMvc.stageLayer.controller.logoLoad();
+	/*LMvc.logoStage.visible = true;
 	if(LMvc.logoStage.chapterMenuLayer){
 		LMvc.logoStage.chapterMenuLayer.mouseChildren = true;
-	}
+	}*/
 	LMvc.stageLayer.x = 0;
 };

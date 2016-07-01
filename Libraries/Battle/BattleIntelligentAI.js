@@ -135,6 +135,7 @@ BattleIntelligentAI.prototype.run = function() {
 	var self = BattleController.ctrlChara.inteAI;
 	if(self.chara.status.hasStatus(StrategyType.Chaos)){
 		self.chara.AI.endAction();
+		return;
 	}else{
 		switch(self.chara.mode){
 			case CharacterMode.NONE:
