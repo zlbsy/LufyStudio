@@ -25,6 +25,8 @@ BattleIntelligentAI.execute = function() {
 	var self = this;
 	var currentBelong = LMvc.BattleController.getValue("currentBelong");
 	if(currentBelong == Belong.SELF){
+		LMvc.BattleController.view.mainMenu.visible = true;
+		LMvc.BattleController.view.miniLayer.visible = LMvc.BattleController.view.mainMenu.miniMapVisible;
 		return;
 	}
 	var chatacters = [];

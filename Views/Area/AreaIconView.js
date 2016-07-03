@@ -121,13 +121,14 @@ AreaIconView.prototype.set=function(){
 	var self = this;
 	self.layer = new LSprite();
 	self.addChild(self.layer);
-	self.icon = self.areaStatus.icon();
-	self.width = self.icon.getWidth();
-	self.height = self.icon.getHeight();
+	var icon = self.areaStatus.icon();
+	self.width = icon.getWidth();
+	self.height = icon.getHeight();
 	self.addShape(LShape.RECT,[0,0,CityIconConfig.width, CityIconConfig.height]);
-	LMvc.MapController.view.mapBitmapData.copyPixels(self.icon._ll_cacheAsBitmap.bitmapData, 
+	LMvc.MapController.view.mapBitmapData.copyPixels(icon._ll_cacheAsBitmap.bitmapData, 
 	new LRectangle(0, 0, self.width, self.height), 
-	new LPoint(self.x+self.icon._ll_cacheAsBitmap.x,self.y + self.icon._ll_cacheAsBitmap.y));
+	new LPoint(self.x+icon._ll_cacheAsBitmap.x,self.y + icon._ll_cacheAsBitmap.y));
+	icon.die();
 };
 AreaIconView.prototype.resetIcon = function(){
 	var self = this;

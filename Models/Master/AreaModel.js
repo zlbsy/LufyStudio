@@ -401,7 +401,7 @@ AreaModel.prototype.flag = function(){
 	var self = this;
 	var color = self.color();
 	if(!color){
-		return null;
+		return new LBitmap(SeigniorModel.getWhiteFlag());
 	}
 	var bitmapData = self.seignior().flag();
 	return new LBitmap(bitmapData);

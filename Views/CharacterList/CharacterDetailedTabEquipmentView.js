@@ -49,13 +49,20 @@ CharacterDetailedTabEquipmentView.prototype.showEquipments=function(){
 CharacterDetailedTabEquipmentView.prototype.showEquipmentList=function(){
 	var self = this;
 	var characterModel = self.controller.getValue("selectedCharacter");
-	if(characterModel.seigniorId() != LMvc.selectSeignorId){
-		return;
-	}
 	var equipmentsView = self.childList.find(function(child){
 		return child instanceof EquipmentsView;
 	});
+	var cityData = LMvc.CityController.getValue("cityData");
+	if(characterModel.seigniorId() != LMvc.selectSeignorId || cityData.seigniorCharaId() != LMvc.selectSeignorId){
+		if(equipmentsView){
+			equipmentsView.visible = false;
+		}
+		return;
+	}
 	if(equipmentsView){
+		equipmentsView.addController(self.controller);
+		equipmentsView.visible = true;
+		equipmentsView.updateView();
 		return;
 	}
 	equipmentsView = new EquipmentsView(self.controller, "equipment", new LPoint(self.tabWidth, self.tabHeight));

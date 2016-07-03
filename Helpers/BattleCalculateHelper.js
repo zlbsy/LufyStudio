@@ -235,7 +235,7 @@ function calculateHertStrategyValue(attChara,hertChara,currentSelectStrategy,cor
 	var attCharaModel = attChara.data;
 	var hertCharaModel = hertChara.data;
 	//得到攻击方的精神力和等级
-	var attLv =  attCharaModel.lv();
+	var attLv =  attCharaModel.seigniorLevel();
 	var attAttack = attCharaModel.spirit();
 	//精神变化
 	var ApiritAid = attChara.status.getStatus(StrategyType.ApiritAid);
@@ -281,7 +281,7 @@ function calculateHertValue(attChara,hertChara,correctionFactor, isView){
 	var attCharaModel = attChara.data;
 	var hertCharaModel = hertChara.data;
 	//得到攻击方的攻击力和等级
-	var attLv =  attCharaModel.lv();
+	var attLv =  attCharaModel.seigniorLevel();
 	var attAttack = attCharaModel.attack();
 	//攻击变化
 	var AttackAid = attChara.status.getStatus(StrategyType.AttackAid);
@@ -531,7 +531,7 @@ function calculateWounded(value, range){
 function calculateExp(attChara,hertChara){
 	var attCharaModel = attChara.data;
 	var hertCharaModel = hertChara.data;
-	var lv = attCharaModel.level() - hertCharaModel.level();
+	var lv = attCharaModel.seigniorLevel() - hertCharaModel.seigniorLevel();
 	var exp = 8;
 	if(lv > 0){
 		exp -= lv;

@@ -232,9 +232,11 @@ BattleResultConfirmView.prototype.tweenClose=function(event){
 	baseLayer.parent.eventType = button.eventType;
 	LTweenLite.to(buttonLayer.parent,0.3,{y:LGlobal.height,onComplete:function(e){
 		var self = e.target.parent;
-		self.dispatchEvent(self.eventType);
-		if(LMvc.BattleController){
-			self.remove();
+		if(self){
+			self.dispatchEvent(self.eventType);
+			if(LMvc.BattleController){
+				self.remove();
+			}
 		}
 	}});
 };

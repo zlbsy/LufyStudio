@@ -3,7 +3,7 @@ function BitmapSprite(src, rect, size){
 	base(self,LSprite,[]);
 	self.size = size;
 	self.rect = rect;
-	loader = new LLoader();
+	var loader = new LLoader();
 	loader.parent = self;
 	loader.addEventListener(LEvent.COMPLETE,self.loadOver);
 	var isBase64 = (src.indexOf(";base64,") > 0);

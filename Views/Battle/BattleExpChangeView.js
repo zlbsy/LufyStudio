@@ -18,6 +18,7 @@ BattleExpChangeView.prototype.mouseup = function(event){
 	var self = event.currentTarget;
 	if(self.isEnd){
 		var resultView = self.parent;
+		self.die();
 		self.remove();
 		resultView.dispatchEvent(BattleResultEvent.CLOSE_EXP);
 	}else{
@@ -119,27 +120,30 @@ BattleExpChangeView.prototype.setData = function(index){
 		if(data.reward){
 			rewardLabel.alpha = 0;
 			rewardLabel.scaleX = rewardLabel.scaleY = 2;
-			
-			LTweenLite.to(layer,0.3,{alpha:1,scaleY:1,ease:LEasing.Elastic.easeOut})
-			.to(featLabel,0.5,{feat:feat,onUpdate:function(e){
+			LTweenLite.to(layer,0.3,{alpha:1,scaleY:1,ease:LEasing.Elastic.easeOut});
+			LTweenLite.to(featLabel,0.5,{delay:0.3,feat:feat,onUpdate:function(e){
 				e.target.text = e.target.feat >>> 0;
 			},onComplete:function(e){
 				e.target.text = e.target.feat >>> 0;
 			}});
 			LTweenLite.to(rewardLabel,0.3,{delay:0.8,alpha:1,scaleX:1,scaleY:1,onComplete:function(e){
 				var obj = e.target.parent;
-				var s = obj.parent.parent.parent;
-				s.setData(obj.index + 1);
+				var s = obj.getParentByConstructor(BattleExpChangeView);
+				if(s){
+					s.setData(obj.index + 1);
+				}
 			}});
 		}else{
-			LTweenLite.to(layer,0.3,{alpha:1,scaleY:1,ease:LEasing.Elastic.easeOut})
-			.to(featLabel,0.5,{feat:feat,onUpdate:function(e){
+			LTweenLite.to(layer,0.3,{alpha:1,scaleY:1,ease:LEasing.Elastic.easeOut});
+			LTweenLite.to(featLabel,0.5,{delay:0.3,feat:feat,onUpdate:function(e){
 				e.target.text = e.target.feat >>> 0;
 			},onComplete:function(e){
 				e.target.text = e.target.feat >>> 0;
 				var obj = e.target.parent;
-				var s = obj.parent.parent.parent;
-				s.setData(obj.index + 1);
+				var s = obj.getParentByConstructor(BattleExpChangeView);
+				if(s){
+					s.setData(obj.index + 1);
+				}
 			}});
 		}
 	}

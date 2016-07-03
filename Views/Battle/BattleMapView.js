@@ -15,7 +15,7 @@ BattleMapView.prototype.init = function(){
 	self.map = new LBitmap(self.bitmapData);
 	self.addChild(self.map);
 	
-	self.datas = [self.bitmapData.clone(), self.bitmapData.clone()];
+	self.datas = [BattleModel.bitmapDatas[1], BattleModel.bitmapDatas[2]];
 	self.dataIndex = 0;
 	self.addEventListener(LEvent.ENTER_FRAME, self.onframe);
 };

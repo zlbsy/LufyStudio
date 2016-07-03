@@ -590,17 +590,18 @@ function hireRun2(characterModel, hireCharacter, area, isAccess){
 	var parentConfig = charactersParentConfig.find(function(child){
 		return child.id == hireCharacter.id();
 	});
-	var parentIsOk = false;
+	var parentIsOk = false, parentLoyalty;
 	if(parentConfig){
 		var parentCharacter = CharacterModel.getChara(parentConfig.parent);
 		if(parentCharacter.seigniorId() == characterModel.seigniorId()){
 			//关联君主在位
+			parentLoyalty = parentCharacter.loyalty();
 			parentIsOk = true;
 		}
 	}
+	var compatibility;
+	var percentage = (JobCoefficient.NORMAL + characterModel.luck()) * 0.5 / JobCoefficient.NORMAL;
 	if(!parentIsOk){
-		var compatibility;
-		var percentage = (JobCoefficient.NORMAL + characterModel.luck()) * 0.5 / JobCoefficient.NORMAL;
 		var seigniorId = characterModel.seigniorId();
 		var seigniorChara = CharacterModel.getChara(seigniorId);
 		compatibility = Math.abs(seigniorChara.compatibility() - hireCharacter.compatibility());
@@ -632,6 +633,9 @@ function hireRun2(characterModel, hireCharacter, area, isAccess){
 	hireCharacter.cityId(characterModel.cityId());
 	hireCharacter.job(Job.END);
 	var loyalty = 50 + 50 * percentage >> 0;
+	if(parentIsOk){
+		loyalty = parentLoyalty;
+	}
 	hireCharacter.loyalty(loyalty > 100 ? 100 : loyalty);
 	characterModel.featPlus(JobFeatCoefficient.NORMAL);
 	if(characterModel.seigniorId() == LMvc.selectSeignorId && !area.isAppoint()){
@@ -823,13 +827,23 @@ function charactersNaturalDeath(area){
 		}
 	}
 	if(seigniorCharaDie){
-		monarchChange(seigniorCharaId);
-		var obj = {title:Language.get("confirm"),
-		message:String.format(Language.get("monarch_die"), seigniorName, seignior.character().name()),
-		height:200,okEvent:function(event){
-			event.currentTarget.parent.remove();
-			SeigniorExecute.run();
-		}};
+		var newSeigniorId = monarchChange(seigniorCharaId);
+		var obj;
+		if(newSeigniorId > 0){
+			obj = {title:Language.get("confirm"),
+			message:String.format(Language.get("monarch_die"), seigniorName, seignior.character().name()),
+			height:200,okEvent:function(event){
+				event.currentTarget.parent.remove();
+				SeigniorExecute.run();
+			}};
+		}else{
+			obj = {title:Language.get("confirm"),
+			message:String.format(Language.get("monarch_die_over"), seigniorName),
+			height:200,okEvent:function(event){
+				event.currentTarget.parent.remove();
+				LMvc.MapController.checkSeigniorFail(seigniorCharaId);
+			}};
+		}
 		var windowLayer = ConfirmWindow(obj);
 		LMvc.layer.addChild(windowLayer);
 	}else if(prefectureDie){
@@ -897,12 +911,11 @@ function captivesChangeLoyalty(area){
 		var parentConfig = charactersParentConfig.find(function(child){
 			return child.id == chara.id();
 		});
-		if(parentConfig && chara.seigniorId() == parentConfig.parent){
-			return;
-			/*var parentCharacter = CharacterModel.getChara(parentConfig.parent);
-			if(parentCharacter.seigniorId() == parentCharacter.id()){
-				return;
-			}*/
+		if(parentConfig){
+			var parentCharacter = CharacterModel.getChara(chara.seigniorId());
+			if(chara.seigniorId() == parentConfig.parent && parentCharacter && parentCharacter.seigniorId() > 0){
+				continue;
+			}
 		}
 		var personalLoyalty = chara.personalLoyalty();
 		var minus = 16 - personalLoyalty;

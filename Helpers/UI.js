@@ -1,6 +1,7 @@
 function getBitmapData(displayObject){
 	var bitmapData = new LBitmapData(null,0,0,displayObject.getWidth(),displayObject.getHeight(),LBitmapData.DATA_CANVAS);
 	bitmapData.draw(displayObject);
+	displayObject.die();
 	return bitmapData;
 }
 function getBitmap(displayObject){

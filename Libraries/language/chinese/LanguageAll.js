@@ -174,7 +174,7 @@ Language.data = {
 	"belong_self_action":"我军行动",
 	"belong_enemy_action":"敌军行动",
 	"belong_friend_action":"友军行动",
-	
+	"persuade_target":"劝降对象",
 	"big_map":"大地图",
 	"create":"作成",
 	"can_select_generals":"可选武将",
@@ -286,6 +286,7 @@ Language.data = {
 	"change_face":"头像变更",
 	"change_monarch":"选择君主",
 	"monarch_die":"{0}病逝了，{1}成了新君主！",
+	"monarch_die_over":"{0}病逝了！",
 	"gender_male":"男",
 	"gender_female":"女",
 	"terrain":"地形",

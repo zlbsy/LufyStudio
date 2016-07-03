@@ -19,8 +19,8 @@ SingleCombatView.prototype.init=function(){
 	var vsBitmap = new LBitmap(new LBitmapData(LMvc.datalist["battle-vs"]));
 	vsBitmap.x = (LGlobal.width - vsBitmap.getWidth()) * 0.5;
 	self.backLayer.addChild(vsBitmap);
-	
-	self.addChildAt(getBitmap(self.backLayer),0);
+	self.backgroundBitmap = getBitmap(self.backLayer);
+	self.addChildAt(self.backgroundBitmap,0);
 	
 	self.ctrlLayer = new LSprite();
 	self.ctrlLayer.y = LGlobal.height - 100;
@@ -247,4 +247,13 @@ SingleCombatView.prototype.keepUp = function(){
 };
 SingleCombatView.prototype.restart = function(){
 	LMvc.SingleCombatArenaController.view.restart();
+};
+SingleCombatView.prototype.die = function(){
+	var self = this;
+	var _canvas = self.backgroundBitmap.bitmapData._canvas;
+	if(LDisplayObject._canvasList.indexOf(_canvas) < 0){
+		LDisplayObject._canvasList.push(_canvas);
+	}
+	self.backgroundBitmap = null;
+	self.callParent("die", arguments);
 };

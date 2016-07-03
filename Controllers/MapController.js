@@ -180,7 +180,7 @@ MapController.prototype.checkSeigniorFail=function(seigniorId){
 		return;
 	}
 	var seignior = SeigniorModel.getSeignior(seigniorId);
-	if(seignior.areas().length > 0){
+	if(seignior.areas().length > 0 && seignior.generalsCount() > 0){
 		self.checkSeigniorChange(seigniorId);
 		return;
 	}

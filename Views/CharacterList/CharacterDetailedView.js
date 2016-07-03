@@ -291,6 +291,8 @@ CharacterDetailedView.prototype.updateChildFromList=function(characterId){
 	});
 	var characterModel = CharacterModel.getChara(characterId);
 	item.set(characterModel);
+	item.cacheAsBitmap(false);
+	item.updateView();
 	self.closeCharacterDetailed();
 };
 CharacterDetailedView.prototype.ctrlLayerInit=function(){

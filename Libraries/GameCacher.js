@@ -21,8 +21,10 @@ GameCacher.getScaleBitmapData = function(name, scaleX, scaleY){
 		var matrix = new LMatrix();
 		matrix.scale(scaleX, scaleY);
 		matrix.translate(scaleX == -1 ? baseData.width : 0, scaleY == -1 ? baseData.height:0);
-		bitmapData.draw(new LBitmap(baseData), matrix);
+		var bitmap = new LBitmap(baseData);
+		bitmapData.draw(bitmap, matrix);
 		GameCacher._scaleBitmapDatas[key] = bitmapData;
+		bitmap.die();
 	}
 	return GameCacher._scaleBitmapDatas[key];
 };
@@ -72,6 +74,7 @@ GameCacher.getCircleBitmapData = function(color, radius){
 		shape.graphics.drawArc(0, "#000000", [radius, radius, radius, 0, 2*Math.PI],true,String.format("rgba({0},0.7)",color));
 		var whiteData = new LBitmapData(null, 0, 0, radius * 2, radius * 2, LBitmapData.DATA_CANVAS);
 		whiteData.draw(shape);
+		shape.die();
 		GameCacher._colorBitmapDatas[key] = whiteData;
 	}
 	return GameCacher._colorBitmapDatas[key];

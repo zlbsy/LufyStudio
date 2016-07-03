@@ -253,7 +253,7 @@ function monarchChange(seigniorId, characterId){
 	if(!characterId){
 		characterId = getMonarchChangeId(seignior);
 		if(!characterId){
-			return;
+			return 0;
 		}
 	}
 	var captives = SeigniorModel.getCharactersIsCaptives(seigniorId);
@@ -280,6 +280,7 @@ function monarchChange(seigniorId, characterId){
 			city.prefecture(charas[0].id());
 		}
 	}
+	return characterId;
 }
 //物品转换忠诚度
 function itemExchangeLoyalty(item){

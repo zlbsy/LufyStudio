@@ -624,6 +624,7 @@ SeigniorExecute.prototype.maskHide=function(){
 	self.messageCitys = [];
 	self.backLayer.remove();
 	self.backLayer = null;
+	MessageView._Instance.die();
 	MessageView._Instance = null;
 };
 

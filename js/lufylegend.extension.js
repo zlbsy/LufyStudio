@@ -38,12 +38,27 @@ LListView.prototype.deleteChildView = function(child) {
 	}
 	self.resizeScrollBar();
 };
+LShape.prototype.die = function(){
+	var s = this;
+	s.graphics.clear();
+	s.callParent("die",arguments);
+};
 LListView.prototype.die = function(){
 	var self = this;
 	for(var i=0,l=self._ll_items.length;i<l;i++){
 		self._ll_items[i].die();
 	}
 	self._ll_items = [];
+	self.callParent("die",arguments);
+};
+LListChildView.prototype.die = function(){
+	var self = this;
+	self.ll_baseBitmap = null;
+	self.ll_baseRectangle = null;
+	self.ll_basePoint = null;
+	self._ll_cacheAsBitmap = null;
+	self._canvas = null;
+	self._context = null;
 	self.callParent("die",arguments);
 };
 LView.prototype.addController = function(controller){
@@ -101,33 +116,96 @@ LButton.prototype.ll_button_mode = function(){
 
 /*不需要加到引擎中，只在本游戏中使用*/
 LTextField._labels = [];
+LTextField._labelsCreate=0;
 LTextField.getLabel = function(){
 	if(LTextField._labels.length > 0){
 		var label = LTextField._labels.shift();
+		label.text = "";
+		label.htmlText = "";
+		label.filters = null;
+		label.visible = true;
+		label.alpha = 1;
+		label.x = 0;
+		label.y = 0;
+		label.rotate = 0;
+		label.texttype = null;
+		label.styleSheet = "";
+		label.lineWidth = 1;
+		label.weight = "normal";
+		label.stroke = false;
+		label.width = 150;
+		label.wordWrap = false;
+		label.multiline = false;
+		label.numLines = 1;
+		label.windRunning = false;
+		label._ll_wind_text = "";
+		label.cacheAsBitmap(false);
+		label.mask = null;
+		label.parent = null;
+		label.transform.matrix = null;
 		return label;
 	}
+	//console.error("_labelsCreate",++LTextField._labelsCreate);
 	return new LTextField();
 };
 LTextField.prototype.die = function(){
 	var self = this;
-	self.text = "";
-	self.htmlText = "";
-	self.filters = null;
-	self.visible = true;
-	self.x = 0;
-	self.y = 0;
-	self.texttype = null;
-	self.styleSheet = "";
-	self.lineWidth = 1;
-	self.weight = "normal";
-	self.stroke = false;
-	self.width = 150;
-	self.wordWrap = false;
-	self.multiline = false;
-	self.numLines = 1;
-	self.cacheAsBitmap(false);
-	LTextField._labels.push(self);
+	if(!LTextField._labels.indexOf(self)){
+		LTextField._labels.push(self);
+	}
 	LMouseEventContainer.removeInputBox(self);
+	self.callParent("die", arguments);
+};
+LDisplayObject._canvasList = [];
+LDisplayObject._canvasCreateCount=0;
+LDisplayObject.prototype._createCanvas = function(){
+	var s = this;
+	if (s._canvas) {
+		return;
+	}
+	if(LDisplayObject._canvasList.length > 0){
+		var _canvas = LDisplayObject._canvasList.shift();
+		s._canvas = _canvas;
+	}else{
+		//console.error("_canvasCreateCount", ++LDisplayObject._canvasCreateCount, s);
+		s._canvas = document.createElement("canvas");
+	}
+	s._context = s._canvas.getContext("2d");
+};
+LListScrollBar.prototype.die = function(){
+	var self = this;
+	self.callParent("die", arguments);
+};
+LDisplayObject.pushCacheCanvas = function(_canvas){
+	if(!LDisplayObject._canvasList.indexOf(_canvas)){
+		LDisplayObject._canvasList.push(_canvas);
+	}
+};
+LDisplayObject.prototype.die = function(){
+	var s = this;
+	if(!s._canvas){
+		return;
+	}
+	LDisplayObject.pushCacheCanvas(s._canvas);
+	s._canvas = null;
+	s._context = null;
+};
+LDisplayObject.prototype.cacheAsBitmap = function(value){
+	var s = this;
+	if(!value){
+		LDisplayObject.pushCacheCanvas(s._canvas);
+		s._canvas = null;
+		s._context = null;
+		s._ll_cacheAsBitmap = null;
+		return;
+	}
+	var sx = s.x - s.startX(true), sy = s.y - s.startY(true);
+	var data = s.getDataCanvas(sx, sy, s.getWidth(true), s.getHeight(true));
+	var b = new LBitmapData(data, 0, 0, null, null, LBitmapData.DATA_CANVAS);
+	var cache = new LBitmap(b);
+	cache.x = -sx;
+	cache.y = -sy;
+	s._ll_cacheAsBitmap = cache;
 };
 LButton.prototype.setCursorEnabled = function(event) {
 	var self = this;

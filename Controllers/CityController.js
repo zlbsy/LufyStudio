@@ -54,6 +54,7 @@ CityController.prototype.init=function(initFunc){
 	self.dispatchEvent(LController.NOTIFY_ALL);
 	if(self.initFunc){
 		self.initFunc();
+		self.initFunc = null;
 	}else if(initFunc){
 		initFunc();
 	}
@@ -94,6 +95,7 @@ CityController.prototype.toSelectMap=function(eventType, params){
 };
 CityController.prototype.gotoBattle=function(){
 	var self = this;
+	LMvc.CityController.view.clearContentLayer();
 	LMvc.CityController.view.visible = false;
 	LPlugin.playSE("Se_goto_battle", LPlugin.gameSetting.SE);
 	LMvc.keepLoading(true);

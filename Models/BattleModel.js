@@ -102,13 +102,62 @@ BattleModel.prototype.createMap = function(callback){
 	var w = maps[0].length;
 	self.map.width = BattleCharacterSize.width * w;
 	self.map.height = BattleCharacterSize.height * h;
-	self.mapBitmapData = new LBitmapData(null,0,0,self.map.width,self.map.height, LBitmapData.DATA_CANVAS);
+	if(!BattleModel.bitmapDatas){
+		BattleModel.bitmapDatas = [
+			new LBitmapData(null,0,0,self.map.width,self.map.height, LBitmapData.DATA_CANVAS)
+			,new LBitmapData(null,0,0,self.map.width,self.map.height, LBitmapData.DATA_CANVAS)
+			,new LBitmapData(null,0,0,self.map.width,self.map.height, LBitmapData.DATA_CANVAS)
+		];
+	}
+	for(var i=0;i<3;i++){
+		var data = BattleModel.bitmapDatas[i];
+		data.image.width = self.map.width;
+		data.image.height = self.map.height;
+	}
+	self.mapBitmapData = BattleModel.bitmapDatas[0];
+	self.createMapTile(0, callback);
+	/*
 	for(var i=0;i<h;i++){
 		for(var j=0;j<w;j++){
 			var data = maps[i][j];
 			var bitmapData = getMapTile(data);
 			self.mapBitmapData.copyPixels(bitmapData,new LRectangle(0, 0, BattleCharacterSize.width, BattleCharacterSize.height),new LPoint(j*BattleCharacterSize.width,i*BattleCharacterSize.height, BattleCharacterSize.width, BattleCharacterSize.height));
 		}
+	}*/
+};
+BattleModel.prototype.createMapTile = function(index, callback){
+	var self = this;
+	var maps = self.map.data;
+	var h = maps.length;
+	var w = maps[0].length;
+	var startI = index / w >>> 0;
+	var startJ = index % w;
+	var endIndex = index + 10;
+	for(var i=startI;i<h;i++){
+		for(var j=startJ;j<w;j++){
+			var data = maps[i][j];
+			var bitmapData = getMapTile(data);
+			var rect = new LRectangle(0, 0, BattleCharacterSize.width, BattleCharacterSize.height);
+			var point = new LPoint(j*BattleCharacterSize.width,i*BattleCharacterSize.height, BattleCharacterSize.width, BattleCharacterSize.height);
+			for(var dataIndex=0;dataIndex<3;dataIndex++){
+				var data = BattleModel.bitmapDatas[dataIndex];
+				data.copyPixels(bitmapData,rect,point);
+			}
+			//self.mapBitmapData.copyPixels(bitmapData,rect,point);
+			if(++index > endIndex){
+				break;
+			}
+		}
+		startJ = 0;
+		if(index > endIndex){
+			break;
+		}
 	}
-	callback.apply(self.controller,[]);
+	if(endIndex < h * w){
+		self.controller.nextFrameExecute(function(){
+			self.createMapTile(index, callback);
+		});
+	}else{
+		callback.apply(self.controller,[]);
+	}
 };

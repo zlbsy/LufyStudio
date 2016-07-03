@@ -329,6 +329,8 @@ LogoView.prototype.showChapterRun=function(button){
 };
 LogoView.prototype.showNews=function(newsURL){
 	var self = this;
+	var newsBackMask = getTranslucentMask();
+	self.addChild(newsBackMask);
 	var w = 400, h = 400, x, y;
 	x = (LGlobal.width - w) * 0.5;
 	y = (LGlobal.height - h) * 0.5;
@@ -346,6 +348,7 @@ LogoView.prototype.showNews=function(newsURL){
 	self.addChild(closeButton);
 	closeButton.addEventListener(LMouseEvent.MOUSE_UP,function(event){
 		event.currentTarget.remove();
+		newsBackMask.remove();
 		newsBackground.remove();
 		webview.hide();
 	});

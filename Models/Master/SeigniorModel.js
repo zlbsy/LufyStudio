@@ -21,9 +21,32 @@ function SeigniorModel(controller, data) {
 SeigniorModel.list = [];
 SeigniorModel.setSeignior=function(list){
 	var self = this;
+	for(var i=0, l= SeigniorModel.list.length;i<l;i++){
+		var flag = SeigniorModel.list[i]._flag;
+		if(flag){
+			flag.die();
+		}
+	}
 	SeigniorModel.list = [];
 	for(var i=0,l=list.length;i<l;i++){
 		if(!list[i].chara_id){
+			continue;
+		}
+		var areas = list[i].areas;
+		if(areas.length == 0){
+			list[i].chara_id = 0;
+			continue;
+		}
+		var generalsCount = 0;
+		for(var j=0, jl=areas.length;j<jl;j++){
+			var generalLength = areas[j].generals.length;
+			if(generalLength == 0){
+				areas[j].prefecture = 0;
+			}
+			generalsCount += generalLength;
+		}
+		if(generalsCount == 0){
+			list[i].chara_id = 0;
 			continue;
 		}
 		var seignior = new SeigniorModel(null,list[i]);
@@ -60,8 +83,8 @@ SeigniorModel.removeSeignior = function(seigniorId){
 		if(seignior.chara_id() != seigniorId){
 			continue;
 		}
-		if(self.lastCityId){
-			var city = AreaModel.getArea(self.lastCityId);
+		if(seignior.lastCityId){
+			var city = AreaModel.getArea(seignior.lastCityId);
 			if(city && city.seigniorCharaId() > 0){
 				var items = seignior.items();
 				for(var j=0;j<items.length;j++){
@@ -71,8 +94,18 @@ SeigniorModel.removeSeignior = function(seigniorId){
 					}
 				}
 			}
+		}else{
+			var areas = seignior.areas().concat();
+			for(var j=0,jl = areas.length;j<jl;j++){
+				areas[j].prefecture(0);
+				areas[j].seigniorCharaId(0);
+				LMvc.MapController.view.resetAreaIcon(areas[j].id());
+			}
 		}
 		SeigniorModel.list.splice(i, 1);
+		if(!seignior.lastCityId){
+			
+		}
 		break;
 	}
 };
@@ -126,6 +159,9 @@ SeigniorModel.getSaveData=function(){
 SeigniorModel.prototype.chara_id = function(value){
 	if(value){
 		CharacterModel.getChara(value).city().prefecture(value);
+		if(this._flag){
+			this._flag.die();
+		}
 		this._flag = null;
 	}
 	return this._dataValue("chara_id", value);
@@ -173,6 +209,19 @@ SeigniorModel.getColorCloth = function(color){
 		SeigniorModel.cloths[color] = bitmapData;
 	}
 	return SeigniorModel.cloths[color];
+};
+SeigniorModel.getWhiteFlag = function(){
+	if(!SeigniorModel._whiteFlag){
+		var bitmapData = SeigniorModel.getColorCloth("255,255,255");
+		var flagCloth = new LBitmap(bitmapData);
+		var flagStick = new LBitmap(new LBitmapData(LMvc.datalist["flag-stick"]));
+		var flag = new LSprite();
+		flag.addChild(flagCloth);
+		flag.addChild(flagStick);
+		flag.cacheAsBitmap(true);
+		SeigniorModel._whiteFlag = flag;
+	}
+	return SeigniorModel._whiteFlag._ll_cacheAsBitmap.bitmapData;
 };
 SeigniorModel.prototype.flag = function(){
 	var self = this;
@@ -231,7 +280,6 @@ SeigniorModel.prototype.addSpyCity = function(cityId){
 };
 SeigniorModel.prototype.checkSpyCitys = function(){
 	var self = this;
-	//console.log("self.data.spyAreas.length="+self.data.spyAreas.length);
 	for(var i = self.data.spyAreas.length - 1;i>=0;i--){
 		var city = self.data.spyAreas[i];
 		city.month -= 1;
@@ -239,7 +287,6 @@ SeigniorModel.prototype.checkSpyCitys = function(){
 			self.data.spyAreas.splice(i, 1);
 		}
 	}
-	//console.log("checkSpyCitys="+self.data.spyAreas.length);
 };
 SeigniorModel.prototype.isSpyCity = function(id){
 	return this.data.spyAreas.findIndex(function(child){

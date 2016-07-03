@@ -128,9 +128,20 @@ CharacterDetailedTabStatusView.prototype.clickRecruit=function(event){
 	var cityData = self.controller.getValue("cityData");
 	characterModel.job(Job.END);
 	var script;
-	if(calculateHitrateSurrender(LMvc.selectSeignorId, characterModel)){
+	var parentConfig = charactersParentConfig.find(function(child){
+		return child.id == characterModel.id();
+	}), parentCharacter;
+	if(parentConfig){
+		parentCharacter = CharacterModel.getChara(parentConfig.parent);
+	}
+	if((parentConfig && parentCharacter.seigniorId() == cityData.seigniorCharaId()) 
+	|| calculateHitrateSurrender(LMvc.selectSeignorId, characterModel)){
 		var cityData = self.controller.getValue("cityData");
-		calculateLoyalty(characterModel, LMvc.selectSeignorId);
+		if(parentConfig && parentCharacter.seigniorId() == cityData.seigniorCharaId()){
+			characterModel.loyalty(parentCharacter.loyalty());
+		}else{
+			calculateLoyalty(characterModel, LMvc.selectSeignorId);
+		}
 		characterModel.seigniorId(LMvc.selectSeignorId);
 		cityData.removeCaptives(characterModel.id());
 		cityData.addGenerals(characterModel);
@@ -170,7 +181,7 @@ CharacterDetailedTabStatusView.prototype.clickRelease=function(event){
 	cityData.removeCaptives(characterModel.id());
 	var targetSeignior = characterModel.seignior();
 	
-	if(targetSeignior){
+	if(targetSeignior && targetSeignior.areas().length > 0){
 		var areas = targetSeignior.areas();
 		var city = areas[areas.length * Math.fakeRandom() >>> 0];
 		characterModel.moveTo(city.id());
@@ -178,7 +189,10 @@ CharacterDetailedTabStatusView.prototype.clickRelease=function(event){
 		detailedView.deleteChildFromList(characterModel.id());
 	}else{
 		characterModel.seignior(0);
+		cityData.addOutOfOfficeCharacter(characterModel);
 	}
+	var detailedView = self.getParentByConstructor(CharacterDetailedView);
+	detailedView.updateChildFromList(characterModel.id());
 	//武将{0}被释放了!
 	var obj = {title:Language.get("confirm"),message:String.format(Language.get("dialog_release_message"), characterModel.name()),height:200,okEvent:null};
 	var windowLayer = ConfirmWindow(obj);
