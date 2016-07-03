@@ -150,6 +150,7 @@ SeigniorExecute.run=function(){
 	self.childsCheckedCitys = [];
 	self.captivesChecked = [];
 	SeigniorExecute.running = false;
+	SeigniorExecute.clearCheck = false;
 	/*var buttonClose = self.backLayer.childList.find(function(child){
 		return child.constructor.name == "LButton";
 	});*/

@@ -108,6 +108,11 @@ CharacterModel.prototype.datas=function(){
 		reputation:self.data.reputation,
 		equipments:self.equipmentsData()
 	};
+	var keys = ["command","force","intelligence","agility","luck"];
+	for(var i=0,l=keys.length;i<l;i++){
+		var key = keys[i];
+		saveData[key+"_exp"] = self.data[key+"_exp"];
+	}
 	if(self.data.currentSoldierId){
 		//当前兵种
 		saveData.currentSoldierId = self.data.currentSoldierId;
@@ -130,6 +135,11 @@ CharacterModel.prototype.setDatas=function(charaData){
 	self.loyalty(charaData.loyalty);
 	self.data.isPrized = charaData.isPrized;
 	self.feat(charaData.feat);
+	var keys = ["command","force","intelligence","agility","luck"];
+	for(var i=0,l=keys.length;i<l;i++){
+		var key = keys[i];
+		self.data[key+"_exp"] = charaData[key+"_exp"];
+	}
 	if(charaData.job){
 		self.setJobData(charaData.job);
 	}
@@ -228,12 +238,48 @@ CharacterModel.prototype.getReputationPlus = function(key) {
 	}
 	return value;
 };
+CharacterModel.prototype.plusPropertiesExp = function(key) {
+	var self = this;
+	var expKey = key +"_exp";
+	var exp = (typeof self.data[expKey] == UNDEFINED ? 0 : self.data[expKey]);
+	var plusExp = 1;
+	if(exp < 200){
+		plusExp = 12 - (Math.fakeRandom() * 4) >>> 0;
+	}else if(exp < 400){
+		plusExp = 10 - (Math.fakeRandom() * 4) >>> 0;
+	}else{
+		plusExp = 8 - (Math.fakeRandom() * 4) >>> 0;
+	}
+	self.propertiesExp(key, plusExp);
+};
+CharacterModel.prototype.propertiesExp = function(key, plusValue) {
+	var self = this;
+	var expKey = key +"_exp";
+	var exp = (typeof self.data[expKey] == UNDEFINED ? 0 : self.data[expKey]);
+	if(typeof plusValue == UNDEFINED){
+		return exp;
+	}
+	exp += plusValue;
+	self.data[expKey] = exp;
+	var plus = (exp / 100 >>> 0);
+	if(self.data[key] + plus >= 100){
+		self.data[expKey] = (100 - self.data[key]) * 100;
+	}
+};
+CharacterModel.prototype.getFullPropertiesValue = function(key) {
+	var self = this;
+	var value = self.data[key];
+	var expKey = key +"_exp";
+	var exp = (typeof self.data[expKey] == UNDEFINED ? 0 : self.data[expKey]);
+	var expValue = exp / 100 >>> 0;
+	return (value + expValue > 100 ? 100 : value + expValue);
+};
 CharacterModel.prototype.basicPropertiesCalculation = function() {
 	var self = this;
 	var keys = ["command","force","intelligence","agility","luck"];
 	for(var i=0,l=keys.length;i<l;i++){
 		var key = keys[i];
-		self.data["_"+key] = self.data[key];
+		self.data["_"+key] = self.getFullPropertiesValue(key);
 		self.data["_"+key] += self.getEquipmentPlus(key);
 		self.data["_"+key] += self.getReputationPlus(key);
 	}
@@ -830,6 +876,21 @@ CharacterModel.prototype.getBasicProperties = function(key) {
 		self.calculation(false);
 	}
 	return self.data["_"+key];
+};
+CharacterModel.prototype.forceFull = function() {
+	return String.format("{0} ({1}/100)", this.force(), this.propertiesExp("force") % 100);
+};
+CharacterModel.prototype.commandFull = function() {
+	return String.format("{0} ({1}/100)", this.command(), this.propertiesExp("command") % 100);
+};
+CharacterModel.prototype.intelligenceFull = function() {
+	return String.format("{0} ({1}/100)", this.intelligence(), this.propertiesExp("intelligence") % 100);
+};
+CharacterModel.prototype.agilityFull = function() {
+	return String.format("{0} ({1}/100)", this.agility(), this.propertiesExp("agility") % 100);
+};
+CharacterModel.prototype.luckFull = function() {
+	return String.format("{0} ({1}/100)", this.luck(), this.propertiesExp("luck") % 100);
 };
 CharacterModel.prototype.command = function() {
 	return this.getBasicProperties("command");

@@ -27,11 +27,11 @@ CharacterDetailedTabPropertiesView.prototype.showLeft=function(characterModel){
 	characterModel.seigniorLevel(),
 	characterModel.level(),
 	characterModel.currentSoldiers().name(),
-	characterModel.force(),
-	characterModel.command(),
-	characterModel.intelligence(),
-	characterModel.agility(),
-	characterModel.luck(),
+	characterModel.forceFull(),
+	characterModel.commandFull(),
+	characterModel.intelligenceFull(),
+	characterModel.agilityFull(),
+	characterModel.luckFull(),
 	characterModel.currentSoldiers().movePower()
 	];
 	for(var i = 0;i<self.leftLayer.numChildren;i++){
@@ -120,7 +120,7 @@ CharacterDetailedTabPropertiesView.prototype.setLeft=function(){
 };
 CharacterDetailedTabPropertiesView.prototype.setRight=function(){
 	var self = this;
-	var txtHeight = 25, startRightY = -txtHeight + 10, startX = 180;
+	var txtHeight = 25, startRightY = -txtHeight + 10, startX = 220;
 	var labels = self.rightLabels;
 	var datasRight = [
 	["2(1)",100,1000,"red_bar", "icon_hert"],
@@ -139,7 +139,7 @@ CharacterDetailedTabPropertiesView.prototype.setRight=function(){
 		startRightY += txtHeight;
 		var obj = datasRight[i];
 		var bar = new StatusBarView(self.controller);
-		bar.set({maxValue:obj[2], currentValue:obj[0], normalValue:obj[1], name:Language.get(labels[i]), icon:obj[4], frontBar:obj[3], barSize:200});
+		bar.set({maxValue:obj[2], currentValue:obj[0], normalValue:obj[1], name:Language.get(labels[i]), icon:obj[4], frontBar:obj[3], barSize:180});
 		bar.y = startRightY;
 		self.rightLayer.addChild(bar);
 	}

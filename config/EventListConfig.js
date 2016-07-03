@@ -572,7 +572,7 @@ var EventListConfig = [
 		citys:[
 		],
 		clear:1,
-		tribe:{from:1,to:2}
+		tribe:{from:0,to:0}
 	},
 	script:"Data/Event/{0}/yzmz.txt",
 	result:[{type:"gameClear"}]
@@ -587,7 +587,7 @@ var EventListConfig = [
 		citys:[
 		],
 		clear:1,
-		tribe:{from:0,to:0},
+		tribe:{from:0,to:5},
 		police:{from:0,to:89}
 	},
 	script:"Data/Event/{0}/hj.txt",
@@ -603,7 +603,7 @@ var EventListConfig = [
 		citys:[
 		],
 		clear:1,
-		tribe:{from:0,to:0},
+		tribe:{from:0,to:5},
 		police:{from:90,to:100}
 	},
 	script:"Data/Event/{0}/xj.txt",

@@ -11,8 +11,8 @@ function checkEventList() {
 		}
 		
 	}
-	for(var i = 0,l = EventListConfig.length;i<l;i++){
-		var currentEvent = EventListConfig[i];
+	for(var ii = 0,ll = EventListConfig.length;ii<ll;ii++){
+		var currentEvent = EventListConfig[ii];
 		if(eventListFinished.findIndex(function(child){
 			return child == currentEvent.id;
 			}) >= 0){
@@ -29,17 +29,25 @@ function checkEventList() {
 				var seignior = SeigniorModel.getSeignior(LMvc.selectSeignorId);
 				var areas = seignior.areas();
 				var policeOk = true;
+				var averagePolice = 0;
 				for(var i = 0, l = areas.length;i<l;i++){
 					var police = areas[i].police();
-					if(currentEvent.condition.police.from > police ||  currentEvent.condition.police.to < police){
-						policeOk = false;
-						break;
-					}
+					averagePolice += police;
+					//if(currentEvent.condition.police.from >= police ||  currentEvent.condition.police.to <= police){
+					//	policeOk = false;
+					//	break;
+					//}
+				}
+				averagePolice = averagePolice/areas.length;
+				if(currentEvent.condition.police.from > averagePolice ||  currentEvent.condition.police.to < averagePolice){
+					policeOk = false;
 				}
 				if(!policeOk){
 					continue;
 				}
 			}
+		}else{
+			continue;
 		}
 		if(currentEvent.condition.from && currentEvent.condition.to){
 			var month = LMvc.chapterData.month;
@@ -191,19 +199,44 @@ function checkEventList() {
 }
 function dispatchEventList(currentEvent) {
 	var script = "";
-	var params;
+	var params = [];
+	params.push({n:"id0",v:LMvc.selectSeignorId});
+	params.push({n:"name0",v:SeigniorModel.getSeignior(LMvc.selectSeignorId).character().name()});
 	if(currentEvent.feat_characters && SeigniorExecute.running){
-		params = [];
-		params.push({n:"id0",v:LMvc.selectSeignorId});
 		for(var i=0, l=currentEvent.condition.feat_generals.count;i<l;i++){
 			var character = currentEvent.feat_characters[i];
 			params.push({n:"id"+(i + 1),v:character.id()});
 			params.push({n:"name"+(i + 1),v:character.name()});
 			currentEvent.result[0].generals.push(character.id());
 		}
-		LPlugin.SetData("event_params_"+currentEvent.id, params);
+	}else if(currentEvent.condition.clear){
+		var charas, index;
+		//小人
+		charas = [618,619], index = 0;
+		for(var i=0;i<charas.length;i++){
+			if(charas.length == LMvc.selectSeignorId){
+				continue;
+			}
+			params.push({n:"xiaoren"+(index++),v:charas[i]});
+		}
+		//美女
+		charas = [380,524, 548], index = 0;
+		for(var i=0;i<charas.length;i++){
+			if(charas.length == LMvc.selectSeignorId){
+				continue;
+			}
+			params.push({n:"meinv"+(index++),v:charas[i]});
+		}
+		//四方诸侯
+		charas = [2,3,5,10,39], index = 0;
+		for(var i=0;i<charas.length;i++){
+			if(charas.length == LMvc.selectSeignorId){
+				continue;
+			}
+			params.push({n:"zhuhou"+(index++),v:charas[i]});
+		}
 	}
-	params = LPlugin.GetData("event_params_"+currentEvent.id);
+	LPlugin.SetData("event_params_"+currentEvent.id, params);
 	if(params && params.length){
 		for(var i=0;i<params.length;i++){
 			var param = params[i];

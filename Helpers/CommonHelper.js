@@ -89,6 +89,9 @@ function generalSurrender(characterModel, city){
  * 斩首概率
  */
 function calculateHitrateBehead(leaderId, charaModel){
+	if(!beheadIsValid()){
+		return false;
+	}
 	if(Math.fakeRandom() > 0.1){
 		return false;
 	}
@@ -350,4 +353,16 @@ function SeigniorLevelUpdate(){
 	if(LMvc.chapterData.level < levelAverage){
 		LMvc.chapterData.level = levelAverage;
 	}
+}
+function deathIsValid(){
+	if(typeof LMvc.chapterData.validDeath == UNDEFINED){
+		return 1;
+	}
+	return LMvc.chapterData.validDeath;
+}
+function beheadIsValid(){
+	if(typeof LMvc.chapterData.validBehead == UNDEFINED){
+		return 1;
+	}
+	return LMvc.chapterData.validBehead;
 }

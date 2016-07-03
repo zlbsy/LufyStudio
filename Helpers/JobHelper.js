@@ -85,6 +85,8 @@ function trainingRun(characterModel, soldierId){
 	var feat = JobFeatCoefficient.NORMAL * proficiencyPlus / JobFeatCoefficient.TRAINING;
 	characterModel.featPlus(feat);
 	characterModel.job(Job.IDLE);
+	//统率经验
+	characterModel.plusPropertiesExp("command");
 }
 function levelUpCityRun(characterModel){
 	var city = characterModel.city();
@@ -359,6 +361,8 @@ function repairRun(characterModel){
 	var feat = JobFeatCoefficient.NORMAL * value / JobFeatCoefficient.REPAIR;
 	//console.log(characterModel.name() + " 修补:",characterModel.force() + characterModel.command(), value, feat);
 	characterModel.featPlus(feat);
+	//武力经验
+	characterModel.plusPropertiesExp("force");
 }
 function agricultureRun(characterModel){
 	//农业：智力+武力
@@ -369,6 +373,8 @@ function agricultureRun(characterModel){
 	var feat = JobFeatCoefficient.NORMAL * value / JobFeatCoefficient.AGRICULTURE;
 	//console.log(characterModel.name() + " 农业:",characterModel.intelligence() + characterModel.force(), value, feat);
 	characterModel.featPlus(feat);
+	//敏捷经验
+	characterModel.plusPropertiesExp("agility");
 }
 function businessRun(characterModel){
 	//商业：智力+敏捷
@@ -379,6 +385,8 @@ function businessRun(characterModel){
 	var feat = JobFeatCoefficient.NORMAL * value / JobFeatCoefficient.BUSINESS;
 	//console.log(characterModel.name() + " 商业:",characterModel.intelligence() + characterModel.agility(), value, feat);
 	characterModel.featPlus(feat);
+	//运气经验
+	characterModel.plusPropertiesExp("luck");
 }
 function policeRun(characterModel){
 	//治安：武力*2+敏捷
@@ -389,6 +397,8 @@ function policeRun(characterModel){
 	var feat = JobFeatCoefficient.NORMAL * value / JobFeatCoefficient.POLICE;
 	//console.log(characterModel.name() + " 治安:",characterModel.force()*2 + characterModel.agility(), value, feat);
 	characterModel.featPlus(feat);
+	//武力经验
+	characterModel.plusPropertiesExp("force");
 }
 function technologyRun(characterModel){
 	//技术：智力+统率
@@ -399,6 +409,8 @@ function technologyRun(characterModel){
 	var feat = JobFeatCoefficient.NORMAL * value / JobFeatCoefficient.TECHNOLOGY;
 	//console.log(characterModel.name() + " 技术:",characterModel.intelligence() + characterModel.command(), value, feat);
 	characterModel.featPlus(feat);
+	//智力经验
+	characterModel.plusPropertiesExp("intelligence");
 }
 function enlistRun(characterModel, targetEnlist){
 	//招募：运气+统率
@@ -428,6 +440,8 @@ function enlistRun(characterModel, targetEnlist){
 	area.police(-(quantity * 0.05 >>> 0));
 	var feat = JobFeatCoefficient.NORMAL * quantity / JobFeatCoefficient.ENLIST;
 	characterModel.featPlus(feat);
+	//统率经验
+	characterModel.plusPropertiesExp("command");
 }
 function persuadeRun(characterModel, targetPersuadeId){
 	//劝降：忠诚度+义气+运气+武将相性
@@ -710,8 +724,6 @@ function SeigniorExecuteChangeCityResources(area){
 	charactersLoyaltyToDown(area);
 	//在野武将移动
 	outOfOfficeCharactersMove(area);
-	//武将死亡
-	//charactersNaturalDeath(area);
 }
 //装备
 function toEquipmentItem(item, characterModel){
@@ -800,6 +812,9 @@ function charactersLoyaltyToDown(area){
 }
 //武将死亡
 function charactersNaturalDeath(area){
+	if(!deathIsValid()){
+		return false;
+	}
 	var generals = area.generals();
 	var prefecture = area.prefecture();
 	var prefectureDie = false;

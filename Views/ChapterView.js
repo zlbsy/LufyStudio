@@ -122,7 +122,7 @@ ChapterView.prototype.okEvent=function(event){
 	var self = windowLayer.getParentByConstructor(ChapterView);
 	windowLayer.remove();
 	var troubleSelect = new TroubleSelectView();
-	var obj = {title:Language.get("confirm"),subWindow:troubleSelect,height:300,
+	var obj = {title:Language.get("confirm"),subWindow:troubleSelect,width:400,height:420,
 	okEvent:self.troubleSelect,cancelEvent:null};
 	var windowLayer = ConfirmWindow(obj);
 	self.addChild(windowLayer);
@@ -132,6 +132,8 @@ ChapterView.prototype.troubleSelect=function(event){
 	var self = windowLayer.getParentByConstructor(ChapterView);
 	var troubleSelect = windowLayer.getChildByName("TroubleSelectView");
 	LMvc.chapterData.trouble = troubleSelect.radioTrouble.value;
+	LMvc.chapterData.validDeath = troubleSelect.radioDeath.value;
+	LMvc.chapterData.validBehead = troubleSelect.radioBehead.value;
 	windowLayer.remove();
 	LMvc.chapterData.isCreateDebut = self.checkboxDebut.checked;
 	self.controller.loadMap(self.select_chara_id);
