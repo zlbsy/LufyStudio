@@ -572,7 +572,7 @@ var EventListConfig = [
 		citys:[
 		],
 		clear:1,
-		tribe:{from:0,to:0}
+		tribe:{from:1,to:2}
 	},
 	script:"Data/Event/{0}/yzmz.txt",
 	result:[{type:"gameClear"}]
