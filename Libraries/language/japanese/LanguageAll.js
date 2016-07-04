@@ -163,6 +163,8 @@ Language.data = {
 	"single_command_defence":"防御",
 	"single_command_dodge":"回避",
 	"single_command_charge":"集気",
+	"single_command_heal":"回復",
+	"single_command_buffer":"燃え",
 	"single_command_backstroke_attack":"詐欺",
 	"single_command_special_attack":"会心",
 	
@@ -286,6 +288,7 @@ Language.data = {
 	"change_face":"顔画像変更",
 	"change_monarch":"君主選択",
 	"monarch_die":"{0}亡くなりました、{1}が新しい君主になりました！",
+	"monarch_die_select":"{0}亡くなりました、新しい君主を決めてください！",
 	"monarch_die_over":"{0}亡くなりました！",
 	"gender_male":"男",
 	"gender_female":"女",

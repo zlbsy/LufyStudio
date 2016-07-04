@@ -124,6 +124,7 @@ BattleCharacterLayerView.prototype.addOurCharacterOnClick=function(locationX,loc
 		}
 		length++;
 	}
+	var onPosition = false;
 	for(var i=0,l=childList.length;i<l;i++){
 		child = childList[i];
 		if(child.cx != locationX || child.cy != locationY){
@@ -136,7 +137,11 @@ BattleCharacterLayerView.prototype.addOurCharacterOnClick=function(locationX,loc
 		chara.HP(chara.maxHP());
 		chara.MP(chara.maxMP());
 		child.remove();
+		onPosition = true;
 		break;
+	}
+	if(!onPosition){
+		return;
 	}
 	length++;
 	LPlugin.playSE("Se_set", LPlugin.gameSetting.SE);
@@ -185,6 +190,7 @@ BattleCharacterLayerView.prototype.getCharacterFromeList=function(childList,id){
 };
 BattleCharacterLayerView.prototype.clickOnPosition=function(index){
 	var self = this;
+	console.error("clickOnPosition");
 	var positionLayer = self.charasPositionsLayer.getChildByName("position_" + index);
 	var locationX = positionLayer.x / BattleCharacterSize.width >>> 0;
 	var locationY = positionLayer.y / BattleCharacterSize.height >>> 0;

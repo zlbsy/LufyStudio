@@ -163,6 +163,8 @@ Language.data = {
 	"single_command_defence":"防御",
 	"single_command_dodge":"躲闪",
 	"single_command_charge":"集气",
+	"single_command_heal":"回复",
+	"single_command_buffer":"燃烧",
 	"single_command_backstroke_attack":"诈败",
 	"single_command_special_attack":"怒击",
 	
@@ -286,6 +288,7 @@ Language.data = {
 	"change_face":"头像变更",
 	"change_monarch":"选择君主",
 	"monarch_die":"{0}病逝了，{1}成了新君主！",
+	"monarch_die_select":"{0}病逝了，请选择继承新君主！",
 	"monarch_die_over":"{0}病逝了！",
 	"gender_male":"男",
 	"gender_female":"女",

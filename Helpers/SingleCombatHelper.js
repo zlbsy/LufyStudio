@@ -103,6 +103,9 @@ function singleCombatHert(leftCharacter, rightCharacter) {
 	if(rightCharacter.currentCommand == SingleCombatCommand.DEFENCE && leftCharacter.currentCommand != SingleCombatCommand.BACKSTROKE_ATTACK){
 		hertValue *= 0.5;
 	}
+	if(leftCharacter.buffer().visible){
+		hertValue *= 1.5;
+	}
 	hertValue = hertValue >>> 0;
 	if(hertValue < 1){
 		hertValue = 1;
@@ -168,6 +171,8 @@ function singleCombatCommandCheckAttack(currentCharacter, targetCharacter) {
 			targetCharacter.addDodgeScript(true);
 			break;
 		case SingleCombatCommand.CHARGE:
+		case SingleCombatCommand.HEAL:
+		case SingleCombatCommand.BUFFER:
 			LPlugin.playSE("Se_hert", LPlugin.gameSetting.SE);//轻伤音效
 			targetCharacter.changeAction(CharacterAction.HERT);
 			singleCombatHert(currentCharacter, targetCharacter);
@@ -213,6 +218,8 @@ function singleCombatCommandCheckDoubleAttack(currentCharacter, targetCharacter)
 			}
 			break;
 		case SingleCombatCommand.CHARGE:
+		case SingleCombatCommand.HEAL:
+		case SingleCombatCommand.BUFFER:
 			LPlugin.playSE("Se_hert", LPlugin.gameSetting.SE);//轻伤音效
 			targetCharacter.changeAction(CharacterAction.HERT);
 			singleCombatHert(currentCharacter, targetCharacter);
@@ -248,6 +255,8 @@ function singleCombatCommandBigAttack(currentCharacter, targetCharacter) {
 			singleCombatHert(currentCharacter, targetCharacter);
 			break;
 		case SingleCombatCommand.CHARGE:
+		case SingleCombatCommand.HEAL:
+		case SingleCombatCommand.BUFFER:
 			LPlugin.playSE("Se_big_hert", LPlugin.gameSetting.SE);//重伤音效
 			targetCharacter.changeAction(CharacterAction.HERT);
 			singleCombatHert(currentCharacter, targetCharacter);
@@ -291,6 +300,8 @@ function singleCombatCommandSpecialAttack(currentCharacter, targetCharacter) {
 			}
 			break;
 		case SingleCombatCommand.CHARGE:
+		case SingleCombatCommand.HEAL:
+		case SingleCombatCommand.BUFFER:
 			LPlugin.playSE("Se_big_hert", LPlugin.gameSetting.SE);//重伤音效
 			targetCharacter.changeAction(CharacterAction.HERT);
 			singleCombatHert(currentCharacter, targetCharacter);
@@ -318,9 +329,15 @@ function checkSingleCombatCommandEnd(){
 	}
 	view.commandEnd = true;
 	if(view.executeIndex < 2){
-		setTimeout(view.execute,1000);
+		setTimeout(function(){
+			view.leftCharacter.checkBuffer();
+			view.rightCharacter.checkBuffer();
+			view.execute();
+		},1000);
 	}else{
 		setTimeout(function(){
+			view.leftCharacter.checkBuffer();
+			view.rightCharacter.checkBuffer();
 			LTweenLite.to(view.commandLayer,0.2,{alpha:0,onComplete:function(e){
 				var layer = e.target;
 				layer.die();

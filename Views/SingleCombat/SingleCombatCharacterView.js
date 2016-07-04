@@ -3,7 +3,10 @@ function SingleCombatCharacterView(controller, id, w, h, isLeft) {
 	LExtends(self, BattleCharacterView, [controller, id, w, h]);
 	self.isLeft = isLeft;
 	self.isFail = false;
+	self.bufferEnable = false;
 	self.addAngry = 10;
+	self.addBuffer = 0;
+	self.addHP = 0;
 	self.commands = [];
 	self.selectedCommands = [];
 	self.selectedButtons = [];
@@ -19,11 +22,46 @@ SingleCombatCharacterView.prototype.moveTo = function(x,y){
 SingleCombatCharacterView.prototype.toStatic = function(value){
 	//覆盖父类处理
 };
+SingleCombatCharacterView.prototype.checkBuffer = function(){
+	var self = this;
+	if(self.bufferEnable){
+		self.buffer().visible = true;
+		self.bufferEnable = false;
+	}
+};
+SingleCombatCharacterView.prototype.buffer = function(){
+	var self = this;
+	if(self._buffer){
+		return self._buffer;
+	}
+	var data = LMvc.datalist["attack_up_effect"];
+	var list = LGlobal.divideCoordinate(data.width,data.height, data.height/data.width, 1);
+	var arr = [];
+	for(var i=7,l=list.length;i<l;i++){
+		arr.push(list[i][0]);
+	}
+	var anime = new LAnimationTimeline(new LBitmapData(data), [arr]);
+	anime.alpha = 0.3;
+	anime.speed = 2;
+	anime.visible = false;
+	anime.x = (BattleCharacterSize.width - anime.getWidth()) * 0.5;
+	anime.y = (BattleCharacterSize.height - anime.getHeight()) * 0.5;
+	self.addChild(anime);
+	self._buffer = anime;
+	return self._buffer;
+};
 SingleCombatCharacterView.prototype.setCommands=function(){
 	var self = this, command, oldCommand;
 	if(self.barAngry){
 		self.barAngry.changeValue(self.addAngry);
 		self.addAngry = 10;
+	}
+	if(self.addHP > 0){
+		self.barHp.changeValue(self.addHP);
+		self.addHP = 0;
+	}
+	if(self.addBuffer > 0){
+		self.addBuffer = 0;
 	}
 	for(var i=0;i<self.selectedCommands.length;i++){
 		oldCommand = self.selectedCommands[0];
@@ -91,6 +129,7 @@ SingleCombatCharacterView.prototype.actionComplete = function(event){
 			}
 			break;
 		case CharacterAction.HERT:
+			self.buffer().visible = false;
 			var targetCommand = self.targetCharacter.currentCommand;
 			if(self.currentCommand == SingleCombatCommand.DOUBLE_ATTACK &&
 				targetCommand != SingleCombatCommand.SPECIAL_ATTACK &&
@@ -173,13 +212,24 @@ SingleCombatCharacterView.prototype.commandExecute = function(){
 		case SingleCombatCommand.DEFENCE:
 		case SingleCombatCommand.DODGE:
 		case SingleCombatCommand.CHARGE:
+		case SingleCombatCommand.HEAL:
+		case SingleCombatCommand.BUFFER:
 		case SingleCombatCommand.BACKSTROKE_ATTACK:
-			if(self.isLeft && (self.targetCharacter.currentCommand == SingleCombatCommand.DEFENCE || self.targetCharacter.currentCommand == SingleCombatCommand.DODGE 
-				|| self.targetCharacter.currentCommand == SingleCombatCommand.CHARGE || self.targetCharacter.currentCommand == SingleCombatCommand.BACKSTROKE_ATTACK)){
+			if(self.isLeft && 
+			(self.targetCharacter.currentCommand == SingleCombatCommand.DEFENCE 
+			|| self.targetCharacter.currentCommand == SingleCombatCommand.DODGE 
+			|| self.targetCharacter.currentCommand == SingleCombatCommand.CHARGE 
+			|| self.targetCharacter.currentCommand == SingleCombatCommand.HEAL
+			|| self.targetCharacter.currentCommand == SingleCombatCommand.BUFFER
+			|| self.targetCharacter.currentCommand == SingleCombatCommand.BACKSTROKE_ATTACK)){
 					checkSingleCombatCommandEnd();
 			}
 			if(self.currentCommand == SingleCombatCommand.CHARGE){
 				self.addAngry += 20;
+			}else if(self.currentCommand == SingleCombatCommand.HEAL){
+				self.addHP = 20;
+			}else if(self.currentCommand == SingleCombatCommand.BUFFER){
+				self.bufferEnable = true;
 			}else if(self.currentCommand == SingleCombatCommand.BACKSTROKE_ATTACK){
 				self.barAngry.changeValue(-80);
 			}

@@ -842,22 +842,33 @@ function charactersNaturalDeath(area){
 		}
 	}
 	if(seigniorCharaDie){
-		var newSeigniorId = monarchChange(seigniorCharaId);
 		var obj;
-		if(newSeigniorId > 0){
+		if(seigniorCharaId == LMvc.selectSeignorId){
 			obj = {title:Language.get("confirm"),
-			message:String.format(Language.get("monarch_die"), seigniorName, seignior.character().name()),
+			message:String.format(Language.get("monarch_die_select"), seigniorName),
 			height:200,okEvent:function(event){
 				event.currentTarget.parent.remove();
-				SeigniorExecute.run();
+				SeigniorExecute.Instance().backLayer.visible = false;
+				SeigniorExecute.Instance().msgView.hideSeignior();
+				LMvc.MapController.checkSeigniorChange(LMvc.selectSeignorId);
 			}};
 		}else{
-			obj = {title:Language.get("confirm"),
-			message:String.format(Language.get("monarch_die_over"), seigniorName),
-			height:200,okEvent:function(event){
-				event.currentTarget.parent.remove();
-				LMvc.MapController.checkSeigniorFail(seigniorCharaId);
-			}};
+			var newSeigniorId = monarchChange(seigniorCharaId);
+			if(newSeigniorId > 0){
+				obj = {title:Language.get("confirm"),
+				message:String.format(Language.get("monarch_die"), seigniorName, seignior.character().name()),
+				height:200,okEvent:function(event){
+					event.currentTarget.parent.remove();
+					SeigniorExecute.run();
+				}};
+			}else{
+				obj = {title:Language.get("confirm"),
+				message:String.format(Language.get("monarch_die_over"), seigniorName),
+				height:200,okEvent:function(event){
+					event.currentTarget.parent.remove();
+					LMvc.MapController.checkSeigniorFail(seigniorCharaId);
+				}};
+			}
 		}
 		var windowLayer = ConfirmWindow(obj);
 		LMvc.layer.addChild(windowLayer);
