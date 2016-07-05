@@ -45,10 +45,11 @@ PerishView.prototype.set = function(charaId){
 PerishView.prototype.removeSelf = function(event){
 	var self = event.currentTarget.parent.parent;
 	var charaId = self.charaId;
+	self.remove();
 	if(LMvc.selectSeignorId == charaId){
 		//GameOver
+		MenuController.instance().view.onClickReturnTop();
 	}else{
-		self.remove();
 		if(SeigniorExecute.running){
 			SeigniorExecute.Instance().msgView.visible = true;
 			SeigniorExecute.run();
