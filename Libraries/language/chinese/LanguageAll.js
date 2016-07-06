@@ -117,6 +117,7 @@ Language.data = {
 	"event_28":"结局:贤君",
 	
 	"prompt":"提示",
+	"def_single_combat_error":"建筑物不可以单挑!",
 	"single_combat_error":"怒击和诈败不可同时使用!",
 	"skip_drama":"跳过剧情",
 	"return":"返回",

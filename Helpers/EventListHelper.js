@@ -46,8 +46,6 @@ function checkEventList() {
 					continue;
 				}
 			}
-		}else{
-			continue;
 		}
 		if(currentEvent.condition.from && currentEvent.condition.to){
 			var month = LMvc.chapterData.month;
@@ -507,6 +505,10 @@ function dispatchEventListResultStopBattle(child) {
 	}
 }
 function dispatchEventListResultChangeSeignior(child) {
+	for(var i=0,l=AreaModel.list.length;i<l;i++){
+		var area = AreaModel.list[i];
+		area.removeNotDebut(child.id);
+	}
 	var character = CharacterModel.getChara(child.id);
 	character.seigniorId(child.seignior);
 	character.loyalty(child.loyalty);

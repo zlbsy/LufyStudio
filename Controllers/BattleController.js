@@ -328,6 +328,10 @@ BattleController.prototype.singleCombat = function(event){
 	if(!chara || chara.hideByCloud || chara.belong != Belong.ENEMY){
 		return;
 	}
+	if(chara.data.isDefCharacter()){
+		Toast.makeText(Language.get("def_single_combat_error")).show();
+		return;
+	}
 	self.view.roadLayer.clear();
 	BattleController.ctrlChara.AI.singleCombat(chara);
 };

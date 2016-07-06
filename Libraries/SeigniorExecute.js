@@ -101,7 +101,7 @@ SeigniorExecute.run=function(){
 			}
 		}
 	}
-	if(!self.tournamentsOver){
+	/*if(!self.tournamentsOver){
 		self.tournamentsOver = true;
 		if(true || LMvc.chapterData.year % 3 == 0 && LMvc.chapterData.month == 1){
 			self.backLayer.visible = false;
@@ -111,7 +111,7 @@ SeigniorExecute.run=function(){
 			LGlobal.script.addScript(script);
 			return;
 		}
-	}
+	}*/
 	if(self.stop){
 		return;
 	}
@@ -278,6 +278,8 @@ SeigniorExecute.prototype.areaJobRun=function(area){
 	var list = [];
 	for(var i=0;i<generals.length;i++){
 		chara = generals[i];
+		chara.HP(chara.maxHP());
+		chara.MP(chara.maxMP());
 		chara.isPrized(false);
 		job = chara.job();
 		switch(job){

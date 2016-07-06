@@ -107,6 +107,10 @@ BattleSelectMenuView.prototype.clickMagicSelect=function(event){
 };
 BattleSelectMenuView.prototype.clickSingleCombat=function(event){
 	var self = event.currentTarget.parent.parent.parent;
+	if(BattleController.ctrlChara.data.isDefCharacter()){
+		Toast.makeText(Language.get("def_single_combat_error")).show();
+		return;
+	}
 	self.closeSelectMenu();
 	self.controller.dispatchEvent(BattleSelectMenuEvent.SINGLE_COMBAT);
 };

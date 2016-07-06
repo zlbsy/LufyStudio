@@ -33,6 +33,7 @@ CityController.prototype.viewLoad=function(){
 };
 CityController.prototype.init=function(initFunc){
 	var self = this;
+	self.clearValue();
 	var cityData = AreaModel.getArea(LMvc.cityId);
 	self.setValue("cityData",cityData);
 	var cityFree = cityData.seigniorCharaId() == LMvc.selectSeignorId || SeigniorModel.getSeignior(LMvc.selectSeignorId).isSpyCity(LMvc.cityId);

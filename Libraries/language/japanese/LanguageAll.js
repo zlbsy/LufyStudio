@@ -61,6 +61,8 @@ Language.data = {
 	"status_Burn":"燃焼",
 	
 	"battle_generals_list":"武将一览",
+	"tournaments_introduction":"又到了三年一次的比武大会了!优胜者能获得一些特殊的奖品。",
+	"tournaments_join_confirm":"要参加三年一次的比武大会吗？",
 	"tournaments_select_toast":"派谁去参加比武大会？",
 	"tournaments_select":"出战比武大会",
 	"can_not_move":"今は移動できません!",
@@ -115,6 +117,7 @@ Language.data = {
 	"event_28":"結局:贤君",
 	
 	"prompt":"提示",
+	"def_single_combat_error":"建築物は一騎討ちができません!",
 	"single_combat_error":"会心は詐欺と同時に使うことができません!",
 	"skip_drama":"スキップ",
 	"return":"戻る",
