@@ -5,6 +5,7 @@ function SeigniorExecute(){
 	self.messageCitys = [];
 	self.areaIndex = 0;
 	self.areaAIIndex = 0;
+	self.tournamentsOver = false;
 	self.eventCitys = [];
 	self.captivesChecked = [];
 	self.childsCheckedCitys = [];
@@ -100,6 +101,17 @@ SeigniorExecute.run=function(){
 			}
 		}
 	}
+	if(!self.tournamentsOver){
+		self.tournamentsOver = true;
+		if(true || LMvc.chapterData.year % 3 == 0 && LMvc.chapterData.month == 1){
+			self.backLayer.visible = false;
+			self.msgView.hideSeignior();
+			var script = String.format("SGJTalk.show({0},{1},{2});", LMvc.selectSeignorId, 1, Language.get("又到了三年一次的比武大会了!"));
+			script += "SGJEvent.tournamentsCheck();";
+			LGlobal.script.addScript(script);
+			return;
+		}
+	}
 	if(self.stop){
 		return;
 	}
@@ -149,6 +161,7 @@ SeigniorExecute.run=function(){
 	self.eventCitys = [];
 	self.childsCheckedCitys = [];
 	self.captivesChecked = [];
+	self.tournamentsOver = false;
 	SeigniorExecute.running = false;
 	SeigniorExecute.clearCheck = false;
 	/*var buttonClose = self.backLayer.childList.find(function(child){
@@ -172,6 +185,19 @@ SeigniorExecute.run=function(){
 			}
 		},3000);
 	}
+};
+SeigniorExecute.prototype.tournamentsCheck=function(){
+	var obj = {title:Language.get("confirm"),
+	message:Language.get("要参加三年一次的比武大会吗？"),
+	height:200,okEvent:function(event){
+		event.currentTarget.parent.remove();
+		
+	},cancelEvent:function(event){
+		event.currentTarget.parent.remove();
+		SeigniorExecute.run();
+	}};
+	var windowLayer = ConfirmWindow(obj);
+	LMvc.layer.addChild(windowLayer);
 };
 SeigniorExecute.prototype.areaRun=function(area){
 	var self = this;

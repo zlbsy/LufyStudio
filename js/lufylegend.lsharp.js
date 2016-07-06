@@ -1798,6 +1798,9 @@ LSGJEventScript.analysis = function(value) {
 		case "SGJEvent.dispatchEventListResult":
 			LSGJEventScript.dispatchEventListResult(value, start, end);
 			break;
+		case "SGJEvent.tournamentsCheck":
+			SeigniorExecute.Instance().tournamentsCheck();
+			break;
 		case "SGJEvent.end":
 			LMvc.EventMapController.close();
 			break;

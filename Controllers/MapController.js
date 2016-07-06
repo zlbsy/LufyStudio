@@ -139,6 +139,16 @@ MapController.prototype.cityLoadComplete=function(){
 	
 	self.initFunc = null;
 };
+MapController.prototype.showTournaments=function(){
+	var self = this;
+	LMvc.keepLoading(true);
+	self.loadMvc("Tournaments",self.tournamentsLoadComplete);
+};
+MapController.prototype.tournamentsLoadComplete=function(){
+	var self = this;
+	var tournaments = new TournamentsController();
+	self.view.parent.addChild(tournaments.view);
+};
 MapController.prototype.returnToCity=function(cityId){
 	var self = this;
 	LTweenLite.removeAll();
