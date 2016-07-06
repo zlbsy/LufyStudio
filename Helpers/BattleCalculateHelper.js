@@ -146,7 +146,7 @@ function calculateHitrate(attChara,hertChara,isView){
 		r = 100;
 	}else if(attBreakout > hertBreakout){
 		r=(attBreakout-hertBreakout)*10/hertBreakout+90;
-	}else if(attBreakout > hertBreakout){
+	}else if(attBreakout > hertBreakout * 0.5){
 		r=(attBreakout-hertBreakout/2)*30/(hertBreakout/2)+60;
 	}else{
 		r=(attBreakout-hertBreakout/3)*30/(hertBreakout/3)+30;
@@ -214,7 +214,7 @@ function calculateHitrateStrategy(attChara,hertChara){
 		r = 100;
 	}else if(attX > hertY){
 		r=(attX-hertY)*10/hertY+90;
-	}else if(attX > hertY){
+	}else if(attX > hertY * 0.5){
 		r=(attX-hertY/2)*30/(hertY/2)+60;
 	}else{
 		r=(attX-hertY/3)*30/(hertY/3)+30;

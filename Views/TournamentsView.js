@@ -14,17 +14,19 @@ TournamentsView.prototype.init=function(){
 	
 	self.arenaLayer = new LSprite();
 	self.addChild(self.arenaLayer);
-	
 	var charas = [];
-	for(var i=0; i<MaxHistoryCharacterIndex; i++){
-		var chara = CharacterModel.list[i];
-		if(chara.data.force >= 80){
-			charas.push(chara);
+	var charasAll = SeigniorModel.getSeignior(LMvc.selectSeignorId).generals();
+	
+	for(var i=0, l=charasAll.length; i<l; i++){
+		var chara = charasAll[i];
+		if(chara.data.force < 80 && i>20){
+			break;
 		}
+		charas.push(chara);
 	}
 	charas = charas.sort(function(a, b){return b.data.force - a.data.force;});
 	self.characters = charas;
-	self.controller.loadCharacterList(CharacterListType.GAME_SINGLE_COMBAT, charas, {isOnlyOne:true, buttonLabel:"execute", noCutover:true, noDetailed:true});
+	self.controller.loadCharacterList(CharacterListType.TOURNAMENTS_SELECT, charas, {isOnlyOne:true, buttonLabel:"execute", noCutover:true, noDetailed:true, toast:"tournaments_select_toast"});
 };
 TournamentsView.prototype.addCharacterListView=function(characterListView){
 	this.contentLayer.addChild(characterListView);

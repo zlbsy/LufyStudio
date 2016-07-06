@@ -106,7 +106,7 @@ SeigniorExecute.run=function(){
 		if(true || LMvc.chapterData.year % 3 == 0 && LMvc.chapterData.month == 1){
 			self.backLayer.visible = false;
 			self.msgView.hideSeignior();
-			var script = String.format("SGJTalk.show({0},{1},{2});", LMvc.selectSeignorId, 1, Language.get("又到了三年一次的比武大会了!"));
+			var script = String.format("SGJTalk.show({0},{1},{2});", LMvc.selectSeignorId, 1, Language.get("tournaments_introduction"));
 			script += "SGJEvent.tournamentsCheck();";
 			LGlobal.script.addScript(script);
 			return;
@@ -188,10 +188,10 @@ SeigniorExecute.run=function(){
 };
 SeigniorExecute.prototype.tournamentsCheck=function(){
 	var obj = {title:Language.get("confirm"),
-	message:Language.get("要参加三年一次的比武大会吗？"),
+	message:Language.get("tournaments_join_confirm"),
 	height:200,okEvent:function(event){
 		event.currentTarget.parent.remove();
-		
+		LMvc.MapController.showTournaments();
 	},cancelEvent:function(event){
 		event.currentTarget.parent.remove();
 		SeigniorExecute.run();

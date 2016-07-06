@@ -61,7 +61,8 @@ Language.data = {
 	"status_Burn":"燃焼",
 	
 	"battle_generals_list":"武将一览",
-	
+	"tournaments_select_toast":"派谁去参加比武大会？",
+	"tournaments_select":"出战比武大会",
 	"can_not_move":"今は移動できません!",
 	"use_strategy_terrain_error":"{0}はこの地形の上に使用できません!",
 	"use_strategy_belong_error":"{0}に使用できません!",

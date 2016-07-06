@@ -61,7 +61,10 @@ Language.data = {
 	"status_Burn":"燃烧",
 	
 	"battle_generals_list":"武将一览",
-	
+	"tournaments_introduction":"又到了三年一次的比武大会了!优胜者能获得一些特殊的奖品。",
+	"tournaments_join_confirm":"要参加三年一次的比武大会吗？",
+	"tournaments_select_toast":"派谁去参加比武大会？",
+	"tournaments_select":"出战比武大会",
 	"can_not_move":"现在无法移动!",
 	"use_strategy_terrain_error":"{0}无法在此地形下使用!",
 	"use_strategy_belong_error":"不可对{0}使用!",
