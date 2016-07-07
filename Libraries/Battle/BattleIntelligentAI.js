@@ -724,7 +724,7 @@ BattleIntelligentAI.prototype.findMoveTarget = function() {
 				roads = [new LPoint(self.locationX, self.locationY)];
 				break;
 			}
-		}while(noRoad && ii < 4);
+		}while(noRoad && ii < 10);
 		LMvc.BattleController.query.checkDistance = false;
 		LMvc.BattleController.query.checkCharacter = false;
 		var currentDistance = roads.length;
@@ -733,7 +733,7 @@ BattleIntelligentAI.prototype.findMoveTarget = function() {
 			targetRoads = roads;
 		}
 	}
-	for(var i = 0,l=targetRoads.length;i<l;i++){
+	for(var i = 0;targetRoads && i<targetRoads.length;i++){
 		var node = targetRoads[i];
 		if(!LMvc.BattleController.view.roadLayer.roadList.find(function(child){
 			return child.x == node.x && child.y == node.y;

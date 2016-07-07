@@ -9,9 +9,7 @@ function CharacterDetailedTabEquipmentView(controller, w, h){
 CharacterDetailedTabEquipmentView.prototype.updateView=function(){
 	var self = this;
 	self.showEquipments();
-	if(!LMvc.BattleController){
-		self.showEquipmentList();
-	}
+	self.showEquipmentList();
 };
 CharacterDetailedTabEquipmentView.prototype.showEquipments=function(){
 	var self = this;
@@ -53,7 +51,7 @@ CharacterDetailedTabEquipmentView.prototype.showEquipmentList=function(){
 		return child instanceof EquipmentsView;
 	});
 	var cityData = LMvc.CityController.getValue("cityData");
-	if(characterModel.seigniorId() != LMvc.selectSeignorId || cityData.seigniorCharaId() != LMvc.selectSeignorId){
+	if(LMvc.BattleController || characterModel.seigniorId() != LMvc.selectSeignorId || cityData.seigniorCharaId() != LMvc.selectSeignorId){
 		if(equipmentsView){
 			equipmentsView.visible = false;
 		}

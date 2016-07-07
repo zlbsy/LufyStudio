@@ -167,7 +167,7 @@ LogoController.prototype.updateCheck = function(){
 	var self = this;
 	LMvc.keepLoading(true);
 	LMvc.changeLoading(TranslucentLoading);
-	LAjax.post(LMvc.updateURL + "index.php",{},function(data){
+	LAjax.post(LMvc.updateURL + "index.php",{ver:LMvc.ver},function(data){
 		data = JSON.parse(data);
 		LPlugin.SetData("reviewing", data.reviewing);
 		self.view.forumLayer.visible = data.reviewing ? false : true;
