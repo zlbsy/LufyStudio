@@ -116,7 +116,7 @@ CharacterListChildView.prototype.setStatus = function() {
 	bitmapName.x = 20;
 	bitmapName.y = 10;
 	self.addChild(bitmapName);
-	if(self.controller.characterListType != CharacterListType.GAME_SINGLE_COMBAT){
+	if(self.controller.characterListType != CharacterListType.GAME_SINGLE_COMBAT && self.controller.characterListType != CharacterListType.TOURNAMENTS_SELECT){
 		self.setBasicProperties();
 	}
 	self.setAbilityProperties();
@@ -129,7 +129,7 @@ CharacterListChildView.prototype.setStatus = function() {
 			self.checkbox.setChecked(true);
 			self.parentView.dispatchEvent(LCheckBox.ON_CHANGE);
 		}
-	}else if(self.controller.characterListType == CharacterListType.GAME_SINGLE_COMBAT){
+	}else if(self.controller.characterListType == CharacterListType.GAME_SINGLE_COMBAT || self.controller.characterListType == CharacterListType.TOURNAMENTS_SELECT){
 		self.abilityProperties.visible = true;
 	}
 }; 

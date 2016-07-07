@@ -54,7 +54,7 @@ CharacterListView.prototype.listInit=function(){
 
 	//TODO::ver1.1参数控制
 	if((SeigniorExecute.running && self.controller.characterListType == CharacterListType.EXPEDITION)
-	|| self.controller.characterListType == CharacterListType.SELECT_MONARCH){
+	|| self.controller.characterListType == CharacterListType.SELECT_MONARCH || self.controller.params.closeDisable){
 		buttonClose.visible = false;
 	}
 	
@@ -270,7 +270,7 @@ CharacterListView.prototype.showTabMenu=function(){
 	self.setAbilityTab();
 	if(self.controller.characterListType == CharacterListType.EXPEDITION){
 		self.setArmTab();
-	}else if(self.controller.characterListType == CharacterListType.GAME_SINGLE_COMBAT){
+	}else if(self.controller.characterListType == CharacterListType.GAME_SINGLE_COMBAT || self.controller.characterListType == CharacterListType.TOURNAMENTS_SELECT){
 		self.abilityTab.visible = true;
 	}
 };

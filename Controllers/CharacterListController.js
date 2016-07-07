@@ -13,7 +13,12 @@ CharacterListController.prototype.construct=function(){
 };
 CharacterListController.prototype.configLoad=function(){
 	var self = this;
-	self.load.config(["CharacterListType","Skills","Equipment","Arms","Belong","Position","Soldiers","Strategy"],self.helperLoad);
+	self.load.config(["CharacterListType","Skills","Equipment","Arms","Belong","Position","Soldiers","Strategy"],self.libraryLoad);
+};
+CharacterListController.prototype.libraryLoad=function(){
+	var self = this;
+	var libraris = ["Face","Toast"];
+	self.load.library(libraris,self.helperLoad);
 };
 CharacterListController.prototype.helperLoad=function(){
 	var self = this;

@@ -25,38 +25,46 @@ TournamentsView.prototype.init=function(){
 		charas.push(chara);
 	}
 	charas = charas.sort(function(a, b){return b.data.force - a.data.force;});
-	self.characters = charas;
-	self.controller.loadCharacterList(CharacterListType.TOURNAMENTS_SELECT, charas, {isOnlyOne:true, buttonLabel:"execute", noCutover:true, noDetailed:true, toast:"tournaments_select_toast"});
+	self.characters = [];
+	for(var i=0,l=SeigniorModel.list.length;i<l;i++){
+		var seignior = SeigniorModel.list[i];
+		if(seignior.chara_id() == LMvc.selectSeignorId){
+			continue;
+		}
+		var generals = seignior.generals().sort(function(a, b){return b.data.force - a.data.force;});
+		self.characters.push(generals[0]);
+	}
+	self.characters = self.characters.sort(function(a, b){return b.data.force - a.data.force;});
+	self.controller.loadCharacterList(CharacterListType.TOURNAMENTS_SELECT, charas, {isOnlyOne:true, buttonLabel:"execute", noCutover:true, noDetailed:true, toast:"tournaments_select_toast",closeDisable:true});
 };
 TournamentsView.prototype.addCharacterListView=function(characterListView){
 	this.contentLayer.addChild(characterListView);
 };
 TournamentsView.prototype.closeCharacterList=function(event){
 	var self = event.currentTarget.view;
-	if(event.subEventType == "return"){
-		self.controller.closeSelf();
-		return;
-	}
-	if(event.characterList.length > 1){
-		var obj = {title:Language.get("confirm"),message:Language.get("dialog_select_onlyone_error"),height:200,okEvent:null};
-		var windowLayer = ConfirmWindow(obj);
-		LMvc.layer.addChild(windowLayer);
-		return false;
-	}
 	var selectCharacterId = event.characterList[0].id();
 	self.controller.setValue("selectCharacterId",selectCharacterId);
+	var force = event.characterList[0].force();
+	var maxLength = 8;
 	var enemyList = [];
 	var killedEnemyList = [];
 	self.characters.forEach(function(child){
-		if(child.id() == selectCharacterId){
+		if(child.id() == selectCharacterId || enemyList.length >= maxLength - 1){
 			return;
 		}
-		enemyList.push(child.id());
+		enemyList.push({id:child.id(), r:[]});
 	});
-	enemyList = enemyList.sort(function(a,b){return Math.random() > 0.5 ? 1 : -1;});
-	self.controller.setValue("enemyList",enemyList);
-	self.controller.setValue("killedEnemyList",killedEnemyList);
-	self.singleCombatStart();
+	var charas = [622,626,632,638,642,644,652,658,662,668];
+	charas = charas.sort(function(a, b){return Math.fakeRandom() > 0.5 ? 1 : -1;});
+	while(enemyList.length < maxLength - 1){
+		enemyList.push({id:charas.shift(), r:[]});
+	}
+	enemyList = enemyList.sort(function(a,b){return Math.fakeRandom() > 0.5 ? 1 : -1;});
+	enemyList.unshift({id:selectCharacterId, r:[]});
+	
+	self.controller.setValue("characters",enemyList);
+	//self.singleCombatStart();
+	self.confirmShow();
 	self.contentLayer.visible = false;
 	return true;
 };
@@ -87,8 +95,14 @@ TournamentsView.prototype.keepUp=function(){
 	LMvc.SingleCombatController.over();
 	self.singleCombatStart(hp + Math.floor((100 - hp) * 0.5));
 };
-TournamentsView.prototype.restart=function(){
+TournamentsView.prototype.confirmShow=function(){
 	var self = this;
-	LMvc.SingleCombatController.over();
-	self.contentLayer.visible = true;
+	if(!self.confirmDialog){
+		self.confirmDialog = new TournamentsConfirmView();
+		self.addChild(self.confirmDialog);
+	}
+	self.confirmDialog.visible = true;
+	self.confirmDialog.updateView();
+	//LMvc.SingleCombatController.over();
+	//self.contentLayer.visible = true;
 };

@@ -3,3 +3,8 @@ function TournamentsModel(){
 }
 TournamentsModel.prototype.construct=function(){
 };
+TournamentsModel.prototype.getImages=function(){
+	var self = this;
+	var list = [];
+	return list;
+};
