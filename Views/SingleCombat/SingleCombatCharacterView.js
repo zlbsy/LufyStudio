@@ -286,6 +286,13 @@ SingleCombatCharacterView.prototype.fail = function(event){
 	if(self.controller.fromController.constructor.name == "BattleController"){
 		self.singleCombatEnd();
 		return;
+	}else if(self.controller.fromController.constructor.name == "TournamentsController"){
+		if(self.isLeft){
+			self.controller.fromController.view.fail();
+		}else{
+			self.controller.fromController.view.win();
+		}
+		return;
 	}
 	var view = LMvc.SingleCombatController.view;
 	var arena = LMvc.SingleCombatArenaController;

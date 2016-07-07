@@ -52,48 +52,101 @@ TournamentsView.prototype.closeCharacterList=function(event){
 		if(child.id() == selectCharacterId || enemyList.length >= maxLength - 1){
 			return;
 		}
-		enemyList.push({id:child.id(), r:[]});
+		enemyList.push({id:child.id(), r:0});
 	});
 	var charas = [622,626,632,638,642,644,652,658,662,668];
 	charas = charas.sort(function(a, b){return Math.fakeRandom() > 0.5 ? 1 : -1;});
 	while(enemyList.length < maxLength - 1){
-		enemyList.push({id:charas.shift(), r:[]});
+		enemyList.push({id:charas.shift(), r:0});
 	}
 	enemyList = enemyList.sort(function(a,b){return Math.fakeRandom() > 0.5 ? 1 : -1;});
-	enemyList.unshift({id:selectCharacterId, r:[]});
-	
+	enemyList.unshift({id:selectCharacterId, r:0});
+	/*enemyList[0].r=1;
+	enemyList[3].r=1;
+	enemyList[5].r=1;
+	enemyList[6].r=1;
+	enemyList.push({id:enemyList[0].id, r:1});
+	enemyList.push({id:enemyList[3].id, r:0});
+	enemyList.push({id:enemyList[5].id, r:0});
+	enemyList.push({id:enemyList[6].id, r:1});
+	enemyList.push({id:enemyList[0].id, r:0});
+	enemyList.push({id:enemyList[6].id, r:0});*/
 	self.controller.setValue("characters",enemyList);
 	//self.singleCombatStart();
 	self.confirmShow();
 	self.contentLayer.visible = false;
 	return true;
 };
-TournamentsView.prototype.singleCombatStart=function(hp){
+TournamentsView.prototype.singleCombatStart=function(){
 	var self = this;
+	var charas = self.controller.getValue("characters");
 	var selectCharacterId = self.controller.getValue("selectCharacterId");
-	var enemyList = self.controller.getValue("enemyList");
-	var currentEnemyId = enemyList.splice(enemyList.length * Math.random() >>> 0, 1)[0];
-	self.controller.setValue("enemyList",enemyList);
-	self.currentEnemyId = currentEnemyId;
+	if(charas.length == 8){
+		self.currentEnemyId = charas[1].id;
+	}else if(charas.length == 12){
+		self.currentEnemyId = charas[9].id;
+	}else{
+		self.currentEnemyId = charas[13].id;
+	}
 	var selectCharacter = CharacterModel.getChara(selectCharacterId);
 	selectCharacter.maxHP(100);
-	selectCharacter.HP(hp ? hp : 100);
-	var currentEnemy = CharacterModel.getChara(currentEnemyId);
+	selectCharacter.HP(100);
+	var currentEnemy = CharacterModel.getChara(self.currentEnemyId);
 	currentEnemy.maxHP(100);
 	currentEnemy.HP(100);
-	var combat = new SingleCombatController(self.controller,selectCharacterId,currentEnemyId);
+	self.confirmDialog.visible = false;
+	var combat = new SingleCombatController(self.controller,selectCharacterId,self.currentEnemyId);
 	self.parent.addChild(combat.view);
 };
-TournamentsView.prototype.keepUp=function(){
+TournamentsView.prototype.win=function(){
 	var self = this;
-	var killedEnemyList = self.controller.getValue("killedEnemyList");
-	killedEnemyList.push(self.currentEnemyId);
-	self.controller.setValue("killedEnemyList",killedEnemyList);
-	var selectCharacterId = self.controller.getValue("selectCharacterId");
-	var selectCharacter = CharacterModel.getChara(selectCharacterId);
-	var hp = LMvc.SingleCombatController.view.leftCharacter.barHp.value;
+	var characters = self.controller.getValue("characters");
+	var from, to;
+	if(characters.length == 8){
+		characters[0].r=1;
+		characters.push({id:characters[0].id, r:0});
+		from = 2;
+		to = 8;
+	}else if(characters.length == 12){
+		characters[8].r=1;
+		characters.push({id:characters[8].id, r:0});
+		from = 10;
+		to = 12;
+	}else{
+		LMvc.SingleCombatController.over();
+		console.log("冠军");
+		return;
+	}
+	for(var i=from;i<to;i+=2){
+		var isWin = self.autoCheck(characters[i].id, characters[i+1].id);
+		if(isWin){
+			characters[i].r = 1;
+			characters.push({id:characters[i].id, r:0});
+		}else{
+			characters[i+1].r = 1;
+			characters.push({id:characters[i+1].id, r:0});
+		}
+	}
 	LMvc.SingleCombatController.over();
-	self.singleCombatStart(hp + Math.floor((100 - hp) * 0.5));
+	self.confirmShow();
+};
+TournamentsView.prototype.fail=function(){
+	var self = this;
+	var characters = self.controller.getValue("characters");
+	if(characters.length == 8){
+		console.log("安慰奖");
+	}else if(characters.length == 12){
+		console.log("4强");
+	}else{
+		console.log("2强");
+	}
+};
+TournamentsView.prototype.autoCheck=function(id1,id2){
+	var chara1 = CharacterModel.getChara(id1);
+	var chara2 = CharacterModel.getChara(id2);
+	var force1 = chara1.force() + 10 - 20 * Math.fakeRandom();
+	var force2 = chara2.force() + 10 - 20 * Math.fakeRandom();
+	return force1 > force2;
 };
 TournamentsView.prototype.confirmShow=function(){
 	var self = this;

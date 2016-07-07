@@ -5,7 +5,7 @@ function TournamentsConfirmView(){
 TournamentsConfirmView.prototype.updateView=function(){
 	var self = this;
 	var charas = self.parent.controller.getValue("characters");
-	console.log("charas.length="+charas.length);
+	self.lineLayer.graphics.clear();
 	for(var i=0;i<self.namesBox.length;i++){
 		if(i >= charas.length){
 			break;
@@ -14,8 +14,17 @@ TournamentsConfirmView.prototype.updateView=function(){
 		var name = box[2];
 		var charaModel = CharacterModel.getChara(charas[i].id);
 		name.text = charaModel.name();
+		if(charaModel.seigniorId() == LMvc.selectSeignorId){
+			name.color="#8FBC8F";
+		}
 		name.x = box[0] + (100 - name.getWidth())*0.5;
 		name.y = box[1]+50 + (50 - name.getHeight())*0.5;
+		if(charas[i].r){
+			var lineObj = self.namesLine[i];
+			for(var j=0;j<lineObj.length - 2;j+=2){
+				self.lineLayer.graphics.drawLine(6,"#F4A460",[lineObj[j], lineObj[j+1],lineObj[j+2], lineObj[j+3]]);
+			}
+		}
 	}
 };
 TournamentsConfirmView.prototype.layerInit=function(){
@@ -24,6 +33,7 @@ TournamentsConfirmView.prototype.layerInit=function(){
 	self.backLayer = new LSprite();
 	self.addChild(self.backLayer);
 	self.lineLayer = new LSprite();
+	self.lineLayer.y = 50;
 	self.addChild(self.lineLayer);
 	self.nameLayer = new LSprite();
 	self.addChild(self.nameLayer);
@@ -32,6 +42,10 @@ TournamentsConfirmView.prototype.layerInit=function(){
 	var panelTitle = getPanel("win02",160, 60);
 	panelTitle.x = (LGlobal.width - 160) * 0.5;
 	self.backLayer.addChild(panelTitle);
+	var name = getStrokeLabel("决赛",20,"#FFFFFF","#000000",4);
+	name.x = panelTitle.x + (160 - name.getWidth()) * 0.5;
+	name.y = (60 - name.getHeight())*0.5;
+	self.nameLayer.addChild(name);
 	self.namesBox = [
 	[10,0], [10,100], [370,0],[370,100],
 	[10,250], [10,350], [370,250],[370,350],
@@ -44,11 +58,12 @@ TournamentsConfirmView.prototype.layerInit=function(){
 		panel.x = box[0];
 		panel.y = box[1]+50;
 		self.backLayer.addChild(panel);
-		self.backLayer.graphics.drawLine();
+		//self.backLayer.graphics.drawLine();
 		var name = getStrokeLabel("",20,"#FFFFFF","#000000",4);
 		self.nameLayer.addChild(name);
 		box.push(name);
 	}
+	
 	self.namesLine = [
 	[60,50,60,75,120,75], 
 	[60,100,60,75,120,75], 
@@ -64,5 +79,33 @@ TournamentsConfirmView.prototype.layerInit=function(){
 	[260,325,240,325,240,260],
 	//[190,140],[190,210]
 	];
+	var layer = new LSprite();
+	layer.y = 50;
+	self.backLayer.addChild(layer);
+	layer.graphics.add(function(c){
+		c.beginPath();
+		for(var i=0;i<self.namesLine.length;i++){
+			var lineObj = self.namesLine[i];
+			for(var j=0;j<lineObj.length - 2;j+=2){
+				c.moveTo(lineObj[j], lineObj[j+1]);
+				c.lineTo(lineObj[j+2], lineObj[j+3]);
+			}
+		}
+		c.lineWidth = 10;
+		c.strokeStyle = "#FFFFFF";
+		c.closePath();
+		c.stroke();
+	});
+	self.backLayer.cacheAsBitmap(true);
 	
+	var buttonOk = getButton(Language.get("开始"),200);
+	buttonOk.x = (LGlobal.width - 200) * 0.5;
+	buttonOk.y = LGlobal.height - 60;
+	self.addChild(buttonOk);
+	buttonOk.addEventListener(LMouseEvent.MOUSE_UP, self.singleStart);
+};
+TournamentsConfirmView.prototype.singleStart=function(event){
+	var self = event.currentTarget.getParentByConstructor(TournamentsConfirmView);
+	var tournamentsView = self.getParentByConstructor(TournamentsView);
+	tournamentsView.singleCombatStart();
 };
