@@ -1,7 +1,7 @@
 var ItemType = {
 	HEAL:"item_heal"/*治疗伤兵*/
 	,ENLIST:"item_enlist"/*招募新兵*/
-	,SUPPLEMENT:"item_supplement"/*从后备兵中补充*/
+	,FEAT:"item_feat"/*增加功绩*/
 	,EQUIPMENT:"item_equipment"/*装备*/
 };
 var ItemSubType = {
@@ -22,12 +22,12 @@ var ItemDatas = [
 	{id:7,name:"募兵令",type:ItemType.ENLIST},
 	{id:8,name:"征兵符",type:ItemType.ENLIST},
 	{id:9,name:"征兵令",type:ItemType.ENLIST},
-	{id:10,name:"强征兵令",type:ItemType.ENLIST},
-	{id:11,name:"招兵符",type:ItemType.SUPPLEMENT},
-	{id:12,name:"招兵令",type:ItemType.SUPPLEMENT},
-	{id:13,name:"招军符",type:ItemType.SUPPLEMENT},
-	{id:14,name:"招军令",type:ItemType.SUPPLEMENT},
-	{id:15,name:"强招兵令",type:ItemType.SUPPLEMENT},
+	{id:10,name:"圣延寿符",value:10,type:ItemType.ENLIST},
+	{id:11,name:"训练金牌",value:100,max:900,type:ItemType.SUPPLEMENT},
+	{id:12,name:"训练铜牌",value:100,max:700,type:ItemType.SUPPLEMENT},
+	{id:13,name:"训练铁牌",value:100,max:500,type:ItemType.SUPPLEMENT},
+	{id:14,name:"功绩印绶",value:100,type:ItemType.SUPPLEMENT},
+	{id:15,name:"功绩簿",value:50,type:ItemType.SUPPLEMENT},
 	{id:16,name:"方天画戟",type:ItemType.EQUIPMENT,rarity:10,stamp:1,position:PositionConfig.Hand,force:10,defense:10},
 	{id:17,name:"丈八蛇矛",type:ItemType.EQUIPMENT,rarity:9,stamp:1,position:PositionConfig.Hand,force:9,breakout:10},
 	{id:18,name:"青龙偃月刀",type:ItemType.EQUIPMENT,rarity:9,stamp:1,position:PositionConfig.Hand,force:9,morale:10},
@@ -102,5 +102,6 @@ var ItemDatas = [
 	{id:87,name:"铜盔",type:ItemType.EQUIPMENT,rarity:4,stamp:1,position:PositionConfig.Head,luck:4},
 	{id:88,name:"铁盔",type:ItemType.EQUIPMENT,rarity:3,stamp:1,position:PositionConfig.Head,luck:3},
 	{id:89,name:"皮盔",type:ItemType.EQUIPMENT,rarity:2,stamp:1,position:PositionConfig.Head,luck:2},
-	{id:90,name:"头巾",type:ItemType.EQUIPMENT,rarity:1,stamp:1,position:PositionConfig.Head,luck:1}
+	{id:90,name:"头巾",type:ItemType.EQUIPMENT,rarity:1,stamp:1,position:PositionConfig.Head,luck:1},
+	{id:91,name:"延寿符",type:ItemType.EQUIPMENT,rarity:10,stamp:1,position:PositionConfig.Accessories,life:10}
 ];

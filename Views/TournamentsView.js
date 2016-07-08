@@ -102,6 +102,7 @@ TournamentsView.prototype.win=function(){
 	var self = this;
 	var characters = self.controller.getValue("characters");
 	var from, to;
+	var selectCharacterId = self.controller.getValue("selectCharacterId");
 	if(characters.length == 8){
 		characters[0].r=1;
 		characters.push({id:characters[0].id, r:0});
@@ -113,8 +114,13 @@ TournamentsView.prototype.win=function(){
 		from = 10;
 		to = 12;
 	}else{
+		//TODO::冠军奖品
 		LMvc.SingleCombatController.over();
-		console.log("冠军");
+		self.controller.closeSelf();
+		//talk
+		var script = String.format("SGJTalk.show({0},{1},{2});", selectCharacterId, 1, Language.get("我还没用全力，冠军就已经到手了!"));
+		script += "SGJEvent.tournamentsGet(1);";
+		LGlobal.script.addScript(script);
 		return;
 	}
 	for(var i=from;i<to;i+=2){
@@ -132,14 +138,27 @@ TournamentsView.prototype.win=function(){
 };
 TournamentsView.prototype.fail=function(){
 	var self = this;
+	
 	var characters = self.controller.getValue("characters");
+	var scriptTalk, result = 0;
 	if(characters.length == 8){
-		console.log("安慰奖");
+		//安慰奖
+		scriptTalk = Language.get("太丢人了，竟然一开始就输了...");
 	}else if(characters.length == 12){
-		console.log("4强");
+		//4强奖品
+		result = 4;
+		scriptTalk = Language.get("惭愧，只进入了四强...");
 	}else{
-		console.log("2强");
+		//亚军奖品
+		result = 2;
+		scriptTalk = Language.get("太可恶了，只差一点儿就能拿到冠军了!");
 	}
+	LMvc.SingleCombatController.over();
+	self.controller.closeSelf();
+	//talk
+	var script = String.format("SGJTalk.show({0},{1},{2});", selectCharacterId, 1, scriptTalk);
+	script += "SGJEvent.tournamentsGet("+result+");";
+	LGlobal.script.addScript(script);
 };
 TournamentsView.prototype.autoCheck=function(id1,id2){
 	var chara1 = CharacterModel.getChara(id1);

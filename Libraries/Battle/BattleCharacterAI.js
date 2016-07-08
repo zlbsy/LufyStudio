@@ -184,7 +184,12 @@ BattleCharacterAI.prototype.physicalAttack = function(target) {
 				self.herts.push(hertParams);
 			}
 			hertParams = self.herts[0];
-			
+			if(self.herts.length == 1 && skill && skill.isSubType(SkillSubType.ATTACK_RECT)){
+				var attacks = skill.attacks();
+				if(attacks && attacks.length > 0){
+					hertParams.list[0].hertValue = hertParams.list[0].hertValue*attacks[0]>>>0;
+				}
+			}
 			if(skill && skill.isSubType(SkillSubType.ENEMY_AID)){
 				var aids = skill.aids();
 				var aidCount = skill.aidCount();

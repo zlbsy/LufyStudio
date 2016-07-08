@@ -315,6 +315,7 @@ BattleCharacterView.prototype.returnShowMoveRoadObject = function() {
 BattleCharacterView.prototype.toDie = function() {
 	var self = this;
 	var script = "";
+	self.data.troops(0);
 	self.data.wounded(0);
 	if(self.data.isDefCharacter()){
 		//防御设施被摧毁,城防降低

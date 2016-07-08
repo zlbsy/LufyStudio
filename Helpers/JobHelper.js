@@ -1009,3 +1009,24 @@ function generalsChangeLoyalty(generals){
 		chara.loyalty(toLoyalty);
 	}
 }
+//比武大会报酬
+function tournamentsGet(result){
+	var message = Language.get("tournaments_get_message_"+result);
+	switch (result) {
+		case 0:
+			//经验果x2
+			break;
+		case 1:
+			//延寿丹,经验果x16,训练果x8
+			break;
+		case 2:
+			//经验果x8,训练果x4
+			break;
+		case 4:
+			//训练果x2,经验果x4
+			break;
+		default:
+			break;
+	}
+	
+}

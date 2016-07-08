@@ -119,6 +119,7 @@ RecordChildView.prototype.readRecordData=function(){
 			gameDataInit();
 			if(!LMvc.areaData.battleData){
 				LMvc.isRead = false;
+				LMvc.MapController.view.changeMode(MapController.MODE_MAP);
 			}
 			LMvc.MapController.dispatchEvent(LController.NOTIFY);
 		}else if(LMvc.MapController){

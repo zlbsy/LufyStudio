@@ -1801,6 +1801,9 @@ LSGJEventScript.analysis = function(value) {
 		case "SGJEvent.tournamentsCheck":
 			SeigniorExecute.Instance().tournamentsCheck();
 			break;
+		case "SGJEvent.tournamentsGet":
+			LSGJEventScript.tournamentsGet(value, start, end);
+			break;
 		case "SGJEvent.end":
 			LMvc.EventMapController.close();
 			break;
@@ -1823,6 +1826,10 @@ LSGJEventScript.analysis = function(value) {
 LSGJEventScript.dispatchEventListResult = function(value, start, end) {
 	var params = value.substring(start + 1, end).split(",");
 	dispatchEventListResult(parseInt(params[0]));
+};
+LSGJEventScript.tournamentsGet = function(value, start, end) {
+	var params = value.substring(start + 1, end).split(",");
+	
 };
 /*
  * LSGJJobHelperScript.js

@@ -266,6 +266,7 @@ SingleCombatCharacterView.prototype.singleCombatEnd = function(event){
 	self.controller.over();
 	dieChara.isSingleCombat = true;
 	dieChara.data.troops(0);
+	dieChara.data.wounded(0);
 	if(dieChara.data.id() == BattleController.ctrlChara.data.id()){
 		BattleController.ctrlChara.AI.endAction();
 	}else{
