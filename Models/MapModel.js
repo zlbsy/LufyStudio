@@ -14,7 +14,7 @@ MapModel.prototype.getImages=function(){
 	
 	list.push({name:"area-1",path:LMvc.IMG_PATH+"area/area-1.png"});
 	list.push({name:"icon-appoint",path:LMvc.IMG_PATH+"icon/appoint.png"});
-	list.push({name:"question",path:LMvc.IMG_PATH+"common/question.png"});
+	//list.push({name:"question",path:LMvc.IMG_PATH+"common/question.png"});
 	/*list.push({name:"flag-blue",path:LMvc.IMG_PATH+"area/flag-blue.png"});
 	list.push({name:"flag-brown",path:LMvc.IMG_PATH+"area/flag-brown.png"});
 	list.push({name:"flag-darkgoldenrod",path:LMvc.IMG_PATH+"area/flag-darkgoldenrod.png"});

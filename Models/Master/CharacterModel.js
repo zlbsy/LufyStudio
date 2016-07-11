@@ -1036,8 +1036,10 @@ CharacterModel.prototype.equipOff = function(itemId) {
 	for(var i=0;i<equipments.length;i++){
 		var item = equipments[i];
 		if(item.id() == itemId){
-			var loyalty = self.loyalty();
-			self.loyalty(loyalty - itemExchangeLoyalty(item));
+			if(self.id() != self.seigniorId()){
+				var loyalty = self.loyalty();
+				self.loyalty(loyalty - itemExchangeLoyalty(item));
+			}
 			equipments.splice(i,1);
 			self.city().addItem(item);
 			break;

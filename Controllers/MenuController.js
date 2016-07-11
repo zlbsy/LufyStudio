@@ -52,3 +52,22 @@ MenuController.prototype.showItemList=function(){
 	var itemListController = new ItemListController();
 	LMvc.layer.addChild(itemListController.view);
 };
+MenuController.prototype.loadDictionary=function(){
+	var self = this;
+	LMvc.keepLoading(true);
+	self.load.view(["Dictionary/Dictionary","Dictionary/DictionaryChild"],self.loadDictionaryConfig);
+};
+MenuController.prototype.loadDictionaryConfig=function(){
+	var self = this;
+	self.load.config(["Dictionary"],self.loadDictionaryLibrary);
+};
+MenuController.prototype.loadDictionaryLibrary=function(){
+	var self = this;
+	var libraris = [String.format("language/{0}/LanguageDictionary",LPlugin.language())];
+	self.load.library(libraris,self.showDictionary);
+};
+MenuController.prototype.showDictionary=function(){
+	var self = this;
+	LMvc.keepLoading(false);
+	self.view.showDictionary();
+};

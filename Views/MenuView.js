@@ -50,10 +50,10 @@ MenuView.prototype.init=function(){
 	buttonEventList.addEventListener(LMouseEvent.MOUSE_UP, self.onClickEventList);
 	
 	menuY += menuHeight;
-	var buttonEventList = getButton(Language.get("game_dictionary"),200);
-	buttonEventList.y = menuY;
-	layer.addChild(buttonEventList);
-	buttonEventList.addEventListener(LMouseEvent.MOUSE_UP, self.onClickEventList);
+	var buttonDictionary = getButton(Language.get("game_dictionary"),200);
+	buttonDictionary.y = menuY;
+	layer.addChild(buttonDictionary);
+	buttonDictionary.addEventListener(LMouseEvent.MOUSE_UP, self.onClickDictionary);
 	
 	menuY += menuHeight;
 	var buttonReturnTop = getButton(Language.get("return_top"),200);
@@ -84,12 +84,11 @@ MenuView.prototype.layerInit=function(){
 MenuView.prototype.hide=function(event){
 	MenuController.instance().hide();
 };
-/*
-MenuView.prototype.onClickOperatingEnd=function(event){
-	var self = event ? event.currentTarget.parent.parent.parent : this;
+MenuView.prototype.onClickDictionary=function(event){
+	var self = event.currentTarget.parent.parent.parent;
 	self.hide();
-	SeigniorExecute.run();
-};*/
+	self.controller.loadDictionary();
+};
 MenuView.prototype.onClickAllSeignior=function(event){
 	var self = event.currentTarget.parent.parent.parent;
 	self.hide();
@@ -138,4 +137,9 @@ MenuView.prototype.onClickReturnTop=function(event){
 		LMvc.logoStage.chapterMenuLayer.mouseChildren = true;
 	}*/
 	LMvc.stageLayer.x = 0;
+};
+MenuView.prototype.showDictionary=function(event){
+	var self = this;
+	var dictionary = new DictionaryView();
+	LMvc.layer.addChild(dictionary);
 };
