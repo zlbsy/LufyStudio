@@ -7,7 +7,7 @@ function DictionaryChildView(word){
 }
 DictionaryChildView.prototype.layerInit=function(){
 	var self = this;
-	var panel = getPanel("win01",100,50);
+	var panel = getPanel("win01",110,50);
 	self.addChild(panel);
 };
 DictionaryChildView.prototype.updateView = function(bitmap, rectangle, point){
@@ -20,7 +20,7 @@ DictionaryChildView.prototype.updateView = function(bitmap, rectangle, point){
 DictionaryChildView.prototype.getName=function(){
 	var self = this;
 	if(!self.lblName){
-		var lblName = getStrokeLabel("",20,"#FFFFFF","#000000",3);
+		var lblName = getStrokeLabel("",16,"#FFFFFF","#000000",3);
 		lblName.y = 5;
 		self.addChild(lblName);
 		self.lblName = lblName;
@@ -31,7 +31,7 @@ DictionaryChildView.prototype.set=function(){
 	var self = this;
 	var lblName = self.getName();
 	lblName.text = Language.get(self.word);
-	lblName.x = (100 - lblName.getWidth()) * 0.5;
+	lblName.x = (110 - lblName.getWidth()) * 0.5;
 	lblName.y = (50 - lblName.getHeight()) * 0.5;
 };
 DictionaryChildView.prototype.onClick = function(event) {

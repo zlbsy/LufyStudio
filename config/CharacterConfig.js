@@ -63,7 +63,7 @@ var CharacterFaceSize = {
 	width:220,height:320
 };
 var CharacterLevelConfig = {
-	initLevel:3,
+	initLevel:30,
 	exp:100,
 	maxLevel:99
 };

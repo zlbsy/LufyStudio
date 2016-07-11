@@ -41,12 +41,12 @@ DictionaryView.prototype.listLayerInit=function(){
 	
 	self.listView = new LListView();
 	self.listView.y = 15;
-	self.listView.resize(400, LGlobal.height - 100);
+	self.listView.resize(440, LGlobal.height - 100);
 	self.listView.maxPerLine = 4;
-	self.listView.cellWidth = 100;
+	self.listView.cellWidth = 110;
 	self.listView.cellHeight = 50;
 	self.listLayer.addChild(self.listView);
-	self.listView.x = 40;
+	self.listView.x = 20;
 	self.listView.y = 80;
 	var items = [];
 	for(var i=0,l=dictionaryConfig.length;i<l;i++){
@@ -60,7 +60,7 @@ DictionaryView.prototype.showDetailedDialog = function(word) {
 	var self = this;
 	self.listLayer.visible = false;
 	self.contentLabel.visible = true;
-	self.contentLabel.text = String.format("【{0}】{1}。",Language.get(word),Language.getDictionary(word));
+	self.contentLabel.text = String.format("【{0}】{1}",Language.get(word),Language.getDictionary(word));
 };
 DictionaryView.prototype.ctrlLayerInit=function(){
 	var self = this;

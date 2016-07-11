@@ -107,9 +107,11 @@ BattleController.prototype.init = function(){
 
 	var enemyTroops = self.battleData.toCity.troops();
 	var generals = self.battleData.toCity.generals();
-	/*for(var i=0,l=generals.length;i<l;i++){
-		enemyTroops += generals[i].troops();
-	}*/
+	if(LMvc.areaData && LMvc.areaData.battleData){
+		for(var i=0,l=generals.length;i<l;i++){
+			enemyTroops += generals[i].troops();
+		}
+	}
 	if(self.battleData.toCity.seigniorCharaId() == 0 || enemyTroops == 0 || 
 		self.battleData.toCity.generalsSum() == 0){
 		self.noBattle = true;
