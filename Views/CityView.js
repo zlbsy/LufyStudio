@@ -87,6 +87,7 @@ CityView.prototype.showBuildView=function(name){
 CityView.prototype.buildLayerInit=function(){
 	var self = this;
 	var selfCity = self.controller.getValue("selfCity");
+	var cityData = self.controller.getValue("cityData");
 	/*self.buildLayer.removeEventListener(LMouseEvent.MOUSE_UP);
 	if(selfCity){
 		self.buildLayer.addEventListener(LMouseEvent.MOUSE_UP, self.onBuildClick);
@@ -103,6 +104,8 @@ CityView.prototype.buildLayerInit=function(){
 		layer = self.buildLayerCacher[cacheKey];
 		layer.visible = true;
 		self.iconAppoint.visible = self.controller.getValue("isAppoint");
+		self.appointContent.visible = self.iconAppoint.visible;
+		self.appointContent.text = Language.get(cityData.appointType());
 		return;
 	}
 	layer = new LSprite();
@@ -123,6 +126,12 @@ CityView.prototype.buildLayerInit=function(){
 	official.addChild(iconAppoint);
 	self.iconAppoint = iconAppoint;
 	self.iconAppoint.visible = self.controller.getValue("isAppoint");
+	var appointContent = getStrokeLabel(Language.get(cityData.appointType()),20,"#FFFFFF","#000000",4);
+	appointContent.x = iconAppoint.x + (iconAppoint.getWidth() - appointContent.getWidth())*0.5;
+	appointContent.y = iconAppoint.y;
+	official.addChild(appointContent);
+	appointContent.visible = self.iconAppoint.visible;
+	self.appointContent = appointContent;
 	
 	var institute = new BuildView(self.controller,"main-institute","institute");
 	institute.x = 0;
@@ -277,7 +286,10 @@ CityView.prototype.init=function(){
 CityView.prototype.updateView = function(){
 	var self = this;
 	self.statusLayer.getChildAt(0).updateView();
+	var cityModel = self.controller.getValue("cityData");
 	self.iconAppoint.visible = self.controller.getValue("isAppoint");
+	self.appointContent.visible = self.iconAppoint.visible;
+	self.appointContent.text = Language.get(cityModel.appointType());
 };
 CityView.prototype.autoTalkCheck = function(){
 	var self = this;

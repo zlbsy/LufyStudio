@@ -78,6 +78,7 @@ SoldiersChildView.prototype.getCheckBox=function(){
 		check.y = 10;
 		self.layer.addChild(check);
 		self.checkbox = check;
+		check.setChecked(self.soldierModel.id() == self.characterModel.currentSoldierId());
 	}
 	return self.checkbox;
 };
@@ -95,7 +96,6 @@ SoldiersChildView.prototype.set=function(){
 		lblCurrent.text = self.soldierModel.id() == self.characterModel.currentSoldierId() ? Language.get("current") : "";
 	}else{
 		var check = self.getCheckBox();
-		check.setChecked(self.soldierModel.id() == self.characterModel.currentSoldierId());
 	}
 	var iconImg = self.soldierModel.img();
 	if(!self.iconImg || iconImg != self.iconImg){

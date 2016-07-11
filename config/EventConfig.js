@@ -11,15 +11,8 @@ var LCityEvent = {};
 LCityEvent.SELECT_CITY = "select_city";
 LCityEvent.CLOSE_SELECT_CITY = "close_select_city";
 
-/*
-var BattleCharacterEvent = {};
-BattleCharacterEvent.MOVE_COMPLETE = "moveComplete";
-BattleCharacterEvent.SHOW_MOVE_ROAD = "showMoveRoad";
-BattleCharacterEvent.MOVING = "moving";
-BattleCharacterEvent.WAIT_ATTACK = "waitAttack";
-BattleCharacterEvent.WAIT_SELECT = "waitSelect";
-BattleCharacterEvent.ATTACK_ACTION_COMPLETE = "attackActionComplete";
-BattleCharacterEvent.HERT_ACTION_COMPLETE = "hertActionComplete";*/
+var ItemEvent = {};
+ItemEvent.USE_ITEM = "user_item";
 
 var CharacterActionEvent = {};
 CharacterActionEvent.MOVE_COMPLETE = "moveComplete";

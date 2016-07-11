@@ -84,6 +84,7 @@ AreaModel.prototype.datas=function(){
 	};
 	if(self.isAppoint()){
 		saveData.isAppoint = 1;
+		saveData.appointType = self.appointType();
 	}
 	return saveData;
 };
@@ -240,6 +241,9 @@ AreaModel.prototype.addGenerals = function(param){
 	if(self.data.generals.length == 1){
 		self.prefecture(chara.id());
 	}
+};
+AreaModel.prototype.appointType = function(value){
+	return this._dataValue("appointType", value, "appoint_random");
 };
 AreaModel.prototype.isAppoint = function(value){
 	var self = this;

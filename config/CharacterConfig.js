@@ -64,7 +64,8 @@ var CharacterFaceSize = {
 };
 var CharacterLevelConfig = {
 	initLevel:3,
-	exp:100
+	exp:100,
+	maxLevel:99
 };
 
 var DefCharacterList = {

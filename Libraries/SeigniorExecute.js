@@ -103,7 +103,7 @@ SeigniorExecute.run=function(){
 	}
 	if(!self.tournamentsOver){
 		self.tournamentsOver = true;
-		if(true || LMvc.chapterData.year % 3 == 0 && LMvc.chapterData.month == 1){
+		if(LMvc.chapterData.year % 3 == 0 && LMvc.chapterData.month == 1){
 			self.backLayer.visible = false;
 			self.msgView.hideSeignior();
 			var script = String.format("SGJTalk.show({0},{1},{2});", LMvc.selectSeignorId, 1, Language.get("tournaments_introduction"));
@@ -233,6 +233,7 @@ SeigniorExecute.prototype.areaRun=function(area){
 	self.areaChangeLoyaltyOver = false;
 	self.areaPrefectureFeatOver = false;
 	self.areaDieOver = false;
+	self.appointExploreOver = false;
 	self.timer.reset();
 	self.timer.start();
 };
@@ -510,6 +511,20 @@ SeigniorExecute.prototype.areaAIRun=function(areaModel){
 	if(toPolice){
 		self.jobAiFunction(areaModel,self.characters,jobAiPolice,["force","agility"]);//治安
 	}
+	if(areaModel.appointType() == AppointType.AppointExplore && !self.appointExploreOver){
+		//重视探索
+		self.appointExploreOver = true;
+		var length = areaModel.generalsSum() * 0.5 >>> 0;
+		while(self.characters.length > length){
+			if(Math.fakeRandom() > 0.5){
+				//农地探索
+				self.jobAiFunction(areaModel,self.characters,jobAiFarmlandExplore,["intelligence","force","luck"]);
+			}else{
+				//市场探索
+				self.jobAiFunction(areaModel,self.characters,jobAiMarketExplore,["intelligence","agility","luck"]);
+			}
+		}
+	}
 	var canEnlish = jobAiCanToEnlish(areaModel);
 	if(needEnlistFlag == AiEnlistFlag.Must || needEnlistFlag == AiEnlistFlag.Need 
 		|| needEnlistFlag == AiEnlistFlag.Battle || Math.fakeRandom() < 0.1){
@@ -528,11 +543,13 @@ SeigniorExecute.prototype.areaAIRun=function(areaModel){
 		) && Math.fakeRandom() > 0.5){
 		self.jobAiFunction(areaModel,self.characters,jobAiRepair,["force","command"]);//修补
 	}
-	//判断是否有可攻击的城池
-	var city = getCanBattleCity(areaModel, self.characters, needEnlistFlag);
-	if(city){
-		jobAiToBattle(areaModel, self.characters, city);
-		return;
+	if(areaModel.appointType() != AppointType.AppointInternal && areaModel.appointType() != AppointType.AppointExplore){
+		//判断是否有可攻击的城池
+		var city = getCanBattleCity(areaModel, self.characters, needEnlistFlag);
+		if(city){
+			jobAiToBattle(areaModel, self.characters, city);
+			return;
+		}
 	}
 	//武将移动
 	jobAiGeneralMove(areaModel,self.characters);
@@ -549,11 +566,10 @@ SeigniorExecute.prototype.areaAIRun=function(areaModel){
 	(
 		needEnlistFlag == AiEnlistFlag.Must || 
 		needEnlistFlag == AiEnlistFlag.Need || 
-		needEnlistFlag == AiEnlistFlag.MustResource || 
-		needEnlistFlag == AiEnlistFlag.NeedResource
+		needEnlistFlag == AiEnlistFlag.MustResource
 	) || 
 	(
-		(needEnlistFlag == AiEnlistFlag.Battle || needEnlistFlag == AiEnlistFlag.BattleResource) && Math.fakeRandom() > 0.2
+		(needEnlistFlag == AiEnlistFlag.NeedResource || needEnlistFlag == AiEnlistFlag.Battle || needEnlistFlag == AiEnlistFlag.BattleResource) && Math.fakeRandom() > 0.2
 	) || 
 	(
 		(needEnlistFlag == AiEnlistFlag.Free || needEnlistFlag == AiEnlistFlag.None) && Math.fakeRandom() > 0.5

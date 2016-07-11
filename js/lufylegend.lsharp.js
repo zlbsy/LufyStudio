@@ -1829,7 +1829,7 @@ LSGJEventScript.dispatchEventListResult = function(value, start, end) {
 };
 LSGJEventScript.tournamentsGet = function(value, start, end) {
 	var params = value.substring(start + 1, end).split(",");
-	
+	tournamentsGet(parseInt(params[0]));
 };
 /*
  * LSGJJobHelperScript.js

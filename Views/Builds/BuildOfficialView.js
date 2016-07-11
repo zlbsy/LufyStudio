@@ -51,17 +51,57 @@ BuildOfficialView.prototype.addAppointButton=function(layer, y){
 	}
 };
 BuildOfficialView.prototype.onClickAppoint=function(event){
-	var self = event.currentTarget.getParentByConstructor(BuildOfficialView);
-	self.updateAppoint(1);
+	var self = event.currentTarget.getParentByConstructor(BuildOfficialView), menuY = 0, menuHeight = 55;
+	var layer = new LSprite();
+	var buttonInternal = getButton(Language.get(AppointType.AppointInternal),200);
+	buttonInternal.name = AppointType.AppointInternal;
+	buttonInternal.y = menuY;
+	layer.addChild(buttonInternal);
+	buttonInternal.addEventListener(LMouseEvent.MOUSE_UP, self.onClickSetAppoint);
+	
+	menuY += menuHeight;
+	var buttonExplore = getButton(Language.get(AppointType.AppointExplore),200);
+	buttonExplore.name = AppointType.AppointExplore;
+	buttonExplore.y = menuY;
+	layer.addChild(buttonExplore);
+	buttonExplore.addEventListener(LMouseEvent.MOUSE_UP, self.onClickSetAppoint);
+	
+	menuY += menuHeight;
+	var buttonMilitary = getButton(Language.get(AppointType.AppointMilitary),200);
+	buttonMilitary.name = AppointType.AppointMilitary;
+	buttonMilitary.y = menuY;
+	layer.addChild(buttonMilitary);
+	buttonMilitary.addEventListener(LMouseEvent.MOUSE_UP, self.onClickSetAppoint);
+	
+	menuY += menuHeight;
+	var buttonMilitary = getButton(Language.get(AppointType.AppointRandom),200);
+	buttonMilitary.name = AppointType.AppointRandom;
+	buttonMilitary.y = menuY;
+	layer.addChild(buttonMilitary);
+	buttonMilitary.addEventListener(LMouseEvent.MOUSE_UP, self.onClickSetAppoint);
+	//self.updateAppoint(1);
+	var obj = {title:Language.get("appoint"),subWindow:layer,width:270,height:320,noButton:true,okEvent:null};
+	var windowLayer = ConfirmWindow(obj);
+	self.addChild(windowLayer);
+};
+BuildOfficialView.prototype.onClickSetAppoint=function(event){
+	var button = event.currentTarget;
+	var self = button.getParentByConstructor(BuildOfficialView);
+	self.updateAppoint(1, button.name);
+	button.parent.remove();
+	self.controller.view.clearContentLayer();
 };
 BuildOfficialView.prototype.onClickRemoveAppoint=function(event){
 	var self = event.currentTarget.getParentByConstructor(BuildOfficialView);
 	self.updateAppoint(0);
 };
-BuildOfficialView.prototype.updateAppoint=function(value){
+BuildOfficialView.prototype.updateAppoint=function(value, type){
 	var self = this;
 	var cityData = self.controller.getValue("cityData");
 	cityData.isAppoint(value);
+	if(value){
+		cityData.appointType(type);
+	}
 	self.controller.setValue("isAppoint",cityData.isAppoint());
 	self.addAppointButton();
 	LMvc.MapController.view.resetAreaIcon(cityData.id());

@@ -2,6 +2,7 @@ var ItemType = {
 	HEAL:"item_heal"/*治疗伤兵*/
 	,ENLIST:"item_enlist"/*招募新兵*/
 	,FEAT:"item_feat"/*增加功绩*/
+	,PROFICIENCY:"item_proficiency"/*增加训练度*/
 	,EQUIPMENT:"item_equipment"/*装备*/
 };
 var ItemSubType = {
@@ -22,12 +23,12 @@ var ItemDatas = [
 	{id:7,name:"募兵令",type:ItemType.ENLIST},
 	{id:8,name:"征兵符",type:ItemType.ENLIST},
 	{id:9,name:"征兵令",type:ItemType.ENLIST},
-	{id:10,name:"圣延寿符",value:10,type:ItemType.ENLIST},
-	{id:11,name:"训练金牌",value:100,max:900,type:ItemType.SUPPLEMENT},
-	{id:12,name:"训练铜牌",value:100,max:700,type:ItemType.SUPPLEMENT},
-	{id:13,name:"训练铁牌",value:100,max:500,type:ItemType.SUPPLEMENT},
-	{id:14,name:"功绩印绶",value:100,type:ItemType.SUPPLEMENT},
-	{id:15,name:"功绩簿",value:50,type:ItemType.SUPPLEMENT},
+	{id:10,name:"练兵金牌",proficiency:100,upper_limit:900,type:ItemType.PROFICIENCY},
+	{id:11,name:"练兵铜牌",proficiency:100,upper_limit:700,type:ItemType.PROFICIENCY},
+	{id:12,name:"练兵铁牌",proficiency:100,upper_limit:500,type:ItemType.PROFICIENCY},
+	{id:13,name:"元帅印",feat:200,type:ItemType.FEAT},
+	{id:14,name:"将军印",feat:100,type:ItemType.FEAT},
+	{id:15,name:"印绶",feat:50,type:ItemType.FEAT},
 	{id:16,name:"方天画戟",type:ItemType.EQUIPMENT,rarity:10,stamp:1,position:PositionConfig.Hand,force:10,defense:10},
 	{id:17,name:"丈八蛇矛",type:ItemType.EQUIPMENT,rarity:9,stamp:1,position:PositionConfig.Hand,force:9,breakout:10},
 	{id:18,name:"青龙偃月刀",type:ItemType.EQUIPMENT,rarity:9,stamp:1,position:PositionConfig.Hand,force:9,morale:10},

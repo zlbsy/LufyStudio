@@ -10,7 +10,14 @@ SoldiersView.prototype.setSoldierList = function(characterModel) {
 		if(characterModel && characterModel.id() != self.characterModel.id()){
 			self.updateItems(characterModel);
 		}else{
-			self.listView.updateView();
+			var soldierId = characterModel.currentSoldiers().id();
+			var items = self.listView.getItems();
+			var item = items.find(function(child){
+				return soldierId == child.soldierModel.id();
+			});
+			item.cacheAsBitmap(false);
+			item.updateView();
+			//self.listView.updateView();
 		}
 		return;
 	}

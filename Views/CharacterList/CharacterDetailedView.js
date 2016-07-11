@@ -302,7 +302,7 @@ CharacterDetailedView.prototype.ctrlLayerInit=function(){
 	var left = new LBitmap(leftBitmapData);
 	var leftButton = new LButton(left);
 	leftButton.x = 10;
-	leftButton.y = 100;
+	leftButton.y = 130;
 	self.ctrlLayer.addChild(leftButton);
 	leftButton.addEventListener(LMouseEvent.MOUSE_UP,self.clickLeftArrow.bind(self));
 	var rightBitmapData = new LBitmapData(null,0,0,leftBitmapData.width,leftBitmapData.height,LBitmapData.DATA_CANVAS);
@@ -317,12 +317,28 @@ CharacterDetailedView.prototype.ctrlLayerInit=function(){
 	self.ctrlLayer.addChild(rightButton);
 	rightButton.addEventListener(LMouseEvent.MOUSE_UP,self.clickRightArrow.bind(self));
 	
-	var buttonClose = getButton(Language.get("return"),60);
+	var buttonClose = getButton(Language.get("return"),100);
 	buttonClose.x = LGlobal.width - buttonClose.getWidth() - 5;
 	self.ctrlLayer.addChild(buttonClose);
 	buttonClose.addEventListener(LMouseEvent.MOUSE_UP, self.closeCharacterDetailed);
+	var buttonItem = getButton(Language.get("item"),100);
+	buttonItem.x = buttonClose.x;
+	buttonItem.y = buttonClose.getHeight() + 5;
+	self.ctrlLayer.addChild(buttonItem);
+	buttonItem.addEventListener(LMouseEvent.MOUSE_UP, self.openItems);
 };
 CharacterDetailedView.prototype.closeCharacterDetailed=function(event){
 	var self = event ?  event.currentTarget.getParentByConstructor(CharacterDetailedView) : this;
 	self.controller.closeCharacterDetailed();
+};
+CharacterDetailedView.prototype.openItems=function(event){
+	var self = event ?  event.currentTarget.getParentByConstructor(CharacterDetailedView) : this;
+	if(self.itemsView){
+		self.itemsView.visible = true;
+		self.itemsView.updateView();
+		return;
+	}
+	self.itemsView = new ItemsView();
+	self.addChild(self.itemsView);
+	self.itemsView.updateView();
 };

@@ -65,11 +65,22 @@ ItemMasterModel.prototype.itemType = function(){
 ItemMasterModel.prototype.rarity = function(){
 	return this.data.rarity;
 };
+ItemMasterModel.prototype.feat = function(){
+	return this.data.feat;
+};
+ItemMasterModel.prototype.proficiency = function(){
+	return this.data.proficiency;
+};
+ItemMasterModel.prototype.upperLimit = function(){
+	return this.data.upper_limit;
+};
 ItemMasterModel.prototype.position = function(){
 	return this.data.position;
 };
 ItemMasterModel.prototype.params = function(){
-	var self = this, keys = ["force","intelligence","command","agility","luck","attack","defense","breakout","morale","spirit"];
+	var self = this, keys;
+	keys = ["force","intelligence","command","agility","luck","attack","defense","breakout","morale","spirit",
+	"life","feat","proficiency","upper_limit"];
 	var result = [];
 	for(var i=0,l=keys.length;i<l;i++){
 		if(this.data[keys[i]]){

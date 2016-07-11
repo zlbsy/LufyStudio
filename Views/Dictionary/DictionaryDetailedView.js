@@ -1,18 +1,18 @@
-function ItemDetailedView(controller,itemModel,fromView){
+function DictionaryDetailedView(controller,itemModel,fromView){
 	var self = this;
 	base(self,LView,[controller]);
 	self.itemModel = itemModel;
 	self.fromView = fromView;
 	self.set();
 }
-ItemDetailedView.prototype.layerInit=function(){
+DictionaryDetailedView.prototype.layerInit=function(){
 	var self = this;
 	self.translucentLayer = new LSprite();
 	self.addChild(self.translucentLayer);
 	self.translucentLayer.addChild(getTranslucentBitmap());
 	self.translucentLayer.addEventListener(LMouseEvent.MOUSE_DOWN, self.click);
 	self.translucentLayer.addEventListener(LMouseEvent.MOUSE_UP, self.closeClick);
-	var width = 320, height = 270;
+	var width = 320, height = 240;
 	self.backLayer = new LSprite();
 	self.addChild(self.backLayer);
 	var backgroundData = new LBitmapData(LMvc.datalist["win05"]);
@@ -28,17 +28,17 @@ ItemDetailedView.prototype.layerInit=function(){
 	self.layer.y = panel.y;
 	self.addChild(self.layer);
 };
-ItemDetailedView.prototype.click=function(event){};
-ItemDetailedView.prototype.closeClick=function(event){
+DictionaryDetailedView.prototype.click=function(event){};
+DictionaryDetailedView.prototype.closeClick=function(event){
 	var self = event.currentTarget.parent;
 	self.close();
 };
-ItemDetailedView.prototype.close=function(){
+DictionaryDetailedView.prototype.close=function(){
 	var self = this;
 	self.remove();
 	for (var k in self)delete self[k];
 };
-ItemDetailedView.prototype.set=function(){
+DictionaryDetailedView.prototype.set=function(){
 	var self = this;
 	self.layerInit();
 	
@@ -67,30 +67,29 @@ ItemDetailedView.prototype.set=function(){
 	additionLayer.y = equipment.y;
 	layer.addChild(additionLayer);
 	
-	var explanation = self.itemModel.explanation();
+	//TODO::ver1.1增加物品介绍
+	/*var explanation = self.itemModel.explanation();
 	var lblExplanation = getStrokeLabel(explanation,18,"#FFFFFF","#000000",4);
 	lblExplanation.width = 280;
 	lblExplanation.setWordWrap(true, 25);
 	lblExplanation.x = equipment.x;
 	lblExplanation.y = equipment.y + height + 10;
 	layer.addChild(lblExplanation);
-	
+	*/
 	if(self.fromView.constructor.name != "ItemListView"){
-		var btnEquip = getButton(Language.get("label_use"), 120);
+		var btnEquip = getButton(Language.get("label_equip"), 120);
 		btnEquip.x = (320 - btnEquip.getWidth())*0.5;
-		btnEquip.y = 200;
+		btnEquip.y = 170;
 		layer.addChild(btnEquip);
-		btnEquip.addEventListener(LMouseEvent.MOUSE_UP, self.use.bind(self));
+		btnEquip.addEventListener(LMouseEvent.MOUSE_UP, self.equip.bind(self));
 	}
 	self.layer.addChild(layer);
 };
-ItemDetailedView.prototype.use=function(event){
+DictionaryDetailedView.prototype.equip=function(event){
 	var self = this;
-	var e = new LEvent(ItemEvent.USE_ITEM);
-	e.item = self.itemModel;
-	self.dispatchEvent(e);
+	self.dispatchEvent(EquipmentEvent.Dress);
 };
-ItemDetailedView.prototype.showAddition=function(){
+DictionaryDetailedView.prototype.showAddition=function(){
 	var self = this;
 	var layer = new LSprite();
 	var params = self.itemModel.params();
@@ -102,7 +101,7 @@ ItemDetailedView.prototype.showAddition=function(){
 	}
 	return layer;
 };
-ItemDetailedView.prototype.equipComplete=function(data){
+DictionaryDetailedView.prototype.equipComplete=function(data){
 	var self = this;
 	var controller = self.controller;
 	var fromController = controller.fromController;

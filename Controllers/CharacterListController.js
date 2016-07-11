@@ -34,6 +34,7 @@ CharacterListController.prototype.viewLoad=function(){
 	"CharacterList/CharacterDetailedTabStatus","CharacterList/CharacterDetailedTabProperties","CharacterList/CharacterDetailedFace","CharacterList/CharacterDetailedTabEquipment",
 	"Equipments/Equipments","Equipments/EquipmentsChild","Equipments/EquipmentDetailed","Common/StatusBar",
 	"Soldiers/Soldiers","Soldiers/SoldiersChild","Soldiers/SoldierDetailed",
+	"Items/Items","Items/ItemsChild","Items/ItemDetailed",
 	"Strategy/Strategy","Strategy/StrategyChild","Strategy/StrategyDetailed"],self.init);
 };
 CharacterListController.prototype.init=function(status){

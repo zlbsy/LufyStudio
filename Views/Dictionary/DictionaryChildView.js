@@ -1,4 +1,4 @@
-function ItemsChildView(itemModel, width){
+function DictionaryChildView(itemModel, width){
 	var self = this;
 	base(self,LListChildView,[]);
 	self.itemModel = itemModel;
@@ -8,19 +8,19 @@ function ItemsChildView(itemModel, width){
 	self.layerInit();
 	//self.set();
 }
-ItemsChildView.prototype.layerInit=function(){
+DictionaryChildView.prototype.layerInit=function(){
 	var self = this;
 	self.layer = new LSprite();
 	self.addChild(self.layer);
 };
-ItemsChildView.prototype.updateView = function(bitmap, rectangle, point){
+DictionaryChildView.prototype.updateView = function(bitmap, rectangle, point){
 	var self = this;
 	if(!self._ll_cacheAsBitmap){
 		self.set();
 	}
 	self.callParent("updateView",arguments);
 };
-ItemsChildView.prototype.getName=function(){
+DictionaryChildView.prototype.getName=function(){
 	var self = this;
 	if(!self.lblName){
 		var lblName = getStrokeLabel("",23,"#FFFFFF","#000000",3);
@@ -31,19 +31,19 @@ ItemsChildView.prototype.getName=function(){
 	}
 	return self.lblName;
 };
-ItemsChildView.prototype.getParams=function(){
+DictionaryChildView.prototype.getParams=function(){
 	var self = this;
 	if(!self.lblParams){
 		var lblParams = getStrokeLabel("",16,"#FFFFFF","#000000",3);
 		lblParams.setWordWrap(true, 23);
-		lblParams.x = 200;
+		lblParams.x = 300;
 		lblParams.y = 5;
 		self.layer.addChild(lblParams);
 		self.lblParams = lblParams;
 	}
 	return self.lblParams;
 };
-ItemsChildView.prototype.drawLine=function(){
+DictionaryChildView.prototype.drawLine=function(){
 	var self = this;
 	if(self.bitmapLine){
 		return;
@@ -55,7 +55,7 @@ ItemsChildView.prototype.drawLine=function(){
 	self.layer.addChild(bitmapLine);
 	self.bitmapLine = bitmapLine;
 };
-ItemsChildView.prototype.set=function(){
+DictionaryChildView.prototype.set=function(){
 	var self = this;
 	var lblName = self.getName();
 	lblName.text = String.format("{0}x{1}", self.itemModel.name(), self.itemModel.count());
@@ -80,14 +80,14 @@ ItemsChildView.prototype.set=function(){
 		self.layer.addChild(self.icon);
 	}
 };
-ItemsChildView.prototype.iconComplete=function(event){
+DictionaryChildView.prototype.iconComplete=function(event){
 	var self = event.currentTarget.parent.parent;
 	self.cacheAsBitmap(false);
 	self.updateView();
 };
-ItemsChildView.prototype.onClick = function(event) {
+DictionaryChildView.prototype.onClick = function(event) {
 	var self = event.target;
 	var listView = event.currentTarget;
-	var itemsView = listView.getParentByConstructor(ItemsView);
-	itemsView.itemDetailedDialog(self.itemModel);
+	var equipmentsView = listView.getParentByConstructor(EquipmentsView);
+	equipmentsView.equipmentDetailedDialog(self.itemModel);
 };

@@ -184,22 +184,35 @@ function jobAiNeedToEnlist(areaModel){
 		var chara = charas[i];
 		minToops += chara.maxTroops();
 	}
-	if(areaModel.troops() < minToops){ 
-		return AiEnlistFlag.Must ;
+	var mustProportion = 1, internalProportion = 1;
+	if(areaModel.appointType() == AppointType.AppointInternal || areaModel.appointType() == AppointType.AppointExplore){
+		mustProportion = 0.1;
+		internalProportion = 2;
+	}else if(areaModel.appointType() == AppointType.AppointMilitary){
+		internalProportion = 0.7;
 	}
-	if(areaModel.agriculture() < areaModel.maxAgriculture()*0.2 || areaModel.business() < areaModel.maxBusiness()*0.2 || areaModel.technology() < areaModel.maxTechnology()*0.2){
+	if(areaModel.troops() < minToops * mustProportion){ 
+		return AiEnlistFlag.Must;
+	}
+	if(areaModel.agriculture() < areaModel.maxAgriculture()*0.2 || 
+		areaModel.business() < areaModel.maxBusiness()*0.2 || 
+		areaModel.technology() < areaModel.maxTechnology()*0.2){
 		return AiEnlistFlag.MustResource;
 	}
-	if(areaModel.troops() < minToops * 1.5){
+	if(areaModel.troops() < minToops * 1.5 * mustProportion){
 		return AiEnlistFlag.Need;
 	}
-	if(areaModel.agriculture() < areaModel.maxAgriculture()*0.4 || areaModel.business() < areaModel.maxBusiness()*0.4 || areaModel.technology() < areaModel.maxTechnology()*0.4){
+	if(areaModel.agriculture() < areaModel.maxAgriculture()*0.4*internalProportion || 
+		areaModel.business() < areaModel.maxBusiness()*0.4*internalProportion || 
+		areaModel.technology() < areaModel.maxTechnology()*0.4*internalProportion){
 		return AiEnlistFlag.NeedResource;
 	}
-	if(areaModel.troops() < minToops * 2){
+	if(areaModel.troops() < minToops * 2 * mustProportion){
 		return AiEnlistFlag.Battle;
 	}
-	if(areaModel.agriculture() < areaModel.maxAgriculture() || areaModel.business() < areaModel.maxBusiness() || areaModel.technology() < areaModel.maxTechnology()){
+	if(areaModel.agriculture() < areaModel.maxAgriculture() || 
+		areaModel.business() < areaModel.maxBusiness() || 
+		areaModel.technology() < areaModel.maxTechnology()){
 		return AiEnlistFlag.BattleResource;
 	}
 	return AiEnlistFlag.Free;

@@ -50,6 +50,12 @@ MenuView.prototype.init=function(){
 	buttonEventList.addEventListener(LMouseEvent.MOUSE_UP, self.onClickEventList);
 	
 	menuY += menuHeight;
+	var buttonEventList = getButton(Language.get("game_dictionary"),200);
+	buttonEventList.y = menuY;
+	layer.addChild(buttonEventList);
+	buttonEventList.addEventListener(LMouseEvent.MOUSE_UP, self.onClickEventList);
+	
+	menuY += menuHeight;
 	var buttonReturnTop = getButton(Language.get("return_top"),200);
 	buttonReturnTop.name = "return_top";
 	buttonReturnTop.y = menuY;

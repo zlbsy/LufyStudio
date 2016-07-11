@@ -325,7 +325,9 @@ function battleFoodCheck(belong){
 	}
 	
 	charas.forEach(function(child){
+		//降低能力
 		child.status.downloadAidStatusRandom();
+		//TODO::待增加处理，兵粮不够的时候，兵力每回合损失
 	});
 	var chara;
 	for(var i=0,l=charas.length;i<l;i++){

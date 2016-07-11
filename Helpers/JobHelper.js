@@ -1012,21 +1012,48 @@ function generalsChangeLoyalty(generals){
 //比武大会报酬
 function tournamentsGet(result){
 	var message = Language.get("tournaments_get_message_"+result);
+	var ids = [];
 	switch (result) {
 		case 0:
-			//经验果x2
+			//将军印x4
+			ids = [{id:14,q:4}];
 			break;
 		case 1:
-			//延寿丹,经验果x16,训练果x8
+			//延寿丹x1,练兵金牌x8,大将军印x8
+			ids = [{id:91,q:1},{id:10,q:8},{id:13,q:8}];
 			break;
 		case 2:
-			//经验果x8,训练果x4
+			//练兵铜牌x8,将军印x8
+			ids = [{id:11,q:8},{id:14,q:8}];
 			break;
 		case 4:
-			//训练果x2,经验果x4
+			//练兵铁牌x8,将军印x4
+			ids = [{id:12,q:8},{id:14,q:4}];
 			break;
 		default:
 			break;
 	}
+	var seignior = SeigniorModel.getSeignior(LMvc.selectSeignorId);
+	var getLabels = [];
+	for(var i=0;i<ids.length;i++){
+		var itemData = ids[i];
+		for(var j=0;j<itemData.q;j++){
+			var item = new ItemModel(null,{item_id:itemData.id,count:1});
+			seignior.addItem(item);
+			if(j > 0){
+				continue;
+			}
+			getLabels.push(item.name() + "x" + itemData.q);
+		}
+	}
+	message += getLabels.join("\n");
 	
+	var obj = {title:Language.get("confirm"),
+	message:message,
+	height:240,okEvent:function(event){
+		event.currentTarget.parent.remove();
+		SeigniorExecute.run();
+	}};
+	var windowLayer = ConfirmWindow(obj);
+	LMvc.layer.addChild(windowLayer);
 }

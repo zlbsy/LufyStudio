@@ -68,7 +68,12 @@ var JobMax = {
 	TECHNOLOGY:[3000,4000,5000,6000,7000],
 	REPAIR:[3000,4000,5000,6000,7000],
 };
-
+var AppointType = {
+	AppointInternal : "appoint_internal",
+	AppointExplore : "appoint_explore",
+	AppointMilitary : "appoint_military",
+	AppointRandom : "appoint_random"
+};
 var AiEnlistFlag = {
 	None:0,//爆满
 	Must:1,//必须征兵

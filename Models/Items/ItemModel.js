@@ -19,6 +19,15 @@ ItemModel.prototype.count = function(value){
 ItemModel.prototype.rarity = function(){
 	return this.master().rarity();
 };
+ItemModel.prototype.feat = function(){
+	return this.master().feat();
+};
+ItemModel.prototype.proficiency = function(){
+	return this.master().proficiency();
+};
+ItemModel.prototype.upperLimit = function(){
+	return this.master().upperLimit();
+};
 ItemModel.prototype.name = function(){
 	return this.master().name();
 };
