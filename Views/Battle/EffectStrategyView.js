@@ -168,6 +168,10 @@ EffectStrategyView.prototype.removeSelf = function(event){
 			statusView.addEventListener(BattleCharacterStatusEvent.CHANGE_COMPLETE,LMvc.currentAttackCharacter.AI.plusExp);
 		}});
 	}else if(self.effectType == StrategyEffectType.Supply){
+			if(!isCurrentAttackTarget(self.currentTargetCharacter)){
+				self.remove();
+				return;
+			}
 		BattleCharacterStatusView.healCharactersStrategy();
 	}else if(isCurrentAttackTarget(self.currentTargetCharacter)){
 		LMvc.currentAttackCharacter.AI.plusExp();

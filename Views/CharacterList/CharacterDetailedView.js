@@ -103,6 +103,7 @@ CharacterDetailedView.prototype.set=function(param){
 	self.setFaceLayer();
 	self.TabShow(self.nowTab);
 	self.controller.dispatchEvent(LController.NOTIFY_ALL);
+	self.buttonItem.visible = !LMvc.BattleController && characterModel.seigniorId() == LMvc.selectSeignorId;
 };
 CharacterDetailedView.prototype.setFaceLayer=function(){
 	var self = this;
@@ -322,6 +323,7 @@ CharacterDetailedView.prototype.ctrlLayerInit=function(){
 	self.ctrlLayer.addChild(buttonClose);
 	buttonClose.addEventListener(LMouseEvent.MOUSE_UP, self.closeCharacterDetailed);
 	var buttonItem = getButton(Language.get("item"),100);
+	self.buttonItem = buttonItem;
 	buttonItem.x = buttonClose.x;
 	buttonItem.y = buttonClose.getHeight() + 5;
 	self.ctrlLayer.addChild(buttonItem);

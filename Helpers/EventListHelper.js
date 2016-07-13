@@ -58,10 +58,18 @@ function checkEventList() {
 				continue;
 			}
 		}
-		if(currentEvent.condition.seignior > 0 && LMvc.selectSeignorId != currentEvent.condition.seignior){
+		if(Array.isArray(currentEvent.condition.seignior)){
+			if(currentEvent.condition.seignior.indexOf(LMvc.selectSeignorId)<0){
+				continue;
+			}
+		}else if(currentEvent.condition.seignior > 0 && LMvc.selectSeignorId != currentEvent.condition.seignior){
 			continue;
 		}
-		if(currentEvent.condition.noSeignior > 0 && LMvc.selectSeignorId == currentEvent.condition.noSeignior){
+		if(Array.isArray(currentEvent.condition.noSeignior)){
+			if(currentEvent.condition.noSeignior.indexOf(LMvc.selectSeignorId)>=0){
+				continue;
+			}
+		}else if(currentEvent.condition.noSeignior > 0 && LMvc.selectSeignorId == currentEvent.condition.noSeignior){
 			continue;
 		}
 		var generalsOk = true;
@@ -88,7 +96,7 @@ function checkEventList() {
 			}
 			if(general.captive){
 				var city = character.city();
-				if(city.seigniorCharaId() != general.captive){
+				if(city && city.seigniorCharaId() != general.captive){
 					generalsOk = false;
 					break;
 				}
