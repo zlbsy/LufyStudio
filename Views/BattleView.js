@@ -30,10 +30,12 @@ BattleView.prototype.init=function(){
 	self.miniLayer.addEventListener(LMouseEvent.MOUSE_UP, self.miniLayerStopDrag);
 	
 	self.addEventListener(LEvent.ENTER_FRAME, self.onframe);
-	return;
-	self.addChildAt(getBlackBitmap(LGlobal.width, LGlobal.height), 0);
-	var baseLayer = self.baseLayer;
-	baseLayer.y = (LGlobal.height - map.height) * 0.5;
+	var map = self.model.map;
+	if(map.height < LGlobal.height){
+		var blackBitmap = getBlackBitmap(LGlobal.width, LGlobal.height - map.height);
+		blackBitmap.y = map.height;
+		self.addChild(blackBitmap);
+	}
 };
 BattleView.prototype.boutShow = function(event){
 	var self = event.currentTarget.view;

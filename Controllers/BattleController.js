@@ -107,10 +107,8 @@ BattleController.prototype.init = function(){
 
 	var enemyTroops = self.battleData.toCity.troops();
 	var generals = self.battleData.toCity.generals();
-	if(LMvc.areaData && LMvc.areaData.battleData){
-		for(var i=0,l=generals.length;i<l;i++){
-			enemyTroops += generals[i].troops();
-		}
+	for(var i=0,l=generals.length;i<l;i++){
+		enemyTroops += generals[i].troops();
 	}
 	if(self.battleData.toCity.seigniorCharaId() == 0 || enemyTroops == 0 || 
 		self.battleData.toCity.generalsSum() == 0){
@@ -139,6 +137,14 @@ BattleController.prototype.charactersInit = function(){
 	var selfPositions;
 	var selfAttack = (self.battleData.fromCity.seigniorCharaId() == LMvc.selectSeignorId);
 	if(selfAttack){
+		var generals = self.battleData.toCity.generals();
+		for(var i=0,l=generals.length;i<l;i++){
+			var chara = generals[i];
+			if(chara.troops() > 0){
+				self.battleData.toCity.troops(self.battleData.toCity.troops() + chara.troops());
+				chara.troops(0);
+			}
+		}
 		enemyCharas = self.battleData.toCity.getDefenseEnemies();
 		enemyPositions = self.model.map.charas;
 		selfPositions = self.model.map.enemys;

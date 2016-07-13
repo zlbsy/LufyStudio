@@ -249,7 +249,7 @@ var SkillsData = [
 {id:56,name:"巾帼(孙尚香)",type:SkillType.ATTACK,subType:[SkillSubType.ATTACK_COUNT],attacks:[1,0.75],probability:100,explanation:"巾帼不让须眉，每次攻击必定双击。"},
 {id:57,name:"偷天换日(马云绿)",type:SkillType.HERT,subType:[SkillSubType.HP_MP_CHANGE],changeProbability:30,probability:100,explanation:"几率使用近战兵种时,将受到的攻击伤害转为MP伤害,如果MP为零，则有一定概率将伤害转换为MP。"},
 {id:58,name:"羁绊(马忠,潘璋)",type:SkillType.ATTACK,subType:[SkillSubType.ENEMY_AID],aids:[22],aidCount:1,aidRects:[{x:0,y:0}],probability:100,explanation:"有几率附带定身效果。"},
-{id:59,name:"运气(夏侯敦)",type:SkillType.CREATE,subType:[SkillSubType.STATUS_ADD_PROP],status_name:"morale",status_value:0.1,probability:100,explanation:"增强士气。"},
+{id:59,name:"运气(马忠(蜀))",type:SkillType.CREATE,subType:[SkillSubType.STATUS_ADD_PROP],status_name:"morale",status_value:0.1,probability:100,explanation:"增强士气。"},
 {id:60,name:"防御(关平)",type:SkillType.CREATE,subType:[SkillSubType.STATUS_ADD_PROP],status_name:"defense",status_value:0.1,probability:100,explanation:"增强防御。"},
 {id:61,name:"敏捷(乐进)",type:SkillType.CREATE,subType:[SkillSubType.STATUS_ADD_PROP],status_name:"breakout",status_value:0.1,probability:100,explanation:"增强爆发力。"},
 {id:62,name:"攻击(文鸯)",type:SkillType.CREATE,subType:[SkillSubType.STATUS_ADD_PROP],status_name:"attack",status_value:0.1,probability:100,explanation:"增强攻击。"},
@@ -260,5 +260,8 @@ var SkillsData = [
 {id:67,name:"反客为主(孙坚)",type:SkillType.BACK_ATTACK,subType:[SkillSubType.ATTACK_COUNT],attacks:[1],probability:100,explanation:"几率反击时给予敌军主动攻击的伤害值。"},
 {id:68,name:"治安(刘封)",type:SkillType.NULL,subType:[SkillSubType.POLICE],explanation:"内政治安加成。"},
 {id:69,name:"飞刀(祝融)",type:SkillType.CREATE,subType:[SkillSubType.SOLDIERS_ATTACK_RECT],condition:{type:"AttackType",value:AttackType.NEAR},rangeAttack:[{x:0,y:2},{x:0,y:-2},{x:2,y:0},{x:-2,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],explanation:"近战兵种攻击范围增强。"},
-{id:70,name:"辅佐(黄月英)",type:SkillType.BOUT_START,subType:[SkillSubType.SELF_AID],aids:[1,3,5,7,9],aidCount:1,aidRects:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],probability:100,explanation:"回合开始时,为自身及周围所有相邻部队提升一种能力。"},
+{id:70,name:"辅佐(黄月英)",type:SkillType.BOUT_START,subType:[SkillSubType.SELF_AID],aids:[1,3,5,7,9],aidCount:1,aidRects:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],probability:100,explanation:"回合开始时,为自身及周围所有相邻部队提升一种能力。"},,
+{id:71,name:"突击(夏侯惇)",type:SkillType.BOUT_START,subType:[SkillSubType.SELF_AID],aids:[1,3,5,7,9],aidCount:1,aidRects:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],probability:100,explanation:"回合开始时,为自身及周围所有相邻部队提升一种能力。"},,
+{id:72,name:"突破(乐进)",type:SkillType.BOUT_START,subType:[SkillSubType.SELF_AID],aids:[1,3,5,7,9],aidCount:1,aidRects:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],probability:100,explanation:"回合开始时,为自身及周围所有相邻部队提升一种能力。"},,
+{id:73,name:"逆势反击(张郃)",type:SkillType.BOUT_START,subType:[SkillSubType.SELF_AID],aids:[1,3,5,7,9],aidCount:1,aidRects:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],probability:100,explanation:"回合开始时,为自身及周围所有相邻部队提升一种能力。"},
 ];
