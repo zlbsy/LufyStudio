@@ -660,10 +660,11 @@ AreaModel.prototype.removeNotDebut=function(charaId){
 	for(var i = 0;i<length;i++){
 		var child = notDebut[i];
 		if(child.chara_id == charaId){
-			self.data.not_debut.splice(i, 1);
-			break;
+			var charas = self.data.not_debut.splice(i, 1);
+			return charas[0];
 		}
 	}
+	return null;
 };
 AreaModel.prototype.notDebut=function(force){
 	var notDebut = this.data.not_debut;

@@ -182,8 +182,11 @@ function accessRun(characterModel){
 		return false;
 	}
 	var charaId = notDebut[notDebut.length*Math.fakeRandom() >>> 0];
-	cityModel.removeNotDebut(charaId);
+	var chara = cityModel.removeNotDebut(charaId);
 	var targetModel = CharacterModel.getChara(charaId);
+	if(chara && chara.equipments && chara.equipments.length > 0){
+		targetModel.equip(chara.equipments);
+	}
 	targetModel.cityId(characterModel.cityId());
 	var area = characterModel.city();
 	var outOfOffice = area.outOfOffice();

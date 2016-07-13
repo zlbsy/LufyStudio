@@ -139,6 +139,9 @@ BattleResultView.prototype.cityWin=function(event){
 	var self = event.currentTarget;
 	var charaTroops = 0;
 	self.model.ourList.forEach(function(child){
+		if(child.data.isDefCharacter()){
+			return;
+		}
 		charaTroops += child.data.troops();
 		child.data.troops(0);
 	});
@@ -173,6 +176,9 @@ BattleResultView.prototype.cityFail=function(event){
 	var self = event.currentTarget;
 	var charaTroops = 0;
 	self.model.enemyList.forEach(function(child){
+		if(child.data.isDefCharacter()){
+			return;
+		}
 		charaTroops += child.data.troops();
 		child.data.troops(0);
 	});

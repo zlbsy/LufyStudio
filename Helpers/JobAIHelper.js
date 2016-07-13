@@ -611,7 +611,10 @@ function childHasNotGenerals(childModel){
 		var index = notDebut.indexOf(childModel.id());
 		if(index >= 0){
 			//删除未登场武将信息
-			area.removeNotDebut(childModel.id());
+			var chara = area.removeNotDebut(childModel.id());
+			if(chara && chara.equipments && chara.equipments.length > 0){
+				childModel.equip(chara.equipments);
+			}
 			return true;
 		}
 	}

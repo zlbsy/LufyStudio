@@ -97,7 +97,8 @@ var EventListConfig = [
 		seignior:[1,21,451],
 		generals:[
 			{id:1,seignior:1},//曹操未灭亡
-			{id:21,seignior:21},//刘备未灭亡
+			{id:18,seignior:18},//吕布未灭亡
+			{id:21,seignior:21,cityId:[43,38,40,33,34,26,29,30,39,41]},//刘备未灭亡,并且在距离徐州附近的城池
 			{id:451,seignior:451},//陶谦未灭亡
 		],
 		citys:[

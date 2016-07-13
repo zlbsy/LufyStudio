@@ -74,9 +74,16 @@ function checkEventList() {
 				break;
 			}
 			if(general.cityId){
-				if(character.cityId() != general.cityId){
-					generalsOk = false;
-					break;
+				if(Array.isArray(general.cityId)){
+					if(general.cityId.indexOf(character.cityId())<0){
+						generalsOk = false;
+						break;
+					}
+				}else{
+					if(character.cityId() != general.cityId){
+						generalsOk = false;
+						break;
+					}
 				}
 			}
 			if(general.captive){
@@ -505,11 +512,18 @@ function dispatchEventListResultStopBattle(child) {
 	}
 }
 function dispatchEventListResultChangeSeignior(child) {
+	var chara;
 	for(var i=0,l=AreaModel.list.length;i<l;i++){
 		var area = AreaModel.list[i];
-		area.removeNotDebut(child.id);
+		chara = area.removeNotDebut(child.id);
+		if(chara){
+			break;
+		}
 	}
 	var character = CharacterModel.getChara(child.id);
+	if(chara && chara.equipments && chara.equipments.length > 0){
+		character.equip(chara.equipments);
+	}
 	character.seigniorId(child.seignior);
 	character.loyalty(child.loyalty);
 	character.moveTo(child.city);
