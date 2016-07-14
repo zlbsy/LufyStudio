@@ -12,7 +12,7 @@ EquipmentDetailedView.prototype.layerInit=function(){
 	self.translucentLayer.addChild(getTranslucentBitmap());
 	self.translucentLayer.addEventListener(LMouseEvent.MOUSE_DOWN, self.click);
 	self.translucentLayer.addEventListener(LMouseEvent.MOUSE_UP, self.closeClick);
-	var width = 320, height = 240;
+	var width = 320, height = 350;
 	self.backLayer = new LSprite();
 	self.addChild(self.backLayer);
 	var backgroundData = new LBitmapData(LMvc.datalist["win05"]);
@@ -63,6 +63,7 @@ EquipmentDetailedView.prototype.set=function(){
 	layer.addChild(equipment);
 	
 	var additionLayer = self.showAddition();
+	self.additionLayer = additionLayer;
 	additionLayer.x = equipment.x + width + 10;
 	additionLayer.y = equipment.y;
 	layer.addChild(additionLayer);
@@ -78,16 +79,117 @@ EquipmentDetailedView.prototype.set=function(){
 	*/
 	if(self.fromView.constructor.name != "ItemListView"){
 		var btnEquip = getButton(Language.get("label_equip"), 120);
-		btnEquip.x = (320 - btnEquip.getWidth())*0.5;
-		btnEquip.y = 170;
+		self.btnEquip = btnEquip;
+		btnEquip.x = (320 - btnEquip.getWidth())*0.5 - 65;
+		btnEquip.y = 280;
 		layer.addChild(btnEquip);
-		btnEquip.addEventListener(LMouseEvent.MOUSE_UP, self.equip.bind(self));
+		btnEquip.addEventListener(LMouseEvent.MOUSE_UP, self.equip);
+		var btnSale = getButton(Language.get("出售"), 120);
+		btnSale.x = (320 - btnSale.getWidth())*0.5 + 65;
+		btnSale.y = 280;
+		layer.addChild(btnSale);
+		btnSale.addEventListener(LMouseEvent.MOUSE_UP, self.sale);
 	}
 	self.layer.addChild(layer);
 };
-EquipmentDetailedView.prototype.equip=function(event){
+EquipmentDetailedView.prototype.minus=function(event){
+	var self = event.currentTarget.getParentByConstructor(EquipmentDetailedView);
+	self.changeNumber(self.number - 1);
+};
+EquipmentDetailedView.prototype.plus=function(event){
+	var self = event.currentTarget.getParentByConstructor(EquipmentDetailedView);
+	self.changeNumber(self.number + 1);
+};
+EquipmentDetailedView.prototype.plusMax=function(event){
+	var self = event.currentTarget.getParentByConstructor(EquipmentDetailedView);
+	self.changeNumber(self.itemModel.count());
+};
+EquipmentDetailedView.prototype.changeNumber=function(num){
 	var self = this;
+	self.number = num;
+	if(self.number < 1){
+		self.number = 1;
+	}else if(self.number > self.itemModel.count()){
+		self.number = self.itemModel.count();
+	}
+	self.lblNumber.text = String.format("{0}/{1}", self.number, self.itemModel.count());
+	self.lblGet.text = String.format("获取银子：{0}", self.number*self.itemModel.price());
+};
+EquipmentDetailedView.prototype.equip=function(event){
+	var self = event.currentTarget.getParentByConstructor(EquipmentDetailedView);
 	self.dispatchEvent(EquipmentEvent.Dress);
+};
+EquipmentDetailedView.prototype.saleRun=function(event){
+	var self = event.currentTarget.getParentByConstructor(EquipmentDetailedView);
+	//self.dispatchEvent(EquipmentEvent.Dress);
+};
+EquipmentDetailedView.prototype.sale=function(event){
+	var btnSale = event.currentTarget;
+	var self = btnSale.getParentByConstructor(EquipmentDetailedView);
+	self.btnEquip.remove();
+	self.additionLayer.remove();
+	btnSale.x = (320 - btnSale.getWidth())*0.5;
+	btnSale.removeEventListener(LMouseEvent.MOUSE_UP, self.sale);
+	self.saleContentInit();
+	btnSale.addEventListener(LMouseEvent.MOUSE_UP, self.saleRun);
+};
+EquipmentDetailedView.prototype.saleContentInit=function(){
+	var self = this;
+	
+	var layer = new LSprite();
+	var detailedLayer = new LSprite();
+	
+	
+	
+	var width = 100, height = 100;
+	
+	var detailedLayer = new LSprite();
+	var lblCount = getStrokeLabel("数量：" + self.itemModel.count(),20,"#FFFFFF","#000000",4);
+	detailedLayer.addChild(lblCount);
+	var lblPrice = getStrokeLabel("单价：" + self.itemModel.price(),20,"#FFFFFF","#000000",4);
+	lblPrice.y = 30;
+	detailedLayer.addChild(lblPrice);
+	detailedLayer.x = width + 30;
+	detailedLayer.y = 50;
+	layer.addChild(detailedLayer);
+	
+	var lblExplanation = getStrokeLabel("请选择出售个数：",20,"#FFFFFF","#000000",4);
+	lblExplanation.x = 20;
+	lblExplanation.y = 50 + height + 10;
+	layer.addChild(lblExplanation);
+	
+	self.number = 1;
+	var lblNumber = getStrokeLabel(String.format("{0}/{1}", self.number, self.itemModel.count()),24,"#FFFFFF","#000000",4);
+	lblNumber.textAlign = "center";
+	lblNumber.x = 120;
+	lblNumber.y = 200;
+	layer.addChild(lblNumber);
+	self.lblNumber = lblNumber;
+	
+	var btnMinus = getButton("-", 60);
+	btnMinus.x = 10;
+	btnMinus.y = 190;
+	layer.addChild(btnMinus);
+	btnMinus.addEventListener(LMouseEvent.MOUSE_UP, self.minus);
+	var btnPlus = getButton("+", 60);
+	btnPlus.x = 170;
+	btnPlus.y = 190;
+	layer.addChild(btnPlus);
+	btnPlus.addEventListener(LMouseEvent.MOUSE_UP, self.plus);
+	var btnMax = getButton("最大", 80);
+	btnMax.x = 230;
+	btnMax.y = 190;
+	layer.addChild(btnMax);
+	btnMax.addEventListener(LMouseEvent.MOUSE_UP, self.plusMax);
+	
+	var lblGet = getStrokeLabel("获取银子：0",20,"#FFFFFF","#000000",4);
+	lblGet.x = 20;
+	lblGet.y = 250;
+	layer.addChild(lblGet);
+	self.lblGet = lblGet;
+	self.changeNumber(self.number);
+	
+	self.layer.addChild(layer);
 };
 EquipmentDetailedView.prototype.showAddition=function(){
 	var self = this;

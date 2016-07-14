@@ -193,7 +193,6 @@ function jobAiNeedToEnlist(areaModel){
 			internalProportion = 0.7;
 		}
 	}
-	console.log(areaModel.name()+","+mustProportion+","+internalProportion, areaModel.troops() ,minToops,minToops * mustProportion,minToops * 1.5 * mustProportion);
 	if(areaModel.troops() < minToops * mustProportion){ 
 		return AiEnlistFlag.Must;
 	}

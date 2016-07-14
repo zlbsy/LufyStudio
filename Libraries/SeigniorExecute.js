@@ -545,7 +545,6 @@ SeigniorExecute.prototype.areaAIRun=function(areaModel){
 	}
 	if(areaModel.seigniorCharaId() != LMvc.selectSeignorId || (areaModel.isAppoint() && areaModel.appointType() != AppointType.AppointInternal && areaModel.appointType() != AppointType.AppointExplore)){
 		//判断是否有可攻击的城池
-		console.log(areaModel.name() +","+needEnlistFlag+",判断是否有可攻击的城池");
 		var city = getCanBattleCity(areaModel, self.characters, needEnlistFlag);
 		if(city){
 			jobAiToBattle(areaModel, self.characters, city);

@@ -615,7 +615,11 @@ CharacterModel.prototype.level = function() {
 	if(self.isDefCharacter() || self.isTribeCharacter()){
 		return self.seigniorLevel();
 	}
-	return (self.data.feat / CharacterLevelConfig.exp >>> 0) + CharacterLevelConfig.initLevel;
+	var lv = (self.data.feat / CharacterLevelConfig.exp >>> 0) + CharacterLevelConfig.initLevel;
+	if(lv > CharacterLevelConfig.maxLevel){
+		return CharacterLevelConfig.maxLevel;
+	}
+	return lv;
 };
 CharacterModel.prototype.strategies = function(isAll) {
 	var self = this;
