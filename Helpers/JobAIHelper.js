@@ -185,12 +185,15 @@ function jobAiNeedToEnlist(areaModel){
 		minToops += chara.maxTroops();
 	}
 	var mustProportion = 1, internalProportion = 1;
-	if(areaModel.appointType() == AppointType.AppointInternal || areaModel.appointType() == AppointType.AppointExplore){
-		mustProportion = 0.1;
-		internalProportion = 2;
-	}else if(areaModel.appointType() == AppointType.AppointMilitary){
-		internalProportion = 0.7;
+	if(areaModel.seigniorCharaId() == LMvc.selectSeignorId && areaModel.isAppoint()){
+		if(areaModel.appointType() == AppointType.AppointInternal || areaModel.appointType() == AppointType.AppointExplore){
+			mustProportion = 0.1;
+			internalProportion = 2;
+		}else if(areaModel.appointType() == AppointType.AppointMilitary){
+			internalProportion = 0.7;
+		}
 	}
+	console.log(areaModel.name()+","+mustProportion+","+internalProportion, areaModel.troops() ,minToops,minToops * mustProportion,minToops * 1.5 * mustProportion);
 	if(areaModel.troops() < minToops * mustProportion){ 
 		return AiEnlistFlag.Must;
 	}

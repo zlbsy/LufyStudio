@@ -17,7 +17,7 @@ CharacterDetailedTabStatusView.prototype.showStatus=function(){
 	var txtHeight = 27, startY = 5, startX = 5;
 	var labels = ["belong","identity","age","city","loyalty","status"];
 	var seigniorId = characterModel.seigniorId();
- 	var loyaltyLabel = seigniorId > 0 ? characterModel.loyalty() : "--";
+ 	var loyaltyLabel = (seigniorId > 0 && characterModel.id() != seigniorId) ? characterModel.loyalty() : "--";
 	var datas = [
 	characterModel.seigniorName(),
 	characterModel.identity(),

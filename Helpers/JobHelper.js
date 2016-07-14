@@ -450,7 +450,7 @@ function persuadeRun(characterModel, targetPersuadeId){
 	//劝降：忠诚度+义气+运气+武将相性
 	characterModel.job(Job.IDLE);
 	var targetPersuade = CharacterModel.getChara(targetPersuadeId);
-	if(!targetPersuade.seignior() || !targetPersuade.city()){
+	if(!targetPersuade.seignior() || targetPersuade.seigniorId() == targetPersuadeId || !targetPersuade.city()){
 		removeCanPersuadeCharacters(targetPersuadeId);
 		characterModel.featPlus(JobFeatCoefficient.NORMAL * 0.5);
 		return false;

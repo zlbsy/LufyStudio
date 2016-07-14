@@ -511,7 +511,7 @@ SeigniorExecute.prototype.areaAIRun=function(areaModel){
 	if(toPolice){
 		self.jobAiFunction(areaModel,self.characters,jobAiPolice,["force","agility"]);//治安
 	}
-	if(areaModel.appointType() == AppointType.AppointExplore && !self.appointExploreOver){
+	if(areaModel.seigniorCharaId() == LMvc.selectSeignorId && areaModel.isAppoint() && areaModel.appointType() == AppointType.AppointExplore && !self.appointExploreOver){
 		//重视探索
 		self.appointExploreOver = true;
 		var length = areaModel.generalsSum() * 0.5 >>> 0;
@@ -543,8 +543,9 @@ SeigniorExecute.prototype.areaAIRun=function(areaModel){
 		) && Math.fakeRandom() > 0.5){
 		self.jobAiFunction(areaModel,self.characters,jobAiRepair,["force","command"]);//修补
 	}
-	if(areaModel.appointType() != AppointType.AppointInternal && areaModel.appointType() != AppointType.AppointExplore){
+	if(areaModel.seigniorCharaId() != LMvc.selectSeignorId || (areaModel.isAppoint() && areaModel.appointType() != AppointType.AppointInternal && areaModel.appointType() != AppointType.AppointExplore)){
 		//判断是否有可攻击的城池
+		console.log(areaModel.name() +","+needEnlistFlag+",判断是否有可攻击的城池");
 		var city = getCanBattleCity(areaModel, self.characters, needEnlistFlag);
 		if(city){
 			jobAiToBattle(areaModel, self.characters, city);
