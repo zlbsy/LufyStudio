@@ -50,6 +50,9 @@ StrategyMasterModel.prototype.effectType = function() {
 StrategyMasterModel.prototype.strategyType = function() {
 	return this.data.type;
 };
+StrategyMasterModel.prototype.rand = function() {
+	return this.data.rand;
+};
 StrategyMasterModel.prototype.canChangeStatus = function() {
 	return this.data.effectType == StrategyEffectType.Status;
 };

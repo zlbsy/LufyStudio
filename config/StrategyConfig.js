@@ -247,8 +247,8 @@ var StrategyDatas = [
 	icon:"chaos_sign",
 	se:"Se_strategy_hert1",
 	cost:8,
-	hert:0.8,
-	rangeAttack:[{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:1,y:1},{x:1,y:-1},{x:-1,y:1},{x:-1,y:-1},{x:2,y:0},{x:-2,y:0},{x:0,y:2},{x:0,y:-2}],
+	hert:0,
+	rangeAttack:[{x:0,y:-1},{x:0,y:-2},{x:0,y:-3},{x:0,y:1},{x:0,y:2},{x:0,y:3},{x:-1,y:0},{x:-2,y:0},{x:-3,y:0},{x:1,y:0},{x:2,y:0},{x:3,y:0},{x:-1,y:-1},{x:1,y:-1},{x:-1,y:1},{x:1,y:1},{x:1,y:2},{x:-1,y:-2},{x:1,y:-2},{x:-1,y:2},{x:2,y:1},{x:-2,y:-1},{x:2,y:-1},{x:-2,y:1}],
 	rangeAttackTarget:[{x:0,y:0}],
 	explanation:""
 	},
@@ -256,8 +256,9 @@ var StrategyDatas = [
 	icon:"fixed_sign",
 	se:"Se_strategy_hert2",
 	cost:8,
-	hert:0.8,
-	rangeAttack:[{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:1,y:1},{x:1,y:-1},{x:-1,y:1},{x:-1,y:-1},{x:2,y:0},{x:-2,y:0},{x:0,y:2},{x:0,y:-2}],
+	hert:0.4,
+	rand:0.6,
+	rangeAttack:[{x:0,y:-1},{x:0,y:-2},{x:0,y:-3},{x:0,y:1},{x:0,y:2},{x:0,y:3},{x:-1,y:0},{x:-2,y:0},{x:-3,y:0},{x:1,y:0},{x:2,y:0},{x:3,y:0},{x:-1,y:-1},{x:1,y:-1},{x:-1,y:1},{x:1,y:1},{x:1,y:2},{x:-1,y:-2},{x:1,y:-2},{x:-1,y:2},{x:2,y:1},{x:-2,y:-1},{x:2,y:-1},{x:-2,y:1}],
 	rangeAttackTarget:[{x:0,y:0}],
 	explanation:""
 	},
@@ -265,8 +266,9 @@ var StrategyDatas = [
 	icon:"du_sign",
 	se:"Se_strategy_hert1",
 	cost:8,
-	hert:0.8,
-	rangeAttack:[{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:1,y:1},{x:1,y:-1},{x:-1,y:1},{x:-1,y:-1},{x:2,y:0},{x:-2,y:0},{x:0,y:2},{x:0,y:-2}],
+	hert:0.6,
+	rand:0.6,
+	rangeAttack:[{x:0,y:-1},{x:0,y:-2},{x:0,y:-3},{x:0,y:1},{x:0,y:2},{x:0,y:3},{x:-1,y:0},{x:-2,y:0},{x:-3,y:0},{x:1,y:0},{x:2,y:0},{x:3,y:0},{x:-1,y:-1},{x:1,y:-1},{x:-1,y:1},{x:1,y:1},{x:1,y:2},{x:-1,y:-2},{x:1,y:-2},{x:-1,y:2},{x:2,y:1},{x:-2,y:-1},{x:2,y:-1},{x:-2,y:1}],
 	rangeAttackTarget:[{x:0,y:0}],
 	explanation:""
 	},
@@ -274,8 +276,8 @@ var StrategyDatas = [
 	icon:"jinzhou_sign",
 	se:"Se_strategy_hert2",
 	cost:8,
-	hert:0.8,
-	rangeAttack:[{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:1,y:1},{x:1,y:-1},{x:-1,y:1},{x:-1,y:-1},{x:2,y:0},{x:-2,y:0},{x:0,y:2},{x:0,y:-2}],
+	hert:0,
+	rangeAttack:[{x:0,y:-1},{x:0,y:-2},{x:0,y:-3},{x:0,y:1},{x:0,y:2},{x:0,y:3},{x:-1,y:0},{x:-2,y:0},{x:-3,y:0},{x:1,y:0},{x:2,y:0},{x:3,y:0},{x:-1,y:-1},{x:1,y:-1},{x:-1,y:1},{x:1,y:1},{x:1,y:2},{x:-1,y:-2},{x:1,y:-2},{x:-1,y:2},{x:2,y:1},{x:-2,y:-1},{x:2,y:-1},{x:-2,y:1}],
 	rangeAttackTarget:[{x:0,y:0}],
 	explanation:""
 	},
@@ -292,7 +294,7 @@ var StrategyDatas = [
 	icon:"chaos_sign",
 	se:"Se_strategy_hert1",
 	cost:14,
-	hert:0.8,
+	hert:0,
 	rangeAttack:[{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:1,y:1},{x:1,y:-1},{x:-1,y:1},{x:-1,y:-1},{x:2,y:0},{x:-2,y:0},{x:0,y:2},{x:0,y:-2}],
 	rangeAttackTarget:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],
 	explanation:""
@@ -301,7 +303,8 @@ var StrategyDatas = [
 	icon:"fixed_sign",
 	se:"Se_strategy_hert2",
 	cost:14,
-	hert:0.8,
+	hert:0.3,
+	rand:0.6,
 	rangeAttack:[{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:1,y:1},{x:1,y:-1},{x:-1,y:1},{x:-1,y:-1},{x:2,y:0},{x:-2,y:0},{x:0,y:2},{x:0,y:-2}],
 	rangeAttackTarget:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],
 	explanation:""
@@ -310,7 +313,8 @@ var StrategyDatas = [
 	icon:"du_sign",
 	se:"Se_strategy_hert1",
 	cost:14,
-	hert:0.8,
+	hert:0.5,
+	rand:0.6,
 	rangeAttack:[{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:1,y:1},{x:1,y:-1},{x:-1,y:1},{x:-1,y:-1},{x:2,y:0},{x:-2,y:0},{x:0,y:2},{x:0,y:-2}],
 	rangeAttackTarget:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],
 	explanation:""
@@ -319,7 +323,7 @@ var StrategyDatas = [
 	icon:"jinzhou_sign",
 	se:"Se_strategy_hert2",
 	cost:14,
-	hert:0.8,
+	hert:0,
 	rangeAttack:[{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:1,y:1},{x:1,y:-1},{x:-1,y:1},{x:-1,y:-1},{x:2,y:0},{x:-2,y:0},{x:0,y:2},{x:0,y:-2}],
 	rangeAttackTarget:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],
 	explanation:""
@@ -328,7 +332,7 @@ var StrategyDatas = [
 	icon:"shao_sign",
 	se:"Se_strategy_hert2",
 	cost:12,
-	hert:0.8,
+	hert:0,
 	rangeAttack:[{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:1,y:1},{x:1,y:-1},{x:-1,y:1},{x:-1,y:-1},{x:2,y:0},{x:-2,y:0},{x:0,y:2},{x:0,y:-2}],
 	rangeAttackTarget:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],
 	explanation:""
@@ -337,7 +341,7 @@ var StrategyDatas = [
 	icon:"wake_sign",
 	se:"Se_strategy_heal2",
 	cost:8,
-	rangeAttack:[{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:1,y:1},{x:1,y:-1},{x:-1,y:1},{x:-1,y:-1},{x:2,y:0},{x:-2,y:0},{x:0,y:2},{x:0,y:-2}],
+	rangeAttack:[{x:0,y:-1},{x:0,y:-2},{x:0,y:-3},{x:0,y:1},{x:0,y:2},{x:0,y:3},{x:-1,y:0},{x:-2,y:0},{x:-3,y:0},{x:1,y:0},{x:2,y:0},{x:3,y:0},{x:-1,y:-1},{x:1,y:-1},{x:-1,y:1},{x:1,y:1},{x:1,y:2},{x:-1,y:-2},{x:1,y:-2},{x:-1,y:2},{x:2,y:1},{x:-2,y:-1},{x:2,y:-1},{x:-2,y:1}],
 	rangeAttackTarget:[{x:0,y:0}],
 	explanation:""
 	},

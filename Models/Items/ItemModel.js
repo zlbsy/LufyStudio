@@ -37,6 +37,9 @@ ItemModel.prototype.itemType = function(){
 ItemModel.prototype.params = function(){
 	return this.master().params();
 };
+ItemModel.prototype.price = function(){
+	return this.rarity() * 200;
+};
 ItemModel.prototype.getParam = function(key){
 	return this.master().getParam(key);
 };

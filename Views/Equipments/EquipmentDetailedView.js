@@ -84,11 +84,15 @@ EquipmentDetailedView.prototype.set=function(){
 		btnEquip.y = 280;
 		layer.addChild(btnEquip);
 		btnEquip.addEventListener(LMouseEvent.MOUSE_UP, self.equip);
-		var btnSale = getButton(Language.get("出售"), 120);
-		btnSale.x = (320 - btnSale.getWidth())*0.5 + 65;
-		btnSale.y = 280;
-		layer.addChild(btnSale);
-		btnSale.addEventListener(LMouseEvent.MOUSE_UP, self.sale);
+		if(self.itemModel.rarity() <= 4){
+			var btnSale = getButton(Language.get("label_sale"), 120);
+			btnSale.x = (320 - btnSale.getWidth())*0.5 + 65;
+			btnSale.y = 280;
+			layer.addChild(btnSale);
+			btnSale.addEventListener(LMouseEvent.MOUSE_UP, self.sale);
+		}else{
+			btnEquip.x = (320 - btnEquip.getWidth())*0.5;
+		}
 	}
 	self.layer.addChild(layer);
 };
@@ -113,7 +117,7 @@ EquipmentDetailedView.prototype.changeNumber=function(num){
 		self.number = self.itemModel.count();
 	}
 	self.lblNumber.text = String.format("{0}/{1}", self.number, self.itemModel.count());
-	self.lblGet.text = String.format("获取银子：{0}", self.number*self.itemModel.price());
+	self.lblGet.text = String.format(Language.get("sale_get_money"), self.number*self.itemModel.price());
 };
 EquipmentDetailedView.prototype.equip=function(event){
 	var self = event.currentTarget.getParentByConstructor(EquipmentDetailedView);
@@ -121,7 +125,14 @@ EquipmentDetailedView.prototype.equip=function(event){
 };
 EquipmentDetailedView.prototype.saleRun=function(event){
 	var self = event.currentTarget.getParentByConstructor(EquipmentDetailedView);
-	//self.dispatchEvent(EquipmentEvent.Dress);
+	var cityData = self.controller.getValue("cityData");
+	var saleMoney = self.number*self.itemModel.price();
+	while(self.number-- > 0){
+		cityData.removeItem(self.itemModel);
+	}
+	cityData.money(saleMoney);
+	self.controller.dispatchEvent(LController.NOTIFY_ALL);
+	self.remove();
 };
 EquipmentDetailedView.prototype.sale=function(event){
 	var btnSale = event.currentTarget;
@@ -138,22 +149,18 @@ EquipmentDetailedView.prototype.saleContentInit=function(){
 	
 	var layer = new LSprite();
 	var detailedLayer = new LSprite();
-	
-	
-	
 	var width = 100, height = 100;
-	
 	var detailedLayer = new LSprite();
-	var lblCount = getStrokeLabel("数量：" + self.itemModel.count(),20,"#FFFFFF","#000000",4);
+	var lblCount = getStrokeLabel(String.format(Language.get("hav_quantity"), self.itemModel.count()),20,"#FFFFFF","#000000",4);
 	detailedLayer.addChild(lblCount);
-	var lblPrice = getStrokeLabel("单价：" + self.itemModel.price(),20,"#FFFFFF","#000000",4);
+	var lblPrice = getStrokeLabel(String.format(Language.get("sale_unit_price"), self.itemModel.price()),20,"#FFFFFF","#000000",4);
 	lblPrice.y = 30;
 	detailedLayer.addChild(lblPrice);
 	detailedLayer.x = width + 30;
 	detailedLayer.y = 50;
 	layer.addChild(detailedLayer);
 	
-	var lblExplanation = getStrokeLabel("请选择出售个数：",20,"#FFFFFF","#000000",4);
+	var lblExplanation = getStrokeLabel(Language.get("sale_quantity_select"),20,"#FFFFFF","#000000",4);
 	lblExplanation.x = 20;
 	lblExplanation.y = 50 + height + 10;
 	layer.addChild(lblExplanation);
@@ -167,22 +174,22 @@ EquipmentDetailedView.prototype.saleContentInit=function(){
 	self.lblNumber = lblNumber;
 	
 	var btnMinus = getButton("-", 60);
-	btnMinus.x = 10;
+	btnMinus.x = 15;
 	btnMinus.y = 190;
 	layer.addChild(btnMinus);
 	btnMinus.addEventListener(LMouseEvent.MOUSE_UP, self.minus);
 	var btnPlus = getButton("+", 60);
-	btnPlus.x = 170;
+	btnPlus.x = 165;
 	btnPlus.y = 190;
 	layer.addChild(btnPlus);
 	btnPlus.addEventListener(LMouseEvent.MOUSE_UP, self.plus);
-	var btnMax = getButton("最大", 80);
-	btnMax.x = 230;
+	var btnMax = getButton(Language.get("max"), 80);
+	btnMax.x = 225;
 	btnMax.y = 190;
 	layer.addChild(btnMax);
 	btnMax.addEventListener(LMouseEvent.MOUSE_UP, self.plusMax);
 	
-	var lblGet = getStrokeLabel("获取银子：0",20,"#FFFFFF","#000000",4);
+	var lblGet = getStrokeLabel(String.format(Language.get("sale_get_money"),0),20,"#FFFFFF","#000000",4);
 	lblGet.x = 20;
 	lblGet.y = 250;
 	layer.addChild(lblGet);

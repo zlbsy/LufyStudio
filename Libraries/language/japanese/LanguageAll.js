@@ -380,6 +380,11 @@ Language.data = {
 	"label_equip":"装備",
 	"label_use":"使用",
 	"label_sale":"売却",
+	"sale_get_money":"獲得お金：{0}",
+	"hav_quantity":"個数：{0}",
+	"sale_unit_price":"価格：{0}",
+	"sale_quantity_select":"個数を選択してください：",
+	"dialog_city_levelup_error":"レベルアップ中です",
 	
 	"born":"出生",
 	"life":"寿命",

@@ -87,7 +87,7 @@ CharacterDetailedTabStatusView.prototype.setCtrlButtons=function(backLayer){
 		btnBehead.y = 105;
 		backLayer.addChild(btnBehead);
 		btnBehead.addEventListener(LMouseEvent.MOUSE_UP,self.clickBehead);
-	}else if(characterModel.loyalty() < 100 && !characterModel.isPrized()){
+	}else if(characterModel.id() != characterModel.seigniorId() && characterModel.loyalty() < 100 && !characterModel.isPrized()){
 		var btnPrized = getButton(Language.get("prize"),200);//褒奖
 		btnPrized.x = LGlobal.width - 260;
 		btnPrized.y = 5;

@@ -29,6 +29,13 @@ BuildInstituteView.prototype.onClickTechnologyButton=function(event){
 BuildInstituteView.prototype.onClickLevelUpButton=function(event){
 	var self = event.currentTarget.parent.parent.parent;
 	var cityModel = self.controller.getValue("cityData");
+	var lvGenerals = cityModel.generals(Job.LEVEL_UP);
+	if(lvGenerals.length > 0){
+		var obj = {title:Language.get("confirm"),message:Language.get("dialog_city_levelup_error"),height:200,okEvent:null};
+		var windowLayer = ConfirmWindow(obj);
+		LMvc.layer.addChild(windowLayer);
+		return;
+	}
 	self.controller.loadCharacterList(CharacterListType.LEVEL_UP, cityModel.generals(Job.IDLE), {isOnlyOne:true,showMoney:true, buttonLabel:"execute"});
 };
 BuildInstituteView.prototype.selectComplete=function(event){

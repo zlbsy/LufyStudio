@@ -32,6 +32,9 @@ StrategyModel.prototype.effectType = function() {
 StrategyModel.prototype.strategyType = function() {
 	return this.master().strategyType();
 };
+StrategyModel.prototype.rand = function() {
+	return this.master().rand();
+};
 StrategyModel.prototype.weathers = function() {
 	return this.master().weathers();
 };

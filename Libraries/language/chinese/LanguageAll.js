@@ -380,6 +380,11 @@ Language.data = {
 	"label_equip":"装备",
 	"label_use":"使用",
 	"label_sale":"出售",
+	"sale_get_money":"获取金钱：{0}",
+	"hav_quantity":"数量：{0}",
+	"sale_unit_price":"单价：{0}",
+	"sale_quantity_select":"请选择出售个数：",
+	"dialog_city_levelup_error":"正在升级中",
 	
 	"born":"出生",
 	"life":"寿命",

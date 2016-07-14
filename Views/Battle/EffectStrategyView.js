@@ -66,8 +66,13 @@ EffectStrategyView.prototype.toChangeStatus = function(){
 		hitrate = calculateHitrateStrategy(self.currentCharacter, self.currentTargetCharacter);
 	}
 	if(hitrate){
-		self.currentTargetCharacter.changeAction(CharacterAction.HERT);
 		self.currentTargetCharacter.status.addStatus(currentSelectStrategy.strategyType(), currentSelectStrategy.hert());
+		if(currentSelectStrategy.hert() > 0 && currentSelectStrategy.rand() > Math.fakeRandom()){
+			self.effectType = StrategyEffectType.Attack;
+			self.toAttack(true);
+		}else{
+			self.currentTargetCharacter.changeAction(CharacterAction.HERT);
+		}
 	}else{
 		self.currentTargetCharacter.changeAction(CharacterAction.BLOCK);
 	}
@@ -88,9 +93,12 @@ EffectStrategyView.prototype.toChangeAidStatus = function(){
 		self.currentTargetCharacter.changeAction(CharacterAction.BLOCK);
 	}
 };
-EffectStrategyView.prototype.toAttack = function(){
+EffectStrategyView.prototype.toAttack = function(hitrate){
 	var self = this, tweenObj;
-	var hitrate = calculateHitrateStrategy(self.currentCharacter, self.currentTargetCharacter);
+	if(!hitrate){
+		hitrate = calculateHitrateStrategy(self.currentCharacter, self.currentTargetCharacter);
+	}
+	//var hitrate = calculateHitrateStrategy(self.currentCharacter, self.currentTargetCharacter);
 	if(hitrate){
 		self.currentTargetCharacter.changeAction(CharacterAction.HERT);
 		tweenObj = new Num(Num.MIDDLE,1,20);

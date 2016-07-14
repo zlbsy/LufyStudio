@@ -146,6 +146,15 @@ BattleAIExecute.prototype.result=function(isWin){
 		var winSeigniorId = toCity.seignior().chara_id();
 		var failSeigniorId = fromSeignior.chara_id();
 		var retreatCityId = fromCity.id();
+		var charaTroops = 0;
+		self.targetData._characterList.forEach(function(child){
+			if(child.isDefCharacter()){
+				return;
+			}
+			charaTroops += child.troops();
+			child.troops(0);
+		});
+		toCity.troops(toCity.troops() + charaTroops);
 		var leaderId = self.targetData._characterList[0].id();
 		captivesAutomatedProcessing(self.targetData.captives, leaderId, retreatCityId, toCity, fromCity);//处理俘虏
 		battleChangeCharactersStatus(winSeigniorId, fromCity, self.attackData._characterList);//战斗结束后武将状态转换，以及出战城池太守任命

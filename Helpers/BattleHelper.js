@@ -55,10 +55,16 @@ function charactersHealMP(currentCharacters){
 		if(mp == maxMP){
 			continue;
 		}
-		if(mp >= maxMP * 0.2){
+		if(mp >= maxMP * 0.8){
 			character.data.MP(mp + 1);
-		}else{
+		}else if(mp >= maxMP * 0.5){
 			character.data.MP(mp + 2);
+		}else if(mp >= maxMP * 0.4){
+			character.data.MP(mp + 3);
+		}else if(mp >= maxMP * 0.2){
+			character.data.MP(mp + 4);
+		}else{
+			character.data.MP(mp + 5);
 		}
 	}
 }
