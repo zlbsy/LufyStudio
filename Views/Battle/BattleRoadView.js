@@ -60,7 +60,7 @@ BattleRoadView.prototype.setRangeAttack = function(chara){
 			continue;
 		}
 		var layer = new LSprite();
-		var m = new LTextField();
+		var m = LTextField.getLabel();
 		m.setWordWrap(true, 14);
 		m.size = 12;
 		m.text = String.format(Language.get("hurt_preview"), calculateHertValue(chara,target,1,true), calculateHitrate(chara,target,true));

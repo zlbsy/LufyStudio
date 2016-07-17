@@ -224,17 +224,20 @@ MapView.prototype.hideMapLayer=function(event){
 };
 MapView.prototype.showMapLayer=function(event){
 	var self = event.currentTarget.view;
-	if(event.characterList.length > 1){
+	/*if(event.characterList.length > 1){
 		var obj = {title:Language.get("confirm"),message:Language.get("dialog_select_onlyone_error"),height:200,okEvent:null};
 		var windowLayer = ConfirmWindow(obj);
 		LMvc.layer.addChild(windowLayer);
 		return;
+	}*/
+	if(event.characterListType == CharacterListType.SELECT_MONARCH){
+		var character = event.characterList[0];
+		monarchChange(LMvc.selectSeignorId, character.id());
+		LMvc.selectSeignorId = character.id();
 	}
-	var character = event.characterList[0];
-	monarchChange(LMvc.selectSeignorId, character.id());
-	LMvc.selectSeignorId = character.id();
 	self.baseLayer.visible = true;
 	self.ctrlLayer.visible = true;
+	self.characterLayer.die();
 	self.characterLayer.removeAllChild();
 	if(SeigniorExecute.running){
 		SeigniorExecute.run();

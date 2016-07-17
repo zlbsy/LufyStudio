@@ -651,6 +651,24 @@ CharacterModel.prototype.identity = function(value) {
 	}
 	return Language.get(identity);
 };
+CharacterModel.prototype.identityIndex = function() {
+	var self = this;
+	var seigniorId = self.seigniorId();
+	if(seigniorId <= 0){
+		return 10000;
+	}
+	var identity = 2;
+	if(self.isDefCharacter()){
+		identity = 10000;
+	} else if(self.id() == seigniorId){
+		identity = 0;
+	}else if(self.id() == self.city().prefecture()){
+		identity = 1;
+	}else if(self.seigniorId() != self.city().seigniorCharaId()){
+		identity = 3;
+	}
+	return identity;
+};
 CharacterModel.prototype.loyalty = function(value) {
 	var self = this;
 	var loyaltyValue = self._dataValue("loyalty", value, 0, 0, 100);

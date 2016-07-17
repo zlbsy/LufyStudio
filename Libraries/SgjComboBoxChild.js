@@ -7,7 +7,7 @@ SgjComboBoxChild.prototype.setStatus = function(content, comboBox) {
 	var panel = new LPanel(new LBitmapData(LMvc.datalist["win02"], 10,10,20,20), self.childWidth, 40);
 	panel.cacheAsBitmap(true);
 	self.addChild(panel);
-	var text = new LTextField();
+	var text = LTextField.getLabel();
 	text.size = comboBox.size;
 	text.color = comboBox.color;
 	text.font = comboBox.font;
@@ -24,7 +24,7 @@ SgjComboBoxChild.prototype.setSelectStatus = function(content, comboBox) {
 	var panel = new LPanel(new LBitmapData(LMvc.datalist["win01"], 15,10,20,20), self.childWidth, 40);
 	panel.cacheAsBitmap(true);
 	self.addChild(panel);
-	var text = new LTextField();
+	var text = LTextField.getLabel();
 	text.size = comboBox.size;
 	text.color = comboBox.color;
 	text.font = comboBox.font;

@@ -12,12 +12,14 @@ CharacterListView.CUTOVER_ABILITY = "ability_properties";
 CharacterListView.CUTOVER_ARM = "arm_properties";
 CharacterListView.prototype.init=function(){
 	var self = this;
-	var backLayer = getTranslucentMask();
-	self.addChild(backLayer);
-	self.listLayer = new LSprite();
-	self.addChild(self.listLayer);
-	self.charaDetailedLayer = new LSprite();
-	self.addChild(self.charaDetailedLayer);
+	if(self.numChildren == 0){
+		var backLayer = getTranslucentMask();
+		self.addChild(backLayer);
+		self.listLayer = new LSprite();
+		self.addChild(self.listLayer);
+		self.charaDetailedLayer = new LSprite();
+		self.addChild(self.charaDetailedLayer);
+	}
 	self.listInit();
 	if(self.controller.characterListType == CharacterListType.BATTLE_SINGLE){
 		var chara = self.controller.fromController.currentCharacter;
@@ -38,35 +40,56 @@ CharacterListView.prototype.listInit=function(){
 	}
 	self.selectedCount = 0;
 	self.usedMoney = 0;
-		
-	var title = getStrokeLabel(Language.get(self.controller.characterListType),30,"#FFFFFF","#000000",4);
-	title.x = 15;
-	title.y = 10;
-	self.listLayer.addChild(title);
+	if(!self.title){
+		var title = getStrokeLabel("",30,"#FFFFFF","#000000",4);
+		title.x = 15;
+		title.y = 10;
+		self.listLayer.addChild(title);
+		self.title = title;
+	}
+	self.title.text = Language.get(self.controller.characterListType);
+	console.log("self.controller.params.noCutover="+self.controller.params.noCutover);
 	if(!self.controller.params.noCutover){
 		self.getCutoverButton(self.controller.characterListType == CharacterListType.EXPEDITION ? CharacterListView.CUTOVER_ARM : CharacterListView.CUTOVER_BASIC);
 	}
-	var bitmapClose = new LBitmap(new LBitmapData(LMvc.datalist["close"]));
-	var buttonClose = new LButton(bitmapClose);
-	buttonClose.x = LGlobal.width - bitmapClose.getWidth() - 5;
-	self.listLayer.addChild(buttonClose);
-	buttonClose.addEventListener(LMouseEvent.MOUSE_UP, self.onClickCloseButton.bind(self));
+	if(!self.buttonClose){
+		var bitmapClose = new LBitmap(new LBitmapData(LMvc.datalist["close"]));
+		var buttonClose = new LButton(bitmapClose);
+		buttonClose.x = LGlobal.width - bitmapClose.getWidth() - 5;
+		self.listLayer.addChild(buttonClose);
+		buttonClose.addEventListener(LMouseEvent.MOUSE_UP, self.onClickCloseButton.bind(self));
+		self.buttonClose = buttonClose;
+	}
 
 	//TODO::ver1.1参数控制
 	if((SeigniorExecute.running && self.controller.characterListType == CharacterListType.EXPEDITION)
 	|| self.controller.characterListType == CharacterListType.SELECT_MONARCH || self.controller.params.closeDisable){
-		buttonClose.visible = false;
+		self.buttonClose.visible = false;
 	}
-	
-	self.tabMenuLayer = new LSprite();
-	self.tabMenuLayer.y = 60;
-	self.listLayer.addChild(self.tabMenuLayer);
+	if(!self.tabMenuLayer){
+		self.tabMenuLayer = new LSprite();
+		self.tabMenuLayer.y = 60;
+		self.listLayer.addChild(self.tabMenuLayer);
+		self.commonTab = new LSprite();
+		self.commonTab.x = 10;
+		self.tabMenuLayer.addChild(self.commonTab);
+		self.basicTab = new LSprite();
+		self.basicTab.x = 170;
+		self.tabMenuLayer.addChild(self.basicTab);
+		self.abilityTab = new LSprite();
+		self.abilityTab.x = 170;
+		self.tabMenuLayer.addChild(self.abilityTab);
+		self.armTab = new LSprite();
+		self.armTab.x = 170;
+		self.tabMenuLayer.addChild(self.armTab);
+	}
 	self.showTabMenu();
 	
-	self.contentLayer = new LSprite();
-	self.contentLayer.y = 110;
-	self.listLayer.addChild(self.contentLayer);
-	
+	if(!self.contentLayer){
+		self.contentLayer = new LSprite();
+		self.contentLayer.y = 110;
+		self.listLayer.addChild(self.contentLayer);
+	}
 	self.dataList = self.controller.characterList;
 	
 	if(self.controller.params.toast){
@@ -76,29 +99,48 @@ CharacterListView.prototype.listInit=function(){
 	var buttonLabel = self.controller.params.buttonLabel;
 	var showMoney = self.controller.params.showMoney;
 	
+	self.removeEventListener(LCheckBox.ON_CHANGE);
+	if(self.executeButton){
+		self.executeButton.visible = false;
+	}
+	if(self.lblMoney){
+		self.lblMoney.visible = false;
+	}
 	if(buttonLabel){
-		var button = getButton(Language.get(buttonLabel),160);
-		self.executeButton = button;
-		button.name = "executeButton";
-		button.x = (LGlobal.width - 160) * 0.5;
-		button.y = LGlobal.height - button.getHeight() - 15;
-		self.listLayer.addChild(button);
-		button.addEventListener(LMouseEvent.MOUSE_UP, self.onClickExecuteButton);
+		if(!self.executeButton){
+			var button = getButton(Language.get(buttonLabel),160);
+			self.executeButton = button;
+			button.name = "executeButton";
+			button.x = (LGlobal.width - 160) * 0.5;
+			button.y = LGlobal.height - button.getHeight() - 15;
+			self.listLayer.addChild(button);
+			button.addEventListener(LMouseEvent.MOUSE_UP, self.onClickExecuteButton);
+		}
+		self.executeButton.visible = true;
 		self.addEventListener(LCheckBox.ON_CHANGE, self.onChangeChildSelect);
 		if(showMoney){
-			var lblMoney = getStrokeLabel(String.format("{0}：{1} - {2} = {3}", Language.get("money"), cityModel.moneyLabel(), 0, cityModel.moneyLabel()),26,"#FFFFFF","#000000",4);
-			lblMoney.x = (LGlobal.width - lblMoney.getWidth()) * 0.5;
-			lblMoney.y = button.y - lblMoney.getHeight() - 10;
-			self.lblMoney = lblMoney;
-			self.listLayer.addChild(lblMoney);
+			if(!self.lblMoney){
+				var lblMoney = getStrokeLabel(String.format("{0}：{1} - {2} = {3}", Language.get("money"), cityModel.moneyLabel(), 0, cityModel.moneyLabel()),26,"#FFFFFF","#000000",4);
+				lblMoney.x = (LGlobal.width - lblMoney.getWidth()) * 0.5;
+				lblMoney.y = self.executeButton.y - lblMoney.getHeight() - 10;
+				self.lblMoney = lblMoney;
+				self.listLayer.addChild(lblMoney);
+			}
+			self.lblMoney.visible = true;
 		}
 	}
 	self.setFooter();
 	
 	self.showList();
+	if(self.controller.params.countCheckBox){
+		self.dispatchEvent(LCheckBox.ON_CHANGE);
+	}
 };
 CharacterListView.prototype.setFooter=function(){
 	var self = this;
+	if(self.pageLabel){
+		return;
+	}
 	self.pageLabel = getStrokeLabel("1/1",30,"#FFFFFF","#000000",4);
 	self.pageLabel.x = 10;
 	self.pageLabel.y = LGlobal.height - self.pageLabel.getHeight() - 15;
@@ -124,10 +166,16 @@ CharacterListView.prototype.setFooter=function(){
 CharacterListView.prototype.clickLeftArrow=function(event){
 	var self = event.currentTarget.getParentByConstructor(CharacterListView);
 	self.charactersPush(self.pageIndex - 1);
+	if(self.listView){
+		self.listView.clipping.y = 0;
+	}
 };
 CharacterListView.prototype.clickRightArrow=function(event){
 	var self = event.currentTarget.getParentByConstructor(CharacterListView);
 	self.charactersPush(self.pageIndex + 1);
+	if(self.listView){
+		self.listView.clipping.y = 0;
+	}
 };
 CharacterListView.prototype.onChangeList=function(event){
 	var self = event.currentTarget;
@@ -197,12 +245,21 @@ CharacterListView.prototype.selectExecute=function(){
 	}
 };
 CharacterListView.prototype.getCutoverButton=function(name){
-	var self = this;
+	var self = this, buttonCutover;
+	if(self.buttonCutover){
+		self.buttonCutover.visible = false;
+	}
 	self.showingTabName = name;
-	var buttonCutover = getButton(String.format("{0} ({1})",Language.get(name),Language.get("cutover")),200);
+	buttonCutover = self.listLayer.getChildByName(name);
+	if(buttonCutover){
+		buttonCutover.visible = true;
+		return;
+	}
+	buttonCutover = getButton(String.format("{0} ({1})",Language.get(name),Language.get("cutover")),200);
 	buttonCutover.x = 210;
 	buttonCutover.y = 5;
 	buttonCutover.name = name;
+	self.buttonCutover = buttonCutover;
 	self.listLayer.addChild(buttonCutover);
 	buttonCutover.addEventListener(LMouseEvent.MOUSE_UP, self.onClickCutoverButton);
 };
@@ -237,7 +294,8 @@ CharacterListView.prototype.onClickCutoverButton=function(event){
 			self.abilityTab.visible = false;
 		}
 	}
-	buttonCutover.remove();
+	buttonCutover.visible = false;
+	//buttonCutover.remove();
 	self.getCutoverButton(cutoverName);
 	self.cutoverChilds();
 };
@@ -254,18 +312,21 @@ CharacterListView.prototype.onClickCloseButton=function(event){
 };
 CharacterListView.prototype.showTabMenu=function(){
 	var self = this;
-	self.commonTab = new LSprite();
-	self.commonTab.x = 10;
-	self.tabMenuLayer.addChild(self.commonTab);
-	var buttonSelected = getButton("↓",50);
-	buttonSelected.name = "selected";
-	self.commonTab.addChild(buttonSelected);
-	
-	var buttonCharacterName = getButton(Language.get("name"),110);
-	buttonCharacterName.x = 50;
-	buttonCharacterName.name = "characterName";
-	self.commonTab.addChild(buttonCharacterName);
-	self.commonTab.addEventListener(LMouseEvent.MOUSE_UP, self.onClickSortButton);
+	if(!self.commonTab.getChildByName("selected")){
+		var buttonSelected = getButton("↓",50);
+		buttonSelected.name = "selected";
+		self.commonTab.addChild(buttonSelected);
+	}
+	if(!self.commonTab.getChildByName("characterName")){
+		var buttonCharacterName = getButton(Language.get("name"),110);
+		buttonCharacterName.x = 50;
+		buttonCharacterName.name = "characterName";
+		self.commonTab.addChild(buttonCharacterName);
+		self.commonTab.addEventListener(LMouseEvent.MOUSE_UP, self.onClickSortButton);
+	}
+	if(self.armTab){
+		self.armTab.visible = false;
+	}
 	self.setBasicTab();
 	self.setAbilityTab();
 	if(self.controller.characterListType == CharacterListType.EXPEDITION){
@@ -276,9 +337,10 @@ CharacterListView.prototype.showTabMenu=function(){
 };
 CharacterListView.prototype.setBasicTab=function(){
 	var self = this;
-	self.basicTab = new LSprite();
-	self.basicTab.x = 170;
-	self.tabMenuLayer.addChild(self.basicTab);
+	if(self.basicTab.numChildren > 0){
+		self.basicTab.visible = true;
+		return;
+	}
 	var tabs = ["belong", "identity", "city", "loyalty", "status"];
 	for(var i=0;i<tabs.length;i++){
 		var button = getButton(Language.get(tabs[i]),60);
@@ -290,9 +352,10 @@ CharacterListView.prototype.setBasicTab=function(){
 };
 CharacterListView.prototype.setAbilityTab=function(){
 	var self = this;
-	self.abilityTab = new LSprite();
-	self.abilityTab.x = 170;
-	self.tabMenuLayer.addChild(self.abilityTab);
+	if(self.abilityTab.numChildren > 0){
+		self.abilityTab.visible = false;
+		return;
+	}
 	var tabs = ["command", "force", "intelligence", "agility", "luck"];
 	for(var i=0;i<tabs.length;i++){
 		var button = getButton(Language.get(tabs[i]),60);
@@ -311,46 +374,54 @@ CharacterListView.prototype.onClickSortButton=function(event){
 	self.sortType = event.target.name;
 	switch(event.target.name){
 		case "selected":
-			break;
+			return;
 		case "characterName":
-			break;
+			return;
 		case "city":
+			self.dataList = self.dataList.sort(function(a,b){
+				return self.sortValue*(a.cityId() - b.cityId());
+			});
 			break;
 		case "status":
-			break;
+			return;
 		case "identity":
+			self.dataList = self.dataList.sort(function(a,b){
+				return self.sortValue*(a.identityIndex() - b.identityIndex());
+			});
 			break;
 		case "belong":
-			break;
+			return;
 		default:
 			self.dataList = self.dataList.sort(function(a,b){
 				var va = a[self.sortType]();
 				var vb = b[self.sortType]();
 				return self.sortValue*((typeof va == "number" ? va : 0) - (typeof vb == "number" ? vb : 0));
 			});
-			var selects = [];
-			self.listView.getItems().forEach(function(child){
-				if(!child.checkbox || !child.checkbox.checked){
-					return;
-				}
-				selects.push(child.charaModel.id());
-			});
-			self.charactersPush(0);
-			self.cutoverChilds();
-			self.listView.getItems().forEach(function(child){
-				if(selects.indexOf(child.charaModel.id()) >= 0){
-					child.checkbox.setChecked(true);
-					child.cacheAsBitmap(false);
-					child.updateView();
-				}
-			});
 	}
+	var selects = [];
+	self.listView.getItems().forEach(function(child){
+		if(!child.checkbox || !child.checkbox.checked){
+			return;
+		}
+		selects.push(child.charaModel.id());
+	});
+	self.charactersPush(0);
+	self.cutoverChilds();
+	self.listView.getItems().forEach(function(child){
+		if(selects.indexOf(child.charaModel.id()) >= 0){
+			child.checkbox.setChecked(true);
+			child.cacheAsBitmap(false);
+			child.updateView();
+		}
+	});
 };
 CharacterListView.prototype.setArmTab=function(){
 	var self = this;
-	self.armTab = new LSprite();
-	self.armTab.x = 170;
-	self.tabMenuLayer.addChild(self.armTab);
+	if(self.armTab.numChildren > 0){
+		self.basicTab.visible = false;
+		self.armTab.visible = true;
+		return;
+	}
 	var tabs = ["troops", "tab_arms"];
 	var tabSize = [120, 100];
 	for(var i=0;i<tabs.length;i++){
@@ -360,6 +431,7 @@ CharacterListView.prototype.setArmTab=function(){
 		self.armTab.addChild(button);
 	}
 	self.basicTab.visible = false;
+	self.armTab.visible = true;
 };
 CharacterListView.prototype.showList=function(){
 	var self = this;
@@ -369,7 +441,17 @@ CharacterListView.prototype.showList=function(){
 		minusHeight = 100;
 	}
 	listHeight = LGlobal.height - self.contentLayer.y - minusHeight;
-	var panel = getBitmap(new LPanel(new LBitmapData(LMvc.datalist["win05"]),LGlobal.width, LGlobal.height - self.contentLayer.y));
+	if(self.listView){
+		self.listViewPanel.cacheAsBitmap(false);
+		self.listViewPanel.resize(LGlobal.width, LGlobal.height - self.contentLayer.y);
+		self.listViewPanel.cacheAsBitmap(true);
+		self.listView.resize(LGlobal.width - 20,listHeight - 30);
+		self.charactersPush(0);
+		return;
+	}
+	var panel = new LPanel(new LBitmapData(LMvc.datalist["win05"]),LGlobal.width, LGlobal.height - self.contentLayer.y);
+	panel.cacheAsBitmap(true);
+	self.listViewPanel = panel;
 	self.contentLayer.addChild(panel);
 	
 	self.listView = new LListView();
@@ -391,7 +473,7 @@ CharacterListView.prototype.charactersPush = function(pageIndex) {
 	self.listView.clear();
 	for(var i=pageIndex * maxNum;i<length;i++){
 		var charaModel = self.dataList[i];
-		var childLayer = new CharacterListChildView(self.controller,charaModel,cityModel,self);
+		var childLayer = CharacterListChildView.createChild(self.controller,charaModel,cityModel,self);
 		childLayer.y = 50 * i;
 		items.push(childLayer);
 	}
@@ -434,7 +516,6 @@ CharacterListView.prototype.showCharacterDetailed=function(param){
 };
 CharacterListView.prototype.showCharacterList=function(){
 	var self = this;
-	//self.charaDetailedLayer.die();
 	self.charaDetailedLayer.removeAllChild();
 	switch(self.controller.characterListType){
 		case CharacterListType.BATTLE_SINGLE:
@@ -442,4 +523,17 @@ CharacterListView.prototype.showCharacterList=function(){
 		return;
 	}
 	self.listLayer.visible = true;
+};
+CharacterListView.prototype.die=function(){
+	var self = this;
+	self.listView.clear();
+	console.warn("CharacterListView.prototype.die");
+	/*
+	if(!self.parent){
+		return;
+	}
+	self.callParent("die", arguments);
+	for(var k in self){
+		delete self[k];
+	}*/
 };

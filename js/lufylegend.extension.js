@@ -12,12 +12,23 @@ LDisplayObjectContainer.prototype.removeAllChild = function () {
 		if (LGlobal.destroy && c[i].die) {
 			c[i].die();
 		}
+		if (LGlobal.destroy && c[i].removeAllChild) {
+			c[i].removeAllChild();
+		}
 		delete c[i].parent;
 	}
 	s.childList.length = 0;
 	s.width = 0;
 	s.height = 0;
 	s.numChildren = 0;
+};
+LDisplayObjectContainer.prototype.die = function () {
+	var s = this, i, c, l;
+	for (i = 0, c = s.childList, l = c.length; i < l; i++) {
+		if (c[i].die) {
+			c[i].die();
+		}
+	}
 };
 LListView.prototype.clear = function() {
 	var self = this;
@@ -53,10 +64,10 @@ LListView.prototype.die = function(){
 };
 LListChildView.prototype.die = function(){
 	var self = this;
+	self.cacheAsBitmap(false);
 	self.ll_baseBitmap = null;
 	self.ll_baseRectangle = null;
 	self.ll_basePoint = null;
-	self._ll_cacheAsBitmap = null;
 	self._canvas = null;
 	self._context = null;
 	self.callParent("die",arguments);
@@ -120,39 +131,51 @@ LTextField._labelsCreate=0;
 LTextField.getLabel = function(){
 	if(LTextField._labels.length > 0){
 		var label = LTextField._labels.shift();
-		label.text = "";
-		label.htmlText = "";
-		label.filters = null;
-		label.visible = true;
-		label.alpha = 1;
-		label.x = 0;
-		label.y = 0;
-		label.rotate = 0;
-		label.texttype = null;
-		label.styleSheet = "";
-		label.lineWidth = 1;
-		label.weight = "normal";
-		label.stroke = false;
-		label.width = 150;
-		label.wordWrap = false;
-		label.multiline = false;
-		label.numLines = 1;
-		label.windRunning = false;
-		label._ll_wind_text = "";
-		label.cacheAsBitmap(false);
-		label.mask = null;
-		label.parent = null;
-		label.transform.matrix = null;
 		return label;
 	}
-	//console.error("_labelsCreate",++LTextField._labelsCreate);
+	if(typeof LPlugin != UNDEFINED && !LPlugin.native)console.error("_labelsCreate",++LTextField._labelsCreate,LTextField._labels.length);
 	return new LTextField();
 };
 LTextField.prototype.die = function(){
 	var self = this;
-	if(!LTextField._labels.indexOf(self)){
+	var has = false;
+	for(var i=0, l=LTextField._labels.length;i<l;i++){
+		var label = LTextField._labels[i];
+		if(label.objectIndex == self.objectIndex){
+			has = true;
+			break;
+		}
+	}
+	if(!has){
+		self.text = "";
+		self.htmlText = "";
+		self.filters = null;
+		self.visible = true;
+		self.alpha = 1;
+		self.x = 0;
+		self.y = 0;
+		self.rotate = 0;
+		self.texttype = null;
+		self.styleSheet = "";
+		self.lineWidth = 1;
+		self.weight = "normal";
+		self.stroke = false;
+		self.width = 150;
+		self.wordWrap = false;
+		self.multiline = false;
+		self.numLines = 1;
+		self.windRunning = false;
+		self._ll_wind_text = "";
+		self.cacheAsBitmap(false);
+		self.mask = null;
+		self.parent = null;
+		self.transform.matrix = null;
 		LTextField._labels.push(self);
 	}
+	if(typeof LPlugin != UNDEFINED && !LPlugin.native)console.error("LTextField.prototype.die",LTextField._labels.length);
+	/*if(!LTextField._labels.indexOf(self)){
+		LTextField._labels.push(self);
+	}*/
 	LMouseEventContainer.removeInputBox(self);
 	self.callParent("die", arguments);
 };
@@ -167,8 +190,9 @@ LDisplayObject.prototype._createCanvas = function(){
 		var _canvas = LDisplayObject._canvasList.shift();
 		s._canvas = _canvas;
 	}else{
-		//console.error("_canvasCreateCount", ++LDisplayObject._canvasCreateCount, s);
+		if(typeof LPlugin != UNDEFINED && !LPlugin.native)console.error("_canvasCreateCount", ++LDisplayObject._canvasCreateCount, s);
 		s._canvas = document.createElement("canvas");
+		s._canvas.objectIndex = ++LGlobal.objectIndex;
 	}
 	s._context = s._canvas.getContext("2d");
 };
@@ -177,9 +201,22 @@ LListScrollBar.prototype.die = function(){
 	self.callParent("die", arguments);
 };
 LDisplayObject.pushCacheCanvas = function(_canvas){
-	if(!LDisplayObject._canvasList.indexOf(_canvas)){
+	var has = false;
+	for(var i=0, l=LDisplayObject._canvasList.length;i<l;i++){
+		var canvas = LDisplayObject._canvasList[i];
+		if(canvas.objectIndex == _canvas.objectIndex){
+			has = true;
+			break;
+		}
+	}
+	if(!has){
+		_canvas.width = _canvas.height = 0;
 		LDisplayObject._canvasList.push(_canvas);
 	}
+	/*if(!LDisplayObject._canvasList.indexOf(_canvas)){
+		_canvas.width = _canvas.height = 0;
+		LDisplayObject._canvasList.push(_canvas);
+	}*/
 };
 LDisplayObject.prototype.die = function(){
 	var s = this;

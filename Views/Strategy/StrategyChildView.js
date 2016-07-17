@@ -81,7 +81,7 @@ StrategyChildView.prototype.set=function(){
 	var lblEffectType = self.getEffectType(color,lineColor,width + 105);
 	lblEffectType.text = effectType;
 	var lblMp = self.getMP(color,lineColor,width + 225);
-	
+	lblMp.text = self.strategyModel.cost();
 	var strategyId = self.strategyModel.id();
 	if(!self.strategyId || strategyId != self.strategyId){
 		if(self.icon){

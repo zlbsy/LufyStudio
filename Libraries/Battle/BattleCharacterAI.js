@@ -169,6 +169,13 @@ BattleCharacterAI.prototype.physicalAttack = function(target) {
 					rangeAttackTarget = skill.rects();
 				}else{
 					rangeAttackTarget = self.chara.data.currentSoldiers().rangeAttackTarget();
+					if(skill && (skill.isSubType(SkillSubType.FALL_BACK) || skill.isSubType(SkillSubType.BREAK_THROUGH)) && self.herts.length == 0){
+						var penetratePoint = getPenetratePoint(self.chara,target);
+						var chara = LMvc.BattleController.view.charaLayer.getCharacterFromLocation(target.locationX()+penetratePoint.x, target.locationY()+penetratePoint.y);
+						if(chara && !isSameBelong(chara.belong,self.chara.belong)){
+							rangeAttackTarget.push(penetratePoint);
+						}
+					}
 				}
 				for(var i = 0;i<rangeAttackTarget.length;i++){
 					var range = rangeAttackTarget[i];
@@ -340,6 +347,23 @@ BattleCharacterAI.prototype.attackActionComplete = function(event) {
 	var hertParams = self.herts[0];
 	self.herts.shift();
 	var mapLayer = LMvc.BattleController.view.mapLayer;
+	if(selfSkill && self.herts.length == 0){
+		if(selfSkill.isSubType(SkillSubType.FALL_BACK)){
+			var penetratePoint = getPenetratePoint(self.chara,self.attackTarget);
+			var charaTarget = LMvc.BattleController.view.charaLayer.getCharacterFromLocation(self.attackTarget.locationX()+penetratePoint.x, self.attackTarget.locationY()+penetratePoint.y);
+			if(!charaTarget){
+				self.attackTarget.toStatic(false);
+				LMvc.BattleController.view.charaLayer.setToPosition(self.attackTarget, self.attackTarget.locationX() + penetratePoint.x, self.attackTarget.locationY() + penetratePoint.y);
+			}
+		}else if(selfSkill.isSubType(SkillSubType.BREAK_THROUGH)){
+			var penetratePoint = getPenetratePoint(self.chara,self.attackTarget);
+			var charaTarget = LMvc.BattleController.view.charaLayer.getCharacterFromLocation(self.attackTarget.locationX()+penetratePoint.x, self.attackTarget.locationY()+penetratePoint.y);
+			if(!charaTarget){
+				chara.toStatic(false);
+				LMvc.BattleController.view.charaLayer.setToPosition(chara, self.attackTarget.locationX() + penetratePoint.x, self.attackTarget.locationY() + penetratePoint.y);
+			}
+		}
+	}
 	for(var i = 0,l = hertParams.list.length;i<l;i++){
 		var obj = hertParams.list[i];
 		obj.chara.toStatic(false);
@@ -517,13 +541,43 @@ BattleCharacterAI.prototype.counterAttack = function(event) {
 		attackChatacter.AI.physicalAttack(isCurrentAttackCharacter(attackChatacter) ? LMvc.currentAttackTarget : LMvc.currentAttackCharacter);
 		return;
 	}
-	if(attackChatacter.data.id() == BattleController.ctrlChara.data.id()){
+	if(attackChatacter.data.id() == BattleController.ctrlChara.data.id() && !attackChatacter.enemyBackAttack){
 		var chara = LMvc.currentAttackTarget;
 		if(chara.data.troops() > 0 && chara.AI.herts === null && battleCanAttackCharacter(chara, attackChatacter)){
 			chara.AI.physicalAttack(attackChatacter);
 			return;
 		}
+	}else if(attackChatacter.AI.attackTarget.data.id() == BattleController.ctrlChara.data.id()){
+		var chara = BattleController.ctrlChara;
+		var target = attackChatacter;
+		var skill = chara.data.skill(SkillType.ENEMY_BACK_ATTACK_END);
+		if(skill && skill.isSubType(SkillSubType.ATTACK_COUNT)){
+			var hertValues = skill.attacks();
+			var hertValue = calculateHertValue(chara, target, 1);
+			for(var j=0;j<hertValues.length;j++){
+				var hertParams = new HertParams();
+				var value = hertValue*hertValues[j]>>>0;
+				hertParams.push(target, value > 1 ? value : 1);
+				var rangeAttackTarget = chara.data.currentSoldiers().rangeAttackTarget();
+				for(var i = 0;i<rangeAttackTarget.length;i++){
+					var range = rangeAttackTarget[i];
+					if(range.x == 0 && range.y == 0){
+						continue;
+					}
+					var charaGet = LMvc.BattleController.view.charaLayer.getCharacterFromLocation(target.locationX()+range.x, target.locationY()+range.y);
+					if(!charaGet || isSameBelong(chara.belong,charaGet.belong)){
+						continue;
+					}
+					hertParams.push(chara,calculateHertValue(chara, charaGet, 1));
+				}
+				chara.AI.herts.push(hertParams);
+			}
+			chara.enemyBackAttack = true;
+			chara.AI.physicalAttack(attackChatacter);
+			return;
+		}
 	}
+	BattleController.ctrlChara.enemyBackAttack = false;
 	BattleController.ctrlChara.AI.endAction();
 };
 BattleCharacterAI.prototype.counterMagicAttack = function(event) {

@@ -170,6 +170,14 @@ BattleCharacterLayerView.prototype.getCharacterFromLocation=function(locationX,l
 	}
 	return null;
 };
+BattleCharacterLayerView.prototype.setToPosition=function(chara, x, y){
+	var self = this;
+	var map = self.model.map;
+	var grids = map.data;
+	var stepWidth = map.width/grids[0].length;
+	var stepHeight = map.height/grids.length;
+	chara.setCoordinate(parseInt(x)*stepWidth,parseInt(y)*stepHeight);
+};
 BattleCharacterLayerView.prototype.getCharacter=function(belong,id,isAll){
 	var self = this;
 	if(!belong){
@@ -190,7 +198,6 @@ BattleCharacterLayerView.prototype.getCharacterFromeList=function(childList,id){
 };
 BattleCharacterLayerView.prototype.clickOnPosition=function(index){
 	var self = this;
-	console.error("clickOnPosition");
 	var positionLayer = self.charasPositionsLayer.getChildByName("position_" + index);
 	var locationX = positionLayer.x / BattleCharacterSize.width >>> 0;
 	var locationY = positionLayer.y / BattleCharacterSize.height >>> 0;

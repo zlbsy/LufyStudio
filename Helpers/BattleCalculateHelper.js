@@ -486,6 +486,16 @@ function calculateAmbush(skill, x, y, belong, count){
  特技穿透效果范围计算
  **************************************************************/
 function calculatePenetratePoints(chara, target, ranges){
+	var arr = getPenetratePoint(chara, target);
+	var x=arr.x, y=arr.y;
+	if(ranges.findIndex(function(child){
+		return child.x == x && child.y == y;
+	}) < 0){
+		ranges.push({x:x,y:y});
+	}
+	return ranges;
+}
+function getPenetratePoint(chara, target){
 	var x=0,y=0;
 	var direction = getDirectionFromTarget(chara, target, true);
 	switch(direction){
@@ -518,12 +528,7 @@ function calculatePenetratePoints(chara, target, ranges){
 			y = 1;
 			break;
 	}
-	if(ranges.findIndex(function(child){
-		return child.x == x && child.y == y;
-	}) < 0){
-		ranges.push({x:x,y:y});
-	}
-	return ranges;
+	return {x:x,y:y};
 }
 function calculateWounded(value, range){
 	return value + range * (1 - 2 * Math.fakeRandom()); 

@@ -3,7 +3,7 @@ function Loading(data){
 	var s = this;
 	s.graphics.drawRect(1,"#000000",[0,0,LGlobal.width,LGlobal.height],true,"#000000");return;
 	s.progress = 0;
-	s.label = new LTextField();
+	s.label = LTextField.getLabel();
 	s.label.color="#FFFFFF";
 	s.label.weight="bolder";
 	s.label.size = 18;

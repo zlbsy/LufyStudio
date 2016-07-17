@@ -1,11 +1,24 @@
 function CharacterListController(characterListType, fromController,  characterList, params){
 	var self = this;
+	self.set(characterListType, fromController,  characterList, params);
+	base(self,MyController,[]);
+}
+CharacterListController.instance = function(characterListType, fromController,  characterList, params){
+	if(!CharacterListController._instance){
+		CharacterListController._instance = new CharacterListController(characterListType, fromController,  characterList, params);
+	}else{
+		CharacterListController._instance.set(characterListType, fromController,  characterList, params);
+		CharacterListController._instance.init();
+	}
+	return CharacterListController._instance;
+};
+CharacterListController.prototype.set=function(characterListType, fromController,  characterList, params){
+	var self = this;
 	self.characterListType = characterListType;
 	self.fromController = fromController;
 	self.characterList = characterList;
 	self.params = params;
-	base(self,MyController,[]);
-}
+};
 CharacterListController.prototype.construct=function(){
 	var self = this;
 	var list = self.model.getImages();
@@ -30,6 +43,9 @@ CharacterListController.prototype.modelLoad=function(){
 };
 CharacterListController.prototype.viewLoad=function(){
 	var self = this;
+	StrategyMasterModel.setMaster(StrategyDatas);
+	SoldierMasterModel.setMaster(SoldierDatas);
+	SkillMasterModel.setMaster(SkillsData);
 	self.load.view(["CharacterList/CharacterListChild","CharacterList/CharacterDetailed","CharacterList/CharacterExpedition",
 	"CharacterList/CharacterDetailedTabStatus","CharacterList/CharacterDetailedTabProperties","CharacterList/CharacterDetailedFace","CharacterList/CharacterDetailedTabEquipment",
 	"Equipments/Equipments","Equipments/EquipmentsChild","Equipments/EquipmentDetailed","Common/StatusBar",
@@ -39,9 +55,6 @@ CharacterListController.prototype.viewLoad=function(){
 };
 CharacterListController.prototype.init=function(status){
 	var self = this;
-	StrategyMasterModel.setMaster(StrategyDatas);
-	SoldierMasterModel.setMaster(SoldierDatas);
-	SkillMasterModel.setMaster(SkillsData);
 	LMvc.keepLoading(false);
 	var cityData = AreaModel.getArea(LMvc.cityId);
 	self.setValue("cityData",cityData);

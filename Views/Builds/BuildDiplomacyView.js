@@ -186,6 +186,7 @@ BuildDiplomacyView.prototype.redeemMoneyComplete=function(event){
 	}else if(self.characterListType == CharacterListType.STOP_BATTLE){
 		var seigniorCharacterId = self.controller.getValue("seigniorCharacterId");
 		var selectCharacter = self.controller.getValue("selectCharacter");
-		selectCharacter.stopBattle(seigniorCharacterId, self.selectMoney);
+		var money = (typeof self.selectMoney == UNDEFINED ? 0 : self.selectMoney);
+		selectCharacter.stopBattle(seigniorCharacterId, money);
 	}
 };

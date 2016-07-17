@@ -10,7 +10,7 @@ MapController.prototype.construct=function(){
 };
 MapController.prototype.configLoad=function(){
 	var self = this;
-	self.load.config(["Character","characterList","Job","Items","Event","Strategy","Soldiers","Reputation"],self.helperLoad);
+	self.load.config(["Character","CharacterListType","characterList","Job","Items","Event","Strategy","Soldiers","Reputation"],self.helperLoad);
 };
 MapController.prototype.helperLoad=function(){
 	var self = this;
@@ -83,12 +83,6 @@ MapController.prototype.init=function(status){
 	}
     LMvc.logoStage.die();
     LMvc.logoStage = null;
-    if(!LMvc.native){
-    	return;
-    }
-    for(var k in LMvc){
-    	console.log("-------",typeof LMvc[k],k,LMvc[k]);
-    }
 };
 MapController.prototype.eventMapComplete = function() {
 	var self = this;

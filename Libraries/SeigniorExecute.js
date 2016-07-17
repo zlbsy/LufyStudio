@@ -648,6 +648,7 @@ SeigniorExecute.prototype.maskShow=function(){
 	self.backLayer = new LSprite();
 	self.backLayer.addChild(maskLayer);
 	self.msgView = MessageView.Instance();
+	self.msgView.showSeignior();
 	self.backLayer.addChild(self.msgView);
 	LMvc.MapController.view.parent.addChild(self.backLayer);
 	
@@ -664,13 +665,16 @@ SeigniorExecute.prototype.maskShow=function(){
 SeigniorExecute.prototype.maskHide=function(){
 	var self = this;
 	if(self.msgView.timer != null){
-		self.msgView.timer.destroy();
+		self.msgView.timer.stop();
+		//self.msgView.timer.destroy();
 	}
 	self.messageCitys = [];
 	self.backLayer.remove();
 	self.backLayer = null;
-	MessageView._Instance.die();
-	MessageView._Instance = null;
+	self.msgView.remove();
+	self.msgView = null;
+	//MessageView._Instance.die();
+	//MessageView._Instance = null;
 };
 
 SeigniorExecute.prototype.loadSeigniorExecute=function(){

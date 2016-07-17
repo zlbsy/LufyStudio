@@ -33,7 +33,16 @@ SoldierModel.prototype.quantity = function(value) {
 	return this.data.quantity;
 };
 SoldierModel.prototype.proficiency = function(value) {
-	return this._dataValue("proficiency",value,0);
+	if(typeof value != UNDEFINED && value > 1000){
+		value = 1000;
+	}
+	var result = this._dataValue("proficiency",value,0);
+	if(typeof value == UNDEFINED){
+		if(result > 1000){
+			return 1000;
+		}
+	}
+	return result;
 };
 SoldierModel.prototype.name = function() {
 	return this.master().name();

@@ -12,7 +12,7 @@ BugReportView.prototype.set = function(){
 	self.addChild(textLabel);
 	var inputLayer = new LSprite();
 	inputLayer.graphics.drawRect(1,"#000000",[0, 0, 380, 100]);
-	self.message = new LTextField();
+	self.message = LTextField.getLabel();
 	self.message.y = 20;
 	self.message.setType(LTextFieldType.INPUT,inputLayer);
 	self.message.setMultiline(true);
@@ -24,7 +24,7 @@ BugReportView.prototype.set = function(){
 	self.addChild(mailLabel);
 	inputLayer = new LSprite();
 	inputLayer.graphics.drawRect(1,"#000000",[0, 0, 380, 30]);
-	self.mail = new LTextField();
+	self.mail = LTextField.getLabel();
 	self.mail.y = 155;
 	self.mail.setType(LTextFieldType.INPUT,inputLayer);
 	self.addChild(self.mail);

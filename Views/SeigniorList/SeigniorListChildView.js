@@ -72,6 +72,7 @@ SeigniorListChildView.prototype.set=function(){
 	layer.x = 40;
 	var win = new LPanel(new LBitmapData(LMvc.datalist["win05"]),400,winH);
 	layer.addChild(win);
+	
 	var name = getStrokeLabel(character.name(),22,String.format("rgb({0})",self.seigniorModel.color()),self.seigniorModel.color()=="1,1,1"?"#CCCCCC":"#000000",1);
 	name.x = 5 + faceW;
 	name.y = 20;
@@ -89,8 +90,6 @@ SeigniorListChildView.prototype.set=function(){
 		relationshipText.y = 109;
 		win.addChild(relationshipText);
 		if(stopBattleSeignior){
-			//relationshipLabel.y -= 25;
-			//relationshipText.y -= 25;
 			str = String.format(Language.get("quantity_of_month"),stopBattleSeignior.month); 
 			var relationshipTime = getStrokeLabel(str,12,"#ffffff","#000000",2);
 			relationshipTime.x = relationshipText.x;

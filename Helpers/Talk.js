@@ -26,7 +26,7 @@ function TalkRun(layer,y,index,faceindex,msg,callback){
 	back.y = 130;
 	back.alpha = 0.7;
 	talkLayer.addChild(back);
-	var nameText = new LTextField();
+	var nameText = LTextField.getLabel();
 	nameText.size = 18;
 	nameText.color = "#FFFFFF";
 	nameText.text = model.name();;
@@ -34,7 +34,7 @@ function TalkRun(layer,y,index,faceindex,msg,callback){
 	nameText.y = back.y + 22;
 	talkLayer.addChild(nameText);
 	
-	var msgText = new LTextField();
+	var msgText = LTextField.getLabel();
 	msgText.name = "message";
 	msgText.x = 25;
 	msgText.y = 225;

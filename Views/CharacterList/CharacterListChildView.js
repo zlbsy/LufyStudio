@@ -1,6 +1,45 @@
 function CharacterListChildView(controller, param, cityModel, parentView) {
 	var self = this;
 	base(self, LListChildView, []);
+	self.init(controller, param, cityModel, parentView);
+}
+CharacterListChildView._list = [];
+CharacterListChildView._listCount = 0;
+CharacterListChildView.createChild = function(controller, param, cityModel, parentView){
+	if(CharacterListChildView._list.length > 0){
+		var child = CharacterListChildView._list.shift();
+		child.init(controller, param, cityModel, parentView);
+		return child;
+	}
+	if(typeof LPlugin != UNDEFINED && !LPlugin.native)console.error("CharacterListChildView.createChild",++CharacterListChildView._listCount);
+	return new CharacterListChildView(controller, param, cityModel, parentView);
+};
+CharacterListChildView.prototype.die = function() {
+	var self = this;
+	var has = false;
+	for(var i=0, l=CharacterListChildView._list.length;i<l;i++){
+		var child = CharacterListChildView._list[i];
+		if(child.objectIndex == self.objectIndex){
+			has = true;
+			break;
+		}
+	}
+	if(!has){
+		self.character = null;
+		self.cityModel = null;
+		self.parentView = null;
+		self.controller = null;
+		self.charaModel = null;
+		self.cacheAsBitmap(false);
+		if(self.checkbox){
+			self.checkbox.setChecked(false);
+		}
+		CharacterListChildView._list.push(self);
+	}
+	//self.callParent("die", arguments);
+}; 
+CharacterListChildView.prototype.init = function(controller, param, cityModel, parentView) {
+	var self = this;
 	self.cityModel = cityModel;
 	self.parentView = parentView;
 	self.controller = controller;
@@ -10,18 +49,24 @@ function CharacterListChildView(controller, param, cityModel, parentView) {
 		self.character = param;
 		self.set(param.data);
 	}
-}
-
+}; 
 CharacterListChildView.prototype.set = function(charaModel) {
 	var self = this;
 	self.charaModel = charaModel;
-	self.removeAllChild();
+	//self.removeAllChild();
 	self.setCheckBox();
 	self.setStatus();
 };
 CharacterListChildView.prototype.setCheckBox = function() {
 	var self = this;
 	if(self.controller.params.showOnly) {
+		if(self.checkbox){
+			self.checkbox.visible = false;
+		}
+		return;
+	}
+	if(self.checkbox){
+		self.checkbox.visible = true;
 		return;
 	}
 	var bitmap = new LBitmap(new LBitmapData(LMvc.datalist["checkbox-background"]));
@@ -102,20 +147,35 @@ CharacterListChildView.prototype.cutover = function(value, isInClipping) {
 };
 CharacterListChildView.prototype.setStatus = function() {
 	var self = this;
-	var layer = new LSprite();
-	layer.graphics.drawRect(0, "#ff0000", [0, 0, 420, 40]);
-	var bitmapLine = new LBitmap(new LBitmapData(LMvc.datalist["icon-line"]));
-	bitmapLine.scaleX = 420;
-	bitmapLine.y = 38;
-	layer.addChild(bitmapLine);
-	var name = getStrokeLabel(self.charaModel.name(), 20, "#FFFFFF", "#000000", 4);
-	name.x = 50;
-	name.y = 5;
-	layer.addChild(name);
-	var bitmapName = getBitmap(layer);
-	bitmapName.x = 20;
-	bitmapName.y = 10;
-	self.addChild(bitmapName);
+	if(!self.nameLabel){
+		var layer = new LSprite();
+		layer.graphics.drawRect(0, "#ff0000", [0, 0, 420, 40]);
+		var bitmapLine = new LBitmap(new LBitmapData(LMvc.datalist["icon-line"]));
+		bitmapLine.scaleX = 420;
+		bitmapLine.y = 38;
+		layer.addChild(bitmapLine);
+		var name = getStrokeLabel(self.charaModel.name(), 20, "#FFFFFF", "#000000", 4);
+		name.x = 50;
+		name.y = 5;
+		layer.addChild(name);
+		/*var bitmapName = getBitmap(layer);
+		bitmapName.x = 20;
+		bitmapName.y = 10;*/
+		layer.x = 20;
+		layer.y = 10;
+		self.addChild(layer);
+		self.nameLabel = name;
+	}
+	self.nameLabel.text = self.charaModel.name();
+	if(self.basicProperties){
+		self.basicProperties.visible = false;
+	}
+	if(self.abilityProperties){
+		self.abilityProperties.visible = false;
+	}
+	if(self.armProperties){
+		self.armProperties.visible = false;
+	}
 	if(self.controller.characterListType != CharacterListType.GAME_SINGLE_COMBAT && self.controller.characterListType != CharacterListType.TOURNAMENTS_SELECT){
 		self.setBasicProperties();
 	}
@@ -131,105 +191,152 @@ CharacterListChildView.prototype.setStatus = function() {
 		}
 	}else if(self.controller.characterListType == CharacterListType.GAME_SINGLE_COMBAT || self.controller.characterListType == CharacterListType.TOURNAMENTS_SELECT){
 		self.abilityProperties.visible = true;
+	}else{
+		self.basicProperties.visible = true;
 	}
 }; 
 CharacterListChildView.prototype.setArmProperties = function() {
 	var self = this;
+	var soldierModel = self.charaModel.currentSoldiers();
 	if(self.armProperties){
-		self.armProperties.remove();
+		self.troops.text = String.format("{0}/{1}",self.charaModel.troops(),soldierModel.maxTroops(self.charaModel));
+		self.soldierName.text = soldierModel.name();
+		
+		return;
 	}
 	var layer = new LSprite();
 	layer.graphics.drawRect(0, "#ff0000", [0, 0, LGlobal.width - 200, 50]);
-	var soldierModel = self.charaModel.currentSoldiers();
 	
-	var name = getStrokeLabel( String.format("{0}/{1}",self.charaModel.troops(),soldierModel.maxTroops(self.charaModel)), 18, "#FFFFFF", "#000000", 4);
-	name.x = 2;
-	name.y = 10;
-	layer.addChild(name);
-	var name = getStrokeLabel(soldierModel.name(), 18, "#FFFFFF", "#000000", 4);
-	name.x = 120;
-	name.y = 10;
-	layer.addChild(name);
+	var troops = getStrokeLabel( String.format("{0}/{1}",self.charaModel.troops(),soldierModel.maxTroops(self.charaModel)), 18, "#FFFFFF", "#000000", 4);
+	troops.x = 2;
+	troops.y = 10;
+	layer.addChild(troops);
+	self.troops = troops;
+	
+	var soldierName = getStrokeLabel(soldierModel.name(), 18, "#FFFFFF", "#000000", 4);
+	soldierName.x = 120;
+	soldierName.y = 10;
+	layer.addChild(soldierName);
+	self.soldierName = soldierName;
 	var panel = new LPanel(new LBitmapData(LMvc.datalist["win01"]),80,40);
 	panel.x = 200;
 	panel.y = 0;
 	layer.addChild(panel);
-	var name = getStrokeLabel(Language.get("distribute"), 18, "#FFFFFF", "#000000", 4);
-	name.x = (panel.getWidth() - name.getWidth())*0.5;
-	name.y = (panel.getHeight() - name.getHeight())*0.5;;
-	panel.addChild(name);
-	var armPropertiesBitmap = getBitmap(layer);
+	var distribute = getStrokeLabel(Language.get("distribute"), 18, "#FFFFFF", "#000000", 4);
+	distribute.x = (panel.getWidth() - distribute.getWidth())*0.5;
+	distribute.y = (panel.getHeight() - distribute.getHeight())*0.5;;
+	panel.addChild(distribute);
+	layer.x = 180;
+	layer.y = 5;
+	/*var armPropertiesBitmap = getBitmap(layer);
 	armPropertiesBitmap.x = 180;
-	armPropertiesBitmap.y = 5;
-	self.addChild(armPropertiesBitmap);
-	self.armProperties = armPropertiesBitmap;
+	armPropertiesBitmap.y = 5;*/
+	self.addChild(layer);
+	self.armProperties = layer;
 };
 CharacterListChildView.prototype.setBasicProperties = function() {
 	var self = this;
+	var seigniorId = self.charaModel.seigniorId();
+	if(self.basicProperties){
+		self.seigniorName.text = self.charaModel.seigniorName();
+		self.identity.text = self.charaModel.identity();
+		if(self.controller.characterListType == CharacterListType.OWN_CHARACTER_LIST){
+			self.cityNameLabel.text = self.charaModel.city().name();
+		}else if(self.cityModel){
+			self.cityNameLabel.text = self.character?self.charaModel.city().name():self.cityModel.name();
+		}
+		self.loyalty.text = seigniorId>0 ? self.charaModel.loyalty() : "--";
+		self.jobLabel.text = self.charaModel.jobLabel();
+		return;
+	}
 	var layer = new LSprite();
 	layer.graphics.drawRect(0, "#ff0000", [0, 0, LGlobal.width - 200, 50]);
 
-	var seigniorId = self.charaModel.seigniorId();
-	var name = getStrokeLabel( self.charaModel.seigniorName(), 18, "#FFFFFF", "#000000", 4);
-	name.x = 2;
-	name.y = 5;
-	layer.addChild(name);
+	var seigniorName = getStrokeLabel( self.charaModel.seigniorName(), 18, "#FFFFFF", "#000000", 4);
+	seigniorName.x = 2;
+	seigniorName.y = 5;
+	layer.addChild(seigniorName);
+	self.seigniorName = seigniorName;
 	
-	var name = getStrokeLabel(self.charaModel.identity(), 18, "#FFFFFF", "#000000", 4);
-	name.x = 60 + 2;
-	name.y = 5;
-	layer.addChild(name);
-	if(self.cityModel){
-		var name = getStrokeLabel(self.character?self.charaModel.city().name():self.cityModel.name(), 18, "#FFFFFF", "#000000", 4);
-		name.x = 60 * 2 + 2;
-		name.y = 5;
-		layer.addChild(name);
+	var identity = getStrokeLabel(self.charaModel.identity(), 18, "#FFFFFF", "#000000", 4);
+	identity.x = 60 + 2;
+	identity.y = 5;
+	layer.addChild(identity);
+	self.identity = identity;
+	var cityNameLabel;
+	if(self.controller.characterListType == CharacterListType.OWN_CHARACTER_LIST){
+		cityNameLabel = getStrokeLabel(self.charaModel.city().name(), 18, "#FFFFFF", "#000000", 4);
+	}else if(self.cityModel){
+		var cityName = self.character?self.charaModel.city().name():self.cityModel.name();
+		cityNameLabel = getStrokeLabel(cityName, 18, "#FFFFFF", "#000000", 4);
 	}
-	var name = getStrokeLabel( seigniorId>0 ? self.charaModel.loyalty() : "--", 18, "#FFFFFF", "#000000", 4);
-	name.x = 60 * 3 + 2;
-	name.y = 5;
-	layer.addChild(name);
+	cityNameLabel.x = 60 * 2 + 2;
+	cityNameLabel.y = 5;
+	layer.addChild(cityNameLabel);
+	self.cityNameLabel = cityNameLabel;
+	var loyalty = getStrokeLabel( seigniorId>0 ? self.charaModel.loyalty() : "--", 18, "#FFFFFF", "#000000", 4);
+	loyalty.x = 60 * 3 + 2;
+	loyalty.y = 5;
+	layer.addChild(loyalty);
+	self.loyalty = loyalty;
 
-	var name = getStrokeLabel(self.charaModel.jobLabel(), 18, "#FFFFFF", "#000000", 4);
-	name.x = 60 * 4;
-	name.y = 5;
-	layer.addChild(name);
-
-	var basicPropertiesBitmap = getBitmap(layer);
+	var jobLabel = getStrokeLabel(self.charaModel.jobLabel(), 18, "#FFFFFF", "#000000", 4);
+	jobLabel.x = 60 * 4;
+	jobLabel.y = 5;
+	layer.addChild(jobLabel);
+	self.jobLabel = jobLabel;
+	layer.x = 180;
+	layer.y = 10;
+	/*var basicPropertiesBitmap = getBitmap();
 	basicPropertiesBitmap.x = 180;
-	basicPropertiesBitmap.y = 10;
-	self.addChild(basicPropertiesBitmap);
-	self.basicProperties = basicPropertiesBitmap;
+	basicPropertiesBitmap.y = 10;*/
+	self.addChild(layer);
+	self.basicProperties = layer;
 }; 
 CharacterListChildView.prototype.setAbilityProperties = function() {
 	var self = this;
+	if(self.abilityProperties){
+		self.command.text = self.charaModel.command();
+		self.force.text = self.charaModel.force();
+		self.intelligence.text = self.charaModel.intelligence();
+		self.agility.text = self.charaModel.agility();
+		self.luck.text = self.charaModel.luck();
+		self.abilityProperties.visible = false;
+		return;
+	}
 	var layer = new LSprite();
 	layer.graphics.drawRect(0, "#ff0000", [0, 0, LGlobal.width - 200, 50]);
-	var name = getStrokeLabel(self.charaModel.command(), 18, "#FFFFFF", "#000000", 4);
-	name.x = 5;
-	name.y = 5;
-	layer.addChild(name);
-	var name = getStrokeLabel(self.charaModel.force(), 18, "#FFFFFF", "#000000", 4);
-	name.x = 60 + 5;
-	name.y = 5;
-	layer.addChild(name);
-	var name = getStrokeLabel(self.charaModel.intelligence(), 18, "#FFFFFF", "#000000", 4);
-	name.x = 60 * 2 + 5;
-	name.y = 5;
-	layer.addChild(name);
-	var name = getStrokeLabel(self.charaModel.agility(), 18, "#FFFFFF", "#000000", 4);
-	name.x = 60 * 3 + 5;
-	name.y = 5;
-	layer.addChild(name);
-	var name = getStrokeLabel(self.charaModel.luck(), 18, "#FFFFFF", "#000000", 4);
-	name.x = 60 * 4 + 5;
-	name.y = 5;
-	layer.addChild(name);
-
-	var abilityPropertiesBitmap = getBitmap(layer);
+	var command = getStrokeLabel(self.charaModel.command(), 18, "#FFFFFF", "#000000", 4);
+	command.x = 5;
+	command.y = 5;
+	layer.addChild(command);
+	self.command = command;
+	var force = getStrokeLabel(self.charaModel.force(), 18, "#FFFFFF", "#000000", 4);
+	force.x = 60 + 5;
+	force.y = 5;
+	layer.addChild(force);
+	self.force = force;
+	var intelligence = getStrokeLabel(self.charaModel.intelligence(), 18, "#FFFFFF", "#000000", 4);
+	intelligence.x = 60 * 2 + 5;
+	intelligence.y = 5;
+	layer.addChild(intelligence);
+	self.intelligence = intelligence;
+	var agility = getStrokeLabel(self.charaModel.agility(), 18, "#FFFFFF", "#000000", 4);
+	agility.x = 60 * 3 + 5;
+	agility.y = 5;
+	layer.addChild(agility);
+	self.agility = agility;
+	var luck = getStrokeLabel(self.charaModel.luck(), 18, "#FFFFFF", "#000000", 4);
+	luck.x = 60 * 4 + 5;
+	luck.y = 5;
+	layer.addChild(luck);
+	self.luck = luck;
+	layer.x = 180;
+	layer.y = 10;
+	/*var abilityPropertiesBitmap = getBitmap(layer);
 	abilityPropertiesBitmap.x = 180;
-	abilityPropertiesBitmap.y = 10;
-	self.addChild(abilityPropertiesBitmap);
-	self.abilityProperties = abilityPropertiesBitmap;
+	abilityPropertiesBitmap.y = 10;*/
+	self.addChild(layer);
+	self.abilityProperties = layer;
 	self.abilityProperties.visible = false;
 }; 

@@ -169,8 +169,9 @@ BuildExpeditionView.prototype.expeditionCancel=function(event){
 };
 BuildExpeditionView.prototype.toExpedition=function(){
 	var self = this;
+	self.controller.setValue("expeditionLeader", null);
 	var cityModel = self.controller.getValue("cityData");
-	self.controller.loadCharacterList(CharacterListType.EXPEDITION, cityModel.generals(Job.IDLE), {buttonLabel:"execute"});
+	self.controller.loadCharacterList(CharacterListType.EXPEDITION, cityModel.generals(Job.IDLE), {buttonLabel:"execute", countCheckBox:true});
 };
 BuildExpeditionView.prototype.toSelectLeader=function(){
 	var self = this;

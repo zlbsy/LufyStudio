@@ -12,14 +12,6 @@ MenuView.prototype.init=function(){
 	
 	self.mainLayer.addChild(layer);
 	layer.x = 20;
-	/*
-	var buttonOperatingEnd = getButton(Language.get("operating_end"),200);
-	buttonOperatingEnd.name = "operating_end";
-	buttonOperatingEnd.y = menuY;
-	layer.addChild(buttonOperatingEnd);
-	buttonOperatingEnd.addEventListener(LMouseEvent.MOUSE_UP, self.onClickOperatingEnd);
-	
-	menuY += menuHeight;*/
 	var buttonGameSave = getButton(Language.get("game_save"),200);
 	buttonGameSave.y = menuY;
 	layer.addChild(buttonGameSave);
@@ -30,6 +22,12 @@ MenuView.prototype.init=function(){
 	buttonGameRead.y = menuY;
 	layer.addChild(buttonGameRead);
 	buttonGameRead.addEventListener(LMouseEvent.MOUSE_UP, self.onClickGameRead);
+
+	menuY += menuHeight;
+	var buttonAllGenerals = getButton(Language.get("own_generals_list"),200);
+	buttonAllGenerals.y = menuY;
+	layer.addChild(buttonAllGenerals);
+	buttonAllGenerals.addEventListener(LMouseEvent.MOUSE_UP, self.onClickAllGenerals);
 
 	menuY += menuHeight;
 	var buttonAllSeignior = getButton(Language.get("all_seignior"),200);
@@ -88,6 +86,13 @@ MenuView.prototype.onClickDictionary=function(event){
 	var self = event.currentTarget.parent.parent.parent;
 	self.hide();
 	self.controller.loadDictionary();
+};
+MenuView.prototype.onClickAllGenerals=function(event){
+	var self = event.currentTarget.getParentByConstructor(MenuView);
+	self.hide();
+	var seignior = SeigniorModel.getSeignior(LMvc.selectSeignorId);
+	var generals = seignior.generals();
+	LMvc.MapController.loadCharacterList(CharacterListType.OWN_CHARACTER_LIST, generals, {showOnly:true});
 };
 MenuView.prototype.onClickAllSeignior=function(event){
 	var self = event.currentTarget.parent.parent.parent;
