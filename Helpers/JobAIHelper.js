@@ -106,7 +106,7 @@ function jobAiToBattle(areaModel,characters,targetCity){
 	areaModel.troops(areaModel.troops() - sumTroops);
 	data.cityId = targetCity.id();
 	data.toCity = targetCity;
-	if(targetCity.seigniorCharaId() == LMvc.selectSeignorId && (targetCity.troops() > 0 && targetCity.generals().length > 0)){
+	if(targetCity.seigniorCharaId() == LMvc.selectSeignorId && !targetCity.isAppoint() && (targetCity.troops() > 0 && targetCity.generals().length > 0)){
 		SeigniorExecute.Instance().stop = true;
 		//进入战斗
 		var attackSeignior = areaModel.seignior();
@@ -576,7 +576,7 @@ function jobAiCaptivesRescue(areaModel,characters){//解救俘虏
 	}
 	SeigniorExecute.Instance().captivesChecked.push(captive.id());
 	var captiveArea = captive.city();
-	if(captiveArea.seigniorCharaId() == LMvc.selectSeignorId){
+	if(captiveArea.seigniorCharaId() == LMvc.selectSeignorId && !captiveArea.isAppoint()){
 		character.job(Job.End);
 		//"{0}的{1}想用金钱{2}赎回{3}，是否答应？"
 		var obj = {title:Language.get("confirm"),message:String.format(Language.get("jobai_rescue_confirm_message"),character.seignior().name(),character.name(),money,captive.name()),height:200

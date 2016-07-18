@@ -643,6 +643,16 @@ SeigniorExecute.prototype.maskShow=function(){
 	if(self.backLayer){
 		return;
 	}
+	var buttonClose;
+	if(self._backLayer){
+		self.backLayer = self._backLayer;
+		buttonClose = self.backLayer.getChildByName("closeButton");
+		buttonClose.visible = false;
+		self.backLayer.visible = true;
+		LMvc.MapController.view.ctrlLayer.visible = false;
+		self.msgView.showSeignior();
+		return;
+	}
 	var maskLayer = getTranslucentMask();
 	maskLayer.alpha = 0.01;
 	self.backLayer = new LSprite();
@@ -653,7 +663,7 @@ SeigniorExecute.prototype.maskShow=function(){
 	LMvc.MapController.view.parent.addChild(self.backLayer);
 	
 	var bitmapClose = new LBitmap(new LBitmapData(LMvc.datalist["close"]));
-	var buttonClose = new LButton(bitmapClose);
+	buttonClose = new LButton(bitmapClose);
 	buttonClose.x = LGlobal.width - bitmapClose.getWidth() - 5;
 	buttonClose.y = self.msgView.panelY - bitmapClose.getHeight();
 	self.backLayer.addChild(buttonClose);
@@ -669,10 +679,14 @@ SeigniorExecute.prototype.maskHide=function(){
 		//self.msgView.timer.destroy();
 	}
 	self.messageCitys = [];
-	self.backLayer.remove();
+	self._backLayer = self.backLayer;
+	self._backLayer.visible = false;
 	self.backLayer = null;
+	return;
 	self.msgView.remove();
 	self.msgView = null;
+	self.backLayer.remove();
+	self.backLayer = null;
 	//MessageView._Instance.die();
 	//MessageView._Instance = null;
 };

@@ -676,6 +676,7 @@ function SeigniorExecuteChangeCityResources(area){
 	if(HarvestMonths.Money.indexOf(LMvc.chapterData.month) >= 0){
 		var addMoney = 500 + 3500*area.business()/maxBusiness;
 		addMoney *= (1 + population * 0.3 / maxPopulation);
+		console.log(area.name(), addMoney);
 		area.money(addMoney >>> 0);
 	}
 	//粮食
