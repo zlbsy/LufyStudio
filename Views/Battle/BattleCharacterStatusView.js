@@ -292,10 +292,12 @@ BattleCharacterStatusView.prototype.setPosition=function(character){
 	}else if(root.x + w > LGlobal.width){
 		self.x -= (root.x + w - LGlobal.width);
 	}
+	var map = LMvc.BattleController.model.map;
+	var maxHeight = map.height > LGlobal.height ? LGlobal.height : map.height;
 	if(root.y < 0){
 		self.y -= root.y;
-	}else if(root.y + h > LGlobal.height){
-		self.y -= (root.y + h - LGlobal.height);
+	}else if(root.y + h > maxHeight){
+		self.y -= (root.y + h - maxHeight);
 	}
 };
 

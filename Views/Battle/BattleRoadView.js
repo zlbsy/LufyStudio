@@ -9,7 +9,12 @@ function BattleRoadView(controller){
 		BattleRoadView.redRange = new LBitmapData(LMvc.datalist["rect"],self.model.stepWidth*2,0,self.model.stepWidth,self.model.stepHeight);
 		BattleRoadView.blueRange = new LBitmapData(LMvc.datalist["rect"],self.model.stepWidth*3,0,self.model.stepWidth,self.model.stepHeight);
 		BattleRoadView.baseBitmapData = new LBitmapData(null,0,0,map.width,map.height,LBitmapData.DATA_CANVAS);
+	}else{
+		BattleRoadView.baseBitmapData.image.width = map.width;
+		BattleRoadView.baseBitmapData.image.height = map.height;
+		BattleRoadView.baseBitmapData.setProperties(0,0,map.width,map.height);
 	}
+	
 	self.blueData = BattleRoadView.blueData;
 	self.redData = BattleRoadView.redData;
 	self.greenData = BattleRoadView.greenData;
