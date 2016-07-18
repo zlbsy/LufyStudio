@@ -62,6 +62,7 @@ BattleResultView.prototype.winInit=function(){
 			city.prefecture(chara.data.id());
 		}
 	}else{
+		self.retreatCityId = battleData.fromCity.id();
 		self.failSeigniorId = battleData.fromCity.seigniorCharaId();
 	}
 	self.showResultTitle("battle_win");
