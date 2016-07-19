@@ -16,15 +16,15 @@ TournamentsView.prototype.init=function(){
 	self.addChild(self.arenaLayer);
 	var charas = [];
 	var charasAll = SeigniorModel.getSeignior(LMvc.selectSeignorId).generals();
-	
+	charasAll = charasAll.sort(function(a, b){return b.data.force - a.data.force;});
 	for(var i=0, l=charasAll.length; i<l; i++){
 		var chara = charasAll[i];
-		if(chara.data.force < 80 && i>20){
-			break;
+		if(chara.data.force < 80 && i > 1){
+			continue;
 		}
 		charas.push(chara);
 	}
-	charas = charas.sort(function(a, b){return b.data.force - a.data.force;});
+	//charas = charas.sort(function(a, b){return b.data.force - a.data.force;});
 	self.characters = [];
 	for(var i=0,l=SeigniorModel.list.length;i<l;i++){
 		var seignior = SeigniorModel.list[i];
