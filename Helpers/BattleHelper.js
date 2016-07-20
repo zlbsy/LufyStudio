@@ -299,9 +299,34 @@ function battleEndCheck(belong){
 		BattleController.ctrlChara.AI.endBoutCheck();
 	}
 }
+function battleDefCharactersToAttack(belong, battleData){
+	if(belong == Belong.SELF){
+		return;
+	}
+	if(battleData.toCity.seigniorCharaId() == LMvc.selectSeignorId ){
+		return;
+	}
+	var charaLayer = LMvc.BattleController.view.charaLayer;
+	var selfCharas = charaLayer.getCharactersFromBelong(Belong.SELF);
+	var enemyCharas = charaLayer.getCharactersFromBelong(Belong.ENEMY);
+	var troopsSelf = 0, troopsEnemy = 0;
+	selfCharas.forEach(function(c){troopsSelf += c.data.troops();});
+	enemyCharas.forEach(function(c){troopsEnemy += c.data.troops();});
+	if(troopsSelf * 4 > troopsEnemy){
+		return;
+	}
+	enemyCharas.forEach(function(c){
+		if(c.data.isDefCharacter()){
+			return;
+		}
+		c.mission = BattleCharacterMission.Initiative;
+	});
+}
 function battleFoodCheck(belong){
 	var battleData = LMvc.BattleController.battleData;
 	var charas = LMvc.BattleController.view.charaLayer.getCharactersFromBelong(belong);
+	
+	battleDefCharactersToAttack(belong);
 	var needFood = 0;
 	var thrift = 1;
 	for(var i=0,l=charas.length;i<l;i++){

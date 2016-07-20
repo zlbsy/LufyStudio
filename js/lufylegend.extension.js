@@ -9,33 +9,22 @@ LTextField.prototype.windComplete = function() {
 LDisplayObjectContainer.prototype.removeAllChild = function () {
 	var s  = this, c = s.childList, i, l;
 	for (i = 0, l = c.length; i < l; i++) {
-		if (LGlobal.destroy && c[i].die) {
-			c[i].die();
-		}
-		if (LGlobal.destroy && c[i].removeAllChild) {
-			c[i].removeAllChild();
-		}
-		delete c[i].parent;
+		var d = c[i];
+		LDisplayObjectContainer.destroy(d);
+		delete d.parent;
 	}
 	s.childList.length = 0;
 	s.width = 0;
 	s.height = 0;
 	s.numChildren = 0;
 };
-LDisplayObjectContainer.prototype.die = function () {
-	var s = this, i, c, l;
-	for (i = 0, c = s.childList, l = c.length; i < l; i++) {
-		if (c[i].die) {
-			c[i].die();
-		}
-	}
-};
 LListView.prototype.clear = function() {
 	var self = this;
 	for (var i = 0, l = self._ll_items.length; i < l; i++) {
 		self._ll_items[i].die();
+		self._ll_items[i].removeAllChild();
 	}
-	self._ll_items.splice(0, self._ll_items.length);
+	self._ll_items.length = 0;
 	self.resizeScrollBar();
 };
 LListView.prototype.deleteChildView = function(child) {
@@ -56,15 +45,13 @@ LShape.prototype.die = function(){
 };
 LListView.prototype.die = function(){
 	var self = this;
-	for(var i=0,l=self._ll_items.length;i<l;i++){
-		self._ll_items[i].die();
-	}
-	self._ll_items = [];
+	self.clear();
 	self.callParent("die",arguments);
 };
 LListChildView.prototype.die = function(){
 	var self = this;
 	self.cacheAsBitmap(false);
+	self.removeAllChild();
 	self.ll_baseBitmap = null;
 	self.ll_baseRectangle = null;
 	self.ll_basePoint = null;
@@ -133,10 +120,10 @@ LTextField.getLabel = function(){
 		var label = LTextField._labels.shift();
 		return label;
 	}
-	//if(typeof LPlugin != UNDEFINED && !LPlugin.native)console.error("_labelsCreate",++LTextField._labelsCreate,LTextField._labels.length);
+	if(typeof LPlugin != UNDEFINED && !LPlugin.native)console.error("_labelsCreate",++LTextField._labelsCreate,LTextField._labels.length);
 	return new LTextField();
 };
-LTextField.prototype.die = function(){
+LTextField.prototype.cached = function(){
 	var self = this;
 	var has = false;
 	for(var i=0, l=LTextField._labels.length;i<l;i++){
@@ -172,12 +159,50 @@ LTextField.prototype.die = function(){
 		self.transform.matrix = null;
 		LTextField._labels.push(self);
 	}
-	//if(typeof LPlugin != UNDEFINED && !LPlugin.native)console.error("LTextField.prototype.die",LTextField._labels.length);
+	if(typeof LPlugin != UNDEFINED && !LPlugin.native)console.error("LTextField.prototype.die",LTextField._labels.length);
 	/*if(!LTextField._labels.indexOf(self)){
 		LTextField._labels.push(self);
 	}*/
 	LMouseEventContainer.removeInputBox(self);
 	self.callParent("die", arguments);
+};
+LDisplayObjectContainer.destroy = function (d) {
+	if (!LGlobal.destroy) {
+		return;
+	}
+	if (d.die) {
+		d.die();
+	}
+	if (d.cached) {
+		d.cached();
+	}
+	if (d.removeAllChild) {
+		d.removeAllChild();
+	}
+};
+LDisplayObjectContainer.prototype.removeChild = function (d) {
+	var s  = this, c = s.childList, i, l;
+	for (i = 0, l = c.length; i < l; i++) {
+		if (d.objectIndex == c[i].objectIndex) {
+			LDisplayObjectContainer.destroy(d);
+			s.childList.splice(i, 1);
+			break;
+		}
+	}
+	s.numChildren = s.childList.length;
+	delete d.parent;
+};
+LDisplayObjectContainer.prototype.removeChildAt = function (i) {
+	var s  = this, c = s.childList, d;
+	if (c.length <= i || i < 0) {
+		return;
+	}
+	d = c[i];
+	LDisplayObjectContainer.destroy(d);
+	s.childList.splice(i, 1);
+	delete d.parent;
+	s.numChildren = s.childList.length;
+	return d;
 };
 LDisplayObject._canvasList = [];
 LDisplayObject._canvasCreateCount=0;
@@ -190,15 +215,11 @@ LDisplayObject.prototype._createCanvas = function(){
 		var _canvas = LDisplayObject._canvasList.shift();
 		s._canvas = _canvas;
 	}else{
-		//if(typeof LPlugin != UNDEFINED && !LPlugin.native)console.error("_canvasCreateCount", ++LDisplayObject._canvasCreateCount, s);
+		if(typeof LPlugin != UNDEFINED && !LPlugin.native)console.error("_canvasCreateCount", ++LDisplayObject._canvasCreateCount, s);
 		s._canvas = document.createElement("canvas");
 		s._canvas.objectIndex = ++LGlobal.objectIndex;
 	}
 	s._context = s._canvas.getContext("2d");
-};
-LListScrollBar.prototype.die = function(){
-	var self = this;
-	self.callParent("die", arguments);
 };
 LDisplayObject.pushCacheCanvas = function(_canvas){
 	var has = false;
@@ -218,7 +239,7 @@ LDisplayObject.pushCacheCanvas = function(_canvas){
 		LDisplayObject._canvasList.push(_canvas);
 	}*/
 };
-LDisplayObject.prototype.die = function(){
+LDisplayObject.prototype.cached = function(){
 	var s = this;
 	if(!s._canvas){
 		return;
