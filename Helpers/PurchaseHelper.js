@@ -64,6 +64,9 @@ function purchaseStart(productId, callback) {
 }
 
 function purchaseHasBuy(productId) {
+	if(LGlobal.traceDebug || LPlugin.testVersion){
+		return true;
+	}
 	var purchaseLog = LPlugin.GetData("purchaseLog", []);
 	var child = purchaseLog.find(function(c){
 		return c.product_id == productId;

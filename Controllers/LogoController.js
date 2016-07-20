@@ -105,22 +105,8 @@ LogoController.prototype.openReportUpdate=function(){
 };
 LogoController.prototype.start=function(event){
 	var self = event.target.parent.controller;
-	if(LPlugin.native){
-		self.dispatchEvent(LController.NOTIFY);
-		self.updateCheck();
-	}else{
-		LPlugin.SetData("purchaseLog", []);
-		//TODO::测试用
-		if(LGlobal.traceDebug){
-			var datas = [];
-			productIdConfig.productIds.forEach(function(c){
-				datas.push({product_id:c});
-			});
-			LPlugin.SetData("purchaseLog", datas);
-			self.updateCheck();
-		}
-		self.dispatchEvent(LController.NOTIFY);
-	}
+	self.dispatchEvent(LController.NOTIFY);
+	self.updateCheck();
 	if(!LPlugin.native && LSound.webAudioEnabled){
 		if(LPlugin.soundData){
 			return;
@@ -163,10 +149,34 @@ LogoController.prototype.start=function(event){
 LogoController.prototype.soundComplete = function(result){
 	LPlugin.soundData = result;
 };
+LogoController.prototype.testVersionOver = function(message){
+	var self = this;
+	LMvc.keepLoading(false);
+	var obj = {title:Language.get("confirm"),message:message,width:300,height:200,okEvent:function(event){
+		LPlugin.openURL(LMvc.homeURL);
+	}};
+	var windowLayer = ConfirmWindow(obj);
+	LMvc.layer.addChild(windowLayer);
+};
 LogoController.prototype.updateCheck = function(){
 	var self = this;
 	LMvc.keepLoading(true);
 	LMvc.changeLoading(TranslucentLoading);
+	if(LPlugin.testVersion){
+		LAjax.post(LMvc.updateURL + "test.php",{ver:LMvc.ver},function(data){
+			data = JSON.parse(data);
+			if(!data.result){
+				self.testVersionOver(data.message);
+			}else{
+				LMvc.keepLoading(false);
+				self.view.showNews(data.newsURL + "&l=" + LPlugin.language());
+			}
+		},function(){
+			self.testVersionOver("Could Not Connect to Internet Error !!");
+			//LMvc.keepLoading(false);
+		});
+		return;
+	}
 	LAjax.post(LMvc.updateURL + "index.php",{ver:LMvc.ver},function(data){
 		data = JSON.parse(data);
 		LPlugin.SetData("reviewing", data.reviewing);

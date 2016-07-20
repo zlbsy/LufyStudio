@@ -504,6 +504,15 @@ function dispatchEventListResultReputation(child) {
 }
 function dispatchEventListResultStopBattle(child) {
 	var seigniors = child.seigniors;
+	var condition = child.condition;
+	console.log(condition);
+	if(condition){
+		if(condition.noSeignior){
+			if(condition.noSeignior.indexOf(LMvc.selectSeignorId) >= 0){
+				return;
+			}
+		}
+	}
 	var month = child.month;
 	for(var i=0,l=seigniors.length;i<l;i++){
 		var iId = seigniors[i];

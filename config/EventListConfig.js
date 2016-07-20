@@ -244,6 +244,7 @@ var EventListConfig = [
 	},
 	script:"Data/Event/{0}/sgml1.txt",
 	result:[
+		{type:"moveGeneralsToSeignior", generals:[20], to:1, loyalty:80},//徐庶移动到曹操手下
 	]
 },
 {
@@ -298,6 +299,7 @@ var EventListConfig = [
 		seignior:[1, 21],
 		generals:[
 			{id:1,seignior:1},//曹操未灭亡
+			{id:17,seignior:17},//孙权未灭亡
 			{id:21,seignior:21},//刘备未灭亡
 			{id:446,seignior:446},//刘表未灭亡
 		],
