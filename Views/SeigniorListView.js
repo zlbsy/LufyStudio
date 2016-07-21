@@ -74,8 +74,8 @@ SeigniorListView.prototype.mapLayerInit=function(){
 	txtmap.x = (bitmapWin.getWidth() - txtmap.getWidth()) * 0.5;
 	bitmapWin.y = txtmap.getHeight();
 	layer.addChild(txtmap);
-	
-	layer = getBitmap(layer);
+	layer.cacheAsBitmap(true);
+	//layer = getBitmap(layer);
 	layer.x = (LGlobal.width - layer.getWidth()) * 0.5;
 	layer.y = 30;
 	self.mapLayer.addChild(layer);

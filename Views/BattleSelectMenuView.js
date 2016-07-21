@@ -91,8 +91,8 @@ BattleSelectMenuView.prototype.setMenu=function(){
 	layer.addChild(menuButton);
 	menuButton.addEventListener(LMouseEvent.MOUSE_UP, self.clickStandby);
 	
-	var win = new LPanel(new LBitmapData(LMvc.datalist["win05"]),menuWidth + 20, menuHeight * (((menuY - 10) / menuHeight >> 0) + 1) + 30);
-	var winBitmap = getBitmap(win);
+	//var win = new LPanel(new LBitmapData(LMvc.datalist["win05"]),menuWidth + 20, menuHeight * (((menuY - 10) / menuHeight >> 0) + 1) + 30);
+	var winBitmap = getPanel("win05",menuWidth + 20, menuHeight * (((menuY - 10) / menuHeight >> 0) + 1) + 30);
 	self.mainLayer.addChildAt(winBitmap, 0);
 };
 BattleSelectMenuView.prototype.clickAttack=function(event){

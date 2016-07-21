@@ -326,7 +326,7 @@ function battleFoodCheck(belong){
 	var battleData = LMvc.BattleController.battleData;
 	var charas = LMvc.BattleController.view.charaLayer.getCharactersFromBelong(belong);
 	
-	battleDefCharactersToAttack(belong);
+	battleDefCharactersToAttack(belong, battleData);
 	var needFood = 0;
 	var thrift = 1;
 	for(var i=0,l=charas.length;i<l;i++){

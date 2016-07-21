@@ -71,9 +71,8 @@ HeaderStatusView.prototype.setStatus=function(label,value,x,y,stepWidth,size){
 	valueText.x = stepWidth - valueText.getWidth() - 5;
 	valueText.y = (self.stepHeight - labelText.getHeight()) * 0.5;
 	panel.addChild(valueText);
-	
-	var bitmapLayer = getBitmap(panel);
-	bitmapLayer.x = x;
-	bitmapLayer.y = y;
-	self.addChild(bitmapLayer);
+	panel.x = x;
+	panel.y = y;
+	panel.cacheAsBitmap(true);
+	self.addChild(panel);
 };

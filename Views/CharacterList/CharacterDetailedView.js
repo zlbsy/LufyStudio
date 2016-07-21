@@ -121,7 +121,10 @@ CharacterDetailedView.prototype.setTabButtons=function(){
 	var tabs = self.tabs;
 	for(var i=0,l=self.tabs.length;i<l;i++){
 		if(!GameCacher.hasPanelBitmapData("tab_no_selected")){
-			var bitmapData = getBitmapData(new LPanel(new LBitmapData(LMvc.datalist["win01"],0,0,51,34),90,40));
+			var panel = new LPanel(new LBitmapData(LMvc.datalist["win01"],0,0,51,34),90,40);
+			var bitmapData = getBitmapData(panel,true);
+			panel.removeAllChild();
+			panel.cached();
 			GameCacher.setPanelBitmapData("tab_no_selected",0,0,0,0,0,0,bitmapData);
 		}
 		layer = getPanel("tab_no_selected");
@@ -139,7 +142,10 @@ CharacterDetailedView.prototype.selectedTab=function(key){
 	self.selectedTabLayer.cacheAsBitmap(false);
 	if(self.selectedTabLayer.numChildren == 0){
 		if(!GameCacher.hasPanelBitmapData("tab_selected")){
-			var bitmapData = getBitmapData(new LPanel(new LBitmapData(LMvc.datalist["win02"],0,0,51,34),90,50));
+			var panel = new LPanel(new LBitmapData(LMvc.datalist["win02"],0,0,51,34),90,50);
+			var bitmapData = getBitmapData(panel,true);
+			panel.removeAllChild();
+			panel.cached();
 			GameCacher.setPanelBitmapData("tab_selected",0,0,0,0,0,0,bitmapData);
 		}
 		var layer = getPanel("tab_selected");
@@ -329,6 +335,7 @@ CharacterDetailedView.prototype.ctrlLayerInit=function(){
 	self.ctrlLayer.addChild(buttonItem);
 	buttonItem.addEventListener(LMouseEvent.MOUSE_UP, self.openItems);
 };
+CharacterDetailedView.prototype.removeAllChild=function(){};
 CharacterDetailedView.prototype.closeCharacterDetailed=function(event){
 	var self = event ?  event.currentTarget.getParentByConstructor(CharacterDetailedView) : this;
 	self.controller.closeCharacterDetailed();

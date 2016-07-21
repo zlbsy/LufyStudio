@@ -292,11 +292,24 @@ BattleResultView.prototype.showMap=function(event){
 	self.changeCharactersStatus();
 	var toCity = self.controller.battleData.toCity;
 	var cityId = toCity.id();
-	self.controller.view.remove();
 	
 	BattleSelectMenuController._instance = null;
 	
+	BattleController.ctrlChara = null;
+	var battleController = LMvc.BattleController;
+	var battleModel = battleController.model;
+	var battleView = battleController.view;
 	LMvc.BattleController = null;
+	battleController.view.remove();
+	for(var k in battleController){
+		delete battleController[k];
+	}
+	for(var k in battleModel){
+		delete battleModel[k];
+	}
+	for(var k in battleView){
+		delete battleView[k];
+	}
 	LMvc.MapController.view.visible = true;
 	LMvc.MapController.view.positionChangeToCity(toCity);
 	LMvc.MapController.view.changeMode(MapController.MODE_MAP);

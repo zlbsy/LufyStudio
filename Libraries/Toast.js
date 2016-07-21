@@ -10,10 +10,11 @@ function Toast(message){
 	layer.graphics.drawRoundRect(1, "#999999", [0, 0, msg.getWidth() + 20, msg.getHeight() + 10, 10], true, "#000000");
 	msg.x = 10, msg.y = 5;
 	layer.addChild(msg);
-	var back = getBitmap(layer);
-	back.x = (LGlobal.width - back.getWidth()) * 0.5;
-	back.y = (LGlobal.width - back.getHeight()) * 0.5;
-	self.addChild(back);
+	layer.cacheAsBitmap(true);
+	//var back = getBitmap(layer);
+	layer.x = (LGlobal.width - layer.getWidth()) * 0.5;
+	layer.y = (LGlobal.width - layer.getHeight()) * 0.5;
+	self.addChild(layer);
 }
 Toast.makeText = function(message){
 	var toast = new Toast(message);

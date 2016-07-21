@@ -76,7 +76,10 @@ BattleRoadView.prototype.setRangeAttack = function(chara){
 		m.x = 1;
 		m.y = self.model.stepHeight - m.getHeight() - 2;
 		layer.addChild(m);
-		var bitmapData = getBitmapData(layer);
+		var bitmapData = getBitmapData(layer, true);
+		layer.die();
+		layer.cached();
+		layer.removeAllChild();
 		var x = node.x*self.model.stepWidth;
 		var y = node.y*self.model.stepHeight;
 		self.bitmap.bitmapData.copyPixels(bitmapData, new LRectangle(0, 0, self.model.stepWidth, self.model.stepHeight), new LPoint(x,y));

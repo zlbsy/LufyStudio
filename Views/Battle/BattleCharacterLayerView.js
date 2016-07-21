@@ -10,6 +10,11 @@ function BattleCharacterLayerView(controller) {
 	self.charasPositions = {};
 	self.controller.addEventListener(BattleBoutEvent.END, self.charactersBoutEnd);
 };
+BattleCharacterLayerView.prototype.die=function(){
+	var self = this;
+	delete self.charasPositions;
+	self.callParent("die", arguments);
+};
 BattleCharacterLayerView.prototype.charactersBoutEnd = function(event) {
 	var controller = event.currentTarget;
 	var self = controller.view.charaLayer;

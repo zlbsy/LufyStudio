@@ -114,7 +114,6 @@ BattleModel.prototype.createMap = function(callback){
 		data.image.width = self.map.width;
 		data.image.height = self.map.height;
 	}
-	self.mapBitmapData = BattleModel.bitmapDatas[0];
 	self.createMapTile(0, callback);
 	/*
 	for(var i=0;i<h;i++){
@@ -158,6 +157,7 @@ BattleModel.prototype.createMapTile = function(index, callback){
 			self.createMapTile(index, callback);
 		});
 	}else{
+		self.mapBitmapData = BattleModel.bitmapDatas[0];
 		callback.apply(self.controller,[]);
 	}
 };

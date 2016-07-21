@@ -19,6 +19,25 @@ function BattleCharacterView(controller, id, w, h) {
 }
 BattleCharacterView.cacheBitmapDatas = {};
 BattleCharacterView.DEFAULT_IMG = "character-s-default";
+BattleCharacterView.prototype.die = function() {
+	var self = this;
+	if(self.AI){
+		var AI = self.AI;
+		for(var k in AI){
+			delete AI[k];
+		}
+		delete self.AI;
+	}
+	if(self.inteAI){
+		var inteAI = self.inteAI;
+		for(var k in inteAI){
+			delete inteAI[k];
+		}
+		delete self.inteAI;
+	}
+	delete self.status;
+	self.callParent("die", arguments);
+};
 BattleCharacterView.getAnimationData = function(){
 	// 1792 x 64
 	var list = LGlobal.divideCoordinate(1792, 64, 1, 28);

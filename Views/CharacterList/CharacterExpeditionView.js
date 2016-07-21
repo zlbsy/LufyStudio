@@ -67,7 +67,8 @@ CharacterExpeditionView.prototype.set=function(){
 	com.label.lineWidth = 3;
 	com.setValue(self.currentTroopsIndex);
 	
-	var rangeBackground = getBitmap(new LPanel(new LBitmapData(LMvc.datalist["win04"]),220,40));
+	//var rangeBackground = getBitmap(new LPanel(new LBitmapData(LMvc.datalist["win04"]),220,40));
+	var rangeBackground = getPanel("win04",220,40);
 	var rangeSelect = new LBitmap(new LBitmapData(LMvc.datalist["range"]));
 	var r = new LRange(rangeBackground, rangeSelect);
 	r.x = 10;

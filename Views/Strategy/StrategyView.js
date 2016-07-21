@@ -98,7 +98,8 @@ StrategyView.prototype.setBackgroundLayer = function() {
 	var windowLayer = new LSprite();
 	windowLayer.addChild(getTranslucentBitmap());
 	var backgroundData = new LBitmapData(LMvc.datalist["win05"]);
-	var panel = getBitmap(new LPanel(backgroundData,self.size.x,self.size.y));
+	//var panel = getBitmap(new LPanel(backgroundData,self.size.x,self.size.y));
+	var panel = getPanel("win05",self.size.x,self.size.y);
 	panel.x = (LGlobal.width - panel.getWidth()) * 0.5;
 	panel.y = (LGlobal.height - panel.getHeight()) * 0.5;
 	windowLayer.addChild(panel);
@@ -128,8 +129,8 @@ StrategyView.prototype.setBackgroundLayer = function() {
 	var tabButton = getButton("MP",100);
 	tabButton.x = 280;
 	tabMenuLayer.addChild(tabButton);
-	
-	self.baseLayer.addChild(getBitmap(windowLayer));
+	windowLayer.cacheAsBitmap(true);
+	self.baseLayer.addChild(windowLayer);
 };
 StrategyView.prototype.ctrlLayerInit = function() {
 	var self = this;

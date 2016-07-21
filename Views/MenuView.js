@@ -60,16 +60,18 @@ MenuView.prototype.init=function(){
 	layer.addChild(buttonReturnTop);
 	buttonReturnTop.addEventListener(LMouseEvent.MOUSE_UP, self.onClickReturnTop);
 	
-	var win = new LPanel(new LBitmapData(LMvc.datalist["win05"]),240,menuY + menuHeight + 20);
-	var winBitmap = getBitmap(win);
-	self.mainLayer.x = LGlobal.width - winBitmap.getWidth();
-	self.mainLayer.addChildAt(winBitmap,0);
+	//var win = new LPanel(new LBitmapData(LMvc.datalist["win05"]),240,menuY + menuHeight + 20);
+	//var winBitmap = getBitmap(win);
+	var win = getPanel("win05",240,menuY + menuHeight + 20);
+	self.mainLayer.x = LGlobal.width - win.getWidth();
+	self.mainLayer.addChildAt(win,0);
 	
 };
 MenuView.prototype.layerInit=function(){
 	var self = this;
 	self.backLayer = new LSprite();
-	self.backLayer.addChild(getBitmap(new LPanel(new LBitmapData(LMvc.datalist["translucent"]),LGlobal.width, LGlobal.height)));
+	self.backLayer.addChild(getTranslucentMask());
+	//self.backLayer.addChild(getBitmap(new LPanel(new LBitmapData(LMvc.datalist["translucent"]),LGlobal.width, LGlobal.height)));
 	self.backLayer.addEventListener(LMouseEvent.MOUSE_UP, self.hide);
 	self.backLayer.addEventListener(LMouseEvent.MOUSE_DOWN, function(){});
 	self.addChild(self.backLayer);

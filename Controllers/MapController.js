@@ -57,9 +57,9 @@ MapController.prototype.init=function(status){
 	LMvc.MapController = self;
 	self.dispatchEvent(LEvent.COMPLETE);
 	LMvc.keepLoading(false);
-	if(LMvc.logoStage.visible){
+	/*if(LMvc.logoStage.visible){
 		LMvc.logoStage.visible = false;
-	}
+	}*/
 	LMvc.chapterController.view.visible = false;
 	LMvc.stageLayer.x = 0;
 	if(LMvc.isRead){
@@ -81,7 +81,8 @@ MapController.prototype.init=function(status){
 		self.loadMvc("EventMap",self.eventMapComplete);
 		LMvc.chapterData.eventEnd = true;
 	}
-    LMvc.logoStage.die();
+    //LMvc.logoStage.die();
+    LMvc.logoStage.remove();
     LMvc.logoStage = null;
 };
 MapController.prototype.eventMapComplete = function() {

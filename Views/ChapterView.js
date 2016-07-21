@@ -26,8 +26,9 @@ ChapterView.prototype.layerInit=function(){
 	self.addChild(self.seigniorsLayer);
 	self.ctrlLayer = new LSprite();
 	self.addChild(self.ctrlLayer);
-	var bitmapWin = new LPanel(new LBitmapData(LMvc.datalist["win04"]),LGlobal.width,LGlobal.height,15,25,18,24);
-	self.addChild(getBitmap(bitmapWin));
+	self.addChild(getPanel("win04",LGlobal.width,LGlobal.height,15,25,18,24));
+	//var bitmapWin = new LPanel(new LBitmapData(LMvc.datalist["win04"]),LGlobal.width,LGlobal.height,15,25,18,24);
+	//self.addChild(getBitmap(bitmapWin));
 };
 ChapterView.prototype.logoToHide=function(){
 	LMvc.logoStage.visible = false;

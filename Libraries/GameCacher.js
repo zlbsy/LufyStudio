@@ -92,7 +92,9 @@ GameCacher.getPanelBitmapData = function(k, w, h, x1, x2, y1, y2){
 	if(!GameCacher._panelBitmapDatas[key]){
 		var data = new LBitmapData(LMvc.datalist[k]);
 		var panel = new LPanel(data,w,h,x1,x2,y1,y2);
-		var bitmapData = getBitmapData(panel);
+		var bitmapData = getBitmapData(panel, true);
+		panel.removeAllChild();
+		panel.cached();
 		GameCacher._panelBitmapDatas[key] = bitmapData;
 	}
 	return GameCacher._panelBitmapDatas[key];

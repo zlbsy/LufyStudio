@@ -16,9 +16,16 @@ MessageView.currentSeigniorId = 0;
 MessageView.SetCurrentSeigniorId = function(){
 	MessageView.Instance().setSeignior(MessageView.currentSeigniorId);
 };
-MessageView.prototype.die = function(){
+MessageView.prototype.removeAllChild=function(){
 	var self = this;
 	self.listView.clear();
+	console.warn("MessageView.prototype.removeAllChild");
+};
+MessageView.prototype.cached=function(){
+	console.warn("MessageView.prototype.cached");
+};
+MessageView.prototype.die = function(){
+	var self = this;
 	self.seignior = null;
 	self.time = null;
 	self.timer.stop();

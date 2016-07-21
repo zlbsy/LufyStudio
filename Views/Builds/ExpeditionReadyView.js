@@ -21,7 +21,8 @@ ExpeditionReadyView.prototype.set=function(img,name){
 		sumTroops += chara.troops();
 	}
 	self.sumTroops= sumTroops;
-	var rangeBackground = getBitmap(new LPanel(new LBitmapData(LMvc.datalist["win04"]),300,40));
+	var rangeBackground = getPanel("win04",300,40);
+	//var rangeBackground = getBitmap(new LPanel(new LBitmapData(LMvc.datalist["win04"]),300,40));
 	var rangeSelect = new LBitmap(new LBitmapData(LMvc.datalist["range"]));
 	var layer = new LSprite();
 	layer.x = (LGlobal.width - rangeBackground.getWidth())*0.5;
@@ -45,7 +46,8 @@ ExpeditionReadyView.prototype.set=function(img,name){
 	foodLayer.addChild(rangeFood);
 	rangeFood.addEventListener(LRange.ON_CHANGE, self.onFoodChange);
 	
-	var rangeBackground = getBitmap(new LPanel(new LBitmapData(LMvc.datalist["win04"]),300,40));
+	var rangeBackground = getPanel("win04",300,40);
+	//var rangeBackground = getBitmap(new LPanel(new LBitmapData(LMvc.datalist["win04"]),300,40));
 	var rangeSelect = new LBitmap(new LBitmapData(LMvc.datalist["range"]));
 	var moneyLayer = new LSprite();
 	moneyLayer.x = 10;
@@ -65,7 +67,8 @@ ExpeditionReadyView.prototype.set=function(img,name){
 	moneyLayer.addChild(rangeMoney);
 	rangeMoney.addEventListener(LRange.ON_CHANGE, self.onMoneyChange);
 	
-	var rangeBackground = getBitmap(new LPanel(new LBitmapData(LMvc.datalist["win04"]),300,40));
+	var rangeBackground = getPanel("win04",300,40);
+	//var rangeBackground = getBitmap(new LPanel(new LBitmapData(LMvc.datalist["win04"]),300,40));
 	var rangeSelect = new LBitmap(new LBitmapData(LMvc.datalist["range"]));
 	var troopsLayer = new LSprite();
 	troopsLayer.x = 10;

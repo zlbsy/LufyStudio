@@ -14,6 +14,7 @@ CharacterListChildView.createChild = function(controller, param, cityModel, pare
 	if(typeof LPlugin != UNDEFINED && !LPlugin.native)console.error("CharacterListChildView.createChild",++CharacterListChildView._listCount);
 	return new CharacterListChildView(controller, param, cityModel, parentView);
 };
+CharacterListChildView.prototype.removeAllChild = function() {};
 CharacterListChildView.prototype.die = function() {
 	var self = this;
 	var has = false;

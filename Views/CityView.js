@@ -21,7 +21,7 @@ CityView.prototype.layerInit=function(){
 	self.baseLayer.addChild(self.statusLayer);
 	
 	self.contentMask = new LSprite();
-	self.contentMask.addChild(getBitmap(new LPanel(new LBitmapData(LMvc.datalist["translucent"]),LGlobal.width, LGlobal.height)));
+	self.contentMask.addChild(getTranslucentBitmap());
 	self.contentMask.addEventListener(LMouseEvent.MOUSE_UP, self.clearContentLayer.bind(self));
 	self.contentMask.addEventListener(LMouseEvent.MOUSE_DOWN, function(){});
 	self.contentMask.visible = false;
@@ -171,7 +171,7 @@ CityView.prototype.footerLayerInit=function(){
 		self.footerLayer.childList[i].visible = false;
 	}
 	var buttonMap = self.footerLayer.getChildByName("bigMap");
-	if(!buttonGenerals){
+	if(!buttonMap){
 		buttonMap = self.getIconButton(Language.get("big_map"), buttonWidth, buttonHeight, "icon-map");
 		buttonMap.name = "bigMap";
 		buttonMap.x = (LGlobal.width - buttonWidth * 4 - 30) * 0.5;

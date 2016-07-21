@@ -1,7 +1,7 @@
-function getBitmapData(displayObject){
+function getBitmapData(displayObject, cache){
+	if(!cache)console.error("*********** getBitmapData *********");
 	var bitmapData = new LBitmapData(null,0,0,displayObject.getWidth(),displayObject.getHeight(),LBitmapData.DATA_CANVAS);
 	bitmapData.draw(displayObject);
-	displayObject.die();
 	return bitmapData;
 }
 function getBitmap(displayObject){
@@ -21,7 +21,8 @@ function getIconButton(icon, rect, text,width,img){
 	textLabel.x = bitmapIcon.getHeight() + (width - bitmapIcon.x - bitmapIcon.getHeight() - textLabel.getWidth()) * 0.5;
 	textLabel.y = (50 - textLabel.getHeight()) * 0.5;
 	bitmapWin.addChild(textLabel);
-	return new LButton(getBitmap(bitmapWin));
+	bitmapWin.cacheAsBitmap(true);
+	return new LButton(bitmapWin);
 }
 function getPanel(key, width, height, x1, x2, y1, y2){
 	var data = GameCacher.getPanelBitmapData(key,width,height,x1,x2,y1,y2);

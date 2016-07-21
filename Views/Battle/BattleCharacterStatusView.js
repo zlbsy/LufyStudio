@@ -139,8 +139,8 @@ BattleCharacterStatusView.prototype.showCharacterStatus=function(confirmStatus){
 		terrainLabel.y = confirmLabel.y;
 		layer.addChild(terrainLabel);
 	}
-	layer = getBitmap(layer);
-	
+	//layer = getBitmap(layer);
+	layer.cacheAsBitmap(true);
 	self.addChild(layer);
 	if(self.statusLayer.numChildren > 0){
 		self.statusLayer.x += layer.x;

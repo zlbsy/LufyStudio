@@ -22,6 +22,7 @@ MessageChildView.createChild = function(msg, color){
 	}
 	return new MessageChildView(msg, color);
 };
+MessageChildView.prototype.removeAllChild = function() {};
 MessageChildView.prototype.die = function() {
 	var self = this;
 	var has = false;

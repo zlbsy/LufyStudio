@@ -45,7 +45,11 @@ LShape.prototype.die = function(){
 };
 LListView.prototype.die = function(){
 	var self = this;
-	self.clear();
+	for (var i = 0, l = self._ll_items.length; i < l; i++) {
+		self._ll_items[i].die();
+		self._ll_items[i].removeAllChild();
+	}
+	self._ll_items.length = 0;
 	self.callParent("die",arguments);
 };
 LListChildView.prototype.die = function(){
@@ -159,12 +163,7 @@ LTextField.prototype.cached = function(){
 		self.transform.matrix = null;
 		LTextField._labels.push(self);
 	}
-	if(typeof LPlugin != UNDEFINED && !LPlugin.native)console.error("LTextField.prototype.die",LTextField._labels.length);
-	/*if(!LTextField._labels.indexOf(self)){
-		LTextField._labels.push(self);
-	}*/
-	LMouseEventContainer.removeInputBox(self);
-	self.callParent("die", arguments);
+	//if(typeof LPlugin != UNDEFINED && !LPlugin.native)console.error("LTextField.prototype.cached",LTextField._labels.length);
 };
 LDisplayObjectContainer.destroy = function (d) {
 	if (!LGlobal.destroy) {
@@ -173,11 +172,50 @@ LDisplayObjectContainer.destroy = function (d) {
 	if (d.die) {
 		d.die();
 	}
+	if (d.removeAllChild) {
+		d.removeAllChild();
+	}
 	if (d.cached) {
 		d.cached();
 	}
-	if (d.removeAllChild) {
-		d.removeAllChild();
+};
+LButton.prototype.ll_modeDown = function (e) {
+	var s = e.clickTarget, w, h, tw, th, x, y, tx, ty, onComplete;
+	if (!s.buttonMode || s.tween) {
+		return;
+	}
+	if (s.state == LButton.STATE_DISABLE) {
+		s.upState.visible = false;
+		s.overState.visible = false;
+		s.downState.visible = false;
+		s.disableState.visible = true;
+		return;
+	}
+	s.upState.visible = false;
+	s.overState.visible = false;
+	s.downState.visible = true;	
+	s._tweenOver = s.ll_modeOver;
+	onComplete = function(obj){
+		var s = obj.parent;
+		if(s){
+			delete s.tween;
+			s._tweenOver({clickTarget : s});
+			delete s._tweenOver;
+		}
+	};
+	if (s.staticMode) {
+		s.tween = LTweenLiteTimeline.to(s.downState, 0.3, {}).to(s.downState, 0.1, {onComplete : onComplete});
+	} else {
+		w = s.downState.getWidth();
+		h = s.downState.getHeight();
+		tw = w * 1.1;
+		th = h * 1.1;
+		x = s.downState.x;
+		y = s.downState.y;
+		tx = x + (w - tw) * 0.5;
+		ty = y + (h - th) * 0.5;
+		s.tween = LTweenLiteTimeline.to(s.downState, 0.3, {x : tx, y : ty, scaleX : s._ll_down_sx*1.1, scaleY : s._ll_down_sy*1.1, ease : Quart.easeOut})
+		.to(s.downState, 0.1, {x : x, y : y, scaleX : s._ll_down_sx, scaleY : s._ll_down_sy, ease : Quart.easeOut,onComplete : onComplete});
 	}
 };
 LDisplayObjectContainer.prototype.removeChild = function (d) {
@@ -222,6 +260,9 @@ LDisplayObject.prototype._createCanvas = function(){
 	s._context = s._canvas.getContext("2d");
 };
 LDisplayObject.pushCacheCanvas = function(_canvas){
+	if(!_canvas){
+		return;
+	}
 	var has = false;
 	for(var i=0, l=LDisplayObject._canvasList.length;i<l;i++){
 		var canvas = LDisplayObject._canvasList[i];
@@ -231,13 +272,11 @@ LDisplayObject.pushCacheCanvas = function(_canvas){
 		}
 	}
 	if(!has){
-		_canvas.width = _canvas.height = 0;
+		_canvas.width = 0;
+		_canvas.height = 0;
 		LDisplayObject._canvasList.push(_canvas);
 	}
-	/*if(!LDisplayObject._canvasList.indexOf(_canvas)){
-		_canvas.width = _canvas.height = 0;
-		LDisplayObject._canvasList.push(_canvas);
-	}*/
+	//if(typeof LPlugin != UNDEFINED && !LPlugin.native)console.error("LDisplayObject.pushCacheCanvas",LDisplayObject._canvasList.length);
 };
 LDisplayObject.prototype.cached = function(){
 	var s = this;
@@ -247,6 +286,13 @@ LDisplayObject.prototype.cached = function(){
 	LDisplayObject.pushCacheCanvas(s._canvas);
 	s._canvas = null;
 	s._context = null;
+};
+LDisplayObject.prototype.die = function(){
+	var s = this;
+	if(s._ll_cacheAsBitmap){
+		s.cacheAsBitmap(false);
+	}
+	s.callParent("die", arguments);
 };
 LDisplayObject.prototype.cacheAsBitmap = function(value){
 	var s = this;

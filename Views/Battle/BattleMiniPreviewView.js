@@ -5,7 +5,7 @@ function BattleMiniPreviewView(controller){
 	self.maxSize = 200;
 	var bitmapData = self.model.mapBitmapData;
 	var bitmap = new LBitmap(bitmapData);
-	if(bitmapData.width > bitmapData.height){
+	if(self.model.map.width > self.model.map.height){
 		self.scaleValue = self.maxSize / bitmapData.width;
 	}else{
 		self.scaleValue = self.maxSize / bitmapData.height;

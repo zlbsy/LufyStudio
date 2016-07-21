@@ -52,7 +52,7 @@ BattleMainMenuView.prototype.changeMenuStatus = function(){
 };
 BattleMainMenuView.prototype.getMainMenu = function(){
 	var self = this;
-	var bitmapWin = new LPanel(new LBitmapData(LMvc.datalist["win01"]),70,50);
+	var bitmapWin = getPanel("win01",70,50);
 	var bitmapIcon;
 	for(var i=0;i<3;i++){
 		bitmapIcon = new LBitmap(new LBitmapData(LMvc.datalist["menu_line"]));
@@ -60,7 +60,9 @@ BattleMainMenuView.prototype.getMainMenu = function(){
 		bitmapIcon.y = 8 + 10 * i;
 		bitmapWin.addChild(bitmapIcon);
 	}
-	return getBitmap(bitmapWin);
+	//bitmapWin.cacheAsBitmap(true);
+	return bitmapWin;
+	//return getBitmap(bitmapWin);
 };
 BattleMainMenuView.prototype.hideMenu=function(){
 	this.backLayer.visible = false;
@@ -125,8 +127,8 @@ BattleMainMenuView.prototype.setMenu=function(){
 	layer.addChild(menuButton);
 	menuButton.addEventListener(LMouseEvent.MOUSE_UP, self.boutEnd);
 	
-	var win = new LPanel(new LBitmapData(LMvc.datalist["win05"]),menuWidth + 20, menuHeight * (((menuY - 10) / menuHeight >> 0) + 1) + 30);
-	var winBitmap = getBitmap(win);
+	//var win = new LPanel(new LBitmapData(LMvc.datalist["win05"]),menuWidth + 20, menuHeight * (((menuY - 10) / menuHeight >> 0) + 1) + 30);
+	var winBitmap = getPanel("win05",menuWidth + 20, menuHeight * (((menuY - 10) / menuHeight >> 0) + 1) + 30);
 	self.menuLayer.addChildAt(winBitmap, 0);
 	self.menuWidth = self.menuLayer.getWidth();
 	self.menuHeight = self.menuLayer.getHeight();

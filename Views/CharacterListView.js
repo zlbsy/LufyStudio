@@ -48,7 +48,6 @@ CharacterListView.prototype.listInit=function(){
 		self.title = title;
 	}
 	self.title.text = Language.get(self.controller.characterListType);
-	console.log("self.controller.params.noCutover="+self.controller.params.noCutover);
 	if(!self.controller.params.noCutover){
 		self.getCutoverButton(self.controller.characterListType == CharacterListType.EXPEDITION ? CharacterListView.CUTOVER_ARM : CharacterListView.CUTOVER_BASIC);
 	}
@@ -478,6 +477,7 @@ CharacterListView.prototype.charactersPush = function(pageIndex) {
 		items.push(childLayer);
 	}
 	self.listView.updateList(items);
+	self.listView.clipping.x = self.listView.clipping.y = 0;
 	var maxPageIndex = self.dataList.length / maxNum >>> 0;
 	self.pageLabel.text = String.format("{0} / {1}", pageIndex + 1, maxPageIndex + 1);
 	var leftButton = self.listLayer.getChildByName("leftButton");
@@ -524,9 +524,15 @@ CharacterListView.prototype.showCharacterList=function(){
 	}
 	self.listLayer.visible = true;
 };
-CharacterListView.prototype.die=function(){
+CharacterListView.prototype.removeAllChild=function(){
 	var self = this;
 	self.listView.clear();
+	console.warn("CharacterListView.prototype.removeAllChild");
+};
+CharacterListView.prototype.cached=function(){
+	console.warn("CharacterListView.prototype.cached");
+};
+CharacterListView.prototype.die=function(){
 	console.warn("CharacterListView.prototype.die");
 	/*
 	if(!self.parent){

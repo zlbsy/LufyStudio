@@ -348,19 +348,32 @@ BattleCharacterAI.prototype.attackActionComplete = function(event) {
 	self.herts.shift();
 	var mapLayer = LMvc.BattleController.view.mapLayer;
 	if(selfSkill && self.herts.length == 0){
-		if(selfSkill.isSubType(SkillSubType.FALL_BACK)){
-			var penetratePoint = getPenetratePoint(self.chara,self.attackTarget);
-			var charaTarget = LMvc.BattleController.view.charaLayer.getCharacterFromLocation(self.attackTarget.locationX()+penetratePoint.x, self.attackTarget.locationY()+penetratePoint.y);
-			if(!charaTarget){
-				self.attackTarget.toStatic(false);
-				LMvc.BattleController.view.charaLayer.setToPosition(self.attackTarget, self.attackTarget.locationX() + penetratePoint.x, self.attackTarget.locationY() + penetratePoint.y);
+		var charaLayer = LMvc.BattleController.view.charaLayer;
+		if(!self.attackTarget.data.isDefCharacter() && selfSkill.isSubType(SkillSubType.FALL_BACK)){
+			var penetratePoint = getPenetratePoint(chara,self.attackTarget);
+			var lx = self.attackTarget.locationX()+penetratePoint.x;
+			var ly = self.attackTarget.locationY()+penetratePoint.y;
+			var terrainId = mapLayer.getTerrainId(lx, ly);
+			var cost = chara.data.currentSoldiers().terrain(terrainId).moveCost;
+			if(cost < 100){
+				var charaTarget = charaLayer.getCharacterFromLocation(lx, ly);
+				if(!charaTarget){
+					self.attackTarget.toStatic(false);
+					charaLayer.setToPosition(self.attackTarget, lx, ly);
+				}
 			}
 		}else if(selfSkill.isSubType(SkillSubType.BREAK_THROUGH)){
-			var penetratePoint = getPenetratePoint(self.chara,self.attackTarget);
-			var charaTarget = LMvc.BattleController.view.charaLayer.getCharacterFromLocation(self.attackTarget.locationX()+penetratePoint.x, self.attackTarget.locationY()+penetratePoint.y);
-			if(!charaTarget){
-				chara.toStatic(false);
-				LMvc.BattleController.view.charaLayer.setToPosition(chara, self.attackTarget.locationX() + penetratePoint.x, self.attackTarget.locationY() + penetratePoint.y);
+			var penetratePoint = getPenetratePoint(chara,self.attackTarget);
+			var lx = self.attackTarget.locationX()+penetratePoint.x;
+			var ly = self.attackTarget.locationY()+penetratePoint.y;
+			var terrainId = mapLayer.getTerrainId(lx, ly);
+			var cost = chara.data.currentSoldiers().terrain(terrainId).moveCost;
+			if(cost < 100){
+				var charaTarget = charaLayer.getCharacterFromLocation(lx, ly);
+				if(!charaTarget){
+					chara.toStatic(false);
+					charaLayer.setToPosition(chara, lx, ly);
+				}
 			}
 		}
 	}

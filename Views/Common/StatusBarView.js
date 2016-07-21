@@ -10,7 +10,8 @@ StatusBarView.prototype.set = function(obj){
 	self.statusLayer = new LSprite();
 	self.addChild(self.statusLayer);
 	self.setCharacterStatus();
-	self.addChildAt(getBitmap(self.mainLayer), 0);
+	self.mainLayer.cacheAsBitmap(true);
+	self.addChildAt(self.mainLayer, 0);
 };
 StatusBarView.prototype.setData = function(obj){
 	var self = this;

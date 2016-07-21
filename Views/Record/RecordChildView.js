@@ -110,8 +110,21 @@ RecordChildView.prototype.readRecordData=function(){
 		LMvc.mapY = self.record.mapY;
 		SeigniorExecute.setSaveData(self.record.seigniorExecute);
 		if(LMvc.BattleController){
-			LMvc.BattleController.view.remove();
+			BattleController.ctrlChara = null;
+			var battleController = LMvc.BattleController;
+			var battleModel = battleController.model;
+			var battleView = battleController.view;
 			LMvc.BattleController = null;
+			battleController.view.remove();
+			for(var k in battleController){
+				delete battleController[k];
+			}
+			for(var k in battleModel){
+				delete battleModel[k];
+			}
+			for(var k in battleView){
+				delete battleView[k];
+			}
 			LMvc.MapController.view.visible = true;
 			LMvc.areaData = self.record;
 			LMvc.selectSeignorId = LMvc.areaData.selectSeignorId;

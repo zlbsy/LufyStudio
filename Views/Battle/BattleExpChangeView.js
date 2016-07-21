@@ -34,7 +34,8 @@ BattleExpChangeView.prototype.initLayer = function(){
 BattleExpChangeView.prototype.setBackground = function(){
 	var self = this;
 	var backgroundData = new LBitmapData(LMvc.datalist["background-text01"]);
-	var panel = getBitmap(new LPanel(backgroundData,LGlobal.width,30 * ((self.datas ? self.datas.length : 1) + 2)));
+	var panel = new LPanel(backgroundData,LGlobal.width,30 * ((self.datas ? self.datas.length : 1) + 2));
+	panel.cacheAsBitmap(true);
 	self.baseLayer.addChildAt(panel,0);
 };
 BattleExpChangeView.prototype.initData = function(){
@@ -128,6 +129,9 @@ BattleExpChangeView.prototype.setData = function(index){
 			}});
 			LTweenLite.to(rewardLabel,0.3,{delay:0.8,alpha:1,scaleX:1,scaleY:1,onComplete:function(e){
 				var obj = e.target.parent;
+				if(!obj){
+					return;
+				}
 				var s = obj.getParentByConstructor(BattleExpChangeView);
 				if(s){
 					s.setData(obj.index + 1);
@@ -140,6 +144,9 @@ BattleExpChangeView.prototype.setData = function(index){
 			},onComplete:function(e){
 				e.target.text = e.target.feat >>> 0;
 				var obj = e.target.parent;
+				if(!obj){
+					return;
+				}
 				var s = obj.getParentByConstructor(BattleExpChangeView);
 				if(s){
 					s.setData(obj.index + 1);
