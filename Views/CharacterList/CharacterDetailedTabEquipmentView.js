@@ -50,7 +50,7 @@ CharacterDetailedTabEquipmentView.prototype.showEquipmentList=function(){
 	var equipmentsView = self.childList.find(function(child){
 		return child instanceof EquipmentsView;
 	});
-	var cityData = LMvc.CityController.getValue("cityData");
+	var cityData = self.controller.getValue("cityData");
 	if(LMvc.BattleController || characterModel.seigniorId() != LMvc.selectSeignorId || cityData.seigniorCharaId() != LMvc.selectSeignorId){
 		if(equipmentsView){
 			equipmentsView.visible = false;
@@ -75,7 +75,7 @@ CharacterDetailedTabEquipmentView.prototype.dressEquipment=function(event){
 	var characterModel = self.controller.getValue("selectedCharacter");
 	characterModel.equip(selectItemModel);
 	characterModel.calculation();
-	var cityData = LMvc.CityController.getValue("cityData");
+	var cityData = self.controller.getValue("cityData");
 	cityData.removeItem(selectItemModel);
 	
 	var detailedView = self.getParentByConstructor(CharacterDetailedView);

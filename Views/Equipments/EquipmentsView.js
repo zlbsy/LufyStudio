@@ -6,7 +6,7 @@ function EquipmentsView(controller, equipmentListType, size) {
 }
 EquipmentsView.prototype.getEquipmentList = function() {
 	var self = this;
-	var cityData = LMvc.CityController.getValue("cityData");
+	var cityData = self.controller.getValue("cityData");
 	var equipmentList = cityData.equipments();
 	equipmentList = equipmentList.sort(function(a, b){
 		var v = b.rarity() - a.rarity();

@@ -100,6 +100,7 @@ CharacterDetailedView.prototype.set=function(param){
 		self.controller.setValue("battleStatus", self.character.status.statusLabel());
 		self.controller.setValue("battleBelong", self.character.belong);
 	}
+	self.controller.setValue("cityData", characterModel.city());
 	self.setFaceLayer();
 	self.TabShow(self.nowTab);
 	self.controller.dispatchEvent(LController.NOTIFY_ALL);
@@ -335,7 +336,9 @@ CharacterDetailedView.prototype.ctrlLayerInit=function(){
 	self.ctrlLayer.addChild(buttonItem);
 	buttonItem.addEventListener(LMouseEvent.MOUSE_UP, self.openItems);
 };
-CharacterDetailedView.prototype.removeAllChild=function(){};
+CharacterDetailedView.prototype.removeAllChild=function(){
+	
+};
 CharacterDetailedView.prototype.closeCharacterDetailed=function(event){
 	var self = event ?  event.currentTarget.getParentByConstructor(CharacterDetailedView) : this;
 	self.controller.closeCharacterDetailed();

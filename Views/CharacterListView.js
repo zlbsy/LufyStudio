@@ -59,7 +59,7 @@ CharacterListView.prototype.listInit=function(){
 		buttonClose.addEventListener(LMouseEvent.MOUSE_UP, self.onClickCloseButton.bind(self));
 		self.buttonClose = buttonClose;
 	}
-
+	self.buttonClose.visible = true;
 	//TODO::ver1.1参数控制
 	if((SeigniorExecute.running && self.controller.characterListType == CharacterListType.EXPEDITION)
 	|| self.controller.characterListType == CharacterListType.SELECT_MONARCH || self.controller.params.closeDisable){
@@ -527,6 +527,8 @@ CharacterListView.prototype.showCharacterList=function(){
 CharacterListView.prototype.removeAllChild=function(){
 	var self = this;
 	self.listView.clear();
+	self.controller.clearValue();
+	self.controller = null;
 	console.warn("CharacterListView.prototype.removeAllChild");
 };
 CharacterListView.prototype.cached=function(){

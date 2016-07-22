@@ -2,6 +2,9 @@
  * 俘虏概率
  */
 function calculateHitrateCaptive(chara, nearCharas){
+	if(chara.data.isTribeCharacter()){
+		return false;
+	}
 	var rate = 1;
 	if(chara.data.hasSkill(SkillSubType.RETREAT)){
 		rate = 0.2;
@@ -220,15 +223,26 @@ function appointPrefecture(city){
 }
 function getMonarchChangeId(seignior){
 	var chara;
+	//父子
 	var childs = seignior.character().childs();
 	if(childs && childs.length > 0){
 		for(var i=0;i<childs.length;i++){
 			chara = CharacterModel.getChara(childs[i]);
-			if(chara.seigniorId() == seignior.chara_id()){
+			if(chara.seigniorId() == seignior.chara_id() && chara.city() && chara.city().seigniorCharaId() == seignior.chara_id()){
 				return chara.id();
 			}
 		}
 	}
+	//兄弟
+	/*childs = seignior.character().father().childs();
+	if(childs && childs.length > 0){
+		for(var i=0;i<childs.length;i++){
+			chara = CharacterModel.getChara(childs[i]);
+			if(chara.seigniorId() == seignior.chara_id() && chara.city() && chara.city().seigniorCharaId() == seignior.chara_id()){
+				return chara.id();
+			}
+		}
+	}*/
 	var generals = seignior.generals();
 	if(generals.length == 0){
 		return 0;

@@ -274,6 +274,7 @@ LDisplayObject.pushCacheCanvas = function(_canvas){
 	if(!has){
 		_canvas.width = 0;
 		_canvas.height = 0;
+		console.error(typeof _canvas, _canvas);
 		LDisplayObject._canvasList.push(_canvas);
 	}
 	//if(typeof LPlugin != UNDEFINED && !LPlugin.native)console.error("LDisplayObject.pushCacheCanvas",LDisplayObject._canvasList.length);
