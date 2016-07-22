@@ -171,7 +171,20 @@ ChapterView.prototype.ctrlLayerInit=function(){
 	settingButton.addEventListener(LMouseEvent.MOUSE_UP, self.loadCreateSetting);
 };
 ChapterView.prototype.onChangeDebut=function(event){
-	var self = event.currentTarget.parent;
+	var check = event.currentTarget;
+	if(!purchaseHasBuy(productIdConfig.createCharacter)){
+		var obj = {
+			title : Language.get("confirm"),
+			message : Language.get("create_character_debut_error"),
+			width : 340,
+			height : 240
+		};
+		var windowLayer = ConfirmWindow(obj);
+		LMvc.layer.addChild(windowLayer);
+		check.setChecked(false);
+		return;
+	}
+	var self = check.parent;
 	self.setMapData();
 	
 	self.setCreateSeigniorList();

@@ -483,12 +483,24 @@ AreaModel.prototype.moneyLabel=function(value){
 	return LString.numberFormat(this.data.money>>>0,3);
 };
 AreaModel.prototype.money=function(value){
+	var m = this._plusData("money",value);
+	if(this.data["money"] > 1000000){
+		console.error("money = " + this.data["money"]);
+	}
+	return m;
+	
 	return this._plusData("money",value);
 };
 AreaModel.prototype.foodLabel=function(){
 	return LString.numberFormat(this.data.food>>>0,3);
 };
 AreaModel.prototype.food=function(value){
+	var f = this._plusData("food",value);
+	if(this.data["food"] > 1000000){
+		console.error("food = " + this.data["food"]);
+	}
+	
+	return f;
 	return this._plusData("food",value);
 };
 AreaModel.prototype.populationLabel=function(){

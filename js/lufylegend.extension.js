@@ -124,7 +124,7 @@ LTextField.getLabel = function(){
 		var label = LTextField._labels.shift();
 		return label;
 	}
-	if(typeof LPlugin != UNDEFINED && !LPlugin.native)console.error("_labelsCreate",++LTextField._labelsCreate,LTextField._labels.length);
+	//if(typeof LPlugin != UNDEFINED && !LPlugin.native)console.error("_labelsCreate",++LTextField._labelsCreate,LTextField._labels.length);
 	return new LTextField();
 };
 LTextField.prototype.cached = function(){
@@ -253,7 +253,7 @@ LDisplayObject.prototype._createCanvas = function(){
 		var _canvas = LDisplayObject._canvasList.shift();
 		s._canvas = _canvas;
 	}else{
-		if(typeof LPlugin != UNDEFINED && !LPlugin.native)console.error("_canvasCreateCount", ++LDisplayObject._canvasCreateCount, s);
+		//if(typeof LPlugin != UNDEFINED && !LPlugin.native)console.error("_canvasCreateCount", ++LDisplayObject._canvasCreateCount, s);
 		s._canvas = document.createElement("canvas");
 		s._canvas.objectIndex = ++LGlobal.objectIndex;
 	}

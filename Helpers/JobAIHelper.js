@@ -482,13 +482,16 @@ function jobAiTransport(areaModel,characters){//运输物资
 	money = money < 5000 ? 0 : money;
 	if(troops == 0 && food == 0 && money == 0){
 		return;
-	}
+	}console.log("运输",money,food,troops);
 	var data = {
 		cityId : currentCity.id(),
 		money : money,
 		food : food,
 		troops : troops
 	};
+	areaModel.troops(areaModel.troops() - troops);
+	areaModel.food(-food);
+	areaModel.money(-money);
 	var index = characters.length * Math.fakeRandom() >>> 0;
 	var character = characters[index];
 	characters.splice(index, 1);
