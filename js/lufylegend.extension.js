@@ -255,7 +255,8 @@ LDisplayObject.prototype._createCanvas = function(){
 	}else{
 		//if(typeof LPlugin != UNDEFINED && !LPlugin.native)console.error("_canvasCreateCount", ++LDisplayObject._canvasCreateCount, s);
 		s._canvas = document.createElement("canvas");
-		s._canvas.objectIndex = ++LGlobal.objectIndex;
+		s._canvas.id = ++LGlobal.objectIndex;
+		s._canvas.objectIndex = s._canvas.id;
 	}
 	s._context = s._canvas.getContext("2d");
 };
@@ -266,7 +267,8 @@ LDisplayObject.pushCacheCanvas = function(_canvas){
 	var has = false;
 	for(var i=0, l=LDisplayObject._canvasList.length;i<l;i++){
 		var canvas = LDisplayObject._canvasList[i];
-		if(canvas.objectIndex == _canvas.objectIndex){
+		if(canvas.id == _canvas.id){
+			console.error("has="+has,_canvas.id);
 			has = true;
 			break;
 		}
@@ -274,7 +276,7 @@ LDisplayObject.pushCacheCanvas = function(_canvas){
 	if(!has){
 		_canvas.width = 0;
 		_canvas.height = 0;
-		console.error(typeof _canvas, _canvas);
+		console.error(typeof _canvas, _canvas,_canvas.id);
 		LDisplayObject._canvasList.push(_canvas);
 	}
 	//if(typeof LPlugin != UNDEFINED && !LPlugin.native)console.error("LDisplayObject.pushCacheCanvas",LDisplayObject._canvasList.length);

@@ -410,6 +410,9 @@ function calculateStrategyCharasCorrection(currentChara){
 		var obj = strategyCharas[i];
 		var chara = obj.chara;
 		var skill = obj.skill;
+		if(!skill){
+			continue;
+		}
 		if(chara.data.troops() == 0 || skill.hert() > hertCorrect){
 			continue;
 		}
