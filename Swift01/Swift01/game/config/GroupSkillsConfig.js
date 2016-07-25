@@ -8,4 +8,6 @@ var GroupSkillsData = [
 ,{id:6,name:"虎痴何在？",group:[1,33],probability:30,correctionFactor:1.4}//曹操许褚
 ,{id:7,name:"冰释前嫌",group:[22,189],probability:30,correctionFactor:1.4}//甘宁凌統
 ,{id:8,name:"珠联璧合",group:[17,81],probability:30,correctionFactor:1.4}//孙权周泰
+,{id:9,name:"英雄美人",group:[18,380],probability:30,correctionFactor:1.4}//吕布貂蝉
+,{id:10,name:"兄弟联手",group:[14,41],probability:30,correctionFactor:1.4}//夏侯兄弟
 ];

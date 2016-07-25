@@ -1,6 +1,6 @@
 LPlugin.KEY_STAMP_LIST = "stampList";
 LPlugin.KEY_EVENT_LIST = "eventList";
-LPlugin.KEY_CHARACTER_LIST = "eventList";
+LPlugin.KEY_CHARACTER_LIST = "characterList";
 LPlugin.stamps = function(){
 	if(!LPlugin._stamps){
 		LPlugin._stamps = LPlugin.GetData(LPlugin.KEY_STAMP_LIST);
@@ -15,7 +15,7 @@ LPlugin.events = function(){
 };
 LPlugin.characters = function(){
 	if(!LPlugin._characters){
-		LPlugin._characters = LPlugin.GetData(LPlugin.KEY_CHARACTER_LIST);
+		LPlugin._characters = LPlugin.GetData(LPlugin.KEY_CHARACTER_LIST, null) || LPlugin.GetData(LPlugin.KEY_EVENT_LIST);
 		if(!LPlugin._characters.list){
 		LPlugin._characters.list = [];
 	}

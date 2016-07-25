@@ -170,6 +170,7 @@ BattleCharacterAI.prototype.physicalAttack = function(target) {
 				}else{
 					rangeAttackTarget = self.chara.data.currentSoldiers().rangeAttackTarget();
 					if(skill && (skill.isSubType(SkillSubType.FALL_BACK) || skill.isSubType(SkillSubType.BREAK_THROUGH)) && self.herts.length == 0){
+						self.chara.currentSkill = skill;
 						var penetratePoint = getPenetratePoint(self.chara,target);
 						var chara = LMvc.BattleController.view.charaLayer.getCharacterFromLocation(target.locationX()+penetratePoint.x, target.locationY()+penetratePoint.y);
 						if(chara && !isSameBelong(chara.belong,self.chara.belong)){
@@ -323,10 +324,15 @@ BattleCharacterAI.prototype.attackActionComplete = function(event) {
 	var self = chara.AI;
 	chara.removeEventListener(BattleCharacterActionEvent.ATTACK_ACTION_COMPLETE,self.attackActionComplete);
 	chara.changeAction(chara.data.isPantTroops()?CharacterAction.PANT:(chara.data.id() == BattleController.ctrlChara.data.id() ? CharacterAction.STAND : CharacterAction.MOVE));
-	if(chara.data.id() == BattleController.ctrlChara.data.id()){
-		selfSkill = chara.data.skill(SkillType.ATTACK_END);
+	if(chara.currentSkill){
+		selfSkill = chara.currentSkill;
+		chara.currentSkill = null;
 	}else{
-		selfSkill = chara.data.skill(SkillType.BACK_ATTACK_END);
+		if(chara.data.id() == BattleController.ctrlChara.data.id()){
+			selfSkill = chara.data.skill(SkillType.ATTACK_END);
+		}else{
+			selfSkill = chara.data.skill(SkillType.BACK_ATTACK_END);
+		}
 	}
 	if(selfSkill && selfSkill.isSubType(SkillSubType.SELF_AID)){
 		var tweenObj = getStrokeLabel(selfSkill.name(),22,"#FFFFFF","#000000",2); 

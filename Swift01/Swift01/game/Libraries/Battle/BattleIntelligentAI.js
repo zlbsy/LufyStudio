@@ -724,7 +724,7 @@ BattleIntelligentAI.prototype.findMoveTarget = function() {
 				roads = [new LPoint(self.locationX, self.locationY)];
 				break;
 			}
-		}while(noRoad && ii < 10);
+		}while(noRoad && ii < 1);
 		LMvc.BattleController.query.checkDistance = false;
 		LMvc.BattleController.query.checkCharacter = false;
 		var currentDistance = roads.length;

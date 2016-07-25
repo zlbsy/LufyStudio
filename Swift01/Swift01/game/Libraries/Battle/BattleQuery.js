@@ -135,7 +135,7 @@ BattleQuery.prototype.isWay = function(checkPoint,thisPoint){
 			return true;
 		}
 		var chara = LMvc.BattleController.view.charaLayer.hasCharacterInPosition(checkPoint.x,checkPoint.y);
-		if(chara && !isSameBelong(chara.belong, BattleController.ctrlChara.belong)){
+		if(chara && !chara.data.isDefCharacter() && !isSameBelong(chara.belong, BattleController.ctrlChara.belong)){
 			return false;
 		}
 	}

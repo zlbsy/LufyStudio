@@ -161,7 +161,7 @@ LTextField.prototype.init = function(){
 	self.parent = null;
 	self.transform.matrix = null;
 };
-LTextField.prototype.cached = function(){
+LTextField.prototype.cached = function(){return;
 	var self = this;
 	var has = false;
 	for(var i=0, l=LTextField._labels.length;i<l;i++){
@@ -272,7 +272,7 @@ LDisplayObject.prototype._createCanvas = function(){
 	}
 	s._context = s._canvas.getContext("2d");
 };
-LDisplayObject.pushCacheCanvas = function(_canvas){
+LDisplayObject.pushCacheCanvas = function(_canvas){return;
 	if(!_canvas){
 		return;
 	}

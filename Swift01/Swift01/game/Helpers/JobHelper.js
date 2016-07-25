@@ -203,12 +203,24 @@ function exploreItems(items){
 	}
 	var proportionSum = 0;
 	for(var i=0,l=items.length;i<l;i++){
-		proportionSum += items[i].proportion;
+		var item = items[i];
+		var itemModel = ItemMasterModel.getMaster(item.item_id);
+		var proportion = item.proportion;
+		if(itemModel.rarity() > 4){
+			proportion *= 2;
+		}
+		proportionSum += proportion;
 	}
 	var proportion = Math.fakeRandom() * proportionSum;
 	proportionSum = 0;
 	for(var i=0,l=items.length;i<l;i++){
-		proportionSum += items[i].proportion;
+		var item = items[i];
+		var itemModel = ItemMasterModel.getMaster(item.item_id);
+		var proportion = item.proportion;
+		if(itemModel.rarity() > 4){
+			proportion *= 2;
+		}
+		proportionSum += proportion;
 		if(proportionSum >= proportion){
 			return i;
 		}

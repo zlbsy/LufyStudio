@@ -54,10 +54,10 @@ StrategyModel.prototype.belong = function() {
 	return this.master().belong();
 };
 StrategyModel.prototype.rangeAttack = function() {
-	return this.master().rangeAttack();
+	return this.master().rangeAttack().concat();
 };
 StrategyModel.prototype.rangeAttackTarget = function() {
-	return this.master().rangeAttackTarget();
+	return this.master().rangeAttackTarget().concat();
 };
 StrategyModel.prototype.strategy = function() {
 	return this.master().strategy();

@@ -81,10 +81,10 @@ SoldierModel.prototype.terrain = function(terrainId) {
 	return this.master().terrain(terrainId);
 };
 SoldierModel.prototype.rangeAttack = function() {
-	return this.master().rangeAttack();
+	return this.master().rangeAttack().concat();
 };
 SoldierModel.prototype.rangeAttackTarget = function() {
-	return this.master().rangeAttackTarget();
+	return this.master().rangeAttackTarget().concat();
 };
 SoldierModel.prototype.strategy = function() {
 	return this.master().strategy();
