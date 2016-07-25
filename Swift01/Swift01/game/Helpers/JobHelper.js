@@ -211,7 +211,7 @@ function exploreItems(items){
 		}
 		proportionSum += proportion;
 	}
-	var proportion = Math.fakeRandom() * proportionSum;
+	var proportionFind = Math.fakeRandom() * proportionSum;
 	proportionSum = 0;
 	for(var i=0,l=items.length;i<l;i++){
 		var item = items[i];
@@ -221,7 +221,7 @@ function exploreItems(items){
 			proportion *= 2;
 		}
 		proportionSum += proportion;
-		if(proportionSum >= proportion){
+		if(proportionSum >= proportionFind){
 			return i;
 		}
 	}
@@ -1079,14 +1079,14 @@ function tournamentsGet(result){
 		default:
 			break;
 	}
+	if(result == 1 && deathIsValid()){
+		arr.push({id:91,q:1});//延寿符x1
+	}
 	ids = [];
 	while(ids.length < 4){
 		var i = arr.length * Math.random() >>> 0;
 		ids.push(arr[i]);
 		arr.splice(i, 1);
-	}
-	if(result == 1 && deathIsValid()){
-		ids.push({id:91,q:1});//延寿符x1
 	}
 	var seignior = SeigniorModel.getSeignior(LMvc.selectSeignorId);
 	var getLabels = [];

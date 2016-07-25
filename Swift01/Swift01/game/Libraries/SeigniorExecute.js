@@ -682,11 +682,11 @@ SeigniorExecute.prototype.maskHide=function(){
 	self._backLayer = self.backLayer;
 	self._backLayer.visible = false;
 	self.backLayer = null;
-	return;
-	self.msgView.remove();
-	self.msgView = null;
-	self.backLayer.remove();
-	self.backLayer = null;
+	self.msgView.listView.clear();
+	//self.msgView.remove();
+	//self.msgView = null;
+	////self.backLayer.remove();
+	//self.backLayer = null;
 	//MessageView._Instance.die();
 	//MessageView._Instance = null;
 };
