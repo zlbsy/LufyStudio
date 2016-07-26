@@ -170,8 +170,21 @@ BuildExpeditionView.prototype.expeditionCancel=function(event){
 BuildExpeditionView.prototype.toExpedition=function(){
 	var self = this;
 	self.controller.setValue("expeditionLeader", null);
+	var toCityId = self.controller.getValue("cityId");
+	var toCity = AreaModel.getArea(toCityId);
+	var neighbor = toCity.neighbor();
 	var cityModel = self.controller.getValue("cityData");
-	self.controller.loadCharacterList(CharacterListType.EXPEDITION, cityModel.generals(Job.IDLE), {buttonLabel:"execute", countCheckBox:true});
+	var generals = [];
+	generals = generals.concat(cityModel.generals(Job.IDLE));
+	for(var i=0;i<neighbor.length;i++){
+		var city = AreaModel.getArea(neighbor[i]);
+		if(city.id() == cityModel.id() || city.seigniorCharaId() != LMvc.selectSeignorId){
+			continue;
+		}
+		generals = generals.concat(city.generals(Job.IDLE));
+	}
+	self.controller.loadCharacterList(CharacterListType.EXPEDITION, generals, {buttonLabel:"execute", countCheckBox:true});
+	//self.controller.loadCharacterList(CharacterListType.EXPEDITION, cityModel.generals(Job.IDLE), {buttonLabel:"execute", countCheckBox:true});
 };
 BuildExpeditionView.prototype.toSelectLeader=function(){
 	var self = this;

@@ -202,31 +202,38 @@ CharacterListChildView.prototype.setArmProperties = function() {
 	if(self.armProperties){
 		self.troops.text = String.format("{0}/{1}",self.charaModel.troops(),soldierModel.maxTroops(self.charaModel));
 		self.soldierName.text = soldierModel.name();
-		
+		var panel = self.soldierName.parent;
+		self.soldierName.x = (panel.getWidth() - self.soldierName.getWidth())*0.5;
 		return;
 	}
 	var layer = new LSprite();
 	layer.graphics.drawRect(0, "#ff0000", [0, 0, LGlobal.width - 200, 50]);
 	
+	var cityName = getStrokeLabel(self.charaModel.city().name(), 18, "#FFFFFF", "#000000", 4);
+	cityName.x = 2;
+	cityName.y = 10;
+	layer.addChild(cityName);
+	
 	var troops = getStrokeLabel( String.format("{0}/{1}",self.charaModel.troops(),soldierModel.maxTroops(self.charaModel)), 18, "#FFFFFF", "#000000", 4);
-	troops.x = 2;
+	troops.x = 80;
 	troops.y = 10;
 	layer.addChild(troops);
 	self.troops = troops;
 	
-	var soldierName = getStrokeLabel(soldierModel.name(), 18, "#FFFFFF", "#000000", 4);
-	soldierName.x = 120;
+	/*var soldierName = getStrokeLabel(soldierModel.name(), 18, "#FFFFFF", "#000000", 4);
+	soldierName.x = 180;
 	soldierName.y = 10;
 	layer.addChild(soldierName);
-	self.soldierName = soldierName;
-	var panel = new LPanel(new LBitmapData(LMvc.datalist["win01"]),80,40);
-	panel.x = 200;
+	self.soldierName = soldierName;*/
+	var panel = getPanel("win01",100,40);
+	panel.x = 180;
 	panel.y = 0;
 	layer.addChild(panel);
-	var distribute = getStrokeLabel(Language.get("distribute"), 18, "#FFFFFF", "#000000", 4);
-	distribute.x = (panel.getWidth() - distribute.getWidth())*0.5;
-	distribute.y = (panel.getHeight() - distribute.getHeight())*0.5;;
-	panel.addChild(distribute);
+	var soldierName = getStrokeLabel(soldierModel.name(), 18, "#FFFFFF", "#000000", 4);
+	soldierName.x = (panel.getWidth() - soldierName.getWidth())*0.5;
+	soldierName.y = (panel.getHeight() - soldierName.getHeight())*0.5;;
+	self.soldierName = soldierName;
+	panel.addChild(soldierName);
 	layer.x = 180;
 	layer.y = 5;
 	/*var armPropertiesBitmap = getBitmap(layer);

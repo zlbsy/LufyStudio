@@ -444,8 +444,8 @@ CharacterListView.prototype.setArmTab=function(){
 		self.armTab.visible = true;
 		return;
 	}
-	var tabs = ["troops", "tab_arms"];
-	var tabSize = [120, 100];
+	var tabs = ["city", "troops", "distribute"];
+	var tabSize = [70, 120, 110];
 	for(var i=0;i<tabs.length;i++){
 		var button = getButton(Language.get(tabs[i]),tabSize[i]);
 		button.name = tabs[i];
