@@ -168,6 +168,12 @@ CharacterListChildView.prototype.setStatus = function() {
 		self.nameLabel = name;
 	}
 	self.nameLabel.text = self.charaModel.name();
+	self.nameLabel.color = "#FFFFFF";
+	self.nameLabel.lineColor = "#000000";
+	if(self.controller.params.checkCity && self.controller.params.checkCity != self.charaModel.cityId()){
+		self.nameLabel.color = "#000000";
+		self.nameLabel.lineColor = "#FFFFFF";
+	}
 	if(self.basicProperties){
 		self.basicProperties.visible = false;
 	}

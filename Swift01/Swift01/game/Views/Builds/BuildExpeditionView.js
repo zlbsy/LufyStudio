@@ -183,7 +183,8 @@ BuildExpeditionView.prototype.toExpedition=function(){
 		}
 		generals = generals.concat(city.generals(Job.IDLE));
 	}
-	self.controller.loadCharacterList(CharacterListType.EXPEDITION, generals, {buttonLabel:"execute", countCheckBox:true});
+	self.controller.loadCharacterList(CharacterListType.EXPEDITION, generals, 
+		{buttonLabel:"execute", countCheckBox:true, checkCity:cityModel.id()});
 	//self.controller.loadCharacterList(CharacterListType.EXPEDITION, cityModel.generals(Job.IDLE), {buttonLabel:"execute", countCheckBox:true});
 };
 BuildExpeditionView.prototype.toSelectLeader=function(){
