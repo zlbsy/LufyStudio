@@ -138,11 +138,11 @@ BattleAIExecute.prototype.result=function(isWin){
 			captivesAutomatedProcessing(self.attackData.captives, leaderId, retreatCityId, toCity, fromCity);//处理俘虏
 		}
 		battleChangeCharactersStatus(winSeigniorId, fromCity, self.attackData._characterList);//战斗结束后武将状态转换，以及出战城池太守任命
-		LMvc.MapController.view.resetAreaIcon(toCity.id());
-		LMvc.MapController.checkSeigniorFail(failSeigniorId);
 		if (winSeigniorId == LMvc.selectSeignorId) {
 			toCity.isAppoint(true);
 		}
+		LMvc.MapController.view.resetAreaIcon(toCity.id());
+		LMvc.MapController.checkSeigniorFail(failSeigniorId);
 	}else{
 		//{0}攻占{1}军的{2}失败了!
 		SeigniorExecute.addMessage(String.format(Language.get("fail_attack_and_occupy_enemy"),fromSeignior.character().name(),toCity.seignior().character().name(),toCity.name()));

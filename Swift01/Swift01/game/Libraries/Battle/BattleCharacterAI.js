@@ -334,7 +334,7 @@ BattleCharacterAI.prototype.attackActionComplete = function(event) {
 			selfSkill = chara.data.skill(SkillType.BACK_ATTACK_END);
 		}
 	}
-	if(selfSkill && selfSkill.isSubType(SkillSubType.SELF_AID)){
+	if(selfSkill && (selfSkill.isSubType(SkillSubType.SELF_AID) || selfSkill.isSubType(SkillSubType.BREAK_THROUGH))){
 		var tweenObj = getStrokeLabel(selfSkill.name(),22,"#FFFFFF","#000000",2); 
 		tweenObj.x = chara.x + (BattleCharacterSize.width - tweenObj.getWidth()) * 0.5;
 			tweenObj.y = chara.y + tweenObj.getHeight();

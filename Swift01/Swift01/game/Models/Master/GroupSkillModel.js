@@ -13,6 +13,11 @@ GroupSkillModel.setMaster=function(list){
 	for(var i=0,l=list.length;i<l;i++){
 		var child = new GroupSkillModel(null,list[i]);
 		GroupSkillModel.master.push(child);
+		var group = child.group();
+		for(var j=0;group&&j<group.length;j++){
+			var chara = CharacterModel.getChara(group[j]);
+			chara.data.groupSkill = child.id();
+		}
 	}
 };
 GroupSkillModel.getMaster=function(id){

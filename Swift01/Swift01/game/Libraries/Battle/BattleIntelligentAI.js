@@ -209,6 +209,10 @@ BattleIntelligentAI.prototype.moveRoadsShow = function() {
 };
 BattleIntelligentAI.prototype.findMagicAttackTarget = function() {
 	var self = this;
+	if(self.chara.status.hasStatus(StrategyType.BanIncantation)){
+		self.chara.mode = CharacterMode.WAIT_ATTACK;
+		return;
+	}
 	switch(self.strategyFlag){
 		case BattleIntelligentAI.ADD_HP:
 			self.useAddHpStrategy();
