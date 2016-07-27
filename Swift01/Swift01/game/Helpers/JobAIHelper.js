@@ -122,14 +122,17 @@ function jobAiToBattle(areaModel,characters,targetCity){
 				LMvc.CityController.setValue("cityData",areaModel);
 				LMvc.CityController.setValue("toCity",targetCity);
 				LMvc.CityController.setValue("expeditionEnemyData",data);
-				LMvc.CityController.loadCharacterList(CharacterListType.EXPEDITION,targetCity.generals(Job.IDLE), {buttonLabel:"execute"});
-				/*
-				if(targetCity.troops() > 0 && targetCity.generals().length > 0){
-					LMvc.CityController.loadCharacterList(CharacterListType.EXPEDITION,targetCity.generals(Job.IDLE), {buttonLabel:"execute"});
-				}else{
-					LMvc.CityController.setValue("battleData",{food:0, money:0, troops:0});
-					LMvc.CityController.gotoBattle();
-				}*/
+				var neighbor = targetCity.neighbor();
+				var generals = [];
+				generals = generals.concat(targetCity.generals());
+				for(var i=0;i<neighbor.length;i++){
+					var city = AreaModel.getArea(neighbor[i]);
+					if(city.id() == targetCity.id() || city.seigniorCharaId() != LMvc.selectSeignorId){
+						continue;
+					}
+					generals = generals.concat(city.generals());
+				}
+				LMvc.CityController.loadCharacterList(CharacterListType.EXPEDITION, generals, {buttonLabel:"execute", /*countCheckBox:true,*/ checkCity:targetCity.id()});
 			});
 		}};
 		var windowLayer = ConfirmWindow(obj);
@@ -172,6 +175,17 @@ function jobAiBattleExecute(areaModel,data,targetCity){
 		break;
 	}
 	targetData.expeditionCharacterList = enemyCharas;
+	var neighbor = targetCity.neighbor();
+	if(targetData.expeditionCharacterList.length < BattleMapConfig.DefenseQuantity){
+		for(var i=0;i<neighbor.length;i++){
+			var city = AreaModel.getArea(neighbor[i]);
+			if(city.id() == targetCity.id() || city.seigniorCharaId() != LMvc.selectSeignorId){
+				continue;
+			}
+			generals = getBattleAddCharacters(city);
+		}
+		
+	}
 	BattleAIExecute.set(data, targetData);
 }
 function jobAiNeedToEnlist(areaModel){
