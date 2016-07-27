@@ -86,6 +86,9 @@ BattleMapView.prototype.getTerrainModel=function(locationX,locationY){
 };
 BattleMapView.prototype.getTerrainId=function(locationX,locationY){
 	var terrainData = this.getTerrainData(locationX,locationY);
+	if(!terrainData){
+		return 21;
+	}
 	return getTerrainId(terrainData);
 };
 BattleMapView.prototype.wakeRoadsClear=function(belong){

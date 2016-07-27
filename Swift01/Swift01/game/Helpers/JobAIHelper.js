@@ -125,13 +125,13 @@ function jobAiToBattle(areaModel,characters,targetCity){
 				var neighbor = targetCity.neighbor();
 				var generals = [];
 				generals = generals.concat(targetCity.generals());
-				for(var i=0;i<neighbor.length;i++){
+				/*for(var i=0;i<neighbor.length;i++){
 					var city = AreaModel.getArea(neighbor[i]);
 					if(city.id() == targetCity.id() || city.seigniorCharaId() != LMvc.selectSeignorId){
 						continue;
 					}
 					generals = generals.concat(city.generals());
-				}
+				}*/
 				LMvc.CityController.loadCharacterList(CharacterListType.EXPEDITION, generals, {buttonLabel:"execute", /*countCheckBox:true,*/ checkCity:targetCity.id()});
 			});
 		}};
@@ -175,7 +175,7 @@ function jobAiBattleExecute(areaModel,data,targetCity){
 		break;
 	}
 	targetData.expeditionCharacterList = enemyCharas;
-	var neighbor = targetCity.neighbor();
+	/*var neighbor = targetCity.neighbor();
 	if(targetData.expeditionCharacterList.length < BattleMapConfig.DefenseQuantity){
 		for(var i=0;i<neighbor.length;i++){
 			var city = AreaModel.getArea(neighbor[i]);
@@ -185,7 +185,7 @@ function jobAiBattleExecute(areaModel,data,targetCity){
 			generals = getBattleAddCharacters(city);
 		}
 		
-	}
+	}*/
 	BattleAIExecute.set(data, targetData);
 }
 function jobAiNeedToEnlist(areaModel){

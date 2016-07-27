@@ -959,7 +959,7 @@ CharacterModel.prototype.currentSoldiers = function(id) {
 		return;
 	}
 	var currentSoldierId = self.currentSoldierId();
-	if(!self.data._currentSoldiers || self.data._currentSoldiers.id() != currentSoldierId){
+	if(!self.data._currentSoldiers || !(self.data._currentSoldiers instanceof SoldierModel) || self.data._currentSoldiers.id() != currentSoldierId){
 		var soldiers = self.soldiers();
 		self.data._currentSoldiers = soldiers.find(function(child){
 			return child.id() == currentSoldierId;
