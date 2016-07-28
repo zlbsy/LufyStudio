@@ -651,6 +651,7 @@ SeigniorExecute.prototype.maskShow=function(){
 		self.backLayer.visible = true;
 		LMvc.MapController.view.ctrlLayer.visible = false;
 		self.msgView.showSeignior();
+		self.msgView.listView.clipping.y = 0;
 		return;
 	}
 	var maskLayer = getTranslucentMask();
@@ -659,6 +660,7 @@ SeigniorExecute.prototype.maskShow=function(){
 	self.backLayer.addChild(maskLayer);
 	self.msgView = MessageView.Instance();
 	self.msgView.showSeignior();
+	self.msgView.listView.clipping.y = 0;
 	self.backLayer.addChild(self.msgView);
 	LMvc.MapController.view.parent.addChild(self.backLayer);
 	
