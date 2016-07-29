@@ -61,8 +61,8 @@ CharacterListView.prototype.listInit=function(){
 	}
 	self.buttonClose.visible = true;
 	//TODO::ver1.1参数控制
-	if((SeigniorExecute.running && self.controller.characterListType == CharacterListType.EXPEDITION)
-	|| self.controller.characterListType == CharacterListType.SELECT_MONARCH || self.controller.params.closeDisable){
+	if(/*(SeigniorExecute.running && self.controller.characterListType == CharacterListType.EXPEDITION)
+	|| */self.controller.characterListType == CharacterListType.SELECT_MONARCH || self.controller.params.closeDisable){
 		self.buttonClose.visible = false;
 	}
 	if(!self.tabMenuLayer){

@@ -106,6 +106,10 @@ AreaModel.prototype.getDefenseEnemiesAndPowerful = function(){
 	}
 	return list;
 };
+AreaModel.prototype.minDefTroops = function(){
+	var self = this;
+	return 1000;
+};
 AreaModel.prototype.getDefenseEnemies = function(){
 	var self = this;
 	var result = [];

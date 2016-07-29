@@ -125,14 +125,14 @@ function jobAiToBattle(areaModel,characters,targetCity){
 				var neighbor = targetCity.neighbor();
 				var generals = [];
 				generals = generals.concat(targetCity.generals());
-				/*for(var i=0;i<neighbor.length;i++){
+				for(var i=0;i<neighbor.length;i++){
 					var city = AreaModel.getArea(neighbor[i]);
 					if(city.id() == targetCity.id() || city.seigniorCharaId() != LMvc.selectSeignorId){
 						continue;
 					}
 					generals = generals.concat(city.generals());
-				}*/
-				LMvc.CityController.loadCharacterList(CharacterListType.EXPEDITION, generals, {buttonLabel:"execute", /*countCheckBox:true,*/ checkCity:targetCity.id()});
+				}
+				LMvc.CityController.loadCharacterList(CharacterListType.EXPEDITION, generals, {buttonLabel:"execute", closeDisable:true, checkCity:targetCity.id()});
 			});
 		}};
 		var windowLayer = ConfirmWindow(obj);
@@ -175,18 +175,82 @@ function jobAiBattleExecute(areaModel,data,targetCity){
 		break;
 	}
 	targetData.expeditionCharacterList = enemyCharas;
-	/*var neighbor = targetCity.neighbor();
+	var neighbor = targetCity.neighbor();
+	neighbor = neighbor.sort(function(){
+		return Math.fakeRandom()>0.5?1:-1;
+	});
+	var selfNoAppoints = [];
 	if(targetData.expeditionCharacterList.length < BattleMapConfig.DefenseQuantity){
 		for(var i=0;i<neighbor.length;i++){
 			var city = AreaModel.getArea(neighbor[i]);
-			if(city.id() == targetCity.id() || city.seigniorCharaId() != LMvc.selectSeignorId){
+			if(city.id() == targetCity.id()){
 				continue;
+			}else if(city.seigniorCharaId() == LMvc.selectSeignorId){
+				if(!city.isAppoint()){
+					selfNoAppoints.push(city);
+					continue;
+				}
 			}
-			generals = getBattleAddCharacters(city);
+			generals = getBattleReinforcement(city, targetData.expeditionCharacterList.length, BattleMapConfig.DefenseQuantity);
 		}
 		
-	}*/
+	}
+	if(targetData.expeditionCharacterList.length < BattleMapConfig.DefenseQuantity && selfNoAppoints.length){
+		SeigniorExecute.Instance().stop = true;
+		//进入战斗
+		var attackSeignior = areaModel.seignior();
+		//{0}的{1}向{2}的{3}发起进攻了!要从其它城池调派援兵吗？
+		var msg = String.format(Language.get("{0}的{1}向{2}的{3}发起进攻了!要从其它城池调派援兵吗？"),attackSeignior.character().name(),areaModel.name(),"我军",targetCity.name());
+		var obj = {title:Language.get("confirm"),message:msg,height:200
+		,okEvent:function(event){
+			event.currentTarget.parent.remove();
+			SeigniorExecute.Instance().backLayer.visible = false;
+			LMvc.MapController.showCity(targetCity.id(), function(){
+				var build = LMvc.CityController.view.showBuildView("expedition");
+				build.characterListType = CharacterListType.EXPEDITION_REINFORCEMENT;
+				LMvc.CityController.setValue("cityData",areaModel);
+				LMvc.CityController.setValue("toCity",targetCity);
+				LMvc.CityController.setValue("expeditionEnemyData",data);
+				LMvc.CityController.setValue("expeditionOutData",targetData);
+				var generals = [];
+				for(var i=0;i<selfNoAppoints.length;i++){
+					var city = selfNoAppoints[i];
+					generals = generals.concat(city.generals());
+				}
+				LMvc.CityController.loadCharacterList(CharacterListType.EXPEDITION, generals, {buttonLabel:"execute"});
+			});
+		},cancelEvent:function(event){
+			event.currentTarget.parent.remove();
+			BattleAIExecute.set(data, targetData);
+		}};
+		var windowLayer = ConfirmWindow(obj);
+		LMvc.layer.addChild(windowLayer);
+		return;
+	}
 	BattleAIExecute.set(data, targetData);
+}
+//获取援兵
+function getBattleReinforcement(areaModel, count, maxCount){
+	var quantity = BattleMapConfig.AttackQuantity;
+	var reinforcementGenerals = [];
+	var generals = AreaModel.getPowerfulCharacters(areaModel.generals(Job.IDLE));
+	if(generals.length < quantity){
+		quantity = generals.length;
+	}
+	var sumTroops = 0;
+	for(var i = 0;i<quantity;i++){
+		if(areaModel.troops() <= areaModel.minDefTroops()){
+			return reinforcementGenerals;
+		}
+		var general = generals[i].general;
+		var maxTroops = general.maxTroops();
+		if(maxTroops < areaModel.troops()){
+			return reinforcementGenerals;
+		}
+		general.troops(maxTroops);
+		reinforcementGenerals.push(general);
+	}
+	return reinforcementGenerals;
 }
 function jobAiNeedToEnlist(areaModel){
 	if(areaModel.troops() >= areaModel.maxTroops()){
