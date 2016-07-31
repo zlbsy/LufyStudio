@@ -11,7 +11,6 @@ CharacterListChildView.createChild = function(controller, param, cityModel, pare
 		child.init(controller, param, cityModel, parentView);
 		return child;
 	}
-	//if(typeof LPlugin != UNDEFINED && !LPlugin.native)console.error("CharacterListChildView.createChild",++CharacterListChildView._listCount);
 	return new CharacterListChildView(controller, param, cityModel, parentView);
 };
 CharacterListChildView.prototype.removeAllChild = function() {};
@@ -103,7 +102,7 @@ CharacterListChildView.prototype.onClick = function(event) {
 	if(self.controller.params.noDetailed){
 		return;
 	}
-	if(self.controller.characterListType == CharacterListType.EXPEDITION && self.armProperties.visible){
+	if(self.controller.params.cutoverName == "arm_properties" && self.armProperties.visible){
 		if(event.offsetX > 350){
 			var characterExpedition = new CharacterExpeditionView(self.controller, self.charaModel);
 			var obj = {title:Language.get("distribute"),subWindow:characterExpedition,width:400,height:320,okEvent:self.updateArmProperties.bind(self),cancelEvent:null};//分配
@@ -159,9 +158,6 @@ CharacterListChildView.prototype.setStatus = function() {
 		name.x = 50;
 		name.y = 5;
 		layer.addChild(name);
-		/*var bitmapName = getBitmap(layer);
-		bitmapName.x = 20;
-		bitmapName.y = 10;*/
 		layer.x = 20;
 		layer.y = 10;
 		self.addChild(layer);
@@ -174,29 +170,21 @@ CharacterListChildView.prototype.setStatus = function() {
 		self.nameLabel.color = "#000000";
 		self.nameLabel.lineColor = "#FFFFFF";
 	}
-	if(self.basicProperties){
-		self.basicProperties.visible = false;
-	}
-	if(self.abilityProperties){
-		self.abilityProperties.visible = false;
-	}
+	self.setBasicProperties();
+	self.basicProperties.visible = false;
+	self.setAbilityProperties();
+	self.abilityProperties.visible = false;
 	if(self.armProperties){
 		self.armProperties.visible = false;
 	}
-	if(self.controller.characterListType != CharacterListType.GAME_SINGLE_COMBAT && self.controller.characterListType != CharacterListType.TOURNAMENTS_SELECT){
-		self.setBasicProperties();
-	}
-	self.setAbilityProperties();
-	if(self.controller.characterListType == CharacterListType.EXPEDITION){
+	if(self.controller.params.showArm){
 		self.setArmProperties();
-		self.basicProperties.visible = false;
-		self.abilityProperties.visible = false;
 		self.armProperties.visible = true;
 		if(self.charaModel.troops() > 0){
 			self.checkbox.setChecked(true);
 			self.parentView.dispatchEvent(LCheckBox.ON_CHANGE);
 		}
-	}else if(self.controller.characterListType == CharacterListType.GAME_SINGLE_COMBAT || self.controller.characterListType == CharacterListType.TOURNAMENTS_SELECT){
+	}else if(self.controller.params.showAbility){
 		self.abilityProperties.visible = true;
 	}else{
 		self.basicProperties.visible = true;
@@ -226,11 +214,6 @@ CharacterListChildView.prototype.setArmProperties = function() {
 	layer.addChild(troops);
 	self.troops = troops;
 	
-	/*var soldierName = getStrokeLabel(soldierModel.name(), 18, "#FFFFFF", "#000000", 4);
-	soldierName.x = 180;
-	soldierName.y = 10;
-	layer.addChild(soldierName);
-	self.soldierName = soldierName;*/
 	var panel = getPanel("win01",100,40);
 	panel.x = 180;
 	panel.y = 0;
@@ -242,9 +225,6 @@ CharacterListChildView.prototype.setArmProperties = function() {
 	panel.addChild(soldierName);
 	layer.x = 180;
 	layer.y = 5;
-	/*var armPropertiesBitmap = getBitmap(layer);
-	armPropertiesBitmap.x = 180;
-	armPropertiesBitmap.y = 5;*/
 	self.addChild(layer);
 	self.armProperties = layer;
 };
@@ -254,11 +234,12 @@ CharacterListChildView.prototype.setBasicProperties = function() {
 	if(self.basicProperties){
 		self.seigniorName.text = self.charaModel.seigniorName();
 		self.identity.text = self.charaModel.identity();
-		if(self.controller.characterListType == CharacterListType.OWN_CHARACTER_LIST){
+		self.cityNameLabel.text = self.charaModel.city().name();
+		/*if(self.controller.characterListType == CharacterListType.OWN_CHARACTER_LIST){
 			self.cityNameLabel.text = self.charaModel.city().name();
 		}else if(self.cityModel){
 			self.cityNameLabel.text = self.character?self.charaModel.city().name():self.cityModel.name();
-		}
+		}*/
 		self.loyalty.text = seigniorId>0 ? self.charaModel.loyalty() : "--";
 		self.jobLabel.text = self.charaModel.jobLabel();
 		return;
@@ -277,13 +258,13 @@ CharacterListChildView.prototype.setBasicProperties = function() {
 	identity.y = 5;
 	layer.addChild(identity);
 	self.identity = identity;
-	var cityNameLabel;
-	if(self.controller.characterListType == CharacterListType.OWN_CHARACTER_LIST){
+	var cityNameLabel = getStrokeLabel(self.charaModel.city().name(), 18, "#FFFFFF", "#000000", 4);
+	/*if(self.controller.characterListType == CharacterListType.OWN_CHARACTER_LIST){
 		cityNameLabel = getStrokeLabel(self.charaModel.city().name(), 18, "#FFFFFF", "#000000", 4);
 	}else if(self.cityModel){
 		var cityName = self.character?self.charaModel.city().name():self.cityModel.name();
 		cityNameLabel = getStrokeLabel(cityName, 18, "#FFFFFF", "#000000", 4);
-	}
+	}*/
 	cityNameLabel.x = 60 * 2 + 2;
 	cityNameLabel.y = 5;
 	layer.addChild(cityNameLabel);
@@ -301,9 +282,6 @@ CharacterListChildView.prototype.setBasicProperties = function() {
 	self.jobLabel = jobLabel;
 	layer.x = 180;
 	layer.y = 10;
-	/*var basicPropertiesBitmap = getBitmap();
-	basicPropertiesBitmap.x = 180;
-	basicPropertiesBitmap.y = 10;*/
 	self.addChild(layer);
 	self.basicProperties = layer;
 }; 
@@ -315,7 +293,6 @@ CharacterListChildView.prototype.setAbilityProperties = function() {
 		self.intelligence.text = self.charaModel.intelligence();
 		self.agility.text = self.charaModel.agility();
 		self.luck.text = self.charaModel.luck();
-		self.abilityProperties.visible = false;
 		return;
 	}
 	var layer = new LSprite();

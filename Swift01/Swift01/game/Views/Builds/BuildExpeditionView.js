@@ -17,7 +17,9 @@ BuildExpeditionView.prototype.run=function(){
 	self.controller.removeEventListener(LCityEvent.SELECT_CITY);
 	self.controller.addEventListener(LCityEvent.SELECT_CITY, self.expeditionSelectCharacter);
 	self.controller.addEventListener(LCityEvent.CLOSE_SELECT_CITY, self.closeSelectCity);
-	self.controller.toSelectMap(CharacterListType.EXPEDITION, {isSelf:false, toast:"dialog_common_select_city_toast", belongError:"dialog_expedition_select_error", stopBattle:false, stopBattleError:"dialog_expedition_stop_battle_error", confirmMessage:"dialog_expedition_select_confirm"});
+	self.controller.toSelectMap(CharacterListType.EXPEDITION, {isSelf:false, toast:"dialog_common_select_city_toast", belongError:"dialog_expedition_select_error", 
+	stopBattle:false, stopBattleError:"dialog_expedition_stop_battle_error", 
+	confirmMessage:"dialog_expedition_select_confirm"});
 };
 BuildExpeditionView.prototype.closeSelectCity=function(event){
 	var controller = event.currentTarget;
@@ -44,11 +46,34 @@ BuildExpeditionView.prototype.selectComplete=function(event){
 		return true;
 	}
 	var cityId = self.controller.getValue("cityId");
-	if(event.characterListType == CharacterListType.EXPEDITION){
+	if(event.characterListType == CharacterListType.EXPEDITION_REINFORCEMENT){
+		var characterList = event.characterList;
+		var toCity = self.controller.getValue("toCity");
+		var expeditionOutData = self.controller.getValue("expeditionOutData");
+		var quantity = toCity.seigniorCharaId() == LMvc.selectSeignorId ? BattleMapConfig.DefenseQuantity : BattleMapConfig.AttackQuantity;
+		if(characterList.length + expeditionOutData.expeditionCharacterList.length > quantity){
+			var msg = toCity.seigniorCharaId() == LMvc.selectSeignorId ? "reinforcement_defense_quantity_message" : "reinforcement_attack_quantity_message";
+			var obj = {title:Language.get("confirm"),
+			message:String.format(Language.get(msg),quantity, quantity - expeditionOutData.expeditionCharacterList.length),
+			height:200,okEvent:null};
+			var windowLayer = ConfirmWindow(obj);
+			LMvc.layer.addChild(windowLayer);
+			return false;
+		}
+		for(var i = 0,l = characterList.length;i<l;i++){
+			if(characterList[i].troops() > 0){
+				continue;
+			}
+			var obj = {title:Language.get("confirm"),message:String.format(Language.get("dialog_character_troops_error"),characterList[i].name()),height:200,okEvent:null};
+			var windowLayer = ConfirmWindow(obj);
+			LMvc.layer.addChild(windowLayer);
+			return false;
+		}
+	}else if(event.characterListType == CharacterListType.EXPEDITION){
 		var characterList = event.characterList;
 		var quantity = SeigniorExecute.running ? BattleMapConfig.DefenseQuantity : BattleMapConfig.AttackQuantity;
 		if(characterList.length > quantity){
-			var obj = {title:Language.get("confirm"),messageHtml:String.format(Language.get(SeigniorExecute.running ? "expedition_defense_quantity_message" : "expedition_attack_quantity_message"),quantity),height:200,okEvent:null};
+			var obj = {title:Language.get("confirm"),message:String.format(Language.get(SeigniorExecute.running ? "expedition_defense_quantity_message" : "expedition_attack_quantity_message"),quantity),height:200,okEvent:null};
 			var windowLayer = ConfirmWindow(obj);
 			LMvc.layer.addChild(windowLayer);
 			return false;
@@ -184,8 +209,7 @@ BuildExpeditionView.prototype.toExpedition=function(){
 		generals = generals.concat(city.generals(Job.IDLE));
 	}
 	self.controller.loadCharacterList(CharacterListType.EXPEDITION, generals, 
-		{buttonLabel:"execute", countCheckBox:true, checkCity:cityModel.id()});
-	//self.controller.loadCharacterList(CharacterListType.EXPEDITION, cityModel.generals(Job.IDLE), {buttonLabel:"execute", countCheckBox:true});
+		{buttonLabel:"execute", countCheckBox:true, cutoverName:"arm_properties", showArm:true,checkCity:cityModel.id()});
 };
 BuildExpeditionView.prototype.toSelectLeader=function(){
 	var self = this;

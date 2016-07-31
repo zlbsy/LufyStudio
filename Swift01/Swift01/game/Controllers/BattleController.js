@@ -84,7 +84,7 @@ BattleController.prototype.showCharacterDetailedView=function(){
 	var enemyCharas = self.view.charaLayer.getCharactersFromBelong(Belong.ENEMY);
 	//self.controller.loadCharacterList(CharacterListType.BATTLE_CHARACTER_LIST,selfCharas.concat(enemyCharas), {showOnly:true});
 	
-	var charaList = new CharacterListController(CharacterListType.BATTLE_SINGLE, self,selfCharas.concat(enemyCharas), {showOnly:true});
+	var charaList = new CharacterListController(CharacterListType.BATTLE_SINGLE, self,selfCharas.concat(enemyCharas), {showDetailed:true,showOnly:true});
 	self.view.parent.addChild(charaList.view);
 };
 BattleController.prototype.init = function(){

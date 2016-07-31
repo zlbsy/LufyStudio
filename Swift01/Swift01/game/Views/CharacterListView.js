@@ -21,7 +21,7 @@ CharacterListView.prototype.init=function(){
 		self.addChild(self.charaDetailedLayer);
 	}
 	self.listInit();
-	if(self.controller.characterListType == CharacterListType.BATTLE_SINGLE){
+	if(self.controller.params.showDetailed){
 		var chara = self.controller.fromController.currentCharacter;
 		self.showCharacterDetailed(chara);
 	}
@@ -49,7 +49,7 @@ CharacterListView.prototype.listInit=function(){
 	}
 	self.title.text = Language.get(self.controller.characterListType);
 	if(!self.controller.params.noCutover){
-		self.getCutoverButton(self.controller.characterListType == CharacterListType.EXPEDITION ? CharacterListView.CUTOVER_ARM : CharacterListView.CUTOVER_BASIC);
+		self.getCutoverButton(self.controller.params.cutoverName ? self.controller.params.cutoverName : CharacterListView.CUTOVER_BASIC);
 	}
 	if(!self.buttonClose){
 		var bitmapClose = new LBitmap(new LBitmapData(LMvc.datalist["close"]));
@@ -60,9 +60,7 @@ CharacterListView.prototype.listInit=function(){
 		self.buttonClose = buttonClose;
 	}
 	self.buttonClose.visible = true;
-	//TODO::ver1.1参数控制
-	if(/*(SeigniorExecute.running && self.controller.characterListType == CharacterListType.EXPEDITION)
-	|| */self.controller.characterListType == CharacterListType.SELECT_MONARCH || self.controller.params.closeDisable){
+	if(self.controller.params.closeDisable){
 		self.buttonClose.visible = false;
 	}
 	if(!self.tabMenuLayer){
@@ -265,7 +263,7 @@ CharacterListView.prototype.getCutoverButton=function(name){
 CharacterListView.prototype.onClickCutoverButton=function(event){
 	var buttonCutover = event.currentTarget, self = buttonCutover.parent.parent, cutoverName = "";
 	var cutoverName = "";
-	if(self.controller.characterListType == CharacterListType.EXPEDITION){
+	if(self.controller.params.cutoverName == "arm_properties"){
 		if(buttonCutover.name == CharacterListView.CUTOVER_ARM){
 			cutoverName = CharacterListView.CUTOVER_BASIC;
 			self.armTab.visible = false;
@@ -340,16 +338,19 @@ CharacterListView.prototype.showTabMenu=function(){
 	}
 	self.setBasicTab();
 	self.setAbilityTab();
-	if(self.controller.characterListType == CharacterListType.EXPEDITION){
+	if(self.controller.params.showArm){
 		self.setArmTab();
-	}else if(self.controller.characterListType == CharacterListType.GAME_SINGLE_COMBAT || self.controller.characterListType == CharacterListType.TOURNAMENTS_SELECT){
+		self.armTab.visible = true;
+	}else if(self.controller.params.showAbility){
 		self.abilityTab.visible = true;
+	}else{
+		self.basicTab.visible = true;
 	}
 };
 CharacterListView.prototype.setBasicTab=function(){
 	var self = this;
 	if(self.basicTab.numChildren > 0){
-		self.basicTab.visible = true;
+		self.basicTab.visible = false;
 		return;
 	}
 	var tabs = ["belong", "identity", "city", "loyalty", "status"];
@@ -440,8 +441,7 @@ CharacterListView.prototype.onClickSortButton=function(event){
 CharacterListView.prototype.setArmTab=function(){
 	var self = this;
 	if(self.armTab.numChildren > 0){
-		self.basicTab.visible = false;
-		self.armTab.visible = true;
+		self.armTab.visible = false;
 		return;
 	}
 	var tabs = ["city", "troops", "distribute"];
@@ -540,8 +540,7 @@ CharacterListView.prototype.showCharacterDetailed=function(param){
 CharacterListView.prototype.showCharacterList=function(){
 	var self = this;
 	self.charaDetailedLayer.removeAllChild();
-	switch(self.controller.characterListType){
-		case CharacterListType.BATTLE_SINGLE:
+	if(self.controller.params.showDetailed){
 		self.remove();
 		return;
 	}

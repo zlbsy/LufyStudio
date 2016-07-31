@@ -24,7 +24,7 @@ SingleCombatArenaView.prototype.init=function(){
 	}
 	charas = charas.sort(function(a, b){return b.data.force - a.data.force;});
 	self.characters = charas;
-	self.controller.loadCharacterList(CharacterListType.GAME_SINGLE_COMBAT, charas, {isOnlyOne:true, buttonLabel:"execute", noCutover:true, noDetailed:true});
+	self.controller.loadCharacterList(CharacterListType.GAME_SINGLE_COMBAT, charas, {isOnlyOne:true, showAbility:true,cutoverName:"ability_properties",buttonLabel:"execute", noCutover:true, noDetailed:true});
 };
 SingleCombatArenaView.prototype.addCharacterListView=function(characterListView){
 	this.contentLayer.addChild(characterListView);

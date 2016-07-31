@@ -182,7 +182,7 @@ Language.data = {
 	"single_command_buffer":"燃え",
 	"single_command_backstroke_attack":"詐欺",
 	"single_command_special_attack":"会心",
-	
+	"expedition_reinforcement":"増援部隊",
 	"action_end_error":"もう行動済みです！",
 	"can_not_operating":"操作不可:{0}",
 	"belong_self":"自軍",
@@ -336,6 +336,7 @@ Language.data = {
 	"shimono_dialog_msg":"{0}が下野しました!",
 	"rescue_enemy_captive_dialog_msg":"捕獲した敵将も救出されました!",
 	"to_attack_seignior_city":"{0}の{1}が{2}の{3}に攻め始めました!",
+	"to_attack_seignior_city_reinforcement":"{0}の{1}が{2}の{3}に攻め始めました!増援部隊を送りますか？",
 	"to_attack_null_city":"{0}の{1}が{2}に攻め始めました!",
 	"win_attack_and_occupy_null":"{0}が{1}を陥落させました!",
 	"win_attack_and_occupy_enemy":"{0}が{1}軍の{2}を陥落させました!",
@@ -538,6 +539,8 @@ Language.data = {
 	"goto_execute_message":"戦略フェイズを終了します\nよろしいですか？",
 	"expedition_attack_quantity_message":"攻城戦は最大武将数が{0}になります",
 	"expedition_defense_quantity_message":"防衛戦は最大武将数が{0}になります",
+	"reinforcement_attack_quantity_message":"攻城戦は最大武将数が{0}になります！残る増援部隊が{1}人送れます！",
+	"reinforcement_defense_quantity_message":"防衛戦は最大武将数が{0}になります！残る増援部隊が{1}人送れます！",
 	"riot_message":"{0}にいる群衆は不満が爆発して、暴動起きました!",
 	"no_food_talk":"やばい！食糧がなくなったから、兵士の戦闘力が下降しました。",
 	"child_growup":"<font size='22' color='#FFFFFF'><font color='#FF0000'> {0} </font>が大人になったから、<font color='#FF0000'> {1} </font>に従って、味方に参加しました！</font>"

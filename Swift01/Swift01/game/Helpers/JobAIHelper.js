@@ -66,7 +66,7 @@ function getIdleCharacters(areaModel){
 }
 /*出战准备*/
 function jobAiToBattle(areaModel,characters,targetCity){
-	//targetCity = AreaModel.getArea(22);//测试用
+	//targetCity = AreaModel.getArea(22);//TODO::测试用
 	
 	var attackQuantity = BattleMapConfig.AttackQuantity;
 	var generalCount = areaModel.generalsSum();
@@ -111,7 +111,7 @@ function jobAiToBattle(areaModel,characters,targetCity){
 		//进入战斗
 		var attackSeignior = areaModel.seignior();
 		//{0}的{1}向{2}的{3}发起进攻了!
-		var msg = String.format(Language.get("to_attack_seignior_city"),attackSeignior.character().name(),areaModel.name(),"我军",targetCity.name());
+		var msg = String.format(Language.get("to_attack_seignior_city"),attackSeignior.character().name(),areaModel.name(),Language.get("belong_self"),targetCity.name());
 		var obj = {title:Language.get("confirm"),message:msg,height:200
 		,okEvent:function(event){
 			event.currentTarget.parent.remove();
@@ -132,7 +132,7 @@ function jobAiToBattle(areaModel,characters,targetCity){
 					}
 					generals = generals.concat(city.generals());
 				}
-				LMvc.CityController.loadCharacterList(CharacterListType.EXPEDITION, generals, {buttonLabel:"execute", closeDisable:true, checkCity:targetCity.id()});
+				LMvc.CityController.loadCharacterList(CharacterListType.EXPEDITION, generals, {buttonLabel:"execute", closeDisable:true, cutoverName:"arm_properties", showArm:true,checkCity:targetCity.id()});
 			});
 		}};
 		var windowLayer = ConfirmWindow(obj);
@@ -200,7 +200,7 @@ function jobAiBattleExecute(areaModel,data,targetCity){
 		//进入战斗
 		var attackSeignior = areaModel.seignior();
 		//{0}的{1}向{2}的{3}发起进攻了!要从其它城池调派援兵吗？
-		var msg = String.format(Language.get("{0}的{1}向{2}的{3}发起进攻了!要从其它城池调派援兵吗？"),attackSeignior.character().name(),areaModel.name(),"我军",targetCity.name());
+		var msg = String.format(Language.get("to_attack_seignior_city_reinforcement"),attackSeignior.character().name(),areaModel.name(),Language.get("belong_self"),targetCity.name());
 		var obj = {title:Language.get("confirm"),message:msg,height:200
 		,okEvent:function(event){
 			event.currentTarget.parent.remove();
@@ -217,7 +217,7 @@ function jobAiBattleExecute(areaModel,data,targetCity){
 					var city = selfNoAppoints[i];
 					generals = generals.concat(city.generals());
 				}
-				LMvc.CityController.loadCharacterList(CharacterListType.EXPEDITION, generals, {buttonLabel:"execute"});
+				LMvc.CityController.loadCharacterList(CharacterListType.EXPEDITION_REINFORCEMENT, generals, {buttonLabel:"execute", showArm:true,cutoverName:"arm_properties"});
 			});
 		},cancelEvent:function(event){
 			event.currentTarget.parent.remove();

@@ -182,7 +182,7 @@ Language.data = {
 	"single_command_buffer":"燃烧",
 	"single_command_backstroke_attack":"诈败",
 	"single_command_special_attack":"怒击",
-	
+	"expedition_reinforcement":"援兵",
 	"action_end_error":"行动已结束！",
 	"can_not_operating":"不可操作{0}",
 	"belong_self":"我军",
@@ -336,6 +336,7 @@ Language.data = {
 	"shimono_dialog_msg":"{0}下野了!",
 	"rescue_enemy_captive_dialog_msg":"我军俘虏的敌将也被救回去了!",
 	"to_attack_seignior_city":"{0}的{1}向{2}的{3}发起进攻了!",
+	"to_attack_seignior_city_reinforcement":"{0}的{1}向{2}的{3}发起进攻了!要从其它城池调派援兵吗？",
 	"to_attack_null_city":"{0}的{1}向{2}发起进攻了!",
 	"win_attack_and_occupy_null":"{0}攻占了{1}!",
 	"win_attack_and_occupy_enemy":"{0}攻占了{1}军的{2}!",
@@ -538,6 +539,8 @@ Language.data = {
 	"goto_execute_message":"结束战略部署\n确定吗？",
 	"expedition_attack_quantity_message":"攻城战最多只能{0}人出战！",
 	"expedition_defense_quantity_message":"防守战最多只能{0}人出战！",
+	"reinforcement_attack_quantity_message":"攻城战最多只能{0}人出战！还可以派出援兵{1}人！",
+	"reinforcement_defense_quantity_message":"防守战最多只能{0}人出战！还可以派出援兵{1}人！",
 	"riot_message":"{0}的百姓发生暴动了!",
 	"no_food_talk":"糟糕！没有兵粮了，士兵的战斗力开始下降了。",
 	"child_growup":"<font size='22' color='#FFFFFF'><font color='#FF0000'> {0} </font>成年了，随<font color='#FF0000'> {1} </font>加入我军！</font>"
