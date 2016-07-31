@@ -67,6 +67,7 @@ CityController.prototype.gotoMap=function(){
 	LPlugin.playBGM("map", LPlugin.gameSetting.BGM);
 	LMvc.MapController.view.visible = true;
 	LMvc.MapController.view.changeMode(MapController.MODE_MAP);
+	self.clearValue();
 };
 CityController.prototype.toSelectMap=function(eventType, params){
 	var self = this;
@@ -94,13 +95,21 @@ CityController.prototype.toSelectMap=function(eventType, params){
 		Toast.makeText(Language.get(params.toast)).show();
 	}
 };
-CityController.prototype.gotoBattle=function(){
+CityController.prototype.gotoBattle=function(isReinforcement){
 	var self = this;
-	LMvc.CityController.view.clearContentLayer();
-	LMvc.CityController.view.visible = false;
-	LPlugin.playSE("Se_goto_battle", LPlugin.gameSetting.SE);
-	LMvc.keepLoading(true);
-	self.loadMvc("Battle",self.battleLoadComplete);
+	self.view.clearContentLayer();
+	self.view.visible = false;
+	if(isReinforcement){
+		LMvc.MapController.view.visible = true;
+		var data = self.getValue("expeditionEnemyData");
+		var targetData = self.getValue("expeditionOutData");
+		BattleAIExecute.set(data, targetData);
+		self.clearValue();
+	}else{
+		LPlugin.playSE("Se_goto_battle", LPlugin.gameSetting.SE);
+		LMvc.keepLoading(true);
+		self.loadMvc("Battle",self.battleLoadComplete);
+	}
 };
 CityController.prototype.battleLoadComplete=function(){
 	var self = this;
@@ -118,4 +127,5 @@ CityController.prototype.battleLoadComplete=function(){
 	battleData.expeditionEnemyData = self.getValue("expeditionEnemyData");
 	var battle = new BattleController(battleData, self);
 	LMvc.stageLayer.addChild(battle);
+	self.clearValue();
 };

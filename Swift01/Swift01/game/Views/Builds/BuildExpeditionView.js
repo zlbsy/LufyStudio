@@ -69,6 +69,11 @@ BuildExpeditionView.prototype.selectComplete=function(event){
 			LMvc.layer.addChild(windowLayer);
 			return false;
 		}
+		for(var i=0,l=characterList.length;i<l;i++){
+			expeditionOutData.expeditionCharacterList.push(characterList[i]);
+		}
+		
+		
 	}else if(event.characterListType == CharacterListType.EXPEDITION){
 		var characterList = event.characterList;
 		var quantity = SeigniorExecute.running ? BattleMapConfig.DefenseQuantity : BattleMapConfig.AttackQuantity;
@@ -148,6 +153,8 @@ BuildExpeditionView.prototype.showBuild=function(event){
 			cityView.clearContentLayer();
 		}else if(event.characterListType == CharacterListType.SELECT_LEADER){
 			self.toExpedition();
+		}else if(event.characterListType == CharacterListType.EXPEDITION_REINFORCEMENT){
+			self.controller.gotoBattle(true);
 		}
 		return;
 	}
@@ -171,6 +178,8 @@ BuildExpeditionView.prototype.showBuild=function(event){
 		}
 	}else if(event.characterListType == CharacterListType.SELECT_LEADER){
 		self.load.view(["Builds/ExpeditionReady"],self.expeditionReady);
+	}else if(event.characterListType == CharacterListType.EXPEDITION_REINFORCEMENT){
+		self.controller.gotoBattle(true);
 	}
 };
 BuildExpeditionView.prototype.expeditionReady=function(){
