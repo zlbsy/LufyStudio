@@ -160,7 +160,7 @@ LogoController.prototype.testVersionOver = function(message){
 };
 LogoController.prototype.updateCheck = function(){
 	var self = this;
-	LMvc.keepLoading(true);
+	LMvc.keepLoading(true);LPlugin.testVersion=true;
 	LMvc.changeLoading(TranslucentLoading);
 	if(LPlugin.testVersion){
 		LAjax.post(LMvc.updateURL + "test.php",{ver:LMvc.ver},function(data){

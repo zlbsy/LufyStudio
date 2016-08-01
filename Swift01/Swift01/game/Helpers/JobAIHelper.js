@@ -103,7 +103,7 @@ function jobAiToBattle(areaModel,characters,targetCity){
 		
 		for(var i=0;i<neighbor.length;i++){
 			var city = AreaModel.getArea(neighbor[i]);
-			if(city.id() == areaModel.id()){
+			if(city.seigniorCharaId() != areaModel.seigniorCharaId() || city.id() == areaModel.id()){
 				continue;
 			}else if(city.seigniorCharaId() == LMvc.selectSeignorId){
 				if(!city.isAppoint()){
@@ -112,6 +112,7 @@ function jobAiToBattle(areaModel,characters,targetCity){
 				}
 			}
 			generals = getBattleReinforcement(city, data.expeditionCharacterList.length, BattleMapConfig.AttackQuantity);
+			console.log("援兵",city.name(),generals.length);
 			data.expeditionCharacterList = data.expeditionCharacterList.concat(generals);
 		}
 	}
@@ -131,7 +132,7 @@ function jobAiToBattle(areaModel,characters,targetCity){
 				LMvc.CityController.setValue("cityData",areaModel);
 				LMvc.CityController.setValue("toCity",targetCity);
 				LMvc.CityController.setValue("expeditionEnemyData",data);
-				LMvc.CityController.setValue("expeditionOutData",targetData);
+				//LMvc.CityController.setValue("expeditionOutData",targetData);
 				var generals = [];
 				for(var i=0;i<selfNoAppoints.length;i++){
 					var city = selfNoAppoints[i];
@@ -243,7 +244,7 @@ function jobAiBattleExecute(areaModel,data,targetCity){
 	if(targetData.expeditionCharacterList.length < BattleMapConfig.DefenseQuantity){
 		for(var i=0;i<neighbor.length;i++){
 			var city = AreaModel.getArea(neighbor[i]);
-			if(city.id() == targetCity.id()){
+			if(city.seigniorCharaId() != targetCity.seigniorCharaId() || city.id() == targetCity.id()){
 				continue;
 			}else if(city.seigniorCharaId() == LMvc.selectSeignorId){
 				if(!city.isAppoint()){
@@ -294,7 +295,7 @@ function jobAiBattleExecute(areaModel,data,targetCity){
 function getBattleReinforcement(areaModel, count, maxCount){
 	var quantity = BattleMapConfig.AttackQuantity;
 	var reinforcementGenerals = [];
-	var generals = AreaModel.getPowerfulCharacters(areaModel.generals(Job.IDLE));
+	var generals = AreaModel.getPowerfulCharacters(areaModel.generals());
 	if(generals.length < quantity){
 		quantity = generals.length;
 	}
@@ -305,7 +306,7 @@ function getBattleReinforcement(areaModel, count, maxCount){
 		}
 		var general = generals[i].general;
 		var maxTroops = general.maxTroops();
-		if(maxTroops < areaModel.troops()){
+		if(maxTroops > areaModel.troops()){
 			return reinforcementGenerals;
 		}
 		general.troops(maxTroops);

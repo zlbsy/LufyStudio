@@ -108,7 +108,12 @@ AreaModel.prototype.getDefenseEnemiesAndPowerful = function(){
 };
 AreaModel.prototype.minDefTroops = function(){
 	var self = this;
-	return 1000;
+	var min = 0;
+	var list = self.getDefenseEnemiesAndPowerful();
+	for(var i=0,l=list.length < BattleMapConfig.DetachmentQuantity ? list.length : BattleMapConfig.DefenseQuantity;i<l;i++){
+		min += list[i].general.maxTroops();
+	}
+	return min * 2;
 };
 AreaModel.prototype.getDefenseEnemies = function(){
 	var self = this;
