@@ -67,7 +67,6 @@ function getIdleCharacters(areaModel){
 /*出战准备*/
 function jobAiToBattle(areaModel,characters,targetCity){
 	//targetCity = AreaModel.getArea(22);//TODO::测试用
-	
 	var attackQuantity = BattleMapConfig.AttackQuantity;
 	var generalCount = areaModel.generalsSum();
 	if(generalCount - attackQuantity < BattleMapConfig.DetachmentQuantity){
@@ -81,7 +80,6 @@ function jobAiToBattle(areaModel,characters,targetCity){
 	data.fromCity = areaModel;
 	data.attackFlag = 1;
 	data.expeditionCharacterList = [];
-	var sumTroops = 0;
 	for(var i = 0;i<attackQuantity;i++){
 		var general = generals[i].general;
 		var index = characters.findIndex(function(child){
@@ -93,8 +91,70 @@ function jobAiToBattle(areaModel,characters,targetCity){
 			data.expeditionLeader = general;
 		}
 		var maxTroops = general.maxTroops();
-		sumTroops += maxTroops;
 		general.troops(maxTroops);
+		areaModel.troops(areaModel.troops() - maxTroops);
+	}
+	var selfNoAppoints = [];
+	if(data.expeditionCharacterList.length < BattleMapConfig.AttackQuantity){
+		var neighbor = areaModel.neighbor();
+		neighbor = neighbor.sort(function(){
+			return Math.fakeRandom()>0.5?1:-1;
+		});
+		
+		for(var i=0;i<neighbor.length;i++){
+			var city = AreaModel.getArea(neighbor[i]);
+			if(city.id() == areaModel.id()){
+				continue;
+			}else if(city.seigniorCharaId() == LMvc.selectSeignorId){
+				if(!city.isAppoint()){
+					selfNoAppoints.push(city);
+					continue;
+				}
+			}
+			generals = getBattleReinforcement(city, data.expeditionCharacterList.length, BattleMapConfig.AttackQuantity);
+			data.expeditionCharacterList = data.expeditionCharacterList.concat(generals);
+		}
+	}
+	if(data.expeditionCharacterList.length < BattleMapConfig.AttackQuantity && selfNoAppoints.length > 0){
+		SeigniorExecute.Instance().stop = true;
+		//进入战斗
+		var attackSeignior = areaModel.seignior();
+		//{0}的{1}向{2}的{3}发起进攻了!要从其它城池调派援兵吗？
+		var msg = String.format(Language.get("to_attack_seignior_city_reinforcement"),Language.get("belong_self"),areaModel.name(),targetCity.seignior().character().name(),targetCity.name());
+		var obj = {title:Language.get("confirm"),message:msg,height:200
+		,okEvent:function(event){
+			event.currentTarget.parent.remove();
+			SeigniorExecute.Instance().backLayer.visible = false;
+			LMvc.MapController.showCity(targetCity.id(), function(){
+				var build = LMvc.CityController.view.showBuildView("expedition");
+				build.characterListType = CharacterListType.EXPEDITION_REINFORCEMENT;
+				LMvc.CityController.setValue("cityData",areaModel);
+				LMvc.CityController.setValue("toCity",targetCity);
+				LMvc.CityController.setValue("expeditionEnemyData",data);
+				LMvc.CityController.setValue("expeditionOutData",targetData);
+				var generals = [];
+				for(var i=0;i<selfNoAppoints.length;i++){
+					var city = selfNoAppoints[i];
+					generals = generals.concat(city.generals());
+				}
+				LMvc.CityController.loadCharacterList(CharacterListType.EXPEDITION_REINFORCEMENT, generals, {buttonLabel:"execute", showArm:true,cutoverName:"arm_properties"});
+			});
+		},cancelEvent:function(event){
+			event.currentTarget.parent.remove();
+			BattleAIExecute.set(data, targetData);
+		}};
+		var windowLayer = ConfirmWindow(obj);
+		LMvc.layer.addChild(windowLayer);
+		return;
+	}
+	jobAiToBattleTarget(areaModel,characters,targetCity,data);
+}
+/*出战准备*/
+function jobAiToBattleTarget(areaModel,characters,targetCity,data){
+	var sumTroops = 0;
+	for(var i = 0;i<data.expeditionCharacterList;i++){
+		var general = data.expeditionCharacterList[i];
+		sumTroops += general.troops();
 	}
 	data.troops = sumTroops;
 	sumTroops = sumTroops + data.troops;
@@ -103,7 +163,7 @@ function jobAiToBattle(areaModel,characters,targetCity){
 	data.food = sumTroops * 15;
 	areaModel.food(-data.food);
 	areaModel.money(-data.money);
-	areaModel.troops(areaModel.troops() - sumTroops);
+	areaModel.troops(areaModel.troops() - data.troops);
 	data.cityId = targetCity.id();
 	data.toCity = targetCity;
 	if(targetCity.seigniorCharaId() == LMvc.selectSeignorId && !targetCity.isAppoint() && (targetCity.troops() > 0 && targetCity.generals().length > 0)){
@@ -192,10 +252,11 @@ function jobAiBattleExecute(areaModel,data,targetCity){
 				}
 			}
 			generals = getBattleReinforcement(city, targetData.expeditionCharacterList.length, BattleMapConfig.DefenseQuantity);
+			targetData.expeditionCharacterList = targetData.expeditionCharacterList.concat(generals);
 		}
 		
 	}
-	if(targetData.expeditionCharacterList.length < BattleMapConfig.DefenseQuantity && selfNoAppoints.length){
+	if(targetData.expeditionCharacterList.length < BattleMapConfig.DefenseQuantity && selfNoAppoints.length > 0){
 		SeigniorExecute.Instance().stop = true;
 		//进入战斗
 		var attackSeignior = areaModel.seignior();
