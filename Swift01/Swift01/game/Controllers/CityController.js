@@ -101,9 +101,16 @@ CityController.prototype.gotoBattle=function(isReinforcement){
 	self.view.visible = false;
 	if(isReinforcement){
 		LMvc.MapController.view.visible = true;
-		var data = self.getValue("expeditionEnemyData");
-		var targetData = self.getValue("expeditionOutData");
-		BattleAIExecute.set(data, targetData);
+		var targetCity = self.getValue("toCity");
+		var cityData = self.getValue("cityData");
+		if(cityData.seigniorCharaId() == targetCity.seigniorCharaId()){
+			var data = self.getValue("expeditionEnemyData");
+			var targetData = self.getValue("expeditionOutData");
+			BattleAIExecute.set(data, targetData);
+		}else{
+			var data = self.getValue("expeditionOutData");
+			jobAiToBattleTarget(cityData,targetCity,data);
+		}
 		self.clearValue();
 	}else{
 		LPlugin.playSE("Se_goto_battle", LPlugin.gameSetting.SE);

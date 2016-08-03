@@ -110,7 +110,7 @@ AreaModel.prototype.minDefTroops = function(){
 	var self = this;
 	var min = 0;
 	var list = self.getDefenseEnemiesAndPowerful();
-	for(var i=0,l=list.length < BattleMapConfig.DetachmentQuantity ? list.length : BattleMapConfig.DefenseQuantity;i<l;i++){
+	for(var i=0,l=(list.length < BattleMapConfig.DetachmentQuantity ? list.length : BattleMapConfig.DetachmentQuantity);i<l;i++){
 		min += list[i].general.maxTroops();
 	}
 	return min * 2;

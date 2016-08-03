@@ -97,7 +97,7 @@ function calculateHitrateBehead(leaderId, charaModel){
 	}
 	if(Math.fakeRandom() > 0.1){
 		return false;
-	}
+	}console.log("斩首",charaModel.name());
 	var sum = 75;
 	var leader = CharacterModel.getChara(leaderId);
 	var compatibility = Math.abs(leader.compatibility() - charaModel.compatibility());

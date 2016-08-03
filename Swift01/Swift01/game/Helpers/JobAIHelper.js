@@ -131,8 +131,7 @@ function jobAiToBattle(areaModel,characters,targetCity){
 				build.characterListType = CharacterListType.EXPEDITION_REINFORCEMENT;
 				LMvc.CityController.setValue("cityData",areaModel);
 				LMvc.CityController.setValue("toCity",targetCity);
-				LMvc.CityController.setValue("expeditionEnemyData",data);
-				//LMvc.CityController.setValue("expeditionOutData",targetData);
+				LMvc.CityController.setValue("expeditionOutData",data);
 				var generals = [];
 				for(var i=0;i<selfNoAppoints.length;i++){
 					var city = selfNoAppoints[i];
@@ -142,18 +141,19 @@ function jobAiToBattle(areaModel,characters,targetCity){
 			});
 		},cancelEvent:function(event){
 			event.currentTarget.parent.remove();
-			BattleAIExecute.set(data, targetData);
+			jobAiToBattleTarget(areaModel,targetCity,data);
 		}};
 		var windowLayer = ConfirmWindow(obj);
 		LMvc.layer.addChild(windowLayer);
 		return;
 	}
-	jobAiToBattleTarget(areaModel,characters,targetCity,data);
+	jobAiToBattleTarget(areaModel,targetCity,data);
 }
 /*出战准备*/
-function jobAiToBattleTarget(areaModel,characters,targetCity,data){
+function jobAiToBattleTarget(areaModel,targetCity,data){
 	var sumTroops = 0;
-	for(var i = 0;i<data.expeditionCharacterList;i++){
+	console.log("data.expeditionCharacterList.length=" + data.expeditionCharacterList.length,data.expeditionCharacterList);
+	for(var i = 0;i<data.expeditionCharacterList.length;i++){
 		var general = data.expeditionCharacterList[i];
 		sumTroops += general.troops();
 	}

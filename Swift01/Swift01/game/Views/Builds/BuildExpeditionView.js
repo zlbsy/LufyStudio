@@ -69,7 +69,7 @@ BuildExpeditionView.prototype.selectComplete=function(event){
 			LMvc.layer.addChild(windowLayer);
 			return false;
 		}
-		for(var i=0,l=characterList.length;i<l;i++){
+		for(var i=0,l=characterList.length;i<l;i++){console.log("troops=",characterList[i].troops());
 			expeditionOutData.expeditionCharacterList.push(characterList[i]);
 		}
 		
