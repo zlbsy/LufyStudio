@@ -487,7 +487,8 @@ CharacterModel.prototype.dispositionLabel = function(){
 	return Language.get("disposition_"+this.data.disposition);
 };
 CharacterModel.prototype.name = function() {
-	if(this.data.id >= 1000){
+	if(this.data.id >= 1000 || 
+	(this.data.id >= EmployCharacter[0] && this.data.id <= EmployCharacter[1])){
 		return this.data.name;
 	}
 	return Language.getCharacter("character_"+this.data.id);

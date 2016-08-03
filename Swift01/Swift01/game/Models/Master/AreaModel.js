@@ -106,6 +106,18 @@ AreaModel.prototype.getDefenseEnemiesAndPowerful = function(){
 	}
 	return list;
 };
+AreaModel.prototype.getEmployCharacters = function(){
+	var self = this;
+	var charas = [];
+	for(var i=EmployCharacter[0];i<=EmployCharacter[1];i++){
+		var chara = CharacterModel.getChara(EmployCharacter[i]);
+		chara.cityId(self.id());
+		eval( "var wordRandom1=" +  '"\\u' + (Math.round(Math.random() * 20901) + 19968).toString(16)+'"');
+		eval( "var wordRandom2=" +  '"\\u' + (Math.round(Math.random() * 20901) + 19968).toString(16)+'"');
+		chara.data.name = wordRandom1 + wordRandom2;
+		charas.push(chara);
+	}
+};
 AreaModel.prototype.minDefTroops = function(){
 	var self = this;
 	var min = 0;

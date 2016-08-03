@@ -193,6 +193,8 @@ function jobAiToBattleTarget(areaModel,targetCity,data){
 					}
 					generals = generals.concat(city.generals());
 				}
+				var employs = targetCity.getEmployCharacters();
+				generals = generals.concat(employs);
 				LMvc.CityController.loadCharacterList(CharacterListType.EXPEDITION, generals, {buttonLabel:"execute", closeDisable:true, cutoverName:"arm_properties", showArm:true,checkCity:targetCity.id()});
 			});
 		}};

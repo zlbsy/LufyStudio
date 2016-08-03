@@ -291,7 +291,57 @@ var SoldierDatas = [
 	strategy:[],
 	strategyHert:1.5,
 	sign:"xhs"
-	}
+	},
+	{id:20,name:"藤甲兵",type:SoldierType.Physical,attackType:AttackType.NEAR,moveType:MoveType.INFANTRY,movePower:5,
+	property:{attack:"B",spirit:"C",defense:"S",breakout:"S",morale:"C",troops:4,strategy:1},
+	equipment:{head:0,hand:0,body:0,foot:0,accessories:0},
+	restrain:[],
+	terrain:[
+	{id:2,value:110,moveCost:1},{id:3,value:110,moveCost:1},{id:4,value:110,moveCost:1},{id:7,value:90,moveCost:1},
+	{id:8,value:90,moveCost:1},{id:9,value:80,moveCost:1},{id:11,value:110,moveCost:2}],
+	rangeAttack:[{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0}],
+	rangeAttackTarget:[{x:0,y:0}],
+	strategy:[],
+	strategyHert:1.5,
+	sign:"tjb"
+	},
+	{id:21,name:"胡骑",type:SoldierType.Physical,attackType:AttackType.NEAR,moveType:MoveType.CAVALRY,movePower:6,
+	property:{attack:"S",spirit:"C",defense:"B",breakout:"S",morale:"B",troops:5,strategy:1},
+	equipment:{head:0,hand:0,body:0,foot:0,accessories:0},
+	restrain:[],
+	terrain:[
+	{id:0,value:110,moveCost:1},{id:1,value:110,moveCost:1},{id:2,value:90,moveCost:2},{id:3,value:90,moveCost:2},{id:4,value:80,moveCost:3},
+	{id:5,value:100,moveCost:2},{id:6,value:110,moveCost:1},{id:7,value:90,moveCost:2},{id:8,value:80,moveCost:3},{id:9,value:80,moveCost:2},{id:11,value:90,moveCost:3}],
+	rangeAttack:[{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0}],
+	rangeAttackTarget:[{x:0,y:0}],
+	strategy:[],
+	sign:"qqb",
+	next:[{id:7,lv:20}]
+	},
+	{id:22,name:"飞刀兵",type:SoldierType.Physical,attackType:AttackType.FAR,moveType:MoveType.INFANTRY,movePower:4,
+	property:{attack:"S",spirit:"C",defense:"B",breakout:"B",morale:"S",troops:4,strategy:1},
+	equipment:{head:0,hand:0,body:0,foot:0,accessories:0},
+	restrain:[{id:3,value:150},{id:18,value:150},{id:19,value:150}],
+	terrain:[{id:7,value:100,moveCost:2},{id:8,value:100,moveCost:2},{id:10,value:110,moveCost:1},{id:11,value:110,moveCost:2}],
+	rangeAttack:[{x:-1,y:-1},{x:-1,y:1},{x:1,y:1},{x:1,y:-1},{x:0,y:-2},{x:0,y:2},{x:-2,y:0},{x:2,y:0}],
+	rangeAttackTarget:[{x:0,y:0}],
+	strategy:[],
+	sign:"gb",
+	next:[{id:7,lv:20}]
+	},
+	{id:23,name:"野蛮人",type:SoldierType.Physical,attackType:AttackType.NEAR,moveType:MoveType.INFANTRY,movePower:5,
+	property:{attack:"S",spirit:"C",defense:"S",breakout:"A",morale:"C",troops:4,strategy:1},
+	equipment:{head:0,hand:0,body:0,foot:0,accessories:0},
+	restrain:[],
+	terrain:[
+	{id:4,value:90,moveCost:1},{id:5,value:90,moveCost:1},
+	{id:8,value:100,moveCost:2},{id:9,value:110,moveCost:1},{id:11,value:100,moveCost:2}],
+	rangeAttack:[{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0}],
+	rangeAttackTarget:[{x:0,y:0}],
+	strategy:[{id:47,lv:10}],
+	sign:"whj",
+	next:[{id:7,lv:20}]
+	},
 ];
 for(var i=0,l=SoldierDatas.length;i<l;i++){
 	SoldierDatas[i].terrain.push({id:12,value:120,moveCost:1});

@@ -210,6 +210,12 @@ BuildExpeditionView.prototype.toExpedition=function(){
 	var cityModel = self.controller.getValue("cityData");
 	var generals = [];
 	generals = generals.concat(cityModel.generals(Job.IDLE));
+	if(toCity.seigniorCharaId() == LMvc.selectSeignorId){
+		//ReinforcementCharacter
+		for (var i = 0; i < 5; i++) {
+			
+		}
+	}
 	for(var i=0;i<neighbor.length;i++){
 		var city = AreaModel.getArea(neighbor[i]);
 		if(city.id() == cityModel.id() || city.seigniorCharaId() != LMvc.selectSeignorId){

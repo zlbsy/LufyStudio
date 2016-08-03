@@ -68,7 +68,7 @@ var CharacterLevelConfig = {
 	maxLevel:100
 };
 
-var DefCharacterList = {
+var DefCharacterList = {//防御设施范围
 	"soldier_4":[671,672,673,674,675,676],
 	"soldier_6":[677,678,679,680,681,682]
 };
@@ -76,8 +76,9 @@ var DefCharacterImage = {
 	"soldier_4":20,
 	"soldier_6":6
 };
-var MaxHistoryCharacterIndex = 620;
-var TribeCharacter = [621,670];
+var MaxHistoryCharacterIndex = 620;//历史人物范围
+var TribeCharacter = [621,670];//外族范围
+var EmployCharacter = [683,692];//援兵范围
 var DefenseCharacterCost = 500;//每个防御设施所需城防
 var BattleCharacterStatusConfig = {};
 BattleCharacterStatusConfig.FADE_TIME = 0.2;
