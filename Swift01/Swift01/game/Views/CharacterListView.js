@@ -191,6 +191,16 @@ CharacterListView.prototype.onChangeList=function(event){
 	
 	characterListChildView.cutover(self.showingTabName, self.listView.isInClipping(index));
 };
+CharacterListView.prototype.onChangeChildSelectEmploy=function(){
+	var self = this,selectedMoeny=0;
+	self.listView.getItems().forEach(function(child){
+		if(!child.checkbox || !child.checkbox.checked || !child.charaModel.isEmploy()){
+			return;
+		}
+		selectedMoeny+=child.charaModel.employPrice();
+	});
+	self.employMoney = selectedMoeny;
+};
 CharacterListView.prototype.onChangeChildSelect=function(event){
 	var self = event.currentTarget,selectedCount=0;
 	self.listView.getItems().forEach(function(child){
@@ -200,11 +210,15 @@ CharacterListView.prototype.onChangeChildSelect=function(event){
 		selectedCount++;
 	});
 	self.selectedCount = selectedCount;
-	if(!self.lblMoney){
+	if(!self.lblMoney || !self.lblMoney.visible){
 		return;
 	}
+	self.employMoney = 0;
+	if(self.controller.params.hasEmploy){
+		self.onChangeChildSelectEmploy();
+	}
 	var cityModel = self.controller.getValue("cityData");
-	var usedMoney = getJobPrice(characterListType2JobType(self.controller.characterListType)) * self.selectedCount;
+	var usedMoney = getJobPrice(characterListType2JobType(self.controller.characterListType)) * self.selectedCount+self.employMoney;
 	var overageMoney = cityModel.money() - usedMoney;
 	self.usedMoney = usedMoney;
 	self.overageMoney = overageMoney;

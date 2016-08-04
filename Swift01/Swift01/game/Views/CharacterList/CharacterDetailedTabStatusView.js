@@ -190,9 +190,10 @@ CharacterDetailedTabStatusView.prototype.clickRelease=function(event){
 	}else{
 		characterModel.seignior(0);
 		cityData.addOutOfOfficeCharacter(characterModel);
+		detailedView.updateChildFromList(characterModel.id());
 	}
-	var detailedView = self.getParentByConstructor(CharacterDetailedView);
-	detailedView.updateChildFromList(characterModel.id());
+	//var detailedView = self.getParentByConstructor(CharacterDetailedView);
+	
 	//武将{0}被释放了!
 	var obj = {title:Language.get("confirm"),message:String.format(Language.get("dialog_release_message"), characterModel.name()),height:200,okEvent:null};
 	var windowLayer = ConfirmWindow(obj);
@@ -202,8 +203,9 @@ CharacterDetailedTabStatusView.prototype.clickBehead=function(event){
 	var self = event.currentTarget.getParentByConstructor(CharacterDetailedTabStatusView);
 	var detailedView = self.getParentByConstructor(CharacterDetailedView);
 	var characterModel = self.controller.getValue("selectedCharacter");
-	var cityData = self.controller.getValue("cityData");
-	cityData.removeCaptives(characterModel.id());
+	characterModel.toDie();
+	/*var cityData = self.controller.getValue("cityData");
+	cityData.removeCaptives(characterModel.id());*/
 	detailedView.deleteChildFromList(characterModel.id());
 	//武将{0}被斩首了!
 	var obj = {title:Language.get("confirm"),message:String.format(Language.get("dialog_behead_message"), characterModel.name()),height:200,okEvent:null};

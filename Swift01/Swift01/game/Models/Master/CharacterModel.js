@@ -409,6 +409,12 @@ CharacterModel.prototype.initStrategy = function() {
 CharacterModel.prototype.initTroops = function() {
 	return this.data.initTroops ? this.data.initTroops : 200;
 };
+CharacterModel.prototype.employPrice = function() {
+	return 500;
+};
+CharacterModel.prototype.isEmploy = function() {
+	return this.id() >= EmployCharacter[0] && this.id()<=EmployCharacter[1];
+};
 CharacterModel.prototype.isDefCharacter = function(value) {
 	return this._dataValue("isDefCharacter", value, 0);
 };
@@ -487,9 +493,11 @@ CharacterModel.prototype.dispositionLabel = function(){
 	return Language.get("disposition_"+this.data.disposition);
 };
 CharacterModel.prototype.name = function() {
-	if(this.data.id >= 1000 || 
-	(this.data.id >= EmployCharacter[0] && this.data.id <= EmployCharacter[1])){
+	if(this.data.id >= 1000){
 		return this.data.name;
+	}
+	if(this.isEmploy()){
+		return this.data.name + "(佣)";
 	}
 	return Language.getCharacter("character_"+this.data.id);
 };

@@ -93,7 +93,7 @@ CharacterDetailedTabEquipmentView.prototype.confirmEquipment=function(event){
 	var equipment = characterModel.equipments().find(function(child){
 		return child.id() == removeItemId;
 	});
-	var canRemove = (!LMvc.BattleController && characterModel.seigniorId() == LMvc.selectSeignorId);
+	var canRemove = (!LMvc.BattleController && characterModel.city() &&  characterModel.city().seigniorCharaId() == LMvc.selectSeignorId);
 	var msg = String.format(Language.get("dialog_remove_equipment_confirm"),equipment.name());
 	if(!canRemove){
 		msg = String.format("<font color='#FF0000'>{0}</font>",equipment.name());

@@ -196,7 +196,7 @@ function jobAiToBattleTarget(areaModel,targetCity,data){
 				var employs = targetCity.getEmployCharacters();
 				generals = generals.concat(employs);
 				console.log(generals);
-				LMvc.CityController.loadCharacterList(CharacterListType.EXPEDITION, generals, {buttonLabel:"execute", closeDisable:true, cutoverName:"arm_properties", showArm:true,checkCity:targetCity.id()});
+				LMvc.CityController.loadCharacterList(CharacterListType.EXPEDITION, generals, {buttonLabel:"execute", closeDisable:true, cutoverName:"arm_properties", showArm:true,hasEmploy:true,showMoney:true,checkCity:targetCity.id()});
 			});
 		}};
 		var windowLayer = ConfirmWindow(obj);

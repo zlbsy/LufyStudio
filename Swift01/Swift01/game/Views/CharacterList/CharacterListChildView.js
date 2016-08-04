@@ -275,7 +275,7 @@ CharacterListChildView.prototype.setBasicProperties = function() {
 	layer.addChild(loyalty);
 	self.loyalty = loyalty;
 
-	var jobLabel = getStrokeLabel(self.charaModel.jobLabel(), 18, "#FFFFFF", "#000000", 4);
+		var jobLabel = getStrokeLabel(self.charaModel.jobLabel(), 18, "#FFFFFF", "#000000", 4);
 	jobLabel.x = 60 * 4;
 	jobLabel.y = 5;
 	layer.addChild(jobLabel);
