@@ -110,13 +110,14 @@ AreaModel.prototype.getEmployCharacters = function(){
 	var self = this;
 	var charas = [];
 	for(var i=EmployCharacter[0];i<=EmployCharacter[1];i++){
-		var chara = CharacterModel.getChara(EmployCharacter[i]);
+		var chara = CharacterModel.getChara(i);
 		chara.cityId(self.id());
 		eval( "var wordRandom1=" +  '"\\u' + (Math.round(Math.random() * 20901) + 19968).toString(16)+'"');
 		eval( "var wordRandom2=" +  '"\\u' + (Math.round(Math.random() * 20901) + 19968).toString(16)+'"');
 		chara.data.name = wordRandom1 + wordRandom2;
 		charas.push(chara);
 	}
+	return charas;
 };
 AreaModel.prototype.minDefTroops = function(){
 	var self = this;

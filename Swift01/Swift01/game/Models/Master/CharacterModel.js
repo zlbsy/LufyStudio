@@ -636,6 +636,9 @@ CharacterModel.prototype.strategies = function(isAll) {
 };
 CharacterModel.prototype.identity = function(value) {
 	var self = this;
+	if(self.id() >= EmployCharacter[0] && self.id() <= EmployCharacter[1]){
+		return Language.get("employ");
+	}
 	var seigniorId = self.seigniorId();
 	if(seigniorId <= 0){
 		return Language.get("out_of_office");

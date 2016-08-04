@@ -431,6 +431,7 @@ Language.data = {
 	"generals_lv":"武将レベル",
 	"seignior_color":"勢力の色",
 	"prefecture":"太守",
+	"employ":"傭兵",
 	"captive":"捕虜",
 	"business":"商業",
 	"agriculture":"農業",
