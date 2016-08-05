@@ -110,14 +110,19 @@ AreaModel.prototype.getEmployCharacters = function(){
 	var self = this;
 	var charas = [];
 	for(var i=EmployCharacter[0];i<=EmployCharacter[1];i++){
-		var chara = CharacterModel.getChara(i);
-		chara.cityId(self.id());
-		eval( "var wordRandom1=" +  '"\\u' + (Math.round(Math.random() * 20901) + 19968).toString(16)+'"');
-		eval( "var wordRandom2=" +  '"\\u' + (Math.round(Math.random() * 20901) + 19968).toString(16)+'"');
-		chara.data.name = wordRandom1 + wordRandom2;
+		var employSoldiers = self.employSoldiers();
+		var soldierId = employSoldiers[employSoldiers.length*Math.fakeRandom() >>> 0];
+		var chara = CharacterModel.createEmployCharacter(id, [{id:soldierId,proficiency:700}], self.id());
 		charas.push(chara);
 	}
 	return charas;
+};
+AreaModel.prototype.employSoldiers = function(){
+	var self = this;
+	if(!self.data.employSoldiers){
+		return [2,3,4];
+	}
+	return self.data.employSoldiers;
 };
 AreaModel.prototype.minDefTroops = function(){
 	var self = this;

@@ -47,6 +47,17 @@ CharacterModel.upValue = function(type, value) {
 	}
 	return 0;
 };
+CharacterModel.createEmployCharacter = function(id, soldiers, cityId){
+	var chara = CharacterModel.getChara(id);
+	chara.cityId(cityId);
+	eval( "var wordRandom1=" +  '"\\u' + (Math.round(Math.random() * 20901) + 19968).toString(16)+'"');
+	eval( "var wordRandom2=" +  '"\\u' + (Math.round(Math.random() * 20901) + 19968).toString(16)+'"');
+	chara.data.name = wordRandom1 + wordRandom2;
+	chara.data.soldiers = soldiers;
+	var values = [-50,-40,-30,-20,-10,0,10,20,30,40,50];
+	chara.data.employLevel = (Math.fakeRandom()*values.length>>>0);
+	return chara;
+};
 CharacterModel.getSoldierType = function(type, value){
 	var types = [];
 	types[1] = "C";
@@ -526,6 +537,9 @@ CharacterModel.prototype.seigniorName = function(){
 };
 CharacterModel.prototype.seigniorLevel = function(){
 	var self = this;
+	if(self.isEmploy()){
+		return self.city().seignior().level();
+	}
 	if(self.seigniorId() == 0){
 		if(!LMvc.selectSeignorId){
 			return 1;
@@ -621,7 +635,7 @@ CharacterModel.prototype.lv = function() {
 };
 CharacterModel.prototype.level = function() {
 	var self = this;
-	if(self.isDefCharacter() || self.isTribeCharacter()){
+	if(self.isDefCharacter() || self.isTribeCharacter() || self.isEmploy()){
 		return self.seigniorLevel();
 	}
 	var lv = (self.data.feat / CharacterLevelConfig.exp >>> 0) + CharacterLevelConfig.initLevel;
