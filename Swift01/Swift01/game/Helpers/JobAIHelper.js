@@ -296,7 +296,7 @@ function jobAiBattleExecute(areaModel,data,targetCity){
 }
 //获取援兵
 function getBattleReinforcement(areaModel, count, maxCount){
-	var quantity = BattleMapConfig.AttackQuantity;
+	var quantity = BattleMapConfig.AttackQuantity - count;
 	var reinforcementGenerals = [];
 	var generals = AreaModel.getPowerfulCharacters(areaModel.generals());
 	if(generals.length < quantity){

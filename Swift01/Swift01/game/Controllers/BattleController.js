@@ -180,10 +180,10 @@ BattleController.prototype.charactersInit = function(){
 		}
 		return v;
 	});
-	self.battleData.expeditionEnemyCharacterList = enemyCharas;
+	self.battleData.expeditionEnemyCharacterList = enemyCharas;console.log(enemyCharas);
 	for(var i = 0;i<enemyCharas.length;i++){
 		var child = enemyPositions[i];
-		var chara = enemyCharas[i];
+		var chara = enemyCharas[i];console.log(chara.id(),chara.name());
 		var charaId = chara.id();
 		self.addEnemyCharacter(charaId,child.direction,child.x,child.y);
 		chara.HP(chara.maxHP());
