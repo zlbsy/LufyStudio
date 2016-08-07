@@ -681,8 +681,10 @@ var characterListConfig = [{id:1,faceImg:1,force:72,intelligence:92,command:99,a
 ,{id:681,faceImg:681,force:70,intelligence:40,command:70,agility:70,luck:50,born:0,life:0,personalLoyalty:0,ambition:15,disposition:0,childs:[],skill:0,compatibility:0,soldiers:[{id:1,proficiency:0},{id:2,proficiency:0},{id:3,proficiency:0},{id:4,proficiency:0},{id:5,proficiency:0},{id:6,proficiency:800},{id:7,proficiency:0},{id:8,proficiency:0},{id:9,proficiency:0},{id:10,proficiency:0},{id:11,proficiency:0},{id:12,proficiency:0},{id:13,proficiency:0},{id:14,proficiency:0},{id:15,proficiency:0},{id:16,proficiency:0},{id:17,proficiency:0},{id:18,proficiency:0},{id:19,proficiency:0}],groupSkill:0}
 ,{id:682,faceImg:682,force:70,intelligence:40,command:70,agility:70,luck:50,born:0,life:0,personalLoyalty:0,ambition:15,disposition:0,childs:[],skill:0,compatibility:0,soldiers:[{id:1,proficiency:0},{id:2,proficiency:0},{id:3,proficiency:0},{id:4,proficiency:0},{id:5,proficiency:0},{id:6,proficiency:800},{id:7,proficiency:0},{id:8,proficiency:0},{id:9,proficiency:0},{id:10,proficiency:0},{id:11,proficiency:0},{id:12,proficiency:0},{id:13,proficiency:0},{id:14,proficiency:0},{id:15,proficiency:0},{id:16,proficiency:0},{id:17,proficiency:0},{id:18,proficiency:0},{id:19,proficiency:0}],groupSkill:0}
 ];
-var l =  characterListConfig.length + 1;
-for (var i = l; i < l + 10; i++) {
-	var id = i;
-	characterListConfig.push({id:id,faceImg:682,force:70,intelligence:70,command:70,agility:70,luck:70,born:0,life:0,personalLoyalty:0,ambition:15,disposition:0,childs:[],skill:0,compatibility:0,soldiers:[],groupSkill:0});
-}
+(function(){
+	var l =  characterListConfig.length + 1;
+	for (var i = l; i < l + 10; i++) {
+		var id = i;
+		characterListConfig.push({id:id,faceImg:682,force:70,intelligence:70,command:70,agility:70,luck:70,born:0,life:0,personalLoyalty:0,ambition:15,disposition:0,childs:[],skill:0,compatibility:0,soldiers:[],groupSkill:0});
+	}
+})();

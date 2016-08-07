@@ -235,8 +235,11 @@ function battleCanAttack(charaBelong, charaId, targerChara){
 	return battleCharaInRangeAttack(chara, targerChara);
 }
 function battleCharaInRangeAttack(chara, targerChara){
-	var relativelyX = targerChara.locationX() - chara.locationX();
-	var relativelyY = targerChara.locationY() - chara.locationY();
+	return battleLocationInRangeAttack(chara, targerChara.locationX(), targerChara.locationY());
+}
+function battleLocationInRangeAttack(chara, locationX, locationY){
+	var relativelyX = locationX - chara.locationX();
+	var relativelyY = locationY - chara.locationY();
 	var rangeAttack = chara.data.rangeAttack();
 	for(var i=0;i<rangeAttack.length;i++){
 		var range = rangeAttack[i];
@@ -358,7 +361,24 @@ function battleFoodCheck(belong){
 	charas.forEach(function(child){
 		//降低能力
 		child.status.downloadAidStatusRandom();
-		//TODO::待增加处理，兵粮不够的时候，兵力每回合损失
+		//兵粮不够的时候，兵力每回合损失0.05
+		var troops = child.data.troops() * 0.95 >>> 0;
+		if(troops < 5){
+			troops = 5;
+		}
+		var minusTroops = child.data.troops() - troops;
+		if(minusTroops < 0){
+			return;
+		}
+		child.data.troops(troops);
+		tweenTextShow(child, String.format("-{0}",minusTroops), 10);
+		/*var tweenObj = getStrokeLabel(String.format("-{0}",minusTroops),12,"#FF0000","#000000",2);
+		tweenObj.x = child.x + (BattleCharacterSize.width - tweenObj.getWidth()) * 0.5;
+		tweenObj.y = child.y + 10;
+		child.controller.view.baseLayer.addChild(tweenObj);
+		LTweenLite.to(tweenObj,1.5,{y:tweenObj.y - 20,alpha:0,onComplete:function(e){
+			e.target.remove();
+		}});*/
 	});
 	var chara;
 	for(var i=0,l=charas.length;i<l;i++){
@@ -887,4 +907,16 @@ function resetTribeCity(city){
 	city.troops(0);
 	city.food(2000);
 	city.money(1000);
+}
+function tweenTextShow(chara, label, y){
+	if(typeof y == UNDEFINED){
+		y = 0;
+	}
+	var tweenObj = getStrokeLabel(label,22,"#FFFFFF","#000000",2);
+	tweenObj.x = chara.x + (BattleCharacterSize.width - tweenObj.getWidth()) * 0.5;
+	tweenObj.y = chara.y + y;
+	chara.controller.view.baseLayer.addChild(tweenObj);
+	LTweenLite.to(tweenObj,0.5,{y:tweenObj.y - 20,alpha:0,onComplete:function(e){
+		e.target.remove();
+	}});
 }

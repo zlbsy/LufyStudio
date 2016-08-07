@@ -247,14 +247,15 @@ BattleResultView.prototype.selfCaptiveWin=function(event){
 		return;
 	}
 	var characterId = self.model.selfCaptive[0];
+	var character = CharacterModel.getChara(characterId);
 	var confirmType = BattleWinConfirmType.selfCaptive;
-	if(self.checkCaptives.indexOf(characterId) >= 0){
+	if(self.checkCaptives.indexOf(characterId) >= 0 || character.seigniorId() == characterId){
 		confirmType = BattleWinConfirmType.selfRecruitFail;
 	}
 	var view = new BattleResultConfirmView(self.controller, 
 		{
 			confirmType : confirmType,
-			characterModel : CharacterModel.getChara(characterId)
+			characterModel : character
 		}
 	);
 	self.addChild(view);

@@ -234,15 +234,18 @@ function getMonarchChangeId(seignior){
 		}
 	}
 	//兄弟
-	/*childs = seignior.character().father().childs();
+	childs = seignior.character().father().childs();
 	if(childs && childs.length > 0){
 		for(var i=0;i<childs.length;i++){
+			if(childs[i] == seignior.chara_id()){
+				continue;
+			}
 			chara = CharacterModel.getChara(childs[i]);
 			if(chara.seigniorId() == seignior.chara_id() && chara.city() && chara.city().seigniorCharaId() == seignior.chara_id()){
 				return chara.id();
 			}
 		}
-	}*/
+	}
 	var generals = seignior.generals();
 	if(generals.length == 0){
 		return 0;

@@ -559,6 +559,9 @@ function jobAiGeneralMove(areaModel,characters){//武将移动
 		if(child.seigniorCharaId() != areaModel.seigniorCharaId()){
 			continue;
 		}
+		if(child.id() == areaModel.prefecture()){
+			continue;
+		}
 		var childGeneralSum = child.generalsSum() + child.aiWillComeNum;
 		if(nowGeneralSum < childGeneralSum){
 			continue;
@@ -603,6 +606,9 @@ function jobAiTransport(areaModel,characters){//运输物资
 		if(child.battleDistance > areaModel.battleDistance){
 			continue;
 		}
+		if(child.troops() > areaModel.troops() && child.money() > areaModel.money() && child.food() > areaModel.food()){
+			continue;
+		}
 		if(child.battleDistance < battleDistance){
 			battleDistance = child.battleDistance;
 			currentCity = child;
@@ -617,12 +623,21 @@ function jobAiTransport(areaModel,characters){//运输物资
 		var chara = charas[i];
 		minToops += chara.maxTroops();
 	}
-	var troops = areaModel.troops() - minToops*3;
-	troops = troops < minToops ? 0 : troops;
-	var food = areaModel.food() - minToops * 30;
-	food = food < minToops * 10 ? 0 : food;
-	var money = areaModel.money() - 10000;
-	money = money < 5000 ? 0 : money;
+	var troops = 0;
+	if(currentCity.troops() < areaModel.troops()){
+		troops = areaModel.troops() - minToops*3;
+		troops = troops < minToops ? 0 : troops;
+	}
+	var food = 0;
+	if(currentCity.food() < areaModel.food()){
+		food = areaModel.food() - minToops * 30;
+		food = food < minToops * 10 ? 0 : food;
+	}
+	var money = 0;
+	if(currentCity.money() < areaModel.money()){
+		money = areaModel.money() - 10000;
+		money = money < 5000 ? 0 : money;
+	}
 	if(troops == 0 && food == 0 && money == 0){
 		return;
 	}//console.log("运输",money,food,troops);

@@ -103,6 +103,7 @@ SeigniorModel.removeSeignior = function(seigniorId){
 			}
 		}
 		SeigniorModel.list.splice(i, 1);
+		seignior.chara_id(0);
 		if(!seignior.lastCityId){
 			
 		}

@@ -112,7 +112,7 @@ AreaModel.prototype.getEmployCharacters = function(){
 	for(var i=EmployCharacter[0];i<=EmployCharacter[1];i++){
 		var employSoldiers = self.employSoldiers();
 		var soldierId = employSoldiers[employSoldiers.length*Math.fakeRandom() >>> 0];
-		var chara = CharacterModel.createEmployCharacter(id, [{id:soldierId,proficiency:700}], self.id());
+		var chara = CharacterModel.createEmployCharacter(i, soldierId, self.id());
 		charas.push(chara);
 	}
 	return charas;

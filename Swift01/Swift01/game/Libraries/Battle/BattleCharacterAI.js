@@ -335,20 +335,20 @@ BattleCharacterAI.prototype.attackActionComplete = function(event) {
 		}
 	}
 	if(selfSkill && (selfSkill.isSubType(SkillSubType.SELF_AID) || selfSkill.isSubType(SkillSubType.BREAK_THROUGH))){
-		var tweenObj = getStrokeLabel(selfSkill.name(),22,"#FFFFFF","#000000",2); 
+		tweenTextShow(chara, selfSkill.name(), 22);
+		/*var tweenObj = getStrokeLabel(selfSkill.name(),22,"#FFFFFF","#000000",2); 
 		tweenObj.x = chara.x + (BattleCharacterSize.width - tweenObj.getWidth()) * 0.5;
-			tweenObj.y = chara.y + tweenObj.getHeight();
-			chara.controller.view.baseLayer.addChild(tweenObj);
-			LTweenLite.to(tweenObj,0.5,{y:tweenObj.y - 20,alpha:0,onComplete:function(e){
-				e.target.remove();
-			}});
-			
-			var aids = Array.getRandomArrays(selfSkill.aids(),selfSkill.aidCount());
-			for(var j = 0;j<aids.length;j++){
-				var strategy = StrategyMasterModel.getMaster(aids[j]);
-				chara.status.addStatus(strategy.strategyType(), strategy.hert());
-			}
-			
+		tweenObj.y = chara.y + tweenObj.getHeight();
+		chara.controller.view.baseLayer.addChild(tweenObj);
+		LTweenLite.to(tweenObj,0.5,{y:tweenObj.y - 20,alpha:0,onComplete:function(e){
+			e.target.remove();
+		}});
+		*/
+		var aids = Array.getRandomArrays(selfSkill.aids(),selfSkill.aidCount());
+		for(var j = 0;j<aids.length;j++){
+			var strategy = StrategyMasterModel.getMaster(aids[j]);
+			chara.status.addStatus(strategy.strategyType(), strategy.hert());
+		}	
 	}
 	var hertParams = self.herts[0];
 	self.herts.shift();
@@ -399,25 +399,27 @@ BattleCharacterAI.prototype.attackActionComplete = function(event) {
 				}
 			}
 			if(skill && skill.isSubType(SkillSubType.HERT_MINUS)){
-				var tweenObj = getStrokeLabel(skill.name(),22,"#FFFFFF","#000000",2);
+				tweenTextShow(obj.chara, skill.name());
+				/*var tweenObj = getStrokeLabel(skill.name(),22,"#FFFFFF","#000000",2);
 				tweenObj.x = obj.chara.x + (BattleCharacterSize.width - tweenObj.getWidth()) * 0.5;
 				tweenObj.y = obj.chara.y;// - tweenObj.getHeight();
 				chara.controller.view.baseLayer.addChild(tweenObj);
 				LTweenLite.to(tweenObj,0.5,{y:tweenObj.y - 20,alpha:0,onComplete:function(obj){
 					obj.remove();
-				}});
+				}});*/
 				obj.hertValue *= skill.hert();
 				obj.hertValue = obj.hertValue >>> 0;
 			}else if(skill && skill.isSubType(SkillSubType.BOUNCE)){
 				var changeHp = obj.hertValue * skill.bounce() >>> 0;
 				chara.data.troops(chara.data.troops() - changeHp, calculateWounded(0.5, 0.2));
-				var tweenObj = getStrokeLabel(String.format("-{0}",changeHp),12,"#FF0000","#000000",2);
+				tweenTextShow(chara, String.format("-{0}",changeHp), 10);
+				/*var tweenObj = getStrokeLabel(String.format("-{0}",changeHp),12,"#FF0000","#000000",2);
 				tweenObj.x = chara.x + (BattleCharacterSize.width - tweenObj.getWidth()) * 0.5;
 				tweenObj.y = chara.y + 10;
 				chara.controller.view.baseLayer.addChild(tweenObj);
 				LTweenLite.to(tweenObj,1.5,{y:tweenObj.y - 20,alpha:0,onComplete:function(e){
 					e.target.remove();
-				}});
+				}});*/
 			}else if(skill && skill.isSubType(SkillSubType.HP_MP_CHANGE)){
 				var skillName = null;
 				if(obj.chara.data.MP() > 0){
@@ -432,27 +434,29 @@ BattleCharacterAI.prototype.attackActionComplete = function(event) {
 					skillName = skill.name();
 				}
 				if(skillName){
-					var tweenObj = getStrokeLabel(skill.name(),22,"#FFFFFF","#000000",2);
+					tweenTextShow(obj.chara, skill.name());
+					/*var tweenObj = getStrokeLabel(skill.name(),22,"#FFFFFF","#000000",2);
 					tweenObj.x = obj.chara.x + (BattleCharacterSize.width - tweenObj.getWidth()) * 0.5;
 					tweenObj.y = obj.chara.y;
 					chara.controller.view.baseLayer.addChild(tweenObj);
 					LTweenLite.to(tweenObj,0.5,{y:tweenObj.y - 20,alpha:0,onComplete:function(obj){
 						obj.remove();
-					}});
+					}});*/
 				}
 			}
 			
 			if(i == 0 && selfSkill && selfSkill.isSubType(SkillSubType.VAMPIRE)){
 				var changeHp = obj.hertValue * selfSkill.vampire() >>> 0;
 				chara.data.troops(chara.data.troops() + changeHp);
-				var tweenObj = getStrokeLabel(String.format("{0} 兵力+{1}",selfSkill.name(),changeHp),12,"#FF0000","#000000",2);
+				tweenTextShow(chara, String.format("{0} {1}+{2}",selfSkill.name(),Language.get("troops"),changeHp));
+				/*var tweenObj = getStrokeLabel(String.format("{0} 兵力+{1}",selfSkill.name(),changeHp),12,"#FF0000","#000000",2);
 				tweenObj.x = chara.x + (BattleCharacterSize.width - tweenObj.getWidth()) * 0.5;
-				tweenObj.y = chara.y;
+				tweenObj.y = chara.y;//"troops_plus":"兵力+{0}",
 				chara.controller.view.baseLayer.addChild(tweenObj);
 				LTweenLite.to(tweenObj,1.5,{y:tweenObj.y + 20,alpha:0,onComplete:function(e){
 					e.target.remove();
 				}});
-				
+				*/
 			}
 			var num = new Num(Num.MIDDLE,1,20);
 			obj.chara.hertValue = obj.hertValue > obj.chara.data.troops() ? obj.chara.data.troops() : obj.hertValue;

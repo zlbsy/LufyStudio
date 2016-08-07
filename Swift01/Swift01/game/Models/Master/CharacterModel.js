@@ -47,15 +47,41 @@ CharacterModel.upValue = function(type, value) {
 	}
 	return 0;
 };
-CharacterModel.createEmployCharacter = function(id, soldiers, cityId){
+CharacterModel.createEmployCharacter = function(id, soldierId, cityId){
 	var chara = CharacterModel.getChara(id);
 	chara.cityId(cityId);
 	eval( "var wordRandom1=" +  '"\\u' + (Math.round(Math.random() * 20901) + 19968).toString(16)+'"');
 	eval( "var wordRandom2=" +  '"\\u' + (Math.round(Math.random() * 20901) + 19968).toString(16)+'"');
 	chara.data.name = wordRandom1 + wordRandom2;
-	chara.data.soldiers = soldiers;
-	var values = [-50,-40,-30,-20,-10,0,10,20,30,40,50];
+	chara.data.soldiers = [{id:soldierId,proficiency:700}];
+	var values = [-60,-40,-20,0,40,80,120];
 	chara.data.employLevel = (Math.fakeRandom()*values.length>>>0);
+	var soldierMaster = SoldierMasterModel.getMaster(soldierId);
+	var property = soldierMaster.property();
+	var status = {"S":90,"A":70,"B":50,"C":30};
+	chara.data.force = status[property.attack];
+	chara.data.intelligence = status[property.spirit];
+	chara.data.command = status[property.defense];
+	chara.data.agility = status[property.breakout];
+	chara.data.luck = status[property.morale];
+	var sumPoint = values[chara.data.employLevel];
+	status = ["force", "intelligence", "command", "agility", "luck"];
+	while(sumPoint != 0){
+		var key = status[Math.fakeRandom()*status.length >>> 0];
+		if(sumPoint > 0){
+			if(chara.data[key] >= 90){
+				continue;
+			}
+			sumPoint -= 10;
+			chara.data[key] += 10;
+		}else{
+			if(chara.data[key] <= 30){
+				continue;
+			}
+			sumPoint += 10;
+			chara.data[key] -= 10;
+		}
+	}
 	return chara;
 };
 CharacterModel.getSoldierType = function(type, value){
@@ -421,7 +447,8 @@ CharacterModel.prototype.initTroops = function() {
 	return this.data.initTroops ? this.data.initTroops : 200;
 };
 CharacterModel.prototype.employPrice = function() {
-	return 500;
+	var self = this;
+	return ((100 + 5 * self.level()) * ((10 + self.data.employLevel) / 10)) >>> 0;
 };
 CharacterModel.prototype.isEmploy = function() {
 	return this.id() >= EmployCharacter[0] && this.id()<=EmployCharacter[1];
@@ -668,7 +695,7 @@ CharacterModel.prototype.identity = function(value) {
 	var identity = "general";
 	if(self.isDefCharacter()){
 		identity = "building";
-	} else if(self.id() == seigniorId){
+	} else if(self.id() == seigniorId && self.seignior()){
 		identity = "monarch";
 	}else if(self.id() == self.city().prefecture()){
 		identity = "prefecture";
@@ -905,7 +932,7 @@ CharacterModel.prototype.hasFaceCacher = function() {
 };
 CharacterModel.prototype.face = function() {
 	var self = this;
-	if(self.isDefCharacter()){
+	if(self.isDefCharacter() || self.isEmploy()){
 		var icon = self.currentSoldiers().icon();
 		var soldierIcon = new LSprite();
 		soldierIcon.addChild(icon);

@@ -309,6 +309,14 @@ BattleIntelligentAI.prototype.getNestNode = function(target, rangeAttack) {
 			return -1;
 		}else if(aIndex < 0 && bIndex >= 0){
 			return 1;
+		}else if(aIndex >= 0 && bIndex >= 0){
+			var aIn = battleLocationInRangeAttack(target, a.x + self.locationX, a.y + self.locationY);
+			var bIn = battleLocationInRangeAttack(target, b.x + self.locationX, b.y + self.locationY);
+			if(aIn && !bIn){
+				return -1;
+			}else if(!aIn && bIn){
+				return 1;
+			}
 		}
 		var al = Math.abs(a.x - lX) + Math.abs(a.y - lY);
 		var bl = Math.abs(b.x - lX) + Math.abs(b.y - lY);

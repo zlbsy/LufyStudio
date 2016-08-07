@@ -163,12 +163,23 @@ CharacterListChildView.prototype.setStatus = function() {
 		self.addChild(layer);
 		self.nameLabel = name;
 	}
+	self.nameLabel.size = 20;
+	self.nameLabel.y = 5;
+	self.nameLabel.lineWidth = 4;
+	self.nameLabel.setWordWrap(false);
 	self.nameLabel.text = self.charaModel.name();
 	self.nameLabel.color = "#FFFFFF";
 	self.nameLabel.lineColor = "#000000";
 	if(self.controller.params.checkCity && self.controller.params.checkCity != self.charaModel.cityId()){
 		self.nameLabel.color = "#000000";
 		self.nameLabel.lineColor = "#FFFFFF";
+	}
+	if(self.charaModel.isEmploy()){
+		self.nameLabel.size = 17;
+		self.nameLabel.y = -4;
+		self.nameLabel.lineWidth = 3;
+		self.nameLabel.setWordWrap(true, 20);
+		self.nameLabel.text += "\n$" + self.charaModel.employPrice();
 	}
 	self.setBasicProperties();
 	self.basicProperties.visible = false;

@@ -200,7 +200,7 @@ BattleResultConfirmView.prototype.selfCaptiveButton = function(msg, leftEventTyp
 	var buttonLayer = self.buttonLayer;
 	buttonLayer.y = 355;
 	var btnCaptive;
-	if(leftEventType == BattleResultEvent.SURRENDER_CAPTIVE){
+	if(leftEventType == BattleResultEvent.SURRENDER_CAPTIVE && self.characterModel.id() != self.characterModel.seigniorId()){
 		btnCaptive = getButton(Language.get("recruit"),100);//招降
 	}else{
 		btnCaptive = getButton(Language.get("captive"),100);//俘虏
@@ -216,7 +216,8 @@ BattleResultConfirmView.prototype.selfCaptiveButton = function(msg, leftEventTyp
 	btnBehead.x = (self.windowWidth - 100)*0.5 + 110;
 	btnBehead.eventType = BattleResultEvent.BEHEAD_CAPTIVE;
 	buttonLayer.addChild(btnBehead);
-	if(self.characterModel.id() == self.characterModel.seigniorId()){
+	var areasLength = self.characterModel.seignior().areas().length;
+	if(self.characterModel.id() == self.characterModel.seigniorId() && areasLength > 0){
 		btnCaptive.visible = false;
 		btnRelease.x = (self.windowWidth - 100)*0.5 - 60;
 		btnBehead.x = (self.windowWidth - 100)*0.5 + 60;
