@@ -84,7 +84,8 @@ RecordChildView.prototype.onClick=function(event){
 };
 RecordChildView.prototype.toSaveData=function(){
 	var self = this;
-	self.record = GameManager.save(self.recordIndex);
+	GameManager.save(self.recordIndex);
+	self.record = GameManager.read(self.recordIndex);
 	self.set(self.record);
 	self.cacheAsBitmap(false);
 	self.updateView();
@@ -103,6 +104,7 @@ RecordChildView.prototype.readRecordData=function(){
 		if(!self.record || !self.record.labels){
 			return;
 		}
+		self.record = GameManager.read(self.recordIndex);
 		RecordController.instance().hide();
 		LMvc.isRead = true;
 		Math.fakeSeed = self.record.fakeSeed;

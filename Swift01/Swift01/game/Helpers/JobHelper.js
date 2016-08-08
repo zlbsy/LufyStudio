@@ -1,4 +1,4 @@
-function characterListType2JobType(characterListType) {
+function characterListType2JobType(characterListType, city) {
 	switch(characterListType){
 		case CharacterListType.AGRICULTURE:
 			return Job.AGRICULTURE;
@@ -22,7 +22,7 @@ function characterListType2JobType(characterListType) {
 			return Job.EXPLORE_BUSINESS;
 		case CharacterListType.CHARACTER_SPY:
 			return Job.SPY;
-		case CharacterListType.LEVEL_UP:
+		case CharacterListType.LEVEL_UP*city.level():
 			return Job.LEVEL_UP;
 		case CharacterListType.PERSUADE:
 			return Job.PERSUADE;
@@ -197,7 +197,7 @@ function accessRun(characterModel){
 	}
 	return hireRun2(characterModel, targetModel, area, true);
 }
-function exploreItems(items){
+function exploreItems(items, value){
 	if(items.length == 0 || Math.fakeRandom() < 0.5){
 		return -1;
 	}
@@ -211,7 +211,11 @@ function exploreItems(items){
 		}
 		proportionSum += proportion;
 	}
-	var proportionFind = Math.fakeRandom() * proportionSum;
+	console.log(value+"/"+(JobCoefficient.EXPLORE_ITEM * 3)+"="+(value / (JobCoefficient.EXPLORE_ITEM * 3)));
+	var proportionFind = Math.fakeRandom() * proportionSum * value / (JobCoefficient.EXPLORE_ITEM * 3);
+	if(proportionFind > proportionSum){
+		proportionFind = proportionSum;
+	}
 	proportionSum = 0;
 	for(var i=0,l=items.length;i<l;i++){
 		var item = items[i];
@@ -243,9 +247,9 @@ function exploreAgricultureRun(characterModel){
 		var food = getValueByExploreFail(400,100);
 		exploreAgricultureFailRun(cityModel, characterModel, food);
 		return;
-	}
+	}console.log(characterModel.name()+"="+characterModel.intelligence() +","+ characterModel.force() +","+ characterModel.luck());
 	var items = cityModel.itemsFarmland();
-	var index = exploreItems(items);
+	var index = exploreItems(items, characterModel.intelligence() + characterModel.force() + characterModel.luck());
 	if(index < 0){
 		//console.log("exploreAgricultureRun : 失败");
 		var food = getValueByExploreFail(800,200);
@@ -331,7 +335,7 @@ function exploreBusinessRun(characterModel){
 		return;
 	}
 	var items = cityModel.itemsMarket();
-	var index = exploreItems(items);
+	var index = exploreItems(items, characterModel.intelligence() + characterModel.agility() + characterModel.luck());
 	if(index < 0){
 		//console.log("exploreBusinessRun : 失败");
 		var money = getValueByExploreFail(400,100);
@@ -1033,47 +1037,40 @@ function tournamentsGet(result){
 		case 0:
 			arr = [
 			{id:4,q:1},//玉环x1
-			{id:11,q:2},//练兵铜牌x2
-			{id:12,q:4},//练兵铁牌x4
-			{id:14,q:2},//将军印x2
-			{id:15,q:4}//印绶x4
+			{id:12,q:1},//练兵铁牌x1
+			{id:15,q:2}//印绶x2
 			];
 			break;
 		case 1:
 			arr = [
 			{id:1,q:1},//方壶x1
 			{id:2,q:2},//美酒x2
-			{id:3,q:3},//香囊x3
-			{id:4,q:4},//玉环x4
-			{id:10,q:8},//练兵金牌x8
-			{id:11,q:12},//练兵铜牌x12
-			{id:12,q:16},//练兵铁牌x16
-			{id:13,q:8},//元帅印x8
-			{id:14,q:12},//将军印x12
-			{id:15,q:16}//印绶x16
+			{id:10,q:1},//练兵金牌x1
+			{id:11,q:2},//练兵铜牌x2
+			{id:12,q:3},//练兵铁牌x3
+			{id:13,q:4},//元帅印x4
+			{id:14,q:6},//将军印x6
+			{id:15,q:8}//印绶x8
 			];
 			break;
 		case 2:
 			arr = [
 			{id:2,q:1},//美酒x1
 			{id:3,q:2},//香囊x2
-			{id:4,q:3},//玉环x3
-			{id:10,q:4},//练兵金牌x4
-			{id:11,q:6},//练兵铜牌x6
-			{id:12,q:8},//练兵铁牌x8
-			{id:13,q:4},//元帅印x4
-			{id:14,q:6},//将军印x6
-			{id:15,q:8}//印绶x8
+			{id:11,q:1},//练兵铜牌x1
+			{id:12,q:2},//练兵铁牌x2
+			{id:13,q:2},//元帅印x2
+			{id:14,q:3},//将军印x3
+			{id:15,q:4}//印绶x4
 			];
 			break;
 		case 4:
 			arr = [
 			{id:3,q:1},//香囊x1
 			{id:4,q:2},//玉环x2
-			{id:11,q:4},//练兵铜牌x4
-			{id:12,q:6},//练兵铁牌x6
-			{id:14,q:4},//将军印x4
-			{id:15,q:6}//印绶x6
+			{id:12,q:2},//练兵铁牌x2
+			{id:14,q:1},//将军印x1
+			{id:15,q:2}//印绶x2
 			];
 			break;
 		default:
@@ -1083,7 +1080,7 @@ function tournamentsGet(result){
 		arr.push({id:91,q:1});//延寿符x1
 	}
 	ids = [];
-	while(ids.length < 4){
+	while(ids.length < 4 && arr.length > 0){
 		var i = arr.length * Math.random() >>> 0;
 		ids.push(arr[i]);
 		arr.splice(i, 1);
