@@ -122,6 +122,8 @@ function jobAiToBattle(areaModel,characters,targetCity){
 		var attackSeignior = areaModel.seignior();
 		//{0}的{1}向{2}的{3}发起进攻了!要从其它城池调派援兵吗？
 		var msg = String.format(Language.get("to_attack_seignior_city_reinforcement"),Language.get("belong_self"),areaModel.name(),targetCity.seignior().character().name(),targetCity.name());
+		msg += "\n"+String.format(Language.get("敌方兵力:{0}\n敌方武将:{1}"),sumTroops,data.expeditionCharacterList.length);
+		msg += "\n"+String.format(Language.get("我方兵力:{0}\n我方武将:{1}"),sumTroops,data.expeditionCharacterList.length);
 		var obj = {title:Language.get("confirm"),message:msg,height:200
 		,okEvent:function(event){
 			event.currentTarget.parent.remove();
@@ -157,7 +159,7 @@ function jobAiToBattleTarget(areaModel,targetCity,data){
 		var general = data.expeditionCharacterList[i];
 		sumTroops += general.troops();
 	}
-	data.troops = sumTroops;
+	data.troops = sumTroops*0.5 >>> 0;
 	sumTroops = sumTroops + data.troops;
 	data.money = areaModel.money() * 0.2 >>> 0;
 	//带15回合粮食
@@ -173,7 +175,8 @@ function jobAiToBattleTarget(areaModel,targetCity,data){
 		var attackSeignior = areaModel.seignior();
 		//{0}的{1}向{2}的{3}发起进攻了!
 		var msg = String.format(Language.get("to_attack_seignior_city"),attackSeignior.character().name(),areaModel.name(),Language.get("belong_self"),targetCity.name());
-		var obj = {title:Language.get("confirm"),message:msg,height:200
+		msg += "\n"+String.format(Language.get("兵力:{0}\n武将:{1}"),data.troops*3,data.expeditionCharacterList.length);
+		var obj = {title:Language.get("confirm"),message:msg,width:340,height:300
 		,okEvent:function(event){
 			event.currentTarget.parent.remove();
 			SeigniorExecute.Instance().backLayer.visible = false;
@@ -266,6 +269,7 @@ function jobAiBattleExecute(areaModel,data,targetCity){
 		var attackSeignior = areaModel.seignior();
 		//{0}的{1}向{2}的{3}发起进攻了!要从其它城池调派援兵吗？
 		var msg = String.format(Language.get("to_attack_seignior_city_reinforcement"),attackSeignior.character().name(),areaModel.name(),Language.get("belong_self"),targetCity.name());
+		msg += "\n"+String.format(Language.get("兵力:{0}\n武将:{1}"),data.troops*3,data.expeditionCharacterList.length);
 		var obj = {title:Language.get("confirm"),message:msg,height:200
 		,okEvent:function(event){
 			event.currentTarget.parent.remove();

@@ -330,7 +330,7 @@ function exploreBusinessRun(characterModel){
 	var cityModel = characterModel.city();
 	if(rand > value){
 		//console.log("exploreBusinessRun : 失败 能力不够");
-		var money = getValueByExploreFail(200,50);
+		var money = getValueByExploreFail(100,50);
 		exploreBusinessFailRun(cityModel, characterModel, money);
 		return;
 	}
@@ -338,7 +338,7 @@ function exploreBusinessRun(characterModel){
 	var index = exploreItems(items, characterModel.intelligence() + characterModel.agility() + characterModel.luck());
 	if(index < 0){
 		//console.log("exploreBusinessRun : 失败");
-		var money = getValueByExploreFail(400,100);
+		var money = getValueByExploreFail(200,100);
 		exploreBusinessFailRun(cityModel, characterModel, money);
 		return;
 	}
