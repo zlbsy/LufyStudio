@@ -1113,7 +1113,8 @@ CharacterModel.prototype.equipOff = function(itemId) {
 		if(item.id() == itemId){
 			if(self.id() != self.seigniorId()){
 				var loyalty = self.loyalty();
-				self.loyalty(loyalty - itemExchangeLoyalty(item));
+				var changeLoyalty = itemExchangeLoyalty(item);
+				self.loyalty(loyalty + (self.seigniorId() == self.city().seigniorCharaId() ? -changeLoyalty : changeLoyalty));
 			}
 			equipments.splice(i,1);
 			self.city().addItem(item);

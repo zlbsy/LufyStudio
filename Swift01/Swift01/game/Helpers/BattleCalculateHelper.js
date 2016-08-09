@@ -172,9 +172,12 @@ function calculateHitrate(attChara,hertChara,isView){
  r=(x-y/3)*30/(y/3)+30;<br>
  宝物的加成<br>
  *********************************************/
-function calculateHitrateStrategy(attChara,hertChara){
+function calculateHitrateStrategy(attChara,hertChara, isView){
 	//对方混乱
 	if(hertChara.status.hasStatus(StrategyType.Chaos)){
+		if(isView){
+			return 100;
+		}
 		return true;
 	}
 	var attCharaModel = attChara.data;
@@ -218,6 +221,9 @@ function calculateHitrateStrategy(attChara,hertChara){
 		r=(attX-hertY/2)*30/(hertY/2)+60;
 	}else{
 		r=(attX-hertY/3)*30/(hertY/3)+30;
+	}
+	if(isView){
+		return r >>> 0;
 	}
 	if(Math.fakeRandom()*100 <= r){
 		return true;

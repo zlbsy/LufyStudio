@@ -132,6 +132,38 @@ BattleRoadView.prototype.setStrategyRoads = function(nodes,chara,addSelf){
 		self.strategyList.push(new LPoint(x + node.x,y + node.y));
 	}
 	self.setRoads(self.strategyList, self.blueData);
+	if(chara.belong != Belong.SELF){
+		return;
+	}
+	for(var i=0;i<self.strategyList.length;i++){
+		var node = self.strategyList[i];
+		var target = chara.controller.view.charaLayer.getCharacterFromLocation(node.x, node.y);
+		if(!target || target.hideByCloud || isSameBelong(chara.belong, target.belong)){
+			continue;
+		}
+		if(!chara.controller.view.mapLayer.canUseStrategyOnTerrain(chara.currentSelectStrategy, node.x, node.y)){
+			continue;
+		}
+		var layer = new LSprite();
+		var m = LTextField.getLabel();
+		m.setWordWrap(true, 14);
+		m.size = 12;
+		m.text = String.format(Language.get("hurt_preview"), calculateHertStrategyValue(chara,target,chara.currentSelectStrategy,1,true), calculateHitrateStrategy(chara,target,true));
+		m.color = "#ffffff";
+		m.lineColor = "#000000";
+		m.lineWidth = 2;
+		m.stroke = true;
+		m.x = 1;
+		m.y = self.model.stepHeight - m.getHeight() - 2;
+		layer.addChild(m);
+		var bitmapData = getBitmapData(layer, true);
+		layer.die();
+		layer.cached();
+		layer.removeAllChild();
+		var x = node.x*self.model.stepWidth;
+		var y = node.y*self.model.stepHeight;
+		self.bitmap.bitmapData.copyPixels(bitmapData, new LRectangle(0, 0, self.model.stepWidth, self.model.stepHeight), new LPoint(x,y));
+	}
 };
 BattleRoadView.prototype.clear = function(){
 	var self = this;
