@@ -315,11 +315,32 @@ CityView.prototype.autoTalkCheck = function(){
 		});
 		return;
 	}
-	//TODO::ver1.1 在野武将推荐
-	/*var outOfOffice = cityModel.outOfOffice();
-	if(outOfOffice.length > 0){
-	
-	}*/
+	if(Math.random() < 0.2){
+		var referralCharas = [];
+		for(var i=0;i<notDebut.length;i++){
+			var chara = CharacterModel.getChara(notDebut[i]);
+			var canReferralChara = generals.find(function(child){
+				return Math.abs(child.compatibility() - chara.compatibility()) < 2;
+			});
+			if(canReferral){
+				referralCharas.push({general:canReferralChara, target:chara});
+			}
+		}
+		//在野武将
+		var outOfOffice = cityModel.outOfOffice();
+		for(var i=0;i<outOfOffice.length;i++){
+			var chara = outOfOffice[i];
+			var canReferralChara = generals.find(function(child){
+				return Math.abs(child.compatibility() - chara.compatibility()) < 2;
+			});
+			if(canReferral){
+				referralCharas.push({general:canReferralChara, target:chara});
+			}
+		}
+		if(referralCharas.length > 0){
+			return;
+		}
+	}
 	var itemModelList = [cityModel.itemsFarmlandModel(), cityModel.itemsMarketModel()];
 	var items = [];
 	for(var i=0,l=itemModelList.length;i<l;i++){
