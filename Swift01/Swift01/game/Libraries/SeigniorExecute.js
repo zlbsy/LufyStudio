@@ -103,7 +103,7 @@ SeigniorExecute.run=function(){
 	}
 	if(!self.tournamentsOver){
 		self.tournamentsOver = true;
-		if(true || LMvc.chapterData.year % 2 == 0 && LMvc.chapterData.month == 12){
+		if(LMvc.chapterData.year % 2 == 0 && LMvc.chapterData.month == 12){
 			self.backLayer.visible = false;
 			self.msgView.hideSeignior();
 			var script = String.format("SGJTalk.show({0},{1},{2});", LMvc.selectSeignorId, 1, Language.get("tournaments_introduction"));
