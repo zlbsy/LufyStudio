@@ -35,7 +35,7 @@ TournamentsView.prototype.init=function(){
 		self.characters.push(generals[0]);
 	}
 	self.characters = self.characters.sort(function(a, b){return b.data.force - a.data.force;});
-	self.controller.loadCharacterList(CharacterListType.TOURNAMENTS_SELECT, charas, {isOnlyOne:true, cutoverName:"ability_properties", buttonLabel:"execute", noCutover:true, noDetailed:true, toast:"tournaments_select_toast",closeDisable:true});
+	self.controller.loadCharacterList(CharacterListType.TOURNAMENTS_SELECT, charas, {isOnlyOne:true, cutoverName:"ability_properties", showAbility:true, buttonLabel:"execute", noCutover:true, noDetailed:true, toast:"tournaments_select_toast",closeDisable:true});
 };
 TournamentsView.prototype.addCharacterListView=function(characterListView){
 	this.contentLayer.addChild(characterListView);
@@ -114,7 +114,6 @@ TournamentsView.prototype.win=function(){
 		from = 10;
 		to = 12;
 	}else{
-		//TODO::冠军奖品
 		LMvc.SingleCombatController.over();
 		self.controller.closeSelf();
 		//talk

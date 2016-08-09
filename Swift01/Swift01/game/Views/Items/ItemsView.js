@@ -36,7 +36,7 @@ ItemsView.prototype.updateItems = function(itemList) {
 		if(i < items.length){
 			item = items[i];
 		}else{
-			item = new ItemsChildView(ItemList[i], self.listView.cellWidth);
+			item = new ItemsChildView(itemList[i], self.listView.cellWidth);
 			self.listView.insertChildView(item);
 		}
 		item.itemModel = itemList[i];

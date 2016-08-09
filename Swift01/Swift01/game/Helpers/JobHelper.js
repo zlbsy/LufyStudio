@@ -1019,11 +1019,19 @@ function generalsChangeLoyalty(generals){
 		if(parentConfig && chara.seigniorId() == parentConfig.parent){
 			return;
 		}
+		var compatibility = Math.abs(chara.compatibility() - chara.seignior().character().compatibility());
+		if(compatibility > JobCoefficient.COMPATIBILITY){
+			compatibility -= JobCoefficient.COMPATIBILITY;
+		}
+		if(compatibility < 10 || (compatibility < 20 && Math.fakeRandom() < 0.5)){
+			continue;
+		}
 		var personalLoyalty = chara.personalLoyalty();
 		if((personalLoyalty > 5 && chara.loyalty() == 100) || chara.loyalty() + (personalLoyalty - 5) >= 100){
 			continue;
 		}
-		var minus = (15 - personalLoyalty) / 3 >>> 0;
+		var minus = (15 - personalLoyalty) * 0.33;
+		minus = minus * (compatibility < 20 ? 0.5 : 1) >>> 0;
 		var loyalty = chara.loyalty();
 		var toLoyalty = loyalty - minus > 0 ? loyalty - minus : 0;
 		chara.loyalty(toLoyalty);
@@ -1104,6 +1112,7 @@ function tournamentsGet(result){
 	message:message,
 	height:320,okEvent:function(event){
 		event.currentTarget.parent.remove();
+		SeigniorExecute.Instance().msgView.showSeignior();
 		SeigniorExecute.run();
 	}};
 	var windowLayer = ConfirmWindow(obj);
