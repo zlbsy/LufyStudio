@@ -684,6 +684,13 @@ function hireRun2(characterModel, hireCharacter, area, isAccess){
 }
 function SeigniorExecuteChangeCityResources(area){
 	//TODO::ver1.1自然灾害
+	//蝗灾,水灾
+	//蝗灾影响人口和粮食收成
+	//水灾影响人口和城防
+	//农业:几率消除蝗灾
+	//技术:几率消除水灾
+	//商业:几率发生特殊物品交易
+	//城防:城防过低会几率出现强盗,影响人口和兵力
 	var minPopulation = AreaModel.populationList[0][0];
 	var maxPopulation = AreaModel.populationList[AreaModel.populationList.length - 1][1];
 	var population = area.population();

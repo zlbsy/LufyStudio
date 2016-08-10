@@ -181,7 +181,13 @@ CharacterModel.prototype.setDatas=function(charaData){
 		self.setJobData(charaData.job);
 	}
 	if(charaData.reputation){
-		self.data.reputation = charaData.reputation;
+		var n = [];
+		for(var i = 0; i < charaData.reputation.length; i++){
+			if (n.indexOf(charaData.reputation[i]) < 0){
+				n.push(charaData.reputation[i]);
+			}
+		}
+		self.data.reputation = n;
 	}
 	if(charaData.currentSoldierId){
 		self.data.currentSoldierId = charaData.currentSoldierId;

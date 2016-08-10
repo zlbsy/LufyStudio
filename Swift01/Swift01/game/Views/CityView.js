@@ -320,9 +320,12 @@ CityView.prototype.autoTalkCheck = function(){
 		for(var i=0;i<notDebut.length;i++){
 			var chara = CharacterModel.getChara(notDebut[i]);
 			var canReferralChara = generals.find(function(child){
+				if(child.id() == child.seigniorId()){
+					return false;
+				}
 				return Math.abs(child.compatibility() - chara.compatibility()) < 2;
 			});
-			if(canReferral){
+			if(canReferralChara){
 				referralCharas.push({general:canReferralChara, target:chara});
 			}
 		}
@@ -331,13 +334,18 @@ CityView.prototype.autoTalkCheck = function(){
 		for(var i=0;i<outOfOffice.length;i++){
 			var chara = outOfOffice[i];
 			var canReferralChara = generals.find(function(child){
+				if(child.id() == child.seigniorId()){
+					return false;
+				}
 				return Math.abs(child.compatibility() - chara.compatibility()) < 2;
 			});
-			if(canReferral){
+			if(canReferralChara){
 				referralCharas.push({general:canReferralChara, target:chara});
 			}
 		}
 		if(referralCharas.length > 0){
+			var child = referralCharas[referralCharas.length*Math.random() >>> 0];
+			self.referralCharacterExecute(child.general, child.target);
 			return;
 		}
 	}
@@ -366,3 +374,13 @@ CityView.prototype.autoTalkCheck = function(){
 		});
 	}
 };
+CityView.prototype.referralCharacterExecute = function(chara, targetChara){
+	var self = this;
+	targetChara.seigniorId(chara.seigniorId());
+	chara.city().addGenerals(targetChara);
+	targetChara.cityId(chara.cityId());
+	targetChara.job(Job.END);
+	var script = "SGJTalk.show(" + chara.id() + ",0,"+String.format(Language.get("属下的故交 [{0}] 有意寻找明主，请允许我将他引荐给主公。"),targetChara.name())+");";
+	script += "SGJTalk.show(" + targetChara.id() + ",0,"+String.format(Language.get("末将{0}，愿孝犬马之劳!"),targetChara.name())+");";
+	LGlobal.script.addScript(script);
+}

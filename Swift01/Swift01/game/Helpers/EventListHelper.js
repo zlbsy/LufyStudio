@@ -499,6 +499,9 @@ function dispatchEventListResultReputation(child) {
 		if(!character.data.reputation){
 			character.data.reputation = [];
 		}
+		if(character.data.reputation.indexOf(child.reputation) >= 0){
+			return;
+		}
 		character.data.reputation.push(child.reputation);
 		var reputationModel = ReputationModel.getReputation(child.reputation);
 		var soldiers = reputationModel.data.soldiers;

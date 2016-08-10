@@ -78,7 +78,12 @@ BattleMapView.prototype.showTerrain=function(x,y){
 	self.controller.view.terrainWindow.show(sX,sY,data);
 };
 BattleMapView.prototype.getTerrainData=function(locationX,locationY){
-	return this.model.map.data[locationY][locationX];
+	var data = this.model.map.data;
+	if(locationY < 0 || locationY >= data.length || 
+		locationX < 0 || locationX >= data[locationY].length){
+		return null;
+	}
+	return data[locationY][locationX];
 };
 BattleMapView.prototype.getTerrainModel=function(locationX,locationY){
 	var terrainId = this.getTerrainId(locationX,locationY);
