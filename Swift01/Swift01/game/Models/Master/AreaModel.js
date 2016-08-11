@@ -78,6 +78,10 @@ AreaModel.prototype.datas=function(){
 		items_farmland:self.itemsFarmland(),
 		items_market:self.itemsMarket(),
 		generals:self.generalsData(),
+		isFlood:self.isFlood(),
+		isPlagueOfLocusts:self.isPlagueOfLocusts(),
+		flood:self.flood(),
+		plagueOfLocusts:self.plagueOfLocusts(),
 		out_of_offices:self.outOfOfficeData(),
 		not_debut:self.data.not_debut,
 		captives:self.captivesData()
@@ -268,6 +272,18 @@ AreaModel.prototype.addGenerals = function(param){
 	if(self.data.generals.length == 1){
 		self.prefecture(chara.id());
 	}
+};
+AreaModel.prototype.isFlood = function(value){//水灾
+	return this._dataValue("isFlood", value, 0);
+};
+AreaModel.prototype.isPlagueOfLocusts = function(value){//蝗灾
+	return this._dataValue("isPlagueOfLocusts", value, 0);
+};
+AreaModel.prototype.flood = function(value){//水灾参数
+	return this._dataValue("flood", value, 0);
+};
+AreaModel.prototype.plagueOfLocusts = function(value){//蝗灾参数
+	return this._dataValue("plagueOfLocusts", value, 0);
 };
 AreaModel.prototype.appointType = function(value){
 	return this._dataValue("appointType", value, "appoint_random");

@@ -199,8 +199,45 @@ SeigniorExecute.prototype.tournamentsCheck=function(){
 	var windowLayer = ConfirmWindow(obj);
 	LMvc.layer.addChild(windowLayer);
 };
+SeigniorExecute.prototype.disasterRun=function(area){
+	var self = this;
+	if(self.areaDisasterOver){
+		return false;
+	}
+	self.areaDisasterOver = true;
+	if(area.isFlood()){
+		area.flood(area.flood() - 1);
+	}else{
+		if(Math.fakeRandom() < 0.1){
+			area.flood(area.flood() + 1);
+		}
+		if(DisasterMonths.Flood.indexOf(LMvc.chapterData.month) >= 0){
+			if(area.flood() > 5){
+				area.isFlood(1);
+				return true;
+			}
+		}
+	}
+	if(area.isFlagueOfLocusts()){
+		area.plagueOfLocusts(area.plagueOfLocusts() - 1);
+	}else{
+		if(Math.fakeRandom() < 0.1){
+			area.plagueOfLocusts(area.plagueOfLocusts() + 1);
+		}
+		if(DisasterMonths.FlagueOfLocusts.indexOf(LMvc.chapterData.month) >= 0){
+			if(area.plagueOfLocusts() > 5){
+				area.isFlagueOfLocusts(1);
+				return true;
+			}
+		}
+	}
+	return false;
+};
 SeigniorExecute.prototype.areaRun=function(area){
 	var self = this;
+	if(self.disasterRun()){//灾难
+		
+	}
 	if(!self.areaPrizedOver){//褒奖
 		self.generalsPrizedRun(area);
 	}
@@ -227,6 +264,7 @@ SeigniorExecute.prototype.areaRun=function(area){
 		}
 	}
 	self.areaIndex++;
+	self.areaDisasterOver = false;
 	self.areaGainOver = false;
 	self.areaJobOver = false;
 	self.areaPrizedOver = false;

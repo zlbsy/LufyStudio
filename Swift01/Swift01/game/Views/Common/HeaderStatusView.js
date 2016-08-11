@@ -35,7 +35,17 @@ HeaderStatusView.prototype.set=function(){
 	self.setStatus(Language.get("business"), self.get(cityModel.business()), self.stepMiniWidth * 0 + 5, self.stepHeight * 2, self.stepMiniWidth);
 	self.setStatus(Language.get("agriculture"), self.get(cityModel.agriculture()), self.stepMiniWidth * 0 + 5, self.stepHeight * 3, self.stepMiniWidth);
 	self.setStatus(Language.get("technology"), self.get(cityModel.technology()), self.stepMiniWidth  * 0+ 5, self.stepHeight * 4, self.stepMiniWidth);
-	
+	var disasterCount = (cityModel.isFlood() ? 1 : 0) + (cityModel.isPlagueOfLocusts() ? 1 : 0);
+	if(disasterCount){
+		var disasters = [];
+		if(cityModel.isFlood()){
+			disasters.push(Language.get("flood"));
+		}
+		if(cityModel.isPlagueOfLocusts()){
+			disasters.push(Language.get("flagueOfLocusts"));
+		}
+		self.setStatus(Language.get("disaster"), disasters.join("、"), self.stepMiniWidth  * 0+ 5, self.stepHeight * 5, self.stepMiniWidth * (0.5 + disasterCount*0.5));
+	}
 	self.setStatus(Language.get("city_defense"), self.get(cityModel.cityDefenseLabel()), self.stepMiniWidth * 1 + 5, self.stepHeight * 2, self.stepMiniWidth + 20);
 	self.setStatus(Language.get("troops"), self.get(cityModel.troopsSum()), self.stepMiniWidth * 1 + 5, self.stepHeight * 3, self.stepMiniWidth + 20);
 	self.setStatus(Language.get("police"), self.get(cityModel.police()), self.stepMiniWidth * 1 + 5, self.stepHeight * 4, self.stepMiniWidth + 20);

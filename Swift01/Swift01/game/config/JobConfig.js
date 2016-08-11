@@ -90,5 +90,10 @@ var HarvestMonths = {
 	Food:[7],
 	Money:[3,6,9,12]
 };
+//灾难月份
+var DisasterMonths = {
+	FlagueOfLocusts:[5,6],
+	Flood:[8,9]
+};
 var TribeAIProbability = 0.1;
 var TribeFriendlyCharacters = [23, 43, 73, 141, 145, 317, 336, 351, 516];

@@ -380,7 +380,7 @@ CityView.prototype.referralCharacterExecute = function(chara, targetChara){
 	chara.city().addGenerals(targetChara);
 	targetChara.cityId(chara.cityId());
 	targetChara.job(Job.END);
-	var script = "SGJTalk.show(" + chara.id() + ",0,"+String.format(Language.get("属下的故交 [{0}] 有意寻找明主，请允许我将他引荐给主公。"),targetChara.name())+");";
-	script += "SGJTalk.show(" + targetChara.id() + ",0,"+String.format(Language.get("末将{0}，愿孝犬马之劳!"),targetChara.name())+");";
+	var script = "SGJTalk.show(" + chara.id() + ",0,"+String.format(Language.get("referralCharacterTalk"),targetChara.name())+");";
+	script += "SGJTalk.show(" + targetChara.id() + ",0,"+String.format(Language.get("referralCharacterTargetTalk"),targetChara.name())+");";
 	LGlobal.script.addScript(script);
-}
+};
