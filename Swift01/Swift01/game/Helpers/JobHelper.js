@@ -247,7 +247,7 @@ function exploreAgricultureRun(characterModel){
 		var food = getValueByExploreFail(400,100);
 		exploreAgricultureFailRun(cityModel, characterModel, food);
 		return;
-	}console.log(characterModel.name()+"="+characterModel.intelligence() +","+ characterModel.force() +","+ characterModel.luck());
+	}
 	var items = cityModel.itemsFarmland();
 	var index = exploreItems(items, characterModel.intelligence() + characterModel.force() + characterModel.luck());
 	if(index < 0){
@@ -378,7 +378,6 @@ function repairRun(characterModel){
 	characterModel.city().cityDefense(value >>> 0);
 	characterModel.job(Job.IDLE);
 	var feat = JobFeatCoefficient.NORMAL * value / JobFeatCoefficient.REPAIR;
-	//console.log(characterModel.name() + " 修补:",characterModel.force() + characterModel.command(), value, feat);
 	characterModel.featPlus(feat);
 	//武力经验
 	characterModel.plusPropertiesExp("force");
@@ -390,10 +389,17 @@ function agricultureRun(characterModel){
 	characterModel.city().agriculture(value >>> 0);
 	characterModel.job(Job.IDLE);
 	var feat = JobFeatCoefficient.NORMAL * value / JobFeatCoefficient.AGRICULTURE;
-	//console.log(characterModel.name() + " 农业:",characterModel.intelligence() + characterModel.force(), value, feat);
 	characterModel.featPlus(feat);
 	//敏捷经验
 	characterModel.plusPropertiesExp("agility");
+	if(!city.isPlagueOfLocusts() && city.plagueOfLocusts() > 0 && Math.fakeRandom() < 0.2){
+		if(Math.fakeRandom() < 0.5){
+			//免费治理蝗害
+		}else{
+			//花钱治理蝗害
+		}
+	}
+	return false;
 }
 function businessRun(characterModel){
 	//商业：智力+敏捷
@@ -402,10 +408,13 @@ function businessRun(characterModel){
 	characterModel.city().business(value >>> 0);
 	characterModel.job(Job.IDLE);
 	var feat = JobFeatCoefficient.NORMAL * value / JobFeatCoefficient.BUSINESS;
-	//console.log(characterModel.name() + " 商业:",characterModel.intelligence() + characterModel.agility(), value, feat);
 	characterModel.featPlus(feat);
 	//运气经验
 	characterModel.plusPropertiesExp("luck");
+	if(Math.fakeRandom() < 0.01){
+		//交易
+	}
+	return false;
 }
 function policeRun(characterModel){
 	//治安：武力*2+敏捷
@@ -414,7 +423,6 @@ function policeRun(characterModel){
 	characterModel.city().police(value >>> 0);
 	characterModel.job(Job.IDLE);
 	var feat = JobFeatCoefficient.NORMAL * value / JobFeatCoefficient.POLICE;
-	//console.log(characterModel.name() + " 治安:",characterModel.force()*2 + characterModel.agility(), value, feat);
 	characterModel.featPlus(feat);
 	//武力经验
 	characterModel.plusPropertiesExp("force");
@@ -423,13 +431,21 @@ function technologyRun(characterModel){
 	//技术：智力+统率
 	var value = getJobResult(characterModel.intelligence() + characterModel.command(),JobCoefficient.TECHNOLOGY);
 	var value = value * (characterModel.hasSkill(SkillSubType.TECHNOLOGY) ? 1.5 : 1);
-	characterModel.city().technology(value >>> 0);
+	var city = characterModel.city();
+	city.technology(value >>> 0);
 	characterModel.job(Job.IDLE);
 	var feat = JobFeatCoefficient.NORMAL * value / JobFeatCoefficient.TECHNOLOGY;
-	//console.log(characterModel.name() + " 技术:",characterModel.intelligence() + characterModel.command(), value, feat);
 	characterModel.featPlus(feat);
 	//智力经验
 	characterModel.plusPropertiesExp("intelligence");
+	if(!city.isFlood() && city.flood() > 0 && Math.fakeRandom() < 0.2){
+		if(Math.fakeRandom() < 0.5){
+			//免费治水
+		}else{
+			//花钱治水确认
+		}
+	}
+	return false;
 }
 function enlistRun(characterModel, targetEnlist){
 	//招募：运气+统率
@@ -437,7 +453,6 @@ function enlistRun(characterModel, targetEnlist){
 	if(!targetEnlist){
 		return;
 	}
-	//console.log("enlistRun招募 : ",characterModel.id());
 	var area = characterModel.city();
 	var population = area.population();
 	var minPopulation = AreaModel.populationList[area.level() - 1][0];
@@ -546,9 +561,6 @@ function spyRun(characterModel, cityId){
 			characterModel.featPlus(JobFeatCoefficient.NORMAL * 0.5);
 			return;
 		}
-		//seignior = characterModel.seignior();
-		//seignior.addSpyCity(cityId);
-		//return;
 	}
 	var num = (spyValue / JobCoefficient.SPY) >>> 0;
 	var seignior = characterModel.seignior();
@@ -590,21 +602,17 @@ function hireRun(characterModel, hireCharacterId){
 	//录用：运气+相性
 	var area = characterModel.city();
 	var outOfOffice = area.outOfOffice();
-	//console.log("hireRun录用 : ",characterModel.id(),outOfOffice);
 	var hireCharacterIndex = outOfOffice.findIndex(function(child){
 		return child.id() == hireCharacterId;
 	});
-	//console.log("hireRun录用 hireCharacterIndex : ",CharacterModel.getChara(19).cityId(),hireCharacterId, hireCharacterIndex);
 	characterModel.job(Job.IDLE);
 	if(hireCharacterIndex < 0){
-		//console.log("hireRun : 失败 null");
 		if(characterModel.seigniorId() == LMvc.selectSeignorId && !area.isAppoint()){
 			SeigniorExecute.addMessage(String.format(Language.get("hireFailMessage"),characterModel.name()));
 		}
 		characterModel.featPlus(JobFeatCoefficient.NORMAL * 0.5);
 		return false;
 	}
-	//var hireCharacter = outOfOffice[hireCharacterIndex];
 	var hireCharacter = CharacterModel.getChara(hireCharacterId);
 	return hireRun2(characterModel, hireCharacter, area);
 }
@@ -642,11 +650,8 @@ function hireRun2(characterModel, hireCharacter, area, isAccess){
 			compatibility -= JobCoefficient.COMPATIBILITY;
 		}
 		percentage *= (JobCoefficient.COMPATIBILITY - compatibility) / JobCoefficient.COMPATIBILITY;
-		
-		//console.log("hireRun : 失败 " + rand + " > " + percentage + " = " + (rand > percentage));
 		var rand = Math.fakeRandom();
 		if(rand > percentage){
-			//console.log("hireRun : 失败 " + rand + " > " + percentage + " = " + (rand > percentage));
 			if(characterModel.seigniorId() == LMvc.selectSeignorId && !area.isAppoint()){
 				SeigniorExecute.addMessage(String.format(Language.get("hireRefuseMessage"),hireCharacter.name(),characterModel.name()));
 			}
@@ -683,16 +688,24 @@ function hireRun2(characterModel, hireCharacter, area, isAccess){
 	return false;
 }
 function SeigniorExecuteChangeCityResources(area){
-	//TODO::ver1.1自然灾害
-	//蝗灾Plague of Locusts,水灾flood
-	//蝗灾影响人口和粮食收成
-	//水灾影响人口和城防
-	//农业:几率消除蝗灾
-	//技术:几率消除水灾
-	//商业:几率发生特殊物品交易
-	//城防:城防过低会几率出现强盗,影响人口和兵力
+	//TODO::城防:城防过低会几率出现强盗,影响人口和兵力
+	var disaster = false;
 	var minPopulation = AreaModel.populationList[0][0];
 	var maxPopulation = AreaModel.populationList[AreaModel.populationList.length - 1][1];
+	if(area.isFlood() || area.isPlagueOfLocusts()){
+		area.population(-(population*0.01 >>> 0));
+		area.business(-(area.business()*0.01 >>> 0));
+		area.agriculture(-(area.agriculture()*0.01 >>> 0));
+		disaster = true;
+	}
+	if(area.isFlood()){
+		area.cityDefense(-(area.cityDefense()*0.02));
+		area.police(-3);
+	}
+	if(area.isPlagueOfLocusts()){
+		area.food(-(area.food()*0.05 >>> 0));
+		area.police(-3);
+	}
 	var population = area.population();
 	//金钱
 	var maxBusiness = AreaModel.businessList[AreaModel.businessList.length - 1];
@@ -707,14 +720,19 @@ function SeigniorExecuteChangeCityResources(area){
 	if(HarvestMonths.Food.indexOf(LMvc.chapterData.month)  >= 0){
 		var addFood = 10000 + 40000*area.agriculture()/maxAgriculture;
 		addFood *= (1 + population * 0.3 / maxPopulation);
+		if(area.isPlagueOfLocusts()){
+			addFood *= (1 - 0.05 * area.plagueOfLocusts());
+		}
 		area.food(addFood >>> 0);
 	}
 	var police = area.police();
 	var minPolice = 40;
 	if(police>50){
 		//人口增长
-		var addPopulation = population * (0.005 * (police-50)/50 + 0.002*area.business()/maxBusiness + 0.003*area.agriculture()/maxAgriculture);
-		area.population(addPopulation);
+		if(!disaster){
+			var addPopulation = population * (0.005 * (police-50)/50 + 0.002*area.business()/maxBusiness + 0.003*area.agriculture()/maxAgriculture);
+			area.population(addPopulation);
+		}
 	}else if (police < 40) {
 		var minusValue = (minPolice - police)/minPolice;
 		var nowMin = AreaModel.populationList[area.level() - 1][0];
@@ -1124,4 +1142,59 @@ function tournamentsGet(result){
 	}};
 	var windowLayer = ConfirmWindow(obj);
 	LMvc.layer.addChild(windowLayer);
+}
+function disasterMonthsExecute(area){
+	if(area.isFlood()){
+		area.flood(area.flood() - 1);
+		if(area.flood()<=0){
+			area.isFlood(0);
+		}
+	}else{
+		if(Math.fakeRandom() < 0.1){
+			area.flood(area.flood() + 1);
+		}
+		if(DisasterMonths.Flood.indexOf(LMvc.chapterData.month) >= 0){
+			if(area.flood() > 5){
+				area.isFlood(1);
+				if(area.seigniorCharaId() == LMvc.selectSeignorId){
+					var obj = {title:Language.get("confirm"),
+					message:String.format(Language.get("floodMessage"), area.name()),
+					height:200,okEvent:function(event){
+						event.currentTarget.parent.remove();
+						SeigniorExecute.run();
+					}};
+					var windowLayer = ConfirmWindow(obj);
+					LMvc.layer.addChild(windowLayer);
+					return true;
+				}
+			}
+		}
+	}
+	if(area.isPlagueOfLocusts()){
+		area.plagueOfLocusts(area.plagueOfLocusts() - 1);
+		if(area.plagueOfLocusts()<=0){
+			area.isPlagueOfLocusts(0);
+		}
+	}else{
+		if(Math.fakeRandom() < 0.1){
+			area.plagueOfLocusts(area.plagueOfLocusts() + 1);
+		}
+		if(DisasterMonths.PlagueOfLocusts.indexOf(LMvc.chapterData.month) >= 0){
+			if(area.plagueOfLocusts() > 5){
+				area.isPlagueOfLocusts(1);
+				if(area.seigniorCharaId() == LMvc.selectSeignorId){
+					var obj = {title:Language.get("confirm"),
+					message:String.format(Language.get("flagueOfLocustsMessage"),area.name()),
+					height:200,okEvent:function(event){
+						event.currentTarget.parent.remove();
+						SeigniorExecute.run();
+					}};
+					var windowLayer = ConfirmWindow(obj);
+					LMvc.layer.addChild(windowLayer);
+					return true;
+				}
+			}
+		}
+	}
+	return false;
 }

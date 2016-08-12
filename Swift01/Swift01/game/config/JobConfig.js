@@ -92,7 +92,7 @@ var HarvestMonths = {
 };
 //灾难月份
 var DisasterMonths = {
-	FlagueOfLocusts:[5,6],
+	PlagueOfLocusts:[5,6],
 	Flood:[8,9]
 };
 var TribeAIProbability = 0.1;

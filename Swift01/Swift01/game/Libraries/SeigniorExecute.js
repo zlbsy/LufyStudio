@@ -136,12 +136,6 @@ SeigniorExecute.run=function(){
 			self.msgView.setSeignior(seigniorModel.chara_id());
 			self.seigniors.push(self.seigniorIndex);
 			seigniorModel.character().featPlus(3);
-			//势力行动消息取消
-			//self.msgView.add(seigniorModel.character().name() + "势力行动!");
-			/*if(seigniorModel.chara_id() != LMvc.selectSeignorId){
-				jobAiSetCityBattleDistance(seigniorModel);
-				return;
-			}*/
 			return;
 		}
 		var aiOver = self.areasAIRun(seigniorModel);
@@ -205,38 +199,15 @@ SeigniorExecute.prototype.disasterRun=function(area){
 		return false;
 	}
 	self.areaDisasterOver = true;
-	if(area.isFlood()){
-		area.flood(area.flood() - 1);
-	}else{
-		if(Math.fakeRandom() < 0.1){
-			area.flood(area.flood() + 1);
-		}
-		if(DisasterMonths.Flood.indexOf(LMvc.chapterData.month) >= 0){
-			if(area.flood() > 5){
-				area.isFlood(1);
-				return true;
-			}
-		}
-	}
-	if(area.isFlagueOfLocusts()){
-		area.plagueOfLocusts(area.plagueOfLocusts() - 1);
-	}else{
-		if(Math.fakeRandom() < 0.1){
-			area.plagueOfLocusts(area.plagueOfLocusts() + 1);
-		}
-		if(DisasterMonths.FlagueOfLocusts.indexOf(LMvc.chapterData.month) >= 0){
-			if(area.plagueOfLocusts() > 5){
-				area.isFlagueOfLocusts(1);
-				return true;
-			}
-		}
+	if(disasterMonthsExecute(area)){
+		return true;
 	}
 	return false;
 };
 SeigniorExecute.prototype.areaRun=function(area){
 	var self = this;
-	if(self.disasterRun()){//灾难
-		
+	if(self.disasterRun(area)){//灾难
+		return;
 	}
 	if(!self.areaPrizedOver){//褒奖
 		self.generalsPrizedRun(area);
