@@ -9,7 +9,9 @@ function BattleCharacterLayerView(controller) {
 	}
 	self.charasPositions = {};
 	self.controller.addEventListener(BattleBoutEvent.END, self.charactersBoutEnd);
-	Toast.makeText(String.format(Language.get("toast_appearances_position_select"), self.controller.battleData.expeditionCharacterList[0].name())).show();
+	if(self.controller.battleData.expeditionCharacterList && self.controller.battleData.expeditionCharacterList.length > 0){
+		Toast.makeText(String.format(Language.get("toast_appearances_position_select"), self.controller.battleData.expeditionCharacterList[0].name())).show();
+	}
 };
 BattleCharacterLayerView.prototype.die=function(){
 	var self = this;

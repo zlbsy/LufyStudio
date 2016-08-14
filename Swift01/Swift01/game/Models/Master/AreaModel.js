@@ -714,6 +714,15 @@ AreaModel.prototype.outOfOfficeData=function(){
 AreaModel.prototype.outOfOffice=function(){
 	return this.data.out_of_offices;
 };
+AreaModel.removeNotDebut=function(charaId){
+	for(var i=0,l=AreaModel.list.length;i<l;i++){
+		var area = AreaModel.list[i];
+		var chara = area.removeNotDebut(charaId);
+		if(chara){
+			break;
+		}
+	}
+};
 AreaModel.prototype.removeNotDebut=function(charaId){
 	var self = this;
 	var notDebut = self.data.not_debut;

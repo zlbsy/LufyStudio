@@ -125,6 +125,12 @@ ItemMasterModel.prototype.agility = function(){
 ItemMasterModel.prototype.luck = function(){
 	return this.data.luck?this.data.luck:0;
 };
+ItemMasterModel.prototype.price = function(){
+	return 100 + (this.data.rarity - 1) * 50;
+};
+ItemMasterModel.prototype.businessPrice = function(){
+	return this.price() * 10;
+};
 ItemMasterModel.prototype.explanation = function(){
 	return Language.getItem("item_explanation_" + this.data.id);
 };

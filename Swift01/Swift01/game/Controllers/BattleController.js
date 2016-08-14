@@ -183,7 +183,7 @@ BattleController.prototype.charactersInit = function(){
 	self.battleData.expeditionEnemyCharacterList = enemyCharas;console.log(enemyCharas);
 	for(var i = 0;i<enemyCharas.length;i++){
 		var child = enemyPositions[i];
-		var chara = enemyCharas[i];console.log(chara.id(),chara.name());
+		var chara = enemyCharas[i];
 		var charaId = chara.id();
 		self.addEnemyCharacter(charaId,child.direction,child.x,child.y);
 		chara.HP(chara.maxHP());

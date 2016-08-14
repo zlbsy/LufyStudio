@@ -90,7 +90,7 @@ function ConfirmWindow(obj){
 	//console.log("ConfirmWindow",obj);
 	var windowLayer = getTranslucentMask();
 	
-	var backgroundData = new LBitmapData(LMvc.datalist["win05"]);
+	//var backgroundData = new LBitmapData(LMvc.datalist["win05"]);
 	if(!obj.width){
 		obj.width = 320;
 	}

@@ -13,24 +13,61 @@ BuildOfficialView.prototype.showMenu=function(){
 		var buttonPrefecture = getButton(Language.get("appoint_prefecture"),200);
 		buttonPrefecture.y = menuY;
 		layer.addChild(buttonPrefecture);
-		buttonPrefecture.addEventListener(LMouseEvent.MOUSE_UP, self.onClickPrefectureButton.bind(self));
+		buttonPrefecture.addEventListener(LMouseEvent.MOUSE_UP, self.onClickPrefectureButton);
 		menuY += menuHeight;
 	}
-	//menuY += menuHeight;
+	
 	var buttonGeneralsMove = getButton(Language.get("transport"),200);
 	buttonGeneralsMove.y = menuY;
 	layer.addChild(buttonGeneralsMove);
-	buttonGeneralsMove.addEventListener(LMouseEvent.MOUSE_UP, self.onClickTransportButton.bind(self));
+	buttonGeneralsMove.addEventListener(LMouseEvent.MOUSE_UP, self.onClickTransportButton);
 		
 	menuY += menuHeight;
 	var buttonSpy = getButton(Language.get("spy"),200);
 	buttonSpy.y = menuY;
 	layer.addChild(buttonSpy);
-	buttonSpy.addEventListener(LMouseEvent.MOUSE_UP, self.onClickSpyButton.bind(self));
-		
+	buttonSpy.addEventListener(LMouseEvent.MOUSE_UP, self.onClickSpyButton);
+	if(cityModel.isFlood()){
+		menuY += menuHeight;
+		var buttonFlood = getButton(Language.get("floodControl"),200);
+		buttonFlood.y = menuY;
+		layer.addChild(buttonFlood);
+		buttonFlood.addEventListener(LMouseEvent.MOUSE_UP, self.onClickFloodButton);
+	}
+	if(cityModel.isPlagueOfLocusts()){
+		menuY += menuHeight;
+		var buttonPlagueOfLocusts = getButton(Language.get("flagueOfLocustsControl"),200);
+		buttonPlagueOfLocusts.y = menuY;
+		layer.addChild(buttonPlagueOfLocusts);
+		buttonPlagueOfLocusts.addEventListener(LMouseEvent.MOUSE_UP, self.onClickPlagueOfLocustsButton);
+	}
 	menuY += menuHeight;
 	self.addAppointButton(layer, menuY);
 	return layer;
+};
+BuildOfficialView.prototype.onClickFloodButton=function(event){
+	var self = event.currentTarget.getParentByConstructor(BuildOfficialView);
+	var cityModel = self.controller.getValue("cityData");
+	var floodGenerals = cityModel.generals(Job.FLOOD);
+	if(floodGenerals.length > 0){
+		var obj = {title:Language.get("confirm"),message:Language.get("dialog_city_levelup_error"),height:200,okEvent:null};
+		var windowLayer = ConfirmWindow(obj);
+		LMvc.layer.addChild(windowLayer);
+		return;
+	}
+	self.controller.loadCharacterList(CharacterListType.FLOOD, cityModel.generals(Job.IDLE), {showMoney:true, buttonLabel:"execute"});
+};
+BuildOfficialView.prototype.onClickPlagueOfLocustsButton=function(event){
+	var self = event.currentTarget.getParentByConstructor(BuildOfficialView);
+	var cityModel = self.controller.getValue("cityData");
+	var plagueOfLocustasGenerals = cityModel.generals(Job.PLAGUE_OF_LOCUSTS);
+	if(plagueOfLocustasGenerals.length > 0){
+		var obj = {title:Language.get("confirm"),message:Language.get("dialog_city_levelup_error"),height:200,okEvent:null};
+		var windowLayer = ConfirmWindow(obj);
+		LMvc.layer.addChild(windowLayer);
+		return;
+	}
+	self.controller.loadCharacterList(CharacterListType.PLAGUE_OF_LOCUSTS, cityModel.generals(Job.IDLE), {showMoney:true, buttonLabel:"execute"});
 };
 BuildOfficialView.prototype.addAppointButton=function(layer, y){
 	var self = this;
@@ -79,7 +116,7 @@ BuildOfficialView.prototype.onClickAppoint=function(event){
 	buttonMilitary.y = menuY;
 	layer.addChild(buttonMilitary);
 	buttonMilitary.addEventListener(LMouseEvent.MOUSE_UP, self.onClickSetAppoint);
-	//self.updateAppoint(1);
+	
 	var obj = {title:Language.get("appoint"),subWindow:layer,width:270,height:320,noButton:true,okEvent:null};
 	var windowLayer = ConfirmWindow(obj);
 	self.addChild(windowLayer);
@@ -108,12 +145,12 @@ BuildOfficialView.prototype.updateAppoint=function(value, type){
 	self.controller.dispatchEvent(LController.NOTIFY_ALL);
 };
 BuildOfficialView.prototype.onClickPrefectureButton=function(event){
-	var self = this;
+	var self = event.currentTarget.getParentByConstructor(BuildOfficialView);
 	var cityModel = self.controller.getValue("cityData");
 	self.controller.loadCharacterList(CharacterListType.APPOINT_PREFECTURE, cityModel.generals(), {isOnlyOne:true, buttonLabel:"appoint_prefecture"});
 };
 BuildOfficialView.prototype.onClickTransportButton=function(event){
-	var self = this;
+	var self = event.currentTarget.getParentByConstructor(BuildOfficialView);
 	self.characterListType = CharacterListType.TRANSPORT;
 	self.controller.removeEventListener(LCityEvent.SELECT_CITY);
 	self.controller.addEventListener(LCityEvent.SELECT_CITY, self.transportSelectCharacter);
@@ -134,7 +171,7 @@ BuildOfficialView.prototype.toTransport=function(){
 	self.controller.loadCharacterList(CharacterListType.TRANSPORT, cityModel.generals(Job.IDLE), {isOnlyOne:true, buttonLabel:"execute"});
 };
 BuildOfficialView.prototype.onClickSpyButton=function(event){
-	var self = this;
+	var self = event.currentTarget.getParentByConstructor(BuildOfficialView);
 	self.controller.removeEventListener(LCityEvent.SELECT_CITY);
 	self.controller.addEventListener(LCityEvent.SELECT_CITY, self.spySelectCharacter);
 	self.controller.toSelectMap(CharacterListType.CHARACTER_SPY, {isSelf:false,toast:"dialog_common_select_city_toast", belongError:"dialog_spy_generals_error",confirmMessage:"dialog_spy_generals_confirm"});

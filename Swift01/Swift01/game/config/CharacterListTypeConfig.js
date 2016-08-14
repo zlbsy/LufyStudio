@@ -33,3 +33,5 @@ CharacterListType.PERSUADE = "persuade";//劝降执行
 CharacterListType.PERSUADE_TARGET = "persuade_target";//劝降对象
 CharacterListType.GAME_SINGLE_COMBAT = "game_single_combat";//单挑挑战
 CharacterListType.EXPEDITION_REINFORCEMENT = "expedition_reinforcement";//援兵
+CharacterListType.FLOOD = "floodControl";//治水
+CharacterListType.PLAGUE_OF_LOCUSTS = "flagueOfLocustsControl";//治理蝗灾

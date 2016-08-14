@@ -546,13 +546,7 @@ function dispatchEventListResultStopBattle(child) {
 }
 function dispatchEventListResultChangeSeignior(child) {
 	var chara;
-	for(var i=0,l=AreaModel.list.length;i<l;i++){
-		var area = AreaModel.list[i];
-		chara = area.removeNotDebut(child.id);
-		if(chara){
-			break;
-		}
-	}
+	AreaModel.removeNotDebut(child.id);
 	var character = CharacterModel.getChara(child.id);
 	if(chara && chara.equipments && chara.equipments.length > 0){
 		character.equip(chara.equipments);

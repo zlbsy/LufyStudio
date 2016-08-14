@@ -203,7 +203,7 @@ MapController.prototype.seigniorPerish=function(){
 	var perishView = new PerishView(self,charaId);
 	LMvc.layer.addChild(perishView);
 };
-MapController.prototype.checkSeigniorWin=function(){
+MapController.prototype.checkSeigniorWin=function(){//TODO::待删
 	var self = this;
 	for(var i=0,l=SeigniorModel.list.length;i<l;i++){
 		var seignior = SeigniorModel.list[i];
@@ -211,4 +211,17 @@ MapController.prototype.checkSeigniorWin=function(){
 			
 		}
 	}
+};
+MapController.prototype.businessItemsShow=function(characterModel, item){
+	var self = this;
+	self.characterModel = characterModel;
+	self.item = item;
+	self.load.view(["Common/BusinessItems"],self.businessItemsViewShow);
+};
+MapController.prototype.businessItemsViewShow=function(){
+	var self = this;
+	var businessItemsView = new BusinessItemsView(self, self.characterModel, self.item);
+	self.characterModel = null;
+	self.item = null;
+	self.view.addChild(businessItemsView);
 };

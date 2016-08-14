@@ -188,6 +188,7 @@ SeigniorExecute.prototype.tournamentsCheck=function(){
 		LMvc.MapController.showTournaments();
 	},cancelEvent:function(event){
 		event.currentTarget.parent.remove();
+		SeigniorExecute.Instance().msgView.showSeignior();
 		SeigniorExecute.run();
 	}};
 	var windowLayer = ConfirmWindow(obj);
@@ -296,11 +297,20 @@ SeigniorExecute.prototype.areaJobRun=function(area){
 			case Job.MOVE:
 				list.push(chara);
 				break;
+			case Job.FLOOD:
+				floodRun(chara);
+				break;
+			case Job.PLAGUE_OF_LOCUSTS:
+				plagueOfLocustsRun(chara);
+				break;
 			case Job.AGRICULTURE:
 				agricultureRun(chara);
 				break;
 			case Job.BUSINESS:
-				businessRun(chara);
+				var stop = businessRun(chara);
+				if(stop){
+					return true;
+				}
 				break;
 			case Job.POLICE:
 				policeRun(chara);

@@ -110,14 +110,19 @@ BuildExpeditionView.prototype.selectComplete=function(event){
 			}
 		}else{
 			var index = characterList.findIndex(function(child){
-				return child.id() == LMvc.selectSeignorId;
+				return child.cityId() == cityId;
+				//return child.id() == LMvc.selectSeignorId;
 			});
-			if(index >= 0){
-				var seigniorCharacter = CharacterModel.getChara(LMvc.selectSeignorId);
-				self.controller.setValue("expeditionLeader",seigniorCharacter);
-				self.controller.setValue("toCityId", cityId);
-				return true;
+			if(index < 0){
+				var obj = {title:Language.get("confirm"),message:Language.get("dialog_character_nodef_error"),height:200,okEvent:null};
+				var windowLayer = ConfirmWindow(obj);
+				LMvc.layer.addChild(windowLayer);
+				return false;
 			}
+			var seigniorCharacter = CharacterModel.getChara(LMvc.selectSeignorId);
+			self.controller.setValue("expeditionLeader",seigniorCharacter);
+			self.controller.setValue("toCityId", cityId);
+			return true;
 		}
 	}else if(event.characterListType == CharacterListType.SELECT_LEADER){
 		if(event.characterList.length > 1){
@@ -225,7 +230,14 @@ BuildExpeditionView.prototype.toSelectLeader=function(){
 	var cityData = self.controller.getValue("cityData");
 	var expeditionCharacterList = self.controller.getValue("expeditionCharacterList");
 	troopsFromCharactersToCity(cityData, expeditionCharacterList);
-	self.controller.loadCharacterList(CharacterListType.SELECT_LEADER, self.controller.getValue("expeditionCharacterList"), 
+	var charas = [];
+	for(var i=0;i<expeditionCharacterList.length;i++){
+		var chara = expeditionCharacterList[i];
+		if(chara.cityId() == cityData.id()){
+			charas.push(chara);
+		}
+	}
+	self.controller.loadCharacterList(CharacterListType.SELECT_LEADER, charas, 
 		{isOnlyOne:true, toast:"dialog_expedition_select_leader", buttonLabel:"execute", showMoney:false});
 };
 BuildExpeditionView.prototype.expeditionReadyComplete=function(event){

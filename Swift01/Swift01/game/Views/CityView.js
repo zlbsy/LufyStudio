@@ -377,7 +377,9 @@ CityView.prototype.autoTalkCheck = function(){
 CityView.prototype.referralCharacterExecute = function(chara, targetChara){
 	var self = this;
 	targetChara.seigniorId(chara.seigniorId());
+	AreaModel.removeNotDebut(targetChara.id());
 	chara.city().addGenerals(targetChara);
+	targetChara.loyalty(chara.loyalty());
 	targetChara.cityId(chara.cityId());
 	targetChara.job(Job.END);
 	var script = "SGJTalk.show(" + chara.id() + ",0,"+String.format(Language.get("referralCharacterTalk"),targetChara.name())+");";

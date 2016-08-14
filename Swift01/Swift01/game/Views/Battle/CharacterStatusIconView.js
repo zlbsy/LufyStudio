@@ -45,15 +45,16 @@ CharacterStatusIconView.prototype.addStatus = function(mode,value){
 	}else{
 		status = self.status;
 	}
+	var step = (mode == StrategyType.Chaos ? 0.5 : 0.1);
 	//{mode:??,p:0.1}
 	for(var i = 0;i<status.length;i++){
 		var child = status[i];
 		if(child.mode == mode){
-			self.updateStatus(child, isAid, value, i);
+			self.updateStatus(child, isAid, value, i, step);
 			return;
 		}
 	}
-	status.push({mode:mode, p:0.1, value:value});
+	status.push({mode:mode, p:step, value:value});
 	if(isAid){
 		return;
 	}
@@ -62,9 +63,9 @@ CharacterStatusIconView.prototype.addStatus = function(mode,value){
 	self.index = status.length - 1;
 	self.speedIndex = self.speed;
 };
-CharacterStatusIconView.prototype.updateStatus = function(child, isAid, value, index){
+CharacterStatusIconView.prototype.updateStatus = function(child, isAid, value, index, p){
 	var self = this;
-	child.p = 0.1;
+	child.p = (typeof p == UNDEFINED ? 0.1 : p);
 	if(!isAid){
 		self.index = index;
 		self.speedIndex = self.speed;
@@ -99,7 +100,8 @@ CharacterStatusIconView.prototype.removeStatus = function(status){
 		if(Math.fakeRandom() < child.p){
 			status.splice(i, 1);
 		}else{
-			child.p += (child.p < 0.5 ? 0.1 : 0);
+			child.p += 0.1;
+			//child.p += (child.p < 0.5 ? 0.1 : 0);
 		}
 	}
 };

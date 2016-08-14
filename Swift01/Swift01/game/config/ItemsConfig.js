@@ -10,16 +10,17 @@ var ItemType = {
 var ItemSubType = {
 	
 };
+var BusinessSaleItems = [3,4];
 //PositionConfig.Hand 武器
 //PositionConfig.Body 身
 //PositionConfig.Head 头
 //PositionConfig.Foot 脚
 //PositionConfig.Accessories 配饰
 var ItemDatas = [
-	{id:1,name:"方壶",stamp:1,loyalty:20,type:ItemType.LOYALTY},
-	{id:2,name:"美酒",stamp:1,loyalty:15,type:ItemType.LOYALTY},
-	{id:3,name:"香囊",stamp:1,loyalty:10,type:ItemType.LOYALTY},
-	{id:4,name:"玉环",stamp:1,loyalty:5,type:ItemType.LOYALTY},
+	{id:1,name:"方壶",stamp:1,rarity:7,loyalty:20,type:ItemType.LOYALTY},
+	{id:2,name:"美酒",stamp:1,rarity:5,loyalty:15,type:ItemType.LOYALTY},
+	{id:3,name:"香囊",stamp:1,rarity:3,loyalty:10,type:ItemType.LOYALTY},
+	{id:4,name:"玉环",stamp:1,rarity:1,loyalty:5,type:ItemType.LOYALTY},
 	{id:5,name:"修炼符(武力)",type:ItemType.EXP},
 	{id:6,name:"修炼符(统率)",type:ItemType.EXP},
 	{id:7,name:"修炼符(智力)",type:ItemType.EXP},

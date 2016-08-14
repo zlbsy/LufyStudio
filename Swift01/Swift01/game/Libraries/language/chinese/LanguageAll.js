@@ -251,6 +251,7 @@ Language.data = {
 	"dialog_no_captived_error":"没有被俘虏的武将！",
 	"dialog_character_troops_error":"{0}没有分配士兵!",
 	"dialog_prefecture_nodef_error":"<font size='22' color='#FFFFFF'>防守战太守<font color='#FF0000'>{0}</font>必须出战!</font>",
+	"dialog_character_nodef_error":"不能只派援兵出战!",
 	"dialog_no_money":"金钱不够！",
 	"dialog_error_hire_more":"一次只能录用一个在野武将！",
 	"dialog_transport_select_confirm":"要向{0}输送物资吗？",
@@ -321,7 +322,7 @@ Language.data = {
 	"battle_fail":"战斗失败",
 	"consecutive_wins":"连胜次数:{0}",
 	"continue_challenge_question":"已经连胜了{0}场，要继续挑战吗？",
-	
+	"businessSaleMessage":"<font size='22' color='#FFFFFF'>{0}在执行商业的时候，遇到了 <font color='#FF0000'>{1}</font> 商人，要购买吗？</font>",
 	"recruit_success":"愿效犬马之力!",
 	"recruit_fail":"少废话!忠臣不事二主!",
 	"captive_dialog_msg":"俘虏了敌将{0}!",
@@ -387,6 +388,8 @@ Language.data = {
 	"disaster":"灾难",
 	"flood":"水灾",
 	"flagueOfLocusts":"蝗灾",
+	"floodControl":"治理水灾",
+	"flagueOfLocustsControl":"治理蝗灾",
 	"floodMessage":"由于连日大雨，「{0}」发生水灾了。",
 	"flagueOfLocustsMessage":"「{0}」发生蝗灾了。",
 	"label_equip":"装备",
@@ -395,6 +398,7 @@ Language.data = {
 	"sale_get_money":"获取金钱：{0}",
 	"hav_quantity":"数量：{0}",
 	"sale_unit_price":"单价：{0}",
+	"item_price":"价格：{0}",
 	"sale_quantity_select":"请选择出售个数：",
 	"dialog_city_levelup_error":"正在升级中",
 	

@@ -251,6 +251,7 @@ Language.data = {
 	"dialog_no_captived_error":"捕獲された武将がいません！",
 	"dialog_character_troops_error":"{0}に分配できる兵士がいません!",
 	"dialog_prefecture_nodef_error":"<font size='22' color='#FFFFFF'>防守戦は太守<font color='#FF0000'>{0}</font>が出戦しなければなりません!</font>",
+	"dialog_character_nodef_error":"増援部隊しか選択していないから、出戦できません!",
 	"dialog_no_money":"金銭不足！",
 	"dialog_error_hire_more":"在野武将は一回に一人しか登用できません！",
 	"dialog_transport_select_confirm":"{0}に物資を輸送しますか？",
@@ -321,7 +322,7 @@ Language.data = {
 	"battle_fail":"戦闘失敗",
 	"consecutive_wins":"連勝回数:{0}",
 	"continue_challenge_question":"{0}連勝しました，挑戦し続きますか？",
-	
+	"businessSaleMessage":"<font size='22' color='#FFFFFF'>{0}は商業作業を実行する時、<font color='#FF0000'>{1}</font> の商人と会いました、購入しますか？</font>",
 	"recruit_success":"晴天を見た思いです、嬉んで臣下となりましょう!",
 	"recruit_fail":"だれも、二人の主人に仕えることはできない！",
 	"captive_dialog_msg":"敵将{0}を捕獲しました!",
@@ -387,6 +388,8 @@ Language.data = {
 	"disaster":"災害",
 	"flood":"水災",
 	"flagueOfLocusts":"蝗害",
+	"floodControl":"治水",
+	"flagueOfLocustsControl":"蝗害除去",
 	"floodMessage":"「集中豪雨により、{0}」水災が発生しました。",
 	"flagueOfLocustsMessage":"「{0}」蝗害が発生しました。",
 	"label_equip":"装備",
@@ -395,6 +398,7 @@ Language.data = {
 	"sale_get_money":"獲得お金：{0}",
 	"hav_quantity":"個数：{0}",
 	"sale_unit_price":"価格：{0}",
+	"item_price":"価格：{0}",
 	"sale_quantity_select":"個数を選択してください：",
 	"dialog_city_levelup_error":"レベルアップ中です",
 	

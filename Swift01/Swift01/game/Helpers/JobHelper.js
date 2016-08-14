@@ -26,6 +26,10 @@ function characterListType2JobType(characterListType, city) {
 			return Job.LEVEL_UP;
 		case CharacterListType.PERSUADE:
 			return Job.PERSUADE;
+		case CharacterListType.FLOOD:
+			return Job.FLOOD;
+		case CharacterListType.PLAGUE_OF_LOCUSTS:
+			return Job.PLAGUE_OF_LOCUSTS;
 	}
 	return Job.IDLE;
 }
@@ -45,6 +49,10 @@ function getJobPrice(jobType) {
 			return JobPrice.SPY;
 		case Job.LEVEL_UP:
 			return JobPrice.LEVEL_UP;
+		case Job.FLOOD:
+			return JobPrice.FLOOD;
+		case Job.PLAGUE_OF_LOCUSTS:
+			return JobPrice.PLAGUE_OF_LOCUSTS;
 	}
 	return 0;
 }
@@ -98,7 +106,6 @@ function levelUpCityRun(characterModel){
 }
 function redeemRun(characterModel, data){
 	//赎回俘虏:智力+运气
-	//console.log("redeemRun 赎回俘虏 : ",characterModel.id(), data);
 	characterModel.job(Job.IDLE);
 	var value01 = getJobResult(characterModel.intelligence(),JobCoefficient.DIPLOMACY);
 	var value02 = getJobResult(characterModel.luck(),JobCoefficient.DIPLOMACY);
@@ -106,9 +113,7 @@ function redeemRun(characterModel, data){
 	var targetCharacter = CharacterModel.getChara(data.chara_id);
 	var sum = (targetCharacter.force() + targetCharacter.intelligence() + targetCharacter.command() + targetCharacter.agility() + targetCharacter.luck()) * JobCoefficient.REDEEM;
 	sum += (sum * targetCharacter.skillCoefficient() * 0.1);
-	//console.log("data.money/sum :"+data.money+"/"+sum+" :  ",(data.money/sum) * 100 , "value : ",value);
 	if((data.money/sum) * 100 + value < 100){
-		//console.log("赎回俘虏 : 失败");
 		if(characterModel.seigniorId() == LMvc.selectSeignorId){
 			SeigniorExecute.addMessage(String.format(Language.get("redeemFailMessage"),characterModel.name()));
 		}
@@ -122,7 +127,6 @@ function redeemRun(characterModel, data){
 	targetCharacter.moveTo();
 	targetCity.removeCaptives(data.chara_id);
 	characterModel.featPlus(JobFeatCoefficient.NORMAL);
-	//console.log("赎回俘虏 : 成功");
 	if(characterModel.seigniorId() == LMvc.selectSeignorId){
 		SeigniorExecute.addMessage(String.format(Language.get("redeemSuccessMessage"),characterModel.name()));
 		SeigniorExecute.addMessage(String.format(Language.get("redeemReturnMessage"),targetCharacter.name(),city.name()));
@@ -130,14 +134,12 @@ function redeemRun(characterModel, data){
 }
 function stopBattleRun(characterModel, data){
 	//停战协议:智力+运气
-	//console.log("stopBattleRun停战协议 : ",characterModel.id());
 	characterModel.job(Job.IDLE);
 	var value01 = getJobResult(characterModel.intelligence(),JobCoefficient.DIPLOMACY);
 	var value02 = getJobResult(characterModel.luck(),JobCoefficient.DIPLOMACY);
 	var value = value01 + value02;
 	var sum = (11 - SeigniorModel.list.length) * JobCoefficient.STOP_BATTLE;
 	if(data.money/sum + value < 100){
-		//console.log("停战协议 : 失败");
 		if(characterModel.seigniorId() == LMvc.selectSeignorId){
 			SeigniorExecute.addMessage(String.format(Language.get("stopBattleFailMessage"),characterModel.name()));
 		}
@@ -155,7 +157,6 @@ function stopBattleRun(characterModel, data){
 }
 function accessRun(characterModel){
 	//访问：智力+统率+运气
-	//console.log("accessRun : ",characterModel.id());
 	characterModel.job(Job.IDLE);
 	var value01 = getJobResult(characterModel.intelligence(),JobCoefficient.ACCESS);
 	var value02 = getJobResult(characterModel.command(),JobCoefficient.ACCESS);
@@ -164,7 +165,6 @@ function accessRun(characterModel){
 	var rand = Math.fakeRandom();
 	
 	var cityModel = characterModel.city();
-	//console.log("accessRun : "+rand+">"+value + ","+value01 + ","+value02 + ","+value03);
 	if(rand > value){
 		if(characterModel.seigniorId() == LMvc.selectSeignorId && !cityModel.isAppoint()){
 			SeigniorExecute.addMessage(String.format(Language.get("accessFailMessage"),characterModel.name()));
@@ -174,7 +174,6 @@ function accessRun(characterModel){
 	}
 	var notDebut = cityModel.notDebut();
 	if(notDebut.length == 0){
-		//console.log("accessRun : 失败 notDebut.length="+notDebut.length+","+cityModel.data.not_debut);
 		if(characterModel.seigniorId() == LMvc.selectSeignorId && !cityModel.isAppoint()){
 			SeigniorExecute.addMessage(String.format(Language.get("accessFailMessage"),characterModel.name()));
 		}
@@ -211,7 +210,6 @@ function exploreItems(items, value){
 		}
 		proportionSum += proportion;
 	}
-	console.log(value+"/"+(JobCoefficient.EXPLORE_ITEM * 3)+"="+(value / (JobCoefficient.EXPLORE_ITEM * 3)));
 	var proportionFind = Math.fakeRandom() * proportionSum * value / (JobCoefficient.EXPLORE_ITEM * 3);
 	if(proportionFind > proportionSum){
 		proportionFind = proportionSum;
@@ -233,7 +231,6 @@ function exploreItems(items, value){
 }
 function exploreAgricultureRun(characterModel){
 	//农地探索：智力+武力+运气
-	//console.log("exploreAgricultureRun农地探索 : ",characterModel.id());
 	characterModel.job(Job.IDLE);
 	var value01 = getJobResult(characterModel.intelligence(),JobCoefficient.EXPLORE_AGRICULTURE);
 	var value02 = getJobResult(characterModel.force(),JobCoefficient.EXPLORE_AGRICULTURE);
@@ -243,7 +240,6 @@ function exploreAgricultureRun(characterModel){
 	
 	var cityModel = characterModel.city();
 	if(rand > value){
-		//console.log("exploreAgricultureRun : 失败 能力不够");
 		var food = getValueByExploreFail(400,100);
 		exploreAgricultureFailRun(cityModel, characterModel, food);
 		return;
@@ -251,7 +247,6 @@ function exploreAgricultureRun(characterModel){
 	var items = cityModel.itemsFarmland();
 	var index = exploreItems(items, characterModel.intelligence() + characterModel.force() + characterModel.luck());
 	if(index < 0){
-		//console.log("exploreAgricultureRun : 失败");
 		var food = getValueByExploreFail(800,200);
 		exploreAgricultureFailRun(cityModel, characterModel, food);
 		return;
@@ -319,7 +314,6 @@ function exploreBusinessFailRun(cityModel, characterModel, money){
 }
 function exploreBusinessRun(characterModel){
 	//市场探索：智力+敏捷+运气
-	//console.log("exploreBusinessRun市场探索 : ",characterModel.id());
 	characterModel.job(Job.IDLE);
 	var value01 = getJobResult(characterModel.intelligence(),JobCoefficient.EXPLORE_BUSINESS);
 	var value02 = getJobResult(characterModel.agility(),JobCoefficient.EXPLORE_BUSINESS);
@@ -329,7 +323,6 @@ function exploreBusinessRun(characterModel){
 	
 	var cityModel = characterModel.city();
 	if(rand > value){
-		//console.log("exploreBusinessRun : 失败 能力不够");
 		var money = getValueByExploreFail(100,50);
 		exploreBusinessFailRun(cityModel, characterModel, money);
 		return;
@@ -337,7 +330,6 @@ function exploreBusinessRun(characterModel){
 	var items = cityModel.itemsMarket();
 	var index = exploreItems(items, characterModel.intelligence() + characterModel.agility() + characterModel.luck());
 	if(index < 0){
-		//console.log("exploreBusinessRun : 失败");
 		var money = getValueByExploreFail(200,100);
 		exploreBusinessFailRun(cityModel, characterModel, money);
 		return;
@@ -362,7 +354,6 @@ function exploreBusinessRun(characterModel){
 }
 function transportRun(characterModel, transportData){
 	//运输物资
-	//console.log("transportRun运输物资 : ",characterModel.id());
 	characterModel.job(Job.IDLE);
 	var cityModel = AreaModel.getArea(transportData.cityId);
 	var troops = cityModel.troops();
@@ -382,6 +373,38 @@ function repairRun(characterModel){
 	//武力经验
 	characterModel.plusPropertiesExp("force");
 }
+function floodRun(characterModel){
+	//治水：智力+统率
+	var value = getJobResult(characterModel.intelligence() + characterModel.command(),JobCoefficient.TECHNOLOGY);
+	var value = value * (characterModel.hasSkill(SkillSubType.TECHNOLOGY) ? 1.5 : 1);
+	var city = characterModel.city();
+	city.technology(value >>> 0);
+	characterModel.job(Job.IDLE);
+	var feat = JobFeatCoefficient.NORMAL * value / JobFeatCoefficient.TECHNOLOGY;
+	characterModel.featPlus(feat);
+	//智力经验
+	characterModel.plusPropertiesExp("intelligence");
+	city.flood(-1);
+	if(city.isFlood() <= 0){
+		city.isFlood(0);
+	}
+}
+function plagueOfLocustsRun(characterModel){
+	//治理蝗灾：智力+武力
+	var value = getJobResult(characterModel.intelligence() + characterModel.force(),JobCoefficient.AGRICULTURE);
+	var value = value * (characterModel.hasSkill(SkillSubType.AGRICULTURE) ? 1.5 : 1);
+	var city = characterModel.city();
+	city.agriculture(value >>> 0);
+	characterModel.job(Job.IDLE);
+	var feat = JobFeatCoefficient.NORMAL * value / JobFeatCoefficient.AGRICULTURE;
+	characterModel.featPlus(feat);
+	//敏捷经验
+	characterModel.plusPropertiesExp("agility");
+	city.plagueOfLocusts(-1);
+	if(city.plagueOfLocusts() <= 0){
+		city.isPlagueOfLocusts(0);
+	}
+}
 function agricultureRun(characterModel){
 	//农业：智力+武力
 	var value = getJobResult(characterModel.intelligence() + characterModel.force(),JobCoefficient.AGRICULTURE);
@@ -392,11 +415,12 @@ function agricultureRun(characterModel){
 	characterModel.featPlus(feat);
 	//敏捷经验
 	characterModel.plusPropertiesExp("agility");
+	var city = characterModel.city();
 	if(!city.isPlagueOfLocusts() && city.plagueOfLocusts() > 0 && Math.fakeRandom() < 0.2){
-		if(Math.fakeRandom() < 0.5){
-			//免费治理蝗害
-		}else{
-			//花钱治理蝗害
+		//治理蝗害
+		city.plagueOfLocusts(-1);
+		if(characterModel.seigniorId() == LMvc.selectSeignorId && !cityModel.isAppoint()){
+			SeigniorExecute.addMessage(String.format(Language.get("{0}向百姓传授了蝗害的防治方法，{1}对蝗害的防治能力提升了。"),characterModel.name(),characterModel.city().name()));
 		}
 	}
 	return false;
@@ -411,8 +435,14 @@ function businessRun(characterModel){
 	characterModel.featPlus(feat);
 	//运气经验
 	characterModel.plusPropertiesExp("luck");
-	if(Math.fakeRandom() < 0.01){
+	if(characterModel.seigniorId() == LMvc.selectSeignorId && !characterModel.city().isAppoint() && Math.fakeRandom() < 10.01){
 		//交易
+		var itemId = BusinessSaleItems[BusinessSaleItems.length*Math.fakeRandom() >>> 0];
+		var item = ItemMasterModel.getMaster(itemId);
+		if(item.businessPrice() <= characterModel.city().money()){
+			LMvc.MapController.businessItemsShow(characterModel, item);
+			return true;
+		}
 	}
 	return false;
 }
@@ -439,10 +469,10 @@ function technologyRun(characterModel){
 	//智力经验
 	characterModel.plusPropertiesExp("intelligence");
 	if(!city.isFlood() && city.flood() > 0 && Math.fakeRandom() < 0.2){
-		if(Math.fakeRandom() < 0.5){
-			//免费治水
-		}else{
-			//花钱治水确认
+		//治水
+		city.flood(-1);
+		if(characterModel.seigniorId() == LMvc.selectSeignorId && !cityModel.isAppoint()){
+			SeigniorExecute.addMessage(String.format(Language.get("{0}带领百姓建造堤坝，{1}的防水能力提升了。"),characterModel.name(),characterModel.city().name()));
 		}
 	}
 	return false;

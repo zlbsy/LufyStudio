@@ -18,6 +18,8 @@ var Job = {
 	DIPLOMACY_STOP_BATTLE:"diplomacy_stop_battle",
 	LEVEL_UP:"levelUp",
 	PERSUADE:"persuade",
+	PLAGUE_OF_LOCUSTS:"flagueOfLocustsControl",//治理蝗灾
+	FLOOD:"floodControl",//治理水灾
 	END:"end"
 };
 var JobPrice = {
@@ -31,6 +33,8 @@ var JobPrice = {
 	TRAINING:200,
 	ENLIST:500,//征兵价格
 	PRIZE:200,//褒奖
+	PLAGUE_OF_LOCUSTS:200,//治理蝗灾
+	FLOOD:200,//治理水灾
 };
 var JobCoefficient = {
 	NORMAL:90,

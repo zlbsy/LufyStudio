@@ -26,6 +26,7 @@ SoldierDetailedView.prototype.set=function(){
 	hpIcon.x = hpBack.x + 140 - hpSize + 2;
 	hpIcon.y = icon.y + 2;
 	layer.addChild(hpIcon);
+	
 	var characterModel = self.controller.getValue("selectedCharacter");
 	var lblHp = getStrokeLabel(self.soldierModel.maxTroops(characterModel),16,"#FFFFFF","#000000",1);
 	lblHp.x = icon.x + width + 30 + 140 - lblHp.getWidth();
@@ -88,7 +89,65 @@ SoldierDetailedView.prototype.set=function(){
 	rangeAttackLayer.y = 70;
 	layer.addChild(rangeAttackLayer);
 	
+	var buttonRestraint = getButton(Language.get("克制(攻)"),120);
+	buttonRestraint.x = icon.x;
+	buttonRestraint.y = lblExplanation.y + lblExplanation.getHeight() + 25;
+	layer.addChild(buttonRestraint);
+	buttonRestraint.addEventListener(LMouseEvent.MOUSE_UP, self.onClickRestraintButton);
+	var buttonRestraintPassive = getButton(Language.get("克制(守)"),120);
+	buttonRestraintPassive.x = icon.x + 130;
+	buttonRestraintPassive.y = lblExplanation.y + lblExplanation.getHeight() + 25;
+	layer.addChild(buttonRestraintPassive);
+	buttonRestraintPassive.addEventListener(LMouseEvent.MOUSE_UP, self.onClickRestraintPassiveButton);
 	self.addChild(layer);
+};
+SoldierDetailedView.prototype.onClickRestraintButton=function(event){
+	var self = event.currentTarget.getParentByConstructor(SoldierDetailedView);
+	var startX = 40, w = 140, h = 40;
+	var layer = new LSprite();
+	for(var i=0,l=SoldierMasterModel.master.length;i<l;i++){
+		var soldier = SoldierMasterModel.master[i];
+		var restrain = self.soldierModel.restrain(soldier.id());
+		var restrainLabel = "-";
+		if(restrain.value != 100){
+			restrainLabel = restrain.value + "%";
+		}
+		var msg = String.format("{0} : {1}", soldier.name(), restrainLabel);
+		var label = getStrokeLabel(msg,18,"#FFFFFF","#000000",4);
+		label.x = startX + w*(i%3);
+		label.y = h*(i/3 >>> 0);
+		layer.addChild(label);
+	}
+	var obj = {title:Language.get("confirm"),subWindow:layer,
+	width:LGlobal.width,height:LGlobal.height-20,okEvent:function(e){
+		e.currentTarget.parent.remove();
+	}};
+	var windowLayer = ConfirmWindow(obj);
+	LMvc.layer.addChild(windowLayer);
+};
+SoldierDetailedView.prototype.onClickRestraintPassiveButton=function(event){
+	var self = event.currentTarget.getParentByConstructor(SoldierDetailedView);
+	var startX = 40, w = 140, h = 40;
+	var layer = new LSprite();
+	for(var i=0,l=SoldierMasterModel.master.length;i<l;i++){
+		var soldier = SoldierMasterModel.master[i];
+		var restrain = soldier.restrain(self.soldierModel.id());
+		var restrainLabel = "-";
+		if(restrain.value != 100){
+			restrainLabel = restrain.value + "%";
+		}
+		var msg = String.format("{0} : {1}", soldier.name(), restrainLabel);
+		var label = getStrokeLabel(msg,18,"#FFFFFF","#000000",4);
+		label.x = startX + w*(i%3);
+		label.y = h*(i/3 >>> 0);
+		layer.addChild(label);
+	}
+	var obj = {title:Language.get("confirm"),subWindow:layer,
+	width:LGlobal.width,height:LGlobal.height-20,okEvent:function(e){
+		e.currentTarget.parent.remove();
+	}};
+	var windowLayer = ConfirmWindow(obj);
+	LMvc.layer.addChild(windowLayer);
 };
 SoldierDetailedView.prototype.getRangeAttack=function(){
 	var self = this;
