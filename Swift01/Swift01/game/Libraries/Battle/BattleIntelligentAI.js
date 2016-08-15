@@ -666,11 +666,37 @@ BattleIntelligentAI.prototype.canAttackTarget = function(target, node) {
 };
 BattleIntelligentAI.prototype.getPhysicalNodeTarget = function(target) {
 	var self = this, chara = self.chara;
-	var roadList = self.roadList;
+	var roadList = self.roadList.concat();
 	var range, rangeAttack = chara.data.currentSoldiers().rangeAttack(), jl = rangeAttack.length;
-	var node, length = 10000, sLength;
 	var lX = target.locationX();
 	var lY = target.locationY();
+	var soldier = chara.data.currentSoldiers();
+	roadList = roadList.sort(function(a,b){
+		var aCan = rangeAttack.find(function(range){
+			return a.x + range.x == lX && a.y + range.y == lY;
+		});
+		var bCan = rangeAttack.find(function(range){
+			return b.x + range.x == lX && b.y + range.y == lY;
+		});
+		if(aCan && !bCan){
+			return -1;
+		}else if(!aCan && bCan){
+			return 1;
+		}else(!aCan && !bCan){
+			return 0;
+		}
+		var aTerrainId = LMvc.BattleController.view.roadLayer.master[i];
+		var aTerrain = soldier.terrain(aTerrainId);
+		var bTerrainId = TerrainMasterModel.master[i];
+		var bTerrain = soldier.terrain(bTerrainId);
+		return bTerrain.value - aTerrain.value;
+	});
+	var child = roadList[0];
+	var can = rangeAttack.find(function(range){
+			return child.x + range.x == lX && child.y + range.y == lY;
+		});
+	return can?child:null;
+	var node, length = 10000, sLength;
 	for (var i = 0, l = roadList.length; i < l; i++) {
 		var child = roadList[i];
 		var can = false;
