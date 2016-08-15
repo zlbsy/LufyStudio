@@ -109,9 +109,17 @@ BuildExpeditionView.prototype.selectComplete=function(event){
 				return true;
 			}
 		}else{
+			var seigniorIndex = characterList.findIndex(function(child){
+				return child.id() == LMvc.selectSeignorId;
+			});
+			if(seigniorIndex >= 0){
+				var seigniorCharacter = CharacterModel.getChara(LMvc.selectSeignorId);
+				self.controller.setValue("expeditionLeader",seigniorCharacter);
+				self.controller.setValue("toCityId", cityId);
+				return true;
+			}
 			var index = characterList.findIndex(function(child){
-				return child.cityId() == cityId;
-				//return child.id() == LMvc.selectSeignorId;
+				return child.cityId() == LMvc.cityId;
 			});
 			if(index < 0){
 				var obj = {title:Language.get("confirm"),message:Language.get("dialog_character_nodef_error"),height:200,okEvent:null};
@@ -119,10 +127,6 @@ BuildExpeditionView.prototype.selectComplete=function(event){
 				LMvc.layer.addChild(windowLayer);
 				return false;
 			}
-			var seigniorCharacter = CharacterModel.getChara(LMvc.selectSeignorId);
-			self.controller.setValue("expeditionLeader",seigniorCharacter);
-			self.controller.setValue("toCityId", cityId);
-			return true;
 		}
 	}else if(event.characterListType == CharacterListType.SELECT_LEADER){
 		if(event.characterList.length > 1){

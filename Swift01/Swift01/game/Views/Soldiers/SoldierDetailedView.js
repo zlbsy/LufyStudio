@@ -90,17 +90,17 @@ SoldierDetailedView.prototype.set=function(){
 	rangeAttackLayer.y = 70;
 	layer.addChild(rangeAttackLayer);
 	
-	var buttonRestraint = getButton(Language.get("克制(攻击)"),120);
+	var buttonRestraint = getButton(Language.get("restraint_attack"),120);
 	buttonRestraint.x = icon.x;
 	buttonRestraint.y = lblExplanation.y + lblExplanation.getHeight() + 25;
 	layer.addChild(buttonRestraint);
 	buttonRestraint.addEventListener(LMouseEvent.MOUSE_UP, self.onClickRestraintButton);
-	var buttonRestraintPassive = getButton(Language.get("克制(伤害)"),120);
+	var buttonRestraintPassive = getButton(Language.get("restraint_attack_passive"),120);
 	buttonRestraintPassive.x = icon.x + 130;
 	buttonRestraintPassive.y = lblExplanation.y + lblExplanation.getHeight() + 25;
 	layer.addChild(buttonRestraintPassive);
 	buttonRestraintPassive.addEventListener(LMouseEvent.MOUSE_UP, self.onClickRestraintPassiveButton);
-	var buttonTerrain = getButton(Language.get("地形"),80);
+	var buttonTerrain = getButton(Language.get("terrain"),80);
 	buttonTerrain.x = icon.x + 260;
 	buttonTerrain.y = lblExplanation.y + lblExplanation.getHeight() + 25;
 	layer.addChild(buttonTerrain);
@@ -111,7 +111,7 @@ SoldierDetailedView.prototype.onClickTerrainButton=function(event){
 	var self = event.currentTarget.getParentByConstructor(SoldierDetailedView);
 	var startX = 40, startY = 60, w = 140, h = 35, index = 0, color;
 	var layer = new LSprite();
-	var msg = String.format(Language.get("{0}的在各个地形上所发挥的能力。"), self.soldierModel.name());
+	var msg = String.format(Language.get("soldier_terrain_message"), self.soldierModel.name());
 	var label = getStrokeLabel(msg,18,"#FFFFFF","#000000",4);
 	label.x = startX;
 	layer.addChild(label);
@@ -128,7 +128,7 @@ SoldierDetailedView.prototype.onClickTerrainButton=function(event){
 			color = "#FF0000";
 		}
 		msg = String.format("{0} : {1}", terrainModel.name(), terrainLabel);
-		label = getStrokeLabel(msg,18,color,"#000000",4);
+		label = getStrokeLabel(msg,18,color,"#000000",2);
 		label.x = startX + w*(index%3);
 		label.y = startY + h*(index/3 >>> 0);
 		layer.addChild(label);
@@ -145,7 +145,7 @@ SoldierDetailedView.prototype.onClickRestraintButton=function(event){
 	var self = event.currentTarget.getParentByConstructor(SoldierDetailedView);
 	var startX = 40, startY = 60, w = 140, h = 35;
 	var layer = new LSprite();
-	var msg = String.format(Language.get("{0}攻击其它兵种时的攻击加成。"), self.soldierModel.name());
+	var msg = String.format(Language.get("restraint_attack_message"), self.soldierModel.name());
 	var label = getStrokeLabel(msg,18,"#FFFFFF","#000000",4);
 	label.x = startX;
 	layer.addChild(label);
@@ -157,7 +157,7 @@ SoldierDetailedView.prototype.onClickRestraintButton=function(event){
 			restrainLabel = restrain.value + "%";
 		}
 		msg = String.format("{0} : {1}", soldier.name(), restrainLabel);
-		label = getStrokeLabel(msg,18,"#FFFFFF","#000000",4);
+		label = getStrokeLabel(msg,18,"#FFFFFF","#000000",2);
 		label.x = startX + w*(i%3);
 		label.y = startY + h*(i/3 >>> 0);
 		layer.addChild(label);
@@ -173,7 +173,7 @@ SoldierDetailedView.prototype.onClickRestraintPassiveButton=function(event){
 	var self = event.currentTarget.getParentByConstructor(SoldierDetailedView);
 	var startX = 40, startY = 60, w = 140, h = 35;
 	var layer = new LSprite();
-	var msg = String.format(Language.get("{0}被其它兵种攻击时受到的伤害加成。"), self.soldierModel.name());
+	var msg = String.format(Language.get("restraint_attack_passive_message"), self.soldierModel.name());
 	var label = getStrokeLabel(msg,18,"#FFFFFF","#000000",4);
 	label.x = startX;
 	layer.addChild(label);
@@ -185,7 +185,7 @@ SoldierDetailedView.prototype.onClickRestraintPassiveButton=function(event){
 			restrainLabel = restrain.value + "%";
 		}
 		msg = String.format("{0} : {1}", soldier.name(), restrainLabel);
-		label = getStrokeLabel(msg,18,"#FFFFFF","#000000",4);
+		label = getStrokeLabel(msg,18,"#FFFFFF","#000000",2);
 		label.x = startX + w*(i%3);
 		label.y = startY + h*(i/3 >>> 0);
 		layer.addChild(label);
@@ -227,7 +227,6 @@ SoldierDetailedView.prototype.getRangeAttackTarget=function(){
 	layer.addChild(label);
 	var labelHeight = 20,maxLength = 5,step = 11;
 	var rangeAttack = self.soldierModel.rangeAttackTarget();
-	//[{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0}]
 	for(var i=0;i<rangeAttack.length;i++){
 		var range = rangeAttack[i];
 		maxLength = Math.max(maxLength, Math.abs(range.x), Math.abs(range.y));

@@ -682,19 +682,23 @@ BattleIntelligentAI.prototype.getPhysicalNodeTarget = function(target) {
 			return -1;
 		}else if(!aCan && bCan){
 			return 1;
-		}else(!aCan && !bCan){
+		}else if(!aCan && !bCan){
 			return 0;
 		}
-		var aTerrainId = LMvc.BattleController.view.roadLayer.master[i];
+		var alx = chara.locationX()+a.x;
+		var aly = chara.locationY()+a.y;
+		var aTerrainId = LMvc.BattleController.view.mapLayer.getTerrainId(alx, aly);
 		var aTerrain = soldier.terrain(aTerrainId);
-		var bTerrainId = TerrainMasterModel.master[i];
+		var blx = chara.locationX()+b.x;
+		var bly = chara.locationY()+b.y;
+		var bTerrainId = LMvc.BattleController.view.mapLayer.getTerrainId(blx, bly);
 		var bTerrain = soldier.terrain(bTerrainId);
 		return bTerrain.value - aTerrain.value;
 	});
 	var child = roadList[0];
 	var can = rangeAttack.find(function(range){
-			return child.x + range.x == lX && child.y + range.y == lY;
-		});
+		return child.x + range.x == lX && child.y + range.y == lY;
+	});
 	return can?child:null;
 	var node, length = 10000, sLength;
 	for (var i = 0, l = roadList.length; i < l; i++) {
