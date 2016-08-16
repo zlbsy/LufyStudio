@@ -298,7 +298,6 @@ BattleIntelligentAI.prototype.getNestNode = function(target, rangeAttack) {
 	var node, length = 10000, sLength;
 	var lX = target.locationX();
 	var lY = target.locationY();
-	//targetLength
 	if(typeof rangeAttack == UNDEFINED){
 		rangeAttack = [{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0}];
 	}
@@ -316,6 +315,16 @@ BattleIntelligentAI.prototype.getNestNode = function(target, rangeAttack) {
 				return -1;
 			}else if(!aIn && bIn){
 				return 1;
+			}else if(aIn && bIn){
+				var alx = chara.locationX()+a.x;
+				var aly = chara.locationY()+a.y;
+				var aTerrainId = LMvc.BattleController.view.mapLayer.getTerrainId(alx, aly);
+				var aTerrain = soldier.terrain(aTerrainId);
+				var blx = chara.locationX()+b.x;
+				var bly = chara.locationY()+b.y;
+				var bTerrainId = LMvc.BattleController.view.mapLayer.getTerrainId(blx, bly);
+				var bTerrain = soldier.terrain(bTerrainId);
+				return bTerrain.value - aTerrain.value;
 			}
 		}
 		var al = Math.abs(a.x - lX) + Math.abs(a.y - lY);
@@ -328,7 +337,7 @@ BattleIntelligentAI.prototype.getNestNode = function(target, rangeAttack) {
 	};
 	self.roadList.sort(sortFunc);
 	return self.roadList[0];
-	for (var i = 0, l = roadList.length; i < l; i++) {
+	/*for (var i = 0, l = roadList.length; i < l; i++) {
 		var child = roadList[i];
 		var cLength = Math.abs(child.x - lX) + Math.abs(child.y - lY);
 		if(cLength > length){
@@ -347,7 +356,7 @@ BattleIntelligentAI.prototype.getNestNode = function(target, rangeAttack) {
 		}
 		node = child;
 	}
-	return node;
+	return node;*/
 };
 BattleIntelligentAI.prototype.getStrategyNodeTarget = function(strategy, target) {
 	var self = this, chara = self.chara;
@@ -604,32 +613,51 @@ BattleIntelligentAI.prototype.findPhysicalAttackTarget = function() {
 			break;
 	}
 };
-BattleIntelligentAI.prototype.findPhysicalPant = function(targetLength) {
+BattleIntelligentAI.prototype.findPhysicalPant = function() {
+	this.findPhysicaTarget(BattleIntelligentAI.targetPantCharacters, BattleIntelligentAI.PHYSICAL_OTHER);
+	/*
 	var self = this, chara = self.chara,node,targets = [];
 	for(var i = 0,l = BattleIntelligentAI.targetPantCharacters.length;i<l;i++){
 		var child = BattleIntelligentAI.targetPantCharacters[i];
 		node = self.getNestNode(child, chara.data.currentSoldiers().rangeAttack());
 		var can = self.canAttackTarget(child,node);
 		if(can){
-			targets.push(child);
+			targets.push({c:child,n:node});
 		}
 	}
 	if(targets.length == 0){
 		self.physicalFlag = BattleIntelligentAI.PHYSICAL_OTHER;
 		return;
 	}
-	var target = targets[(targets.length * Math.fakeRandom()) >>> 0];
-	node = self.getPhysicalNodeTarget(target);
-	self.target = target;
-	self.targetNode = node;
-	self.chara.mode = CharacterMode.MOVING;
+	var soldier = chara.data.currentSoldiers();
+	targets = targets.sort(function(a, b) {
+		var aIn = battleLocationInRangeAttack(a.c, a.n.x + self.locationX, a.n.y + self.locationY);
+		var bIn = battleLocationInRangeAttack(b.c, b.n.x + self.locationX, b.n.y + self.locationY);
+		if(aIn && !bIn){
+			return -1;
+		}else if(!aIn && bIn){
+			return 1;
+		}
+		var alx = chara.locationX()+a.n.x;
+		var aly = chara.locationY()+a.n.y;
+		var aTerrainId = LMvc.BattleController.view.mapLayer.getTerrainId(alx, aly);
+		var aTerrain = soldier.terrain(aTerrainId);
+		var blx = chara.locationX()+b.n.x;
+		var bly = chara.locationY()+b.n.y;
+		var bTerrainId = LMvc.BattleController.view.mapLayer.getTerrainId(blx, bly);
+		var bTerrain = soldier.terrain(bTerrainId);
+		return bTerrain.value - aTerrain.value;
+	});
+	var targetObj = targets[0];
+	//var target = targets[(targets.length * Math.fakeRandom()) >>> 0];
+	//node = self.getPhysicalNodeTarget(target);
+	self.target = targetObj.c;
+	self.targetNode = targetObj.n;
+	self.chara.mode = CharacterMode.MOVING;*/
 };
 BattleIntelligentAI.prototype.findPhysicalOther = function(targetLength) {
-	var self = this, chara = self.chara,node,targets = [];
-	var fromLocations = [[self.locationX, self.locationY]];
-	if(chara.data.currentSoldiers().attackType() == AttackType.FAR){
-		
-	}
+	this.findPhysicaTarget(BattleIntelligentAI.targetCharacters, BattleIntelligentAI.TO_MOVE);
+	/*var self = this, chara = self.chara,node,targets = [];
 	for(var i = 0,l = BattleIntelligentAI.targetCharacters.length;i<l;i++){
 		var child = BattleIntelligentAI.targetCharacters[i];
 		if(child.data.isPantTroops()){
@@ -649,6 +677,44 @@ BattleIntelligentAI.prototype.findPhysicalOther = function(targetLength) {
 	node = self.getPhysicalNodeTarget(target);
 	self.target = target;
 	self.targetNode = node;
+	self.chara.mode = CharacterMode.MOVING;*/
+};
+BattleIntelligentAI.prototype.findPhysicaTarget = function(characters, nextMode) {
+	var self = this, chara = self.chara,node,targets = [];
+	for(var i = 0,l = characters.length;i<l;i++){
+		var child = characters[i];
+		node = self.getNestNode(child, chara.data.currentSoldiers().rangeAttack());
+		var can = self.canAttackTarget(child,node);
+		if(can){
+			targets.push({c:child,n:node});
+		}
+	}
+	if(targets.length == 0){
+		self.physicalFlag = nextMode;
+		return;
+	}
+	var soldier = chara.data.currentSoldiers();
+	targets = targets.sort(function(a, b) {
+		var aIn = battleLocationInRangeAttack(a.c, a.n.x + self.locationX, a.n.y + self.locationY);
+		var bIn = battleLocationInRangeAttack(b.c, b.n.x + self.locationX, b.n.y + self.locationY);
+		if(aIn && !bIn){
+			return -1;
+		}else if(!aIn && bIn){
+			return 1;
+		}
+		var alx = chara.locationX()+a.n.x;
+		var aly = chara.locationY()+a.n.y;
+		var aTerrainId = LMvc.BattleController.view.mapLayer.getTerrainId(alx, aly);
+		var aTerrain = soldier.terrain(aTerrainId);
+		var blx = chara.locationX()+b.n.x;
+		var bly = chara.locationY()+b.n.y;
+		var bTerrainId = LMvc.BattleController.view.mapLayer.getTerrainId(blx, bly);
+		var bTerrain = soldier.terrain(bTerrainId);
+		return bTerrain.value - aTerrain.value;
+	});
+	var targetObj = targets[0];
+	self.target = targetObj.c;
+	self.targetNode = targetObj.n;
 	self.chara.mode = CharacterMode.MOVING;
 };
 BattleIntelligentAI.prototype.canAttackTarget = function(target, node) {
@@ -664,6 +730,7 @@ BattleIntelligentAI.prototype.canAttackTarget = function(target, node) {
 	}
 	return false;
 };
+/*
 BattleIntelligentAI.prototype.getPhysicalNodeTarget = function(target) {
 	var self = this, chara = self.chara;
 	var roadList = self.roadList.concat();
@@ -732,7 +799,7 @@ BattleIntelligentAI.prototype.getPhysicalNodeTarget = function(target) {
 		node = child;
 	}
 	return node;
-};
+};*/
 BattleIntelligentAI.prototype.findMoveTarget = function() {
 	var self = this, chara = self.chara;
 	if(chara.mission != BattleCharacterMission.Initiative){
