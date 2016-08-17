@@ -23,11 +23,36 @@ function getWeakBattleCity(areaModel){
 }
 /*检索可攻击城池*/
 function getCanBattleCity(areaModel,characters,enlistFlag){
-	
-	if((enlistFlag != AiEnlistFlag.Free && enlistFlag != AiEnlistFlag.None && enlistFlag != AiEnlistFlag.BattleResource) 
+/*var AiEnlistFlag = {
+	None:0,//爆满
+	Must:1,//必须征兵
+	Need:2,//需要征兵
+	Battle:3,//战斗准备征兵
+	MustResource:4,//物资极缺
+	NeedResource:5,//物资短缺
+	BattleResource:6,//战斗准备物资
+	Free:7//充足
+};*/
+	switch (enlistFlag) {
+		case AiEnlistFlag.None:
+		case AiEnlistFlag.Free:
+			break;
+		case AiEnlistFlag.Battle:
+		case AiEnlistFlag.BattleResource:
+			if(Math.fakeRandom() < 0.5){
+				return null;
+			}
+		case AiEnlistFlag.Must:
+		case AiEnlistFlag.Need:
+		case AiEnlistFlag.MustResource:
+		case AiEnlistFlag.NeedResource:
+		default:
+			return null;
+	}
+	/*if((enlistFlag != AiEnlistFlag.Free && enlistFlag != AiEnlistFlag.None && enlistFlag != AiEnlistFlag.BattleResource) 
 	|| ((enlistFlag == AiEnlistFlag.Battle || enlistFlag == AiEnlistFlag.NeedResource) && Math.fakeRandom() < 0.5)){
 		return null;
-	}
+	}*/
 	var generalCount = areaModel.generalsSum();
 	if(characters.length < BattleMapConfig.DetachmentQuantity || generalCount < BattleMapConfig.DetachmentQuantity * 2){
 		return null;
