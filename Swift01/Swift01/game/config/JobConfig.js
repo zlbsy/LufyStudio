@@ -18,7 +18,7 @@ var Job = {
 	DIPLOMACY_STOP_BATTLE:"diplomacy_stop_battle",
 	LEVEL_UP:"levelUp",
 	PERSUADE:"persuade",
-	PLAGUE_OF_LOCUSTS:"flagueOfLocustsControl",//治理蝗灾
+	PLAGUE_OF_LOCUSTS:"plagueOfLocustsControl",//治理蝗灾
 	FLOOD:"floodControl",//治理水灾
 	END:"end"
 };

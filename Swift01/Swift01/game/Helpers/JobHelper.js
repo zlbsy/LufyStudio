@@ -420,7 +420,7 @@ function agricultureRun(characterModel){
 		//治理蝗害
 		city.plagueOfLocusts(-1);
 		if(characterModel.seigniorId() == LMvc.selectSeignorId && !cityModel.isAppoint()){
-			SeigniorExecute.addMessage(String.format(Language.get("{0}向百姓传授了蝗害的防治方法，{1}对蝗害的防治能力提升了。"),characterModel.name(),characterModel.city().name()));
+			SeigniorExecute.addMessage(String.format(Language.get("plagueOfLocustsControlMessage"),characterModel.name(),characterModel.city().name()));
 		}
 	}
 	return false;
@@ -472,7 +472,7 @@ function technologyRun(characterModel){
 		//治水
 		city.flood(-1);
 		if(characterModel.seigniorId() == LMvc.selectSeignorId && !cityModel.isAppoint()){
-			SeigniorExecute.addMessage(String.format(Language.get("{0}带领百姓建造堤坝，{1}的防水能力提升了。"),characterModel.name(),characterModel.city().name()));
+			SeigniorExecute.addMessage(String.format(Language.get("floodControlMessage"),characterModel.name(),characterModel.city().name()));
 		}
 	}
 	return false;
@@ -1214,7 +1214,7 @@ function disasterMonthsExecute(area){
 				area.isPlagueOfLocusts(1);
 				if(area.seigniorCharaId() == LMvc.selectSeignorId){
 					var obj = {title:Language.get("confirm"),
-					message:String.format(Language.get("flagueOfLocustsMessage"),area.name()),
+					message:String.format(Language.get("plagueOfLocustsMessage"),area.name()),
 					height:200,okEvent:function(event){
 						event.currentTarget.parent.remove();
 						SeigniorExecute.run();

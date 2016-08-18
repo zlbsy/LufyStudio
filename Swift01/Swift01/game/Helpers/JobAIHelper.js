@@ -23,36 +23,36 @@ function getWeakBattleCity(areaModel){
 }
 /*检索可攻击城池*/
 function getCanBattleCity(areaModel,characters,enlistFlag){
-/*var AiEnlistFlag = {
-	None:0,//爆满
-	Must:1,//必须征兵
-	Need:2,//需要征兵
-	Battle:3,//战斗准备征兵
-	MustResource:4,//物资极缺
-	NeedResource:5,//物资短缺
-	BattleResource:6,//战斗准备物资
-	Free:7//充足
-};*/
 	switch (enlistFlag) {
-		case AiEnlistFlag.None:
-		case AiEnlistFlag.Free:
+		case AiEnlistFlag.None://爆满
+		case AiEnlistFlag.Free://充足
 			break;
-		case AiEnlistFlag.Battle:
-		case AiEnlistFlag.BattleResource:
-			if(Math.fakeRandom() < 0.5){
+		case AiEnlistFlag.Battle://战斗准备征兵
+		case AiEnlistFlag.BattleResource://战斗准备物资
+			var ambition, maxAmbition = 15;
+			var seigniorCharaId = areaModel.seigniorCharaId();
+			if(seigniorCharaId == LMvc.selectSeignorId){
+				if(areaModel.isAppoint() && areaModel.appointType() == AppointType.AppointMilitary){
+					var prefectureChara = CharacterModel.getChara(areaModel.prefecture());
+					var basicPropertiesSum = prefectureChara.basicPropertiesSum();
+					ambition = maxAmbition * basicPropertiesSum / 500;
+				}else{
+					ambition = 0;
+				}
+			}else{
+				ambition = areaModel.seignior().character().ambition();
+			}
+			var p = (maxAmbition - ambition) / maxAmbition;
+			if(Math.fakeRandom() < (1 - p)){
 				return null;
 			}
-		case AiEnlistFlag.Must:
-		case AiEnlistFlag.Need:
-		case AiEnlistFlag.MustResource:
-		case AiEnlistFlag.NeedResource:
+		case AiEnlistFlag.Must://必须征兵
+		case AiEnlistFlag.Need://需要征兵
+		case AiEnlistFlag.MustResource://物资极缺
+		case AiEnlistFlag.NeedResource://物资短缺
 		default:
 			return null;
 	}
-	/*if((enlistFlag != AiEnlistFlag.Free && enlistFlag != AiEnlistFlag.None && enlistFlag != AiEnlistFlag.BattleResource) 
-	|| ((enlistFlag == AiEnlistFlag.Battle || enlistFlag == AiEnlistFlag.NeedResource) && Math.fakeRandom() < 0.5)){
-		return null;
-	}*/
 	var generalCount = areaModel.generalsSum();
 	if(characters.length < BattleMapConfig.DetachmentQuantity || generalCount < BattleMapConfig.DetachmentQuantity * 2){
 		return null;
@@ -137,7 +137,6 @@ function jobAiToBattle(areaModel,characters,targetCity){
 				}
 			}
 			generals = getBattleReinforcement(city, data.expeditionCharacterList.length, BattleMapConfig.AttackQuantity);
-			console.log("援兵",city.name(),generals.length);
 			data.expeditionCharacterList = data.expeditionCharacterList.concat(generals);
 		}
 	}
@@ -368,9 +367,9 @@ function jobAiNeedToEnlist(areaModel){
 	if(areaModel.troops() < minToops * mustProportion){ 
 		return AiEnlistFlag.Must;
 	}
-	if(areaModel.agriculture() < areaModel.maxAgriculture()*0.2 || 
-		areaModel.business() < areaModel.maxBusiness()*0.2 || 
-		areaModel.technology() < areaModel.maxTechnology()*0.2){
+	if(areaModel.agriculture() < areaModel.maxAgriculture()*0.2*internalProportion || 
+		areaModel.business() < areaModel.maxBusiness()*0.2*internalProportion || 
+		areaModel.technology() < areaModel.maxTechnology()*0.2*internalProportion){
 		return AiEnlistFlag.MustResource;
 	}
 	if(areaModel.troops() < minToops * 1.5 * mustProportion){
@@ -384,9 +383,9 @@ function jobAiNeedToEnlist(areaModel){
 	if(areaModel.troops() < minToops * 2 * mustProportion){
 		return AiEnlistFlag.Battle;
 	}
-	if(areaModel.agriculture() < areaModel.maxAgriculture() || 
-		areaModel.business() < areaModel.maxBusiness() || 
-		areaModel.technology() < areaModel.maxTechnology()){
+	if(areaModel.agriculture() < areaModel.maxAgriculture()*internalProportion || 
+		areaModel.business() < areaModel.maxBusiness()*internalProportion || 
+		areaModel.technology() < areaModel.maxTechnology()*internalProportion){
 		return AiEnlistFlag.BattleResource;
 	}
 	return AiEnlistFlag.Free;

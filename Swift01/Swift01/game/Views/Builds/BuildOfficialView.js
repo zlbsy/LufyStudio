@@ -36,7 +36,7 @@ BuildOfficialView.prototype.showMenu=function(){
 	}
 	if(cityModel.isPlagueOfLocusts()){
 		menuY += menuHeight;
-		var buttonPlagueOfLocusts = getButton(Language.get("flagueOfLocustsControl"),200);
+		var buttonPlagueOfLocusts = getButton(Language.get("plagueOfLocustsControl"),200);
 		buttonPlagueOfLocusts.y = menuY;
 		layer.addChild(buttonPlagueOfLocusts);
 		buttonPlagueOfLocusts.addEventListener(LMouseEvent.MOUSE_UP, self.onClickPlagueOfLocustsButton);

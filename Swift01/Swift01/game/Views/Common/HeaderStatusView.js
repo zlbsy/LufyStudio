@@ -42,7 +42,7 @@ HeaderStatusView.prototype.set=function(){
 			disasters.push(Language.get("flood"));
 		}
 		if(cityModel.isPlagueOfLocusts()){
-			disasters.push(Language.get("flagueOfLocusts"));
+			disasters.push(Language.get("plagueOfLocusts"));
 		}
 		self.setStatus(Language.get("disaster"), disasters.join("、"), self.stepMiniWidth  * 0+ 5, self.stepHeight * 5, self.stepMiniWidth * (0.5 + disasterCount*0.5));
 	}

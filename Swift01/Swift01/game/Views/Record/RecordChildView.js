@@ -112,6 +112,7 @@ RecordChildView.prototype.readRecordData=function(){
 		LMvc.mapY = self.record.mapY;
 		SeigniorExecute.setSaveData(self.record.seigniorExecute);
 		if(LMvc.BattleController){
+			GameCacher.resetAreaMap("area-map-1");
 			BattleController.ctrlChara = null;
 			var battleController = LMvc.BattleController;
 			var battleModel = battleController.model;
@@ -138,6 +139,7 @@ RecordChildView.prototype.readRecordData=function(){
 			}
 			LMvc.MapController.dispatchEvent(LController.NOTIFY);
 		}else if(LMvc.MapController){
+			GameCacher.resetAreaMap("area-map-1");
 			LMvc.areaData = self.record;
 			LMvc.selectSeignorId = LMvc.areaData.selectSeignorId;
 			LMvc.chapterData = LMvc.areaData.chapterData;

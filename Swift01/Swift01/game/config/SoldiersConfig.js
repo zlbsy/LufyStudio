@@ -338,7 +338,7 @@ var SoldierDatas = [
 	{id:8,value:100,moveCost:2},{id:9,value:110,moveCost:1},{id:11,value:100,moveCost:2}],
 	rangeAttack:[{x:-1,y:-1},{x:-1,y:1},{x:1,y:1},{x:1,y:-1},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0}],
 	rangeAttackTarget:[{x:0,y:0}],
-	strategy:[{id:47,lv:10}],
+	strategy:[],
 	sign:"ymr",
 	next:[{id:7,lv:20}]
 	},
@@ -351,7 +351,7 @@ var SoldierDatas = [
 	{id:8,value:100,moveCost:2},{id:9,value:110,moveCost:1},{id:11,value:100,moveCost:2}],
 	rangeAttack:[{x:0,y:-1},{x:0,y:-2},{x:0,y:1},{x:0,y:2},{x:-1,y:0},{x:-2,y:0},{x:1,y:0},{x:2,y:0}],
 	rangeAttackTarget:[{x:0,y:0}],
-	strategy:[{id:47,lv:10}],
+	strategy:[],
 	sign:"qzb",
 	next:[{id:7,lv:20}]
 	},
