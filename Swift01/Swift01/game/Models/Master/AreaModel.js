@@ -52,8 +52,7 @@ AreaModel.getPowerfulCharacters = function(generals, init){
 		data.calculation(init);
 		var value = data.basicPropertiesSum() * data.lv() * 0.1;
 		value += data.propertiesSum();
-		//value += data.maxProficiencySoldier().proficiency() * 0.1;
-		value += data.skill() > 0 ? 100 : 0;
+		value += data.skill() ? data.skill().powerful() : 0;
 		list.push({general:child,value:value});
 	}
 	list = list.sort(function(a,b){return b.value - a.value;});

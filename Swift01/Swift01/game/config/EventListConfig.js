@@ -58,6 +58,7 @@ var EventListConfig = [
 	script:"Data/Event/{0}/qdca.txt",
 	result:[
 		{type:"moveGeneralsToCity", generals:[], from:22, to:12},//洛阳武将全部移往长安
+		{type:"generalsStopInCity", generals:[265], cityId:12,months:12},//董卓强制待在长安1年
 		{type:"moveCityResources", from:22, to:12},//洛阳资源全部移往长安
 		{type:"changeCitySeignior", cityId:22, seignior:0},//洛阳变成无势力状态
 		{type:"changeCityResources", cityId:22, food:0, money:0, business:10000, agriculture:10000, technology:5000, police:50, city_defense:1000, troops:0}//洛阳资源变更

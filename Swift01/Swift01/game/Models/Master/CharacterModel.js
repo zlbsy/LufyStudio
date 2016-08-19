@@ -142,6 +142,7 @@ CharacterModel.prototype.datas=function(){
 		loyalty:self.loyalty(),//忠诚度
 		soldiers:self.data.soldiers,//所有兵种熟练度
 		isPrized:self.isPrized(),
+		stopIn:self.stopIn(),
 		reputation:self.data.reputation,
 		equipments:self.equipmentsData()
 	};
@@ -172,6 +173,7 @@ CharacterModel.prototype.setDatas=function(charaData){
 	self.loyalty(charaData.loyalty);
 	self.data.isPrized = charaData.isPrized;
 	self.feat(charaData.feat);
+	self.data.stopIn = charaData.stopIn;
 	var keys = ["command","force","intelligence","agility","luck"];
 	for(var i=0,l=keys.length;i<l;i++){
 		var key = keys[i];
@@ -465,8 +467,14 @@ CharacterModel.prototype.isDefCharacter = function(value) {
 CharacterModel.prototype.id = function() {
 	return this.data.id;
 };
+CharacterModel.prototype.ambition = function() {
+	return this.data.ambition;
+};
 CharacterModel.prototype.life = function() {
 	return this.data.life;
+};
+CharacterModel.prototype.stopIn = function(value) {
+	return this._dataValue("stopIn", value, 0);
 };
 CharacterModel.prototype.age = function() {
 	if(this.data.born == 0 || !LMvc.chapterData){

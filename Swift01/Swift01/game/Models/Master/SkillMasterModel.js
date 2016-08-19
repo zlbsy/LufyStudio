@@ -129,3 +129,6 @@ SkillMasterModel.prototype.healRects = function() {
 SkillMasterModel.prototype.changeProbability = function() {
 	return this.data.changeProbability;
 };
+SkillMasterModel.prototype.powerful = function() {
+	return this.data.powerful ? this.data.powerful : 0;
+};

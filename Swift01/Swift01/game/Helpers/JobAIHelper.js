@@ -18,11 +18,13 @@ function getWeakBattleCity(areaModel){
 	if(enemyCitys.length == 0){
 		return null;
 	}
-	enemyCitys = enemyCitys.sort(function(a,b){return a.powerful() - b.powerful();});
+	enemyCitys = enemyCitys.sort(function(a,b){
+		return a.powerful() - b.powerful();
+	});
 	return enemyCitys[0];
 }
 /*检索可攻击城池*/
-function getCanBattleCity(areaModel,characters,enlistFlag){
+function getCanBattleCity(areaModel,baseCharacters,enlistFlag){
 	switch (enlistFlag) {
 		case AiEnlistFlag.None://爆满
 		case AiEnlistFlag.Free://充足
@@ -41,11 +43,13 @@ function getCanBattleCity(areaModel,characters,enlistFlag){
 				}
 			}else{
 				ambition = areaModel.seignior().character().ambition();
+				console.log("ambition="+ambition);
 			}
 			var p = (maxAmbition - ambition) / maxAmbition;
-			if(Math.fakeRandom() < (1 - p)){
+			if(Math.fakeRandom() < p){
 				return null;
 			}
+			break;
 		case AiEnlistFlag.Must://必须征兵
 		case AiEnlistFlag.Need://需要征兵
 		case AiEnlistFlag.MustResource://物资极缺
@@ -53,17 +57,29 @@ function getCanBattleCity(areaModel,characters,enlistFlag){
 		default:
 			return null;
 	}
+	var characters = [];
+	for (var i = 0, l=baseCharacters.length; i < l; i++) {
+		var chara = baseCharacters[i];
+		if(chara.stopIn() == areaModel.id()){
+			continue;
+		}
+		characters.push(chara);
+	}
 	var generalCount = areaModel.generalsSum();
 	if(characters.length < BattleMapConfig.DetachmentQuantity || generalCount < BattleMapConfig.DetachmentQuantity * 2){
+		console.log("characters.length="+characters.length);
+		console.log("generalCount="+generalCount);
 		return null;
 	}
 	var weakCity = getWeakBattleCity(areaModel);
 	if(!weakCity){
+		console.log("weakCity is null");
 		return null;
 	}
 	var weakCityGeneralCount = weakCity.generalsSum();
 	weakCityGeneralCount = weakCityGeneralCount > BattleMapConfig.DefenseQuantity ? BattleMapConfig.DefenseQuantity : weakCityGeneralCount;
 	if(characters.length < weakCityGeneralCount * 0.5){
+		console.log("weakCityGeneralCount="+weakCityGeneralCount);
 		return null;
 	}
 	var generals = AreaModel.getPowerfulCharacters(characters);
@@ -73,9 +89,10 @@ function getCanBattleCity(areaModel,characters,enlistFlag){
 		needFood += charaModel.maxTroops();
 	}
 	if(areaModel.food() < needFood * 20){
+		console.log("areaModel.food()="+areaModel.food());
 		return null;
 	}
-	
+	console.log("weakCity = "+weakCity.name());
 	return weakCity;
 }
 function getIdleCharacters(areaModel){
@@ -90,12 +107,20 @@ function getIdleCharacters(areaModel){
 	return charas;
 }
 /*出战准备*/
-function jobAiToBattle(areaModel,characters,targetCity){
+function jobAiToBattle(areaModel,baseCharacters,targetCity){
 	//targetCity = AreaModel.getArea(22);//TODO::测试用
 	var attackQuantity = BattleMapConfig.AttackQuantity;
 	var generalCount = areaModel.generalsSum();
 	if(generalCount - attackQuantity < BattleMapConfig.DetachmentQuantity){
 		attackQuantity = generalCount - BattleMapConfig.DetachmentQuantity;
+	}
+	var characters = [];
+	for (var i = 0, l=baseCharacters.length; i < l; i++) {
+		var chara = baseCharacters[i];
+		if(chara.stopIn() == areaModel.id()){
+			continue;
+		}
+		characters.push(chara);
 	}
 	if(characters.length < attackQuantity){
 		attackQuantity = characters.length;
@@ -569,7 +594,15 @@ function jobAiSetCityBattleDistance(seigniorModel){
 	SeigniorExecute.Instance().timer.reset();
 	SeigniorExecute.Instance().timer.start();
 }
-function jobAiGeneralMove(areaModel,characters){//武将移动
+function jobAiGeneralMove(areaModel,baseCharacters){//武将移动
+	var characters = [];
+	for (var i = 0, l=baseCharacters.length; i < l; i++) {
+		var chara = baseCharacters[i];
+		if(chara.stopIn() == areaModel.id()){
+			continue;
+		}
+		characters.push(chara);
+	}
 	if(characters.length == 0){
 		return;
 	}

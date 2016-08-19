@@ -315,6 +315,8 @@ function dispatchEventListResult(eventId, currentEvent) {
 			case "gameClear"://游戏通关
 				dispatchEventListResultGameClear(child);
 				break;
+			case "generalsStopInCity": //强制武将停留在某个城池
+				dispatchEventListResultGeneralsStopInCity(child);
 		}
 	}
 	if(eventId){
@@ -326,6 +328,12 @@ function dispatchEventListResultGameClear(child) {
 	MenuController.instance().nextFrameExecute(function(){
 		MenuController.instance().view.onClickReturnTop();
 	});
+}
+function dispatchEventListResultGeneralsStopInCity(child) {
+	for(var i=0,l=child.generals.length;i<l;i++){
+		var general = CharacterModel.getChara(child.generals[i]);
+		general.stopIn(child.cityId);
+	}
 }
 function dispatchEventListResultCaptiveDie(child) {
 	for(var i=0,l=child.captives.length;i<l;i++){
