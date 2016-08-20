@@ -718,7 +718,7 @@ function hireRun2(characterModel, hireCharacter, area, isAccess){
 	return false;
 }
 function SeigniorExecuteChangeCityResources(area){
-	//TODO::城防:城防过低会几率出现强盗,影响人口和兵力
+	//TODO::待处理城防:城防过低会几率出现强盗,影响人口和兵力
 	var disaster = false;
 	var minPopulation = AreaModel.populationList[0][0];
 	var maxPopulation = AreaModel.populationList[AreaModel.populationList.length - 1][1];
@@ -738,17 +738,19 @@ function SeigniorExecuteChangeCityResources(area){
 	}
 	var population = area.population();
 	//金钱
+	var minBusiness = AreaModel.businessList[0] * 0.5;
 	var maxBusiness = AreaModel.businessList[AreaModel.businessList.length - 1];
 	if(HarvestMonths.Money.indexOf(LMvc.chapterData.month) >= 0){
-		var addMoney = 500 + 3500*area.business()/maxBusiness;
+		var addMoney = 600 + 3500*(area.business() - minBusiness)/(maxBusiness - minBusiness);
 		addMoney *= (1 + population * 0.3 / maxPopulation);
 		//console.log(area.name(), addMoney);
 		area.money(addMoney >>> 0);
 	}
 	//粮食
+	var minAgriculture = AreaModel.agricultureList[0] * 0.5;
 	var maxAgriculture = AreaModel.agricultureList[AreaModel.agricultureList.length - 1];
 	if(HarvestMonths.Food.indexOf(LMvc.chapterData.month)  >= 0){
-		var addFood = 10000 + 40000*area.agriculture()/maxAgriculture;
+		var addFood = 10000 + 40000*(area.agriculture() - minAgriculture)/(maxAgriculture - minAgriculture);
 		addFood *= (1 + population * 0.3 / maxPopulation);
 		if(area.isPlagueOfLocusts()){
 			addFood *= (1 - 0.05 * area.plagueOfLocusts());

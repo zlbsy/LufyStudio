@@ -448,9 +448,11 @@ BattleAIExecute.prototype.physicalAttack = function(currentChara, targetChara) {
 				var doubleAtt = calculateDoubleAtt(currentChara, targetChara);
 				hertValues = doubleAtt ? [1,1] : [1];
 			}
-			if(skill && skill.isSubType(SkillSubType.AMBUSH_INVERSE)){
-				//TODO::ver1.1暂时增加0.1，需计算得出
-				hertValues[0] += 0.1;
+			if(skill){
+				if(skill.isSubType(SkillSubType.AMBUSH_INVERSE)){
+					//反埋伏，陷阵营
+					hertValues[0] += (skill.powerful()*0.002);
+				}
 			}
 			if(skill && skill.isSubType(SkillSubType.NO_COUNTER)){
 				targetChara.herts = [];

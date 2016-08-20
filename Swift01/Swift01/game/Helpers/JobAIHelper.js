@@ -29,6 +29,7 @@ function getCanBattleCity(areaModel,baseCharacters,enlistFlag){
 		case AiEnlistFlag.None://爆满
 		case AiEnlistFlag.Free://充足
 			break;
+		case AiEnlistFlag.NeedResource://物资短缺
 		case AiEnlistFlag.Battle://战斗准备征兵
 		case AiEnlistFlag.BattleResource://战斗准备物资
 			var ambition, maxAmbition = 15;
@@ -43,9 +44,14 @@ function getCanBattleCity(areaModel,baseCharacters,enlistFlag){
 				}
 			}else{
 				ambition = areaModel.seignior().character().ambition();
-				console.log("ambition="+ambition);
 			}
-			var p = (maxAmbition - ambition) / maxAmbition;
+			var numAmbition = maxAmbition - ambition;
+			var p = numAmbition / maxAmbition;
+			if(enlistFlag == AiEnlistFlag.NeedResource){
+				if(Math.fakeRandom() < 0.8 + 0.2 * p){
+					return null;
+				}
+			}
 			if(Math.fakeRandom() < p){
 				return null;
 			}
@@ -53,7 +59,6 @@ function getCanBattleCity(areaModel,baseCharacters,enlistFlag){
 		case AiEnlistFlag.Must://必须征兵
 		case AiEnlistFlag.Need://需要征兵
 		case AiEnlistFlag.MustResource://物资极缺
-		case AiEnlistFlag.NeedResource://物资短缺
 		default:
 			return null;
 	}
@@ -67,19 +72,15 @@ function getCanBattleCity(areaModel,baseCharacters,enlistFlag){
 	}
 	var generalCount = areaModel.generalsSum();
 	if(characters.length < BattleMapConfig.DetachmentQuantity || generalCount < BattleMapConfig.DetachmentQuantity * 2){
-		console.log("characters.length="+characters.length);
-		console.log("generalCount="+generalCount);
 		return null;
 	}
 	var weakCity = getWeakBattleCity(areaModel);
 	if(!weakCity){
-		console.log("weakCity is null");
 		return null;
 	}
 	var weakCityGeneralCount = weakCity.generalsSum();
 	weakCityGeneralCount = weakCityGeneralCount > BattleMapConfig.DefenseQuantity ? BattleMapConfig.DefenseQuantity : weakCityGeneralCount;
 	if(characters.length < weakCityGeneralCount * 0.5){
-		console.log("weakCityGeneralCount="+weakCityGeneralCount);
 		return null;
 	}
 	var generals = AreaModel.getPowerfulCharacters(characters);
@@ -89,10 +90,8 @@ function getCanBattleCity(areaModel,baseCharacters,enlistFlag){
 		needFood += charaModel.maxTroops();
 	}
 	if(areaModel.food() < needFood * 20){
-		console.log("areaModel.food()="+areaModel.food());
 		return null;
 	}
-	console.log("weakCity = "+weakCity.name());
 	return weakCity;
 }
 function getIdleCharacters(areaModel){
@@ -201,7 +200,6 @@ function jobAiToBattle(areaModel,baseCharacters,targetCity){
 /*出战准备*/
 function jobAiToBattleTarget(areaModel,targetCity,data){
 	var sumTroops = 0;
-	console.log("data.expeditionCharacterList.length=" + data.expeditionCharacterList.length,data.expeditionCharacterList);
 	for(var i = 0;i<data.expeditionCharacterList.length;i++){
 		var general = data.expeditionCharacterList[i];
 		sumTroops += general.troops();
@@ -245,7 +243,6 @@ function jobAiToBattleTarget(areaModel,targetCity,data){
 				}
 				var employs = targetCity.getEmployCharacters();
 				generals = generals.concat(employs);
-				console.log(generals);
 				LMvc.CityController.loadCharacterList(CharacterListType.EXPEDITION, generals, {buttonLabel:"execute", closeDisable:true, cutoverName:"arm_properties", showArm:true,hasEmploy:true,showMoney:true,checkCity:targetCity.id()});
 			});
 		}};
@@ -345,6 +342,30 @@ function jobAiBattleExecute(areaModel,data,targetCity){
 		LMvc.layer.addChild(windowLayer);
 		return;
 	}
+	var employCharacters;
+	while(targetData.expeditionCharacterList.length < BattleMapConfig.DefenseQuantity){
+		if(!employCharacters){
+			employCharacters = targetCity.getEmployCharacters();
+		}
+		var chara = employCharacters.shift();
+		if(targetCity.money() < chara.employPrice()){
+			break;
+		}
+		if(targetCity.troops() < chara.maxTroops()){
+			break;
+		}
+		chara.troops(chara.maxTroops());
+		targetCity.troops(targetCity.troops() - chara.maxTroops());
+		targetCity.money(-chara.employPrice());
+		targetData.expeditionCharacterList.push(chara);
+	}
+	/*console.log("BattleAIExecute");
+	for(var i=0;i<data.expeditionCharacterList.length;i++){
+		console.log("data",data.expeditionCharacterList[i].name());
+	}
+	for(var i=0;i<targetData.expeditionCharacterList.length;i++){
+		console.log("targetData",targetData.expeditionCharacterList[i].name());
+	}*/
 	BattleAIExecute.set(data, targetData);
 }
 //获取援兵
@@ -381,13 +402,21 @@ function jobAiNeedToEnlist(areaModel){
 		minToops += chara.maxTroops();
 	}
 	var mustProportion = 1, internalProportion = 1;
-	if(areaModel.seigniorCharaId() == LMvc.selectSeignorId && areaModel.isAppoint()){
-		if(areaModel.appointType() == AppointType.AppointInternal || areaModel.appointType() == AppointType.AppointExplore){
-			mustProportion = 0.1;
-			internalProportion = 2;
-		}else if(areaModel.appointType() == AppointType.AppointMilitary){
-			internalProportion = 0.7;
+	if(areaModel.seigniorCharaId() == LMvc.selectSeignorId){
+		if(areaModel.isAppoint()){
+			if(areaModel.appointType() == AppointType.AppointInternal || areaModel.appointType() == AppointType.AppointExplore){
+				mustProportion = 0.1;
+				internalProportion = 2;
+			}else if(areaModel.appointType() == AppointType.AppointMilitary){
+				internalProportion = 0.7;
+				mustProportion = 0.7;
+			}
 		}
+	}else{
+		var maxAmbition = 15, ambition = areaModel.seignior().character().ambition();
+		internalProportion = 0.7 + (maxAmbition - ambition) / maxAmbition;
+		mustProportion = internalProportion;
+		
 	}
 	if(areaModel.troops() < minToops * mustProportion){ 
 		return AiEnlistFlag.Must;
@@ -428,7 +457,6 @@ function jobAiToEnlish(areaModel,characters){
 	if(areaModel.money() < JobPrice.ENLIST){
 		return;
 	}
-	//console.log("jobAiToEnlish :: 征兵");
 	var character = characters.shift();
 	var num = EnlistSetting.ENLIST_TO - EnlistSetting.ENLIST_FROM;
 	var cost = JobPrice.ENLIST * EnlistSetting.ENLIST_TO / EnlistSetting.ENLIST_FROM >>> 0;
@@ -469,7 +497,6 @@ function jobAiPersuade(areaModel,characters){//劝降
 	if(length == 0){
 		return;
 	}
-	//console.log("+++++++++++++++++++++++劝降"+persuadeCharacters[0].l);
 	var minLoyalty = persuadeCharacters[length - 1].l;
 	var p = Math.ceil((90 - minLoyalty) / 5) * 0.1;
 	var r = Math.fakeRandom();
@@ -509,7 +536,6 @@ function jobAiAccess(areaModel,characters){//访问
 	if(characters.length == 0){
 		return;
 	}
-	//SeigniorExecute.Instance().areaMessage(areaModel, "jobai_tavern_message");
 	jobAiInternal(areaModel,characters,0,Job.ACCESS);
 }
 function jobAiLevelUpCity(areaModel,characters){//升级城池
@@ -543,7 +569,6 @@ function jobAiInternal(areaModel,characters,price,job){//内政
 	if(price > 0 && areaModel.money() < price){
 		return;
 	}
-	//SeigniorExecute.Instance().areaMessage(areaModel, "jobai_internal_message");//{0}的{1}在发展内政!
 	var character = characters.shift();
 	character.job(job);
 	if(price > 0){
@@ -562,7 +587,6 @@ function jobAiSetCityBattleDistance(seigniorModel){
 		area.battleDistance = 100;
 		area.aiWillComeNum = 0;
 	});
-	//console.log("jobAiSetCityBattleDistance areas:"+areas.length);
 	for(var j=0,l=areas.length;j<l;j++){
 		var area = areas[j];
 		if(area.battleDistanceCheckOver){
@@ -606,7 +630,6 @@ function jobAiGeneralMove(areaModel,baseCharacters){//武将移动
 	if(characters.length == 0){
 		return;
 	}
-	//console.log("jobAiGeneralMove :: 武将移动");
 	var nowGeneralSum = areaModel.aiWillComeNum + areaModel.generalsSum();
 	if(nowGeneralSum <= 1){
 		return;
@@ -655,7 +678,6 @@ function jobAiTransport(areaModel,characters){//运输物资
 	if(characters.length == 0){
 		return;
 	}
-	//console.log("jobAiTransport :: 运输物资");
 	var neighbors = areaModel.neighbor();
 	var battleDistance = 100;
 	var currentCity;
@@ -701,7 +723,7 @@ function jobAiTransport(areaModel,characters){//运输物资
 	}
 	if(troops == 0 && food == 0 && money == 0){
 		return;
-	}//console.log("运输",money,food,troops);
+	}
 	var data = {
 		cityId : currentCity.id(),
 		money : money,
@@ -792,7 +814,6 @@ function jobAiCaptivesRescue(areaModel,characters){//解救俘虏
 	var character = characters.shift();
 	var money = (captive.force() + captive.intelligence() + captive.command() + captive.agility() + captive.luck()) * JobCoefficient.REDEEM;
 	money += (money * captive.skillCoefficient() * 0.1);
-	//console.log("captive:" ,captive.name(),",money:",money,", areaModel.money():",areaModel.money());
 	if(areaModel.money() < money){
 		return false;
 	}
