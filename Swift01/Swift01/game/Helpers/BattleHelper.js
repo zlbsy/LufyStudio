@@ -690,14 +690,22 @@ function battleCityChange(winSeigniorId, failSeigniorId, retreatCityId, expediti
 	var seigniorWin = SeigniorModel.getSeignior(winSeigniorId);
 	seigniorWin.addCity(city);
 	city.seigniorCharaId(winSeigniorId);
-	city.prefecture(expeditionList[0].id());
+	var prefectureChara = expeditionList[0];
+	var fromCityId = prefectureChara.cityId();
+	city.prefecture(prefectureChara.id());
 	generals = expeditionList.slice();
 	for(var i=0,l=generals.length;i<l;i++){
 		var chara = generals[i];
-		city.troops(city.troops() + chara.troops());
-		chara.troops(0);
-		chara.moveTo(city.id());
-		chara.moveTo();
+		if(chara.cityId() == fromCityId){
+			city.troops(city.troops() + chara.troops());
+			chara.troops(0);
+			chara.moveTo(city.id());
+			chara.moveTo();
+		}else{
+			var charaCity = chara.city();
+			charaCity.troops(charaCity.troops() + chara.troops());
+			chara.troops(0);
+		}
 	}
 };
 /*战斗失败,撤退城池搜索及处理*/

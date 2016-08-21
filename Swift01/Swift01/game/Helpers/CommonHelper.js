@@ -97,7 +97,7 @@ function calculateHitrateBehead(leaderId, charaModel){
 	}
 	if(Math.fakeRandom() > 0.1){
 		return false;
-	}console.log("斩首",charaModel.name());
+	}
 	var sum = 75;
 	var leader = CharacterModel.getChara(leaderId);
 	var compatibility = Math.abs(leader.compatibility() - charaModel.compatibility());
@@ -234,7 +234,7 @@ function getMonarchChangeId(seignior){
 		}
 	}
 	//兄弟
-	childs = seignior.character().father().childs();
+	childs = seignior.character().father() ? seignior.character().father().childs() : null;
 	if(childs && childs.length > 0){
 		for(var i=0;i<childs.length;i++){
 			if(childs[i] == seignior.chara_id()){

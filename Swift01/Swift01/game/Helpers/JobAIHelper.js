@@ -625,6 +625,9 @@ function jobAiGeneralMove(areaModel,baseCharacters){//武将移动
 		if(chara.stopIn() == areaModel.id()){
 			continue;
 		}
+		if(chara.id() == areaModel.prefecture()){
+			continue;
+		}
 		characters.push(chara);
 	}
 	if(characters.length == 0){
@@ -643,14 +646,11 @@ function jobAiGeneralMove(areaModel,baseCharacters){//武将移动
 		if(child.seigniorCharaId() != areaModel.seigniorCharaId()){
 			continue;
 		}
-		if(child.id() == areaModel.prefecture()){
-			continue;
-		}
 		var childGeneralSum = child.generalsSum() + child.aiWillComeNum;
 		if(nowGeneralSum < childGeneralSum){
 			continue;
 		}
-		if(child.battleDistance < battleDistance || (child.battleDistance == battleDistance && childGeneralSum < currentGeneralSum)){
+		if(childGeneralSum == 0 || child.battleDistance < battleDistance || (child.battleDistance == battleDistance && childGeneralSum < currentGeneralSum)){
 			citys = [child];
 			battleDistance = child.battleDistance;
 			currentCity = child;
@@ -659,7 +659,7 @@ function jobAiGeneralMove(areaModel,baseCharacters){//武将移动
 			citys.push(child);
 		}
 	}
-	if(citys.length == 0 || citys[0].battleDistance > areaModel.battleDistance){
+	if(citys.length == 0 || (citys[0].battleDistance > areaModel.battleDistance && citys[0].generalsSum() > 0)){
 		return;
 	}
 	var targetCity = citys[citys.length * Math.fakeRandom() >>> 0];

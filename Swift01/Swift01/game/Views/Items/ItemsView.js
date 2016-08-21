@@ -109,7 +109,7 @@ ItemsView.prototype.itemUse = function(event) {
 	var characterModel = characterDetailedView.controller.getValue("selectedCharacter");
 	var subView;
 	if(itemModel.itemType() == ItemType.FEAT){
-		if(characterModel.level() >= CharacterLevelConfig.maxLevel){
+		if(characterModel.level() >= characterModel.seignior().level()){
 			var obj = {title:Language.get("confirm"),
 			message:Language.get("dialog_generals_level_error"),height:200,okEvent:null};
 			var windowLayer = ConfirmWindow(obj);

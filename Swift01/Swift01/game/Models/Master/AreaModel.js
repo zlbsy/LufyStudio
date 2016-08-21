@@ -122,10 +122,19 @@ AreaModel.prototype.getEmployCharacters = function(){
 };
 AreaModel.prototype.employSoldiers = function(){
 	var self = this;
+	var soldierIds;
 	if(!self.data.employSoldiers){
-		return [2,3,4];
+		soldierIds = [2,3,4];
+	}else{
+		soldierIds = self.data.employSoldiers.concat();
 	}
-	return self.data.employSoldiers;
+	while(soldierIds.length < 4){
+		var soldier = SoldierMasterModel.master[SoldierMasterModel.master.length * Math.fakeRandom() >>> 0];
+		if(soldierIds.indexOf(soldier.id()) < 0){
+			soldierIds.push(soldier.id());
+		}
+	}
+	return soldierIds;
 };
 AreaModel.prototype.minDefTroops = function(){
 	var self = this;

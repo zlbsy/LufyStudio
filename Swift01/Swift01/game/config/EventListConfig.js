@@ -74,7 +74,6 @@ var EventListConfig = [
 		generals:[
 			{id:18,seignior:265},
 			{id:265,seignior:265},
-			{id:380,seignior:0},
 			{id:543,seignior:265},
 			{id:465,seignior:265},
 		],

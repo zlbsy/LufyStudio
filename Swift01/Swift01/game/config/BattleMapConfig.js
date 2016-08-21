@@ -3,8 +3,8 @@ function BattleMapConfig(){
 BattleMapConfig.SPEED = 4;
 BattleMapConfig.SPEED_FAST = 2;
 BattleMapConfig.SPEED_NORMAL = 4;
-BattleMapConfig.AttackQuantity = 5;
-BattleMapConfig.DefenseQuantity = 10;
+BattleMapConfig.AttackQuantity = 6;
+BattleMapConfig.DefenseQuantity = 12;
 BattleMapConfig.DetachmentQuantity = 2;
 
 var MapHelperSetting = {
