@@ -419,8 +419,8 @@ function agricultureRun(characterModel){
 	if(!city.isPlagueOfLocusts() && city.plagueOfLocusts() > 0 && Math.fakeRandom() < 0.2){
 		//治理蝗害
 		city.plagueOfLocusts(-1);
-		if(characterModel.seigniorId() == LMvc.selectSeignorId && !cityModel.isAppoint()){
-			SeigniorExecute.addMessage(String.format(Language.get("plagueOfLocustsControlMessage"),characterModel.name(),characterModel.city().name()));
+		if(characterModel.seigniorId() == LMvc.selectSeignorId && !city.isAppoint()){
+			SeigniorExecute.addMessage(String.format(Language.get("plagueOfLocustsControlMessage"),characterModel.name(),city.name()));
 		}
 	}
 	return false;
@@ -471,8 +471,8 @@ function technologyRun(characterModel){
 	if(!city.isFlood() && city.flood() > 0 && Math.fakeRandom() < 0.2){
 		//治水
 		city.flood(-1);
-		if(characterModel.seigniorId() == LMvc.selectSeignorId && !cityModel.isAppoint()){
-			SeigniorExecute.addMessage(String.format(Language.get("floodControlMessage"),characterModel.name(),characterModel.city().name()));
+		if(characterModel.seigniorId() == LMvc.selectSeignorId && !city.isAppoint()){
+			SeigniorExecute.addMessage(String.format(Language.get("floodControlMessage"),characterModel.name(),city.name()));
 		}
 	}
 	return false;

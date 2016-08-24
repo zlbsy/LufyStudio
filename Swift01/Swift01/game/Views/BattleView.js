@@ -88,10 +88,6 @@ BattleView.prototype.layerInit=function(){
 	self.mapLayer = new BattleMapView(self.controller);
 	self.baseLayer.addChild(self.mapLayer);
 
-	//路径层
-	self.roadLayer = new BattleRoadView(self.controller);
-	self.baseLayer.addChild(self.roadLayer);
-	self.roadLayer.visible = false;
 	//人物层
 	self.charaLayer = new BattleCharacterLayerView(self.controller);
 	self.baseLayer.addChild(self.charaLayer);
@@ -99,13 +95,17 @@ BattleView.prototype.layerInit=function(){
 	//特效层
 	self.effectLayer = new LSprite();
 	self.baseLayer.addChild(self.effectLayer);
+	//天气层
+	self.weatherLayer = new BattleWeatherView();
+	self.addChild(self.weatherLayer);
 	//地形预览层
 	self.terrainWindow = new BattleTerrainView(self.controller);
 	self.addChild(self.terrainWindow);
 	self.terrainWindow.visible = false;
-	//天气层
-	self.weatherLayer = new BattleWeatherView();
-	self.addChild(self.weatherLayer);
+	//路径层
+	self.roadLayer = new BattleRoadView(self.controller);
+	self.baseLayer.addChild(self.roadLayer);
+	self.roadLayer.visible = false;
 	//预览层
 	self.miniLayer = new BattleMiniPreviewView(self.controller);
 	self.addChild(self.miniLayer);

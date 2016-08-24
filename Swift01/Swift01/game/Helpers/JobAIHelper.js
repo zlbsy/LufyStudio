@@ -292,7 +292,8 @@ function jobAiBattleExecute(areaModel,data,targetCity){
 		return Math.fakeRandom()>0.5?1:-1;
 	});
 	var selfNoAppoints = [];
-	if(targetData.expeditionCharacterList.length < BattleMapConfig.DefenseQuantity){
+	if(targetData.expeditionCharacterList.length > 0 
+		&& targetData.expeditionCharacterList.length < BattleMapConfig.DefenseQuantity){
 		for(var i=0;i<neighbor.length;i++){
 			var city = AreaModel.getArea(neighbor[i]);
 			if(city.seigniorCharaId() != targetCity.seigniorCharaId() || city.id() == targetCity.id()){
@@ -308,7 +309,8 @@ function jobAiBattleExecute(areaModel,data,targetCity){
 		}
 		
 	}
-	if(targetData.expeditionCharacterList.length < BattleMapConfig.DefenseQuantity && selfNoAppoints.length > 0){
+	if(targetData.expeditionCharacterList.length > 0 && 
+		targetData.expeditionCharacterList.length < BattleMapConfig.DefenseQuantity && selfNoAppoints.length > 0){
 		SeigniorExecute.Instance().stop = true;
 		//进入战斗
 		var attackSeignior = areaModel.seignior();
@@ -343,7 +345,7 @@ function jobAiBattleExecute(areaModel,data,targetCity){
 		return;
 	}
 	var employCharacters;
-	while(targetData.expeditionCharacterList.length < BattleMapConfig.DefenseQuantity){
+	while(targetData.expeditionCharacterList.length > 0 && targetData.expeditionCharacterList.length < BattleMapConfig.DefenseQuantity){
 		if(!employCharacters){
 			employCharacters = targetCity.getEmployCharacters();
 		}

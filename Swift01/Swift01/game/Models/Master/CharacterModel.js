@@ -157,6 +157,32 @@ CharacterModel.prototype.datas=function(){
 	}
 	return saveData;
 };
+CharacterModel.prototype.employDatas=function(){
+	var self = this;
+	var childData = {};
+	var status = ["force", "intelligence", "command", "agility", "luck", "employLevel", "soldiers", "name", "cityId"];
+	for(var i=0;i<status.length;i++){
+		childData[status[i]] = self.data[status[i]];
+	}
+	childData.troops=self.troops();
+	childData.wounded=self.wounded();
+	childData.exp=self.exp();
+	childData.mp=self.MP();
+	childData.hp=self.HP();
+	return childData;
+};
+CharacterModel.prototype.setEmployDatas=function(charaData){
+	var self = this;
+	var status = ["force", "intelligence", "command", "agility", "luck", "employLevel", "soldiers", "name", "cityId"];
+	for(var i=0;i<status.length;i++){
+		self.data[status[i]] = charaData[status[i]];
+	}
+	self.troops(charaData.troops);
+	self.wounded(charaData.wounded);
+	self.exp(charaData.exp);
+	self.MP(charaData.mp);
+	self.HP(charaData.hp);
+};
 CharacterModel.prototype.setDatas=function(charaData){
 	var self = this;
 	self.cityId(charaData.cityId);
@@ -699,7 +725,7 @@ CharacterModel.prototype.strategies = function(isAll) {
 };
 CharacterModel.prototype.identity = function(value) {
 	var self = this;
-	if(self.id() >= EmployCharacter[0] && self.id() <= EmployCharacter[1]){
+	if(self.isEmploy()){
 		return Language.get("employ");
 	}
 	var seigniorId = self.seigniorId();
@@ -1015,7 +1041,11 @@ CharacterModel.prototype.currentSoldierId = function(value) {
 		return;
 	}
 	if(!self.data.currentSoldierId){
-		self.data.currentSoldierId = self.maxProficiencySoldier().id();
+		var soldier = self.maxProficiencySoldier();
+		if(!soldier){
+			return 0;
+		}
+		self.data.currentSoldierId = soldier.id();
 	}
 	return self.data.currentSoldierId;
 };

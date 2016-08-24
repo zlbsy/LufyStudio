@@ -164,6 +164,9 @@ function battleSingleCombatCheck(attChara){
 			result = true;
 		}
 	}
+	if(hertChara.data.isEmploy()){
+		result = false;
+	}
 	if(result){
 		script += "SGJTalk.show(" + hertCharaModel.id() + ",0," + Language.get("single_combat_answer_ok") + ");" + 
 		"SGJBattleCharacter.singleCombatStart(" + attChara.belong + "," + attCharaModel.id() + ");";
@@ -474,11 +477,14 @@ function getBattleSaveData(){
 			mode:character.mode,
 			mission:character.mission,
 			isDefCharacter:character.data.isDefCharacter(),
+			isEmploy:character.data.isEmploy(),
 			x:character.locationX(),
 			y:character.locationY()
 		};
 		if(childData.isDefCharacter){
 			childData.data = character.data.datas();
+		}else if(character.data.isEmploy()){
+			childData.employDatas = character.data.employDatas();
 		}
 		data.ourList.push(childData);
 	}
@@ -492,11 +498,14 @@ function getBattleSaveData(){
 			action:character.action,
 			mission:character.mission,
 			isDefCharacter:character.data.isDefCharacter(),
+			isEmploy:character.data.isEmploy(),
 			x:character.locationX(),
 			y:character.locationY()
 		};
 		if(childData.isDefCharacter){
 			childData.data = character.data.datas();
+		}else if(character.data.isEmploy()){
+			childData.employDatas = character.data.employDatas();
 		}
 		data.enemyList.push(childData);
 	}
@@ -559,6 +568,9 @@ function setBattleSaveData(){
 			chara.seigniorId(battleData.toCity.seigniorCharaId());
 			chara.cityId(battleData.toCity.id());
 			chara.setDatas(charaData.data);
+		}else if(charaData.isEmploy){
+			var chara = CharacterModel.getChara(charaData.id);
+			chara.setEmployDatas(charaData.employDatas);
 		}
 		var chara = charaLayer.addOurCharacter(charaData.id,charaData.action,charaData.direction,charaData.x,charaData.y);
 		chara.changeAction(charaData.action);
@@ -577,6 +589,9 @@ function setBattleSaveData(){
 			chara.seigniorId(battleData.toCity.seigniorCharaId());
 			chara.cityId(battleData.toCity.id());
 			chara.setDatas(charaData.data);
+		}else if(charaData.isEmploy){
+			var chara = CharacterModel.getChara(charaData.id);
+			chara.setEmployDatas(charaData.employDatas);
 		}
 		var chara = charaLayer.addEnemyCharacter(charaData.id,charaData.action,charaData.direction,charaData.x,charaData.y);
 		chara.changeAction(charaData.action);
@@ -873,7 +888,7 @@ function allCharactersToRetreat(){
 		var troops = characters[i].data.troops();
 		characters[i].data.troops(0);
 		if(isSelfDef){
-			toCity.troops(toCity.troops() + troops);
+			characters[i].data.city().troops(toCity.troops() + troops);
 		}else{
 			controller.battleData.troops += troops;
 		}

@@ -32,7 +32,7 @@ BattleController.prototype.libraryLoad=function(){
 };
 BattleController.prototype.helperLoad=function(){
 	var self = this;
-	self.load.helper(["Talk","Hert","BattleHelper","MapHelper","CommonHelper","BattleCalculateHelper","SkillCalculateHelper"],self.modelLoad);
+	self.load.helper(["Talk","Hert","JobAIHelper","BattleHelper","MapHelper","CommonHelper","BattleCalculateHelper","SkillCalculateHelper"],self.modelLoad);
 };
 BattleController.prototype.modelLoad=function(){
 	var self = this;
@@ -165,6 +165,39 @@ BattleController.prototype.charactersInit = function(){
 			enemyCharas = enemyCharas.splice(0, i + 1);
 			break;
 		}
+		if(enemyCharas.length < BattleMapConfig.DefenseQuantity){
+			var neighbor = self.battleData.toCity.neighbor();
+			neighbor = neighbor.sort(function(){
+				return Math.fakeRandom()>0.5?1:-1;
+			});
+			for(var i=0;i<neighbor.length;i++){
+				var city = AreaModel.getArea(neighbor[i]);
+				if(city.seigniorCharaId() != self.battleData.toCity.seigniorCharaId() || city.id() == self.battleData.toCity.id()){
+					continue;
+				}
+				generals = getBattleReinforcement(city, enemyCharas.length, BattleMapConfig.DefenseQuantity);
+				enemyCharas = enemyCharas.concat(generals);
+			}
+		}
+		
+		var employCharacters;
+		while(enemyCharas.length < BattleMapConfig.DefenseQuantity){
+			if(!employCharacters){
+				employCharacters = self.battleData.toCity.getEmployCharacters();
+			}
+			var chara = employCharacters.shift();
+			if(self.battleData.toCity.money() < chara.employPrice()){
+				break;
+			}
+			if(self.battleData.toCity.troops() < chara.maxTroops()){
+				break;
+			}
+			chara.troops(chara.maxTroops());
+			self.battleData.toCity.troops(self.battleData.toCity.troops() - chara.maxTroops());
+			self.battleData.toCity.money(-chara.employPrice());
+			enemyCharas.push(chara);
+		}
+	
 	}else{
 		enemyCharas = self.battleData.expeditionEnemyData.expeditionCharacterList;
 		self.battleData.food = self.battleData.expeditionEnemyData.food;
@@ -180,7 +213,7 @@ BattleController.prototype.charactersInit = function(){
 		}
 		return v;
 	});
-	self.battleData.expeditionEnemyCharacterList = enemyCharas;console.log(enemyCharas);
+	self.battleData.expeditionEnemyCharacterList = enemyCharas;
 	for(var i = 0;i<enemyCharas.length;i++){
 		var child = enemyPositions[i];
 		var chara = enemyCharas[i];

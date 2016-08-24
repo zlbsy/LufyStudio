@@ -103,7 +103,8 @@ CityController.prototype.gotoBattle=function(isReinforcement){
 		LMvc.MapController.view.visible = true;
 		var targetCity = self.getValue("toCity");
 		var cityData = self.getValue("cityData");
-		if(cityData.seigniorCharaId() == targetCity.seigniorCharaId()){
+		if(targetCity.seigniorCharaId() == LMvc.selectSeignorId){
+		//if(cityData.seigniorCharaId() == targetCity.seigniorCharaId()){
 			var data = self.getValue("expeditionEnemyData");
 			var targetData = self.getValue("expeditionOutData");
 			BattleAIExecute.set(data, targetData);

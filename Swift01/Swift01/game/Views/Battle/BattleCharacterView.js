@@ -191,6 +191,9 @@ BattleCharacterView.prototype.addAnimation = function() {
 	self.anime.addFrameScript(String.format("{0}-{1}",CharacterAction.ATTACK,CharacterDirection.LEFT),self.attackSpecialCheck,[]);
 	self.anime.addFrameScript(String.format("{0}-{1}",CharacterAction.ATTACK,CharacterDirection.RIGHT),self.attackSpecialCheck,[]);
 	var isSelf = self.data.seigniorId() == LMvc.selectSeignorId;
+	if(self.data.isEmploy()){
+		isSelf = self.data.city().seigniorCharaId() == LMvc.selectSeignorId;
+	}
 	var img = self.data.currentSoldiers().img(isSelf);
 	var loader = new LLoader();
 	loader.parent = self;
@@ -343,7 +346,7 @@ BattleCharacterView.prototype.toDie = function() {
 		//防御设施被摧毁,城防降低
 		self.data.city().cityDefense(-DefenseCharacterCost * 0.5);
 	}
-	if(!self.data.isDefCharacter() && !self.data.isTribeCharacter()){
+	if(!self.data.isDefCharacter() && !self.data.isTribeCharacter() && !self.data.isEmploy()){
 		var talkMsg;
 		if(self.isSingleCombat || calculateHitrateCaptive(self)){
 			self.isSingleCombat = false;
