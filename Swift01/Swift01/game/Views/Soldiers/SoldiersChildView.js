@@ -147,7 +147,7 @@ SoldiersChildView.prototype.onClick = function(event) {
 	}
 	var soldiersView = listView.getParentByConstructor(SoldiersView);
 	var soldierDetailed = new SoldierDetailedView(soldiersView.controller,self.soldierModel);
-	var obj = {title:self.soldierModel.name(),subWindow:soldierDetailed,width:400,height:520};
+	var obj = {title:self.soldierModel.name(),subWindow:soldierDetailed,width:400,height:540};
 	if(canSelect){
 		obj.okEvent = function(e){
 			self.toSelected(listView);

@@ -246,11 +246,6 @@ CharacterListChildView.prototype.setBasicProperties = function() {
 		self.seigniorName.text = self.charaModel.seigniorName();
 		self.identity.text = self.charaModel.identity();
 		self.cityNameLabel.text = self.charaModel.city().name();
-		/*if(self.controller.characterListType == CharacterListType.OWN_CHARACTER_LIST){
-			self.cityNameLabel.text = self.charaModel.city().name();
-		}else if(self.cityModel){
-			self.cityNameLabel.text = self.character?self.charaModel.city().name():self.cityModel.name();
-		}*/
 		self.loyalty.text = seigniorId>0 ? self.charaModel.loyalty() : "--";
 		self.jobLabel.text = self.charaModel.jobLabel();
 		return;
@@ -269,13 +264,7 @@ CharacterListChildView.prototype.setBasicProperties = function() {
 	identity.y = 5;
 	layer.addChild(identity);
 	self.identity = identity;
-	var cityNameLabel = getStrokeLabel(self.charaModel.city().name(), 18, "#FFFFFF", "#000000", 4);
-	/*if(self.controller.characterListType == CharacterListType.OWN_CHARACTER_LIST){
-		cityNameLabel = getStrokeLabel(self.charaModel.city().name(), 18, "#FFFFFF", "#000000", 4);
-	}else if(self.cityModel){
-		var cityName = self.character?self.charaModel.city().name():self.cityModel.name();
-		cityNameLabel = getStrokeLabel(cityName, 18, "#FFFFFF", "#000000", 4);
-	}*/
+	var cityNameLabel = getStrokeLabel(LMvc.SingleCombatArenaController ? "" : self.charaModel.city().name(), 18, "#FFFFFF", "#000000", 4);
 	cityNameLabel.x = 60 * 2 + 2;
 	cityNameLabel.y = 5;
 	layer.addChild(cityNameLabel);
@@ -286,7 +275,7 @@ CharacterListChildView.prototype.setBasicProperties = function() {
 	layer.addChild(loyalty);
 	self.loyalty = loyalty;
 
-		var jobLabel = getStrokeLabel(self.charaModel.jobLabel(), 18, "#FFFFFF", "#000000", 4);
+	var jobLabel = getStrokeLabel(self.charaModel.jobLabel(), 18, "#FFFFFF", "#000000", 4);
 	jobLabel.x = 60 * 4;
 	jobLabel.y = 5;
 	layer.addChild(jobLabel);
@@ -335,9 +324,6 @@ CharacterListChildView.prototype.setAbilityProperties = function() {
 	self.luck = luck;
 	layer.x = 180;
 	layer.y = 10;
-	/*var abilityPropertiesBitmap = getBitmap(layer);
-	abilityPropertiesBitmap.x = 180;
-	abilityPropertiesBitmap.y = 10;*/
 	self.addChild(layer);
 	self.abilityProperties = layer;
 	self.abilityProperties.visible = false;

@@ -35,6 +35,10 @@ CreateCharacterArmView.prototype.refreshStatus=function(){
 			data.push({id:child.id,proficiency:child.proficiency});
 		}
 	}
+	for(var i=soldiers.length,l=SoldierDatas.length;i<l;i++){
+		var child = SoldierDatas[i];
+		data.push({id:child.id,proficiency:0});
+	}
 	if(sum < 1500){
 		self.point += (1500 - sum);
 	}
