@@ -237,11 +237,13 @@ LogoView.prototype.loadChapterList=function(event){
 };
 LogoView.prototype.showChapterListChild=function(chapter, menuLayer, x, y){
 	var self = this;
-	var title = chapter.year + " " + Language.get("chapter_"+chapter.id);
+	var title = (chapter.hideYear ? "" : chapter.year + " ") + Language.get("chapter_"+chapter.id);
 	var buttonChapter = getSizeButton(title,200, 45);
 	buttonChapter.chapterId = chapter.id;
 	buttonChapter.name = productIdConfig["chapter_"+chapter.id];
-	if(chapter.lock){
+	var group = productIdConfig[chapter.group];
+	var groupIsBuy = purchaseHasBuy(group);
+	if(chapter.lock && !groupIsBuy){
 		if(!purchaseHasBuy(productIdConfig["chapter_" + chapter.id])){
 			lockedButton(buttonChapter);
 		}
@@ -251,50 +253,103 @@ LogoView.prototype.showChapterListChild=function(chapter, menuLayer, x, y){
 	menuLayer.addChild(buttonChapter);
 	buttonChapter.addEventListener(LMouseEvent.MOUSE_UP, self.showChapter);
 };
-LogoView.prototype.showChapterList=function(list){
+LogoView.prototype.showChapterList=function(list, index){
 	var self = this;
 	var menuHeight = 48;
 	var menuY = 0;
-	var menuLayer = new LSprite();
-	menuLayer.name = "menuLayer";
-	menuLayer.tx = (LGlobal.width - 200) * 0.5;
-	self.addChild(menuLayer);
-	var i = 0;
-	for(; i < list.length*0.5; i++){
+	var menuLayer = self.getChildByName("menuLayer");
+	if(menuLayer){
+		menuLayer.removeAllChild();
+	}else{
+		menuLayer = new LSprite();
+		menuLayer.name = "menuLayer";
+		menuLayer.tx = (LGlobal.width - 200) * 0.5;
+		self.addChild(menuLayer);
+	}
+	self.showIndex = index;
+	var currentChapter;
+	for(var i = 0; i < list.length; i++){
 		var chapter = list[i];
-		self.showChapterListChild(chapter, menuLayer, -110, menuY);
+		if(chapter.index != index){
+			continue;
+		}
+		currentChapter = chapter;
+		self.showChapterListChild(chapter, menuLayer, 0, menuY);
+		//self.showChapterListChild(chapter, menuLayer, -110, menuY);
 		menuY += menuHeight;
 	}
-	menuY = 0;
+	var lockButton = menuLayer.childList.find(function(child){
+		return child.getChildByName("lock");
+	});
+	if(lockButton && currentChapter && currentChapter.group){
+		var title = Language.get("chapter_group");
+		var buttonChapter = getSizeButton(title,200, 45);
+		buttonChapter.group = currentChapter.group;
+		buttonChapter.name = productIdConfig[currentChapter.group];
+		if(!purchaseHasBuy(buttonChapter.name)){
+			lockedButton(buttonChapter);
+		}
+		buttonChapter.x = (200 - buttonChapter.getWidth()) * 0.5;
+		buttonChapter.y = menuY;
+		menuY += menuHeight;
+		menuLayer.addChild(buttonChapter);
+		buttonChapter.addEventListener(LMouseEvent.MOUSE_UP, self.showChapter);
+	}
+	/*menuY = 0;
 	for(; i < list.length; i++){
 		var chapter = list[i];
 		self.showChapterListChild(chapter, menuLayer, 110, menuY);
 		menuY += menuHeight;
-	}
+	}*/
 	var buttonReturn = getSizeButton(Language.get("return"),200,45);
 	buttonReturn.y = menuY;
 	menuLayer.addChild(buttonReturn);
-	buttonReturn.addEventListener(LMouseEvent.MOUSE_UP, self.returnTopMenu.bind(self));
-	
+	buttonReturn.addEventListener(LMouseEvent.MOUSE_UP, self.returnTopMenu);
+	if(index > 0){
+		var buttonLeft = getSizeButton("←",100,45);
+		buttonLeft.x = (200 - buttonLeft.getWidth()) * 0.5 - 160;
+		buttonLeft.y = menuY;
+		menuLayer.addChild(buttonLeft);
+		buttonLeft.addEventListener(LMouseEvent.MOUSE_UP, self.toLeft);
+	}
+	if(index != 3){
+		var buttonRight = getSizeButton("→",100,45);
+		buttonRight.x = (200 - buttonRight.getWidth()) * 0.5 + 160;
+		buttonRight.y = menuY;
+		menuLayer.addChild(buttonRight);
+		buttonRight.addEventListener(LMouseEvent.MOUSE_UP, self.toRight);
+	}
 	menuLayer.x = self.topMenuLayer.x + 210;
 	menuY += menuHeight * 2;
 	menuLayer.y = LGlobal.height - menuY;
 	self.chapterMenuLayer = menuLayer;
 	
 	LTweenLite.to(self.topMenuLayer,0.5,{x:self.topMenuLayer.tx-210, alpha:0});
+	self.chapterMenuLayer.alpha = 0;
 	LTweenLite.to(self.chapterMenuLayer,0.5,{x:menuLayer.tx, alpha:1});
 };
 LogoView.prototype.chapterMenuClosed=function(event){
-	var self = this;
+	var self = event.target.getParentByConstructor(LogoView);
 	self.chapterMenuLayer.remove();
 	self.chapterMenuLayer = null;
 	self.topMenuLayer.mouseChildren = true;
 };
+LogoView.prototype.toLeft=function(event){
+	var button = event.currentTarget;
+	var self = button.getParentByConstructor(LogoView);
+	self.controller.showChapterList(self.showIndex - 1);
+};
+LogoView.prototype.toRight=function(event){
+	var button = event.currentTarget;
+	var self = button.getParentByConstructor(LogoView);
+	self.controller.showChapterList(self.showIndex + 1);
+};
 LogoView.prototype.returnTopMenu=function(event){
-	var self = this;
+	var button = event.currentTarget;
+	var self = button.getParentByConstructor(LogoView);
 	self.chapterMenuLayer.mouseChildren = false;
 	LTweenLite.to(self.topMenuLayer,0.5,{x:self.topMenuLayer.tx, alpha:1});
-	LTweenLite.to(self.chapterMenuLayer,0.5,{x:self.chapterMenuLayer.tx+210, alpha:0,onComplete:self.chapterMenuClosed.bind(self)});
+	LTweenLite.to(self.chapterMenuLayer,0.5,{x:self.chapterMenuLayer.tx+210, alpha:0,onComplete:self.chapterMenuClosed});
 };
 LogoView.prototype.showChapter=function(event){
 	var button = event.currentTarget;
@@ -303,21 +358,31 @@ LogoView.prototype.showChapter=function(event){
 };
 LogoView.prototype.showChapterRun=function(button){
 	var self = this;
-	if(!button.chapterId){
+	if(!button.chapterId && !button.group){
 		return;
 	}
 	var lockMark = button.getChildByName("lock");
 	if(lockMark){
 		var name = String.format(Language.get("new_script"), Language.get("chapter_"+button.chapterId));
 		if(LPlugin.native){
-			purchaseConfirm(button.name, name, function(productId){
-				var menuLayer = self.getChildByName("menuLayer");
-				var currentButton = menuLayer.getChildByName(productId);
-				var currentLock = currentButton.getChildByName("lock");
-				currentLock.remove();
-				self.showChapterRun(currentButton);
-			});
+			if(button.group){
+				name = Language.get("chapter_group");
+				purchaseGroupConfirm(button.name, name, button.group, function(productId){
+					self.controller.showChapterList(self.showIndex);
+				});
+			}else{
+				purchaseConfirm(button.name, name, function(productId){
+					var menuLayer = self.getChildByName("menuLayer");
+					var currentButton = menuLayer.getChildByName(productId);
+					var currentLock = currentButton.getChildByName("lock");
+					currentLock.remove();
+					self.showChapterRun(currentButton);
+				});
+			}
 		}else{
+			if(button.group){
+				name = Language.get("chapter_group");
+			}
 			purchaseConfirm(null, name, function(){
 				window.open(LMvc.homeURL);
 			});

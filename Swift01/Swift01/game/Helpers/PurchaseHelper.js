@@ -44,13 +44,14 @@ function purchaseComplete(event, callback) {
 	}else{
 		//success
 		var data = event.target ? event.target : {};
+		//purchase log update
+		var purchaseLog = LPlugin.GetData("purchaseLog", []);
+		LPlugin.print("data.productId="+data.productId);
+		purchaseLog.push({"product_id":data.productId});
+		LPlugin.SetData("purchaseLog", purchaseLog);
 		if(callback){
 			callback(data.productId);
 		}
-		//purchase log update
-		var purchaseLog = LPlugin.GetData("purchaseLog", []);
-		purchaseLog.push({"product_id":data.productId});
-		LPlugin.SetData("purchaseLog", purchaseLog);
 	}
 }
 
@@ -73,9 +74,23 @@ function purchaseHasBuy(productId) {
 	});
 	return child != null;
 }
-
-
+function getGroupChapterNames(group){
+	var names = [];
+	for(var i=0;i<chapterListSetting.length;i++){
+		var chapter = chapterListSetting[i];
+		if(chapter.group == group){
+			names.push("・" + Language.get("chapter_"+chapter.id));
+		}
+	}
+	return names.join("\n");
+}
+function purchaseGroupConfirm(productId, name, group, callback){
+	purchaseConfirmShow(productId, name, group, callback);
+}
 function purchaseConfirm(productId, name, callback) {
+	purchaseConfirmShow(productId, name, null, callback);
+}
+function purchaseConfirmShow(productId, name, group, callback) {console.log("purchaseConfirmShow");
 	var obj = {
 		title : Language.get("confirm"),
 		width : 340,
@@ -86,14 +101,19 @@ function purchaseConfirm(productId, name, callback) {
 		var productInformation = GameCacher.getData("productInformation");
 		if (!productInformation) {
 			purchaseProductInformation(function() {
-				purchaseConfirm(productId, name, callback);
+				purchaseConfirmShow(productId, name, group, callback);
 			});
 			return;
 		}
 		var product = productInformation.find(function(child) {
 			return child.productId == productId;
 		});
-		obj.messageHtml = String.format(Language.get("purchase_confirm_native_message"), name, product.priceLabel);
+		if(group){
+			obj.messageHtml = String.format(Language.get("purchase_confirm_group_message"), product.priceLabel, getGroupChapterNames(group));
+			obj.height += 160;
+		}else{
+			obj.messageHtml = String.format(Language.get("purchase_confirm_native_message"), name, product.priceLabel);
+		}
 		obj.okEvent = function(e) {
 			e.currentTarget.parent.remove();
 			purchaseStart(productId, callback);

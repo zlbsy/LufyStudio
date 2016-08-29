@@ -72,6 +72,7 @@ var EventListConfig = [
 		to:{year:191,month:9},
 		noSeignior:265,
 		generals:[
+			{id:237,seignior:237},
 			{id:18,seignior:265},
 			{id:265,seignior:265},
 			{id:543,seignior:265},
@@ -121,7 +122,7 @@ var EventListConfig = [
 	condition:{
 		from:{year:194,month:4},
 		to:{year:194,month:4},
-		seignior:[21],
+		noSeignior:451,
 		generals:[
 			{id:451,seignior:451},//陶谦未灭亡
 			{id:21,seignior:21},//刘备未灭亡

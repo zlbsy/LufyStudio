@@ -411,6 +411,9 @@ BattleCharacterAI.prototype.attackActionComplete = function(event) {
 				obj.hertValue = obj.hertValue >>> 0;
 			}else if(skill && skill.isSubType(SkillSubType.BOUNCE)){
 				var changeHp = obj.hertValue * skill.bounce() >>> 0;
+				if(changeHp > chara.data.troops()){
+					changeHp = chara.data.troops();
+				}
 				chara.data.troops(chara.data.troops() - changeHp, calculateWounded(0.5, 0.2));
 				tweenTextShow(chara, String.format("-{0}",changeHp), 10);
 				/*var tweenObj = getStrokeLabel(String.format("-{0}",changeHp),12,"#FF0000","#000000",2);

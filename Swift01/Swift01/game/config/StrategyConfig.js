@@ -276,7 +276,7 @@ var StrategyDatas = [
 	rangeAttackTarget:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],
 	explanation:""
 	},
-	{id:28,name:"群体毒",belong:Belong.ENEMY,type:StrategyType.Fixed,effectType:StrategyEffectType.Status,image:"du_effect",
+	{id:28,name:"群体毒",belong:Belong.ENEMY,type:StrategyType.Poison,effectType:StrategyEffectType.Status,image:"du_effect",
 	icon:"du_sign",
 	se:"Se_strategy_hert1",
 	cost:14,
@@ -286,7 +286,7 @@ var StrategyDatas = [
 	rangeAttackTarget:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],
 	explanation:""
 	},
-	{id:29,name:"群体禁咒",belong:Belong.ENEMY,type:StrategyType.Fixed,effectType:StrategyEffectType.Status,image:"jinzhou_effect",
+	{id:29,name:"群体禁咒",belong:Belong.ENEMY,type:StrategyType.BanIncantation,effectType:StrategyEffectType.Status,image:"jinzhou_effect",
 	icon:"jinzhou_sign",
 	se:"Se_strategy_hert2",
 	cost:14,
@@ -295,7 +295,7 @@ var StrategyDatas = [
 	rangeAttackTarget:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],
 	explanation:""
 	},
-	{id:30,name:"群体燃烧",belong:Belong.ENEMY,type:StrategyType.Fixed,effectType:StrategyEffectType.Status,image:"shao_effect",
+	{id:30,name:"群体燃烧",belong:Belong.ENEMY,type:StrategyType.Burn,effectType:StrategyEffectType.Status,image:"shao_effect",
 	icon:"shao_sign",
 	se:"Se_strategy_hert2",
 	cost:12,

@@ -656,17 +656,26 @@ CharacterModel.prototype.maxExp = function(value){
 	return this._dataValue("maxExp", value, 500);
 };
 CharacterModel.prototype.wounded = function(value){//伤兵
-	return this._dataValue("wounded", value, 0);
+	var self = this;
+	if(typeof value != UNDEFINED && value < 0){
+		value = 0;
+	}
+	return self._dataValue("wounded", value, 0);
 };
 CharacterModel.prototype.troops = function(value, proportionWounded) {
 	var self = this;
-	if(value && proportionWounded){
-		var addWounded = (self.data.troops - value) * proportionWounded >>> 0;
-		var wounded = self.wounded();
-		self.wounded(wounded + addWounded);
-	}
-	if(value && self.data._maxTroops && value + self.wounded() > self.maxTroops()){
-		self.wounded(self.maxTroops() - value);
+	if(typeof value != UNDEFINED){
+		if(proportionWounded){
+			var addWounded = (self.data.troops - value) * proportionWounded >>> 0;
+			var wounded = self.wounded();
+			self.wounded(wounded + addWounded);
+		}
+		if(self.data._maxTroops && value + self.wounded() > self.maxTroops()){
+			self.wounded(self.maxTroops() - value);
+		}
+		if(value == 0 || value == self.maxTroops()){
+			self.wounded(0);
+		}
 	}
 	return self._dataValue("troops", value,0);
 };

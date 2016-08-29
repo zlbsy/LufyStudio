@@ -245,7 +245,7 @@ CharacterListChildView.prototype.setBasicProperties = function() {
 	if(self.basicProperties){
 		self.seigniorName.text = self.charaModel.seigniorName();
 		self.identity.text = self.charaModel.identity();
-		self.cityNameLabel.text = self.charaModel.city().name();
+		self.cityNameLabel.text = !self.charaModel.city() ? "" : self.charaModel.city().name();
 		self.loyalty.text = seigniorId>0 ? self.charaModel.loyalty() : "--";
 		self.jobLabel.text = self.charaModel.jobLabel();
 		return;
@@ -264,7 +264,7 @@ CharacterListChildView.prototype.setBasicProperties = function() {
 	identity.y = 5;
 	layer.addChild(identity);
 	self.identity = identity;
-	var cityNameLabel = getStrokeLabel(LMvc.SingleCombatArenaController ? "" : self.charaModel.city().name(), 18, "#FFFFFF", "#000000", 4);
+	var cityNameLabel = getStrokeLabel(!self.charaModel.city() ? "" : self.charaModel.city().name(), 18, "#FFFFFF", "#000000", 4);
 	cityNameLabel.x = 60 * 2 + 2;
 	cityNameLabel.y = 5;
 	layer.addChild(cityNameLabel);

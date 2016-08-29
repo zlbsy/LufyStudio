@@ -49,6 +49,7 @@ Language.dataSimple = {
 	"no":"いいえ",
 	"restore_confirm_message":"<font size='21' color='#FFFFFF'>既に<font color='#FF0000'>購入した</font>機能を復元しますか？（この操作は<font color='#FF0000'>無料</font>です）</font>",
 	"purchase_confirm_native_message":"<font size='21' color='#FFFFFF'><font color='#FF0000'>{0}</font>を解放する、必要なお金は<font color='#FF0000'>{1}</font>です、よろしいですか?</font>",
+	"purchase_confirm_group_message":"<font size='21' color='#FFFFFF'>下記のシナリオを解放する、必要なお金は<font color='#FF0000'>{0}</font>です、よろしいですか?\n{1}</font>",
 	"purchase_confirm_web_message":"<font size='21' color='#FFFFFF'>今のバージョンは<font color='#FF0000'>{0}</font>という機能が使えません、ネーティブ版<font color='#FF0000'>をダウンロードしてください。</font>!</font>",
 	"select_seignior_message":"<font size='22' color='#FFFFFF'>勢力 <font color='#FF0000'>{0}</font> を選択しますか？</font>",
 	"chapter_1":"黄巾の乱",
@@ -61,5 +62,7 @@ Language.dataSimple = {
 	"chapter_8":"諸葛亮の南征",
 	"chapter_9":"諸葛亮の死",
 	"chapter_10":"蜀の滅亡",
+	"chapter_11":"英雄集結",
+	"chapter_group":"複数シナリオ購入",
 	"new_script":"シナリオ({0})",
 };

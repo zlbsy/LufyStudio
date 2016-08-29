@@ -240,6 +240,12 @@ LogoController.prototype.loadChapterList = function(){
 };
 LogoController.prototype.configLoadComplete = function(){
 	var self = this;
+	self.showChapterList(0);
+	AreaModel.setArea(MapSetting);
+	LMvc.keepLoading(false);
+};
+LogoController.prototype.showChapterList = function(index){
+	var self = this;
 	var list = [];
 	for(var i=0;i<chapterListSetting.length;i++){
 		var chapter = chapterListSetting[i];
@@ -247,9 +253,7 @@ LogoController.prototype.configLoadComplete = function(){
 			list.push(chapter);
 		}
 	}
-	self.view.showChapterList(list);
-	AreaModel.setArea(MapSetting);
-	LMvc.keepLoading(false);
+	self.view.showChapterList(list, index);
 };
 LogoController.prototype.showChapter = function(chapterId){
 	var self = this;

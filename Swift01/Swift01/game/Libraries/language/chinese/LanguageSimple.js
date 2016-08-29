@@ -49,6 +49,7 @@ Language.dataSimple = {
 	"no":"否",
 	"restore_confirm_message":"<font size='21' color='#FFFFFF'>恢复<font color='#FF0000'>已购买</font>的功能吗？（此操作<font color='#FF0000'>免费</font>）</font>",
 	"purchase_confirm_native_message":"<font size='21' color='#FFFFFF'>开通<font color='#FF0000'>{0}</font>功能需要花费<font color='#FF0000'>{1}</font>，要开通此功能吗?</font>",
+	"purchase_confirm_group_message":"<font size='21' color='#FFFFFF'>一次性开通以下剧本需要花费<font color='#FF0000'>{0}</font>，要开通此功能吗?\n{1}</font>",
 	"purchase_confirm_web_message":"<font size='21' color='#FFFFFF'>当前版本无法使用<font color='#FF0000'>{0}</font>功能，请下载<font color='#FF0000'>手机安装版本</font>!</font>",
 	"select_seignior_message":"<font size='22' color='#FFFFFF'>要选择势力 <font color='#FF0000'>{0}</font> 吗？</font>",
 	"chapter_1":"覆苍天黄巾当立",
@@ -61,5 +62,7 @@ Language.dataSimple = {
 	"chapter_8":"征南寇丞相兴师",
 	"chapter_9":"未捷师孔明殒命",
 	"chapter_10":"灭蜀汉二士争功",
+	"chapter_11":"群雄集结",
+	"chapter_group":"购买多个剧本",
 	"new_script":"新剧本({0})",
 };

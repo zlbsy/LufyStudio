@@ -39,38 +39,13 @@ TroubleSelectView.prototype.set=function(){
 	label.y = 40;
 	self.addChild(label);
 	
-	label = getStrokeLabel(Language.get("select_death_title"),20,"#FFFFFF","#000000",3);
+	label = getStrokeLabel(Language.get("select_behead_title"),20,"#FFFFFF","#000000",3);
 	label.y = 90;
 	self.addChild(label);
 	
 	radio = new LRadio();
 	radio.setChildRadio(1,0,125,bitmap,bitmapSelect);
 	radio.setChildRadio(0,110,125,bitmap,bitmapSelect);
-	radio.setValue(1);
-	self.addChild(radio);
-	self.radioDeath = radio;
-	for(var i=0;i<radio.numChildren;i++){
-		var child = radio.getChildAt(i);
-		child.addShape(LShape.RECT,[0,-10,100,50]);
-	}
-	label = getStrokeLabel(Language.get("yes"),20,"#FFFFFF","#000000",3);
-	label.x = 40;
-	label.y = 130;
-	self.addChild(label);
-	
-	label = getStrokeLabel(Language.get("no"),20,"#FFFFFF","#000000",3);
-	label.x = 150;
-	label.y = 130;
-	self.addChild(label);
-	
-	
-	label = getStrokeLabel(Language.get("select_behead_title"),20,"#FFFFFF","#000000",3);
-	label.y = 180;
-	self.addChild(label);
-	
-	radio = new LRadio();
-	radio.setChildRadio(1,0,215,bitmap,bitmapSelect);
-	radio.setChildRadio(0,110,215,bitmap,bitmapSelect);
 	radio.setValue(1);
 	self.addChild(radio);
 	self.radioBehead = radio;
@@ -80,11 +55,36 @@ TroubleSelectView.prototype.set=function(){
 	}
 	label = getStrokeLabel(Language.get("yes"),20,"#FFFFFF","#000000",3);
 	label.x = 40;
-	label.y = 220;
+	label.y = 130;
 	self.addChild(label);
 	
 	label = getStrokeLabel(Language.get("no"),20,"#FFFFFF","#000000",3);
 	label.x = 150;
-	label.y = 220;
+	label.y = 130;
 	self.addChild(label);
+	
+	if(!LMvc.chapterData.noLife){
+		label = getStrokeLabel(Language.get("select_death_title"),20,"#FFFFFF","#000000",3);
+		label.y = 180;
+		self.addChild(label);
+		radio = new LRadio();
+		radio.setChildRadio(1,0,215,bitmap,bitmapSelect);
+		radio.setChildRadio(0,110,215,bitmap,bitmapSelect);
+		radio.setValue(1);
+		self.addChild(radio);
+		self.radioDeath = radio;
+		for(var i=0;i<radio.numChildren;i++){
+			var child = radio.getChildAt(i);
+			child.addShape(LShape.RECT,[0,-10,100,50]);
+		}
+		label = getStrokeLabel(Language.get("yes"),20,"#FFFFFF","#000000",3);
+		label.x = 40;
+		label.y = 220;
+		self.addChild(label);
+		
+		label = getStrokeLabel(Language.get("no"),20,"#FFFFFF","#000000",3);
+		label.x = 150;
+		label.y = 220;
+		self.addChild(label);
+	}
 };

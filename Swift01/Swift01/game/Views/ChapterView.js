@@ -133,7 +133,11 @@ ChapterView.prototype.troubleSelect=function(event){
 	var self = windowLayer.getParentByConstructor(ChapterView);
 	var troubleSelect = windowLayer.getChildByName("TroubleSelectView");
 	LMvc.chapterData.trouble = troubleSelect.radioTrouble.value;
-	LMvc.chapterData.validDeath = troubleSelect.radioDeath.value;
+	if(LMvc.chapterData.noLife){
+		LMvc.chapterData.validDeath = 0;
+	}else{
+		LMvc.chapterData.validDeath = troubleSelect.radioDeath.value;
+	}
 	LMvc.chapterData.validBehead = troubleSelect.radioBehead.value;
 	windowLayer.remove();
 	LMvc.chapterData.isCreateDebut = self.checkboxDebut.checked;
