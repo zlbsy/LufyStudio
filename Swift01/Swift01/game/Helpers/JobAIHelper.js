@@ -456,21 +456,21 @@ function jobAiToEnlish(areaModel,characters){
 	if(characters.length == 0){
 		return;
 	}
-	if(areaModel.money() < JobPrice.ENLIST){
+	if(areaModel.money() - areaModel.minMoney() < JobPrice.ENLIST){
 		return;
 	}
 	var character = characters.shift();
 	var num = EnlistSetting.ENLIST_TO - EnlistSetting.ENLIST_FROM;
 	var cost = JobPrice.ENLIST * EnlistSetting.ENLIST_TO / EnlistSetting.ENLIST_FROM >>> 0;
-	if(areaModel.money() < cost){
+	if(areaModel.money() - areaModel.minMoney() < cost){
 		num = (EnlistSetting.ENLIST_TO - EnlistSetting.ENLIST_FROM)*0.7;
 		cost = JobPrice.ENLIST * (EnlistSetting.ENLIST_FROM + num) / EnlistSetting.ENLIST_FROM >>> 0;
 	}
-	if(areaModel.money() < cost){
+	if(areaModel.money() - areaModel.minMoney() < cost){
 		num = (EnlistSetting.ENLIST_TO - EnlistSetting.ENLIST_FROM)*0.3;
 		cost = JobPrice.ENLIST * (EnlistSetting.ENLIST_FROM + num) / EnlistSetting.ENLIST_FROM >>> 0;
 	}
-	if(areaModel.money() < cost){
+	if(areaModel.money() - areaModel.minMoney() < cost){
 		num = 0;
 		cost = JobPrice.ENLIST;
 	}
@@ -568,7 +568,7 @@ function jobAiInternal(areaModel,characters,price,job){//内政
 	if(characters.length == 0){
 		return;
 	}
-	if(price > 0 && areaModel.money() < price){
+	if(price > 0 && areaModel.money() - areaModel.minMoney() < price){
 		return;
 	}
 	var character = characters.shift();

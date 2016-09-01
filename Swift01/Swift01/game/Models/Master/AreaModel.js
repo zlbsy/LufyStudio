@@ -548,6 +548,9 @@ AreaModel.prototype.money=function(value){
 	
 	return this._plusData("money",value);
 };
+AreaModel.prototype.minMoney = function(){
+	return (100 + 5 * this.seignior().level()) * 5;
+};
 AreaModel.prototype.foodLabel=function(){
 	return LString.numberFormat(this.data.food>>>0,3);
 };

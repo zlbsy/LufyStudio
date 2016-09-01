@@ -60,6 +60,9 @@ CityController.prototype.init=function(initFunc){
 		initFunc();
 	}
 	LPlugin.playBGM("city", LPlugin.gameSetting.BGM);
+	var seignior = SeigniorModel.getSeignior(LMvc.selectSeignorId);
+			var item = new ItemModel(null,{item_id:91,count:1});
+			seignior.addItem(item);
 };
 CityController.prototype.gotoMap=function(){
 	var self = this;

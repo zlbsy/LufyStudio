@@ -95,6 +95,9 @@ ItemMasterModel.prototype.params = function(){
 ItemMasterModel.prototype.getParam = function(key){
 	return this.data[key];
 };
+ItemMasterModel.prototype.life = function(){
+	return this.data.life?this.data.life:0;
+};
 ItemMasterModel.prototype.attack = function(){
 	return this.data.attack?this.data.attack:0;
 };

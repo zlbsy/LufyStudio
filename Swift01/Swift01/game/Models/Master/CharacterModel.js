@@ -497,7 +497,14 @@ CharacterModel.prototype.ambition = function() {
 	return this.data.ambition;
 };
 CharacterModel.prototype.life = function() {
-	return this.data.life;
+	var self = this;
+	var value = self.data.life;
+	var equipments = self.equipments();
+	for(var i=0;i<equipments.length;i++){
+		var item = equipments[i];
+		value += item.life();
+	}
+	return value;
 };
 CharacterModel.prototype.stopIn = function(value) {
 	return this._dataValue("stopIn", value, 0);
@@ -665,6 +672,9 @@ CharacterModel.prototype.wounded = function(value){//伤兵
 CharacterModel.prototype.troops = function(value, proportionWounded) {
 	var self = this;
 	if(typeof value != UNDEFINED){
+		if(value > self.maxTroops()){
+			value = self.maxTroops();
+		}
 		if(proportionWounded){
 			var addWounded = (self.data.troops - value) * proportionWounded >>> 0;
 			var wounded = self.wounded();
