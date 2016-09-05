@@ -1,0 +1,5 @@
+SGJEvent.mapShow(2);
+SGJEvent.messageShow(东汉末年政局不稳，外戚专政，宦官专权，加之土地兼并现象严重，民不聊生！,3);
+SGJEvent.messageShow(张角创立太平道，以宗教的方式笼络人心，在贫苦农民中树立了威望，信众多达数十万。,3);
+SGJEvent.messageShow(教徒们头扎黄巾，高喊“苍天已死，黄天当立，岁在甲子，天下大吉”的口号，向官僚地主发动了猛烈攻击，并对东汉朝廷的统治产生了巨大的冲击！,3);
+Mark.EventEnd;

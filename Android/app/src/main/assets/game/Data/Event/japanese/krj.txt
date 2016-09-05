@@ -1,0 +1,3 @@
+SGJEvent.mapShow(1);
+SGJEvent.messageShow(苦肉の計。,3);
+Mark.EventEnd;

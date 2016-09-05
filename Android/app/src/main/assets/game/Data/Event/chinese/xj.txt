@@ -1,0 +1,11 @@
+SGJEvent.mapShow(7);
+SGJEvent.addCharacter(@id0,150,100,fade);
+SGJEvent.messageShow(经过了多年的争斗，@name0终于统一了天下，建立了新的王朝。,3);
+SGJEvent.messageShow(建立了新王朝的@name0经常注意叮咛自我克制欲望，嘱咐臣下莫恐上不悦而停止进谏，励精图治。,3);
+SGJEvent.messageShow(在政治上，既往不咎，知人善任，从谏如流，整饬吏治；经济上，薄赋尚俭，为政谨慎；亲自选派都督、刺史等地方官，并将其功过写在宫内屏风上，作为升降奖惩的依据。,3);
+SGJEvent.addCharacter(622,0,200,fade);
+SGJEvent.messageShow(在军事上，@name0多次对外用兵，先后平定四方的胡人部落。,3);
+SGJEvent.removeCharacter(622,fade);
+SGJEvent.messageShow(由是新王朝声威远播，四方宾服。,3);
+SGJEvent.messageShow(经君臣二十三年的努力，社会安定、经济恢复并稳定发展，对外武功显赫，@name0成为了中国历史上最杰出的皇帝之一。,3);
+Mark.EventEnd;

@@ -1,0 +1,14 @@
+SGJEvent.mapShow(1);
+SGJEvent.messageShow(曹操起兵之后，感到董卓势大，凭自己一人之力恐怕难以与之抗衡。,3);
+SGJEvent.addCharacter(1,50,100,fade);
+SGJEvent.talk(1,凭我一人之力，是肯定对付不了董卓的，只能联合其它诸侯了！);
+SGJEvent.messageShow(曹操作了檄文，号召天下英雄一起讨伐董卓，檄文发出去后，各镇诸侯纷纷起兵相应。,3);
+SGJEvent.messageShow(曹操推举袁绍来做联合军的盟主。,3);
+SGJEvent.addCharacter(8,250,100,fade);
+SGJEvent.talk(8,孟德，盟主为什么不是由作为发起人的你来做呢？);
+SGJEvent.talk(1,袁紹是四世三公的名门，恐怕没人比他更适合坐盟主这个位子了。);
+SGJEvent.talk(8,......嗯，这倒是啊。);
+SGJEvent.addCharacter(39,150,100,fade);
+SGJEvent.talk(39,正义一定是站在我们这一边的！大家一鼓作气，铲除奸党董卓！);
+SGJEvent.messageShow(反董卓联盟成立了。,3);
+Mark.EventEnd;
