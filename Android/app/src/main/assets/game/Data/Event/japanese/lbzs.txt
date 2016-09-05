@@ -1,0 +1,3 @@
+SGJEvent.mapShow(1);
+SGJEvent.messageShow(刘表之死。,3);
+Mark.EventEnd;

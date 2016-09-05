@@ -1,0 +1,13 @@
+SGJEvent.mapShow(7);
+SGJEvent.addCharacter(@id0,150,100,fade);
+SGJEvent.messageShow(经过了多年的争斗，@name0终于统一了天下，建立了新的王朝。,3);
+SGJEvent.messageShow(然而，天下依然没有太平，统一只是短暂的，不久，四方的胡人部落开始侵入中原。,3);
+SGJEvent.addCharacter(621,0,50,fade);
+SGJEvent.addCharacter(622,0,200,fade);
+SGJEvent.addCharacter(624,350,50,fade);
+SGJEvent.addCharacter(626,350,200,fade);
+SGJEvent.messageShow(而@name0建立的新王朝根基不稳，并没有足够的实力抵御这些从四面八方杀来的胡人。,3);
+SGJEvent.messageShow(胡人抓住了这个机会，联合起来大举入侵，并攻破了新王朝的都城。,3);
+SGJEvent.removeCharacter(@id0,fade);
+SGJEvent.messageShow(新王朝就这样灭亡了。,3);
+Mark.EventEnd;

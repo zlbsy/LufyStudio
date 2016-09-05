@@ -1,0 +1,36 @@
+//strategy:[火，风，水，地]
+var TerrainConfig = [
+{id:0,name:"平原",strategy:[1,1,0,0]},
+{id:1,name:"草原",strategy:[1,1,0,0]},
+{id:2,name:"森林",strategy:[1,0,0,0]},
+{id:3,name:"荒地",strategy:[0,1,0,1]},
+{id:4,name:"山地",strategy:[0,1,0,1]},
+{id:5,name:"雪原",strategy:[0,1,1,0]},
+{id:6,name:"桥梁",strategy:[1,1,1,0]},
+{id:7,name:"浅滩",strategy:[0,1,1,0]},
+{id:8,name:"沼泽",strategy:[0,1,1,0]},
+{id:9,name:"大河",strategy:[0,1,1,0],boat:true,se:"Se_move_warter"},
+{id:10,name:"城内",strategy:[1,0,0,0]},
+{id:11,name:"民居",strategy:[1,0,0,0]},
+{id:12,name:"城池",strategy:[1,0,0,0],heal:0.15,comment:"terrain_comment_heal"},
+{id:13,name:"关隘",strategy:[1,0,0,0],heal:0.15,comment:"terrain_comment_heal"},
+{id:14,name:"鹿砦",strategy:[1,0,0,0],heal:0.15,comment:"terrain_comment_heal"},
+{id:15,name:"村庄",strategy:[1,0,0,0],heal:0.05,comment:"terrain_comment_heal"},
+{id:16,name:"兵营",strategy:[1,0,0,0],heal:0.10,comment:"terrain_comment_heal"},
+{id:17,name:"岩山",strategy:[0,0,0,0],comment:"terrain_comment_nomove"},
+{id:18,name:"池塘",strategy:[0,0,0,0],comment:"terrain_comment_nomove"},
+{id:19,name:"小河",strategy:[0,0,0,0],comment:"terrain_comment_nomove"},
+{id:20,name:"栅栏",strategy:[0,0,0,0],comment:"terrain_comment_nomove"},
+{id:21,name:"城墙",strategy:[0,0,0,0],comment:"terrain_comment_nomove"},
+{id:22,name:"水池",strategy:[0,0,0,0],comment:"terrain_comment_nomove"},
+{id:23,name:"火",strategy:[0,0,0,0],comment:"terrain_comment_nomove"},
+{id:24,name:"船",strategy:[0,0,0,0],comment:"terrain_comment_nomove"}
+];
+var TerrainStrategyConfig = [StrategyType.Fire, StrategyType.Wind, StrategyType.Warter, StrategyType.Earth];
+/*
+0:"平原",1:"草原",2:"森林",3:"荒地",4:"山地",5:"雪原",6:"桥梁",7:"浅滩",8:"沼泽",9:"大河",10:"城内",11:"民居"
+terrain:[
+{id:0,value:100,moveCost:1},{id:1,value:100,moveCost:1},{id:2,value:100,moveCost:1},{id:3,value:100,moveCost:1},
+{id:4,value:100,moveCost:1},{id:5,value:100,moveCost:1},{id:6,value:100,moveCost:1},{id:7,value:100,moveCost:1},
+{id:8,value:100,moveCost:1},{id:9,value:100,moveCost:1},{id:10,value:100,moveCost:1},{id:11,value:100,moveCost:1}],
+*/

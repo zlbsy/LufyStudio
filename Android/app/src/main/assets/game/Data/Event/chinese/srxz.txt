@@ -1,0 +1,5 @@
+SGJEvent.mapShow(1);
+SGJEvent.messageShow(实力不断扩大的曹操本打算把父亲・曹嵩从故乡结果来，但是在途中被陶谦的属下张闿杀害了。,3);
+SGJEvent.messageShow(愤怒的曹操开始对徐州进兵征伐，很多无辜的百姓都惨遭杀害，而刘备就是化解这场危机的其中的一人。,3);
+SGJEvent.messageShow(过度忧劳的陶谦想将徐州托付给刘备，刘备虽然再三推辞，但是由于周围的人苦苦哀求，终于答应，领了徐州。,3);
+Mark.EventEnd;

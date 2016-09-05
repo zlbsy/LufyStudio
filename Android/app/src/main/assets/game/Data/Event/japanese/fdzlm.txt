@@ -1,0 +1,17 @@
+SGJEvent.mapShow(1);
+SGJEvent.messageShow(義兵を募り旗揚げを成した曹操は、権勢に衰えを見せない董卓に対し、どう対応するかを決めかねていた。,3);
+SGJEvent.addCharacter(1,50,100,fade);
+SGJEvent.talk(1,天を持つかもうという董卓に一軍で攻めかかるのは愚の骨頂ならば、他に兵を求めるのも手か......?);
+SGJEvent.messageShow(曹操はただちに書状をしたため、各地の諸侯らへ檄文を発した。,3);
+SGJEvent.messageShow(曹操が発した檄文に応え、各地の諸侯が参集した。,3);
+SGJEvent.talk(1,天下万民がため、漢室を蔑ろにし、専横を極める逆賊・董卓を討つ！);
+SGJEvent.messageShow(連合軍の盟主には、曹操の推挙を受け、袁紹が就いていた。,3);
+SGJEvent.addCharacter(8,250,100,fade);
+SGJEvent.talk(8,盟主にはてっきり、発起人たる貴公が就かれると思ったのだがな。);
+SGJEvent.talk(1,袁紹殿は四世三公の名門......);
+SGJEvent.talk(1,他に盟主にふさわしい者はおるまい。);
+SGJEvent.talk(8,......ほう、さようか);
+SGJEvent.addCharacter(39,150,100,fade);
+SGJEvent.talk(39,正義は我にあり！皆の者、進めーッ！);
+SGJEvent.messageShow(反董卓連合を結成しました。,3);
+Mark.EventEnd;
