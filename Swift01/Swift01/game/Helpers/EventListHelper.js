@@ -1,4 +1,7 @@
 function checkEventList() {
+	if(LMvc.chapterData.noLife){
+		return false;
+	}
 	var eventListFinished = LMvc.chapterData.eventListFinished || [];
 	var tribeSeignior = 0, gameClear = true;
 	for(var i=0,l=SeigniorModel.list.length;i<l;i++){

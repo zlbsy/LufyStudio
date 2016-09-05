@@ -67,15 +67,21 @@ CharacterModel.createEmployCharacter = function(id, soldierId, cityId){
 	var sumPoint = values[chara.data.employLevel];
 	status = ["force", "intelligence", "command", "agility", "luck"];
 	while(sumPoint != 0){
-		var key = status[Math.fakeRandom()*status.length >>> 0];
+		if(status.length == 0){
+			break;
+		}
+		var index = Math.fakeRandom()*status.length >>> 0;
+		var key = status[index];
 		if(sumPoint > 0){
 			if(chara.data[key] >= 90){
+				status.splice(index, 1);
 				continue;
 			}
 			sumPoint -= 10;
 			chara.data[key] += 10;
 		}else{
 			if(chara.data[key] <= 30){
+				status.splice(index, 1);
 				continue;
 			}
 			sumPoint += 10;
