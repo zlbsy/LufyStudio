@@ -212,8 +212,32 @@ public class Lufylegend {
     }
     private void soundInit(){
         HashMap<Integer, String> sounds = new HashMap<Integer, String>(){
-            {put(R.raw.se_ok, "se_ok");}
+            {put(R.raw.se_big_block, "se_big_block");}
+            {put(R.raw.se_big_hert, "se_big_hert");}
+            {put(R.raw.se_block, "se_block");}
+            {put(R.raw.se_cancel, "se_cancel");}
+            {put(R.raw.se_charge, "se_charge");}
+            {put(R.raw.se_die, "se_die");}
+            {put(R.raw.se_gameover, "se_gameover");}
+            {put(R.raw.se_goto_battle, "se_goto_battle");}
+            {put(R.raw.se_hert, "se_hert");}
+            {put(R.raw.se_loading, "se_loading");}
+            {put(R.raw.se_move_car, "se_move_car");}
+            {put(R.raw.se_move_cavalry, "se_move_cavalry");}
+            {put(R.raw.se_move_infantry, "se_move_infantry");}
+            {put(R.raw.se_move_warter, "se_move_warter");}
             {put(R.raw.se_no, "se_no");}
+            {put(R.raw.se_ok, "se_ok");}
+            {put(R.raw.se_set, "se_set");}
+            {put(R.raw.se_strategy_earth, "se_strategy_earth");}
+            {put(R.raw.se_strategy_fire, "se_strategy_fire");}
+            {put(R.raw.se_strategy_heal1, "se_strategy_heal1");}
+            {put(R.raw.se_strategy_heal2, "se_strategy_heal2");}
+            {put(R.raw.se_strategy_hert1, "se_strategy_hert1");}
+            {put(R.raw.se_strategy_hert2, "se_strategy_hert2");}
+            {put(R.raw.se_strategy_warter, "se_strategy_warter");}
+            {put(R.raw.se_strategy_wind, "se_strategy_wind");}
+            {put(R.raw.se_swing, "se_swing");}
         };
         audioAttributes = new AudioAttributes.Builder()
                 // USAGE_MEDIA
@@ -233,5 +257,8 @@ public class Lufylegend {
             soundIds.put(sounds.get(id), sound);
         }
         soundIds.put("battle1", R.raw.battle1);
+        soundIds.put("battle2", R.raw.battle2);
+        soundIds.put("city", R.raw.city);
+        soundIds.put("map", R.raw.map);
     }
 }
