@@ -137,6 +137,7 @@ CharacterModel.prototype.datas=function(){
 	var saveData = {
 		chara_id:self.id(),
 		seignior_id:self.seigniorId(),
+		feat:self.feat(),//功绩
 		troops:self.troops(),
 		wounded:self.wounded(),
 		exp:self.exp(),
@@ -144,7 +145,6 @@ CharacterModel.prototype.datas=function(){
 		hp:self.HP(),
 		isDefCharacter:self.isDefCharacter(),
 		job:self.getJobData(),//根据任务内容变化
-		feat:self.feat(),//功绩
 		loyalty:self.loyalty(),//忠诚度
 		soldiers:self.data.soldiers,//所有兵种熟练度
 		isPrized:self.isPrized(),

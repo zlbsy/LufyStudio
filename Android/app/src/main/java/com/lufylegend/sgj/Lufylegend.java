@@ -48,6 +48,7 @@ public class Lufylegend {
         myWebView.setWebViewClient(new WebViewClient());
         //ページを表示する。
         String url = String.format("%sindex.html", Lufylegend.gamePath);
+        Lufylegend.gamePath = path;
         myWebView.loadUrl(url);
     }
     @JavascriptInterface

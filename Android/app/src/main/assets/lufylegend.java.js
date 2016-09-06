@@ -16,7 +16,9 @@ function LPurchaseInit() {
             if(pathIndex == 0){
                 pathIndex = 2;
             }
-            var data = LPlugin.readFile(u.substring(pathIndex, extensionIndex), extension);
+            //LPlugin.print("LPlugin.readFile="+(typeof LPlugin.readFile));
+            //var data = LPlugin.readFile(u.substring(pathIndex, extensionIndex), extension);
+            var data = LPlugin.readFile(u);
             var event = new LEvent(LEvent.COMPLETE);
             s.data = data;
             event.currentTarget = s;
@@ -31,7 +33,6 @@ function LPurchaseInit() {
     LLoader.prototype.loadStart = function(u){
     		var s = this;
     		s.content = new Image();
-    		LPlugin.print("u="+u);
     		s.content.onload = function () {
     			s.content.onload = null;
     			var event = new LEvent(LEvent.COMPLETE);
@@ -53,10 +54,7 @@ function LPurchaseInit() {
     			};
     		}
     		var base64 = LPlugin.encodeBase64(u);
-    		LPlugin.print("base64="+base64);
     		var us = u.split(".");
     		s.content.src = "data:image/" + us[us.length - 1] + ";base64," +  base64;
-    		//s.content.src = LPlugin.encodeBase64(u);
-    		LPlugin.print("s.content.src="+s.content.src);
     	};
 }
