@@ -1,4 +1,4 @@
-function characterListType2JobType(characterListType, city) {
+function characterListType2JobType(characterListType) {
 	switch(characterListType){
 		case CharacterListType.AGRICULTURE:
 			return Job.AGRICULTURE;
@@ -22,7 +22,7 @@ function characterListType2JobType(characterListType, city) {
 			return Job.EXPLORE_BUSINESS;
 		case CharacterListType.CHARACTER_SPY:
 			return Job.SPY;
-		case CharacterListType.LEVEL_UP*city.level():
+		case CharacterListType.LEVEL_UP:
 			return Job.LEVEL_UP;
 		case CharacterListType.PERSUADE:
 			return Job.PERSUADE;
@@ -33,7 +33,7 @@ function characterListType2JobType(characterListType, city) {
 	}
 	return Job.IDLE;
 }
-function getJobPrice(jobType) {
+function getJobPrice(jobType, city) {
 	switch(jobType){
 		case Job.AGRICULTURE:
 			return JobPrice.AGRICULTURE;
@@ -48,7 +48,7 @@ function getJobPrice(jobType) {
 		case Job.SPY:
 			return JobPrice.SPY;
 		case Job.LEVEL_UP:
-			return JobPrice.LEVEL_UP;
+			return JobPrice.LEVEL_UP*city.level();
 		case Job.FLOOD:
 			return JobPrice.FLOOD;
 		case Job.PLAGUE_OF_LOCUSTS:

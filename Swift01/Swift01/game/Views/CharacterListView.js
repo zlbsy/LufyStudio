@@ -218,7 +218,7 @@ CharacterListView.prototype.onChangeChildSelect=function(event){
 		self.onChangeChildSelectEmploy();
 	}
 	var cityModel = self.controller.getValue("cityData");
-	var usedMoney = getJobPrice(characterListType2JobType(self.controller.characterListType, cityModel)) * self.selectedCount+self.employMoney;
+	var usedMoney = getJobPrice(characterListType2JobType(self.controller.characterListType), cityModel) * self.selectedCount+self.employMoney;
 	var overageMoney = cityModel.money() - usedMoney;
 	self.usedMoney = usedMoney;
 	self.overageMoney = overageMoney;

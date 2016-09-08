@@ -219,6 +219,9 @@ BuildOfficialView.prototype.selectComplete=function(event){
 			self.controller.setValue("transportCharacter", event.characterList[0]);
 			return true;
 		}
+	}else if(event.characterListType == CharacterListType.FLOOD || 
+		event.characterListType == CharacterListType.PLAGUE_OF_LOCUSTS){
+		return self.callParent("selectComplete",arguments);
 	}
 	return true;
 };

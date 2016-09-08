@@ -62,7 +62,7 @@ var SoldierDatas = [
 	{id:3,name:"骑兵",type:SoldierType.Physical,attackType:AttackType.NEAR,moveType:MoveType.CAVALRY,movePower:6,
 	property:{attack:"S",spirit:"B",defense:"A",breakout:"B",morale:"B",troops:5,strategy:1},
 	equipment:{head:0,hand:0,body:0,foot:0,accessories:0},
-	restrain:[{id:4,value:50},{id:6,value:50}],
+	restrain:[{id:4,value:60},{id:6,value:60}],
 	terrain:[
 	{id:0,value:110,moveCost:1},{id:1,value:110,moveCost:1},{id:2,value:90,moveCost:2},{id:3,value:90,moveCost:2},{id:4,value:80,moveCost:3},
 	{id:5,value:100,moveCost:2},{id:6,value:110,moveCost:1},{id:7,value:90,moveCost:2},{id:8,value:80,moveCost:3},{id:9,value:80,moveCost:2},{id:11,value:90,moveCost:3}],
@@ -253,7 +253,7 @@ var SoldierDatas = [
 	{id:17,name:"西凉骑兵",type:SoldierType.Physical,attackType:AttackType.NEAR,moveType:MoveType.CAVALRY,movePower:5,
 	property:{attack:"S",spirit:"C",defense:"S",breakout:"B",morale:"B",troops:6,strategy:1},
 	equipment:{head:0,hand:0,body:0,foot:0,accessories:0},
-	restrain:[{id:4,value:50},{id:6,value:50}],
+	restrain:[{id:4,value:60},{id:6,value:60}],
 	terrain:[
 	{id:2,value:80,moveCost:2},{id:3,value:110,moveCost:1},
 	{id:4,value:110,moveCost:1},{id:5,value:110,moveCost:1},{id:7,value:80,moveCost:2},
@@ -306,7 +306,7 @@ var SoldierDatas = [
 	{id:21,name:"游牧骑",type:SoldierType.Physical,attackType:AttackType.NEAR,moveType:MoveType.CAVALRY,movePower:6,
 	property:{attack:"S",spirit:"C",defense:"B",breakout:"S",morale:"B",troops:5,strategy:1},
 	equipment:{head:0,hand:0,body:0,foot:0,accessories:0},
-	restrain:[{id:4,value:50},{id:6,value:50}],
+	restrain:[{id:4,value:60},{id:6,value:60}],
 	terrain:[
 	{id:2,value:80,moveCost:2},{id:3,value:110,moveCost:1},
 	{id:4,value:110,moveCost:1},{id:5,value:110,moveCost:1},{id:7,value:80,moveCost:2},
