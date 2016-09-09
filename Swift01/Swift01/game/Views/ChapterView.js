@@ -26,7 +26,6 @@ ChapterView.prototype.layerInit=function(){
 	self.addChild(self.seigniorsLayer);
 	self.ctrlLayer = new LSprite();
 	self.addChild(self.ctrlLayer);
-	self.addChild(getPanel("win04",LGlobal.width,LGlobal.height,15,25,18,24));
 	//var bitmapWin = new LPanel(new LBitmapData(LMvc.datalist["win04"]),LGlobal.width,LGlobal.height,15,25,18,24);
 	//self.addChild(getBitmap(bitmapWin));
 };
@@ -35,14 +34,14 @@ ChapterView.prototype.logoToHide=function(){
 };
 ChapterView.prototype.backLayerInit=function(){
 	var self = this;
-	self.backLayer.addChild(getBlackBitmap());
+	self.backLayer.addChild(getPanel("win04",LGlobal.width,LGlobal.height));
 };
 ChapterView.prototype.chapterLayerInit=function(){
 	var self = this;
 	var miniMapData = GameCacher.getAreaMiniMap("area-map-1");
 	var miniMap = new LBitmap(miniMapData);
 	var layer = new LSprite();
-	var bitmapWin = new LPanel(new LBitmapData(LMvc.datalist["win01"]),420,260,20,30,23,24);
+	var bitmapWin = new LPanel(new LBitmapData(LMvc.datalist["win05"]),420,260);
 	layer.addChild(bitmapWin);
 	var title = self.controller.getValue("title");
 	var txtChapter = getStrokeLabel(title,30,"#FFFFFF","#CCCCCC",1);

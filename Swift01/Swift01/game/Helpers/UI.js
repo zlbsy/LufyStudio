@@ -144,12 +144,12 @@ function ConfirmWindow(obj){
 		});
 		return windowLayer;
 	}
-	var okPanel = new LButton(new LBitmap(new LBitmapData(LMvc.datalist["ok"])));
+	var okPanel = getButton(Language.get("yes"), 100);//new LButton(new LBitmap(new LBitmapData(LMvc.datalist["ok"])));
 	okPanel.y = panel.y + panel.getHeight() - okPanel.getHeight() - 20;
 	windowLayer.addChild(okPanel);
 	okPanel.name = "okButton";
 	if(typeof obj.cancelEvent != UNDEFINED){
-		var cancelPanel = new LButton(new LBitmap(new LBitmapData(LMvc.datalist["close"])));
+		var cancelPanel = getButton(Language.get("no"), 100);//new LButton(new LBitmap(new LBitmapData(LMvc.datalist["close"])));
 		cancelPanel.se = "Se_cancel";
 		cancelPanel.y = panel.y + panel.getHeight() - cancelPanel.getHeight() - 20;
 		windowLayer.addChild(cancelPanel);

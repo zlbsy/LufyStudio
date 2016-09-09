@@ -11,7 +11,7 @@ ChapterSeigniorView.prototype.set=function(){
 	var self = this;
 	var faceSize = 100, winSize = 160;
 	
-	var win = new LPanel(new LBitmapData(LMvc.datalist["win05"]),winSize,winSize);
+	var win = new LPanel(new LBitmapData(LMvc.datalist["win02"]),winSize,winSize);
 	
 	var name = getStrokeLabel(self.data.name,20,String.format("rgb({0})",self.data.color),self.data.color=="1,1,1"?"#CCCCCC":"#000000",1);
 	name.x = winSize - name.getWidth() - 15;
