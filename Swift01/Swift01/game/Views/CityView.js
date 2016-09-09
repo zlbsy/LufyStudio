@@ -246,7 +246,7 @@ CityView.prototype.getIconButton=function(text,width,height,icon, belong){
 	var bitmapWin;
 	var display;
 	if(!belong || self.controller.getValue("selfCity")){
-		bitmapWin = getPanel("win05", width, height);
+		bitmapWin = getPanel("win01", width, height);
 		display = new LBitmap(new LBitmapData(LMvc.datalist[icon]));
 	}else{
 		bitmapWin = getPanel("win07", width, height);
