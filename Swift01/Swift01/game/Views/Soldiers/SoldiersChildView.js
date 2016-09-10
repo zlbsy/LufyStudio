@@ -83,7 +83,6 @@ SoldiersChildView.prototype.getCheckBox=function(){
 };
 SoldiersChildView.prototype.set=function(){
 	var self = this;
-	
 	var lblName = self.getName();
 	lblName.text = self.soldierModel.name();
 	var lblLevel = self.getLevel();
@@ -119,10 +118,11 @@ SoldiersChildView.prototype.toSelected=function(listView){
 	if(self.checkbox.checked){
 		return;
 	}
+	self.characterModel.currentSoldierId(self.soldierModel.id());
 	var items = listView.getItems();
 	for(var i = 0, l = items.length; i < l; i++){
 		var child = items[i];
-		if(!child.checkbox || !child.checkbox.checked){
+		if(!child.checkbox || child.objectIndex == self.objectIndex){
 			continue;
 		}
 		child.checkbox.setChecked(false);
@@ -130,12 +130,10 @@ SoldiersChildView.prototype.toSelected=function(listView){
 		if(listView.isInClipping(i)){
 			child.updateView();
 		}
-		break;
 	}
 	self.checkbox.setChecked(true);
 	self.cacheAsBitmap(false);
 	self.updateView();
-	self.characterModel.currentSoldierId(self.soldierModel.id());
 };
 SoldiersChildView.prototype.onClick = function(event) {
 	var self = event.target;
@@ -147,14 +145,7 @@ SoldiersChildView.prototype.onClick = function(event) {
 	}
 	var soldiersView = listView.getParentByConstructor(SoldiersView);
 	var soldierDetailed = new SoldierDetailedView(soldiersView.controller,self.soldierModel);
-	var obj = {title:self.soldierModel.name(),subWindow:soldierDetailed,width:400,height:540};
-	if(canSelect){
-		obj.okEvent = function(e){
-			self.toSelected(listView);
-			e.currentTarget.parent.remove();
-		};
-		obj.cancelEvent = null;
-	}
+	var obj = {title:self.soldierModel.name(),subWindow:soldierDetailed,width:400,height:500, noButton:true};
 	var windowLayer = ConfirmWindow(obj);
 	LMvc.layer.addChild(windowLayer);
 };

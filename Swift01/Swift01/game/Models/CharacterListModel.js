@@ -17,6 +17,8 @@ CharacterListModel.prototype.getImages=function(){
 	list.push({name:"yellow_ball",path:LMvc.IMG_PATH+"icon/yellow_ball.png"});
 	list.push({name:"win05",path:LMvc.IMG_PATH+"win/win05.png"});
 	list.push({name:"win06",path:LMvc.IMG_PATH+"win/win06.png"});
+	list.push({name:"win08",path:LMvc.IMG_PATH+"win/win08.png"});
+	list.push({name:"win09",path:LMvc.IMG_PATH+"win/win09.png"});
 	list.push({name:"icon-line",path:LMvc.IMG_PATH+"icon/line.png"});
 	list.push({name:"arrow",path:LMvc.IMG_PATH+"icon/arrow.png"});
 	return list;

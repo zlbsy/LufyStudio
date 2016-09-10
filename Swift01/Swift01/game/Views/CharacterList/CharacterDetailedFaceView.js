@@ -10,7 +10,7 @@ CharacterDetailedFaceView.prototype.init=function(controller){
 	}
 	var faceW = CharacterFaceSize.width + 20, faceH = CharacterFaceSize.height + 20;
 	if(!self.faceLayer){
-		var win = new LPanel(new LBitmapData(LMvc.datalist["win05"]),faceW,faceH);
+		var win = new LPanel(new LBitmapData(LMvc.datalist["win02"]),faceW,faceH);
 		self.addChild(win);
 		win.cacheAsBitmap(true);
 		

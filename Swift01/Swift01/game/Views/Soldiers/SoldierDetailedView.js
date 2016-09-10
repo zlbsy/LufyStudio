@@ -109,7 +109,7 @@ SoldierDetailedView.prototype.set=function(){
 };
 SoldierDetailedView.prototype.onClickTerrainButton=function(event){
 	var self = event.currentTarget.getParentByConstructor(SoldierDetailedView);
-	var startX = 40, startY = 60, w = 140, h = 35, index = 0, color;
+	var startX = 10, startY = 60, w = 140, h = 35, index = 0, color;
 	var layer = new LSprite();
 	var msg = String.format(Language.get("soldier_terrain_message"), self.soldierModel.name());
 	var label = getStrokeLabel(msg,18,"#FFFFFF","#000000",4);
@@ -134,16 +134,14 @@ SoldierDetailedView.prototype.onClickTerrainButton=function(event){
 		layer.addChild(label);
 		index++;
 	}
-	var obj = {title:Language.get("terrain"),subWindow:layer,
-	width:LGlobal.width,height:LGlobal.height-20,okEvent:function(e){
-		e.currentTarget.parent.remove();
-	}};
+	var obj = {title:Language.get("terrain"), noButton:true,subWindow:layer,
+	width:LGlobal.width-20,height:LGlobal.height-20};
 	var windowLayer = ConfirmWindow(obj);
 	LMvc.layer.addChild(windowLayer);
 };
 SoldierDetailedView.prototype.onClickRestraintButton=function(event){
 	var self = event.currentTarget.getParentByConstructor(SoldierDetailedView);
-	var startX = 40, startY = 60, w = 140, h = 35;
+	var startX = 10, startY = 60, w = 140, h = 35;
 	var layer = new LSprite();
 	var msg = String.format(Language.get("restraint_attack_message"), self.soldierModel.name());
 	var label = getStrokeLabel(msg,18,"#FFFFFF","#000000",4);
@@ -162,16 +160,14 @@ SoldierDetailedView.prototype.onClickRestraintButton=function(event){
 		label.y = startY + h*(i/3 >>> 0);
 		layer.addChild(label);
 	}
-	var obj = {title:Language.get("confirm"),subWindow:layer,
-	width:LGlobal.width,height:LGlobal.height-20,okEvent:function(e){
-		e.currentTarget.parent.remove();
-	}};
+	var obj = {title:Language.get("confirm"), noButton:true,subWindow:layer,
+	width:LGlobal.width-20,height:LGlobal.height-20};
 	var windowLayer = ConfirmWindow(obj);
 	LMvc.layer.addChild(windowLayer);
 };
 SoldierDetailedView.prototype.onClickRestraintPassiveButton=function(event){
 	var self = event.currentTarget.getParentByConstructor(SoldierDetailedView);
-	var startX = 40, startY = 60, w = 140, h = 35;
+	var startX = 10, startY = 60, w = 140, h = 35;
 	var layer = new LSprite();
 	var msg = String.format(Language.get("restraint_attack_passive_message"), self.soldierModel.name());
 	var label = getStrokeLabel(msg,18,"#FFFFFF","#000000",4);
@@ -190,10 +186,8 @@ SoldierDetailedView.prototype.onClickRestraintPassiveButton=function(event){
 		label.y = startY + h*(i/3 >>> 0);
 		layer.addChild(label);
 	}
-	var obj = {title:Language.get("confirm"),subWindow:layer,
-	width:LGlobal.width,height:LGlobal.height-20,okEvent:function(e){
-		e.currentTarget.parent.remove();
-	}};
+	var obj = {title:Language.get("confirm"), noButton:true,subWindow:layer,
+	width:LGlobal.width-20,height:LGlobal.height-20};
 	var windowLayer = ConfirmWindow(obj);
 	LMvc.layer.addChild(windowLayer);
 };

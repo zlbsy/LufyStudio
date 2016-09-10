@@ -27,9 +27,6 @@ CharacterDetailedView.prototype.layerInit=function(){
 	self.tabButtonCacheLayer.x = 15;
 	self.tabButtonCacheLayer.y = 340;
 	self.addChild(self.tabButtonCacheLayer);
-	self.selectedTabLayer = new LSprite();
-	self.selectedTabLayer.y = self.tabButtonCacheLayer.y - 10;
-	self.addChild(self.selectedTabLayer);
 	self.tabButtonLayer = new LSprite();
 	self.tabButtonLayer.x = self.tabButtonCacheLayer.x;
 	self.tabButtonLayer.y = self.tabButtonCacheLayer.y;
@@ -39,6 +36,9 @@ CharacterDetailedView.prototype.layerInit=function(){
 	self.tabLayer.x = self.tabButtonCacheLayer.x + 10;
 	self.tabLayer.y = self.tabButtonCacheLayer.y + 45;
 	self.addChild(self.tabLayer);
+	self.selectedTabLayer = new LSprite();
+	self.selectedTabLayer.y = self.tabButtonCacheLayer.y - 10;
+	self.addChild(self.selectedTabLayer);
 	
 	self.ctrlLayer = new LSprite();
 	self.addChild(self.ctrlLayer);
@@ -122,7 +122,7 @@ CharacterDetailedView.prototype.setTabButtons=function(){
 	var tabs = self.tabs;
 	for(var i=0,l=self.tabs.length;i<l;i++){
 		if(!GameCacher.hasPanelBitmapData("tab_no_selected")){
-			var panel = new LPanel(new LBitmapData(LMvc.datalist["win01"],0,0,51,34),90,40);
+			var panel = new LPanel(new LBitmapData(LMvc.datalist["win08"],0,0,51,34),90,40);
 			var bitmapData = getBitmapData(panel,true);
 			panel.removeAllChild();
 			panel.cached();
@@ -130,10 +130,10 @@ CharacterDetailedView.prototype.setTabButtons=function(){
 		}
 		layer = getPanel("tab_no_selected");
 		var label = getStrokeLabel(Language.get(tabs[i]),22,"#FFFFFF","#000000",2);
-		label.x = (90 - label.getWidth()) * 0.5;
+		label.x = (86 - label.getWidth()) * 0.5;
 		label.y = 10;
 		layer.addChild(label);
-		layer.x = 90 * i;
+		layer.x = 86 * i + 4;
 		self.tabButtonCacheLayer.addChild(layer);
 	}
 	self.tabButtonCacheLayer.cacheAsBitmap(true);
@@ -143,13 +143,14 @@ CharacterDetailedView.prototype.selectedTab=function(key){
 	self.selectedTabLayer.cacheAsBitmap(false);
 	if(self.selectedTabLayer.numChildren == 0){
 		if(!GameCacher.hasPanelBitmapData("tab_selected")){
-			var panel = new LPanel(new LBitmapData(LMvc.datalist["win02"],0,0,51,34),90,50);
+			var panel = new LPanel(new LBitmapData(LMvc.datalist["win08"],0,0,51,34),90,50);
 			var bitmapData = getBitmapData(panel,true);
 			panel.removeAllChild();
 			panel.cached();
 			GameCacher.setPanelBitmapData("tab_selected",0,0,0,0,0,0,bitmapData);
 		}
 		var layer = getPanel("tab_selected");
+		layer.y = 1;
 		self.selectedTabLayer.addChild(layer);
 		label = getStrokeLabel("",22,"#FFFFFF","#000000",2);
 		label.y = 10;
@@ -157,12 +158,12 @@ CharacterDetailedView.prototype.selectedTab=function(key){
 	}
 	label = self.selectedTabLayer.getChildAt(1); 
 	label.text = Language.get(key);
-	label.x = (90 - label.getWidth()) * 0.5;
+	label.x = (86 - label.getWidth()) * 0.5;
 	self.selectedTabLayer.cacheAsBitmap(true);
 };
 CharacterDetailedView.prototype.tabLayerInit=function(){
 	var self = this;
-	var back = getPanel("win02",450,LGlobal.height - self.tabLayer.y + 10);
+	var back = getPanel("win04",450,LGlobal.height - self.tabLayer.y + 10);
 	back.x = -10;
 	back.y = -10;
 	self.tabLayer.addChild(back);
@@ -181,7 +182,7 @@ CharacterDetailedView.prototype.TabShow=function(tab){
 	for(var i=0,l=tabs.length;i<l;i++){
 		if(tabs[i] == tab){
 			self.selectedTab(tab);
-			self.selectedTabLayer.x = self.tabButtonCacheLayer.x + 90 * i;
+			self.selectedTabLayer.x = self.tabButtonCacheLayer.x + 86 * i + 4;
 		}else{
 			layer = new LSprite();
 			layer.tabName = tabs[i];
