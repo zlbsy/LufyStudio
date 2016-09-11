@@ -32,7 +32,7 @@ MapView.prototype.mapInit=function(){
 	var bitmapData = GameCacher.getAreaMap("area-map-1");//new LBitmapData(LMvc.datalist["area-map-1"],null,null,null,null,LBitmapData.DATA_CANVAS);
 	self.backgroundWidth = bitmapData.width;
 	self.backgroundHeight = bitmapData.height;
-	var roadLayer = new LShape();
+	/*var roadLayer = new LShape();
 	roadLayer.alpha = 0.7;
 	roadLayer.graphics.drawRect(0,"#FFFFFF",[0, 0, self.backgroundWidth, self.backgroundHeight]);
 	for(var i=0,l=AreaModel.list.length;i<l;i++){
@@ -44,11 +44,12 @@ MapView.prototype.mapInit=function(){
 				continue;
 			}
 			var neighborArea = AreaModel.getArea(neighborId);
-			roadLayer.graphics.drawLine(10, "#FFFFFF", [75 + areaStatus.position().x, 65 + areaStatus.position().y, 75 + neighborArea.position().x, 65 + neighborArea.position().y]);
+			//roadLayer.graphics.drawLine(10, "#FFFFFF", [75 + areaStatus.position().x - 40, 65 + areaStatus.position().y - 40, 75 + neighborArea.position().x - 40, 65 + neighborArea.position().y - 40]);
 		}
 	}
 	roadLayer.cacheAsBitmap(true);
-	bitmapData.copyPixels(roadLayer._ll_cacheAsBitmap.bitmapData, new LRectangle(0, 0, self.backgroundWidth, self.backgroundHeight), new LPoint(0,0));
+	//bitmapData.copyPixels(roadLayer._ll_cacheAsBitmap.bitmapData, new LRectangle(0, 0, self.backgroundWidth, self.backgroundHeight), new LPoint(0,0));
+	*/
 	self.mapBitmapData = bitmapData;
 	var background = new BackgroundView();
 	background.set(bitmapData, self.baseLayer);

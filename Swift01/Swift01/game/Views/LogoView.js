@@ -408,8 +408,8 @@ LogoView.prototype.showNews=function(newsURL){
 	webview.loadURL(newsURL);
 	webview.show();
 	var closeButton = new LButton(new LBitmap(new LBitmapData(LMvc.datalist["close"])));
-	closeButton.x = x + w - closeButton.getWidth();
-	closeButton.y = y - closeButton.getWidth();
+	closeButton.x = x + w - 10;// - closeButton.getWidth() + 10;
+	closeButton.y = y - closeButton.getHeight();
 	self.addChild(closeButton);
 	closeButton.addEventListener(LMouseEvent.MOUSE_UP,function(event){
 		event.currentTarget.remove();

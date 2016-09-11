@@ -474,9 +474,9 @@ AreaModel.prototype.icon=function(){
 	//self.iconWidth(bitmapData.width);
 	//bitmapData.setProperties(0, 0, self.iconWidth(), bitmapData.height);
 	var bitmap = new LBitmap(bitmapData);
-	bitmap.scaleX = bitmap.scaleY = (5+this.data.level)*0.1;
-	bitmap.x = (bitmapData.width - bitmap.getWidth())*0.5;
-	bitmap.y = (bitmapData.height - bitmap.getHeight())*0.5;
+	bitmap.scaleX = bitmap.scaleY = (5+this.data.level)*0.08;
+	bitmap.x = (CityIconConfig.width - bitmap.getWidth())*0.5;
+	bitmap.y = (CityIconConfig.height - bitmap.getHeight())*0.5;
 	iconLayer.addChild(bitmap);
 	if(self.isAppoint()){
 		var iconAppoint = new LBitmap(new LBitmapData(LMvc.datalist["icon-appoint"]));
@@ -491,7 +491,7 @@ AreaModel.prototype.icon=function(){
 		flag.y = -flag.getHeight() * 0.3;
 		iconLayer.addChild(flag);
 	}
-	var name = getStrokeLabel(self.name(), 25, "#FFFFFF", "#000000", 3);
+	var name = getStrokeLabel(self.name(), 22, "#FFFFFF", "#000000", 3);
 	//var name = getBitmap(name);
 	name.x = bitmap.x + (bitmap.getWidth() - name.getWidth()) * 0.5;
 	name.y = bitmap.y + bitmap.getHeight() - name.getHeight();

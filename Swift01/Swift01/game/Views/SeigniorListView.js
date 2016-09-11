@@ -66,7 +66,7 @@ SeigniorListView.prototype.mapLayerInit=function(){
 	self.mapData = new LBitmap(mapBitmapData);
 	
 	var layer = new LSprite();
-	var bitmapWin = new LPanel(new LBitmapData(LMvc.datalist["win01"]),420,260,20,30,23,24);
+	var bitmapWin = new LPanel(new LBitmapData(LMvc.datalist["win05"]),420,260,20,30,23,24);
 	layer.addChild(bitmapWin);
 	
 	var title = Language.get("all_seignior");
