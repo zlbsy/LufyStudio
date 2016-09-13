@@ -19,13 +19,29 @@ function encrypt(data){
 }
 var src = 'Hello,CryptWorld';
 console.log(encrypt(src));*/
+var crypto = require("crypto");
+
+var key = "abcdefghijklmnopqrstuvwx";
+
+var pt = "hello world!";
+
+var encrypt = crypto.createCipheriv('des-ede3', key, "");
+var theCipher = encrypt.update(pt, 'utf8', 'base64');
+theCipher += encrypt.final('base64');
+console.log(theCipher);
+
+var decrypt = crypto.createDecipheriv('des-ede3', key, "");
+var s = decrypt.update(theCipher, 'base64', 'utf8');
+console.log(s + decrypt.final('utf8'));
+/*
 var crypto = require('crypto');
 
 var SimpleEncrypt = (function () {
-  function cipher(mode, key, iv, data) {console.log(key, iv);
-    var encipher = crypto[mode]('aes-256-cbc', key, iv);
-    var encoded  = encipher.update(data);
-    encoded += encipher.final();
+  function cipher(mode, key, iv, data) {
+    var encipher = crypto[mode]('aes-256-cbc', key, iv),
+    encoded  = encipher.update(data);
+
+    encoded += encipher.final('utf8');
     return encoded;
   }  
 
@@ -48,16 +64,17 @@ var SimpleEncrypt = (function () {
     b64enc: b64enc
   };
 }());
-var cryptkey   = crypto.createHash('sha256').update('RwcmlVpg').digest();
-var iv         = '4e5Wa71fYoT7MFEX';
-var buf        = "my test"; // 32 chars
-var enc        = SimpleEncrypt.encrypt(cryptkey, iv, buf);
-//var dec        = SimpleEncrypt.decrypt(cryptkey, iv, enc);
+
+var cryptkey   = crypto.createHash('sha256').update('Nixnogen').digest(),
+    iv         = 'a2xhcgAAAAAAAAAA',
+    buf        = "my test", // 32 chars
+    enc        = SimpleEncrypt.encrypt(cryptkey, iv, buf);
+    dec        = SimpleEncrypt.decrypt(cryptkey, iv, enc);
 
 
-console.warn("Encoded : ", enc);
 console.warn("Encoded length: ", enc.length);
-console.warn("Encoded in Base64:", "<" + SimpleEncrypt.b64enc(enc) + ">");
+console.warn("Encoded in Base64:", SimpleEncrypt.b64enc(enc));
+console.warn("Decoded:", dec);*/
 //console.warn("Decoded:", dec);
 /*
  // 异步读取

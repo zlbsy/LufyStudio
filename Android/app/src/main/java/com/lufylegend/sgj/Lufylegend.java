@@ -32,9 +32,12 @@ public class Lufylegend {
         soundInit();
         ///System.out.println("BuildConfig.VERSION_NAME="+BuildConfig.VERSION_NAME);
         //System.out.println("readFile="+readFile(""));
+        String s = readFile("hoge.txt");
+        Log.e("Lufylegend"," s="+s);
+        Log.e("Lufylegend"," encrypt="+AESUtil.decrypt(s));
     }
     public static void initialize(String path, AppCompatActivity activity){
-        Lufylegend.gamePath = String.format("file:///android_asset/%s", path);
+        Lufylegend.gamePath = path;
         activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         activity.requestWindowFeature(Window.FEATURE_NO_TITLE);
         activity.setContentView(R.layout.activity_main);
@@ -47,8 +50,7 @@ public class Lufylegend {
         //リンクをタップしたときに標準ブラウザを起動させない
         myWebView.setWebViewClient(new WebViewClient());
         //ページを表示する。
-        String url = String.format("%sindex.html", Lufylegend.gamePath);
-        Lufylegend.gamePath = path;
+        String url = String.format("%sindex.html", String.format("file:///android_asset/%s", path));
         myWebView.loadUrl(url);
     }
     @JavascriptInterface
@@ -58,7 +60,7 @@ public class Lufylegend {
     @JavascriptInterface
     public String encodeBase64(String path) {
         try{
-            Log.e("encodeBase64=",path);
+            //Log.e("encodeBase64=",path);
             int readLength = 8192;
             final AssetManager assetManager = context.getAssets();
             InputStream inputStream = assetManager.open(path);
@@ -72,10 +74,13 @@ public class Lufylegend {
                 }
                 //return new String(byteStream.toByteArray());    //byte[] に変換
 
-                byte[] outdata = Base64.encodeBase64(byteStream.toByteArray());
+                String base64Data = android.util.Base64.encodeToString(byteStream.toByteArray(),8192);
+                //Log.e("base64=",base64Data);
+                return base64Data;
+                /*byte[] outdata = Base64.encodeBase64(byteStream.toByteArray());
                 String base64Data =  new String(outdata);
                 Log.e("base64=",base64Data);
-                return base64Data;
+                return base64Data;*/
             } finally {
                 try {
                     byteStream.reset();     //すべてのデータを破棄
@@ -142,7 +147,7 @@ public class Lufylegend {
             fileInputStream.close();
             return new String(readBytes);
         } catch (IOException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
         }
         return "";
     }

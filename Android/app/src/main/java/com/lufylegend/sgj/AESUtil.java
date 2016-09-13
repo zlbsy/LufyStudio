@@ -21,7 +21,7 @@ public enum AESUtil {
 		try {
 			Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
 			cipher.init(Cipher.ENCRYPT_MODE, makeKey(), makeIv());
-			return Base64.encodeBytes(cipher.doFinal(src.getBytes()));
+			return android.util.Base64.encodeToString(cipher.doFinal(src.getBytes()), 8192);
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -32,7 +32,8 @@ public enum AESUtil {
 		try {
 			Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
 			cipher.init(Cipher.DECRYPT_MODE, makeKey(), makeIv());
-			String decoded = new String(android.util.Base64.decode(src,2045));
+			String decoded = new String(android.util.Base64.decode(src,8192));
+			android.util.Log.i("decoded",decoded);
 			decrypted = new String(cipher.doFinal(decoded.getBytes()));
 		} catch (Exception e) {
 			throw new RuntimeException(e);
