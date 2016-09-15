@@ -11,7 +11,6 @@ function LPurchaseInit() {
         if(u.indexOf("./") == 0){
             u = u.substring(2);
         }
-        LPlugin.print("LURLLoader.prototype.load u="+u+", t="+t +", " + s._loadIndex);
         if (t == LURLLoader.TYPE_TEXT || (!t && getExtension(u) == "txt")) {
             s.loadtype = LURLLoader.TYPE_TEXT;
             //LPlugin.print("LPlugin.readFile="+(typeof LPlugin.readFile));
@@ -44,10 +43,9 @@ function LPurchaseInit() {
         }
     };
     LLoader.prototype.loadStart = function(u){
-    		var s = this;LPlugin.print("loadStart="+u);
+    		var s = this;
     		s.content = new Image();
     		s.content.onload = function () {
-    		    LPlugin.print("s.content.onload="+u);
     			s.content.onload = null;
     			var event = new LEvent(LEvent.COMPLETE);
     			event.currentTarget = s;
@@ -67,7 +65,8 @@ function LPurchaseInit() {
     				s.dispatchEvent(event);
     			};
     		}
-    		var base64 = LPlugin.encodeBase64(u);
+    		//var base64 = LPlugin.encodeBase64(u);
+    		var base64 = LPlugin.readFile(u);
     		var us = u.split(".");
     		s.content.src = "data:image/" + us[us.length - 1] + ";base64," +  base64;
     	};

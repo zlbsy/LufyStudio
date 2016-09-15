@@ -16,6 +16,7 @@ and open the template in the editor.
         <script src="./js/lufylegend.ui-0.14.1.min.js" type="text/javascript"></script>
         <script src="./js/lufylegend.mvc-0.3.1.min.js" type="text/javascript"></script>
         <script src="./js/lufylegend.extension.js" type="text/javascript"></script>
+        <script src="./js/lufylegend.lsharp.js" type="text/javascript"></script>
         <script type="text/javascript">
     LURLLoader.prototype.ll_load_base = LURLLoader.prototype.load;
     LURLLoader.prototype.load = function(u, t){
@@ -83,9 +84,7 @@ and open the template in the editor.
 					{name:"logo_bg_2",path:LMvc.IMG_PATH+"logo/logo_bg_2.png"},
 					{name:"logo_ryofu",path:LMvc.IMG_PATH+"logo/logo_ryofu.png"},
 					{path:"./core/MyController.js",type:"js"},
-					{path:"./core/MyModel.js",type:"js"},
-					{path:"./js/lufylegend.lsharp.js",type:"js"},
-					//{path:"./js/lufylegend.extension.js",type:"js"}
+					{path:"./core/MyModel.js",type:"js"}
 			];
 		
 			var loadingLayer = new LoadingSample3();
