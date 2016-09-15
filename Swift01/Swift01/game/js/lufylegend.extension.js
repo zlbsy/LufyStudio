@@ -109,6 +109,24 @@ LComboBox.prototype._showChildList = function (event) {
 	}
 	s.showChildList();
 };
+LRadio.ON_CHANGE = "onchange";
+LRadio.prototype.setValue = function (value) {
+	var s = this, child, k;
+	var saveValue = s.value;
+	for (k in s.childList) {
+		child = s.childList[k];
+	    if (child.setChecked) {
+	     	child.setChecked(false);
+		}
+		if (child.value == value) {
+			s.value = value;
+			child.setChecked(true);
+		}
+	}
+	if(saveValue != s.value){
+		s.dispatchEvent(LRadio.ON_CHANGE);
+	}
+};
 //////////////////////华丽的分界线////////////////////
 /*引擎中需调整*/
 LButton.prototype.ll_button_mode = function(){

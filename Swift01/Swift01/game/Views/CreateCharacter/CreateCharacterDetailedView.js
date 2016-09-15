@@ -27,10 +27,10 @@ CreateCharacterDetailedView.prototype.TabShow=function(tab){
 	for(var i=0,l=tabs.length;i<l;i++){
 		tabIcon = new LSprite();
 		if(tabs[i] == tab){
-			layer = new LPanel(new LBitmapData(LMvc.datalist["win02"],0,0,51,34),160,50);
+			layer = new LPanel(new LBitmapData(LMvc.datalist["win08"],0,0,51,34),160,50);
 			tabIcon.y = -10;
 		}else{
-			layer = new LPanel(new LBitmapData(LMvc.datalist["win01"],0,0,51,34),160,40);
+			layer = new LPanel(new LBitmapData(LMvc.datalist["win08"],0,0,51,34),160,40);
 			tabIcon.tabName = tabs[i];
 			tabIcon.addEventListener(LMouseEvent.MOUSE_UP,self.TabClick.bind(self));
 		}
@@ -95,10 +95,13 @@ CreateCharacterDetailedView.prototype.showArms=function(){
 	var self = this;
 	self.armLayer.visible = true;
 	if(self.armView){
+		self.armView.resetSoliderImage();
 		return;
 	}
-	self.armView = new CreateCharacterArmView(null, self.data);
+	self.armView = new CreateCharacterArmView(null);
 	self.armLayer.addChild(self.armView);
+	self.armView.init(self.data);
+	self.armView.resetSoliderImage();
 };
 CreateCharacterDetailedView.prototype.hideTabs=function(){
 	var self = this;
@@ -154,7 +157,11 @@ CreateCharacterDetailedView.prototype.getData=function(){
 	var items = self.armView.listView.getItems();
 	for(var i=0, l=items.length;i<l;i++){
 		var child = items[i];
-		soldiers.push({id:child.soldier.id(),proficiency:child.textField.text});
+		var soldierData = {id:child.soldier.id(),proficiency:child.textField.text};
+		if(data.gender == 2 && child.soldier.data.img){
+			soldierData.img = child.soldier.data.img;
+		}
+		soldiers.push(soldierData);
 	}
 	data.soldiers = soldiers;
 	

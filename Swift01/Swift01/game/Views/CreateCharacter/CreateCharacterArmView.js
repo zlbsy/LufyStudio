@@ -1,6 +1,5 @@
-function CreateCharacterArmView(controller, data){
+function CreateCharacterArmView(controller){
 	base(this,LView,[controller]);
-	this.init(data);
 }
 CreateCharacterArmView.prototype.layerInit=function(){
 	var self = this;
@@ -20,24 +19,48 @@ CreateCharacterArmView.prototype.updatePoint=function(value){
 };
 CreateCharacterArmView.prototype.refreshStatus=function(){
 	var self = this;
+	var detailedView = self.getParentByConstructor(CreateCharacterDetailedView);
 	var chara = CharacterModel.list[CharacterModel.list.length * Math.random() >>> 0];
 	self.point = 0;
 	var data = [];
 	var soldiers = chara.data.soldiers;
 	var sum = 0;
+	var girlSoldiers = [{id:1,img:"36-1"},{id:2,img:"36-2"},{id:3,img:"36-3"},{id:4,img:"36-4"},{id:5,img:"36-5"},{id:7,img:"36-2"},{id:8,img:"36-2"},
+	{id:9,img:"36-9"},{id:10,img:"36-9"},{id:11,img:"36-9"},{id:12,img:"36-12"},{id:13,img:"36-13"},{id:14,img:"36-2"},{id:15,img:"36-2"},
+	{id:16,img:"36-9"},{id:17,img:"36-17"},{id:21,img:"36-3"},{id:23,img:"36-2"},{id:24,img:"36-13"}];
 	for(var i=0,l=soldiers.length;i<l;i++){
 		var child = soldiers[i];
 		sum += child.proficiency;
+		var soldierData = {id:child.id};
 		if(child.proficiency > 500){
-			data.push({id:child.id,proficiency:child.proficiency - 500});
+			soldierData.proficiency = child.proficiency - 500;
+			data.push(soldierData);
 			self.point += 500;
 		}else{
-			data.push({id:child.id,proficiency:child.proficiency});
+			soldierData.proficiency = child.proficiency;
+			data.push(soldierData);
+		}
+		if(detailedView.faceLayer.genderRadio.value == 2){
+			var findGirlSoldier = girlSoldiers.find(function(c){
+				return c.id == child.id;
+			});
+			if(findGirlSoldier){
+				soldierData.img = findGirlSoldier.img;
+			}
 		}
 	}
 	for(var i=soldiers.length,l=SoldierDatas.length;i<l;i++){
 		var child = SoldierDatas[i];
-		data.push({id:child.id,proficiency:0});
+		var soldierData = {id:child.id,proficiency:0};
+		var findGirlSoldier = girlSoldiers.find(function(c){
+			return c.id == child.id;
+		});
+		if(detailedView.faceLayer.genderRadio.value == 2){
+			if(findGirlSoldier){
+				soldierData.img = findGirlSoldier.img;
+			}
+		}
+		data.push(soldierData);
 	}
 	if(sum < 1500){
 		self.point += (1500 - sum);
@@ -90,4 +113,17 @@ CreateCharacterArmView.prototype.armInit=function(data){
 	
 	self.listView.resize(260, 50 * 6);
 	self.listView.updateList(items);
+};
+CreateCharacterArmView.prototype.resetSoliderImage=function(data){
+	var self = this;
+	var soldiers = self.refreshStatus().soldiers;
+	var items = self.listView.getItems();
+	for(var i=0;i<items.length;i++){
+		var item = items[i];
+		var soldier = soldiers.find(function(child){
+			return child.id == item.soldier.id();
+		});
+		item.soldier.data.img = soldier ? soldier.img : null;
+		item.setIcon();
+	}
 };

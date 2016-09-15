@@ -12,6 +12,7 @@ CreateCharacterModel.prototype.getImages=function(){
 		{name:"win04",path:LMvc.IMG_PATH+"win/win04.png"},
 		{name:"win05",path:LMvc.IMG_PATH+"win/win05.png"},
 		{name:"win06",path:LMvc.IMG_PATH+"win/win06.png"},
+		{name:"win08",path:LMvc.IMG_PATH+"win/win08.png"},
 		{name:"combobox_arraw",path:LMvc.IMG_PATH+"component/combobox_off.png"},
 		{name:"background-text01",path:LMvc.IMG_PATH+"background/text01.png"},
 		{name:"close",path:LMvc.IMG_PATH+"component/close.png"},

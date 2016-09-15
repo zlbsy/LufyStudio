@@ -36,6 +36,14 @@ CreateCharacterFaceView.prototype.init=function(data){
 	genderRadio.setValue(data.gender);
 	self.addChild(genderRadio);
 	self.genderRadio = genderRadio;
+	self.genderRadio.addEventListener(LRadio.ON_CHANGE, self.changeGender);
+};
+CreateCharacterFaceView.prototype.changeGender=function(event){
+	var self = event.currentTarget.parent;
+	var detailedView = self.getParentByConstructor(CreateCharacterDetailedView);
+	if(detailedView.armView && detailedView.armView.visible){
+		detailedView.armView.resetSoliderImage();
+	}
 };
 CreateCharacterFaceView.prototype.changeFace=function(event){
 	var self = event.currentTarget.parent;

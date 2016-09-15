@@ -54,6 +54,7 @@ CharacterModel.createEmployCharacter = function(id, soldierId, cityId){
 	eval( "var wordRandom2=" +  '"\\u' + (Math.round(Math.random() * 20901) + 19968).toString(16)+'"');
 	chara.data.name = wordRandom1 + wordRandom2;
 	chara.data.soldiers = [{id:soldierId,proficiency:700}];
+	self.data.currentSoldierId = soldierId;
 	var values = [-60,-40,-20,0,40,80,120];
 	chara.data.employLevel = (Math.fakeRandom()*values.length>>>0);
 	var soldierMaster = SoldierMasterModel.getMaster(soldierId);

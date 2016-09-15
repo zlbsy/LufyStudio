@@ -44,11 +44,19 @@ CreateCharacterArmItemView.prototype.onClick=function(event){
 		self.onPlusStatus();
 	}
 };
+CreateCharacterArmItemView.prototype.setIcon=function(){
+	var self = this;
+	if(self.icon){
+		self.icon.remove();
+	}
+	var width = 50, height = 50;
+	self.icon = self.soldier.icon(new LPoint(width,height),self.iconComplete);
+	self.addChild(self.icon);
+};
 CreateCharacterArmItemView.prototype.init=function(){
 	var self = this;
 	var width = 50, height = 50;
-	var icon = self.soldier.icon(new LPoint(width,height),self.iconComplete);
-	self.addChild(icon);
+	self.setIcon();
 	var label = getStrokeLabel(Language.get(self.soldierMaster.name()), 18, "#FFFFFF", "#000000", 3);
 	label.x = 60;
 	label.y = 4;
