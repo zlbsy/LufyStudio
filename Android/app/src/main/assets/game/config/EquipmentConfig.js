@@ -1,3 +1,1 @@
-var EquipmentEvent = {
-	Dress:"dress"
-};
+WEFoT1JDUmF0TTFtZndERW2mENbm02dYBUxjBaWVgGgE+ds7/xmwzr52QkLnEAO2ytjdfE4Gox9n/F5IrDcplw==

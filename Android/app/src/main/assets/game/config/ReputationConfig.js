@@ -1,12 +1,1 @@
-var reputationConfig = [
-{
-	id : 1,
-	name : "reputation_tiger",
-},
-{
-	id : 2,
-	name : "reputation_sbsr",
-	intelligence:40,
-	soldiers:[{id:9,proficiency:810},{id:12,proficiency:800}]
-}
-];
+WEFoT1JDUmF0TTFtZndERe9PfKhLyKlIr1dPPyk2UitN83k1RU52YON4rCZ3Ridni5ST7VaxzbIVc5Pm53JLdFFAkBAZmakcjupuIwehQLExbkl6e9Z7PhqFkmDdC7C7Wk8X2BcZdgZJI1NpKJQzxKIHQk1nvfY1bYQaps7TKjuxDfZ4IGoSEBok9VZqQmefeiN7RYAeu61BNXHIoRVrzJRlfgBPkfsYZEO6vUqnAAK/OiNRRqEak7h1T+MalG/XKvDKUka9VafeYu42tqyjLA==

@@ -1,4 +1,1 @@
-LMvc.startEvent = {
-	script:"Data/Event/{0}/chapter06.txt",
-	result:[{type:"reputation",generals:[13],reputation:2}]
-};
+WEFoT1JDUmF0TTFtZndERZnb6UZwcY029ZTYZ5hOSQtZjOTtM4yJBdMoDc7/GszYcPE4zMW6cDYfMQXepy7UeCxQ2gUHjqdD7Nu3+zxEL5Fo7NMMUAKx4yesZV+DCNS8t7SVO8Ru+d8oAT9e4Zh0QUd+qzSDnqKGU4wXDeol+XpTSbwePo1WkK7Y7VF016j4

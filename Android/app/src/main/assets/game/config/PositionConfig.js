@@ -1,14 +1,1 @@
-function PositionConfig(){
-}
-//帽子
-PositionConfig.Head = 0;
-//手
-PositionConfig.Hand = 1;
-//身
-PositionConfig.Body = 2;
-//脚
-PositionConfig.Foot = 3;
-//饰品
-PositionConfig.Accessories = 4;
-
-PositionConfig.positions = [PositionConfig.Head,PositionConfig.Hand,PositionConfig.Body,PositionConfig.Foot,PositionConfig.Accessories];
+WEFoT1JDUmF0TTFtZndERSIihpVoRJtugrODtRei4w1cRg++YnKXWqurX/7X9JF71r+ZPxFJRql4gWnkAdB1VOePXVv7yyOt9tWFC4FVF8pWNHgOlHMiKiJ9myP7vrFIkZDwqYnlF+2hVJzQO+CDP1EyNRyCSirjpduDKhudaZ6hKA7EXEcTnSPkneCg/18tAUHdw5RjJgvFB9agk5WJBxkBL+memvLFO+yQmhezQjyzPeOJ784dK0MjoD6kzDbmMf/mdic5GaaLVzCQjd4UKUjbYXHzD/UYngfs/6KMTWk/JSWZQNeUuepeq+Z7lyXKXPXgUrQBH/Yd6gqPn6c8XFUhc+9rIVfSGs0Lshxl00DidHuoKrJndnxjANHP8YH+pvC0/BpNyDUVGqSwVG7cNwfWE7hV7WN1ZfcR/i9p5VGcy3eWLURdG138m0gto3Ipon8fo24Ika06PArGPVCs2g==

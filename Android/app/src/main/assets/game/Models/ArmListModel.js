@@ -1,13 +1,1 @@
-function ArmListModel(){
-	base(this,MyModel,[]);
-}
-ArmListModel.prototype.construct=function(){
-};
-ArmListModel.prototype.getImages=function(){
-	var list = [];
-	list.push({name:"checkbox-background",path:LMvc.IMG_PATH+"component/checkbox-background.png"});
-	list.push({name:"checkbox-on",path:LMvc.IMG_PATH+"component/checkbox-on.png"});
-	list.push({name:"range",path:LMvc.IMG_PATH+"component/range.png"});
-	list.push({name:"close",path:LMvc.IMG_PATH+"component/close.png"});
-	return list;
-};
+WEFoT1JDUmF0TTFtZndERdFFKxH2Smiefo4zHLZPMOzPPvTOiLCfqqmjWDBmm+ckat2IeGLWESzMK8/37oVlJDplLDGualr3CFofjXXVhXWBQu/nMBXkjtf/N6mxm7AWk8Ck91WMfIyCvBKFeFaMMw6Pjq8NkFqksHmWmiH8/noSIzwGSNy9spqVgS8xs1ieKyYxJxs2z/2gW7BzD6RCjlXccOliOVzfG5dumYbuO4dEJOWlv156juWZIt93hFdnjXi5XIszboqsYvgfkjuboJRXew4iaa34P//yR7UoSnr1caiU8hToXcFu3uW0zgRdHSuwENTG6LaEI8/+Vz4uw7gzXwPQqtL/Mcmbfr3+nX34aAHqPbvcJI2sH1seHyynPUoMQJugZv6XBS4HrbyM/zt8TKXvi/oIXcaNJf2UzAaSyFPFLMN8Fk0z8PtR80DJZXmI++mSigD20dqt2fjDzN+pCZNN60oikTCd15GgwIslwRReTVWbLVs+cKVkmFQ3DucoKA3w/oNhQdAkOANv5YooJwEYCojawnwMuIyLd0MOH/VwNOj+e22cQr6kNQhhlgIvo4YmJPKB2kABCXHCC1hCXDJ4XM2/tTu9pVFabnNO1trojtDbR3BWV8t4Ve+sVKoFU4Y79790FJaQupiQ5NpBsLIWPIuwO9y5FORED+o=

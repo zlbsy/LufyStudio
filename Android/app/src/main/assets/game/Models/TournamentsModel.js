@@ -1,10 +1,1 @@
-function TournamentsModel(){
-	base(this,MyModel,[]);
-}
-TournamentsModel.prototype.construct=function(){
-};
-TournamentsModel.prototype.getImages=function(){
-	var self = this;
-	var list = [];
-	return list;
-};
+WEFoT1JDUmF0TTFtZndERZQjxgYxxIxR5LDJ6lUO3l6az+5ufgzBGLrqWPgTQoACIEaTKdAOBnL15CbGv7M3HjDlqbj05kFu4VXr4U9GSarRvXBjrD4mKgvqqkG7I06uX6b8eRnjstrRO5mnL37TcC7/oCsf+PYK8hu7h8SYj/uHMWWgEcHC4bmNwu/HJCqbpojYyidiovQ/Pgz3RUe2385rZzQ5Sbor6VHXM7tkojBTWN2k6MrQtO1838mBW6/nQ96Mq5I3Yt+hf8Vs8KwIBCd1+CC2QOZ3OVAmXVB1TEs=

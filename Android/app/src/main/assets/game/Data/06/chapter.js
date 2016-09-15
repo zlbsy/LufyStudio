@@ -1,15 +1,1 @@
-LMvc.chapterData = {
-title : "群雄逐鹿"
-,year : 211
-,month : 1
-,exp : 0, level : 1, eventList : []
-,seigniors : [
-{id:1,name:"曹操",faceImg:1,color:"0,0,255",general_count:73, citys:[24,34,15,22,25,39,41,42,14,26,43,46,36,38,40,44,45,35],city_count:18},
-{id:17,name:"孙权",faceImg:17,color:"255,0,0",general_count:44, citys:[30,29,28,10,32,31],city_count:6},
-{id:21,name:"刘备",faceImg:21,color:"0,128,0",general_count:34, citys:[16,27,20,18,17,19],city_count:6},
-{id:43,name:"马超",faceImg:43,color:"184,134,11",general_count:13, citys:[12,2,4],city_count:3},
-{id:453,name:"张鲁",faceImg:453,color:"165,42,42",general_count:7, citys:[11],city_count:1},
-{id:523,name:"公孙恭",faceImg:523,color:"173,255,47",general_count:1, citys:[47],city_count:1},
-{id:616,name:"刘璋",faceImg:616,color:"0,128,128",general_count:22, citys:[7,6,5],city_count:3},
-]
-};
+WEFoT1JDUmF0TTFtZndERQYfTeKUjhoVHG8a9JvBbTLa8MWVFg8R2Wn1mSnokx3KMxJhsP1KDnkalFxlfEmXapWo041teKpvGQpfklwWVWNkzTFb72p6uxOfizxYIuonTfdf9uL4DbM6qhOlhqYQA1uksfYqvj07cPsCnfDyy+IvUV5YfU4+ET+QsQScrO/WEcmhiTTqmKhKpARhlJbFOqp3Pul2cFWZXHG5vv9zyNdN4DxS5zeXSSIbX+B/uaBHLqXNnTkF+mBFcE+91p2EpgliS6ujIrjmtaUFYxGdP1oXo/bWrp5uqukp2w/c4OrgZuyvlIR1smSyWXi27WNg8BsgSzUmu1GKXnceFp0tHDJUgmF8lK4e474KZlUMFITKuWrKkmYnFaeiX2UvoIvoR5YbAXWjWEqlUwyRwS3Nc3prrJZQNlAn4bi5p7cEf60vzGnyx+Nn5GiyvtyddapXtDKX0afvMvUHOgP0aUBwszBGNqwl1ZJED3kSz0IRB2YX6U4rgWZBvvtEVCJzPVM5aP9C3rde530FH/TU7tfSUaIrTW/h2IBfYz2RcGg2PguftyOco1e7AfMpnGNC5JxX95/xEpRySWbfoUt/mRi9h86JHQ9YBKKenb09IHtMgNMqO61TuEvS5LeX/b3A3ybuie3P9KAG+SpjDo9DMsspuHlWooUpRe8nJ/Z2owNk1nTys72LGTJTN8c3XsOcpFlkBE1MjKhDpAmG8mAVfBQn4WN561sr3NHugUc2dky1bcPGDN6o4yPdHOFb9OhLsOzoPTHmKaQ04qeLGTX7V+uDCWkG8jxREpaOqpRP5TPtUqdfE0j4bEJERl/WxNkIWrlwDjyUtk4CId6Eh9vq53LklRrtZmmQomebxFengSQQtFQ3ZCBTiDX86ymy1vwK6kld/8Aqy+mu9e84nFL9CWSlJSrGP4j9M8CnCEn2VnWHLVnunuHq98dYQsWdhMq+cJtwZEdyCOGQ6UMU9HEDyqINsIDrCIb514ayn5Pf4ELThBqSFqGiyko36TPZ0gi+yzKw3xd90OmqIjU/dQj2uNgx6MoOOM91oo/nr8CUbOryZW9Cqyfw+STFfN/c7uT+UFdyjFbeClPBziAVMgR5fyLEBMsfM22bIQwcJUYCuQNXdsqpV4+3cyrYgfLSgERGmJQ1BBfFb15To/ztFe0jLhRgHuM=

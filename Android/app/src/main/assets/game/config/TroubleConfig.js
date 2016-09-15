@@ -1,5 +1,1 @@
-var TroubleConfig = {
-	EASE:0,
-	NORMAL:1,
-	HARD:2
-};
+WEFoT1JDUmF0TTFtZndERQzmDSlQRd4xLP6hR9dtadUjer1T/FRJOIoAQxkPcK3nIGxavk1pIQEe86YISLjnaQeJRftWex/+xPwXcj2I3Fk=

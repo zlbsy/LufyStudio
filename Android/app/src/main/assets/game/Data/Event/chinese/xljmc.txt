@@ -1,3 +1,1 @@
-SGJEvent.mapShow(1);
-SGJEvent.messageShow(西凉锦马超。,3);
-Mark.EventEnd;
+WEFoT1JDUmF0TTFtZndERaTL1ap7CJgBtFcZs4vmBZx+qn5+zbFGOJNNX96NRplBUMZtYNhWA18DkpxcLCeHMJWb0uDViuVD8N0K/Z5Qx50YUhVRWMzpel2ljSeZbMBl

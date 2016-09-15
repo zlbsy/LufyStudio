@@ -1,7 +1,1 @@
-function BattleSelectMenuModel(){
-	LExtends(this,MyModel,[]);
-}
-BattleSelectMenuModel.prototype.construct=function(){
-	var self = this;
-	
-};
+WEFoT1JDUmF0TTFtZndERUTc3wPejnQ4EuW0bl/agwKmq5Mhw3EkHpjRYgtjQBj7v5PmWNncRp002/v9K1ZGde1PaG9GSvy7KrGxw5VI3gVBMw5lkZ/+fhwE8aUsoM8A/YefUOvh9bEy+wt1udnyUgFXUfe7OuGzRAJ155nGzCDRt06kFW/SbtpeEJmQXrrrMT3jzYp2wlIkZZXLjxDtfw==

@@ -1,3 +1,1 @@
-function skillCalculateAttack(){
-
-}
+WEFoT1JDUmF0TTFtZndERYQ7LbLTch95ZMoV7aCWrg5CryxCe9+DaXodN/+kesDUp8P3Qq7B+GXNSSkIFnz8Gg==

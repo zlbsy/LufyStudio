@@ -1,4 +1,1 @@
-LMvc.startEvent = {
-	script:"Data/Event/{0}/chapter01.txt",
-	result:[]
-};
+WEFoT1JDUmF0TTFtZndERZnb6UZwcY029ZTYZ5hOSQtZjOTtM4yJBdMoDc7/GszYcPE4zMW6cDYfMQXepy7UeLa/uNUtMnFIb0GrAj6cMpDyynKPMnY4ovVDTSt2oUNK

@@ -1,5 +1,1 @@
-function SeigniorListModel(){
-	base(this,MyModel,[]);
-}
-SeigniorListModel.prototype.construct=function(){
-};
+WEFoT1JDUmF0TTFtZndERVqOQ3M6xtSusIZDT1gJautGOqwMqU4gYjpf8hRvyLHZBkeYrH3hzVDUQ1cvZ5XuMmyuxuvP/ani3/Vwip6IBxgAAko4KluLCADS3V3oJ2wqPr98ShKCgzac8eX2heiGKk1GpMfCKQIxSxxKE74EoiY=

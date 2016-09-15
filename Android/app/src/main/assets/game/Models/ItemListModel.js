@@ -1,13 +1,1 @@
-function ItemListModel(){
-	base(this,MyModel,[]);
-}
-ItemListModel.prototype.construct=function(){
-};
-
-ItemListModel.prototype.getImages=function(){
-	var self = this;
-	var list = [];
-	list.push({name:"win06",path:LMvc.IMG_PATH+"win/win06.png"});
-	list.push({name:"lock",path:LMvc.IMG_PATH+"icon/lock.png"});
-	return list;
-};
+WEFoT1JDUmF0TTFtZndERTNnmT6z4zcnnO4U8oREkJlyQ2nLpuOixQIscQNkg9N8uVMvmi3Eefs0DLyI0GK5lEGtwbL55AbIQYItMjU/TQV/CqeZ4h3gDudiGM7SxBvwn4V+Yc/7MFK9x/oQAmsSL9NB/bz1gn7byestDPyBPWNZUKBQDpV17ga+JEM6rNRF30r38E/YRNwIVf6osHtTicujq4krHClHAzxdJv4jA8DxF2KcfA+SXxvi0BGglC3nbtgiSsmZdCy8Y1EtBUqUhJhmhfo0v6mkJP1YnxEzQKHCwbrFMXT1WgqtvcYXJKboHEkBsPY3dKm+UArKxHABgLvshBGNuztwmxU/KZd/9Ynl44fwb2jzgzrpymREQjFq517LlnDQuD1lxydkN+RFXMlWG4DFd1ssvE/TZa7TeX1gnfMgBuoWeAfpX+LOBxLpz7KLgDzcWIlAvMsXN4tdHQ==

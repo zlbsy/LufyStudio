@@ -16,7 +16,28 @@ and open the template in the editor.
         <script src="./js/lufylegend.ui-0.14.1.min.js" type="text/javascript"></script>
         <script src="./js/lufylegend.mvc-0.3.1.min.js" type="text/javascript"></script>
         <script src="./js/lufylegend.extension.js" type="text/javascript"></script>
-        <script src="../lufylegend.java.js" type="text/javascript"></script>
+        <script type="text/javascript">
+    LURLLoader.prototype.ll_load_base = LURLLoader.prototype.load;
+    LURLLoader.prototype.load = function(u, t){
+        var s = this;
+        if (t == LURLLoader.TYPE_JS) {
+        	LAjax.get(u, {}, function(data){
+	            var script = document.createElement("script");
+	            document.querySelector('head').appendChild(script);
+	            script.innerHTML = data;
+	            var event = new LEvent(LEvent.COMPLETE);
+	            event.currentTarget = s;
+	            event.target = s;
+	            s.dispatchEvent(event);
+        	});
+        } else {
+            s.ll_load_base(u, t);
+        }
+    };
+        	if(typeof LPlugin != UNDEFINED && typeof LPlugin.androidSetting == "function"){
+        		document.write(LPlugin.androidSetting());
+        	}
+        </script>
     </head>
     <body style="margin:0px 0px 0px 0px;padding:0px 0px 0px 0px;font-size: 0;">
         <div id="mvclegend">loading</div>

@@ -1,6 +1,1 @@
-function MenuModel(){
-	base(this,MyModel,[]);
-}
-MenuModel.prototype.construct=function(){
-	var self = this;
-};
+WEFoT1JDUmF0TTFtZndERScnLn4sz/gSxFz6TfGZsghAjYySWby7cixUWEHV2qw4E9rErxB1OMpTK8Lb0+mct0GNvXA3MfdJ++ICbY3VNsIzpQkB5eaPIMkBbHNbBbr7QDqc+l5uIokopV4S9Cu3TSdPrlxMCH/872w/G4Kiuug=

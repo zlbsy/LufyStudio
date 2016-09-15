@@ -1,16 +1,1 @@
-function ArmsConfig(){
-}
-ArmsConfig.Arms = [{id:1},{id:2},{id:3},{id:4},{id:5},{id:6}];
-//步兵
-ArmsConfig.INFANTRY = 0;
-//骑兵
-ArmsConfig.CAVALRY = 1;
-
-//刀兵
-ArmsConfig.KNIFE = 0;
-//斧兵
-ArmsConfig.AXEMAN = 1;
-//弓兵
-ArmsConfig.ARCHER = 2;
-
-ArmsConfig.MAX_ID = 50;
+WEFoT1JDUmF0TTFtZndERRsEee53WmYmJaL4SVsoaFyG2Fx/MnL5+QNSWlHkUuJpKJxXGi5qQCh9cenyojtcsq3Ni+AlMrltNRj67G4cLJdQh7a8npLNgZlOhOdZyf6LrpUzrdvvAocZsJaUtZbvYf0PNI0Aupzyog1zm+LUOyehhvzaR6RCcxFCfGiIF8sMHslb6WQc4aeOPEbisQwoNyJASRSxC1cxFuONxUMjGz+VW8nfcveGQfcYqS5fUbftEYIDFRo/e4VRMTTFf7ZR0dtdi5Mg5kw/FMfXMYMtzgv+71Nbo7bfaKMPyJqUn3LyAZIKuUr0Wpvs5fORZk5q4ZVrCAmTlaLLnOVFB3WKZtb4bBXegx5OAjsItUkxddORq+hgk5/bQmT5YIA9CvAnOA==

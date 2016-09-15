@@ -11,11 +11,19 @@ import android.view.WindowManager;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+
+import java.security.MessageDigest;
+import java.security.Provider;
 import java.util.Locale;
 import java.util.HashMap;
 import java.io.*;
 import android.content.res.AssetManager;
 import org.apache.commons.codec.binary.Base64;
+import org.bouncycastle.jce.provider.BouncyCastleProvider;
+
+import javax.crypto.Cipher;
+import javax.crypto.spec.IvParameterSpec;
+import javax.crypto.spec.SecretKeySpec;
 
 /**
  * Created by lubin.zhang on 16/08/31.
@@ -32,9 +40,9 @@ public class Lufylegend {
         soundInit();
         ///System.out.println("BuildConfig.VERSION_NAME="+BuildConfig.VERSION_NAME);
         //System.out.println("readFile="+readFile(""));
-        String s = readFile("hoge.txt");
-        Log.e("Lufylegend"," s="+s);
-        Log.e("Lufylegend"," encrypt="+AESUtil.decrypt(s));
+        //String s = readFile("hoge.txt");
+        //Log.e("Lufylegend"," s="+s);
+        //Log.e("Lufylegend"," encrypt="+AESUtil.decrypt(s));
     }
     public static void initialize(String path, AppCompatActivity activity){
         Lufylegend.gamePath = path;
@@ -63,7 +71,7 @@ public class Lufylegend {
             //Log.e("encodeBase64=",path);
             int readLength = 8192;
             final AssetManager assetManager = context.getAssets();
-            InputStream inputStream = assetManager.open(path);
+            InputStream inputStream = assetManager.open(Lufylegend.gamePath + path);
             final ByteArrayOutputStream byteStream = new ByteArrayOutputStream(readLength);  //一時バッファのように使う
             final byte[] bytes = new byte[readLength];
             final BufferedInputStream bis = new BufferedInputStream(inputStream, readLength);
@@ -74,7 +82,7 @@ public class Lufylegend {
                 }
                 //return new String(byteStream.toByteArray());    //byte[] に変換
 
-                String base64Data = android.util.Base64.encodeToString(byteStream.toByteArray(),8192);
+                String base64Data = android.util.Base64.encodeToString(byteStream.toByteArray(),android.util.Base64.DEFAULT);
                 //Log.e("base64=",base64Data);
                 return base64Data;
                 /*byte[] outdata = Base64.encodeBase64(byteStream.toByteArray());
@@ -102,6 +110,30 @@ public class Lufylegend {
             e.printStackTrace();
         }
         return "";
+    }
+    @JavascriptInterface
+    public String changeToScript(String text){
+        String strResult = "";
+        try {
+            byte[] byteText = android.util.Base64.decode(text, android.util.Base64.DEFAULT);
+            String ENCRYPT_KEY = "W4IG2lgO";
+            String ENCRYPT_IV = "XAhORCRatM1mfwDE";
+            byte[] byteIv = ENCRYPT_IV.getBytes("UTF-8");
+            Provider provider = new BouncyCastleProvider();
+            MessageDigest digester = MessageDigest.getInstance("SHA-256", provider);
+            digester.update(String.valueOf(ENCRYPT_KEY).getBytes("UTF-8"));
+            byte[] byteKey = digester.digest();
+            SecretKeySpec key = new SecretKeySpec(byteKey, "AES");
+            IvParameterSpec iv = new IvParameterSpec(byteIv);
+            Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
+            cipher.init(Cipher.DECRYPT_MODE, key, iv);
+            byte[] byteResult = cipher.doFinal(byteText);
+            strResult = new String(byteResult, "UTF-8");
+            return strResult.substring(15);
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+        return strResult;
     }
     @JavascriptInterface
     public String androidSetting(){

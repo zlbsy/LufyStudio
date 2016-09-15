@@ -1,4 +1,1 @@
-ArmListType = {};
-ArmListType.ARM_LIST = "arm_list";
-ArmListType.ARM_ENLIST = "arm_enlist";
-ArmListType.EXPEDITION = "arm_expedition";
+WEFoT1JDUmF0TTFtZndERaWio/Dbf0T25Yl9NxIuIfHx/Dowp6U9l//+BM8V18c3/qLbnIKJtzYVny2xCpZC15XOd/MFlkxpFpcca0hCI/wFGQQAj5i/tG0jJQutCgrVIp+cgMaRek8SE0HMMt0MxcNGttqdKh6/KaTxNd8ysfA3SqaTBsbxHUxrOlYSGfVJ+dzgtmsF3PFBw0mtx368tw==

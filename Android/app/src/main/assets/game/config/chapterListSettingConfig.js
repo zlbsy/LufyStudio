@@ -1,14 +1,1 @@
-var chapterListSetting = [
-{id:0,year:184,folder:"00"},
-{id:1,year:184,folder:"01",index:0},
-{id:2,year:190,folder:"02",index:0},
-{id:3,year:194,folder:"03",lock:true,index:1,group:"chapter_194_211"},
-{id:4,year:200,folder:"04",lock:true,index:1,group:"chapter_194_211"},
-{id:5,year:207,folder:"05",lock:true,index:1,group:"chapter_194_211"},
-{id:6,year:211,folder:"06",lock:true,index:1,group:"chapter_194_211"},
-{id:7,year:219,folder:"07",lock:true,index:2,group:"chapter_219_263"},
-{id:8,year:225,folder:"08",lock:true,index:2,group:"chapter_219_263"},
-{id:9,year:234,folder:"09",lock:true,index:2,group:"chapter_219_263"},
-{id:10,year:263,folder:"10",lock:true,index:2,group:"chapter_219_263"},
-{id:11,year:300,folder:"11",lock:true,index:3,hideYear:true}  
-];
+WEFoT1JDUmF0TTFtZndERWd7wW+BUEuOUT7RmBWbsHJTAyGn6sJOMLtVxaByag0uV+qCjuaAHX2xv8kSgy3I1fjJdPzco42W+X+sgFfBfr0rlTUyeIl2/33cEQqYgtU5qdGfAzQVbx9zCIqOhahK2zgbItigm83voggt9OPH8XkXJN58f16vMsaXRGICWahB5YqoXmbu32A+qB5yZbpNhTo/WhG9eBKkenOCY+I4sqaztHm7PD+U+uJwk6MSd/1lH5UbfTenjP9WmQmlrSCxx754opTaScf/a5mkuGz+Tg088HRVKm85uNse+drRZoCT2XW5zOL/6n8kSNShVGJQR1bQ6ZYk1G/0C65GntFv2yE89Jf3mlMSg5QCifIZZHZbVQU7dBipmbAusVP1L0XWIxaW13CU/Rncm9rAMIKXBJuxCVfookw0f/PysoRgOrFMzzp4F3UtKehTY2nkuXT17hLDX2nG+kq0OE/+wqTAB95y0VRZ8pXAo+9JgBAYbTsDQH5ojUWN8aYpvdymeMMuGTCBHTgdh9rNqDWIgGy5zYPyFiORmyEtko/sJGeMJVWIXuP8L26VBulWMgdlLehR/YSAstaxXVSrEavG/Zmwpla/KpBxfuPI00TmYyS++gxvhNr3zbLpF6k4+IHHL2rFpujHHf8URjoJOkxF+rdCWzQdUWRB+/k7fyh8LcD/XIdq1Cff/3CJbzESAy/KTQK04u3oRulE6GmsA1fsfsmRgP+TjiQkjoG2VvvurULQHzu95mDFml1EzwevGHkAFhmgLT858KQCCJ42GEXLcDA99HAEAqCx29+d3lpGGHd9ZAGZet3aAdBqGgWyK92IaZy7Q24+sPGLzE4FJ6xBcSbP9dGV7JpcyrZuRQS3YHIecTDwmEOLJ5L4GB/T3GTkeHvh42NGt8PeG1nkrevpCjTPMNTjuPwnhfs8aWuuD9snrgX8czYeN0mi/eJyD+t5LZgWacgB7zAohjlHtHx/a2DDW8GbWTpB2hQQzVWkbfvjlbJiZSk088ZNn+tqpiZJ1TXOXg==

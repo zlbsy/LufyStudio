@@ -1,11 +1,1 @@
-function SelectSeigniorColorChildView(color){
-	var self = this;
-	base(self,LListChildView,[]);
-	self.color = color;
-	self.graphics.drawRect(0, "#ff0000", [20, 10, 60, 30],true,String.format("rgb({0})",color));
-}
-SelectSeigniorColorChildView.prototype.onClick = function(event) {
-	var self = event.target;
-	var listView = event.currentTarget;
-	listView.parent.colorSelected(self.color);
-};
+WEFoT1JDUmF0TTFtZndERSnbXcdteNQh2q9SkFKr/4+7ElyDqDGlAFqcXsIQhSkCW6yWug/2FUAnBJMBJn1xYuEsxU8PVmAmf5APMhfHn8wUiKVYpa951pxA1bOXxQxFqYtgLHnWNfMYddKwvTS8w44bIJxOYG6NwG20L5jzNVVuWjq1OAXC1ootc1FcAaza2LWjitJC4TqaU/ywJXSk3/Ce/KJ4EFDMGRw9kD0rco/64YZZIkO/Km7X0g6P7Uw/Tm+CFRoU3+Cp7DlqlWmt4SeZXGQnxjovWeiAul5v7ur7UQTGAdvpYpX5l+PaueVJf6heYO4W35U/wvWnj3lJytHs7SFh2VheH05WaV+8V1h0eszHI9FXRQ522xFAEv5Zu2You7X+px2aMFEA10713zuYJyStUyH1L/QBwgwaF8YwcUyUltL3aQBS4Q6yYKCc+uJviXfta1VhvcMYt+6c28mI1Pj5yYzT3KYWaMp0SgYmZRSkGxspYIbj1ckVkzlKfJHXu+iuZ3HksLtutu1DVgDXWqiUa70zQt1pd15gFOM=

@@ -1,9 +1,1 @@
-SGJEvent.mapShow(1);
-SGJEvent.messageShow(从诸葛亮的草庐回来几天后，刘备派去打听的人回来报信说，诸葛亮已经回到了家里。,3);
-SGJEvent.addCharacter(21,250,100,fade);
-SGJEvent.addCharacter(4,150,100,fade);
-SGJEvent.addCharacter(19,350,100,fade);
-SGJEvent.messageShow(刘备又带着关羽・张飞，冒着大雪，第二次去寻访诸葛亮。,3);
-SGJEvent.messageShow(然而，却又一次扑空了。,3);
-SGJEvent.messageShow(刘备留下了一封书信，继续等待下次寻访的机会.....,3);
-Mark.EventEnd;
+WEFoT1JDUmF0TTFtZndERaTL1ap7CJgBtFcZs4vmBZx+qn5+zbFGOJNNX96NRplBw5RvTLm2fG+134Rep8Zjlnxb+XkWC/G+4zv1Ldk0dSoaab3ySW10kIU0J25DMtbBCkXm+X4aBz7N16y3sNMXBmGqfM/bD4QSimnE8K7HzzA27iA4aSUPM5LxefiYpuDWvK254/kcdVkJVVr9USMRWWzMU+eg4Xz+Qrd5V7qKdGI7wA9cRe+Cazzx4ZE/K4cYDM/gxTF3ocfDxob/N2izOCPJz7cF6Hil1CLczXDnSkVxeQ+55U1cObhCC6Oqohx4enCEi+dxSwz9Q/684dzpA6DZlsejrGWWLqLRbWOKFFO0WJPl6OhwH6ce4RyVO1gzEBZOMRJf4vmQmivJef/rQMd+wyPWbFq7VOh0kgfcYDouhTmop1cFMRz7iWFkkNwRT68slPO6DSPBq9PiQsiEtZATn1Q1t/blcIyrs8mdIlXpKOuSc06ibpvoTr4ndA2p0PrnLwHUIIxkOyCci/Ith8zlHoDEZk3WZwKEQO/rlAQK/chFmq+vzInWIuFL47i9azRr7UvnKHvN4CZ+qARAYVHMvPmy5635uOKLGVQ/fl8oe85am0aqOz7YgfLD6ToxiAThP2Dljvg+BhpnEnFdDmGm930O6wXjfRwOKvBK7RYgtCtN2yaqBZTH3LHejdKXtGDmygkqLQHlXL1CWyQG57ywwjK2AEbZuAMVGQGfnsN+1txkjybal5/GEqap46W7

@@ -1,15 +1,1 @@
-function RecordModel(){
-	base(this,MyModel,[]);
-}
-RecordModel.prototype.construct=function(){
-	var self = this;
-};
-RecordModel.prototype.getImages=function(){
-	var list = [
-		{name:"close",path:LMvc.IMG_PATH+"component/close.png"},
-		{name:"win02",path:LMvc.IMG_PATH+"win/win02.png"},
-		{name:"win03",path:LMvc.IMG_PATH+"win/win03.png"},
-		{name:"win05",path:LMvc.IMG_PATH+"win/win05.png"}
-	];
-	return list;
-};
+WEFoT1JDUmF0TTFtZndERecsGn9A/VV4zgwGQLkBvn255PfsgHBEHxMnhxV6vC0NfiQKM1k71jSo8Dy1/VUQV2HXW1yTEH59yTOS/bcOr9kBK2r2pPovlUXT9hwSkgbcRJzX2OHRR4Xz2zsGvDDD53nf9RPnrjSg9NNueOtwJs/CRRawHdwubejPUdj5dq41WxV/YRbkweYm8kfCqf+gIcZEyE7ix9sNno9dpZPVGDE/Di2yggewa/tHO1T7oySWs3flaC4iw0djFYlapNcTLuutlvbrY0j+eNx+3bVutyKyEqLINulSFs+jgLFiq049fmKZpcyWj4Byz9u24q6+UMQL6deNZG0TtHUPOj8Q59amZ2RGD9N1Pcn55jQURaeHRMyf+r2Pn3u0WAiDvI0zIpFfKrofg/cOYtBgagX65dNimpub24dUnUddYs+wVsR0XeUKzJgrIcv0M6TLggGgB1xf7q4+f+BF9HZLDtajUlQOfOB/fKLVIRjcRAix2MfYCxc/DAN9P82QxWSUbU1Qa5CoG5JAmiKnU2KRD33LHJ1M1+OSbqKjN5yYzL+KTdvZ

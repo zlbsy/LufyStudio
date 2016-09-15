@@ -1,11 +1,1 @@
-function EventListModel(){
-	base(this,MyModel,[]);
-}
-EventListModel.prototype.construct=function(){
-};
-EventListModel.prototype.getImages=function(){
-	var self = this;
-	var list = [];
-	list.push({name:"lock",path:LMvc.IMG_PATH+"icon/lock.png"});
-	return list;
-};
+WEFoT1JDUmF0TTFtZndERew50DujkFoTPTQnTJ97d8GdfuXABFvv7iWxwe9xPo5XW+krm3V/HoIQxQrPLxNyS0GCozDTMZsl9HBYdzLOnlOq05x4THqSYTiRH4KymE3Rcfw/UEyD7rznLW6biMLMGvEZ3FiAF1O06jTZMlDo/WOQtyTsigXDbM7Cm2f3Y8xsRb5H25/yTUuB4GyJgZWO9yKK0EfA2ZPMVrmyCsZ5PKMaXk0dh1qWW/3JO3jD0L99eq5g9dAVKZsh45zu/M1gnpl3AHaovi++DOGiNcftyweAriTBUjjQ7FWemx3iiK50qUFPyHhvLb61AntaPwg0fKQSexqkxyyx3mhfrhJGQ7wXWH2Ifgd65730B5FINFep

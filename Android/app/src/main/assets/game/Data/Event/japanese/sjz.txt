@@ -1,3 +1,1 @@
-SGJEvent.mapShow(1);
-SGJEvent.messageShow(失荆州。,3);
-Mark.EventEnd;
+WEFoT1JDUmF0TTFtZndERaTL1ap7CJgBtFcZs4vmBZx+qn5+zbFGOJNNX96NRplBcvHpeO940Z1w2agEqfSjJy1oDehOzl6GxrVAL+xFpftQ7MbiOnM77Zk9ERqHlYRI

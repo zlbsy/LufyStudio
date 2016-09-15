@@ -1,3 +1,1 @@
-SGJEvent.mapShow(1);
-SGJEvent.messageShow(刘表之死。,3);
-Mark.EventEnd;
+WEFoT1JDUmF0TTFtZndERaTL1ap7CJgBtFcZs4vmBZx+qn5+zbFGOJNNX96NRplBhsZLF2QSqZibw+y8r7CcEcixalh5JGgxnllZ4ZJfvlunCd75Kp1mL6A/j32tkzpk
