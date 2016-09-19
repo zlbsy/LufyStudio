@@ -21,7 +21,11 @@ LogoController.prototype.configLoad=function(){
 };
 LogoController.prototype.helperLoad=function(){
 	var self = this;
-	self.load.helper(["Label","UI","PurchaseHelper"],self.libraryLoad);
+	self.load.helper(["Label","UI","PurchaseHelper"],self.viewLoad);
+};
+LogoController.prototype.viewLoad=function(){
+	var self = this;
+	self.load.view(["Common/PurchaseStart"],self.libraryLoad);
 };
 LogoController.prototype.libraryLoad=function(){
 	var self = this;
@@ -32,6 +36,7 @@ LogoController.prototype.libraryLoad=function(){
 	if(LPlugin.native){
 		LMvc.ver = LPlugin.bundleVersion();
 	}
+	LPlugin.native = true;
 	self.load.library(list,self.languageLoad);
 };
 LogoController.prototype.languageLoad=function(){
@@ -105,8 +110,21 @@ LogoController.prototype.openReportUpdate=function(){
 };
 LogoController.prototype.start=function(event){
 	var self = event.target.parent.controller;
-	self.dispatchEvent(LController.NOTIFY);
-	self.updateCheck();
+	
+	var purchaseBatch = LPlugin.GetData("purchaseBatch", []);
+	var now = formatDate(new Date(), "YYYY-MM-DD hh:mm:ss");
+	var updateTime = purchaseBatch.find(function(child){
+		return child < now;
+	});
+	if(updateTime){
+		purchaseRestore(function(){
+			self.dispatchEvent(LController.NOTIFY);
+			self.updateCheck();
+		});
+	}else{
+		self.dispatchEvent(LController.NOTIFY);
+		self.updateCheck();
+	}
 	if(!LPlugin.native && LSound.webAudioEnabled){
 		if(LPlugin.soundData){
 			return;
@@ -181,8 +199,21 @@ LogoController.prototype.updateCheck = function(){
 		data = JSON.parse(data);
 		LPlugin.SetData("reviewing", data.reviewing);
 		self.view.forumLayer.visible = data.reviewing ? false : true;
+		var today = formatDate(new Date(), "YYYY-MM-DD 00:00:00");
 		if(!data.reviewing && data.newsURL){
-			self.view.showNews(data.newsURL + "&l=" + LPlugin.language());
+			var newsShowDay = LPlugin.GetData("newsShowDay", null);
+			var forceNewsShow = false;
+			if(data.forceNewsTime){
+				var forceNewsTime = LPlugin.GetData("forceNewsTime", today);
+				forceNewsShow = forceNewsTime < data.forceNewsTime;
+				if(forceNewsShow){
+					LPlugin.SetData("forceNewsTime", data.forceNewsTime);
+				}
+			}
+			if(newsShowDay < today || forceNewsShow){
+				self.view.showNews(data.newsURL + "&l=" + LPlugin.language());
+				LPlugin.SetData("newsShowDay", today);
+			}
 		}
 		if(LPlugin.dataVer() >= LPlugin.dataVer(data.ver)){
 			LMvc.keepLoading(false);

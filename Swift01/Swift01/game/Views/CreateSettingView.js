@@ -15,7 +15,7 @@ CreateSettingView.prototype.layerInit=function(){
 	var self = this;
 	self.baseLayer = new LSprite();
 	self.addChild(self.baseLayer);
-	var panel = getBitmap(new LPanel(new LBitmapData(LMvc.datalist["win05"]),LGlobal.width, LGlobal.height));
+	var panel = getPanel("win05",LGlobal.width, LGlobal.height);
 	self.baseLayer.addChild(panel);
 	
 	self.titleLayer = new LSprite();

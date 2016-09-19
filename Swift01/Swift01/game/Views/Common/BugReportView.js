@@ -14,6 +14,7 @@ BugReportView.prototype.set = function(){
 	inputLayer.graphics.drawRect(1,"#000000",[0, 0, 380, 100]);
 	self.message = LTextField.getLabel();
 	self.message.y = 20;
+	self.message.color = "#FFFFFF";
 	self.message.setType(LTextFieldType.INPUT,inputLayer);
 	self.message.setMultiline(true);
 	self.addChild(self.message);
@@ -26,6 +27,7 @@ BugReportView.prototype.set = function(){
 	inputLayer.graphics.drawRect(1,"#000000",[0, 0, 380, 30]);
 	self.mail = LTextField.getLabel();
 	self.mail.y = 155;
+	self.mail.color = "#FFFFFF";
 	self.mail.setType(LTextFieldType.INPUT,inputLayer);
 	self.addChild(self.mail);
 	

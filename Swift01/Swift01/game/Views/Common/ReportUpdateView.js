@@ -21,6 +21,7 @@ ReportUpdateView.prototype.set = function(){
 	inputLayer.graphics.drawRect(1,"#000000",[0, 0, 380, 30]);
 	self.idText = LTextField.getLabel();
 	self.idText.y = 100;
+	self.idText.color = "#FFFFFF";
 	self.idText.setType(LTextFieldType.INPUT,inputLayer);
 	self.addChild(self.idText);
 };

@@ -186,7 +186,6 @@ class Lufylegend : XXXPurchaseManagerDelegate{
             return ""
         })
         context.setb1("productInformation", {(productIds:AnyObject!)->AnyObject in
-            print("swift productInformation run");
             self.fetchProductInformationForIds(productIds as! [String])
             return ""
         })
@@ -305,7 +304,7 @@ class Lufylegend : XXXPurchaseManagerDelegate{
                                                                 
                                                             }
                                                             str += "]"
-                                                            
+                                                            print(str)
                                                             let _ll_dispatchEvent = "LPurchase._ll_dispatchEvent("+str+", LPurchase.PRODUCT_INFORMATION_COMPLETE);"
                                                             self!.context.evaluateScript(_ll_dispatchEvent)
             })
