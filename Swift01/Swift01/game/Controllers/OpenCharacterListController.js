@@ -18,7 +18,6 @@ OpenCharacterListController.prototype.loadCharacterList = function(type, charact
 OpenCharacterListController.prototype.showCharacterList=function(){
 	var self = this;
 	var characterList = CharacterListController.instance(self.characterListType,self,self.characterList, self.params);
-	//var characterList = new CharacterListController(self.characterListType,self,self.characterList, self.params);
 	self.view.addCharacterListView(characterList.view);
 	self.dispatchEvent(CharacterListEvent.SHOW);
 };

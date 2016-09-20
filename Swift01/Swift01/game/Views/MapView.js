@@ -248,7 +248,7 @@ MapView.prototype.addCharacterListView=function(characterListView){
 	var self = this;
 	self.baseLayer.visible = false;
 	self.ctrlLayer.visible = false;
-	self.characterLayer.addChild(getTranslucentMask());
+	//self.characterLayer.addChild(getTranslucentMask());
 	self.characterLayer.addChild(characterListView);
 };
 

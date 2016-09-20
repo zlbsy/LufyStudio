@@ -340,7 +340,9 @@ public class Lufylegend {
     @JavascriptInterface
     public String bundleVersion(){
         String version = BuildConfig.VERSION_NAME;
-        String[] versions = version.split(".");
+        Log.e("version=", "" + version);
+        String[] versions = version.split("\\.");
+        Log.e("versions.length=", "" + versions.length);
         return versions.length >= 3 ? version : version + ".0";
     }
     @JavascriptInterface

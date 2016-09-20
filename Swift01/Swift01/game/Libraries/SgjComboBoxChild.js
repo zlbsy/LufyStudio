@@ -4,7 +4,7 @@ function SgjComboBoxChild(content, comboBox, selected) {
 }
 SgjComboBoxChild.prototype.setStatus = function(content, comboBox) {
 	var self = this;
-	var panel = new LPanel(new LBitmapData(LMvc.datalist["win02"], 10,10,20,20), self.childWidth, 40);
+	var panel = new LPanel(new LBitmapData(LMvc.datalist["win05"], 10,10,20,20), self.childWidth, 40);
 	panel.cacheAsBitmap(true);
 	self.addChild(panel);
 	var text = LTextField.getLabel();
@@ -21,7 +21,7 @@ SgjComboBoxChild.prototype.setStatus = function(content, comboBox) {
 };
 SgjComboBoxChild.prototype.setSelectStatus = function(content, comboBox) {
 	var self = this;
-	var panel = new LPanel(new LBitmapData(LMvc.datalist["win01"], 15,10,20,20), self.childWidth, 40);
+	var panel = new LPanel(new LBitmapData(LMvc.datalist["win07"], 15,10,20,20), self.childWidth, 40);
 	panel.cacheAsBitmap(true);
 	self.addChild(panel);
 	var text = LTextField.getLabel();

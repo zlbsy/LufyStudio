@@ -1,6 +1,15 @@
 LPlugin.KEY_STAMP_LIST = "stampList";
 LPlugin.KEY_EVENT_LIST = "eventList";
 LPlugin.KEY_CHARACTER_LIST = "characterList";
+if(!LPlugin.bundleVersion){
+	LPlugin.bundleVersion = function(){
+		return LMvc.ver;
+	};
+}
+LPlugin.testVersion = (function(){
+    var vers = LPlugin.bundleVersion().split(".");
+    return parseInt(vers[vers.length - 1]) > 0;
+})();
 LPlugin.stamps = function(){
 	if(!LPlugin._stamps){
 		LPlugin._stamps = LPlugin.GetData(LPlugin.KEY_STAMP_LIST);
