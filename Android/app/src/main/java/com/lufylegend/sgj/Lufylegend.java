@@ -1,10 +1,14 @@
 package com.lufylegend.sgj;
 
 import android.content.Context;
+import android.content.Intent;
 import android.media.AudioAttributes;
 import android.media.SoundPool;
 import android.media.MediaPlayer;
+import android.net.Uri;
+import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
+import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
@@ -12,13 +16,13 @@ import android.webkit.JavascriptInterface;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
+import java.net.URI;
 import java.security.MessageDigest;
 import java.security.Provider;
 import java.util.Locale;
 import java.util.HashMap;
 import java.io.*;
 import android.content.res.AssetManager;
-import org.apache.commons.codec.binary.Base64;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 
 import javax.crypto.Cipher;
@@ -31,6 +35,7 @@ import javax.crypto.spec.SecretKeySpec;
 public class Lufylegend {
     public static String gamePath;
     private Context context;
+    public static WebView myWebView;
     private MediaPlayer mediaPlayer;
     private SoundPool soundPool;
     private AudioAttributes audioAttributes;
@@ -38,11 +43,6 @@ public class Lufylegend {
     public Lufylegend(Context context){
         this.context = context;
         soundInit();
-        ///System.out.println("BuildConfig.VERSION_NAME="+BuildConfig.VERSION_NAME);
-        //System.out.println("readFile="+readFile(""));
-        //String s = readFile("hoge.txt");
-        //Log.e("Lufylegend"," s="+s);
-        //Log.e("Lufylegend"," encrypt="+AESUtil.decrypt(s));
     }
     public static void initialize(String path, AppCompatActivity activity){
         Lufylegend.gamePath = path;
@@ -51,6 +51,7 @@ public class Lufylegend {
         activity.setContentView(R.layout.activity_main);
         //レイアウトで指定したWebViewのIDを指定する。
         WebView myWebView = (WebView)activity.findViewById(R.id.webView1);
+        Lufylegend.myWebView = myWebView;
         //jacascriptを許可する
         myWebView.getSettings().setJavaScriptEnabled(true);
 
@@ -72,6 +73,16 @@ public class Lufylegend {
             int readLength = 8192;
             final AssetManager assetManager = context.getAssets();
             InputStream inputStream = assetManager.open(Lufylegend.gamePath + path);
+            BufferedReader br = null;
+            br = new BufferedReader(new InputStreamReader(inputStream));
+            String text = "";
+            String str;
+            while ((str = br.readLine()) != null) {
+                text += str;
+            }
+            String base64Data = android.util.Base64.encodeToString(text.getBytes(),android.util.Base64.DEFAULT);
+            return base64Data;
+            /*
             final ByteArrayOutputStream byteStream = new ByteArrayOutputStream(readLength);  //一時バッファのように使う
             final byte[] bytes = new byte[readLength];
             final BufferedInputStream bis = new BufferedInputStream(inputStream, readLength);
@@ -83,12 +94,7 @@ public class Lufylegend {
                 //return new String(byteStream.toByteArray());    //byte[] に変換
 
                 String base64Data = android.util.Base64.encodeToString(byteStream.toByteArray(),android.util.Base64.DEFAULT);
-                //Log.e("base64=",base64Data);
                 return base64Data;
-                /*byte[] outdata = Base64.encodeBase64(byteStream.toByteArray());
-                String base64Data =  new String(outdata);
-                Log.e("base64=",base64Data);
-                return base64Data;*/
             } finally {
                 try {
                     byteStream.reset();     //すべてのデータを破棄
@@ -96,15 +102,7 @@ public class Lufylegend {
                 } catch (Exception e) {
                     //IOException
                 }
-            }
-            //FileInputStream fi = context.openFileInput(path);
-            //byte[] readBytes = new byte[fi.available()];
-            //fi.read(readBytes);
-            //File inf = new File(path);
-            //FileInputStream fi = new FileInputStream(inf);
-            //byte[] indata = new byte[(int) inf.length()];
-            //fi.read(indata);
-            //fi.close();
+            }*/
         }catch (Exception e)
         {
             e.printStackTrace();
@@ -142,11 +140,17 @@ public class Lufylegend {
     @JavascriptInterface
     public String readFile(String filePath) {
         try {
-            int readLength = 8192;
             final AssetManager assetManager = context.getAssets();
-            Log.e("test", Lufylegend.gamePath + filePath);
             InputStream inputStream = assetManager.open(Lufylegend.gamePath + filePath);
-            final ByteArrayOutputStream byteStream = new ByteArrayOutputStream(readLength);  //一時バッファのように使う
+            BufferedReader br = null;
+            br = new BufferedReader(new InputStreamReader(inputStream));
+            String text = "";
+            String str;
+            while ((str = br.readLine()) != null) {
+                text += str;
+            }
+            return text;
+            /*final ByteArrayOutputStream byteStream = new ByteArrayOutputStream(readLength);  //一時バッファのように使う
             final byte[] bytes = new byte[readLength];
             final BufferedInputStream bis = new BufferedInputStream(inputStream, readLength);
             try {
@@ -155,7 +159,6 @@ public class Lufylegend {
                     byteStream.write(bytes, 0, len);    //ストリームバッファに溜め込む
                 }
                 return new String(byteStream.toByteArray());    //byte[] に変換
-
             } finally {
                 try {
                     byteStream.reset();     //すべてのデータを破棄
@@ -164,6 +167,7 @@ public class Lufylegend {
                     //IOException
                 }
             }
+            */
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -204,7 +208,110 @@ public class Lufylegend {
     }
     @JavascriptInterface
     public void openURL(String url){
-
+        Uri uri = Uri.parse(url);
+        Intent i = new Intent(Intent.ACTION_VIEW,uri);
+        context.startActivity(i);
+    }
+    @JavascriptInterface
+    public String productInformation(String[] productIds){
+        String identification_id = identificationId();
+        String completeEvent = "LPurchase._ll_dispatchEvent(data, LPurchase.PRODUCT_INFORMATION_COMPLETE);";
+        String errorEvent = "LPurchase._ll_dispatchEventError('Json Error', LPurchase.PRODUCT_INFORMATION_COMPLETE);";
+        String params = "{";
+        params += "'identification_id':'"+identification_id+"'";
+        params += ",'language':'"+preferredLanguage()+"'";
+        params += "}";
+        return execPost("purchase_information/", params, completeEvent, errorEvent);
+    }
+    @JavascriptInterface
+    public String purchase(String productId, String name, String num, String paymentTime, String email, String qq){
+        String identification_id = identificationId();
+        String completeEvent = "";
+        completeEvent += "LPurchase._ll_dispatchEvent(data, LPurchase.PURCHASE_COMPLETE);";
+        String errorEvent = "LPurchase._ll_dispatchEventError('Json Error', LPurchase.PURCHASE_COMPLETE);";
+        String params = "{";
+        params += "'identification_id':'"+identification_id+"'";
+        params += ",'product_id':'"+productId+"'";
+        params += ",'name':'"+name+"'";
+        params += ",'num':'"+num+"'";
+        params += ",'payment_time':'"+paymentTime+"'";
+        params += ",'email':'"+email+"'";
+        params += ",'qq':'"+qq+"'";
+        params += "}";
+        return execPost("purchase_start/index.php", params, completeEvent, errorEvent);
+    }
+    @JavascriptInterface
+    public String purchaseCheck(String productId){
+        String identification_id = identificationId();
+        String completeEvent = "";
+        completeEvent += "LPurchase._ll_dispatchEvent(data, LPurchase.PURCHASE_CHECK_COMPLETE);";
+        String errorEvent = "LPurchase._ll_dispatchEventError('Json Error', LPurchase.PURCHASE_CHECK_COMPLETE);";
+        String params = "{";
+        params += "'identification_id':'"+identification_id+"'";
+        params += ",'product_id':'"+productId+"'";
+        params += "}";
+        return execPost("purchase_start/check.php", params, completeEvent, errorEvent);
+    }
+    @JavascriptInterface
+    public String purchaseLog(){
+        String identification_id = identificationId();
+        String completeEvent = "";
+        completeEvent += "LPurchase._ll_dispatchEvent(data, LPurchase.PURCHASE_COMPLETE);";
+        String params = "{";
+        params += "'identification_id':'"+identification_id+"'";
+        params += "}";
+        String errorEvent = "LPurchase._ll_dispatchEventError('Json Error', LPurchase.PURCHASE_COMPLETE);";
+        return execPost("purchase_restore/", params, completeEvent, errorEvent);
+    }
+    @JavascriptInterface
+    public String purchaseRestore(){
+        String identification_id = identificationId();
+        String completeEvent = "for(var i=0;i<data.length;i++){";
+        completeEvent += "LPurchase._ll_dispatchEvent({'status':1,'productId':data[i].product_id}, LPurchase.PURCHASE_COMPLETE);";
+        completeEvent += "}";
+        completeEvent += "LPurchase._ll_dispatchEvent(data, LPurchase.PURCHASE_RESTORE_COMPLETE);";
+        String errorEvent = "LPurchase._ll_dispatchEventError('Json Error', LPurchase.PURCHASE_COMPLETE);";
+        String params = "{";
+        params += "'identification_id':'"+identification_id+"'";
+        params += "}";
+        return execPost("purchase_restore/", params, completeEvent, errorEvent);
+    }
+    private String execPost(String strUrl, String params, String completeEvent, String errorEvent) {
+        strUrl = "http://sgj.lufylegend.com/android_purchase/r7ahGNe_A8QLDKKd3Ys7/" + strUrl;
+        String script = "";
+        script += "LAjax.post('"+strUrl+"',"+params+",";
+        script += "function(data){data=JSON.parse(data);"+completeEvent+"},";
+        script += "function(){"+errorEvent+"}";
+        script += ")";
+        return script;
+    }
+    @JavascriptInterface
+    public String identificationId(){
+        String id = androidId();
+        if(id.isEmpty()){
+            id = deviceId();
+        }
+        return id;
+    }
+    private String androidId(){
+        String android_id = "";
+        try{
+            android_id = Settings.Secure.getString(
+                    context.getContentResolver(),Settings.Secure.ANDROID_ID);
+        }catch (Exception e){
+            android_id = "";
+        }
+        return android_id;
+    }
+    private String deviceId(){
+        String device_id = "";
+        try{
+            TelephonyManager telephonyManager = (TelephonyManager)context.getSystemService(Context.TELEPHONY_SERVICE);
+            device_id = telephonyManager.getDeviceId();
+        }catch (Exception e){
+            device_id = "";
+        }
+        return device_id;
     }
     @JavascriptInterface
     public void print(String message){

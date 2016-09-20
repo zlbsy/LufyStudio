@@ -102,7 +102,7 @@ function ConfirmWindow(obj){
 	panel.x = (LGlobal.width - obj.width) * 0.5;
 	panel.y = (LGlobal.height - obj.height) * 0.5;
 	windowLayer.addChild(panel);
-	var titlePanel = getPanel("win02",160,60);
+	var titlePanel = getPanel("win02",obj.titleWidth ? obj.titleWidth : 160,60);
 	//var titleData = new LBitmapData(LMvc.datalist["win02"]);
 	//var titlePanel = getBitmap(new LPanel(titleData,160,60));
 	titlePanel.x = (LGlobal.width - titlePanel.getWidth()) * 0.5;

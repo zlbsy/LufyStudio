@@ -377,8 +377,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: lubin zhang (487MZ6R5X8)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: lubin zhang (487MZ6R5X8)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: lubin zhang (66X4HC73B2)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: lubin zhang (66X4HC73B2)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
@@ -401,7 +401,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "508e2cc9-5b74-4bb6-a1c2-b7d80e1acee9";
+				PROVISIONING_PROFILE = "dcbc5a82-fab8-4c96-959a-24efe116b6f1";
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -424,8 +424,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: lubin zhang (487MZ6R5X8)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: lubin zhang (487MZ6R5X8)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: lubin zhang (66X4HC73B2)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: lubin zhang (66X4HC73B2)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
@@ -441,7 +441,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PROVISIONING_PROFILE = "508e2cc9-5b74-4bb6-a1c2-b7d80e1acee9";
+				PROVISIONING_PROFILE = "dcbc5a82-fab8-4c96-959a-24efe116b6f1";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -452,16 +452,16 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: lubin zhang (487MZ6R5X8)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: lubin zhang (487MZ6R5X8)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: lubin zhang (66X4HC73B2)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: lubin zhang (66X4HC73B2)";
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				INFOPLIST_FILE = Swift01/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.lufylegend.sgj;
 				PRODUCT_NAME = "三国記";
-				PROVISIONING_PROFILE = "508e2cc9-5b74-4bb6-a1c2-b7d80e1acee9";
-				"PROVISIONING_PROFILE[sdk=*]" = "508e2cc9-5b74-4bb6-a1c2-b7d80e1acee9";
+				PROVISIONING_PROFILE = "dcbc5a82-fab8-4c96-959a-24efe116b6f1";
+				"PROVISIONING_PROFILE[sdk=*]" = "dcbc5a82-fab8-4c96-959a-24efe116b6f1";
 				SWIFT_OBJC_BRIDGING_HEADER = Swift01/jsc.h;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -473,16 +473,16 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: lubin zhang (487MZ6R5X8)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: lubin zhang (487MZ6R5X8)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: lubin zhang (66X4HC73B2)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: lubin zhang (66X4HC73B2)";
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				INFOPLIST_FILE = Swift01/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.lufylegend.sgj;
 				PRODUCT_NAME = "三国記";
-				PROVISIONING_PROFILE = "508e2cc9-5b74-4bb6-a1c2-b7d80e1acee9";
-				"PROVISIONING_PROFILE[sdk=*]" = "508e2cc9-5b74-4bb6-a1c2-b7d80e1acee9";
+				PROVISIONING_PROFILE = "dcbc5a82-fab8-4c96-959a-24efe116b6f1";
+				"PROVISIONING_PROFILE[sdk=*]" = "dcbc5a82-fab8-4c96-959a-24efe116b6f1";
 				SWIFT_OBJC_BRIDGING_HEADER = Swift01/jsc.h;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
