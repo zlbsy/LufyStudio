@@ -149,7 +149,7 @@ BattleCharacterAI.prototype.physicalAttack = function(target) {
 				hertValues = doubleAtt ? [1,1] : [1];
 			}
 			if(skill && skill.isSubType(SkillSubType.AMBUSH_INVERSE)){
-				hertValues[0] += calculateAmbush(skill, self.chara.locationX(), self.chara.locationY(), target.belong, 1);
+				hertValues[0] += calculateAmbush(skill, self.chara.locationX(), self.chara.locationY(), target.belong, 0);
 			}
 			if(skill && skill.isSubType(SkillSubType.NO_COUNTER)){
 				target.AI.herts = [];

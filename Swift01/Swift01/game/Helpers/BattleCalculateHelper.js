@@ -354,12 +354,6 @@ function calculateHertValue(attChara,hertChara,correctionFactor, isView){
 	if(!ignore){
 		r = r * restrain * 0.01;
 	}
-	/*
-	//兵种相克
-	var restrain = attCharaModel.currentSoldiers().restrain(hertCharaModel.currentSoldiers().id()).value * 0.01;
-	if(!ignore && restrain < 1){
-		r = r * restrain;
-	}*/
 	//修正系数
 	r *= correctionFactor;
 	if(!isView){
@@ -487,6 +481,11 @@ function calculateAmbush(skill, x, y, belong, count){
 		}
 		if(++num > count){
 			result += ambush;
+		}
+	}
+	if(num - count == 1 && skill.startAmbushProbability() < 1){
+		if(Math.fakeRandom() > skill.startAmbushProbability()){
+			return 0;
 		}
 	}
 	return result;
