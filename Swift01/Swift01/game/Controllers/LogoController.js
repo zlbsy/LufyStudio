@@ -36,7 +36,6 @@ LogoController.prototype.libraryLoad=function(){
 	if(LPlugin.native){
 		LMvc.ver = LPlugin.bundleVersion();
 	}
-	LPlugin.native = true;
 	self.load.library(list,self.languageLoad);
 };
 LogoController.prototype.languageLoad=function(){

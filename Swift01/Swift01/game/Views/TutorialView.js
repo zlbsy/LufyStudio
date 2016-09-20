@@ -63,13 +63,13 @@ TutorialView.prototype.setMask=function(rectangle){
 	var rectangleLayer = new LSprite();
 	rectangleLayer.graphics.drawRect(0, "#000000", [rectangle.x, rectangle.y, rectangle.width, rectangle.height], true, "#000000");
 	baseLayer.addChild(rectangleLayer);
-	var focus = getPanel("focus", rectangle.width + 28, rectangle.height + 28);
-	focus.x = rectangle.x - 14;
-	focus.y = rectangle.y - 14;
-	baseLayer.addChild(focus);
 	var pointLayer = getPanel("translucent", LGlobal.width, LGlobal.height);
 	pointLayer.blendMode = LBlendMode.SOURCE_OUT;
 	baseLayer.addChild(pointLayer);
 	baseLayer.cacheAsBitmap(true);
 	self.maskLayer.addChild(baseLayer);
+	var focus = getPanel("focus", rectangle.width + 28, rectangle.height + 28);
+	focus.x = rectangle.x - 14;
+	focus.y = rectangle.y - 14;
+	self.maskLayer.addChild(focus);
 };

@@ -197,15 +197,15 @@ CharacterModel.prototype.setDatas=function(charaData){
 	if(charaData.soldiers){
 		self.data.soldiers = charaData.soldiers;
 	}
-	self.troops(charaData.troops);
-	self.wounded(charaData.wounded);
+	self.feat(charaData.feat);
 	self.exp(charaData.exp);
 	self.MP(charaData.mp);
 	self.HP(charaData.hp);
+	self.troops(charaData.troops);
+	self.wounded(charaData.wounded);
 	self.isDefCharacter(charaData.isDefCharacter);
 	self.loyalty(charaData.loyalty);
 	self.data.isPrized = charaData.isPrized;
-	self.feat(charaData.feat);
 	self.data.stopIn = charaData.stopIn;
 	var keys = ["command","force","intelligence","agility","luck"];
 	for(var i=0,l=keys.length;i<l;i++){

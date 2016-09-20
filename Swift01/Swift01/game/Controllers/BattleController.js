@@ -165,7 +165,7 @@ BattleController.prototype.charactersInit = function(){
 			enemyCharas = enemyCharas.splice(0, i + 1);
 			break;
 		}
-		if(enemyCharas.length < BattleMapConfig.DefenseQuantity){
+		if(!LMvc.TutorialController && enemyCharas.length < BattleMapConfig.DefenseQuantity){
 			var neighbor = self.battleData.toCity.neighbor();
 			neighbor = neighbor.sort(function(){
 				return Math.fakeRandom()>0.5?1:-1;
@@ -181,7 +181,7 @@ BattleController.prototype.charactersInit = function(){
 		}
 		
 		var employCharacters;
-		while(enemyCharas.length < BattleMapConfig.DefenseQuantity){
+		while(!LMvc.TutorialController && enemyCharas.length < BattleMapConfig.DefenseQuantity){
 			if(!employCharacters){
 				employCharacters = self.battleData.toCity.getEmployCharacters();
 			}
