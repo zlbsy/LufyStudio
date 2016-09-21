@@ -212,6 +212,15 @@ public class Lufylegend {
         Intent i = new Intent(Intent.ACTION_VIEW,uri);
         context.startActivity(i);
     }
+    private void javascriptRun(String script){
+        final String strScript = script;
+        Lufylegend.myWebView.post(new Runnable() {
+            @Override
+            public void run() {
+                Lufylegend.myWebView.loadUrl("javascript:" + strScript);
+            }
+        });
+    }
     @JavascriptInterface
     public String productInformation(String[] productIds){
         String identification_id = identificationId();
@@ -340,9 +349,7 @@ public class Lufylegend {
     @JavascriptInterface
     public String bundleVersion(){
         String version = BuildConfig.VERSION_NAME;
-        Log.e("version=", "" + version);
         String[] versions = version.split("\\.");
-        Log.e("versions.length=", "" + versions.length);
         return versions.length >= 3 ? version : version + ".0";
     }
     @JavascriptInterface
