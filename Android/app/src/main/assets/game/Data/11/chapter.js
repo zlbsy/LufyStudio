@@ -1,1 +1,40 @@
-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
+LMvc.chapterData = {
+title : "群英荟萃"
+,year : 207
+,month : 1
+,noLife : 1
+,exp : 0, level : 1, eventList : []
+,seigniors : [
+{id:1,name:"曹操",faceImg:1,color:"0,0,255",general_count:34, citys:[26,33],city_count:2},
+{id:8,name:"孙坚",faceImg:8,color:"255,0,0",general_count:36, citys:[28,29],city_count:2},
+{id:18,name:"吕布",faceImg:18,color:"1,1,1",general_count:10, citys:[39],city_count:1},
+{id:21,name:"刘备",faceImg:21,color:"0,128,0",general_count:15, citys:[35],city_count:1},
+{id:39,name:"袁绍",faceImg:39,color:"255,255,0",general_count:28, citys:[44,43],city_count:2},
+{id:66,name:"张角",faceImg:66,color:"255,255,0",general_count:18, citys:[23],city_count:1},
+{id:75,name:"公孙瓒",faceImg:75,color:"0,255,0",general_count:13, citys:[46],city_count:1},
+{id:144,name:"公孙度",faceImg:144,color:"173,255,47",general_count:8, citys:[47],city_count:1},
+{id:160,name:"马腾",faceImg:160,color:"184,134,11",general_count:14, citys:[1],city_count:1},
+{id:197,name:"张绣",faceImg:197,color:"148,0,211",general_count:3, citys:[14],city_count:1},
+{id:237,name:"张扬",faceImg:237,color:"70,130,180",general_count:9, citys:[42],city_count:1},
+{id:265,name:"董卓",faceImg:265,color:"1,1,1",general_count:12, citys:[12],city_count:1},
+{id:333,name:"严白虎",faceImg:333,color:"102,205,170",general_count:2, citys:[31],city_count:1},
+{id:336,name:"孟获",faceImg:336,color:"1,1,1",general_count:11, citys:[9],city_count:1},
+{id:367,name:"刘焉",faceImg:367,color:"0,128,128",general_count:20, citys:[5,6],city_count:2},
+{id:375,name:"袁术",faceImg:375,color:"128,0,0",general_count:14, citys:[34],city_count:1},
+{id:408,name:"刘岱",faceImg:408,color:"143,188,143",general_count:3, citys:[40],city_count:1},
+{id:431,name:"刘繇",faceImg:431,color:"127,255,212",general_count:7, citys:[30],city_count:1},
+{id:446,name:"刘表",faceImg:446,color:"255,192,203",general_count:22, citys:[15,16],city_count:2},
+{id:451,name:"陶谦",faceImg:451,color:"135,206,235",general_count:7, citys:[37],city_count:1},
+{id:453,name:"张鲁",faceImg:453,color:"165,42,42",general_count:7, citys:[11],city_count:1},
+{id:481,name:"王朗",faceImg:481,color:"128,128,0",general_count:3, citys:[32],city_count:1},
+{id:484,name:"刘虞",faceImg:484,color:"255,0,255",general_count:5, citys:[45],city_count:1},
+{id:495,name:"孔融",faceImg:495,color:"255,165,0",general_count:3, citys:[38],city_count:1},
+{id:501,name:"金旋",faceImg:501,color:"1,1,1",general_count:2, citys:[17],city_count:1},
+{id:562,name:"孔伷",faceImg:562,color:"255,160,122",general_count:2, citys:[24],city_count:1},
+{id:594,name:"赵范",faceImg:594,color:"255,165,0",general_count:3, citys:[20],city_count:1},
+{id:602,name:"韩馥",faceImg:602,color:"160,82,45",general_count:8, citys:[41],city_count:1},
+{id:604,name:"何进",faceImg:604,color:"1,1,1",general_count:8, citys:[22],city_count:1},
+{id:605,name:"刘度",faceImg:605,color:"255,255,0",general_count:3, citys:[19],city_count:1},
+{id:615,name:"韩玄",faceImg:615,color:"128,0,0",general_count:3, citys:[18],city_count:1},
+]
+};

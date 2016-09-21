@@ -1,1 +1,90 @@
-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
+function CharacterListController(characterListType, fromController,  characterList, params){
+	var self = this;
+	self.set(characterListType, fromController,  characterList, params);
+	base(self,MyController,[]);
+}
+CharacterListController.instance = function(characterListType, fromController,  characterList, params){
+	if(!CharacterListController._instance){
+		CharacterListController._instance = new CharacterListController(characterListType, fromController,  characterList, params);
+	}else{
+		CharacterListController._instance.set(characterListType, fromController,  characterList, params);
+		CharacterListController._instance.init();
+	}
+	return CharacterListController._instance;
+};
+CharacterListController.prototype.set=function(characterListType, fromController,  characterList, params){
+	var self = this;
+	self.characterListType = characterListType;
+	self.fromController = fromController;
+	self.characterList = characterList;
+	self.params = params;
+};
+CharacterListController.prototype.construct=function(){
+	var self = this;
+	var list = self.model.getImages();
+	self.load.image(list,self.configLoad);
+};
+CharacterListController.prototype.configLoad=function(){
+	var self = this;
+	self.load.config(["CharacterListType","Skills","Equipment","Arms","Belong","Position","Soldiers","Strategy","Terrain"],self.libraryLoad);
+};
+CharacterListController.prototype.libraryLoad=function(){
+	var self = this;
+	var libraris = ["Face","Toast"];
+	self.load.library(libraris,self.helperLoad);
+};
+CharacterListController.prototype.helperLoad=function(){
+	var self = this;
+	self.load.helper(["JobHelper"],self.modelLoad);
+};
+CharacterListController.prototype.modelLoad=function(){
+	var self = this;
+	self.load.model(["Master/SkillMaster","Items/Item","Master/SoldierMaster","Master/Soldier","Master/StrategyMaster","Master/Strategy","Master/TerrainMaster"],self.viewLoad);
+};
+CharacterListController.prototype.viewLoad=function(){
+	var self = this;
+	TerrainMasterModel.setMaster(TerrainConfig);
+	StrategyMasterModel.setMaster(StrategyDatas);
+	SoldierMasterModel.setMaster(SoldierDatas);
+	SkillMasterModel.setMaster(SkillsData);
+	self.load.view(["CharacterList/CharacterListChild","CharacterList/CharacterDetailed","CharacterList/CharacterExpedition",
+	"CharacterList/CharacterDetailedTabStatus","CharacterList/CharacterDetailedTabProperties","CharacterList/CharacterDetailedFace","CharacterList/CharacterDetailedTabEquipment",
+	"Equipments/Equipments","Equipments/EquipmentsChild","Equipments/EquipmentDetailed","Common/StatusBar",
+	"Soldiers/Soldiers","Soldiers/SoldiersChild","Soldiers/SoldierDetailed",
+	"Items/Items","Items/ItemsChild","Items/ItemDetailed",
+	"Strategy/Strategy","Strategy/StrategyChild","Strategy/StrategyDetailed"],self.init);
+};
+CharacterListController.prototype.init=function(status){
+	var self = this;
+	LMvc.keepLoading(false);
+	var cityData = AreaModel.getArea(LMvc.cityId);
+	self.setValue("cityData",cityData);
+	self.dispatchEvent(LEvent.COMPLETE);
+	self.dispatchEvent(LController.NOTIFY);
+};
+CharacterListController.prototype.closeCharacterDetailed=function(){
+	this.view.showCharacterList();
+};
+CharacterListController.prototype.closeCharacterList=function(obj){
+	this.fromController.closeCharacterList(obj);
+};
+CharacterListController.prototype.toSelectMap=function(characterName){
+	this.fromController.toSelectMap(characterName);
+};
+
+
+
+
+CharacterListController.prototype.equipmentsShow=function(character_id){
+	var self = this;
+	self.character_id = character_id;
+	LMvc.changeLoading(TranslucentLoading);
+	LMvc.keepLoading(true);
+	//self.view.visible = false;
+	self.loadMvc("Equipments",self.equipmentsLoadComplete);
+};
+CharacterListController.prototype.equipmentsLoadComplete=function(){
+	var self = this;
+	var equipments = new EquipmentsController(self);
+	self.view.parent.addChild(equipments.view);
+};

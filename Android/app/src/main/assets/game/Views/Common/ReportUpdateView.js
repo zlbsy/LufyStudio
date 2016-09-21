@@ -1,1 +1,112 @@
-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
+function ReportUpdateView(controller){
+	var self = this;
+	LExtends(self,LView,[controller]);
+	LGlobal.preventDefault = false;
+	self.name = "ReportUpdateView";
+	self.set();
+}
+ReportUpdateView.prototype.set = function(){
+	var self = this;
+	var textLabel = getStrokeLabel(Language.get("update_report_id"),20,"#FFFFFF","#000000",3);
+	textLabel.x = 5;
+	self.addChild(textLabel);
+	
+	var subLabel = getStrokeLabel(Language.get("update_report_id_description"),16,"#FFFFFF","#000000",3);
+	subLabel.width = 380;
+	subLabel.setWordWrap(true,20);
+	subLabel.x = 5;
+	subLabel.y = 35;
+	self.addChild(subLabel);
+	var inputLayer = new LSprite();
+	inputLayer.graphics.drawRect(1,"#000000",[0, 0, 380, 30]);
+	self.idText = LTextField.getLabel();
+	self.idText.y = 100;
+	self.idText.color = "#FFFFFF";
+	self.idText.setType(LTextFieldType.INPUT,inputLayer);
+	self.addChild(self.idText);
+};
+ReportUpdateView.prototype.selectReport = function(event){
+	var button = event.currentTarget;
+	var self = button.getParentByConstructor(ReportUpdateView);
+	RecordController.instance().show(RecordController.REPORT_MODE);
+};
+ReportUpdateView.prototype.setReport = function(record){
+	var self = this;
+	self.record = record;
+	var labels = record.labels;
+	self.labelsLayer.removeAllChild();
+	var name = getStrokeLabel(labels.name,18,"#FFFFFF","#000000",4);
+	name.x = 40;
+	name.y = 6;
+	self.labelsLayer.addChild(name);
+	var title = getStrokeLabel(labels.date,18,"#FFFFFF","#000000",4);
+	title.x = 150;
+	title.y = 6;
+	self.labelsLayer.addChild(title);
+	
+	var cityCount = getStrokeLabel(labels.cityCount,18,"#FFFFFF","#000000",3);
+	cityCount.x = 40;
+	cityCount.y = 31;
+	self.labelsLayer.addChild(cityCount);
+	
+	var generalsCount = getStrokeLabel(labels.generalsCount,18,"#FFFFFF","#000000",3);
+	generalsCount.x = 150;
+	generalsCount.y = 31;
+	self.labelsLayer.addChild(generalsCount);
+	
+	if(labels.battleTitle){
+		var battleTitle = getStrokeLabel(labels.battleTitle,18,"#FFFFFF","#000000",3);
+		battleTitle.x = 40;
+		battleTitle.y = 55;
+		self.labelsLayer.addChild(battleTitle);
+	}
+	
+	var saveTime = getStrokeLabel(labels.saveTime,16,"#FFFFFF","#000000",3);
+	saveTime.x = 222;
+	saveTime.y = 58;
+	self.labelsLayer.addChild(saveTime);
+};
+ReportUpdateView.prototype.toUpdate = function(event){
+	var button = event.currentTarget;
+	var recordWindow = button.parent;
+	var self = recordWindow.getChildByName("ReportUpdateView");
+	if(!self.idText.text){
+		var obj = {width:300, height:200, message:Language.get("update_report_id"), title:Language.get("confirm")};
+		var dialog = ConfirmWindow(obj);
+		LMvc.logoStage.addChild(dialog);
+		return;
+	}
+	LAjax.post(LMvc.downloadURL, {reportId:self.idText.text}, function(data){
+		var errorFun = function(){
+			var obj = {width:300, height:200, message:Language.get("error_update_report"), title:Language.get("confirm")};
+			var dialog = ConfirmWindow(obj);
+			LMvc.logoStage.addChild(dialog);
+		};
+		try{
+			data = JSON.parse(data);
+		}catch(e){
+			errorFun();
+			return;
+		}
+		if(data.success && data.record){
+			LGlobal.preventDefault = true;
+			self.parent.remove();
+			RecordController.instance().hide();
+			LMvc.isRead = true;
+			Math.fakeSeed = data.record.fakeSeed;
+			LMvc.mapX = data.record.mapX;
+			LMvc.mapY = data.record.mapY;
+			SeigniorExecute.setSaveData(data.record.seigniorExecute);
+			LMvc.areaData = data.record;
+			LMvc.selectSeignorId = LMvc.areaData.selectSeignorId;
+			LMvc.chapterData = LMvc.areaData.chapterData;
+			LMvc.logoStage.controller.read();
+		}else{
+			errorFun();
+		}
+	},function(){
+		var obj = {width:300, height:200, message:Language.get("dialog_fail_net"), title:Language.get("dialog_fail_net")};
+		var dialog = ConfirmWindow(obj);
+		LMvc.logoStage.addChild(dialog);
+	});
+};

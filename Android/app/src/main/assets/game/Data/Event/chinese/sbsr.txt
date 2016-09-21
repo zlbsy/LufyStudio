@@ -1,1 +1,3 @@
-WEFoT1JDUmF0TTFtZndERaTL1ap7CJgBtFcZs4vmBZx+qn5+zbFGOJNNX96NRplBLAseqYscD+vEeHItDngd1e/XaTupYzyFM1vucZ6OJURUFxfWGCjz8C4Sv0DWHk9n
+SGJEvent.mapShow(1);
+SGJEvent.messageShow(士别三日。,3);
+Mark.EventEnd;

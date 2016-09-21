@@ -1,1 +1,3 @@
-WEFoT1JDUmF0TTFtZndERaTL1ap7CJgBtFcZs4vmBZx+qn5+zbFGOJNNX96NRplB1XjLum0XxY1ODVQN2kLRXcYaIFE7Z4QR4cY7v32cwJnZfMGIUFYmiRtVLl875BNn
+SGJEvent.mapShow(1);
+SGJEvent.messageShow(蜀灭亡。,3);
+Mark.EventEnd;

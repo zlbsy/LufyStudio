@@ -1,1 +1,16 @@
-WEFoT1JDUmF0TTFtZndERZafMfRWposlTinIXozseQqxaNO4Ij9Q9udIoOQAqT6hjgMm4MWsDOWGYRnF2I4uW3r4Ijp/uHjLvOZec22OeQcDXbjIVOs0j3H3k3ZcFiEdpzBo5jSS0LMB3wZcPmkRc7vE3Sl17egWEpnjfs+sMH6zby59Vvgx7aVnFzevv6k4QmAOwLCc+9IQv17Zc5ZjC7UtGqf+TinjYPY8aNY4XR8igJ5WuRzLvwy8F/0EqpyIpyBjGj6+BVFxZoFVMvZ7EpoPPMuaYiRzcn6gUZsahE3zrYKZOkW8YJpvuNW5/CXu+YcmECiFUQLF73b7TKaIHxzrLPUBgHQeZXgHlip9QOQq7DPA2Z+/5CJzcC22rkqiUSA8fn2QrjF3M2D0wcGpgh9DN4rt3MXrABUt86BGdeVR6u2sVqiFg5B1p1b3udOSxgiogkUr2bXHbpZbYUFeOd0kRvRde7xD5hlLbXhyoEeEzuB+dyi0MmwPhS2nGS1guEOGnjiskgoe14UVo8AJEnT+JsFah1l8FXkvNG2jxvoomSmXNHJUXYE++3W2QxmDBOuXbk5ePoTMhxE09Y6//V0Qt1sxk4Gm1PVoyePR4GLqrNiTxprei5E/eXFwX+lZBZ034qdzW0ISaWoVxlml2NFdVZpoSvVpxKG5PlOCuvajhT4IcLMVSBjP/j4dWhYGUemkbuaDNozDIT7Npwf5A4k5pU3fSM58+/xvb8fTnVx6SZT809nRLESu6ocwHZTRWrMze4WnOSWxLdW0k5/wl8Lb62yy3bc/7CcobuqrzXsUzNfzMoRAGAxhwlJV4rp/0EMNYk5lesDfAZFUi1Z6x7CsiqfDFTUmvQenhqfFcK2pkYO2Z0e80IaCJqbLbS7m+RDIg2ZTX/+WBPFRKB4xb9SihglRQDfqyNSoYE6qjWh1QycD0PoT0rw6uEWRrDp7y7IWBz9p4yrUwMvLe6xGHg==
+var ItemType = {
+	HEAL:"heal"/*治疗伤兵*/
+	,ENLIST:"enlist"/*招募新兵*/
+	,SUPPLEMENT:"supplement"/*从后备兵中补充*/
+	,EQUIPMENT:"equipment"/*装备*/
+};
+var ItemsConfig = [
+	{id:1,name:"金创药",type:ItemType.HEAL},
+	{id:2,name:"征兵符",type:ItemType.ENLIST},
+	{id:3,name:"兵符",type:ItemType.SUPPLEMENT},
+	{id:4,name:"短刀",type:ItemType.EQUIPMENT,position:PositionConfig.Hand},
+	{id:5,name:"皮铠",type:ItemType.EQUIPMENT,position:PositionConfig.Body},
+	{id:6,name:"皮帽",type:ItemType.EQUIPMENT,position:PositionConfig.Head},
+	{id:7,name:"布鞋",type:ItemType.EQUIPMENT,position:PositionConfig.Foot},
+	{id:8,name:"皮盾",type:ItemType.EQUIPMENT,position:PositionConfig.Accessories}
+];

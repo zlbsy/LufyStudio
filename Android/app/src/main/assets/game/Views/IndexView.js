@@ -1,1 +1,8 @@
-WEFoT1JDUmF0TTFtZndERT3eAgc+dY6r4WRdvd4QuHKgVWswxrw/KPjrOPt8N50FyEhSZUBmz5nn13QRO7f1fx7DlJsoSzReU1h8lGDTnzfp3zqgElQEwFh3AsTzwf6+sBBmwCajmdr9ra6mRSjjliWVaT81vHwFGLg36PvUaWZDTRYrX6Ty94w84dwUT9+6lK/XZmCMj8GssgZfl7NxDvnyPa6HgcRkn+5+r2EsFIvPKDEWQ/dx3FytOSa4rza/IVsMKdBumjNpTc6QIz9R4w==
+function IndexView(){
+	base(this,LView,[]);
+}
+IndexView.prototype.construct=function(){
+	var self = this;
+	LMvc.layer.addChild(self);
+    var script = new LScript(LMvc.layer,"");
+};

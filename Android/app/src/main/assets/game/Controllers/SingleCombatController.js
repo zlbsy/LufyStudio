@@ -1,1 +1,44 @@
-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
+function SingleCombatController(fromController, currentCharacterId, targetCharacterId){
+	var self = this;
+	base(self,MyController,[]);
+	self.fromController = fromController;
+	self.currentCharacterId = currentCharacterId;
+	self.targetCharacterId = targetCharacterId;
+}
+SingleCombatController.prototype.construct=function(){
+	var self = this;
+	LMvc.keepLoading(true);
+	var list = self.model.getImages();
+	self.load.image(list,self.configLoad);
+};
+SingleCombatController.prototype.configLoad=function(){
+	var self = this;
+	self.load.config(["Character","SingleCombat"],self.helperLoad);
+};
+SingleCombatController.prototype.helperLoad=function(){
+	var self = this;
+	self.load.helper(["SingleCombatHelper"],self.libraryLoad);
+};
+SingleCombatController.prototype.libraryLoad=function(){
+	var self = this;
+	var libraris = ["Face"];
+	self.load.library(libraris,self.viewLoad);
+};
+SingleCombatController.prototype.viewLoad=function(){
+	var self = this;
+	self.load.view(["SingleCombat/SingleCombatTalk","SingleCombat/SingleCombatCharacter","Common/StatusBar","Common/Character","Battle/BattleCharacter","Common/SpecialEffect"],self.init);
+};
+SingleCombatController.prototype.init = function(){
+	var self = this;
+	LMvc.keepLoading(false);
+	LMvc.SingleCombatController = self;
+	self.fromController.view.visible = false;
+	self.dispatchEvent(LEvent.COMPLETE);
+	self.dispatchEvent(LController.NOTIFY);
+};
+SingleCombatController.prototype.over = function(){
+	var self = this;
+	self.fromController.view.visible = true;
+	LMvc.SingleCombatController = null;
+	self.view.remove();
+};

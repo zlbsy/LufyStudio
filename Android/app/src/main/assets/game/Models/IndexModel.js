@@ -1,1 +1,5 @@
-WEFoT1JDUmF0TTFtZndERRCjZGPx41yeqMMH4WW/h9N0JgjAc99VaRNQaKcHK86Slqdl+JT4/HnKht3VYbkYSELCewvTLFyGhc198RF0eRbLLWP5E1bY2B1t/bCeOUHZkV56mnyO5UZNiVkvFDD5Rw==
+function IndexModel(){
+	base(this,MyModel,[]);
+}
+IndexModel.prototype.construct=function(){
+};

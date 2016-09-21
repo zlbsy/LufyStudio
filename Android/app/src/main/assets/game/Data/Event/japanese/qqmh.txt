@@ -1,1 +1,3 @@
-WEFoT1JDUmF0TTFtZndERaTL1ap7CJgBtFcZs4vmBZx+qn5+zbFGOJNNX96NRplBj48rofsDaQF9QwBsffJhPZT8rqkF/7DPkEfwrTKREKpAmQ2r9ttPtMbBu13iPiVv
+SGJEvent.mapShow(1);
+SGJEvent.messageShow(七擒孟获。,3);
+Mark.EventEnd;

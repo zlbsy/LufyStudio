@@ -1,1 +1,147 @@
-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
+function CharacterDetailedTabPropertiesView(controller, w, h){
+	var self = this;
+	base(self,LView,[controller]);
+	self.tabWidth = w;
+	self.tabHeight = h;
+	self.setProperties();
+}
+CharacterDetailedTabPropertiesView.prototype.updateView=function(){
+	var self = this;
+	self.showProperties();
+};
+CharacterDetailedTabPropertiesView.prototype.showProperties=function(){
+	var self = this;
+	var characterModel = self.controller.getValue("selectedCharacter");
+	var battleStatus = self.controller.getValue("battleStatus");
+	if(!battleStatus){
+ 		characterModel.calculation(true); 
+ 	}
+	self.leftLayer.parent.cacheAsBitmap(false);
+	self.showLeft(characterModel);
+	self.showRight(characterModel);
+	self.leftLayer.parent.cacheAsBitmap(true);
+};
+CharacterDetailedTabPropertiesView.prototype.showLeft=function(characterModel){
+	var self = this;
+	var datas = [
+	characterModel.seigniorLevel(),
+	characterModel.level(),
+	characterModel.currentSoldiers().name(),
+	characterModel.forceFull(),
+	characterModel.commandFull(),
+	characterModel.intelligenceFull(),
+	characterModel.agilityFull(),
+	characterModel.luckFull(),
+	characterModel.currentSoldiers().movePower()
+	];
+	for(var i = 0;i<self.leftLayer.numChildren;i++){
+		var label = self.leftLayer.childList[i];
+		label.text = String.format("{0} : {1}",Language.get(self.leftLabels[i]), datas[i]);
+	}
+};
+CharacterDetailedTabPropertiesView.prototype.showRight=function(characterModel){
+	var self = this;
+	var datasRight = [
+	[String.format("{0}({1})",characterModel.troops() == 0 ? characterModel.maxTroops() : characterModel.troops(),characterModel.wounded()),characterModel.maxTroops(),characterModel.maxTroops()],
+	[characterModel.MP(),characterModel.maxMP(),characterModel.maxMP()],
+	LMvc.BattleController ? [characterModel.exp(),characterModel.maxExp(),characterModel.maxExp()] : [characterModel.feat(),characterModel.maxFeat(),characterModel.maxFeat()],
+	[characterModel.currentSoldiers().proficiency(),characterModel.currentSoldiers().proficiency(),1000],
+	self.getStatusAsList(characterModel, "attack", "AttackAid"),
+	self.getStatusAsList(characterModel, "spirit", "ApiritAid"),
+	self.getStatusAsList(characterModel, "defense", "DefenseAid"),
+	self.getStatusAsList(characterModel, "breakout", "BreakoutAid"),
+	self.getStatusAsList(characterModel, "morale", "MoraleAid"),
+	[characterModel.currentSoldiers().movePower(),characterModel.currentSoldiers().movePower(),10]
+	];
+	for(var i=0;i<self.rightLayer.numChildren;i++){
+		var bar = self.rightLayer.childList[i];
+		var obj = datasRight[i];
+		bar.setData({maxValue:obj[2],currentValue:obj[0],normalValue:obj[1]});
+		bar.setStatus();
+	}
+};
+CharacterDetailedTabPropertiesView.prototype.getStatusAsList=function(characterModel, key, aidKey, maxValue){
+	var self = this;
+	var charaStatus = self.controller.getValue("charaStatus");
+	var value = characterModel[key]();
+	var valueCurrent = value;
+	var aid = charaStatus ? charaStatus.getStatus(StrategyType[aidKey]) : null;
+	if(aid){
+		valueCurrent *= (1 + aid.value);
+	}
+	if(typeof maxValue == UNDEFINED){
+		maxValue = 1000;
+	}
+	return [self.getCurrentStatus(valueCurrent,value),value,maxValue];
+};
+CharacterDetailedTabPropertiesView.prototype.getCurrentStatus=function(currentValue, value){
+	if(currentValue == value){
+		return value;
+	}
+	return String.format("{0}({1})",currentValue,(currentValue > value ? "↑":"↓") );
+};
+CharacterDetailedTabPropertiesView.prototype.setProperties=function(){
+	var self = this;
+	var statusLayer = new LSprite();
+	self.leftLabels = ["seignior_lv","generals_lv","tab_arms",
+	"force","command","intelligence","agility","luck"];
+	self.leftLayer = new LSprite();
+	statusLayer.addChild(self.leftLayer);
+	var startY = self.setLeft();
+	self.rightLabels = ["troops","MP",
+	LMvc.BattleController ? "exp" : "feat", "proficiency",
+	"attack","spirit","defense","breakout","morale","movePower"];
+	self.rightLayer = new LSprite();
+	statusLayer.addChild(self.rightLayer);
+	var startRightY = self.setRight();
+	var txtHeight = 25;
+	startY += txtHeight;
+	startRightY += txtHeight;
+	var height = startY > startRightY ? startY : startRightY;
+	statusLayer.graphics.drawRect(0, "#000000", [0, 0, self.tabWidth, height]);
+	
+	var backLayer = new LSprite();
+	backLayer.addChild(statusLayer);
+	var sc = new LScrollbar(backLayer, self.tabWidth, self.tabHeight, 10);
+	self.addChild(sc);
+};
+CharacterDetailedTabPropertiesView.prototype.setLeft=function(){
+	var self = this;
+	var txtHeight = 25, startY = -txtHeight + 10, startX = 5;
+	var labels = self.leftLabels;
+	self.leftLayer.x = startX;
+	for(var i=0;i<labels.length;i++){
+		startY += txtHeight;
+		var lblLeft = getStrokeLabel("",20,"#FFFFFF","#000000",4);
+		lblLeft.y = startY;
+		self.leftLayer.addChild(lblLeft);
+	}
+	return startY;
+};
+CharacterDetailedTabPropertiesView.prototype.setRight=function(){
+	var self = this;
+	var txtHeight = 25, startRightY = -txtHeight + 10, startX = 220;
+	var labels = self.rightLabels;
+	var datasRight = [
+	["2(1)",100,1000,"red_bar", "icon_hert"],
+	[0,100,1000,"yellow_bar","yellow_ball"],
+	[0,100,1000,"orange_bar","orange_ball"],
+	[0,100,1000,"red_bar",null],
+	[0,100,1000,"red_bar",null],
+	[0,100,1000,"red_bar",null],
+	[0,100,1000,"red_bar",null],
+	[0,100,1000,"red_bar",null],
+	[0,100,1000,"red_bar",null],
+	[0,0,10,"red_bar",null],
+	];
+	self.rightLayer.x = startX;
+	for(var i=0;i<labels.length;i++){
+		startRightY += txtHeight;
+		var obj = datasRight[i];
+		var bar = new StatusBarView(self.controller);
+		bar.set({maxValue:obj[2], currentValue:obj[0], normalValue:obj[1], name:Language.get(labels[i]), icon:obj[4], frontBar:obj[3], barSize:180});
+		bar.y = startRightY;
+		self.rightLayer.addChild(bar);
+	}
+	return startRightY;
+};

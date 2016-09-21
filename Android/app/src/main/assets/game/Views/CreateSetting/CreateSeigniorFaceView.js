@@ -1,1 +1,82 @@
-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
+function CreateSeigniorFaceView(controller, data){
+	base(this,LView,[controller]);
+	this.init(data);
+}
+CreateSeigniorFaceView.prototype.init=function(data){
+	var self = this;
+	var backgroundData = new LBitmapData(LMvc.datalist["win05"]);
+	var panel = getBitmap(new LPanel(backgroundData,186, 266));
+	self.addChild(panel);
+	
+	var label = getStrokeLabel(Language.get("monarch") + ": " + Language.get("null"),18,"#FFFFFF","#000000",4);
+	self.nameTextField = label;
+	label.x = (176 - label.getWidth()) * 0.5;
+	label.y = 270;
+	self.addChild(label);
+	
+	var buttonBackground = new LPanel(new LBitmapData(LMvc.datalist["win07"]),176,50);
+	var textLabel = getStrokeLabel(Language.get("seignior_color"),18,"#999999","#000000",3);
+	textLabel.x = (buttonBackground.getWidth() - textLabel.getWidth()) * 0.5;
+	textLabel.y = (buttonBackground.getHeight() - textLabel.getHeight()) * 0.5;
+	buttonBackground.addChild(textLabel);
+	buttonBackground.y = 385;
+	buttonBackground.cacheAsBitmap(true);
+	self.addChild(buttonBackground);
+	var buttonChangeColor = getButton(Language.get("seignior_color"),176);
+	buttonChangeColor.y = 385;
+	self.addChild(buttonChangeColor);
+	self.buttonChangeColor = buttonChangeColor;
+	buttonChangeColor.visible = false;
+	buttonChangeColor.addEventListener(LMouseEvent.MOUSE_UP, self.changeMonarchColor);
+	if(!data){
+		var buttonChange = getButton(Language.get("change_monarch"),176);
+		buttonChange.y = 292;
+		self.addChild(buttonChange);
+		buttonChange.addEventListener(LMouseEvent.MOUSE_UP, self.changeMonarch);
+		self.setData(null);
+	}else{
+		var buttonBackground = new LPanel(new LBitmapData(LMvc.datalist["win07"]),176,50);
+		var textLabel = getStrokeLabel(Language.get("change_monarch"),20,"#999999","#000000",3);
+		textLabel.x = (buttonBackground.getWidth() - textLabel.getWidth()) * 0.5;
+		textLabel.y = (buttonBackground.getHeight() - textLabel.getHeight()) * 0.5;
+		buttonBackground.addChild(textLabel);
+		buttonBackground.y = 292;
+		buttonBackground.cacheAsBitmap(true);
+		self.addChild(buttonBackground);
+		var characters = LPlugin.characters().list;
+		self.setData(characters.find(function(child){return child.id == data.id;}), data.color);
+	}
+};
+CreateSeigniorFaceView.prototype.changeMonarchColor=function(event){
+	var detailedView = event.currentTarget.getParentByConstructor(CreateSeigniorDetailedView);
+	detailedView.changeMonarchColor();
+};
+CreateSeigniorFaceView.prototype.changeMonarch=function(event){
+	var detailedView = event.currentTarget.getParentByConstructor(CreateSeigniorDetailedView);
+	detailedView.toSelectSeignior();
+};
+CreateSeigniorFaceView.prototype.setData=function(data, color){
+	var self = this;
+	if(!data){
+		self.buttonChangeColor.visible = false;
+		return;
+	}
+	self.data = data;
+	self.color = color;
+	self.buttonChangeColor.visible = true;
+	self.changeFace(data.faceImg);
+	self.nameTextField.text = Language.get("monarch") + ": " + data.name;
+	self.nameTextField.x = (176 - self.nameTextField.getWidth()) * 0.5;
+	self.graphics.clear();
+	self.graphics.drawRect(0, "#ff0000", [58, 350, 60, 30],true,String.format("rgb({0})",color));
+};
+CreateSeigniorFaceView.prototype.changeFace=function(faceIndex){
+	var self = this;
+	if(self.face){
+		self.face.remove();
+	}
+	self.face = new Face(faceIndex);
+	self.face.x = self.face.y = 5;
+	self.face.scaleX = self.face.scaleY = 0.8;
+	self.addChild(self.face);
+};

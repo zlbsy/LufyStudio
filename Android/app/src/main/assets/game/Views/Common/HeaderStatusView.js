@@ -1,1 +1,88 @@
-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
+function HeaderStatusView(controller){
+	var self = this;
+	base(self,LView,[controller]);
+}
+HeaderStatusView.prototype.get=function(value){
+	return this.cityFree ? value : "***";
+};
+HeaderStatusView.prototype.set=function(){
+	var self = this;
+	self.x = 10;
+	self.y = 10;
+	self.stepWidth = 150;
+	self.stepMiniWidth = 100;
+	self.stepHeight = 30;
+	self.cityFree = self.controller.getValue("cityFree");
+	var cityModel = self.controller.getValue("cityData");
+	var panel = new LPanel(new LBitmapData(LMvc.datalist["background-header"]),300,50);
+	panel.x = 5;
+	self.addChild(panel);
+	var title = getStrokeLabel(String.format(Language.get("city_title"), LMvc.chapterData.year, LMvc.chapterData.month, cityModel.name(), cityModel.size()),24,"#FFFFFF","#000000",2);
+	title.x = 5;
+	title.y = 10;
+	panel.addChild(title);
+	var seigniorCharacterName = "***";
+	if(cityModel.seignior_chara_id()){
+		 seigniorCharacterName = CharacterModel.getChara(cityModel.seignior_chara_id()).name();
+	}
+	var prefectureCharacterName = "***";
+	if(cityModel.prefecture()){
+		 prefectureCharacterName = CharacterModel.getChara(cityModel.prefecture()).name();
+	}
+	self.setStatus(Language.get("seignior"), seigniorCharacterName, self.stepWidth * 2 + 5, 0, self.stepWidth);
+	self.setStatus(Language.get("prefecture"), prefectureCharacterName, self.stepWidth * 2 + 5, self.stepHeight, self.stepWidth);
+	
+	self.setStatus(Language.get("business"), self.get(cityModel.business()), self.stepMiniWidth * 0 + 5, self.stepHeight * 2, self.stepMiniWidth);
+	self.setStatus(Language.get("agriculture"), self.get(cityModel.agriculture()), self.stepMiniWidth * 0 + 5, self.stepHeight * 3, self.stepMiniWidth);
+	self.setStatus(Language.get("technology"), self.get(cityModel.technology()), self.stepMiniWidth  * 0+ 5, self.stepHeight * 4, self.stepMiniWidth);
+	var disasterCount = (cityModel.isFlood() ? 1 : 0) + (cityModel.isPlagueOfLocusts() ? 1 : 0);
+	if(disasterCount){
+		var disasters = [];
+		if(cityModel.isFlood()){
+			disasters.push(Language.get("flood"));
+		}
+		if(cityModel.isPlagueOfLocusts()){
+			disasters.push(Language.get("plagueOfLocusts"));
+		}
+		self.setStatus(Language.get("disaster"), disasters.join("、"), self.stepMiniWidth  * 0+ 5, self.stepHeight * 5, self.stepMiniWidth * (0.5 + disasterCount*0.5));
+	}
+	self.setStatus(Language.get("city_defense"), self.get(cityModel.cityDefenseLabel()), self.stepMiniWidth * 1 + 5, self.stepHeight * 2, self.stepMiniWidth + 20);
+	self.setStatus(Language.get("troops"), self.get(cityModel.troopsSum()), self.stepMiniWidth * 1 + 5, self.stepHeight * 3, self.stepMiniWidth + 20);
+	self.setStatus(Language.get("police"), self.get(cityModel.police()), self.stepMiniWidth * 1 + 5, self.stepHeight * 4, self.stepMiniWidth + 20);
+	
+	self.setStatus(Language.get("generals"), self.get(cityModel.generalsSum()), self.stepMiniWidth * 2 + 5 + 20, self.stepHeight * 2, self.stepMiniWidth - 20);
+	self.setStatus(Language.get("out_of_office"), self.get(cityModel.outOfOfficeSum()), self.stepMiniWidth * 2 + 5 + 20, self.stepHeight * 3, self.stepMiniWidth - 20);
+	self.setStatus(Language.get("captive"), self.get(cityModel.captiveSum()), self.stepMiniWidth * 2 + 5 + 20, self.stepHeight * 4, self.stepMiniWidth - 20);
+	
+	self.setStatus(Language.get("population"), self.get(cityModel.populationLabel()), self.stepMiniWidth * 3 + 5, self.stepHeight * 2, self.stepWidth);
+	self.setStatus(Language.get("money"), self.get(cityModel.moneyLabel()), self.stepMiniWidth * 3 + 5, self.stepHeight * 3, self.stepWidth);
+	self.setStatus(Language.get("food"), self.get(cityModel.foodLabel()), self.stepMiniWidth * 3 + 5, self.stepHeight * 4, self.stepWidth);
+};
+HeaderStatusView.prototype.updateView = function(){
+	var self = this;
+	self.die();
+	self.removeAllChild();
+	self.set();
+};
+HeaderStatusView.prototype.setStatus=function(label,value,x,y,stepWidth,size){
+	var self = this;
+	var layer = new LSprite();
+	var panel = new LPanel(new LBitmapData(LMvc.datalist["background-text01"]),stepWidth,self.stepHeight);
+	layer.addChild(panel);
+	if(typeof size == UNDEFINED){
+		size = 17;
+	}
+	var labelText = getStrokeLabel(label,size,"#FFFFFF","#000000",2);
+	labelText.x = 5;
+	labelText.y = (self.stepHeight - labelText.getHeight()) * 0.5;
+	panel.addChild(labelText);
+	
+	var valueText = getStrokeLabel(value,size,"#FFFFFF","#000000",2);
+	valueText.x = stepWidth - valueText.getWidth() - 5;
+	valueText.y = (self.stepHeight - labelText.getHeight()) * 0.5;
+	panel.addChild(valueText);
+	panel.x = x;
+	panel.y = y;
+	panel.cacheAsBitmap(true);
+	self.addChild(panel);
+};

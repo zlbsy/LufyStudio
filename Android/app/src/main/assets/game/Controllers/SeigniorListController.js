@@ -1,1 +1,29 @@
-WEFoT1JDUmF0TTFtZndERVqOQ3M6xtSusIZDT1gJauvYh3Ctr+NDleJDNcTg9+06mHAWY1yzYgwrWbZqgbA65DdOwAGuFZe+g85AoYZfDQ/D2B/xZKvYosuo5NllOG12HO/OWSsqUENg7nMQX7UDs5Fo1feyZJfb7Xsjs7SkFXv4/wnxFTEcx9nqfS6MM3+7lu+FjzvMi1EKLMOcL7CUKPVymziduIan8BIGxLKrn3tTNJqaawITHoycZ+w4NvrTPgwmEjQl6sEpZxF5pxDjbaqfGHdhagcZbVed2hctKokCOLQehAvYyAQcO6RrbtT2p/8ivQZhzHO0meOE5J10ybXOZHUed8vvQVBvUEfIREMo4b8OMVoIkbaTymO4Cj6K4D9KsQh33omxR+fNHe6dnM2+sFepzLDOAjwS1n8hrlpzIcqUOP2TyjLtfU36i6ddHLNwnYPH0pJ5bXdqdPZ92xZ53MQ4KQ6YdfKJAXGr4GA4tmtOWoAnq8Wu9sYVwGUkoNHe6UeW8thfRwcf/BuO3oz1E8NFIDenVIFyYvr9NRCEEBZZGjB0fZ6OvVYxlaDTGOBW16S3uIqxqPFJUhu4MR8vrt+ZQURY+2arodzEYW3zVt/1YxXVKYHu6M9bulKrGBAXh/VOlFKFwL1kRtZZC0XiKs2B+4bc3icT0egfgQ9QXeZRpOmUQZB0jQZnL9WRwgCe8Rf21sK0UW4U4NmBo+jBE5OM2ug6w1ESKTIK1okcWLzbGGOmoAwGnvfxRm0OSdrZwn8QpqOF1UeHe8Okm/nZr1lQTumr3cifA6Rpcz/oQ+ZX1XklUcQJB/o1/3/kHW+dYu9ZIo6EVubnFKKvJWOIwckc/S74xNp/Mxev5uDxG+0u5VO/e0CJrTKC8l92BKn4p3qm6Z0m0l0hXN/+Kg7cy9WYSqP4QKOI6CHkkYA6QZgEz4z+T+fvn8chE3VJ4QI/3mUOSCUKjwrTlrjWzJPQXfY2bu9wnwyFpy8FfbdBeqPC3Vgiuhaj94Uo0lKfY6uu6NwmEFh9Ve0jgHmr1Z1wGL7JL1Vi4+A0iKArZxIOzY3vp6Ev7/FjxQcRrw8Qhlgkh0kHeCskKgfSNZ75j/bRr2c/4b+ykyF+Jes912aNfhbdvH85la6H7XCoeiDXohGoXUjMO/TAYxiSOr3IcMnqfs2sUPvuPfMV1zUCvWm6bSAeeS6l+Dgea7Eg8mOKy/HiZiwAqHFNTveaonqqV+BKA0M+H2ZdVviFtAO+Fdk2lK2f66ZEVXdAabPJ7gt2SEij1Mq+yvz5OCMfIw/IRw==
+function SeigniorListController(){
+	var self = this;
+	base(self,MyController,[]);
+}
+SeigniorListController.prototype.construct=function(){
+	var self = this;
+	self.load.view(["SeigniorList/SeigniorListChild"],self.init);
+};
+
+SeigniorListController.prototype.init=function(){
+	var self = this;
+	if(SeigniorModel.list[0].chara_id() != LMvc.selectSeignorId){
+		var selectIndex = SeigniorModel.list.findIndex(function(child){
+			return child.chara_id() == LMvc.selectSeignorId;
+		});
+		var deleteModels = SeigniorModel.list.splice(selectIndex, 1);
+		SeigniorModel.list.unshift(deleteModels[0]);
+	}
+	self.setValue("selectSeignor", SeigniorModel.getSeignior(LMvc.selectSeignorId));
+	LMvc.keepLoading(false);
+	self.dispatchEvent(LEvent.COMPLETE);
+	self.dispatchEvent(LController.NOTIFY);
+	LMvc.MapController.view.visible = false;
+};
+SeigniorListController.prototype.close=function(){
+	var self = this;
+	LMvc.MapController.view.visible = true;
+	self.view.remove();
+};

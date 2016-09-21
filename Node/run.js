@@ -53,7 +53,7 @@ function readGameFiles(path, toPath) {
 				if(path.indexOf("/images") > 0){
 					data = data.toString('base64');
 				}else{
-					data = encrypt(data);
+					//data = encrypt(data);
 				}
 				fs.writeFile(toFullPath, data, function(err) {
 					if (err) {

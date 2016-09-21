@@ -1,1 +1,120 @@
-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
+/**
+ * 武将相关
+ * 武将一览，武将移动，武将劝降
+ */
+function BuildGeneralsView(controller){
+	var self = this;
+	base(self,BuildBaseView,[controller,"generals"]);
+}
+BuildGeneralsView.prototype.showMenu=function(){
+	var self = this, layer = new LSprite(), menuY = 0, menuHeight = 55;
+	if(self.controller.getValue("selfCity")){
+		var buttonGeneralsList = getButton(Language.get("generals_list"),200);
+		buttonGeneralsList.y = menuY;
+		layer.addChild(buttonGeneralsList);
+		buttonGeneralsList.addEventListener(LMouseEvent.MOUSE_UP, self.onClickGeneralsListButton);
+		
+		menuY += menuHeight;
+		var buttonGeneralsMove = getButton(Language.get("generals_move"),200);
+		buttonGeneralsMove.y = menuY;
+		layer.addChild(buttonGeneralsMove);
+		buttonGeneralsMove.addEventListener(LMouseEvent.MOUSE_UP, self.onClickGeneralsMoveButton);
+		
+		menuY += menuHeight;
+		var buttonPersuade = getButton(Language.get("persuade_character"),200);
+		buttonPersuade.y = menuY;
+		layer.addChild(buttonPersuade);
+		buttonPersuade.addEventListener(LMouseEvent.MOUSE_UP, self.onClickPersuade);
+	}else{
+		var buttonGeneralsList = getButton(Language.get("generals_list"),200);
+		buttonGeneralsList.y = menuY;
+		layer.addChild(buttonGeneralsList);
+		buttonGeneralsList.addEventListener(LMouseEvent.MOUSE_UP, self.onClickGeneralsListButton.bind(self));
+	}
+	
+	return layer;
+};
+BuildGeneralsView.prototype.onClickPersuade=function(event){
+	var self = event.currentTarget.getParentByConstructor(BuildGeneralsView);
+	self.characterListType = CharacterListType.PERSUADE_TARGET;
+	self.controller.removeEventListener(LCityEvent.SELECT_CITY);
+	self.controller.addEventListener(LCityEvent.SELECT_CITY, self.persuadeTargetSelectCharacter);
+	self.controller.toSelectMap(CharacterListType.PERSUADE_TARGET, {isSelf:false,toast:"dialog_persuade_select_city_toast",spy:true, belongError:"dialog_persuade_belong_error", spyError:"dialog_persuade_spy_error"});
+};
+BuildGeneralsView.prototype.persuadeTargetSelectCharacter=function(event){
+	var controller = event.currentTarget;
+	var self = controller.view.contentLayer.childList.find(function(child){
+		return child.constructor.name == "BuildGeneralsView";
+	});
+	self.controller.setValue("cityId", event.cityId);
+	controller.removeEventListener(LCityEvent.SELECT_CITY, self.persuadeTargetSelectCharacter);
+	var selectCity = AreaModel.getArea(event.cityId);
+	var characterList = selectCity.generals();
+	self.controller.loadCharacterList(CharacterListType.PERSUADE_TARGET, characterList, {isOnlyOne:true, buttonLabel:"execute"});
+};
+BuildGeneralsView.prototype.onClickGeneralsListButton=function(event){
+	var self = event.currentTarget.getParentByConstructor(BuildGeneralsView);
+	var cityModel = self.controller.getValue("cityData");
+	generals = cityModel.generals();
+	var characterList = generals.concat(cityModel.outOfOffice()).concat(cityModel.captives());
+	self.controller.loadCharacterList(CharacterListType.CHARACTER_LIST, characterList, {showOnly:true});
+};
+BuildGeneralsView.prototype.onClickGeneralsMoveButton=function(event){
+	var self = event.currentTarget.getParentByConstructor(BuildGeneralsView);
+	self.controller.removeEventListener(LCityEvent.SELECT_CITY);
+	self.controller.addEventListener(LCityEvent.SELECT_CITY, self.moveSelectCharacter);
+	self.controller.toSelectMap(CharacterListType.CHARACTER_MOVE, {isSelf:true,toast:"dialog_common_select_city_toast",belongError:"dialog_move_generals_error",confirmMessage:"dialog_move_generals_confirm"});
+};
+BuildGeneralsView.prototype.moveSelectCharacter=function(event){
+	var controller = event.currentTarget;
+	var self = controller.view.contentLayer.childList.find(function(child){
+		return child.constructor.name == "BuildGeneralsView";
+	});
+	self.controller.setValue("cityId", event.cityId);
+	controller.removeEventListener(LCityEvent.SELECT_CITY, self.moveSelectCharacter);
+	var cityModel = self.controller.getValue("cityData");
+	self.controller.loadCharacterList(CharacterListType.CHARACTER_MOVE, cityModel.generals(Job.IDLE), {buttonLabel:"move_start"});
+};
+BuildGeneralsView.prototype.selectComplete=function(event){
+	var self = this;
+	
+	var characterList = event.characterList;
+	var cityId = self.controller.getValue("cityId");
+	if(!characterList){
+		return true;
+	}
+	if(event.characterListType == CharacterListType.CHARACTER_MOVE){
+		self.controller.setValue("cityId", null);
+		event.characterList.forEach(function(child){
+			child.moveTo(cityId);
+		});
+	}else if(event.characterListType == CharacterListType.PERSUADE_TARGET){
+		self.controller.setValue("persuadeCharacter", event.characterList[0]);
+	}else if(event.characterListType == CharacterListType.PERSUADE){
+		self.controller.setValue("cityId", null);
+		var persuadeCharacter = self.controller.getValue("persuadeCharacter");
+		var characterModel = event.characterList[0];
+		characterModel.persuade(persuadeCharacter.id());
+	}
+	return true;
+};
+BuildGeneralsView.prototype.showBuild=function(event){
+	var contentLayer = event.currentTarget.view.contentLayer;
+	var self = contentLayer.childList.find(function(child){
+		return child.isBuildBaseView;
+	});
+	var result = self.callParent("showBuild",arguments);
+	if(!result){
+		return;
+	}
+	if(event.subEventType == "return"){
+		return;
+	}
+	if(!self.load){
+		self.load = new LMvcLoader(self);
+	}
+	if(event.characterListType == CharacterListType.PERSUADE_TARGET){
+		var cityModel = self.controller.getValue("cityData");
+		self.controller.loadCharacterList(CharacterListType.PERSUADE, cityModel.generals(Job.IDLE), {isOnlyOne:true, buttonLabel:"execute"});
+	}
+};

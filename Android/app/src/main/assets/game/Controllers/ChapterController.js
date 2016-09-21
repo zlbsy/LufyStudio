@@ -1,1 +1,69 @@
-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
+function ChapterController(chapterSelectData){
+	base(this,MyController,[]);
+	self.chapterSelectData = chapterSelectData;
+}
+ChapterController.prototype.construct=function(){
+	var self = this;
+	var list = self.model.getImages();
+	self.load.image(list,self.libraryLoad);
+};
+ChapterController.prototype.libraryLoad=function(){
+	var self = this;
+	var libraris = ["Face","GameManager","GameCacher"];
+	self.load.library(libraris,self.viewLoad);
+};
+ChapterController.prototype.viewLoad=function(){
+	var self = this;
+	self.load.view(["Chapter/ChapterSeignior","Chapter/TroubleSelect"],self.getChapterData);
+};
+ChapterController.prototype.getChapterData=function(){
+	var self = this;
+	self.model.getChapterData(self.init);
+};
+ChapterController.prototype.init=function(status){
+	var self = this;
+	if(LMvc.isRead){
+		self.loadMvc("Map",self.mapLoadComplete);
+		return;
+	}else if(LMvc.TutorialController){
+		self.loadMap(21);
+		return;
+	}
+	self.dispatchEvent(LEvent.COMPLETE);
+	self.dispatchEvent(LController.NOTIFY);
+	
+	LMvc.keepLoading(false);
+};
+ChapterController.prototype.returnToChapterMenu=function(event){
+	var self = this;
+	
+	LTweenLite.removeAll();
+	self.view.remove();
+	LMvc.mainController.view.visible = true;
+	LMvc.mainController.webview.show();
+	delete LMvc.mainController;
+};
+ChapterController.prototype.loadMap=function(chara_id){
+	var self = this;
+	LMvc.selectSeignorId = chara_id;
+	LMvc.keepLoading(true);
+	self.loadMvc("Map",self.mapLoadComplete);
+};
+ChapterController.prototype.mapLoadComplete=function(){
+	var self = this;
+	LMvc.chapterController = self;
+	var map = new MapController();
+	LMvc.stageLayer.addChild(map.view);
+};
+ChapterController.prototype.loadCreateSetting=function(){
+	var self = this;
+	LMvc.keepLoading(true);
+	self.loadMvc("CreateSetting",self.loadCreateSettingComplete);
+};
+ChapterController.prototype.loadCreateSettingComplete=function(){
+	var self = this;
+	LMvc.chapterController = self;
+	var createSetting = new CreateSettingController();
+	createSetting.view.x = self.view.x;
+	LMvc.stageLayer.addChild(createSetting.view);
+};

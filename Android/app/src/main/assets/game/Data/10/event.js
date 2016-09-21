@@ -1,1 +1,4 @@
-WEFoT1JDUmF0TTFtZndERZnb6UZwcY029ZTYZ5hOSQtZjOTtM4yJBdMoDc7/GszYcPE4zMW6cDYfMQXepy7UeFPCVjbtv4uNXt62Yx043gVxzIG5yVjtn48ZhScfzGxW
+LMvc.startEvent = {
+	script:"Data/Event/{0}/chapter10.txt",
+	result:[]
+};

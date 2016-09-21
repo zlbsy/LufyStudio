@@ -1,1 +1,145 @@
-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
+function BattleWeatherView(controller){
+	var self = this;
+	LExtends(self,LView,[controller]);
+	self.weathers = {};
+};
+BattleWeatherView.prototype.change = function(){
+	var self = this;
+	var probability = 1;
+	if(self.currentWeather){
+		self.currentWeather.probability += 0.1;
+		probability = self.currentWeather.probability;
+	}
+	if(Math.fakeRandom() > probability){
+		return;
+	}
+	var weatherProbabilitys = WeatherProbabilityConfig[LMvc.chapterData.month];
+	var rand = Math.fakeRandom(), sum = 0;
+	for(var i=0, l=weatherProbabilitys.length; i<l; i++){
+		var weatherProbability = weatherProbabilitys[i];
+		sum += weatherProbability.probability;
+		if(rand > sum){
+			continue;
+		}
+		self.show(weatherProbability.weather);
+		break;
+	}
+};
+BattleWeatherView.prototype.create = function(weather){
+	var self = this;
+	var layer;
+	switch(weather){
+		case BattleWeatherConfig.RAIN:
+			layer = self.createRain();
+			break;
+		case BattleWeatherConfig.SNOW:
+			layer = self.createSnow();
+			break;
+		case BattleWeatherConfig.CLOUD:
+			layer = self.createCloud();
+			break;
+		default:
+			layer = new LSprite();
+	}
+	layer.weather = weather;
+	self.addChild(layer);
+	return layer;
+};
+BattleWeatherView.prototype.createCloud = function(){
+	var layer = new LSprite();
+	layer.graphics.drawRect(0,"#000000",[0,0,LGlobal.width,LGlobal.height], true, "#ffffff");
+	layer.alpha = 0.6;
+	layer.cacheAsBitmap(true);
+	return layer;
+};
+BattleWeatherView.prototype.createSnow = function(){
+	var datas = [], listChild = [];
+	for(var i=0;i<4;i++){
+		var layer = new LSprite();
+		layer.graphics.drawRect(0,"#000000",[0,0,LGlobal.width,LGlobal.height]);
+		layer.graphics.add(function (c){
+			c.fillStyle = "#ffffff";
+			c.beginPath();
+			for(var i=0;i<50;i++){
+				var sx = Math.random()*LGlobal.width;
+				var sy = Math.random()*LGlobal.height;
+				c.moveTo(sx,sy);
+				c.arc(sx,sy, 2 + Math.random()*5,0,2*Math.PI);
+			}
+			c.fill();
+		});
+		layer.alpha = 0.6;
+		var bitmapData = getBitmapData(layer);
+		datas.push(bitmapData);
+		listChild.push({dataIndex : i, x : 0, y : 0, width : LGlobal.width, height : LGlobal.height, sx : 0, sy : 0});
+	}
+	var rainLayer = new LAnimationTimeline(datas, [listChild]);
+	rainLayer.speed = 12;
+	return rainLayer;
+};
+BattleWeatherView.prototype.createRain = function(){
+	var datas = [], listChild = [];
+	for(var i=0;i<4;i++){
+		var layer = new LSprite();
+		layer.graphics.drawRect(0,"#000000",[0,0,LGlobal.width * 1.3,LGlobal.height * 1.3]);
+		layer.graphics.add(function (c){
+	    	c.strokeStyle = "#ffffff";
+			c.beginPath();
+			for(var i=0;i<50;i++){
+				var sx = Math.random()*LGlobal.width * 1.3;
+				var sy = Math.random()*LGlobal.height * 1.3;
+				c.moveTo(sx,sy);
+				c.lineTo(sx,sy + 50 + Math.random()*100);
+			}
+			c.stroke();
+		});
+		var bitmapData = getBitmapData(layer, true);
+		layer.die();
+		datas.push(bitmapData);
+		listChild.push({dataIndex : i, x : 0, y : 0, width : LGlobal.width * 1.3, height : LGlobal.height * 1.3, sx : 0, sy : 0});
+	}
+	var rainLayer = new LAnimationTimeline(datas, [listChild]);
+	rainLayer.speed = 2;
+	rainLayer.x = LGlobal.width * 0.15;
+	rainLayer.y = -LGlobal.height * 0.2;
+	rainLayer.rotate = 20;
+	return rainLayer;
+};
+BattleWeatherView.prototype.show = function(weather){
+	var self = this;
+	if(self.currentWeather){
+		self.currentWeather.visible = false;
+	}
+	if(!self.weathers[weather]){
+		self.weathers[weather] = self.create(weather);
+	}
+	self.currentWeather = self.weathers[weather];
+
+	self.currentWeather.visible = true;
+	self.currentWeather.probability = 0;
+	cloudWeatherCharacterShow();
+};
+BattleWeatherView.prototype.isWeather = function(weather){
+	var self = this;
+	if(!self.weathers[weather]){
+		return weather == BattleWeatherConfig.SUNNY;
+	}
+	return self.currentWeather.objectIndex == self.weathers[weather].objectIndex;
+};
+BattleWeatherView.prototype.getLavel = function(){
+	var self = this;
+	var weather = self.currentWeather ? self.currentWeather.weather : BattleWeatherConfig.SUNNY;
+	return Language.get(weather);
+};
+BattleWeatherView.prototype.getData = function(){
+	var self = this;
+	if(self.currentWeather){
+		return {weather:self.currentWeather.weather, probability:self.currentWeather.probability};
+	}
+	return {weather:BattleWeatherConfig.CLOUD, probability:0};
+};
+BattleWeatherView.prototype.setData = function(obj){
+	var self = this;
+	self.show(obj.weather);
+	self.currentWeather.probability = obj.probability;
+};

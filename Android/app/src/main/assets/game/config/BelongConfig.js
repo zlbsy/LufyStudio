@@ -1,1 +1,5 @@
-WEFoT1JDUmF0TTFtZndERZSh1xbpU7psH2gOTRdi+ySjw/v05dIglqNj4jg84JrYpmSiE9FVFj4nBQfwvGAlBY40WlZsLCknrTKEv8+hKE8W+Z+rax4Qi4acNXBwJbJTR58QJM2zm97oU0xnEzmthw==
+var Belong = {
+	SELF:"belong_self",
+	FRIEND:"belong_friend",
+	ENEMY:"belong_enemy"
+};

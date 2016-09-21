@@ -1,1 +1,88 @@
-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
+function CreateCharacterArmItemView(listView, soldier){
+	var self = this;
+	base(self,LListChildView,[]);
+	self.listView = listView;
+	self.soldier = new SoldierModel(null, soldier);
+	self.soldierMaster = SoldierMasterModel.getMaster(soldier.id);
+	self.init();
+}
+CreateCharacterArmItemView.prototype.onMinusStatus=function(){
+	var self = this;
+	var value = parseInt(self.textField.text, 10);
+	var abilityView = self.listView.parent.parent;
+	if(value <= 0){
+		return;
+	}
+	self.textField.text = value - 50;
+	self.cacheAsBitmap(false);
+	self.updateView();
+	abilityView.updatePoint(50);
+};
+CreateCharacterArmItemView.prototype.onPlusStatus=function(){
+	var self = this;
+	var value = parseInt(self.textField.text, 10);
+	var abilityView = self.listView.parent.parent;
+	if(abilityView.point <= 0 || value >= 1000){
+		return;
+	}
+	self.textField.text = value + 50;
+	self.cacheAsBitmap(false);
+	self.updateView();
+	abilityView.updatePoint(-50);
+};
+CreateCharacterArmItemView.prototype.setStatus=function(value){
+	var self = this;
+	self.textField.text = value;
+	self.cacheAsBitmap(false);
+	self.updateView();
+};
+CreateCharacterArmItemView.prototype.onClick=function(event){
+	var self = event.target;
+	if(event.selfX > self.minusButton.x && event.selfX < self.minusButton.x + self.minusButton.getWidth() && event.selfY > self.minusButton.y && event.selfY < self.minusButton.y + self.minusButton.getHeight()){
+		self.onMinusStatus();
+	}else if(event.selfX > self.plusButton.x && event.selfX < self.plusButton.x + self.plusButton.getWidth() && event.selfY > self.plusButton.y && event.selfY < self.plusButton.y + self.plusButton.getHeight()){
+		self.onPlusStatus();
+	}
+};
+CreateCharacterArmItemView.prototype.setIcon=function(){
+	var self = this;
+	if(self.icon){
+		self.icon.remove();
+	}
+	var width = 50, height = 50;
+	self.icon = self.soldier.icon(new LPoint(width,height),self.iconComplete);
+	self.addChild(self.icon);
+};
+CreateCharacterArmItemView.prototype.init=function(){
+	var self = this;
+	var width = 50, height = 50;
+	self.setIcon();
+	var label = getStrokeLabel(Language.get(self.soldierMaster.name()), 18, "#FFFFFF", "#000000", 3);
+	label.x = 60;
+	label.y = 4;
+	self.addChild(label);
+	var proficiencyLabel = getStrokeLabel(Language.get("proficiency") + ": ", 18, "#FFFFFF", "#000000", 3);
+	proficiencyLabel.x = 60;
+	proficiencyLabel.y = 26;
+	self.addChild(proficiencyLabel);
+	var text = getStrokeLabel(self.soldier.proficiency(),18,"#FFFFFF","#000000",3);
+	text.x = 125;
+	text.y = 26;
+	self.addChild(text);
+	var minusButton = getSizeButton("-",40,40);
+	minusButton.status = text;
+	minusButton.x = 175;
+	self.addChild(minusButton);
+	self.minusButton = minusButton;
+	var plusButton = getSizeButton("+",40,40);
+	plusButton.status = text;
+	plusButton.x = 215;
+	self.addChild(plusButton);
+	self.plusButton = plusButton;
+	self.textField = text;
+};
+CreateCharacterArmItemView.prototype.iconComplete=function(event){
+	var self = event.currentTarget.parent;
+	self.cacheAsBitmap(false);
+	self.updateView();
+};

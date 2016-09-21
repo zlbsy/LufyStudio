@@ -1,1 +1,58 @@
-WEFoT1JDUmF0TTFtZndERcz00ky2B7XRiADpW8VPKn80MMgzOuV1vCkIsLCgpG2HxPY5Qk+lL0v2EDsqewC2xn2UgrisdOyMp1GFfkGP5D0d50ulZ8rq6PbjkeS5nXUf6IhBOYM3q2bZXfdF4tz4iE7fETPoPZcqCiEbTLkVcKUb85tz9AXajkcOZ/yN/DMDcUSVE3UuZiTd5rLkE7ipMyYZQPrzcOtlnP5rb9G+sk4q4L8IZRzB1W4PAKCk/mhx2cblJxRWML1yELSMu5qaYLLpQRyCxZNJI1No/LD3vxgtotFw5iEDpRAcAeOotDg39eXYbs7psnKmo3XwfKH5zA6OGs4QWLBJ8WuUN41A8kxQa+OPGAZdLz+ITs5sm6+EeE4xtUBj7a5WRH7KFcZqbPogDDp3ZMIpUa7tViInbDWgosPl/UNQ50rIUUgMERnun23CIo+gAgCt47+Aaql3ICXEg5AfF/SA7B/E1bF1Dzo9wUUHeNI5Bk01+NEW6SM6cUwgPp5zZZRb122aJmDCl9GIFJDaPhq/OZvfgztw4Txw2qpBGV2866fnnl4PlSPOtEr14yRZLo7jU8LHwGo7ySd6U11FMD5PbQQVFvqUMcYnb5IxlMQECgp+vKZTyYnzeWYwAOiwZ5rQvk+Le4Ei4XiTXXECD4t4GQPtMsustc2dgtt0K/d0e9kzb5EuP/d5cVkJh1PC1wQwVtAIQuYfHlEZHqrDRS8RhDQWcWAreYuM98lj/+HSQhjLHyNrmOrCrOqYoXqfb/yhzU5PjZTKeF3+2rIgb1dtchjxxKJddkhl1y2859pyJESScSmzWrPMiHcIHQWNilzh3+Wg91FjI/a51+/uI5cuR4RGbyOr1gilxcTknYJk7xhA10HdPppFCJ0QnTm93itkVgIeq209L9dXPDwNz+5OZisAumcQ8ti05lgcU9fK69g6AqS+3GOyApbaZPNZEeNcb8PeJvLc9BQtJGQv9CpnoKnI8uTvk3GW2L/wXAY39Zmp7eLQq83dzEZQIR9Y3V2hmg3hWUmdZZ3Hx4GakbvzSmrU7RbopxTgnWe8kKIGAxX3ojZh2+vE1K5CsqtffuiKcrkSaJvu8ibwv8GzIy/1dDJy0FkDwhwiANTQ89r3oN9hsMzigNB2elUHMLMzWUFiqMFbxLSaHnOE/mWDDGyMw77ByIDIMCPAmvw58AWyNcaEzWsAn0iwpgUfbzSCfBnUAP5m7hme8V49X4h20ttHdbaCJ3W8lMGVjLBufF04p340P6q6pY5EewtO+OkyIcpZ3mTisYXZvw106KV+W4GkIvdQMjzm/AGU94JvciT+h2OKtOOdi+fqeNU5EZvMslbmcugNQKT1z6x4jhqsPDbdLyfkxRRMec/AZyzVW+2eEUoHUEp/eB5V504GME46qKmG75TjJGU53bLhw9wDZv9YEm1ub9t5FEVHF8p5bs/atkzmOUE1O0o6utkaOWRbf3Cbsfpxyuq5nRqNDNBERGubBSaVCGhy60UseY11aBwIjM/NIfmZb5SoL1ZoxKtzTe6yEbUodkh6xgYxOVUwsPfW663O9zhxVGrvKu8TUiNPni5OlZlAML9EQT7WT97RhBi0dNkaMwcAXDP5VCkAk7m1+hW/Tzv5WG51VYIXlc8L7Ucd4kwqhGVG+WaKlO/MVJk5mIsJwNHI3rTVjp81W82H1NJ13UJcz3GqGqSTjM+lvxO+j7pYtliRQ8IVlCgrzs6C7DBcC+RwFhqFK2EZMX8jJMo2L3+NTmQtLCSdychXKa6+py/PSDvAobTuJs2G+nJ8POGO/g/96ipA77nIP3Kl3GGcdLP7q1+g8bqJ8K9LbENfCbCnP8rToF27qInwV9oBuj0ScV/ODDrBkFYhKzPnNe9vAxspY6OriHrXk2gWWhZDIzZaDw/3JlW6jq9N3y+NLFW6LlIE6KC0XaaM3Zc/WbT+KmNs9SY=
+/**
+ * @author lufy
+ */
+function Num(direction,index,num_width){
+	var self = this;
+	base(self,LSprite,[]);
+	self.num_width = num_width;
+	self.init(direction,index);
+}
+Num.LEFT = "num_left";
+Num.RIGHT = "num_right";
+Num.MIDDLE = "num_middle";
+Num.prototype.init = function(direction,index){
+	var self = this;
+	self.direction = direction;
+	self.dataList = [];
+	for(var i=0;i<10;i++){
+		self.dataList.push(new LBitmapData(LMvc.datalist["num-"+index+"-"+i]));
+	}
+	self.list = [];
+	self.setValue(0);
+};
+Num.prototype.setValue = function(value){
+	var self = this;
+	self.value = value;
+	var strValue = self.value.toString(),numBitmap,sx;
+	if(self.childList.length != strValue.length){
+		self.setList(strValue.length);
+	}
+	
+	for(var i=0,l=strValue.length;i<l;i++){
+		numBitmap = self.childList[i];
+		numBitmap.bitmapData = self.dataList[parseInt(strValue.charAt(i))];
+	}
+};
+Num.prototype.setList = function(length){
+	var self = this;
+	if(self.childList.length > length){
+		self.childList.splice(length - 1,self.childList.length - length);
+	}
+	var sx,numBitmap;
+	if(self.direction == Num.LEFT){
+		sx = -length*self.num_width;
+	}else if(self.direction == Num.RIGHT){
+		sx = -self.num_width;
+	}else{
+		sx = -length*self.num_width*0.5;
+	}
+	for(var i=0,l=length;i<l;i++){
+		if(i >= self.childList.length){
+			numBitmap = new LBitmap(self.dataList[0]);
+			self.addChild(numBitmap);
+		}
+		numBitmap = self.childList[i];
+		sx += self.num_width;
+		numBitmap.x = sx;
+	}
+};

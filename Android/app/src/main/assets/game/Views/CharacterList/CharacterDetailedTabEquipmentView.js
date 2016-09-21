@@ -1,1 +1,133 @@
-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
+function CharacterDetailedTabEquipmentView(controller, w, h){
+	var self = this;
+	base(self,LView,[controller]);
+	self.equipmentLayer = new LSprite();
+	self.addChild(self.equipmentLayer);
+	self.tabWidth = w;
+	self.tabHeight = h;
+}
+CharacterDetailedTabEquipmentView.prototype.updateView=function(){
+	var self = this;
+	self.showEquipments();
+	self.showEquipmentList();
+};
+CharacterDetailedTabEquipmentView.prototype.showEquipments=function(){
+	var self = this;
+	self.equipmentLayer.removeAllChild();
+	var characterModel = self.controller.getValue("selectedCharacter");
+	var detailedView = self.getParentByConstructor(CharacterDetailedView);
+	var faceW = CharacterFaceSize.width + 20, faceH = CharacterFaceSize.height + 20;
+	var icon,iconSize = 60;
+	var equipmentCoordinates = [];
+	equipmentCoordinates[PositionConfig.Head] = {x:(faceW - iconSize)*0.5,y:0};
+	equipmentCoordinates[PositionConfig.Hand] = {x:0,y:(faceH - iconSize) * 0.5};
+	equipmentCoordinates[PositionConfig.Body] = {x:(faceW - iconSize)*0.5,y:(faceH - iconSize) * 0.5};
+	equipmentCoordinates[PositionConfig.Foot] = {x:(faceW - iconSize)*0.5,y:faceH - iconSize};
+	equipmentCoordinates[PositionConfig.Accessories] = {x:faceW - iconSize,y:(faceH - iconSize) * 0.5};
+	var equipments = characterModel.equipments();
+	for(var i=0;i<PositionConfig.positions.length;i++){
+		var position = PositionConfig.positions[i];
+		var coordinate = equipmentCoordinates[position];
+		var equipment = equipments.find(function(child){
+			return child.position() == position;
+		});
+		if(equipment){
+			icon = equipment.icon(new LPoint(iconSize,iconSize));
+			icon.removeItemId = equipment.id();
+			icon.addEventListener(LMouseEvent.MOUSE_UP,self.confirmEquipment);
+		}else{
+			icon = getPanel("win03",iconSize,iconSize);
+			//icon = new LPanel(new LBitmapData(LMvc.datalist["win03"]),iconSize,iconSize);
+		}
+		icon.x = detailedView.faceView.x + coordinate.x - detailedView.tabLayer.x - self.x;
+		icon.y = detailedView.faceView.y + coordinate.y - detailedView.tabLayer.y - self.y;
+		self.equipmentLayer.addChild(icon);
+	}
+};
+CharacterDetailedTabEquipmentView.prototype.showEquipmentList=function(){
+	var self = this;
+	var characterModel = self.controller.getValue("selectedCharacter");
+	var equipmentsView = self.childList.find(function(child){
+		return child instanceof EquipmentsView;
+	});
+	var cityData = self.controller.getValue("cityData");
+	if(LMvc.BattleController || characterModel.seigniorId() != LMvc.selectSeignorId || cityData.seigniorCharaId() != LMvc.selectSeignorId){
+		if(equipmentsView){
+			equipmentsView.visible = false;
+		}
+		return;
+	}
+	if(equipmentsView){
+		equipmentsView.addController(self.controller);
+		equipmentsView.visible = true;
+		equipmentsView.updateView();
+		return;
+	}
+	equipmentsView = new EquipmentsView(self.controller, "equipment", new LPoint(self.tabWidth, self.tabHeight));
+	self.addChild(equipmentsView);
+	equipmentsView.addEventListener(EquipmentEvent.Dress,self.dressEquipment);
+	equipmentsView.updateView();
+};
+CharacterDetailedTabEquipmentView.prototype.dressEquipment=function(event){
+	var self = event.currentTarget.getParentByConstructor(CharacterDetailedTabEquipmentView);
+	var selectItemModel = event.selectItemModel;
+	var itemCount = selectItemModel.count();
+	var characterModel = self.controller.getValue("selectedCharacter");
+	characterModel.equip(selectItemModel);
+	characterModel.calculation();
+	var cityData = self.controller.getValue("cityData");
+	cityData.removeItem(selectItemModel);
+	
+	var detailedView = self.getParentByConstructor(CharacterDetailedView);
+	detailedView.changeCharacter(0);
+	var characterListView = self.getParentByConstructor(CharacterListView);
+	var e = new LEvent(CharacterListEvent.LIST_CHANGE);
+	e.characterModel = characterModel;
+	characterListView.dispatchEvent(e);
+};
+CharacterDetailedTabEquipmentView.prototype.confirmEquipment=function(event){
+	var icon = event.currentTarget;
+	var self = icon.getParentByConstructor(CharacterDetailedTabEquipmentView);
+	var characterModel = self.controller.getValue("selectedCharacter");
+	var removeItemId = icon.removeItemId;;
+	var equipment = characterModel.equipments().find(function(child){
+		return child.id() == removeItemId;
+	});
+	var canRemove = (!LMvc.BattleController && characterModel.city() &&  characterModel.city().seigniorCharaId() == LMvc.selectSeignorId);
+	var msg = String.format(Language.get("dialog_remove_equipment_confirm"),equipment.name());
+	if(!canRemove){
+		msg = String.format("<font color='#FF0000'>{0}</font>",equipment.name());
+	}
+	var params = equipment.params();
+	for(var i = 0;i < params.length;i++){
+		var key = params[i];
+		var format = "<font size='22' color='#FFFFFF'>{0} "+(canRemove ? "-" : "+")+"{1}</font>";
+		msg += "\n" + String.format(format, Language.get(key), equipment.getParam(key));
+	}
+	
+	var obj = {title:Language.get("confirm"),messageHtml:msg,height:270};
+		
+	if(canRemove){
+		obj.okEvent = self.removeEquipmentRun;
+		obj.cancelEvent = null;
+	}else{
+		obj.okEvent = null;
+	}
+	var windowLayer = ConfirmWindow(obj);
+	var detailedView = self.getParentByConstructor(CharacterDetailedView);
+	detailedView.removeItemId = removeItemId;
+	detailedView.addChild(windowLayer);
+};
+CharacterDetailedTabEquipmentView.prototype.removeEquipmentRun=function(event){
+	var detailedView = event.currentTarget.getParentByConstructor(CharacterDetailedView);
+	event.currentTarget.parent.remove();
+	var characterModel = detailedView.controller.getValue("selectedCharacter");
+	characterModel.equipOff(detailedView.removeItemId);
+	characterModel.calculation();
+	delete detailedView.removeItemId;
+	detailedView.changeCharacter(0);
+	var characterListView = detailedView.getParentByConstructor(CharacterListView);
+	var e = new LEvent(CharacterListEvent.LIST_CHANGE);
+	e.characterModel = characterModel;
+	characterListView.dispatchEvent(e);
+};

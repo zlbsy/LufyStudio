@@ -1,1 +1,72 @@
-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
+function BusinessItemsView(controller, characterModel, item){
+	var self = this;
+	LExtends(self,LView,[controller]);
+	self.set(characterModel, item);
+}
+BusinessItemsView.prototype.set = function(characterModel, item){
+	var self = this, width = 340, height = 340;
+	self.characterModel = characterModel;
+	self.item = item;
+	SeigniorExecute.Instance().backLayer.visible = false;
+	SeigniorExecute.Instance().msgView.hideSeignior();
+	var windowLayer = getTranslucentMask();
+	self.addChild(windowLayer);
+	var panel = getPanel("win05", width, height);
+	panel.x = (LGlobal.width - width) * 0.5;
+	panel.y = (LGlobal.height - height) * 0.5;
+	self.addChild(panel);
+	var titlePanel = getPanel("win02",160,60);
+	titlePanel.x = (LGlobal.width - titlePanel.getWidth()) * 0.5;
+	titlePanel.y = panel.y - 10;
+	self.addChild(titlePanel);
+	var title = getStrokeLabel(Language.get("confirm"),20,"#FFFFFF","#000000",4);
+	title.x = (LGlobal.width - title.getWidth())*0.5;
+	title.y = panel.y + 8;
+	self.addChild(title);
+	
+	var messageHtml = String.format(Language.get("businessSaleMessage"), characterModel.name(), item.name());
+	var msg = getStrokeLabel(messageHtml,16,"#FFFFFF","#000000",2,"htmlText");
+	msg.width = width - 60;
+	msg.x = panel.x + 30;
+	msg.y = panel.y + 70;
+	msg.setWordWrap(true,27);
+	self.addChild(msg);
+	var icon = item.icon();
+	icon.x = msg.x;
+	icon.y = msg.y + 100;
+	self.addChild(icon);
+	var price = getStrokeLabel(String.format(Language.get("item_price"), item.businessPrice()),18,"#FFFFFF","#000000",2); 
+	price.x = icon.x + icon.getWidth() + 20;
+	price.y = icon.y + 10;
+	self.addChild(price);
+	
+	var okButton = new LButton(new LBitmap(new LBitmapData(LMvc.datalist["ok"])));
+	okButton.x = panel.x + panel.getWidth()*0.5 - okButton.getWidth() - 20;
+	okButton.y = panel.y + panel.getHeight() - okButton.getHeight() - 20;
+	self.addChild(okButton);
+	okButton.addEventListener(LMouseEvent.MOUSE_UP, self.buy);
+	
+	var cancelButton = new LButton(new LBitmap(new LBitmapData(LMvc.datalist["close"])));
+	cancelButton.x = panel.x + panel.getWidth()*0.5 + 20;
+	cancelButton.y = panel.y + panel.getHeight() - cancelButton.getHeight() - 20;
+	self.addChild(cancelButton);
+	cancelButton.addEventListener(LMouseEvent.MOUSE_UP, self.cancel);
+};
+BusinessItemsView.prototype.buy = function(event){
+	var self = event.currentTarget.getParentByConstructor(BusinessItemsView);
+	self.characterModel.city().money(-self.item.businessPrice());
+	self.characterModel.city().addItem(new ItemModel(null,{item_id:self.item.id(),count:1}));
+	self.removeSelf();
+};
+BusinessItemsView.prototype.cancel = function(event){
+	var self = event.currentTarget.getParentByConstructor(BusinessItemsView);
+	self.removeSelf();
+};
+BusinessItemsView.prototype.removeSelf = function(){
+	var self = this;
+	self.characterModel = null;
+	self.item = null;
+	self.remove();
+	SeigniorExecute.Instance().msgView.showSeignior();
+	SeigniorExecute.run();
+};

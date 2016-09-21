@@ -1,1 +1,12 @@
-WEFoT1JDUmF0TTFtZndERQYfTeKUjhoVHG8a9JvBbTLa8MWVFg8R2Wn1mSnokx3KMxJhsP1KDnkalFxlfEmXauUNgEPZuB6uZSF5rEwozE3eVH5wojNcH7Q8Rav09ENlLFTOJX6hQUuQUNqsXEJpvZPo6ZYRMbKXTlUE63o6fhEgFE1MnixaDwnY/q0NFemwlnBxOS4KVaduYJaa1BS3C3I2/P2Zg8W7IJrLJvve9O/cFcMVkXLQbHLOPjFZSRqTZd22W5tW+BRyz3ic4HGDMsLIS8YIKMMCfqy3MhuT2algNl9k1Xt51ybo1Mn9NTHKGSsL9PjPLyvk20bFU9SjjGVV6p26fSxfwQhhsb4cw+hBZw924bBAlcv7fDbT2FwurTPzSZZbe4kbjiAl1TqbKzM1X6UJOdWe8yLAjmSfJkUm/QiUMPIP0AugODjOBMGzrdjPBaG/QW9SfeBRD8qXG1t8oZMz4dbAVmyT3CAMFCb5LXIiu7zzdBleNzIq+CT21TrHrM8LLLhRPjzbi7U0XMp0q37T4ZJVy0Zsi9Aqnair4M47KUdNqLkswitldUWYI2ifBwju0pseEu8cCwOyMKsnBZNjO/OM78rvGAuGvRB1um4Q5t5HgF5ofCHs+RBORO+HpGq4QyTZeI9+NX7q+RkR0eR9dvD/oH5MaevWfcL7rG5TIIxuSqG5vgctRz36rS/IUFIVCeAonatQWHf0N6HiBdMq3qms/scZmGrZRXqcR/qvuiRTUInewyhizbrX9ZBiCfxnXXsWimE1byHVk9nXCllCsqqh4MiKp5EcS/RKAZ31dyH/S8HSFylVZAOC8KTUqIbvPUFlMOzxI+XSzg==
+LMvc.chapterData = {
+title : "群雄逐鹿"
+,year : 234
+,month : 1
+,exp : 0, level : 1, eventList : []
+,seigniors : [
+{id:17,name:"孙权",faceImg:17,color:"255,0,0",general_count:46, citys:[16,30,27,29,28,20,17,10,19,21,18,32,31],city_count:13},
+{id:228,name:"曹叡",faceImg:228,color:"0,0,255",general_count:86, citys:[12,15,22,4,34,38,36,26,42,53,40,46,14,43,25,39,24,23,45,35,44,41],city_count:22},
+{id:229,name:"公孙渊",faceImg:229,color:"173,255,47",general_count:5, citys:[47],city_count:1},
+{id:620,name:"刘禅",faceImg:620,color:"0,128,0",general_count:54, citys:[2,11,13,5,7,8,9,6],city_count:8},
+]
+};

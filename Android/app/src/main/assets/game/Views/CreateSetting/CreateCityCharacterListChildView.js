@@ -1,1 +1,45 @@
-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
+function CreateCityCharacterListChildView(data) {
+	var self = this;
+	//{id:1,color:"0,0,255",citys:[{id:39,generals:[1,2]}]}
+	base(self, LListChildView, []);
+	self.set(data);
+}
+
+CreateCityCharacterListChildView.prototype.set = function(data) {
+	var self = this;
+	self.data = data;
+	self.removeAllChild();
+	self.setStatus();
+};
+CreateCityCharacterListChildView.prototype.onClick = function(event) {
+	if(event.selfX <= 360){
+		return;
+	}
+	var self = event.target;
+	var listView = event.currentTarget;
+	var cityDetailed = listView.getParentByConstructor(CreateSeigniorCityDetailedView);
+	cityDetailed.prefectureComboBox.deleteChild(self.data.id);
+	listView.deleteChildView(self);
+};
+CreateCityCharacterListChildView.prototype.setStatus = function() {
+	var self = this;
+	self.graphics.drawRect(0, "#ff0000", [0, 0, 440, 40]);
+	var bitmapLine = new LBitmap(new LBitmapData(LMvc.datalist["icon-line"]));
+	bitmapLine.scaleX = 400;
+	bitmapLine.x = 20;
+	bitmapLine.y = 38;
+	self.addChild(bitmapLine);
+	
+	var list = ["name", 0, "force", 100, "intelligence", 150, "command", 200, "agility", 250, "luck", 300];
+	for(var i=0,l=list.length;i<l;i+=2){
+		label = getStrokeLabel(self.data[list[i]],18,"#FFFFFF","#000000",4);
+		label.x = list[i + 1] + 10;
+		label.y = 10;
+		self.addChild(label);
+	}
+	var closeButton = new LBitmap(new LBitmapData(LMvc.datalist["close"]));
+	closeButton.x = 380;
+	closeButton.y = 5;
+	closeButton.scaleX = closeButton.scaleY = 0.5;
+	self.addChild(closeButton);
+}; 

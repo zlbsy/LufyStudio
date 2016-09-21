@@ -1,1 +1,137 @@
-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
+function AreaIconView(controller,areaStatus){
+	var self = this;
+	base(self,LView,[controller]);
+	self.name = "areaIcon_" + areaStatus.id();
+	self.areaStatus = areaStatus;
+	self.x = self.areaStatus.position().x;
+	self.y = self.areaStatus.position().y;
+	self.set();
+	
+	self.addEventListener(LMouseEvent.MOUSE_DOWN, self.onDown);
+	self.addEventListener(LMouseEvent.MOUSE_UP, self.onUp);
+	self.addEventListener(LEvent.ENTER_FRAME, self.onframe);
+	
+}
+AreaIconView.prototype.onDown=function(event){
+	var self = event.currentTarget;
+	self.offsetX = event.offsetX;
+	self.offsetY = event.offsetY;
+	self.onTouching = true;
+	self.saveTouch = {dx:mouseX,dy:mouseY,touchMove:false};
+	var baseView = self.parent.parent;
+	baseView.startDrag(event.touchPointID);
+	LPlugin.playSE("Se_ok", LPlugin.gameSetting.SE);
+};
+AreaIconView.prototype.onUp=function(event){
+	var self = event.currentTarget;
+	self.onTouching = false;
+	var baseView = self.parent.parent;
+	baseView.stopDrag();
+	if(LPoint.distance2(self.offsetX,self.offsetY,event.offsetX,event.offsetY) < 5){
+		if(LMvc.MapController.mode !== MapController.MODE_MAP){
+			if(LMvc.cityId == self.areaStatus.id()){
+				self.showDialogKey("dialog_select_city_common_error");
+				return;
+			}
+			var params = self.controller.getValue("selectCityParams");
+			var obj;
+			var cityData = LMvc.CityController.getValue("cityData");
+			//if(params.neighbor){
+			var neighbor = cityData.neighbor();
+			if(neighbor.indexOf(self.areaStatus.id()) < 0 || LMvc.cityId == self.areaStatus.id()){
+				self.showDialogKey("dialog_select_city_neighbor_error");
+				return;
+			}
+			//}
+			if((params.isSelf && self.areaStatus.seigniorCharaId() != LMvc.selectSeignorId) ||
+			(!params.isSelf && self.areaStatus.seigniorCharaId() == LMvc.selectSeignorId)){
+				self.showDialogKey(params.belongError);
+				return;
+			}
+			if(typeof params.stopBattle != UNDEFINED){
+				var isStopBattle = SeigniorModel.getSeignior(LMvc.selectSeignorId).isStopBattle(self.areaStatus.seigniorCharaId());
+				if(isStopBattle != params.stopBattle){
+					self.showDialogKey(params.stopBattleError);
+					return;
+				}
+			}
+			if(params.spy){
+				var cityFree = SeigniorModel.getSeignior(LMvc.selectSeignorId).isSpyCity(self.areaStatus.id());
+				if(!cityFree){
+					self.showDialogKey(params.spyError);
+					return;
+				}
+			}
+			if(params.confirmMessage){
+				var formatMsg = Language.get(params.confirmMessage);
+				var message=String.format(formatMsg,self.areaStatus.name());
+				self.showDialogMessage(message, function(event){
+					self.selectCityComplete(event);
+				},null);
+			}else{
+				self.selectCityComplete(null);
+			}
+		}else{
+			self.controller.showCity(self.areaStatus.id());
+			if(!LPlugin.native){
+				LPlugin.readyBGM("city");
+			}
+		}
+	}
+};
+AreaIconView.prototype.showDialogKey=function(msgKey, okEvent, cancelEvent){
+	var self = this;
+	self.showDialogMessage(Language.get(msgKey), okEvent, cancelEvent);
+};
+AreaIconView.prototype.showDialogMessage=function(msg, okEvent, cancelEvent){
+	var self = this;
+	var obj = {title:Language.get("confirm"),message:msg,height:240};
+	if(typeof okEvent != UNDEFINED){
+		obj.okEvent = okEvent;
+	}
+	if(typeof cancelEvent != UNDEFINED){
+		obj.cancelEvent = cancelEvent;
+	}
+	var windowLayer = ConfirmWindow(obj);
+	self.controller.view.parent.addChild(windowLayer);
+};
+AreaIconView.prototype.selectCityComplete=function(event){
+	var self = this;
+	if(event){
+		event.currentTarget.parent.remove();
+	}
+	self.controller.returnToCity(self.areaStatus.id());
+};
+AreaIconView.prototype.onframe=function(event){
+	var self = event.currentTarget;
+	var point = self.getRootCoordinate();
+	if(point.x > LGlobal.width || point.x < -self.width || point.y > LGlobal.height || point.y < -self.height){
+		self.layer.visible = false;
+	}else{
+		self.layer.visible = true;
+	}
+	if(!self.onTouching){
+		return;
+	}
+	if(!self.saveTouch.touchMove && (Math.abs(self.saveTouch.dx - mouseX) > 5 || Math.abs(self.saveTouch.dy - mouseY) > 5)){
+		self.saveTouch.touchMove = true;
+	}
+};
+AreaIconView.prototype.set=function(){
+	var self = this;
+	self.layer = new LSprite();
+	self.addChild(self.layer);
+	var icon = self.areaStatus.icon();
+	self.width = icon.getWidth();
+	self.height = icon.getHeight();
+	self.addShape(LShape.RECT,[0,0,CityIconConfig.width, CityIconConfig.height]);
+	LMvc.MapController.view.mapBitmapData.copyPixels(icon._ll_cacheAsBitmap.bitmapData, 
+	new LRectangle(0, 0, self.width, self.height), 
+	new LPoint(self.x+icon._ll_cacheAsBitmap.x,self.y + icon._ll_cacheAsBitmap.y));
+	icon.die();
+};
+AreaIconView.prototype.resetIcon = function(){
+	var self = this;
+	self.layer.remove();
+	self.set();
+};

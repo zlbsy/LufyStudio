@@ -1,1 +1,111 @@
-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
+function TournamentsConfirmView(){
+	base(this,LView,[]);
+	this.layerInit();
+}
+TournamentsConfirmView.prototype.updateView=function(){
+	var self = this;
+	var charas = self.parent.controller.getValue("characters");
+	self.lineLayer.graphics.clear();
+	for(var i=0;i<self.namesBox.length;i++){
+		if(i >= charas.length){
+			break;
+		}
+		var box = self.namesBox[i];
+		var name = box[2];
+		var charaModel = CharacterModel.getChara(charas[i].id);
+		name.text = charaModel.name();
+		if(charaModel.seigniorId() == LMvc.selectSeignorId){
+			name.color="#8FBC8F";
+		}
+		name.x = box[0] + (100 - name.getWidth())*0.5;
+		name.y = box[1]+50 + (50 - name.getHeight())*0.5;
+		if(charas[i].r){
+			var lineObj = self.namesLine[i];
+			for(var j=0;j<lineObj.length - 2;j+=2){
+				self.lineLayer.graphics.drawLine(6,"#F4A460",[lineObj[j], lineObj[j+1],lineObj[j+2], lineObj[j+3]]);
+			}
+		}
+	}
+};
+TournamentsConfirmView.prototype.layerInit=function(){
+	var self = this;
+	self.addChild(getTranslucentMask());
+	self.backLayer = new LSprite();
+	self.addChild(self.backLayer);
+	self.lineLayer = new LSprite();
+	self.lineLayer.y = 50;
+	self.addChild(self.lineLayer);
+	self.nameLayer = new LSprite();
+	self.addChild(self.nameLayer);
+	var panel = getPanel("win05",LGlobal.width, LGlobal.height);
+	self.backLayer.addChild(panel);
+	var panelTitle = getPanel("win02",200, 60);
+	panelTitle.x = (LGlobal.width - 200) * 0.5;
+	self.backLayer.addChild(panelTitle);
+	var name = getStrokeLabel(Language.get("tournaments"),20,"#FFFFFF","#000000",4);
+	name.x = panelTitle.x + (200 - name.getWidth()) * 0.5;
+	name.y = (60 - name.getHeight())*0.5;
+	self.nameLayer.addChild(name);
+	self.namesBox = [
+	[10,0], [10,100], [370,0],[370,100],
+	[10,250], [10,350], [370,250],[370,350],
+	[120,50],[260,50], [120,300],[260,300],
+	[190,140],[190,210]
+	];
+	for(var i=0;i<self.namesBox.length;i++){
+		var box = self.namesBox[i];
+		var panel = getPanel("win03",100, 50);
+		panel.x = box[0];
+		panel.y = box[1]+50;
+		self.backLayer.addChild(panel);
+		//self.backLayer.graphics.drawLine();
+		var name = getStrokeLabel("",20,"#FFFFFF","#000000",4);
+		self.nameLayer.addChild(name);
+		box.push(name);
+	}
+	
+	self.namesLine = [
+	[60,50,60,75,120,75], 
+	[60,100,60,75,120,75], 
+	[420,50,420,75,360,75],
+	[420,100,420,75,360,75],
+	[60,300,60,325,120,325], 
+	[60,350,60,325,120,325], 
+	[420,300,420,325,360,325],
+	[420,350,420,325,360,325],
+	[220,75,240,75,240,140],
+	[260,75,240,75,240,140], 
+	[220,325,240,325,240,260],
+	[260,325,240,325,240,260],
+	//[190,140],[190,210]
+	];
+	var layer = new LSprite();
+	layer.y = 50;
+	self.backLayer.addChild(layer);
+	layer.graphics.add(function(c){
+		c.beginPath();
+		for(var i=0;i<self.namesLine.length;i++){
+			var lineObj = self.namesLine[i];
+			for(var j=0;j<lineObj.length - 2;j+=2){
+				c.moveTo(lineObj[j], lineObj[j+1]);
+				c.lineTo(lineObj[j+2], lineObj[j+3]);
+			}
+		}
+		c.lineWidth = 10;
+		c.strokeStyle = "#FFFFFF";
+		c.closePath();
+		c.stroke();
+	});
+	self.backLayer.cacheAsBitmap(true);
+	
+	var buttonOk = getButton(Language.get("start"),200);
+	buttonOk.x = (LGlobal.width - 200) * 0.5;
+	buttonOk.y = LGlobal.height - 60;
+	self.addChild(buttonOk);
+	buttonOk.addEventListener(LMouseEvent.MOUSE_UP, self.singleStart);
+};
+TournamentsConfirmView.prototype.singleStart=function(event){
+	var self = event.currentTarget.getParentByConstructor(TournamentsConfirmView);
+	var tournamentsView = self.getParentByConstructor(TournamentsView);
+	tournamentsView.singleCombatStart();
+};

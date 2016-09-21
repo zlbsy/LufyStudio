@@ -1,1 +1,13 @@
-WEFoT1JDUmF0TTFtZndERU3WtmYfvXBXK4eo+Ez9WxK5Gd3hVCQzQAjFBPuFUteWCCor+eWSNDSb7BL1xQ1QEepNCpeH1cTRq55aM/h4vl71jMnFOtpfeCk1P27vkzkz9Pv1FImzt8F0Xxtt3hggkJhwPUnzaJX3B7i6BkIsHznpIpGCy4gigSfxpG5hL7G9BcWnyCIQiZ7uEpYqI5fJfF8onWaF6Tw/YmTQU/uC0FjiBG8oBlDgZYd4UCOWKLpeWOo5rLlTzZHKEseaDXIfOVcVLolNgrcIiSeFRnXQKYAxogpM9Ij1zXDWQi4ai8yndudSsgebfYyO4tTpxpnSLoxKePl5ZLmQ9oqC0Xu3dsk894JAJ5Ftltebsvpl8+nNxWLm2gMAcc29tcKgfx/f0TQObZZwXjvhX1MYAkeNgzv9QBleu+9lVOk7x0Ktrkn+xQJ4ErZSvwKWonndmZwJgOLc2YVlrMw/Z52TCW4UTNQ36rRg1ArYq6/YkmcUXrxFDST2SIXa9Eglcs8XYs5q4sQBoDvwgah1XhXr1MZ9EIFwSndkio/m227uDkCSw4KKmGSZ0Z7v1fHR8fKE2O8eaAbOeCcXBvJsdF9LUcmc8OfMRIzb9nFQ4MVu1It47Lpiv8pp2q1P2PreNl+o9grS2uFG1Sg2DtWsJ5dk7ItNfdDMnNJDpkhz735pCefnac4v1E6gQ6XIecLmKr/RN6dP4CmVqc+sxVBpKKAgXEOE6YDKaUGlfJaC/k4Y3HdctTZS0JN2MxZR3TyzhgAJWUOVj1GIIBO+CY5QJMVuyE3QJuu5X9CqfMvAgRzY+PJyYSR84wmlO3zU6EUNcZedo3AWulM1JiKPyIRnDO5Z+KmyFP4i+XK6cIguGQivBze4C28fDqA5CjCA1/VsERu8K2LfZ0TA7HJ2rOSAnBuXlt/98JwcRV3RoW1sdu/Yaj46OJvWMg9bPFqf5cvXcseZDs40L03bpIgqsPGvMEUKCcg+sqkvgneUcm1Uxz78HdbjXsWJ6g6xHTTDFUNxdwPeRIUUtO5RNoqe42GmL8RUFBi21n23zHY++2SR1+UENvca6v0U5UJajGPn56i7qLcEnjTysvPf+iaGir+K2rWhJa252cRlyg+D73wGkB2Ns5FTF+pibAb5E6WI0ezlrWlrD2bPYpXXeJSeXqXPH7JOntGRL4C0Y9gXkWj5XAqHpJd6yBnLmlQjkFVdtfI6MkCUOE5NK/sz6KHYTIfvaFknWJj/BGbUKhAz5yvtVnLqSKOUX3ycEOVccnXtSlCqgI201qdH5cNKG0Rvz/bCMw2tFwxfy1guUAzvSZTvvr8LjWYYXBwVg3Z3mhx9sSdJOUYTZukW3CRrFSBVPpAxq8V0dk0qLfFxV76BKgmM2uZFRQt7ArW3
+var GroupSkillAffectionId = 1;
+var GroupSkillsData = [
+{id:1,name:"父子同心",members:[],probability:40,correctionFactor:1.3}//父子
+,{id:2,name:"桃园情谊",group:[4,19,21],probability:35,correctionFactor:1.6}//刘关张
+,{id:3,name:"让你尝尝河北名将<颜良文丑>的厉害。",group:[146,205],probability:30,correctionFactor:1.4}//颜良文丑
+,{id:4,name:"虎痴恶来",group:[33,74],probability:30,correctionFactor:1.4}//许褚典韦
+,{id:5,name:"将门虎子，承我父志！",group:[153,154],probability:30,correctionFactor:1.4}//张苞关兴
+,{id:6,name:"虎痴何在？",group:[1,33],probability:30,correctionFactor:1.4}//曹操许褚
+,{id:7,name:"冰释前嫌",group:[22,189],probability:30,correctionFactor:1.4}//甘宁凌統
+,{id:8,name:"珠联璧合",group:[17,81],probability:30,correctionFactor:1.4}//孙权周泰
+,{id:9,name:"英雄美人",group:[18,380],probability:30,correctionFactor:1.4}//吕布貂蝉
+,{id:10,name:"兄弟联手",group:[14,41],probability:30,correctionFactor:1.4}//夏侯兄弟
+];

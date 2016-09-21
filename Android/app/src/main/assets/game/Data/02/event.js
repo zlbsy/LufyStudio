@@ -1,1 +1,6 @@
-WEFoT1JDUmF0TTFtZndERZnb6UZwcY029ZTYZ5hOSQtZjOTtM4yJBdMoDc7/GszYcPE4zMW6cDYfMQXepy7UeJfohr9S/3BN+e9FP7+3g1ZGO8rDIROspqnFSCjtjKRIetGfFXOrH21HYXH03FtBMUDAl/X0DDb9Af2UoVg+E1AqPZq4fYO32h31Ff1hRAZYOEbYHdD2jbrxINfQBSXZvsyLLton/n0xyzKEq/lo7SynIOLVj/UpgO+yJ1CnghauCZVSVKa7yigWBrnjWjubHsCEyRhwKCZPzVTG4wR9tB4RfX4OjU7IVSFz3bSWdbjT
+LMvc.startEvent = {
+	script:"Data/Event/{0}/chapter02.txt",
+	result:[
+		{type:"generalsStopInCity", generals:[18,185,265,543,465,485], cityId:22,months:12},//董卓，吕布，华雄强制待在洛阳1年
+	]
+};

@@ -1,1 +1,28 @@
-WEFoT1JDUmF0TTFtZndERbUTm3/QMybBqeKmVX5VLZ6cdODy5IsLMBS/90VrlBgb+rX59ZcB/+AbLQJ4nmeJDs70TvHU2iRjseFZKkOPlQeWLwR6CB3/0Nbj9p+u4R3hc/ePxlsc/IEeHiPNmD/lv7RMPcU7MeLPMONZl9giPPloEUOS96LrIczYjzzVwTilsb3AcFPOVcidkysS/PkqtD4CAq1FIEzlSULGf0avUA+wCFRPp1FB5EoAVCLjwyjKPR/W21PQw4AbdSXSwQ7w1epe0Xh3nuu8tU4lr9h52t2cqxvXsF+heTPnz/kf8JZVqHNIm3SrXTL2z5m15rHbzHrAIvFTG89fgSLlxzG/vjlw1N6MddSONp0J7QelLlXEvqeGy2wxtCrifzp0t0+nMnUq8c4rIwZUXSc28nKm/PGdC5JdmFYJ9Dm4t425wBcgAg1AA8ezXq0v5ZR7YxMGWJuKZr71ee1eX1JVI9VlD6aCx+PprfQUsjV38nJubTplGGR1S+kBuVN9jTqt1FvcA+dhrBqLok8rHBCzoyKr49RJiwv670YX/KLDG6mU9Wr0+EsaVNyRKY3cWsN3iHzxHav8Kr+qCX9PcAwWkfcjTvcpQO8HI4EdresNHUtN08ALSiq6T2VfDtF1gy4IUlVdsIpun4msU+mw/mby3v1FXZ0QiDa7rjg6QNsDS7DntHh6RDUe1hCOk/62tJmDY21CFdetLY7KPM+MOIKsvGlic/+O84KLtCE5tW9NCVwLNnGzw1/+7EFcE6hf5mTl0p/tqSBAPdenWHSkik5kP+MQlYHXXNz+MufvaMfg10rXbbt8cZat+VZ8dGYzyajIhOWXrBshZiGhV7uQUANpfHZd3tmj685bZfwog4XHyi2UNefAcnisPsQfw4BiVjWNjDqSKoyU8DTyQrfFl7CXA/r7kx9can4OvHZrMtJdyBTVYB7OBd0H/EN/RODHTElj59mYTIIaADd8HkVSWDWSRR3pcgQxsbt9uWbMHdNMFhIcJT+nLsm18ox6MGzkICw9BeUS+bOgN8yowaARUHfSMUompASncK4zAHO1HLTmQ5z6putXgce8nUm2tpWJVY9O0xWVUZhy2p4qPe9RtOjPPF5QgSUzIleggkWbA6XFhyL9nnbGUSfWgXeg0aiB/pP5AMOAl3Nc8Exa00tzKlF14dTFZq4=
+function BuildView(controller,img,name){
+	var self = this;
+	base(self,LView,[controller]);
+	self.set(img,name);
+}
+BuildView.prototype.set=function(img,name){
+	var self = this;
+	self.name = name;
+	var layer = new LSprite();
+	var display;
+	if(self.controller.getValue("selfCity")){
+		display = new LBitmap(new LBitmapData(LMvc.datalist[img]));
+	}else{
+		display = GameCacher.getGrayDisplayObject(img);
+	}
+	self.width = display.getWidth();
+	self.height = display.getHeight();
+	layer.addChild(display);
+	
+	var name = getStrokeLabel(Language.get(name),25,"#FFFFFF","#000000",4);
+	name.x = (display.getWidth() - name.getWidth())*0.5;
+	name.y = display.getHeight() - name.getHeight();
+	name.heightMode = LTextField.HEIGHT_MODE_BASELINE;
+	layer.addChild(name);
+	layer.cacheAsBitmap(true);
+	self.addChild(layer);
+	self.addShape(LShape.RECT,[0,0,self.width,self.height]);
+};

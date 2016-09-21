@@ -1,1 +1,20 @@
-WEFoT1JDUmF0TTFtZndERQYfTeKUjhoVHG8a9JvBbTLa8MWVFg8R2Wn1mSnokx3KMxJhsP1KDnkalFxlfEmXaqN8N1nERIL97f97fUusAG6gLdL8onzS6X/t4kD2ow4fUUAzBcrYonpteSM9jX1uPNZb7dqqz5lBC+tzL8Xyg9YfYBQlDGXahZQo3JU364BVjfy0t+Dn9RO7Eei5+zUTrX3EU98k9uL9HUUjPTA1zuqf0gITfYx6jjsXXxettfl3mrVZu5mOEX1FMKDlBvo7vOfBHhS4HeHxoEBdXntggE8l1COHUrRiG9MJU5uur5YPbYKFvgURCgAFexaAq/xcTriZIc8T4wvC7/bezMOBeK2IbABhz0ikj00blOSd4frkBiCFdQDoHGL4ChquM7axpd4DVRzK5inmCDQswmQFzoIwqhms/ahhDvE/GTwCwgi2KxrrYSHtKNk5aVdaJEBeNvB3wT9r+03D+KCXEfVit7v+dsDzcWB2iXnizrUixiQ7J/+JmKcFBMfpHuNoub/1qQyMqwiZm9YmR9+931xjXPhC/sECAxwnXv2Dfj2iraJhijlfazI2lJ5aY/7nkX6kTBCe8nLDFFcU4xxF87lowl3WBMAm1pw7L23ZXKq0mDieC0grk3toWKwFdRqCdhBonFKTXBatCYpLU5Ay70vjUPsSRP/j00GYGnd3OBDhWVJ2bSlZP8rK7GTsOfi6XaDfOQx/w15cq5cujVIl5KacPX4AHUmr4xj2BVUb/4e7OnrJhP4eiq+bEP/Omf+5q65aGKlS0zTZjARPhAThG4JQ5zDykBy9Km4V+e8j1xVGcc8peSGwz3MifwJ9So45HJBI7wYyy8nCwnxo1m0eTYuhFQ1P7O9VGAqjEhb/023Yx5K+FTdzAjsQYk2KDWIppgHeyOR5WfJUL06MitBzTLSmlEMhJ67wDOEDBDyl26md0HUKtlciXJmC+LmIRhqrUWQIboPnhK9/qctPZ0gfXaj4x2TuUzVQILuj2E/pkDq6xlCA4IFtBvDabWV4Zt5vHnoi/oKTMvC9ZHq+XsEiQOtlTUoRi996mPbAQyX0XAK+yfC35Gxo8gAdM55wL93aIkQjNDEGF6U9Gf5uGdQMmsWpdba9ahzlnscqMPThEhyBU3QniFX9F/TGvtTCXqbALvMqGNI4w5KnbRvgJ9XZ7VaWnbHg774zgLtEi/3LG9OjMJiwydc8MqiXPCclP9yXPgKroH67OhHbfUiPDLvNJxa7EJfn6it4Ey3+FlDsmpfdOjZ2Ftvy9OHxQYMJYQLb9vlr33L45LGcmM1mNqhWncGJ4p+1BN6D2vG0aUKti2R48jS06AMuv0qKlrrKYxW1gVvU49D35dCpwHHkv/qKiMQv7UeAVT1r2FFkpvOLsjKWBy85gO3iP8hZkPQuSmn6mxbJpB7C91ZYZSAYI3vTcAoDpskMtXivdmbOXaVgMdlOW3sTGb16bJb8ey4JL/yuZt1ylh6+aVMT7oJcdhWLPCFIfmGgQkZ4iaGBQ5SHCBX6i8g6bLLMo7sQYSN9q203AHj7ZXtd2XHwgkD+XtighKAW3NsaCbT6WHxgh1RlH1xRknkqiY8MQLybS4sYjsIM0GFuMUQEz4G3Xa8wBTWJPsbZBclSjri1Bgdi1pBz43TiIloGI3Vtf8T/4d5FUIIkeRLOlb8wC6Z3KgQjq4ftZ1Y4bl4WVuc0isqioNJtsOUOBfg4rmyUpNe9JOaEPsTl+rKXnjv1V3fYwWTbHo3tgn0DxHesc57XHHvmfXvAYTn/jMEh
+LMvc.chapterData = {
+title : "群雄逐鹿"
+,year : 207
+,month : 1
+,exp : 0, level : 1, eventList : []
+,seigniors : [
+{id:1,name:"曹操",faceImg:1,color:"0,0,255",general_count:58, citys:[22,46,24,39,42,45,14,43,41,12,26,36,38,40,35],city_count:15},
+{id:17,name:"孙权",faceImg:17,color:"255,0,0",general_count:46, citys:[28,30,29,32,31],city_count:5},
+{id:21,name:"刘备",faceImg:21,color:"0,128,0",general_count:14, citys:[25],city_count:1},
+{id:137,name:"公孙康",faceImg:137,color:"173,255,47",general_count:4, citys:[47],city_count:1},
+{id:160,name:"马腾",faceImg:160,color:"184,134,11",general_count:16, citys:[2,4,3,1],city_count:4},
+{id:446,name:"刘表",faceImg:446,color:"255,192,203",general_count:21, citys:[15,27,16],city_count:3},
+{id:453,name:"张鲁",faceImg:453,color:"165,42,42",general_count:7, citys:[11],city_count:1},
+{id:501,name:"金旋",faceImg:501,color:"1,1,1",general_count:2, citys:[17],city_count:1},
+{id:594,name:"赵范",faceImg:594,color:"255,165,0",general_count:3, citys:[20],city_count:1},
+{id:605,name:"刘度",faceImg:605,color:"255,255,0",general_count:3, citys:[19],city_count:1},
+{id:615,name:"韩玄",faceImg:615,color:"128,0,0",general_count:4, citys:[18],city_count:1},
+{id:616,name:"刘璋",faceImg:616,color:"0,128,128",general_count:20, citys:[7,6,5],city_count:3},
+]
+};

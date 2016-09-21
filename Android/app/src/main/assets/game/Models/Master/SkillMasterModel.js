@@ -1,1 +1,140 @@
-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
+function SkillMasterModel(controller, data) {
+	var self = this;
+	base(self, MyModel, [controller]);
+	self.type = "SkillMasterModel";
+	self.data = data;
+}
+SkillMasterModel.master = [];
+SkillMasterModel.setMaster=function(list){
+	var self = this;
+	if(SkillMasterModel.master.length > 0){
+		return;
+	}
+	for(var i=0,l=list.length;i<l;i++){
+		var skill = new SkillMasterModel(null,list[i]);
+		SkillMasterModel.master.push(skill);
+	}
+};
+SkillMasterModel.getMaster=function(id){
+	var self = this;
+	for(var i=0,l=SkillMasterModel.master.length;i<l;i++){
+		var skill = SkillMasterModel.master[i];
+		if(skill.id() != id){
+			continue;
+		}
+		return skill;
+	}
+	return null;
+};
+SkillMasterModel.prototype.id = function() {
+	return this.data.id;
+};
+SkillMasterModel.prototype.name = function() {
+	return Language.getSkill("s_"+this.data.id);
+};
+SkillMasterModel.prototype.explanation = function() {
+	return Language.getSkill("se_"+this.data.id);
+};
+SkillMasterModel.prototype.mainType = function() {
+	return this.data.type;
+};
+SkillMasterModel.prototype.subType = function() {
+	return this.data.subType;
+};
+SkillMasterModel.prototype.isSubType = function(subType) {
+	return this.data.subType.indexOf(subType) >= 0;
+};
+SkillMasterModel.prototype.attacks = function() {
+	return this.data.attacks;
+};
+SkillMasterModel.prototype.startAmbushProbability = function() {
+	if(typeof this.data.startAmbushProbability == UNDEFINED){
+		return 1;
+	}
+	return this.data.startAmbushProbability;
+};
+SkillMasterModel.prototype.strategyAttacks = function() {
+	return this.data.strategy_attacks;
+};
+SkillMasterModel.prototype.rects = function() {
+	return this.data.rects;
+};
+SkillMasterModel.prototype.probability = function() {
+	var probability = this.data.probability;
+	return probability ? probability : 100;
+};
+SkillMasterModel.prototype.hert = function() {
+	return this.data.hert;
+};
+SkillMasterModel.prototype.aids = function() {
+	return this.data.aids;
+};
+SkillMasterModel.prototype.aidCount = function() {
+	return this.data.aidCount;
+};
+SkillMasterModel.prototype.aidRects = function() {
+	return this.data.aidRects;
+};
+SkillMasterModel.prototype.wakeRects = function() {
+	return this.data.wakeRects;
+};
+SkillMasterModel.prototype.minusRects = function() {
+	return this.data.minusRects;
+};
+SkillMasterModel.prototype.vampire = function() {
+	return this.data.vampire;
+};
+SkillMasterModel.prototype.ambush = function() {
+	return this.data.ambush;
+};
+SkillMasterModel.prototype.ambushRects = function() {
+	return this.data.ambushRects;
+};
+SkillMasterModel.prototype.thrift = function() {
+	return this.data.thrift;
+};
+SkillMasterModel.prototype.bounce = function() {
+	return this.data.bounce;
+};
+SkillMasterModel.prototype.condition = function() {
+	return this.data.condition;
+};
+SkillMasterModel.prototype.ignore = function() {
+	return this.data.ignore;
+};
+SkillMasterModel.prototype.speadRects = function() {
+	return this.data.speadRects;
+};
+SkillMasterModel.prototype.speadProbability = function() {
+	return this.data.speadProbability;
+};
+SkillMasterModel.prototype.enlistCount = function() {
+	return this.data.enlist_count;
+};
+SkillMasterModel.prototype.enlistValue = function() {
+	return this.data.enlist_value;
+};
+SkillMasterModel.prototype.statusName = function() {
+	return this.data.status_name;
+};
+SkillMasterModel.prototype.statusValue = function() {
+	return this.data.status_value;
+};
+SkillMasterModel.prototype.hertVsStatus = function() {
+	return this.data.hert_vs_status;
+};
+SkillMasterModel.prototype.rangeAttack = function() {
+	return this.data.rangeAttack;
+};
+SkillMasterModel.prototype.healId = function() {
+	return this.data.healId;
+};
+SkillMasterModel.prototype.healRects = function() {
+	return this.data.healRects;
+};
+SkillMasterModel.prototype.changeProbability = function() {
+	return this.data.changeProbability;
+};
+SkillMasterModel.prototype.powerful = function() {
+	return this.data.powerful ? this.data.powerful : 0;
+};

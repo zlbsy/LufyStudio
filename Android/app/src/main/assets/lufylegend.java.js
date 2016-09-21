@@ -70,10 +70,9 @@ function LURLLoaderExtensionInit() {
 		}
 		if (t == LURLLoader.TYPE_TEXT || (!t && getExtension(u) == "txt")) {
 			s.loadtype = LURLLoader.TYPE_TEXT;
-			//LPlugin.print("LPlugin.readFile="+(typeof LPlugin.readFile));
-			//var data = LPlugin.readFile(u.substring(pathIndex, extensionIndex), extension);
 			var data = LPlugin.readFile(u);
-			data = LPlugin.changeToScript(data);
+			//暂时取消加密
+			//data = LPlugin.changeToScript(data);
 			setTimeout(function() {
 				var event = new LEvent(LEvent.COMPLETE);
 				s.data = data;
@@ -82,7 +81,7 @@ function LURLLoaderExtensionInit() {
 				s.dispatchEvent(event);
 				delete s.data;
 			}, 1);
-		} else if (t == LURLLoader.TYPE_JS) {
+		}/*暂时取消加密 else if (t == LURLLoader.TYPE_JS) {
 			var data = LPlugin.readFile(u);
 			data = LPlugin.changeToScript(data);
 			var script = document.createElement("script");
@@ -94,7 +93,7 @@ function LURLLoaderExtensionInit() {
 				event.target = s;
 				s.dispatchEvent(event);
 			}, 100);
-		} else {
+		}*/ else {
 			s.ll_load_base(u, t);
 		}
 	};

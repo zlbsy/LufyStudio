@@ -1,1 +1,74 @@
-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
+function CharacterDetailedFaceView(controller){
+	var self = this;
+	base(self,LView,[controller]);
+	self.init();
+}
+CharacterDetailedFaceView.prototype.init=function(controller){
+	var self = this;
+	if(controller){
+		self.addController(controller);
+	}
+	var faceW = CharacterFaceSize.width + 20, faceH = CharacterFaceSize.height + 20;
+	if(!self.faceLayer){
+		var win = new LPanel(new LBitmapData(LMvc.datalist["win02"]),faceW,faceH);
+		self.addChild(win);
+		win.cacheAsBitmap(true);
+		
+		var face = new LSprite();
+		face.x = 10;
+		face.y = 10;
+		self.faceLayer = face;
+		self.addChild(face);
+	}
+	if(!self.textFieldName){
+		self.textLayer = new LSprite();
+		self.addChild(self.textLayer);
+		
+		var name = getStrokeLabel("", 20, "#FFFFFF", "#000000", 4);
+		name.x = face.x + 10;
+		name.y = face.y + 10;
+		self.textLayer.addChild(name);
+		self.textFieldName = name;
+	}
+	if(!self.textFieldBelong){
+		var belongLabel = getStrokeLabel("", 20, "#FFFFFF", "#000000", 4);
+		belongLabel.x = name.x;
+		belongLabel.y = name.y + 30;
+		self.textLayer.addChild(belongLabel);
+		self.textFieldBelong = belongLabel;
+	}
+};
+CharacterDetailedFaceView.prototype.updateView=function(){
+	var self = this;
+	if(LMvc.BattleController){
+		self.textFieldBelong.visible = true;
+	}else{
+		self.textFieldBelong.visible = false;
+	}
+	var characterModel = self.controller.getValue("selectedCharacter");
+	self.showLabel(characterModel);
+	self.faceLayer.removeAllChild();
+	if(characterModel.hasFaceCacher()){
+		self.showFace();
+	}else{
+		self.controller.nextFrameExecute(function(){
+			self.showFace();
+		});
+	}
+};
+CharacterDetailedFaceView.prototype.showLabel=function(characterModel){
+	var self = this;
+	self.textFieldName.text = characterModel.name();
+	var battleBelong = self.controller.getValue("battleBelong");
+	if(LMvc.BattleController && battleBelong){
+		self.textFieldBelong.text = Language.get(battleBelong);
+	}
+	self.textLayer.cacheAsBitmap(false);
+	self.textLayer.cacheAsBitmap(true);
+};
+CharacterDetailedFaceView.prototype.showFace=function(){
+	var self = this;
+	var characterModel = self.controller.getValue("selectedCharacter");
+	var face = characterModel.face();
+	self.faceLayer.addChild(face);
+};

@@ -1,1 +1,33 @@
-WEFoT1JDUmF0TTFtZndERYXsyQp22H3TdzYNxphidrN3S9ZJSyi4IulN8mtRCfJZRw04s+0E6zc5Z96IajV76GjIcsfW3hwqPg6c3Tj9c3uqtDQ1Wlvc1Jp3Rtier/Jpv98KU4bXtqdcncWfsoy183G1kQPlaLezdqcNZU8M93fcFRegZIe87mRwF7uioDe0U2VvH4Zzd6YmEfhOSekDdy9jeLrj/1IPlr8zPU7ajhed7NRldvf4p+V6JXRfOoxpTddSTYCOb3Q/xxQr9rxRxS/hsEktPBos2DB0yzslICBxi5AVB0rYEW2mhyT6/c/Nhi8LptNCyDU1BxUZgnJOoFVvrmMtcSBRz4X4iWtqxDplbi7Jh1sfeTrjTfIMSNuILwYbl5OqZRWW1GC9MkXlROxO5L5+5YZ9E/lIkKiLWjk4bElgvZrUjwnDacrLUUdt4CTyjeAOTXCDNsEb0FHfxY0TVuBNLGzdnQK1BPon3coMsDZPXWuGa3z3K2K1R+KlC1jjOM/BLkn+r63/K1e9Z2Za+4LmcMT3r/y5OEShPk2v2rKpIKPKxCW/16UN5hAHlb7MSFeFYT3OTFrMSqBugzUbzTO81YfC/S5kRGnlPZVbs+0V+jdW0poEI3znqJ+vWNFV3nYhO4oHG1EDUapwHx4heBP7KdsiKxbaKDyLX8lpHSC7HLUNMju7swgW0MMoR/MXIfo/UsjDpo+0u54hIzaBCFDOPtqU8x0cJvalD0AxZuFaPcAqqIXmAYscQtZn0TFllG6rKww2ym71PWvTXhmQh9LC5kVelKm26sibZ+gFvY37yZvX+IY9rf8o5h35Z7HP87Z1aOouo/d+2NJYfNhYQ5u9NqwD22FLgFurGTURuaGnMmTuHRrZgr0zFXZUouQZBkB1JsUMARkslwhlN4NMqwsqd1JuKoBS/jYBWpB2dPr/Ae1fkyetSdoxqNYe55JUeJGb0LeBh15kQd2U5lnnjACVL8LXcfw1KcC6YqtjG+BU1CBLH1gGKluD7bJZd5ppic1fTsNnCAWEWOgF3DRPifHA5MTUqYnCi1kWelxdESOFKXdKc+2JMflDQNZJXuvLUnBhLpDF88JGK0frz/9z8cLCbA426dfUCnjh9IjWOWSeYtb6xz3Eifjy7yhlkdn/4mN64u5iUe81IOpvPiF90U0BopJU7Kwbk/6rlXp3BrEeXS9E29GoTBBI8rVOiABOJ3n3uIYJ+Aqqw8ZFLE5NK1DI2tqIYgbTsRzyI7GW0srbcexRfpV4QuJQieHlL/Cs7diubssghyZNketIDDefpGa8h6CDteu0LfQa2HKfCwNyhxt+jfFIlINl1Jp+pjgHmy2FT8ZVXzRxuiiDwMC/QtfvhUOOWPMpCB9watc4op8wI3c4NdkhHU9E5j1Dora1Wke7FpAXOjIKcC1Hf9UW3+rn1f4Op88SuekiwxIjVkyvp0ymdDhLr/LZAO2AzVHw0oEY6MTH0j02KR7xCA==
+function BattleLoading(data){
+	base(this,LSprite,[]);
+	var s = this;
+	var background = getBlackBitmap(LGlobal.width,LGlobal.height);
+	s.addChild(background);
+	s.addEventListener(LMouseEvent.MOUSE_DOWN, function(){});
+	s.addEventListener(LMouseEvent.MOUSE_UP, function(){});
+	var bitmap = new LBitmap(new LBitmapData(LMvc.datalist["common-loading"]));
+	bitmap.x = -bitmap.getWidth()*0.5;
+	bitmap.y = -bitmap.getHeight()*0.5;
+	s.layer = new LSprite();
+	s.addChild(s.layer);
+	s.layer.addChild(bitmap);
+	s.layer.x = LGlobal.width * 0.5;
+	s.layer.y = LGlobal.height * 0.7;
+	
+	var title = getStrokeLabel("",34,"#FFFFFF","#FFFF00",2);
+	s.title = title;
+	title.y = 50;
+	s.addChild(title);
+	
+	s.addEventListener(LEvent.ENTER_FRAME,s.onframe);
+}
+BattleLoading.prototype.setTitle = function (value){
+	var self = this;
+	self.title.text = value;
+	self.title.x = (LGlobal.width - self.title.getWidth())*0.5;
+};
+BattleLoading.prototype.setProgress = function (value){};
+BattleLoading.prototype.onframe = function(event){
+	var self = event.currentTarget;
+	self.layer.rotate += 10;
+};

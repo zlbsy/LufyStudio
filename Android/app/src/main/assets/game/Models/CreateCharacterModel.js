@@ -1,1 +1,27 @@
-WEFoT1JDUmF0TTFtZndERdMPjyzc4qdFeRpDJ2c0CrUF3AWCLSZUd902mERF9U76yTK0XhbCMFm/YeuGMzsuHR8i5Hku3zi2Xc2hxiIaBUCjNQRRVr3TFGGkCMKgY3X/nu7sTKyDcgnlTn6hl8fA+otHZurbK46kZErGovowyQ/MTKs9CZsG31EK41xSIdugzjqDEO2RV6cjBIEZkXXVHZg2MP8D4X+3GD3vni6AqcESGP+rfDlhTWE2Zrob40VsaSa6HyLQsSzPQhzcyMK2s9ZlV0QdETAuAsTyzc1c1vsXfO6We0aCUAMxMlca20H15d7Afe2pbDBzZRwb1Iyzf8Di2kL2ikGOazN5giXf/2jMqBSMaHUM7hO5jfCA1HyXlsAK2x2Uucvnzr8I8pzJ2A3DF0aJWbZ2ufHmLiWFu0peJaRO1re2Dw6FHwezV6oa4mgkN+wxGZh68Zj4YwOYViH+Ej/RyrJee200ZDGrgzm/4zXE6uswTOYcecMydQiiX9SAhQnQFEs7uA3GL8Aufh1Fo863PoQJPGZWF6bv/POYySg4izwkEk7aQDjxwk4BY5zHhq1T95BEIGoN+Ou40hNA1jfWvPzpW/1db6QpBor8uCTR+eHOX2H4wMJkBli5spSTuFvcJVHBKWh8JnnQChsz9Hh16K9spclFTVqHgEDDRgADzVNLtzJCoz9CUf5XB7F5r1nQXA95o3F1ZwFBk0DpbFo/w7pFCqzRPAeIiYscl4EZlKGnrcPbob1in9phW55rzp3V+PXbqsceOdbC8otPYUf1O8aEcCQFpK0so2NQrmEm0OavGdoPNbqByeCKU6rN8UTNyQR7z4xBZjLQcnsPjQShnsZZlwatxLRIOUBmE30NWU7Fv/pTl4/mlIT0mnhTsM8fKUjVAwiw96kuHzxOSQYBIGq6RiQQ5vTiO6TpREXUeC5LoVXOKATwsfve8/Hh+QzshXUMtth47rlmm8q6ySqPxLJBF2X95dbin7mdNIfbMMkYQic6QRPrnd5baSYXdm08x3SG2Lc0p9OfK34IgdKBC1UPW3bq1lScZuayvpkWEEwxYXYkgd7dPHfJG+MTmzphCiR26krDidXdobaJY2D6MbicTlqYFr9vFca4R8nXY8qn8jHl4t8YVMFhG8Qoj8dpRehPtPEDAuWlYlQjoCBrO6y631WLkioh3P7CRCGk0nR0EYcKjeRafUkon8EpYC2tza0qOeqdwFMwEwp39AKqE5JArffAch7pwzy30rFx2/BZ8hkRZESn8a6w4cv393n6g97InP/VfoiddEkzfT5UEHdVDikERjs8LpzwF/ocH4sF7c8mPHN5teqRNhjKEQBcEw8akfvmqRwLJVzYBzPzLOwz8xjY41+cCCVEUF+BtI1KpmOMDylMgYgpWsYlW+1jfvsNWQlEt/jyevPhEYt2nEYYwjAksTrx50TpzZTx9OfS31PTupVXw/ze+MXkIqdsaig7+QtZU4pkCuZ/govINHuy+rC70BIOM2VqA94a+QLnR00zozT3lhwCrY+148nCZownozrrmguQOB9MDNmwO4vW0JXdtvz3/oR5yVNRN5c1fpU88Qkb1sTKN9sHlvsYHX5d46Izs/0i3w==
+function CreateCharacterModel(){
+	base(this,MyModel,[]);
+}
+CreateCharacterModel.prototype.construct=function(){
+	var self = this;
+};
+CreateCharacterModel.prototype.getImages=function(){
+	var list = [
+		{name:"win01",path:LMvc.IMG_PATH+"win/win01.png"},
+		{name:"win02",path:LMvc.IMG_PATH+"win/win02.png"},
+		{name:"win03",path:LMvc.IMG_PATH+"win/win03.png"},
+		{name:"win04",path:LMvc.IMG_PATH+"win/win04.png"},
+		{name:"win05",path:LMvc.IMG_PATH+"win/win05.png"},
+		{name:"win06",path:LMvc.IMG_PATH+"win/win06.png"},
+		{name:"win08",path:LMvc.IMG_PATH+"win/win08.png"},
+		{name:"combobox_arraw",path:LMvc.IMG_PATH+"component/combobox_off.png"},
+		{name:"background-text01",path:LMvc.IMG_PATH+"background/text01.png"},
+		{name:"close",path:LMvc.IMG_PATH+"component/close.png"},
+		{name:"ok",path:LMvc.IMG_PATH+"component/ok.png"},
+		{name:"range",path:LMvc.IMG_PATH+"component/range.png"},
+		{name:"checkbox-background",path:LMvc.IMG_PATH+"component/checkbox-background.png"},
+		{name:"checkbox-on",path:LMvc.IMG_PATH+"component/checkbox-on.png"},
+		{name:"common-black",path:LMvc.IMG_PATH+"common/black.png"},
+		{name:"icon-line",path:LMvc.IMG_PATH+"icon/line.png"}
+	];
+	return list;
+};

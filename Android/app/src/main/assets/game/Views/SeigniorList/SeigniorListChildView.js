@@ -1,1 +1,126 @@
-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
+function SeigniorListChildView(controller, seigniorModel) {
+	var self = this;
+	base(self, LView, [controller]);
+	self.seigniorModel = seigniorModel;
+	self.y = LGlobal.height - 160;
+	self.layer = new LSprite();
+	self.addChild(self.layer);
+	
+	self.addEventListener(LEvent.ENTER_FRAME, self.onframe);
+	
+	self.addEventListener(LMouseEvent.MOUSE_DOWN, self.onDown);
+	self.addEventListener(LMouseEvent.MOUSE_UP, self.onUp);
+}
+SeigniorListChildView.prototype.onDown=function(event){
+	var self = event.currentTarget;
+	self.onTouching = true;
+	self.saveTouch = {x:mouseX,y:mouseY,dx:mouseX,dy:mouseY,speed:0,touchMove:false};
+	var parent = self.parent;
+	parent.startDrag(event.touchPointID);
+	self.controller.view.ctrlLayer.visible = false;
+};
+SeigniorListChildView.prototype.onUp=function(event){
+	var self = event.currentTarget;
+	self.onTouching = false;
+	var parent = self.parent;
+	parent.stopDrag();
+	self.controller.view.ctrlLayer.visible = true;
+	if(!self.saveTouch.touchMove){
+		self.controller.showArea(self.chapterStatus.id());
+	}else if(parent.x > 0){
+		self.controller.view.centerOnChild();
+	}else if(parent.x < -(parent.numChildren - 1) * LGlobal.width){
+		self.controller.view.centerOnChild();
+	}else if(self.saveTouch.speed > 30){
+		self.controller.view.moveRight();
+	}else if(self.saveTouch.speed < -30){
+		self.controller.view.moveLeft();
+	}else{
+		self.controller.view.centerOnChild();
+	}
+};
+SeigniorListChildView.prototype.onframe=function(event){
+	var self = event.currentTarget;
+	var parent = self.parent;
+	if(parent.x + self.x > -LGlobal.width && parent.x + self.x < LGlobal.width){
+		self.layer.visible = true;
+		if(self.layer.numChildren == 0){
+			self.set();
+		}
+	}else{
+		self.layer.visible = false;
+	}
+	if(!self.onTouching){
+		return;
+	}
+	if(!self.saveTouch.touchMove && (Math.abs(self.saveTouch.dx - mouseX) > 5 || Math.abs(self.saveTouch.dy - mouseY) > 5)){
+		self.saveTouch.touchMove = true;
+	}
+	self.saveTouch.speed = self.saveTouch.x - mouseX;
+	self.saveTouch.x = mouseX;
+	self.saveTouch.y = mouseY;
+};
+SeigniorListChildView.prototype.set=function(){
+	var self = this;
+	var winH = 160;
+	var faceW = 220;
+	var faceH = 320;
+	var faceSize = 100;
+	var selectSeignor = self.controller.getValue("selectSeignor");
+	var character = self.seigniorModel.character();
+	var layer = new LSprite();
+	layer.x = 40;
+	var win = new LPanel(new LBitmapData(LMvc.datalist["win05"]),400,winH);
+	layer.addChild(win);
+	
+	var name = getStrokeLabel(character.name(),22,String.format("rgb({0})",self.seigniorModel.color()),self.seigniorModel.color()=="1,1,1"?"#CCCCCC":"#000000",1);
+	name.x = 5 + faceW;
+	name.y = 20;
+	win.addChild(name);
+	if(character.id() != LMvc.selectSeignorId){
+		var stopBattleSeignior = selectSeignor.getStopBattleSeignior(character.id());
+		var relationshipLabel = getStrokeLabel(Language.get("relationship"),22,"#999999","#000000",2);
+		relationshipLabel.x = name.x;
+		relationshipLabel.y = 82;
+		win.addChild(relationshipLabel);
+		
+		var str = Language.get(stopBattleSeignior?"stop_battleing":"hostility");
+		var relationshipText = getStrokeLabel(str,20,"#ffffff","#000000",2);
+		relationshipText.x = name.x;
+		relationshipText.y = 109;
+		win.addChild(relationshipText);
+		if(stopBattleSeignior){
+			str = String.format(Language.get("quantity_of_month"),stopBattleSeignior.month); 
+			var relationshipTime = getStrokeLabel(str,12,"#ffffff","#000000",2);
+			relationshipTime.x = relationshipText.x;
+			relationshipTime.y = 132;
+			win.addChild(relationshipTime);
+		}
+	}
+	
+	var city_count_label = getStrokeLabel(Language.get("city"),22,"#999999","#000000",2);
+	city_count_label.x = 320;
+	city_count_label.y = 20;
+	win.addChild(city_count_label);
+	var city_count = getStrokeLabel(self.seigniorModel.areas().length,20,"#ffffff","#000000",2);
+	city_count.x = city_count_label.x;
+	city_count.y = 47;
+	win.addChild(city_count);
+	
+	var general_count_label = getStrokeLabel(Language.get("generals"),22,"#999999","#000000",2);
+	general_count_label.x = 320;
+	general_count_label.y = 82;
+	win.addChild(general_count_label);
+	var general_count = getStrokeLabel(self.seigniorModel.generalsCount(),20,"#ffffff","#000000",2);
+	general_count.x = general_count_label.x;
+	general_count.y = 109;
+	win.addChild(general_count);
+	
+	layer.cacheAsBitmap(true);
+	self.layer.addChild(layer);
+	
+	var face = character.face();
+	face.x = 0;
+	face.y = winH - faceH;
+	self.layer.addChild(face);
+};

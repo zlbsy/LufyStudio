@@ -1,1 +1,13 @@
-WEFoT1JDUmF0TTFtZndERQYfTeKUjhoVHG8a9JvBbTLa8MWVFg8R2Wn1mSnokx3KMxJhsP1KDnkalFxlfEmXanQZz2RIde/25UTZBXIIkffwS3VdkHGLwmFNZMjD8pKkkRetnGgcNZYB9Mk7BGNZhDFREU3Eh/kP+o9JS8xC6CoOc2puUiB9FZudVBkRTjB4cd9taiHbV5zcEZ85ffmHuD4sV1lrRFEIZNnwCjBFSQp1SPhBKrF2ddw9J6sf8/6QUGZLQwzPankdYrh9fyHpiJcj0MvpZn+spEBt2sr2QBt/8oFU7lW1QY90UHOhBlbu6dU0wR4zFrU0OqxhZ+qYqYZ3jNoTEYl83bYEpSRu++s4EoYFDBcVoBTWD8dr77sohHV1N75zKLLputa+t2aS6wk9x1+D7IRpncQcxM3Tx8lwCr/Ft6g1GaqJEOWTO4L2bqCsg6eBFr9WvMfKeLz91EBgbs4lTefwp130u+LPDM2uDy74reYdRF0/h+rtKl3eHjr0VeAle4uHz7x1s+rI5h3ogy6MOaKsTBln6qhq3JLK03B8XITC6MLPoJ/z3PfR6cOyDDQECimk4mkrtP44LB4s/iyZYQJToxxx3mcgXAdblJixenLy0Xjy7UMbth/P2I/F0HOowwyby+rSGTTBufZWQEXMoko3bkAMd6JuY97CPI9GBcKJN1pGrJ+UzFX7RcDcRlKHVRZrvLHuHQ8wJ273zN7Kxb6S73cV6SB8bnnbtzMWIUBtOw4avL8cN6K8su9TdUBXPzj5L56ssrvwupf2F8ehqiBtBlEBJaJ3SJjFqQ/Q0tNY6r+SN0ZCIgo086ur1mryC98pnkrqGvhPS2j28Z965nh4PO6y6HJgKyPYP7aCa3lWZfGAiBH66l2U9MhJqjMgf/wJXe2kfccY9518ZQpA4BmzyzmFxQUHbUozHZHODLtLXRa/2LsHIUJP
+LMvc.chapterData = {
+title : "群雄逐鹿"
+,year : 225
+,month : 1
+,exp : 0, level : 1, eventList : []
+,seigniors : [
+{id:17,name:"孙权",faceImg:17,color:"255,0,0",general_count:46, citys:[16,30,27,17,29,28,20,32,10,19,18,31],city_count:12},
+{id:35,name:"曹丕",faceImg:35,color:"0,0,255",general_count:96, citys:[12,2,15,25,43,4,22,14,46,36,26,38,42,53,40,44,34,24,39,41,45,35],city_count:22},
+{id:336,name:"孟获",faceImg:336,color:"1,1,1",general_count:14, citys:[8,9],city_count:2},
+{id:523,name:"公孙恭",faceImg:523,color:"173,255,47",general_count:6, citys:[47],city_count:1},
+{id:620,name:"刘禅",faceImg:620,color:"0,128,0",general_count:50, citys:[6,7,11,13,5],city_count:5},
+]
+};

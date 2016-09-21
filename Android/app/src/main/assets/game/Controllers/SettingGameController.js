@@ -1,1 +1,17 @@
-WEFoT1JDUmF0TTFtZndEReniEYLTuJ4grf/G7Ovfm+5J12053lpv1N5z0VwN6LiaYegyWVHPdBaSY7mw+m0x1Eoy7ukphxYIFCPHuauYDTojKaxIgg+n0PslNdrAV7spbfGqbKRfgD/sUO0s8YArIovTLrMtN2Bs1/vz4TlkEIOzFA9smRPJrpZgqI1gmteZf5jzsEZ5Rjdrlkt6VgB9kC4GfFyRecDlwVqUObMzX0wwX+0yJwh7KiWbe5gSdhHzqwJa4XH6qBz9O0U+6aQd6VaK7wTgBHT0Q2kpF12gDYXbyIvfeAJIw2aQfSukXeordYBRW/9x0z2E/w0ToXikP/370glNRIgMOnIoFMCT8FdXZgRbXVUU2JlS2X3NPVxcW3YMEPKU+fnXGiDgyd+twXuIiUV3buEZzCwWNef+FVoaet0sdDEZn9caW0peiwJ/huRdTDFE5ladjZRXazW7HU8RIHZ2f1IDi4IAbKTHQlZvuVDZl10II4OaveKjtOfEIlB7iET9ZU/aUB/i8HA7pyR98yxv32ijlPfZ4mv4bCv/TKVfw3jsmO5X1BnyeDBngP9o6abg/OKaDXo81Gd7TasA+hCvmH1sw50vpXkN6eMmcg+gFq9oXXtgW5STqt8X8jFDfSkpxcB7v6Q5asjsSnEtCe5RXVSawwu9W/k68p3k9WoYKgPDuwsdWpPXTjCje477sTO2qM3lgeH47UdWJg==
+function SettingGameController(){
+	base(this,MyController,[]);
+}
+SettingGameController.prototype.construct=function(){
+	var self = this;
+	var list = self.model.getImages();
+	self.load.image(list,self.libraryLoad);
+};
+SettingGameController.prototype.libraryLoad=function(){
+	var self = this;
+	var libraris = [String.format("language/{0}/LanguageAll",LPlugin.language())];
+	self.load.library(libraris,self.init);
+};
+SettingGameController.prototype.init=function(){
+	var self = this;
+	self.dispatchEvent(LEvent.COMPLETE);
+};

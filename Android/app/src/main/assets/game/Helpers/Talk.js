@@ -1,1 +1,70 @@
-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
+function Talk(){
+	if(arguments.length == 6){
+		TalkRun.apply(this,arguments);
+	}else if(arguments.length == 4){
+		TalkRun.call(this,LMvc.layer,150,arguments[0],arguments[1],arguments[2],arguments[3]);
+	}else{
+		TalkRun.call(this,arguments[0],150,arguments[1],arguments[2],arguments[3],arguments[4]);
+	}
+}
+function TalkRun(layer,y,index,faceindex,msg,callback){
+	if(LMvc.talkLayer && LMvc.talkLayer.parent){
+		LMvc.talkLayer.remove();
+	}
+	var talkLayer = new LSprite();
+	
+	talkLayer.y = y;
+	//talkLayer.x = 50;
+	var model = CharacterModel.getChara(index);
+	if(faceindex >= 0){
+		var face = model.face();
+		face.x = 200;
+		talkLayer.addChild(face);
+	}
+	
+	var back = new LBitmap(new LBitmapData(LMvc.datalist["talkbox"]));
+	back.y = 130;
+	back.alpha = 0.7;
+	talkLayer.addChild(back);
+	var nameText = LTextField.getLabel();
+	nameText.size = 18;
+	nameText.color = "#FFFFFF";
+	nameText.text = model.name();;
+	nameText.x = 30+(90 - nameText.getWidth())*0.5;
+	nameText.y = back.y + 22;
+	talkLayer.addChild(nameText);
+	
+	var msgText = LTextField.getLabel();
+	msgText.name = "message";
+	msgText.x = 25;
+	msgText.y = 225;
+	msgText.text = msg;
+	msgText.size = 18;
+	msgText.color = "#FFFFFF";
+	msgText.width = 430;
+	msgText.setWordWrap(true,23);
+	msgText.speed = LPlugin.gameSetting.speed;
+	msgText.wind(callback);
+	talkLayer.addChild(msgText);
+	if(layer){
+		layer.addChild(talkLayer);
+	}else{
+		LMvc.layer.addChild(talkLayer);
+	}
+	LMvc.talkOver = false;
+	LMvc.talkLayer = talkLayer;
+	talkLayer.addShape(LShape.RECT,[-talkLayer.x,-talkLayer.y,LGlobal.width,LGlobal.height]);
+	talkLayer.addEventListener(LMouseEvent.MOUSE_DOWN, function(){});
+	talkLayer.addEventListener(LMouseEvent.MOUSE_UP, TalkRemove);
+}
+function TalkRemove(){
+	var msgText = LMvc.talkLayer.getChildByName("message");
+	if(msgText.windRunning){
+		msgText.windComplete();
+		return;
+	}
+	LMvc.talkLayer.remove();
+	LMvc.talkOver = false;
+	LMvc.talkLayer = null;
+	LGlobal.script.analysis();
+}

@@ -1,1 +1,152 @@
-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
+function SettingGameView(){
+	base(this,LView,[]);
+}
+SettingGameView.prototype.construct=function(){
+	this.controller.addEventListener(LEvent.COMPLETE, this.init.bind(this));
+};
+SettingGameView.prototype.layerInit=function(){
+	var self = this;
+	self.addChild(getTranslucentMask());
+	self.baseLayer = new LSprite();
+	self.addChild(self.baseLayer);
+	self.contentLayer = new LSprite();
+	self.addChild(self.contentLayer);
+};
+SettingGameView.prototype.backgroundInit=function(){
+	var self = this;
+	var backgroundData = new LBitmapData(LMvc.datalist["win05"]);
+	var panel = getBitmap(new LPanel(backgroundData,self.size.x, self.size.y));
+	panel.x = (LGlobal.width - self.size.x) * 0.5;
+	panel.y = (LGlobal.height - self.size.y) * 0.5;
+	self.baseLayer.addChild(panel);
+	
+	var titleData = new LBitmapData(LMvc.datalist["win02"]);
+	var titlePanel = getBitmap(new LPanel(titleData,160,60));
+	titlePanel.x = (LGlobal.width - titlePanel.getWidth()) * 0.5;
+	titlePanel.y = panel.y - 10;
+	self.baseLayer.addChild(titlePanel);
+	
+	var title = getStrokeLabel(Language.get("game_setting"),20,"#FFFFFF","#000000",4);
+	title.x = (LGlobal.width - title.getWidth())*0.5;
+	title.y = panel.y + 8;
+	self.baseLayer.addChild(title);
+};
+SettingGameView.prototype.add=function(){
+	var self = this;
+	self.addChild(getTranslucentMask());
+	self.baseLayer = new LSprite();
+	self.addChild(self.baseLayer);
+};
+SettingGameView.prototype.init=function(){
+	var self = this;
+	self.size = new LPoint(LGlobal.width - 40, 300);
+	self.layerInit();
+	self.backgroundInit();
+	
+	self.contentLayer.x = (LGlobal.width - self.size.x) * 0.5 + 20;
+	self.contentLayer.y = (LGlobal.height - self.size.y) * 0.5 + 60;
+	
+	var checkboxBackgroundData = new LBitmapData(LMvc.datalist["checkbox-background"]);
+	var checkboxOnData = new LBitmapData(LMvc.datalist["checkbox-on"]);
+	var radioBackground, radioSelect;
+	/*var rangeBackground = new LPanel(new LBitmapData(LMvc.datalist["win04"]),250,40);
+	rangeBackground.cacheAsBitmap(true);
+	var rangeSelect = new LBitmap(new LBitmapData(LMvc.datalist["range"]));*/
+	var soundLayer = new LSprite();
+	self.contentLayer.addChild(soundLayer);
+	var soundLabel = getStrokeLabel(Language.get("se_set"),20,"#FFFFFF","#000000",4);
+	soundLabel.y = 12;
+	soundLayer.addChild(soundLabel);
+	
+	var enabledLabel = getStrokeLabel(Language.get("enabled"),20,"#FFFFFF","#000000",4);
+	enabledLabel.x = 120;
+	enabledLabel.y = 13;
+	soundLayer.addChild(enabledLabel);
+	var disabledLabel = getStrokeLabel(Language.get("disabled"),20,"#FFFFFF","#000000",4);
+	disabledLabel.x = 220;
+	disabledLabel.y = 13;
+	soundLayer.addChild(disabledLabel);
+	
+	radioBackground = new LBitmap(checkboxBackgroundData);
+	radioSelect = new LBitmap(checkboxOnData);
+	seRadio = new LRadio();
+	seRadio.x = 160;
+	seRadio.setChildRadio(1,0,10,radioBackground,radioSelect);
+	seRadio.setChildRadio(0,100,10,radioBackground,radioSelect);
+	seRadio.setValue(LPlugin.gameSetting.SE);
+	soundLayer.addChild(seRadio);
+	seRadio.addEventListener(LMouseEvent.MOUSE_UP,self.onSEChange);
+
+	var bgmLayer = new LSprite();
+	bgmLayer.y = 70;
+	self.contentLayer.addChild(bgmLayer);
+	var bgmLabel = getStrokeLabel(Language.get("bgm_set"),20,"#FFFFFF","#000000",4);
+	bgmLabel.y = 12;
+	bgmLayer.addChild(bgmLabel);
+	
+	var enabledLabel = getStrokeLabel(Language.get("enabled"),20,"#FFFFFF","#000000",4);
+	enabledLabel.x = 120;
+	enabledLabel.y = 13;
+	bgmLayer.addChild(enabledLabel);
+	var disabledLabel = getStrokeLabel(Language.get("disabled"),20,"#FFFFFF","#000000",4);
+	disabledLabel.x = 220;
+	disabledLabel.y = 13;
+	bgmLayer.addChild(disabledLabel);
+	bgmRadio = new LRadio();
+	bgmRadio.x = 160;
+	bgmRadio.setChildRadio(1,0,10,radioBackground,radioSelect);
+	bgmRadio.setChildRadio(0,100,10,radioBackground,radioSelect);
+	bgmRadio.setValue(LPlugin.gameSetting.BGM);
+	bgmLayer.addChild(bgmRadio);
+	bgmRadio.addEventListener(LMouseEvent.MOUSE_UP,self.onBgmChange);
+	
+	var speedLayer = new LSprite();
+	speedLayer.y = 160;
+	self.contentLayer.addChild(speedLayer);
+	var speedLabel = getStrokeLabel(Language.get("game_speed"),20,"#FFFFFF","#000000",4);
+	speedLabel.y = 3;
+	speedLayer.addChild(speedLabel);
+	
+	var normalLabel = getStrokeLabel(Language.get("speed_normal"),20,"#FFFFFF","#000000",4);
+	normalLabel.x = 120;
+	normalLabel.y = 3;
+	speedLayer.addChild(normalLabel);
+	var fastLabel = getStrokeLabel(Language.get("speed_fast"),20,"#FFFFFF","#000000",4);
+	fastLabel.x = 220;
+	fastLabel.y = 3;
+	speedLayer.addChild(fastLabel);
+	var radioBackground = new LBitmap(checkboxBackgroundData);
+	var radioSelect = new LBitmap(checkboxOnData);
+	speedRadio = new LRadio();
+	speedRadio.x = 160;
+	speedRadio.setChildRadio(1,0,0,radioBackground,radioSelect);
+	speedRadio.setChildRadio(0,100,0,radioBackground,radioSelect);
+	speedRadio.setValue(LPlugin.gameSetting.speed);
+	speedLayer.addChild(speedRadio);
+	speedRadio.addEventListener(LMouseEvent.MOUSE_UP,self.onSpeedChange);
+	
+	var bitmapClose = new LBitmap(new LBitmapData(LMvc.datalist["close"]));
+	var buttonClose = new LButton(bitmapClose);
+	buttonClose.x = (LGlobal.width - self.size.x) * 0.5 + self.size.x - bitmapClose.getWidth()*0.7;
+	buttonClose.y = (LGlobal.height - self.size.y) * 0.5 - bitmapClose.getHeight()*0.3;
+	self.baseLayer.addChild(buttonClose);
+	buttonClose.addEventListener(LMouseEvent.MOUSE_UP,self.closeSelf);
+};
+SettingGameView.prototype.closeSelf=function(event){
+	event.currentTarget.parent.parent.remove();
+};
+SettingGameView.prototype.onSEChange=function(event){
+	LPlugin.gameSetting.SE = event.currentTarget.value;
+	LPlugin.SetData("gameSetting", {SE:LPlugin.gameSetting.SE, BGM:LPlugin.gameSetting.BGM, speed:LPlugin.gameSetting.speed});
+};
+SettingGameView.prototype.onBgmChange=function(event){
+	LPlugin.gameSetting.BGM = event.currentTarget.value;
+	if(!LPlugin.gameSetting.BGM){
+		LPlugin.playBGM("map", 0);
+	}
+	LPlugin.SetData("gameSetting", {SE:LPlugin.gameSetting.SE, BGM:LPlugin.gameSetting.BGM, speed:LPlugin.gameSetting.speed});
+};
+SettingGameView.prototype.onSpeedChange=function(event){
+	LPlugin.gameSetting.speed = event.currentTarget.value;
+	LPlugin.SetData("gameSetting", {SE:LPlugin.gameSetting.SE, BGM:LPlugin.gameSetting.BGM, speed:LPlugin.gameSetting.speed});
+};

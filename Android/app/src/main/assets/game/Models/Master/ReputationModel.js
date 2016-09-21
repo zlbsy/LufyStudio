@@ -1,1 +1,61 @@
-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
+function ReputationModel(controller, data) {
+	var self = this;
+	base(self, MyModel, [controller]);
+	self.type = "ReputationModel";
+	self.data = data;
+}
+ReputationModel.list = [];
+ReputationModel.setReputation=function(list){
+	var self = this;
+	for(var i=0,l=list.length;i<l;i++){
+		var reputation = new ReputationModel(null,list[i]);
+		ReputationModel.list.push(reputation);
+	}
+};
+ReputationModel.getReputation=function(id){
+	var self = this;
+	for(var i=0,l=ReputationModel.list.length;i<l;i++){
+		var reputation = ReputationModel.list[i];
+		if(reputation.id() != id){
+			continue;
+		}
+		return reputation;
+	}
+	return null;
+};
+ReputationModel.prototype.id = function() {
+	return this.data.id;
+};
+ReputationModel.prototype.name = function() {
+	return Language.get(this.data.name);
+};
+ReputationModel.prototype.attack = function(){
+	return this.data.attack?this.data.attack:0;
+};
+ReputationModel.prototype.defense = function(){
+	return this.data.defense?this.data.defense:0;
+};
+ReputationModel.prototype.breakout = function(){
+	return this.data.breakout?this.data.breakout:0;
+};
+ReputationModel.prototype.morale = function(){
+	return this.data.morale?this.data.morale:0;
+};
+ReputationModel.prototype.spirit = function(){
+	return this.data.spirit?this.data.spirit:0;
+};
+ReputationModel.prototype.force = function(){
+	return this.data.force?this.data.force:0;
+};
+ReputationModel.prototype.intelligence = function(){
+	return this.data.intelligence?this.data.intelligence:0;
+};
+ReputationModel.prototype.command = function(){
+	return this.data.command?this.data.command:0;
+};
+ReputationModel.prototype.agility = function(){
+	return this.data.agility?this.data.agility:0;
+};
+ReputationModel.prototype.luck = function(){
+	return this.data.luck?this.data.luck:0;
+};

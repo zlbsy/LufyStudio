@@ -1,1 +1,68 @@
-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
+function SelectSeigniorCityChildView(cityData){
+	var self = this;
+	//{id:39,prefecture:1,generals:[1,2]}
+	base(self,LListChildView,[]);
+	self.init();
+	self.setData(cityData);
+}
+SelectSeigniorCityChildView.prototype.onClick = function(event) {
+	var self = event.target;
+	var listView = event.currentTarget;
+	if(event.selfX <= 180){
+		var seigniorDetailed = event.currentTarget.getParentByConstructor(CreateSeigniorDetailedView);
+		seigniorDetailed.showCityDetailed(self.cityData);
+		return;
+	}
+	var errorMessage = String.format(Language.get("create_city_delete_error"), self.cityModel.name());
+	var obj = {title:Language.get("confirm"),messageHtml:errorMessage,height:200,okEvent:function(event){
+		listView.deleteChildView(self);
+		event.currentTarget.parent.remove();
+	}, cancelEvent:null};
+	var windowLayer = ConfirmWindow(obj);
+	LMvc.layer.addChild(windowLayer);
+};
+SelectSeigniorCityChildView.prototype.setData = function(cityData) {
+	var self = this;
+	self.cityData = cityData;
+	self.cityModel = AreaModel.getArea(cityData.id);
+	self.cityLabel.text = self.cityModel.name();
+	var characters = LPlugin.characters().list;
+	var character = characters.find(function(child){
+		return child.id == self.cityData.prefecture;
+	});
+	self.prefectureLabel.text = character.name;
+	self.generalsLabel.text = self.cityData.generals.length;
+};
+SelectSeigniorCityChildView.prototype.init = function() {
+	var self = this, label;
+	self.graphics.drawRect(0, "#ff0000", [0, 0, 250, 40]);
+	var bitmapLine = new LBitmap(new LBitmapData(LMvc.datalist["icon-line"]));
+	bitmapLine.scaleX = 190;
+	bitmapLine.x = 5;
+	bitmapLine.y = 38;
+	self.addChild(bitmapLine);
+	
+	label = getStrokeLabel("",18,"#FFFFFF","#000000",4);
+	label.x = 5;
+	label.y = 10;
+	self.addChild(label);
+	self.cityLabel = label;
+	
+	label = getStrokeLabel("",18,"#FFFFFF","#000000",4);
+	label.x = 55;
+	label.y = 10;
+	self.addChild(label);
+	self.prefectureLabel = label;
+	
+	label = getStrokeLabel("",18,"#FFFFFF","#000000",4);
+	label.x = 145;
+	label.y = 10;
+	self.addChild(label);
+	self.generalsLabel = label;
+	
+	var closeButton = new LBitmap(new LBitmapData(LMvc.datalist["close"]));
+	closeButton.x = 190;
+	closeButton.y = 5;
+	closeButton.scaleX = closeButton.scaleY = 0.5;
+	self.addChild(closeButton);
+};

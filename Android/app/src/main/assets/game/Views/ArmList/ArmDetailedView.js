@@ -1,1 +1,136 @@
-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
+function ArmDetailedView(controller){
+	var self = this;
+	base(self,LView,[controller]);
+	self.set();
+	self.name = "ArmDetailedView";
+}
+ArmDetailedView.prototype.setArmEnlist=function(){
+	var self = this;
+	var soldierModel = self.soldierModel;
+	var cityModel = self.controller.fromController.getValue("cityData");
+	var layer = new LSprite();
+	
+	var width = 48, height = 48;
+	
+	var quantity = getStrokeLabel(String.format(Language.get("city_of_troops"),cityModel.name(),cityModel.troops()), 20, "#FFFFFF", "#000000", 4);
+	quantity.x = 50;
+	quantity.y = 20;
+	layer.addChild(quantity);
+	
+	self.enlistPrice = JobPrice.ENLIST;
+	
+	var enlistConfrim = getStrokeLabel(Language.get("recruit_many_soldiers"), 20, "#FFFFFF", "#000000", 4);
+	enlistConfrim.x = 50;
+	enlistConfrim.y = 100;
+	layer.addChild(enlistConfrim);
+	
+	var enlistFrom = getStrokeLabel(String.format(Language.get("number_of_people"),EnlistSetting.ENLIST_FROM), 20, "#FFFFFF", "#000000", 4);
+	enlistFrom.x = 50;
+	enlistFrom.y = 150;
+	layer.addChild(enlistFrom);
+	
+	var enlistTo = getStrokeLabel(String.format(Language.get("number_of_people"),EnlistSetting.ENLIST_TO), 20, "#FFFFFF", "#000000", 4);
+	enlistTo.x = enlistFrom.x + 200 - enlistTo.getWidth();
+	enlistTo.y = enlistFrom.y;
+	layer.addChild(enlistTo);
+	
+	var rangeBackground = getPanel("win04",200,40);
+	var rangeSelect = new LBitmap(new LBitmapData(LMvc.datalist["range"]));
+	var r = new LRange(rangeBackground, rangeSelect);
+	r.x = 30;
+	r.y = enlistFrom.y + enlistFrom.getHeight();
+	self.enlistRange = r;
+	layer.addChild(r);
+	
+	var buttonMax = getButton(Language.get("max"),80);
+	buttonMax.x = 250;
+	buttonMax.y = r.y;
+	buttonMax.name = "buttonMax";
+	layer.addChild(buttonMax);
+	buttonMax.addEventListener(LMouseEvent.MOUSE_UP, self.onClickMaxButton);
+
+	var enlistConfrim = getStrokeLabel("", 20, "#FFFFFF", "#000000", 4);
+	enlistConfrim.setWordWrap(true);
+	enlistConfrim.width = 400;
+	enlistConfrim.x = 50;
+	enlistConfrim.y = 230;
+	self.enlistConfrim = enlistConfrim;
+	layer.addChild(enlistConfrim);
+	
+	self.addChild(layer);
+	r.addEventListener(LRange.ON_CHANGE, self.onChangeEvent);
+	self.onChange();
+};
+ArmDetailedView.prototype.onClickMaxButton=function(event){
+	var self = event ? event.currentTarget.getParentByConstructor(ArmDetailedView) : this;
+	self.enlistRange.setValue(100);
+};
+ArmDetailedView.prototype.setArmExpedition=function(){
+	var self = this;
+	var soldierModel = self.soldierModel;
+	
+	var layer = new LSprite();
+	
+	var quantity = getStrokeLabel(String.format(Language.get("proportion_of_people"),soldierModel.readyQuantity(),soldierModel.quantity()), 20, "#FFFFFF", "#000000", 4);
+	quantity.x = 300 - quantity.getWidth();
+	self.quantity = quantity;
+	layer.addChild(quantity);
+	
+	var rangeBackground = getBitmap(new LPanel(new LBitmapData(LMvc.datalist["win04"]),240,40));
+	var rangeSelect = new LBitmap(new LBitmapData(LMvc.datalist["range"]));
+	var r = new LRange(rangeBackground, rangeSelect);
+	r.x = 50;
+	r.y = quantity.y + quantity.getHeight() + 10;
+	r.setValue(soldierModel.readyQuantity()*100/soldierModel.quantity() >> 0);
+	self.range = r;
+	layer.addChild(r);
+	
+	self.addChild(layer);
+	r.addEventListener(LRange.ON_CHANGE, self.onChange);
+};
+ArmDetailedView.prototype.set=function(){
+	var self = this;
+	if(self.controller.armListType == ArmListType.ARM_ENLIST){
+		self.setArmEnlist();
+	}else if(self.controller.armListType == ArmListType.EXPEDITION){
+		self.setArmExpedition();
+	}
+};
+ArmDetailedView.prototype.getEnlistCount = function(){
+	var self = this;
+	var selectCharacters = self.controller.getValue("selectCharacters");
+	var length = selectCharacters.length;
+	var enlistCount = EnlistSetting.ENLIST_FROM + (EnlistSetting.ENLIST_TO - EnlistSetting.ENLIST_FROM) * self.enlistRange.value*0.01 >>> 0;
+	return enlistCount * length;
+};
+ArmDetailedView.prototype.getEnlistPrice = function(count){
+	var self = this;
+	var enlistCount = count ? count : self.getEnlistCount();
+	return self.enlistPrice * enlistCount / EnlistSetting.ENLIST_FROM >>> 0;
+};
+ArmDetailedView.prototype.getSelectQuantity = function(){
+	var self = this;
+	return self.soldierModel.quantity() * self.range.value * 0.01 >> 0;
+};
+ArmDetailedView.prototype.onChangeEvent = function(event){
+	var range = event.currentTarget;
+	var self = range.parent.parent;
+	self.onChange();
+};
+ArmDetailedView.prototype.onChange = function(){
+	var self = this;
+	var range = self.range;
+	if(self.controller.armListType == ArmListType.EXPEDITION){
+		var selectQuantity = self.soldierModel.quantity() * range.value * 0.01 >> 0;
+		self.quantity.text = String.format(Language.get("proportion_of_people"),selectQuantity,self.soldierModel.quantity());
+	}else{
+		self.enlistChange();
+	}
+};
+ArmDetailedView.prototype.enlistChange = function(){
+	var self = this;
+	var enlistCount = self.getEnlistCount();
+	var enlistPrice = self.getEnlistPrice(enlistCount);
+	self.enlistConfrim.text = String.format(Language.get("expedition_troops"), enlistPrice, enlistCount);
+};
+

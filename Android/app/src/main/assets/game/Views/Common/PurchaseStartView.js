@@ -1,1 +1,195 @@
-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
+function PurchaseStartView(controller, productId, callback){
+	var self = this;
+	LExtends(self,LView,[controller]);
+	LGlobal.preventDefault = false;
+	self.name = "PurchaseStartView";
+	self.productId = productId;
+	self.callback = callback;
+	self.set();
+}
+PurchaseStartView.prototype.set = function(){
+	var self = this;
+	var productInformation = GameCacher.getData("productInformation");
+	var product = productInformation.find(function(child) {
+		return child.productId == self.productId;
+	});
+	var text = String.format(Language.get("purchase_explanation"),product.price);
+	var textLabel = getStrokeLabel(text,18,"#FFFFFF","#000000",3,"htmlText");
+	textLabel.width = 380;
+	textLabel.setWordWrap(true,22);
+	textLabel.x = 5;
+	self.addChild(textLabel);
+	self.inputWindow = new LSprite();
+	self.inputWindow.y = 220;
+	self.addChild(self.inputWindow);
+	
+	var textLabel = getStrokeLabel(Language.get("您的支付宝名称"),18,"#FFFFFF","#000000",3);
+	textLabel.x = 5;
+	textLabel.y = 0;
+	self.inputWindow.addChild(textLabel);
+	var inputLayer = new LSprite();
+	inputLayer.graphics.drawRect(1,"#000000",[0, 0, 380, 30]);
+	self.account = LTextField.getLabel();
+	self.account.y = 20;
+	self.account.color = "#FFFFFF";
+	self.account.setType(LTextFieldType.INPUT,inputLayer);
+	self.account.setMultiline(true);
+	self.inputWindow.addChild(self.account);
+	
+	textLabel = getStrokeLabel(Language.get("订单号/流水号"),18,"#FFFFFF","#000000",3);
+	textLabel.x = 5;
+	textLabel.y = 55;
+	self.inputWindow.addChild(textLabel);
+	inputLayer = new LSprite();
+	inputLayer.graphics.drawRect(1,"#000000",[0, 0, 380, 30]);
+	self.num = LTextField.getLabel();
+	self.num.y = 75;
+	self.num.color = "#FFFFFF";
+	self.num.setType(LTextFieldType.INPUT,inputLayer);
+	self.inputWindow.addChild(self.num);
+	
+	textLabel = getStrokeLabel(Language.get("转账时间："),18,"#FFFFFF","#000000",3);
+	textLabel.x = 5;
+	textLabel.y = 115;
+	self.inputWindow.addChild(textLabel);
+	inputLayer = new LSprite();
+	inputLayer.graphics.drawRect(1,"#000000",[0, 0, 45, 30]);
+	self.payment_time_year = LTextField.getLabel();
+	self.payment_time_year.size = 18;
+	self.payment_time_year.x = 100;
+	self.payment_time_year.y = 110;
+	self.payment_time_year.color = "#FFFFFF";
+	self.payment_time_year.setType(LTextFieldType.INPUT,inputLayer);
+	self.inputWindow.addChild(self.payment_time_year);
+	textLabel = getStrokeLabel(Language.get("年"),18,"#FFFFFF","#000000",3);
+	textLabel.x = 145;
+	textLabel.y = 115;
+	self.inputWindow.addChild(textLabel);
+	inputLayer = new LSprite();
+	inputLayer.graphics.drawRect(1,"#000000",[0, 0, 25, 30]);
+	self.payment_time_month = LTextField.getLabel();
+	self.payment_time_month.size = 18;
+	self.payment_time_month.x = 165;
+	self.payment_time_month.y = 110;
+	self.payment_time_month.color = "#FFFFFF";
+	self.payment_time_month.setType(LTextFieldType.INPUT,inputLayer);
+	self.inputWindow.addChild(self.payment_time_month);
+	textLabel = getStrokeLabel(Language.get("月"),18,"#FFFFFF","#000000",3);
+	textLabel.x = 190;
+	textLabel.y = 115;
+	self.inputWindow.addChild(textLabel);
+	inputLayer = new LSprite();
+	inputLayer.graphics.drawRect(1,"#000000",[0, 0, 25, 30]);
+	self.payment_time_day = LTextField.getLabel();
+	self.payment_time_day.size = 18;
+	self.payment_time_day.x = 210;
+	self.payment_time_day.y = 110;
+	self.payment_time_day.color = "#FFFFFF";
+	self.payment_time_day.setType(LTextFieldType.INPUT,inputLayer);
+	self.inputWindow.addChild(self.payment_time_day);
+	textLabel = getStrokeLabel(Language.get("日"),18,"#FFFFFF","#000000",3);
+	textLabel.x = 235;
+	textLabel.y = 115;
+	self.inputWindow.addChild(textLabel);
+	inputLayer = new LSprite();
+	inputLayer.graphics.drawRect(1,"#000000",[0, 0, 25, 30]);
+	self.payment_time_hour = LTextField.getLabel();
+	self.payment_time_hour.size = 18;
+	self.payment_time_hour.x = 260;
+	self.payment_time_hour.y = 110;
+	self.payment_time_hour.color = "#FFFFFF";
+	self.payment_time_hour.setType(LTextFieldType.INPUT,inputLayer);
+	self.inputWindow.addChild(self.payment_time_hour);
+	textLabel = getStrokeLabel(Language.get("时"),18,"#FFFFFF","#000000",3);
+	textLabel.x = 285;
+	textLabel.y = 115;
+	self.inputWindow.addChild(textLabel);
+	inputLayer = new LSprite();
+	inputLayer.graphics.drawRect(1,"#000000",[0, 0, 25, 30]);
+	self.payment_time_minute = LTextField.getLabel();
+	self.payment_time_minute.size = 18;
+	self.payment_time_minute.x = 305;
+	self.payment_time_minute.y = 110;
+	self.payment_time_minute.color = "#FFFFFF";
+	self.payment_time_minute.setType(LTextFieldType.INPUT,inputLayer);
+	self.inputWindow.addChild(self.payment_time_minute);
+	textLabel = getStrokeLabel(Language.get("分"),18,"#FFFFFF","#000000",3);
+	textLabel.x = 330;
+	textLabel.y = 115;
+	self.inputWindow.addChild(textLabel);
+	
+	textLabel = getStrokeLabel(Language.get("联系邮箱："),18,"#FFFFFF","#000000",3);
+	textLabel.x = 5;
+	textLabel.y = 150;
+	self.inputWindow.addChild(textLabel);
+	inputLayer = new LSprite();
+	inputLayer.graphics.drawRect(1,"#000000",[0, 0, 280, 30]);
+	self.mail = LTextField.getLabel();
+	self.mail.size = 18;
+	self.mail.x = 100;
+	self.mail.y = 145;
+	self.mail.color = "#FFFFFF";
+	self.mail.setType(LTextFieldType.INPUT,inputLayer);
+	self.inputWindow.addChild(self.mail);
+	
+	textLabel = getStrokeLabel(Language.get("QQ号："),18,"#FFFFFF","#000000",3);
+	textLabel.x = 5;
+	textLabel.y = 185;
+	self.inputWindow.addChild(textLabel);
+	inputLayer = new LSprite();
+	inputLayer.graphics.drawRect(1,"#000000",[0, 0, 280, 30]);
+	self.qq = LTextField.getLabel();
+	self.qq.x = 100;
+	self.qq.y = 180;
+	self.qq.color = "#FFFFFF";
+	self.qq.setType(LTextFieldType.INPUT,inputLayer);
+	self.inputWindow.addChild(self.qq);
+	/*
+	self.account.text = "测试支付宝";
+	self.num.text = "222222";
+	self.payment_time_year.text = "2016";
+	self.payment_time_month.text = "8";
+	self.payment_time_day.text = "2";
+	self.payment_time_hour.text = "2";
+	self.payment_time_minute.text = "2";
+	self.mail.text = "zhang@yahoo.co.jp";
+	self.qq.text = "27227";*/
+};
+PurchaseStartView.prototype.clickOK = function(event){
+	var button = event.currentTarget;
+	var self = button.parent.getChildByName("PurchaseStartView");
+	var obj;
+	if(!self.account.text){
+		obj = {width:300, height:200, message:Language.get("dialog_error_account"), title:Language.get("confirm")};
+		var dialog = ConfirmWindow(obj);
+		LMvc.layer.addChild(dialog);
+		return;
+	}
+	if(!self.num.text){
+		obj = {width:300, height:200, message:Language.get("dialog_error_num"), title:Language.get("confirm")};
+		var dialog = ConfirmWindow(obj);
+		LMvc.layer.addChild(dialog);
+		return;
+	}
+	if(!self.payment_time_year.text || !self.payment_time_month.text || !self.payment_time_day.text || !self.payment_time_hour.text || !self.payment_time_minute.text){
+		obj = {width:300, height:200, message:Language.get("dialog_error_payment_time"), title:Language.get("confirm")};
+		var dialog = ConfirmWindow(obj);
+		LMvc.layer.addChild(dialog);
+		return;
+	}
+	if((!self.mail.text || self.mail.text.indexOf("@")<1) && !self.qq.text){
+		obj = {width:300, height:200, message:Language.get("dialog_error_email_or_qq"), title:Language.get("confirm")};
+		var dialog = ConfirmWindow(obj);
+		LMvc.layer.addChild(dialog);
+		return;
+	}
+	var paymentTime = String.format("{0}-{1}-{2} {3}:{4}",self.payment_time_year.text,self.payment_time_month.text,self.payment_time_day.text,self.payment_time_hour.text,self.payment_time_minute.text);
+	self.mouseEnabled = false;
+	purchaseStartAndroidCheck(self.productId, 
+		self.account.text,
+		self.num.text,
+		paymentTime,
+		self.mail.text,
+		self.qq.text,
+		self.callback);
+};

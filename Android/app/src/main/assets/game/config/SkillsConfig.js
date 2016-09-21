@@ -1,1 +1,282 @@
-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
+var SkillType = {
+	/**
+	 * 攻击时发动
+	 **/
+	ATTACK:"attack",
+	/**
+	 * 攻击结束时发动
+	 **/
+	ATTACK_END:"attackEnd",
+	/**
+	 * 法术攻击时发动
+	 **/
+	STRATEGY_ATTACK:"strategyAttack",
+	/**
+	 * 法术攻击结束时发动
+	 **/
+	STRATEGY_ATTACK_END:"strategyAttackEnd",
+	/**
+	 * 被攻击时发动
+	 **/
+	HERT:"hert",
+	/**
+	 * 反击时发动
+	 **/
+	BACK_ATTACK:"backAttack",
+	/**
+	 * 敌军反击结束时发动
+	 **/
+	ENEMY_BACK_ATTACK_END:"enemyBackAttackEnd",
+	/**
+	 * 反击结束时发动
+	 **/
+	BACK_ATTACK_END:"backAttackEnd",
+	/**
+	 * 致命攻击时发动
+	 **/
+	ANGRY_ATTACK:"angryAttack",
+	/**
+	 * 回合开始时发动
+	 **/
+	BOUT_START:"boutStart",
+	/**
+	 * 数据生成时
+	 **/
+	CREATE:"create",
+	/**
+	 * 特定时刻，被动调用
+	 **/
+	NULL:"null"
+};
+var SkillSubType = {
+	/**
+	 * 自身状态改变
+	 **/
+	SELF_AID:"selfAid",
+	/**
+	 * 令敌军状态改变
+	 **/
+	ENEMY_AID:"enemyAid",
+	/**
+	 * 攻击次数
+	 **/
+	ATTACK_COUNT:"attackCount",
+	/**
+	 * 法术攻击次数
+	 **/
+	STRATEGY_COUNT:"strategyCount",
+	/**
+	 * 攻击范围
+	 **/
+	ATTACK_RECT:"attackRect",
+	/**
+	 * 兵种攻击范围
+	 **/
+	SOLDIERS_ATTACK_RECT:"soldiersAttackRect",
+	/**
+	 * 无反击
+	 **/
+	NO_COUNTER:"noCounter",
+	/**
+	 * 后退
+	 **/
+	FALL_BACK:"fallBack",
+	/**
+	 * 突破
+	 **/
+	BREAK_THROUGH:"breakThrough",
+	/**
+	 * 治疗
+	 **/
+	HEAL:"heal",
+	/**
+	 * 伤害减少
+	 **/
+	HERT_MINUS:"hertMinus",
+	/**
+	 * 法术伤害减少
+	 **/
+	STRATEGY_HERT_MINUS:"strategyHertMinus",
+	/**
+	 * 属性随HP变化而变化
+	 **/
+	HERT_VS_STATUS:"hertVsStatus",
+	/**
+	 * HP和MP相互转化(偷天换日)
+	 **/
+	HP_MP_CHANGE:"hpMpChange",
+	/**
+	 * 免疫异常攻击或法术
+	 **/
+	WAKE:"wake",
+	/**
+	 * 撤退(血路)
+	 **/
+	RETREAT:"retreat",
+	/**
+	 * 吸血
+	 **/
+	VAMPIRE:"vampire",
+	/**
+	 * 弹射
+	 **/
+	BOUNCE:"bounce",
+	/**
+	 * 蔓延
+	 **/
+	SPREAD:"spread",
+	/**
+	 * 劫营
+	 **/
+	SURPRISE:"surprise",
+	/**
+	 * 埋伏
+	 **/
+	AMBUSH:"ambush",
+	/**
+	 * 反埋伏
+	 **/
+	AMBUSH_INVERSE:"ambush_inverse",
+	/**
+	 * 穿透
+	 **/
+	PENETRATE:"penetrate",
+	/**
+	 * 突击(移动时无视敌军阻挡)
+	 **/
+	MOVE_ASSAULT:"move_assault",
+	/**
+	 * 恶路(移动时无视地形)
+	 **/
+	MOVE_KNOW:"move_know",
+	/**
+	 * 无视相克
+	 **/
+	IGNORE_RESTRAINT:"ignore_restraint",
+	/**
+	 * 节约(兵粮消耗减半)
+	 **/
+	THRIFT:"thrift",
+	/**
+	 * 节约MP
+	 **/
+	THRIFT_MP:"thrift_mp",
+	/**
+	 * 借用
+	 **/
+	BORROW:"borrow",
+	/**
+	 * 属性增加固定值
+	 **/
+	STATUS_ADD_NUM:"status_add_num",
+	/**
+	 * 属性增加百分比值
+	 **/
+	STATUS_ADD_PROP:"status_add_prop",
+	/**
+	 * 征集(和招募区别)
+	 **/
+	ENLIST_SKILL:"enlist_skill",
+	/**
+	 * 商业
+	 **/
+	BUSINESS:"business",
+	/**
+	 * 农业
+	 **/
+	AGRICULTURE:"agriculture",
+	/**
+	 * 技术
+	 **/
+	TECHNOLOGY:"technology",
+	/**
+	 * 修补
+	 **/
+	REPAIR:"repair",
+	/**
+	 * 治安
+	 **/
+	POLICE:"police",
+	/**
+	 * 招募
+	 **/
+	ENLIST:"enlist",
+};
+var SkillsData = [
+{id:1,name:"雷霆怒击(张飞)",powerful:200,type:SkillType.ATTACK,subType:[SkillSubType.ATTACK_COUNT],attacks:[1,0.8,0.7],probability:40,explanation:"{probability}几率连续攻击三次。"},
+{id:2,name:"真龙之气(刘备,曹操,孙权,曹丕,司马炎)",powerful:100,type:SkillType.HERT,subType:[SkillSubType.HERT_MINUS],hert:0,probability:30,explanation:"{probability}%几率将受到的伤害减少为0。"},
+{id:3,name:"隔山打牛(关羽)",powerful:200,type:SkillType.ATTACK,subType:[SkillSubType.ATTACK_RECT],attacks:[1.5],rects:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],probability:40,explanation:"{probability}几率使攻击波及到目标敌人相邻的敌军。"},
+{id:4,name:"天下无双(吕布)",powerful:200,type:SkillType.ATTACK,subType:[SkillSubType.ATTACK_COUNT,SkillSubType.ENEMY_AID],attacks:[1.1,1.1],aids:[4],aidCount:1,aidRects:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],probability:60,explanation:"{probability}几率重击敌军两次，并且使得目标敌人相邻的敌军防御力降低。"},
+{id:5,name:"愈战愈勇(颜良,杜预)",powerful:100,type:SkillType.ATTACK_END,subType:[SkillSubType.SELF_AID],aids:[1],aidCount:1,aidRects:[{x:0,y:0}],probability:40,explanation:"{probability}几率在攻击结束时提升自身攻击力。"},
+{id:6,name:"愈战愈坚(文丑,郝昭)",powerful:100,type:SkillType.ATTACK_END,subType:[SkillSubType.SELF_AID],aids:[3],aidCount:1,aidRects:[{x:0,y:0}],probability:40,explanation:"{probability}几率在攻击结束时提升自身防御力。"},
+{id:7,name:"鼓舞(张辽,张任)",powerful:100,type:SkillType.BOUT_START,subType:[SkillSubType.SELF_AID],aids:[5],aidCount:1,aidRects:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],probability:50,explanation:"{probability}几率在回合开始时提升自身以及周围友军的士气。"},
+{id:8,name:"苍龙苏醒(赵云)",powerful:200,type:SkillType.ATTACK,subType:[SkillSubType.ENEMY_AID,SkillSubType.WAKE,SkillSubType.ATTACK_COUNT],attacks:[1.5],aids:[2,4,6,8,10],aidCount:1,aidRects:[{x:0,y:0}],wakeRects:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],probability:50,explanation:"{probability}几率在攻击时使敌人降低一种能力，且自身及周围友军不会陷入任何不良状态。"},
+{id:9,name:"幻影(黄忠)",powerful:200,type:SkillType.ATTACK,subType:[SkillSubType.ENEMY_AID,SkillSubType.ATTACK_COUNT],attacks:[2],aids:[21],aidCount:1,aidRects:[{x:0,y:0}],probability:30,explanation:"{probability}几率给对方2倍攻击，且使对方陷入昏迷状态。"},
+{id:10,name:"噬血(马超)",powerful:200,type:SkillType.ATTACK_END,subType:[SkillSubType.VAMPIRE],vampire:0.5,probability:40,explanation:"{probability}几率给在物理攻击对方时将敌军兵力转换为己方兵力。"},
+{id:11,name:"神算(诸葛亮)",powerful:200,type:SkillType.STRATEGY_ATTACK,subType:[SkillSubType.STRATEGY_COUNT,SkillSubType.STRATEGY_HERT_MINUS],strategy_attacks:[1.5],hert:0.5,minusRects:[],probability:100,explanation:"法术攻击时必暴击，我军全员法术伤害减半。"},
+{id:12,name:"火神(周瑜)",powerful:200,type:SkillType.STRATEGY_ATTACK,subType:[SkillSubType.STRATEGY_COUNT,SkillSubType.ENEMY_AID],strategy_attacks:[2],condition:{type:"StrategyType",value:StrategyType.Fire},aids:[25],aidCount:1,aidRects:[{x:0,y:0}],probability:100,explanation:"{probability}几率使用火系策略伤害加倍，且另对方进入燃烧状态。"},
+{id:13,name:"医神(华佗)",powerful:100,type:SkillType.BOUT_START,subType:[SkillSubType.HEAL],healId:42,healRects:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],probability:100,explanation:"{probability}几率回合开始时对自身及相邻友军进行治疗。"},
+{id:14,name:"反间计(陆逊,陆抗)",powerful:150,type:SkillType.STRATEGY_ATTACK_END,subType:[SkillSubType.VAMPIRE],vampire:0.5,probability:50,explanation:"{probability}几率在法术攻击对方时将敌军兵力转换为己方兵力。"},
+{id:15,name:"识破(荀攸)",powerful:100,type:SkillType.NULL,subType:[SkillSubType.STRATEGY_HERT_MINUS],hert:0.5,minusRects:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],probability:100,explanation:"{probability}几率令自身及相邻的友军受到的法术伤害减半。"},
+{id:16,name:"连珠(法正)",powerful:200,type:SkillType.STRATEGY_ATTACK,subType:[SkillSubType.STRATEGY_COUNT],strategy_attacks:[1,1],probability:60,explanation:"{probability}几率法术连击。"},
+{id:17,name:"连环计(庞统)",powerful:200,type:SkillType.STRATEGY_ATTACK,subType:[SkillSubType.SPREAD],speadProbability:0.5,speadRects:[{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0}],probability:60,explanation:"{probability}几率法术攻击时不断蔓延到其他相邻的敌军。"},
+{id:18,name:"鬼策(贾诩)",powerful:150,type:SkillType.STRATEGY_ATTACK,subType:[SkillSubType.STRATEGY_COUNT,SkillSubType.ENEMY_AID],strategy_attacks:[1.5],aids:[2,4,6,8,10],aidCount:1,aidRects:[{x:0,y:0}],probability:50,explanation:"{probability}几率1.5倍法术暴击，且降低敌军状态。"},
+{id:19,name:"鬼谋(郭嘉)",powerful:150,type:SkillType.STRATEGY_ATTACK,subType:[SkillSubType.STRATEGY_COUNT,SkillSubType.ENEMY_AID],strategy_attacks:[1.5],aids:[21,22,23,24,25],aidCount:1,aidRects:[{x:0,y:0}],probability:50,explanation:"{probability}几率1.5倍法术暴击，且令敌军陷入不良状态。"},
+{id:20,name:"逆嗜血(许褚)",powerful:150,type:SkillType.BACK_ATTACK_END,subType:[SkillSubType.VAMPIRE],vampire:0.5,probability:40,explanation:"{probability}几率反击时将敌军兵力转化为自身兵力。"},
+{id:21,name:"反弹(典韦)",powerful:150,type:SkillType.HERT,subType:[SkillSubType.BOUNCE],bounce:0.5,probability:100,explanation:"{probability}几率被攻击时令敌军也受到一定程度伤害。"},
+{id:22,name:"血路(廖化)",powerful:20,type:SkillType.NULL,subType:[SkillSubType.RETREAT],probability:100,explanation:"降低自身及周围被俘虏概率。"},
+{id:23,name:"十面埋伏(程昱)",powerful:150,type:SkillType.STRATEGY_ATTACK,subType:[SkillSubType.AMBUSH],ambush:0.2,ambushRects:[{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],probability:100,explanation:"{probability}几率在使用法术攻击敌军时，如果攻击目标的周围有友军存在，可以借助友军的力量提高法术伤害，友军越多，加成越多。"},
+{id:24,name:"决胜(司马懿)",powerful:200,type:SkillType.STRATEGY_ATTACK,subType:[SkillSubType.STRATEGY_COUNT,SkillSubType.THRIFT_MP],strategy_attacks:[2],aidCount:1,thrift:1,probability:50,explanation:"{probability}几率在使用法术攻击敌军时2倍暴击，且不消化MP。"},
+{id:25,name:"摆尾(荀彧)",powerful:150,type:SkillType.STRATEGY_ATTACK,subType:[SkillSubType.PENETRATE],probability:30,explanation:"使用法术攻击时附带穿透效果。"},
+{id:26,name:"毒箭(夏侯渊)",powerful:160,type:SkillType.ATTACK,subType:[SkillSubType.ENEMY_AID],condition:{type:"AttackType",value:AttackType.FAR},aids:[23],aidCount:1,aidRects:[{x:0,y:0}],probability:100,explanation:"{probability}几率在使用弓箭类兵种攻击时令敌军中毒。"},
+{id:27,name:"毒计(徐庶,审配)",powerful:150,type:SkillType.STRATEGY_ATTACK,subType:[SkillSubType.ENEMY_AID],aids:[23],aidCount:1,aidRects:[{x:0,y:0}],probability:60,explanation:"{probability}几率在使用法术攻击时令敌军中毒。"},
+{id:28,name:"灵敏(魏延,文鸳)",powerful:80,type:SkillType.ATTACK_END,subType:[SkillSubType.SELF_AID],aids:[9],aidCount:1,aidRects:[{x:0,y:0}],probability:100,explanation:"{probability}几率攻击结束时提升自身爆发力。"},
+{id:29,name:"猛攻(姜维)",powerful:100,type:SkillType.BOUT_START,subType:[SkillSubType.SELF_AID],aids:[1],aidCount:1,aidRects:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],probability:50,explanation:"{probability}几率回合开始时提升自身及周围友军的攻击力。"},
+{id:30,name:"坚固(邓艾)",powerful:100,type:SkillType.BOUT_START,subType:[SkillSubType.SELF_AID],aids:[3],aidCount:1,aidRects:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],probability:50,explanation:"{probability}几率回合开始时提升自身及周围友军的防御力。"},
+{id:31,name:"暗行(吕蒙)",powerful:10,type:SkillType.CREATE,subType:[SkillSubType.MOVE_ASSAULT,SkillSubType.MOVE_KNOW],probability:100,explanation:"无视地形和敌军阻挡进行移动。"},
+{id:32,name:"劫营(甘宁)",powerful:150,type:SkillType.ATTACK,subType:[SkillSubType.SURPRISE],attacks:[1.5,1.2],probability:100,explanation:"从敌人背后或侧面攻击时攻击有加成,不包括斜角攻击。"},
+{id:33,name:"乱射(太史慈)",powerful:150,type:SkillType.ATTACK,subType:[SkillSubType.SPREAD],condition:{type:"AttackType",value:AttackType.FAR},speadProbability:0.5,speadRects:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],probability:40,explanation:"{probability}几率使用弓箭类兵种攻击时,使攻击波及到目标敌人相邻的敌军。"},
+{id:34,name:"破弩(徐晃)",powerful:90,type:SkillType.NULL,subType:[SkillSubType.IGNORE_RESTRAINT],ignore:{type:"AttackType",value:AttackType.FAR},probability:100,explanation:"无视弓兵类兵种的克制效果。"},
+{id:35,name:"破步(于禁)",powerful:90,type:SkillType.NULL,subType:[SkillSubType.IGNORE_RESTRAINT],ignore:{type:"MoveType",value:MoveType.INFANTRY},probability:100,explanation:"无视步兵类兵种的克制效果。"},
+{id:36,name:"破骑(张郃)",powerful:90,type:SkillType.NULL,subType:[SkillSubType.IGNORE_RESTRAINT],ignore:{type:"MoveType",value:MoveType.CAVALRY},probability:100,explanation:"无视骑兵类兵种的克制效果。"},
+{id:37,name:"破兵(庞德)",powerful:110,type:SkillType.NULL,subType:[SkillSubType.IGNORE_RESTRAINT],ignore:{type:"SoldierType",value:SoldierType.Physical},probability:100,explanation:"无视物理类兵种的克制效果。"},
+{id:38,name:"仁者(鲁肃,羊祜)",powerful:100,type:SkillType.BOUT_START,subType:[SkillSubType.ENLIST_SKILL],enlist_value:0.05,enlist_count:1,probability:50,explanation:"{probability}几率回合开始时为己方随机一人征集一些兵力。"},
+{id:39,name:"陷阵营(高顺)",powerful:200,type:SkillType.ATTACK,subType:[SkillSubType.AMBUSH_INVERSE],ambush:0.2,startAmbushProbability:0.5,ambushRects:[{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],probability:100,explanation:"{probability}几率相邻敌军大于1时攻击有加成，且相邻敌军越多攻击加成越多。"},
+{id:40,name:"强行(刘晔)",powerful:10,type:SkillType.CREATE,subType:[SkillSubType.STATUS_ADD_NUM],status_name:"movePower",status_value:2,probability:100,explanation:"移动力增加。"},
+{id:41,name:"小霸王(孙策)",powerful:100,type:SkillType.ATTACK,subType:[SkillSubType.ATTACK_COUNT,SkillSubType.ENEMY_AID],condition:{type:"StatusCompare",name:"force",value:1},attacks:[1.5],aids:[2],aidCount:1,aidRects:[{x:0,y:0}],probability:50,explanation:"{probability}几率对武力低于自己的敌军，进行1.5倍暴击，且令其攻击力降低。"},
+{id:42,name:"逆击(华雄)",powerful:100,type:SkillType.BACK_ATTACK,subType:[SkillSubType.ATTACK_COUNT],attacks:[0.75,0.75],probability:50,explanation:"{probability}几率反击两次。"},
+{id:43,name:"大喝(关兴)",powerful:100,type:SkillType.ATTACK,subType:[SkillSubType.ATTACK_COUNT,SkillSubType.NO_COUNTER],attacks:[1.5],probability:40,explanation:"{probability}几率1.5倍暴击，大喝的强大气势令敌军无法反击。"},
+{id:44,name:"冲锋(张苞)",powerful:100,type:SkillType.ATTACK,subType:[SkillSubType.ATTACK_COUNT,SkillSubType.PENETRATE],attacks:[1.5],probability:40,explanation:"{probability}几率1.5倍暴击，附带穿透效果。"},
+{id:45,name:"节粮(马良,郭淮,张紘)",powerful:100,type:SkillType.NULL,subType:[SkillSubType.THRIFT],explanation:"粮食消耗减半。"},
+{id:46,name:"商业(糜竺)",powerful:0,type:SkillType.NULL,subType:[SkillSubType.BUSINESS],explanation:"内政商业加成。"},
+{id:47,name:"技术(伊籍)",powerful:0,type:SkillType.NULL,subType:[SkillSubType.TECHNOLOGY],explanation:"内政技术加成。"},
+{id:48,name:"农业(简雍)",powerful:0,type:SkillType.NULL,subType:[SkillSubType.AGRICULTURE],explanation:"内政农业加成。"},
+{id:49,name:"征兵(陈到)",powerful:0,type:SkillType.NULL,subType:[SkillSubType.ENLIST],explanation:"内政征兵加成。"},
+{id:50,name:"肉搏(周泰)",powerful:100,type:SkillType.BACK_ATTACK,subType:[SkillSubType.PENETRATE],probability:50,explanation:"反击时附带穿透效果。"},
+{id:51,name:"死战(凌统)",powerful:100,type:SkillType.CREATE,subType:[SkillSubType.HERT_VS_STATUS],hert_vs_status:{name:"attack",value:0.2},probability:100,explanation:"士兵越少攻击越高。"},
+{id:52,name:"顺势(程普)",powerful:80,type:SkillType.ANGRY_ATTACK,subType:[SkillSubType.ATTACK_COUNT],attacks:[2.5],probability:100,explanation:"致命一击发动时有几率将攻击提高一倍。"},
+{id:53,name:"忍耐(黄盖)",powerful:80,type:SkillType.CREATE,subType:[SkillSubType.HERT_VS_STATUS],hert_vs_status:{name:"defense",value:0.2},probability:100,explanation:"士兵越少防御越高。"},
+{id:54,name:"倾国(貂蝉)",powerful:80,type:[SkillType.ATTACK, SkillType.HERT],subType:[SkillSubType.HERT_MINUS,SkillSubType.ENEMY_AID],hert:0.5,condition:{type:"SoldierId",value:13},aids:[22],aidCount:1,aidRects:[{x:0,y:0}],probability:100,explanation:"使用女兵兵种时,受到攻击时有几率将伤害减半,其倾国的美色让敌军无法动弹(定身效果)。"},
+{id:55,name:"倾城(大乔,小乔)",powerful:50,type:SkillType.HERT,subType:[SkillSubType.HERT_MINUS],hert:0.5,condition:{type:"SoldierId",value:13},aids:[22],aidCount:1,probability:100,explanation:"使用女兵兵种时,受到攻击时有几率将伤害减半。"},
+{id:56,name:"巾帼(孙尚香)",powerful:120,type:SkillType.ATTACK,subType:[SkillSubType.ATTACK_COUNT],attacks:[1,0.75],probability:100,explanation:"巾帼不让须眉，每次攻击必定双击。"},
+{id:57,name:"偷天换日(马云绿)",powerful:120,type:SkillType.HERT,subType:[SkillSubType.HP_MP_CHANGE],changeProbability:30,probability:100,explanation:"几率使用近战兵种时,将受到的攻击伤害转为MP伤害,如果MP为零，则有一定概率将伤害转换为MP。"},
+{id:58,name:"羁绊(马忠,潘璋)",powerful:50,type:SkillType.ATTACK,subType:[SkillSubType.ENEMY_AID],aids:[22],aidCount:1,aidRects:[{x:0,y:0}],probability:100,explanation:"有几率附带定身效果。"},
+{id:59,name:"运气(马忠(蜀))",powerful:80,type:SkillType.CREATE,subType:[SkillSubType.STATUS_ADD_PROP],status_name:"morale",status_value:0.1,probability:100,explanation:"增强士气。"},
+{id:60,name:"防御(关平)",powerful:80,type:SkillType.CREATE,subType:[SkillSubType.STATUS_ADD_PROP],status_name:"defense",status_value:0.1,probability:100,explanation:"增强防御。"},
+{id:61,name:"敏捷(乐进)",powerful:80,type:SkillType.CREATE,subType:[SkillSubType.STATUS_ADD_PROP],status_name:"breakout",status_value:0.1,probability:100,explanation:"增强爆发力。"},
+{id:62,name:"攻击(文鸯)",powerful:80,type:SkillType.CREATE,subType:[SkillSubType.STATUS_ADD_PROP],status_name:"attack",status_value:0.1,probability:100,explanation:"增强攻击。"},
+{id:63,name:"精神(陈登,邓芝)",powerful:80,type:SkillType.CREATE,subType:[SkillSubType.STATUS_ADD_PROP],status_name:"spirit",status_value:0.1,probability:100,explanation:"增强精神。"},
+{id:64,name:"厚皮(周仓)",powerful:80,type:SkillType.CREATE,subType:[SkillSubType.STATUS_ADD_PROP],status_name:"maxTroops",status_value:0.1,probability:100,explanation:"增大兵力。"},
+{id:65,name:"斗转星移(甄氏)",powerful:30,type:SkillType.BACK_ATTACK,subType:[SkillSubType.BORROW],probability:100,explanation:"有几率在反击时借用对方的攻击力。"},
+{id:66,name:"熟路(吕凯)",powerful:10,type:SkillType.CREATE,subType:[SkillSubType.MOVE_KNOW],probability:100,explanation:"所有地形消耗1点移动力。"},
+{id:67,name:"反客为主(孙坚)",powerful:120,type:SkillType.BACK_ATTACK,subType:[SkillSubType.ATTACK_COUNT],attacks:[1],probability:100,explanation:"几率反击时给予敌军主动攻击的伤害值。"},
+{id:68,name:"治安(刘封)",powerful:0,type:SkillType.NULL,subType:[SkillSubType.POLICE],explanation:"内政治安加成。"},
+{id:69,name:"飞刀(祝融)",powerful:100,type:SkillType.CREATE,subType:[SkillSubType.SOLDIERS_ATTACK_RECT],condition:{type:"AttackType",value:AttackType.NEAR},rangeAttack:[{x:0,y:2},{x:0,y:-2},{x:2,y:0},{x:-2,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],explanation:"近战兵种攻击范围增强。"},
+{id:70,name:"辅佐(黄月英)",powerful:100,type:SkillType.BOUT_START,subType:[SkillSubType.SELF_AID],aids:[1,3,5,7,9],aidCount:1,aidRects:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],probability:100,explanation:"回合开始时,为自身及周围所有相邻部队提升一种能力。"},
+{id:71,name:"突击(夏侯惇)",powerful:180,type:[SkillType.ATTACK],subType:[SkillSubType.ATTACK_COUNT,SkillSubType.FALL_BACK],attacks:[1.2],probability:35,explanation:"重击敌军的同时令敌军后退一格，如果后方存在部队无法后退时，则对后方部队产生撞击伤害。对建筑无效。"},
+{id:72,name:"突破(乐进)",powerful:150,type:[SkillType.ATTACK],subType:[SkillSubType.BREAK_THROUGH],aids:[3],aidCount:1,aidRects:[{x:0,y:0}],probability:35,explanation:"提升自身防御之后穿透到敌军背后，如果后方存在部队无法后退时，则对后方部队产生撞击伤害。"},
+{id:73,name:"逆势反击(张郃)",powerful:150,type:SkillType.ENEMY_BACK_ATTACK_END,subType:[SkillSubType.ATTACK_COUNT],attacks:[0.75],probability:50,explanation:"主动攻击时依然对敌军的攻击进行反击。"},
+{id:74,name:"白耳(陈到)",powerful:100,type:SkillType.ATTACK_END,subType:[SkillSubType.FALL_BACK],probability:30,explanation:"白耳兵强大的攻击力迫使敌军后退一格，如因后方存在部队无法后退时,则产生撞击伤害。对建筑无效。"},
+{id:75,name:"冲击(张辽)",powerful:160,type:SkillType.ATTACK,subType:[SkillSubType.ENEMY_AID,SkillSubType.PENETRATE],aids:[2],aidCount:1,aidRects:[{x:0,y:0}],probability:50,explanation:"用力冲向敌军,强大的冲力令敌军胆寒,除了令敌军攻击力受损之外,还可以将伤害蔓延到后方的敌军。"},
+{id:76,name:"运筹(陈宫)",powerful:100,type:SkillType.STRATEGY_ATTACK,subType:[SkillSubType.STRATEGY_COUNT],strategy_attacks:[1.5],aidCount:1,thrift:1,probability:40,explanation:"{probability}几率在使用法术攻击敌军时1.5倍暴击。"},
+];

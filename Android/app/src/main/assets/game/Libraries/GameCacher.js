@@ -1,1 +1,109 @@
-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
+function GameCacher(){
+}
+GameCacher._datas = {};
+GameCacher._areaMaps = {};
+GameCacher._areaMiniMaps = {};
+GameCacher._colorBitmapDatas = {};
+GameCacher._panelBitmapDatas = {};
+GameCacher._grayBitmapDatas = {};
+GameCacher._scaleBitmapDatas = {};
+GameCacher.getData = function(key){
+	return GameCacher._datas[key];
+};
+GameCacher.setData = function(key, data){
+	GameCacher._datas[key] = data;
+};
+GameCacher.getScaleBitmapData = function(name, scaleX, scaleY){
+	var key = name+"_" + scaleX + "_" + scaleY;
+	if(!GameCacher._scaleBitmapDatas[key]){
+		var baseData = new LBitmapData(LMvc.datalist[name]);
+		var bitmapData = new LBitmapData(null, 0, 0, baseData.width, baseData.height, LBitmapData.DATA_CANVAS);
+		var matrix = new LMatrix();
+		matrix.scale(scaleX, scaleY);
+		matrix.translate(scaleX == -1 ? baseData.width : 0, scaleY == -1 ? baseData.height:0);
+		var bitmap = new LBitmap(baseData);
+		bitmapData.draw(bitmap, matrix);
+		GameCacher._scaleBitmapDatas[key] = bitmapData;
+		bitmap.die();
+	}
+	return GameCacher._scaleBitmapDatas[key];
+};
+GameCacher.getGrayDisplayObject = function(key, width, height){
+	if(!GameCacher._grayBitmapDatas[key]){
+		var layer = new LSprite();
+		var bitmap = new LBitmap(new LBitmapData(LMvc.datalist[key]));    
+		layer.addChild(bitmap);
+		layer.filters = [new LColorMatrixFilter([0.3086,0.6094, 0.0820, 0, 0, 0.3086, 0.6094, 0.0820, 0, 0, 0.3086, 0.6094, 0.0820, 0, 0, 0, 0, 0, 1, 0])];
+		GameCacher._grayBitmapDatas[key] = layer;
+	}
+	return GameCacher._grayBitmapDatas[key];
+};
+GameCacher.resetAreaMap = function(key){
+	var bitmapData = GameCacher.getAreaMap(key);
+	var bitmapDataBase = new LBitmapData(LMvc.datalist[key]);
+	bitmapData.copyPixels(bitmapDataBase, new LRectangle(0, 0, bitmapDataBase.width, bitmapDataBase.height), new LPoint(0,0));
+};
+GameCacher.getAreaMap = function(key){
+	if(GameCacher._areaMaps[key]){
+		return GameCacher._areaMaps[key];
+	}
+	var bitmapData = new LBitmapData(LMvc.datalist[key],null,null,null,null,LBitmapData.DATA_CANVAS);
+	GameCacher._areaMaps[key] = bitmapData;
+	return bitmapData;
+};
+GameCacher.getAreaMiniMap = function(key){
+	var miniBitmapData;
+	var fullBitmapData = GameCacher.getAreaMap(key);
+	if(!GameCacher._areaMiniMaps[key]){
+		miniBitmapData = new LBitmapData(null,0,0,400,240,LBitmapData.DATA_CANVAS);
+		miniBitmapData.mapScaleX = miniBitmapData.width/fullBitmapData.width;
+		miniBitmapData.mapScaleY = miniBitmapData.height/fullBitmapData.height;
+		GameCacher._areaMiniMaps[key] = miniBitmapData;
+	}
+	miniBitmapData = GameCacher._areaMiniMaps[key];
+	var matrix = new LMatrix();
+	matrix.scale(miniBitmapData.mapScaleX, miniBitmapData.mapScaleY);
+	miniBitmapData.draw(fullBitmapData, matrix);
+	
+	return miniBitmapData;
+};
+GameCacher.getCircleBitmapData = function(color, radius){
+	var key = "" + color + "_" + radius;
+	if(!GameCacher._colorBitmapDatas[key]){
+		var shape = new LShape();
+		shape.graphics.drawArc(0, "#000000", [radius, radius, radius, 0, 2*Math.PI],true,String.format("rgba({0},0.7)",color));
+		var whiteData = new LBitmapData(null, 0, 0, radius * 2, radius * 2, LBitmapData.DATA_CANVAS);
+		whiteData.draw(shape);
+		shape.die();
+		GameCacher._colorBitmapDatas[key] = whiteData;
+	}
+	return GameCacher._colorBitmapDatas[key];
+};
+GameCacher.getColorBitmapData = function(color, width, height){
+	var key = "" + color + "_" + width + "_" + height;
+	if(!GameCacher._colorBitmapDatas[key]){
+		var colorData = new LBitmapData(String.format("rgb({0})",color),0,0,width, height,LBitmapData.DATA_CANVAS);
+		GameCacher._colorBitmapDatas[key] = colorData;
+	}
+	return GameCacher._colorBitmapDatas[key];
+};
+GameCacher.getPanelBitmapData = function(k, w, h, x1, x2, y1, y2){
+	var key = k+"_"+(w || 0)+"_"+(h || 0)+"_"+(x1 || 0)+"_"+(x2 || 0)+"_"+(y1 || 0)+"_"+(y2 || 0);
+	if(!GameCacher._panelBitmapDatas[key]){
+		var data = new LBitmapData(LMvc.datalist[k]);
+		var panel = new LPanel(data,w,h,x1,x2,y1,y2);
+		var bitmapData = getBitmapData(panel, true);
+		panel.removeAllChild();
+		panel.cached();
+		GameCacher._panelBitmapDatas[key] = bitmapData;
+	}
+	return GameCacher._panelBitmapDatas[key];
+};
+GameCacher.setPanelBitmapData = function(k, w, h, x1, x2, y1, y2, data){
+	var key = k+"_"+(w || 0)+"_"+(h || 0)+"_"+(x1 || 0)+"_"+(x2 || 0)+"_"+(y1 || 0)+"_"+(y2 || 0);
+	GameCacher._panelBitmapDatas[key] = data;
+};
+GameCacher.hasPanelBitmapData = function(k, w, h, x1, x2, y1, y2){
+	var key = k+"_"+(w || 0)+"_"+(h || 0)+"_"+(x1 || 0)+"_"+(x2 || 0)+"_"+(y1 || 0)+"_"+(y2 || 0);
+	return GameCacher._panelBitmapDatas[key];
+};

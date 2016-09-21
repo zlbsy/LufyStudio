@@ -1,1 +1,42 @@
-WEFoT1JDUmF0TTFtZndERdFFKxH2Smiefo4zHLZPMOzumiPkBZu+Gl9tHbEZ+pYaFyLHoRgZZJlpkHMKuKCUubLbr5yI9NA38r9WHELPnv1Rl9Ajq1FJC52biDsM7qijhhWZIF8E/VBWh4sGhzbLiYkv68yZ6vDhB9Y8AJSL7Ks6o7puMdkx5WW389LyNe1QIuug8HlqzU6Ne8v6/oZ/JSLhO63RYr0mqyK+WN0WYxN2VWiKW+PLJqvABkKqLFSk3NAzu3dApSdCFGv38JJ9sR5Q1c5JDjBshjs7qV3DMe5nYMZRfMRAtsvwl6db/3vIkAQbAIor+BavhnKK7bBZswVDjXt9E/tb8tkkS4tk/ymH1M2/EbDJWO8ImSDH9scUmmqt7Kyq/ZBlw2nP4CX+dOcl7bhGAoG7GkPbUf9LY2Q++47ZI61DLazLKSEvLApDbWKOJhH1oe75EFxrkS1vetykkCPeU12szFdiOp+ixuSZOlZjPZJ9gmx3rWfIBR9HOqdutQWw0aF1n8o0lPa2EsjWbSX+8QLIPR73KsLq1deKUJVGjUfTyOxYxYFknUCuKUJ50dRRUXeEXjch+9ns33G64JgGedn8FftUg5eMw00vH8ClNCr4r28Zj2jhohie7IQkrsFb72WIut3i91jKA3QzP7vXwBMP9bAelGwNnkssayw8iRDv9QmJw2zPwVsdiPeDE2WdJNGvbZUM+kSfJT7nKMsi/X5N5hr7/xzk7IKEU8omvKNIZBwrXX/Fyjr9lo4QiYCint9MnIFEL2BRSsu3/bdKYc+r64AH7rzmKrRjRLcPLsNdGCYA36BSgYvLAQFgo/QzRGy4o8T3S1q6iSRP+kWVGahA1w7pApIu3vfB2XxrigWD9a/UdYTzuPixBrZd4t4gsXKxTIuvu7ewSJlzcPcJQ91fqheCdNmQPhbJ9pqvvElrKKAKpz8S/wHz75mhUPVsGlAWD4zO5BaAnHLdwRV7gLTlnr2yqAgC0pZNT+QprTK3s8piN/mNSNzHdl5UUFJne/wwyKqMUNSUI+5cC6grqejPmWFEAoSlKearilxVP7+xOwnxiCYE7TSvQRguPBSzxtZTrF9JwQXwiGRb/1v2pE8xYWduR7gUQo3VZYIxxMaZI4xDm/o0ZNlh77cjVPZ+pDR8dn2vZC5gRfusu3VLmfvMJMONBLBbX0kGe8UgGpIXS9JDRATcUIiUkQR5SuuTCNWgl0MUzQCGjSl2rICz2hElSWw6HnFq8evq0kMzijCEdw4WUp1xCf9oBA3SfVj8hUlJy0iREN4uMi37fvz4m6UJruL91JskDsHV73wfhT2uWb+y6VlBFmofsZNTU2d5RnNgrXwIR5BmKXzbYX+5ptoVjf/CoOT2gd0kTwYixSQ+BCOoJeZ6f7/cx2k9E5cMlOn9VnZZ1Lc7kxxhJIXtB7CImUlUVbXhiTC1xM4NHU5tx8SKWq7sQ5BmZ7gTSrgjojIS5CAKCbYKalYERQgHGhOOvAat6kE+aIvAU4RVDhSir99tJhCvWg+jxg1uTv8qQFXC+SNUDFkjltUCV2UXcCLHC2I/V4IjoMiSn0TPcmjlq4LU+A/4uoFehl4QMAC2enVzS2PT5pZ35U4L2i20uhowZunVQGeMFI+kM1YVeUZjilvfYfGdDCzb6PYTdpcqOqMUO0cshbbWZQq3EEZNTmAdtK35tdNIw21evem8GyZXdkjOSe9Pu1aBr9Xsb/5hrHdym/F/sMviEHjuJGt8/MvNWW4W/30MWHBOzw8hRISEoFyIrflxghsOCYtjL6fyX47wZRtXItnTLIWEWjE8lpV8GhpmiJKz7MKHlWdgF5e5ihnoKKZrneGPGdhpwokmT0cSz5/HYo469Q==
+function ArmListController(armListType,fromController){
+	var self = this;
+	self.armListType = armListType;
+	self.fromController = fromController;
+	base(self,OpenCharacterListController,[]);
+}
+ArmListController.prototype.construct=function(){
+	var self = this;
+	var list = self.model.getImages();
+	self.load.image(list,self.configLoad);
+};
+ArmListController.prototype.configLoad=function(){
+	var self = this;
+	self.load.config(["Equipment","Arms","ArmListType","Belong","Position","Soldiers","Strategy"],self.modelLoad);
+};
+
+ArmListController.prototype.modelLoad=function(){
+	var self = this;
+	self.load.model(["Master/SoldierMaster","Master/Soldier"],self.viewLoad);
+};
+ArmListController.prototype.viewLoad=function(){
+	var self = this;
+	self.load.view(["ArmList/ArmListChild","ArmList/ArmDetailed",
+	"Soldiers/Soldiers","Soldiers/SoldiersChild","Soldiers/SoldierDetailed"],self.init);
+};
+ArmListController.prototype.init=function(status){
+	var self = this;
+	SoldierMasterModel.setMaster(SoldierDatas);
+	LMvc.keepLoading(false);
+	var cityData = AreaModel.getArea(LMvc.cityId);
+	self.setValue("cityData",cityData);
+	self.dispatchEvent(LEvent.COMPLETE);
+	self.dispatchEvent(LController.NOTIFY);
+};
+ArmListController.prototype.closeArmDetailed=function(){
+	this.view.showCharacterList();
+};
+ArmListController.prototype.closeArmList=function(){
+	this.fromController.closeArmList();
+};
+
+

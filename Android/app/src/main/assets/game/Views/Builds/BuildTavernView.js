@@ -1,1 +1,87 @@
-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
+/**
+ * 酒馆
+ * 搜索招募人才
+ */
+function BuildTavernView(controller){
+	var self = this;
+	base(self,BuildBaseView,[controller,"tavern"]);
+}
+BuildTavernView.prototype.showMenu=function(){
+	var self = this, layer = new LSprite(), menuY = 0, menuHeight = 55;
+	var buttonAccess = getButton(Language.get("access"),200);
+	buttonAccess.name = "buttonAccess";
+	buttonAccess.y = menuY;
+	layer.addChild(buttonAccess);
+	buttonAccess.addEventListener(LMouseEvent.MOUSE_UP, self.onClickAccessButton);
+	
+	menuY += menuHeight;
+	var buttonHire = getButton(Language.get("hire"),200);
+	buttonHire.name = "buttonHire";
+	buttonHire.y = menuY;
+	layer.addChild(buttonHire);
+	buttonHire.addEventListener(LMouseEvent.MOUSE_UP, self.onClickHireButton);
+	
+	return layer;
+};
+BuildTavernView.prototype.onClickAccessButton=function(event){
+	var self = event.currentTarget.parent.parent.parent;
+	var cityModel = self.controller.getValue("cityData");
+	self.controller.loadCharacterList(CharacterListType.ACCESS, cityModel.generals(Job.IDLE), {buttonLabel:"execute"});
+};
+BuildTavernView.prototype.onClickHireButton=function(event){
+	var self = event.currentTarget.parent.parent.parent;
+	self.toHire();
+};
+BuildTavernView.prototype.toHire=function(){
+	var self = this;
+	var cityModel = self.controller.getValue("cityData");
+	self.controller.loadCharacterList(CharacterListType.HIRE, cityModel.outOfOffice(), {isOnlyOne:true, buttonLabel:"execute"});
+};
+BuildTavernView.prototype.showBuild=function(event){
+	var contentLayer = event.currentTarget.view.contentLayer;
+	var self = contentLayer.childList.find(function(child){
+		return child.isBuildBaseView;
+	});
+	var result = self.callParent("showBuild",arguments);
+	if(!result){
+		return;
+	}
+	if(event.subEventType == "return"){
+		if(event.characterListType == CharacterListType.CHARACTER_HIRE){
+			self.toHire();
+		}
+		return;
+	}
+	if(event.characterListType == CharacterListType.HIRE){
+		var cityModel = self.controller.getValue("cityData");
+		self.controller.loadCharacterList(CharacterListType.CHARACTER_HIRE, cityModel.generals(Job.IDLE), {buttonLabel:"execute"});
+	}
+};
+BuildTavernView.prototype.selectComplete=function(event){
+	var self = this;
+	var characterList = event.characterList;
+	if(!characterList){
+		self.cityId = null;
+		return true;
+	}
+	if(event.characterListType == CharacterListType.HIRE){
+		if(event.characterList.length > 1){
+			var obj = {title:Language.get("confirm"),message:Language.get("dialog_error_hire_more"),height:200,okEvent:null};
+			var windowLayer = ConfirmWindow(obj);
+			LMvc.layer.addChild(windowLayer);
+			return false;
+		}else{
+			self.controller.setValue("hireCharacter",event.characterList[0]);
+			return true;
+		}
+	}else if(event.characterListType == CharacterListType.CHARACTER_HIRE){
+		var hireCharacter = self.controller.getValue("hireCharacter");
+		self.controller.setValue("hireCharacter",null);
+		event.characterList.forEach(function(child){
+			child.hire(hireCharacter.id());
+		});
+	}else if(event.characterListType == CharacterListType.ACCESS){
+		return self.callParent("selectComplete",arguments);
+	}
+	return true;
+};

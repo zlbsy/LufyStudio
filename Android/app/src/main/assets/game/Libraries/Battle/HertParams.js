@@ -1,1 +1,7 @@
-WEFoT1JDUmF0TTFtZndERTnVapdEVYZya8Iys6tJ2yXqpCNRn1KwnxVgOUXBOP3djavIFXZTQsl2e/2fZvqXcT/ja2KWyvIpNodfLLjhwT3K9wRfzcFnUeZMzPdGcA7vnYBFkkNvxtAry+3Fya0DeyY8ZSW9J+02YfomEnrrULFZFgFoE/S2gEvR2m1KN9HTQQOJFXyPG5MDbTstGtpniuMPoGZN52i2OETcy9hMKVAIx6VV03VnjP0Z3eeQgUmB
+function HertParams(){
+	var self = this;
+	self.list = [];
+}
+HertParams.prototype.push = function(chara, hertValue){
+	this.list.push({chara:chara, hertValue:hertValue});
+};

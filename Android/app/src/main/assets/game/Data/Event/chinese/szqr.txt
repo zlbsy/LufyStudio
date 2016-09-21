@@ -1,1 +1,3 @@
-WEFoT1JDUmF0TTFtZndERaTL1ap7CJgBtFcZs4vmBZx+qn5+zbFGOJNNX96NRplBHcdtSYEsgFLbWoVuQPOOyxessWGtPHQSGmXzLaReYrkT+aUn0baCr6t2Y2IG9ASB
+SGJEvent.mapShow(1);
+SGJEvent.messageShow(舌战群儒。,3);
+Mark.EventEnd;

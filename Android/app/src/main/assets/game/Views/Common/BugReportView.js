@@ -1,1 +1,129 @@
-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
+function BugReportView(controller){
+	var self = this;
+	LExtends(self,LView,[controller]);
+	LGlobal.preventDefault = false;
+	self.name = "BugReportView";
+	self.set();
+}
+BugReportView.prototype.set = function(){
+	var self = this;
+	var textLabel = getStrokeLabel(Language.get("error_bug_description"),18,"#FFFFFF","#000000",3);
+	textLabel.x = 5;
+	self.addChild(textLabel);
+	var inputLayer = new LSprite();
+	inputLayer.graphics.drawRect(1,"#000000",[0, 0, 380, 100]);
+	self.message = LTextField.getLabel();
+	self.message.y = 20;
+	self.message.color = "#FFFFFF";
+	self.message.setType(LTextFieldType.INPUT,inputLayer);
+	self.message.setMultiline(true);
+	self.addChild(self.message);
+	
+	var mailLabel = getStrokeLabel(Language.get("error_bug_email"),18,"#FFFFFF","#000000",3);
+	mailLabel.x = 5;
+	mailLabel.y = 135;
+	self.addChild(mailLabel);
+	inputLayer = new LSprite();
+	inputLayer.graphics.drawRect(1,"#000000",[0, 0, 380, 30]);
+	self.mail = LTextField.getLabel();
+	self.mail.y = 155;
+	self.mail.color = "#FFFFFF";
+	self.mail.setType(LTextFieldType.INPUT,inputLayer);
+	self.addChild(self.mail);
+	
+	var buttonBug = getSizeButton(Language.get("error_bug_report"),200, 45);
+	buttonBug.y = 210;
+	self.addChild(buttonBug);
+	buttonBug.addEventListener(LMouseEvent.MOUSE_UP, self.selectReport);
+	var win = new LPanel(new LBitmapData(LMvc.datalist["win03"]), LGlobal.width - 100, 80);
+	win.y = 260;
+	self.addChild(win);
+	self.labelsLayer = new LSprite();
+	self.labelsLayer.y = 260;
+	self.addChild(self.labelsLayer);
+};
+BugReportView.prototype.selectReport = function(event){
+	var button = event.currentTarget;
+	var self = button.getParentByConstructor(BugReportView);
+	LGlobal.preventDefault = true;
+	RecordController.instance().show(RecordController.REPORT_MODE);
+};
+BugReportView.prototype.setReport = function(record){
+	var self = this;
+	LGlobal.preventDefault = false;
+	self.record = record;
+	var labels = record.labels;
+	self.labelsLayer.removeAllChild();
+	var name = getStrokeLabel(labels.name,18,"#FFFFFF","#000000",4);
+	name.x = 40;
+	name.y = 6;
+	self.labelsLayer.addChild(name);
+	var title = getStrokeLabel(labels.date,18,"#FFFFFF","#000000",4);
+	title.x = 150;
+	title.y = 6;
+	self.labelsLayer.addChild(title);
+	
+	var cityCount = getStrokeLabel(labels.cityCount,18,"#FFFFFF","#000000",3);
+	cityCount.x = 40;
+	cityCount.y = 31;
+	self.labelsLayer.addChild(cityCount);
+	
+	var generalsCount = getStrokeLabel(labels.generalsCount,18,"#FFFFFF","#000000",3);
+	generalsCount.x = 150;
+	generalsCount.y = 31;
+	self.labelsLayer.addChild(generalsCount);
+	
+	if(labels.battleTitle){
+		var battleTitle = getStrokeLabel(labels.battleTitle,18,"#FFFFFF","#000000",3);
+		battleTitle.x = 40;
+		battleTitle.y = 55;
+		self.labelsLayer.addChild(battleTitle);
+	}
+	
+	var saveTime = getStrokeLabel(labels.saveTime,16,"#FFFFFF","#000000",3);
+	saveTime.x = 222;
+	saveTime.y = 58;
+	self.labelsLayer.addChild(saveTime);
+};
+BugReportView.prototype.toUpdate = function(event){
+	var button = event.currentTarget;
+	var recordWindow = button.parent;
+	var self = recordWindow.getChildByName("BugReportView");
+	var obj;
+	if(!self.message.text){
+		obj = {width:300, height:200, message:Language.get("dialog_error_description"), title:Language.get("confirm")};
+		var dialog = ConfirmWindow(obj);
+		LMvc.logoStage.addChild(dialog);
+		return;
+	}
+	if(!self.mail.text || self.mail.text.indexOf("@")<1){
+		obj = {width:300, height:200, message:Language.get("dialog_error_email"), title:Language.get("confirm")};
+		var dialog = ConfirmWindow(obj);
+		LMvc.logoStage.addChild(dialog);
+		return;
+	}
+	if(!self.record || !self.record.labels){
+		obj = {width:300, height:200, message:Language.get("dialog_error_report"), title:Language.get("confirm")};
+		var dialog = ConfirmWindow(obj);
+		LMvc.logoStage.addChild(dialog);
+		return;
+	}
+	LAjax.post(LMvc.uploadURL, {email:self.mail.text, message:self.message.text, ver:LMvc.ver, report:JSON.stringify(self.record), charas:JSON.stringify(LPlugin.characters())}, function(data){
+		var obj;
+		if(parseInt(data)>0){
+			obj = {width:300, height:240, message:Language.get("dialog_success_report"), title:Language.get("dialog_success_report_title"), okEvent:function(e){
+				LGlobal.preventDefault = true;
+				recordWindow.remove();
+				e.currentTarget.parent.remove();
+			}};
+		}else{
+			obj = {width:300, height:200, message:Language.get("dialog_fail_net"), title:Language.get("dialog_fail_report")};
+		}
+		var dialog = ConfirmWindow(obj);
+		LMvc.logoStage.addChild(dialog);
+	},function(){
+		obj = {width:300, height:200, message:Language.get("dialog_fail_net"), title:Language.get("dialog_fail_net")};
+		var dialog = ConfirmWindow(obj);
+		LMvc.logoStage.addChild(dialog);
+	});
+};

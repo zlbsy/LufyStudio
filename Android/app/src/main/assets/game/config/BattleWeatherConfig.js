@@ -1,1 +1,80 @@
-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
+//TODO::ver1.1增加天气的影响
+//大雾，可视范围缩小->已添加
+//大雨，移动力下降
+//大雪，移动后几率滑动
+var BattleWeatherConfig = {};
+BattleWeatherConfig.RAIN = "rain";
+BattleWeatherConfig.CLOUD = "cloud";
+BattleWeatherConfig.SNOW = "snow";
+BattleWeatherConfig.SUNNY = "sunny";
+
+var BattleWeatherObstacle = {};
+BattleWeatherObstacle[BattleWeatherConfig.SUNNY] = 0;
+BattleWeatherObstacle[BattleWeatherConfig.SNOW] = 1;
+BattleWeatherObstacle[BattleWeatherConfig.RAIN] = 1;
+BattleWeatherObstacle[BattleWeatherConfig.CLOUD] = 2;
+
+//天气随机变化
+var _weatherList;
+var WeatherProbabilityConfig = [];
+_weatherList = [
+	{probability:0.5, weather:BattleWeatherConfig.RAIN},
+	{probability:0.1, weather:BattleWeatherConfig.CLOUD},
+	{probability:0, weather:BattleWeatherConfig.SNOW},
+	{probability:0.4, weather:BattleWeatherConfig.SUNNY}
+];
+//12 雪:50% 雾:10% 雨:0% 晴:40%
+WeatherProbabilityConfig[12] = _weatherList;
+_weatherList = [
+	{probability:0.3, weather:BattleWeatherConfig.RAIN},
+	{probability:0.1, weather:BattleWeatherConfig.CLOUD},
+	{probability:0, weather:BattleWeatherConfig.SNOW},
+	{probability:0.6, weather:BattleWeatherConfig.SUNNY}
+];
+//11,1 雪:30% 雾:10% 雨:0% 晴:60%
+WeatherProbabilityConfig[1] = _weatherList;
+WeatherProbabilityConfig[11] = _weatherList;
+_weatherList = [
+	{probability:0.1, weather:BattleWeatherConfig.RAIN},
+	{probability:0.1, weather:BattleWeatherConfig.CLOUD},
+	{probability:0.1, weather:BattleWeatherConfig.SNOW},
+	{probability:0.7, weather:BattleWeatherConfig.SUNNY}
+];
+//2,10 雪:10% 雾:10% 雨:10% 晴:70%
+WeatherProbabilityConfig[2] = _weatherList;
+WeatherProbabilityConfig[10] = _weatherList;
+_weatherList = [
+	{probability:0, weather:BattleWeatherConfig.RAIN},
+	{probability:0.3, weather:BattleWeatherConfig.CLOUD},
+	{probability:0.1, weather:BattleWeatherConfig.SNOW},
+	{probability:0.6, weather:BattleWeatherConfig.SUNNY}
+];
+//3,9 雪:0% 雾:30% 雨:10% 晴:60%
+WeatherProbabilityConfig[3] = _weatherList;
+WeatherProbabilityConfig[9] = _weatherList;
+_weatherList = [
+	{probability:0, weather:BattleWeatherConfig.RAIN},
+	{probability:0.1, weather:BattleWeatherConfig.CLOUD},
+	{probability:0.1, weather:BattleWeatherConfig.SNOW},
+	{probability:0.8, weather:BattleWeatherConfig.SUNNY}
+];
+//4,8 雪:0% 雾:10% 雨:10% 晴:80%
+WeatherProbabilityConfig[4] = _weatherList;
+WeatherProbabilityConfig[8] = _weatherList;
+_weatherList = [
+	{probability:0, weather:BattleWeatherConfig.RAIN},
+	{probability:0.1, weather:BattleWeatherConfig.CLOUD},
+	{probability:0.3, weather:BattleWeatherConfig.SNOW},
+	{probability:0.6, weather:BattleWeatherConfig.SUNNY}
+];
+//5,7 雪:0% 雾:10% 雨:30% 晴:60%
+WeatherProbabilityConfig[5] = _weatherList;
+WeatherProbabilityConfig[7] = _weatherList;
+_weatherList = [
+	{probability:0, weather:BattleWeatherConfig.RAIN},
+	{probability:0.1, weather:BattleWeatherConfig.CLOUD},
+	{probability:0.5, weather:BattleWeatherConfig.SNOW},
+	{probability:0.4, weather:BattleWeatherConfig.SUNNY}
+];
+//6 雪:0% 雾:10% 雨:50% 晴:40%
+WeatherProbabilityConfig[6] = _weatherList;

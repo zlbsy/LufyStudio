@@ -1,1 +1,12 @@
-WEFoT1JDUmF0TTFtZndEReJYgA7cOGhk8YEOAq5Ir8rInk3HqOVkYWnWK733aCA4rIJkENuMq5Vdkcn9bE2WogJ17W25spvHC70Znw6zXaSnUfbeQ/STnlpWpkAMNeRUm/L5bLgGrdLWbHRHy32YPx51HkMLyCY2dNeHvJ4PAi/d4iwiZnJDRI76CJUcdCtvsNO/wPQpK73PjpekSJCADoS/7AbvKaYPBYtV1WpaawHEmjDYFU7pHujqLClrdq7Q28L41Z6vj14TuFSFk1Npl5pFmj6V4Dwy4nz3q/G28Vy+4HibyCJ8TXfi+TWalAp6wvRt8GEO5vVimSzwqmsPk1yyudDcir99Ln0jA0L9otsMqBQkuKWRX5JHPkLt45dYVc5a4pnP5Fwinb/1kpWP33uPix/wbQfvAcCVqX1kxQHwP6MtktU3k8Nj2AwIQ3Sq
+function TutorialModel(){
+	base(this,MyModel,[]);
+}
+TutorialModel.prototype.construct=function(){
+};
+TutorialModel.prototype.getImages=function(){
+	var list = [
+		{name:"translucent",path:LMvc.IMG_PATH+"common/translucent.png"},
+		{name:"focus",path:LMvc.IMG_PATH+"common/focus.png"},
+	];
+	return list;
+};

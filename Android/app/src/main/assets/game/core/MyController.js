@@ -1,1 +1,30 @@
-WEFoT1JDUmF0TTFtZndERfGNhT+BPf8laU+i3mPQw85EdOkF375bPUkTCSYvw4q1yKWWWfsc1EuMdxaSV4X8gUUx/m3AHDvce2Wf2/wQi3gbOk0zPRKKlbHh4DotjUfVp3qY2NXzj3qxcpm0qwzsPtWIc8QmQ5PvYrvFC5+m+XlWp/6eSeCFdy9u7UCoFsMjOBrI2OycyGmGFmmFQ6NXcE3xh+dT0KGosFycaZYecGbtVsuSe5tK5uu1ioeKRRStZ6CQxXSsOOmgnu1NF38L++kvBjzk3gTYS5v3q6wdk+IpkbNTH59fn1Fs7eFAnY+dsJFSRq2KFwSibH7gyg05zBHjBNlnzxOd/mgVHkhHxUQ3KaeEa9qRa3Xc0QALsUMWPnhAh7vqugEjd+ia6eIsl1j/T+Zn3wgA3H+W/CvlKxNtA4lswB5yPCO4yeAG7/evPKWct91PP5Y8mZkM9g3kMlTG276AIyMfLtPv56fKjsE4IXq/bb95YYsUyqY/J2d4OA5j44VVpfzCWoGjRDWsFNeN6525L5VWo+qOSrjBMn2z0BKigftLWuYERu/OKWhALxTiGZaF45YuFnagdBoWlWifRQWK8rFXM5lj8zfeWchQYoLvDZJagJ2o4RGoldJC3lZZZfl3AF/9Ij5GVylVtKSrAgQ3ZRGMT66/Ku25AtPn+wCjkkCrA6RL1aGBICMXDbvA0nT2V2W92HcTQtJZ1dbKxVQbcTG0OziX/BM9mK5lE378QqO7uzVphHOeN8z45i9+FIUFux5W0WaDZXZF80NdskDNje+XMass4yiaC1quLvETQlda6+yxwmKksCMJbuM7L/g5rUmZ4IaEN6cCvFp1OOGX8lTMs+ZNcjHtvD4fi6jk48Xh3B9kHy1eRe2xcnn6INh+qleMwp2eMdEfBkFgZDp3yIdWm/VhN4mMIHRIeusjTWHlMhrv7p53ypxDuPw+Ux8w9W3FMHY7g6NnhQscVP4GRuKyPgQG7sDr50xTRJj2HQbO89sy2aNxZFdUrbT5+o6S+XWmj3ZD8bA+abhV/g6csfr6Yb6M3CO7iGSBWnl6NvPZOZlelVDHuWcE/6TeGeM7rqXSXPDXeF/+5Rsvzq8k2QlxGi/cdpHam1ddy7ohbOBjQVdKRZcbCAE9ifQ6cKIR6vlvGlpJxhTPXC0biaiOg9AOwRbRv0HiL6AZZKqOG41sFoHsLszu76IK
+function MyController(){
+	base(this,LController,[]);
+}
+MyController.waitExecuteFuncs = [];
+MyController.prototype.construct=function(){
+};
+MyController.prototype.nextFrameExecute=function(func){
+	if(!MyController.timer){
+		MyController.timer = new LTimer(LGlobal.speed*1.1, 1);
+		MyController.timer.addEventListener(LTimerEvent.TIMER, MyController.waitExecuteFuncsExecute);
+	}
+	if(MyController.waitExecuteFuncs.length == 0){
+		MyController.timer.reset();
+		MyController.timer.start();
+	}
+	MyController.waitExecuteFuncs.push(func);
+};
+MyController.waitExecuteFuncsExecute=function(){
+	var funcs = [];
+	for (var i = 0, l=MyController.waitExecuteFuncs.length; i < l; i++) {
+		var func = MyController.waitExecuteFuncs[i];
+		if(typeof func == "function"){
+			funcs.push(func);
+		}
+	}
+	MyController.waitExecuteFuncs.length = 0;
+	for (var i = 0, l=funcs.length; i < l; i++) {
+		funcs[i]();
+	}
+};

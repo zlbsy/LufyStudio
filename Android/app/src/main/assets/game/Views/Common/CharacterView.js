@@ -1,1 +1,149 @@
-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
+function CharacterView(controller,id,w,h){
+	var self = this;
+	base(self,LView,[controller]);
+	self.id = id;
+	self.data = CharacterModel.getChara(self.id);
+	self.data.calculation(true);
+	self.list = {};
+	self.to = new LPoint(self.x,self.y);
+	self.roads = [];
+	self.layer = new LSprite();
+	self.addChild(self.layer);
+	self.layer.x = 0;
+	self.layer.y = 0;
+	self.w = w;
+	self.h = h;
+	self.step = self.moveStep = 2;
+	self.moveBevelStep = self.moveStep*Math.sqrt(w*w + h*h)/w;
+	self.moveBevelStep = (self.moveBevelStep*100 >>> 0)/100;
+	
+	self.directionList = {
+		"-1,-1":CharacterDirection.LEFT_UP,
+		"-1,0":CharacterDirection.LEFT,
+		"-1,1":CharacterDirection.LEFT_DOWN,
+		"0,-1":CharacterDirection.UP,
+		"0,1":CharacterDirection.DOWN,
+		"1,-1":CharacterDirection.RIGHT_UP,
+		"1,0":CharacterDirection.RIGHT,
+		"1,1":CharacterDirection.RIGHT_DOWN
+	};
+	self.coordinateRects = {};
+	self.layer.addEventListener(LEvent.ENTER_FRAME,self.onframe);
+	self.setActionDirection(CharacterAction.STAND,CharacterDirection.DOWN);
+}
+CharacterView.prototype.histTestOn = function(x,y){
+	var s = this.rect;
+	return x>=s[0] && x <= s[2] && y>= s[1] && y <= s[3];
+};
+CharacterView.prototype.setActionDirection = function(action,direction){
+	var self = this;
+	if(self.action == action && self.direction == direction)return;
+	var key = action+"-"+direction;
+	if(!self.list[key]){
+		self.list[key] = new Action(self.data[self.RS],action,direction,self.data[self.RS+"Width"],self.data[self.RS+"Height"],self.RS);
+		self.layer.addChild(self.list[key]);
+	}
+	if(self.actionObject){
+		self.actionObject.visible = false;
+	}
+	self.actionObject = self.list[key];
+	self.actionObject.visible = true;
+	self.action = action;
+	self.direction = direction;
+};
+CharacterView.prototype.changeAction = function(action){
+	var self = this;
+	self.setActionDirection(action,self.direction);
+};
+CharacterView.prototype.changeDirection = function(direction){
+	var self = this;
+	self.setActionDirection(self.action,direction);
+};
+CharacterView.prototype.setMoveDirection = function(x,y){
+	var self = this;
+	var direction = self.directionList[x+","+y];
+	self.setActionDirection(CharacterAction.MOVE,direction);
+};
+CharacterView.prototype.setCoordinate = function(x,y){
+	var self = this;
+	self.x = self.to.x = x;
+	self.y = self.to.y = y;
+};
+CharacterView.prototype.onCoordinate = function(x,y){
+	return this.onLocation(x/this.w >>> 0, y/this.h >>> 0);
+};
+CharacterView.prototype.onLocation = function(x,y){
+	var self = this;
+	return x == self.locationX() && y == self.locationY();
+};
+CharacterView.prototype.locationX = function(){
+	return this.x/this.w >>> 0;
+};
+CharacterView.prototype.locationY = function(){
+	return this.y/this.h >>> 0;
+};
+CharacterView.prototype.getTo = function(){
+	var self = this;
+	return [self.to.x/self.w >>> 0,self.to.y/self.h >>> 0];
+};
+CharacterView.prototype.setTo = function(){
+	var self = this;
+	var road = self.roads.shift();
+	self.to.x = road.x*self.w;
+	self.to.y = road.y*self.h;	
+};
+CharacterView.prototype.getValue = function(v1,v2){
+	if(v1 == v2)return 0;
+	return v1 < v2 ? 1 : -1;
+};
+CharacterView.prototype.isMoving = function(){
+	var self = this;
+	return self.roads.length > 0 || self.x != self.to.x || self.y != self.to.y;
+};
+CharacterView.prototype.move = function(){
+	var self = this,controller=self.parent.parent.parent.controller;
+	if(self.x == self.to.x && self.y == self.to.y)return;
+	
+	if(self.x != self.to.x && self.y != self.to.y){
+		self.step = self.moveBevelStep;
+	}else{
+		self.step = self.moveStep;
+	}
+	var mx = self.getValue(self.x , self.to.x),my = self.getValue(self.y , self.to.y);
+	self.x += self.step*mx;
+	self.y += self.step*my*self.h/self.w;
+	var cx = self.getValue(self.x , self.to.x),cy = self.getValue(self.y , self.to.y);
+	if(mx != cx || my != cy){
+		if(self.roads.length == 0){
+			self.x = self.to.x;
+			self.y = self.to.y;
+			self.changeAction(CharacterAction.STAND);
+			if(controller){
+				if(controller.mapMove)controller.mapMove();
+			}
+			self.dispatchEvent(CharacterActionEvent.MOVE_COMPLETE);
+			return;
+		}
+		var next = self.roads[0];
+		var nx = self.getValue(self.to.x , next.x),ny = self.getValue(self.to.y , next.y);
+		if(mx != nx || my != ny){
+			self.x = self.to.x;
+			self.y = self.to.y;
+		}
+		if(self.roads.length > 0){
+			self.setTo();
+		}
+		
+	}
+	self.setMoveDirection(mx,my);
+	if(controller && controller.mapMove)controller.mapMove();
+};
+CharacterView.prototype.onframe = function(event){
+	var self = event.currentTarget.parent;
+};
+CharacterView.prototype.setRoad = function(list){
+	var self = this;
+	self.roads = list;
+	if(self.to.x == self.x && self.to.y == self.y)self.setTo();
+};
+

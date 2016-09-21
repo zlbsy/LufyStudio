@@ -1,1 +1,68 @@
-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
+function SgjComboBoxChild(content, comboBox, selected) {
+	var self = this;
+	base(self, LComboBoxChild, [content, comboBox, selected]);
+}
+SgjComboBoxChild.prototype.setStatus = function(content, comboBox) {
+	var self = this;
+	var panel = new LPanel(new LBitmapData(LMvc.datalist["win05"], 10,10,20,20), self.childWidth, 40);
+	panel.cacheAsBitmap(true);
+	self.addChild(panel);
+	var text = LTextField.getLabel();
+	text.size = comboBox.size;
+	text.color = comboBox.color;
+	text.font = comboBox.font;
+	text.lineColor = "#000000";
+	text.stroke = true;
+	text.lineWidth = 3;
+	text.text = content.label;
+	text.x = text.y = 10;
+	self.addChild(text);
+	self.updateView();
+};
+SgjComboBoxChild.prototype.setSelectStatus = function(content, comboBox) {
+	var self = this;
+	var panel = new LPanel(new LBitmapData(LMvc.datalist["win07"], 15,10,20,20), self.childWidth, 40);
+	panel.cacheAsBitmap(true);
+	self.addChild(panel);
+	var text = LTextField.getLabel();
+	text.size = comboBox.size;
+	text.color = comboBox.color;
+	text.font = comboBox.font;
+	text.lineColor = "#000000";
+	text.stroke = true;
+	text.lineWidth = 3;
+	text.text = content.label;
+	text.x = text.y = 10;
+	self.addChild(text);
+	self.updateView();
+};
+function TrainingComboBoxChild(content, comboBox, selected) {
+	var self = this;
+	self.childWidth = 250;
+	base(self, SgjComboBoxChild, [content, comboBox, selected]);
+}
+function ExpeditionComboBoxChild(content, comboBox, selected) {
+	var self = this;
+	self.childWidth = 210;
+	base(self, SgjComboBoxChild, [content, comboBox, selected]);
+}
+function CreateCharacterComboBoxChild(content, comboBox, selected) {
+	var self = this;
+	self.childWidth = 100;
+	base(self, SgjComboBoxChild, [content, comboBox, selected]);
+}
+function CreateCharacterSkillComboBoxChild(content, comboBox, selected) {
+	var self = this;
+	self.childWidth = 170;
+	base(self, SgjComboBoxChild, [content, comboBox, selected]);
+}
+function CreateCityComboBoxChild(content, comboBox, selected) {
+	var self = this;
+	self.childWidth = 120;
+	base(self, SgjComboBoxChild, [content, comboBox, selected]);
+}
+function CreatePrefectureComboBoxChild(content, comboBox, selected) {
+	var self = this;
+	self.childWidth = 150;
+	base(self, SgjComboBoxChild, [content, comboBox, selected]);
+}

@@ -1,1 +1,137 @@
-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
+function CreateCharacterAbilityView(controller,data){
+	base(this,LView,[controller]);
+	this.init(data);
+}
+CreateCharacterAbilityView.prototype.layerInit=function(){
+	var self = this;
+	self.baseLayer = new LSprite();
+	self.baseLayer.x = 190;
+	self.addChild(self.baseLayer);
+};
+CreateCharacterAbilityView.prototype.init=function(data){
+	var self = this;
+	self.layerInit();
+	self.abilityInit(data);
+	self.skillInit(data);
+};
+CreateCharacterAbilityView.prototype.updatePoint=function(value){
+	var self = this;
+	self.point += value;
+	self.statusPoint.text = String.format(Language.get("distribute_point"),self.point);
+};
+CreateCharacterAbilityView.prototype.onRefreshStatus=function(event){
+	var self = event.currentTarget.parent.parent;
+	var data = self.refreshStatus();
+	var items = self.listView.getItems();
+	for(var i=0, l=items.length;i<l;i++){
+		var child = items[i];
+		child.setStatus(data[child.name]);
+	}
+	self.statusPoint.text = String.format(Language.get("distribute_point"),self.point);
+};
+CreateCharacterAbilityView.prototype.refreshStatus=function(){
+	var self = this;
+	var chara = CharacterModel.list[CharacterModel.list.length * Math.random() >>> 0];
+	self.point = 0;
+	var data = {force:0,intelligence:0,command:0,agility:0,luck:0};
+	for(var key in data){
+		if(chara.data[key] > 5){
+			data[key] = chara.data[key] - 5;
+			self.point += 5;
+		}else{
+			data[key] = chara.data[key];
+		}
+	}
+	return data;
+};
+CreateCharacterAbilityView.prototype.abilityInit=function(data){
+	var self = this;
+	if(!data){
+		data = self.refreshStatus();
+	}else{
+		self.point = data.statusPoint;
+	}
+	
+	self.statusPoint = getStrokeLabel(String.format(Language.get("distribute_point"),self.point),20,"#FFFFFF","#000000",3);
+	self.statusPoint.x = 10;
+	self.statusPoint.y = 12;
+	self.baseLayer.addChild(self.statusPoint);
+	var refreshButton = getSizeButton(Language.get("refresh"),80,40);
+	refreshButton.x = 180;
+	refreshButton.y = 5;
+	self.baseLayer.addChild(refreshButton);
+	refreshButton.addEventListener(LMouseEvent.MOUSE_UP, self.onRefreshStatus);
+	self.listView = new LListView();
+	self.listView.dragEffect = LListView.DragEffects.None;
+	self.listView.x = 10;
+	self.listView.y = 55;
+	self.listView.cellWidth = 200;
+	self.listView.cellHeight = 45;
+	self.baseLayer.addChild(self.listView);
+	var items = [], child;
+	child = new CreateCharacterAbilityItemView(self.listView, "force", data.force);
+	items.push(child);
+	child = new CreateCharacterAbilityItemView(self.listView, "intelligence", data.intelligence);
+	items.push(child);
+	child = new CreateCharacterAbilityItemView(self.listView, "command", data.command);
+	items.push(child);
+	child = new CreateCharacterAbilityItemView(self.listView, "agility", data.agility);
+	items.push(child);
+	child = new CreateCharacterAbilityItemView(self.listView, "luck", data.luck);
+	items.push(child);
+	self.listView.resize(200, 45 * items.length);
+	self.listView.updateList(items);
+};
+CreateCharacterAbilityView.prototype.skillInit=function(data){
+	var self = this;
+	
+	var label = getStrokeLabel(Language.get("stunt") + ": ",20,"#FFFFFF","#000000",3);
+	label.x = 10;
+	label.y = 282;
+	self.baseLayer.addChild(label);
+	
+	var panel = new LPanel(new LBitmapData(LMvc.datalist["win01"]),170,40);
+	panel.cacheAsBitmap(true);
+	var bitmapOn = new LBitmap(new LBitmapData(LMvc.datalist["combobox_arraw"]));
+	var bitmapOff = new LBitmap(new LBitmapData(LMvc.datalist["combobox_arraw"]));
+	var com = new LComboBox(18,"#ffffff","Arial",panel,bitmapOff,bitmapOn);
+	com.setListChildView(CreateCharacterSkillComboBoxChild);
+	com.label.x = 10;
+	com.label.y = 9;
+	com.label.lineColor = "#000000";
+	com.label.stroke = true;
+	com.label.lineWidth = 3;
+	com.setChild({label:Language.get("null"),value:0});
+	for(var i=0,l=SkillMasterModel.master.length;i<l;i++){
+		var skill = SkillMasterModel.master[i];
+		com.setChild({label:skill.name(),value:skill.id()});
+	}
+	com.maxIndex = 4;
+	self.skillComboBox = com;
+	com.x = 60;
+	com.y = 277;
+	self.baseLayer.addChild(com);
+	com.addEventListener(LComboBox.ON_CHANGE, self.onSkillChange);
+	
+	var skillTextField = getStrokeLabel("",14,"#FFFFFF","#000000",2);
+	skillTextField.width = 260;
+	skillTextField.setWordWrap(true, 18);
+	skillTextField.x = 10;
+	skillTextField.y = 322;
+	self.baseLayer.addChild(skillTextField);
+	self.skillTextField = skillTextField;
+	
+	if(data && data.skill > 0){
+		com.setValue(data.skill);
+		skillTextField.text = SkillMasterModel.getMaster(data.skill).explanation();
+	}
+};
+CreateCharacterAbilityView.prototype.onSkillChange=function(event){
+	var com = event.currentTarget;
+	var self = com.parent.parent;
+	if(com.value == 0){
+		self.skillTextField.text = "";
+		return;
+	}
+	self.skillTextField.text = SkillMasterModel.getMaster(com.value).explanation();
+};

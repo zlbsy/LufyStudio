@@ -1,1 +1,10 @@
-WEFoT1JDUmF0TTFtZndERQYfTeKUjhoVHG8a9JvBbTLWLbeQuoI5FBfn79C2DfFBMyHbO8cQQnSDPWdlYkRZZi7XcZFzVeFhdTjg421A9py6BGQ3JrRE3nf0GLRX4lApJbJu7aqJoFdwFijImHPpCe3JOYiHwA7UyKAPfwsaAS1qni1qlth6EO2zaqt7IQSEqMMG/0hk3zZ8WLKNctJKWkgKcTvMw5LCchb4U+vzXMYz8gYeivNXWcRStY3XPdU8K8ZT+CcyUbm1uc2TTIgUOQQ1L6s3rM8beXTe/rcJiSbTjwcu8zPkfI+ST090JlB9QOMDEOma4X1vDnAzi4jAYX4g27Bh94zn7E7feVtZIRGKdBNc8mXlgGwjdg47+q1IDlbeZvOBXhJ+R0PRQEzaBOmZJiOwldW8j6sOepUwWY8W6dO0ykX5BFfX4c+xk2Rj
+LMvc.chapterData = {
+title : "黄巾之乱"
+,year : 184
+,month : 1
+,exp : 0, level : 1, eventList : []
+,seigniors : [
+{id:66,name:"张角",faceImg:66,color:"255,255,0",general_count:4, citys:[43, 41,24],city_count:2},
+{id:21,name:"刘备",faceImg:21,color:"0,128,0",general_count:2, citys:[44],city_count:1},
+]
+};

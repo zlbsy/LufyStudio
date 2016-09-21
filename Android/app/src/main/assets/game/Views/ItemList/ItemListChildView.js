@@ -1,1 +1,57 @@
-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
+function ItemListChildView(itemModel) {
+	var self = this;
+	base(self, LListChildView, []);
+	self.itemModel = itemModel;
+	self.lock = !LPlugin.stampIsOpen(itemModel.id());
+	self.set();
+}
+ItemListChildView.prototype.layerInit=function(){
+	var self = this;
+	self.layer = new LSprite();
+	self.addChild(self.layer);
+};
+ItemListChildView.prototype.loadOver=function(event){
+	var self = event.currentTarget.parent.parent;
+	self.cacheAsBitmap(false);
+	self.updateView();
+};
+ItemListChildView.prototype.getWidth=function(){
+	return 100;
+};
+ItemListChildView.prototype.getHeight=function(){
+	return 100;
+};
+ItemListChildView.prototype.set=function(){
+	var self = this;
+	self.layerInit();
+	
+	var width = self.getWidth(), height = self.getHeight();
+	
+	var icon;
+	if(self.lock){
+		var winPanel = new LPanel(new LBitmapData(LMvc.datalist["win06"]),width,height);
+		self.layer.addChild(winPanel);
+		icon = new LBitmap(new LBitmapData(LMvc.datalist["lock"]));
+		icon.x = (width - icon.getWidth())*0.5;
+		icon.y = (height - icon.getHeight())*0.5;
+		self.layer.addChild(icon);
+		return;
+	}else{
+		icon = self.itemModel.icon(new LPoint(width,height));
+		icon.addEventListener(LEvent.COMPLETE,self.loadOver);
+		self.layer.addChild(icon);
+	}
+	var name = getStrokeLabel(self.itemModel.name(),12,"#FFFFFF","#000000",2);
+	name.x = 10;
+	name.y = 10;
+	self.layer.addChild(name);
+};
+ItemListChildView.prototype.onClick = function(event) {
+	var self = event.target;
+	if(self.lock){
+		return;
+	}
+	var listView = event.currentTarget;
+	var parentView = listView.getParentByConstructor(ItemListView);;
+	parentView.showCharacterDetailed(self.itemModel);
+};

@@ -1,1 +1,140 @@
-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
+function StrategyChildView(strategyModel, isLearned, width){
+	var self = this;
+	base(self,LListChildView,[]);
+	self.init(strategyModel, isLearned, width);
+	self.layerInit();
+	//self.set();
+}
+StrategyChildView._list = [];
+StrategyChildView._listCount = 0;
+StrategyChildView.createChild = function(strategyModel, isLearned, width){
+	if(StrategyChildView._list.length > 0){
+		var child = StrategyChildView._list.shift();
+		child.init(strategyModel, isLearned, width);
+		return child;
+	}
+	return new StrategyChildView(strategyModel, isLearned, width);
+};
+StrategyChildView.prototype.removeAllChild = function() {};
+StrategyChildView.prototype.die = function() {
+	var self = this;
+	var has = false;
+	for(var i=0, l=StrategyChildView._list.length;i<l;i++){
+		var child = StrategyChildView._list[i];
+		if(child.objectIndex == self.objectIndex){
+			has = true;
+			break;
+		}
+	}
+	if(!has){
+		self.strategyModel = null;
+		self.cacheAsBitmap(false);
+		StrategyChildView._list.push(self);
+	}
+}; 
+StrategyChildView.prototype.init = function(strategyModel, isLearned, width) {
+	var self = this;
+	self.strategyModel = strategyModel;
+	self.isLearned = isLearned;
+	self.fullWidth = width;
+};
+StrategyChildView.prototype.updateView = function(bitmap, rectangle, point){
+	var self = this;
+	if(!self._ll_cacheAsBitmap){
+		self.set();
+	}
+	self.callParent("updateView",arguments);
+};
+StrategyChildView.prototype.layerInit=function(){
+	var self = this;
+	self.layer = new LSprite();
+	self.addChild(self.layer);
+};
+StrategyChildView.prototype.getName=function(color,lineColor,x){
+	var self = this;
+	if(!self.lblName){
+		var lblName = getStrokeLabel("",20,color,lineColor,3);
+		lblName.x = x;
+		lblName.y = 10;
+		self.layer.addChild(lblName);
+		self.lblName = lblName;
+	}
+	self.lblName.color = color;
+	self.lblName.lineColor = lineColor;
+	return self.lblName;
+};
+StrategyChildView.prototype.setBitmapLine=function(x){
+	var self = this;
+	if(!self.bitmapLine){
+		var bitmapLine = new LBitmap(new LBitmapData(LMvc.datalist["icon-line"]));
+		bitmapLine.scaleX = self.fullWidth - x;
+		bitmapLine.x = x;
+		bitmapLine.y = 48;
+		self.layer.addChild(bitmapLine);
+		self.bitmapLine = bitmapLine;
+	}
+	self.bitmapLine.scaleX = self.fullWidth - x;
+};
+StrategyChildView.prototype.getEffectType=function(color,lineColor,x){
+	var self = this;
+	if(!self.lblEffectType){
+		var lblEffectType = getStrokeLabel("",20,color,lineColor,3);
+		lblEffectType.x = x;
+		lblEffectType.y = 10;
+		self.layer.addChild(lblEffectType);
+		self.lblEffectType = lblEffectType;
+	}
+	self.lblEffectType.color = color;
+	self.lblEffectType.lineColor = lineColor;
+	return self.lblEffectType;
+};
+StrategyChildView.prototype.getMP=function(color,lineColor,x){
+	var self = this;
+	if(!self.lblMp){
+		var lblMp = getStrokeLabel("",20,color,lineColor,3);
+		lblMp.x = x;
+		lblMp.y = 10;
+		self.layer.addChild(lblMp);
+		self.lblMp = lblMp;
+	}
+	self.lblMp.color = color;
+	self.lblMp.lineColor = lineColor;
+	return self.lblMp;
+};
+StrategyChildView.prototype.set=function(){
+	var self = this;
+	var width = 50, height = 50;
+	var color = self.isLearned ? "#FFFFFF" : "#CCCCCC";
+	var lineColor = self.isLearned ? "#000000" : "#999999";
+	var lblName = self.getName(color,lineColor,width + 5);
+	lblName.text = self.strategyModel.name();
+	self.setBitmapLine(width + 5);
+	var effectType = Language.get("StrategyEffectType." + self.strategyModel.effectType());
+	var lblEffectType = self.getEffectType(color,lineColor,width + 105);
+	lblEffectType.text = effectType;
+	var lblMp = self.getMP(color,lineColor,width + 225);
+	lblMp.text = self.strategyModel.cost();
+	var strategyId = self.strategyModel.id();
+	if(!self.strategyId || strategyId != self.strategyId){
+		if(self.icon){
+			self.icon.remove();
+		}
+		self.strategyId =strategyId;
+		self.icon = self.strategyModel.icon(new LPoint(50,50),self.iconComplete);
+		self.layer.addChild(self.icon);
+	}
+}; 
+StrategyChildView.prototype.iconComplete=function(event){
+	var self = event.currentTarget.parent.parent;
+	self.cacheAsBitmap(false);
+	self.updateView();
+};
+StrategyChildView.prototype.onClick = function(event) {
+	var self = event.target;
+	var listView = event.currentTarget;
+	var strategyView = listView.parent;
+	while(strategyView.constructor.name != "StrategyView"){
+		strategyView = strategyView.parent;
+	}
+	strategyView.strategySelect(self.strategyModel);
+};

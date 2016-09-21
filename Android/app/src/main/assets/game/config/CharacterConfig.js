@@ -1,1 +1,122 @@
-WEFoT1JDUmF0TTFtZndERdZLYpwlQ1S0A3kWZV0Hb9FuISo2xDHvydt7EZr7AEnReZoXy03FjTFTdNkD0ebUq1Mfi+96YWViFBQb4FYIp+do0Y8STZOHJWpr7O0aNHs5tv6s07zt6y0oDka+H8pUkuPm7PPyY7BbSMpYcvuFO0uOMeSald+vm+teapymeC4gpl+JiWcTgUtfW9snhzPs81FTtZ5iWs1P4uR33wP4ZE+Ng3m66tO3dukgTlfYslfRpwjzOMxwSvpBjZHF4HHq2b1dVXB1mMOrQhFxlVFMcqYIlBrTiyYNDo7xAS/3bpduR3qTQT9LmoI2CoS1u8qmteXmxGBERdA3XDzVIrkYLULPIq1CdYV7QPEFTlSz1JC0PLOcrs3DvG1xf0Bq0EzcrDrdtodO6YRxVYIJ8zdrdnwCpdSk8vqJffneouoWSMCC+3L3fZDrsfIQwfu9VNKwVjHBxoM9VrvtTfrlORJtH+mU45qMkO18QmOjhDBDPf/Ni2MBz0XsgnPjumzWF+cpW0HrwDoWx1WQJGNnQnY3svNR7PCrQ7jigtKN1dod2Lb3oM0/kKXDbePJwjbwfb3de3xv5OLpf3vpZa451q+fVJmbJQYTO225lAsLJNcQMql9qNBUiRvYqlRyXNowC4evxziNA5zha6pxgCgvlg21WiaDVOJ2k7Ip5/RFnOwYvG2KWI4GqVAt6sJybTl+/q+AvdytYMwGVMaPFb/Uy7796qp4P/kQ4QBDMTn3n6Md8wwV2HIAMk6ZX+5qj1w4i23ApIemcJ7uc096TN8keskNLAvvVhhP+73DfzeY7i018BFyZ9SUORlD9rluHK21ab7m+qPJS+TVkrmeEGkj2N8BjPsFgLIJSJbMcOwgqfBlzM1JeoXWm1qX0MoHAhh57BmY9vJDe0x+UF194/coLgDnWevxPBMziZPObO2uEQ7WHYs5WnOBvW4YqpskHiufpsTfufYel0fHwNKjXOGUCV3r3xKlDROFPeKsf8ylVgT0sTtcXe4IpIH1zdGwgs4D8Fl8LNNRrMYl9s4PjPFslvZ0Y71GhaUq/Iwolx9FF4Mv2MvxtkUqFWcFeCUJYbXknY2O3AM+CcKJGxupSiQs7DNOWW48LvShrqDXKG+wUvU49DkZoxBFohkSaT3p8Qxz6wa8KF532G4DxPHcdQiIkYg3kinPgzFygPWFRk0jU+csnfxDCxza5l4GYSFySPFqpsLuvrz47gvosmSOhJJmZ+i43Bx7fJKXyetspEY+jsKs08GpCK1a66PfoHJUHIYbDKSKZvZiJuB2oGj7vp+JHqaOmBB1KtlTcKqVfUHp/AckBRn4xpjyWr+pN/67aBAkgQ1AqvhWToAJsY+0+Dn0RWBHH03rHJvx4jKx7V7BzCmR/QFE71G7OrsgHuTgfEGApLLVYMnrubha5JuJBT59pH/Bn7qQ/uA0G/PYOujXMhmVRCwOLp/V1PCsFtjBZHdLmDca5dV0nWB34r/OXBMmCyZM3AYW684kEEDkkxAJE8DUexBpH8XLC7X74V8KoJEGt4Q6UfLoI278EF5TDn63SE27QRmwEnXwSmLYqPDYxNCqOqdLaPMb0vvFskTDgh+ROqzZEJqh1XTuQHo3wi/iG8+RTtt7Jsfg7N9Hdva5KdXmLT3tR5FreSUvYzTZSP4Vn4cT1ZPo6jBMg8jwVbZtmaXW1D4i1d9kkgiJnaNptqMQY8d9dhxApCbFfNpqx18MxKyrPrgksTaZpSNdr5xpKAev4csW+2Waq5uImExVyU5RCibvzUhT6ryj8+cdq2RR0kD4LFkBmR1rbxY3qHRpFC/lZmjRW3DATuPajIACFyicn7zIXxZvLnwBD1q7MqUytABN8h4ej+QxQ7WCaghmdWQ/OdJisy29fDiDWDi8sqUW/+CUxuwPvb4Q2bywxa8cy09qRmfbu9Wg9QWj71vjzyrBELbUWuQCBYzy7knDKKKQYzI3lkt8GCwOzOm57x4PlZ5Xv4hUd3UrFabxSnQ+zROX8rxuDMIl2uMcHlfmNg/z+uqrVCQAF550vpbN88VcGgehL5Xf/RQHFUichHvxwbIQe7y+uEnTHfPSQAJGhxfuPcOUQ3L6oHBVo7duod5FoRM7yUajnLHveXyMud9JYC1a5mLSsHbhk3pTMSdqRrdZT3Zb2Jwjwkwgf/l9GholLPVuIdAWRWpLrnZkEjx0Tm3RZhNxneuGBElB+y1EaZPQ5VtQiqeI5fK3q4sqZa7Pz/Qnyd8tEZ0wr3KUOS5Gtgcl5sa/WcwQBlDh1D4Gsch37zdCH2CNKh39lQJeRjJWT+LyF53N0whVPYR2S7cIx7LIyRei+E9+mFy//3sBMKxsVzr47MKfUrb0eqcD9PPAmIjHCqFFdtZHdCTJzjqF0W53v7J9y/gSp4oev0tNYUT9moAIKLK+7x7821cI8DFEdEMgtHIKjmc1wugzYPd6fEeHwz/sBYxd93ZSU9WXLVKSiSo0vZ6mhvuMNanv9S6rk56FIHIMvZL7mL3Qujh1jWSj7E5ktPwxrGqlBcbFLUDLZ8FotMkWzNKGEunnAAoeiO2iX6PPxiViP5Q9WrdAHdScmxcDnTu4nQomIG6gTUWijoXcWZJXRIxiKph3k+Cx43cRPj9+eZa1N/zTX3rdZoZ58m3zTrJsCvbm3aWnPt+CeqcNVD4HMeNcZA9q+9qOr9PdmA78uCJHu9XQgc2wWtosMW9MIdYYvJdGEwSrrwahIbxuCuGGjkMiwqoZQVQ0WfLCWb1YjLv8E17c59wTkbPFIpPjiqg/cFAd+iX56OAZl8s8KSKVj0tl30Iv0i52ndcyjqCJPhrGy+COYPDW/4bBFFSP53JMxvlam4v4f6g/kelVg+ny7mKEwQ/rTf2o5JSEQvBcW62kB2kJBNmz9Po0zkmCcp+onxJap+Hz0qQwo/c206UI1a9mRsgQXU8yjpRbRAsRko1saGM6jerHqdIZ5uE4vLN7uqI1jIqzKkoqguiN4Hwz5CugQjFEvaDsDgmZ+s+U7GdHg3Fcg1dvSO4dBWvxVG6IAVcQ6me28Ocvnp8VPjqFynJt24lWIuatbjczezdafBxF3zTJuEIMfNSCdh3wzQ497GyRVO+Te8Nn7HtuKyMoheIrvzrei487npCh/88uS7y+MLj6n1WDLiBSd73agwH6sqLVRS2r8s3NrSP6uVZZsdUuSKpeIeU9ycVZjdFHd2va1GWz89vPoY+HzMIq1e5jth8Ewf7QhWJZWg9Vf/9UrLyTrG2cuEsKYnPeMzWI5V40VEVoBZS+JOnxUYlGzkjormXXO9nK+ge1MscMnl/3XhjOk1YXHZXIbAhp85X8yhxWSacjQ+yJOFWtRTQ=
+var CharacterAction = {
+	/**
+	 * 站立
+	 **/
+	STAND:"stand",
+	/**
+	 * 移动
+	 **/
+	MOVE:"move",
+	/**
+	 * 攻击
+	 **/
+	ATTACK:"attack",
+	/**
+	 * 攻击开始
+	 **/
+	ATTACK_START:"attack_start",
+	/**
+	 * 挡格
+	 **/
+	BLOCK:"block",
+	/**
+	 * 受伤
+	 **/
+	HERT:"hert",
+	/**
+	 * 觉醒
+	 **/
+	WAKE:"wake",
+	/**
+	 * 喘气
+	 **/
+	PANT:"pant",
+	/**
+	 * 升级
+	 **/
+	LEVELUP:"levelup",
+	/**
+	 * 法攻
+	 **/
+	MAGIC_ATTACK:"magic_attack"
+};
+var CharacterDirection = {
+	DOWN:"down",
+	LEFT:"left",
+	RIGHT:"right",
+	UP:"up",
+	LEFT_DOWN:"left_down",
+	RIGHT_DOWN:"right_down",
+	LEFT_UP:"left_up",
+	RIGHT_UP:"right_up"
+};
+var CharacterDisposition = {
+	TIMID:0,//胆小
+	CALM:1,//冷静
+	BRAVE:2,//勇敢
+	RECKLESS:3//鲁莽
+};
+var BattleCharacterSize = {
+	width:48,height:48
+};
+var CharacterFaceSize = {
+	width:220,height:320
+};
+var CharacterLevelConfig = {
+	initLevel:3,
+	exp:50,
+	maxLevel:100
+};
+
+var DefCharacterList = {//防御设施范围
+	"soldier_4":[671,672,673,674,675,676],
+	"soldier_6":[677,678,679,680,681,682]
+};
+var DefCharacterImage = {
+	"soldier_4":200,
+	"soldier_6":6
+};
+var MaxHistoryCharacterIndex = 620;//历史人物范围
+var TribeCharacter = [621,670];//外族范围
+var EmployCharacter = [683,692];//援兵范围
+var DefenseCharacterCost = 500;//每个防御设施所需城防
+var BattleCharacterStatusConfig = {};
+BattleCharacterStatusConfig.FADE_TIME = 0.2;
+BattleCharacterStatusConfig.SHOW_TIME = 0.5;
+BattleCharacterStatusConfig.CONFIRM_STATUS_TIME = 1;
+BattleCharacterStatusConfig.TROOPS = "Troops";
+BattleCharacterStatusConfig.HP = "HP";
+BattleCharacterStatusConfig.MP = "MP";
+BattleCharacterStatusConfig.SP = "SP";
+BattleCharacterStatusConfig.EXP = "Exp";
+BattleCharacterStatusConfig.EXP_WEAPON = "ExpWeapon";
+BattleCharacterStatusConfig.EXP_ARMOR = "ExpArmor";
+var CharacterMode = {
+	NONE : "none",
+	SHOW_MOVE_ROAD : "showMoveRoad",
+	STRATEGY_SELECT: "strategySelect",
+	WAIT_ATTACK : "waitAttack",
+	ATTACK : "attack",
+	WAIT_SINGLE_COMBAT:"waitSingleCombat",
+	MOVING : "moving",
+	TO_MOVE : "toMove",
+	END_MOVE : "endMove",
+	END_ACTION : "endAction"
+};
+//行动方针
+var BattleCharacterMission = {
+	Initiative:0,//主动出击
+	Passive:1,//被动出击
+	Defensive:2//原地防守
+};
+var SingleCombatCharacterConfig = {};
+SingleCombatCharacterConfig.INIT = "init";
+SingleCombatCharacterConfig.START = "start";
+var RPGCharacterConfig = {
+	SPEED : 4
+};
+//俘虏忠诚度以及劝降关联
+var charactersParentConfig = [
+	{id:4,parent:21},//关羽-刘备
+	{id:19,parent:21},//张飞-刘备
+];

@@ -1,1 +1,75 @@
-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
+function BattleTerrainView(controller){
+	var self = this;
+	LExtends(self,LView,[controller]);
+	self.init();
+}
+BattleTerrainView.prototype.init = function(){
+	var self = this;
+	var background = new LSprite();
+	background.addChild(getTranslucentBitmap(160,100));
+	self.addChild(background);
+	self.bitmap = new LBitmap(new LBitmapData("#ffffff",0,0,BattleCharacterSize.width,BattleCharacterSize.height,LBitmapData.DATA_CANVAS));
+	self.bitmap.x = self.bitmap.y = 10;
+	self.addChild(self.bitmap);
+	var lblName = getStrokeLabel(Language.get("terrain"),20,"#FFFFFF","#000000",4);
+	lblName.x = self.bitmap.x + BattleCharacterSize.width + 10;
+	lblName.y = self.bitmap.y;
+	self.addChild(lblName);
+	self.nameLabel = lblName;
+	
+	var lblComment = getStrokeLabel(Language.get("terrain_comment_heal"),16,"#FF0000","#000000",4);
+	lblComment.x = lblName.x;
+	lblComment.y = lblName.y + lblName.getHeight() + 5;
+	self.addChild(lblComment);
+	self.commentLabel = lblComment;
+	
+	var bitmapStrategys = [
+		new LBitmap(new LBitmapData(LMvc.datalist["icon_strategy"],0,0,30,30)),
+		new LBitmap(new LBitmapData(LMvc.datalist["icon_strategy"],30,0,30,30)),
+		new LBitmap(new LBitmapData(LMvc.datalist["icon_strategy"],60,0,30,30)),
+		new LBitmap(new LBitmapData(LMvc.datalist["icon_strategy"],90,0,30,30))
+	];
+	for(var i = 0;i < bitmapStrategys.length;i++){
+		var bitmap = bitmapStrategys[i];
+		bitmap.x = 10 + i * 35;
+		bitmap.y = self.bitmap.y + self.bitmap.getHeight() + 5;
+		self.addChild(bitmap);
+	}
+	self.bitmapStrategys = bitmapStrategys;
+};
+BattleTerrainView.prototype.show = function(sx,sy,mapData){
+	var self = this;
+	if(self.tween){
+		LTweenLite.remove(self.tween);
+	}
+	var terrainId = getTerrainId(mapData);
+	var terrainModel = TerrainMasterModel.getMaster(terrainId);
+	self.nameLabel.text = terrainModel.name();
+	var strategy = terrainModel.strategy();
+	for(var i=0;i<strategy.length;i++){
+		self.setChildIndex(self.bitmapStrategys[i], strategy[i] ? self.numChildren - 1 : 0);
+	}
+	var comment = terrainModel.comment();
+	self.commentLabel.visible = comment ? true:false;
+	if(self.commentLabel.visible){
+		self.commentLabel.text = comment;
+	}
+	var bitmapData = getMapTile(mapData);
+	self.bitmap.bitmapData.copyPixels(bitmapData,new LRectangle(0,0,BattleCharacterSize.width,BattleCharacterSize.height),new LPoint(0,0));
+	self.visible = true;
+	self.alpha = 1;
+	self.x = mouseX + BattleCharacterSize.width;
+	self.y = mouseY;
+	if(self.x + self.getWidth() > LGlobal.width){
+		self.x = mouseX - BattleCharacterSize.width - self.getWidth();
+	}
+	if(self.y + self.getHeight() > LGlobal.height){
+		self.y = LGlobal.height - self.getWidth();
+	}
+	self.tween = LTweenLite.to(self,0.2,{alpha:0,delay:0.5,onComplete:self.onComplete});
+};
+BattleTerrainView.prototype.onComplete = function(event){
+	var self = event.target;
+	self.tween=null;
+	self.visible = false;
+};

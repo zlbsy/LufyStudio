@@ -1,1 +1,59 @@
-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
+/*****
+ * TODO::ver1.1官职系统，下个版本加入
+ */
+/*
+* id:武将id
+* name：备注武将名，使用language
+* faceImg：头像
+* minFace：小头像范围
+* disposition : 0胆小，1冷静，2勇敢，3鲁莽
+* skill：特技
+* force：武力
+* intelligence：智力
+* command：统率
+* agility：敏捷
+* luck：运气
+* compatibility : 相性 1-150
+* personalLoyalty ： 义气 1-15
+* childs : 子[id,id]
+* father : 父id
+* soldiers：初始可带兵种［{id:兵种ID,proficiency:熟练度,img:兵种形象ID}］(熟练度 : 精通S，熟练A，普通B，略懂C，不会D) 用兵符升级 D+1=C,C+2=B,B+3=A,A+4=S
+* */
+/*
+var characterList = [
+	{id:1,name:"刘备",faceImg:6,minFace:[0,23,151,151],disposition:0,skill:30,force:78,intelligence:76,command:72,agility:74,luck:100,compatibility:75,initTroops:100,initStrategy:20,personalLoyalty:10,
+		soldiers:[{id:1,proficiency:500},{id:2,proficiency:100}],angryTalks:["angry_talk_1_0","angry_talk_1_1","angry_talk_1_2"],groupSkill:1},
+	{id:2,name:"关羽",faceImg:7,minFace:[15,67,100,100],disposition:2,skill:3,force:96,intelligence:90,command:98,agility:68,luck:62,compatibility:75,initTroops:100,initStrategy:20,personalLoyalty:10,
+		soldiers:[{id:2,proficiency:700,img:2},{id:1,proficiency:500,img:2},],groupSkill:1}
+];*/
+//刘备，关羽，张飞，赵云，马超，黄忠，魏延
+//曹操，许褚，典卫，夏侯惇，夏侯渊，张辽，张郃
+//孙权，孙策，甘宁，太史慈，周泰，程普，黄盖
+//吕布，董卓，华雄，颜良，文丑，袁绍，公孙赞，曹彰
+/*
+ 0品：125%
+ 1品：120%
+ 2品：115%
+ 3品：110%
+ 4品：105%
+ 5品：100%
+ 6品：95%
+ 7品：90%
+ 8品：85%
+ 9品：80%
+ * */
+var government = [
+	{id:1,name:"校尉",rating:1,type:0},
+	{id:2,name:"中郎将",rating:2,type:0},
+	{id:3,name:"骁骑将军",rating:3,type:0},
+	{id:4,name:"前将军",rating:4,type:0},
+	{id:5,name:"镇国将军",rating:5,type:0},
+	{id:6,name:"大将军",rating:6,type:0},
+	
+	{id:7,name:"从事",rating:1,type:1},
+	{id:8,name:"长史",rating:2,type:1},
+	{id:9,name:"主簿",rating:3,type:1},
+	{id:10,name:"尚书",rating:4,type:1},
+	{id:11,name:"太常",rating:5,type:1},
+	{id:12,name:"丞相",rating:6,type:1}
+];

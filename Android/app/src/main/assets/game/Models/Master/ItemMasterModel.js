@@ -1,1 +1,153 @@
-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
+function ItemMasterModel(controller,data){
+	var self = this;
+	base(self,MyModel,[controller]);
+	self.data = data;
+	self.setData();
+}
+ItemMasterModel.master = [];
+ItemMasterModel.setMaster=function(list){
+	var self = this;
+	for(var i=0,l=list.length;i<l;i++){
+		var item = new ItemMasterModel(null,list[i]);
+		ItemMasterModel.master.push(item);
+	}
+};
+ItemMasterModel.getMaster=function(item_id){
+	var self = this;
+	for(var i=0,l=ItemMasterModel.master.length;i<l;i++){
+		var item = ItemMasterModel.master[i];
+		if(item.id() != item_id){
+			continue;
+		}
+		return item;
+	}
+	return null;
+};
+ItemMasterModel.getStamps=function(){
+	var self = this;
+	var stamps = [];
+	for(var i=0,l=ItemMasterModel.master.length;i<l;i++){
+		var item = ItemMasterModel.master[i];
+		if(!item.stamp()){
+			continue;
+		}
+		stamps.push(item);
+	}
+	return stamps;
+};
+ItemMasterModel.prototype.setData = function(){
+	var self = this;
+	if(self.data.type == ItemType.EQUIPMENT){
+		self.initEquipmentData();
+	}
+};
+ItemMasterModel.prototype.initEquipmentData = function(){
+	var self = this;
+	var params = ["force","intelligence","command","agility","luck","attack","spirit","defense","breakout","morale","troops","MP"];
+	for(var i=0;i<params.length;i++){
+		if(typeof self.data[params[i]] == UNDEFINED){
+			self.data[params[i]] = 0;
+		}
+	}
+};
+ItemMasterModel.prototype.id = function(){
+	return this.data.id;
+};
+ItemMasterModel.prototype.name = function(){
+	return Language.getItem("item_name_"+this.data.id);
+};
+ItemMasterModel.prototype.stamp = function(){
+	return this.data.stamp ? true : false;
+};
+ItemMasterModel.prototype.itemType = function(){
+	return this.data.type;
+};
+ItemMasterModel.prototype.loyalty = function(){
+	return this.data.loyalty;
+};
+ItemMasterModel.prototype.rarity = function(){
+	return this.data.rarity;
+};
+ItemMasterModel.prototype.feat = function(){
+	return this.data.feat;
+};
+ItemMasterModel.prototype.proficiency = function(){
+	return this.data.proficiency;
+};
+ItemMasterModel.prototype.upperLimit = function(){
+	return this.data.upper_limit;
+};
+ItemMasterModel.prototype.position = function(){
+	return this.data.position;
+};
+ItemMasterModel.prototype.params = function(){
+	var self = this, keys;
+	keys = ["force","intelligence","command","agility","luck","attack","defense","breakout","morale","spirit",
+	"life","feat","proficiency","upper_limit","loyalty"];
+	var result = [];
+	for(var i=0,l=keys.length;i<l;i++){
+		if(this.data[keys[i]]){
+			result.push(keys[i]);
+		}
+	}
+	return result;
+};
+ItemMasterModel.prototype.getParam = function(key){
+	return this.data[key];
+};
+ItemMasterModel.prototype.life = function(){
+	return this.data.life?this.data.life:0;
+};
+ItemMasterModel.prototype.attack = function(){
+	return this.data.attack?this.data.attack:0;
+};
+ItemMasterModel.prototype.defense = function(){
+	return this.data.defense?this.data.defense:0;
+};
+ItemMasterModel.prototype.breakout = function(){
+	return this.data.breakout?this.data.breakout:0;
+};
+ItemMasterModel.prototype.morale = function(){
+	return this.data.morale?this.data.morale:0;
+};
+ItemMasterModel.prototype.spirit = function(){
+	return this.data.spirit?this.data.spirit:0;
+};
+ItemMasterModel.prototype.force = function(){
+	return this.data.force?this.data.force:0;
+};
+ItemMasterModel.prototype.intelligence = function(){
+	return this.data.intelligence?this.data.intelligence:0;
+};
+ItemMasterModel.prototype.command = function(){
+	return this.data.command?this.data.command:0;
+};
+ItemMasterModel.prototype.agility = function(){
+	return this.data.agility?this.data.agility:0;
+};
+ItemMasterModel.prototype.luck = function(){
+	return this.data.luck?this.data.luck:0;
+};
+ItemMasterModel.prototype.price = function(){
+	return 100 + (this.data.rarity - 1) * 50;
+};
+ItemMasterModel.prototype.businessPrice = function(){
+	return this.price() * 10;
+};
+ItemMasterModel.prototype.explanation = function(){
+	return Language.getItem("item_explanation_" + this.data.id);
+};
+ItemMasterModel.prototype.icon=function(size,callback){
+	if(!size){
+		size = new LPoint(60, 60);
+	}
+	var icon = new BitmapSprite(LMvc.IMG_PATH + "item/" + this.id() + ".png", null,size);
+	//var icon = new BitmapSprite(LMvc.IMG_PATH + "item/1.png", null,size);
+	if(typeof callback == "function")icon.addEventListener(LEvent.COMPLETE, callback);
+	var winPanel = getPanel("win06",size.x,size.y);
+	//new LPanel(new LBitmapData(LMvc.datalist["win06"]),size.x,size.y);
+	//winPanel.cacheAsBitmap(true);
+	icon.addChild(winPanel);
+	LPlugin.openStamp(this.id());
+	return icon;
+};

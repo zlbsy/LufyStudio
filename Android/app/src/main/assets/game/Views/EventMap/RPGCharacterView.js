@@ -1,1 +1,157 @@
-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
+function RPGCharacterView(controller, id, w, h,action,direction) {
+	var self = this;
+	LExtends(self, CharacterView, [controller, id, w, h]);
+	self.step = self.moveStep = 4;
+	//self.layer.x = self.layer.y = -8;
+	self.belong = null;
+	//self.addShape(LShape.RECT,[0,0,BattleCharacterSize.width,BattleCharacterSize.height]);
+	self.addShape(LShape.RECT,[0,0,48,64]);
+	self.mode = CharacterMode.NONE;
+	self.directionList = {
+		"-1,-1":CharacterDirection.LEFT,
+		"-1,0":CharacterDirection.LEFT,
+		"-1,1":CharacterDirection.DOWN,
+		"0,-1":CharacterDirection.UP,
+		"0,1":CharacterDirection.DOWN,
+		"1,-1":CharacterDirection.UP,
+		"1,0":CharacterDirection.RIGHT,
+		"1,1":CharacterDirection.RIGHT
+	};
+}
+RPGCharacterView.cacheBitmapDatas = {};
+RPGCharacterView.DEFAULT_IMG = "character-s-default";
+RPGCharacterView.getAnimationData = function(){
+	// 1920 x 64
+	var list = LGlobal.divideCoordinate(1920, 64, 1, 40);
+	var data = [
+		[list[0][0]],//STAND 0
+		[list[0][20]],//STAND 1
+		[list[0][1],list[0][2]],//MOVE 2
+		[list[0][21],list[0][22]],//MOVE 3
+	];
+	return data;
+};
+RPGCharacterView.prototype.addAnimation = function() {
+	var self = this;
+	var bitmapData = new LBitmapData(LMvc.datalist[RPGCharacterView.DEFAULT_IMG]);
+	self.anime = new LAnimationTimeline(bitmapData, RPGCharacterView.getAnimationData());
+	self.anime.speed = RPGCharacterConfig.SPEED;
+	self.layer.addChild(self.anime);
+	self.setAnimationLabel();
+	self.anime.setFrameSpeedAt(13,0,2);
+	
+	self.anime.addEventListener(LEvent.COMPLETE, self.actionComplete);
+	/*
+	self.anime.addFrameScript(String.format("{0}-{1}",CharacterAction.ATTACK_START,CharacterDirection.DOWN),self.attackToHert,[]);
+	self.anime.addFrameScript(String.format("{0}-{1}",CharacterAction.ATTACK_START,CharacterDirection.UP),self.attackToHert,[]);
+	self.anime.addFrameScript(String.format("{0}-{1}",CharacterAction.ATTACK_START,CharacterDirection.LEFT),self.attackToHert,[]);
+	self.anime.addFrameScript(String.format("{0}-{1}",CharacterAction.ATTACK_START,CharacterDirection.RIGHT),self.attackToHert,[]);
+	self.anime.addFrameScript(String.format("{0}-{1}",CharacterAction.ATTACK,CharacterDirection.DOWN),self.attackSpecialCheck,[]);
+	self.anime.addFrameScript(String.format("{0}-{1}",CharacterAction.ATTACK,CharacterDirection.UP),self.attackSpecialCheck,[]);
+	self.anime.addFrameScript(String.format("{0}-{1}",CharacterAction.ATTACK,CharacterDirection.LEFT),self.attackSpecialCheck,[]);
+	self.anime.addFrameScript(String.format("{0}-{1}",CharacterAction.ATTACK,CharacterDirection.RIGHT),self.attackSpecialCheck,[]);
+	*/
+	var img = self.data.id();
+	var loader = new LLoader();
+	loader.parent = self;
+	loader.addEventListener(LEvent.COMPLETE, self.loadSOver);
+	loader.load(LMvc.IMG_PATH + "character/r/"+img+".png", "bitmapData");
+};
+RPGCharacterView.prototype.setAnimationLabel = function() {
+	var self = this;
+	var anime = self.anime;
+	//STAND
+	anime.setLabel(String.format("{0}-{1}",CharacterAction.STAND,CharacterDirection.DOWN),0,0,1,false);
+	anime.setLabel(String.format("{0}-{1}",CharacterAction.STAND,CharacterDirection.UP),1,0,1,false);
+	anime.setLabel(String.format("{0}-{1}",CharacterAction.STAND,CharacterDirection.RIGHT),0,0,1,true);
+	anime.setLabel(String.format("{0}-{1}",CharacterAction.STAND,CharacterDirection.LEFT),1,0,1,true);
+	//MOVE
+	anime.setLabel(String.format("{0}-{1}",CharacterAction.MOVE,CharacterDirection.DOWN),2,0,1,false);
+	anime.setLabel(String.format("{0}-{1}",CharacterAction.MOVE,CharacterDirection.UP),3,0,1,false);
+	anime.setLabel(String.format("{0}-{1}",CharacterAction.MOVE,CharacterDirection.RIGHT),2,0,1,true);
+	anime.setLabel(String.format("{0}-{1}",CharacterAction.MOVE,CharacterDirection.LEFT),3,0,1,true);
+	/*
+	//STAND
+	anime.setLabel(String.format("{0}-{1}",CharacterAction.STAND,CharacterDirection.DOWN),6,0,1,false);
+	anime.setLabel(String.format("{0}-{1}",CharacterAction.STAND,CharacterDirection.UP),7,0,1,false);
+	anime.setLabel(String.format("{0}-{1}",CharacterAction.STAND,CharacterDirection.LEFT),8,0,1,false);
+	anime.setLabel(String.format("{0}-{1}",CharacterAction.STAND,CharacterDirection.RIGHT),8,0,1,true);
+	//PANT
+	anime.setLabel(String.format("{0}-{1}",CharacterAction.PANT,CharacterDirection.DOWN),9,0,1,false);
+	anime.setLabel(String.format("{0}-{1}",CharacterAction.PANT,CharacterDirection.UP),9,0,1,false);
+	anime.setLabel(String.format("{0}-{1}",CharacterAction.PANT,CharacterDirection.LEFT),9,0,1,false);
+	anime.setLabel(String.format("{0}-{1}",CharacterAction.PANT,CharacterDirection.RIGHT),9,0,1,false);
+	//BLOCK
+	anime.setLabel(String.format("{0}-{1}",CharacterAction.BLOCK,CharacterDirection.DOWN),10,0,1,false);
+	anime.setLabel(String.format("{0}-{1}",CharacterAction.BLOCK,CharacterDirection.UP),11,0,1,false);
+	anime.setLabel(String.format("{0}-{1}",CharacterAction.BLOCK,CharacterDirection.LEFT),12,0,1,false);
+	anime.setLabel(String.format("{0}-{1}",CharacterAction.BLOCK,CharacterDirection.RIGHT),12,0,1,true);
+	//HERT
+	anime.setLabel(String.format("{0}-{1}",CharacterAction.HERT,CharacterDirection.DOWN),13,0,1,false);
+	anime.setLabel(String.format("{0}-{1}",CharacterAction.HERT,CharacterDirection.UP),13,0,1,false);
+	anime.setLabel(String.format("{0}-{1}",CharacterAction.HERT,CharacterDirection.LEFT),13,0,1,false);
+	anime.setLabel(String.format("{0}-{1}",CharacterAction.HERT,CharacterDirection.RIGHT),13,0,1,false);
+	//LEVELUP
+	anime.setLabel(String.format("{0}-{1}",CharacterAction.WAKE,CharacterDirection.DOWN),14,0,1,false);
+	anime.setLabel(String.format("{0}-{1}",CharacterAction.WAKE,CharacterDirection.UP),14,0,1,false);
+	anime.setLabel(String.format("{0}-{1}",CharacterAction.WAKE,CharacterDirection.LEFT),14,0,1,false);
+	anime.setLabel(String.format("{0}-{1}",CharacterAction.WAKE,CharacterDirection.RIGHT),14,0,1,false);
+	//LEVELUP
+	anime.setLabel(String.format("{0}-{1}",CharacterAction.LEVELUP,CharacterDirection.DOWN),15,0,1,false);
+	anime.setLabel(String.format("{0}-{1}",CharacterAction.LEVELUP,CharacterDirection.UP),16,0,1,false);
+	anime.setLabel(String.format("{0}-{1}",CharacterAction.LEVELUP,CharacterDirection.LEFT),17,0,1,false);
+	anime.setLabel(String.format("{0}-{1}",CharacterAction.LEVELUP,CharacterDirection.RIGHT),17,0,1,true);
+	//MAGIC_ATTACK
+	anime.setLabel(String.format("{0}-{1}",CharacterAction.MAGIC_ATTACK,CharacterDirection.DOWN),18,0,1,false);
+	anime.setLabel(String.format("{0}-{1}",CharacterAction.MAGIC_ATTACK,CharacterDirection.UP),19,0,1,false);
+	anime.setLabel(String.format("{0}-{1}",CharacterAction.MAGIC_ATTACK,CharacterDirection.LEFT),20,0,1,false);
+	anime.setLabel(String.format("{0}-{1}",CharacterAction.MAGIC_ATTACK,CharacterDirection.RIGHT),20,0,1,true);
+	*/
+};
+RPGCharacterView.prototype.loadSOver = function(event){
+	var self = event.currentTarget.parent;
+	var animeBitmapData = self.anime.bitmap.bitmapData;
+	var bitmapData = new LBitmapData(event.target,animeBitmapData.x,animeBitmapData.y,animeBitmapData.width,animeBitmapData.height);
+	self.anime.bitmap.bitmapData = bitmapData;
+};
+RPGCharacterView.prototype.onframe = function(event){
+	var self = event.currentTarget.parent;
+	self.move();
+};
+RPGCharacterView.prototype.setActionDirection = function(action, direction) {
+	var self = this;
+	if (self.action == action && self.direction == direction) {
+		return;
+	}
+	if (!self.anime) {
+		self.addAnimation();
+	}
+	self.anime._send_complete = false;
+	var label = action + "-" + direction;
+	
+	self.anime.gotoAndPlay(label);
+	
+	self.action = action;
+	self.direction = direction;
+};
+RPGCharacterView.prototype.getTo = function(){
+	var self = this;
+	return [self.to.x/self.w >>> 0,self.to.y/self.h >>> 0];
+};
+RPGCharacterView.prototype.actionComplete = function(event){
+	var self = event.currentTarget.parent.parent;
+	/*switch(self.action){
+		case CharacterAction.HERT:
+			self.dispatchEvent(BattleCharacterActionEvent.HERT_ACTION_COMPLETE);
+			break;
+		case CharacterAction.BLOCK:
+			self.dispatchEvent(BattleCharacterActionEvent.BLOCK_ACTION_COMPLETE);
+			break;
+	}*/
+	self.dispatchEvent(LEvent.COMPLETE);
+};
+RPGCharacterView.prototype.setRoad = function(list){
+	var self = this;
+	self.callParent("setRoad",arguments);
+	self.mode = CharacterMode.MOVING;
+};

@@ -1,1 +1,371 @@
-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
+function getSingleCombatCommandCount(force){
+	if(force > 94){
+		return 6;
+	}else if(force > 80){
+		return 5;
+	}else if(force > 60){
+		return 4;
+	}else{
+		return 3;
+	}
+}
+function selectSingleCombatCommand(commands, selectedCommands, characterModel){
+	var commandProbability = SingleCombatCommandProbability[characterModel.disposition()];
+	var canSelectCommand = [], commandCount = 0;
+	for(var key in commandProbability){
+		//console.log("key : "+key+"="+commandProbability[key]);
+		var index = commands.findIndex(function(child){
+			//console.log(child+"=="+key);
+			return child == key;
+		});
+		if(index < 0){
+			continue;
+		}
+		if(key == SingleCombatCommand.BACKSTROKE_ATTACK || key == SingleCombatCommand.SPECIAL_ATTACK){
+			var index2 = selectedCommands.findIndex(function(child){
+				return child == SingleCombatCommand.BACKSTROKE_ATTACK || child == SingleCombatCommand.SPECIAL_ATTACK;
+			});
+			if(index2 >= 0){
+				continue;
+			}
+		}
+		canSelectCommand.push(key);
+		commandCount += commandProbability[key];
+	}
+	var randomIndex = Math.random() * commandCount;
+	commandCount = 0;
+	for(var i=0;i<canSelectCommand.length;i++){
+		var key = canSelectCommand[i];
+		commandCount += commandProbability[key];
+		if(randomIndex < commandCount){
+			return key;
+		}
+	}
+	return null;
+}
+function getSingleCombatCommand(commands, angry, force, oldCommand) {
+	var specialIndex,backstrokeIndex;
+	if(angry == 100){
+		specialIndex = commands.findIndex(function(child){
+			return child == SingleCombatCommand.SPECIAL_ATTACK;
+		});
+		if(specialIndex < 0){
+			return SingleCombatCommand.SPECIAL_ATTACK;
+		}
+		if(force >= 90){
+			backstrokeIndex = commands.findIndex(function(child){
+				return child == SingleCombatCommand.BACKSTROKE_ATTACK;
+			});
+			if(backstrokeIndex < 0 && Math.random() > 0.5){
+				return SingleCombatCommand.BACKSTROKE_ATTACK;
+			}
+		}
+	}
+	if(oldCommand){
+		return getSingleCombatCommandFromOldCommand(oldCommand);
+	}
+	var index = Math.random() * RandomSingleCombatCommands.length >> 0;
+	return RandomSingleCombatCommands[index];
+}
+function getSingleCombatCommandFromOldCommand(oldCommand) {
+	var commands = SingleCombatCommandChange[oldCommand];
+	if(commands){
+		return commands[Math.random() * commands.length >> 0];
+	}
+	return RandomSingleCombatCommands[Math.random() * RandomSingleCombatCommands.length >> 0];
+}
+function singleCombatCommandExecute(leftCharacter, rightCharacter) {
+	leftCharacter.commandExecute();
+	rightCharacter.commandExecute();
+}
+function singleCombatHert(leftCharacter, rightCharacter) {
+	var hertValue = 5, cardinalNumber = 5;
+	var value = leftCharacter.data.force() - rightCharacter.data.force();
+	if(value > 0){
+		hertValue += cardinalNumber * value / 90;
+	}else{
+		hertValue += cardinalNumber * value / 90;
+		if(hertValue < 0.1){
+			hertValue = 0.1;
+		}
+	}
+	if(leftCharacter.currentCommand == SingleCombatCommand.ATTACK){
+		hertValue *= 3;
+	}else if(leftCharacter.currentCommand == SingleCombatCommand.DOUBLE_ATTACK){
+		hertValue *= 2;
+	}else if(leftCharacter.currentCommand == SingleCombatCommand.BIG_ATTACK){
+		hertValue *= 5;
+	}else if(leftCharacter.currentCommand == SingleCombatCommand.BACKSTROKE_ATTACK){
+		hertValue *= 6;
+	}else if(leftCharacter.currentCommand == SingleCombatCommand.SPECIAL_ATTACK){
+		hertValue *= 8;
+	}
+	if(rightCharacter.currentCommand == SingleCombatCommand.DEFENCE && leftCharacter.currentCommand != SingleCombatCommand.BACKSTROKE_ATTACK){
+		hertValue *= 0.5;
+	}
+	if(leftCharacter.buffer().visible){
+		hertValue *= 1.5;
+	}
+	hertValue = hertValue >>> 0;
+	if(hertValue < 1){
+		hertValue = 1;
+	}
+	rightCharacter.changeHp(hertValue);
+}
+//TODO::ver1.1版本升级后，需做事件化调整
+function singleCombatAttackActionComplete(currentCharacter, targetCharacter) {
+	switch(currentCharacter.currentCommand){
+		case SingleCombatCommand.ATTACK:
+			singleCombatCommandCheckAttack(currentCharacter, targetCharacter);
+			break;
+		case SingleCombatCommand.DOUBLE_ATTACK:
+			singleCombatCommandCheckDoubleAttack(currentCharacter, targetCharacter);
+			break;
+		case SingleCombatCommand.BIG_ATTACK:
+			singleCombatCommandBigAttack(currentCharacter, targetCharacter);
+			break;
+		case SingleCombatCommand.DEFENCE:
+			LPlugin.playSE("Se_hert", LPlugin.gameSetting.SE);//轻伤音效
+			targetCharacter.changeAction(CharacterAction.HERT);
+			singleCombatHert(currentCharacter, targetCharacter);
+			break;
+		case SingleCombatCommand.DODGE:
+			LPlugin.playSE("Se_hert", LPlugin.gameSetting.SE);//轻伤音效
+			targetCharacter.changeAction(CharacterAction.HERT);
+			singleCombatHert(currentCharacter, targetCharacter);
+			break;
+		case SingleCombatCommand.BACKSTROKE_ATTACK:
+			LPlugin.playSE("Se_big_hert", LPlugin.gameSetting.SE);//重伤音效
+			targetCharacter.changeAction(CharacterAction.HERT);
+			singleCombatHert(currentCharacter, targetCharacter);
+			break;
+		case SingleCombatCommand.SPECIAL_ATTACK:
+			singleCombatCommandSpecialAttack(currentCharacter, targetCharacter);
+			break;
+	}
+}
+function singleCombatCommandCheckAttack(currentCharacter, targetCharacter) {
+	switch(targetCharacter.currentCommand){
+		case SingleCombatCommand.ATTACK:
+			if(currentCharacter.isLeft){
+				LPlugin.playSE("Se_block", LPlugin.gameSetting.SE);//挡格音效
+			}
+			break;
+		case SingleCombatCommand.DOUBLE_ATTACK:
+			LPlugin.playSE("Se_hert", LPlugin.gameSetting.SE);//轻伤音效
+			targetCharacter.changeAction(CharacterAction.HERT);
+			singleCombatHert(currentCharacter, targetCharacter);
+			break;
+		case SingleCombatCommand.BIG_ATTACK:
+			LPlugin.playSE("Se_hert", LPlugin.gameSetting.SE);//轻伤音效
+			targetCharacter.changeAction(CharacterAction.HERT);
+			singleCombatHert(currentCharacter, targetCharacter);
+			break;
+		case SingleCombatCommand.DEFENCE:
+			LPlugin.playSE("Se_block", LPlugin.gameSetting.SE);//挡格音效
+			targetCharacter.changeAction(CharacterAction.BLOCK);
+			singleCombatHert(currentCharacter, targetCharacter);
+			break;
+		case SingleCombatCommand.DODGE:
+			LPlugin.playSE("Se_swing", LPlugin.gameSetting.SE);//抡空音效
+			targetCharacter.addDodgeScript(true);
+			break;
+		case SingleCombatCommand.CHARGE:
+		case SingleCombatCommand.HEAL:
+		case SingleCombatCommand.BUFFER:
+			LPlugin.playSE("Se_hert", LPlugin.gameSetting.SE);//轻伤音效
+			targetCharacter.changeAction(CharacterAction.HERT);
+			singleCombatHert(currentCharacter, targetCharacter);
+			break;
+		case SingleCombatCommand.BACKSTROKE_ATTACK:
+			targetCharacter.addBackstrokeScript();
+			break;
+		case SingleCombatCommand.SPECIAL_ATTACK:
+			break;
+	}
+}
+function singleCombatCommandCheckDoubleAttack(currentCharacter, targetCharacter) {
+	switch(targetCharacter.currentCommand){
+		case SingleCombatCommand.ATTACK:
+			if(targetCharacter.action == CharacterAction.ATTACK){
+				break;
+			}
+			targetCharacter.changeAction(CharacterAction.HERT);
+			singleCombatHert(currentCharacter, targetCharacter);
+			break;
+		case SingleCombatCommand.DOUBLE_ATTACK:
+			if(currentCharacter.isLeft){
+				LPlugin.playSE("Se_block", LPlugin.gameSetting.SE);//挡格音效
+			}
+			break;
+		case SingleCombatCommand.BIG_ATTACK:
+			LPlugin.playSE("Se_hert", LPlugin.gameSetting.SE);//轻伤音效
+			targetCharacter.changeAction(CharacterAction.HERT);
+			singleCombatHert(currentCharacter, targetCharacter);
+			break;
+		case SingleCombatCommand.DEFENCE:
+			LPlugin.playSE("Se_block", LPlugin.gameSetting.SE);//挡格音效
+			targetCharacter.changeAction(CharacterAction.BLOCK);
+			break;
+		case SingleCombatCommand.DODGE:
+			if(currentCharacter.attackCount == 0){
+				LPlugin.playSE("Se_swing", LPlugin.gameSetting.SE);//抡空音效
+				targetCharacter.addDodgeScript(false);
+			}else{
+				LPlugin.playSE("Se_hert", LPlugin.gameSetting.SE);//轻伤音效
+				targetCharacter.changeAction(CharacterAction.HERT);
+				singleCombatHert(currentCharacter, targetCharacter);
+			}
+			break;
+		case SingleCombatCommand.CHARGE:
+		case SingleCombatCommand.HEAL:
+		case SingleCombatCommand.BUFFER:
+			LPlugin.playSE("Se_hert", LPlugin.gameSetting.SE);//轻伤音效
+			targetCharacter.changeAction(CharacterAction.HERT);
+			singleCombatHert(currentCharacter, targetCharacter);
+			break;
+		case SingleCombatCommand.BACKSTROKE_ATTACK:
+			currentCharacter.attackCount++;
+			targetCharacter.addBackstrokeScript();
+			break;
+		case SingleCombatCommand.SPECIAL_ATTACK:
+			currentCharacter.attackCount++;
+			break;
+	}
+}
+function singleCombatCommandBigAttack(currentCharacter, targetCharacter) {
+	switch(targetCharacter.currentCommand){
+		case SingleCombatCommand.ATTACK:
+			break;
+		case SingleCombatCommand.DOUBLE_ATTACK:
+			break;
+		case SingleCombatCommand.BIG_ATTACK:
+			if(currentCharacter.isLeft){
+				LPlugin.playSE("Se_big_block", LPlugin.gameSetting.SE);//重挡格音效
+			}
+			break;
+		case SingleCombatCommand.DEFENCE:
+			LPlugin.playSE("Se_block", LPlugin.gameSetting.SE);//挡格音效
+			targetCharacter.changeAction(CharacterAction.BLOCK);
+			singleCombatHert(currentCharacter, targetCharacter);
+			break;
+		case SingleCombatCommand.DODGE:
+			LPlugin.playSE("Se_big_hert", LPlugin.gameSetting.SE);//重伤音效
+			targetCharacter.changeAction(CharacterAction.HERT);
+			singleCombatHert(currentCharacter, targetCharacter);
+			break;
+		case SingleCombatCommand.CHARGE:
+		case SingleCombatCommand.HEAL:
+		case SingleCombatCommand.BUFFER:
+			LPlugin.playSE("Se_big_hert", LPlugin.gameSetting.SE);//重伤音效
+			targetCharacter.changeAction(CharacterAction.HERT);
+			singleCombatHert(currentCharacter, targetCharacter);
+			break;
+		case SingleCombatCommand.BACKSTROKE_ATTACK:
+			targetCharacter.addBackstrokeScript();
+			break;
+		case SingleCombatCommand.SPECIAL_ATTACK:
+			break;
+	}
+}
+function singleCombatCommandSpecialAttack(currentCharacter, targetCharacter) {
+	switch(targetCharacter.currentCommand){
+		case SingleCombatCommand.ATTACK:
+			LPlugin.playSE("Se_big_hert", LPlugin.gameSetting.SE);//重伤音效
+			targetCharacter.changeAction(CharacterAction.HERT);
+			singleCombatHert(currentCharacter, targetCharacter);
+			break;
+		case SingleCombatCommand.DOUBLE_ATTACK:
+			LPlugin.playSE("Se_big_hert", LPlugin.gameSetting.SE);//重伤音效
+			targetCharacter.changeAction(CharacterAction.HERT);
+			singleCombatHert(currentCharacter, targetCharacter);
+			break;
+		case SingleCombatCommand.BIG_ATTACK:
+			LPlugin.playSE("Se_big_hert", LPlugin.gameSetting.SE);//重伤音效
+			targetCharacter.changeAction(CharacterAction.HERT);
+			singleCombatHert(currentCharacter, targetCharacter);
+			break;
+		case SingleCombatCommand.DEFENCE:
+			LPlugin.playSE("Se_big_block", LPlugin.gameSetting.SE);//重挡格音效
+			targetCharacter.changeAction(CharacterAction.BLOCK);
+			singleCombatHert(currentCharacter, targetCharacter);
+			break;
+		case SingleCombatCommand.DODGE:
+			if(Math.random() > 0.5){
+				LPlugin.playSE("Se_swing", LPlugin.gameSetting.SE);//抡空音效
+				targetCharacter.addDodgeScript(false);
+			}else{
+				targetCharacter.changeAction(CharacterAction.HERT);
+				singleCombatHert(currentCharacter, targetCharacter);
+			}
+			break;
+		case SingleCombatCommand.CHARGE:
+		case SingleCombatCommand.HEAL:
+		case SingleCombatCommand.BUFFER:
+			LPlugin.playSE("Se_big_hert", LPlugin.gameSetting.SE);//重伤音效
+			targetCharacter.changeAction(CharacterAction.HERT);
+			singleCombatHert(currentCharacter, targetCharacter);
+			break;
+		case SingleCombatCommand.BACKSTROKE_ATTACK:
+			targetCharacter.addBackstrokeScript();
+			break;
+		case SingleCombatCommand.SPECIAL_ATTACK:
+			if(currentCharacter.isLeft){
+				LPlugin.playSE("Se_big_block", LPlugin.gameSetting.SE);//重挡格音效
+			}
+			break;
+	}
+}
+function checkSingleCombatCommandEnd(){
+	var view = LMvc.SingleCombatController.view;
+	if(view.commandEnd){
+		return;
+	}
+	var character = view.characterLayer.childList.find(function(child){
+		return child.constructor.name == "SingleCombatCharacterView" && (child.action != CharacterAction.STAND || child.filters);
+	});
+	if(character){
+		return;
+	}
+	view.commandEnd = true;
+	if(view.executeIndex < 2){
+		setTimeout(function(){
+			view.leftCharacter.checkBuffer();
+			view.rightCharacter.checkBuffer();
+			view.execute();
+		},1000);
+	}else{
+		setTimeout(function(){
+			view.leftCharacter.checkBuffer();
+			view.rightCharacter.checkBuffer();
+			LTweenLite.to(view.commandLayer,0.2,{alpha:0,onComplete:function(e){
+				var layer = e.target;
+				layer.die();
+				layer.removeAllChild();
+				layer.alpha = 1;
+			}});
+			view.leftCharacter.setCommands();
+			view.rightCharacter.setCommands();
+			view.leftCharacter.clearCommand();
+			view.rightCharacter.clearCommand();
+			view.addCtrlButton();
+		},1000);
+	}
+}
+function getSingleCombatTalk(characterModel, mode){
+	var length;
+	switch(mode){
+		case SingleCombatTalkMode.DEBUT:
+			return String.format(Language.getSingleCombat(SingleCombatTalkMode.DEBUT + (Math.random() * 4 >> 0)),characterModel.name());
+		case SingleCombatTalkMode.BACK:
+			length = 4;
+			break;
+		case SingleCombatTalkMode.PURSUIT:
+			length = 2;
+			break;
+		case SingleCombatTalkMode.BACK_ATTACK:
+			length = 3;
+			break;
+	}
+	return Language.getSingleCombat(mode + (Math.random() * length >>> 0));
+}

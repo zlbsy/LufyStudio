@@ -1,1 +1,345 @@
-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
+function BattleResultView(controller, result){
+	var self = this;
+	LExtends(self,LView,[controller]);
+	self.name = "BattleResult";
+	self.backInit();
+	self.result = result;
+	self.checkCaptives = [];
+	//TODO:test code
+	//var from = self.controller.battleData.fromCity;
+	//self.controller.battleData.fromCity = self.controller.battleData.toCity;
+	//self.controller.battleData.toCity = from;
+	//self.model.enemyList[0].isLeader = true;
+	//TODO:test code end
+	//self.result = result=0;
+	//controller.addEnemyCharacter(243,"up",3,3);
+	//self.model.enemyList[0].isLeader = true;
+	//self.model.enemyCaptive.push(4);
+	
+	experienceToFeat(self.controller.battleData.expeditionEnemyCharacterList);
+	self.setEvent();
+	if(result){
+		self.winInit();
+	}else{
+		self.failInit();
+	}
+	self.showExpDialog();
+};
+BattleResultView.prototype.selfChangeCity=function(){
+	var self = this;
+	var battleData = self.controller.battleData;
+	self.retreatCity = battleFailChangeCity(battleData.toCity, self.failSeigniorId);
+	if(self.retreatCity){
+		self.retreatCityId = self.retreatCity.id();
+	}
+};
+BattleResultView.prototype.winInit=function(){
+	var self = this;
+	var battleData = self.controller.battleData;
+	self.winSeigniorId = LMvc.selectSeignorId;
+	if(battleData.fromCity.seigniorCharaId() == LMvc.selectSeignorId){
+		self.failSeigniorId = battleData.toCity.seigniorCharaId();
+		var city = battleData.toCity;
+		if(city.seigniorCharaId() > 0 && city.seignior().isTribe()){
+			//外族资源重设
+			resetTribeCity(city);
+		}
+		if(city.seigniorCharaId() > 0 && city.generalsSum() > self.model.selfCaptive.length){
+			self.selfChangeCity();
+		}
+		battleCityChange(self.winSeigniorId, self.failSeigniorId, self.retreatCityId, battleData.expeditionCharacterList, battleData.toCity, self.model.selfCaptive);
+		//敌方太守
+		self.retreatCityId = battleCheckRetreatCity(self.retreatCity, self.failSeigniorId, battleData.toCity);
+		//己方太守
+		if(self.controller.noBattle){
+			city.prefecture(battleData.expeditionLeader.id());
+		}else{
+			var selfCharas = self.controller.view.charaLayer.getCharactersFromBelong(Belong.SELF);
+			var chara = selfCharas.find(function(child){
+				return child.isLeader;
+			});
+			if(!chara)return;
+			city.prefecture(chara.data.id());
+		}
+	}else{
+		self.retreatCityId = battleData.fromCity.id();
+		self.failSeigniorId = battleData.fromCity.seigniorCharaId();
+	}
+	self.showResultTitle("battle_win");
+};
+BattleResultView.prototype.failInit=function(){
+	var self = this;
+	var battleData = self.controller.battleData;
+	self.enemyLeader = self.model.enemyList.find(function(child){
+		return child.isLeader;
+	});
+	self.showResultTitle("battle_fail");
+	self.failSeigniorId = LMvc.selectSeignorId;
+	if(battleData.fromCity.seigniorCharaId() == LMvc.selectSeignorId){
+		self.winSeigniorId = battleData.toCity.seigniorCharaId();
+		self.retreatCityId = battleData.fromCity.id();
+		self.addEventListener(BattleResultEvent.CLOSE_EXP, self.enemyCaptiveFail);
+	}else{
+		self.winSeigniorId = battleData.fromCity.seigniorCharaId();
+		var isTribeCharacter = battleData.fromCity.seignior().character().isTribeCharacter();
+		if(isTribeCharacter){
+			self.addEventListener(BattleResultEvent.CLOSE_EXP, self.lossOfResources);
+			self.addEventListener(BattleResultEvent.LOSS_OF_OCCUPY, self.showMap);
+		}else{
+			self.addEventListener(BattleResultEvent.CLOSE_EXP, self.selectMoveCity);
+		}
+	}
+};
+BattleResultView.prototype.lossOfResources=function(event){
+	var self = event.currentTarget;
+	var battleData = self.controller.battleData;
+	//外族入侵，资源损失
+	lossOfResourcesByTribe(battleData.toCity, battleData.fromCity);
+	//外族兵力及资源撤回
+	var characters = self.controller.view.charaLayer.getCharactersFromBelong(Belong.ENEMY);
+	attackResourcesReturnToCity(characters, battleData, battleData.fromCity);
+	self.message = String.format(Language.get("dialog_tribe_invasion_self_message"), battleData.toCity.name());
+	//{0}被外族入侵，城池遭到破坏，资源损失严重!
+	var view = new BattleResultConfirmView(self.controller, 
+		{
+			confirmType : BattleFailConfirmType.lossOfResources, 
+			message : self.message
+		}
+	);
+	self.addChild(view);
+};
+BattleResultView.prototype.selectMoveCity=function(event){
+	var self = event.currentTarget;
+	var view = new BattleResultConfirmView(self.controller, 
+		{
+			winSeigniorId : self.winSeigniorId,
+			failSeigniorId : self.failSeigniorId,
+			confirmType : BattleFailConfirmType.selectMoveCity
+		}
+	);
+	self.addChild(view);
+};
+BattleResultView.prototype.setEvent=function(){
+	var self = this;
+	if(self.result){
+		self.addEventListener(BattleResultEvent.CLOSE_EXP, self.selfCaptiveWin);
+		self.addEventListener(BattleResultEvent.CLOSE_CAPTIVE, self.selfCaptiveWin);
+		self.addEventListener(BattleResultEvent.CLOSE_CAPTIVE_SELF, self.enemyCaptiveWin);
+		self.addEventListener(BattleResultEvent.CLOSE_CAPTIVE_ENEMY, self.cityWin);
+		self.addEventListener(BattleResultEvent.RESCUE_CAPTIVE, self.cityWin);
+	}else{
+		self.addEventListener(BattleResultEvent.LOSE_CITY, self.enemyCaptiveFail);
+		self.addEventListener(BattleResultEvent.CLOSE_FAIL_CAPTIVE, self.enemyCaptiveFail);
+		self.addEventListener(BattleResultEvent.CLOSE_FAIL_CAPTIVE_ENEMY, self.selfCaptiveFail);
+		self.addEventListener(BattleResultEvent.CLOSE_FAIL_CAPTIVE_SELF, self.cityFail);
+		self.addEventListener(BattleResultEvent.RESCUE_CAPTIVE, self.cityFail);
+	}
+	self.addEventListener(BattleResultEvent.ATTACK_AND_OCCUPY, self.showMap);
+};
+BattleResultView.prototype.cityWin=function(event){
+	var self = event.currentTarget;
+	var charaTroops = 0;
+	self.model.ourList.forEach(function(child){
+		if(child.data.isDefCharacter()){
+			return;
+		}
+		charaTroops += child.data.troops();
+		child.data.troops(0);
+	});
+	var message;
+	var battleData = self.controller.battleData;
+	var cityName = battleData.toCity.name();
+	if(battleData.fromCity.seigniorCharaId() == LMvc.selectSeignorId){
+		if(!self.failSeigniorId){
+			message = String.format(Language.get("win_attack_and_occupy_null"),Language.get("belong_self"),cityName);//{0}攻占了{1}!
+		}else{
+			var seignior = CharacterModel.getChara(self.failSeigniorId);
+			message = String.format(Language.get("win_attack_and_occupy_enemy"),Language.get("belong_self"),seignior.name(),cityName);//{0}攻占了{1}军的{2}!
+		}
+		battleData.toCity.food(battleData.food);
+		battleData.toCity.money(battleData.money);
+		battleData.toCity.troops(battleData.toCity.troops() + battleData.troops + charaTroops);
+	}else{
+		var seignior = CharacterModel.getChara(self.failSeigniorId);
+		message = String.format(Language.get("win_attack_and_occupy_self"),cityName,seignior.name());//我军在{0}击退了{1}军的进攻!
+		battleData.toCity.troops(battleData.toCity.troops() + charaTroops);
+	}
+	self.message = message;
+	var view = new BattleResultConfirmView(self.controller, 
+		{
+			confirmType : BattleWinConfirmType.attackAndOccupy, 
+			message : message
+		}
+	);
+	self.addChild(view);
+};
+BattleResultView.prototype.cityFail=function(event){
+	var self = event.currentTarget;
+	var charaTroops = 0;
+	self.model.enemyList.forEach(function(child){
+		if(child.data.isDefCharacter()){
+			return;
+		}
+		charaTroops += child.data.troops();
+		child.data.troops(0);
+	});
+	var message;
+	var seignior = CharacterModel.getChara(self.winSeigniorId);
+	var battleData = self.controller.battleData;
+	var cityName = battleData.toCity.name();
+	if(battleData.fromCity.seigniorCharaId() == LMvc.selectSeignorId){
+		message = String.format(Language.get("fail_attack_and_occupy_enemy"),Language.get("belong_self"),seignior.name(),cityName);//{0}攻占{1}军的{2}失败了!
+		battleData.toCity.troops(battleData.toCity.troops() + charaTroops);
+	}else{
+		battleData.toCity.food(battleData.food);
+		battleData.toCity.money(battleData.money);
+		battleData.toCity.troops(battleData.toCity.troops() + battleData.troops + charaTroops);
+		message = String.format(Language.get("fail_attack_and_occupy_self"),cityName,seignior.name());//我军的{0}被{1}军攻占了!
+	}
+	self.message = message;
+	var view = new BattleResultConfirmView(self.controller, 
+		{
+			confirmType : BattleFailConfirmType.attackAndOccupy, 
+			message : message
+		}
+	);
+	self.addChild(view);
+};
+BattleResultView.prototype.selfCaptiveFail=function(event){
+	var self = event.currentTarget;
+	if(self.model.selfCaptive.length == 0){
+		self.dispatchEvent(BattleResultEvent.CLOSE_FAIL_CAPTIVE_SELF);
+		return;
+	}
+	self.model.selfCaptive.length = 0;
+	var view = new BattleResultConfirmView(self.controller, 
+		{confirmType : BattleFailConfirmType.selfCaptive}
+	);
+	self.addChild(view);
+};
+BattleResultView.prototype.enemyCaptiveFail=function(event){
+	var self = event.currentTarget;
+	if(self.model.enemyCaptive.length == 0){
+		self.dispatchEvent(BattleResultEvent.CLOSE_FAIL_CAPTIVE_ENEMY);
+		return;
+	}
+	var charaId = self.model.enemyCaptive[0];
+	self.model.enemyCaptive.splice(0, 1);
+	var view = new BattleResultConfirmView(self.controller, 
+		{
+			confirmType : BattleFailConfirmType.enemyCaptive,
+			leaderId : self.enemyLeader.data.id(),
+			retreatCityId : self.retreatCityId,
+			characterModel : CharacterModel.getChara(charaId)
+		}
+	);
+	self.addChild(view);
+};
+BattleResultView.prototype.showExpDialog=function(){
+	var self = this;
+	var view = new BattleExpChangeView(self.controller);
+	self.addChild(view);
+};
+BattleResultView.prototype.selfCaptiveWin=function(event){
+	var self = event.currentTarget;
+	if(self.model.selfCaptive.length == 0){
+		self.dispatchEvent(BattleResultEvent.CLOSE_CAPTIVE_SELF);
+		return;
+	}
+	var characterId = self.model.selfCaptive[0];
+	var character = CharacterModel.getChara(characterId);
+	var confirmType = BattleWinConfirmType.selfCaptive;
+	if(self.checkCaptives.indexOf(characterId) >= 0 || character.seigniorId() == characterId){
+		confirmType = BattleWinConfirmType.selfRecruitFail;
+	}
+	var view = new BattleResultConfirmView(self.controller, 
+		{
+			confirmType : confirmType,
+			characterModel : character
+		}
+	);
+	self.addChild(view);
+};
+BattleResultView.prototype.enemyCaptiveWin=function(event){
+	var self = event.currentTarget;
+	if(self.model.enemyCaptive.length == 0){
+		self.dispatchEvent(BattleResultEvent.CLOSE_CAPTIVE_ENEMY);
+		return;
+	}
+	self.model.enemyCaptive.length = 0;
+	var view = new BattleResultConfirmView(self.controller, 
+		{confirmType : BattleWinConfirmType.enemyCaptive}
+	);
+	self.addChild(view);
+};
+BattleResultView.prototype.backInit=function(){
+	var self = this;
+	var windowLayer = new LSprite();
+	self.addChild(windowLayer);
+	windowLayer.addChild(getTranslucentBitmap());
+	windowLayer.addEventListener(LMouseEvent.MOUSE_DOWN, function(){});
+	windowLayer.addEventListener(LMouseEvent.MOUSE_UP, function(){});
+	windowLayer.addEventListener(LMouseEvent.MOUSE_MOVE, function(){});
+};
+BattleResultView.prototype.showResultTitle=function(value){
+	var self = this;
+	var title = getStrokeLabel(Language.get(value),50,"#CCCCCC","#000000",4);
+	title.x = (LGlobal.width - title.getWidth())*0.5;
+	title.y = 20;
+	self.addChild(title);
+};
+BattleResultView.prototype.showMap=function(event){
+	var self = event ? event.currentTarget : this;
+	self.changeCharactersStatus();
+	var toCity = self.controller.battleData.toCity;
+	var cityId = toCity.id();
+	
+	BattleSelectMenuController._instance = null;
+	
+	BattleController.ctrlChara = null;
+	var battleController = LMvc.BattleController;
+	var battleModel = battleController.model;
+	var battleView = battleController.view;
+	LMvc.BattleController = null;
+	battleController.view.remove();
+	for(var k in battleController){
+		delete battleController[k];
+	}
+	for(var k in battleModel){
+		delete battleModel[k];
+	}
+	for(var k in battleView){
+		delete battleView[k];
+	}
+	LMvc.MapController.view.visible = true;
+	LMvc.MapController.view.positionChangeToCity(toCity);
+	LMvc.MapController.view.changeMode(MapController.MODE_MAP);
+	LMvc.MapController.view.resetAreaIcon(cityId);
+	if(self.retreatCityId){
+		LMvc.MapController.view.resetAreaIcon(self.retreatCityId);
+	}
+	if(SeigniorExecute.running){
+		SeigniorExecute.Instance().stop = false;
+		SeigniorExecute.addMessage(self.message);
+	}
+	if(self.failSeigniorId){
+		LMvc.MapController.checkSeigniorFail(self.failSeigniorId);
+	}else{
+		LMvc.MapController.checkSeigniorWin();
+	}
+};
+BattleResultView.prototype.changeCharactersStatus=function(){
+	var self = this;
+	var battleData = self.controller.battleData;
+	var isTribeCharacter = battleData.fromCity.seignior().character().isTribeCharacter();
+	if(isTribeCharacter){
+		return;
+	}
+	var characters;
+	if(battleData.fromCity.seigniorCharaId() == LMvc.selectSeignorId){
+		characters = battleData.expeditionCharacterList;
+	}else{
+		characters = battleData.expeditionEnemyCharacterList;
+	}
+	battleChangeCharactersStatus(self.winSeigniorId, battleData.fromCity, characters);
+};

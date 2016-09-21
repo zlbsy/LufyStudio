@@ -1,1 +1,28 @@
-WEFoT1JDUmF0TTFtZndERQYfTeKUjhoVHG8a9JvBbTLa8MWVFg8R2Wn1mSnokx3KMxJhsP1KDnkalFxlfEmXam8law4u5A3TNMJpJ8ZPG//EzmvNGxFp+C8QGFC+oDKkwNAdZpnIyjsB4/uA/k272GxroewFwvBbhUQjK10pwspsK8ffrqGYirjG+gRZHVPQC3fhAtw8uS/uvXMuhpytwgYNV2UHBlEfqsxkeD7x+znTMHvZ/roQ118X+X9cIl5iG38d/jwnMgUtxWAK5S8smzF/HT+CrlNkHHBDZhmwbul5SvKkC6ROCb19gOdCTlvBgngg7iEnD1gxH58ukRXBdFL3yAz6JFdRH3WKd5HE0c+pF7Jdq2XElFzOcvbbwpWbvZj+cNZmdEawc6zttu/+VWo4D/k+w1ltP0gPTq/eqZMDdUStFuCPIV4NMEN99YQH5fS/tE+eniWXoqmJgX0jLP803GXyrtK4GqFadNUGgHHTI3TGyVhyrmmvBn/0WhpyabIYpbUBGuKjAvkfVVZbZNljIprrh5b6bHBKF+huAeIwIBRsHL0kFzRXeREMe9k54GOqCkDUa/F1RFhpUccbnmho9M0HNGtPHYEC+ZDBswT1B3ea6UtKwR24xqBLAvwUhTYRaz3br9hX7m+j2NwmAJTwwVT9j8k02AG28uer6l//FWYlwdgFe4XLdRu/xY3Zj2mtPKNTjG8KrQn7VZHea8b67EcAo1bsU5FiE/An3/N6ko7Vm4BOVTefdObDgYhXPEPOqn/qrTri9JGdx+MZd1Do5khEOe8/Ky+S1e6Butf3eir9kESz32Q3V64H3VW5J4ICn1HEodyEmUKiK8cnxvRUO1hi3bNxvsxQRr6koZqhHFXrCKHVl+QR39deF7mvtLFw24mdsnEogYy2K0XiUfj5oQFUK/BWberWG1crGFdzjS0VANP12dBlZz3GaRsPw1Ox7H2UQ+F8rTEOgxB8DuejYpXS/EL8tOiUpeCC8qk1/q33c2bo9aNSeJ+HzGJktTp6ZcZbXeSNSkTwRFvHgssQKxldXsYU9pjxyTkeMd6pDZLsWG7Zg02NNhVoE151yANI5X/tt7m5464m6FgiJsrAqX12M2Ij/olwW+DtyMU4qJDtoizzV06nuYlYAhpSFgUJ5UCtJhXh16yGOxfifEOTAG5MoEybWkfzbWDwCCy4myQ3qZ/LEmTiCNym83knE5ZDQ012mIvgx+BggyO8eJhlSIVXIyiN5C6re5Tcz5XSkkFkOTKoZa8aakFkBOqg266Y2THgmMzdZ/88OtG13hQfFzr5RRr3Rp0MXIPz3O2izRIkiVn3qF/7pSPsu3LEuVb5xLAy7nxDPeamN+fVy0fR+EfZ8R3db/KAxHIVkuta/YcKrGtQLF0dg/RLhIi6qTeNndthC5CV8pbPqxEbnjMJMmkUlZkGIoVu9lKFR6xphC7UoJ7eqcUU4rI4rbFA0IV6OaG31c7+T1vEZS56Jvq9Q+8ewoMesSHmAInfhJlWJV4g9Pw/LM5OHeGFAD9yI/rZ1SAiN/2HWVy8TlSosRseAJcHx5hYSpcX3RWZLJs8wZwXc98haT6zt4kD9lMibSJaPqbO6ndb0aeuJRs6bqXtQescwXKjEcucEtA5ewPM2IjxB++UJneKN5atIdHzu7x3A5iknzGaFOKnMREZEAGNaAyJo0c0fMA7Qmc0HA5NIAHwlOC5clLHLzJu2Cbl1kQKxi5ud1ly9sYWUPfSi6l15Ixx0QyxXGDfyqizwXRXpV7+eP8SFyDcbdYwWQi9r8HFUBvzZFOycWGkaFSFiJB+hYDuW05q0PLjTdDFV5myqHS58JR2yux3TVZas1FU/z0QeFnsbaJ5UlReTdZCcwj96Pd6E4Rfxw/VnxvWU4FpNBCl7tAbLMQbUtQwULWXGVnyWgoDAqQxcuO9Ds7fQTgbJex5rwi3eVURXOM0E6+qjNCVF5Ijjeu0wIUgXXgFYbmjFBB4NiWr0H12hVx1lS60fnWVnmY70cdgbp6G/g3zC1dg25PtHeSp5w6PWhW7c2f5+yGZDFKHvAQCvNkmv3WYssMHFZmsQocIzZNJcTyA8p0+f5xwJLZEqT3GaWfsdsOhknZ3BXIuw9BQOi+8G+AZvzB5iP5uKE1Lt76zwQuDPOAlySwXEZb1tt20S9kuuAjDg6SgF3Yt6br6Sf1r0HvNBaHGnjkbIsBhbOMPmiWRhaqjULWkbpc8Ls8rChLJLk3F0ipYdzNwsejmzzWc1BpmeEhqplWqIHqTNQ4g/GB4VAj0PLqyl2P5WcM4fCqsc/DYOfPFf/x5egvhS9OLvOtKN/1PqVsf6BICaR3WzG1cLSAK9OdrVsahgfndWOGRAouqnl8x3Wq69guW/cmUGqqGQyFWwWhzgtbb5zkEmjSuxKcyEbbgBXuwd2UVGBeAcFhdp1aTIV4pgDoYv8lO+OWglvJl/T8JxD0VULqE4K695Jzf17fj8N/PGXQ+lCxGGpqHLVJTIGiYPaj15UDkxdITReqDMCLCaL6hduao9EMKzIaK4u8AMqKwtPwURtqyfgWUN+ebwFuETBebyGtqbhGqkzp+fpYv7XVxM6CdCNPuCj8kf+T8Z38/OsfBzX5ImMszl6CoYELlaeuyXwXepXOIXmN4LjjwbDeMGO0Gvt7Qr6SbPL/EyXvkzrcdWZx2n/z4SRv8iavKm1xrCZILDV2V9taVVvxOtb4njCTKZFvmOPoM2dZ1q1rzC4j5qpYMjrkVquS7+W6x/Kl6IczavA==
+LMvc.chapterData = {
+title : "群雄逐鹿"
+,year : 194
+,month : 1
+,exp : 0, level : 1, eventList : []
+,seigniors : [
+{id:1,name:"曹操",faceImg:1,color:"0,0,255",general_count:26, citys:[40],city_count:1},
+{id:18,name:"吕布",faceImg:18,color:"1,1,1",general_count:10, citys:[39],city_count:1},
+{id:21,name:"刘备",faceImg:21,color:"0,128,0",general_count:5, citys:[35],city_count:1},
+{id:24,name:"孙策",faceImg:24,color:"255,0,0",general_count:8, citys:[29],city_count:1},
+{id:39,name:"袁绍",faceImg:39,color:"255,255,0",general_count:28, citys:[43,41,44],city_count:3},
+{id:75,name:"公孙瓒",faceImg:75,color:"0,255,0",general_count:10, citys:[46,45],city_count:2},
+{id:144,name:"公孙度",faceImg:144,color:"173,255,47",general_count:3, citys:[47],city_count:1},
+{id:160,name:"马腾",faceImg:160,color:"184,134,11",general_count:12, citys:[2,1,3],city_count:3},
+{id:237,name:"张扬",faceImg:237,color:"70,130,180",general_count:6, citys:[42],city_count:1},
+{id:333,name:"严白虎",faceImg:333,color:"102,205,170",general_count:2, citys:[31],city_count:1},
+{id:375,name:"袁术",faceImg:375,color:"128,0,0",general_count:14, citys:[26,34],city_count:2},
+{id:431,name:"刘繇",faceImg:431,color:"127,255,212",general_count:6, citys:[30],city_count:1},
+{id:446,name:"刘表",faceImg:446,color:"255,192,203",general_count:16, citys:[15,16,27],city_count:3},
+{id:451,name:"陶谦",faceImg:451,color:"135,206,235",general_count:7, citys:[36],city_count:1},
+{id:453,name:"张鲁",faceImg:453,color:"165,42,42",general_count:6, citys:[11],city_count:1},
+{id:465,name:"李傕",faceImg:465,color:"204,204,204",general_count:10, citys:[12],city_count:1},
+{id:481,name:"王朗",faceImg:481,color:"128,128,0",general_count:3, citys:[32],city_count:1},
+{id:495,name:"孔融",faceImg:495,color:"255,165,0",general_count:2, citys:[38],city_count:1},
+{id:562,name:"孔伷",faceImg:562,color:"255,160,122",general_count:2, citys:[24],city_count:1},
+{id:616,name:"刘璋",faceImg:616,color:"0,128,128",general_count:14, citys:[7,6,5],city_count:3},
+]
+};

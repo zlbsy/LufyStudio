@@ -1,1 +1,157 @@
-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
+function BattleExpChangeView(controller){
+	var self = this;
+	LExtends(self,LView,[controller]);
+	
+	self.isEnd = false;
+	self.xs = [0, 100, 200, 230, 330];
+	self.initLayer();
+	self.initData();
+	self.setBackground();
+	self.setData(0);
+	
+	self.addShape(LShape.RECT,[0,0,LGlobal.width,LGlobal.height]);
+	self.addEventListener(LMouseEvent.MOUSE_DOWN, self.mousedown); 
+	self.addEventListener(LMouseEvent.MOUSE_UP, self.mouseup); 
+}
+BattleExpChangeView.prototype.mousedown = function(e){};
+BattleExpChangeView.prototype.mouseup = function(event){
+	var self = event.currentTarget;
+	if(self.isEnd){
+		var resultView = self.parent;
+		self.die();
+		self.remove();
+		resultView.dispatchEvent(BattleResultEvent.CLOSE_EXP);
+	}else{
+		self.setData();
+	}
+};
+BattleExpChangeView.prototype.initLayer = function(){
+	var self = this;
+	self.baseLayer = new LSprite();
+	self.baseLayer.y = 100;
+	self.addChild(self.baseLayer);
+};
+BattleExpChangeView.prototype.setBackground = function(){
+	var self = this;
+	var backgroundData = new LBitmapData(LMvc.datalist["background-text01"]);
+	var panel = new LPanel(backgroundData,LGlobal.width,30 * ((self.datas ? self.datas.length : 1) + 2));
+	panel.cacheAsBitmap(true);
+	self.baseLayer.addChildAt(panel,0);
+};
+BattleExpChangeView.prototype.initData = function(){
+	var self = this, label;
+	var layer = new LSprite();
+	layer.x = 50;
+	layer.y = 10;
+	self.baseLayer.addChild(layer);
+	
+	var battleData = LMvc.BattleController.battleData;
+	self.datas = experienceToFeat(battleData.expeditionCharacterList);
+	var xs = self.xs;
+	label = getStrokeLabel(Language.get("generals"),20,"#FFFFFF","#000000",4);
+	label.x = xs[0];
+	layer.addChild(label);
+	label = getStrokeLabel(Language.get("exp"),20,"#FFFFFF","#000000",4);
+	label.x = xs[1];
+	layer.addChild(label);
+	label = getStrokeLabel(Language.get("feat"),20,"#FFFFFF","#000000",4);
+	label.x = xs[3];
+	layer.addChild(label);
+	
+	layer = new LSprite();
+	layer.x = 50;
+	layer.y = 20;
+	self.baseLayer.addChild(layer);
+	self.expLayer = layer;
+};
+BattleExpChangeView.prototype.setData = function(index){
+	var self = this, label;
+	if(self.isEnd){
+		return;
+	}
+	var xs = self.xs;
+	var isAll = (typeof index == UNDEFINED);
+	if(isAll || !self.datas){
+		index = -1;
+		self.isEnd = true;
+		self.expLayer.removeAllChild();
+	}else if(index >= self.datas.length){
+		self.isEnd = true;
+		return;
+	}
+	
+	for(var i=0,l=self.datas ? self.datas.length : 0;i<l;i++){
+		if(!isAll && i !== index){
+			continue;
+		}
+		var layer = new LSprite();
+		layer.index = index;
+		self.expLayer.addChild(layer);
+		layer.y = (i + 1) * 30;
+		var data = self.datas[i];
+		label = getStrokeLabel(data.name,20,"#FFFFFF","#000000",4);
+		label.x = xs[0];
+		layer.addChild(label);
+		
+		label = getStrokeLabel( data.exp,20,"#FFFFFF","#000000",4);
+		label.x = xs[1];
+		layer.addChild(label);
+		
+		label = getStrokeLabel( "→",20,"#FFFFFF","#000000",4);
+		label.x = xs[2];
+		layer.addChild(label);
+		var feat = data.feat;
+		var featLabel = getStrokeLabel(isAll?feat:0,20,"#FFFFFF","#000000",4);
+		featLabel.x = xs[3];
+		featLabel.feat = 0;
+		layer.addChild(featLabel);
+		
+		var rewardLabel;
+		if(data.reward){
+			rewardLabel = getStrokeLabel("首功",20,"#FF0000","#000000",4);
+			rewardLabel.x = xs[4];
+			layer.addChild(rewardLabel);
+		}
+		if(isAll){
+			continue;
+		}
+		
+		layer.alpha = 0;
+		layer.scaleY = 0.1;
+		if(data.reward){
+			rewardLabel.alpha = 0;
+			rewardLabel.scaleX = rewardLabel.scaleY = 2;
+			LTweenLite.to(layer,0.3,{alpha:1,scaleY:1,ease:LEasing.Elastic.easeOut});
+			LTweenLite.to(featLabel,0.5,{delay:0.3,feat:feat,onUpdate:function(e){
+				e.target.text = e.target.feat >>> 0;
+			},onComplete:function(e){
+				e.target.text = e.target.feat >>> 0;
+			}});
+			LTweenLite.to(rewardLabel,0.3,{delay:0.8,alpha:1,scaleX:1,scaleY:1,onComplete:function(e){
+				var obj = e.target.parent;
+				if(!obj){
+					return;
+				}
+				var s = obj.getParentByConstructor(BattleExpChangeView);
+				if(s){
+					s.setData(obj.index + 1);
+				}
+			}});
+		}else{
+			LTweenLite.to(layer,0.3,{alpha:1,scaleY:1,ease:LEasing.Elastic.easeOut});
+			LTweenLite.to(featLabel,0.5,{delay:0.3,feat:feat,onUpdate:function(e){
+				e.target.text = e.target.feat >>> 0;
+			},onComplete:function(e){
+				e.target.text = e.target.feat >>> 0;
+				var obj = e.target.parent;
+				if(!obj){
+					return;
+				}
+				var s = obj.getParentByConstructor(BattleExpChangeView);
+				if(s){
+					s.setData(obj.index + 1);
+				}
+			}});
+		}
+	}
+};

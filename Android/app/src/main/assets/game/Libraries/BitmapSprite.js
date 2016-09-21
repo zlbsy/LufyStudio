@@ -1,1 +1,33 @@
-WEFoT1JDUmF0TTFtZndERWLf/vHEXeTvcpltPbb5YwPYOy66Yg948uXgUjAWEYaqkdnngtjx5hW/gp2u2uVBAKYJ4hqPMzGtPk//5lUoesnQdxMuZh/gDRFe0S1KzbcZ4VIG6eNRFe1sYICW9qs+Vce2k52+wwf4V95EpsORdGjJGdvQUVXP7fSz2wLxwxNlBPL2yUoM0tc/CGdPfnWvy4vVwniHSq0hImxwdGyZ1FKvzvlvR2MvO2uX+1k4N8W56bu/pWY0keEfe1QUSoqxwsJfFuONlnqXIAe/k07dkkuWfKohMJkiWsEKiMuoxgr6k0cm1ZRT2fyEEw8JXJNQDF1ET5+IACqV9JW/kE52bmJyK3guZydN2v9+fq7/LJpM9FDZU6URaQJa4X7+6fpu7FmdevdweCSo7u5DXcsyhVyfQ3VTHVgFEtu8pn2aAMLCBL4l95X+DoUvZ/OichtRoyvE6uLYOHfyDrFw9rpUDKOWmUNASCwF0L/1FDi+29KTxWQxNVKIP2gpJqgh+FmcQ0AGtReuRTBYAna9bf4Brtzv5pcZKAE/Srz1xMQRwsr3WFBTrSx+Wu6VzKppJPvHgvwjot63rioUCSaPRcJ6efk2dr/8WMQtLNV62Z6CYCwVp4GT7ZP8Q9AbpwdpxOHWze1+cyttFCl1xoLeZocC5lSoMUKp9xU1N3aq6EKNotKI2my3TQOptm6l99r7X3uN2zeot1tLZJYwmDdKcrVc793oaZvbmNaFWPW1f7j10i7YHJgabX4trolG+xPCiznFgMpxtspPI9rW2J7yJ1Svb2YIXinwmk3v8KYV8hfB4+U6jESb2zEJd1hQOzMxTUqKMaT//CWnpT8c9ElvxYBEwKzsU4cIrYmKhL+lFR+DzasdLTBHnjST0KRgjNmf3uGM+kL5ByIbxr3N+nhw+BxndTDWtyYk+UqmxNvZ6aQ4UclEl+B4ZPQBorhBfN0jxHRNUkTsmSD221/aPI28Dq66Y7GmWDkZvXWTERHwKv5P1W9Ctb6hrX9KBX4GEWnfJwAJdjNDsypQowoLf1QwRRZCy9eosyOjpt5lE6LTJQsblUSv4chGCUvSjYy0y6gZfhbNrYZmoqytUGjfohkOavTdaDvwv/XTPD+jOBv612HUsG8Eb8TEOhGfXilKpQMWI82Gt+gkAofFOYDarGcupS4kQ1TO5OHH4r5kY0jaJ1U5IHGs5bUkrX1AZMlv8dvxb1mmFBu+9HCdb8OLeLxR5WYOqIRzYXURiKHMechC9sotk519DP4xqRU+Gbv7hnfoBSZpncdRQ+0AKdVsDhzWJSRfRjTCbvJn7IDdjbnImimowIltfF4R0lG72PPdRqWiBvX8kC2CoEg4rjlfIeJCkPi2bG7rqss1pIvpZa3ZPqhAwT7ayvbI+cFrd36lgYsn0xRXVp5iqx3aX8PKQIwTEfirBdWpVWT5Bx5/cOPNY1ILNfpM
+function BitmapSprite(src, rect, size){
+	var self = this;
+	base(self,LSprite,[]);
+	self.size = size;
+	self.rect = rect;
+	var loader = new LLoader();
+	loader.parent = self;
+	loader.addEventListener(LEvent.COMPLETE,self.loadOver);
+	var isBase64 = (src.indexOf(";base64,") > 0);
+	if(!isBase64){
+		src = (src.indexOf(LMvc.IMG_PATH) >= 0 ? "" : LMvc.IMG_PATH) + src;
+		if(LGlobal.traceDebug){
+			src += (src.indexOf('?') >= 0 ? '&' : '?') + 't=' + getTimer();
+		}
+	}
+	loader.load(src,"bitmapData");
+}
+BitmapSprite.prototype.loadOver = function(event){
+	var self = event.currentTarget.parent;
+	event.currentTarget.removeEventListener(LEvent.COMPLETE,self.loadOver);
+	var bitmapData = new LBitmapData(event.target);
+	if(self.rect){
+		bitmapData.setProperties(self.rect[0],self.rect[1],self.rect[2],self.rect[3]);
+	}
+	var bitmap = new LBitmap(bitmapData);
+	bitmap.name = "bitmap";
+	self.addChildAt(bitmap, 0);
+	if(self.size){
+		bitmap.scaleX = self.size.x / bitmap.bitmapData.width;
+		bitmap.scaleY = self.size.y / bitmap.bitmapData.height;
+	}
+	self.dispatchEvent(LEvent.COMPLETE);
+};

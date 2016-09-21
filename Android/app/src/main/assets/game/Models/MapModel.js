@@ -1,1 +1,53 @@
-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
+function MapModel(){
+	base(this,MyModel,[]);
+}
+MapModel.prototype.construct=function(){
+	var self = this;
+	self.areas = [];
+};
+MapModel.prototype.getImages=function(){
+	var self = this;
+	var list = [];
+	//TODO::ver1.1四季 list.push({name:"area-map-1",path:LMvc.IMG_PATH+"area/map-1.png"});
+	
+	list.push({name:"talkbox",path:LMvc.IMG_PATH+"common/talkbox.png"});
+	
+	list.push({name:"area-1",path:LMvc.IMG_PATH+"area/area-1.png"});
+	list.push({name:"icon-appoint",path:LMvc.IMG_PATH+"icon/appoint.png"});
+	//list.push({name:"question",path:LMvc.IMG_PATH+"common/question.png"});
+	/*list.push({name:"flag-blue",path:LMvc.IMG_PATH+"area/flag-blue.png"});
+	list.push({name:"flag-brown",path:LMvc.IMG_PATH+"area/flag-brown.png"});
+	list.push({name:"flag-darkgoldenrod",path:LMvc.IMG_PATH+"area/flag-darkgoldenrod.png"});
+	list.push({name:"flag-darkviolet",path:LMvc.IMG_PATH+"area/flag-darkviolet.png"});
+	list.push({name:"flag-green",path:LMvc.IMG_PATH+"area/flag-green.png"});
+	list.push({name:"flag-greenyellow",path:LMvc.IMG_PATH+"area/flag-greenyellow.png"});
+	list.push({name:"flag-orange",path:LMvc.IMG_PATH+"area/flag-orange.png"});
+	list.push({name:"flag-pink",path:LMvc.IMG_PATH+"area/flag-pink.png"});
+	list.push({name:"flag-red",path:LMvc.IMG_PATH+"area/flag-red.png"});
+	list.push({name:"flag-teal",path:LMvc.IMG_PATH+"area/flag-teal.png"});
+	list.push({name:"flag-yellow",path:LMvc.IMG_PATH+"area/flag-yellow.png"});*/
+	list.push({name:"flag-stick",path:LMvc.IMG_PATH+"area/flag-stick.png"});
+	list.push({name:"flag-cloth",path:LMvc.IMG_PATH+"area/flag-cloth.png"});
+	list.push({name:"blue_bar",path:LMvc.IMG_PATH+"icon/blue_bar.png"});
+	list.push({name:"yellow_bar",path:LMvc.IMG_PATH+"icon/yellow_bar.png"});
+	list.push({name:"character-s-default",path:LMvc.IMG_PATH+"character/s/default.png"});
+	
+	list.push({name:"checkbox-background",path:LMvc.IMG_PATH+"component/checkbox-background.png"});
+	
+	return list;
+};
+MapModel.prototype.getAreaData=function(callback){
+	var self = this;
+	self.callback = callback;
+	LLoadManage.load( [{path:"./Data/"+LMvc.dataFolder+"/area.js",type:"js"}],null,self.getAreaDataComplete.bind(self));
+};
+MapModel.prototype.getAreaDataComplete=function(){
+	var self = this;
+	if(LMvc.chapterData.isCreateDebut){
+		addCreateSeigniorsToGame();
+	}
+	gameDataInit();
+	var callback = self.callback;
+	delete self.callback;
+	callback.apply(self.controller,[]);
+};

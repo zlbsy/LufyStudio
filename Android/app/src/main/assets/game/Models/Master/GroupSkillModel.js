@@ -1,1 +1,60 @@
-WEFoT1JDUmF0TTFtZndERYeO6La66bXkElozbM5yG6dtClvp28S4Px3rgDeUh6LWJNHqmolLGPxQsHFoFWIHTcZrGY1l0Uah0yoKMSlNdSb7Ubv2/iUehUSKpRJ+ughzV53/Qxa4s2iOG2EkbC6vAYu/PlP1PTkEbRmaCgjtEa6R5gB65FkmiIlEgW7B407b7SZWo6VZfn9Iwt10ydk24kP6owxrMMPTMgdnKj1gTVz9Vy7HrxXH1KnsPYvTWMXv5XxjYEasQ/+AtXgLf0KxsvSgzgKxhe1q/lozSVj0rVW4oSTAPJGmj6yca96IAGG4UdVm1UhlBMYiZm+LNIU72K9x2WAHiTsMtmH68Lc9BamT1payQ7+L+3GRbv0X7J3F34rcb+5zX83B7VHFkBo3lE3mLt25Vzh1hrGMelIfoEISkHf24DJsLwojW3EqBNoU447eNuEIVjzs57ygreqCa7YYvpyn4woUTW8bi+REF1HmOcJSeBtfmWLu+r9HF3gtPdRV7KjyFXdbdth42oMBjvdTp5TqnENoNeB4krdk6OQgHOUA28HSUJUYAXr+RJCLUgkfWuzBe4reOD+S11gnGW37ow6tvNTPdWTqzlEt8OUE4/DZPN+dL383pmazY3hPFMmYRT3o/+yotUkCKO5LBP9Mf6rKuaEBq598VcT0qqlaoDvQFlZL1e1oYnVdgkNsBsGqZykwKHL1vaqRhLAZgdilnl4QD+PavIiP1/QTLX1Kin/BV5z19mIhJaVa7AJAiH8TTkqxtBrr19Rt2MbSbhdnNfob7C+FSHa3WN1DDb8I6FFT+F89DSoNznHwXEtr7W5ZGHktxavEsPzXLneRc+jvtXW/oTuEZRsGv9KgH/isFdxpvX0wUdHYt49rgB4SmQHpxhfX0iDoP9sDOK+GOQ8NWOMRel4YS2eGQ8BMbxRVUAXOw42B4vYaEIDs6pJ+uCtAPMbkZHdlNyOWmMwRPfSoUJuujDvJwuFhXbqc+NlOwQEQQm9jtj7yEaXJ+Qs6I7lVfIH5ZI3nlJeIk8xByL7gJbD66HFCvRYoQmh1Q28+YQwuXGEpfBDaqCaW4H69+mgEc8rbSH/U2PsFo7bx3heKmaNJ1fk3ldgUPlyZ13GOAVsVL7Lv9VEnNT6fWJK9/S1OgrsSABV8OaWn/89gOXo2uVqxLM2XiDIyBEtp6zLWW+zRHcaz117zl+liH9BpVDU5EtgWo4FBe6iPIrc1LLIPjZcuzHoN5dJPaDNIs/bVVH8yEUlxa4IdJhfEJSfSbX3PEpccc8hp67SXi8eTEh9iXmxro/js0ax0RmaBtfikIN6Ba6qRME4CGpyMkoYmuFTLvtN1hrKLSgcEFQV0ZGPjD6+3fBWDAU6/oIu3V+9UANp3DLSLeAdvhp4dFIEl6iRwd0dXgwedpdAXCvaN9Estr+ArAbbVCXH1nAngsrDPnXqcCWgQgkawLVzvfJuFVq4vFsxRAAmX8emx+S5e8Hd98xGbYzLiT+IVyFsDsL9XUOXJi9TXJYHPc3b4zud/8wTEYODehJZqOTqCgcrILDdJyIZM6EO42aDhRjeiKPw25Nqhu9gXY43q8VubDI8WaeIcuakYRz/bHst+HQGH1IUTQs9Kb3LO82gBtFx8haOA/2YpziEEx+yz35l8MZzBoofZF6DZwzjV8xm8i0b3fPvcMLU9Bc7zwtX2HPbM19wy7WMUCDqP+F/yK/5ZTOg9Vf73WMFospksVncCixFYDi1zmoOwk0ZiHSMC6lVk3JQXi4nCAn0uvqALG5LRuuayJ+YIu+hOY6ATpGQpHeIgwPnyH5iGNxNs73yMn+a6NslUu44f0UYfGrIxi4D3HH2JrPuM9QMlzc8nVHKziO1NAnafI8PfeEAikrY11JBEEQ5rExUOflI8EUp+zPRDV3QQNAKgLSuOjt0hqsdK5eXR9w==
+function GroupSkillModel(controller, data) {
+	var self = this;
+	base(self, MyModel, [controller]);
+	self.type = "GroupSkillModel";
+	self.data = data;
+}
+GroupSkillModel.master = [];
+GroupSkillModel.setMaster=function(list){
+	if(GroupSkillModel.master.length > 0){
+		return;
+	}
+	var self = this;
+	for(var i=0,l=list.length;i<l;i++){
+		var child = new GroupSkillModel(null,list[i]);
+		GroupSkillModel.master.push(child);
+		var group = child.group();
+		for(var j=0;group&&j<group.length;j++){
+			var chara = CharacterModel.getChara(group[j]);
+			chara.data.groupSkill = child.id();
+		}
+	}
+};
+GroupSkillModel.getMaster=function(id){
+	var self = this;
+	for(var i=0,l=GroupSkillModel.master.length;i<l;i++){
+		var child = GroupSkillModel.master[i];
+		if(child.id() != id){
+			continue;
+		}
+		return child;
+	}
+	return null;
+};
+GroupSkillModel.prototype.id=function(){
+	return this.data.id;
+};
+GroupSkillModel.prototype.name=function(){
+	return Language.getSkill("group_"+this.data.id);
+};
+GroupSkillModel.prototype.probability=function(){
+	return this.data.probability;
+};
+GroupSkillModel.prototype.correctionFactor=function(){
+	return this.data.correctionFactor;
+};
+GroupSkillModel.prototype.group=function(){
+	return this.data.group;
+};
+GroupSkillModel.prototype.members=function(){
+	var self = this;
+	var group = self.group();
+	if(group){
+		return group;
+	}
+	var members = self.data.members;
+	if(members){
+		return members;
+	}
+	return [];
+};

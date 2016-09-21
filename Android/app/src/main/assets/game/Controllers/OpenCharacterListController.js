@@ -1,1 +1,70 @@
-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
+function OpenCharacterListController(){
+	var self = this;
+	base(self,MyController,[]);
+}
+OpenCharacterListController.prototype.construct=function(){};
+OpenCharacterListController.prototype.loadCharacterList = function(type, characterList, params){
+	var self = this;
+	LMvc.keepLoading(true);
+	LMvc.changeLoading(TranslucentLoading);
+	if(!params){
+		params = {};
+	}
+	self.params = params;
+	self.characterListType = type;
+	self.characterList = characterList;
+	self.loadMvc("CharacterList",self.showCharacterList);
+};
+OpenCharacterListController.prototype.showCharacterList=function(){
+	var self = this;
+	var characterList = CharacterListController.instance(self.characterListType,self,self.characterList, self.params);
+	self.view.addCharacterListView(characterList.view);
+	self.dispatchEvent(CharacterListEvent.SHOW);
+};
+OpenCharacterListController.prototype.closeCharacterList=function(obj){
+	var e = new LEvent(CharacterListEvent.CLOSE);
+	if(!obj){
+		obj = {};
+	}
+	for(var k in obj){
+		if(obj.hasOwnProperty(k)){
+			e[k] = obj[k];
+		}
+	}
+	//e.characterList = obj.characterList;
+	//e.usedMoney = obj.usedMoney;
+	//e.characterListType = obj.characterListType;
+	e.characterListType = this.characterListType;
+	this.dispatchEvent(e);
+};
+
+OpenCharacterListController.prototype.loadArmList = function(type){
+	var self = this;
+	LMvc.keepLoading(true);
+	LMvc.changeLoading(TranslucentLoading);
+	self.armListType = type;
+	self.loadMvc("ArmList",self.showArmList);
+};
+OpenCharacterListController.prototype.showArmList=function(){
+	var self = this;
+	var armList = new ArmListController(self.armListType,self);
+	var armListLayer = self.getValue("armListLayer");
+	armListLayer.addChild(armList.view);
+	self.dispatchEvent(ArmListEvent.SHOW);
+};
+OpenCharacterListController.prototype.closeArmList=function(obj){
+	var self = this;
+	var armListLayer = self.getValue("armListLayer");
+	armListLayer.removeChildAt(armListLayer.numChildren - 1);
+	var e = new LEvent(ArmListEvent.CLOSE);
+	if(!obj){
+		obj = {};
+	}
+	for(var k in obj){
+		if(obj.hasOwnProperty(k)){
+			e[k] = obj[k];
+		}
+	}
+	e.armListType = self.armListType;
+	self.dispatchEvent(e);
+};

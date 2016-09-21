@@ -1,1 +1,117 @@
-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
+function StatusBarView(controller){
+	var self = this;
+	LExtends(self,LView,[controller]);
+}
+StatusBarView.prototype.set = function(obj){
+	var self = this;
+	self.setData(obj);
+	//isDynamic
+	self.mainLayer = new LSprite();
+	self.statusLayer = new LSprite();
+	self.addChild(self.statusLayer);
+	self.setCharacterStatus();
+	self.mainLayer.cacheAsBitmap(true);
+	self.addChildAt(self.mainLayer, 0);
+};
+StatusBarView.prototype.setData = function(obj){
+	var self = this;
+	self.maxValue = obj.maxValue;
+	if(typeof obj.currentValue == "string"){
+		var index = obj.currentValue.indexOf("(");
+		var indexEnd = obj.currentValue.indexOf(")");
+		self.currentValue = parseInt(obj.currentValue.substring(0,index));
+		var subCurrentValue = obj.currentValue.substring(index+1, indexEnd);
+		self.subCurrentValue = LMath.isInt(subCurrentValue) ? parseInt(subCurrentValue) : subCurrentValue;
+	}else {
+		self.currentValue = obj.currentValue;
+		self.subCurrentValue = undefined;
+	}
+	self.normalValue = obj.normalValue;
+	if(typeof self.normalValue == UNDEFINED){
+		self.normalValue = self.maxValue;
+	}
+	if(typeof obj.name != UNDEFINED){
+		self.name = obj.name;
+	}
+	if(typeof obj.icon != UNDEFINED){
+		self.icon = obj.icon;
+	}
+	if(typeof obj.frontBar != UNDEFINED){
+		self.frontBar = obj.frontBar;
+	}
+	if(typeof obj.barSize != UNDEFINED){
+		self.barSize = obj.barSize;
+	}
+};
+StatusBarView.prototype.setCharacterStatus=function(){
+	var self = this;
+	var iconX = 0, iconY = 0;
+	if(self.icon){
+		var iconBitmapData = new LBitmapData(LMvc.datalist[self.icon]);
+		var hertIcon = new LBitmap(iconBitmapData);
+		hertIcon.scaleX = hertIcon.scaleY = 16 / hertIcon.getHeight();
+		self.mainLayer.addChild(hertIcon);
+	}
+	var barBack = getPanel("blue_bar",self.barSize + 4,14);
+	barBack.x = 20;
+	self.mainLayer.addChild(barBack);
+	
+	var currentValue = self.currentValue;
+	var strCurrent = currentValue;
+	if(typeof self.subCurrentValue != UNDEFINED){
+		strCurrent += "(" + self.subCurrentValue + ")";
+	}
+	value = currentValue / self.maxValue;
+	value = value < 0.001 ? 0.001 : value;
+	var barSize = self.barSize * value;
+	var barIcon = getPanel(self.frontBar,self.barSize,10);
+	barIcon.scaleX = value;
+	var barEndPosition = barBack.x + self.barSize + 2;
+	barIcon.x = barEndPosition - barSize;
+	barIcon.y = iconY + 2;
+	self.statusLayer.addChild(barIcon);
+	var lblBar = getStrokeLabel(String.format("{0} {1}/{2} ",self.name, strCurrent, self.normalValue),14,"#FFFFFF","#000000",3);
+	var textEndPosition = iconX + 15 + self.barSize;
+	lblBar.x = textEndPosition - lblBar.getWidth();
+	lblBar.y = barBack.y + barBack.getHeight() - lblBar.getHeight() - 5;
+	self.statusLayer.addChild(lblBar);
+	self.textEndPosition = textEndPosition;
+	self.barEndPosition = barEndPosition;
+	self.barIcon = barIcon;
+	self.label = lblBar;
+};
+StatusBarView.prototype.onUpdate=function(event){
+	event.target.setStatus();
+};
+StatusBarView.prototype.onComplete=function(event){
+	var self = event.target;
+	self.setStatus();
+	self.dispatchEvent(LEvent.COMPLETE);
+};
+StatusBarView.prototype.changeValue=function(value){
+	var self = this;
+	self.value = self.currentValue + value;
+	if(self.value > self.maxValue){
+		self.value = self.maxValue;
+	}else if(self.value < 0){
+		self.value = 0;
+	}
+	var obj = {currentValue:self.value,onUpdate:self.onUpdate,onComplete:self.onComplete};
+	LTweenLite.to(self,0.5,obj);
+};
+StatusBarView.prototype.setStatus=function(){
+	var self = this;
+	var currentValue = self.currentValue >>0;
+	var strCurrent = currentValue;
+	if(typeof self.subCurrentValue != UNDEFINED){
+		strCurrent += "(" + self.subCurrentValue + ")";
+	}
+	value = currentValue / self.maxValue;
+	value = value < 0.001 ? 0.001 : value;
+	var barSize = self.barSize * value;
+	self.barIcon.scaleX = value;
+	self.barIcon.x = self.barEndPosition - barSize;
+	
+	self.label.text = String.format("{0} {1}/{2} ",self.name, strCurrent, self.maxValue);
+	self.label.x = self.textEndPosition - self.label.getWidth();
+};

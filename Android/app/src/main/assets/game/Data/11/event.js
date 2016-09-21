@@ -1,1 +1,4 @@
-WEFoT1JDUmF0TTFtZndERZnb6UZwcY029ZTYZ5hOSQtZjOTtM4yJBdMoDc7/GszYcPE4zMW6cDYfMQXepy7UeAHfr7JSfoVK4BY1QSzpEKYmCAf+GzXWpVEOQEHIr1hC0a5unVwD+GBUqTuE/Wf/Wd32Xt2kjvB5zSMYNE5/TMaTKBV4jKOr4LFCWS0f0ii9
+LMvc.startEvent = {
+	script:"Data/Event/{0}/chapter11.txt",
+	result:[{type:"reputation",generals:[13],reputation:2}]
+};

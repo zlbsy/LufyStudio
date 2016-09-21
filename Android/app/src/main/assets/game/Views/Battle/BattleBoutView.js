@@ -1,1 +1,61 @@
-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
+function BattleBoutView(controller, belong){
+	var self = this;
+	LExtends(self,LView,[controller]);
+	self.set(belong);
+	self.name = "BattleBoutView";
+};
+BattleBoutView.prototype.set=function(belong){
+	var self = this;
+	LMvc.running = true;
+	LMvc.BattleController.view.roadLayer.clear();
+	var belongLayer = new LSprite();
+	belongLayer.x = -LGlobal.width * 0.5;
+	belongLayer.y = LGlobal.height * 0.5;
+	var belongLabel = getLabelWindow(Language.get(String.format("{0}_action",belong)), 50, 340, 100);
+	belongLabel.x = -belongLabel.getWidth() * 0.5;
+	belongLabel.y = -belongLabel.getHeight() * 0.5;
+	belongLayer.addChild(belongLabel);
+	self.addChild(belongLayer);
+	self.belong = belong;
+	if(belong == Belong.SELF){
+		belongLayer.y = LGlobal.height * 0.5 - 40;
+		self.setBout();
+	}
+	LTweenLite.to(belongLayer,1,{x:LGlobal.width * 0.5,ease:Elastic.easeOut}) 
+	.to(belongLayer,1,{delay:0.5,x:LGlobal.width * 1.5,ease:Quint.easeOut,onComplete:self.removeSelf}); 
+};
+BattleBoutView.prototype.setBout=function(){
+	var self = this;
+	var boutLayer = new LSprite();
+	boutLayer.x = LGlobal.width * 1.5;
+	boutLayer.y = LGlobal.height * 0.5 + 40;
+	var bout = self.controller.getValue("bout");
+	bout++;
+	self.controller.setValue("bout",bout);
+	var boutLabel = getLabelWindow(String.format(Language.get("bout_label"),bout), 30, 200, 60);
+	boutLabel.x = -boutLabel.getWidth() * 0.5;
+	boutLabel.y = -boutLabel.getHeight() * 0.5;
+	boutLayer.addChild(boutLabel);
+	self.addChild(boutLayer);
+	LTweenLite.to(boutLayer,1,{x:LGlobal.width * 0.5,ease:Elastic.easeOut}) 
+	.to(boutLayer,1,{delay:0.5,x:-LGlobal.width * 0.5,ease:Quint.easeOut});  
+};
+BattleBoutView.prototype.removeSelf=function(event){
+	var self = event.target.parent;
+	var view = self.parent;
+	var belong = self.belong;
+	LMvc.running = false;
+	if(belong == Belong.SELF){
+		//self.controller.view.mainMenu.visible = true;
+		//self.controller.view.miniLayer.visible = self.controller.view.mainMenu.miniMapVisible;
+	}
+	self.remove();
+	battleCharacterStatusUpdate(belong);
+	self.controller.view.weatherLayer.change();
+	var currentCharacters = view.charaLayer.getCharactersFromBelong(belong);
+	charactersHealMP(currentCharacters);
+	if(battleFoodCheck(belong)){
+		var abnormalState = view.charaLayer.abnormalState;
+		view.charaLayer.boutSkillRun(belong, abnormalState);
+	}
+};

@@ -1,1 +1,584 @@
-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
+/********************************************
+ 双击概率计算
+ 如果Sa/Sd<1，那么H=1；
+ 如果1<=Sa/Sd<2，那么H=2+18*（Sa/Sd-1）；
+ 如果2<=Sa/Sd<=3，那么H=20+80*（Sa/Sd-2）；
+ 如果Sa/Sd>=3，那么H=100；
+ *********************************************/
+function calculateDoubleAtt(attChara,hertChara){
+	if(LMvc.TutorialController){
+		return false;
+	}
+	var attCharaModel = attChara.data;
+	var hertCharaModel = hertChara.data;
+	var h;
+	//得到双方的爆发力
+	var attBreakout = attCharaModel.breakout();
+	var BreakoutAid = attChara.status.getStatus(StrategyType.BreakoutAid);
+	if(BreakoutAid){
+		attBreakout *= (1 + BreakoutAid.value);
+	}
+	var hertBreakout = hertCharaModel.breakout();
+	BreakoutAid = hertChara.status.getStatus(StrategyType.BreakoutAid);
+	if(BreakoutAid){
+		hertBreakout *= (1 + BreakoutAid.value);
+	}
+	//地形修正
+	var terrainAtt = attChara.getTerrain();
+	var terrainHert = hertChara.getTerrain();
+	var attBreakout = attBreakout * terrainAtt.value * 0.01;
+	var hertBreakout = hertBreakout * terrainHert.value * 0.01;
+	
+	var rate = attBreakout/hertBreakout;
+	if(rate < 1){
+		h = 1;
+	}else if(rate >= 1 && rate < 2){
+		h = 2 + 18*(rate - 1);
+	}else if(rate >= 2 && rate < 3){
+		h = 20 + 80*(rate - 2);
+	}else if(rate >= 3){
+		h = 100;
+	}
+	if(Math.fakeRandom()*100 <= h){
+		return true;
+	}
+	return false;
+}
+/********************************************
+ 致命概率计算
+ 如果Sa/Sd<1，那么H=1；
+ 如果1<=Sa/Sd<2，那么H=2+18*（Sa/Sd-1）；
+ 如果2<=Sa/Sd<=3，那么H=20+80*（Sa/Sd-2）；
+ 如果Sa/Sd>=3，那么H=100；
+ *********************************************/
+function calculateFatalAtt(attChara,hertChara){
+	if(LMvc.TutorialController){
+		return false;
+	}
+	var attCharaModel = attChara.data;
+	var hertCharaModel = hertChara.data;
+	var h;
+	var h;
+	//得到双方的士气
+	var attMorale = attCharaModel.morale();
+	var MoraleAid = attChara.status.getStatus(StrategyType.MoraleAid);
+	if(MoraleAid){
+		attMorale *= (1 + MoraleAid.value);
+	}
+	var hertMorale = hertCharaModel.morale();
+	MoraleAid = hertChara.status.getStatus(StrategyType.MoraleAid);
+	if(MoraleAid){
+		hertMorale *= (1 + MoraleAid.value);
+	}
+	//地形修正
+	var terrainAtt = attChara.getTerrain();
+	var terrainHert = hertChara.getTerrain();
+	var attMorale = attMorale * terrainAtt.value * 0.01;
+	var hertMorale = hertMorale * terrainHert.value * 0.01;
+	
+	var rate = attMorale/hertMorale;
+	if(rate < 1){
+		h = 1;
+	}else if(rate >= 1 && rate < 2){
+		h = 2 + 18*(rate - 1);
+	}else if(rate >= 2 && rate < 3){
+		h = 20 + 80*(rate - 2);
+	}else if(rate >= 3){
+		h = 100;
+	}
+	if(Math.fakeRandom()*100 <= h){
+		return true;
+	}
+	return false;
+}
+/********************************************
+ 物理攻击的命中率<br>
+ X代表我方的爆发力，Y代表敌方的爆发力。R表示命中率<br>
+ if (x>2*y)<br>
+ r=100;<br>
+ else if(x>y)<br>
+ r=(x-y)*10/y+90;<br>
+ else if(x>y/2)<br>
+ r=(x-y/2)*30/(y/2)+60;<br>
+ else<br>
+ r=(x-y/3)*30/(y/3)+30;<br>
+ 注：手套和盾有加成效果。比如敌人有辅助防御15%的宝物，那么最终的命中率是r-15<br>
+ 2、法术攻击的命中率<br>
+ 计算公式与1相同，其中X表示我方的精神力与运气之和，Y表示敌方的精神力与运气之和<br>
+ 再考虑宝物的加成<br>
+ 最后，不同的法术还会有具体的权重系数，比如还要乘以1.5、0.9等等。
+ *********************************************/
+function calculateHitrate(attChara,hertChara,isView){
+	if(LMvc.TutorialController){
+		if(isView){
+			return 100;
+		}
+		return true;
+	}
+	//对方混乱
+	if(hertChara.status.hasStatus(StrategyType.Chaos)){
+		if(isView){
+			return 100;
+		}
+		return true;
+	}
+	var attCharaModel = attChara.data;
+	var hertCharaModel = hertChara.data;
+	var r;
+	//得到双方的爆发力
+	var attBreakout = attCharaModel.breakout();
+	var BreakoutAid = attChara.status.getStatus(StrategyType.BreakoutAid);
+	if(BreakoutAid){
+		attBreakout *= (1 + BreakoutAid.value);
+	}
+	var hertBreakout = hertCharaModel.breakout();
+	BreakoutAid = hertChara.status.getStatus(StrategyType.BreakoutAid);
+	if(BreakoutAid){
+		hertBreakout *= (1 + BreakoutAid.value);
+	}
+	//地形修正
+	var terrainAtt = attChara.getTerrain();
+	var terrainHert = hertChara.getTerrain();
+	var attBreakout = attBreakout * terrainAtt.value * 0.01;
+	var hertBreakout = hertBreakout * terrainHert.value * 0.01;
+	
+	if(attBreakout > 2*hertBreakout){
+		r = 100;
+	}else if(attBreakout > hertBreakout){
+		r=(attBreakout-hertBreakout)*10/hertBreakout+90;
+	}else if(attBreakout > hertBreakout * 0.5){
+		r=(attBreakout-hertBreakout/2)*30/(hertBreakout/2)+60;
+	}else{
+		r=(attBreakout-hertBreakout/3)*30/(hertBreakout/3)+30;
+	}
+	if(isView){
+		return r >>> 0;
+	}
+	if(Math.fakeRandom()*100 <= r){
+		return true;
+	}
+	return false;
+}
+/********************************************
+ 法术攻击的命中率<br>
+ X代表我方的精神力与运气之和，Y代表敌方的精神力与运气之和。R表示命中率<br>
+ if (x>2*y)<br>
+ r=100;<br>
+ else if(x>y)<br>
+ r=(x-y)*10/y+90;<br>
+ else if(x>y/2)<br>
+ r=(x-y/2)*30/(y/2)+60;<br>
+ else<br>
+ r=(x-y/3)*30/(y/3)+30;<br>
+ 宝物的加成<br>
+ *********************************************/
+function calculateHitrateStrategy(attChara,hertChara, isView){
+	//对方混乱
+	if(hertChara.status.hasStatus(StrategyType.Chaos)){
+		if(isView){
+			return 100;
+		}
+		return true;
+	}
+	var attCharaModel = attChara.data;
+	var hertCharaModel = hertChara.data;
+	var r;
+	//得到双方的精神力与运气之和
+	var attSpirit = attCharaModel.spirit();
+	var ApiritAid = attChara.status.getStatus(StrategyType.ApiritAid);
+	if(ApiritAid){
+		attSpirit *= (1 + ApiritAid.value);
+	}
+	var attMorale = attCharaModel.morale();
+	var MoraleAid = attChara.status.getStatus(StrategyType.MoraleAid);
+	if(MoraleAid){
+		attMorale *= (1 + MoraleAid.value);
+	}
+	var attX = attSpirit + attMorale;
+	
+	var hertSpirit = hertCharaModel.spirit();
+	ApiritAid = hertChara.status.getStatus(StrategyType.ApiritAid);
+	if(ApiritAid){
+		hertSpirit *= (1 + ApiritAid.value);
+	}
+	var hertMorale = hertCharaModel.morale();
+	MoraleAid = hertChara.status.getStatus(StrategyType.MoraleAid);
+	if(MoraleAid){
+		hertMorale *= (1 + MoraleAid.value);
+	}
+	var hertY = hertSpirit + hertMorale;
+	//地形修正
+	var terrainAtt = attChara.getTerrain();
+	var terrainHert = hertChara.getTerrain();
+	var attX = attX * terrainAtt.value * 0.01;
+	var hertY = hertY * terrainHert.value * 0.01;
+	
+	if(attX > 2*hertY){
+		r = 100;
+	}else if(attX > hertY){
+		r=(attX-hertY)*10/hertY+90;
+	}else if(attX > hertY * 0.5){
+		r=(attX-hertY/2)*30/(hertY/2)+60;
+	}else{
+		r=(attX-hertY/3)*30/(hertY/3)+30;
+	}
+	if(isView){
+		return r >>> 0;
+	}
+	if(Math.fakeRandom()*100 <= r){
+		return true;
+	}	
+	return false;
+}
+/************************************************************
+ 法术攻击的伤害值计算<br>
+ X代表攻击方的精神力，Y代表被攻击方的精神力，Lv表示攻击方的等级。R表示伤害值<br>
+ r=Lv+25+(X'-Y')/3;<br>
+ 然后再根据兵种相克和宝物进行修正
+ **************************************************************/
+function calculateHertStrategyValue(attChara,hertChara,currentSelectStrategy,correctionFactor){
+	var r;
+	var attCharaModel = attChara.data;
+	var hertCharaModel = hertChara.data;
+	//得到攻击方的精神力和等级
+	var attLv =  attCharaModel.seigniorLevel();
+	var attAttack = attCharaModel.spirit();
+	//精神变化
+	var ApiritAid = attChara.status.getStatus(StrategyType.ApiritAid);
+	if(ApiritAid){
+		attAttack *= (1 + ApiritAid.value);
+	}
+	//得到防御方的精神力
+	var hertDefense = hertCharaModel.spirit();
+	//精神变化
+	ApiritAid = hertChara.status.getStatus(StrategyType.ApiritAid);
+	if(ApiritAid){
+		hertDefense *= (1 + ApiritAid.value);
+	}
+	//地形修正
+	var terrainAtt = attChara.getTerrain();
+	var terrainHert = hertChara.getTerrain();
+	var attAttack = attAttack * terrainAtt.value * 0.01;
+	var hertDefense = hertDefense * terrainHert.value * 0.01;
+	//法术攻击的伤害值计算
+	r = attLv + 25 + (attAttack - hertDefense)/3;
+	//法术系数加成
+	r = r * currentSelectStrategy.hert();
+	//特技等系数加成
+	r = r * correctionFactor;
+	//兵种伤害系数加成
+	r = r * attCharaModel.currentSoldiers().strategyHert();
+	//TODO:宝物加成
+	if(r < 1){
+		r = 1;
+	}
+	r = r >>> 0;
+	return r;
+}	
+/*****************************************************************
+ 物理攻击的伤害值计算
+ X代表攻击方的攻击力，Y代表被攻击方的防御力，Lv表示攻击方的等级。R表示伤害值
+ 首先会根据地形修正攻击和防御力为X',Y'
+ r=Lv+25+(X'-Y')/2;
+ 然后再根据兵种相克和宝物进行修正
+ **************************************************************/
+function calculateHertValue(attChara,hertChara,correctionFactor, isView){
+	var r;
+	var attCharaModel = attChara.data;
+	var hertCharaModel = hertChara.data;
+	//得到攻击方的攻击力和等级
+	var attLv =  attCharaModel.seigniorLevel();
+	var attAttack = attCharaModel.attack();
+	//攻击变化
+	var AttackAid = attChara.status.getStatus(StrategyType.AttackAid);
+	if(AttackAid){
+		attAttack *= (1 + AttackAid.value);
+	}
+	//得到防御方的防御力
+	var hertDefense = hertCharaModel.defense();
+	//防御变化
+	var DefenseAid = hertChara.status.getStatus(StrategyType.DefenseAid);
+	if(DefenseAid){
+		hertDefense *= (1 + DefenseAid.value);
+	}
+	//地形修正
+	var terrainAtt = attChara.getTerrain();
+	var terrainHert = hertChara.getTerrain();
+	var attAttackAddition = attAttack * terrainAtt.value * 0.01;
+	var hertDefenseAddition = hertDefense * terrainHert.value * 0.01;
+	//物理攻击的伤害值计算
+	r = attLv + 25 + (attAttackAddition - hertDefenseAddition)/2;
+	
+	//兵种相克
+	var restrain = attCharaModel.currentSoldiers().restrain(hertCharaModel.currentSoldiers().id()).value;
+	var ignore = false;
+	if(restrain > 100){
+		var skill = hertCharaModel.skill(SkillType.IGNORE_RESTRAINT);
+		if(skill){
+			var skillIgnore = skill.ignore();
+			if(!skillIgnore){
+			}else if(skillIgnore.type == "AttackType"){
+				if(skillIgnore.value == attCharaModel.currentSoldiers().attackType()){
+					ignore = true;
+				}
+			}else if(skillIgnore.type == "MoveType"){
+				if(skillIgnore.value == attCharaModel.currentSoldiers().moveType()){
+					ignore = true;
+				}
+			}else if(skillIgnore.type == "SoldierType"){
+				if(skillIgnore.value == attCharaModel.currentSoldiers().soldierType()){
+					ignore = true;
+				}
+			}
+		}
+	}else if(restrain < 100){
+		var skill = attCharaModel.skill(SkillType.IGNORE_RESTRAINT);
+		if(skill){
+			var skillIgnore = skill.ignore();
+			if(!skillIgnore){
+			}else if(skillIgnore.type == "AttackType"){
+				if(skillIgnore.value == hertCharaModel.currentSoldiers().attackType()){
+					ignore = true;
+				}
+			}else if(skillIgnore.type == "MoveType"){
+				if(skillIgnore.value == hertCharaModel.currentSoldiers().moveType()){
+					ignore = true;
+				}
+			}else if(skillIgnore.type == "SoldierType"){
+				if(skillIgnore.value == hertCharaModel.currentSoldiers().soldierType()){
+					ignore = true;
+				}
+			}
+		}
+	}
+	if(!ignore){
+		r = r * restrain * 0.01;
+	}
+	//修正系数
+	r *= correctionFactor;
+	if(!isView){
+		//随即系数
+		r = (11 - Math.fakeRandom() * 2) * 0.1 * r;
+	}
+	if(r < 1){
+		r = 1;
+	}
+	r = r >>> 0;
+	return r;
+}
+/*****************************************************************
+ 劫营特技的伤害加成值计算
+ **************************************************************/
+function calculateSkillSurpriseAmend(chara, target, attacks){
+	if(!chara.locationX || !target.locationX){
+		//AI自动战斗，随机
+		var rand = Math.fakeRandom();
+		if(rand < 0.2){
+			return attacks[0];
+		}else if(rand < 0.5){
+			return attacks[1];
+		}
+		return 1;
+	}
+	if(chara.locationX() != target.locationX() && chara.locationY() != target.locationY()){
+		return 1;
+	}
+	if(chara.direction == target.direction){
+		return attacks[0];
+	}
+	var no = (chara.direction == CharacterDirection.DOWN && chara.direction == CharacterDirection.UP) ||
+		(chara.direction == CharacterDirection.UP && chara.direction == CharacterDirection.DOWN) ||
+		(chara.direction == CharacterDirection.LEFT && chara.direction == CharacterDirection.RIGHT) ||
+		(chara.direction == CharacterDirection.RIGHT && chara.direction == CharacterDirection.LEFT);
+	if(no){
+		return 1;
+	}
+	return attacks[1];
+}
+/*****************************************************************
+ 特技的法术减免伤害加成值计算
+ **************************************************************/
+function calculateStrategyCharasCorrection(currentChara){
+	var strategyCharas = currentChara.model.getMinusStrategyCharas(currentChara.belong);
+	if(strategyCharas.length == 0){
+		return 1;
+	}
+	var hertCorrect = 1;
+	var locationX = currentChara.locationX();
+	var locationY = currentChara.locationY();
+	for(var i=0,l=strategyCharas.length;i<l;i++){
+		var obj = strategyCharas[i];
+		var chara = obj.chara;
+		var skill = obj.skill;
+		if(!skill){
+			continue;
+		}
+		if(chara.data.troops() == 0 || skill.hert() > hertCorrect){
+			continue;
+		}
+		var x = chara.locationX();
+		var y = chara.locationY();
+		var minusRects = skill.minusRects();
+		if(minusRects.length == 0){
+			hertCorrect = skill.hert();
+			continue;
+		}
+		for(var i = 0;i<minusRects.length;i++){
+			var point = minusRects[i];
+			if(x + point.x == locationX && y + point.y == locationY){
+				hertCorrect = skill.hert();
+				break;
+			}
+		}
+	}
+	return hertCorrect;
+}
+/*****************************************************************
+ 特技的法术蔓延范围计算
+ **************************************************************/
+function calculateSpreadPoints(skill, ranges, targetCharacter){
+	var points = ranges.concat();
+	var speadRects = skill.speadRects();
+	var speadProbability = skill.speadProbability();
+	var pointsCheck = {};
+	ranges.forEach(function(child){
+		for(var i = 0; i < speadRects.length; i++){
+			var point = speadRects[i];
+			calculateSpreadPointsLoop(targetCharacter, child.x + point.x, child.y + point.y, points, speadRects, speadProbability, 0, pointsCheck);
+		}
+	});
+	return points;
+}
+function calculateSpreadPointsLoop(targetCharacter, x, y, points, speadRects, speadProbability, loops, pointsCheck){
+	if(loops > 2 || pointsCheck[x+","+y])return;
+	if(Math.fakeRandom() > speadProbability){
+		return;
+	}
+	pointsCheck[x+","+y]=1;
+	var targetChara = LMvc.BattleController.view.charaLayer.hasCharacterInPosition(targetCharacter.locationX() + x, targetCharacter.locationY() + y);
+	if(!targetChara || !isSameBelong(targetCharacter.belong, targetChara.belong)){
+		return;
+	}
+	points.push({x:x,y:y});
+	for(var i = 0; i < speadRects.length; i++){
+		var point = speadRects[i];
+		calculateSpreadPointsLoop(targetCharacter, x + point.x, y + point.y, points, speadRects, speadProbability, loops + 1, pointsCheck);
+	}
+}
+/*****************************************************************
+ 特技(反)埋伏加强系数计算
+ **************************************************************/
+function calculateAmbush(skill, x, y, belong, count){
+	var ambushRects = skill.ambushRects();
+	var ambush = skill.ambush();
+	var result = 0;
+	var num = 0;
+	for(var i = 0, l = ambushRects.length;i<l;i++){
+		var point = ambushRects[i];
+		var chara = LMvc.BattleController.view.charaLayer.getCharacterFromLocation(x+point.x, y+point.y);
+		if(!chara || !isSameBelong(chara.belong,belong)){
+			continue;
+		}
+		if(++num > count){
+			result += ambush;
+		}
+	}
+	if(num - count == 1 && skill.startAmbushProbability() < 1){
+		if(Math.fakeRandom() > skill.startAmbushProbability()){
+			return 0;
+		}
+	}
+	return result;
+}
+/*****************************************************************
+ 特技穿透效果范围计算
+ **************************************************************/
+function calculatePenetratePoints(chara, target, ranges){
+	var arr = getPenetratePoint(chara, target);
+	var x=arr.x, y=arr.y;
+	if(ranges.findIndex(function(child){
+		return child.x == x && child.y == y;
+	}) < 0){
+		ranges.push({x:x,y:y});
+	}
+	return ranges;
+}
+function getPenetratePoint(chara, target){
+	var x=0,y=0;
+	var direction = getDirectionFromTarget(chara, target, true);
+	switch(direction){
+		case CharacterDirection.DOWN:
+			y = 1;
+			break;
+		case CharacterDirection.UP:
+			y = -1;
+			break;
+		case CharacterDirection.LEFT:
+			x = -1;
+			break;
+		case CharacterDirection.RIGHT:
+			x = 1;
+			break;
+		case CharacterDirection.LEFT_UP:
+			x = -1;
+			y = -1;
+			break;
+		case CharacterDirection.RIGHT_UP:
+			x = 1;
+			y = -1;
+			break;
+		case CharacterDirection.RIGHT_DOWN:
+			x = 1;
+			y = 1;
+			break;
+		case CharacterDirection.LEFT_DOWN:
+			x = -1;
+			y = 1;
+			break;
+	}
+	return {x:x,y:y};
+}
+function calculateWounded(value, range){
+	return value + range * (1 - 2 * Math.fakeRandom()); 
+}
+function calculateExp(attChara,hertChara){
+	var attCharaModel = attChara.data;
+	var hertCharaModel = hertChara.data;
+	var lv = attCharaModel.seigniorLevel() - hertCharaModel.seigniorLevel();
+	var exp = 8;
+	if(lv > 0){
+		exp -= lv;
+	}else if(lv < 0){
+		exp -= lv * 2;
+	}
+	if(exp < 1){
+		exp = 1;
+	}
+	if(hertCharaModel.troops() == 0){
+		exp = (exp*1.5 >>> 0);
+	}
+	return exp;
+}
+function calculateAskSingleCombat(chara, target){
+	if(chara.data.force() < 60){
+		return false;
+	}
+	if(!battleCanAttackCharacter(target, chara)){
+		return false;
+	}
+	var charaValue = chara.data.force()*3 + chara.data.HP();
+	var targetValue = target.data.force()*3 + target.data.HP();
+	var value = charaValue - targetValue;
+	if(value < -15){
+		return false; 
+	}else if(value <= 0){
+		return Math.fakeRandom() < 0.05; 
+	}else if(value <= 15){
+		return Math.fakeRandom() < 0.2; 
+	}else if(value <= 30){
+		return Math.fakeRandom() < 0.05; 
+	}else if(value <= 50){
+		return Math.fakeRandom() < 0.01; 
+	}
+	return false;
+}

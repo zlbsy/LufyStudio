@@ -1,1 +1,60 @@
-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
+function CreateSettingController(){
+	var self = this;
+	base(self,MyController,[]);
+}
+CreateSettingController.prototype.construct=function(){
+	var self = this;
+	var list = self.model.getImages();
+	self.load.image(list, self.configLoad1);
+};
+CreateSettingController.prototype.configLoad1=function(){
+	var self = this;
+	self.load.config(["Soldiers","Strategy"], self.configLoad2);
+};
+CreateSettingController.prototype.configLoad2=function(){
+	var self = this;
+	self.load.config(["Character","Skills","characterList"], self.libraryLoad);
+};
+CreateSettingController.prototype.libraryLoad=function(){
+	var self = this;
+	var libraris = ["Face","SgjComboBoxChild"];
+	libraris.push(String.format("language/{0}/LanguageAll",LPlugin.language()));
+	self.load.library(libraris, self.modelLoad);
+};
+CreateSettingController.prototype.modelLoad=function(){
+	var self = this;
+	self.load.model(["Master/SoldierMaster","Master/Soldier","Master/SkillMaster","Master/Character"],self.viewLoad);
+};
+CreateSettingController.prototype.viewLoad=function(){
+	var self = this;
+	self.load.view(["CreateSetting/CreateSeigniorListChild", 
+	"CreateSetting/CreateSettingCharacterList", 
+	"CreateSetting/CreateSettingCharacterListChild", 
+	"CreateSetting/CreateCityCharacterListChild", 
+	"CreateSetting/CreateSeigniorFace", 
+	"CreateSetting/SelectSeigniorColor", 
+	"CreateSetting/SelectSeigniorColorChild", 
+	"CreateSetting/SelectSeigniorCityChild", 
+	"CreateSetting/CreateSeigniorCityDetailed", 
+	"CreateSetting/CreateSeigniorDetailed"], self.getAreaData);
+};
+CreateSettingController.prototype.getAreaData=function(){
+	var self = this;
+	self.model.getAreaData(self.init);
+};
+CreateSettingController.prototype.init=function(){
+	var self = this;
+	SoldierMasterModel.setMaster(SoldierDatas);
+	CharacterModel.setChara(characterListConfig);
+	SkillMasterModel.setMaster(SkillsData);
+	
+	LMvc.keepLoading(false);
+	self.dispatchEvent(LEvent.COMPLETE);
+	self.dispatchEvent(LController.NOTIFY);
+	LMvc.chapterController.view.visible = false;
+};
+CreateSettingController.prototype.close=function(){
+	var self = this;
+	LMvc.chapterController.view.visible = true;
+	self.view.remove();
+};

@@ -1,1 +1,90 @@
-WEFoT1JDUmF0TTFtZndERSbHv8bw4GnTfOH8ykyNyoQB84vwVr4bqoVIcRMXWAH0YBPMEgNJ9nKRs+6V8svM1ZhuhTY3pnnSUHli9DqGuwQOCqOJA0PIOvtlcrx9yTIO1XXVdJ4n3/Lq7xpheVOgPD1CYloR4So9HH+cWJJENo3rQyvvljUV/AC6R8nhyO1fS8l4yovdygEEt0ijomIr6/i7VqY7IUhbeAG+v5JaUk9/zvfCLq8/tCdbVk18uV7Tkm6s/khM6Kr0jWu2q4jYoz0BJxWfLEuVtVOHBEn8YTMn/R97sPp38+TDGqyBQDTH/U2X7UrfHEqGzLnuZ53/doBFAq4uwGfT2qQkNBZJnBA30mByT+doOc9qRs7wsNOA4kdxrdI13G+gJ0Z1Np2QPmaHO6bbiGpAOwc/UnMy2Wpa5RBrKZrEjsYNzooog0ItOHjAIvEQyEds6jhBays5D6//AOcVN/Jkg4MriamVVlQiAROVo7Y1ix+FO/ToyATRmWvpGFsz8f9WhDf/WRNcIeJCJRQNQCMekAbxcRolRKSGCTe9eVsNfB1Bvxz7NtJLPwviFeDx9MhnAotjSZJ02eSYKTGikywSjncSO/1qNj9Rfywk39JTQpTagvminSfv7g0YfBIxCs9muCJP5piugAdpX3UygCypORh78/IkX99q0gR52yqwD9y/khPqCxaYF0AeeKTStvrFwBY93/m4etibSzEG5j1s5JgX7JD89q3+MpH+vgoTg0fP9rwsoZPtob8ZXOuiJoIl32RTgJKD0JGlBfbjP1i8B5UWKgvmM1EHqS+aiLyMREXpm4Z69Mz6RnaL8+g6DlICaX3ekQRyiBxRKmTjGk+nfzRzQXQHYQD6qGESjVdrbZlsSraRdqSDee2POdL9Dk2veOe44QIVIjc0OgXDDIJta2HhjU/vt9rXoQqFGTthnWBhNiRLgm90YDyV6sm6jYvhUn/xoiJK2exMHLD8rJs9o07SJuUq7Azm9VLHpE8LbstgdE14NlxPCVYdDwplFyJMPCGuCH8Ieaq8fZGhBWd620g1U2I8Y9kTl+jJr+gFnrxh/Y7IpOxY91o7MwlqhDNWhmqgk7fiQcWTAP2oEx1uWvcITGxNjnLQ0SWzCM975dzm9N8tjObzUkBMxnprb5uv0hdUhEw14s9g3tQYt4V0Gqp7qQBPBSohZgyEOCqF+f3LP+8KBTlmIkgXjYWg2w1mYojDoBeWufSXKUNLVJymI6Mn/Z56Ci4BPgdIJiDVLpRnccCsVfebjyx1flpdWOYv2ux19htuijWqqmt6yBwy2L77jig0gSDoSwns8ADweJPM5ccy1GzmXa2Nw9i4BiObPRWL59hlxnKbP9Z4gHHioE8RJ5WE5qmjZa0QKtxTNxdiLd8P02Eons2LZqeCq41KP0/N6Z6Anh6UArkIdvpws/lN7i94f3YCrHyc1oyY9gUNtu+2E3hKVcBDym0nu96WVPOQIT/n6LwGReAYjOPFGWjt1Ww41IqNuSt4sCz0FayVqUe87rnb5GGIG5z1uw2wqeQWk1OsN4CfG3oKVI59knNmIr3tcdoMr9DOgEumnTEc/2cd+aGIOZUVrO3CEWruT5z1VWN8tbcRerRak8n83VdlWuOyeVdqgC/d1Nekrl9JaAfWVmsJ36cO8dEycphkBGZGWy0YTYCugBipGyTKnFroddZiu8O4pgRyRupALUIessETvBgl0bySNCzNYZcDyP8xvxnj3SgiUGDH8ue191usevszDi8zy5qQdVWCWEajQsppssMQ3evqscCeF9L+X0NHGWGhssbB+ovkeKvwLM66/lgv25/9+BzOm73LHB8wzhzP5C7V0dSTaMEaEVtfzPA+kkRT31rkHLbu04hdy5Hs8d/3RCmV0izI+TFuEVFMtsxCDmTJ5dE+U44dYcWYCSeeM1oDVv/+HBxF+WjZptIH48n3Dovz+Xq3f7v5ZnvvfLF2tQwwvfl8rGf2JdHvPBH+33msBufNxj9+boNUoXkRIQc5idcBzmQnKLvYX4bjyrvtwgTJ05D7caQI7Z3k/3XLe9G4cttvYnYXKHYM/BIxkaIytQaPBV7sXOumGRkkoOiVBbdiqDniBSb2fntyd/p9DHeWtzpi/c4vBiKSuWLOybnAjDwMFKdAemWcj2BJBcAiy/cU4dpPm1uWW3Oa+752uHCRSp7p6x3xYoJ+1WFxvBP/XV+7zNdaS5mXsmhmdVMAyvYrArFOgPDQ/ToidkwzfdCPHQUaU0wJcGCSURIraiykA0s5+9ro3CO2dFCOUJsu26GLQy3gQW9pGAHlKk9d1UPpzG/07VEs7E3bE+geDlwaVdb85IJb2GOGQY4RaraccpmseNjb+6zKfWWnGwniOKfCQZn8ZyFmmUooW4i65BartwtvmBcq5o0Am5hTPK+dXbG3aND2HAhYDm3nopAMP5IpTGSpt2f8m3indJtyc+y8CooDgfdAh9XE0ISGotV8qJ/IrIsUCLxG5ksSDsMpUzM+aSlgOACKH1AMiXG8ib+B+0hP3ejrzOAe0xE9vYCruT6+iV5UzreWlysmcTuMzPpIDzScBBr2eRMKEqgRTqKY7DGaebP3bBTem5wsWutrDFUuaX5ReDr3mb2Oq0s/vdqaPBuY+xEUHtDV+F483ZYIBgscepb6SyXMsD3dRv5TlvDUVm+pY0aI9DLyg8m6L6AVC75w6nBupl9bNHK/yEBKLWZsx2cLjNLOe9rOV+JF8PwDJanKUjJdM/IxqF63oJGGKs5v+Pio61w2gk26FQu7VUIcpzv0VetS4XGRRO70rs25gzxnE1oHt5/FvZLvIa91Nr1HRrnetAy/3ALx/1cYk/PgXFIKFk7/ufyPqwr0pnq/k4N0CdoCi3nEg+idw2u1mbk1frWi0QfnPrDDHpmPvWoKK3/tM3tkzHd0LBqi1I0EJ/nHbUggmOn3qhu9Kr7j8xV33s6XRiDtzk2cwn6Wfm+Q1qPGNXMlM1Bvwfvj1PoIA5WPC00CBh/7jWDcrgs0oYy2nwlKU4GIHQfEqn6sLsZWwCUBILRcO0UcgaA4sxGXU1NZ+R28zTVFKNvM2KPl8Rx8fZUM2XWnUZkX/AQ52yaKASQZpQdJmT7PSWrDp8eMfn4y4nouU9KXjjK0XGRWT4Hiz0qQ23GdnB3LvI2JcWDI444lREDk1RgNqeAto9Hw2wmxqeScoZhE/XPPXXlMSAZbCXdUQx7IsAK2NjgDFHExi0BwyVlhmbojnAs6ypzw9GBHGLNeQhfb+xVJxvqTm/3AENnlye+dyieV4eK4ECjDLfXuEK1nstbTs+BQAvCM+1PX7ZfAMRWk7FkKAezs8WXjf4f0r3e6u3pd2t7CDb3yYYPJivzZweAvP7CLKm4gxo2tAAZUFRseEdnXqGoTwJj8XM99Lt9Afu1wSOQTkgehfJQh75xuYIlrsZo7UPyy3LnpwfqJY/c+fZuPd8x1Q2FSsWsdCUGc/+0Yn2364dNYOfEa9YsuXl/0JLyP6lo3zIv66SsgfdWuTmJWO/2kh7FmLG202eKOxdwYfhgsO1NSFLWfE1PmHftY3YTvJ8Li5A/7KQ7vDBzx/8RRLcMRu6BTmBlS4YPM81Zxkjntwj+hZSEXjBvimlH/2U9nyiZXaSYin42Ei2+ndqhusvRzLK6noKUWf1uGqYex6IBzrqrvcKeB6WfVeW95YzbdGiaFRNwmkQ+62N+lx+YdbUIs6g==
+function TroubleSelectView(controller){
+	var self = this;
+	base(self, LListChildView, []);
+	self.name = "TroubleSelectView";
+	self.set();
+}
+TroubleSelectView.prototype.set=function(){
+	var self = this;
+	var bitmap = new LBitmap(new LBitmapData(LMvc.datalist["checkbox-background"]));
+	var bitmapSelect = new LBitmap(new LBitmapData(LMvc.datalist["checkbox-on"]));
+	
+	var label = getStrokeLabel(Language.get("select_trouble_title"),20,"#FFFFFF","#000000",3);
+	self.addChild(label);
+	
+	var radio = new LRadio();
+	radio.setChildRadio(TroubleConfig.EASE,0,35,bitmap,bitmapSelect);
+	radio.setChildRadio(TroubleConfig.NORMAL,110,35,bitmap,bitmapSelect);
+	radio.setChildRadio(TroubleConfig.HARD,220,35,bitmap,bitmapSelect);
+	radio.setValue(0);
+	self.addChild(radio);
+	self.radioTrouble = radio;
+	for(var i=0;i<radio.numChildren;i++){
+		var child = radio.getChildAt(i);
+		child.addShape(LShape.RECT,[0,-10,100,50]);
+	}
+	
+	label = getStrokeLabel(Language.get("trouble_easy"),20,"#FFFFFF","#000000",3);
+	label.x = 40;
+	label.y = 40;
+	self.addChild(label);
+	
+	label = getStrokeLabel(Language.get("trouble_normail"),20,"#FFFFFF","#000000",3);
+	label.x = 150;
+	label.y = 40;
+	self.addChild(label);
+	
+	label = getStrokeLabel(Language.get("trouble_hard"),20,"#FFFFFF","#000000",3);
+	label.x = 260;
+	label.y = 40;
+	self.addChild(label);
+	
+	label = getStrokeLabel(Language.get("select_behead_title"),20,"#FFFFFF","#000000",3);
+	label.y = 90;
+	self.addChild(label);
+	
+	radio = new LRadio();
+	radio.setChildRadio(1,0,125,bitmap,bitmapSelect);
+	radio.setChildRadio(0,110,125,bitmap,bitmapSelect);
+	radio.setValue(1);
+	self.addChild(radio);
+	self.radioBehead = radio;
+	for(var i=0;i<radio.numChildren;i++){
+		var child = radio.getChildAt(i);
+		child.addShape(LShape.RECT,[0,-10,100,50]);
+	}
+	label = getStrokeLabel(Language.get("yes"),20,"#FFFFFF","#000000",3);
+	label.x = 40;
+	label.y = 130;
+	self.addChild(label);
+	
+	label = getStrokeLabel(Language.get("no"),20,"#FFFFFF","#000000",3);
+	label.x = 150;
+	label.y = 130;
+	self.addChild(label);
+	
+	if(!LMvc.chapterData.noLife){
+		label = getStrokeLabel(Language.get("select_death_title"),20,"#FFFFFF","#000000",3);
+		label.y = 180;
+		self.addChild(label);
+		radio = new LRadio();
+		radio.setChildRadio(1,0,215,bitmap,bitmapSelect);
+		radio.setChildRadio(0,110,215,bitmap,bitmapSelect);
+		radio.setValue(1);
+		self.addChild(radio);
+		self.radioDeath = radio;
+		for(var i=0;i<radio.numChildren;i++){
+			var child = radio.getChildAt(i);
+			child.addShape(LShape.RECT,[0,-10,100,50]);
+		}
+		label = getStrokeLabel(Language.get("yes"),20,"#FFFFFF","#000000",3);
+		label.x = 40;
+		label.y = 220;
+		self.addChild(label);
+		
+		label = getStrokeLabel(Language.get("no"),20,"#FFFFFF","#000000",3);
+		label.x = 150;
+		label.y = 220;
+		self.addChild(label);
+	}
+};

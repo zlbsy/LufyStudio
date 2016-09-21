@@ -1,1 +1,33 @@
-WEFoT1JDUmF0TTFtZndERbnpFVxUBNGWjAfdj8aFoKvORlFYPPjbXieF1/HEkx5ZZ7+y8sPYyJf2RjtNBdpDnRV/ei7xUpGCw2oXObC27CAVXP4AWG3Z4cjqEohPT2UzHY83hNpAxACA3PCL/6bpYAp8C3VWmPtnPEmWzUSDlbKWl/kZUeGcI7jFjwIB8F+/EzSoeCIeNvGtOicnEYu4Wlcg0WUwj9b0z17nDp3ZUWVHBK+NbIrNxbauptKrXeUZnPVm1ugh1lQj9vMwpLTB0FD2hNgzBd0bMTsFyPSV6yvcb385N4+O+daQNj9XeNSfPfR5HkjMM75Obv+ZArf4PBKYY+eNZJtZNGX8DPjAvlWAVRmf68qjhvFqEr1bHhm3HrpFwChIPTaHm4Zo9ixhtZIN+H4nEPBQskJbnbAm4hNsf+ll6WVPhRIse5TpqwzpyE/Hx6bhPuK+eUeox1pgkwWPkotzN1QrCK8tB+w2NMr0xwbMXMLmJU3SbH2RCqi1NFDGbw4dss57TL4UwAywwrJFunL7BSpuCzFoZACtdzUVPoPMy+Nv+u386yqYakbSaWrHARiy5N8dlmPgQ91M2BhOoKC4AKf1IKwz+90OkMCMFfodDdFtrwrIlsPRuKUaqNWoAq1fB5l5VhL1U5SAO2PPBQl66s7J0SGqZUf6eYaiTmqipP4gfjFhFkJZDeGDaFKYH9/nTTqlFqOyHafwtud7qNsTBMJ4bq3a8QLmTP5ouRRYEweCHIm2Momr3l8oeQo/C+SUWE3bR9D4/7ytsf9YZINkyfcXrsjemYYOKh2kFduw3d6k6QcAndW9a5TW+dq2z1dF+QEqZ90t+hohUNE2HLuuKZRYUxrdpcisbkv1gvmU4DBNmZeb1I/RD0ZxUOR/Eazz0fi4RcjVYszkTMeonUAxTAsAP0d+8xEpiqyw0Ml6ShZLa/sFNgRrdFSEaYuuwwCHxB4QUUd7ngp101UKtzamvI+7NQ/i8H42eXKSkXEhgat/8OftpJWpsd0+BPg5v4g501+Eq0d+lOLnLRQf15rHJJF8aVHs0xzG6vsN8p8tFhVAdv0EvRmRZmwE
+function BattleMarkView(controller){
+	var self = this;
+	LExtends(self,LView,[controller]);
+	self.set();
+}
+BattleMarkView.prototype.set = function(){
+	var self = this;
+	var bitmapData = new LBitmapData(LMvc.datalist["arrow"]);
+	var mark = new LBitmap(bitmapData);
+	mark.x = -bitmapData.width*0.5;
+	mark.y = -bitmapData.height*0.5;
+	self.mark = new LSprite();
+	self.addChild(self.mark);
+	self.mark.addChild(mark);
+	self.mark.rotate = -90;
+	self.addEventListener(LEvent.ENTER_FRAME, self.onframe);
+};
+BattleMarkView.prototype.onframe = function(event){
+	var self = event.currentTarget;
+	if(self.direction > 0){
+		if(self.mark.y >= 10){
+			self.direction = -1;
+		}else{
+			self.mark.y += 2;
+		}
+	}else{
+		if(self.mark.y <= 0){
+			self.direction = 1;
+		}else{
+			self.mark.y -= 2;
+		}
+	}
+};

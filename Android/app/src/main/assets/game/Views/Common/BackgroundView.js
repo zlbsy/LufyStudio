@@ -1,1 +1,26 @@
-WEFoT1JDUmF0TTFtZndERYneyUSQ+hRADYORFQBSZ4DIB7xw2TFRbWbZpWjODT3f9x+FWHXOZFQr0kcN5gUos2w7qlCZtO+CE7ZyNN15AXxlRyQRLH84EWn7uOFonhpqCE/G1a7RSHwGjWFAMeu+1TeOKRn0cQXMXEuY54ATRJdmH9IxDvk5BwJRjSL1Ek6t5ikR+VBy/CYeLDSL1BkKfon0WZDhpkmEoz5eNgVZKQ6Ex804OumOBQRmmA0thdn2E9+1TNVQogfcUT1e9NPCuUhnLpzJmvqHND/TVGFNcUeVA5nPchRKWRViF/MuG4/K3t9BvBFgUI0UCnK8GR1ah3iDdoQP1MyokpHFd3TPBBXRAEyRX94mEjA6Cd+weLN13MkQkPzktVht4nL9d+4zF82vjJj2fpLxUB7RWxUbX0h1RsUNSxkOqo62ieNxoIByC1YjVTNmbqClB8zj+t3xxLRyfZ/7Cq6Lu0Dw4GbKM8qoIgN/eYRL7o4ol27NxEwCO/DQO5Ih/EHEZFV/8VWI0Tz6dYqQ2sNRtTrChJUfeY7pKbX8OTl2k527ctvGD0AZ1OZXhk0WGet72WqOcfHQP+q9A29rKbg7lyrmmMJkwphSJCcFWSKAyYF/leDLzwZvCcwKupP+msMXF5aycM7lhWE+lGm3xR7TNnmtzpxVb/Oc6GdF9SskYGqgKcbXcJWWg1YJ5e7hq+D78REuDKDoqprHDfDSOTi2yq++8X8/7A+ngkY6u3WUyAjqFQtggfV0idd7JfRLzK1rTJ9vsEYYwd7g54/y0gUO13iszJw9sbX+ZJumoEcpZhM5Zpxonk83HyDp9FKpRsFzTofA9F4j8MFzKbdhk8DwIF+XRSlEIL0RwdlfqGehHybaTlPrSRdnEzCQIAoSkCummdz0FU4WnPCeBAAP5LRk2jWnv/xGGg5qoKu9akVjCg0jk1kXR6V8YfA5loCe4FqFc8MRTM6lwZBLYTKtixx7AyVpfiFkdaQGnSwMZP4YS3Pj+2uofwGqWy1qNq4Fo0kRy+8PyITCcxY2Vl1FWVck/GU8rjOYaK+m+ZMUu9t4uGilQLuTmJ9x9/QEUuFeGCdAgpb5ICOxR2e3ayJSp3OUU7p/X/jxqkajjXz0y8kIh5DqL7l1saz/KCwm/oMN1ETwOwH3vv7eHW2OjSChrQ1ITPPrFggMDgn0XU0tWMUpvIbPOZmBXEToyikdr9WUYw7kQcd7oaxRALNl007H3rIiOwY9QJ61S6Cjt+Y5C2PzQokYj/cOpr7e
+function BackgroundView(controller){
+	var self = this;
+	LExtends(self,LView,[controller]);
+}
+BackgroundView.prototype.set = function(bitmapData, targetLayer){
+	var self = this;
+	self.baseBitmapData = bitmapData;
+	self.targetLayer = targetLayer;
+	var data = new LBitmapData(null,0,0,LGlobal.width,LGlobal.height,LBitmapData.DATA_CANVAS);
+	self.map = new LBitmap(data);
+	self.addChild(self.map);
+
+	self.addEventListener(LEvent.ENTER_FRAME, self.onframe);
+};
+BackgroundView.prototype.onframe = function(event){
+	var self = event.currentTarget;
+	if(self.ll_x == self.targetLayer.x && self.ll_y == self.targetLayer.y){
+		return;
+	}
+	self.ll_x = self.targetLayer.x;
+	self.ll_y = self.targetLayer.y;
+	self.map.bitmapData.copyPixels(self.baseBitmapData, new LRectangle(-self.targetLayer.x,-self.targetLayer.y, LGlobal.width,LGlobal.height), new LPoint(0,0));
+};
+BackgroundView.prototype.updateView = function(){
+	this.ll_x = Number.MIN_VALUE;
+};
