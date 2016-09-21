@@ -3,9 +3,11 @@ package com.lufylegend.sgj;
 import android.content.Context;
 import android.content.Intent;
 import android.media.AudioAttributes;
+import android.media.AudioManager;
 import android.media.SoundPool;
 import android.media.MediaPlayer;
 import android.net.Uri;
+import android.os.Build;
 import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.telephony.TelephonyManager;
@@ -393,19 +395,24 @@ public class Lufylegend {
             {put(R.raw.se_strategy_wind, "se_strategy_wind");}
             {put(R.raw.se_swing, "se_swing");}
         };
-        audioAttributes = new AudioAttributes.Builder()
-                // USAGE_MEDIA
-                // USAGE_GAME
-                .setUsage(AudioAttributes.USAGE_GAME)
-                // CONTENT_TYPE_MUSIC
-                // CONTENT_TYPE_SPEECH, etc.
-                .setContentType(AudioAttributes.CONTENT_TYPE_SPEECH)
-                .build();
-        soundPool = new SoundPool.Builder()
-                .setAudioAttributes(audioAttributes)
-                // ストリーム数に応じて
-                .setMaxStreams(sounds.size())
-                .build();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            audioAttributes = new AudioAttributes.Builder()
+                    // USAGE_MEDIA
+                    // USAGE_GAME
+                    .setUsage(AudioAttributes.USAGE_GAME)
+                    // CONTENT_TYPE_MUSIC
+                    // CONTENT_TYPE_SPEECH, etc.
+                    .setContentType(AudioAttributes.CONTENT_TYPE_SPEECH)
+                    .build();
+            soundPool = new SoundPool.Builder()
+                    .setAudioAttributes(audioAttributes)
+                    // ストリーム数に応じて
+                    .setMaxStreams(sounds.size())
+                    .build();
+        }
+        else {
+            soundPool = new SoundPool(sounds.size(), AudioManager.STREAM_MUSIC, 0);
+        }
         for (int id : sounds.keySet()) {
             int sound = soundPool.load(context, id, 1);
             soundIds.put(sounds.get(id), sound);
