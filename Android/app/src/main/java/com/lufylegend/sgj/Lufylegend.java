@@ -137,13 +137,18 @@ public class Lufylegend {
     }
     @JavascriptInterface
     public String androidSetting(){
-        return "<script type=\"text/javascript\" src=\"../lufylegend.java.js\"></script>;";
+        String data = readFile("lufylegend.java.js", "");
+        return changeToScript(data);
+        //return "<script type=\"text/javascript\" src=\"../lufylegend.java.js\"></script>;";
     }
     @JavascriptInterface
     public String readFile(String filePath) {
+        return readFile(filePath, Lufylegend.gamePath);
+    }
+    public String readFile(String filePath, String basePath) {
         try {
             final AssetManager assetManager = context.getAssets();
-            InputStream inputStream = assetManager.open(Lufylegend.gamePath + filePath);
+            InputStream inputStream = assetManager.open(basePath + filePath);
             BufferedReader br = null;
             br = new BufferedReader(new InputStreamReader(inputStream));
             String text = "";
@@ -262,17 +267,6 @@ public class Lufylegend {
         params += ",'product_id':'"+productId+"'";
         params += "}";
         return execPost("purchase_start/check.php", params, completeEvent, errorEvent);
-    }
-    @JavascriptInterface
-    public String purchaseLog(){
-        String identification_id = identificationId();
-        String completeEvent = "";
-        completeEvent += "LPurchase._ll_dispatchEvent(data, LPurchase.PURCHASE_COMPLETE);";
-        String params = "{";
-        params += "'identification_id':'"+identification_id+"'";
-        params += "}";
-        String errorEvent = "LPurchase._ll_dispatchEventError('Json Error', LPurchase.PURCHASE_COMPLETE);";
-        return execPost("purchase_restore/", params, completeEvent, errorEvent);
     }
     @JavascriptInterface
     public String purchaseRestore(){

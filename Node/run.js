@@ -53,7 +53,12 @@ function readGameFiles(path, toPath) {
 				if(path.indexOf("/images") > 0){
 					data = data.toString('base64');
 				}else{
-					//data = encrypt(data);
+					if(toFullPath.indexOf("LPluginExtension.js") >= 0 || 
+					toFullPath.indexOf("PurchaseHelper.js") >= 0 || 
+					toFullPath.indexOf("LogoController.js") >= 0 || 
+					toFullPath.indexOf("LogoView.js") >= 0){
+						data = encrypt(data);
+					}
 				}
 				fs.writeFile(toFullPath, data, function(err) {
 					if (err) {
@@ -78,6 +83,17 @@ function copyCommon(callback) {
 	fs.createReadStream(IOS_PATH + '/index.html').pipe(fs.createWriteStream(ANDROID_PATH + '/index.html'));
 	fs.copySync(IOS_PATH + "/js", ANDROID_PATH + "/js");
 	//fs.copySync(IOS_PATH + "/images", ANDROID_PATH + "/images");
+	var files = [{"from":"./Android/lufylegend.java.js","to":"../Android/app/src/main/assets/lufylegend.java.js"}];
+	for(var i=0;i<files.length;i++){
+		var child = files[i];
+		var data = fs.readFileSync(child.from);
+		data = encrypt(data);
+		fs.writeFile(child.to, data, function(err) {
+			if (err) {
+				console.log("error:" + err);
+			}
+		});
+	}
 }
 if (isDir(ANDROID_PATH)) {
 	fs.removeSync(ANDROID_PATH);
