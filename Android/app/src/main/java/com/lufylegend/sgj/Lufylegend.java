@@ -1,5 +1,6 @@
 package com.lufylegend.sgj;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.media.AudioAttributes;
@@ -8,6 +9,7 @@ import android.media.SoundPool;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Handler;
 import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.telephony.TelephonyManager;
@@ -25,6 +27,10 @@ import java.util.Locale;
 import java.util.HashMap;
 import java.io.*;
 import android.content.res.AssetManager;
+
+import com.lufylegend.sgj.com.lufylegend.sgj.alipay.AliPayAPI;
+import com.lufylegend.sgj.com.lufylegend.sgj.alipay.AliPayResult;
+
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 
 import javax.crypto.Cipher;
@@ -36,13 +42,13 @@ import javax.crypto.spec.SecretKeySpec;
  */
 public class Lufylegend {
     public static String gamePath;
-    private Context context;
+    private Activity context;
     public static WebView myWebView;
     private MediaPlayer mediaPlayer;
     private SoundPool soundPool;
     private AudioAttributes audioAttributes;
     private HashMap<String, Integer> soundIds = new HashMap<String, Integer>();
-    public Lufylegend(Context context){
+    public Lufylegend(Activity context){
         this.context = context;
         soundInit();
     }
@@ -64,6 +70,52 @@ public class Lufylegend {
         String url = String.format("%sindex.html", String.format("file:///android_asset/%s", path));
         myWebView.loadUrl(url);
     }
+    private Handler mHandler = new Handler() {
+        @Override
+        public void handleMessage(android.os.Message msg) {
+            //支付返回的订单号，可具体处理此订单的逻辑
+            String outTradeNo = msg.getData().getString(AliPayAPI.MSG_KEY_OUT_TRADE_NO);
+            String strResult = msg.getData().getString(AliPayAPI.MSG_KEY_RESULT);
+            AliPayResult result = new AliPayResult(strResult);
+/*
+支付宝返回结果
+ */
+            switch (msg.what) {
+                case AliPayAPI.RQF_PAY: {
+                    if (result.isSucceed()) {//支付成功
+                       // nativeAlipayResult(outTradeNo, 1, "succeed");
+                    } else {//支付成功
+                       // nativeAlipayResult(outTradeNo, 0, result.getResultStatusMsg());
+                    }
+                }
+                break;
+                default:
+                    break;
+            }
+        };
+    };
+    /*
+    trGameId:标示你的自己账户系统id，
+    outTradeNo：订单号
+    subject：描述信息
+    body：带有订单信息的消息体
+    totalFee：价格
+    具体参数如果有疑问可参考这篇文章 https://doc.open.alipay.com/doc2/detail?treeId=59&articleId=103663&docType=1
+     */
+    public int startAlipay(String trGameId, String outTradeNo, String subject, String body,
+                                  String totalFee) {
+        if (this.context == null) {
+            return 0;
+        }
+        Log.d("TRGame", String.format("Alipay,trGameId=%s,tradeNo=%s,subject=%s,body=%s,fee=%s",
+                trGameId, outTradeNo, subject, body, totalFee));
+
+        AliPayAPI.startAlipay(context, mHandler, trGameId, outTradeNo, subject, body,
+                totalFee);
+        return 1;
+    }
+
+
     @JavascriptInterface
     public String getGamePath(){
         return Lufylegend.gamePath;
