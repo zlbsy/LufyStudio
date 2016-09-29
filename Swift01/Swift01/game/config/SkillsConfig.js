@@ -279,4 +279,13 @@ var SkillsData = [
 {id:74,name:"白耳(陈到)",powerful:100,type:SkillType.ATTACK_END,subType:[SkillSubType.FALL_BACK],probability:30,explanation:"白耳兵强大的攻击力迫使敌军后退一格，如因后方存在部队无法后退时,则产生撞击伤害。对建筑无效。"},
 {id:75,name:"冲击(张辽)",powerful:160,type:SkillType.ATTACK,subType:[SkillSubType.ENEMY_AID,SkillSubType.PENETRATE],aids:[2],aidCount:1,aidRects:[{x:0,y:0}],probability:50,explanation:"用力冲向敌军,强大的冲力令敌军胆寒,除了令敌军攻击力受损之外,还可以将伤害蔓延到后方的敌军。"},
 {id:76,name:"运筹(陈宫)",powerful:100,type:SkillType.STRATEGY_ATTACK,subType:[SkillSubType.STRATEGY_COUNT],strategy_attacks:[1.5],aidCount:1,thrift:1,probability:40,explanation:"{probability}几率在使用法术攻击敌军时1.5倍暴击。"},
+{id:77,name:"神箭",powerful:100,type:SkillType.STRATEGY_ATTACK,subType:[SkillSubType.STRATEGY_COUNT],strategy_attacks:[1.5],aidCount:1,thrift:1,probability:40,explanation:"{probability}几率在使用法术攻击敌军时1.5倍暴击。"},
+{id:78,name:"霸王重生",powerful:100,type:SkillType.STRATEGY_ATTACK,subType:[SkillSubType.STRATEGY_COUNT],strategy_attacks:[1.5],aidCount:1,thrift:1,probability:40,explanation:"{probability}几率在使用法术攻击敌军时1.5倍暴击。"},
+{id:79,name:"算无遗策",powerful:100,type:SkillType.STRATEGY_ATTACK,subType:[SkillSubType.STRATEGY_COUNT],strategy_attacks:[1.5],aidCount:1,thrift:1,probability:40,explanation:"{probability}几率在使用法术攻击敌军时1.5倍暴击。"},
+{id:80,name:"军神",powerful:100,type:SkillType.STRATEGY_ATTACK,subType:[SkillSubType.STRATEGY_COUNT],strategy_attacks:[1.5],aidCount:1,thrift:1,probability:40,explanation:"{probability}几率在使用法术攻击敌军时1.5倍暴击。"},
+{id:81,name:"冲杀",powerful:100,type:SkillType.STRATEGY_ATTACK,subType:[SkillSubType.STRATEGY_COUNT],strategy_attacks:[1.5],aidCount:1,thrift:1,probability:40,explanation:"{probability}几率在使用法术攻击敌军时1.5倍暴击。"},
+{id:82,name:"横扫",powerful:100,type:SkillType.STRATEGY_ATTACK,subType:[SkillSubType.STRATEGY_COUNT],strategy_attacks:[1.5],aidCount:1,thrift:1,probability:40,explanation:"{probability}几率在使用法术攻击敌军时1.5倍暴击。"},
+{id:83,name:"百步穿杨",powerful:100,type:SkillType.STRATEGY_ATTACK,subType:[SkillSubType.STRATEGY_COUNT],strategy_attacks:[1.5],aidCount:1,thrift:1,probability:40,explanation:"{probability}几率在使用法术攻击敌军时1.5倍暴击。"},
+{id:84,name:"兵神",powerful:100,type:SkillType.STRATEGY_ATTACK,subType:[SkillSubType.STRATEGY_COUNT],strategy_attacks:[1.5],aidCount:1,thrift:1,probability:40,explanation:"{probability}几率在使用法术攻击敌军时1.5倍暴击。"},
+{id:85,name:"奋战",powerful:100,type:SkillType.STRATEGY_ATTACK,subType:[SkillSubType.STRATEGY_COUNT],strategy_attacks:[1.5],aidCount:1,thrift:1,probability:40,explanation:"{probability}几率致命一击。"},
 ];

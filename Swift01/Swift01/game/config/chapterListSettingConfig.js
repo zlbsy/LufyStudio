@@ -10,5 +10,6 @@ var chapterListSetting = [
 {id:8,year:225,folder:"08",lock:true,index:2,group:"chapter_219_263"},
 {id:9,year:234,folder:"09",lock:true,index:2,group:"chapter_219_263"},
 {id:10,year:263,folder:"10",lock:true,index:2,group:"chapter_219_263"},
-{id:11,year:300,folder:"11",lock:true,index:3,hideYear:true}  
+{id:11,year:300,folder:"11",lock:true,index:3,hideYear:true},
+{id:12,year:301,folder:"12",lock:true,index:3,hideYear:true}
 ];

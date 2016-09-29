@@ -69,6 +69,7 @@ Language.dataSimple = {
 	"chapter_9":"未捷师孔明殒命",
 	"chapter_10":"灭蜀汉二士争功",
 	"chapter_11":"群雄集结",
+	"chapter_12":"时空错乱",
 	"chapter_group":"购买多个剧本",
 	"new_script":"新剧本({0})",
 };
