@@ -41,9 +41,12 @@ import javax.crypto.spec.SecretKeySpec;
  * Created by lubin.zhang on 16/08/31.
  */
 public class Lufylegend {
+    private static final String API_URL = "http://sgj.lufylegend.com/android_purchase/r7ahGNe_A8QLDKKd3Ys7/";
     public static String gamePath;
-    private Activity context;
     public static WebView myWebView;
+    public static Lufylegend instance = null;
+    private String purchaseParams;
+    private Activity context;
     private MediaPlayer mediaPlayer;
     private SoundPool soundPool;
     private AudioAttributes audioAttributes;
@@ -62,8 +65,8 @@ public class Lufylegend {
         Lufylegend.myWebView = myWebView;
         //jacascriptを許可する
         myWebView.getSettings().setJavaScriptEnabled(true);
-
-        myWebView.addJavascriptInterface(new Lufylegend(activity), "LPlugin");
+        Lufylegend.instance = new Lufylegend(activity);
+        myWebView.addJavascriptInterface(Lufylegend.instance, "LPlugin");
         //リンクをタップしたときに標準ブラウザを起動させない
         myWebView.setWebViewClient(new WebViewClient());
         //ページを表示する。
@@ -83,9 +86,9 @@ public class Lufylegend {
             switch (msg.what) {
                 case AliPayAPI.RQF_PAY: {
                     if (result.isSucceed()) {//支付成功
-                       // nativeAlipayResult(outTradeNo, 1, "succeed");
-                    } else {//支付成功
-                       // nativeAlipayResult(outTradeNo, 0, result.getResultStatusMsg());
+                        Lufylegend.instance.purchaseLog();
+                    } else {//支付失败
+                        Lufylegend.instance.purchaseError();
                     }
                 }
                 break;
@@ -281,7 +284,7 @@ public class Lufylegend {
         });
     }
     @JavascriptInterface
-    public String productInformation(String[] productIds){
+    public void productInformation(String[] productIds){
         String identification_id = identificationId();
         String completeEvent = "LPurchase._ll_dispatchEvent(data, LPurchase.PRODUCT_INFORMATION_COMPLETE);";
         String errorEvent = "LPurchase._ll_dispatchEventError('Json Error', LPurchase.PRODUCT_INFORMATION_COMPLETE);";
@@ -289,27 +292,35 @@ public class Lufylegend {
         params += "'identification_id':'"+identification_id+"'";
         params += ",'language':'"+preferredLanguage()+"'";
         params += "}";
-        return execPost("purchase_information/", params, completeEvent, errorEvent);
+        execPost("purchase_information/", params, completeEvent, errorEvent);
     }
     @JavascriptInterface
-    public String purchase(String productId, String name, String num, String paymentTime, String email, String qq){
+    public void purchase(String productId, String paymentTime, String subject, String body,String totalFee){
+        String trGameId = identificationId();
+        String outTradeNo = productId.replace("com.lufylegend.","") + "." + trGameId + "." + paymentTime;
+        outTradeNo = outTradeNo.length() > 64 ? outTradeNo.substring(0, 64) : outTradeNo;
+        Log.e("outTradeNo", outTradeNo);
+        String params = "{";
+        params += "'identification_id':'"+trGameId+"'";
+        params += ",'product_id':'"+productId+"'";
+        params += ",'payment_time':'"+paymentTime+"'";
+        params += "}";
+        purchaseParams = params;
+        startAlipay(trGameId, outTradeNo, subject, body, totalFee);
+    }
+    public void purchaseLog(){
         String identification_id = identificationId();
         String completeEvent = "";
         completeEvent += "LPurchase._ll_dispatchEvent(data, LPurchase.PURCHASE_COMPLETE);";
         String errorEvent = "LPurchase._ll_dispatchEventError('Json Error', LPurchase.PURCHASE_COMPLETE);";
-        String params = "{";
-        params += "'identification_id':'"+identification_id+"'";
-        params += ",'product_id':'"+productId+"'";
-        params += ",'name':'"+name+"'";
-        params += ",'num':'"+num+"'";
-        params += ",'payment_time':'"+paymentTime+"'";
-        params += ",'email':'"+email+"'";
-        params += ",'qq':'"+qq+"'";
-        params += "}";
-        return execPost("purchase_start/index.php", params, completeEvent, errorEvent);
+        execPost("purchase_start/index.php", purchaseParams, completeEvent, errorEvent);
+    }
+    public void purchaseError(){
+        String errorEvent = "LPurchase._ll_dispatchEventError('Json Error', LPurchase.PURCHASE_COMPLETE);";
+        javascriptRun(errorEvent);
     }
     @JavascriptInterface
-    public String purchaseCheck(String productId){
+    public void purchaseCheck(String productId){
         String identification_id = identificationId();
         String completeEvent = "";
         completeEvent += "LPurchase._ll_dispatchEvent(data, LPurchase.PURCHASE_CHECK_COMPLETE);";
@@ -318,10 +329,10 @@ public class Lufylegend {
         params += "'identification_id':'"+identification_id+"'";
         params += ",'product_id':'"+productId+"'";
         params += "}";
-        return execPost("purchase_start/check.php", params, completeEvent, errorEvent);
+        execPost("purchase_start/check.php", params, completeEvent, errorEvent);
     }
     @JavascriptInterface
-    public String purchaseRestore(){
+    public void purchaseRestore(){
         String identification_id = identificationId();
         String completeEvent = "for(var i=0;i<data.length;i++){";
         completeEvent += "LPurchase._ll_dispatchEvent({'status':1,'productId':data[i].product_id}, LPurchase.PURCHASE_COMPLETE);";
@@ -331,16 +342,16 @@ public class Lufylegend {
         String params = "{";
         params += "'identification_id':'"+identification_id+"'";
         params += "}";
-        return execPost("purchase_restore/", params, completeEvent, errorEvent);
+        execPost("purchase_restore/", params, completeEvent, errorEvent);
     }
-    private String execPost(String strUrl, String params, String completeEvent, String errorEvent) {
-        strUrl = "http://sgj.lufylegend.com/android_purchase/r7ahGNe_A8QLDKKd3Ys7/" + strUrl;
+    private void execPost(String strUrl, String params, String completeEvent, String errorEvent) {
+        strUrl = Lufylegend.API_URL + strUrl;
         String script = "";
         script += "LAjax.post('"+strUrl+"',"+params+",";
         script += "function(data){data=JSON.parse(data);"+completeEvent+"},";
         script += "function(){"+errorEvent+"}";
         script += ")";
-        return script;
+        javascriptRun(script);
     }
     @JavascriptInterface
     public String identificationId(){

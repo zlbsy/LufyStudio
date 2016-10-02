@@ -54,7 +54,7 @@ CharacterModel.createEmployCharacter = function(id, soldierId, cityId){
 	eval( "var wordRandom2=" +  '"\\u' + (Math.round(Math.random() * 20901) + 19968).toString(16)+'"');
 	chara.data.name = wordRandom1 + wordRandom2;
 	chara.data.soldiers = [{id:soldierId,proficiency:700}];
-	self.data.currentSoldierId = soldierId;
+	chara.data.currentSoldierId = soldierId;
 	var values = [-60,-40,-20,0,40,80,120];
 	chara.data.employLevel = (Math.fakeRandom()*values.length>>>0);
 	var soldierMaster = SoldierMasterModel.getMaster(soldierId);
@@ -144,6 +144,7 @@ CharacterModel.prototype.datas=function(){
 		exp:self.exp(),
 		mp:self.MP(),
 		hp:self.HP(),
+		hardships:self.hardships(),
 		isDefCharacter:self.isDefCharacter(),
 		job:self.getJobData(),//根据任务内容变化
 		loyalty:self.loyalty(),//忠诚度
@@ -203,6 +204,7 @@ CharacterModel.prototype.setDatas=function(charaData){
 	self.HP(charaData.hp);
 	self.troops(charaData.troops);
 	self.wounded(charaData.wounded);
+	self.hardships(charaData.hardships);
 	self.isDefCharacter(charaData.isDefCharacter);
 	self.loyalty(charaData.loyalty);
 	self.data.isPrized = charaData.isPrized;
@@ -423,15 +425,18 @@ CharacterModel.prototype.calculation = function(init) {
 		self.data.hertVsStatus = skill.hertVsStatus();
 	}else if (skill && skill.isSubType(SkillSubType.SOLDIERS_ATTACK_RECT)) {
 		var condition = skill.condition();
-		if(condition && condition.type == "AttackType" && condition.value == currentSoldiers.attackType()){
-			self.data.rangeAttack = skill.rangeAttack().concat();
-			var ranges = currentSoldiers.rangeAttack();
-			for(var i=0,l=ranges.length;i<l;i++){
-				var range = ranges[i];
-				if(self.data.rangeAttack.findIndex(function(child){return range.x == child.x && range.y == child.y;}) >= 0){
-					return;
+		if(condition){
+			if((condition.type == "AttackType" && condition.value == currentSoldiers.attackType()) || 
+			(condition.type == "SoldierId" && condition.value == currentSoldiers.id())){
+				self.data.rangeAttack = skill.rangeAttack().concat();
+				var ranges = currentSoldiers.rangeAttack();
+				for(var i=0,l=ranges.length;i<l;i++){
+					var range = ranges[i];
+					if(self.data.rangeAttack.findIndex(function(child){return range.x == child.x && range.y == child.y;}) >= 0){
+						return;
+					}
+					self.data.rangeAttack.push(range);
 				}
-				self.data.rangeAttack.push(range);
 			}
 		}
 	}
@@ -474,6 +479,12 @@ CharacterModel.prototype.rangeAttack = function() {
 		return self.data.rangeAttack;
 	}
 	return self.currentSoldiers().rangeAttack();
+};
+/**
+ * 卧薪尝胆参数
+ */
+CharacterModel.prototype.hardships = function(value) {
+	return this._dataValue("hardships", value, 0);
 };
 CharacterModel.prototype.moveKnow = function() {
 	return this.data.moveKnow;

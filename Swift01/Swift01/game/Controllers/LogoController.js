@@ -21,11 +21,7 @@ LogoController.prototype.configLoad=function(){
 };
 LogoController.prototype.helperLoad=function(){
 	var self = this;
-	self.load.helper(["Label","UI","PurchaseHelper"],self.viewLoad);
-};
-LogoController.prototype.viewLoad=function(){
-	var self = this;
-	self.load.view(["Common/PurchaseStart"],self.libraryLoad);
+	self.load.helper(["Label","UI","PurchaseHelper"],self.libraryLoad);
 };
 LogoController.prototype.libraryLoad=function(){
 	var self = this;
@@ -110,20 +106,8 @@ LogoController.prototype.openReportUpdate=function(){
 LogoController.prototype.start=function(event){
 	var self = event.target.parent.controller;
 	
-	var purchaseBatch = LPlugin.GetData("purchaseBatch", []);
-	var now = formatDate(new Date(), "YYYY-MM-DD hh:mm:ss");
-	var updateTime = purchaseBatch.find(function(child){
-		return child < now;
-	});
-	if(updateTime){
-		purchaseRestore(function(){
-			self.dispatchEvent(LController.NOTIFY);
-			self.updateCheck();
-		});
-	}else{
-		self.dispatchEvent(LController.NOTIFY);
-		self.updateCheck();
-	}
+	self.dispatchEvent(LController.NOTIFY);
+	self.updateCheck();
 	if(!LPlugin.native && LSound.webAudioEnabled){
 		if(LPlugin.soundData){
 			return;
@@ -285,13 +269,27 @@ LogoController.prototype.showChapterList = function(index){
 	}
 	self.view.showChapterList(list, index);
 };
-LogoController.prototype.showChapter = function(chapterId){
+LogoController.prototype.selectedChapter = function(chapterId){
 	var self = this;
 	LMvc.keepLoading(true);
 	LMvc.changeLoading(TranslucentLoading);
 	LMvc.chapterId = chapterId;
 	var chapterSelectData = chapterListSetting.find(function(child){return child.id == chapterId;});
 	LMvc.dataFolder = chapterSelectData.folder;
+};
+LogoController.prototype.showChapterDetailed = function(chapterId){
+	var self = this;
+	self.selectedChapter(chapterId);
+	self.loadMvc("ChapterDetailed",self.chapterDetailedLoadComplete);
+};
+LogoController.prototype.chapterDetailedLoadComplete=function(){
+	var self = this;
+	var chapter = new ChapterDetailedController();
+	LMvc.stageLayer.addChild(chapter.view);
+};
+LogoController.prototype.showChapter = function(chapterId){
+	var self = this;
+	self.selectedChapter(chapterId);
 	self.loadMvc("Chapter",self.chapterLoadComplete);
 };
 LogoController.prototype.chapterLoadComplete=function(){

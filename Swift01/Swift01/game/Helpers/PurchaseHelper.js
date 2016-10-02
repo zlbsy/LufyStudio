@@ -26,24 +26,6 @@ function purchaseRestore(callback) {
 }
 
 function purchaseProductInformation(callback) {
-	GameCacher.setData("productInformation", [
-	{productId:"com.lufylegend.sgj.newWujiang",title:"新武将",price:6,priceLabel:"¥6"},
-	{productId:"com.lufylegend.sgj.saveReport",title:"存档",price:6,priceLabel:"¥6"},
-	{productId:"com.lufylegend.sgj.chapter_3",title:"chapter_3",price:6,priceLabel:"¥6"},
-	{productId:"com.lufylegend.sgj.chapter_4",title:"chapter_4",price:6,priceLabel:"¥6"},
-	{productId:"com.lufylegend.sgj.chapter_5",title:"chapter_5",price:6,priceLabel:"¥6"},
-	{productId:"com.lufylegend.sgj.chapter_6",title:"chapter_6",price:6,priceLabel:"¥6"},
-	{productId:"com.lufylegend.sgj.chapter_7",title:"chapter_7",price:6,priceLabel:"¥6"},
-	{productId:"com.lufylegend.sgj.chapter_8",title:"chapter_8",price:6,priceLabel:"¥6"},
-	{productId:"com.lufylegend.sgj.chapter_9",title:"chapter_9",price:6,priceLabel:"¥6"},
-	{productId:"com.lufylegend.sgj.chapter_10",title:"chapter_10",price:6,priceLabel:"¥6"},
-	{productId:"com.lufylegend.sgj.chapter_11",title:"chapter_11",price:6,priceLabel:"¥6"},
-	{productId:"com.lufylegend.sgj.chapter_194_211",title:"chapter_194_211",price:12,priceLabel:"¥12"},
-	{productId:"com.lufylegend.sgj.chapter_219_263",title:"chapter_219_263",price:12,priceLabel:"¥12"},
-	]);
-	callback();return;
-	
-	
 	var purchase = LPurchase.Instance();
 	purchase.removeAllEventListener();
 	purchase.addEventListener(LPurchase.PRODUCT_INFORMATION_COMPLETE, function(event) {
@@ -58,9 +40,20 @@ function purchaseComplete(event, callback) {
 	LPlugin.print(JSON.stringify(event));
 	if(event.status == 0){
 		//error
-		if(callback){
-			callback(null);
-		}
+		var obj = {
+			title : Language.get("confirm"),
+			width : 340,
+			height : 260,
+			message : Language.get("purchase_buy_fail")
+		};
+		obj.okEvent = function(e){
+			e.currentTarget.parent.remove();
+			if(callback){
+				callback(null);
+			}
+		};
+		var windowLayer = ConfirmWindow(obj);
+		LMvc.layer.addChild(windowLayer);
 	}else{
 		//success
 		var data = event.target ? event.target : {};
@@ -75,7 +68,7 @@ function purchaseComplete(event, callback) {
 }
 function purchaseStart(productId, callback) {
 	if(LGlobal.android){
-		purchaseStartAndroidInput(productId, callback);
+		purchaseStartAndroidCheck(productId, callback);
 		return;
 	}
 	var purchase = LPurchase.Instance();
@@ -85,28 +78,13 @@ function purchaseStart(productId, callback) {
 	});
 	purchase.purchase(productId);
 }
-function purchaseStartAndroidInput(productId, callback) {
-	var purchaseStartView = new PurchaseStartView(null, productId, callback);
-	var productInformation = GameCacher.getData("productInformation");
-	var product = productInformation.find(function(child) {
-		return child.productId == productId;
-	});
-	var obj = {width:440, height:580, subWindow:purchaseStartView, title:product.title, titleWidth:200, 
-		okEvent:purchaseStartView.clickOK, cancelEvent:function(event){
-		event.currentTarget.parent.remove();
-		LGlobal.preventDefault = true;
-	}};
-	var purchaseStartDialog = ConfirmWindow(obj);
-	purchaseStartDialog.name = "PurchaseStartWindow";
-	LMvc.layer.addChild(purchaseStartDialog);
-}
-function purchaseStartAndroidCheck(productId, name, num, paymentTime, email, qq, callback) {
+function purchaseStartAndroidCheck(productId, callback) {
 	var purchase = LPurchase.Instance();
 	purchase.removeAllEventListener();
 	purchase.addEventListener(LPurchase.PURCHASE_CHECK_COMPLETE,function(event){
 		var data = event.target;
 		if(data.num_rows == 0){
-			purchaseStartAndroid(productId, name, num, paymentTime, email, qq, callback);
+			purchaseStartAndroid(productId, callback);
 		}else{
 			var productInformation = GameCacher.getData("productInformation");
 			var product = productInformation.find(function(child) {
@@ -118,34 +96,27 @@ function purchaseStartAndroidCheck(productId, name, num, paymentTime, email, qq,
 				height : 260,
 				messageHtml : String.format(Language.get("purchase_already_buy_confirm"), product.title)
 			};
-			obj.okEvent = function(e){
-				e.currentTarget.parent.remove();
-				purchaseStartAndroid(productId, name, num, paymentTime, email, qq, callback);
-			};
-			obj.cancelEvent = function(e){
-				e.currentTarget.parent.remove();
-				var purchaseStartWindow = LMvc.layer.getChildByName("PurchaseStartWindow");
-				var purchaseStartView = purchaseStartWindow.getChildByName("PurchaseStartView");
-				purchaseStartView.mouseEnabled = true;
-			};
 			var windowLayer = ConfirmWindow(obj);
 			LMvc.layer.addChild(windowLayer);
 		}
 	});
 	purchase.purchaseCheck(productId);
 }
-function purchaseStartAndroid(productId, name, num, paymentTime, email, qq, callback) {
+function purchaseStartAndroid(productId, callback) {
 	var purchase = LPurchase.Instance();
 	purchase.removeAllEventListener();
 	purchase.addEventListener(LPurchase.PURCHASE_COMPLETE,function(event){
-		var purchaseStartWindow = LMvc.layer.getChildByName("PurchaseStartWindow");
-		purchaseStartWindow.remove();
-		var purchaseBatch = LPlugin.GetData("purchaseBatch", []);
-		var updateTime = event.target.updateTime;
-		purchaseBatch.push(updateTime);
-		LPlugin.SetData("purchaseBatch", purchaseBatch);
+		purchaseComplete(event, callback);
 	});
-	purchase.purchase(productId, name, num, paymentTime, email, qq);
+	var paymentTime = formatDate(new Date(), "MMDDhhmmss");
+	var productInformation = GameCacher.getData("productInformation");
+	var product = productInformation.find(function(child) {
+		return child.productId == productId;
+	});
+	var subject = product.title;
+	var body = product.title;
+	var totalFee = product.price;
+	purchase.purchase(productId, paymentTime, subject, body, totalFee);
 }
 
 function purchaseHasBuy(productId) {

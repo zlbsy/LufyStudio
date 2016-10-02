@@ -314,6 +314,7 @@ BattleCharacterView.prototype.actionComplete = function(event){
 };
 BattleCharacterView.prototype.setRoad = function(list){
 	var self = this;
+	self.moveAttackStep = list.length;
 	self.callParent("setRoad",arguments);
 	self.mode = CharacterMode.MOVING;
 };
@@ -326,6 +327,10 @@ BattleCharacterView.prototype.setRangeSingleCombat = function(){
 	var self = this;
 	LMvc.BattleController.view.roadLayer.setRangeSingleCombat(self);
 	self.mode = CharacterMode.WAIT_SINGLE_COMBAT;
+};
+BattleCharacterView.prototype.getMoveAddition = function() {
+	var self = this;
+	return self.moveAttackStep ? self.moveAttackStep * 0.05 : 0;
 };
 BattleCharacterView.prototype.saveShowMoveRoadObject = function(roadList) {
 	var self = this;

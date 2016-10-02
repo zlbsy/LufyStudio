@@ -337,6 +337,9 @@ function battleFoodCheck(belong){
 	var thrift = 1;
 	for(var i=0,l=charas.length;i<l;i++){
 		var charaModel = charas[i].data;
+		if(charaModel.hasSkill(SkillSubType.RICE)){
+			continue;
+		}
 		needFood += charaModel.troops();
 		if(charaModel.hasSkill(SkillSubType.THRIFT)){
 			thrift = 0.5;
@@ -375,13 +378,6 @@ function battleFoodCheck(belong){
 		}
 		child.data.troops(troops);
 		tweenTextShow(child, String.format("-{0}",minusTroops), 10);
-		/*var tweenObj = getStrokeLabel(String.format("-{0}",minusTroops),12,"#FF0000","#000000",2);
-		tweenObj.x = child.x + (BattleCharacterSize.width - tweenObj.getWidth()) * 0.5;
-		tweenObj.y = child.y + 10;
-		child.controller.view.baseLayer.addChild(tweenObj);
-		LTweenLite.to(tweenObj,1.5,{y:tweenObj.y - 20,alpha:0,onComplete:function(e){
-			e.target.remove();
-		}});*/
 	});
 	var chara;
 	for(var i=0,l=charas.length;i<l;i++){

@@ -52,7 +52,7 @@ Language.dataSimple = {
 	"purchase_confirm_group_message":"<font size='21' color='#FFFFFF'>一次性开通以下剧本需要花费<font color='#FF0000'>{0}</font>，要开通此功能吗?\n{1}</font>",
 	"purchase_confirm_web_message":"<font size='21' color='#FFFFFF'>当前版本无法使用<font color='#FF0000'>{0}</font>功能，请下载<font color='#FF0000'>手机安装版本</font>!</font>",
 	"select_seignior_message":"<font size='22' color='#FFFFFF'>要选择势力 <font color='#FF0000'>{0}</font> 吗？</font>",
-	"purchase_already_buy_confirm":"<font size='21' color='#D3D3D3'>您已经购买过「<font size='21' color='#FAFAD2'>{0}</font>」，重新提交会覆盖之前填写的购买信息，要继续吗？</font>",
+	"purchase_already_buy_confirm":"<font size='21' color='#D3D3D3'>您已经购买过「<font size='21' color='#FAFAD2'>{0}</font>」，请使用「恢复购买」功能重新开通此功能。</font>",
 	"dialog_error_account":"请填写您的支付宝名称！",
 	"dialog_error_num":"请填写转账［订单号/流水号］！",
 	"dialog_error_email_or_qq":"请填写您的邮箱地址或者QQ号",
@@ -69,6 +69,7 @@ Language.dataSimple = {
 	"chapter_9":"未捷师孔明殒命",
 	"chapter_10":"灭蜀汉二士争功",
 	"chapter_11":"群雄集结",
+	"chapter_12":"时空错乱",
 	"chapter_group":"购买多个剧本",
 	"new_script":"新剧本({0})",
 };

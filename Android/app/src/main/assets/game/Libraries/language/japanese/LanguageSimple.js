@@ -63,6 +63,7 @@ Language.dataSimple = {
 	"chapter_9":"諸葛亮の死",
 	"chapter_10":"蜀の滅亡",
 	"chapter_11":"英雄集結",
+	"chapter_12":"時空乱流",
 	"chapter_group":"複数シナリオ購入",
 	"new_script":"シナリオ({0})",
 };

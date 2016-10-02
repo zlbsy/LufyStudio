@@ -27,20 +27,16 @@ function LPurchaseCreate() {
 	LPurchase.PURCHASE_COMPLETE = 'purchaseComplete';
 	LPurchase.PURCHASE_CHECK_COMPLETE = 'purchaseCheckComplete';
     LPurchase.prototype.purchaseRestore = function(){
-        var script = LPlugin.purchaseRestore();
-	    eval( script );
+    	LPlugin.purchaseRestore();
     };
     LPurchase.prototype.productInformation = function(productIds){
-        var script = LPlugin.productInformation(productIds);
-	    eval( script );
+    	LPlugin.productInformation(productIds);
     };
-    LPurchase.prototype.purchase = function(productId, name, num, paymentTime, email, qq){
-        var script = LPlugin.purchase(productId, name, num, paymentTime, email, qq);
-	    eval( script );
+    LPurchase.prototype.purchase = function(productId, paymentTime, subject, body, totalFee){
+    	LPlugin.purchase(productId, paymentTime, subject, body, totalFee);
     };
     LPurchase.prototype.purchaseCheck = function(productId){
-        var script = LPlugin.purchaseCheck(productId);
-	    eval( script );
+    	LPlugin.purchaseCheck(productId);
     };
 	LPurchase._ll_dispatchEvent = function(data, type) {
 		var event = new LEvent(type);

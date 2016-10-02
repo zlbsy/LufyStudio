@@ -252,6 +252,12 @@ LogoView.prototype.showChapterListChild=function(chapter, menuLayer, x, y){
 	buttonChapter.y = y;
 	menuLayer.addChild(buttonChapter);
 	buttonChapter.addEventListener(LMouseEvent.MOUSE_UP, self.showChapter);
+	var buttonDetailed = getSizeButton("?",45, 45);
+	buttonDetailed.chapterId = chapter.id;
+	buttonDetailed.x = buttonChapter.x + 200 + 10;
+	buttonDetailed.y = buttonChapter.y;
+	menuLayer.addChild(buttonDetailed);
+	buttonDetailed.addEventListener(LMouseEvent.MOUSE_UP, self.showChapterDetailed);
 };
 LogoView.prototype.showChapterList=function(list, index){
 	var self = this;
@@ -350,6 +356,12 @@ LogoView.prototype.returnTopMenu=function(event){
 	self.chapterMenuLayer.mouseChildren = false;
 	LTweenLite.to(self.topMenuLayer,0.5,{x:self.topMenuLayer.tx, alpha:1});
 	LTweenLite.to(self.chapterMenuLayer,0.5,{x:self.chapterMenuLayer.tx+210, alpha:0,onComplete:self.chapterMenuClosed});
+};
+LogoView.prototype.showChapterDetailed=function(event){
+	var button = event.currentTarget;
+	var self = button.getParentByConstructor(LogoView);
+	self.chapterMenuLayer.mouseChildren = false;
+	self.controller.showChapterDetailed(button.chapterId);
 };
 LogoView.prototype.showChapter=function(event){
 	var button = event.currentTarget;
