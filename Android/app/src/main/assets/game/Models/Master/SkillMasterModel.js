@@ -47,6 +47,15 @@ SkillMasterModel.prototype.isSubType = function(subType) {
 SkillMasterModel.prototype.attacks = function() {
 	return this.data.attacks;
 };
+SkillMasterModel.prototype.hit = function() {
+	return this.data.hit;
+};
+SkillMasterModel.prototype.penetrate = function() {
+	if(typeof this.data.penetrate == UNDEFINED){
+		return 1;
+	}
+	return this.data.penetrate;
+};
 SkillMasterModel.prototype.startAmbushProbability = function() {
 	if(typeof this.data.startAmbushProbability == UNDEFINED){
 		return 1;

@@ -86,6 +86,10 @@ function calculateFatalAtt(attChara,hertChara){
 	}else if(rate >= 3){
 		h = 100;
 	}
+	var skill = attCharaModel.skill(SkillType.ATTACK_FATAL);
+	if(skill && h < skill.hit()){
+		h = skill.hit();
+	}
 	if(Math.fakeRandom()*100 <= h){
 		return true;
 	}
@@ -150,6 +154,18 @@ function calculateHitrate(attChara,hertChara,isView){
 		r=(attBreakout-hertBreakout/2)*30/(hertBreakout/2)+60;
 	}else{
 		r=(attBreakout-hertBreakout/3)*30/(hertBreakout/3)+30;
+	}
+	var skill = attCharaModel.skill(SkillType.HIT);
+	var condition = skill ? skill.condition() : null;
+	if(condition){
+		if(condition.type == "AttackType"){
+			if(condition.value != attCharaModel.currentSoldiers().attackType()){
+				skill = null;
+			}
+		}
+	}
+	if(skill && r < skill.hit()){
+		r = skill.hit();
 	}
 	if(isView){
 		return r >>> 0;
@@ -221,6 +237,10 @@ function calculateHitrateStrategy(attChara,hertChara, isView){
 		r=(attX-hertY/2)*30/(hertY/2)+60;
 	}else{
 		r=(attX-hertY/3)*30/(hertY/3)+30;
+	}
+	var skill = attCharaModel.skill(SkillType.HIT);
+	if(skill && r < skill.hit()){
+		r = skill.hit();
 	}
 	if(isView){
 		return r >>> 0;
@@ -308,7 +328,9 @@ function calculateHertValue(attChara,hertChara,correctionFactor, isView){
 	var hertDefenseAddition = hertDefense * terrainHert.value * 0.01;
 	//物理攻击的伤害值计算
 	r = attLv + 25 + (attAttackAddition - hertDefenseAddition)/2;
-	
+	if(attCharaModel.hasSkill(SkillSubType.MOVE_ATTACK) && attChara.getMoveAddition){
+		r *= (1 + attChara.getMoveAddition());
+	}
 	//兵种相克
 	var restrain = attCharaModel.currentSoldiers().restrain(hertCharaModel.currentSoldiers().id()).value;
 	var ignore = false;
@@ -491,20 +513,43 @@ function calculateAmbush(skill, x, y, belong, count){
 	return result;
 }
 /*****************************************************************
- 特技穿透效果范围计算
+ 特技横扫效果范围计算
  **************************************************************/
-function calculatePenetratePoints(chara, target, ranges){
-	var arr = getPenetratePoint(chara, target);
-	var x=arr.x, y=arr.y;
-	if(ranges.findIndex(function(child){
-		return child.x == x && child.y == y;
-	}) < 0){
-		ranges.push({x:x,y:y});
+function calculateInAttackRangePoints(chara, target, attackRanges){
+	var ranges = [];
+	var charaX = chara.locationX();
+	var charaY = chara.locationY();
+	var targetX = target.locationX();
+	var targetY = target.locationY();
+	for(var i=0;i<attackRanges.length;i++){
+		var child = attackRanges[i];
+		var x = child.x + charaX;
+		var y = child.y + charaY;
+		ranges.push({x:x-targetX,y:y-targetY});
 	}
 	return ranges;
 }
-function getPenetratePoint(chara, target){
-	var x=0,y=0;
+/*****************************************************************
+ 特技穿透效果范围计算
+ **************************************************************/
+function calculatePenetratePoints(chara, target, ranges, penetrate){
+	if(!penetrate){
+		penetrate = 1;
+	}
+	var arr = getPenetratePoint(chara, target, penetrate);
+	for(var i=0;i<arr.length;i++){
+		var point = arr[i];
+		var x=point.x, y=point.y;
+		if(ranges.findIndex(function(child){
+			return child.x == x && child.y == y;
+		}) < 0){
+			ranges.push({x:x,y:y});
+		}
+	}
+	return ranges;
+}
+function getPenetratePoint(chara, target, penetrate){
+	var arr = [], x = 0, y = 0;
 	var direction = getDirectionFromTarget(chara, target, true);
 	switch(direction){
 		case CharacterDirection.DOWN:
@@ -536,7 +581,10 @@ function getPenetratePoint(chara, target){
 			y = 1;
 			break;
 	}
-	return {x:x,y:y};
+	for(var i=0;i<penetrate;i++){
+		arr.push({x : x*(i+1), y : y*(i+1)});
+	}
+	return arr;
 }
 function calculateWounded(value, range){
 	return value + range * (1 - 2 * Math.fakeRandom()); 

@@ -20,6 +20,18 @@ var SkillType = {
 	 **/
 	HERT:"hert",
 	/**
+	 * 命中判断时发动
+	 **/
+	ATTACK_HIT:"attack_hit",
+	/**
+	 * 致命判断时发动
+	 **/
+	ATTACK_FATAL:"attack_fatal",
+	/**
+	 * 法术命中判断时发动
+	 **/
+	STRATEGY_HIT:"trategy_hit",
+	/**
 	 * 反击时发动
 	 **/
 	BACK_ATTACK:"backAttack",
@@ -70,6 +82,10 @@ var SkillSubType = {
 	 **/
 	ATTACK_RECT:"attackRect",
 	/**
+	 * 攻击范围变为能攻击到的所有人
+	 **/
+	ATTACK_IN_RECT:"attackInRect",
+	/**
 	 * 兵种攻击范围
 	 **/
 	SOLDIERS_ATTACK_RECT:"soldiersAttackRect",
@@ -90,6 +106,14 @@ var SkillSubType = {
 	 **/
 	HEAL:"heal",
 	/**
+	 * 米袋
+	 **/
+	RICE:"rice",
+	/**
+	 * 卧薪尝胆
+	 **/
+	HARDSHIPS:"hardships",
+	/**
 	 * 伤害减少
 	 **/
 	HERT_MINUS:"hertMinus",
@@ -106,9 +130,25 @@ var SkillSubType = {
 	 **/
 	HP_MP_CHANGE:"hpMpChange",
 	/**
+	 * 物理攻击命中
+	 **/
+	HIT:"hit",
+	/**
+	 * 物理致命攻击
+	 **/
+	ATTACK_FATAL:"attack_fatal",
+	/**
+	 * 法术命中
+	 **/
+	STRATEGY_HIT:"trategy_hit",
+	/**
 	 * 免疫异常攻击或法术
 	 **/
 	WAKE:"wake",
+	/**
+	 * 移动攻击
+	 **/
+	MOVE_ATTACK:"move_attack",
 	/**
 	 * 撤退(血路)
 	 **/
@@ -206,7 +246,7 @@ var SkillsData = [
 {id:1,name:"雷霆怒击(张飞)",powerful:200,type:SkillType.ATTACK,subType:[SkillSubType.ATTACK_COUNT],attacks:[1,0.8,0.7],probability:40,explanation:"{probability}几率连续攻击三次。"},
 {id:2,name:"真龙之气(刘备,曹操,孙权,曹丕,司马炎)",powerful:100,type:SkillType.HERT,subType:[SkillSubType.HERT_MINUS],hert:0,probability:30,explanation:"{probability}%几率将受到的伤害减少为0。"},
 {id:3,name:"隔山打牛(关羽)",powerful:200,type:SkillType.ATTACK,subType:[SkillSubType.ATTACK_RECT],attacks:[1.5],rects:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],probability:40,explanation:"{probability}几率使攻击波及到目标敌人相邻的敌军。"},
-{id:4,name:"天下无双(吕布)",powerful:200,type:SkillType.ATTACK,subType:[SkillSubType.ATTACK_COUNT,SkillSubType.ENEMY_AID],attacks:[1.1,1.1],aids:[4],aidCount:1,aidRects:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],probability:60,explanation:"{probability}几率重击敌军两次，并且使得目标敌人相邻的敌军防御力降低。"},
+{id:4,name:"天下无双(吕布)",powerful:210,type:SkillType.ATTACK,subType:[SkillSubType.ATTACK_COUNT,SkillSubType.ENEMY_AID],attacks:[1.1,1.1],aids:[4],aidCount:1,aidRects:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],probability:60,explanation:"{probability}几率重击敌军两次，并且使得目标敌人相邻的敌军防御力降低。"},
 {id:5,name:"愈战愈勇(颜良,杜预)",powerful:100,type:SkillType.ATTACK_END,subType:[SkillSubType.SELF_AID],aids:[1],aidCount:1,aidRects:[{x:0,y:0}],probability:40,explanation:"{probability}几率在攻击结束时提升自身攻击力。"},
 {id:6,name:"愈战愈坚(文丑,郝昭)",powerful:100,type:SkillType.ATTACK_END,subType:[SkillSubType.SELF_AID],aids:[3],aidCount:1,aidRects:[{x:0,y:0}],probability:40,explanation:"{probability}几率在攻击结束时提升自身防御力。"},
 {id:7,name:"鼓舞(张辽,张任)",powerful:100,type:SkillType.BOUT_START,subType:[SkillSubType.SELF_AID],aids:[5],aidCount:1,aidRects:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],probability:50,explanation:"{probability}几率在回合开始时提升自身以及周围友军的士气。"},
@@ -233,7 +273,7 @@ var SkillsData = [
 {id:28,name:"灵敏(魏延,文鸳)",powerful:80,type:SkillType.ATTACK_END,subType:[SkillSubType.SELF_AID],aids:[9],aidCount:1,aidRects:[{x:0,y:0}],probability:100,explanation:"{probability}几率攻击结束时提升自身爆发力。"},
 {id:29,name:"猛攻(姜维)",powerful:100,type:SkillType.BOUT_START,subType:[SkillSubType.SELF_AID],aids:[1],aidCount:1,aidRects:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],probability:50,explanation:"{probability}几率回合开始时提升自身及周围友军的攻击力。"},
 {id:30,name:"坚固(邓艾)",powerful:100,type:SkillType.BOUT_START,subType:[SkillSubType.SELF_AID],aids:[3],aidCount:1,aidRects:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],probability:50,explanation:"{probability}几率回合开始时提升自身及周围友军的防御力。"},
-{id:31,name:"暗行(吕蒙)",powerful:10,type:SkillType.CREATE,subType:[SkillSubType.MOVE_ASSAULT,SkillSubType.MOVE_KNOW],probability:100,explanation:"无视地形和敌军阻挡进行移动。"},
+{id:31,name:"暗行(吕蒙)",powerful:10,type:[SkillType.CREATE,SkillType.ATTACK],subType:[SkillSubType.MOVE_ASSAULT,SkillSubType.MOVE_KNOW,SkillSubType.NO_COUNTER],probability:100,explanation:"无视地形和敌军阻挡进行移动。"},
 {id:32,name:"劫营(甘宁)",powerful:150,type:SkillType.ATTACK,subType:[SkillSubType.SURPRISE],attacks:[1.5,1.2],probability:100,explanation:"从敌人背后或侧面攻击时攻击有加成,不包括斜角攻击。"},
 {id:33,name:"乱射(太史慈)",powerful:150,type:SkillType.ATTACK,subType:[SkillSubType.SPREAD],condition:{type:"AttackType",value:AttackType.FAR},speadProbability:0.5,speadRects:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],probability:40,explanation:"{probability}几率使用弓箭类兵种攻击时,使攻击波及到目标敌人相邻的敌军。"},
 {id:34,name:"破弩(徐晃)",powerful:90,type:SkillType.NULL,subType:[SkillSubType.IGNORE_RESTRAINT],ignore:{type:"AttackType",value:AttackType.FAR},probability:100,explanation:"无视弓兵类兵种的克制效果。"},
@@ -278,19 +318,20 @@ var SkillsData = [
 {id:73,name:"逆势反击(张郃)",powerful:150,type:SkillType.ENEMY_BACK_ATTACK_END,subType:[SkillSubType.ATTACK_COUNT],attacks:[0.75],probability:50,explanation:"主动攻击时依然对敌军的攻击进行反击。"},
 {id:74,name:"白耳(陈到)",powerful:100,type:SkillType.ATTACK_END,subType:[SkillSubType.FALL_BACK],probability:30,explanation:"白耳兵强大的攻击力迫使敌军后退一格，如因后方存在部队无法后退时,则产生撞击伤害。对建筑无效。"},
 {id:75,name:"冲击(张辽)",powerful:160,type:SkillType.ATTACK,subType:[SkillSubType.ENEMY_AID,SkillSubType.PENETRATE],aids:[2],aidCount:1,aidRects:[{x:0,y:0}],probability:50,explanation:"用力冲向敌军,强大的冲力令敌军胆寒,除了令敌军攻击力受损之外,还可以将伤害蔓延到后方的敌军。"},
-{id:76,name:"运筹(陈宫)",powerful:100,type:SkillType.STRATEGY_ATTACK,subType:[SkillSubType.STRATEGY_COUNT],strategy_attacks:[1.5],aidCount:1,thrift:1,probability:40,explanation:"{probability}几率在使用法术攻击敌军时1.5倍暴击。"},
-{id:77,name:"神箭",powerful:200,type:SkillType.STRATEGY_ATTACK,subType:[SkillSubType.STRATEGY_COUNT],strategy_attacks:[1.5],aidCount:1,thrift:1,probability:40,explanation:"{probability}几率在使用法术攻击敌军时1.5倍暴击。"},
-{id:78,name:"霸王重生",powerful:200,type:SkillType.STRATEGY_ATTACK,subType:[SkillSubType.STRATEGY_COUNT],strategy_attacks:[1.5],aidCount:1,thrift:1,probability:40,explanation:"{probability}几率在使用法术攻击敌军时1.5倍暴击。"},
-{id:79,name:"算无遗策",powerful:200,type:SkillType.STRATEGY_ATTACK,subType:[SkillSubType.STRATEGY_COUNT],strategy_attacks:[1.5],aidCount:1,thrift:1,probability:40,explanation:"{probability}几率在使用法术攻击敌军时1.5倍暴击。"},
-{id:80,name:"军神",powerful:200,type:SkillType.STRATEGY_ATTACK,subType:[SkillSubType.STRATEGY_COUNT],strategy_attacks:[1.5],aidCount:1,thrift:1,probability:40,explanation:"{probability}几率在使用法术攻击敌军时1.5倍暴击。"},
-{id:81,name:"冲杀",powerful:200,type:SkillType.STRATEGY_ATTACK,subType:[SkillSubType.STRATEGY_COUNT],strategy_attacks:[1.5],aidCount:1,thrift:1,probability:40,explanation:"{probability}几率在使用法术攻击敌军时1.5倍暴击。"},
-{id:82,name:"横扫",powerful:200,type:SkillType.STRATEGY_ATTACK,subType:[SkillSubType.STRATEGY_COUNT],strategy_attacks:[1.5],aidCount:1,thrift:1,probability:40,explanation:"{probability}几率在使用法术攻击敌军时1.5倍暴击。"},
-{id:83,name:"百步穿杨",powerful:160,type:SkillType.STRATEGY_ATTACK,subType:[SkillSubType.STRATEGY_COUNT],strategy_attacks:[1.5],aidCount:1,thrift:1,probability:40,explanation:"{probability}几率在使用法术攻击敌军时1.5倍暴击。"},
-{id:84,name:"兵神",powerful:200,type:SkillType.STRATEGY_ATTACK,subType:[SkillSubType.STRATEGY_COUNT],strategy_attacks:[1.5],aidCount:1,thrift:1,probability:40,explanation:"{probability}几率在使用法术攻击敌军时1.5倍暴击。"},
-{id:85,name:"奋战",powerful:110,type:SkillType.STRATEGY_ATTACK,subType:[SkillSubType.STRATEGY_COUNT],strategy_attacks:[1.5],aidCount:1,thrift:1,probability:100,explanation:"{probability}几率致命一击。"},
-{id:86,name:"卧薪尝胆",powerful:110,type:SkillType.STRATEGY_ATTACK,subType:[SkillSubType.STRATEGY_COUNT],strategy_attacks:[1.5],aidCount:1,thrift:1,probability:40,explanation:"{probability}几率致命一击。"},
-{id:87,name:"勇猛",powerful:100,type:SkillType.STRATEGY_ATTACK,subType:[SkillSubType.STRATEGY_COUNT],strategy_attacks:[1.5],aidCount:1,thrift:1,probability:50,explanation:"{probability}几率伤害提升10%。"},
-{id:88,name:"防守",powerful:100,type:SkillType.STRATEGY_ATTACK,subType:[SkillSubType.STRATEGY_COUNT],strategy_attacks:[1.5],aidCount:1,thrift:1,probability:50,explanation:"{probability}几率伤害减少10%。"},
-{id:89,name:"骑术",powerful:80,type:SkillType.STRATEGY_ATTACK,subType:[SkillSubType.STRATEGY_COUNT],strategy_attacks:[1.5],aidCount:1,thrift:1,probability:50,explanation:"{probability}掌握了超凡的骑术，在使用骑兵时，将攻击范围扩大至8格。"},
-{id:90,name:"米袋",powerful:50,type:SkillType.STRATEGY_ATTACK,subType:[SkillSubType.STRATEGY_COUNT],strategy_attacks:[1.5],aidCount:1,thrift:1,probability:50,explanation:"{probability}自备口粮，不消耗军队的粮食。"},
+{id:76,name:"运筹(陈宫)",powerful:100,type:SkillType.STRATEGY_ATTACK,subType:[SkillSubType.STRATEGY_COUNT],strategy_attacks:[1.5],aidCount:1,thrift:1,probability:40,explanation:"在使用法术攻击敌军时1.5倍暴击。"},
+{id:77,name:"神箭",powerful:200,type:[SkillType.ATTACK,SkillType.ATTACK_HIT],subType:[SkillSubType.HIT,SkillSubType.ATTACK_COUNT],attacks:[1,1],hit:100,condition:{type:"AttackType",value:AttackType.FAR},probability:100,explanation:"使用弓箭类兵种时，100%双击，且100%命中"},
+{id:78,name:"霸王重生",powerful:200,type:[SkillType.ATTACK,SkillType.ATTACK_END],subType:[SkillSubType.ATTACK_COUNT,SkillSubType.SELF_AID],attacks:[1.1,1.1],aids:[1,3,5,7,9],aidCount:1,aidRects:[{x:0,y:0}],probability:60,explanation:"双击＋提升自身能力"},
+{id:79,name:"算无遗策",powerful:200,type:[SkillType.STRATEGY_HIT,SkillType.STRATEGY_ATTACK],subType:[SkillSubType.STRATEGY_HIT,SkillSubType.SPREAD],hit:100,speadProbability:0.3,speadRects:[{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0}],probability:100,explanation:"法术命中100%＋随机溅射一人"},
+{id:80,name:"军神",powerful:200,type:[SkillType.ATTACK_HIT,SkillType.ATTACK],subType:[SkillSubType.HIT,SkillSubType.AMBUSH],hit:100,ambush:0.2,ambushRects:[{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],probability:100,explanation:"物理攻击命中100%＋十面埋伏特效"},
+{id:81,name:"冲杀",powerful:200,type:SkillType.ATTACK,subType:[SkillSubType.PENETRATE],penetrate:3,probability:40,explanation:"穿透4格攻击"},
+{id:82,name:"横扫",powerful:200,type:SkillType.ATTACK,subType:[SkillSubType.ATTACK_IN_RECT],probability:40,explanation:"物理攻击时，一次性攻击所有相邻的敌军。"},
+{id:83,name:"百步穿杨",powerful:160,type:[SkillType.ATTACK,SkillType.ATTACK_HIT],subType:[SkillSubType.HIT,SkillSubType.ATTACK_COUNT],attacks:[1.1],hit:100,condition:{type:"AttackType",value:AttackType.FAR},probability:100,explanation:"使用弓箭类兵种时，攻击伤害提升10%，且100%命中。"},
+{id:84,name:"兵神",powerful:210,type:[SkillType.STRATEGY_HIT,SkillType.STRATEGY_ATTACK],subType:[SkillSubType.STRATEGY_HIT,SkillSubType.STRATEGY_COUNT],strategy_attacks:[1,0.8,0.7],hit:100,probability:50,explanation:"法术三次连击，且命中100%。"},
+{id:85,name:"奋战",powerful:150,type:SkillType.ATTACK_FATAL,subType:[SkillSubType.ATTACK_FATAL],hit:100,probability:100,explanation:"致命攻击。"},
+{id:86,name:"卧薪尝胆",powerful:110,type:SkillType.NULL,subType:[SkillSubType.HARDSHIPS],probability:100,explanation:"敌方回合每受到一次攻击，自己的攻击伤害提升10%。"},
+{id:87,name:"快速连击",powerful:100,type:SkillType.ATTACK,subType:[SkillSubType.ATTACK_COUNT],attacks:[0.6,0.6],probability:50,explanation:"通过减轻力量来快速攻击两次，但是每次攻击只有普通攻击的0.6倍。"},
+{id:88,name:"防守",powerful:100,type:SkillType.HERT,subType:[SkillSubType.HERT_MINUS],hert:0.8,probability:50,explanation:"受到的伤害减少10%。"},
+{id:89,name:"骑术",powerful:80,type:SkillType.CREATE,subType:[SkillSubType.SOLDIERS_ATTACK_RECT],condition:{type:"SoldierId",value:3},rangeAttack:[{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],explanation:"掌握了超凡的骑术，在使用骑兵时，将攻击范围扩大至8格。"},
+{id:90,name:"米袋",powerful:50,type:SkillType.NULL,subType:[SkillSubType.RICE],probability:100,explanation:"自备口粮，不消耗军队的粮食。"},
+{id:91,name:"移动攻击",powerful:100,type:SkillType.NULL,subType:[SkillSubType.MOVE_ATTACK],probability:100,explanation:"移动距离越长攻击越高。"},
 ];
