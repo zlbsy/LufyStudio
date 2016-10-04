@@ -17,6 +17,8 @@ BattleCharacterAI.prototype.magicAttack = function(target){
 		self.chara.currentSelectStrategy.strategyImageLoad(self,self.magicAttack,[target]);
 		return;
 	}
+	//智力经验
+	self.chara.data.propertiesExp("intelligence", 1);
 	//console.log("magicAttack",self.chara.data.name(),target.data.name());
 	LMvc.running = true;
 	self.attackTarget = target;
@@ -113,6 +115,8 @@ BattleCharacterAI.prototype.magicAttack = function(target){
 };
 BattleCharacterAI.prototype.physicalAttack = function(target) {
 	var self = this;
+	//武力经验
+	self.chara.data.propertiesExp("force", 1);
 	LMvc.running = true;
 	LMvc.currentAttackCharacter = self.chara;
 	LMvc.currentAttackTarget = target;
@@ -395,7 +399,7 @@ BattleCharacterAI.prototype.attackActionComplete = function(event) {
 		if(hardships > 0){
 			obj.hertValue *= (1 + hardships);
 		}
-		var hitrate = calculateHitrate(chara,obj.chara);hitrate=true;
+		var hitrate = calculateHitrate(chara,obj.chara);
 		if(hitrate){
 			skill = obj.chara.data.skill(SkillType.HERT);
 			var condition = skill ? skill.condition() : null;
@@ -406,18 +410,33 @@ BattleCharacterAI.prototype.attackActionComplete = function(event) {
 					}
 				}
 			}
-			if(skill && skill.isSubType(SkillSubType.HERT_MINUS)){
-				tweenTextShow(obj.chara, skill.name());
-				obj.hertValue *= skill.hert();
-				obj.hertValue = obj.hertValue >>> 0;
-			}else if(skill && skill.isSubType(SkillSubType.BOUNCE)){
+			if(skill && skill.isSubType(SkillSubType.BOUNCE)){
 				var changeHp = obj.hertValue * skill.bounce() >>> 0;
 				if(changeHp > chara.data.troops()){
 					changeHp = chara.data.troops();
 				}
 				chara.data.troops(chara.data.troops() - changeHp, calculateWounded(0.5, 0.2));
 				tweenTextShow(chara, String.format("-{0}",changeHp), 10);
-			}else if(skill && skill.isSubType(SkillSubType.HP_MP_CHANGE)){
+			}
+			if(skill && skill.isSubType(SkillSubType.HERT_MINUS)){
+				tweenTextShow(obj.chara, skill.name());
+				obj.hertValue *= skill.hert();
+				obj.hertValue = obj.hertValue >>> 0;
+				
+				if(skill.isSubType(SkillSubType.HEAL)){
+					var wounded = obj.chara.data.wounded();
+					var troops = obj.chara.data.troops();
+					obj.chara.data.wounded(0);
+					obj.chara.data.troops(troops + wounded);
+				}else if(skill.isSubType(SkillSubType.SELF_AID)){
+					var aids = Array.getRandomArrays(skill.aids(),skill.aidCount());
+					for(var j = 0;j<aids.length;j++){
+						var strategy = StrategyMasterModel.getMaster(aids[j]);
+						obj.chara.status.addStatus(strategy.strategyType(), strategy.hert());
+					}
+				}
+			}
+			if(skill && skill.isSubType(SkillSubType.HP_MP_CHANGE)){
 				var skillName = null;
 				if(obj.chara.data.MP() > 0){
 					var minusMp = obj.hertValue > obj.chara.data.MP() ? obj.chara.data.MP() : obj.hertValue;
@@ -462,10 +481,14 @@ BattleCharacterAI.prototype.attackActionComplete = function(event) {
 			if(obj.chara.data.hasSkill(SkillSubType.HARDSHIPS)){
 				obj.chara.data.hardships(obj.chara.data.hardships() + 0.2);
 			}
+			//统率经验
+			obj.chara.data.propertiesExp("command", 1);
 			obj.chara.changeAction(CharacterAction.HERT);
 			LPlugin.playSE("Se_hert", LPlugin.gameSetting.SE);
 			obj.chara.addEventListener(BattleCharacterActionEvent.HERT_ACTION_COMPLETE,obj.chara.AI.hertActionComplete);
 		}else{
+			//敏捷经验
+			obj.chara.data.propertiesExp("agility", 1);
 			obj.chara.changeAction(CharacterAction.BLOCK);
 			LPlugin.playSE("Se_block", LPlugin.gameSetting.SE);
 			obj.chara.addEventListener(BattleCharacterActionEvent.BLOCK_ACTION_COMPLETE,obj.chara.AI.blockActionComplete);

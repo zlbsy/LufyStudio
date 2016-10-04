@@ -324,7 +324,7 @@ var SkillsData = [
 {id:79,name:"算无遗策",powerful:200,type:[SkillType.STRATEGY_HIT,SkillType.STRATEGY_ATTACK],subType:[SkillSubType.STRATEGY_HIT,SkillSubType.SPREAD],hit:100,speadProbability:0.3,speadRects:[{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0}],probability:100,explanation:"法术命中100%＋随机溅射一人"},
 {id:80,name:"军神",powerful:200,type:[SkillType.ATTACK_HIT,SkillType.ATTACK],subType:[SkillSubType.HIT,SkillSubType.AMBUSH],hit:100,ambush:0.2,ambushRects:[{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],probability:100,explanation:"物理攻击命中100%＋十面埋伏特效"},
 {id:81,name:"冲杀",powerful:200,type:SkillType.ATTACK,subType:[SkillSubType.PENETRATE],penetrate:3,probability:40,explanation:"穿透4格攻击"},
-{id:82,name:"横扫",powerful:200,type:SkillType.ATTACK,subType:[SkillSubType.ATTACK_IN_RECT],probability:40,explanation:"物理攻击时，一次性攻击所有相邻的敌军。"},
+{id:82,name:"横扫",powerful:200,type:SkillType.ATTACK,subType:[SkillSubType.ATTACK_IN_RECT],probability:40,explanation:"物理攻击时，一次性攻击所有攻击范围内的敌军。"},
 {id:83,name:"百步穿杨",powerful:160,type:[SkillType.ATTACK,SkillType.ATTACK_HIT],subType:[SkillSubType.HIT,SkillSubType.ATTACK_COUNT],attacks:[1.1],hit:100,condition:{type:"AttackType",value:AttackType.FAR},probability:100,explanation:"使用弓箭类兵种时，攻击伤害提升10%，且100%命中。"},
 {id:84,name:"兵神",powerful:210,type:[SkillType.STRATEGY_HIT,SkillType.STRATEGY_ATTACK],subType:[SkillSubType.STRATEGY_HIT,SkillSubType.STRATEGY_COUNT],strategy_attacks:[1,0.8,0.7],hit:100,probability:50,explanation:"法术三次连击，且命中100%。"},
 {id:85,name:"奋战",powerful:150,type:SkillType.ATTACK_FATAL,subType:[SkillSubType.ATTACK_FATAL],hit:100,probability:100,explanation:"致命攻击。"},
@@ -334,4 +334,7 @@ var SkillsData = [
 {id:89,name:"骑术",powerful:80,type:SkillType.CREATE,subType:[SkillSubType.SOLDIERS_ATTACK_RECT],condition:{type:"SoldierId",value:3},rangeAttack:[{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],explanation:"掌握了超凡的骑术，在使用骑兵时，将攻击范围扩大至8格。"},
 {id:90,name:"米袋",powerful:50,type:SkillType.NULL,subType:[SkillSubType.RICE],probability:100,explanation:"自备口粮，不消耗军队的粮食。"},
 {id:91,name:"移动攻击",powerful:100,type:SkillType.NULL,subType:[SkillSubType.MOVE_ATTACK],probability:100,explanation:"移动距离越长攻击越高。"},
+{id:92,name:"英龙之气(曹操)",powerful:180,type:SkillType.HERT,subType:[SkillSubType.HERT_MINUS,SkillSubType.BOUNCE],bounce:0.5,hert:0,probability:30,explanation:"将受到的一部分伤害反射给对方，自身承受的伤害减少为0。"},
+{id:93,name:"仁龙之气(刘备)",powerful:180,type:SkillType.HERT,subType:[SkillSubType.HERT_MINUS,SkillSubType.HEAL],hert:0,probability:30,explanation:"将受到的伤害减少为0，且治愈所有伤兵。"},
+{id:94,name:"贤龙之气(孙权)",powerful:180,type:SkillType.HERT,subType:[SkillSubType.HERT_MINUS,SkillSubType.SELF_AID],hert:0,aids:[1,3,5,7,9],aidCount:1,aidRects:[{x:0,y:0}],probability:30,explanation:"将受到的伤害减少为0，并为自己提高一种能力。"},
 ];

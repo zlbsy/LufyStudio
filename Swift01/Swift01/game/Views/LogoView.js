@@ -141,6 +141,18 @@ LogoView.prototype.showMenu=function(){
 		buttonJapanese.staticMode = true;
 		buttonChinese.addEventListener(LMouseEvent.MOUSE_UP, self.changeLanguage);
 	}
+	var tiebaLayer = new LSprite();
+	var tiebaLabel = getStrokeLabel(Language.get("tieba"),20,"#FFFFFF","#000000",4);
+	tiebaLayer.graphics.drawRect(0,"#000000",[0,0,tiebaLabel.getWidth(),tiebaLabel.getHeight()]);
+	tiebaLayer.graphics.drawLine(2,"#000000",[0,tiebaLabel.getHeight()+2,tiebaLabel.getWidth(),tiebaLabel.getHeight()+2]);
+	tiebaLayer.addChild(tiebaLabel);
+	tiebaLayer.x = LGlobal.width - menuLayer.x - tiebaLayer.getWidth() - 10;
+	tiebaLayer.y = menuY - 95;
+	menuLayer.addChild(tiebaLayer);
+	tiebaLayer.addEventListener(LMouseEvent.MOUSE_UP, self.clickTieba);
+	self.tiebaLayer = tiebaLayer;
+	self.tiebaLayer.visible = LPlugin.GetData("reviewing") ? false : true;
+	
 	var forumLayer = new LSprite();
 	var forumLabel = getStrokeLabel(Language.get("opinion"),20,"#FFFFFF","#000000",4);
 	forumLayer.graphics.drawRect(0,"#000000",[0,0,forumLabel.getWidth(),forumLabel.getHeight()]);
@@ -174,6 +186,9 @@ LogoView.prototype.bugReportChick=function(event){
 };
 LogoView.prototype.clickForum=function(event){
 	LPlugin.openURL(LMvc.forumURL);
+};
+LogoView.prototype.clickTieba=function(event){
+	LPlugin.openURL(LMvc.tiebaURL);
 };
 LogoView.prototype.restoreChick=function(event){
 	var button = event.currentTarget;

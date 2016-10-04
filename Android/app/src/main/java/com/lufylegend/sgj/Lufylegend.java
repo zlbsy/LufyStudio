@@ -297,9 +297,12 @@ public class Lufylegend {
     @JavascriptInterface
     public void purchase(String productId, String paymentTime, String subject, String body,String totalFee){
         String trGameId = identificationId();
+        if(trGameId == ""){
+            purchaseError();
+            return;
+        }
         String outTradeNo = productId.replace("com.lufylegend.","") + "." + trGameId + "." + paymentTime;
         outTradeNo = outTradeNo.length() > 64 ? outTradeNo.substring(0, 64) : outTradeNo;
-        Log.e("outTradeNo", outTradeNo);
         String params = "{";
         params += "'identification_id':'"+trGameId+"'";
         params += ",'product_id':'"+productId+"'";
@@ -322,6 +325,9 @@ public class Lufylegend {
     @JavascriptInterface
     public void purchaseCheck(String productId){
         String identification_id = identificationId();
+        if(identification_id == ""){
+            identification_id = "0";
+        }
         String completeEvent = "";
         completeEvent += "LPurchase._ll_dispatchEvent(data, LPurchase.PURCHASE_CHECK_COMPLETE);";
         String errorEvent = "LPurchase._ll_dispatchEventError('Json Error', LPurchase.PURCHASE_CHECK_COMPLETE);";
