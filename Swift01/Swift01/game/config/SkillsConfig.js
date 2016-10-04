@@ -335,6 +335,6 @@ var SkillsData = [
 {id:90,name:"米袋",powerful:50,type:SkillType.NULL,subType:[SkillSubType.RICE],probability:100,explanation:"自备口粮，不消耗军队的粮食。"},
 {id:91,name:"移动攻击",powerful:100,type:SkillType.NULL,subType:[SkillSubType.MOVE_ATTACK],probability:100,explanation:"移动距离越长攻击越高。"},
 {id:92,name:"英龙之气(曹操)",powerful:180,type:SkillType.HERT,subType:[SkillSubType.HERT_MINUS,SkillSubType.BOUNCE],bounce:0.5,hert:0,probability:30,explanation:"将受到的一部分伤害反射给对方，自身承受的伤害减少为0。"},
-{id:93,name:"仁龙之气(刘备)",powerful:180,type:SkillType.HERT,subType:[SkillSubType.HERT_MINUS,SkillSubType.HEAL],hert:0,healId:42,healRects:[{x:0,y:0}],probability:30,explanation:"将受到的伤害减少为0，且治愈所有伤兵。"},
+{id:93,name:"仁龙之气(刘备)",powerful:180,type:SkillType.HERT,subType:[SkillSubType.HERT_MINUS,SkillSubType.HEAL],hert:0,probability:30,explanation:"将受到的伤害减少为0，且治愈所有伤兵。"},
 {id:94,name:"贤龙之气(孙权)",powerful:180,type:SkillType.HERT,subType:[SkillSubType.HERT_MINUS,SkillSubType.SELF_AID],hert:0,aids:[1,3,5,7,9],aidCount:1,aidRects:[{x:0,y:0}],probability:30,explanation:"将受到的伤害减少为0，并为自己提高一种能力。"},
 ];

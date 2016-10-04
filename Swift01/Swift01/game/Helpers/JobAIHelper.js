@@ -207,8 +207,14 @@ function jobAiToBattleTarget(areaModel,targetCity,data){
 	data.troops = sumTroops*0.5 >>> 0;
 	sumTroops = sumTroops + data.troops;
 	data.money = areaModel.money() * 0.2 >>> 0;
-	//带15回合粮食
-	data.food = sumTroops * 15;
+	//带15-35回合粮食
+	var bout = (areaModel.food() * 0.5 / sumTroops) >>> 0;
+	if(bout < 15){
+		bout = 15;
+	}else if(bout > 35){
+		bout = 35;
+	}
+	data.food = sumTroops * bout;
 	areaModel.food(-data.food);
 	areaModel.money(-data.money);
 	areaModel.troops(areaModel.troops() - data.troops);
