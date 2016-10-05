@@ -221,6 +221,7 @@
 					A06B2A1C1C17CACD00CB68AF = {
 						CreatedOnToolsVersion = 7.1.1;
 						DevelopmentTeam = 487MZ6R5X8;
+						LastSwiftMigration = 0800;
 						SystemCapabilities = {
 							com.apple.InAppPurchase = {
 								enabled = 1;
@@ -229,10 +230,12 @@
 					};
 					A06B2A301C17CACD00CB68AF = {
 						CreatedOnToolsVersion = 7.1.1;
+						LastSwiftMigration = 0800;
 						TestTargetID = A06B2A1C1C17CACD00CB68AF;
 					};
 					A06B2A3B1C17CACE00CB68AF = {
 						CreatedOnToolsVersion = 7.1.1;
+						LastSwiftMigration = 0800;
 						TestTargetID = A06B2A1C1C17CACD00CB68AF;
 					};
 				};
@@ -464,6 +467,7 @@
 				"PROVISIONING_PROFILE[sdk=*]" = "dcbc5a82-fab8-4c96-959a-24efe116b6f1";
 				SWIFT_OBJC_BRIDGING_HEADER = Swift01/jsc.h;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -484,6 +488,7 @@
 				PROVISIONING_PROFILE = "dcbc5a82-fab8-4c96-959a-24efe116b6f1";
 				"PROVISIONING_PROFILE[sdk=*]" = "dcbc5a82-fab8-4c96-959a-24efe116b6f1";
 				SWIFT_OBJC_BRIDGING_HEADER = Swift01/jsc.h;
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
@@ -496,6 +501,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = test.Swift01Tests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Swift01.app/Swift01";
 			};
 			name = Debug;
@@ -508,6 +514,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = test.Swift01Tests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Swift01.app/Swift01";
 			};
 			name = Release;
@@ -519,6 +526,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = test.Swift01UITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_TARGET_NAME = Swift01;
 				USES_XCTRUNNER = YES;
 			};
@@ -531,6 +539,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = test.Swift01UITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_TARGET_NAME = Swift01;
 				USES_XCTRUNNER = YES;
 			};

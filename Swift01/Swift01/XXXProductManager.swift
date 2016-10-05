@@ -13,10 +13,10 @@ private var productManagers : Set<XXXProductManager> = Set()
 
 class XXXProductManager: NSObject, SKProductsRequestDelegate {
     
-    private var completionForProductidentifiers : (([SKProduct]!,NSError?) -> Void)?
+    fileprivate var completionForProductidentifiers : (([SKProduct]?,NSError?) -> Void)?
     
     /// 課金アイテム情報を取得
-    class func productsWithProductIdentifiers(productIdentifiers : [String]!,completion:(([SKProduct]!,NSError?) -> Void)?){
+    class func productsWithProductIdentifiers(_ productIdentifiers : [String]!,completion:(([SKProduct]?,NSError?) -> Void)?){
         let productManager = XXXProductManager()
         productManager.completionForProductidentifiers = completion
         let productRequest = SKProductsRequest(productIdentifiers: Set(productIdentifiers))
@@ -26,7 +26,7 @@ class XXXProductManager: NSObject, SKProductsRequestDelegate {
     }
     
     // MARK: - SKProducts Request Delegate
-    func productsRequest(request: SKProductsRequest, didReceiveResponse response: SKProductsResponse) {
+    func productsRequest(_ request: SKProductsRequest, didReceive response: SKProductsResponse) {
         var error : NSError? = nil
         if response.products.count == 0 {
             error = NSError(domain: "ProductsRequestErrorDomain", code: 0, userInfo: [NSLocalizedDescriptionKey:"productsRequest プロダクトを取得できませんでした。"])
@@ -34,24 +34,24 @@ class XXXProductManager: NSObject, SKProductsRequestDelegate {
         completionForProductidentifiers?(response.products, error)
     }
     
-    func request(request: SKRequest, didFailWithError error: NSError) {
+    func request(_ request: SKRequest, didFailWithError error: Error) {
         let error = NSError(domain: "ProductsRequestErrorDomain", code: 0, userInfo: [NSLocalizedDescriptionKey:"request プロダクトを取得できませんでした。"])
         completionForProductidentifiers?(nil,error)
         productManagers.remove(self)
     }
     
-    func requestDidFinish(request: SKRequest) {
+    func requestDidFinish(_ request: SKRequest) {
         productManagers.remove(self)
     }
     
     // MARK: - Utility
     /// おまけ 価格情報を抽出
-    class func priceStringFromProduct(product: SKProduct!) -> String {
-        let numberFormatter = NSNumberFormatter()
-        numberFormatter.formatterBehavior = .Behavior10_4
-        numberFormatter.numberStyle = .CurrencyStyle
+    class func priceStringFromProduct(_ product: SKProduct!) -> String {
+        let numberFormatter = NumberFormatter()
+        numberFormatter.formatterBehavior = .behavior10_4
+        numberFormatter.numberStyle = .currency
         numberFormatter.locale = product.priceLocale
-        return numberFormatter.stringFromNumber(product.price)!
+        return numberFormatter.string(from: product.price)!
     }
     
 }

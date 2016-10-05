@@ -2,25 +2,25 @@ import UIKit
 import AVFoundation
 import StoreKit
 
-typealias ID = AnyObject!
+typealias ID = Any!
 extension JSContext {
-    func fetch(key:String)->JSValue {
+    func fetch(_ key:String)->JSValue {
         return getJSVinJSC(self, key)
     }
-    func store(key:String, _ val:ID) {
+    func store(_ key:String, _ val:ID) {
         setJSVinJSC(self, key, val)
     }
     // Yikes.  Swift 1.2 and its JavaScriptCore no longer allows method overloding by type
-    func setb0(key:String, _ blk:()->ID) {
+    func setb0(_ key:String, _ blk:@escaping ()->ID) {
         setB0JSVinJSC(self, key, blk)
     }
-    func setb1(key:String, _ blk:(ID)->ID) {
+    func setb1(_ key:String, _ blk:@escaping (ID)->ID) {
         setB1JSVinJSC(self, key, blk)
     }
-    func setb2(key:String, _ blk:(ID,ID)->ID) {
+    func setb2(_ key:String, _ blk:@escaping (ID,ID)->ID) {
         setB2JSVinJSC(self, key, blk)
     }
-    func setb3(key:String, _ blk:(ID,ID,ID)->ID) {
+    func setb3(_ key:String, _ blk:@escaping (ID,ID,ID)->ID) {
         setB3JSVinJSC(self, key, blk)
     }
 }
@@ -34,7 +34,7 @@ class Lufylegend : XXXPurchaseManagerDelegate{
     var context : JSContext = JSContext()
     var audioBGMPlayer:AVAudioPlayer = AVAudioPlayer()
     var bgmPlaying = false
-    func initialize(gamePath: String, viewController: UIViewController, delegate: UIWebViewDelegate){
+    func initialize(_ gamePath: String, viewController: UIViewController, delegate: UIWebViewDelegate){
         GAME_PATH = gamePath
         PATH_SOUND = GAME_PATH + "Sound/"
         
@@ -42,36 +42,36 @@ class Lufylegend : XXXPurchaseManagerDelegate{
         webView.frame = viewController.view.bounds
         viewController.view.addSubview(webView)
         
-        if let url = NSBundle.mainBundle().URLForResource(GAME_PATH + "index", withExtension: "html") {
-            webView.loadRequest(NSURLRequest(URL: url))
+        if let url = Bundle.main.url(forResource: GAME_PATH + "index", withExtension: "html") {
+            webView.loadRequest(URLRequest(url: url))
         }
-        if let ctx = webView.valueForKeyPath("documentView.webView.mainFrame.javaScriptContext") {
+        if let ctx = webView.value(forKeyPath: "documentView.webView.mainFrame.javaScriptContext") {
             let context = ctx as! JSContext
             self.contextInit(context)
         }
     }
-    func playSE(name : String, volume : Int){
+    func playSE(_ name : String, volume : Int){
         if(volume == 0){
             return
         }
         var soundIdRing:SystemSoundID = 0
-        let soundUrl = NSURL.fileURLWithPath(NSBundle.mainBundle().pathForResource(PATH_SOUND + name, ofType:TYPE_SE)!)
-        AudioServicesCreateSystemSoundID(soundUrl, &soundIdRing)
+        let soundUrl = URL(fileURLWithPath: Bundle.main.path(forResource: PATH_SOUND + name, ofType:TYPE_SE)!)
+        AudioServicesCreateSystemSoundID(soundUrl as CFURL, &soundIdRing)
         AudioServicesPlaySystemSound(soundIdRing)
     }
-    func playBGM(name : String, volume : Int){
+    func playBGM(_ name : String, volume : Int){
         if(volume == 0){
             if(bgmPlaying){
                 bgmPlaying = false
-                if(audioBGMPlayer.playing){
+                if(audioBGMPlayer.isPlaying){
                     audioBGMPlayer.stop()
                 }
             }
             return
         }
-        let coinSound = NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource(PATH_SOUND + name, ofType: TYPE_BGM)!)
+        let coinSound = URL(fileURLWithPath: Bundle.main.path(forResource: PATH_SOUND + name, ofType: TYPE_BGM)!)
         do{
-            audioBGMPlayer = try AVAudioPlayer(contentsOfURL:coinSound)
+            audioBGMPlayer = try AVAudioPlayer(contentsOf:coinSound)
             audioBGMPlayer.volume = 1
             audioBGMPlayer.numberOfLoops = -1
             audioBGMPlayer.prepareToPlay()
@@ -81,30 +81,30 @@ class Lufylegend : XXXPurchaseManagerDelegate{
             print("Error :: getting the audio file : " + name)
         }
     }
-    func writeToFileInDomain(name : String, data : String) -> Bool{
+    func writeToFileInDomain(_ name : String, data : String) -> Bool{
         let paths = NSSearchPathForDirectoriesInDomains(
-            .DocumentDirectory,
-            .UserDomainMask, true)
+            .documentDirectory,
+            .userDomainMask, true)
         let dir = paths.first!
-        let file_name =  dir.stringByAppendingString("/" + name + ".txt")
+        let file_name =  dir + ("/" + name + ".txt")
         do {
-            try data.writeToFile( file_name, atomically: false, encoding: NSUTF8StringEncoding )
+            try data.write( toFile: file_name, atomically: false, encoding: String.Encoding.utf8 )
             return true
         } catch {
             print("Error :: can't save to file : " + file_name)
         }
         return false
     }
-    func deleteFileInDomain(name : String) -> Bool{
+    func deleteFileInDomain(_ name : String) -> Bool{
         let paths = NSSearchPathForDirectoriesInDomains(
-            .DocumentDirectory,
-            .UserDomainMask, true)
+            .documentDirectory,
+            .userDomainMask, true)
         let dir = paths.first!
-        let file_name =  dir.stringByAppendingString("/" + name + ".txt")
-        let manager = NSFileManager()
-        if(manager.fileExistsAtPath(file_name)){
+        let file_name =  dir + ("/" + name + ".txt")
+        let manager = FileManager()
+        if(manager.fileExists(atPath: file_name)){
             do {
-                try manager.removeItemAtPath(file_name)
+                try manager.removeItem(atPath: file_name)
                 return true
             } catch {
                 print("Error :: can't delete file : " + file_name)
@@ -112,110 +112,110 @@ class Lufylegend : XXXPurchaseManagerDelegate{
         }
         return false
     }
-    func readFileInDomain(name : String) -> String{
+    func readFileInDomain(_ name : String) -> String{
         let paths = NSSearchPathForDirectoriesInDomains(
-            .DocumentDirectory,
-            .UserDomainMask, true)
+            .documentDirectory,
+            .userDomainMask, true)
         let dir = paths.first!
-        let file_name =  dir.stringByAppendingString("/" + name + ".txt")
+        let file_name =  dir + ("/" + name + ".txt")
         var data = "";
-        let manager = NSFileManager()
-        if(!manager.fileExistsAtPath(file_name)){
+        let manager = FileManager()
+        if(!manager.fileExists(atPath: file_name)){
             return data
         }
         do {
-            data = (try NSString( contentsOfFile: file_name, encoding: NSUTF8StringEncoding )) as String
+            data = (try NSString( contentsOfFile: file_name, encoding: String.Encoding.utf8.rawValue )) as String
         } catch {
             print("Error :: getting the file : " + file_name)
         }
         return data
     }
-    func readFile(name : String, extensionType : String) -> String{
-        let path = NSBundle.mainBundle().pathForResource(GAME_PATH + name, ofType: extensionType)!
+    func readFile(_ name : String, extensionType : String) -> String{
+        let path = Bundle.main.path(forResource: GAME_PATH + name, ofType: extensionType)!
         
-        let manager = NSFileManager()
-        if(!manager.fileExistsAtPath(path)){
+        let manager = FileManager()
+        if(!manager.fileExists(atPath: path)){
             return ""
         }
-        if let data = NSData(contentsOfFile: path){
-            var data = String(NSString(data: data, encoding: NSUTF8StringEncoding)!)
-            data = data.stringByReplacingOccurrencesOfString("\n", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
+        if let data = try? Data(contentsOf: URL(fileURLWithPath: path)){
+            var data = String(NSString(data: data, encoding: String.Encoding.utf8.rawValue)!)
+            data = data.replacingOccurrences(of: "\n", with: "", options: NSString.CompareOptions.literal, range: nil)
             return data;
         }
         print("Error :: getting the file : " + path)
         return ""
     }
     func bundleVersion() -> String{
-        let nsObject: AnyObject? = NSBundle.mainBundle().infoDictionary!["CFBundleShortVersionString"]
+        let nsObject: AnyObject? = Bundle.main.infoDictionary!["CFBundleShortVersionString"] as AnyObject?
         let version = nsObject as! String
-        let versions = version.componentsSeparatedByString(".")
+        let versions = version.components(separatedBy: ".")
         if(versions.count >= 3){
             return version
         }
         return version + ".0"
     }
     func preferredLanguage() -> String{
-        let languages = NSLocale.preferredLanguages()
+        let languages = Locale.preferredLanguages
         let language = languages.first!
         return language
     }
-    func contextInit(c : JSContext){
+    func contextInit(_ c : JSContext){
         context = c
-        context.setb2("playSE", {(seName:AnyObject!, volume:AnyObject!)->AnyObject in
+        context.setb2("playSE", {(seName:Any!, volume:Any!)->Any in
             self.playSE(seName as! String, volume: volume as! Int)
-            return ""
+            return "" as Any
         })
-        context.setb2("playBGM", {(seName:AnyObject!, volume:AnyObject!)->AnyObject in
+        context.setb2("playBGM", {(seName:Any!, volume:Any!)->Any in
             self.playBGM(seName as! String, volume: volume as! Int)
-            return ""
+            return "" as Any
         })
-        context.setb2("readFile", {(name:AnyObject!, extensionType:AnyObject!)->AnyObject in
+        context.setb2("readFile", {(name:Any!, extensionType:Any!)->Any in
             return self.readFile(name as! String, extensionType: extensionType as! String)
         })
-        context.setb1("deleteFileInDomain", {(name:AnyObject!)->AnyObject in
+        context.setb1("deleteFileInDomain", {(name:Any!)->Any in
             return self.deleteFileInDomain(name as! String)
         })
-        context.setb1("readFileInDomain", {(name:AnyObject!)->AnyObject in
+        context.setb1("readFileInDomain", {(name:Any!)->Any in
             return self.readFileInDomain(name as! String)
         })
-        context.setb2("writeToFileInDomain", {(name:AnyObject!, data:AnyObject!)->AnyObject in
+        context.setb2("writeToFileInDomain", {(name:Any!, data:Any!)->Any in
             return self.writeToFileInDomain(name as! String, data: data as! String)
         })
-        context.setb1("purchaseLog", {(complete:AnyObject!)->AnyObject in
+        context.setb1("purchaseLog", {(complete:Any!)->Any in
             self.purchaseLog()
-            return ""
+            return "" as Any
         })
-        context.setb1("productInformation", {(productIds:AnyObject!)->AnyObject in
+        context.setb1("productInformation", {(productIds:Any!)->Any in
             self.fetchProductInformationForIds(productIds as! [String])
-            return ""
+            return "" as Any
         })
-        context.setb1("purchase", {(productId:AnyObject!)->AnyObject in
+        context.setb1("purchase", {(productId:Any!)->Any in
             self.purchase(productId as! String)
-            return ""
+            return "" as Any
         })
-        context.setb1("myPrint", {(data:AnyObject!)->AnyObject in
+        context.setb1("myPrint", {(data:Any!)->Any in
             print(data as! String)
-            return ""
+            return "" as Any
         })
-        context.setb1("openURL", {(data:AnyObject!)->AnyObject in
-            let url = NSURL(string: data as! String)
-            if UIApplication.sharedApplication().canOpenURL(url!){
-                UIApplication.sharedApplication().openURL(url!)
+        context.setb1("openURL", {(data:Any!)->Any in
+            let url = URL(string: data as! String)
+            if UIApplication.shared.canOpenURL(url!){
+                UIApplication.shared.openURL(url!)
             }
-            return ""
+            return "" as Any
         })
-        context.setb0("purchaseRestore", {()->AnyObject in
+        context.setb0("purchaseRestore", {()->Any in
             self.startRestore()
-            return ""
+            return "" as Any
         })
-        context.setb0("preferredLanguage", {()->AnyObject in
+        context.setb0("preferredLanguage", {()->Any in
             return self.preferredLanguage()
         })
-        context.setb0("bundleVersion", {()->AnyObject in
+        context.setb0("bundleVersion", {()->Any in
             return self.bundleVersion()
         })
-        context.setb0("getSystemVersion", {()->AnyObject in
-            return UIDevice.currentDevice().systemVersion
+        context.setb0("getSystemVersion", {()->Any in
+            return UIDevice.current.systemVersion
         })
         /*let notificationCenter = NSNotificationCenter.defaultCenter()
         notificationCenter.addObserver(
@@ -225,32 +225,32 @@ class Lufylegend : XXXPurchaseManagerDelegate{
             object: nil)
         */
         
-        let path = NSBundle.mainBundle().pathForResource("lufylegend.swift", ofType: "js")!
-        if let data = NSData(contentsOfFile: path){
-            var strScript = String(NSString(data: data, encoding: NSUTF8StringEncoding)!)
-            strScript = strScript.stringByReplacingOccurrencesOfString("\n", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
+        let path = Bundle.main.path(forResource: "lufylegend.swift", ofType: "js")!
+        if let data = try? Data(contentsOf: URL(fileURLWithPath: path)){
+            var strScript = String(NSString(data: data, encoding: String.Encoding.utf8.rawValue)!)
+            strScript = strScript.replacingOccurrences(of: "\n", with: "", options: NSString.CompareOptions.literal, range: nil)
             context.evaluateScript(strScript)
         }
         
     }
-    func stopBGM(notification: NSNotification?){
+    func stopBGM(_ notification: Notification?){
         audioBGMPlayer.stop()
     }
     func purchaseLog(){
-        if let receiptUrl: NSURL = NSBundle.mainBundle().appStoreReceiptURL {
-            if let receiptData: NSData = NSData(contentsOfURL: receiptUrl) {
-                let receiptBase64Str: String = receiptData.base64EncodedStringWithOptions(NSDataBase64EncodingOptions())
+        if let receiptUrl: URL = Bundle.main.appStoreReceiptURL {
+            if let receiptData: Data = try? Data(contentsOf: receiptUrl) {
+                let receiptBase64Str: String = receiptData.base64EncodedString(options: NSData.Base64EncodingOptions())
                 
                 let requestContents: NSDictionary = ["receipt-data": receiptBase64Str] as NSDictionary
-                let url:NSURL = NSURL(string:"https://buy.itunes.apple.com/verifyReceipt")!
+                let url:URL = URL(string:"https://buy.itunes.apple.com/verifyReceipt")!
                 //let url: NSURL = NSURL(string: "https://sandbox.itunes.apple.com/verifyReceipt")!
-                let request: NSMutableURLRequest = NSMutableURLRequest(URL: url)
+                let request: NSMutableURLRequest = NSMutableURLRequest(url: url)
                 
                 request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField:"content-type")
                 request.timeoutInterval = 5.0
-                request.HTTPMethod = "POST"
+                request.httpMethod = "POST"
                 do {
-                    request.HTTPBody = try NSJSONSerialization.dataWithJSONObject(requestContents, options: NSJSONWritingOptions.init(rawValue: 2))
+                    request.httpBody = try JSONSerialization.data(withJSONObject: requestContents, options: JSONSerialization.WritingOptions.init(rawValue: 2))
                 } catch {
                     // Error Handling
                     print("NSJSONSerialization Error")
@@ -258,11 +258,11 @@ class Lufylegend : XXXPurchaseManagerDelegate{
                     self.context.evaluateScript(_ll_dispatchEvent)
                     return
                 }
-                let configuration = NSURLSessionConfiguration.defaultSessionConfiguration()
-                let session = NSURLSession(configuration: configuration, delegate:nil, delegateQueue:NSOperationQueue.mainQueue())
-                let task = session.dataTaskWithRequest(request, completionHandler: {
+                let configuration = URLSessionConfiguration.default
+                let session = URLSession(configuration: configuration, delegate:nil, delegateQueue:OperationQueue.main)
+                let task = session.dataTask(with: request as URLRequest, completionHandler: {
                     (data, response, error) -> Void in
-                    let myData:NSString = NSString(data: data!, encoding: NSUTF8StringEncoding)!
+                    let myData:NSString = NSString(data: data!, encoding: String.Encoding.utf8.rawValue)!
                     let _ll_dispatchEvent = "LPurchase._ll_dispatchEvent("+(myData as String)+", LPurchase.PURCHASE_LOG_COMPLETE);"
                     self.context.evaluateScript(_ll_dispatchEvent)
                 })
@@ -276,9 +276,9 @@ class Lufylegend : XXXPurchaseManagerDelegate{
     }
     
     ///プロダクト情報取得
-    private func fetchProductInformationForIds(productIds:[String]) {
+    fileprivate func fetchProductInformationForIds(_ productIds:[String]) {
         XXXProductManager.productsWithProductIdentifiers(productIds,
-                                                         completion: {[weak self] (products : [SKProduct]!, error : NSError?) -> Void in
+                                                         completion: {[weak self] (products : [SKProduct]?, error : NSError?) -> Void in
                                                             if error != nil {
                                                                 print(error?.localizedDescription)
                                                                 let _ll_dispatchEvent = "LPurchase._ll_dispatchEventError('"+(error?.localizedDescription)!+"', LPurchase.PRODUCT_INFORMATION_COMPLETE);"
@@ -287,7 +287,7 @@ class Lufylegend : XXXPurchaseManagerDelegate{
                                                             }
                                                             var str : String = "["
                                                             var add = ""
-                                                            for product in products {
+                                                            for product in products! {
                                                                 //価格を抽出
                                                                 let priceLabel = XXXProductManager.priceStringFromProduct(product)
                                                                 
@@ -312,14 +312,14 @@ class Lufylegend : XXXPurchaseManagerDelegate{
         
     }
     ///課金開始
-    private func purchase(productId:String) {
+    fileprivate func purchase(_ productId:String) {
         self.currentProductId = productId
         //デリゲード設定
         XXXPurchaseManager.sharedManager().delegate = self
         
         //プロダクト情報を取得
         XXXProductManager.productsWithProductIdentifiers([productId],
-                                                         completion: {[weak self]  (products : [SKProduct]!, error : NSError?) -> Void in
+                                                         completion: {[weak self]  (products : [SKProduct]?, error : NSError?) -> Void in
                                                             if error != nil {
                                                                 if let weakSelf = self {
                                                                     weakSelf.purchaseManager(XXXPurchaseManager.sharedManager(), didFailWithError: error)
@@ -330,9 +330,9 @@ class Lufylegend : XXXPurchaseManagerDelegate{
                                                                 return
                                                             }
                                                             
-                                                            if products.count > 0 {
+                                                            if (products?.count)! > 0 {
                                                                 //課金処理開始
-                                                                XXXPurchaseManager.sharedManager().startWithProduct(products[0])
+                                                                XXXPurchaseManager.sharedManager().startWithProduct((products?[0])!)
                                                             }
             })
     }
@@ -348,31 +348,31 @@ class Lufylegend : XXXPurchaseManagerDelegate{
     
     
     // MARK: - XXXPurchaseManager Delegate
-    @objc func purchaseManager(purchaseManager: XXXPurchaseManager!, didFinishPurchaseWithTransaction transaction: SKPaymentTransaction!, decisionHandler: ((complete: Bool) -> Void)!) {
+    @objc func purchaseManager(_ purchaseManager: XXXPurchaseManager!, didFinishPurchaseWithTransaction transaction: SKPaymentTransaction!, decisionHandler: ((_ complete: Bool) -> Void)!) {
         //課金終了時に呼び出される
         /*productIdentifier
          TODO: コンテンツ解放処理
          */
         print("purchase finish! " + transaction.payment.productIdentifier)
         //コンテンツ解放が終了したら、この処理を実行(true: 課金処理全部完了, false 課金処理中断)
-        decisionHandler(complete: true)
+        decisionHandler(true)
         let _ll_dispatchEvent = "LPurchase._ll_dispatchEvent({'status':1,'productId':'"+transaction.payment.productIdentifier+"'}, LPurchase.PURCHASE_COMPLETE);"
         self.context.evaluateScript(_ll_dispatchEvent)
     }
     
-    @objc func purchaseManager(purchaseManager: XXXPurchaseManager!, didFinishUntreatedPurchaseWithTransaction transaction: SKPaymentTransaction!, decisionHandler: ((complete: Bool) -> Void)!) {
+    @objc func purchaseManager(_ purchaseManager: XXXPurchaseManager!, didFinishUntreatedPurchaseWithTransaction transaction: SKPaymentTransaction!, decisionHandler: ((_ complete: Bool) -> Void)!) {
         //課金終了時に呼び出される(startPurchaseで指定したプロダクトID以外のものが課金された時。)
         /*
          TODO: コンテンツ解放処理
          */
         print("purchase finish!(Untreated.)")
         //コンテンツ解放が終了したら、この処理を実行(true: 課金処理全部完了, false 課金処理中断)
-        decisionHandler(complete: true)
+        decisionHandler(true)
         let _ll_dispatchEvent = "LPurchase._ll_dispatchEvent({'status':1,'productId':'"+transaction.payment.productIdentifier+"'}, LPurchase.PURCHASE_COMPLETE);"
         self.context.evaluateScript(_ll_dispatchEvent)
     }
     
-    @objc func purchaseManager(purchaseManager: XXXPurchaseManager!, didFailWithError error: NSError!) {
+    @objc func purchaseManager(_ purchaseManager: XXXPurchaseManager!, didFailWithError error: NSError!) {
         //課金失敗時に呼び出される
         /*
          TODO: errorを使ってアラート表示
@@ -382,7 +382,7 @@ class Lufylegend : XXXPurchaseManagerDelegate{
         self.context.evaluateScript(_ll_dispatchEvent)
     }
     
-    @objc func purchaseManagerDidFinishRestore(purchaseManager: XXXPurchaseManager!) {
+    @objc func purchaseManagerDidFinishRestore(_ purchaseManager: XXXPurchaseManager!) {
         //リストア終了時に呼び出される(個々のトランザクションは”課金終了”で処理)
         /*
          TODO: インジケータなどを表示していたら非表示に         
@@ -392,7 +392,7 @@ class Lufylegend : XXXPurchaseManagerDelegate{
         self.context.evaluateScript(_ll_dispatchEvent)
     }
     
-    @objc func purchaseManagerDidDeferred(purchaseManager: XXXPurchaseManager!) {
+    @objc func purchaseManagerDidDeferred(_ purchaseManager: XXXPurchaseManager!) {
         //承認待ち状態時に呼び出される(ファミリー共有)
         /*
          TODO: インジケータなどを表示していたら非表示に
