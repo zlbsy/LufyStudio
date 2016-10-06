@@ -37,7 +37,6 @@ function purchaseProductInformation(callback) {
 }
 
 function purchaseComplete(event, callback) {
-	LPlugin.print(JSON.stringify(event));
 	if(event.status == 0){
 		//error
 		var obj = {

@@ -1,7 +1,4 @@
 function checkEventList() {
-	if(LMvc.chapterData.noLife){
-		return false;
-	}
 	var eventListFinished = LMvc.chapterData.eventListFinished || [];
 	var tribeSeignior = 0, gameClear = true;
 	for(var i=0,l=SeigniorModel.list.length;i<l;i++){
@@ -49,6 +46,8 @@ function checkEventList() {
 					continue;
 				}
 			}
+		}else if(LMvc.chapterData.noLife){
+			continue;
 		}
 		if(currentEvent.condition.from && currentEvent.condition.to){
 			var month = LMvc.chapterData.month;

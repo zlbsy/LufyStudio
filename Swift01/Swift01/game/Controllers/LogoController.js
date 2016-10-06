@@ -206,7 +206,6 @@ LogoController.prototype.updateCheck = function(){
 		self.needUpdateFiles = {};
 		self.updateFile(0);
 	},function(){
-		//LPlugin.print("updateCheck Error");
 		LMvc.keepLoading(false);
 		var reviewing = LPlugin.GetData("reviewing", 0);
 		self.view.forumLayer.visible = reviewing ? false : true;

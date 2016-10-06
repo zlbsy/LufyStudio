@@ -556,12 +556,12 @@ AreaModel.prototype.foodLabel=function(){
 };
 AreaModel.prototype.food=function(value){
 	var f = this._plusData("food",value);
-	if(this.data["food"] > 1000000){
+	/*if(this.data["food"] > 1000000){
 		console.error("food = " + this.data["food"]);
 	}
-	
+	*/
 	return f;
-	return this._plusData("food",value);
+	//return this._plusData("food",value);
 };
 AreaModel.prototype.populationLabel=function(){
 	return LString.numberFormat(this.data.population >>> 0,3);
