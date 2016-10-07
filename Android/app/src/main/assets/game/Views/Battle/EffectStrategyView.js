@@ -72,12 +72,12 @@ EffectStrategyView.prototype.toChangeStatus = function(){
 			self.toAttack(true);
 		}else{
 			//运气经验
-			self.chara.data.propertiesExp("luck", 1);
+			self.currentTargetCharacter.data.propertiesExp("luck", 1);
 			self.currentTargetCharacter.changeAction(CharacterAction.HERT);
 		}
 	}else{
 		//敏捷经验
-		obj.chara.data.propertiesExp("agility", 1);
+		self.currentTargetCharacter.data.propertiesExp("agility", 1);
 		self.currentTargetCharacter.changeAction(CharacterAction.BLOCK);
 	}
 };

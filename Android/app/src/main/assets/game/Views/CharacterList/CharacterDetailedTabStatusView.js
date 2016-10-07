@@ -21,7 +21,7 @@ CharacterDetailedTabStatusView.prototype.showStatus=function(){
 	var datas = [
 	characterModel.seigniorName(),
 	characterModel.identity(),
-	characterModel.age(),
+	LMvc.chapterData.noLife ? "--" : characterModel.age(),
 	characterModel.cityId() > 0 ? characterModel.city().name() : "--",
 	loyaltyLabel,
 	battleStatus ? battleStatus : characterModel.jobLabel()
