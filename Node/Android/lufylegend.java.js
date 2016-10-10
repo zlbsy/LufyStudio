@@ -32,8 +32,8 @@ function LPurchaseCreate() {
     LPurchase.prototype.productInformation = function(productIds){
     	LPlugin.productInformation(productIds);
     };
-    LPurchase.prototype.purchase = function(productId, paymentTime, subject, body, totalFee){
-    	LPlugin.purchase(productId, paymentTime, subject, body, totalFee);
+    LPurchase.prototype.purchase = function(productId, itemId, paymentTime, subject, body, totalFee){
+    	LPlugin.purchase(productId, itemId, paymentTime, subject, body, totalFee);
     };
     LPurchase.prototype.purchaseCheck = function(productId){
     	LPlugin.purchaseCheck(productId);

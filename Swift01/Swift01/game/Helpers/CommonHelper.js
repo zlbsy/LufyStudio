@@ -183,6 +183,16 @@ function getCreateSeigniorAsType(noneSeignior,child){
 		var area = noneSeignior.areas.splice(cityIndex, 1)[0];
 		for(var i=0,l=city.generals.length;i<l;i++){
 			area.prefecture = city.prefecture;
+			area.level = 2;
+			area.money = 5000;
+			area.food = 25000;
+			area.population = 50000;
+			area.business = 6000;
+			area.agriculture = 6000;
+			area.technology = 3500;
+			area.police = 100;
+			area.city_defense = 1300;
+			area.troops = 3000;
 			area.generals.push({chara_id:city.generals[i],feat:0,loyalty:100});
 		}
 		seignior.areas.push(area);

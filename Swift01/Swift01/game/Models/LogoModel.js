@@ -13,7 +13,6 @@ LogoModel.prototype.getImages=function(){
 		{name:"win05",path:LMvc.IMG_PATH+"win/win05.png"},
 		{name:"win07",path:LMvc.IMG_PATH+"win/win07.png"},
 		{name:"close",path:LMvc.IMG_PATH+"component/close.png"},
-		{name:"ok",path:LMvc.IMG_PATH+"component/ok.png"},
 		{name:"lock",path:LMvc.IMG_PATH+"icon/lock.png"}
 	];
 	return list;

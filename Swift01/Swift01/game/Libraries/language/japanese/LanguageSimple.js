@@ -57,6 +57,7 @@ Language.dataSimple = {
 	"purchase_confirm_web_message":"<font size='21' color='#FFFFFF'>今のバージョンは<font color='#FF0000'>{0}</font>という機能が使えません、ネーティブ版<font color='#FF0000'>をダウンロードしてください。</font>!</font>",
 	"select_seignior_message":"<font size='22' color='#FFFFFF'>勢力 <font color='#FF0000'>{0}</font> を選択しますか？</font>",
 	"purchase_already_buy_confirm":"<font size='21' color='#D3D3D3'>「<font size='21' color='#FAFAD2'>{0}</font>」は購入したことがあるから，「リストア」機能を使ってください。</font>",
+	"purchase_only_alipay":"<font size='21' color='#D3D3D3'>今は 「<font size='21' color='#FAFAD2'>中国支付宝</font>」 しかサポートしません。</font>",
 	"chapter_1":"黄巾の乱",
 	"chapter_2":"反董卓連合",
 	"chapter_3":"呂布の兗州強奪",

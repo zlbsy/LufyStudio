@@ -57,6 +57,7 @@ Language.dataSimple = {
 	"purchase_confirm_web_message":"<font size='21' color='#FFFFFF'>当前版本无法使用<font color='#FF0000'>{0}</font>功能，请下载<font color='#FF0000'>手机安装版本</font>!</font>",
 	"select_seignior_message":"<font size='22' color='#FFFFFF'>要选择势力 <font color='#FF0000'>{0}</font> 吗？</font>",
 	"purchase_already_buy_confirm":"<font size='21' color='#D3D3D3'>您已经购买过「<font size='21' color='#FAFAD2'>{0}</font>」，请使用「恢复购买」功能重新开通此功能。</font>",
+	"purchase_only_alipay":"<font size='21' color='#D3D3D3'>目前只支持 「<font size='21' color='#FAFAD2'>中国支付宝</font>」 付费。</font>",
 	"chapter_1":"覆苍天黄巾当立",
 	"chapter_2":"伐董卓诸侯并起",
 	"chapter_3":"吕温侯豪取兖州",

@@ -16,7 +16,6 @@ CreateSettingModel.prototype.getImages=function(){
 		{name:"combobox_arraw",path:LMvc.IMG_PATH+"component/combobox_off.png"},
 		{name:"background-text01",path:LMvc.IMG_PATH+"background/text01.png"},
 		{name:"close",path:LMvc.IMG_PATH+"component/close.png"},
-		{name:"ok",path:LMvc.IMG_PATH+"component/ok.png"},
 		{name:"range",path:LMvc.IMG_PATH+"component/range.png"},
 		{name:"checkbox-background",path:LMvc.IMG_PATH+"component/checkbox-background.png"},
 		{name:"checkbox-on",path:LMvc.IMG_PATH+"component/checkbox-on.png"},

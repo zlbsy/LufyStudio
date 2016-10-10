@@ -8,7 +8,6 @@ SingleCombatArenaModel.prototype.getImages=function(){
 	var self = this;
 	var list = [];
 	list.push({name:"close",path:LMvc.IMG_PATH+"component/close.png"});
-	list.push({name:"ok",path:LMvc.IMG_PATH+"component/ok.png"});
 	list.push({name:"win02",path:LMvc.IMG_PATH+"win/win02.png"});
 	list.push({name:"win05",path:LMvc.IMG_PATH+"win/win05.png"});
 	return list;

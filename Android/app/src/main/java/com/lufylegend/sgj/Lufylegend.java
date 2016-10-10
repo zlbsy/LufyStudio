@@ -11,7 +11,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Handler;
 import android.provider.Settings;
-import android.support.v7.app.AppCompatActivity;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.Window;
@@ -55,7 +54,7 @@ public class Lufylegend {
         this.context = context;
         soundInit();
     }
-    public static void initialize(String path, AppCompatActivity activity){
+    public static void initialize(String path, Activity activity){
         Lufylegend.gamePath = path;
         activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         activity.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -212,24 +211,6 @@ public class Lufylegend {
                 text += str;
             }
             return text;
-            /*final ByteArrayOutputStream byteStream = new ByteArrayOutputStream(readLength);  //一時バッファのように使う
-            final byte[] bytes = new byte[readLength];
-            final BufferedInputStream bis = new BufferedInputStream(inputStream, readLength);
-            try {
-                int len = 0;
-                while ((len = bis.read(bytes, 0, readLength)) > 0) {
-                    byteStream.write(bytes, 0, len);    //ストリームバッファに溜め込む
-                }
-                return new String(byteStream.toByteArray());    //byte[] に変換
-            } finally {
-                try {
-                    byteStream.reset();     //すべてのデータを破棄
-                    bis.close();            //ストリームを閉じる
-                } catch (Exception e) {
-                    //IOException
-                }
-            }
-            */
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -295,13 +276,13 @@ public class Lufylegend {
         execPost("purchase_information/", params, completeEvent, errorEvent);
     }
     @JavascriptInterface
-    public void purchase(String productId, String paymentTime, String subject, String body,String totalFee){
+    public void purchase(String productId, String itemId, String paymentTime, String subject, String body,String totalFee){
         String trGameId = identificationId();
         if(trGameId == ""){
             purchaseError();
             return;
         }
-        String outTradeNo = productId.replace("com.lufylegend.","") + "." + trGameId + "." + paymentTime;
+        String outTradeNo = itemId + "." + trGameId + "." + paymentTime;
         outTradeNo = outTradeNo.length() > 64 ? outTradeNo.substring(0, 64) : outTradeNo;
         String params = "{";
         params += "'identification_id':'"+trGameId+"'";

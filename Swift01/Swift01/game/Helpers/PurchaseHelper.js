@@ -115,7 +115,8 @@ function purchaseStartAndroid(productId, callback) {
 	var subject = product.title;
 	var body = product.title;
 	var totalFee = product.price;
-	purchase.purchase(productId, paymentTime, subject, body, totalFee);
+	var itemId = product.itemId;
+	purchase.purchase(productId, itemId, paymentTime, subject, body, totalFee);
 }
 
 function purchaseHasBuy(productId) {
@@ -167,6 +168,10 @@ function purchaseConfirmShow(productId, name, group, callback) {
 			obj.height += 160;
 		}else{
 			obj.messageHtml = String.format(Language.get("purchase_confirm_native_message"), name, product.priceLabel);
+		}
+		if(LGlobal.android){
+			obj.messageHtml += "\n" + Language.get("purchase_only_alipay");
+			obj.height += 40;
 		}
 		obj.okEvent = function(e) {
 			e.currentTarget.parent.remove();

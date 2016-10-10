@@ -14,7 +14,6 @@ ChapterModel.prototype.getImages=function(){
 		{name:"win04",path:LMvc.IMG_PATH+"win/win04.png"},
 		{name:"win05",path:LMvc.IMG_PATH+"win/win05.png"},
 		{name:"close",path:LMvc.IMG_PATH+"component/close.png"},
-		{name:"ok",path:LMvc.IMG_PATH+"component/ok.png"},
 		{name:"arrow",path:LMvc.IMG_PATH+"icon/arrow.png"},
 		{name:"common-black",path:LMvc.IMG_PATH+"common/black.png"},
 		{name:"checkbox-background",path:LMvc.IMG_PATH+"component/checkbox-background.png"},

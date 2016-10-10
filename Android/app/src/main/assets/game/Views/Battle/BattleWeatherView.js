@@ -45,14 +45,46 @@ BattleWeatherView.prototype.create = function(weather){
 	self.addChild(layer);
 	return layer;
 };
+BattleWeatherView.prototype.getAndroidDialog = function(layer, weatherType){
+	var self = this;
+	var panel = getPanel("win05",200,240);
+	layer.x = 10;
+	layer.y = 50;
+	panel.addChild(layer);
+	var weather = String.format("{0}:{1}", Language.get("weather"),Language.get(weatherType));
+	label = getStrokeLabel(weather,24,"#FFFFFF","#000000",4);
+	label.x = 10;
+	label.y = 10;
+	panel.addChild(label);
+	var closePanel = new LButton(new LBitmap(new LBitmapData(LMvc.datalist["close"])));
+	closePanel.x = panel.getWidth() - closePanel.getWidth() - 10;
+	closePanel.y = 5;
+	panel.addChild(closePanel);
+	closePanel.addEventListener(LMouseEvent.MOUSE_UP,function(event){
+		event.currentTarget.parent.visible = false;
+	});
+	return panel;
+};
 BattleWeatherView.prototype.createCloud = function(){
+	var self = this;
+	var width = LGlobal.width;
+	var height = LGlobal.height;
+	if(LGlobal.android){
+		width = height = 180;
+	}
 	var layer = new LSprite();
-	layer.graphics.drawRect(0,"#000000",[0,0,LGlobal.width,LGlobal.height], true, "#ffffff");
+	layer.graphics.drawRect(0,"#000000",[0,0,width,height], true, "#ffffff");
 	layer.alpha = 0.6;
 	layer.cacheAsBitmap(true);
-	return layer;
+	if(LGlobal.android){
+		var panel = self.getAndroidDialog(layer, BattleWeatherConfig.CLOUD);
+		return panel;
+	}else{
+		return layer;
+	}
 };
 BattleWeatherView.prototype.createSnow = function(){
+	var self = this;
 	var datas = [], listChild = [];
 	for(var i=0;i<4;i++){
 		var layer = new LSprite();
@@ -69,15 +101,28 @@ BattleWeatherView.prototype.createSnow = function(){
 			c.fill();
 		});
 		layer.alpha = 0.6;
-		var bitmapData = getBitmapData(layer);
+		if(LGlobal.android){
+			layer.scaleX = layer.scaleY = 180 / LGlobal.width;
+		}
+		var bitmapData = getBitmapData(layer, true);
+		if(LGlobal.android){
+			bitmapData.height = bitmapData.width;
+		}
+		layer.die();
 		datas.push(bitmapData);
-		listChild.push({dataIndex : i, x : 0, y : 0, width : LGlobal.width, height : LGlobal.height, sx : 0, sy : 0});
+		listChild.push({dataIndex : i, x : 0, y : 0, width : bitmapData.width, height : bitmapData.height, sx : 0, sy : 0});
 	}
-	var rainLayer = new LAnimationTimeline(datas, [listChild]);
-	rainLayer.speed = 12;
-	return rainLayer;
+	var snowLayer = new LAnimationTimeline(datas, [listChild]);
+	snowLayer.speed = 12;
+	if(LGlobal.android){
+		var panel = self.getAndroidDialog(snowLayer, BattleWeatherConfig.SNOW);
+		return panel;
+	}else{
+		return snowLayer;
+	}
 };
 BattleWeatherView.prototype.createRain = function(){
+	var self = this;
 	var datas = [], listChild = [];
 	for(var i=0;i<4;i++){
 		var layer = new LSprite();
@@ -93,17 +138,28 @@ BattleWeatherView.prototype.createRain = function(){
 			}
 			c.stroke();
 		});
+		if(LGlobal.android){
+			layer.scaleX = layer.scaleY = 180 / LGlobal.width * 1.3;
+		}
 		var bitmapData = getBitmapData(layer, true);
+		if(LGlobal.android){
+			bitmapData.height = bitmapData.width = 180;
+		}
 		layer.die();
 		datas.push(bitmapData);
-		listChild.push({dataIndex : i, x : 0, y : 0, width : LGlobal.width * 1.3, height : LGlobal.height * 1.3, sx : 0, sy : 0});
+		listChild.push({dataIndex : i, x : 0, y : 0, width : bitmapData.width, height : bitmapData.height, sx : 0, sy : 0});
 	}
 	var rainLayer = new LAnimationTimeline(datas, [listChild]);
 	rainLayer.speed = 2;
-	rainLayer.x = LGlobal.width * 0.15;
-	rainLayer.y = -LGlobal.height * 0.2;
-	rainLayer.rotate = 20;
-	return rainLayer;
+	if(LGlobal.android){
+		var panel = self.getAndroidDialog(rainLayer, BattleWeatherConfig.RAIN);
+		return panel;
+	}else{
+		rainLayer.x = LGlobal.width * 0.15;
+		rainLayer.y = -LGlobal.height * 0.2;
+		rainLayer.rotate = 20;
+		return rainLayer;
+	}
 };
 BattleWeatherView.prototype.show = function(weather){
 	var self = this;
@@ -136,7 +192,7 @@ BattleWeatherView.prototype.getData = function(){
 	if(self.currentWeather){
 		return {weather:self.currentWeather.weather, probability:self.currentWeather.probability};
 	}
-	return {weather:BattleWeatherConfig.CLOUD, probability:0};
+	return {weather:BattleWeatherConfig.SUNNY, probability:0};
 };
 BattleWeatherView.prototype.setData = function(obj){
 	var self = this;

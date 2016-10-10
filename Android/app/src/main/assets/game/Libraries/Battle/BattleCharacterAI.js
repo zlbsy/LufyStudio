@@ -180,7 +180,8 @@ BattleCharacterAI.prototype.physicalAttack = function(target) {
 					rangeAttackTarget = self.chara.data.currentSoldiers().rangeAttackTarget();
 					if(skill && (skill.isSubType(SkillSubType.FALL_BACK) || skill.isSubType(SkillSubType.BREAK_THROUGH)) && self.herts.length == 0){
 						self.chara.currentSkill = skill;
-						var penetratePoint = getPenetratePoint(self.chara,target);
+						var penetratePoint = getPenetratePoint(self.chara,target, 1);
+						penetratePoint = penetratePoint[0];
 						var chara = LMvc.BattleController.view.charaLayer.getCharacterFromLocation(target.locationX()+penetratePoint.x, target.locationY()+penetratePoint.y);
 						if(chara && !isSameBelong(chara.belong,self.chara.belong)){
 							rangeAttackTarget.push(penetratePoint);
@@ -365,7 +366,8 @@ BattleCharacterAI.prototype.attackActionComplete = function(event) {
 	if(selfSkill && self.herts.length == 0){
 		var charaLayer = LMvc.BattleController.view.charaLayer;
 		if(!self.attackTarget.data.isDefCharacter() && selfSkill.isSubType(SkillSubType.FALL_BACK)){
-			var penetratePoint = getPenetratePoint(chara,self.attackTarget);
+			var penetratePoint = getPenetratePoint(chara,self.attackTarget, 1);
+			penetratePoint = penetratePoint[0];
 			var lx = self.attackTarget.locationX()+penetratePoint.x;
 			var ly = self.attackTarget.locationY()+penetratePoint.y;
 			var terrainId = mapLayer.getTerrainId(lx, ly);
@@ -378,7 +380,8 @@ BattleCharacterAI.prototype.attackActionComplete = function(event) {
 				}
 			}
 		}else if(selfSkill.isSubType(SkillSubType.BREAK_THROUGH)){
-			var penetratePoint = getPenetratePoint(chara,self.attackTarget);
+			var penetratePoint = getPenetratePoint(chara,self.attackTarget, 1);
+			penetratePoint = penetratePoint[0];
 			var lx = self.attackTarget.locationX()+penetratePoint.x;
 			var ly = self.attackTarget.locationY()+penetratePoint.y;
 			var terrainId = mapLayer.getTerrainId(lx, ly);

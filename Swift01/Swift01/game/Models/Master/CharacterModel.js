@@ -65,6 +65,7 @@ CharacterModel.createEmployCharacter = function(id, soldierId, cityId){
 	chara.data.command = status[property.defense];
 	chara.data.agility = status[property.breakout];
 	chara.data.luck = status[property.morale];
+	chara._soldiers = null;
 	var sumPoint = values[chara.data.employLevel];
 	status = ["force", "intelligence", "command", "agility", "luck"];
 	while(sumPoint != 0){
