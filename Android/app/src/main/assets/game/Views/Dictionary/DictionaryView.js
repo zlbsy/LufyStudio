@@ -9,7 +9,7 @@ DictionaryView.prototype.init=function(){
 	
 	var title = Language.get("game_dictionary");
 	var txtTitle = getStrokeLabel(title,30,"#FFFFFF","#CCCCCC",1);
-	txtTitle.x = (LGlobal.width - txtTitle.getWidth()) * 0.5;
+	txtTitle.x = (LMvc.screenWidth - txtTitle.getWidth()) * 0.5;
 	txtTitle.y = 20;
 	self.addChild(txtTitle);
 	
@@ -17,7 +17,7 @@ DictionaryView.prototype.init=function(){
 	self.addChild(self.listLayer);
 	self.listLayerInit();
 	self.contentLabel = getStrokeLabel("",20,"#FFFFFF","#000000",2);
-	self.contentLabel.width = LGlobal.width - 40;
+	self.contentLabel.width = LMvc.screenWidth - 40;
 	self.contentLabel.setWordWrap(true,27);
 	self.contentLabel.x = 20;
 	self.contentLabel.y = 100;
@@ -41,7 +41,7 @@ DictionaryView.prototype.listLayerInit=function(){
 	
 	self.listView = new LListView();
 	self.listView.y = 15;
-	self.listView.resize(440, LGlobal.height - 100);
+	self.listView.resize(440, LMvc.screenHeight - 100);
 	self.listView.maxPerLine = 4;
 	self.listView.cellWidth = 110;
 	self.listView.cellHeight = 50;
@@ -66,7 +66,7 @@ DictionaryView.prototype.ctrlLayerInit=function(){
 	var self = this;
 	var bitmapClose = new LBitmap(new LBitmapData(LMvc.datalist["close"]));
 	var buttonClose = new LButton(bitmapClose);
-	buttonClose.x = LGlobal.width - bitmapClose.getWidth() - 5;
+	buttonClose.x = LMvc.screenWidth - bitmapClose.getWidth() - 5;
 	buttonClose.y = 5;
 	
 	self.ctrlLayer.addChild(buttonClose);

@@ -8,7 +8,7 @@ function RecordChildView(index){
 }
 RecordChildView.prototype.init=function(){
 	var self = this;
-	self.backLayer = new LPanel(new LBitmapData(LMvc.datalist["win03"]), LGlobal.width - 100, 80);
+	self.backLayer = new LPanel(new LBitmapData(LMvc.datalist["win03"]), LMvc.screenWidth - 100, 80);
 	self.addChild(self.backLayer);
 	if(self.recordIndex > 0){
 		var lblIndex = getStrokeLabel(self.recordIndex+".",18,"#999999","#000000",4);

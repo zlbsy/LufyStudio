@@ -17,20 +17,20 @@ CreateSettingCharacterListView.prototype.layerInit=function(){
 	var self = this;
 	self.baseLayer = new LSprite();
 	self.addChild(self.baseLayer);
-	var panel = getBitmap(new LPanel(new LBitmapData(LMvc.datalist["win05"]),LGlobal.width, LGlobal.height));
+	var panel = getBitmap(new LPanel(new LBitmapData(LMvc.datalist["win05"]),LMvc.screenWidth, LMvc.screenHeight));
 	self.baseLayer.addChild(panel);
 	
 	self.titleLayer = new LSprite();
 	self.baseLayer.addChild(self.titleLayer);
 	
 	var closeButton = new LButton(new LBitmap(new LBitmapData(LMvc.datalist["close"])));
-	closeButton.x = LGlobal.width - closeButton.getWidth();
+	closeButton.x = LMvc.screenWidth - closeButton.getWidth();
 	self.baseLayer.addChild(closeButton);
 	closeButton.addEventListener(LMouseEvent.MOUSE_UP, self.closeSelf);
 	
 	var executeButton = getButton(Language.get("execute"),120);
-	executeButton.x = (LGlobal.width - executeButton.getWidth()) * 0.5;
-	executeButton.y = LGlobal.height - executeButton.getHeight() - 20;
+	executeButton.x = (LMvc.screenWidth - executeButton.getWidth()) * 0.5;
+	executeButton.y = LMvc.screenHeight - executeButton.getHeight() - 20;
 	self.baseLayer.addChild(executeButton);
 	executeButton.addEventListener(LMouseEvent.MOUSE_UP, self.execute);
 };
@@ -91,7 +91,7 @@ CreateSettingCharacterListView.prototype.setCharacterList=function(){
 	self.listView.isOnlyOne = self.isOnlyOne;
 	self.listView.x = 10;
 	self.listView.y = 90;
-	self.listView.cellWidth = LGlobal.width - 40;
+	self.listView.cellWidth = LMvc.screenWidth - 40;
 	self.listView.cellHeight = 50;
 	self.baseLayer.addChild(self.listView);
 	var items = [], child;
@@ -104,7 +104,7 @@ CreateSettingCharacterListView.prototype.setCharacterList=function(){
 		items.push(child);
 	}
 		
-	self.listView.resize(self.listView.cellWidth, LGlobal.height - self.listView.y - 80);
+	self.listView.resize(self.listView.cellWidth, LMvc.screenHeight - self.listView.y - 80);
 	if(items.length == 0){
 		var obj = {title:Language.get("confirm"),message:Language.get("create_seignior_no_character_error"),width:300,height:220};
 		var windowLayer = ConfirmWindow(obj);

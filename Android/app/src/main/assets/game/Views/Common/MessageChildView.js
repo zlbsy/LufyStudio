@@ -9,7 +9,7 @@ MessageChildView.prototype.set = function(msg, color){
 	child.x = 10;
 	child.y = 2;
 	self.addChild(child);
-	self.graphics.rect(0, 0, LGlobal.width - 20, 20);
+	self.graphics.rect(0, 0, LMvc.screenWidth - 20, 20);
 };
 MessageChildView._list = [];
 MessageChildView.createChild = function(msg, color){

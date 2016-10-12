@@ -8,7 +8,7 @@ SpecialEffectView.prototype.set=function(){
 	var list = LGlobal.divideCoordinate(5760, 72, 1, 12);
 	var data = new LBitmapData(LMvc.datalist["big_attack_1"], 0, 0, 480, 72);
 	var anime = new LAnimationTimeline(data, list);
-	anime.y = (LGlobal.height - 72) * 0.5;
+	anime.y = (LMvc.screenHeight - 72) * 0.5;
 	anime.speed = 2;
 	anime.addEventListener(LEvent.COMPLETE, self.animeComplete);
 	self.addChild(anime);

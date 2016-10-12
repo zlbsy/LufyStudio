@@ -1,11 +1,11 @@
 /*
  * LScript.js
  **/
-function LScript(scriptLayer, value) {
+function LScript(scriptLayer, value, width, height) {
 	var self = this;
 	LGlobal.script = self;
 	self.scriptLayer = scriptLayer;
-	scriptLayer.addShape(LShape.RECT,[0, 0, LGlobal.width, LGlobal.height]);
+	scriptLayer.addShape(LShape.RECT,[0, 0, width ? width : LGlobal.width, height ? height : LGlobal.height]);
 	self.scriptArray = new LScriptArray();
 	self.scriptArray.layerList["-"] = scriptLayer;
 	self.dataList = new Array();

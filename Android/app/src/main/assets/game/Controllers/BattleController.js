@@ -356,7 +356,7 @@ BattleController.prototype.mapMouseDown = function(event){
 	self.downY = event.offsetY;
 	self.selfX = event.selfX;
 	self.selfY = event.selfY;
-	if(LGlobal.height < self.model.map.height || LGlobal.width < self.model.map.width){
+	if(LMvc.screenHeight < self.model.map.height || LMvc.screenWidth < self.model.map.width){
 		event.currentTarget.startDrag(event.touchPointID);
 	}
 	self.draging = true;

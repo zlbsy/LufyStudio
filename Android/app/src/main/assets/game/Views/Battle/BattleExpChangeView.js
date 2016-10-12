@@ -9,7 +9,7 @@ function BattleExpChangeView(controller){
 	self.setBackground();
 	self.setData(0);
 	
-	self.addShape(LShape.RECT,[0,0,LGlobal.width,LGlobal.height]);
+	self.addShape(LShape.RECT,[0,0,LMvc.screenWidth,LMvc.screenHeight]);
 	self.addEventListener(LMouseEvent.MOUSE_DOWN, self.mousedown); 
 	self.addEventListener(LMouseEvent.MOUSE_UP, self.mouseup); 
 }
@@ -34,7 +34,7 @@ BattleExpChangeView.prototype.initLayer = function(){
 BattleExpChangeView.prototype.setBackground = function(){
 	var self = this;
 	var backgroundData = new LBitmapData(LMvc.datalist["background-text01"]);
-	var panel = new LPanel(backgroundData,LGlobal.width,30 * ((self.datas ? self.datas.length : 1) + 2));
+	var panel = new LPanel(backgroundData,LMvc.screenWidth,30 * ((self.datas ? self.datas.length : 1) + 2));
 	panel.cacheAsBitmap(true);
 	self.baseLayer.addChildAt(panel,0);
 };

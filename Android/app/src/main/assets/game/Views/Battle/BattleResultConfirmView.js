@@ -40,7 +40,7 @@ function BattleResultConfirmView(controller, params){
 			break;
 	}
 	var y = self.baseLayer.y;
-	self.baseLayer.y = LGlobal.height;
+	self.baseLayer.y = LMvc.screenHeight;
 	LTweenLite.to(self.baseLayer,0.3,{y:y});
 }
 BattleResultConfirmView.prototype.initLayer = function(){
@@ -57,8 +57,8 @@ BattleResultConfirmView.prototype.resize = function(w, h){
 	self.windowPanel.cacheAsBitmap(false);
 	self.windowPanel.resize(w, h);
 	self.windowPanel.cacheAsBitmap(true);
-	self.baseLayer.x = (LGlobal.width - self.windowWidth)*0.5;
-	self.baseLayer.y = (LGlobal.height - self.windowHeight)*0.5;
+	self.baseLayer.x = (LMvc.screenWidth - self.windowWidth)*0.5;
+	self.baseLayer.y = (LMvc.screenHeight - self.windowHeight)*0.5;
 };
 BattleResultConfirmView.prototype.setBackground = function(){
 	var self = this;
@@ -231,7 +231,7 @@ BattleResultConfirmView.prototype.tweenClose=function(event){
 	var button = event.target;
 	var baseLayer = buttonLayer.parent;
 	baseLayer.parent.eventType = button.eventType;
-	LTweenLite.to(buttonLayer.parent,0.3,{y:LGlobal.height,onComplete:function(e){
+	LTweenLite.to(buttonLayer.parent,0.3,{y:LMvc.screenHeight,onComplete:function(e){
 		var self = e.target.parent;
 		if(self){
 			self.dispatchEvent(self.eventType);

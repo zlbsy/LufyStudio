@@ -105,7 +105,7 @@ AreaIconView.prototype.selectCityComplete=function(event){
 AreaIconView.prototype.onframe=function(event){
 	var self = event.currentTarget;
 	var point = self.getRootCoordinate();
-	if(point.x > LGlobal.width || point.x < -self.width || point.y > LGlobal.height || point.y < -self.height){
+	if(point.x > LMvc.screenWidth || point.x < -self.width || point.y > LMvc.screenHeight || point.y < -self.height){
 		self.layer.visible = false;
 	}else{
 		self.layer.visible = true;

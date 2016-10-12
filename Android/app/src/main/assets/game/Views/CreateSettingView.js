@@ -15,7 +15,7 @@ CreateSettingView.prototype.layerInit=function(){
 	var self = this;
 	self.baseLayer = new LSprite();
 	self.addChild(self.baseLayer);
-	var panel = getPanel("win05",LGlobal.width, LGlobal.height);
+	var panel = getPanel("win05",LMvc.screenWidth, LMvc.screenHeight);
 	self.baseLayer.addChild(panel);
 	
 	self.titleLayer = new LSprite();
@@ -57,7 +57,7 @@ CreateSettingView.prototype.setSeigniorList=function(){
 	self.listView = new LListView();
 	self.listView.x = 10;
 	self.listView.y = 90;
-	self.listView.cellWidth = LGlobal.width - 40;
+	self.listView.cellWidth = LMvc.screenWidth - 40;
 	self.listView.cellHeight = 50;
 	self.baseLayer.addChild(self.listView);
 	/*{id:1000,color:"0,0,255",citys:[{id:39,prefecture:1,generals:[1,2]}]}*/
@@ -68,7 +68,7 @@ CreateSettingView.prototype.setSeigniorList=function(){
 		items.push(child);
 	}
 		
-	self.listView.resize(self.listView.cellWidth, LGlobal.height - self.y - self.listView.y - 15);
+	self.listView.resize(self.listView.cellWidth, LMvc.screenHeight - self.y - self.listView.y - 15);
 	self.listView.updateList(items);
 	
 	var updateButton = getSizeButton(Language.get("create"),100,40);
@@ -78,7 +78,7 @@ CreateSettingView.prototype.setSeigniorList=function(){
 	updateButton.addEventListener(LMouseEvent.MOUSE_UP, self.showDetailed);
 	
 	var closeButton = new LButton(new LBitmap(new LBitmapData(LMvc.datalist["close"])));
-	closeButton.x = LGlobal.width - closeButton.getWidth();
+	closeButton.x = LMvc.screenWidth - closeButton.getWidth();
 	self.baseLayer.addChild(closeButton);
 	closeButton.addEventListener(LMouseEvent.MOUSE_UP, self.closeSelf);
 };

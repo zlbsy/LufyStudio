@@ -12,8 +12,8 @@ function Toast(message){
 	layer.addChild(msg);
 	layer.cacheAsBitmap(true);
 	//var back = getBitmap(layer);
-	layer.x = (LGlobal.width - layer.getWidth()) * 0.5;
-	layer.y = (LGlobal.width - layer.getHeight()) * 0.5;
+	layer.x = (LMvc.screenWidth - layer.getWidth()) * 0.5;
+	layer.y = (LMvc.screenHeight - layer.getHeight()) * 0.5;
 	self.addChild(layer);
 }
 Toast.makeText = function(message){

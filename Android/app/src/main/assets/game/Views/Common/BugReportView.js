@@ -35,7 +35,7 @@ BugReportView.prototype.set = function(){
 	buttonBug.y = 210;
 	self.addChild(buttonBug);
 	buttonBug.addEventListener(LMouseEvent.MOUSE_UP, self.selectReport);
-	var win = new LPanel(new LBitmapData(LMvc.datalist["win03"]), LGlobal.width - 100, 80);
+	var win = new LPanel(new LBitmapData(LMvc.datalist["win03"]), LMvc.screenWidth - 100, 80);
 	win.y = 260;
 	self.addChild(win);
 	self.labelsLayer = new LSprite();

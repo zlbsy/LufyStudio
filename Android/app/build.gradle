@@ -7,8 +7,8 @@ android {
         applicationId "com.lufylegend.sgj"
         minSdkVersion 9
         targetSdkVersion 9
-        versionName '1.7.0'
-        versionCode 1
+        versionName '1.8.0'
+        versionCode 2
     }
     buildTypes {
         release {

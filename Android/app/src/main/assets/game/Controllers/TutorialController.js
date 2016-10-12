@@ -115,14 +115,14 @@ TutorialController.prototype.clickMask=function(path, name, width, height, fromX
 	if(!width){
 		width = target.getWidth();
 	}else if(width == "LGlobal.width"){
-		width = LGlobal.width;
+		width = LMvc.screenWidth;
 	}else{
 		width = parseInt(width);
 	}
 	if(!height){
 		height = target.getHeight();
 	}else if(height == "LGlobal.height"){
-		height = LGlobal.height;
+		height = LMvc.screenHeight;
 	}else{
 		height = parseInt(height);
 	}

@@ -16,8 +16,8 @@ ChapterDetailedView.prototype.layerInit=function(){
 	self.baseLayer = getTranslucentMask();
 	self.addChild(self.baseLayer);
 	self.backLayer = getPanel("win05", self.windowWidth, 400);
-	self.backLayer.x = (LGlobal.width - self.windowWidth) * 0.5;
-	self.backLayer.y = (LGlobal.height - 400) * 0.5;
+	self.backLayer.x = (LMvc.screenWidth - self.windowWidth) * 0.5;
+	self.backLayer.y = (LMvc.screenHeight - 400) * 0.5;
 	self.addChild(self.backLayer);
 	self.seigniorsLayer = new LSprite();
 	self.seigniorsLayer.y = 130;

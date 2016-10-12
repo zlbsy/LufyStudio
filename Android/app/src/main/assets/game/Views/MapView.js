@@ -57,10 +57,10 @@ MapView.prototype.mapInit=function(){
 	self.backLayer.addShape(LShape.RECT,[0,0,self.backgroundWidth,self.backgroundHeight]);
 	
 	self.baseLayer.dragRange = new LRectangle(
-		LGlobal.width - self.backgroundWidth,
-		LGlobal.height - self.backgroundHeight,
-		self.backgroundWidth - LGlobal.width,
-		self.backgroundHeight - LGlobal.height
+		LMvc.screenWidth - self.backgroundWidth,
+		LMvc.screenHeight - self.backgroundHeight,
+		self.backgroundWidth - LMvc.screenWidth,
+		self.backgroundHeight - LMvc.screenHeight
 	);
 	self.toPosition();
 	self.backLayer.addEventListener(LMouseEvent.MOUSE_DOWN,self.areaDragStart);
@@ -93,18 +93,18 @@ MapView.prototype.positionChangeToCity=function(city){
 MapView.prototype.toPosition=function(x, y){
 	var self = this;
 	if(typeof x != UNDEFINED && typeof y != UNDEFINED){
-		self.baseLayer.x = LGlobal.width * 0.5 - x - CityIconConfig.width * 0.5;
-		self.baseLayer.y = LGlobal.height * 0.5 - y - CityIconConfig.height * 0.3;
+		self.baseLayer.x = LMvc.screenWidth * 0.5 - x - CityIconConfig.width * 0.5;
+		self.baseLayer.y = LMvc.screenHeight * 0.5 - y - CityIconConfig.height * 0.3;
 	}
 	if(self.baseLayer.x > 0){
 		self.baseLayer.x = 0;
-	}else if(self.baseLayer.x < LGlobal.width - self.backgroundWidth){
-		self.baseLayer.x = LGlobal.width - self.backgroundWidth;
+	}else if(self.baseLayer.x < LMvc.screenWidth - self.backgroundWidth){
+		self.baseLayer.x = LMvc.screenWidth - self.backgroundWidth;
 	}
 	if(self.baseLayer.y > 0){
 		self.baseLayer.y = 0;
-	}else if(self.baseLayer.y < LGlobal.height - self.backgroundHeight){
-		self.baseLayer.y = LGlobal.height - self.backgroundHeight;
+	}else if(self.baseLayer.y < LMvc.screenHeight - self.backgroundHeight){
+		self.baseLayer.y = LMvc.screenHeight - self.backgroundHeight;
 	}
 };
 MapView.prototype.init=function(){
@@ -177,12 +177,12 @@ MapView.prototype.ctrlLayerInit=function(){
 	var buttonMenu = getButton(Language.get("menu"),100);
 	buttonMenu.addEventListener(LMouseEvent.MOUSE_UP,self.showMainMenu);
 	buttonMenu.name = "menu";
-	buttonMenu.x = LGlobal.width - buttonMenu.getWidth();
+	buttonMenu.x = LMvc.screenWidth - buttonMenu.getWidth();
 	self.ctrlLayer.addChild(buttonMenu);
 	var buttonGo = getButton(Language.get("go"),100);
 	buttonGo.addEventListener(LMouseEvent.MOUSE_UP,self.gotoExecute);
 	buttonGo.name = "go";
-	buttonGo.x = LGlobal.width - buttonGo.getWidth();
+	buttonGo.x = LMvc.screenWidth - buttonGo.getWidth();
 	buttonGo.y = 50;
 	self.ctrlLayer.addChild(buttonGo);
 	
@@ -190,7 +190,7 @@ MapView.prototype.ctrlLayerInit=function(){
 	var buttonClose = new LButton(bitmapClose);
 	buttonClose.addEventListener(LMouseEvent.MOUSE_UP, self.closeMap);
 	buttonClose.name = "close";
-	buttonClose.x = LGlobal.width - bitmapClose.getWidth() - 5;
+	buttonClose.x = LMvc.screenWidth - bitmapClose.getWidth() - 5;
 	buttonClose.y = 5;
 	self.ctrlLayer.addChild(buttonClose);
 	self.changeMode(MapController.MODE_MAP);

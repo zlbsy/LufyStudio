@@ -14,7 +14,7 @@ function BattleMiniPreviewView(controller){
 	self.stepW = BattleCharacterSize.width * self.scaleValue;
 	self.stepH = BattleCharacterSize.height * self.scaleValue;
 	self.map = new LSprite();
-	var background = getBlackBitmap(LGlobal.width,LGlobal.height);
+	var background = getBlackBitmap(LMvc.screenWidth,LMvc.screenHeight);
 	self.map.addChild(bitmap);
 	self.map.cacheAsBitmap(true);
 	self.map.x = 10;

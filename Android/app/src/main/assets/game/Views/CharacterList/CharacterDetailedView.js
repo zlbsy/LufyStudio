@@ -113,7 +113,7 @@ CharacterDetailedView.prototype.setFaceLayer=function(){
 		return;
 	}
 	self.faceView = new CharacterDetailedFaceView(self.controller);
-	self.faceView.x = (LGlobal.width - CharacterFaceSize.width - 20) * 0.5;
+	self.faceView.x = (LMvc.screenWidth - CharacterFaceSize.width - 20) * 0.5;
 	self.faceView.y = 0;
 	self.layer.addChild(self.faceView);
 };
@@ -163,7 +163,7 @@ CharacterDetailedView.prototype.selectedTab=function(key){
 };
 CharacterDetailedView.prototype.tabLayerInit=function(){
 	var self = this;
-	var back = getPanel("win04",450,LGlobal.height - self.tabLayer.y + 10);
+	var back = getPanel("win04",450,LMvc.screenHeight - self.tabLayer.y + 10);
 	back.x = -10;
 	back.y = -10;
 	self.tabLayer.addChild(back);
@@ -223,7 +223,7 @@ CharacterDetailedView.prototype.showEquipment=function(){
 		equipmentView.visible = true;
 		return;
 	}
-	equipmentView = new CharacterDetailedTabEquipmentView(self.controller, LGlobal.width - 50, LGlobal.height - self.tabLayer.y - 10);
+	equipmentView = new CharacterDetailedTabEquipmentView(self.controller, LMvc.screenWidth - 50, LMvc.screenHeight - self.tabLayer.y - 10);
 	self.tabLayer.addChild(equipmentView);
 };
 CharacterDetailedView.prototype.showStrategy=function(){
@@ -237,7 +237,7 @@ CharacterDetailedView.prototype.showStrategy=function(){
 		return;
 	}
 	var characterModel = self.controller.getValue("selectedCharacter");
-	strategyView = new StrategyView(self.controller, characterModel, new LPoint(LGlobal.width - 50, LGlobal.height - self.tabLayer.y - 10),self);
+	strategyView = new StrategyView(self.controller, characterModel, new LPoint(LMvc.screenWidth - 50, LMvc.screenHeight - self.tabLayer.y - 10),self);
 	self.tabLayer.addChild(strategyView);
 };
 CharacterDetailedView.prototype.showArms=function(){
@@ -251,7 +251,7 @@ CharacterDetailedView.prototype.showArms=function(){
 		return;
 	}
 	var characterModel = self.controller.getValue("selectedCharacter");
-	soldiersView = new SoldiersView(self.controller, characterModel, new LPoint(LGlobal.width - 50, LGlobal.height - self.tabLayer.y - 10));
+	soldiersView = new SoldiersView(self.controller, characterModel, new LPoint(LMvc.screenWidth - 50, LMvc.screenHeight - self.tabLayer.y - 10));
 	self.tabLayer.addChild(soldiersView);
 };
 
@@ -265,7 +265,7 @@ CharacterDetailedView.prototype.showStatus=function(){
 		statusView.visible = true;
 		return;
 	}
-	statusView = new CharacterDetailedTabStatusView(self.controller, LGlobal.width - 50, LGlobal.height - self.tabLayer.y - 10);
+	statusView = new CharacterDetailedTabStatusView(self.controller, LMvc.screenWidth - 50, LMvc.screenHeight - self.tabLayer.y - 10);
 	self.tabLayer.addChild(statusView);
 };
 CharacterDetailedView.prototype.showProperties=function(){
@@ -278,7 +278,7 @@ CharacterDetailedView.prototype.showProperties=function(){
 		propertiesView.visible = true;
 		return;
 	}
-	propertiesView = new CharacterDetailedTabPropertiesView(self.controller, LGlobal.width - 50, LGlobal.height - self.tabLayer.y - 10);
+	propertiesView = new CharacterDetailedTabPropertiesView(self.controller, LMvc.screenWidth - 50, LMvc.screenHeight - self.tabLayer.y - 10);
 	self.tabLayer.addChild(propertiesView);
 };
 CharacterDetailedView.prototype.deleteChildFromList=function(characterId){
@@ -321,13 +321,13 @@ CharacterDetailedView.prototype.ctrlLayerInit=function(){
 	rightBitmapData.draw(left, matrix);
 	var right = new LBitmap(rightBitmapData);
 	var rightButton = new LButton(right);
-	rightButton.x = LGlobal.width - leftButton.x - leftBitmapData.width;
+	rightButton.x = LMvc.screenWidth - leftButton.x - leftBitmapData.width;
 	rightButton.y = leftButton.y;
 	self.ctrlLayer.addChild(rightButton);
 	rightButton.addEventListener(LMouseEvent.MOUSE_UP,self.clickRightArrow.bind(self));
 	
 	var buttonClose = getButton(Language.get("return"),100);
-	buttonClose.x = LGlobal.width - buttonClose.getWidth() - 5;
+	buttonClose.x = LMvc.screenWidth - buttonClose.getWidth() - 5;
 	self.ctrlLayer.addChild(buttonClose);
 	buttonClose.addEventListener(LMouseEvent.MOUSE_UP, self.closeCharacterDetailed);
 	var buttonItem = getButton(Language.get("item"),100);

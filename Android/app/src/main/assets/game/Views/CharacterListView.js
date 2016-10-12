@@ -54,7 +54,7 @@ CharacterListView.prototype.listInit=function(){
 	if(!self.buttonClose){
 		var bitmapClose = new LBitmap(new LBitmapData(LMvc.datalist["close"]));
 		var buttonClose = new LButton(bitmapClose);
-		buttonClose.x = LGlobal.width - bitmapClose.getWidth() - 5;
+		buttonClose.x = LMvc.screenWidth - bitmapClose.getWidth() - 5;
 		self.listLayer.addChild(buttonClose);
 		buttonClose.addEventListener(LMouseEvent.MOUSE_UP, self.onClickCloseButton.bind(self));
 		self.buttonClose = buttonClose;
@@ -108,8 +108,8 @@ CharacterListView.prototype.listInit=function(){
 			var button = getButton(Language.get(buttonLabel),160);
 			self.executeButton = button;
 			button.name = "executeButton";
-			button.x = (LGlobal.width - 160) * 0.5;
-			button.y = LGlobal.height - button.getHeight() - 15;
+			button.x = (LMvc.screenWidth - 160) * 0.5;
+			button.y = LMvc.screenHeight - button.getHeight() - 15;
 			self.listLayer.addChild(button);
 			button.addEventListener(LMouseEvent.MOUSE_UP, self.onClickExecuteButton);
 		}
@@ -118,7 +118,7 @@ CharacterListView.prototype.listInit=function(){
 		if(showMoney){
 			if(!self.lblMoney){
 				var lblMoney = getStrokeLabel(String.format("{0}：{1} - {2} = {3}", Language.get("money"), cityModel.moneyLabel(), 0, cityModel.moneyLabel()),26,"#FFFFFF","#000000",4);
-				lblMoney.x = (LGlobal.width - lblMoney.getWidth()) * 0.5;
+				lblMoney.x = (LMvc.screenWidth - lblMoney.getWidth()) * 0.5;
 				lblMoney.y = self.executeButton.y - lblMoney.getHeight() - 10;
 				self.lblMoney = lblMoney;
 				self.listLayer.addChild(lblMoney);
@@ -140,22 +140,22 @@ CharacterListView.prototype.setFooter=function(){
 	}
 	self.pageLabel = getStrokeLabel("1/1",30,"#FFFFFF","#000000",4);
 	self.pageLabel.x = 10;
-	self.pageLabel.y = LGlobal.height - self.pageLabel.getHeight() - 15;
+	self.pageLabel.y = LMvc.screenHeight - self.pageLabel.getHeight() - 15;
 	self.listLayer.addChild(self.pageLabel);
 	
 	var leftBitmapData = new LBitmapData(LMvc.datalist["arrow"]);
 	var left = new LBitmap(leftBitmapData);
 	var leftButton = new LButton(left);
 	leftButton.name = "leftButton";
-	leftButton.x = LGlobal.width - leftBitmapData.width * 2 - 20;
-	leftButton.y = LGlobal.height - leftBitmapData.height - 15;
+	leftButton.x = LMvc.screenWidth - leftBitmapData.width * 2 - 20;
+	leftButton.y = LMvc.screenHeight - leftBitmapData.height - 15;
 	self.listLayer.addChild(leftButton);
 	leftButton.addEventListener(LMouseEvent.MOUSE_UP,self.clickLeftArrow);
 	var rightBitmapData = GameCacher.getScaleBitmapData("arrow", -1, 1);
 	var right = new LBitmap(rightBitmapData);
 	var rightButton = new LButton(right);
 	rightButton.name = "rightButton";
-	rightButton.x = LGlobal.width - leftBitmapData.width - 10;
+	rightButton.x = LMvc.screenWidth - leftBitmapData.width - 10;
 	rightButton.y = leftButton.y;
 	self.listLayer.addChild(rightButton);
 	rightButton.addEventListener(LMouseEvent.MOUSE_UP,self.clickRightArrow);
@@ -223,7 +223,7 @@ CharacterListView.prototype.onChangeChildSelect=function(event){
 	self.usedMoney = usedMoney;
 	self.overageMoney = overageMoney;
 	self.lblMoney.text = String.format("{0}：{1} - {2} = {3}", Language.get("money"), cityModel.moneyLabel(), LString.numberFormat(usedMoney,3), LString.numberFormat(overageMoney,3));
-	self.lblMoney.x = (LGlobal.width - self.lblMoney.getWidth()) * 0.5;
+	self.lblMoney.x = (LMvc.screenWidth - self.lblMoney.getWidth()) * 0.5;
 };
 CharacterListView.prototype.onClickExecuteButton=function(event){
 	var self = event ? event.currentTarget.parent.parent : this;
@@ -471,29 +471,29 @@ CharacterListView.prototype.setArmTab=function(){
 };
 CharacterListView.prototype.showList=function(){
 	var self = this;
-	var listHeight = LGlobal.height - self.contentLayer.y;
+	var listHeight = LMvc.screenHeight - self.contentLayer.y;
 	var minusHeight = 70;
 	if(self.controller.params.showMoney){
 		minusHeight = 100;
 	}
-	listHeight = LGlobal.height - self.contentLayer.y - minusHeight;
+	listHeight = LMvc.screenHeight - self.contentLayer.y - minusHeight;
 	if(self.listView){
 		self.listViewPanel.cacheAsBitmap(false);
-		self.listViewPanel.resize(LGlobal.width, LGlobal.height - self.contentLayer.y);
+		self.listViewPanel.resize(LMvc.screenWidth, LMvc.screenHeight - self.contentLayer.y);
 		self.listViewPanel.cacheAsBitmap(true);
-		self.listView.resize(LGlobal.width - 20,listHeight - 30);
+		self.listView.resize(LMvc.screenWidth - 20,listHeight - 30);
 		self.charactersPush(0);
 		return;
 	}
-	var panel = new LPanel(new LBitmapData(LMvc.datalist["win05"]),LGlobal.width, LGlobal.height - self.contentLayer.y);
+	var panel = new LPanel(new LBitmapData(LMvc.datalist["win05"]),LMvc.screenWidth, LMvc.screenHeight - self.contentLayer.y);
 	panel.cacheAsBitmap(true);
 	self.listViewPanel = panel;
 	self.contentLayer.addChild(panel);
 	
 	self.listView = new LListView();
 	self.listView.y = 15;
-	self.listView.resize(LGlobal.width - 20,listHeight - 30);
-	self.listView.cellWidth = LGlobal.width - 20;
+	self.listView.resize(LMvc.screenWidth - 20,listHeight - 30);
+	self.listView.cellWidth = LMvc.screenWidth - 20;
 	self.listView.cellHeight = 50;
 	self.contentLayer.addChild(self.listView);
 	self.charactersPush(0);

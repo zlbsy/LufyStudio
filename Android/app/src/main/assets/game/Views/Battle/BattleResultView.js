@@ -284,7 +284,7 @@ BattleResultView.prototype.backInit=function(){
 BattleResultView.prototype.showResultTitle=function(value){
 	var self = this;
 	var title = getStrokeLabel(Language.get(value),50,"#CCCCCC","#000000",4);
-	title.x = (LGlobal.width - title.getWidth())*0.5;
+	title.x = (LMvc.screenWidth - title.getWidth())*0.5;
 	title.y = 20;
 	self.addChild(title);
 };

@@ -11,8 +11,8 @@ ChapterView.prototype.init=function(){
 	self.seigniorsLayerInit();
 	self.ctrlLayerInit();
 	self.chapterLayerInit();
-	self.x = LGlobal.width;
-	LTweenLite.to(LMvc.stageLayer,0.5,{x:-LGlobal.width, onComplete:self.logoToHide.bind(self)});
+	self.x = LMvc.screenWidth;
+	LTweenLite.to(LMvc.stageLayer,0.5,{x:-LMvc.screenWidth, onComplete:self.logoToHide.bind(self)});
 };
 ChapterView.prototype.layerInit=function(){
 	var self = this;
@@ -22,11 +22,11 @@ ChapterView.prototype.layerInit=function(){
 	self.addChild(self.chapterLayer);
 	self.seigniorsLayer = new LSprite();
 	self.seigniorsLayer.x = 30;
-	self.seigniorsLayer.y = LGlobal.height - 180;
+	self.seigniorsLayer.y = LMvc.screenHeight - 180;
 	self.addChild(self.seigniorsLayer);
 	self.ctrlLayer = new LSprite();
 	self.addChild(self.ctrlLayer);
-	//var bitmapWin = new LPanel(new LBitmapData(LMvc.datalist["win04"]),LGlobal.width,LGlobal.height,15,25,18,24);
+	//var bitmapWin = new LPanel(new LBitmapData(LMvc.datalist["win04"]),LMvc.screenWidth,LMvc.screenHeight,15,25,18,24);
 	//self.addChild(getBitmap(bitmapWin));
 };
 ChapterView.prototype.logoToHide=function(){
@@ -34,7 +34,7 @@ ChapterView.prototype.logoToHide=function(){
 };
 ChapterView.prototype.backLayerInit=function(){
 	var self = this;
-	self.backLayer.addChild(getPanel("win04",LGlobal.width,LGlobal.height));
+	self.backLayer.addChild(getPanel("win04",LMvc.screenWidth,LMvc.screenHeight));
 };
 ChapterView.prototype.chapterLayerInit=function(){
 	var self = this;
@@ -49,7 +49,7 @@ ChapterView.prototype.chapterLayerInit=function(){
 	bitmapWin.y = txtChapter.getHeight();
 	layer.addChild(txtChapter);
 	layer.cacheAsBitmap(true);
-	layer.x = (LGlobal.width - layer.getWidth()) * 0.5;
+	layer.x = (LMvc.screenWidth - layer.getWidth()) * 0.5;
 	layer.y = 30;
 	miniMap.x = layer.x + 10;
 	miniMap.y = layer.y + bitmapWin.y + 10;
@@ -103,7 +103,7 @@ ChapterView.prototype.seigniorsLayerInit=function(){
 	var self = this;
 	var seigniors = self.controller.getValue("seigniors");
 	self.listView = new LListView();
-	self.listView.resize(LGlobal.width - 60, 160);
+	self.listView.resize(LMvc.screenWidth - 60, 160);
 	self.listView.cellWidth = 160;
 	self.listView.cellHeight = 160;
 	self.listView.arrangement = LListView.Direction.Vertical;
@@ -149,7 +149,7 @@ ChapterView.prototype.ctrlLayerInit=function(){
 	var self = this;
 	var bitmapClose = new LBitmap(new LBitmapData(LMvc.datalist["close"]));
 	var buttonClose = new LButton(bitmapClose);
-	buttonClose.x = LGlobal.width - bitmapClose.getWidth() - 5;
+	buttonClose.x = LMvc.screenWidth - bitmapClose.getWidth() - 5;
 	buttonClose.y = 5;
 	self.ctrlLayer.addChild(buttonClose);
 	buttonClose.addEventListener(LMouseEvent.MOUSE_UP,self.returnToChapterMenu.bind(self));
@@ -168,7 +168,7 @@ ChapterView.prototype.ctrlLayerInit=function(){
 	self.checkboxDebut = check;
 	
 	var settingButton = getButton(Language.get("create_character_setting"),150);
-	settingButton.x = LGlobal.width - settingButton.getWidth() - 25;
+	settingButton.x = LMvc.screenWidth - settingButton.getWidth() - 25;
 	settingButton.y = self.seigniorsLayer.y - settingButton.getHeight() - 5;
 	self.ctrlLayer.addChild(settingButton);
 	settingButton.addEventListener(LMouseEvent.MOUSE_UP, self.loadCreateSetting);

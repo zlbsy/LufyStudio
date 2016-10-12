@@ -139,6 +139,7 @@ LMvc.init = function(){
 	LMvc.layer = new LSprite();
 	addChild(LMvc.layer);
 	LMvc.loading = new LoadingSample5();
+	LMvc.loading.scaleX = LMvc.loading.scaleY = 1/LGlobal.stage.scaleX;
 	LMvc.loading.alpha = 0.5;
 	addChild(LMvc.loading);
 	LMvc.loading.visible = false;

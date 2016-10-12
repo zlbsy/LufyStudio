@@ -135,7 +135,7 @@ SoldierDetailedView.prototype.onClickTerrainButton=function(event){
 		index++;
 	}
 	var obj = {title:Language.get("terrain"), noButton:true,subWindow:layer,
-	width:LGlobal.width-20,height:LGlobal.height-20};
+	width:LMvc.screenWidth-20,height:LMvc.screenHeight-20};
 	var windowLayer = ConfirmWindow(obj);
 	LMvc.layer.addChild(windowLayer);
 };
@@ -161,7 +161,7 @@ SoldierDetailedView.prototype.onClickRestraintButton=function(event){
 		layer.addChild(label);
 	}
 	var obj = {title:Language.get("confirm"), noButton:true,subWindow:layer,
-	width:LGlobal.width-20,height:LGlobal.height-20};
+	width:LMvc.screenWidth-20,height:LMvc.screenHeight-20};
 	var windowLayer = ConfirmWindow(obj);
 	LMvc.layer.addChild(windowLayer);
 };
@@ -187,7 +187,7 @@ SoldierDetailedView.prototype.onClickRestraintPassiveButton=function(event){
 		layer.addChild(label);
 	}
 	var obj = {title:Language.get("confirm"), noButton:true,subWindow:layer,
-	width:LGlobal.width-20,height:LGlobal.height-20};
+	width:LMvc.screenWidth-20,height:LMvc.screenHeight-20};
 	var windowLayer = ConfirmWindow(obj);
 	LMvc.layer.addChild(windowLayer);
 };

@@ -18,7 +18,7 @@ CreateSeigniorCityDetailedView.prototype.layerInit=function(){
 	var self = this;
 	self.baseLayer = new LSprite();
 	self.addChild(self.baseLayer);
-	var panel = getBitmap(new LPanel(new LBitmapData(LMvc.datalist["win05"]),LGlobal.width, LGlobal.height));
+	var panel = getBitmap(new LPanel(new LBitmapData(LMvc.datalist["win05"]),LMvc.screenWidth, LMvc.screenHeight));
 	self.baseLayer.addChild(panel);
 	self.titleLayer = new LSprite();
 	self.baseLayer.addChild(self.titleLayer);
@@ -31,13 +31,13 @@ CreateSeigniorCityDetailedView.prototype.layerInit=function(){
 	self.baseLayer.addChild(self.generalsLayer);
 	
 	var closeButton = new LButton(new LBitmap(new LBitmapData(LMvc.datalist["close"])));
-	closeButton.x = LGlobal.width - closeButton.getWidth();
+	closeButton.x = LMvc.screenWidth - closeButton.getWidth();
 	self.baseLayer.addChild(closeButton);
 	closeButton.addEventListener(LMouseEvent.MOUSE_UP, self.closeSelf);
 	
 	var buttonOK = getButton("OK",200);
-	buttonOK.x = (LGlobal.width - buttonOK.getWidth()) * 0.5;
-	buttonOK.y = LGlobal.height - 60;
+	buttonOK.x = (LMvc.screenWidth - buttonOK.getWidth()) * 0.5;
+	buttonOK.y = LMvc.screenHeight - 60;
 	self.baseLayer.addChild(buttonOK);
 	buttonOK.addEventListener(LMouseEvent.MOUSE_UP, self.onClickOK);
 };
@@ -190,7 +190,7 @@ CreateSeigniorCityDetailedView.prototype.generalsInit=function(){
 		items.push(child);
 		self.prefectureComboBox.setChild({label:data.name,value:data.id});
 	}
-	self.listView.resize(440, LGlobal.height - self.generalsLayer.y - 70);
+	self.listView.resize(440, LMvc.screenHeight - self.generalsLayer.y - 70);
 	self.listView.updateList(items);
 	if(self.cityData){
 		self.prefectureComboBox.setValue(self.cityData.prefecture);

@@ -21,7 +21,7 @@ BattleSelectMenuView.prototype.closeSelectMenu=function(){
 BattleSelectMenuView.prototype.layerInit=function(){
 	var self = this;
 	var translucentLayer = new LSprite();
-	translucentLayer.addShape(LShape.RECT,[0,0,LGlobal.width,LGlobal.height]);
+	translucentLayer.addShape(LShape.RECT,[0,0,LMvc.screenWidth,LMvc.screenHeight]);
 	self.addChild(translucentLayer);
 	translucentLayer.addEventListener(LMouseEvent.MOUSE_DOWN, self.onclick);
 	translucentLayer.addEventListener(LMouseEvent.MOUSE_UP, self.cancel);
@@ -43,11 +43,11 @@ BattleSelectMenuView.prototype.setPosition=function(){
 	var point = BattleController.ctrlChara.getRootCoordinate();
 	self.mainLayer.x=point.x + BattleCharacterSize.width;
 	self.mainLayer.y=point.y;
-	if(self.mainLayer.x + self.mainLayer.getWidth() > LGlobal.width){
+	if(self.mainLayer.x + self.mainLayer.getWidth() > LMvc.screenWidth){
 		self.mainLayer.x = point.x - self.mainLayer.getWidth();
 	}
-	if(self.mainLayer.y + self.mainLayer.getHeight() > LGlobal.height){
-		self.mainLayer.y = LGlobal.height - self.mainLayer.getHeight();
+	if(self.mainLayer.y + self.mainLayer.getHeight() > LMvc.screenHeight){
+		self.mainLayer.y = LMvc.screenHeight - self.mainLayer.getHeight();
 	}
 	self.visible = true;
 };

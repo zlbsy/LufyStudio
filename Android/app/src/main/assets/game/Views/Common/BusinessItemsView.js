@@ -12,15 +12,15 @@ BusinessItemsView.prototype.set = function(characterModel, item){
 	var windowLayer = getTranslucentMask();
 	self.addChild(windowLayer);
 	var panel = getPanel("win05", width, height);
-	panel.x = (LGlobal.width - width) * 0.5;
-	panel.y = (LGlobal.height - height) * 0.5;
+	panel.x = (LMvc.screenWidth - width) * 0.5;
+	panel.y = (LMvc.screenHeight - height) * 0.5;
 	self.addChild(panel);
 	var titlePanel = getPanel("win02",160,60);
-	titlePanel.x = (LGlobal.width - titlePanel.getWidth()) * 0.5;
+	titlePanel.x = (LMvc.screenWidth - titlePanel.getWidth()) * 0.5;
 	titlePanel.y = panel.y - 10;
 	self.addChild(titlePanel);
 	var title = getStrokeLabel(Language.get("confirm"),20,"#FFFFFF","#000000",4);
-	title.x = (LGlobal.width - title.getWidth())*0.5;
+	title.x = (LMvc.screenWidth - title.getWidth())*0.5;
 	title.y = panel.y + 8;
 	self.addChild(title);
 	

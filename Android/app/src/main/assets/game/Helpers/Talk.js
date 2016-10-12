@@ -53,7 +53,7 @@ function TalkRun(layer,y,index,faceindex,msg,callback){
 	}
 	LMvc.talkOver = false;
 	LMvc.talkLayer = talkLayer;
-	talkLayer.addShape(LShape.RECT,[-talkLayer.x,-talkLayer.y,LGlobal.width,LGlobal.height]);
+	talkLayer.addShape(LShape.RECT,[-talkLayer.x,-talkLayer.y,LMvc.screenWidth,LMvc.screenHeight]);
 	talkLayer.addEventListener(LMouseEvent.MOUSE_DOWN, function(){});
 	talkLayer.addEventListener(LMouseEvent.MOUSE_UP, TalkRemove);
 }

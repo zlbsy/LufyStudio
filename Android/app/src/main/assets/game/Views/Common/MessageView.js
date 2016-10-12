@@ -44,22 +44,22 @@ MessageView.prototype.init = function(){
 	var self = this;
 	var height = 200;
 	var backgroundData = new LBitmapData(LMvc.datalist["win03"]);
-	var panel = new LPanel(backgroundData,LGlobal.width,height);
+	var panel = new LPanel(backgroundData,LMvc.screenWidth,height);
 	panel.cacheAsBitmap(true);
-	panel.y = LGlobal.height - height;
+	panel.y = LMvc.screenHeight - height;
 	self.addChild(panel);
 	self.listView = new LListView();
 	self.listView.x = 5;
 	self.listView.y = panel.y + 5;
-	self.listView.resize(LGlobal.width - 10,height - 10);
-	self.listView.cellWidth = LGlobal.width - 10;
+	self.listView.resize(LMvc.screenWidth - 10,height - 10);
+	self.listView.cellWidth = LMvc.screenWidth - 10;
 	self.listView.cellHeight = 20;
 	self.addChild(self.listView);
 	self.panelY = panel.y;
 	
 	var faceW = 220;
 	var faceH = 320;
-	var win = new LPanel(new LBitmapData(LMvc.datalist["win05"]),LGlobal.width,faceH);
+	var win = new LPanel(new LBitmapData(LMvc.datalist["win05"]),LMvc.screenWidth,faceH);
 	win.cacheAsBitmap(true);
 	self.addChild(win);
 	self.seigniorBackground = win;
@@ -147,7 +147,7 @@ MessageView.prototype.setSeignior = function(seigniorId){
 	}
 	self.general_count.text = seignior.generalsCount();
 	
-	var barWidth = LGlobal.width - layer.x - 20;
+	var barWidth = LMvc.screenWidth - layer.x - 20;
 	if(!self.barBack){
 		var barBack = new LPanel(new LBitmapData(LMvc.datalist["blue_bar"]), barWidth, 14);
 		barBack.y = 280;

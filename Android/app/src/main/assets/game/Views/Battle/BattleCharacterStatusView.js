@@ -289,11 +289,11 @@ BattleCharacterStatusView.prototype.setPosition=function(character){
 	var root = self.getRootCoordinate();
 	if(root.x < 0){
 		self.x -= root.x;
-	}else if(root.x + w > LGlobal.width){
-		self.x -= (root.x + w - LGlobal.width);
+	}else if(root.x + w > LMvc.screenWidth){
+		self.x -= (root.x + w - LMvc.screenWidth);
 	}
 	var map = LMvc.BattleController.model.map;
-	var maxHeight = map.height > LGlobal.height ? LGlobal.height : map.height;
+	var maxHeight = map.height > LMvc.screenHeight ? LMvc.screenHeight : map.height;
 	if(root.y < 0){
 		self.y -= root.y;
 	}else if(root.y + h > maxHeight){

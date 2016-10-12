@@ -18,9 +18,9 @@ CreateCharacterListChildView.prototype.onClick = function(event) {
 CreateCharacterListChildView.prototype.setStatus = function() {
 	var self = this, label;
 	var layer = new LSprite();
-	layer.graphics.drawRect(0, "#ff0000", [0, 0, LGlobal.width - 20, 40]);
+	layer.graphics.drawRect(0, "#ff0000", [0, 0, LMvc.screenWidth - 20, 40]);
 	var bitmapLine = new LBitmap(new LBitmapData(LMvc.datalist["icon-line"]));
-	bitmapLine.scaleX = LGlobal.width - 60;
+	bitmapLine.scaleX = LMvc.screenWidth - 60;
 	bitmapLine.y = 38;
 	layer.addChild(bitmapLine);
 	var list = ["name", 20, "force", 110, "intelligence", 160, "command", 210, "agility", 260, "luck", 310];

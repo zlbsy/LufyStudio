@@ -116,8 +116,8 @@ CityView.prototype.buildLayerInit=function(){
 	self.buildLayer.addChild(layer);
 
 	var official = new BuildView(self.controller,"main-official","official");
-	official.x = (LGlobal.width - official.width)*0.5;
-	official.y = (LGlobal.height - official.height) * 0.4;
+	official.x = (LMvc.screenWidth - official.width)*0.5;
+	official.y = (LMvc.screenHeight - official.height) * 0.4;
 	layer.addChild(official);
 	var iconAppoint = new LBitmap(new LBitmapData(LMvc.datalist["icon-appoint"]));
 	iconAppoint.name = "official";
@@ -139,7 +139,7 @@ CityView.prototype.buildLayerInit=function(){
 	layer.addChild(institute);
 	
 	var citygate = new BuildView(self.controller,"main-citygate","citygate");
-	citygate.y = LGlobal.height - citygate.height - 100;
+	citygate.y = LMvc.screenHeight - citygate.height - 100;
 	layer.addChild(citygate);
 	
 	var tavern = new BuildView(self.controller,"main-tavern","tavern");
@@ -147,24 +147,24 @@ CityView.prototype.buildLayerInit=function(){
 	layer.addChild(tavern);
 	
 	var market = new BuildView(self.controller,"main-shop","market");
-	market.x = LGlobal.width - market.width;
+	market.x = LMvc.screenWidth - market.width;
 	market.y = 160;
 	layer.addChild(market);
 	
 	var barrack = new BuildView(self.controller,"main-trainingGround","barrack");
-	barrack.x = LGlobal.width - barrack.width;
-	barrack.y = LGlobal.height - barrack.height - 100;
+	barrack.x = LMvc.screenWidth - barrack.width;
+	barrack.y = LMvc.screenHeight - barrack.height - 100;
 	layer.addChild(barrack);
 	
 	var farmland = new BuildView(self.controller,"main-farmland","farmland");
-	farmland.x = LGlobal.width - farmland.width;
+	farmland.x = LMvc.screenWidth - farmland.width;
 	farmland.y = market.y + market.height + (barrack.y - market.y - market.height - farmland.height) * 0.5;
 	layer.addChild(farmland);
 };
 CityView.prototype.footerLayerInit=function(){
 	var self = this;
 	var buttonWidth = 100, buttonHeight = 60;
-	self.footerLayer.y = LGlobal.height - buttonHeight;
+	self.footerLayer.y = LMvc.screenHeight - buttonHeight;
 	var selfCity = self.controller.getValue("selfCity");
 	
 	for(var i=0,l=self.footerLayer.childList.length;i<l;i++){
@@ -174,7 +174,7 @@ CityView.prototype.footerLayerInit=function(){
 	if(!buttonMap){
 		buttonMap = self.getIconButton(Language.get("big_map"), buttonWidth, buttonHeight, "icon-map");
 		buttonMap.name = "bigMap";
-		buttonMap.x = (LGlobal.width - buttonWidth * 4 - 30) * 0.5;
+		buttonMap.x = (LMvc.screenWidth - buttonWidth * 4 - 30) * 0.5;
 		self.footerLayer.addChild(buttonMap);
 		buttonMap.addEventListener(LMouseEvent.MOUSE_UP, self.onClickMapButton);
 	}

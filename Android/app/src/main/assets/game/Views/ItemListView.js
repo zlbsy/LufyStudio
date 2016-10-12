@@ -11,7 +11,7 @@ ItemListView.prototype.init=function(){
 	
 	var title = Language.get("stamp_list");
 	var txtTitle = getStrokeLabel(title,30,"#FFFFFF","#CCCCCC",1);
-	txtTitle.x = (LGlobal.width - txtTitle.getWidth()) * 0.5;
+	txtTitle.x = (LMvc.screenWidth - txtTitle.getWidth()) * 0.5;
 	txtTitle.y = 20;
 	self.addChild(txtTitle);
 	
@@ -35,7 +35,7 @@ ItemListView.prototype.listLayerInit=function(){
 	
 	self.listView = new LListView();
 	self.listView.y = 15;
-	self.listView.resize(400, LGlobal.height - 100);
+	self.listView.resize(400, LMvc.screenHeight - 100);
 	self.listView.maxPerLine = 4;
 	self.listView.cellWidth = 100;
 	self.listView.cellHeight = 100;
@@ -59,7 +59,7 @@ ItemListView.prototype.ctrlLayerInit=function(){
 	var self = this;
 	var bitmapClose = new LBitmap(new LBitmapData(LMvc.datalist["close"]));
 	var buttonClose = new LButton(bitmapClose);
-	buttonClose.x = LGlobal.width - bitmapClose.getWidth() - 5;
+	buttonClose.x = LMvc.screenWidth - bitmapClose.getWidth() - 5;
 	buttonClose.y = 5;
 	
 	self.ctrlLayer.addChild(buttonClose);
