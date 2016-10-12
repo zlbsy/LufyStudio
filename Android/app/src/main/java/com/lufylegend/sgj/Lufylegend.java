@@ -22,13 +22,17 @@ import android.webkit.WebViewClient;
 import java.net.URI;
 import java.security.MessageDigest;
 import java.security.Provider;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Locale;
 import java.util.HashMap;
 import java.io.*;
+import java.util.Random;
+
 import android.content.res.AssetManager;
 
-import com.lufylegend.sgj.com.lufylegend.sgj.alipay.AliPayAPI;
-import com.lufylegend.sgj.com.lufylegend.sgj.alipay.AliPayResult;
+import com.lufylegend.sgj.AliPayAPI;
+import com.lufylegend.sgj.AliPayResult;
 
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 
@@ -71,6 +75,22 @@ public class Lufylegend {
         //ページを表示する。
         String url = String.format("%sindex.html", String.format("file:///android_asset/%s", path));
         myWebView.loadUrl(url);
+        //instance.startAlipay("123", instance.getOutTradeNo(), "test", "test", "0.1");
+    }
+
+    /**
+     * get the out_trade_no for an order. 生成商户订单号，该值在商户端应保持唯一（可自定义格式规范）
+     *
+     */
+    private String getOutTradeNo() {
+        SimpleDateFormat format = new SimpleDateFormat("MMddHHmmss", Locale.getDefault());
+        Date date = new Date();
+        String key = format.format(date);
+
+        Random r = new Random();
+        key = key + r.nextInt();
+        key = key.substring(0, 15);
+        return key;
     }
     private Handler mHandler = new Handler() {
         @Override
@@ -282,7 +302,7 @@ public class Lufylegend {
             purchaseError();
             return;
         }
-        String outTradeNo = itemId + "." + trGameId + "." + paymentTime;
+        String outTradeNo = itemId + "-" + trGameId + "-" + paymentTime;
         outTradeNo = outTradeNo.length() > 64 ? outTradeNo.substring(0, 64) : outTradeNo;
         String params = "{";
         params += "'identification_id':'"+trGameId+"'";
