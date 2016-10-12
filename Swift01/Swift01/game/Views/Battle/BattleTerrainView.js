@@ -60,11 +60,11 @@ BattleTerrainView.prototype.show = function(sx,sy,mapData){
 	self.alpha = 1;
 	self.x = mouseX + BattleCharacterSize.width;
 	self.y = mouseY;
-	if(self.x + self.getWidth() > LGlobal.width){
+	if(self.x + self.getWidth() > LMvc.screenWidth){
 		self.x = mouseX - BattleCharacterSize.width - self.getWidth();
 	}
-	if(self.y + self.getHeight() > LGlobal.height){
-		self.y = LGlobal.height - self.getWidth();
+	if(self.y + self.getHeight() > LMvc.screenHeight){
+		self.y = LMvc.screenHeight - self.getWidth();
 	}
 	self.tween = LTweenLite.to(self,0.2,{alpha:0,delay:0.5,onComplete:self.onComplete});
 };

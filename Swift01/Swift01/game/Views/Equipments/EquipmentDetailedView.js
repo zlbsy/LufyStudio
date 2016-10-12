@@ -18,8 +18,8 @@ EquipmentDetailedView.prototype.layerInit=function(){
 	//var backgroundData = new LBitmapData(LMvc.datalist["win05"]);
 	var panel = getPanel("win05",width,height);
 	panel.name = "windowBackground";
-	panel.x = (LGlobal.width - panel.getWidth()) * 0.5;
-	panel.y = (LGlobal.height - panel.getHeight()) * 0.5;
+	panel.x = (LMvc.screenWidth - panel.getWidth()) * 0.5;
+	panel.y = (LMvc.screenHeight - panel.getHeight()) * 0.5;
 	self.backLayer.addChild(panel);
 	self.backLayer.addEventListener(LMouseEvent.MOUSE_UP, self.click);
 	
@@ -44,12 +44,12 @@ EquipmentDetailedView.prototype.set=function(){
 	
 	//var titleData = new LBitmapData(LMvc.datalist["win02"]);
 	var titlePanel = getPanel("win02",160,60);
-	titlePanel.x = (LGlobal.width - titlePanel.getWidth()) * 0.5;
+	titlePanel.x = (LMvc.screenWidth - titlePanel.getWidth()) * 0.5;
 	titlePanel.y = self.backLayer.getChildByName("windowBackground").y - 20;
 	self.backLayer.addChild(titlePanel);
 	
 	var title = getStrokeLabel(self.itemModel.name(),20,"#FFFFFF","#000000",4);
-	title.x = (LGlobal.width - title.getWidth())*0.5;
+	title.x = (LMvc.screenWidth - title.getWidth())*0.5;
 	title.y = self.backLayer.getChildByName("windowBackground").y;
 	self.backLayer.addChild(title);
 	

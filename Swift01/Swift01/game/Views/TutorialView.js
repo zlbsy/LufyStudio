@@ -24,7 +24,7 @@ TutorialView.prototype.layerInit=function(){
 	self.baseLayer.addChild(self.messageLayer);
 	
 	self.clickLayer = new LSprite();
-	self.clickLayer.addShape(LShape.RECT,[0,0,LGlobal.width,LGlobal.height]);
+	self.clickLayer.addShape(LShape.RECT,[0,0,LMvc.screenWidth,LMvc.screenHeight]);
 	self.clickLayer.addEventListener(LMouseEvent.MOUSE_DOWN, function(){});
 	self.clickLayer.addEventListener(LMouseEvent.MOUSE_UP, self.clickToNextScript);
 	self.baseLayer.addChild(self.clickLayer);
@@ -63,7 +63,7 @@ TutorialView.prototype.setMask=function(rectangle){
 	var rectangleLayer = new LSprite();
 	rectangleLayer.graphics.drawRect(0, "#000000", [rectangle.x, rectangle.y, rectangle.width, rectangle.height], true, "#000000");
 	baseLayer.addChild(rectangleLayer);
-	var pointLayer = getPanel("translucent", LGlobal.width, LGlobal.height);
+	var pointLayer = getPanel("translucent", LMvc.screenWidth, LMvc.screenHeight);
 	pointLayer.blendMode = LBlendMode.SOURCE_OUT;
 	baseLayer.addChild(pointLayer);
 	baseLayer.cacheAsBitmap(true);

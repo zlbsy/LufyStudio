@@ -37,10 +37,10 @@ TournamentsConfirmView.prototype.layerInit=function(){
 	self.addChild(self.lineLayer);
 	self.nameLayer = new LSprite();
 	self.addChild(self.nameLayer);
-	var panel = getPanel("win05",LGlobal.width, LGlobal.height);
+	var panel = getPanel("win05",LMvc.screenWidth, LMvc.screenHeight);
 	self.backLayer.addChild(panel);
 	var panelTitle = getPanel("win02",200, 60);
-	panelTitle.x = (LGlobal.width - 200) * 0.5;
+	panelTitle.x = (LMvc.screenWidth - 200) * 0.5;
 	self.backLayer.addChild(panelTitle);
 	var name = getStrokeLabel(Language.get("tournaments"),20,"#FFFFFF","#000000",4);
 	name.x = panelTitle.x + (200 - name.getWidth()) * 0.5;
@@ -99,8 +99,8 @@ TournamentsConfirmView.prototype.layerInit=function(){
 	self.backLayer.cacheAsBitmap(true);
 	
 	var buttonOk = getButton(Language.get("start"),200);
-	buttonOk.x = (LGlobal.width - 200) * 0.5;
-	buttonOk.y = LGlobal.height - 60;
+	buttonOk.x = (LMvc.screenWidth - 200) * 0.5;
+	buttonOk.y = LMvc.screenHeight - 60;
 	self.addChild(buttonOk);
 	buttonOk.addEventListener(LMouseEvent.MOUSE_UP, self.singleStart);
 };

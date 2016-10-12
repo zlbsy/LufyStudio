@@ -45,7 +45,7 @@ BuildBaseView.prototype.setMenuPositionByFooter=function(build, menuLayer){
 	var menuW = menuLayer.getWidth();
 	var menuH = menuLayer.getHeight();
 	menuLayer.x = build.x + (build.getWidth() - menuW) * 0.5;
-	menuLayer.y = LGlobal.height - menuH - 100;
+	menuLayer.y = LMvc.screenHeight - menuH - 100;
 };
 BuildBaseView.prototype.setMenuPosition=function(build, menuLayer){
 	var self = this;
@@ -53,15 +53,15 @@ BuildBaseView.prototype.setMenuPosition=function(build, menuLayer){
 	var centerY = build.y + build.getHeight() * 0.5;
 	var menuW = menuLayer.getWidth();
 	var menuH = menuLayer.getHeight();
-	if(centerX < LGlobal.width * 0.6){
+	if(centerX < LMvc.screenWidth * 0.6){
 		menuLayer.x = centerX;
 	}else{
 		menuLayer.x = centerX - menuW;
 	}
-	if(centerY < LGlobal.height * 0.6){
+	if(centerY < LMvc.screenHeight * 0.6){
 		menuLayer.y = centerY;	
-		if(menuLayer.y + menuH > LGlobal.height - 10){
-			menuLayer.y = LGlobal.height - 10 - menuH;
+		if(menuLayer.y + menuH > LMvc.screenHeight - 10){
+			menuLayer.y = LMvc.screenHeight - 10 - menuH;
 		}
 	}else{
 		menuLayer.y = centerY - menuH;

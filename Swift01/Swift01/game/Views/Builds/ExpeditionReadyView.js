@@ -25,7 +25,7 @@ ExpeditionReadyView.prototype.set=function(img,name){
 	//var rangeBackground = getBitmap(new LPanel(new LBitmapData(LMvc.datalist["win04"]),300,40));
 	var rangeSelect = new LBitmap(new LBitmapData(LMvc.datalist["range"]));
 	var layer = new LSprite();
-	layer.x = (LGlobal.width - rangeBackground.getWidth())*0.5;
+	layer.x = (LMvc.screenWidth - rangeBackground.getWidth())*0.5;
 	self.addChild(layer);
 	var cityModel = self.controller.getValue("cityData");
 	var foodLayer = new LSprite();

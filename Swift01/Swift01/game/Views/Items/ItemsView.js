@@ -56,8 +56,8 @@ ItemsView.prototype.setItemList = function() {
 		return;
 	}
 	var backLayer = new LSprite();
-	backLayer.x = (LGlobal.width - 420) * 0.5;
-	backLayer.y = (LGlobal.height - 420) * 0.5;
+	backLayer.x = (LMvc.screenWidth - 420) * 0.5;
+	backLayer.y = (LMvc.screenHeight - 420) * 0.5;
 	self.addChild(backLayer);
 	var panel = getPanel("win05",420, 420);
 	backLayer.addChild(panel);

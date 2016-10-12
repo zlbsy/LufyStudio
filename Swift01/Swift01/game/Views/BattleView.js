@@ -31,8 +31,8 @@ BattleView.prototype.init=function(){
 	
 	self.addEventListener(LEvent.ENTER_FRAME, self.onframe);
 	var map = self.model.map;
-	if(map.height < LGlobal.height){
-		var blackBitmap = getBlackBitmap(LGlobal.width, LGlobal.height - map.height);
+	if(map.height < LMvc.screenHeight){
+		var blackBitmap = getBlackBitmap(LMvc.screenWidth, LMvc.screenHeight - map.height);
 		blackBitmap.y = map.height;
 		self.addChildAt(blackBitmap, 0);
 	}
@@ -70,7 +70,7 @@ BattleView.prototype.menuLayerInit=function(){
 	var self = this;
 	
 	var openmenuButton = GetButton(LMvc.datalist["openmenu"],null,0);
-	openmenuButton.x = LGlobal.width - openmenuButton.getWidth();
+	openmenuButton.x = LMvc.screenWidth - openmenuButton.getWidth();
 	openmenuButton.y = 0;
 	self.addChild(openmenuButton);
 	openmenuButton.addEventListener(LMouseEvent.MOUSE_UP, function(){
@@ -112,7 +112,7 @@ BattleView.prototype.layerInit=function(){
 	self.miniLayer.visible = false;
 	
 	self.mainMenu = new BattleMainMenuView(self.controller);
-	self.mainMenu.mainLayer.x = LGlobal.width - self.mainMenu.getWidth();
+	self.mainMenu.mainLayer.x = LMvc.screenWidth - self.mainMenu.getWidth();
 	self.addChild(self.mainMenu);
 	self.mainMenu.visible = false;
 	
@@ -141,30 +141,30 @@ BattleView.prototype.resetMapPosition=function(chara){
 	if(chara.hideByCloud){
 		return;
 	}
-	if(LGlobal.height >= self.model.map.height){
+	if(LMvc.screenHeight >= self.model.map.height){
 		return;
 	}
 	var baseLayer = self.baseLayer;
-	LTweenLite.to(baseLayer,0.2,{x:LGlobal.width*0.5 - chara.x,y:LGlobal.height*0.5 - chara.y,});
+	LTweenLite.to(baseLayer,0.2,{x:LMvc.screenWidth*0.5 - chara.x,y:LMvc.screenHeight*0.5 - chara.y,});
 };
 BattleView.prototype.checkPosition=function(){
 	var self = this;
 	var map = self.model.map;
 	var baseLayer = self.baseLayer;
-	if(LGlobal.width < map.width){
+	if(LMvc.screenWidth < map.width){
 		if(baseLayer.x > 0){
 			baseLayer.x = 0;
-		}else if(baseLayer.x < LGlobal.width - map.width){
-			baseLayer.x = LGlobal.width - map.width;
+		}else if(baseLayer.x < LMvc.screenWidth - map.width){
+			baseLayer.x = LMvc.screenWidth - map.width;
 		}
 	}else{
 		baseLayer.x = 0;
 	}
-	if(LGlobal.height < map.height){
+	if(LMvc.screenHeight < map.height){
 		if(baseLayer.y > 0){
 			baseLayer.y = 0;
-		}else if(baseLayer.y < LGlobal.height - map.height){
-			baseLayer.y = LGlobal.height - map.height;
+		}else if(baseLayer.y < LMvc.screenHeight - map.height){
+			baseLayer.y = LMvc.screenHeight - map.height;
 		}
 	}else{
 		baseLayer.y = 0;

@@ -138,11 +138,11 @@ BattleMainMenuView.prototype.setMenuPosition=function(){
 	var self = this;
 	self.menuLayer.x = self.mainLayer.x + 70;
 	self.menuLayer.y = self.mainLayer.y;
-	if(self.menuLayer.x + self.menuWidth > LGlobal.width){
+	if(self.menuLayer.x + self.menuWidth > LMvc.screenWidth){
 		self.menuLayer.x = self.mainLayer.x - self.menuWidth;
 	}
-	if(self.menuLayer.y + self.menuHeight > LGlobal.height){
-		self.menuLayer.y = LGlobal.height - self.menuHeight;
+	if(self.menuLayer.y + self.menuHeight > LMvc.screenHeight){
+		self.menuLayer.y = LMvc.screenHeight - self.menuHeight;
 	}
 };
 BattleMainMenuView.prototype.showOrHideMiniMap=function(event){

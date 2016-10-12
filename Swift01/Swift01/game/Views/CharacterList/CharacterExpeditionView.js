@@ -9,7 +9,7 @@ function CharacterExpeditionView(controller,characterModel){
 CharacterExpeditionView.prototype.layerInit=function(){
 	var self = this;
 	var backLayer = new LSprite();
-	backLayer.graphics.drawRect(0,"#000000",[0,0,LGlobal.width,LGlobal.height],true,"#FFFFFF");
+	backLayer.graphics.drawRect(0,"#000000",[0,0,LMvc.screenWidth,LMvc.screenHeight],true,"#FFFFFF");
 	self.addChild(getBitmap(backLayer));
 	self.layer = new LSprite();
 	self.addChild(self.layer);

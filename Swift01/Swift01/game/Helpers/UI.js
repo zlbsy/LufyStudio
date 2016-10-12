@@ -72,15 +72,15 @@ function getTranslucentMask(){
 function getTranslucentBitmap(width,height){
 	var backgroundData = new LBitmapData(LMvc.datalist["translucent"]);
 	var background = new LBitmap(backgroundData);
-	background.scaleX = (width ? width : LGlobal.width) / backgroundData.width;
-	background.scaleY = (height ? height : LGlobal.height) / backgroundData.height;
+	background.scaleX = (width ? width : LMvc.screenWidth) / backgroundData.width;
+	background.scaleY = (height ? height : LMvc.screenHeight) / backgroundData.height;
 	return background;
 }
 function getBlackBitmap(width,height){
 	var backgroundData = new LBitmapData(LMvc.datalist["common-black"]);
 	var background = new LBitmap(backgroundData);
-	background.scaleX = (width ? width : LGlobal.width) / backgroundData.width;
-	background.scaleY = (height ? height : LGlobal.height) / backgroundData.height;
+	background.scaleX = (width ? width : LMvc.screenWidth) / backgroundData.width;
+	background.scaleY = (height ? height : LMvc.screenHeight) / backgroundData.height;
 	return background;
 }
 /**
@@ -98,19 +98,18 @@ function ConfirmWindow(obj){
 		obj.height = 300;
 	}
 	var panel = getPanel("win05",obj.width,obj.height);
-	//var panel = getBitmap(new LPanel(backgroundData,obj.width,obj.height));
-	panel.x = (LGlobal.width - obj.width) * 0.5;
-	panel.y = (LGlobal.height - obj.height) * 0.5;
+	panel.x = (LMvc.screenWidth - obj.width) * 0.5;
+	panel.y = (LMvc.screenHeight - obj.height) * 0.5;
 	windowLayer.addChild(panel);
 	var titlePanel = getPanel("win02",obj.titleWidth ? obj.titleWidth : 160,60);
 	//var titleData = new LBitmapData(LMvc.datalist["win02"]);
 	//var titlePanel = getBitmap(new LPanel(titleData,160,60));
-	titlePanel.x = (LGlobal.width - titlePanel.getWidth()) * 0.5;
+	titlePanel.x = (LMvc.screenWidth - titlePanel.getWidth()) * 0.5;
 	titlePanel.y = panel.y - 10;
 	windowLayer.addChild(titlePanel);
 	
 	var title = getStrokeLabel(obj.title,20,"#FFFFFF","#000000",4);
-	title.x = (LGlobal.width - title.getWidth())*0.5;
+	title.x = (LMvc.screenWidth - title.getWidth())*0.5;
 	title.y = panel.y + 8;
 	windowLayer.addChild(title);
 	var msg;
@@ -125,7 +124,7 @@ function ConfirmWindow(obj){
 		msg.width = obj.width - 60;
 		msg.setWordWrap(true,27);
 	}
-	if(obj.width < LGlobal.width){
+	if(obj.width < LMvc.screenWidth){
 		msg.x = panel.x + 30;
 	}
 	if(!obj.contentStartY){
@@ -158,10 +157,10 @@ function ConfirmWindow(obj){
 			event.currentTarget.parent.remove();
 		});
 	
-		okPanel.x = LGlobal.width*0.5 - okPanel.getWidth() - 20;
-		cancelPanel.x = LGlobal.width*0.5 + 20;
+		okPanel.x = LMvc.screenWidth*0.5 - okPanel.getWidth() - 20;
+		cancelPanel.x = LMvc.screenWidth*0.5 + 20;
 	}else{
-		okPanel.x = (LGlobal.width - okPanel.getWidth())*0.5;
+		okPanel.x = (LMvc.screenWidth - okPanel.getWidth())*0.5;
 	}
 	okPanel.addEventListener(LMouseEvent.MOUSE_UP, obj.okEvent?obj.okEvent:function(event){
 		event.currentTarget.parent.remove();

@@ -11,7 +11,7 @@ EventListView.prototype.init=function(){
 	
 	var title = Language.get("event_list");
 	var txtTitle = getStrokeLabel(title,30,"#FFFFFF","#CCCCCC",1);
-	txtTitle.x = (LGlobal.width - txtTitle.getWidth()) * 0.5;
+	txtTitle.x = (LMvc.screenWidth - txtTitle.getWidth()) * 0.5;
 	txtTitle.y = 20;
 	self.addChild(txtTitle);
 	
@@ -33,7 +33,7 @@ EventListView.prototype.listLayerInit=function(){
 	var self = this;
 	self.listView = new LListView();
 	self.listView.y = 15;
-	self.listView.resize(440, LGlobal.height - 100);
+	self.listView.resize(440, LMvc.screenHeight - 100);
 	self.listView.maxPerLine = 2;
 	self.listView.cellWidth = 220;
 	self.listView.cellHeight = 100;
@@ -68,7 +68,7 @@ EventListView.prototype.ctrlLayerInit=function(){
 	var self = this;
 	var bitmapClose = new LBitmap(new LBitmapData(LMvc.datalist["close"]));
 	var buttonClose = new LButton(bitmapClose);
-	buttonClose.x = LGlobal.width - bitmapClose.getWidth() - 5;
+	buttonClose.x = LMvc.screenWidth - bitmapClose.getWidth() - 5;
 	buttonClose.y = 5;
 	
 	self.ctrlLayer.addChild(buttonClose);

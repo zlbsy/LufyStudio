@@ -1,7 +1,7 @@
 function BattleLoading(data){
 	base(this,LSprite,[]);
 	var s = this;
-	var background = getBlackBitmap(LGlobal.width,LGlobal.height);
+	var background = getBlackBitmap(LMvc.screenWidth,LMvc.screenHeight);
 	s.addChild(background);
 	s.addEventListener(LMouseEvent.MOUSE_DOWN, function(){});
 	s.addEventListener(LMouseEvent.MOUSE_UP, function(){});
@@ -11,8 +11,8 @@ function BattleLoading(data){
 	s.layer = new LSprite();
 	s.addChild(s.layer);
 	s.layer.addChild(bitmap);
-	s.layer.x = LGlobal.width * 0.5;
-	s.layer.y = LGlobal.height * 0.7;
+	s.layer.x = LMvc.screenWidth * 0.5;
+	s.layer.y = LMvc.screenHeight * 0.7;
 	
 	var title = getStrokeLabel("",34,"#FFFFFF","#FFFF00",2);
 	s.title = title;
@@ -24,7 +24,7 @@ function BattleLoading(data){
 BattleLoading.prototype.setTitle = function (value){
 	var self = this;
 	self.title.text = value;
-	self.title.x = (LGlobal.width - self.title.getWidth())*0.5;
+	self.title.x = (LMvc.screenWidth - self.title.getWidth())*0.5;
 };
 BattleLoading.prototype.setProgress = function (value){};
 BattleLoading.prototype.onframe = function(event){

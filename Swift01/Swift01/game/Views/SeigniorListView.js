@@ -29,7 +29,7 @@ SeigniorListView.prototype.onClickCloseButton=function(event){
 SeigniorListView.prototype.updateMap=function(){
 	var self = this;
 	var miniMapData = self.miniMapData;
-	var index = Math.floor((-self.listLayer.x) / LGlobal.width);
+	var index = Math.floor((-self.listLayer.x) / LMvc.screenWidth);
 	self.mapData.bitmapData.copyPixels(miniMapData,new LRectangle(0,0,miniMapData.width,miniMapData.height),new LPoint(0,0));
 	var seigniorModel = SeigniorModel.list[index];
 	
@@ -49,10 +49,10 @@ SeigniorListView.prototype.listLayerInit=function(){
 	for(var i=0,l=seigniors.length;i<l;i++){
 		var seigniorModel = seigniors[i];
 		var seigniorChild = new SeigniorListChildView(self.controller,seigniorModel);
-		seigniorChild.x = LGlobal.width * i;
+		seigniorChild.x = LMvc.screenWidth * i;
 		self.listLayer.addChild(seigniorChild);
 	}
-	self.listLayer.dragRange = new LRectangle(-LGlobal.width * seigniors.length,0,LGlobal.width * (seigniors.length + 1),0);
+	self.listLayer.dragRange = new LRectangle(-LMvc.screenWidth * seigniors.length,0,LMvc.screenWidth * (seigniors.length + 1),0);
 };
 SeigniorListView.prototype.mapLayerInit=function(){
 	var self = this;
@@ -76,7 +76,7 @@ SeigniorListView.prototype.mapLayerInit=function(){
 	layer.addChild(txtmap);
 	layer.cacheAsBitmap(true);
 	//layer = getBitmap(layer);
-	layer.x = (LGlobal.width - layer.getWidth()) * 0.5;
+	layer.x = (LMvc.screenWidth - layer.getWidth()) * 0.5;
 	layer.y = 30;
 	self.mapLayer.addChild(layer);
 	
@@ -91,21 +91,21 @@ SeigniorListView.prototype.ctrlLayerInit=function(){
 	var leftButton = new LButton(left);
 	leftButton.name = "leftButton";
 	leftButton.x = 10;
-	leftButton.y = LGlobal.height - 160 + (160 - leftBitmapData.height) * 0.5;
+	leftButton.y = LMvc.screenHeight - 160 + (160 - leftBitmapData.height) * 0.5;
 	self.ctrlLayer.addChild(leftButton);
 	leftButton.addEventListener(LMouseEvent.MOUSE_UP,self.clickLeftArrow);
 	var rightBitmapData = GameCacher.getScaleBitmapData("arrow", -1, 1);
 	var right = new LBitmap(rightBitmapData);
 	var rightButton = new LButton(right);
 	rightButton.name = "rightButton";
-	rightButton.x = LGlobal.width - leftButton.x - leftBitmapData.width;
+	rightButton.x = LMvc.screenWidth - leftButton.x - leftBitmapData.width;
 	rightButton.y = leftButton.y;
 	self.ctrlLayer.addChild(rightButton);
 	rightButton.addEventListener(LMouseEvent.MOUSE_UP,self.clickRightArrow);
 	
 	var bitmapClose = new LBitmap(new LBitmapData(LMvc.datalist["close"]));
 	var buttonClose = new LButton(bitmapClose);
-	buttonClose.x = LGlobal.width - bitmapClose.getWidth() - 5;
+	buttonClose.x = LMvc.screenWidth - bitmapClose.getWidth() - 5;
 	buttonClose.y = 5;
 	
 	self.ctrlLayer.addChild(buttonClose);
@@ -129,17 +129,17 @@ SeigniorListView.prototype.clickRightArrow=function(event){
 };
 SeigniorListView.prototype.centerOnChild=function(){
 	var self = this;
-	if(self.listLayer.x / LGlobal.width == 0){
+	if(self.listLayer.x / LMvc.screenWidth == 0){
 		return;
 	}
 	if(self.listLayer.x > 0){
 		self.moveRight();
 		return;
-	}else if(self.listLayer.x < -(self.listLayer.numChildren - 1) * LGlobal.width){
+	}else if(self.listLayer.x < -(self.listLayer.numChildren - 1) * LMvc.screenWidth){
 		self.moveLeft();
 	}
-	var nx = Math.abs(self.listLayer.x % LGlobal.width);
-	if(nx > LGlobal.width * 0.5){
+	var nx = Math.abs(self.listLayer.x % LMvc.screenWidth);
+	if(nx > LMvc.screenWidth * 0.5){
 		self.moveRight();
 	}else{
 		self.moveLeft();
@@ -151,18 +151,18 @@ SeigniorListView.prototype.moveLeft=function(){
 		return;
 	}
 	self.listLayer.isMoving = true;
-	var tox = self.listLayer.x + LGlobal.width;
-	tox = Math.floor(tox / LGlobal.width) * LGlobal.width;
+	var tox = self.listLayer.x + LMvc.screenWidth;
+	tox = Math.floor(tox / LMvc.screenWidth) * LMvc.screenWidth;
 	LTweenLite.to(self.listLayer,0.5,{x:tox,onComplete:self.moveComplete});
 };
 SeigniorListView.prototype.moveRight=function(){
 	var self = this;
-	if(self.listLayer.x <= -(self.listLayer.numChildren - 1)*LGlobal.width){
+	if(self.listLayer.x <= -(self.listLayer.numChildren - 1)*LMvc.screenWidth){
 		return;
 	}
 	self.listLayer.isMoving = true;
-	var tox = self.listLayer.x - LGlobal.width;
-	tox = Math.ceil(tox / LGlobal.width) * LGlobal.width;
+	var tox = self.listLayer.x - LMvc.screenWidth;
+	tox = Math.ceil(tox / LMvc.screenWidth) * LMvc.screenWidth;
 	LTweenLite.to(self.listLayer,0.5,{x:tox,onComplete:self.moveComplete});
 };
 SeigniorListView.prototype.moveComplete=function(event){
@@ -178,5 +178,5 @@ SeigniorListView.prototype.ctrlButton=function(){
 	var leftButton = self.ctrlLayer.getChildByName("leftButton");
 	leftButton.visible = (self.listLayer.x < 0);
 	var rightButton = self.ctrlLayer.getChildByName("rightButton");
-	rightButton.visible = (self.listLayer.x > -(self.listLayer.numChildren - 1)*LGlobal.width);
+	rightButton.visible = (self.listLayer.x > -(self.listLayer.numChildren - 1)*LMvc.screenWidth);
 };

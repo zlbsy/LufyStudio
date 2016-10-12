@@ -113,7 +113,7 @@ BattleCharacterLayerView.prototype.onframe = function(event) {
 		child = self.getChildAt(i);
 		x = child.x + self.parent.x;
 		y = child.y + self.parent.y;
-		if (x + stepWidth < 0 || x > LGlobal.width || y + stepHeight < 0 || y > LGlobal.height) {
+		if (x + stepWidth < 0 || x > LMvc.screenWidth || y + stepHeight < 0 || y > LMvc.screenHeight) {
 			child.visible = false;
 		} else {
 			child.visible = true;

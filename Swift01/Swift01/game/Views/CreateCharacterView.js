@@ -9,7 +9,7 @@ CreateCharacterView.prototype.layerInit=function(){
 	//self.addChild(getTranslucentMask());
 	self.baseLayer = new LSprite();
 	self.addChild(self.baseLayer);
-	var panel = getBitmap(new LPanel(new LBitmapData(LMvc.datalist["win05"]),LGlobal.width, LGlobal.height));
+	var panel = getBitmap(new LPanel(new LBitmapData(LMvc.datalist["win05"]),LMvc.screenWidth, LMvc.screenHeight));
 	//panel.y = 20;
 	self.baseLayer.addChild(panel);
 	
@@ -53,7 +53,7 @@ CreateCharacterView.prototype.init=function(){
 	self.listView = new LListView();
 	self.listView.x = 10;
 	self.listView.y = 90;
-	self.listView.cellWidth = LGlobal.width - 40;
+	self.listView.cellWidth = LMvc.screenWidth - 40;
 	self.listView.cellHeight = 50;
 	self.baseLayer.addChild(self.listView);
 
@@ -64,7 +64,7 @@ CreateCharacterView.prototype.init=function(){
 		items.push(child);
 	}
 	
-	self.listView.resize(self.listView.cellWidth, LGlobal.height - self.y - self.listView.y - 15);
+	self.listView.resize(self.listView.cellWidth, LMvc.screenHeight - self.y - self.listView.y - 15);
 	self.listView.updateList(items);
 	
 	var updateButton = getSizeButton(Language.get("create"),100,40);
@@ -74,7 +74,7 @@ CreateCharacterView.prototype.init=function(){
 	updateButton.addEventListener(LMouseEvent.MOUSE_UP, self.showDetailed);
 	
 	var closeButton = new LButton(new LBitmap(new LBitmapData(LMvc.datalist["close"])));
-	closeButton.x = LGlobal.width - closeButton.getWidth();
+	closeButton.x = LMvc.screenWidth - closeButton.getWidth();
 	self.baseLayer.addChild(closeButton);
 	closeButton.addEventListener(LMouseEvent.MOUSE_UP, self.returnToTop);
 };
@@ -89,7 +89,7 @@ CreateCharacterView.prototype.showDetailed=function(event){
 CreateCharacterView.prototype.toShowDetailed=function(data){
 	var self = this;
 	var detailedView = new CreateCharacterDetailedView(self.controller, data);
-	var obj = {title:Language.get(data?"update_character":"create_character"),subWindow:detailedView,contentStartY:60,width:LGlobal.width,height:560,okEvent:self.saveCharacter,cancelEvent:self.cancelEvent};
+	var obj = {title:Language.get(data?"update_character":"create_character"),subWindow:detailedView,contentStartY:60,width:LMvc.screenWidth,height:560,okEvent:self.saveCharacter,cancelEvent:self.cancelEvent};
 	var windowLayer = ConfirmWindow(obj);
 	self.addChild(windowLayer);
 	self.baseLayer.visible = false;

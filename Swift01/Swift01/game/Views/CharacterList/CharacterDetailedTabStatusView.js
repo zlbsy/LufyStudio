@@ -40,7 +40,7 @@ CharacterDetailedTabStatusView.prototype.showStatus=function(){
 		var height = txtHeight;
 		var lblCost = getStrokeLabel(String.format("{0} : {1}",Language.get(labels[i]), datas[i]),20,"#FFFFFF","#000000",4);
 		if(labels[i] == "stunt" || labels[i] == "status"){
-			lblCost.width = LGlobal.width - 60;
+			lblCost.width = LMvc.screenWidth - 60;
 			lblCost.setWordWrap(true, txtHeight);
 			height = lblCost.getHeight();
 		}
@@ -69,7 +69,7 @@ CharacterDetailedTabStatusView.prototype.setCtrlButtons=function(backLayer){
 	}
 	if(characterModel.seigniorId() != LMvc.selectSeignorId){
 		var btnRecruit = getButton(Language.get("recruit"),200, characterModel.job() == Job.END ? "win07" : "win01");//招降
-		btnRecruit.x = LGlobal.width - 260;
+		btnRecruit.x = LMvc.screenWidth - 260;
 		btnRecruit.y = 5;
 		backLayer.addChild(btnRecruit);
 		if(characterModel.job() == Job.END){
@@ -78,18 +78,18 @@ CharacterDetailedTabStatusView.prototype.setCtrlButtons=function(backLayer){
 			btnRecruit.addEventListener(LMouseEvent.MOUSE_UP,self.clickRecruit);
 		}
 		var btnRelease = getButton(Language.get("release"),200);//释放
-		btnRelease.x = LGlobal.width - 260;
+		btnRelease.x = LMvc.screenWidth - 260;
 		btnRelease.y = 55;
 		backLayer.addChild(btnRelease);
 		btnRelease.addEventListener(LMouseEvent.MOUSE_UP,self.clickRelease);
 		var btnBehead = getButton(Language.get("behead"),200);//斩首
-		btnBehead.x = LGlobal.width - 260;
+		btnBehead.x = LMvc.screenWidth - 260;
 		btnBehead.y = 105;
 		backLayer.addChild(btnBehead);
 		btnBehead.addEventListener(LMouseEvent.MOUSE_UP,self.clickBehead);
 	}else if(characterModel.id() != characterModel.seigniorId() && characterModel.loyalty() < 100 && !characterModel.isPrized()){
 		var btnPrized = getButton(Language.get("prize"),200);//褒奖
-		btnPrized.x = LGlobal.width - 260;
+		btnPrized.x = LMvc.screenWidth - 260;
 		btnPrized.y = 5;
 		backLayer.addChild(btnPrized);
 		btnPrized.addEventListener(LMouseEvent.MOUSE_UP,self.clickPrized);

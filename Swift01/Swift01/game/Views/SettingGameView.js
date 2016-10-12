@@ -16,18 +16,18 @@ SettingGameView.prototype.backgroundInit=function(){
 	var self = this;
 	var backgroundData = new LBitmapData(LMvc.datalist["win05"]);
 	var panel = getBitmap(new LPanel(backgroundData,self.size.x, self.size.y));
-	panel.x = (LGlobal.width - self.size.x) * 0.5;
-	panel.y = (LGlobal.height - self.size.y) * 0.5;
+	panel.x = (LMvc.screenWidth - self.size.x) * 0.5;
+	panel.y = (LMvc.screenHeight - self.size.y) * 0.5;
 	self.baseLayer.addChild(panel);
 	
 	var titleData = new LBitmapData(LMvc.datalist["win02"]);
 	var titlePanel = getBitmap(new LPanel(titleData,160,60));
-	titlePanel.x = (LGlobal.width - titlePanel.getWidth()) * 0.5;
+	titlePanel.x = (LMvc.screenWidth - titlePanel.getWidth()) * 0.5;
 	titlePanel.y = panel.y - 10;
 	self.baseLayer.addChild(titlePanel);
 	
 	var title = getStrokeLabel(Language.get("game_setting"),20,"#FFFFFF","#000000",4);
-	title.x = (LGlobal.width - title.getWidth())*0.5;
+	title.x = (LMvc.screenWidth - title.getWidth())*0.5;
 	title.y = panel.y + 8;
 	self.baseLayer.addChild(title);
 };
@@ -39,12 +39,12 @@ SettingGameView.prototype.add=function(){
 };
 SettingGameView.prototype.init=function(){
 	var self = this;
-	self.size = new LPoint(LGlobal.width - 40, 300);
+	self.size = new LPoint(LMvc.screenWidth - 40, 300);
 	self.layerInit();
 	self.backgroundInit();
 	
-	self.contentLayer.x = (LGlobal.width - self.size.x) * 0.5 + 20;
-	self.contentLayer.y = (LGlobal.height - self.size.y) * 0.5 + 60;
+	self.contentLayer.x = (LMvc.screenWidth - self.size.x) * 0.5 + 20;
+	self.contentLayer.y = (LMvc.screenHeight - self.size.y) * 0.5 + 60;
 	
 	var checkboxBackgroundData = new LBitmapData(LMvc.datalist["checkbox-background"]);
 	var checkboxOnData = new LBitmapData(LMvc.datalist["checkbox-on"]);
@@ -127,8 +127,8 @@ SettingGameView.prototype.init=function(){
 	
 	var bitmapClose = new LBitmap(new LBitmapData(LMvc.datalist["close"]));
 	var buttonClose = new LButton(bitmapClose);
-	buttonClose.x = (LGlobal.width - self.size.x) * 0.5 + self.size.x - bitmapClose.getWidth()*0.7;
-	buttonClose.y = (LGlobal.height - self.size.y) * 0.5 - bitmapClose.getHeight()*0.3;
+	buttonClose.x = (LMvc.screenWidth - self.size.x) * 0.5 + self.size.x - bitmapClose.getWidth()*0.7;
+	buttonClose.y = (LMvc.screenHeight - self.size.y) * 0.5 - bitmapClose.getHeight()*0.3;
 	self.baseLayer.addChild(buttonClose);
 	buttonClose.addEventListener(LMouseEvent.MOUSE_UP,self.closeSelf);
 };

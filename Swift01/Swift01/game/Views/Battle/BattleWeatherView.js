@@ -67,8 +67,8 @@ BattleWeatherView.prototype.getAndroidDialog = function(layer, weatherType){
 };
 BattleWeatherView.prototype.createCloud = function(){
 	var self = this;
-	var width = LGlobal.width;
-	var height = LGlobal.height;
+	var width = LMvc.screenWidth;
+	var height = LMvc.screenHeight;
 	if(LGlobal.android){
 		width = height = 180;
 	}
@@ -88,13 +88,13 @@ BattleWeatherView.prototype.createSnow = function(){
 	var datas = [], listChild = [];
 	for(var i=0;i<4;i++){
 		var layer = new LSprite();
-		layer.graphics.drawRect(0,"#000000",[0,0,LGlobal.width,LGlobal.height]);
+		layer.graphics.drawRect(0,"#000000",[0,0,LMvc.screenWidth,LMvc.screenHeight]);
 		layer.graphics.add(function (c){
 			c.fillStyle = "#ffffff";
 			c.beginPath();
 			for(var i=0;i<50;i++){
-				var sx = Math.random()*LGlobal.width;
-				var sy = Math.random()*LGlobal.height;
+				var sx = Math.random()*LMvc.screenWidth;
+				var sy = Math.random()*LMvc.screenHeight;
 				c.moveTo(sx,sy);
 				c.arc(sx,sy, 2 + Math.random()*5,0,2*Math.PI);
 			}
@@ -102,7 +102,7 @@ BattleWeatherView.prototype.createSnow = function(){
 		});
 		layer.alpha = 0.6;
 		if(LGlobal.android){
-			layer.scaleX = layer.scaleY = 180 / LGlobal.width;
+			layer.scaleX = layer.scaleY = 180 / LMvc.screenWidth;
 		}
 		var bitmapData = getBitmapData(layer, true);
 		if(LGlobal.android){
@@ -126,20 +126,20 @@ BattleWeatherView.prototype.createRain = function(){
 	var datas = [], listChild = [];
 	for(var i=0;i<4;i++){
 		var layer = new LSprite();
-		layer.graphics.drawRect(0,"#000000",[0,0,LGlobal.width * 1.3,LGlobal.height * 1.3]);
+		layer.graphics.drawRect(0,"#000000",[0,0,LMvc.screenWidth * 1.3,LMvc.screenHeight * 1.3]);
 		layer.graphics.add(function (c){
 	    	c.strokeStyle = "#ffffff";
 			c.beginPath();
 			for(var i=0;i<50;i++){
-				var sx = Math.random()*LGlobal.width * 1.3;
-				var sy = Math.random()*LGlobal.height * 1.3;
+				var sx = Math.random()*LMvc.screenWidth * 1.3;
+				var sy = Math.random()*LMvc.screenHeight * 1.3;
 				c.moveTo(sx,sy);
 				c.lineTo(sx,sy + 50 + Math.random()*100);
 			}
 			c.stroke();
 		});
 		if(LGlobal.android){
-			layer.scaleX = layer.scaleY = 180 / LGlobal.width * 1.3;
+			layer.scaleX = layer.scaleY = 180 / LMvc.screenWidth * 1.3;
 		}
 		var bitmapData = getBitmapData(layer, true);
 		if(LGlobal.android){
@@ -155,8 +155,8 @@ BattleWeatherView.prototype.createRain = function(){
 		var panel = self.getAndroidDialog(rainLayer, BattleWeatherConfig.RAIN);
 		return panel;
 	}else{
-		rainLayer.x = LGlobal.width * 0.15;
-		rainLayer.y = -LGlobal.height * 0.2;
+		rainLayer.x = LMvc.screenWidth * 0.15;
+		rainLayer.y = -LMvc.screenHeight * 0.2;
 		rainLayer.rotate = 20;
 		return rainLayer;
 	}

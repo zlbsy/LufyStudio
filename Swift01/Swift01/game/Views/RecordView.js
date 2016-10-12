@@ -40,8 +40,8 @@ RecordView.prototype.init=function(){
 };
 RecordView.prototype.layerInit=function(){
 	var self = this;
-	var width = LGlobal.width - 60;
-	var height = LGlobal.height - 100;
+	var width = LMvc.screenWidth - 60;
+	var height = LMvc.screenHeight - 100;
 	self.width = width;
 	self.height = height;
 	var maskBackground = getTranslucentMask();
@@ -53,7 +53,7 @@ RecordView.prototype.layerInit=function(){
 	self.listView.cellWidth = width - 40;
 	self.listView.cellHeight = 80;
 	self.backLayer = new LSprite();
-	self.backLayer.x = (LGlobal.width - width) * 0.5;
+	self.backLayer.x = (LMvc.screenWidth - width) * 0.5;
 	self.backLayer.y = 60;
 	
 	var backLayer = new LPanel(new LBitmapData(LMvc.datalist["win05"]),width, height);
@@ -79,8 +79,8 @@ RecordView.prototype.layerInit=function(){
 	self.addChild(self.backLayer);
 	
 	var title = getStrokeLabel(self.getTitle(),25,"#FFFFFF","#000000",4);
-	title.x = (LGlobal.width - title.getWidth()) * 0.5;
-	title.y = (LGlobal.height - self.height) * 0.5 + 7;
+	title.x = (LMvc.screenWidth - title.getWidth()) * 0.5;
+	title.y = (LMvc.screenHeight - self.height) * 0.5 + 7;
 	self.title = title;
 	self.addChild(title);
 };

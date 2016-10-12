@@ -24,7 +24,7 @@ EventMapView.prototype.layerInit=function(){
 	self.baseLayer.addChild(self.messageLayer);
 	
 	self.clickLayer = new LSprite();
-	self.clickLayer.addShape(LShape.RECT,[0,0,LGlobal.width,LGlobal.height]);
+	self.clickLayer.addShape(LShape.RECT,[0,0,LMvc.screenWidth,LMvc.screenHeight]);
 	self.clickLayer.addEventListener(LMouseEvent.MOUSE_UP, self.clickToNextScript);
 	self.baseLayer.addChild(self.clickLayer);
 	self.clickLayer.visible = false;
@@ -48,7 +48,7 @@ EventMapView.prototype.clickToNextScript=function(event){
 EventMapView.prototype.menuLayerInit=function(){
 	var self = this;
 	var buttonSkip = getButton(Language.get("skip_drama"),100);
-	buttonSkip.x = LGlobal.width - 100;
+	buttonSkip.x = LMvc.screenWidth - 100;
 	self.menuLayer.addChild(buttonSkip);
 	buttonSkip.addEventListener(LMouseEvent.MOUSE_UP, self.onClickSkipButton);
 };
@@ -125,14 +125,14 @@ EventMapView.prototype.mapShow=function(mapIndex){
 EventMapView.prototype.loadMapOver=function(event){
 	var bitmapSprite = event.currentTarget;
 	bitmapSprite.removeEventListener(LEvent.COMPLETE);
-	bitmapSprite.y = (LGlobal.height - bitmapSprite.getHeight()) * 0.5;
+	bitmapSprite.y = (LMvc.screenHeight - bitmapSprite.getHeight()) * 0.5;
 	LTweenLite.to(bitmapSprite,0.5,{alpha:1,ease:LEasing.None.easeIn,onComplete:LGlobal.script.analysis});
 };
 EventMapView.prototype.messageShow=function(msg, speed){
 	var self = this;
 	var panel = getPanel("win03",360,300);
-	panel.x = (LGlobal.width - 360) * 0.5;
-	panel.y = (LGlobal.height - 300) * 0.5;
+	panel.x = (LMvc.screenWidth - 360) * 0.5;
+	panel.y = (LMvc.screenHeight - 300) * 0.5;
 	var label = getStrokeLabel(msg,20,"#FFFFFF","#000000",4);
 	label.name = "message";
 	label.width = 320;

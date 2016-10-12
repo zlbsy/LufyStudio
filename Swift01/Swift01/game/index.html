@@ -47,15 +47,18 @@ and open the template in the editor.
 				LGlobal.setDebug(true);
 			}
 			if(LGlobal.mobile){
-				LGlobal.width = 480;
-				LGlobal.height = 480*window.innerHeight/window.innerWidth;
+				LMvc.screenWidth = 480;
+				LMvc.screenHeight = LMvc.screenWidth*window.innerHeight/window.innerWidth;
+				var mobileScale = LGlobal.android ? 0.5 : 1;
+				LGlobal.width = LMvc.screenWidth * mobileScale;
+				LGlobal.height = LMvc.screenHeight * mobileScale;
 				LGlobal.canvasObj.width  = LGlobal.width;
 				LGlobal.canvasObj.height  = LGlobal.height;
+				LGlobal.stage.scaleX = LGlobal.stage.scaleY = mobileScale;
 			}
 			LGlobal.align = LStageAlign.TOP_LEFT;
 			LGlobal.stageScale = LStageScaleMode.SHOW_ALL;
 			LSystem.screen(LStage.FULL_SCREEN);
-			
 			var loadData = [
 					{name:"logo_bg_1",path:LMvc.IMG_PATH+"logo/logo_bg_1.jpg"},
 					{name:"logo_bg_2",path:LMvc.IMG_PATH+"logo/logo_bg_2.png"},
@@ -63,9 +66,9 @@ and open the template in the editor.
 					{path:"./core/MyController.js",type:"js"},
 					{path:"./core/MyModel.js",type:"js"}
 			];
-		
 			var loadingLayer = new LoadingSample3();
 			addChild(loadingLayer);	
+			
 			LLoadManage.load(
 				loadData,
 				function(progress){

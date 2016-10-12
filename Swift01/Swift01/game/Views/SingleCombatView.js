@@ -2,8 +2,8 @@ function SingleCombatView(controller){
 	var self = this;
 	base(self,LView,[controller]);
 	self.characterY = 270 - 48;
-	self.leftCharacterX = LGlobal.width * 0.5 - 96;
-	self.rightCharacterX = LGlobal.width * 0.5;
+	self.leftCharacterX = LMvc.screenWidth * 0.5 - 96;
+	self.rightCharacterX = LMvc.screenWidth * 0.5;
 }
 SingleCombatView.prototype.construct=function(){
 	this.controller.addEventListener(LEvent.COMPLETE, this.init.bind(this));
@@ -17,14 +17,14 @@ SingleCombatView.prototype.init=function(){
 	self.characterLayerInit();
 	
 	var vsBitmap = new LBitmap(new LBitmapData(LMvc.datalist["battle-vs"]));
-	vsBitmap.x = (LGlobal.width - vsBitmap.getWidth()) * 0.5;
+	vsBitmap.x = (LMvc.screenWidth - vsBitmap.getWidth()) * 0.5;
 	self.backLayer.addChild(vsBitmap);
 	self.backLayer.cacheAsBitmap(true);
 	//self.backgroundBitmap = getBitmap(self.backLayer);
 	self.addChildAt(self.backLayer,0);
 	
 	self.ctrlLayer = new LSprite();
-	self.ctrlLayer.y = LGlobal.height - 100;
+	self.ctrlLayer.y = LMvc.screenHeight - 100;
 	self.addChild(self.ctrlLayer);
 	
 	self.commandLayer = new LSprite();
@@ -34,12 +34,12 @@ SingleCombatView.prototype.init=function(){
 };
 SingleCombatView.prototype.backLayerInit=function(){
 	var self = this;
-	var bitmapData = new LBitmapData(LMvc.datalist["singleCombatBackground"],0,0,LGlobal.width,LGlobal.height);
+	var bitmapData = new LBitmapData(LMvc.datalist["singleCombatBackground"],0,0,LMvc.screenWidth,LMvc.screenHeight);
 	var bitmap = new LBitmap(bitmapData);
 	self.backLayer.addChild(bitmap);
 	bitmapData = new LBitmapData(LMvc.datalist["singleCombatForeground"]);
 	bitmap = new LBitmap(bitmapData);
-	bitmap.x = (LGlobal.width - bitmap.getWidth()) * 0.5;
+	bitmap.x = (LMvc.screenWidth - bitmap.getWidth()) * 0.5;
 	bitmap.y = 250;
 	self.backLayer.addChild(bitmap);
 };
@@ -75,7 +75,7 @@ SingleCombatView.prototype.addCtrlButton=function(){
 	for(var i = 0;i<self.leftCharacter.maxCommand;i++){
 		var child = getButton(Language.get(self.leftCharacter.commands[i]),80);
 		child.name = self.leftCharacter.commands[i];
-		child.x = LGlobal.width;
+		child.x = LMvc.screenWidth;
 		self.ctrlLayer.addChild(child);
 		child.addEventListener(LMouseEvent.MOUSE_UP,self.onButtonSelect);
 		LTweenLite.to(child,0.4 - i * 0.05,{x:i * 80});
@@ -132,7 +132,7 @@ SingleCombatView.prototype.buttonMoveComplete=function(event){
 			self.commandLayer.addChild(child);
 			continue;
 		}
-		LTweenLite.to(child,0.4 - i * 0.05,{x:LGlobal.width,onComplete:child.remove.bind(child)});
+		LTweenLite.to(child,0.4 - i * 0.05,{x:LMvc.screenWidth,onComplete:child.remove.bind(child)});
 	}
 	LGlobal.destroy = true;
 	self.commandLayer.childList.sort(function(a,b){return a.y - b.y;});
@@ -142,7 +142,7 @@ SingleCombatView.prototype.buttonMoveComplete=function(event){
 	self.executeIndex = 0;
 	for(var i = 0;i<self.rightCharacter.selectedCommands.length;i++){
 		var child = getButton(Language.get(self.rightCharacter.selectedCommands[i]),80);
-		child.x = LGlobal.width;
+		child.x = LMvc.screenWidth;
 		child.y = self.commandLayer.getChildAt(i).y;
 		self.commandLayer.addChild(child);
 		self.rightCharacter.selectedButtons.push(child);
@@ -174,13 +174,13 @@ SingleCombatView.prototype.characterDebutComplete=function(event){
 	}
 	self.leftCharacter.anime.play();
 	self.rightCharacter.anime.play();
-	self.leftCharacter.moveTo(LGlobal.width * 0.5 - 96, self.leftCharacter.y);
-	self.rightCharacter.moveTo(LGlobal.width * 0.5, self.rightCharacter.y);
+	self.leftCharacter.moveTo(LMvc.screenWidth * 0.5 - 96, self.leftCharacter.y);
+	self.rightCharacter.moveTo(LMvc.screenWidth * 0.5, self.rightCharacter.y);
 	self.addCtrlButton();
 };
 SingleCombatView.prototype.startSingleCombat=function(event){
 	var self = this;
-	var obj = [{x:0,y:20,tx:LGlobal.width},{x:0,y:150,tx:LGlobal.width},{x:100,y:20,tx:-LGlobal.width},{x:100,y:150,tx:-LGlobal.width}];
+	var obj = [{x:0,y:20,tx:LMvc.screenWidth},{x:0,y:150,tx:LMvc.screenWidth},{x:100,y:20,tx:-LMvc.screenWidth},{x:100,y:150,tx:-LMvc.screenWidth}];
 	obj.forEach(function(child){
 		var cloud = new LBitmap(new LBitmapData(LMvc.datalist["domestic_clouds"]));
 		cloud.x = child.x;
@@ -197,13 +197,13 @@ SingleCombatView.prototype.faceLayerInit=function(characterModel,isLeft){
 	var self = this;
 	var faceSize = 100, startPosition = 10;
 	var win =getPanel("win05",220,180);
-	win.x = isLeft ? 0 : LGlobal.width - win.getWidth();
+	win.x = isLeft ? 0 : LMvc.screenWidth - win.getWidth();
 	self.backLayer.addChild(win);
 	var faceLayer = new LSprite();
 	var face = characterModel.face();
 	faceLayer.scaleX = faceLayer.scaleY = faceSize/CharacterFaceSize.width;
 	faceLayer.addChild(face);
-	faceLayer.x = isLeft ? startPosition : LGlobal.width - faceSize - startPosition;
+	faceLayer.x = isLeft ? startPosition : LMvc.screenWidth - faceSize - startPosition;
 	faceLayer.y = startPosition;
 	self.characterLayer.addChild(faceLayer);
 	
@@ -226,7 +226,7 @@ SingleCombatView.prototype.faceLayerInit=function(characterModel,isLeft){
 	barHp.y = faceLayer.y + faceSize + 20;
 	var obj = {maxValue:characterModel.maxHP(),currentValue:characterModel.HP(),name:"HP",icon:"icon_hert",frontBar:"red_bar",barSize:170};
 	barHp.set(obj);
-	barHp.x = isLeft ? startPosition : LGlobal.width - barHp.getWidth() - startPosition;
+	barHp.x = isLeft ? startPosition : LMvc.screenWidth - barHp.getWidth() - startPosition;
 	self.characterLayer.addChild(barHp);
 
 	var barAngry = new StatusBarView(self.controller);

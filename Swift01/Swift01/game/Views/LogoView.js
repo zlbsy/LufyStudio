@@ -4,8 +4,8 @@ function LogoView(){
 LogoView.prototype.construct=function(){
 	var self = this;
 	var bitmapBgBack = new LBitmap(new LBitmapData(LMvc.datalist["logo_bg_1"]));
-	self.graphics.drawRect(0,"#000000",[0,0,LGlobal.width,LGlobal.height*0.5],true,"#000000");
-	bitmapBgBack.y = LGlobal.height - bitmapBgBack.getHeight()+50;
+	self.graphics.drawRect(0,"#000000",[0,0,LMvc.screenWidth,LMvc.screenHeight*0.5],true,"#000000");
+	bitmapBgBack.y = LMvc.screenHeight - bitmapBgBack.getHeight()+50;
 	self.addChild(bitmapBgBack);
 	self.bitmapBgBack = bitmapBgBack;
 	
@@ -13,9 +13,9 @@ LogoView.prototype.construct=function(){
 	bitmapBg.x = -bitmapBg.getWidth()*0.5;
 	
 	var layerBg = new LSprite();
-	layerBg.x = LGlobal.width*0.5;
+	layerBg.x = LMvc.screenWidth*0.5;
 	self.addChild(layerBg);
-	layerBg.y = LGlobal.height - bitmapBg.getHeight();
+	layerBg.y = LMvc.screenHeight - bitmapBg.getHeight();
 	layerBg.scaleX = layerBg.scaleY = 4;
 	layerBg.addChild(bitmapBg);
 	self.layerBg = layerBg;
@@ -24,9 +24,9 @@ LogoView.prototype.construct=function(){
 	bitmapChara.x = -bitmapChara.getWidth()*0.5;
 	bitmapChara.y = -bitmapChara.getHeight()*0.5;
 	var layerChara = new LSprite();
-	layerChara.x = LGlobal.width*0.5;
+	layerChara.x = LMvc.screenWidth*0.5;
 	self.addChild(layerChara);
-	layerChara.y = LGlobal.height + bitmapChara.getHeight()*2;
+	layerChara.y = LMvc.screenHeight + bitmapChara.getHeight()*2;
 	layerChara.scaleX = layerChara.scaleY = 5;
 	layerChara.addChild(bitmapChara);
 	self.layerChara = layerChara;
@@ -50,7 +50,7 @@ LogoView.prototype.showMenu=function(){
 	var menuY = 0;
 	var layer = new LSprite();
 	var title = getStrokeLabel(Language.get("game_title"),80,"#FFFFFF","#000000",4);
-	title.x = (LGlobal.width - title.getWidth())*0.5;
+	title.x = (LMvc.screenWidth - title.getWidth())*0.5;
 	title.y = 150;
 	var shadow = new LDropShadowFilter(5,45,"#00FF00");
 	title.filters = [shadow];
@@ -62,7 +62,7 @@ LogoView.prototype.showMenu=function(){
 	//self.mainMenuLayer.addChild(getBitmap(layer));
 	
 	var menuLayer = new LSprite();
-	menuLayer.x = menuLayer.tx = (LGlobal.width - 180) * 0.5;
+	menuLayer.x = menuLayer.tx = (LMvc.screenWidth - 180) * 0.5;
 	self.mainMenuLayer.addChild(menuLayer);
 	
 	var buttonStart = getSizeButton(Language.get("game_start"),180, 45);
@@ -146,7 +146,7 @@ LogoView.prototype.showMenu=function(){
 	tiebaLayer.graphics.drawRect(0,"#000000",[0,0,tiebaLabel.getWidth(),tiebaLabel.getHeight()]);
 	tiebaLayer.graphics.drawLine(2,"#000000",[0,tiebaLabel.getHeight()+2,tiebaLabel.getWidth(),tiebaLabel.getHeight()+2]);
 	tiebaLayer.addChild(tiebaLabel);
-	tiebaLayer.x = LGlobal.width - menuLayer.x - tiebaLayer.getWidth() - 10;
+	tiebaLayer.x = LMvc.screenWidth - menuLayer.x - tiebaLayer.getWidth() - 10;
 	tiebaLayer.y = menuY - 95;
 	menuLayer.addChild(tiebaLayer);
 	tiebaLayer.addEventListener(LMouseEvent.MOUSE_UP, self.clickTieba);
@@ -158,7 +158,7 @@ LogoView.prototype.showMenu=function(){
 	forumLayer.graphics.drawRect(0,"#000000",[0,0,forumLabel.getWidth(),forumLabel.getHeight()]);
 	forumLayer.graphics.drawLine(2,"#000000",[0,forumLabel.getHeight()+2,forumLabel.getWidth(),forumLabel.getHeight()+2]);
 	forumLayer.addChild(forumLabel);
-	forumLayer.x = LGlobal.width - menuLayer.x - forumLabel.getWidth() - 10;
+	forumLayer.x = LMvc.screenWidth - menuLayer.x - forumLabel.getWidth() - 10;
 	forumLayer.y = menuY - 60;
 	menuLayer.addChild(forumLayer);
 	forumLayer.addEventListener(LMouseEvent.MOUSE_UP, self.clickForum);
@@ -166,11 +166,11 @@ LogoView.prototype.showMenu=function(){
 	self.forumLayer.visible = LPlugin.GetData("reviewing") ? false : true;
 	
 	var verLabel = getStrokeLabel("Ver." + LMvc.ver,20,"#FFFFFF","#000000",4);
-	verLabel.x = LGlobal.width - menuLayer.x - verLabel.getWidth() - 10;
+	verLabel.x = LMvc.screenWidth - menuLayer.x - verLabel.getWidth() - 10;
 	verLabel.y = menuY - 25;
 	menuLayer.addChild(verLabel);
 	
-	menuLayer.y = LGlobal.height - menuY;
+	menuLayer.y = LMvc.screenHeight - menuY;
 	
 	self.topMenuLayer = menuLayer;
 };
@@ -284,7 +284,7 @@ LogoView.prototype.showChapterList=function(list, index){
 	}else{
 		menuLayer = new LSprite();
 		menuLayer.name = "menuLayer";
-		menuLayer.tx = (LGlobal.width - 200) * 0.5;
+		menuLayer.tx = (LMvc.screenWidth - 200) * 0.5;
 		self.addChild(menuLayer);
 	}
 	self.showIndex = index;
@@ -342,7 +342,7 @@ LogoView.prototype.showChapterList=function(list, index){
 	}
 	menuLayer.x = self.topMenuLayer.x + 210;
 	menuY += menuHeight * 2;
-	menuLayer.y = LGlobal.height - menuY;
+	menuLayer.y = LMvc.screenHeight - menuY;
 	self.chapterMenuLayer = menuLayer;
 	
 	LTweenLite.to(self.topMenuLayer,0.5,{x:self.topMenuLayer.tx-210, alpha:0});
@@ -424,8 +424,8 @@ LogoView.prototype.showNews=function(newsURL){
 	var newsBackMask = getTranslucentMask();
 	self.addChild(newsBackMask);
 	var w = 400, h = 400, x, y;
-	x = (LGlobal.width - w) * 0.5;
-	y = (LGlobal.height - h) * 0.5;
+	x = (LMvc.screenWidth - w) * 0.5;
+	y = (LMvc.screenHeight - h) * 0.5;
 	var newsBackground = getPanel("win02", w + 20, h + 20);
 	newsBackground.x = x - 10;
 	newsBackground.y = y - 10;

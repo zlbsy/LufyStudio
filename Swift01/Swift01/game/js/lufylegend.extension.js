@@ -135,6 +135,20 @@ LButton.prototype.ll_button_mode = function(){
 //////////////////////华丽的分界线////////////////////
 
 /*不需要加到引擎中，只在本游戏中使用*/
+LMvc.init = function(){
+	LMvc.layer = new LSprite();
+	addChild(LMvc.layer);
+	LMvc.loading = new LoadingSample5();
+	LMvc.loading.alpha = 0.5;
+	addChild(LMvc.loading);
+	LMvc.loading.visible = false;
+	LMvc.loadClass("Index",function(){
+		LMvc.loading.visible = true;
+		var controller = new IndexController();
+		LMvc.loading.visible = false;
+	});
+};
+	
 LTextField._labels = [];
 LTextField._labelsCreate=0;
 LTextField.getLabel = function(){

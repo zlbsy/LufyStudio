@@ -25,7 +25,7 @@ BattleMapView.prototype.onframe = function(event){
 	self.map.x = -self.parent.x;
 	self.map.y = -self.parent.y;
 	var bitmapData = self.datas[self.dataIndex];
-	bitmapData.setProperties(self.map.x,self.map.y,LGlobal.width,LGlobal.height);
+	bitmapData.setProperties(self.map.x,self.map.y,LMvc.screenWidth,LMvc.screenHeight);
 	self.map.bitmapData = bitmapData;
 	if(self._speed++ < self.speed){
 		return;

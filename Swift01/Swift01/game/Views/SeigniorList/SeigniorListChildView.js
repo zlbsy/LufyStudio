@@ -2,7 +2,7 @@ function SeigniorListChildView(controller, seigniorModel) {
 	var self = this;
 	base(self, LView, [controller]);
 	self.seigniorModel = seigniorModel;
-	self.y = LGlobal.height - 160;
+	self.y = LMvc.screenHeight - 160;
 	self.layer = new LSprite();
 	self.addChild(self.layer);
 	
@@ -29,7 +29,7 @@ SeigniorListChildView.prototype.onUp=function(event){
 		self.controller.showArea(self.chapterStatus.id());
 	}else if(parent.x > 0){
 		self.controller.view.centerOnChild();
-	}else if(parent.x < -(parent.numChildren - 1) * LGlobal.width){
+	}else if(parent.x < -(parent.numChildren - 1) * LMvc.screenWidth){
 		self.controller.view.centerOnChild();
 	}else if(self.saveTouch.speed > 30){
 		self.controller.view.moveRight();
@@ -42,7 +42,7 @@ SeigniorListChildView.prototype.onUp=function(event){
 SeigniorListChildView.prototype.onframe=function(event){
 	var self = event.currentTarget;
 	var parent = self.parent;
-	if(parent.x + self.x > -LGlobal.width && parent.x + self.x < LGlobal.width){
+	if(parent.x + self.x > -LMvc.screenWidth && parent.x + self.x < LMvc.screenWidth){
 		self.layer.visible = true;
 		if(self.layer.numChildren == 0){
 			self.set();

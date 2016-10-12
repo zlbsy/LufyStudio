@@ -685,7 +685,7 @@ SeigniorExecute.prototype.maskShow=function(){
 	
 	var bitmapClose = new LBitmap(new LBitmapData(LMvc.datalist["close"]));
 	buttonClose = new LButton(bitmapClose);
-	buttonClose.x = LGlobal.width - bitmapClose.getWidth() - 5;
+	buttonClose.x = LMvc.screenWidth - bitmapClose.getWidth() - 5;
 	buttonClose.y = self.msgView.panelY - bitmapClose.getHeight();
 	self.backLayer.addChild(buttonClose);
 	buttonClose.addEventListener(LMouseEvent.MOUSE_UP, SeigniorExecute.close);

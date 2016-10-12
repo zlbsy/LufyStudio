@@ -6,7 +6,7 @@ BackgroundView.prototype.set = function(bitmapData, targetLayer){
 	var self = this;
 	self.baseBitmapData = bitmapData;
 	self.targetLayer = targetLayer;
-	var data = new LBitmapData(null,0,0,LGlobal.width,LGlobal.height,LBitmapData.DATA_CANVAS);
+	var data = new LBitmapData(null,0,0,LMvc.screenWidth,LMvc.screenHeight,LBitmapData.DATA_CANVAS);
 	self.map = new LBitmap(data);
 	self.addChild(self.map);
 
@@ -19,7 +19,7 @@ BackgroundView.prototype.onframe = function(event){
 	}
 	self.ll_x = self.targetLayer.x;
 	self.ll_y = self.targetLayer.y;
-	self.map.bitmapData.copyPixels(self.baseBitmapData, new LRectangle(-self.targetLayer.x,-self.targetLayer.y, LGlobal.width,LGlobal.height), new LPoint(0,0));
+	self.map.bitmapData.copyPixels(self.baseBitmapData, new LRectangle(-self.targetLayer.x,-self.targetLayer.y, LMvc.screenWidth,LMvc.screenHeight), new LPoint(0,0));
 };
 BackgroundView.prototype.updateView = function(){
 	this.ll_x = Number.MIN_VALUE;

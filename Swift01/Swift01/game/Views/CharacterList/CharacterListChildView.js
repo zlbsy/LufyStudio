@@ -212,7 +212,7 @@ CharacterListChildView.prototype.setArmProperties = function() {
 		return;
 	}
 	var layer = new LSprite();
-	layer.graphics.drawRect(0, "#ff0000", [0, 0, LGlobal.width - 200, 50]);
+	layer.graphics.drawRect(0, "#ff0000", [0, 0, LMvc.screenWidth - 200, 50]);
 	
 	var cityName = getStrokeLabel(self.charaModel.city().name(), 18, "#FFFFFF", "#000000", 4);
 	cityName.x = 2;
@@ -251,7 +251,7 @@ CharacterListChildView.prototype.setBasicProperties = function() {
 		return;
 	}
 	var layer = new LSprite();
-	layer.graphics.drawRect(0, "#ff0000", [0, 0, LGlobal.width - 200, 50]);
+	layer.graphics.drawRect(0, "#ff0000", [0, 0, LMvc.screenWidth - 200, 50]);
 
 	var seigniorName = getStrokeLabel( self.charaModel.seigniorName(), 18, "#FFFFFF", "#000000", 4);
 	seigniorName.x = 2;
@@ -296,7 +296,7 @@ CharacterListChildView.prototype.setAbilityProperties = function() {
 		return;
 	}
 	var layer = new LSprite();
-	layer.graphics.drawRect(0, "#ff0000", [0, 0, LGlobal.width - 200, 50]);
+	layer.graphics.drawRect(0, "#ff0000", [0, 0, LMvc.screenWidth - 200, 50]);
 	var command = getStrokeLabel(self.charaModel.command(), 18, "#FFFFFF", "#000000", 4);
 	command.x = 5;
 	command.y = 5;

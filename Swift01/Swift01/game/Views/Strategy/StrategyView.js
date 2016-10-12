@@ -74,7 +74,7 @@ StrategyView.prototype.layerInit = function() {
 	var self = this;
 	if(!self.fromCharacterDetailed){
 		var translucentLayer = new LSprite();
-		translucentLayer.addShape(LShape.RECT,[0,0,LGlobal.width,LGlobal.height]);
+		translucentLayer.addShape(LShape.RECT,[0,0,LMvc.screenWidth,LMvc.screenHeight]);
 		self.addChild(translucentLayer);
 		translucentLayer.addEventListener(LMouseEvent.MOUSE_DOWN, self.onclick);
 		translucentLayer.addEventListener(LMouseEvent.MOUSE_UP, self.onclick);
@@ -89,8 +89,8 @@ StrategyView.prototype.layerInit = function() {
 	if(self.fromCharacterDetailed){
 		return;
 	}
-	self.strategyListLayer.x = (LGlobal.width - self.size.x)*0.5 + 20;
-	self.strategyListLayer.y = (LGlobal.height - self.size.y)*0.5 + 110;
+	self.strategyListLayer.x = (LMvc.screenWidth - self.size.x)*0.5 + 20;
+	self.strategyListLayer.y = (LMvc.screenHeight - self.size.y)*0.5 + 110;
 	self.ctrlLayerInit();
 };
 StrategyView.prototype.setBackgroundLayer = function() {
@@ -100,8 +100,8 @@ StrategyView.prototype.setBackgroundLayer = function() {
 	var backgroundData = new LBitmapData(LMvc.datalist["win05"]);
 	//var panel = getBitmap(new LPanel(backgroundData,self.size.x,self.size.y));
 	var panel = getPanel("win05",self.size.x,self.size.y);
-	panel.x = (LGlobal.width - panel.getWidth()) * 0.5;
-	panel.y = (LGlobal.height - panel.getHeight()) * 0.5;
+	panel.x = (LMvc.screenWidth - panel.getWidth()) * 0.5;
+	panel.y = (LMvc.screenHeight - panel.getHeight()) * 0.5;
 	windowLayer.addChild(panel);
 
 	var charaName = getStrokeLabel(self.characterModel.name(),20,"#FFFFFF","#000000",4);
@@ -135,8 +135,8 @@ StrategyView.prototype.setBackgroundLayer = function() {
 StrategyView.prototype.ctrlLayerInit = function() {
 	var self = this;
 	var buttonClose = new LButton(new LBitmap(new LBitmapData(LMvc.datalist["close"])));
-	buttonClose.x = (LGlobal.width - self.size.x) * 0.5 + self.size.x - buttonClose.getWidth() * 0.7;
-	buttonClose.y = (LGlobal.height - self.size.y) * 0.5 - buttonClose.getHeight() * 0.3;
+	buttonClose.x = (LMvc.screenWidth - self.size.x) * 0.5 + self.size.x - buttonClose.getWidth() * 0.7;
+	buttonClose.y = (LMvc.screenHeight - self.size.y) * 0.5 - buttonClose.getHeight() * 0.3;
 	self.baseLayer.addChild(buttonClose);
 	buttonClose.addEventListener(LMouseEvent.MOUSE_UP, self.close);
 };

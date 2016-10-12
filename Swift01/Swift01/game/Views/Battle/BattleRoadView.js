@@ -175,7 +175,7 @@ BattleRoadView.prototype.onframe = function(event){
 	var self = event.currentTarget;
 	self.bitmap.x = -self.parent.x;
 	self.bitmap.y = -self.parent.y;
-	self.bitmap.bitmapData.setProperties(self.bitmap.x,self.bitmap.y,LGlobal.width,LGlobal.height);
+	self.bitmap.bitmapData.setProperties(self.bitmap.x,self.bitmap.y,LMvc.screenWidth,LMvc.screenHeight);
 };
 BattleRoadView.prototype.charaToMove = function(lx,ly){
 	var self = this;
