@@ -104,8 +104,8 @@ StrategyChildView.prototype.getMP=function(color,lineColor,x){
 StrategyChildView.prototype.set=function(){
 	var self = this;
 	var width = 50, height = 50;
-	var color = self.isLearned ? "#FFFFFF" : "#CCCCCC";
-	var lineColor = self.isLearned ? "#000000" : "#999999";
+	var color = self.isLearned ? "#FFFFFF" : "#666666";
+	var lineColor = self.isLearned ? "#000000" : "#000000";
 	var lblName = self.getName(color,lineColor,width + 5);
 	lblName.text = self.strategyModel.name();
 	self.setBitmapLine(width + 5);
