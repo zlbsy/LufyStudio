@@ -705,6 +705,8 @@ function hireRun2(characterModel, hireCharacter, area, isAccess){
 		loyalty = parentLoyalty;
 	}
 	hireCharacter.loyalty(loyalty > 100 ? 100 : loyalty);
+	//登场功绩计算
+	setCharacterInitFeat(hireCharacter);
 	characterModel.featPlus(JobFeatCoefficient.NORMAL);
 	if(characterModel.seigniorId() == LMvc.selectSeignorId && !area.isAppoint()){
 		SeigniorExecute.addMessage(String.format(Language.get("hireSuccessMessage"),characterModel.name(),hireCharacter.name(),hireCharacter.name()));

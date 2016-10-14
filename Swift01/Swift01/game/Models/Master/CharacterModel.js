@@ -657,6 +657,9 @@ CharacterModel.prototype.childs = function(){
 CharacterModel.prototype.father = function(){
 	return this.data.father;
 };
+CharacterModel.prototype.fatherCharacter = function(){
+	return CharacterModel.getChara(this.data.father);
+};
 CharacterModel.prototype.featPlus = function(value){
 	var self = this, feat = self.feat();
 	if(self.seigniorId() != LMvc.selectSeignorId){
