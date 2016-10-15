@@ -8,7 +8,7 @@ if(!LPlugin.bundleVersion){
 }
 LPlugin.testVersion = (function(){
     var vers = LPlugin.bundleVersion().split(".");
-    return parseInt(vers[vers.length - 1]) > 0;
+    return parseInt(vers[vers.length - 1]) == 9;
 })();
 LPlugin.stamps = function(){
 	if(!LPlugin._stamps){
