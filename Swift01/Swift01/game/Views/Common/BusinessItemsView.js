@@ -40,13 +40,13 @@ BusinessItemsView.prototype.set = function(characterModel, item){
 	price.y = icon.y + 10;
 	self.addChild(price);
 	
-	var okButton = new LButton(new LBitmap(new LBitmapData(LMvc.datalist["ok"])));
+	var okButton = getButton(Language.get("yes"), 100);
 	okButton.x = panel.x + panel.getWidth()*0.5 - okButton.getWidth() - 20;
 	okButton.y = panel.y + panel.getHeight() - okButton.getHeight() - 20;
 	self.addChild(okButton);
 	okButton.addEventListener(LMouseEvent.MOUSE_UP, self.buy);
 	
-	var cancelButton = new LButton(new LBitmap(new LBitmapData(LMvc.datalist["close"])));
+	var cancelButton = getButton(Language.get("no"), 100);
 	cancelButton.x = panel.x + panel.getWidth()*0.5 + 20;
 	cancelButton.y = panel.y + panel.getHeight() - cancelButton.getHeight() - 20;
 	self.addChild(cancelButton);
