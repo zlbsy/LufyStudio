@@ -98,7 +98,7 @@ function checkEventList() {
 			}
 			if(general.captive){
 				var city = character.city();
-				if(city && city.seigniorCharaId() != general.captive){
+				if(!city || city.seigniorCharaId() != general.captive){
 					generalsOk = false;
 					break;
 				}

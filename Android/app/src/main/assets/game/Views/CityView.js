@@ -382,6 +382,7 @@ CityView.prototype.referralCharacterExecute = function(chara, targetChara){
 	targetChara.loyalty(chara.loyalty());
 	targetChara.cityId(chara.cityId());
 	targetChara.job(Job.END);
+	setCharacterInitFeat(targetChara);
 	var script = "SGJTalk.show(" + chara.id() + ",0,"+String.format(Language.get("referralCharacterTalk"),targetChara.name())+");";
 	script += "SGJTalk.show(" + targetChara.id() + ",0,"+String.format(Language.get("referralCharacterTargetTalk"),targetChara.name())+");";
 	LGlobal.script.addScript(script);

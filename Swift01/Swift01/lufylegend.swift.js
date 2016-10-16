@@ -13,6 +13,10 @@ LPlugin.getSystemVersion = getSystemVersion;
 LPlugin.bundleVersion = bundleVersion;
 LPlugin.print = myPrint;
 LPlugin.openURL = openURL;
+LPlugin.testVersion = (function(){
+    var vers = LPlugin.bundleVersion().split(".");
+    return parseInt(vers[vers.length - 1]) == 9;
+})();
 
 function LPurchaseInit() {
     function LPurchase() {

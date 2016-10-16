@@ -36,6 +36,7 @@ function getSizeButton(text,width,height,img){
 	}
 	var bitmapWin = getPanel(img,width,height);
 	var textLabel = getStrokeLabel(text,18,"#FFFFFF","#000000",3);
+	textLabel.name = "label";
 	textLabel.x = (width - textLabel.getWidth()) * 0.5;
 	textLabel.y = (height - textLabel.getHeight()) * 0.5;
 	bitmapWin.addChild(textLabel);

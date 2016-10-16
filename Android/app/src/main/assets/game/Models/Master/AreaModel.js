@@ -272,6 +272,9 @@ AreaModel.prototype.addGenerals = function(param){
 	}else{
 		chara = param;
 	}
+	if(chara.isEmploy()){
+		return;
+	}
 	if(chara.cityId() > 0){
 		chara.city().removeCharacter(chara.id());
 	}
@@ -334,6 +337,17 @@ AreaModel.prototype.setSeignor = function(seignior,areaData){
 				out_of_offices.push(chara);
 			}
 			this.data[key] = out_of_offices;
+			continue;
+		}else if(key == "not_debut"){
+			for(var i=0,l=areaData[key].length;i<l;i++){
+				var charaData = areaData[key][i];
+				var chara = CharacterModel.getChara(charaData.chara_id);
+				chara.data.equipments = [];
+				if(charaData.equipments){
+					chara.equip(charaData.equipments);
+				}
+			}
+			this.data[key] = areaData[key];
 			continue;
 		}else if(key == "captives"){
 			//{chara_id:?,seignior_id:?,loyalty:?}

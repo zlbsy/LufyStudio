@@ -112,7 +112,14 @@ CharacterListView.prototype.listInit=function(){
 			button.y = LMvc.screenHeight - button.getHeight() - 15;
 			self.listLayer.addChild(button);
 			button.addEventListener(LMouseEvent.MOUSE_UP, self.onClickExecuteButton);
+		}else{
+			self.executeButton.upState.cacheAsBitmap(false);
+			var labelObject = self.executeButton.upState.getChildByName("label");
+			labelObject.text = Language.get(buttonLabel);
+			labelObject.x = (160 - labelObject.getWidth()) * 0.5;
+			self.executeButton.upState.cacheAsBitmap(true);
 		}
+		
 		self.executeButton.visible = true;
 		self.addEventListener(LCheckBox.ON_CHANGE, self.onChangeChildSelect);
 		if(showMoney){

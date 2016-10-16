@@ -2,7 +2,7 @@
  * 俘虏概率
  */
 function calculateHitrateCaptive(chara, nearCharas){
-	if(chara.data.isTribeCharacter()){
+	if(chara.data.isTribeCharacter() || chara.data.isDefCharacter() || chara.data.isEmploy()){
 		return false;
 	}
 	var rate = 1;
@@ -231,6 +231,29 @@ function appointPrefecture(city){
 	});
 	city.prefecture(generals[0].id());
 }
+function setCharacterInitFeat(chara){
+	var city = chara.city();
+	if(!city){
+		chara.feat(0);
+		return;
+	}
+	var generals = city.generals();
+	if(generals.length == 0){
+		chara.feat(0);
+		return;
+	}
+	var minFeat = CharacterLevelConfig.exp * CharacterLevelConfig.maxLevel;
+	for(var i=0;i<generals.length;i++){
+		var child = generals[0];
+		if(child.id() == chara.id()){
+			continue;
+		}
+		if(child.feat() < minFeat){
+			minFeat = child.feat();
+		}
+	}
+	chara.feat(minFeat);
+}
 function getMonarchChangeId(seignior){
 	var chara;
 	//父子
@@ -244,7 +267,7 @@ function getMonarchChangeId(seignior){
 		}
 	}
 	//兄弟
-	childs = seignior.character().father() ? seignior.character().father().childs() : null;
+	childs = seignior.character().father() ? seignior.character().fatherCharacter().childs() : null;
 	if(childs && childs.length > 0){
 		for(var i=0;i<childs.length;i++){
 			if(childs[i] == seignior.chara_id()){

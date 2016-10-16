@@ -608,11 +608,17 @@ function setBattleSaveData(){
 	for(var i=0,l=data.selfMinusStrategyCharas.length;i<l;i++){
 		var characterId = data.selfMinusStrategyCharas[i];
 		var chara = charaLayer.getCharacter(Belong.SELF, characterId);
+		if(!chara){
+			continue;
+		}
 		model.selfMinusStrategyCharas.push({chara:chara,skill:chara.data.skill()});
 	}
 	for(var i=0,l=data.enemyMinusStrategyCharas.length;i<l;i++){
 		var characterId = data.enemyMinusStrategyCharas[i];
 		var chara = charaLayer.getCharacter(Belong.ENEMY, characterId);
+		if(!chara){
+			continue;
+		}
 		data.enemyMinusStrategyCharas.push({chara:chara,skill:chara.data.skill()});
 	}
 	LMvc.BattleController.view.charaLayer.resetCharacterPositions();

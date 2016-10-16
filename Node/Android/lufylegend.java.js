@@ -8,7 +8,7 @@ function LPluginExtensionInit() {
 	LPlugin.native = true;
 	LPlugin.testVersion = (function() {
 		var vers = LPlugin.bundleVersion().split(".");
-		return parseInt(vers[vers.length - 1]) > 0;
+		return parseInt(vers[vers.length - 1]) == 9;
 	})();
 }
 function LPurchaseCreate() {
