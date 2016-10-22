@@ -5,6 +5,9 @@ function BattleWeatherView(controller){
 };
 BattleWeatherView.prototype.change = function(){
 	var self = this;
+	if(LMvc.TutorialController){
+		return;
+	}
 	var probability = 1;
 	if(self.currentWeather){
 		self.currentWeather.probability += 0.1;
@@ -40,6 +43,9 @@ BattleWeatherView.prototype.create = function(weather){
 			break;
 		default:
 			layer = new LSprite();
+			if(LGlobal.android){
+				layer = self.getAndroidDialog(layer, BattleWeatherConfig.SUNNY);
+			}
 	}
 	layer.weather = weather;
 	self.addChild(layer);

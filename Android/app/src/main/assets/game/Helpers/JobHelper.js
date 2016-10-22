@@ -183,10 +183,10 @@ function accessRun(characterModel){
 	var charaId = notDebut[notDebut.length*Math.fakeRandom() >>> 0];
 	var chara = cityModel.removeNotDebut(charaId);
 	var targetModel = CharacterModel.getChara(charaId);
+	targetModel.cityId(characterModel.cityId());
 	if(chara && chara.equipments && chara.equipments.length > 0){
 		targetModel.equip(chara.equipments);
 	}
-	targetModel.cityId(characterModel.cityId());
 	var area = characterModel.city();
 	var outOfOffice = area.outOfOffice();
 	outOfOffice.push(targetModel);

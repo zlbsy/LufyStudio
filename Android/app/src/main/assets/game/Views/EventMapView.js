@@ -139,7 +139,7 @@ EventMapView.prototype.messageShow=function(msg, speed){
 	label.x = label.y = 20;
 	label.setWordWrap(true,27);
 	panel.addChild(label);
-	label.speed = speed;
+	label.speed = LPlugin.gameSetting.speed;
 	label.wind();
 	self.clickLayer.visible = true;
 	self.messageLayer.addChild(panel);
