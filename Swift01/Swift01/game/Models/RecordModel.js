@@ -1,15 +1,1 @@
-function RecordModel(){
-	base(this,MyModel,[]);
-}
-RecordModel.prototype.construct=function(){
-	var self = this;
-};
-RecordModel.prototype.getImages=function(){
-	var list = [
-		{name:"close",path:LMvc.IMG_PATH+"component/close.png"},
-		{name:"win02",path:LMvc.IMG_PATH+"win/win02.png"},
-		{name:"win03",path:LMvc.IMG_PATH+"win/win03.png"},
-		{name:"win05",path:LMvc.IMG_PATH+"win/win05.png"}
-	];
-	return list;
-};
+eval(function(p,a,c,k,e,r){e=function(c){return c.toString(a)};if(!''.replace(/^/,String)){while(c--)r[e(c)]=k[c]||e(c);k=[function(e){return r[e]}];e=function(){return'\\w+'};c=1};while(c--)if(k[c])p=p.replace(new RegExp('\\b'+e(c)+'\\b','g'),k[c]);return p}('5 7(){k(9,j,[])}7.c.i=5(){e a=9};7.c.h=5(){e a=[{0:"d",1:2.3+"g/d.4"},{0:"8",1:2.3+"6/8.4"},{0:"b",1:2.3+"6/b.4"},{0:"f",1:2.3+"6/f.4"}];l a};',22,22,'name|path|LMvc|IMG_PATH|png|function|win|RecordModel|win02|this||win03|prototype|close|var|win05|component|getImages|construct|MyModel|base|return'.split('|'),0,{}))

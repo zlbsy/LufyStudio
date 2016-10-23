@@ -1,11 +1,1 @@
-function EventListModel(){
-	base(this,MyModel,[]);
-}
-EventListModel.prototype.construct=function(){
-};
-EventListModel.prototype.getImages=function(){
-	var self = this;
-	var list = [];
-	list.push({name:"lock",path:LMvc.IMG_PATH+"icon/lock.png"});
-	return list;
-};
+eval(function(p,a,c,k,e,r){e=function(c){return c.toString(a)};if(!''.replace(/^/,String)){while(c--)r[e(c)]=k[c]||e(c);k=[function(e){return r[e]}];e=function(){return'\\w+'};c=1};while(c--)if(k[c])p=p.replace(new RegExp('\\b'+e(c)+'\\b','g'),k[c]);return p}('0 1(){8(2,9,[])}1.3.d=0(){};1.3.6=0(){4 a=2;4 b=[];b.j({c:"5",e:f.g+"h/5.i"});7 b};',20,20,'function|EventListModel|this|prototype|var|lock|getImages|return|base|MyModel|||name|construct|path|LMvc|IMG_PATH|icon|png|push'.split('|'),0,{}))

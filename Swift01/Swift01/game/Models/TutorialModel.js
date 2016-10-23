@@ -1,12 +1,1 @@
-function TutorialModel(){
-	base(this,MyModel,[]);
-}
-TutorialModel.prototype.construct=function(){
-};
-TutorialModel.prototype.getImages=function(){
-	var list = [
-		{name:"translucent",path:LMvc.IMG_PATH+"common/translucent.png"},
-		{name:"focus",path:LMvc.IMG_PATH+"common/focus.png"},
-	];
-	return list;
-};
+eval(function(p,a,c,k,e,r){e=function(c){return c.toString(a)};if(!''.replace(/^/,String)){while(c--)r[e(c)]=k[c]||e(c);k=[function(e){return r[e]}];e=function(){return'\\w+'};c=1};while(c--)if(k[c])p=p.replace(new RegExp('\\b'+e(c)+'\\b','g'),k[c]);return p}('0 1(){h(g,f,[])}1.5.e=0(){};1.5.d=0(){c a=[{9:"b",8:7.6+"4/b.3"},{9:"2",8:7.6+"4/2.3"},];i a};',19,19,'function|TutorialModel|focus|png|common|prototype|IMG_PATH|LMvc|path|name||translucent|var|getImages|construct|MyModel|this|base|return'.split('|'),0,{}))

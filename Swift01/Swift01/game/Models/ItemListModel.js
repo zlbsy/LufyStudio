@@ -1,13 +1,1 @@
-function ItemListModel(){
-	base(this,MyModel,[]);
-}
-ItemListModel.prototype.construct=function(){
-};
-
-ItemListModel.prototype.getImages=function(){
-	var self = this;
-	var list = [];
-	list.push({name:"win06",path:LMvc.IMG_PATH+"win/win06.png"});
-	list.push({name:"lock",path:LMvc.IMG_PATH+"icon/lock.png"});
-	return list;
-};
+eval(function(p,a,c,k,e,r){e=function(c){return c.toString(a)};if(!''.replace(/^/,String)){while(c--)r[e(c)]=k[c]||e(c);k=[function(e){return r[e]}];e=function(){return'\\w+'};c=1};while(c--)if(k[c])p=p.replace(new RegExp('\\b'+e(c)+'\\b','g'),k[c]);return p}('0 1(){j(2,i,[])}1.4.g=0(){};1.4.f=0(){7 a=2;7 b=[];b.9({d:"e",8:6.5+"h/e.3"});b.9({d:"c",8:6.5+"k/c.3"});l b};',22,22,'function|ItemListModel|this|png|prototype|IMG_PATH|LMvc|var|path|push|||lock|name|win06|getImages|construct|win|MyModel|base|icon|return'.split('|'),0,{}))

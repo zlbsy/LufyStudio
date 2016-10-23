@@ -1,17 +1,1 @@
-function SettingGameController(){
-	base(this,MyController,[]);
-}
-SettingGameController.prototype.construct=function(){
-	var self = this;
-	var list = self.model.getImages();
-	self.load.image(list,self.libraryLoad);
-};
-SettingGameController.prototype.libraryLoad=function(){
-	var self = this;
-	var libraris = [String.format("language/{0}/LanguageAll",LPlugin.language())];
-	self.load.library(libraris,self.init);
-};
-SettingGameController.prototype.init=function(){
-	var self = this;
-	self.dispatchEvent(LEvent.COMPLETE);
-};
+eval(function(p,a,c,k,e,r){e=function(c){return c.toString(a)};if(!''.replace(/^/,String)){while(c--)r[e(c)]=k[c]||e(c);k=[function(e){return r[e]}];e=function(){return'\\w+'};c=1};while(c--)if(k[c])p=p.replace(new RegExp('\\b'+e(c)+'\\b','g'),k[c]);return p}('2 3(){i(4,f,[])}3.5.d=2(){1 a=4;1 b=a.m.c();a.6.p(b,a.7)};3.5.7=2(){1 a=4;1 b=[g.h("8/{0}/j",k.8())];a.6.l(b,a.9)};3.5.9=2(){1 a=4;a.n(o.e)};',26,26,'|var|function|SettingGameController|this|prototype|load|libraryLoad|language|init|||getImages|construct|COMPLETE|MyController|String|format|base|LanguageAll|LPlugin|library|model|dispatchEvent|LEvent|image'.split('|'),0,{}))

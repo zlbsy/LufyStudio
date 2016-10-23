@@ -1,13 +1,1 @@
-function ArmListModel(){
-	base(this,MyModel,[]);
-}
-ArmListModel.prototype.construct=function(){
-};
-ArmListModel.prototype.getImages=function(){
-	var list = [];
-	list.push({name:"checkbox-background",path:LMvc.IMG_PATH+"component/checkbox-background.png"});
-	list.push({name:"checkbox-on",path:LMvc.IMG_PATH+"component/checkbox-on.png"});
-	list.push({name:"range",path:LMvc.IMG_PATH+"component/range.png"});
-	list.push({name:"close",path:LMvc.IMG_PATH+"component/close.png"});
-	return list;
-};
+eval(function(p,a,c,k,e,r){e=function(c){return c.toString(a)};if(!''.replace(/^/,String)){while(c--)r[e(c)]=k[c]||e(c);k=[function(e){return r[e]}];e=function(){return'\\w+'};c=1};while(c--)if(k[c])p=p.replace(new RegExp('\\b'+e(c)+'\\b','g'),k[c]);return p}('8 9(){i(g,l,[])}9.c.j=8(){};9.c.h=8(){k a=[];a.7({0:"6-b",5:4.3+"2/6-b.1"});a.7({0:"6-d",5:4.3+"2/6-d.1"});a.7({0:"e",5:4.3+"2/e.1"});a.7({0:"f",5:4.3+"2/f.1"});m a};',23,23,'name|png|component|IMG_PATH|LMvc|path|checkbox|push|function|ArmListModel||background|prototype|on|range|close|this|getImages|base|construct|var|MyModel|return'.split('|'),0,{}))

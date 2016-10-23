@@ -1,7 +1,1 @@
-function BattleSelectMenuModel(){
-	LExtends(this,MyModel,[]);
-}
-BattleSelectMenuModel.prototype.construct=function(){
-	var self = this;
-	
-};
+eval(function(p,a,c,k,e,r){e=String;if(!''.replace(/^/,String)){while(c--)r[c]=k[c]||c;k=[function(e){return r[e]}];e=function(){return'\\w+'};c=1};while(c--)if(k[c])p=p.replace(new RegExp('\\b'+e(c)+'\\b','g'),k[c]);return p}('0 1(){3(2,4,[])}1.5.6=0(){7 8=2};',9,9,'function|BattleSelectMenuModel|this|LExtends|MyModel|prototype|construct|var|a'.split('|'),0,{}))
