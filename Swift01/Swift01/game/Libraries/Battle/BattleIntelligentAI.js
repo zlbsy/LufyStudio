@@ -377,39 +377,9 @@ BattleIntelligentAI.prototype.getStrategyNodeTarget = function(strategy, target)
 BattleIntelligentAI.prototype.magicAttack = function() {
 	this.chara.AI.magicAttack(this.target);
 };
-BattleIntelligentAI.prototype.askSingleCombat = function() {
-	var self = BattleController.ctrlChara.inteAI;
-	var targetModel = self.target.data;
-	var message = String.format( Language.get("ask_single_combat_confirm"), self.chara.data.name(), self.chara.data.force(), self.chara.data.HP(), targetModel.name(), targetModel.force(), targetModel.HP());
-	var obj = {title:Language.get("confirm"), message:message, width:360, height:330, okEvent:self.singleCombatSuccess, cancelEvent:self.singleCombatFail};
-	var windowLayer = ConfirmWindow(obj);
-	LMvc.layer.addChild(windowLayer);
-};
-BattleIntelligentAI.prototype.singleCombatSuccess = function(event) {
-	event.currentTarget.parent.remove();
-	var self = BattleController.ctrlChara.inteAI;
-	self.chara.AI.singleCombat(self.target);
-	var targetModel = self.target.data;
-	script = "SGJTalk.show(" + targetModel.id() + ",0," + Language.get("single_combat_answer_ok") + ");" + 
-		"SGJBattleCharacter.singleCombatStart(" + self.chara.belong + "," + self.chara.data.id() + ");";
-	LGlobal.script.addScript(script);
-};
-BattleIntelligentAI.prototype.singleCombatFail = function(event) {
-	event.currentTarget.parent.remove();
-	var self = BattleController.ctrlChara.inteAI;
-	var script = "SGJTalk.show(" + self.target.data.id() + ",0," + Language.get("single_combat_answer_no") + ");" + 
-		"SGJBattleCharacter.endAction(" + self.chara.belong + "," + self.chara.data.id() + ");";
-	LGlobal.script.addScript(script);
-};
 BattleIntelligentAI.prototype.physicalAttack = function() {
 	var self = this;
-	if(calculateAskSingleCombat(self.chara, self.target)){
-		var script = "SGJTalk.show(" + self.chara.data.id() + ",0," + String.format(Language.get("single_combat_ask"), self.target.data.name()) + ");";
-		script += "SGJBattleCharacter.askSingleCombat();";
-		LGlobal.script.addScript(script);
-	}else{
-		self.chara.AI.physicalAttack(self.target);
-	}
+	self.chara.AI.physicalAttack(self.target);
 };
 BattleIntelligentAI.prototype.useAddHpStrategy = function() {
 	var self = this, chara = self.chara, strategy, strategys = [], node;

@@ -1,5 +1,1 @@
-var TroubleConfig = {
-	EASE:0,
-	NORMAL:1,
-	HARD:2
-};
+eval(function(p,a,c,k,e,r){e=String;if(!''.replace(/^/,String)){while(c--)r[c]=k[c]||c;k=[function(e){return r[e]}];e=function(){return'\\w+'};c=1};while(c--)if(k[c])p=p.replace(new RegExp('\\b'+e(c)+'\\b','g'),k[c]);return p}('3 4={5:0,6:1,7:2};',8,8,'|||var|TroubleConfig|EASE|NORMAL|HARD'.split('|'),0,{}))

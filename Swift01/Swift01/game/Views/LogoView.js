@@ -90,7 +90,6 @@ LogoView.prototype.showMenu=function(){
 	
 	menuY += menuHeight;
 	var buttonCreate = getSizeButton(Language.get("create_character"),180, 45);
-	buttonCreate.name = productIdConfig.createCharacter;
 	buttonCreate.y = menuY;
 	menuLayer.addChild(buttonCreate);
 	lockedButton(buttonCreate);
@@ -103,6 +102,12 @@ LogoView.prototype.showMenu=function(){
 	buttonTutorial.addEventListener(LMouseEvent.MOUSE_UP, self.tutorialChick);
 	
 	menuY += menuHeight * 2;
+	
+	var buttonMore = getSizeButton(Language.get("更多游戏"),140, 45);
+	buttonMore.x = -menuLayer.x;
+	buttonMore.y = menuY - buttonMore.getHeight() - menuHeight * 2;
+	menuLayer.addChild(buttonMore);
+	buttonMore.addEventListener(LMouseEvent.MOUSE_UP, self.showMoreGame);
 	
 	var buttonRestore = getSizeButton(Language.get("about_game"),140, 45);
 	buttonRestore.x = -menuLayer.x;
@@ -135,6 +140,9 @@ LogoView.prototype.showMenu=function(){
 	
 	self.topMenuLayer = menuLayer;
 };
+LogoView.prototype.showMoreGame=function(event){
+	h5api.moreGame();
+};
 LogoView.prototype.tutorialChick=function(event){
 	var button = event.currentTarget;
 	var self = button.getParentByConstructor(LogoView);
@@ -164,8 +172,6 @@ LogoView.prototype.showChapterListChild=function(chapter, menuLayer, x, y){
 	var title = (chapter.hideYear ? "" : chapter.year + " ") + Language.get("chapter_"+chapter.id);
 	var buttonChapter = getSizeButton(title,200, 45);
 	buttonChapter.chapterId = chapter.id;
-	buttonChapter.name = productIdConfig["chapter_"+chapter.id];
-	var group = productIdConfig[chapter.group];
 	buttonChapter.x = (200 - buttonChapter.getWidth()) * 0.5 + x;
 	buttonChapter.y = y;
 	menuLayer.addChild(buttonChapter);

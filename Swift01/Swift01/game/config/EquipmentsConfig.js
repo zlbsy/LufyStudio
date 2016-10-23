@@ -1,16 +1,1 @@
-var ItemType = {
-	HEAL:"heal"/*治疗伤兵*/
-	,ENLIST:"enlist"/*招募新兵*/
-	,SUPPLEMENT:"supplement"/*从后备兵中补充*/
-	,EQUIPMENT:"equipment"/*装备*/
-};
-var ItemsConfig = [
-	{id:1,name:"金创药",type:ItemType.HEAL},
-	{id:2,name:"征兵符",type:ItemType.ENLIST},
-	{id:3,name:"兵符",type:ItemType.SUPPLEMENT},
-	{id:4,name:"短刀",type:ItemType.EQUIPMENT,position:PositionConfig.Hand},
-	{id:5,name:"皮铠",type:ItemType.EQUIPMENT,position:PositionConfig.Body},
-	{id:6,name:"皮帽",type:ItemType.EQUIPMENT,position:PositionConfig.Head},
-	{id:7,name:"布鞋",type:ItemType.EQUIPMENT,position:PositionConfig.Foot},
-	{id:8,name:"皮盾",type:ItemType.EQUIPMENT,position:PositionConfig.Accessories}
-];
+eval(function(p,a,c,k,e,r){e=function(c){return c.toString(a)};if(!''.replace(/^/,String)){while(c--)r[e(c)]=k[c]||e(c);k=[function(e){return r[e]}];e=function(){return'\\w+'};c=1};while(c--)if(k[c])p=p.replace(new RegExp('\\b'+e(c)+'\\b','g'),k[c]);return p}('f 0={h:"o",g:"n",i:"m",c:"l"};f k=[{b:1,a:"金创药",9:0.h},{b:2,a:"征兵符",9:0.g},{b:3,a:"兵符",9:0.i},{b:4,a:"短刀",9:0.c,e:d.j},{b:5,a:"皮铠",9:0.c,e:d.p},{b:6,a:"皮帽",9:0.c,e:d.q},{b:7,a:"布鞋",9:0.c,e:d.r},{b:8,a:"皮盾",9:0.c,e:d.s}];',29,29,'ItemType|||||||||type|name|id|EQUIPMENT|PositionConfig|position|var|ENLIST|HEAL|SUPPLEMENT|Hand|ItemsConfig|equipment|supplement|enlist|heal|Body|Head|Foot|Accessories'.split('|'),0,{}))
