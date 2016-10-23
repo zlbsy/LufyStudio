@@ -72,4 +72,8 @@ Language.dataSimple = {
 	"chapter_12":"时空错乱",
 	"chapter_group":"购买多个剧本",
 	"new_script":"新剧本({0})",
+	"web_not_support":"网页版<三国记>暂时不支持此功能，待添加！",
+	"web_not_support_gamesave":"网页版<三国记>暂时不支持战场保存功能，待添加！",
+	"about_game":"关于游戏",
+	"about_game_message":"<font size='21' color='#FFFFFF'>《三国记》是一款由个人开发者 <font size='21' color='#FAFAD2'>lufy</font> 独立开发的 <font size='21' color='#FAFAD2'>多平台策略游戏</font> ，您现在玩的是网页版《三国记》，希望大家多支持！</font>",
 };

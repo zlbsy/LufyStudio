@@ -26,8 +26,6 @@ ChapterView.prototype.layerInit=function(){
 	self.addChild(self.seigniorsLayer);
 	self.ctrlLayer = new LSprite();
 	self.addChild(self.ctrlLayer);
-	//var bitmapWin = new LPanel(new LBitmapData(LMvc.datalist["win04"]),LMvc.screenWidth,LMvc.screenHeight,15,25,18,24);
-	//self.addChild(getBitmap(bitmapWin));
 };
 ChapterView.prototype.logoToHide=function(){
 	LMvc.logoStage.visible = false;
@@ -81,22 +79,6 @@ ChapterView.prototype.setMapData=function(){
 			miniMapData.copyPixels(colorData,new LRectangle(0,0,colorData.width,colorData.height),new LPoint(city.position.x*miniMapData.mapScaleX,city.position.y*miniMapData.mapScaleY));
 		}
 	}
-	if(!self.checkboxDebut.checked){
-		return;
-	}
-	var seigniorList = GameManager.getCreateSeigniorList(LMvc.chapterId);
-	for(var i=0,l=seigniorList.list.length;i<l;i++){
-		var seignior = seigniorList.list[i];
-		var citys = seignior.citys;
-		for(var j=0,ll=citys.length;j<ll;j++){
-			var city = MapSetting.find(function(child){
-				return child.id == citys[j].id;
-			});
-			var color = String.format("rgb({0})",seignior.color);
-			var colorData = new LBitmapData(color,0,0,size,size,LBitmapData.DATA_CANVAS);
-			miniMapData.copyPixels(colorData,new LRectangle(0,0,colorData.width,colorData.height),new LPoint(city.position.x*miniMapData.mapScaleX,city.position.y*miniMapData.mapScaleY));
-		}
-	}
 	
 };
 ChapterView.prototype.seigniorsLayerInit=function(){
@@ -139,7 +121,7 @@ ChapterView.prototype.troubleSelect=function(event){
 	}
 	LMvc.chapterData.validBehead = troubleSelect.radioBehead.value;
 	windowLayer.remove();
-	LMvc.chapterData.isCreateDebut = self.checkboxDebut.checked;
+	LMvc.chapterData.isCreateDebut = false;
 	self.controller.loadMap(self.select_chara_id);
 	if(!LPlugin.native){
 		LPlugin.readyBGM("map");
@@ -154,67 +136,15 @@ ChapterView.prototype.ctrlLayerInit=function(){
 	self.ctrlLayer.addChild(buttonClose);
 	buttonClose.addEventListener(LMouseEvent.MOUSE_UP,self.returnToChapterMenu.bind(self));
 	
-	var newCharacter = getStrokeLabel(Language.get("create_character_debut"),20,"#FFFFFF","#CCCCCC",1);
-	newCharacter.x = self.seigniorsLayer.x;
-	newCharacter.y = self.seigniorsLayer.y - newCharacter.getHeight() - 10;
-	self.ctrlLayer.addChild(newCharacter);
-	var bitmap = new LBitmap(new LBitmapData(LMvc.datalist["checkbox-background"]));
-	var bitmapSelect = new LBitmap(new LBitmapData(LMvc.datalist["checkbox-on"]));
-	var check = new LCheckBox(bitmap, bitmapSelect);
-	check.x = newCharacter.x + newCharacter.getWidth();
-	check.y = newCharacter.y + (newCharacter.getHeight() - bitmap.height) * 0.5;
-	check.addEventListener(LCheckBox.ON_CHANGE,self.onChangeDebut);
-	self.addChild(check);
-	self.checkboxDebut = check;
-	
-	var settingButton = getButton(Language.get("create_character_setting"),150);
+	var settingButton = getButton(Language.get("create_character_setting"),200);
 	settingButton.x = LMvc.screenWidth - settingButton.getWidth() - 25;
 	settingButton.y = self.seigniorsLayer.y - settingButton.getHeight() - 5;
+	lockedButton(settingButton);
 	self.ctrlLayer.addChild(settingButton);
-	settingButton.addEventListener(LMouseEvent.MOUSE_UP, self.loadCreateSetting);
+	settingButton.addEventListener(LMouseEvent.MOUSE_UP, self.showWebNotSupportDialog);
 };
-ChapterView.prototype.onChangeDebut=function(event){
-	var check = event.currentTarget;
-	if(!purchaseHasBuy(productIdConfig.createCharacter)){
-		var obj = {
-			title : Language.get("confirm"),
-			message : Language.get("create_character_debut_error"),
-			width : 340,
-			height : 240
-		};
-		var windowLayer = ConfirmWindow(obj);
-		LMvc.layer.addChild(windowLayer);
-		check.setChecked(false);
-		return;
-	}
-	var self = check.parent;
-	self.setMapData();
-	
-	self.setCreateSeigniorList();
-};
-ChapterView.prototype.setCreateSeigniorList=function(){
-	var self = this;
-	var items = self.listView.getItems();
-	for(var i=items.length - 1;i>=0;i--){
-		var child = items[i];
-		if(child.data.id < 1000){
-			break;
-		}
-		self.listView.deleteChildView(child);
-	}
-	if(!self.checkboxDebut.checked){
-		return;
-	}
-	var seigniorList = GameManager.getCreateSeigniorList(LMvc.chapterId);
-	for(var i=0,l=seigniorList.list.length;i<l;i++){
-		var seignior = seigniorList.list[i];
-		var child = new ChapterSeigniorView(self.controller,seignior);
-		self.listView.insertChildView(child);
-	}
-};
-ChapterView.prototype.loadCreateSetting=function(event){
-	var self = event.currentTarget.parent.parent;
-	self.controller.loadCreateSetting();
+ChapterView.prototype.showWebNotSupportDialog=function(event){
+	webNotSupportDialog();
 };
 ChapterView.prototype.returnToChapterMenu=function(event){
 	var self = this;

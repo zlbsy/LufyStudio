@@ -59,7 +59,6 @@ LogoView.prototype.showMenu=function(){
 	layer.graphics.drawRect(0,"#000000",[0,0,layer.getWidth() * 1.2,layer.getHeight()*1.2]);
 	layer.cacheAsBitmap(true);
 	self.mainMenuLayer.addChild(layer);
-	//self.mainMenuLayer.addChild(getBitmap(layer));
 	
 	var menuLayer = new LSprite();
 	menuLayer.x = menuLayer.tx = (LMvc.screenWidth - 180) * 0.5;
@@ -86,17 +85,16 @@ LogoView.prototype.showMenu=function(){
 	var buttonSingleCombat = getSizeButton(Language.get("game_single_combat"),180, 45);
 	buttonSingleCombat.y = menuY;
 	menuLayer.addChild(buttonSingleCombat);
-	buttonSingleCombat.addEventListener(LMouseEvent.MOUSE_UP, self.showSingleCombatArena.bind(self));
+	lockedButton(buttonSingleCombat);
+	buttonSingleCombat.addEventListener(LMouseEvent.MOUSE_UP, self.showWebNotSupportDialog);
 	
 	menuY += menuHeight;
 	var buttonCreate = getSizeButton(Language.get("create_character"),180, 45);
 	buttonCreate.name = productIdConfig.createCharacter;
 	buttonCreate.y = menuY;
 	menuLayer.addChild(buttonCreate);
-	if(!purchaseHasBuy(productIdConfig.createCharacter)){
-		lockedButton(buttonCreate);
-	}
-	buttonCreate.addEventListener(LMouseEvent.MOUSE_UP, self.createCharacterChick);
+	lockedButton(buttonCreate);
+	buttonCreate.addEventListener(LMouseEvent.MOUSE_UP, self.showWebNotSupportDialog);
 	
 	menuY += menuHeight;
 	var buttonTutorial = getSizeButton(Language.get("game_tutorial"),180, 45);
@@ -106,24 +104,12 @@ LogoView.prototype.showMenu=function(){
 	
 	menuY += menuHeight * 2;
 	
-	var buttonBug = getSizeButton(Language.get("bug_report"),140, 45);
-	buttonBug.x = -menuLayer.x;
-	buttonBug.y = menuY - buttonBug.getHeight() - menuHeight * 3 - 2;
-	menuLayer.addChild(buttonBug);
-	buttonBug.addEventListener(LMouseEvent.MOUSE_UP, self.bugReportChick);
-	var buttonUpdate = getSizeButton(Language.get("update_report"),140, 45);
-	buttonUpdate.x = -menuLayer.x;
-	buttonUpdate.y = menuY - buttonUpdate.getHeight() - menuHeight * 2 - 2;
-	menuLayer.addChild(buttonUpdate);
-	buttonUpdate.addEventListener(LMouseEvent.MOUSE_UP, self.reportUpdateChick);
-	
-	if(LPlugin.native){
-		var buttonRestore = getSizeButton(Language.get("restore_buy"),100, 45);
-		buttonRestore.x = -menuLayer.x;
-		buttonRestore.y = menuY - buttonRestore.getHeight() - menuHeight;
-		menuLayer.addChild(buttonRestore);
-		buttonRestore.addEventListener(LMouseEvent.MOUSE_UP, self.restoreChick);
-	}
+	var buttonRestore = getSizeButton(Language.get("about_game"),140, 45);
+	buttonRestore.x = -menuLayer.x;
+	buttonRestore.y = menuY - buttonRestore.getHeight() - menuHeight;
+	menuLayer.addChild(buttonRestore);
+	buttonRestore.addEventListener(LMouseEvent.MOUSE_UP, self.showAboutGame);
+		
 	var buttonChinese = getSizeButton(Language.get("chinese"),100, 45,LPlugin.language() == LPlugin.languageDefault?"win07":"win01");
 	buttonChinese.language = "chinese";
 	buttonChinese.x = -menuLayer.x;
@@ -141,103 +127,26 @@ LogoView.prototype.showMenu=function(){
 		buttonJapanese.staticMode = true;
 		buttonChinese.addEventListener(LMouseEvent.MOUSE_UP, self.changeLanguage);
 	}
-	var tiebaLayer = new LSprite();
-	var tiebaLabel = getStrokeLabel(Language.get("tieba"),20,"#FFFFFF","#000000",4);
-	tiebaLayer.graphics.drawRect(0,"#000000",[0,0,tiebaLabel.getWidth(),tiebaLabel.getHeight()]);
-	tiebaLayer.graphics.drawLine(2,"#000000",[0,tiebaLabel.getHeight()+2,tiebaLabel.getWidth(),tiebaLabel.getHeight()+2]);
-	tiebaLayer.addChild(tiebaLabel);
-	tiebaLayer.x = LMvc.screenWidth - menuLayer.x - tiebaLayer.getWidth() - 10;
-	tiebaLayer.y = menuY - 95;
-	menuLayer.addChild(tiebaLayer);
-	tiebaLayer.addEventListener(LMouseEvent.MOUSE_UP, self.clickTieba);
-	self.tiebaLayer = tiebaLayer;
-	self.tiebaLayer.visible = LPlugin.GetData("reviewing") ? false : true;
-	
-	var forumLayer = new LSprite();
-	var forumLabel = getStrokeLabel(Language.get("opinion"),20,"#FFFFFF","#000000",4);
-	forumLayer.graphics.drawRect(0,"#000000",[0,0,forumLabel.getWidth(),forumLabel.getHeight()]);
-	forumLayer.graphics.drawLine(2,"#000000",[0,forumLabel.getHeight()+2,forumLabel.getWidth(),forumLabel.getHeight()+2]);
-	forumLayer.addChild(forumLabel);
-	forumLayer.x = LMvc.screenWidth - menuLayer.x - forumLabel.getWidth() - 10;
-	forumLayer.y = menuY - 60;
-	menuLayer.addChild(forumLayer);
-	forumLayer.addEventListener(LMouseEvent.MOUSE_UP, self.clickForum);
-	self.forumLayer = forumLayer;
-	self.forumLayer.visible = LPlugin.GetData("reviewing") ? false : true;
-	
-	var verLabel = getStrokeLabel("Ver." + LMvc.ver,20,"#FFFFFF","#000000",4);
+	var verLabel = getStrokeLabel(LMvc.ver,20,"#FFFFFF","#000000",4);
 	verLabel.x = LMvc.screenWidth - menuLayer.x - verLabel.getWidth() - 10;
 	verLabel.y = menuY - 25;
 	menuLayer.addChild(verLabel);
-	
 	menuLayer.y = LMvc.screenHeight - menuY;
 	
 	self.topMenuLayer = menuLayer;
-};
-LogoView.prototype.reportUpdateChick=function(event){
-	var button = event.currentTarget;
-	var self = button.getParentByConstructor(LogoView);
-	self.controller.loadReportUpdate();
-};
-LogoView.prototype.bugReportChick=function(event){
-	var button = event.currentTarget;
-	var self = button.getParentByConstructor(LogoView);
-	self.controller.loadReport();
-};
-LogoView.prototype.clickForum=function(event){
-	LPlugin.openURL(LMvc.forumURL);
-};
-LogoView.prototype.clickTieba=function(event){
-	LPlugin.openURL(LMvc.tiebaURL);
-};
-LogoView.prototype.restoreChick=function(event){
-	var button = event.currentTarget;
-	var self = button.getParentByConstructor(LogoView);
-	var obj = {
-		title : Language.get("confirm"),
-		messageHtml : Language.get("restore_confirm_message"),
-		width : 340,
-		height : 260,
-		okEvent : function(e) {
-			e.currentTarget.parent.remove();
-			self.controller.restore();
-		},
-		cancelEvent : null
-	};
-	var windowLayer = ConfirmWindow(obj);
-	LMvc.layer.addChild(windowLayer);
 };
 LogoView.prototype.tutorialChick=function(event){
 	var button = event.currentTarget;
 	var self = button.getParentByConstructor(LogoView);
 	self.controller.loadTutorial();
 };
-LogoView.prototype.createCharacterChick=function(event){
-	var button = event.currentTarget;
-	var self = button.getParentByConstructor(LogoView);
-	self.createCharacter(button);
+LogoView.prototype.showWebNotSupportDialog=function(event){
+	webNotSupportDialog();
 };
-LogoView.prototype.createCharacter=function(button){
-	var self = this;
-	if(button.getChildByName("lock")){
-		if(LPlugin.native){
-			purchaseConfirm(productIdConfig.createCharacter, Language.get("create_character"), function(productId){
-				var currentButton = self.topMenuLayer.getChildByName(productId);
-				var currentLock = currentButton.getChildByName("lock");
-				currentLock.remove();
-				self.createCharacter(currentButton);
-			});
-		}else{
-			purchaseConfirm(null, Language.get("create_character"), function(){
-				window.open(LMvc.homeURL);
-			});
-		}
-		return;
-	}
-	self.controller.loadCreateCharacter();
-};
-LogoView.prototype.showSingleCombatArena=function(event){
-	this.controller.showSingleCombatArena();
+LogoView.prototype.showAboutGame=function(event){
+	var obj = {width:400, height:300, messageHtml:Language.get("about_game_message"), title:Language.get("about_game")};
+	var dialog = ConfirmWindow(obj);
+	LMvc.layer.addChild(dialog);
 };
 LogoView.prototype.readGame=function(event){
 	RecordController.instance().show(RecordController.READ_MODE);
@@ -257,12 +166,6 @@ LogoView.prototype.showChapterListChild=function(chapter, menuLayer, x, y){
 	buttonChapter.chapterId = chapter.id;
 	buttonChapter.name = productIdConfig["chapter_"+chapter.id];
 	var group = productIdConfig[chapter.group];
-	var groupIsBuy = purchaseHasBuy(group);
-	if(chapter.lock && !groupIsBuy){
-		if(!purchaseHasBuy(productIdConfig["chapter_" + chapter.id])){
-			lockedButton(buttonChapter);
-		}
-	}
 	buttonChapter.x = (200 - buttonChapter.getWidth()) * 0.5 + x;
 	buttonChapter.y = y;
 	menuLayer.addChild(buttonChapter);
@@ -296,50 +199,12 @@ LogoView.prototype.showChapterList=function(list, index){
 		}
 		currentChapter = chapter;
 		self.showChapterListChild(chapter, menuLayer, 0, menuY);
-		//self.showChapterListChild(chapter, menuLayer, -110, menuY);
 		menuY += menuHeight;
 	}
-	var lockButton = menuLayer.childList.find(function(child){
-		return child.getChildByName("lock");
-	});
-	if(lockButton && currentChapter && currentChapter.group){
-		var title = Language.get("chapter_group");
-		var buttonChapter = getSizeButton(title,200, 45);
-		buttonChapter.group = currentChapter.group;
-		buttonChapter.name = productIdConfig[currentChapter.group];
-		if(!purchaseHasBuy(buttonChapter.name)){
-			lockedButton(buttonChapter);
-		}
-		buttonChapter.x = (200 - buttonChapter.getWidth()) * 0.5;
-		buttonChapter.y = menuY;
-		menuY += menuHeight;
-		menuLayer.addChild(buttonChapter);
-		buttonChapter.addEventListener(LMouseEvent.MOUSE_UP, self.showChapter);
-	}
-	/*menuY = 0;
-	for(; i < list.length; i++){
-		var chapter = list[i];
-		self.showChapterListChild(chapter, menuLayer, 110, menuY);
-		menuY += menuHeight;
-	}*/
 	var buttonReturn = getSizeButton(Language.get("return"),200,45);
 	buttonReturn.y = menuY;
 	menuLayer.addChild(buttonReturn);
 	buttonReturn.addEventListener(LMouseEvent.MOUSE_UP, self.returnTopMenu);
-	if(index > 0){
-		var buttonLeft = getSizeButton("←",100,45);
-		buttonLeft.x = (200 - buttonLeft.getWidth()) * 0.5 - 160;
-		buttonLeft.y = menuY;
-		menuLayer.addChild(buttonLeft);
-		buttonLeft.addEventListener(LMouseEvent.MOUSE_UP, self.toLeft);
-	}
-	if(index != 3){
-		var buttonRight = getSizeButton("→",100,45);
-		buttonRight.x = (200 - buttonRight.getWidth()) * 0.5 + 160;
-		buttonRight.y = menuY;
-		menuLayer.addChild(buttonRight);
-		buttonRight.addEventListener(LMouseEvent.MOUSE_UP, self.toRight);
-	}
 	menuLayer.x = self.topMenuLayer.x + 210;
 	menuY += menuHeight * 2;
 	menuLayer.y = LMvc.screenHeight - menuY;
@@ -354,16 +219,6 @@ LogoView.prototype.chapterMenuClosed=function(event){
 	self.chapterMenuLayer.remove();
 	self.chapterMenuLayer = null;
 	self.topMenuLayer.mouseChildren = true;
-};
-LogoView.prototype.toLeft=function(event){
-	var button = event.currentTarget;
-	var self = button.getParentByConstructor(LogoView);
-	self.controller.showChapterList(self.showIndex - 1);
-};
-LogoView.prototype.toRight=function(event){
-	var button = event.currentTarget;
-	var self = button.getParentByConstructor(LogoView);
-	self.controller.showChapterList(self.showIndex + 1);
 };
 LogoView.prototype.returnTopMenu=function(event){
 	var button = event.currentTarget;
@@ -388,60 +243,6 @@ LogoView.prototype.showChapterRun=function(button){
 	if(!button.chapterId && !button.group){
 		return;
 	}
-	var lockMark = button.getChildByName("lock");
-	if(lockMark){
-		var name = String.format(Language.get("new_script"), Language.get("chapter_"+button.chapterId));
-		if(LPlugin.native){
-			if(button.group){
-				name = Language.get("chapter_group");
-				purchaseGroupConfirm(button.name, name, button.group, function(productId){
-					self.controller.showChapterList(self.showIndex);
-				});
-			}else{
-				purchaseConfirm(button.name, name, function(productId){
-					var menuLayer = self.getChildByName("menuLayer");
-					var currentButton = menuLayer.getChildByName(productId);
-					var currentLock = currentButton.getChildByName("lock");
-					currentLock.remove();
-					self.showChapterRun(currentButton);
-				});
-			}
-		}else{
-			if(button.group){
-				name = Language.get("chapter_group");
-			}
-			purchaseConfirm(null, name, function(){
-				window.open(LMvc.homeURL);
-			});
-		}
-		return;
-	}
 	self.chapterMenuLayer.mouseChildren = false;
 	self.controller.showChapter(button.chapterId);
-};
-LogoView.prototype.showNews=function(newsURL){
-	var self = this;
-	var newsBackMask = getTranslucentMask();
-	self.addChild(newsBackMask);
-	var w = 400, h = 400, x, y;
-	x = (LMvc.screenWidth - w) * 0.5;
-	y = (LMvc.screenHeight - h) * 0.5;
-	var newsBackground = getPanel("win02", w + 20, h + 20);
-	newsBackground.x = x - 10;
-	newsBackground.y = y - 10;
-	self.addChild(newsBackground);
-	var webview = new LStageWebView();
-	webview.setViewPort(new LRectangle(x, y, w, h));
-	webview.loadURL(newsURL);
-	webview.show();
-	var closeButton = new LButton(new LBitmap(new LBitmapData(LMvc.datalist["close"])));
-	closeButton.x = x + w - 10;// - closeButton.getWidth() + 10;
-	closeButton.y = y - closeButton.getHeight();
-	self.addChild(closeButton);
-	closeButton.addEventListener(LMouseEvent.MOUSE_UP,function(event){
-		event.currentTarget.remove();
-		newsBackMask.remove();
-		newsBackground.remove();
-		webview.hide();
-	});
 };

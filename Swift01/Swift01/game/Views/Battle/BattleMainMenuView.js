@@ -103,9 +103,7 @@ BattleMainMenuView.prototype.setMenu=function(){
 	menuY += menuHeight;
 	var menuButton = getButton(Language.get("game_save"),menuWidth);
 	self.gameSaveButton = menuButton;
-	if(!purchaseHasBuy(productIdConfig.saveReport)){
-		lockedButton(menuButton);
-	}
+	lockedButton(menuButton);
 	menuButton.y = menuY;
 	layer.addChild(menuButton);
 	menuButton.addEventListener(LMouseEvent.MOUSE_UP, self.onClickGameSave);
@@ -169,9 +167,7 @@ BattleMainMenuView.prototype.boutEnd=function(event){
 	self.hideMenu();
 };
 BattleMainMenuView.prototype.onClickGameSave=function(event){
-	var button = event.currentTarget;
-	var self = button.getParentByConstructor(BattleMainMenuView);
-	self.toGameSave(button);
+	webNotSupportDialog("web_not_support_gamesave");
 };
 BattleMainMenuView.prototype.toGameSave=function(button){
 	var self = this;

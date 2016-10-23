@@ -72,17 +72,12 @@ BattleSelectMenuView.prototype.setMenu=function(){
 	menuButton.addEventListener(LMouseEvent.MOUSE_UP, self.clickMagicSelect);
 	
 	menuY += menuHeight;
-	var menuButton = getIconButton("battle-menu",new LRectangle(70,0,35,35),Language.get("singleCombat"),menuWidth);
-	menuButton.name = "singleCombat";
-	menuButton.y = menuY;
-	layer.addChild(menuButton);
-	menuButton.addEventListener(LMouseEvent.MOUSE_UP, self.clickSingleCombat);
-	/*
-	menuY += menuHeight;
-	var menuButton = getIconButton("battle-menu",new LRectangle(105,0,35,35),"物品",menuWidth);
-	menuButton.y = menuY;
-	layer.addChild(menuButton);
-	menuButton.addEventListener(LMouseEvent.MOUSE_UP, self.clickItem);*/
+	var singleCombatButton = getIconButton("battle-menu",new LRectangle(70,0,35,35),Language.get("singleCombat"),menuWidth);
+	singleCombatButton.name = "singleCombat";
+	singleCombatButton.y = menuY;
+	lockedButton(singleCombatButton);
+	layer.addChild(singleCombatButton);
+	singleCombatButton.addEventListener(LMouseEvent.MOUSE_UP, self.clickSingleCombat);
 
 	menuY += menuHeight;
 	var menuButton = getIconButton("battle-menu",new LRectangle(175,0,35,35),Language.get("standby"),menuWidth);
@@ -91,7 +86,6 @@ BattleSelectMenuView.prototype.setMenu=function(){
 	layer.addChild(menuButton);
 	menuButton.addEventListener(LMouseEvent.MOUSE_UP, self.clickStandby);
 	
-	//var win = new LPanel(new LBitmapData(LMvc.datalist["win05"]),menuWidth + 20, menuHeight * (((menuY - 10) / menuHeight >> 0) + 1) + 30);
 	var winBitmap = getPanel("win05",menuWidth + 20, menuHeight * (((menuY - 10) / menuHeight >> 0) + 1) + 30);
 	self.mainLayer.addChildAt(winBitmap, 0);
 };
@@ -106,13 +100,7 @@ BattleSelectMenuView.prototype.clickMagicSelect=function(event){
 	self.controller.dispatchEvent(BattleSelectMenuEvent.MAGIC_SELECT);
 };
 BattleSelectMenuView.prototype.clickSingleCombat=function(event){
-	var self = event.currentTarget.parent.parent.parent;
-	if(BattleController.ctrlChara.data.isDefCharacter()){
-		Toast.makeText(Language.get("def_single_combat_error")).show();
-		return;
-	}
-	self.closeSelectMenu();
-	self.controller.dispatchEvent(BattleSelectMenuEvent.SINGLE_COMBAT);
+	webNotSupportDialog();
 };
 BattleSelectMenuView.prototype.clickStandby=function(event){
 	var self = event ? event.currentTarget.parent.parent.parent : this;

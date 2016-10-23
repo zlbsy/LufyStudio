@@ -169,3 +169,8 @@ function ConfirmWindow(obj){
 	windowLayer.name = "ConfirmWindow";
 	return windowLayer;
 }
+function webNotSupportDialog(messageKey){
+	var obj = {width:300, height:200, message:Language.get(messageKey ? messageKey : "web_not_support"), title:Language.get("confirm")};
+	var dialog = ConfirmWindow(obj);
+	LMvc.layer.addChild(dialog);
+}

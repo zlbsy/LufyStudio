@@ -20,7 +20,7 @@ BattleController.prototype.construct=function(){
 };
 BattleController.prototype.mvcLoad=function(){
 	var self = this;
-	self.loadMvc(["BattleSelectMenu","SingleCombat"],self.configLoad);
+	self.loadMvc(["BattleSelectMenu"],self.configLoad);
 };
 BattleController.prototype.configLoad=function(){
 	var self = this;

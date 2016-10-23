@@ -101,17 +101,6 @@ SeigniorExecute.run=function(){
 			}
 		}
 	}
-	if(!self.tournamentsOver){
-		self.tournamentsOver = true;
-		if(LMvc.chapterData.year % 2 == 0 && LMvc.chapterData.month == 12){
-			self.backLayer.visible = false;
-			self.msgView.hideSeignior();
-			var script = String.format("SGJTalk.show({0},{1},{2});", LMvc.selectSeignorId, 1, Language.get("tournaments_introduction"));
-			script += "SGJEvent.tournamentsCheck();";
-			LGlobal.script.addScript(script);
-			return;
-		}
-	}
 	if(self.stop){
 		return;
 	}
@@ -179,20 +168,6 @@ SeigniorExecute.run=function(){
 			}
 		},3000);
 	}
-};
-SeigniorExecute.prototype.tournamentsCheck=function(){
-	var obj = {title:Language.get("confirm"),
-	message:Language.get("tournaments_join_confirm"),
-	height:200,okEvent:function(event){
-		event.currentTarget.parent.remove();
-		LMvc.MapController.showTournaments();
-	},cancelEvent:function(event){
-		event.currentTarget.parent.remove();
-		SeigniorExecute.Instance().msgView.showSeignior();
-		SeigniorExecute.run();
-	}};
-	var windowLayer = ConfirmWindow(obj);
-	LMvc.layer.addChild(windowLayer);
 };
 SeigniorExecute.prototype.disasterRun=function(area){
 	var self = this;
