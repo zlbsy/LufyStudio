@@ -112,8 +112,9 @@ function purchaseStartAndroid(productId, callback) {
 	var product = productInformation.find(function(child) {
 		return child.productId == productId;
 	});
-	var subject = product.title;
-	var body = product.title;
+	var gameName = "三国记";
+	var subject = gameName;
+	var body = gameName + "-" + product.title;
 	var totalFee = product.price;
 	var itemId = product.itemId;
 	purchase.purchase(productId, itemId, paymentTime, subject, body, totalFee);

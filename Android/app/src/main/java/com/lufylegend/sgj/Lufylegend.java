@@ -410,6 +410,7 @@ public class Lufylegend {
             mediaPlayer.stop();
         }
         mediaPlayer = MediaPlayer.create(context, soundIds.get(name.toLowerCase()));
+        mediaPlayer.setLooping(true);
         mediaPlayer.start();
     }
     @JavascriptInterface
