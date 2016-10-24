@@ -32,7 +32,7 @@ EventListChildView.prototype.set=function(){
 	
 	if(!self.lock){
 		var path = LMvc.IMG_PATH + "event_list/"+self.eventObject.id+".png";
-		var pathTxt = path + ".txt";
+		var pathTxt = path + ".dat";
 		var GameData = LPlugin.GetData("GameData", null);
 		if(GameData && LPlugin.dataVer(GameData.ver) > LPlugin.dataVer(LMvc.ver) && GameData.files.findIndex(function(child){return pathTxt == child;}) > 0){
 			var key = pathTxt.replace(/\//g,"_");

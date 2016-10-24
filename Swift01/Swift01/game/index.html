@@ -35,6 +35,8 @@ and open the template in the editor.
 			LMvc.ver = "4399网页版";
 			//LGlobal.setDebug(true);
 			if(LGlobal.mobile){
+				LGlobal.align = LStageAlign.TOP_LEFT;
+				LGlobal.stageScale = LStageScaleMode.SHOW_ALL;
 				LMvc.screenWidth = 480;
 				LMvc.screenHeight = LMvc.screenWidth*window.innerHeight/window.innerWidth;
 				var mobileScale = 1;
@@ -44,11 +46,10 @@ and open the template in the editor.
 				LGlobal.canvasObj.height  = LGlobal.height;
 				LGlobal.stage.scaleX = LGlobal.stage.scaleY = mobileScale;
 			}else{
+				LGlobal.stageScale = LStageScaleMode.NO_SCALE;
 				LMvc.screenWidth = 480;
 				LMvc.screenHeight = 800;
 			}
-			LGlobal.align = LStageAlign.TOP_LEFT;
-			LGlobal.stageScale = LStageScaleMode.SHOW_ALL;
 			LSystem.screen(LStage.FULL_SCREEN);
 			var loadData = [
 					{name:"logo_bg_1",path:LMvc.IMG_PATH+"logo/logo_bg_1.jpg"},

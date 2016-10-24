@@ -1,5 +1,0 @@
-SGJEvent.mapShow(2);
-SGJEvent.messageShow(時は後漢末期、皇帝である霊帝は宦官の専横を許し世は、乱れた！,3);
-SGJEvent.messageShow(太平道の教祖である張角は民の不満を背景に信者を集め、その勢力を着々と拡大する！,3);
-SGJEvent.messageShow(教徒らはみな一様に、頭に黄色い布を卷いていたため黃巾党と呼ばれ、各地を荒らしまわっていた！,3);
-Mark.EventEnd;

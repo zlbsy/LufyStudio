@@ -108,7 +108,7 @@ EventMapView.prototype.removeCharacter=function(id,animation){
 EventMapView.prototype.mapShow=function(mapIndex){
 	var self = this;
 	var path = self.model.mapPath(mapIndex);
-	var pathTxt = path + ".txt";
+	var pathTxt = path + ".dat";
 	var GameData = LPlugin.GetData("GameData", null);
 	if(GameData && LPlugin.dataVer(GameData.ver) > LPlugin.dataVer(LMvc.ver) && GameData.files.findIndex(function(child){return pathTxt == child;}) > 0){
 		var key = pathTxt.replace(/\//g,"_");
