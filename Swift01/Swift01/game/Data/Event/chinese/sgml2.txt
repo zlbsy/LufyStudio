@@ -1,9 +1,0 @@
-SGJEvent.mapShow(1);
-SGJEvent.messageShow(从诸葛亮的草庐回来几天后，刘备派去打听的人回来报信说，诸葛亮已经回到了家里。,3);
-SGJEvent.addCharacter(21,250,100,fade);
-SGJEvent.addCharacter(4,150,100,fade);
-SGJEvent.addCharacter(19,350,100,fade);
-SGJEvent.messageShow(刘备又带着关羽・张飞，冒着大雪，第二次去寻访诸葛亮。,3);
-SGJEvent.messageShow(然而，却又一次扑空了。,3);
-SGJEvent.messageShow(刘备留下了一封书信，继续等待下次寻访的机会.....,3);
-Mark.EventEnd;

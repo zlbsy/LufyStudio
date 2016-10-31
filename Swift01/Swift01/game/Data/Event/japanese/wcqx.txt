@@ -1,3 +1,0 @@
-SGJEvent.mapShow(1);
-SGJEvent.messageShow(乌巢急袭。,3);
-Mark.EventEnd;

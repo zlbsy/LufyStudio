@@ -1,3 +1,0 @@
-SGJEvent.mapShow(1);
-SGJEvent.messageShow(七擒孟获。,3);
-Mark.EventEnd;

@@ -1,3 +1,0 @@
-SGJEvent.mapShow(1);
-SGJEvent.messageShow(出师表。,3);
-Mark.EventEnd;

@@ -1,3 +1,0 @@
-SGJEvent.mapShow(1);
-SGJEvent.messageShow(蜀灭亡。,3);
-Mark.EventEnd;

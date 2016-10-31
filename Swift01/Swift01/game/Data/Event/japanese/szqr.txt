@@ -1,3 +1,0 @@
-SGJEvent.mapShow(1);
-SGJEvent.messageShow(舌战群儒。,3);
-Mark.EventEnd;

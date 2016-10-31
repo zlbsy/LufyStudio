@@ -1,3 +1,0 @@
-SGJEvent.mapShow(1);
-SGJEvent.messageShow(西凉锦马超。,3);
-Mark.EventEnd;

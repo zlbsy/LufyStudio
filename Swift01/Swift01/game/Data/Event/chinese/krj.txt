@@ -1,3 +1,0 @@
-SGJEvent.mapShow(1);
-SGJEvent.messageShow(苦肉计。,3);
-Mark.EventEnd;

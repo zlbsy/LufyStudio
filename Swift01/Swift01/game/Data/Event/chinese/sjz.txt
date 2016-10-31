@@ -1,3 +1,0 @@
-SGJEvent.mapShow(1);
-SGJEvent.messageShow(失荆州。,3);
-Mark.EventEnd;

@@ -1,3 +1,0 @@
-var EquipmentEvent = {
-	Dress:"dress"
-};
