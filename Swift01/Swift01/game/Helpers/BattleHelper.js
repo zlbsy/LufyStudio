@@ -945,3 +945,59 @@ function tweenTextShow(chara, label, y){
 		e.target.remove();
 	}});
 }
+/*军师计发动*/
+function militaryAdviserStart(){
+	var characterModel = BattleController.ctrlChara.data;
+	var militaryModel = characterModel.military();
+	var image = LMvc.datalist["military-"+militaryModel.image()];
+    var data = new LBitmapData(image);
+    var list = LGlobal.divideCoordinate(data.width, data.height, 1, militaryModel.imageCount());
+	var animation = new LAnimationTimeline(data, list);
+	animation.x =  -animation.getWidth()*0.5;
+	animation.y =  -animation.getHeight()*0.5;
+	animation.speed = 3;
+	var animationLayer = new LSprite();
+	animationLayer.alpha = 0;
+	animationLayer.x = LMvc.screenWidth*0.5;
+	animationLayer.y = LMvc.screenHeight*0.5;
+	animationLayer.addChild(animation);
+	LMvc.layer.addChild(animationLayer);
+	LTweenLite.to(animationLayer,0.5,{alpha:1})
+	.to(animationLayer,2,{scaleX:2,scaleY:2,alpha:0,ease:LEasing.Quart.easeOut,onComplete:militaryAdviserEnd});
+}
+function militaryAdviserEnd(event){
+	event.target.remove();
+	var characterModel = BattleController.ctrlChara.data;
+	var militaryModel = characterModel.military();
+	var charas = LMvc.BattleController.view.charaLayer.getCharactersFromBelong(militaryModel.belong());
+	if(militaryModel.isType(MilitaryType.STRATEGY_ATTACK)){
+		var strategys = Array.getRandomArrays(militaryModel.strategys(),militaryModel.strategyCount());
+		for(var i=0,l=charas.length;i<l;i++){
+			var chara = charas[i];
+			for(var j = 0;j<strategys.length;j++){
+				var strategy = StrategyMasterModel.getMaster(strategys[j]);
+				var hertValue = calculateHertStrategyValue(BattleController.ctrlChara, chara, strategy, 1);
+				var troops = chara.data.troops();
+				if(troops < hertValue){
+					hertValue = troops;
+				}
+				chara.data.troops(troops - hertValue);
+			}
+		}
+	}
+	if(militaryModel.isType(MilitaryType.AID)){
+		var aids = Array.getRandomArrays(militaryModel.aids(),militaryModel.aidCount());
+		for(var i=0,l=charas.length;i<l;i++){
+			var chara = charas[i];
+			for(var j = 0;j<aids.length;j++){
+				var strategy = StrategyMasterModel.getMaster(aids[j]);
+				chara.status.addStatus(strategy.strategyType(), strategy.hert());
+			}
+		}
+	}
+	if(militaryModel.isType(MilitaryType.HEAL)){
+		
+	}
+	LMvc.running = false;
+	BattleController.ctrlChara.AI.endAction();
+}

@@ -44,7 +44,7 @@ BattleController.prototype.viewLoad=function(){
 	"Battle/BattleCharacterLayer","Battle/BattleCharacter","Battle/BattleRoad","Battle/BattleCharacterStatus",
 	"Strategy/Strategy","Strategy/StrategyChild","Battle/EffectStrategy","Battle/BattleMainMenu","Battle/BattleBout",
 	"Battle/CharacterStatusIcon","Battle/BattleWeather","Battle/BattleTerrain","Battle/BattleResult","Battle/BattleResultConfirm",
-	"Battle/BattleExpChange","Battle/BattleField"],self.addMap);
+	"Battle/BattleExpChange","Battle/BattleField","Battle/MilitaryAdviser"],self.addMap);
 };
 BattleController.prototype.addMap=function(){
 	var self = this;

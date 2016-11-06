@@ -561,7 +561,10 @@ Language.data = {
 	"reinforcement_defense_quantity_message":"防守战最多只能{0}人出战！还可以派出援兵{1}人！",
 	"riot_message":"{0}的百姓发生暴动了!",
 	"no_food_talk":"糟糕！没有兵粮了，士兵的战斗力开始下降了。",
-	"child_growup":"<font size='22' color='#FFFFFF'><font color='#FF0000'> {0} </font>成年了，随<font color='#FF0000'> {1} </font>加入我军！</font>"
+	"child_growup":"<font size='22' color='#FFFFFF'><font color='#FF0000'> {0} </font>成年了，随<font color='#FF0000'> {1} </font>加入我军！</font>",
+	"militaryConfirm":"<font size='21' color='#FFFFFF'>使用军师计【<font size='21' color='#FAFAD2'>{0}</font>】吗？</font>",
+	"militaryNode":"※军师计在战斗中只能使用一次。",
+	"military":"军师计",
 };
 Language.itemData = {
 	"item_name_1":"方壶",
@@ -1019,6 +1022,9 @@ Language.skillData = {
 	"se_93":"将受到的伤害减少为0，且治愈自身所有伤兵。",
 	"s_94":"贤龙之气",
 	"se_94":"将受到的伤害减少为0，并为自己提高一种能力。",
+	
+	"m_1":"炎海",
+	"mi_1":"召唤火神火烧敌军，并让敌军全体进入燃烧状态。",
 };
 Language.groupSkillTalkData = [
 	"痛快，一起上!",

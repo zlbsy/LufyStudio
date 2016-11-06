@@ -26,7 +26,7 @@ CharacterListController.prototype.construct=function(){
 };
 CharacterListController.prototype.configLoad=function(){
 	var self = this;
-	self.load.config(["CharacterListType","Skills","Equipment","Arms","Belong","Position","Soldiers","Strategy","Terrain"],self.libraryLoad);
+	self.load.config(["CharacterListType","Skills","Equipment","Arms","Belong","Position","Soldiers","Strategy","Terrain","Military"],self.libraryLoad);
 };
 CharacterListController.prototype.libraryLoad=function(){
 	var self = this;
@@ -39,7 +39,8 @@ CharacterListController.prototype.helperLoad=function(){
 };
 CharacterListController.prototype.modelLoad=function(){
 	var self = this;
-	self.load.model(["Master/SkillMaster","Items/Item","Master/SoldierMaster","Master/Soldier","Master/StrategyMaster","Master/Strategy","Master/TerrainMaster"],self.viewLoad);
+	self.load.model(["Master/SkillMaster","Items/Item","Master/SoldierMaster","Master/Soldier",
+	"Master/StrategyMaster","Master/Strategy","Master/TerrainMaster","Master/Military"],self.viewLoad);
 };
 CharacterListController.prototype.viewLoad=function(){
 	var self = this;
