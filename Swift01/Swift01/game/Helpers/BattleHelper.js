@@ -958,12 +958,13 @@ function militaryAdviserStart(){
 	animation.speed = 3;
 	var animationLayer = new LSprite();
 	animationLayer.alpha = 0;
+	animationLayer.scaleX = animationLayer.scaleY = 0.1;
 	animationLayer.x = LMvc.screenWidth*0.5;
 	animationLayer.y = LMvc.screenHeight*0.5;
 	animationLayer.addChild(animation);
 	LMvc.layer.addChild(animationLayer);
-	LTweenLite.to(animationLayer,0.5,{alpha:1})
-	.to(animationLayer,2,{scaleX:2,scaleY:2,alpha:0,ease:LEasing.Quart.easeOut,onComplete:militaryAdviserEnd});
+	LTweenLite.to(animationLayer,0.5,{scaleX:360/data.width,scaleY:360/data.width,alpha:1})
+	.to(animationLayer,2,{delay:0.5,scaleX:720/data.width,scaleY:720/data.width,alpha:0,ease:LEasing.Quart.easeOut,onComplete:militaryAdviserEnd});
 }
 function militaryAdviserEnd(event){
 	event.target.remove();
