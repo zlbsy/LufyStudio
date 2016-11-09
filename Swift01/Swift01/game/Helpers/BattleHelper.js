@@ -966,11 +966,48 @@ function militaryAdviserStart(){
 	LTweenLite.to(animationLayer,0.5,{scaleX:360/data.width,scaleY:360/data.width,alpha:1})
 	.to(animationLayer,2,{delay:0.5,scaleX:720/data.width,scaleY:720/data.width,alpha:0,ease:LEasing.Quart.easeOut,onComplete:militaryAdviserEnd});
 }
+function militaryAdviserStrategy(charas, strategy){
+	switch(strategy.effectType()){
+		case StrategyEffectType.Status:
+			for(var j=0,l=charas.length;j<l;j++){
+				var chara = charas[j];
+				if(strategy.effectType() == StrategyEffectType.Wake){
+					chara.status.wake();
+				}else{
+					
+				}
+			}
+			if(strategy.hert() == 0){
+				break;
+			}
+		case StrategyEffectType.Attack:
+			for(var j=0,l=charas.length;j<l;j++){
+				var chara = charas[j];
+				var hertValue = calculateHertStrategyValue(BattleController.ctrlChara, chara, strategy, 1);
+				var troops = chara.data.troops();
+				if(troops < hertValue){
+					hertValue = troops;
+				}
+				chara.data.troops(troops - hertValue);
+			}
+			break;
+	}
+}
 function militaryAdviserEnd(event){
 	event.target.remove();
 	var characterModel = BattleController.ctrlChara.data;
 	var militaryModel = characterModel.military();
 	var charas = LMvc.BattleController.view.charaLayer.getCharactersFromBelong(militaryModel.belong());
+	var strategys = Array.getRandomArrays(militaryModel.strategys(),militaryModel.strategyCount());
+	for(var i=0;i<strategys.length;i++){
+		var ids = strategys[i];
+		for(var j=0;j<ids.length;j++){
+			var strategy = StrategyMasterModel.getMaster(ids[j]);
+			militaryAdviserStrategy(charas, strategy);
+		}
+	}
+	return;
+	
 	if(militaryModel.isType(MilitaryType.STRATEGY_ATTACK)){
 		var strategys = Array.getRandomArrays(militaryModel.strategys(),militaryModel.strategyCount());
 		for(var i=0,l=charas.length;i<l;i++){
@@ -996,8 +1033,44 @@ function militaryAdviserEnd(event){
 			}
 		}
 	}
-	if(militaryModel.isType(MilitaryType.HEAL)){
-		
+	if(militaryModel.isType(MilitaryType.SUPPLY)){
+		var heals = Array.getRandomArrays(militaryModel.heals(),militaryModel.healCount());
+		for(var i=0,l=charas.length;i<l;i++){
+			var chara = charas[i];
+			for(var j = 0;j<heals.length;j++){
+				var strategy = StrategyMasterModel.getMaster(heals[j]);
+				var troopsAdd = strategy.troops();
+				var woundedAdd = strategy.wounded();
+				var troops = chara.data.troops();
+				var maxTroops = chara.data.maxTroops();
+				if(troops == maxTroops){
+					return 0;
+				}
+				var wounded = chara.data.wounded();
+				if(woundedAdd < 1){
+					woundedAdd = wounded * woundedAdd >>> 0;
+				}else if(woundedAdd > wounded){
+					woundedAdd = wounded;
+				}
+				if(troops + woundedAdd > maxTroops){
+					woundedAdd = maxTroops - troops;
+				}
+				if(troops + troopsAdd + woundedAdd > maxTroops){
+					troopsAdd = maxTroops - troops - woundedAdd;
+				}
+				if(woundedAdd > 0){
+					chara.data.wounded(wounded - woundedAdd);
+					troopsAdd += woundedAdd;
+				}
+				chara.data.troops(troops + troopsAdd);
+			}
+		}
+	}
+	if(militaryModel.isType(MilitaryType.WAKE)){
+		for(var i=0,l=charas.length;i<l;i++){
+			var chara = charas[i];
+			chara.status.wake();
+		}
 	}
 	LMvc.running = false;
 	BattleController.ctrlChara.AI.endAction();

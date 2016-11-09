@@ -47,6 +47,12 @@ MilitaryModel.prototype.aids = function() {
 MilitaryModel.prototype.aidCount = function() {
 	return this.data.aidCount;
 };
+MilitaryModel.prototype.heals = function() {
+	return this.data.heals;
+};
+MilitaryModel.prototype.healCount = function() {
+	return this.data.healCount;
+};
 MilitaryModel.prototype.strategys = function() {
 	return this.data.strategys;
 };
