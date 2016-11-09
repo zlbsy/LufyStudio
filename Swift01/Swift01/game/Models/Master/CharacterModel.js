@@ -712,7 +712,7 @@ CharacterModel.prototype.troops = function(value, proportionWounded) {
 	return self._dataValue("troops", value,0);
 };
 CharacterModel.prototype.military = function(){
-	return MilitaryModel.getMaster(2);
+	return MilitaryModel.getMaster(4);
 	return MilitaryModel.getMaster(this.data.military);
 };
 CharacterModel.prototype.HP = function(value) {

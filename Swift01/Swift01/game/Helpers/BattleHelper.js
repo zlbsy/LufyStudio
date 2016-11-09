@@ -966,30 +966,27 @@ function militaryAdviserStart(){
 	LTweenLite.to(animationLayer,0.5,{scaleX:360/data.width,scaleY:360/data.width,alpha:1})
 	.to(animationLayer,2,{delay:0.5,scaleX:720/data.width,scaleY:720/data.width,alpha:0,ease:LEasing.Quart.easeOut,onComplete:militaryAdviserEnd});
 }
-function militaryAdviserStrategy(charas, strategy){
+function militaryAdviserStrategy(chara, strategy){
 	switch(strategy.effectType()){
 		case StrategyEffectType.Status:
-			for(var j=0,l=charas.length;j<l;j++){
-				var chara = charas[j];
-				if(strategy.effectType() == StrategyEffectType.Wake){
-					chara.status.wake();
-				}else{
-					
-				}
+			if(strategy.effectType() == StrategyEffectType.Wake){
+				chara.status.wake();
+			}else{
+				chara.status.addStatus(strategy.strategyType(), strategy.hert());
 			}
 			if(strategy.hert() == 0){
 				break;
 			}
 		case StrategyEffectType.Attack:
-			for(var j=0,l=charas.length;j<l;j++){
-				var chara = charas[j];
-				var hertValue = calculateHertStrategyValue(BattleController.ctrlChara, chara, strategy, 1);
-				var troops = chara.data.troops();
-				if(troops < hertValue){
-					hertValue = troops;
-				}
-				chara.data.troops(troops - hertValue);
+			var hertValue = calculateHertStrategyValue(BattleController.ctrlChara, chara, strategy, 1);
+			var troops = chara.data.troops();
+			if(troops < hertValue){
+				hertValue = troops;
 			}
+			chara.data.troops(troops - hertValue);
+			break;
+		case StrategyEffectType.Aid:
+			chara.status.addStatus(strategy.strategyType(), strategy.hert());
 			break;
 	}
 }
@@ -998,6 +995,18 @@ function militaryAdviserEnd(event){
 	var characterModel = BattleController.ctrlChara.data;
 	var militaryModel = characterModel.military();
 	var charas = LMvc.BattleController.view.charaLayer.getCharactersFromBelong(militaryModel.belong());
+	for(var i=0, l= charas.length;i<l;i++){
+		var chara = charas[i];
+		var strategys = Array.getRandomArrays(militaryModel.strategys(),militaryModel.strategyCount());
+		for(var j=0;j<strategys.length;j++){
+			var ids = strategys[j];
+			for(var k=0;k<ids.length;k++){
+				var strategy = StrategyMasterModel.getMaster(ids[k]);
+				militaryAdviserStrategy(chara, strategy);
+			}
+		}
+	}
+	/*
 	var strategys = Array.getRandomArrays(militaryModel.strategys(),militaryModel.strategyCount());
 	for(var i=0;i<strategys.length;i++){
 		var ids = strategys[i];
@@ -1006,6 +1015,9 @@ function militaryAdviserEnd(event){
 			militaryAdviserStrategy(charas, strategy);
 		}
 	}
+	*/
+	LMvc.running = false;
+	BattleController.ctrlChara.AI.endAction();
 	return;
 	
 	if(militaryModel.isType(MilitaryType.STRATEGY_ATTACK)){
