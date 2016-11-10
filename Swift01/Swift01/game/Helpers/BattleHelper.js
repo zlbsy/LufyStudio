@@ -969,11 +969,7 @@ function militaryAdviserStart(){
 function militaryAdviserStrategy(chara, strategy){
 	switch(strategy.effectType()){
 		case StrategyEffectType.Status:
-			if(strategy.effectType() == StrategyEffectType.Wake){
-				chara.status.wake();
-			}else{
-				chara.status.addStatus(strategy.strategyType(), strategy.hert());
-			}
+			chara.status.addStatus(strategy.strategyType(), strategy.hert());
 			if(strategy.hert() == 0){
 				break;
 			}
@@ -987,6 +983,35 @@ function militaryAdviserStrategy(chara, strategy){
 			break;
 		case StrategyEffectType.Aid:
 			chara.status.addStatus(strategy.strategyType(), strategy.hert());
+			break;
+		case StrategyEffectType.Wake:
+			chara.status.wake();
+			break;
+		case StrategyEffectType.Supply:
+			var troopsAdd = strategy.troops();
+			var woundedAdd = strategy.wounded();
+			var troops = chara.data.troops();
+			var maxTroops = chara.data.maxTroops();
+			if(troops == maxTroops){
+				break;
+			}
+			var wounded = chara.data.wounded();
+			if(woundedAdd < 1){
+				woundedAdd = wounded * woundedAdd >>> 0;
+			}else if(woundedAdd > wounded){
+				woundedAdd = wounded;
+			}
+			if(troops + woundedAdd > maxTroops){
+				woundedAdd = maxTroops - troops;
+			}
+			if(troops + troopsAdd + woundedAdd > maxTroops){
+				troopsAdd = maxTroops - troops - woundedAdd;
+			}
+			if(woundedAdd > 0){
+				chara.data.wounded(wounded - woundedAdd);
+				troopsAdd += woundedAdd;
+			}
+			chara.data.troops(troops + troopsAdd);
 			break;
 	}
 }
@@ -1004,84 +1029,6 @@ function militaryAdviserEnd(event){
 				var strategy = StrategyMasterModel.getMaster(ids[k]);
 				militaryAdviserStrategy(chara, strategy);
 			}
-		}
-	}
-	/*
-	var strategys = Array.getRandomArrays(militaryModel.strategys(),militaryModel.strategyCount());
-	for(var i=0;i<strategys.length;i++){
-		var ids = strategys[i];
-		for(var j=0;j<ids.length;j++){
-			var strategy = StrategyMasterModel.getMaster(ids[j]);
-			militaryAdviserStrategy(charas, strategy);
-		}
-	}
-	*/
-	LMvc.running = false;
-	BattleController.ctrlChara.AI.endAction();
-	return;
-	
-	if(militaryModel.isType(MilitaryType.STRATEGY_ATTACK)){
-		var strategys = Array.getRandomArrays(militaryModel.strategys(),militaryModel.strategyCount());
-		for(var i=0,l=charas.length;i<l;i++){
-			var chara = charas[i];
-			for(var j = 0;j<strategys.length;j++){
-				var strategy = StrategyMasterModel.getMaster(strategys[j]);
-				var hertValue = calculateHertStrategyValue(BattleController.ctrlChara, chara, strategy, 1);
-				var troops = chara.data.troops();
-				if(troops < hertValue){
-					hertValue = troops;
-				}
-				chara.data.troops(troops - hertValue);
-			}
-		}
-	}
-	if(militaryModel.isType(MilitaryType.AID)){
-		var aids = Array.getRandomArrays(militaryModel.aids(),militaryModel.aidCount());
-		for(var i=0,l=charas.length;i<l;i++){
-			var chara = charas[i];
-			for(var j = 0;j<aids.length;j++){
-				var strategy = StrategyMasterModel.getMaster(aids[j]);
-				chara.status.addStatus(strategy.strategyType(), strategy.hert());
-			}
-		}
-	}
-	if(militaryModel.isType(MilitaryType.SUPPLY)){
-		var heals = Array.getRandomArrays(militaryModel.heals(),militaryModel.healCount());
-		for(var i=0,l=charas.length;i<l;i++){
-			var chara = charas[i];
-			for(var j = 0;j<heals.length;j++){
-				var strategy = StrategyMasterModel.getMaster(heals[j]);
-				var troopsAdd = strategy.troops();
-				var woundedAdd = strategy.wounded();
-				var troops = chara.data.troops();
-				var maxTroops = chara.data.maxTroops();
-				if(troops == maxTroops){
-					return 0;
-				}
-				var wounded = chara.data.wounded();
-				if(woundedAdd < 1){
-					woundedAdd = wounded * woundedAdd >>> 0;
-				}else if(woundedAdd > wounded){
-					woundedAdd = wounded;
-				}
-				if(troops + woundedAdd > maxTroops){
-					woundedAdd = maxTroops - troops;
-				}
-				if(troops + troopsAdd + woundedAdd > maxTroops){
-					troopsAdd = maxTroops - troops - woundedAdd;
-				}
-				if(woundedAdd > 0){
-					chara.data.wounded(wounded - woundedAdd);
-					troopsAdd += woundedAdd;
-				}
-				chara.data.troops(troops + troopsAdd);
-			}
-		}
-	}
-	if(militaryModel.isType(MilitaryType.WAKE)){
-		for(var i=0,l=charas.length;i<l;i++){
-			var chara = charas[i];
-			chara.status.wake();
 		}
 	}
 	LMvc.running = false;
