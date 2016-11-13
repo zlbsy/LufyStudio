@@ -331,13 +331,23 @@ function battleDefCharactersToAttack(belong, battleData){
 function battleFoodCheck(belong){
 	var battleData = LMvc.BattleController.battleData;
 	var charas = LMvc.BattleController.view.charaLayer.getCharactersFromBelong(belong);
-	
+	var militaryModel = LMvc.BattleController.militaryModel;
 	battleDefCharactersToAttack(belong, battleData);
 	var needFood = 0;
 	var thrift = 1;
 	for(var i=0,l=charas.length;i<l;i++){
 		var charaModel = charas[i].data;
 		if(charaModel.hasSkill(SkillSubType.RICE)){
+			continue;
+		}
+		if(militaryModel && militaryModel.isType(MilitaryType.WOOD_CATTLE)){
+			var troops = charaModel.troops();
+			var troopsAdd = charaModel.maxTroops() * militaryModel.healTroops() >>> 0;
+			if(charaModel.maxTroops() < troops + troopsAdd){
+				charaModel.troops(charaModel.maxTroops());
+			}else{
+				charaModel.troops(troops + troopsAdd);
+			}
 			continue;
 		}
 		needFood += charaModel.troops();
@@ -348,6 +358,13 @@ function battleFoodCheck(belong){
 	var cityFood = (belong == Belong.SELF && battleData.fromCity.seigniorCharaId() != LMvc.selectSeignorId) || 
 		(belong == Belong.ENEMY && battleData.fromCity.seigniorCharaId() == LMvc.selectSeignorId);
 	if(cityFood){
+		if(militaryModel && militaryModel.isType(MilitaryType.WOOD_CATTLE)){
+			thrift = 0;
+			LMvc.BattleController.militaryValidLimit--;
+			if(LMvc.BattleController.militaryValidLimit <= 0){
+				LMvc.BattleController.militaryType = null;
+			}
+		}
 		needFood = (needFood * thrift >>> 0);
 		if(battleData.toCity.food() > needFood){
 			battleData.toCity.food(-needFood);
@@ -1020,15 +1037,26 @@ function militaryAdviserEnd(event){
 	var characterModel = BattleController.ctrlChara.data;
 	var militaryModel = characterModel.military();
 	var charas = LMvc.BattleController.view.charaLayer.getCharactersFromBelong(militaryModel.belong());
-	for(var i=0, l= charas.length;i<l;i++){
-		var chara = charas[i];
-		var strategys = Array.getRandomArrays(militaryModel.strategys(),militaryModel.strategyCount());
-		for(var j=0;j<strategys.length;j++){
-			var ids = strategys[j];
-			for(var k=0;k<ids.length;k++){
-				var strategy = StrategyMasterModel.getMaster(ids[k]);
-				militaryAdviserStrategy(chara, strategy);
+	if(militaryModel.type() == MilitaryType.STRATEGY){
+		for(var i=0, l= charas.length;i<l;i++){
+			var chara = charas[i];
+			var strategys = Array.getRandomArrays(militaryModel.strategys(),militaryModel.strategyCount());
+			for(var j=0;j<strategys.length;j++){
+				var ids = strategys[j];
+				for(var k=0;k<ids.length;k++){
+					var strategy = StrategyMasterModel.getMaster(ids[k]);
+					militaryAdviserStrategy(chara, strategy);
+				}
 			}
+		}
+	}else if(militaryModel.type() == MilitaryType.WOOD_CATTLE){
+		LMvc.BattleController.militaryModel = militaryModel;
+		LMvc.BattleController.militaryValidLimit = militaryModel.validLimit();
+	}else if(militaryModel.type() == MilitaryType.BARRIER){
+		for(var i=0, l= charas.length;i<l;i++){
+			var chara = charas[i];
+			chara.militaryType = MilitaryType.BARRIER;
+			chara.militaryValidLimit = militaryModel.validLimit();
 		}
 	}
 	LMvc.running = false;
