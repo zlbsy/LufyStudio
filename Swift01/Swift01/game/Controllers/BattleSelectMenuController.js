@@ -54,13 +54,18 @@ BattleSelectMenuController.prototype.militaryAdviser = function(event){
 	var view = new MilitaryAdviserView(null, BattleController.ctrlChara.data);
 	var obj = {width:360, height:300, subWindow:view, title:Language.get("military")};
 	obj.okEvent = self.militaryAdviserSelect;
-	obj.cancelEvent = null;
+	obj.cancelEvent = self.militaryAdviserCancel;
 	var dialog = ConfirmWindow(obj);
 	LMvc.layer.addChild(dialog);
 };
 BattleSelectMenuController.prototype.militaryAdviserSelect = function(event){
 	event.currentTarget.parent.remove();
-	militaryAdviserStart();
+	LMvc.BattleController.militaryOver = true;
+	militaryAdviserStart(BattleController.ctrlChara.data);
+};
+BattleSelectMenuController.prototype.militaryAdviserCancel = function(event){
+	event.currentTarget.parent.remove();
+	LMvc.running = false;
 };
 BattleSelectMenuController.prototype.magicSelect = function(event){
 	var self = BattleSelectMenuController.instance();

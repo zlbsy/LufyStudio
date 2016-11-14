@@ -36,8 +36,7 @@ BattleSelectMenuView.prototype.showSelectMenu=function(){
 		self.layerInit();
 		self.setMenu();
 	}
-	var militaryAdviserBackground = self.mainLayer.getChildByName("militaryAdviserBackground");
-	if(militaryAdviserBackground.visible){
+	if(LMvc.BattleController.militaryOver){
 		self.hideMilitaryAdviser();
 	}else{
 		self.showMilitaryAdviser();

@@ -38,6 +38,9 @@ MilitaryModel.prototype.imageCount = function() {
 MilitaryModel.prototype.isType = function(type) {
 	return this.data.type.indexOf(type) >= 0;
 };
+MilitaryModel.prototype.validLimit = function() {
+	return this.data.validLimit;
+};
 MilitaryModel.prototype.belong = function() {
 	return this.data.belong;
 };

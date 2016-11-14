@@ -120,6 +120,7 @@ BattleController.prototype.init = function(){
 		self.dispatchEvent(LEvent.COMPLETE);
 		return;
 	}
+	self.militaryOver = false;
 	self.dispatchEvent(LEvent.COMPLETE);
 	if(LMvc.areaData && LMvc.areaData.battleData){
 		setBattleSaveData();

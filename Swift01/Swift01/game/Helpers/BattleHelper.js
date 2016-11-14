@@ -963,8 +963,7 @@ function tweenTextShow(chara, label, y){
 	}});
 }
 /*军师计发动*/
-function militaryAdviserStart(){
-	var characterModel = BattleController.ctrlChara.data;
+function militaryAdviserStart(characterModel){
 	var militaryModel = characterModel.military();
 	var image = LMvc.datalist["military-"+militaryModel.image()];
     var data = new LBitmapData(image);
@@ -1037,7 +1036,7 @@ function militaryAdviserEnd(event){
 	var characterModel = BattleController.ctrlChara.data;
 	var militaryModel = characterModel.military();
 	var charas = LMvc.BattleController.view.charaLayer.getCharactersFromBelong(militaryModel.belong());
-	if(militaryModel.type() == MilitaryType.STRATEGY){
+	if(militaryModel.isType(MilitaryType.STRATEGY)){
 		for(var i=0, l= charas.length;i<l;i++){
 			var chara = charas[i];
 			var strategys = Array.getRandomArrays(militaryModel.strategys(),militaryModel.strategyCount());
@@ -1049,13 +1048,13 @@ function militaryAdviserEnd(event){
 				}
 			}
 		}
-	}else if(militaryModel.type() == MilitaryType.WOOD_CATTLE){
+	}else if(militaryModel.isType(MilitaryType.WOOD_CATTLE)){
 		LMvc.BattleController.militaryModel = militaryModel;
 		LMvc.BattleController.militaryValidLimit = militaryModel.validLimit();
-	}else if(militaryModel.type() == MilitaryType.BARRIER){
+	}else if(militaryModel.isType(MilitaryType.BARRIER)){
 		for(var i=0, l= charas.length;i<l;i++){
 			var chara = charas[i];
-			chara.militaryType = MilitaryType.BARRIER;
+			chara.militaryModel = militaryModel;
 			chara.militaryValidLimit = militaryModel.validLimit();
 		}
 	}

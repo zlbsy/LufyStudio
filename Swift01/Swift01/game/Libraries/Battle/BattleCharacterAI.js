@@ -402,7 +402,16 @@ BattleCharacterAI.prototype.attackActionComplete = function(event) {
 		if(hardships > 0){
 			obj.hertValue *= (1 + hardships);
 		}
-		var hitrate = calculateHitrate(chara,obj.chara);
+		var hitrate = false;
+		if(obj.chara.militaryModel && obj.chara.militaryModel.isType(MilitaryType.BARRIER)){
+			tweenTextShow(obj.chara, obj.chara.militaryModel.name());
+			obj.chara.militaryValidLimit--;
+			if(obj.chara.militaryValidLimit <= 0){
+				obj.chara.militaryModel = null;
+			}
+		}else{
+			hitrate = calculateHitrate(chara,obj.chara);
+		}
 		if(hitrate){
 			skill = obj.chara.data.skill(SkillType.HERT);
 			var condition = skill ? skill.condition() : null;
