@@ -60,7 +60,6 @@ BattleSelectMenuController.prototype.militaryAdviser = function(event){
 };
 BattleSelectMenuController.prototype.militaryAdviserSelect = function(event){
 	event.currentTarget.parent.remove();
-	LMvc.BattleController.militaryOver = true;
 	militaryAdviserStart(BattleController.ctrlChara.data);
 };
 BattleSelectMenuController.prototype.militaryAdviserCancel = function(event){

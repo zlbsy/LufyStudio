@@ -964,6 +964,7 @@ function tweenTextShow(chara, label, y){
 }
 /*军师计发动*/
 function militaryAdviserStart(characterModel){
+	LMvc.BattleController.militaryOver = true;
 	var militaryModel = characterModel.military();
 	var image = LMvc.datalist["military-"+militaryModel.image()];
     var data = new LBitmapData(image);
@@ -1060,4 +1061,26 @@ function militaryAdviserEnd(event){
 	}
 	LMvc.running = false;
 	BattleController.ctrlChara.AI.endAction();
+}
+function getMaxMilitary(belong){
+	if(LMvc.BattleController.militaryOver){
+		return null;
+	}
+	var charas = LMvc.BattleController.view.charaLayer.getCharactersFromBelong(belong);
+	var militaryModels = [];
+	for(var i=0;i<charas.length;i++){
+		var characterModel = charas[i].data;
+		var militaryModel = characterModel.military();
+		if(!militaryModel){
+			continue;
+		}
+		militaryModels.push(militaryModel);
+	}
+	if(militaryModels.length == 0){
+		return null;
+	}
+	militaryModels = militaryModels.sort(function(a, b){
+		return b.powerful() - a.powerful();
+	});
+	return militaryModels[0];
 }

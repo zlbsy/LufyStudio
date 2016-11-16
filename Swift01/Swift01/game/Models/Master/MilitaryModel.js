@@ -68,3 +68,9 @@ MilitaryModel.prototype.explanation = function() {
 MilitaryModel.prototype.strategyCount = function() {
 	return this.data.strategyCount;
 };
+MilitaryModel.prototype.powerful = function() {
+	return this.data.powerful;
+};
+MilitaryModel.prototype.condition = function() {
+	return this.data.condition;
+};
