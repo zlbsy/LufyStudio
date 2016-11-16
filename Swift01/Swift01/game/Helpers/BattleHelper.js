@@ -1084,3 +1084,19 @@ function getMaxMilitary(belong){
 	});
 	return militaryModels[0];
 }
+function isNeedSupplyMilitary(belong){
+	var charas = LMvc.BattleController.view.charaLayer.getCharactersFromBelong(belong);
+	var count = 0;
+	for(var i=0;i<charas.length;i++){
+		var chara = charas[i];
+		if(chara.status.needWake()){
+			count++;
+			continue;
+		}
+		var characterModel = chara.data;
+		if(characterModel.wounded() > 20){
+			count++;
+		}
+	}
+	return count >= charas.length * 0.5;
+}
