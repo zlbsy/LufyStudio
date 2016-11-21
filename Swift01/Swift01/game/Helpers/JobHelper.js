@@ -1023,6 +1023,7 @@ function toPrizedByMoney(characterModel){
 	var personalLoyaltyValue = 5;
 	var compatibilityValue = 3;
 	var value1 = personalLoyaltyValue * characterModel.personalLoyalty()/15;
+	console.log(characterModel.name());
 	var value2 = compatibilityValue * (150 - Math.abs(characterModel.compatibility() - characterModel.seignior().character().compatibility())) / 150;
 	var upValue = (value1 + value2) >>> 0;
 	var value = (value1 + value2 - upValue)*0.5 + 0.5;

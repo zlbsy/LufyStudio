@@ -23,8 +23,10 @@ BattleCharacterStatusView.healCharactersStrategy = function(){
 BattleCharacterStatusView.healCharactersCheck = function(){
 	if(BattleCharacterStatusView.healCharacters.length == 0){
 		var callback = BattleCharacterStatusView.callback;
-		BattleCharacterStatusView.callback = null;
-		callback();
+		if(callback){
+			BattleCharacterStatusView.callback = null;
+			callback();
+		}
 		return;
 	}
 	var obj = BattleCharacterStatusView.healCharacters.shift();
