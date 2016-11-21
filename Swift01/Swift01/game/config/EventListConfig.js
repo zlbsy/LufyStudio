@@ -618,5 +618,133 @@ var EventListConfig = [
 	},
 	script:"Data/Event/{0}/xj.txt",
 	result:[{type:"gameClear"}]
+},
+{
+	id:29,
+	name:"结局:贤君",//蛮族入侵-割地称臣
+	condition:{
+		seignior:0,
+		generals:[
+		],
+		citys:[
+		],
+		clear:1,
+		tribe:{from:0,to:5},
+		police:{from:90,to:100}
+	},
+	script:"Data/Event/{0}/xj.txt",
+	result:[{type:"gameClear"}]
+},
+{
+	id:30,
+	name:"结局:贤君",//远征蛮族-失败
+	condition:{
+		seignior:0,
+		generals:[
+		],
+		citys:[
+		],
+		clear:1,
+		tribe:{from:0,to:5},
+		police:{from:90,to:100}
+	},
+	script:"Data/Event/{0}/xj.txt",
+	result:[{type:"gameClear"}]
+},
+{
+	id:31,
+	name:"结局:贤君",//远征蛮族-失败
+	condition:{
+		seignior:0,
+		generals:[
+		],
+		citys:[
+		],
+		clear:1,
+		tribe:{from:0,to:5},
+		police:{from:90,to:100}
+	},
+	script:"Data/Event/{0}/xj.txt",
+	result:[{type:"gameClear"}]
+},
+{
+	id:32,
+	name:"结局:贤君",//贤君-商业大国
+	condition:{
+		seignior:0,
+		generals:[
+		],
+		citys:[
+		],
+		clear:1,
+		tribe:{from:0,to:5},
+		police:{from:90,to:100}
+	},
+	script:"Data/Event/{0}/xj.txt",
+	result:[{type:"gameClear"}]
+},
+{
+	id:33,
+	name:"结局:贤君",//贤君-商业大国
+	condition:{
+		seignior:0,
+		generals:[
+		],
+		citys:[
+		],
+		clear:1,
+		tribe:{from:0,to:5},
+		police:{from:90,to:100}
+	},
+	script:"Data/Event/{0}/xj.txt",
+	result:[{type:"gameClear"}]
+},
+{
+	id:34,
+	name:"结局:贤君",//贤君-文明大国
+	condition:{
+		seignior:0,
+		generals:[
+		],
+		citys:[
+		],
+		clear:1,
+		tribe:{from:0,to:5},
+		police:{from:90,to:100}
+	},
+	script:"Data/Event/{0}/xj.txt",
+	result:[{type:"gameClear"}]
+},
+{
+	id:35,
+	name:"结局:贤君",//汉室复兴-汉室延长
+	condition:{
+		seignior:0,
+		generals:[
+		],
+		citys:[
+		],
+		clear:1,
+		tribe:{from:0,to:5},
+		police:{from:90,to:100}
+	},
+	script:"Data/Event/{0}/xj.txt",
+	result:[{type:"gameClear"}]
+},
+{
+	id:36,
+	name:"结局:贤君",//汉室复兴-苟延残喘
+	condition:{
+		seignior:0,
+		generals:[
+		],
+		citys:[
+		],
+		clear:1,
+		tribe:{from:0,to:5},
+		police:{from:90,to:100}
+	},
+	script:"Data/Event/{0}/xj.txt",
+	result:[{type:"gameClear"}]
 }
 ];

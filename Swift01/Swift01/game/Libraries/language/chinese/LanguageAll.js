@@ -140,6 +140,7 @@ Language.data = {
 	"tab_lineups":"阵型",
 	"tab_status":"状态",
 	"tab_properties":"属性",
+	"tab_introduction":"简介",
 	"tab_all":"全",
 	
 	"terrain_0":"平原",

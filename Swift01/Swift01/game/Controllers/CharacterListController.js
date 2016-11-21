@@ -48,7 +48,7 @@ CharacterListController.prototype.viewLoad=function(){
 	StrategyMasterModel.setMaster(StrategyDatas);
 	SoldierMasterModel.setMaster(SoldierDatas);
 	SkillMasterModel.setMaster(SkillsData);
-	self.load.view(["CharacterList/CharacterListChild","CharacterList/CharacterDetailed","CharacterList/CharacterExpedition",
+	self.load.view(["CharacterList/CharacterListChild","CharacterList/CharacterDetailed","CharacterList/CharacterExpedition","CharacterList/CharacterDetailedTabIntroduction",
 	"CharacterList/CharacterDetailedTabStatus","CharacterList/CharacterDetailedTabProperties","CharacterList/CharacterDetailedFace","CharacterList/CharacterDetailedTabEquipment",
 	"Equipments/Equipments","Equipments/EquipmentsChild","Equipments/EquipmentDetailed","Common/StatusBar",
 	"Soldiers/Soldiers","Soldiers/SoldiersChild","Soldiers/SoldierDetailed",
