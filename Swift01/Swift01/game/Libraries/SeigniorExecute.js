@@ -386,6 +386,17 @@ SeigniorExecute.prototype.areaJobRun=function(area){
 			}
 		}
 	}
+	//俘虏移动
+	var captives = area.captives();
+	for(var i=0;i<captives.length;i++){
+		chara = captives[i];
+		if(chara.job() == Job.MOVE){
+			var toCity = AreaModel.getArea(chara.data.targetCity);
+			chara.data.targetCity = null;
+			chara.job(Job.IDLE);
+			toCity.addCaptives(chara);
+		}
+	}
 	captivesChangeLoyalty(area);
 	self.areaJobOver = true;
 	return false;
