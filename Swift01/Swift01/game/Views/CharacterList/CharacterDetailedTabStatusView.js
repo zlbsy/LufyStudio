@@ -146,15 +146,6 @@ CharacterDetailedTabStatusView.prototype.clickRecruit=function(event){
 		characterModel.seigniorId(LMvc.selectSeignorId);
 		cityData.removeCaptives(characterModel.id());
 		cityData.addGenerals(characterModel);
-		//list更新
-		var listView = self.controller.view.listView;
-		var items = listView.getItems();
-		var item = items.find(function(child){
-			return characterModel.id() == child.charaModel.id();
-		});
-		item.set(characterModel);
-		item.cacheAsBitmap(false);
-		item.updateView();
 		//详细更新
 		detailedView.changeCharacter(0);
 		script = "SGJTalk.show(" + characterModel.id() + ",0,"+Language.get("dialog_recruit_success_message")+");";//愿效犬马之劳!
@@ -172,6 +163,15 @@ CharacterDetailedTabStatusView.prototype.clickRecruit=function(event){
 		script = "SGJTalk.show(" + characterModel.id() + ",0,"+Language.get("dialog_recruit_fail_message")+");";//少废话!忠臣不事二主!
 		script += "SGJBattleResult.selfCaptiveWin(1);";
 	}
+	//list更新
+	var listView = self.controller.view.listView;
+	var items = listView.getItems();
+	var item = items.find(function(child){
+		return characterModel.id() == child.charaModel.id();
+	});
+	item.set(characterModel);
+	item.cacheAsBitmap(false);
+	item.updateView();
 	LGlobal.script.addScript(script);
 };
 CharacterDetailedTabStatusView.prototype.clickRelease=function(event){
