@@ -1037,6 +1037,13 @@ function militaryAdviserEnd(event){
 	var characterModel = BattleController.ctrlChara.data;
 	var militaryModel = characterModel.military();
 	var charas = LMvc.BattleController.view.charaLayer.getCharactersFromBelong(militaryModel.belong());
+	militaryAdviserSelect(characterModel, charas);
+}
+function militaryAdviserSelect(characterModel, charas){
+	//event.target.remove();
+	//var characterModel = BattleController.ctrlChara.data;
+	var militaryModel = characterModel.military();
+	//var charas = LMvc.BattleController.view.charaLayer.getCharactersFromBelong(militaryModel.belong());
 	if(militaryModel.isType(MilitaryType.STRATEGY)){
 		for(var i=0, l= charas.length;i<l;i++){
 			var chara = charas[i];
@@ -1060,13 +1067,23 @@ function militaryAdviserEnd(event){
 		}
 	}
 	LMvc.running = false;
-	BattleController.ctrlChara.AI.endAction();
+	if(BattleController.ctrlChara){
+		BattleController.ctrlChara.AI.endAction();
+	}
 }
 function getMaxMilitary(belong){
-	if(LMvc.BattleController.militaryOver){
+	var selfAttack = (LMvc.BattleController.battleData.fromCity.seigniorCharaId() == LMvc.selectSeignorId);
+	if(!selfAttack || LMvc.BattleController.militaryOver){
 		return null;
 	}
 	var charas = LMvc.BattleController.view.charaLayer.getCharactersFromBelong(belong);
+	return getMaxMilitaryFromCharacters(charas);
+}
+function getMaxMilitaryFromCharacters(charas){
+	/*if(LMvc.BattleController.militaryOver){
+		return null;
+	}
+	var charas = LMvc.BattleController.view.charaLayer.getCharactersFromBelong(belong);*/
 	var militaryModels = [];
 	for(var i=0;i<charas.length;i++){
 		var characterModel = charas[i].data;
@@ -1086,6 +1103,10 @@ function getMaxMilitary(belong){
 }
 function isNeedSupplyMilitary(belong){
 	var charas = LMvc.BattleController.view.charaLayer.getCharactersFromBelong(belong);
+	return isNeedSupplyMilitaryFromCharacters(charas);
+}
+function isNeedSupplyMilitaryFromCharacters(charas){
+	//var charas = LMvc.BattleController.view.charaLayer.getCharactersFromBelong(belong);
 	var count = 0;
 	for(var i=0;i<charas.length;i++){
 		var chara = charas[i];

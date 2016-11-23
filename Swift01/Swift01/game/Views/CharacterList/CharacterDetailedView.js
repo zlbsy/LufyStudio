@@ -190,8 +190,8 @@ CharacterDetailedView.prototype.TabShow=function(tab){
 		}else{
 			layer = new LSprite();
 			layer.tabName = tabs[i];
-			layer.addShape(LShape.RECT,[0,0,self.tabWidth,40]);
-			layer.x = self.tabWidth * i;
+			layer.addShape(LShape.RECT,[0,0,(self.tabWidth - 4),40]);
+			layer.x = (self.tabWidth - 4) * i + 6;
 			self.tabButtonLayer.addChild(layer);
 			layer.addEventListener(LMouseEvent.MOUSE_UP,self.TabClick);
 		}

@@ -139,7 +139,7 @@ BattleIntelligentAI.prototype.run = function() {
 		self.chara.AI.endAction();
 		return;
 	}else{
-		var militaryModel = getMaxMilitary(self.chara.belong);
+		/*var militaryModel = getMaxMilitary(self.chara.belong);
 		if(militaryModel && militaryModel.id() == self.chara.data.militaryId()){
 			//军师计
 			if(militaryModel.condition() == MilitaryCondition.START){
@@ -149,7 +149,7 @@ BattleIntelligentAI.prototype.run = function() {
 				militaryAdviserStart(self.chara.data);
 				return;
 			}
-		}
+		}*/
 		switch(self.chara.mode){
 			case CharacterMode.NONE:
 				var militaryModel = getMaxMilitary(self.chara.belong);

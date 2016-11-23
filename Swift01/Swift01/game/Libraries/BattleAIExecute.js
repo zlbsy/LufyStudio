@@ -13,6 +13,7 @@ BattleAIExecute.Instance = function(){
 };
 BattleAIExecute.set = function(attackData, targetData){
 	//console.log("BattleAIExecute.set Start ",attackData, targetData);
+	LMvc.BattleController = {};
 	BattleAIExecute.Instance()._set(attackData, targetData);
 };
 BattleAIExecute.run=function(){
@@ -52,11 +53,11 @@ BattleAIExecute.run=function(){
 		if(rand < 0.5){
 			//console.log("attackIndex:"+self.attackIndex + ",currentChara:"+attackCharacters[self.attackIndex]);
 			self.currentChara = attackCharacters[self.attackIndex++];
-			self.characterExec(self.currentChara, self.attackData, self.targetData);
+			self.characterExec(self.currentChara, self.attackData, self.targetData, false);
 		}else{
 			//console.log("targetIndex:"+self.targetIndex + ",currentChara:"+targetCharacters[self.targetIndex]);
 			self.currentChara = targetCharacters[self.targetIndex++];
-			self.characterExec(self.currentChara, self.targetData, self.attackData);
+			self.characterExec(self.currentChara, self.targetData, self.attackData, true);
 		}
 		self.currentChara.herts = null;
 		if(self.currentChara.attackTarget){
@@ -91,6 +92,7 @@ BattleAIExecute.prototype.result=function(isWin){
 	experienceToFeat(self.attackData._characterList);
 	experienceToFeat(self.targetData._characterList);
 	SeigniorExecute.Instance().msgView.showSeignior();
+	LMvc.BattleController = null;
 	if(isWin){
 		var winSeigniorId = fromSeignior.chara_id();
 		var failSeigniorId = toCity.seigniorCharaId();
@@ -270,11 +272,25 @@ BattleAIExecute.prototype.removeChara = function(chara){
 	}
 	//console.log("removeChara Over, length=" + charaList.length);
 };
-BattleAIExecute.prototype.characterExec=function(currentCharacter, currentData, enemyData){
+BattleAIExecute.prototype.characterExec=function(currentCharacter, currentData, enemyData, checkMilitary){
 	var self = this;
-	//console.log("characterExec:",currentCharacter);
 	var currentCharacters = currentData.expeditionCharacterList;
 	var enemyCharacters = enemyData.expeditionCharacterList;
+	var militaryModel = checkMilitary ? getMaxMilitaryFromCharacters(currentCharacters) : null;
+	if(militaryModel && militaryModel.id() == currentCharacter.data.militaryId()){
+		//军师计判断
+		if(militaryModel.condition() == MilitaryCondition.START){
+			militaryAdviserSelect(currentCharacter.data, currentCharacters);
+			return;
+		}else if(militaryModel.isType(MilitaryType.WOOD_CATTLE) && currentData.toCity && currentData.toCity.food() == 0){
+			militaryAdviserSelect(currentCharacter.data, currentCharacters);
+			return;
+		}else if(militaryModel.condition() == MilitaryCondition.HERT && isNeedSupplyMilitaryFromCharacters(currentCharacters)){
+			militaryAdviserSelect(currentCharacter.data, currentCharacters);
+			return;
+		}
+	}
+		
 	var enemyPants = self.getPantCharacter(enemyCharacters);
 	//有虚弱敌军->攻击
 	if(enemyPants.length > 0 && Math.fakeRandom() > 0.8){
