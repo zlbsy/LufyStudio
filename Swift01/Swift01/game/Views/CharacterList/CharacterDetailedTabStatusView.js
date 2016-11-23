@@ -68,11 +68,12 @@ CharacterDetailedTabStatusView.prototype.setCtrlButtons=function(backLayer){
 		return;
 	}
 	if(characterModel.seigniorId() != LMvc.selectSeignorId){
-		var btnRecruit = getButton(Language.get("recruit"),200, characterModel.job() == Job.END ? "win07" : "win01");//招降
+		var recruitDisable = characterModel.job() != Job.IDLE;
+		var btnRecruit = getButton(Language.get("recruit"),200, recruitDisable ? "win07" : "win01");//招降
 		btnRecruit.x = LMvc.screenWidth - 260;
 		btnRecruit.y = 5;
 		backLayer.addChild(btnRecruit);
-		if(characterModel.job() == Job.END){
+		if(recruitDisable){
 			btnRecruit.staticMode = true;
 		}else{
 			btnRecruit.addEventListener(LMouseEvent.MOUSE_UP,self.clickRecruit);
