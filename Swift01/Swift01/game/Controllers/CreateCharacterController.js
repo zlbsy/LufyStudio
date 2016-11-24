@@ -35,7 +35,8 @@ CreateCharacterController.prototype.viewLoad=function(){
 	"CreateCharacter/CreateCharacterAbility", 
 	"CreateCharacter/CreateCharacterAbilityItem", 
 	"CreateCharacter/CreateCharacterArm", 
-	"CreateCharacter/CreateCharacterArmItem"], self.init);
+	"CreateCharacter/CreateCharacterArmItem", 
+	"CreateCharacter/CreateCharacterArmIconItem"], self.init);
 };
 CreateCharacterController.prototype.init=function(){
 	var self = this;

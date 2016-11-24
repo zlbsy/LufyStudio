@@ -36,12 +36,25 @@ CreateCharacterArmItemView.prototype.setStatus=function(value){
 	self.cacheAsBitmap(false);
 	self.updateView();
 };
+CreateCharacterArmItemView.prototype.onClickIcon=function(){
+	var self = this;
+	var iconListView = new LListView();
+	iconListView.cellWidth = 100;
+	iconListView.cellHeight = 100;
+	iconListView.resize(300, 300);
+	//iconListView.updateList(items);
+	var obj = {width:360, height:400, subWindow:iconListView, title:Language.get("形象指定"), noButton:true};
+	var dialog = ConfirmWindow(obj);
+	LMvc.layer.addChild(dialog);
+};
 CreateCharacterArmItemView.prototype.onClick=function(event){
 	var self = event.target;
 	if(event.selfX > self.minusButton.x && event.selfX < self.minusButton.x + self.minusButton.getWidth() && event.selfY > self.minusButton.y && event.selfY < self.minusButton.y + self.minusButton.getHeight()){
 		self.onMinusStatus();
 	}else if(event.selfX > self.plusButton.x && event.selfX < self.plusButton.x + self.plusButton.getWidth() && event.selfY > self.plusButton.y && event.selfY < self.plusButton.y + self.plusButton.getHeight()){
 		self.onPlusStatus();
+	}else if(event.selfX > self.icon.x && event.selfX < self.icon.x + self.icon.getWidth() && event.selfY > self.icon.y && event.selfY < self.icon.y + self.icon.getHeight()){
+		self.onClickIcon();
 	}
 };
 CreateCharacterArmItemView.prototype.setIcon=function(){

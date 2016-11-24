@@ -92,6 +92,9 @@ CreateCharacterArmView.prototype.armInit=function(data){
 	self.statusPoint.x = 10;
 	self.statusPoint.y = 12;
 	self.baseLayer.addChild(self.statusPoint);
+	self.imgLabel = getStrokeLabel("点击兵种形象可以选择其它形象！",18,"#FAFAD2","#000000",2);
+	self.imgLabel.y = 360;
+	self.baseLayer.addChild(self.imgLabel);
 	var refreshButton = getSizeButton(Language.get("refresh"),80,40);
 	refreshButton.x = 180;
 	refreshButton.y = 5;

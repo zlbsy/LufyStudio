@@ -21,6 +21,10 @@ var TrainingSetting = {
 	MAX:500//训练最大熟练度
 };
 var HealSoldiers = [10];
+var SoldierImages = [];
+SoldierImages[AttackType.NEAR] = [["4-2"], ["3-3", "4-3"], []];
+SoldierImages[AttackType.FAR] = [["624-4"], ["41-5","111-5"], []];
+SoldierImages[AttackType.MAGIC] = [["10-16"], [], []];
 /* {id:1,name:"兵种名",type:SoldierType,movetype:MoveType,movePower:移动力,
 	property:兵种属性,
 	equipment:可以装备的装备的种类,
