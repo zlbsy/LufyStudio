@@ -1,5 +1,6 @@
 function CreateCharacterView(controller){
 	base(this,LView,[controller]);
+	this.name = "CreateCharacterView";
 }
 CreateCharacterView.prototype.construct=function(){
 	this.controller.addEventListener(LEvent.COMPLETE, this.init.bind(this));
@@ -106,6 +107,7 @@ CreateCharacterView.prototype.saveCharacter=function(event){
 	}
 	
 	var length = LPlugin.characters().list.length;
+	console.log("saveCharacter",charaData);
 	LPlugin.setCharacter(charaData);
 	var characters = LPlugin.characters();
 	if(characters.list.length == length){

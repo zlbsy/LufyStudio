@@ -22,7 +22,10 @@ var TrainingSetting = {
 };
 var HealSoldiers = [10];
 var SoldierImages = [];
-SoldierImages[AttackType.NEAR] = [["4-2"], ["3-3", "4-3"], []];
+SoldierImages[AttackType.NEAR] = [
+["4-2"], 
+["3-3", "4-3", "5-3", "6-3", "7-3", "8-1", "12-3", "18-17", "19-3", "21-1", "28-3", "43-17", "90-3", "146-3", "205-3", "621-1", "622-3"], 
+[]];
 SoldierImages[AttackType.FAR] = [["624-4"], ["41-5","111-5"], []];
 SoldierImages[AttackType.MAGIC] = [["10-16"], [], []];
 /* {id:1,name:"兵种名",type:SoldierType,movetype:MoveType,movePower:移动力,

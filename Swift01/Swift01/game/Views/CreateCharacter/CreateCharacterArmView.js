@@ -31,7 +31,8 @@ CreateCharacterArmView.prototype.refreshStatus=function(){
 	for(var i=0,l=soldiers.length;i<l;i++){
 		var child = soldiers[i];
 		sum += child.proficiency;
-		var soldierData = {id:child.id};
+		var soldierData = {id:child.id, img:child.img};
+		console.error(soldierData);
 		if(child.proficiency > 500){
 			soldierData.proficiency = child.proficiency - 500;
 			data.push(soldierData);

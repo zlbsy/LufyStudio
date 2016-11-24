@@ -158,9 +158,10 @@ CreateCharacterDetailedView.prototype.getData=function(){
 	for(var i=0, l=items.length;i<l;i++){
 		var child = items[i];
 		var soldierData = {id:child.soldier.id(),proficiency:child.textField.text};
-		if(data.gender == 2 && child.soldier.data.img){
+		if(/*data.gender == 2 && */child.soldier.data.img){
 			soldierData.img = child.soldier.data.img;
 		}
+	console.error("getData",soldierData);
 		soldiers.push(soldierData);
 	}
 	data.soldiers = soldiers;

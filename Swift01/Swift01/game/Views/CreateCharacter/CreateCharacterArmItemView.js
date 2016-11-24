@@ -39,11 +39,19 @@ CreateCharacterArmItemView.prototype.setStatus=function(value){
 CreateCharacterArmItemView.prototype.onClickIcon=function(){
 	var self = this;
 	var iconListView = new LListView();
-	iconListView.cellWidth = 100;
-	iconListView.cellHeight = 100;
-	iconListView.resize(300, 300);
-	//iconListView.updateList(items);
-	var obj = {width:360, height:400, subWindow:iconListView, title:Language.get("形象指定"), noButton:true};
+	iconListView.cellWidth = 70;
+	iconListView.cellHeight = 70;
+	iconListView.maxPerLine = 4;
+	iconListView.resize(280, 350);
+	var items = [new CreateCharacterArmIconItemView(iconListView, self.soldierMaster, null)], child;
+	var images = SoldierImages[self.soldierMaster.attackType()][self.soldierMaster.moveType()];
+	for(var i=0,l=images.length;i<l;i++){
+		var image = images[i];
+		child = new CreateCharacterArmIconItemView(iconListView, self.soldierMaster, image);
+		items.push(child);
+	}
+	iconListView.updateList(items);
+	var obj = {width:340, height:440, subWindow:iconListView, title:Language.get("形象指定"), noButton:true};
 	var dialog = ConfirmWindow(obj);
 	LMvc.layer.addChild(dialog);
 };
@@ -57,10 +65,16 @@ CreateCharacterArmItemView.prototype.onClick=function(event){
 		self.onClickIcon();
 	}
 };
-CreateCharacterArmItemView.prototype.setIcon=function(){
+CreateCharacterArmItemView.prototype.setIcon=function(displayObject){
 	var self = this;
 	if(self.icon){
 		self.icon.remove();
+	}
+	if(displayObject){
+		self.icon = displayObject;
+		self.addChild(self.icon);
+		self.iconUpdate();
+		return;
 	}
 	var width = 50, height = 50;
 	self.icon = self.soldier.icon(new LPoint(width,height),self.iconComplete);
@@ -96,6 +110,10 @@ CreateCharacterArmItemView.prototype.init=function(){
 };
 CreateCharacterArmItemView.prototype.iconComplete=function(event){
 	var self = event.currentTarget.parent;
+	self.iconUpdate();
+};
+CreateCharacterArmItemView.prototype.iconUpdate=function(){
+	var self = this;
 	self.cacheAsBitmap(false);
 	self.updateView();
 };
