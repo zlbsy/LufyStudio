@@ -98,9 +98,18 @@ EffectStrategyView.prototype.toChangeAidStatus = function(){
 	}
 };
 EffectStrategyView.prototype.toAttack = function(hitrate){
-	var self = this, tweenObj;
-	if(!hitrate){
-		hitrate = calculateHitrateStrategy(self.currentCharacter, self.currentTargetCharacter);
+	var self = this, tweenObj, missMessage;
+	if(self.currentTargetCharacter.militaryModel && self.currentTargetCharacter.militaryModel.isType(MilitaryType.BARRIER)){
+		self.currentTargetCharacter.militaryValidLimit--;
+		missMessage = self.currentTargetCharacter.militaryModel.name();
+		if(self.currentTargetCharacter.militaryValidLimit <= 0){
+			self.currentTargetCharacter.militaryModel = null;
+		}
+		hitrate = false;
+	}else{
+		if(!hitrate){
+			hitrate = calculateHitrateStrategy(self.currentCharacter, self.currentTargetCharacter);
+		}
 	}
 	//var hitrate = calculateHitrateStrategy(self.currentCharacter, self.currentTargetCharacter);
 	if(hitrate){
@@ -142,7 +151,7 @@ EffectStrategyView.prototype.toAttack = function(hitrate){
 	}else{
 		self.currentTargetCharacter.changeAction(CharacterAction.BLOCK);
 		self.currentTargetCharacter.hertValue = 0;
-		tweenObj = getStrokeLabel("MISS",22,"#FFFFFF","#000000",2);
+		tweenObj = getStrokeLabel(missMessage ? missMessage : "MISS",22,"#FFFFFF","#000000",2);
 		tweenObj.x = self.currentTargetCharacter.x + (BattleCharacterSize.width - tweenObj.getWidth()) * 0.5;
 	}
 	tweenObj.y = self.currentTargetCharacter.y;
