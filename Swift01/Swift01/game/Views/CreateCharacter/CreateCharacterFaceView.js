@@ -42,7 +42,7 @@ CreateCharacterFaceView.prototype.changeGender=function(event){
 	var self = event.currentTarget.parent;
 	var detailedView = self.getParentByConstructor(CreateCharacterDetailedView);
 	if(detailedView.armView && detailedView.armView.visible){
-		detailedView.armView.resetSoliderImage();
+		detailedView.armView.resetSoliderImage(true);
 	}
 };
 CreateCharacterFaceView.prototype.changeFace=function(event){

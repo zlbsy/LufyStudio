@@ -31,8 +31,7 @@ CreateCharacterArmView.prototype.refreshStatus=function(){
 	for(var i=0,l=soldiers.length;i<l;i++){
 		var child = soldiers[i];
 		sum += child.proficiency;
-		var soldierData = {id:child.id, img:child.img};
-		console.error(soldierData);
+		var soldierData = {id:child.id};
 		if(child.proficiency > 500){
 			soldierData.proficiency = child.proficiency - 500;
 			data.push(soldierData);
@@ -118,7 +117,7 @@ CreateCharacterArmView.prototype.armInit=function(data){
 	self.listView.resize(260, 50 * 6);
 	self.listView.updateList(items);
 };
-CreateCharacterArmView.prototype.resetSoliderImage=function(data){
+CreateCharacterArmView.prototype.resetSoliderImage=function(isRefresh){
 	var self = this;
 	var soldiers = self.refreshStatus().soldiers;
 	var items = self.listView.getItems();
@@ -127,7 +126,9 @@ CreateCharacterArmView.prototype.resetSoliderImage=function(data){
 		var soldier = soldiers.find(function(child){
 			return child.id == item.soldier.id();
 		});
-		item.soldier.data.img = soldier ? soldier.img : null;
+		if(isRefresh){
+			item.soldier.data.img = soldier ? soldier.img : null;
+		}
 		item.setIcon();
 	}
 };
