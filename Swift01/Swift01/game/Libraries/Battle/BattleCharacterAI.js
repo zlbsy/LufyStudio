@@ -401,6 +401,7 @@ BattleCharacterAI.prototype.attackActionComplete = function(event) {
 		obj.chara.hertIndex = l - i;
 		if(hardships > 0){
 			obj.hertValue *= (1 + hardships);
+			obj.hertValue = obj.hertValue >>> 0;
 		}
 		var hitrate = false;
 		if(obj.chara.militaryModel && obj.chara.militaryModel.isType(MilitaryType.BARRIER)){
