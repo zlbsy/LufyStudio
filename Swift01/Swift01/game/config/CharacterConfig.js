@@ -120,3 +120,4 @@ var charactersParentConfig = [
 	{id:4,parent:21},//关羽-刘备
 	{id:19,parent:21},//张飞-刘备
 ];
+var sCharacterImages = ["zpftmd748"];

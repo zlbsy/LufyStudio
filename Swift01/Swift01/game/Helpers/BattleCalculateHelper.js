@@ -287,7 +287,7 @@ function calculateHertStrategyValue(attChara,hertChara,currentSelectStrategy,cor
 	//特技等系数加成
 	r = r * correctionFactor;
 	//兵种伤害系数加成
-	r = r * attCharaModel.currentSoldiers().strategyHert();
+	r = r * hertCharaModel.currentSoldiers().strategyHert();
 	//TODO:宝物加成
 	if(r < 1){
 		r = 1;
