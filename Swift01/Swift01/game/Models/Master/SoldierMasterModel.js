@@ -117,6 +117,13 @@ SoldierMasterModel.prototype.next = function() {
 SoldierMasterModel.prototype.img=function(){
 	return this.data.img;
 };
+SoldierMasterModel.prototype.strategySkill = function() {
+	var strategyId = this.data.strategySkill;
+	if(!strategyId){
+		return null;
+	}
+	return StrategyMasterModel.getMaster(strategyId);
+};
 SoldierMasterModel.prototype.maxTroops = function(charaModel) {
 	var self = this;
 	var currentId = charaModel.currentSoldierId();

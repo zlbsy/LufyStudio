@@ -227,11 +227,9 @@ BattleCharacterAI.prototype.physicalAttack = function(target) {
 					}
 					if(hertParamObj){
 						hertParamObj.aids = Array.getRandomArrays(aids,aidCount);
-						//console.log("hertParamObj.aids="+hertParamObj.aids.length);
 					}
 				}
 			}
-			//console.log("battleCanGroupSkill");
 			var groupSkill = battleCanGroupSkill(self.chara, target);
 			if(groupSkill){
 				self.chara.groupSkill = groupSkill;
@@ -493,6 +491,11 @@ BattleCharacterAI.prototype.attackActionComplete = function(event) {
 			}
 			if(obj.chara.data.hasSkill(SkillSubType.HARDSHIPS)){
 				obj.chara.data.hardships(obj.chara.data.hardships() + 0.2);
+			}
+			//兵种附带异常效果
+			var strategySkill = chara.data.currentSoldiers().strategySkill();
+			if(strategySkill && strategySkill.belong() == Belong.ENEMY && strategySkill.canChangeStatus()){
+				obj.chara.status.addStatus(strategySkill.strategyType(), strategySkill.hert());
 			}
 			//统率经验
 			obj.chara.data.propertiesExp("command", 1);

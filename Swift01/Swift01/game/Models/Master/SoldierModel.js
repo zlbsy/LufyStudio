@@ -95,6 +95,9 @@ SoldierModel.prototype.explanation = function() {
 SoldierModel.prototype.next = function() {
 	return this.master().next();
 };
+SoldierModel.prototype.strategySkill = function() {
+	return this.master().strategySkill();
+};
 SoldierModel.prototype.img = function(isSelf) {
 	var self = this;
 	var imgIndex = self.data.img;

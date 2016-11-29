@@ -24,7 +24,9 @@ var HealSoldiers = [10];
 var SoldierImages = [];
 SoldierImages[AttackType.NEAR] = [
 ["4-2"], 
-["3-3", "4-3", "5-3", "6-3", "7-3", "8-1", "12-3", "18-17", "19-3", "21-1", "28-3", "43-17", "90-3", "146-3", "205-3", "621-1", "622-3"], 
+["1-1", "3-3", "4-3", "5-3", "6-3", "7-3", "8-1", "12-3", "14-3", "17-1", "18-17", "19-3", "21-1", "24-1", "25-3", "27-3", 
+"28-3", "35-1", "39-1", "43-17", "48-3", "53-3", "65-3", "70-1", "72-3", "75-1", "81-3", "83-3", "89-3", "90-3", "94-3", 
+"119-3", "129-3", "131-3", "143-3", "146-3", "153-3", "154-3", "205-3", "621-1", "622-3"], 
 []];
 SoldierImages[AttackType.FAR] = [["624-4"], ["41-5","111-5"], []];
 SoldierImages[AttackType.MAGIC] = [["10-16"], [], []];
@@ -212,6 +214,7 @@ var SoldierDatas = [
 	rangeAttack:[{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0}],
 	rangeAttackTarget:[{x:0,y:0}],
 	strategy:[{id:47,lv:10},{id:49,lv:20}],
+	strategySkill:31,
 	sign:"wun",
 	next:[{id:7,lv:20}]
 	},
@@ -284,6 +287,7 @@ var SoldierDatas = [
 	strategy:[],
 	strategyHert:1.5,
 	sign:"xxs",
+	strategySkill:23,
 	next:[{id:8,lv:40}]
 	},
 	{id:19,name:"驯虎师",type:SoldierType.Physical,attackType:AttackType.NEAR,moveType:MoveType.INFANTRY,movePower:5,
@@ -298,6 +302,7 @@ var SoldierDatas = [
 	strategy:[],
 	strategyHert:1.5,
 	sign:"xhs"
+	strategySkill:22,
 	},
 	{id:20,name:"藤甲兵",type:SoldierType.Physical,attackType:AttackType.NEAR,moveType:MoveType.INFANTRY,movePower:4,
 	property:{attack:"B",spirit:"C",defense:"S",breakout:"S",morale:"C",troops:4,strategy:1},
