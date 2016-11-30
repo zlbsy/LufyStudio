@@ -302,7 +302,7 @@ var SoldierDatas = [
 	rangeAttackTarget:[{x:0,y:0}],
 	strategy:[],
 	strategyHert:1.5,
-	sign:"xhs"
+	sign:"xhs",
 	strategySkill:22,
 	strategySkillProbability:20,
 	},
@@ -380,7 +380,7 @@ var SoldierDatas = [
 	{id:26,name:"重骑兵",type:SoldierType.Physical,attackType:AttackType.NEAR,moveType:MoveType.CAVALRY,movePower:6,
 	property:{attack:"S",spirit:"B",defense:"A",breakout:"B",morale:"B",troops:5,strategy:1},
 	equipment:{head:0,hand:0,body:0,foot:0,accessories:0},
-	restrain:[{id:4,value:60},{id:6,value:60}],
+	restrain:[{id:4,value:80},{id:6,value:80}],
 	terrain:[
 	{id:0,value:110,moveCost:1},{id:1,value:110,moveCost:1},{id:2,value:90,moveCost:2},{id:3,value:90,moveCost:2},{id:4,value:80,moveCost:3},
 	{id:5,value:100,moveCost:2},{id:6,value:110,moveCost:1},{id:7,value:90,moveCost:2},{id:8,value:80,moveCost:3},{id:9,value:80,moveCost:2},{id:11,value:90,moveCost:3}],
@@ -398,7 +398,7 @@ var SoldierDatas = [
 	rangeAttack:[{x:0,y:-1},{x:0,y:-2},{x:0,y:-3},{x:0,y:1},{x:0,y:2},{x:0,y:3},{x:-1,y:0},{x:-2,y:0},{x:-3,y:0},{x:1,y:0},{x:2,y:0},{x:3,y:0},{x:-1,y:-1},{x:1,y:-1},{x:-1,y:1},{x:1,y:1},{x:1,y:2},{x:-1,y:-2},{x:1,y:-2},{x:-1,y:2},{x:2,y:1},{x:-2,y:-1},{x:2,y:-1},{x:-2,y:1}],
 	rangeAttackTarget:[{x:0,y:0}],
 	strategy:[],
-	sign:"nvb",
+	sign:"nub",
 	next:[{id:7,lv:20}]
 	},
 	{id:28,name:"驽骑兵",type:SoldierType.Physical,attackType:AttackType.FAR,moveType:MoveType.CAVALRY,movePower:6,
@@ -422,8 +422,10 @@ var SoldierDatas = [
 	{id:2,value:90,moveCost:1},{id:3,value:90,moveCost:1},
 	{id:4,value:80,moveCost:2},{id:6,value:110,moveCost:1},{id:7,value:80,moveCost:2},
 	{id:8,value:80,moveCost:2},{id:10,value:110,moveCost:1},{id:11,value:100,moveCost:2}],
-	rangeAttack:[{x:0,y:-4},{x:0,y:4},{x:-4,y:0},{x:4,y:0}, {x:1,y:-3},{x:1,y:3},{x:-1,y:-3},{x:-1,y:3},{x:-3,y:1},{x:3,y:1},{x:-3,y:-1},{x:3,y:-1}, {x:2,y:-2},{x:2,y:2},{x:-2,y:2},{x:-2,y:-2}],
-	rangeAttackTarget:[{x:0,y:0},{x:0,y:1},{x:0,y:-1},{x:1,y:0},{x:-1,y:0}],
+	rangeAttack:[{x:0,y:-4},{x:0,y:4},{x:-4,y:0},{x:4,y:0}, {x:1,y:-3},{x:1,y:3},{x:-1,y:-3},{x:-1,y:3},{x:-3,y:1},{x:3,y:1},{x:-3,y:-1},{x:3,y:-1}, {x:2,y:-2},{x:2,y:2},{x:-2,y:2},{x:-2,y:-2},
+	{x:-5,y:0},{x:-4,y:1},{x:-4,y:-1},{x:-3,y:2},{x:-3,y:-2},{x:-2,y:3},{x:-2,y:-3},{x:-1,y:4},{x:-1,y:-4},{x:0,y:5},{x:0,y:-5},
+	{x:1,y:4},{x:1,y:-4},{x:2,y:3},{x:2,y:-3},{x:3,y:2},{x:3,y:-2},{x:4,y:1},{x:4,y:-1},{x:5,y:0}],
+	rangeAttackTarget:[{x:0,y:0}],
 	strategy:[],
 	sign:"zpc",
 	next:[{id:7,lv:20}]
