@@ -122,6 +122,12 @@ SoldierMasterModel.prototype.strategySkill = function() {
 	if(!strategyId){
 		return null;
 	}
+	if(this.data.strategySkillProbability && this.data.strategySkillProbability < 100){
+		var rand = Math.fakeRandom();
+		if(rand > this.data.strategySkillProbability*0.01){
+			return null;
+		}
+	}
 	return StrategyMasterModel.getMaster(strategyId);
 };
 SoldierMasterModel.prototype.maxTroops = function(charaModel) {
