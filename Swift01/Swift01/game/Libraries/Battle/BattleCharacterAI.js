@@ -36,6 +36,9 @@ BattleCharacterAI.prototype.magicAttack = function(target){
 		var currentSelectStrategy = self.chara.currentSelectStrategy;
 		var rangeAttackTarget = currentSelectStrategy.rangeAttackTarget();
 		skill = self.chara.data.skill(SkillType.STRATEGY_ATTACK);
+		if(skill && skill.belong() && skill.belong() != currentSelectStrategy.belong()){
+			skill = null;
+		}
 		var condition = skill ? skill.condition() : null;
 		if(condition){
 			if(condition.type == "StrategyType"){

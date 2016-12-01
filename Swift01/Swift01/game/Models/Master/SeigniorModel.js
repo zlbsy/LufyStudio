@@ -426,7 +426,7 @@ SeigniorModel.prototype.removeItem = function(item){
 		var child = items[i];
 		if(child.id() == item.id()){
 			child.count(child.count() - 1);
-			if(child.count() == 0){
+			if(child.count() <= 0){
 				items.splice(i,1);
 			}
 			break;
