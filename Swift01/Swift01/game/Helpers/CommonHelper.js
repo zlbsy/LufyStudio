@@ -244,7 +244,7 @@ function setCharacterInitFeat(chara){
 	}
 	var minFeat = CharacterLevelConfig.exp * CharacterLevelConfig.maxLevel;
 	for(var i=0;i<generals.length;i++){
-		var child = generals[0];
+		var child = generals[i];
 		if(child.id() == chara.id()){
 			continue;
 		}
