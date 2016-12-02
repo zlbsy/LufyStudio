@@ -12,7 +12,17 @@ var productIdConfig = {
 	"com.lufylegend.sgj.chapter_11",
 	"com.lufylegend.sgj.chapter_12",
 	"com.lufylegend.sgj.chapter_194_211",
-	"com.lufylegend.sgj.chapter_219_263"
+	"com.lufylegend.sgj.chapter_219_263",
+	"com.lufylegend.sgj.soldier_dyb",
+	"com.lufylegend.sgj.soldier_ber",
+	"com.lufylegend.sgj.soldier_wdfj",
+	"com.lufylegend.sgj.soldier_hbq",
+	"com.lufylegend.sgj.soldier_hwj",
+	"com.lufylegend.sgj.soldier_jfb",
+	"com.lufylegend.sgj.soldier_bmyc",
+	"com.lufylegend.sgj.soldier_fxj",
+	"com.lufylegend.sgj.soldier_xzy",
+	"com.lufylegend.sgj.soldier_xr"
 	],
 	createCharacter : "com.lufylegend.sgj.newWujiang",
 	saveReport : "com.lufylegend.sgj.saveReport",

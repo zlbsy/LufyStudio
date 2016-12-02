@@ -62,6 +62,14 @@ var SkillType = {
 };
 var SkillSubType = {
 	/**
+	 * 提高城市收入
+	 **/
+	INCOME:"income",
+	/**
+	 * 祭祀
+	 **/
+	SACRIFICE:"sacrifice",
+	/**
 	 * 自身状态改变
 	 **/
 	SELF_AID:"selfAid",
@@ -337,4 +345,7 @@ var SkillsData = [
 {id:92,name:"英龙之气(曹操)",powerful:180,type:SkillType.HERT,subType:[SkillSubType.HERT_MINUS,SkillSubType.BOUNCE],bounce:0.5,hert:0,probability:30,explanation:"将受到的一部分伤害反射给对方，自身承受的伤害减少为0。"},
 {id:93,name:"仁龙之气(刘备)",powerful:180,type:SkillType.HERT,subType:[SkillSubType.HERT_MINUS,SkillSubType.HEAL],hert:0,probability:30,explanation:"将受到的伤害减少为0，且治愈所有伤兵。"},
 {id:94,name:"贤龙之气(孙权)",powerful:180,type:SkillType.HERT,subType:[SkillSubType.HERT_MINUS,SkillSubType.SELF_AID],hert:0,aids:[1,3,5,7,9],aidCount:1,aidRects:[{x:0,y:0}],probability:30,explanation:"将受到的伤害减少为0，并为自己提高一种能力。"},
+{id:95,name:"经商",powerful:0,type:SkillType.NULL,subType:[SkillSubType.INCOME],income:"money",probability:100,explanation:"大幅增加城池金钱收入。"},
+{id:96,name:"生产",powerful:0,type:SkillType.NULL,subType:[SkillSubType.INCOME],income:"food",probability:100,explanation:"大幅增加城池粮食收入。"},
+{id:97,name:"祭祀",powerful:0,type:SkillType.NULL,subType:[SkillSubType.SACRIFICE],probability:100,explanation:"所在城池不会发生灾害。"},
 ];

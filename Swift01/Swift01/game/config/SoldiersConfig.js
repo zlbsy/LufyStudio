@@ -375,7 +375,7 @@ var SoldierDatas = [
 	rangeAttackTarget:[{x:0,y:0}],
 	strategy:[],
 	sign:"zbb",
-	next:[{id:5,lv:20}]
+	newcount:1
 	},
 	{id:26,name:"重骑兵",type:SoldierType.Physical,attackType:AttackType.NEAR,moveType:MoveType.CAVALRY,movePower:6,
 	property:{attack:"S",spirit:"B",defense:"A",breakout:"B",morale:"B",troops:5,strategy:1},
@@ -388,7 +388,7 @@ var SoldierDatas = [
 	rangeAttackTarget:[{x:0,y:0}],
 	strategy:[],
 	sign:"zqb",
-	next:[{id:7,lv:20}]
+	newcount:1
 	},
 	{id:27,name:"驽兵",type:SoldierType.Physical,attackType:AttackType.FAR,moveType:MoveType.INFANTRY,movePower:4,
 	property:{attack:"A",spirit:"B",defense:"B",breakout:"B",morale:"S",troops:4,strategy:1},
@@ -399,7 +399,7 @@ var SoldierDatas = [
 	rangeAttackTarget:[{x:0,y:0}],
 	strategy:[],
 	sign:"nub",
-	next:[{id:7,lv:20}]
+	newcount:1
 	},
 	{id:28,name:"驽骑兵",type:SoldierType.Physical,attackType:AttackType.FAR,moveType:MoveType.CAVALRY,movePower:6,
 	property:{attack:"S",spirit:"B",defense:"B",breakout:"B",morale:"A",troops:5,strategy:1},
@@ -412,7 +412,7 @@ var SoldierDatas = [
 	rangeAttackTarget:[{x:0,y:0}],
 	strategy:[],
 	sign:"nqb",
-	next:[{id:7,lv:20}]
+	newcount:1
 	},
 	{id:29,name:"重炮车",type:SoldierType.Physical,attackType:AttackType.FAR,moveType:MoveType.CAR,movePower:3,
 	property:{attack:"S",spirit:"B",defense:"A",breakout:"C",morale:"A",troops:4,strategy:1},
@@ -428,7 +428,7 @@ var SoldierDatas = [
 	rangeAttackTarget:[{x:0,y:0}],
 	strategy:[],
 	sign:"zpc",
-	next:[{id:7,lv:20}]
+	newcount:1
 	},
 	{id:30,name:"拳士",type:SoldierType.Physical,attackType:AttackType.NEAR,moveType:MoveType.INFANTRY,movePower:5,
 	property:{attack:"A",spirit:"C",defense:"A",breakout:"S",morale:"B",troops:4,strategy:1},
@@ -441,7 +441,7 @@ var SoldierDatas = [
 	rangeAttackTarget:[{x:0,y:0}],
 	strategy:[{id:47,lv:10}],
 	sign:"qs",
-	next:[{id:7,lv:20}]
+	newcount:1
 	},
 	{id:31,name:"义贼",type:SoldierType.Physical,attackType:AttackType.NEAR,moveType:MoveType.INFANTRY,movePower:5,
 	property:{attack:"S",spirit:"C",defense:"B",breakout:"B",morale:"S",troops:5,strategy:1},
@@ -455,7 +455,7 @@ var SoldierDatas = [
 	rangeAttackTarget:[{x:0,y:0}],
 	strategy:[{id:4,lv:15},{id:36,lv:10}],
 	sign:"yz",
-	next:[{id:7,lv:20}]
+	newcount:1
 	},
 	{id:32,name:"参谋",type:SoldierType.Magic,attackType:AttackType.MAGIC,moveType:MoveType.INFANTRY,movePower:4,
 	property:{attack:"B",spirit:"S",defense:"B",breakout:"B",morale:"B",troops:5,strategy:2},
@@ -469,7 +469,7 @@ var SoldierDatas = [
 	rangeAttackTarget:[{x:0,y:0}],
 	strategy:[{id:33,lv:0},{id:34,lv:0},{id:35,lv:5},{id:36,lv:10},{id:37,lv:15},{id:38,lv:20},{id:39,lv:25},{id:40,lv:30},{id:41,lv:5},{id:42,lv:20},{id:48,lv:20}],
 	sign:"cm",
-	next:[{id:7,lv:20}]
+	newcount:1
 	},
 	{id:33,name:"方术士",type:SoldierType.Magic,attackType:AttackType.MAGIC,moveType:MoveType.INFANTRY,movePower:4,
 	property:{attack:"C",spirit:"S",defense:"C",breakout:"A",morale:"A",troops:3,strategy:2},
@@ -483,7 +483,7 @@ var SoldierDatas = [
 	strategy:[{id:1,lv:5},{id:3,lv:10},{id:5,lv:15},{id:7,lv:20},{id:9,lv:25},{id:11,lv:30},{id:13,lv:35},{id:15,lv:40},{id:17,lv:45},{id:19,lv:50},{id:31,lv:10},{id:32,lv:50},
 	{id:41,lv:0},{id:42,lv:0},{id:43,lv:10},{id:44,lv:10},{id:45,lv:20},{id:46,lv:20}],
 	sign:"fss",
-	next:[{id:7,lv:20}]
+	newcount:1
 	},
 	{id:34,name:"幻术士",type:SoldierType.Magic,attackType:AttackType.MAGIC,moveType:MoveType.INFANTRY,movePower:4,
 	property:{attack:"C",spirit:"S",defense:"B",breakout:"A",morale:"B",troops:3,strategy:2},
@@ -499,7 +499,7 @@ var SoldierDatas = [
 	{id:21,lv:30},{id:22,lv:10},{id:23,lv:0},{id:24,lv:20},{id:26,lv:50},{id:27,lv:40},{id:28,lv:35},{id:29,lv:45},
 	{id:41,lv:5}],
 	sign:"hss",
-	next:[{id:7,lv:20}]
+	newcount:1
 	},
 	{id:35,name:"骑马参谋",type:SoldierType.Magic,attackType:AttackType.MAGIC,moveType:MoveType.CAVALRY,movePower:6,
 	property:{attack:"A",spirit:"S",defense:"B",breakout:"B",morale:"C",troops:5,strategy:2},
@@ -513,7 +513,7 @@ var SoldierDatas = [
 	rangeAttackTarget:[{x:0,y:0}],
 	strategy:[{id:4,lv:20},{id:6,lv:30},{id:10,lv:40},{id:33,lv:0},{id:34,lv:5},{id:35,lv:10},{id:36,lv:15},{id:38,lv:25},{id:40,lv:35},{id:41,lv:5},{id:42,lv:20}],
 	sign:"qmcm",
-	next:[{id:7,lv:20}]
+	newcount:1
 	},
 	{id:36,name:"女将",type:SoldierType.Physical,attackType:AttackType.NEAR,moveType:MoveType.INFANTRY,movePower:5,
 	property:{attack:"A",spirit:"B",defense:"B",breakout:"S",morale:"B",troops:3,strategy:1},
@@ -527,7 +527,7 @@ var SoldierDatas = [
 	strategy:[{id:47,lv:10},{id:49,lv:20}],
 	strategySkill:31,
 	sign:"nvj",
-	next:[{id:7,lv:20}]
+	newcount:1
 	},
 	{id:37,name:"丹阳兵",type:SoldierType.Physical,attackType:AttackType.NEAR,moveType:MoveType.INFANTRY,movePower:5,
 	property:{attack:"A",spirit:"B",defense:"B",breakout:"S",morale:"B",troops:3,strategy:1},
@@ -541,7 +541,8 @@ var SoldierDatas = [
 	strategy:[{id:47,lv:10},{id:49,lv:20}],
 	strategySkill:31,
 	sign:"dyb",
-	next:[{id:7,lv:20}]
+	skill:85,//奋战
+	newcount:1
 	},
 	{id:38,name:"白耳兵",type:SoldierType.Physical,attackType:AttackType.NEAR,moveType:MoveType.INFANTRY,movePower:5,
 	property:{attack:"A",spirit:"B",defense:"B",breakout:"S",morale:"B",troops:3,strategy:1},
@@ -555,7 +556,8 @@ var SoldierDatas = [
 	strategy:[{id:47,lv:10},{id:49,lv:20}],
 	strategySkill:31,
 	sign:"ber",
-	next:[{id:7,lv:20}]
+	skill:74,//白耳
+	newcount:1
 	},
 	{id:39,name:"无当飞军",type:SoldierType.Physical,attackType:AttackType.NEAR,moveType:MoveType.INFANTRY,movePower:5,
 	property:{attack:"A",spirit:"B",defense:"B",breakout:"S",morale:"B",troops:3,strategy:1},
@@ -569,7 +571,8 @@ var SoldierDatas = [
 	strategy:[{id:47,lv:10},{id:49,lv:20}],
 	strategySkill:31,
 	sign:"wdfj",
-	next:[{id:7,lv:20}]
+	skill:42,//逆击
+	newcount:1
 	},
 	{id:40,name:"虎豹骑",type:SoldierType.Physical,attackType:AttackType.NEAR,moveType:MoveType.INFANTRY,movePower:5,
 	property:{attack:"A",spirit:"B",defense:"B",breakout:"S",morale:"B",troops:3,strategy:1},
@@ -583,7 +586,8 @@ var SoldierDatas = [
 	strategy:[{id:47,lv:10},{id:49,lv:20}],
 	strategySkill:31,
 	sign:"hbq",
-	next:[{id:7,lv:20}]
+	skill:44,//冲锋
+	newcount:1
 	},
 	{id:41,name:"虎卫军",type:SoldierType.Physical,attackType:AttackType.NEAR,moveType:MoveType.INFANTRY,movePower:5,
 	property:{attack:"A",spirit:"B",defense:"B",breakout:"S",morale:"B",troops:3,strategy:1},
@@ -597,7 +601,8 @@ var SoldierDatas = [
 	strategy:[{id:47,lv:10},{id:49,lv:20}],
 	strategySkill:31,
 	sign:"hwj",
-	next:[{id:7,lv:20}]
+	skill:21,//反弹
+	newcount:1
 	},
 	{id:42,name:"解烦兵",type:SoldierType.Physical,attackType:AttackType.NEAR,moveType:MoveType.INFANTRY,movePower:5,
 	property:{attack:"A",spirit:"B",defense:"B",breakout:"S",morale:"B",troops:3,strategy:1},
@@ -611,7 +616,8 @@ var SoldierDatas = [
 	strategy:[{id:47,lv:10},{id:49,lv:20}],
 	strategySkill:31,
 	sign:"jfb",
-	next:[{id:7,lv:20}]
+	skill:32,//劫营
+	newcount:1
 	},
 	{id:43,name:"白马义从",type:SoldierType.Physical,attackType:AttackType.NEAR,moveType:MoveType.INFANTRY,movePower:5,
 	property:{attack:"A",spirit:"B",defense:"B",breakout:"S",morale:"B",troops:3,strategy:1},
@@ -625,7 +631,8 @@ var SoldierDatas = [
 	strategy:[{id:47,lv:10},{id:49,lv:20}],
 	strategySkill:31,
 	sign:"bmyc",
-	next:[{id:7,lv:20}]
+	skill:91,//移动攻击
+	newcount:1
 	},
 	{id:44,name:"飞熊军",type:SoldierType.Physical,attackType:AttackType.NEAR,moveType:MoveType.INFANTRY,movePower:5,
 	property:{attack:"A",spirit:"B",defense:"B",breakout:"S",morale:"B",troops:3,strategy:1},
@@ -639,7 +646,8 @@ var SoldierDatas = [
 	strategy:[{id:47,lv:10},{id:49,lv:20}],
 	strategySkill:31,
 	sign:"fxj",
-	next:[{id:7,lv:20}]
+	skill:86,//卧薪尝胆
+	newcount:1
 	},
 	{id:45,name:"陷阵营",type:SoldierType.Physical,attackType:AttackType.NEAR,moveType:MoveType.INFANTRY,movePower:5,
 	property:{attack:"A",spirit:"B",defense:"B",breakout:"S",morale:"B",troops:3,strategy:1},
@@ -653,7 +661,8 @@ var SoldierDatas = [
 	strategy:[{id:47,lv:10},{id:49,lv:20}],
 	strategySkill:31,
 	sign:"xzy",
-	next:[{id:7,lv:20}]
+	skill:39,//陷阵营
+	newcount:1
 	},
 	{id:46,name:"仙人",type:SoldierType.Physical,attackType:AttackType.NEAR,moveType:MoveType.INFANTRY,movePower:5,
 	property:{attack:"A",spirit:"B",defense:"B",breakout:"S",morale:"B",troops:3,strategy:1},
@@ -667,7 +676,8 @@ var SoldierDatas = [
 	strategy:[{id:47,lv:10},{id:49,lv:20}],
 	strategySkill:31,
 	sign:"xr",
-	next:[{id:7,lv:20}]
+	skill:11,//神算
+	newcount:1
 	},
 ];
 for(var i=0,l=SoldierDatas.length;i<l;i++){

@@ -744,7 +744,9 @@ function SeigniorExecuteChangeCityResources(area){
 	if(HarvestMonths.Money.indexOf(LMvc.chapterData.month) >= 0){
 		var addMoney = 600 + 3500*area.business()/maxBusiness;
 		addMoney *= (1 + population * 0.3 / maxPopulation);
-		//console.log(area.name(), addMoney);
+		if(area.canIncome("money")){
+			addMoney *= 1.2;
+		}
 		area.money(addMoney >>> 0);
 	}
 	//粮食
@@ -754,6 +756,9 @@ function SeigniorExecuteChangeCityResources(area){
 		addFood *= (1 + population * 0.3 / maxPopulation);
 		if(area.isPlagueOfLocusts()){
 			addFood *= (1 - 0.05 * area.plagueOfLocusts());
+		}
+		if(area.canIncome("food")){
+			addFood *= 1.2;
 		}
 		area.food(addFood >>> 0);
 	}
@@ -1178,11 +1183,11 @@ function tournamentsGet(result){
 }
 function disasterMonthsExecute(area){
 	if(area.isFlood()){
-		area.flood(area.flood() - 1);
+		area.flood(area.flood() - (area.canSacrifice() ? 2 : 1));
 		if(area.flood()<=0){
 			area.isFlood(0);
 		}
-	}else{
+	}else if(!area.canSacrifice()){
 		if(Math.fakeRandom() < 0.1){
 			area.flood(area.flood() + 1);
 		}
@@ -1204,11 +1209,11 @@ function disasterMonthsExecute(area){
 		}
 	}
 	if(area.isPlagueOfLocusts()){
-		area.plagueOfLocusts(area.plagueOfLocusts() - 1);
+		area.plagueOfLocusts(area.plagueOfLocusts() - (area.canSacrifice() ? 2 : 1));
 		if(area.plagueOfLocusts()<=0){
 			area.isPlagueOfLocusts(0);
 		}
-	}else{
+	}else if(!area.canSacrifice()){
 		if(Math.fakeRandom() < 0.1){
 			area.plagueOfLocusts(area.plagueOfLocusts() + 1);
 		}

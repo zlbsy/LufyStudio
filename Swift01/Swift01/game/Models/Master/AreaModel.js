@@ -710,6 +710,27 @@ AreaModel.prototype.generalsData=function(){
 	}
 	return list;
 };
+AreaModel.prototype.canIncome=function(value){
+	var self = this;
+	for(var i=0,l=self.data.generals.length;i<l;i++){
+		var chara = self.data.generals[i];
+		var skill = chara.skill();
+		if(skill.isSubType(SkillSubType.INCOME) && skill.income() == value){
+			return true;
+		}
+	}
+	return false;
+};
+AreaModel.prototype.canSacrifice=function(){
+	var self = this;
+	for(var i=0,l=self.data.generals.length;i<l;i++){
+		var chara = self.data.generals[i];
+		if(chara.hasSkill(SkillSubType.SACRIFICE)){
+			return true;
+		}
+	}
+	return false;
+};
 AreaModel.prototype.generals=function(job){
 	var self = this;
 	if(job){
