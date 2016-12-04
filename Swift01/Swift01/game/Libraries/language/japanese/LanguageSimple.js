@@ -72,4 +72,5 @@ Language.dataSimple = {
 	"chapter_12":"時空乱流",
 	"chapter_group":"複数シナリオ購入",
 	"new_script":"シナリオ({0})",
+	"soldier_special":"スペシャル部隊(全部)",
 };

@@ -17,7 +17,14 @@ CharacterModel.list = [];
 CharacterModel.commonAngryTalks = ["angry_talk_0_0","angry_talk_0_1","angry_talk_0_2"];
 CharacterModel.commonDieTalks = ["die_talk_0_0","die_talk_0_1","die_talk_0_2"];
 CharacterModel.commonUnderArrestTalks = ["under_arrest_talk_0_0", "under_arrest_talk_0_1", "under_arrest_talk_0_2"];
-CharacterModel.upValue = function(type, value) {
+CharacterModel.newcountUpValue = function(value, standard, newcount) {
+	if(value < standard){
+		return 0;
+	}
+	var newcountValue = 0.02;
+	return newcount ? (value - standard)*newcountValue : 0;
+};
+CharacterModel.upValue = function(type, value, newcount) {
 	if (type == "S") {
 		if (value < 50) {
 			return 1;
@@ -26,7 +33,7 @@ CharacterModel.upValue = function(type, value) {
 		} else if (value < 90) {
 			return 3;
 		}else{
-			return 4;
+			return 4 + CharacterModel.newcountUpValue(value, 90, newcount);
 		}
 	} else if (type == "A") {
 		if (value < 50) {
@@ -34,16 +41,16 @@ CharacterModel.upValue = function(type, value) {
 		} else if (value < 70) {
 			return 2;
 		} else {
-			return 3;
+			return 3 + CharacterModel.newcountUpValue(value, 70, newcount);
 		}
 	} else if (type == "B") {
 		if (value < 50) {
 			return 1;
 		} else {
-			return value >= 90 ? 3 : 2;
+			return value >= 90 ? 3 + CharacterModel.newcountUpValue(value, 90, newcount) : 2 + CharacterModel.newcountUpValue(value, 50, newcount);
 		}
 	} else if (type == "C") {
-		return value >= 70 ? 2 : 1;
+		return value >= 70 ? 2 + CharacterModel.newcountUpValue(value, 70, newcount) : 1 + CharacterModel.newcountUpValue(value, 30, newcount);
 	}
 	return 0;
 };
@@ -149,7 +156,7 @@ CharacterModel.prototype.datas=function(){
 		isDefCharacter:self.isDefCharacter(),
 		job:self.getJobData(),//根据任务内容变化
 		loyalty:self.loyalty(),//忠诚度
-		soldiers:self.data.soldiers,//所有兵种熟练度
+		soldiers:self.soldiersData(),//所有兵种熟练度
 		isPrized:self.isPrized(),
 		stopIn:self.stopIn(),
 		reputation:self.data.reputation,
@@ -1128,6 +1135,16 @@ CharacterModel.prototype.angryTalk = function() {
 	list = (self.data.angryTalks && self.data.angryTalks.length) ? self.data.angryTalks : CharacterModel.commonAngryTalks;
 	index = Math.random()*list.length >>> 0;
 	return Language.getAngryTalk(list[index]);
+};
+CharacterModel.prototype.soldiersData = function() {
+	var self = this;
+	var models = self.soldiers();
+	var datas = [];
+	for(var i=0,l=models.length;i<l;i++){
+		var model = models[i];
+		datas.push(model.data);
+	}
+	return datas;
 };
 CharacterModel.prototype.soldiers = function() {
 	var self = this;

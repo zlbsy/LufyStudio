@@ -129,9 +129,9 @@ AreaModel.prototype.employSoldiers = function(){
 		soldierIds = self.data.employSoldiers.concat();
 	}
 	while(soldierIds.length < 4){
-		var soldier = SoldierMasterModel.master[SoldierMasterModel.master.length * Math.fakeRandom() >>> 0];
-		if(soldierIds.indexOf(soldier.id()) < 0){
-			soldierIds.push(soldier.id());
+		var soldierId = employCommonSoldiersConfig[employCommonSoldiersConfig.length * Math.fakeRandom() >>> 0];
+		if(soldierIds.indexOf(soldierId) < 0){
+			soldierIds.push(soldierId);
 		}
 	}
 	return soldierIds;

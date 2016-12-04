@@ -72,4 +72,5 @@ Language.dataSimple = {
 	"chapter_12":"时空错乱",
 	"chapter_group":"购买多个剧本",
 	"new_script":"新剧本({0})",
+	"soldier_special":"特殊兵种(全部)",
 };

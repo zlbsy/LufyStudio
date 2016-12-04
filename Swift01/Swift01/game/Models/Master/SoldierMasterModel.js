@@ -29,6 +29,9 @@ SoldierMasterModel.getMaster=function(id){
 SoldierMasterModel.prototype.id = function() {
 	return this.data.id;
 };
+SoldierMasterModel.prototype.isSpecialSoldiers = function() {
+	return specialSoldiersConfig.indexOf(this.data.id) >= 0;
+};
 SoldierMasterModel.prototype.name = function() {
 	return Language.getSoldier("name_" + this.data.sign);
 };
@@ -116,6 +119,9 @@ SoldierMasterModel.prototype.next = function() {
 };
 SoldierMasterModel.prototype.img=function(){
 	return this.data.img;
+};
+SoldierMasterModel.prototype.maxProficiency=function(){
+	return this.data.maxProficiency;
 };
 SoldierMasterModel.prototype.strategySkill = function() {
 	var strategyId = this.data.strategySkill;

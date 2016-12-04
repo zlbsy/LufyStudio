@@ -46,11 +46,38 @@ SoldiersChildView.prototype.getName=function(){
 	}
 	return self.lblName;
 };
+SoldiersChildView.prototype.setLvUpButton=function(){
+	var self = this;
+	if(!self.soldierModel.next()){
+		if(self.btnLvUp){
+			self.btnLvUp.remove();
+		}
+		return;
+	}
+	if(!self.btnLvUp){
+		var img = self.soldierModel.proficiency() >= self.soldierModel.maxProficiency() ? "win01" : "win07";
+		var btnLvUp = getPanel(img,60, 40);
+		btnLvUp.img = img;
+		var textLabel = getStrokeLabel(Language.get("进阶"),18,"#FFFFFF","#000000",3);
+		textLabel.x = (60 - textLabel.getWidth()) * 0.5;
+		textLabel.y = (40 - textLabel.getHeight()) * 0.5;
+		btnLvUp.addChild(textLabel);
+		//var btnLvUp = getSizeButton(Language.get("进阶"),60, 40);
+		btnLvUp.x = self.lblName.x + 250;
+		btnLvUp.y = self.lblName.y;
+		self.layer.addChild(btnLvUp);
+		self.btnLvUp = btnLvUp;
+	}else{
+		if(self.soldierModel.proficiency() >= self.soldierModel.maxProficiency() && self.btnLvUp.img == "win07"){
+			
+		}
+	}
+};
 SoldiersChildView.prototype.getLevel=function(){
 	var self = this;
 	if(!self.lblLevel){
 		var lblLevel = getStrokeLabel("", 23, "#FFFFFF", "#000000", 3);
-		lblLevel.x = self.lblName.x + 120;
+		lblLevel.x = self.lblName.x + 110;
 		lblLevel.y = self.lblName.y;
 		self.layer.addChild(lblLevel);
 		self.lblLevel = lblLevel;
@@ -61,7 +88,7 @@ SoldiersChildView.prototype.getCurrent=function(){
 	var self = this;
 	if(!self.lblCurrent){
 		var lblCurrent = getStrokeLabel("",23,"#FFFFFF","#000000",3);
-		lblCurrent.x = self.lblLevel.x + 200;
+		lblCurrent.x = self.lblLevel.x + 210;
 		lblCurrent.y = 10;
 		self.layer.addChild(lblCurrent);
 		self.lblCurrent = lblCurrent;
@@ -70,16 +97,32 @@ SoldiersChildView.prototype.getCurrent=function(){
 };
 SoldiersChildView.prototype.getCheckBox=function(){
 	var self = this;
+	if(self.lockIcon){
+		self.lockIcon.remove();
+		self.lockIcon = null;
+	}
 	if(!self.checkbox){
 		var bitmap = new LBitmap(new LBitmapData(LMvc.datalist["checkbox-background"]));
 		var bitmapSelect = new LBitmap(new LBitmapData(LMvc.datalist["checkbox-on"]));
 		var check = new LCheckBox(bitmap, bitmapSelect);
-		check.x = self.lblLevel.x + 200;
+		check.x = self.lblLevel.x + 210;
 		check.y = 10;
 		self.layer.addChild(check);
 		self.checkbox = check;
 	}
 	return self.checkbox;
+};
+SoldiersChildView.prototype.setLockIcon=function(){
+	var self = this;
+	if(self.lockIcon){
+		return;
+	}
+	var lockIcon = new LBitmap(new LBitmapData(LMvc.datalist["lock"]));
+	lockIcon.scaleX = lockIcon.scaleY = 30 / lockIcon.getWidth();
+	lockIcon.x = self.lblLevel.x + 200;
+	lockIcon.y = 10;
+	self.layer.addChild(lockIcon);
+	self.lockIcon = lockIcon;
 };
 SoldiersChildView.prototype.set=function(){
 	var self = this;
@@ -93,8 +136,18 @@ SoldiersChildView.prototype.set=function(){
 		var lblCurrent = self.getCurrent();
 		lblCurrent.text = self.soldierModel.id() == self.characterModel.currentSoldierId() ? Language.get("current") : "";
 	}else{
-		var check = self.getCheckBox();
-		check.setChecked(self.soldierModel.id() == self.characterModel.currentSoldierId());
+		self.setLvUpButton();
+		if(self.soldierModel.isSpecialSoldiers()){
+			if(purchaseHasBuy(productIdConfig.soldier_special)){
+				var check = self.getCheckBox();
+				check.setChecked(self.soldierModel.id() == self.characterModel.currentSoldierId());
+			}else{
+				self.setLockIcon();
+			}
+		}else{
+			var check = self.getCheckBox();
+			check.setChecked(self.soldierModel.id() == self.characterModel.currentSoldierId());
+		}
 	}
 	var iconImg = self.soldierModel.img();
 	if(!self.iconImg || iconImg != self.iconImg){
@@ -135,13 +188,36 @@ SoldiersChildView.prototype.toSelected=function(listView){
 	self.cacheAsBitmap(false);
 	self.updateView();
 };
+SoldiersChildView.prototype.toPurchase = function(listView) {
+	var self = this;
+	var name =Language.get("soldier_special");
+	purchaseConfirm(productIdConfig.soldier_special, name, function(productId){
+		var items = listView.getItems();
+		for(var i=0,l=items.length;i<l;i++){
+			var item = items[i];
+			if(!item.lockIcon){
+				continue;
+			}
+			item.cacheAsBitmap(false);
+			item.updateView();
+		}
+	});
+};
 SoldiersChildView.prototype.onClick = function(event) {
 	var self = event.target;
 	var listView = event.currentTarget;
 	var canSelect = (!LMvc.BattleController && self.characterModel.seigniorId() == LMvc.selectSeignorId);
-	if(canSelect && event.offsetX > self.checkbox.x - 10){
-		self.toSelected(listView);
-		return;
+	if(canSelect){
+		if(self.checkbox && event.offsetX > self.checkbox.x - 10){
+			self.toSelected(listView);
+			return;
+		}else if(self.lockIcon && event.offsetX > self.lockIcon.x - 10){
+			self.toPurchase(listView);
+			return;
+		}else if(self.btnLvUp && event.offsetX > self.btnLvUp.x - 10){
+			console.log("进阶");
+			return;
+		}
 	}
 	var soldiersView = listView.getParentByConstructor(SoldiersView);
 	var soldierDetailed = new SoldierDetailedView(soldiersView.controller,self.soldierModel);

@@ -26,23 +26,32 @@ SoldierModel.prototype.readyQuantity = function(value) {
 	}
 	return this.data.readyQuantity;
 };
+SoldierModel.prototype.isSpecialSoldiers = function() {
+	return this.master().isSpecialSoldiers();
+};
 SoldierModel.prototype.strategyHert = function() {
 	return this.master().strategyHert();
 };
 SoldierModel.prototype.quantity = function(value) {
 	return this.data.quantity;
 };
+SoldierModel.prototype.maxProficiency = function() {
+	return this.master().maxProficiency();
+};
 SoldierModel.prototype.proficiency = function(value) {
-	if(typeof value != UNDEFINED && value > 1000){
+	var self = this;
+	var maxProficiency = self.maxProficiency();
+	return self._dataValue("proficiency",value,0,0,maxProficiency);
+	/*if(typeof value != UNDEFINED && value > 1000){
 		value = 1000;
 	}
-	var result = this._dataValue("proficiency",value,0);
+	var result = self._dataValue("proficiency",value,0,0,maxProficiency);
 	if(typeof value == UNDEFINED){
 		if(result > 1000){
 			return 1000;
 		}
 	}
-	return result;
+	return result;*/
 };
 SoldierModel.prototype.name = function() {
 	return this.master().name();
