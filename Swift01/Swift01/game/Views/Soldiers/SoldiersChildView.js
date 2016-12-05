@@ -55,21 +55,25 @@ SoldiersChildView.prototype.setLvUpButton=function(){
 		return;
 	}
 	if(!self.btnLvUp){
-		var img = self.soldierModel.proficiency() >= self.soldierModel.maxProficiency() ? "win01" : "win07";
+		var canLvUp = self.soldierModel.proficiency() >= self.soldierModel.maxProficiency();
+		var img = canLvUp ? "win01" : "win07";
 		var btnLvUp = getPanel(img,60, 40);
 		btnLvUp.img = img;
-		var textLabel = getStrokeLabel(Language.get("进阶"),18,"#FFFFFF","#000000",3);
+		var textLabel = getStrokeLabel(Language.get("levelUp"),18,canLvUp ? "#FFFFFF" : "#666666","#000000",3);
 		textLabel.x = (60 - textLabel.getWidth()) * 0.5;
 		textLabel.y = (40 - textLabel.getHeight()) * 0.5;
 		btnLvUp.addChild(textLabel);
-		//var btnLvUp = getSizeButton(Language.get("进阶"),60, 40);
 		btnLvUp.x = self.lblName.x + 250;
 		btnLvUp.y = self.lblName.y;
 		self.layer.addChild(btnLvUp);
 		self.btnLvUp = btnLvUp;
 	}else{
 		if(self.soldierModel.proficiency() >= self.soldierModel.maxProficiency() && self.btnLvUp.img == "win07"){
-			
+			var data = GameCacher.getPanelBitmapData("win01",60, 40);
+			self.btnLvUp.removeChildAt(0);
+			self.btnLvUp.addChildAt(new LBitmap(data), 0);
+			self.btnLvUp.img = "win01";
+			self.btnLvUp.getChildAt(1).color = "#FFFFFF";
 		}
 	}
 };

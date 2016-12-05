@@ -69,7 +69,7 @@ var SoldierDatas = [
 	rangeAttackTarget:[{x:0,y:0}],
 	strategy:[],
 	sign:"qbb",
-	maxProficiency:1000,
+	maxProficiency:900,
 	next:26
 	},
 	{id:3,name:"骑兵",type:SoldierType.Physical,attackType:AttackType.NEAR,moveType:MoveType.CAVALRY,movePower:6,
