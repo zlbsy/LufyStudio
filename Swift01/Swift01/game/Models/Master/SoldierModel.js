@@ -30,6 +30,9 @@ SoldierModel.prototype.readyQuantity = function(value) {
 SoldierModel.prototype.isSpecialSoldiers = function() {
 	return this.master().isSpecialSoldiers();
 };
+SoldierModel.prototype.newcount = function() {
+	return this.master().newcount();
+};
 SoldierModel.prototype.strategyHert = function() {
 	return this.master().strategyHert();
 };

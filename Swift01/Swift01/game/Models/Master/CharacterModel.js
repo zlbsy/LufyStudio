@@ -396,11 +396,11 @@ CharacterModel.prototype.calculation = function(init) {
 	*************/
 	var lv = self.seigniorLevel();
 	self.basicPropertiesCalculation();
-	self.data.attack = self.force() * 0.5 + CharacterModel.upValue(property.attack, self.force()) * lv;
-	self.data.spirit = self.intelligence() * 0.5 + CharacterModel.upValue(property.spirit, self.intelligence()) * lv;
-	self.data.defense = self.command() * 0.5 + CharacterModel.upValue(property.defense, self.command()) * lv;
-	self.data.breakout = self.agility() * 0.5 + CharacterModel.upValue(property.breakout, self.agility()) * lv;
-	self.data.morale = self.luck() * 0.5 + CharacterModel.upValue(property.morale, self.luck()) * lv;
+	self.data.attack = self.force() * 0.5 + CharacterModel.upValue(property.attack, self.force(), currentSoldiers.newcount()) * lv;
+	self.data.spirit = self.intelligence() * 0.5 + CharacterModel.upValue(property.spirit, self.intelligence(), currentSoldiers.newcount()) * lv;
+	self.data.defense = self.command() * 0.5 + CharacterModel.upValue(property.defense, self.command(), currentSoldiers.newcount()) * lv;
+	self.data.breakout = self.agility() * 0.5 + CharacterModel.upValue(property.breakout, self.agility(), currentSoldiers.newcount()) * lv;
+	self.data.morale = self.luck() * 0.5 + CharacterModel.upValue(property.morale, self.luck(), currentSoldiers.newcount()) * lv;
 	
 	//self.data.maxTroops = self.initTroops() + property.troops * self.lv();
 	//self.data.maxStrategy = self.initStrategy() + property.strategy * self.lv();
@@ -1118,6 +1118,10 @@ CharacterModel.prototype.currentSoldiers = function(id) {
 		self.data._currentSoldiers = soldiers.find(function(child){
 			return child.id() == currentSoldierId;
 		});
+	}
+	if(!self.data._currentSoldiers){
+		self.data.currentSoldierId = null;
+		return self.currentSoldiers();
 	}
 	return self.data._currentSoldiers;
 };

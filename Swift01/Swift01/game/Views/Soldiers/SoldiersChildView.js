@@ -231,7 +231,8 @@ SoldiersChildView.prototype.onClick = function(event) {
 				obj.okEvent = function(e) {
 					e.currentTarget.parent.remove();
 					var nextSoldiersData = {id:nextSoldiers.id(),proficiency:self.soldierModel.maxProficiency(), img:self.soldierModel.img()};
-					self.soldierModel = new SoldierModel(null, nextSoldiersData);
+					self.soldierModel.data = nextSoldiersData;
+					self.soldierModel._master = null;
 					self.cacheAsBitmap(false);
 					self.updateView();
 				};

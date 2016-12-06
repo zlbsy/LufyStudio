@@ -32,6 +32,9 @@ SoldierMasterModel.prototype.id = function() {
 SoldierMasterModel.prototype.isSpecialSoldiers = function() {
 	return specialSoldiersConfig.indexOf(this.data.id) >= 0;
 };
+SoldierMasterModel.prototype.newcount = function() {
+	return this.data.newcount;
+};
 SoldierMasterModel.prototype.name = function() {
 	return Language.getSoldier("name_" + this.data.sign);
 };

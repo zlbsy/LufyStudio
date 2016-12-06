@@ -753,6 +753,7 @@ Language.soldierData = {
 	"name_fdb":"飞刀兵",
 	"name_ymr":"野蛮人",
 	"name_qzb":"青州兵",
+	"name_jw":"君王",
 	"name_zbb":"重步兵",
 	"name_nub":"驽兵",
 	"name_zqb":"重骑兵",
@@ -765,6 +766,10 @@ Language.soldierData = {
 	"name_hss":"幻术士",
 	"name_qmcm":"骑马参谋",
 	"name_nvj":"女将",
+	"name_dhd":"大海盗",
+	"name_ddd":"大都督",
+	"name_kzss":"狂咒术士",
+	"name_xltq":"西凉铁骑",
 	"name_dyb":"丹阳兵",//步
 	"name_ber":"白耳兵",//步
 	"name_wdfj":"无当飞军",//骑

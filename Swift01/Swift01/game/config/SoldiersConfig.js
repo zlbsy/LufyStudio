@@ -392,7 +392,7 @@ var SoldierDatas = [
 	rangeAttack:[{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0}],
 	rangeAttackTarget:[{x:0,y:0}],
 	strategy:[{id:33,lv:5},{id:34,lv:10},{id:42,lv:20}],
-	sign:"jj",
+	sign:"jw",
 	newcount:1
 	},
 	{id:26,name:"重步兵",type:SoldierType.Physical,attackType:AttackType.NEAR,moveType:MoveType.INFANTRY,movePower:4,
@@ -569,7 +569,7 @@ var SoldierDatas = [
 	rangeAttack:[{x:-1,y:-1},{x:-1,y:1},{x:1,y:1},{x:1,y:-1},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0}],
 	rangeAttackTarget:[{x:0,y:0}],
 	strategy:[{id:35,lv:10},{id:39,lv:40}],
-	sign:"hd",
+	sign:"dhd",
 	newcount:1
 	},
 	{id:39,name:"大都督",type:SoldierType.Comprehensive,attackType:AttackType.MAGIC,moveType:MoveType.INFANTRY,movePower:5,
@@ -582,7 +582,7 @@ var SoldierDatas = [
 	rangeAttack:[{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0}],
 	rangeAttackTarget:[{x:0,y:0}],
 	strategy:[{id:33,lv:5},{id:34,lv:10},{id:35,lv:0},{id:36,lv:15},{id:37,lv:25},{id:38,lv:30},{id:39,lv:20},{id:41,lv:5},{id:42,lv:20}],
-	sign:"dd",
+	sign:"ddd",
 	newcount:1
 	},
 	{id:40,name:"狂咒术士",type:SoldierType.Magic,attackType:AttackType.MAGIC,moveType:MoveType.INFANTRY,movePower:5,
@@ -598,7 +598,7 @@ var SoldierDatas = [
 	{id:21,lv:25},{id:22,lv:10},{id:23,lv:15},{id:24,lv:20},{id:31,lv:30},
 	{id:33,lv:0},{id:34,lv:10},{id:35,lv:20},{id:36,lv:30},{id:37,lv:40},
 	{id:41,lv:5},{id:42,lv:0},{id:45,lv:45},{id:46,lv:40}],
-	sign:"zss",
+	sign:"kzss",
 	newcount:1
 	},
 	{id:41,name:"西凉铁骑",type:SoldierType.Physical,attackType:AttackType.NEAR,moveType:MoveType.CAVALRY,movePower:5,
@@ -613,7 +613,7 @@ var SoldierDatas = [
 	rangeAttackTarget:[{x:0,y:0}],
 	strategy:[],
 	strategyHert:1.5,
-	sign:"xlqb",
+	sign:"xltq",
 	newcount:1
 	},
 	{id:42,name:"丹阳兵",type:SoldierType.Physical,attackType:AttackType.FAR,moveType:MoveType.INFANTRY,movePower:4,
