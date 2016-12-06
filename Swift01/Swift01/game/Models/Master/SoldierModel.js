@@ -11,11 +11,12 @@ SoldierModel.prototype.master=function(){
 	}
 	return self._master;
 };
+SoldierModel.prototype.getData = function() {
+	var self = this;
+	return {id:self.id(), proficiency:self.proficiency(), img:self.img()};
+};
 SoldierModel.prototype.id = function() {
 	return this.data.id;
-};
-SoldierModel.prototype.learned = function() {
-	return this.data.learned;
 };
 SoldierModel.prototype.readyQuantity = function(value) {
 	if(typeof value != UNDEFINED){

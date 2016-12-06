@@ -219,7 +219,28 @@ SoldiersChildView.prototype.onClick = function(event) {
 			self.toPurchase(listView);
 			return;
 		}else if(self.btnLvUp && event.offsetX > self.btnLvUp.x - 10){
-			console.log("进阶");
+			var canLvUp = self.soldierModel.proficiency() >= self.soldierModel.maxProficiency();
+			var obj = {
+				title : Language.get("confirm"),
+				width : 340,
+				height : 260
+			};
+			if(canLvUp){
+				var nextSoldiers = SoldierMasterModel.getMaster(self.soldierModel.next());
+				obj.messageHtml = String.format(Language.get("<font size='21' color='#D3D3D3'>将兵种升级为 「<font size='21' color='#FAFAD2'>{0}</font>」 吗？</font>"), nextSoldiers.name());
+				obj.okEvent = function(e) {
+					e.currentTarget.parent.remove();
+					var nextSoldiersData = {id:nextSoldiers.id(),proficiency:self.soldierModel.maxProficiency(), img:self.soldierModel.img()};
+					self.soldierModel = new SoldierModel(null, nextSoldiersData);
+					self.cacheAsBitmap(false);
+					self.updateView();
+				};
+				obj.cancelEvent = null;
+			}else{
+				obj.messageHtml = String.format(Language.get("<font size='21' color='#D3D3D3'>兵种升级需要熟练度达到 「<font size='21' color='#FAFAD2'>{0}</font>」 。</font>"), self.soldierModel.maxProficiency());
+			}
+			var windowLayer = ConfirmWindow(obj);
+			LMvc.layer.addChild(windowLayer);
 			return;
 		}
 	}

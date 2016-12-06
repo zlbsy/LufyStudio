@@ -143,6 +143,9 @@ CharacterModel.getChara=function(chara_id){
 };
 CharacterModel.prototype.datas=function(){
 	var self = this;
+	if(self.id() == 4){
+		console.error(self.soldiersData());
+	}
 	var saveData = {
 		chara_id:self.id(),
 		seignior_id:self.seigniorId(),
@@ -1142,7 +1145,7 @@ CharacterModel.prototype.soldiersData = function() {
 	var datas = [];
 	for(var i=0,l=models.length;i<l;i++){
 		var model = models[i];
-		datas.push(model.data);
+		datas.push(model.getData());
 	}
 	return datas;
 };
