@@ -1084,6 +1084,11 @@ CharacterModel.prototype.maxProficiencySoldier = function() {
 	var proficiency = 0, soldier;
 	for(var i=0,l=soldiers.length;i<l;i++){
 		var child = soldiers[i];
+		if(specialSoldiersConfig.indexOf(child.id()) >= 0 
+			&& self.seigniorId() == LMvc.selectSeignorId
+			&& !purchaseHasBuy(productIdConfig.soldier_special)){
+			continue;
+		}
 		if(i == 0 || proficiency < child.proficiency()){
 			proficiency = child.proficiency();
 			soldier = child;
@@ -1096,6 +1101,13 @@ CharacterModel.prototype.currentSoldierId = function(value) {
 	if(value){
 		self.data.currentSoldierId = value;
 		return;
+	}
+	if(self.data.currentSoldierId){
+		if(specialSoldiersConfig.indexOf(self.data.currentSoldierId) >= 0 
+			&& self.seigniorId() == LMvc.selectSeignorId
+			&& !purchaseHasBuy(productIdConfig.soldier_special)){
+			self.data.currentSoldierId = null;
+		}
 	}
 	if(!self.data.currentSoldierId){
 		var soldier = self.maxProficiencySoldier();
