@@ -375,6 +375,10 @@ CharacterModel.prototype.basicPropertiesCalculation = function() {
 		self.data["_"+key] += self.getReputationPlus(key);
 	}
 };
+CharacterModel.prototype.maxPropertie = function(){
+	var self = this;
+	return Math.max(self.force(), self.intelligence(), self.command(), self.agility(), self.luck());
+};
 CharacterModel.prototype.basicPropertiesSum = function(){
 	var self = this;
 	return self.force() + self.intelligence() + self.command() + self.agility() + self.luck();

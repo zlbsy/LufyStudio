@@ -1,10 +1,11 @@
 function checkEventList() {
 	var eventListFinished = LMvc.chapterData.eventListFinished || [];
-	var tribeSeignior = 0, gameClear = true;
+	var tribeSeignior = 0, gameClear = true, tribeTroops = 0, selectSeigniorTroops = 0, selectSeigniorGeneralsCount = 0;
 	for(var i=0,l=SeigniorModel.list.length;i<l;i++){
 		var seignior = SeigniorModel.list[i];
 		if(seignior.isTribe()){
 			tribeSeignior++;
+			tribeTroops += seignior.troops();
 		}else if(seignior.chara_id() != LMvc.selectSeignorId){
 			gameClear = false;
 			break;
@@ -22,8 +23,17 @@ function checkEventList() {
 			if(!gameClear){
 				continue;
 			}
-			if(currentEvent.condition.tribe.from > tribeSeignior ||  currentEvent.condition.tribe.to < tribeSeignior){
+			if(currentEvent.condition.tribe.indexOf(tribeSeignior) < 0){
 				continue;
+			}
+			if(currentEvent.condition.troopsVsTribe){
+				if(selectSeigniorTroops == 0){
+					selectSeigniorTroops = SeigniorModel.getSeignior(LMvc.selectSeignorId).troops();
+				}
+				if(currentEvent.condition.troopsVsTribe.from * tribeTroops > selectSeigniorTroops || 
+					currentEvent.condition.troopsVsTribe.to * tribeTroops < selectSeigniorTroops){
+					continue;
+				}
 			}
 			if(currentEvent.condition.police){
 				var seignior = SeigniorModel.getSeignior(LMvc.selectSeignorId);
@@ -176,14 +186,14 @@ function checkEventList() {
 			continue;
 		}
 		
-		var feat_generals = currentEvent.condition.feat_generals;
-		if(feat_generals){
-			if(SeigniorModel.list[SeigniorExecute.Instance().seigniorIndex].chara_id() != LMvc.selectSeignorId){
+		var generalsCount = currentEvent.condition.generalsCount;
+		if(generalsCount){
+			if(generalsCount.isSelect && SeigniorModel.list[SeigniorExecute.Instance().seigniorIndex].chara_id() != LMvc.selectSeignorId){
 				continue;
 			}
-			var feat = feat_generals.feat;
-			var force = feat_generals.force;
-			var count = feat_generals.count;
+			var feat = generalsCount.feat;
+			var force = generalsCount.force;
+			var basicPropertiesSum = generalsCount.basicPropertiesSum;
 			var seignior = SeigniorModel.getSeignior(LMvc.selectSeignorId);
 			var charas = seignior.generals();
 			var characters = [];
@@ -192,15 +202,27 @@ function checkEventList() {
 				if(character.id() == LMvc.selectSeignorId){
 					continue;
 				}
-				if(character.feat() >= feat && character.force() >= force){
-					characters.push(character);
+				if(feat && character.feat() < feat){
+					continue;
 				}
+				if(force && character.force() < force){
+					continue;
+				}
+				if(basicPropertiesSum && character.basicPropertiesSum() < basicPropertiesSum){
+					continue;
+				}
+				characters.push(character);
 			}
-			if(characters.length < count){
+			if(generalsCount.from && characters.length < generalsCount.from){
 				continue;
 			}
-			characters = characters.sort(function(a,b){return b.feat() - a.feat();});
-			currentEvent.feat_characters = characters;
+			if(generalsCount.to && characters.length > generalsCount.to){
+				continue;
+			}
+			if(currentEvent.condition.feat_characters){
+				characters = characters.sort(function(a,b){return b.feat() - a.feat();});
+				currentEvent.feat_characters = characters;
+			}
 		}
 		if(!LPlugin.eventIsOpen(currentEvent.id)){
 			LPlugin.openEvent(currentEvent.id);

@@ -391,6 +391,14 @@ SeigniorModel.prototype.generalsCount = function(){
 	});
 	return count;
 };
+SeigniorModel.prototype.troops = function(){
+	var areas = this.data.areas;
+	var count = 0;
+	areas.forEach(function(city){
+		count += city.troops();
+	});
+	return count;
+};
 SeigniorModel.prototype.items = function(){
 	if(!this.data.items){
 		this.data.items = [];

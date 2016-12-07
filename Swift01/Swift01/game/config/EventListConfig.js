@@ -550,7 +550,8 @@ var EventListConfig = [
 		seignior:0,
 		generals:[
 		],
-		feat_generals:{feat:5000,count:5,force:90},
+		feat_characters:1,
+		generalsCount:{feat:5000,from:5,force:90,isSelect:true},
 		citys:[
 		]
 	},
@@ -559,7 +560,7 @@ var EventListConfig = [
 },
 {
 	id:25,
-	name:"结局:蛮族入侵",//蛮族入侵,战乱四起,最终灭亡
+	name:"结局:蛮族入侵,战乱四起,最终灭亡",
 	condition:{
 		seignior:0,
 		generals:[
@@ -567,14 +568,15 @@ var EventListConfig = [
 		citys:[
 		],
 		clear:1,
-		tribe:{from:5, to:10}
+		tribe:[3, 5],
+		troopsVsTribe:{from:0, to:1.5}
 	},
 	script:"Data/Event/{0}/mzrq.txt",
 	result:[{type:"gameClear"}]
 },
 {
 	id:26,
-	name:"结局:远征蛮族",//远征蛮族,平定蛮族,蛮族年年进贡
+	name:"结局:远征蛮族,平定蛮族,蛮族年年进贡",
 	condition:{
 		seignior:0,
 		generals:[
@@ -582,7 +584,9 @@ var EventListConfig = [
 		citys:[
 		],
 		clear:1,
-		tribe:{from:1,to:2}
+		tribe:[2, 4],
+		troopsVsTribe:{from:3, to:1000},
+		generalsCount:{basicPropertiesSum:360, from:20}
 	},
 	script:"Data/Event/{0}/yzmz.txt",
 	result:[{type:"gameClear"}]
@@ -621,7 +625,7 @@ var EventListConfig = [
 },
 {
 	id:29,
-	name:"结局:贤君",//蛮族入侵-割地称臣
+	name:"结局:蛮族入侵-割地称臣",
 	condition:{
 		seignior:0,
 		generals:[
@@ -629,15 +633,15 @@ var EventListConfig = [
 		citys:[
 		],
 		clear:1,
-		tribe:{from:0,to:5},
-		police:{from:90,to:100}
+		tribe:[3, 5],
+		troopsVsTribe:{from:1.5, to:3}
 	},
 	script:"Data/Event/{0}/xj.txt",
 	result:[{type:"gameClear"}]
 },
 {
 	id:30,
-	name:"结局:贤君",//远征蛮族-失败
+	name:"结局:远征蛮族-失败",
 	condition:{
 		seignior:0,
 		generals:[
@@ -645,8 +649,9 @@ var EventListConfig = [
 		citys:[
 		],
 		clear:1,
-		tribe:{from:0,to:5},
-		police:{from:90,to:100}
+		tribe:[2, 4],
+		troopsVsTribe:{from:0, to:3},
+		generalsCount:{basicPropertiesSum:360, to:19}
 	},
 	script:"Data/Event/{0}/xj.txt",
 	result:[{type:"gameClear"}]
