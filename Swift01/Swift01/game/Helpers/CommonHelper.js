@@ -106,6 +106,12 @@ function calculateHitrateBehead(leaderId, charaModel){
 	}
 	return Math.fakeRandom() < compatibility/sum;
 }
+function beheadCountPlus(){
+	if(typeof LMvc.chapterData.behead == UNDEFINED){
+		LMvc.chapterData.behead = 0;
+	}
+	LMvc.chapterData.behead++;
+}
 /**
  * 释放概率
  */

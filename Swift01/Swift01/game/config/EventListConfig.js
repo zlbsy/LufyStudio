@@ -593,7 +593,7 @@ var EventListConfig = [
 },
 {
 	id:27,
-	name:"结局:昏君",//平均治安90以下,纸醉金迷，灭亡
+	name:"结局:昏君-灭亡",
 	condition:{
 		seignior:0,
 		generals:[
@@ -601,8 +601,8 @@ var EventListConfig = [
 		citys:[
 		],
 		clear:1,
-		tribe:{from:0,to:5},
-		police:{from:0,to:89}
+		behead:{from:20},
+		police:{from:0,to:69}
 	},
 	script:"Data/Event/{0}/hj.txt",
 	result:[{type:"gameClear"}]

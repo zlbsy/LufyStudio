@@ -290,6 +290,7 @@ BattleResultConfirmView.prototype.captiveBehead=function(event){
 	var self = event.currentTarget;
 	self.characterModel.toDie();
 	self.model.selfCaptive.splice(0, 1);
+	beheadCountPlus();
 	self.parent.dispatchEvent(BattleResultEvent.CLOSE_CAPTIVE);
 };
 BattleResultConfirmView.prototype.setCharacter = function(){

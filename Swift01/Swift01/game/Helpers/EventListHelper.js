@@ -185,6 +185,15 @@ function checkEventList() {
 			//console.log(currentEvent.name + " stopBattleOk");
 			continue;
 		}
+		var behead = currentEvent.condition.behead;
+		if(behead && LMvc.chapterData.behead){
+			if(behead.from && LMvc.chapterData.behead < behead.from){
+				continue;
+			}
+			if(behead.to && LMvc.chapterData.behead > behead.to){
+				continue;
+			}
+		}
 		
 		var generalsCount = currentEvent.condition.generalsCount;
 		if(generalsCount){

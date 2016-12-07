@@ -205,8 +205,7 @@ CharacterDetailedTabStatusView.prototype.clickBehead=function(event){
 	var detailedView = self.getParentByConstructor(CharacterDetailedView);
 	var characterModel = self.controller.getValue("selectedCharacter");
 	characterModel.toDie();
-	/*var cityData = self.controller.getValue("cityData");
-	cityData.removeCaptives(characterModel.id());*/
+	beheadCountPlus();
 	detailedView.deleteChildFromList(characterModel.id());
 	//武将{0}被斩首了!
 	var obj = {title:Language.get("confirm"),message:String.format(Language.get("dialog_behead_message"), characterModel.name()),height:200,okEvent:null};
