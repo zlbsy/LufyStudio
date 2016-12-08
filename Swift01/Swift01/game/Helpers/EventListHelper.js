@@ -23,9 +23,9 @@ function checkEventList() {
 			if(!gameClear){
 				continue;
 			}
-			if(currentEvent.condition.tribe.indexOf(tribeSeignior) < 0){
+			/*if(currentEvent.condition.tribe.indexOf(tribeSeignior) < 0){
 				continue;
-			}
+			}*/
 			if(currentEvent.condition.troopsVsTribe){
 				if(selectSeigniorTroops == 0){
 					selectSeigniorTroops = SeigniorModel.getSeignior(LMvc.selectSeignorId).troops();
@@ -35,10 +35,29 @@ function checkEventList() {
 					continue;
 				}
 			}
+			if(currentEvent.condition.tribe){
+				if(currentEvent.condition.tribe.indexOf(tribeSeignior) < 0){
+					continue;
+				}
+			}
+			var beheadOk = true;
+                        var behead = currentEvent.condition.behead;
+			if(behead  && LMvc.chapterData.behead){
+				if(behead.from && LMvc.chapterData.behead < behead.from){
+					beheadOk = false;
+				}else if(behead.to && LMvc.chapterData.behead > behead.to){
+                                //if(currentEvent.condition.behead.indexOf(tribeSeignior) < 0){
+                                        beheadOk = false;
+                                }
+                        }
+			if(!currentEvent.condition.beheadOrPolice && !beheadOk){
+				continue;
+			}
+			var policeOk = true;
 			if(currentEvent.condition.police){
 				var seignior = SeigniorModel.getSeignior(LMvc.selectSeignorId);
 				var areas = seignior.areas();
-				var policeOk = true;
+				//var policeOk = true;
 				var averagePolice = 0;
 				for(var i = 0, l = areas.length;i<l;i++){
 					var police = areas[i].police();
@@ -52,10 +71,17 @@ function checkEventList() {
 				if(currentEvent.condition.police.from > averagePolice ||  currentEvent.condition.police.to < averagePolice){
 					policeOk = false;
 				}
-				if(!policeOk){
+				/*if(!policeOk){
 					continue;
-				}
+				}*/
 			}
+			if(!currentEvent.condition.beheadOrPolice && !policeOk){
+				continue;
+			}
+			if(currentEvent.condition.beheadOrPolice && !beheadOk && !policeOk){
+				continue;
+			}
+			//behead
 		}else if(LMvc.chapterData.noLife){
 			continue;
 		}
@@ -185,7 +211,7 @@ function checkEventList() {
 			//console.log(currentEvent.name + " stopBattleOk");
 			continue;
 		}
-		var behead = currentEvent.condition.behead;
+		/*var behead = currentEvent.condition.behead;
 		if(behead && LMvc.chapterData.behead){
 			if(behead.from && LMvc.chapterData.behead < behead.from){
 				continue;
@@ -194,7 +220,7 @@ function checkEventList() {
 				continue;
 			}
 		}
-		
+		*/
 		var generalsCount = currentEvent.condition.generalsCount;
 		if(generalsCount){
 			if(generalsCount.isSelect && SeigniorModel.list[SeigniorExecute.Instance().seigniorIndex].chara_id() != LMvc.selectSeignorId){

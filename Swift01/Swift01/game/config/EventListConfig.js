@@ -602,7 +602,8 @@ var EventListConfig = [
 		],
 		clear:1,
 		behead:{from:20},//斩首武将超过20人
-		police:{from:0,to:69}//平均治安小于70 TODO::这个应该是或的关系，需修正
+		police:{from:0,to:69},//平均治安小于70 
+		beheadOrPolice:1//behead和police为或的关系
 	},
 	script:"Data/Event/{0}/hj.txt",
 	result:[{type:"gameClear"}]
