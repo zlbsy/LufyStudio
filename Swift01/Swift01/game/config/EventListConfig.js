@@ -568,8 +568,8 @@ var EventListConfig = [
 		citys:[
 		],
 		clear:1,
-		tribe:[3, 5],
-		troopsVsTribe:{from:0, to:1.5}
+		tribe:[3, 5],//五个或三个外族存在
+		troopsVsTribe:{from:0, to:1.5}//兵力低于五个外族出兵总兵力的1.5倍
 	},
 	script:"Data/Event/{0}/mzrq.txt",
 	result:[{type:"gameClear"}]
@@ -584,9 +584,9 @@ var EventListConfig = [
 		citys:[
 		],
 		clear:1,
-		tribe:[2, 4],
-		troopsVsTribe:{from:3, to:1000},
-		generalsCount:{basicPropertiesSum:360, from:20}
+		tribe:[2, 4],//二个或四个外族存在
+		troopsVsTribe:{from:3, to:1000},//兵力大于外族兵力的3倍
+		generalsCount:{basicPropertiesSum:360, from:20}//属性平均值超过90的武将大于20人
 	},
 	script:"Data/Event/{0}/yzmz.txt",
 	result:[{type:"gameClear"}]
@@ -601,8 +601,8 @@ var EventListConfig = [
 		citys:[
 		],
 		clear:1,
-		behead:{from:20},
-		police:{from:0,to:69}
+		behead:{from:20},//斩首武将超过20人
+		police:{from:0,to:69}//平均治安小于70 TODO::这个应该是或的关系，需修正
 	},
 	script:"Data/Event/{0}/hj.txt",
 	result:[{type:"gameClear"}]
