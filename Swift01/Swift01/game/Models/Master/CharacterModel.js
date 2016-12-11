@@ -1084,7 +1084,8 @@ CharacterModel.prototype.luck = function() {
 	return this.getBasicProperties("luck");
 };
 CharacterModel.prototype.maxProficiencySoldier = function() {
-	var soldiers = this.soldiers();
+	var self = this;
+	var soldiers = self.soldiers();
 	var proficiency = 0, soldier;
 	for(var i=0,l=soldiers.length;i<l;i++){
 		var child = soldiers[i];

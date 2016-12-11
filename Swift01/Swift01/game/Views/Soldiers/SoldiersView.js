@@ -4,8 +4,35 @@ function SoldiersView(controller, characterModel, size) {
 	self.characterModel = characterModel;
 	self.size = size;
 }
+SoldiersView.prototype.setSpecialSoldiers = function(characterModel) {
+	var self = this;
+	var soldierList = characterModel.soldiers();
+	if(purchaseHasBuy(productIdConfig.soldier_special)){
+		for(var i=0, l=specialSoldiersConfig.length;i<l;i++){
+			var soldierId = specialSoldiersConfig[i];
+			var soldierModel = soldierList.find(function(c){
+				return c.id() == soldierId;
+			});
+			if(!soldierModel){
+				soldierModel = new SoldierModel(null, {id:soldierId,proficiency:0});
+				for(var j=0;j<soldierList.length;j++){
+					var seachSoldier = soldierList[j];
+					if(seachSoldier.soldierType() == soldierModel.soldierType() && 
+					seachSoldier.attackType() == soldierModel.attackType() &&
+					seachSoldier.moveType() == soldierModel.moveType() && 
+					seachSoldier.img().indexOf("common") < 0){
+						soldierModel.data.img = seachSoldier.img();
+						break;
+					}
+				}
+				soldierList.push(soldierModel);
+			}
+		}
+	}
+};
 SoldiersView.prototype.setSoldierList = function(characterModel) {
 	var self = this;
+	self.setSpecialSoldiers(characterModel);
 	if(self.listView){
 		if(characterModel && characterModel.id() != self.characterModel.id()){
 			self.updateItems(characterModel);
@@ -28,46 +55,11 @@ SoldiersView.prototype.setSoldierList = function(characterModel) {
 	self.addChild(self.listView);
 	var items = [];
 	var soldierList = self.characterModel.soldiers();
-	if(purchaseHasBuy(productIdConfig.soldier_special)){
-		for(var i=0, l=specialSoldiersConfig.length;i<l;i++){
-			var soldierId = specialSoldiersConfig[i];
-			var soldierModel = soldierList.find(function(c){
-				return c.id() == soldierId;
-			});
-			if(!soldierModel){
-				soldierModel = new SoldierModel(null, {id:soldierId,proficiency:0});
-				for(var j=0;j<soldierList.length;j++){
-					var seachSoldier = soldierList[j];
-					if(seachSoldier.soldierType() == soldierModel.soldierType() && 
-					seachSoldier.attackType() == soldierModel.attackType() &&
-					seachSoldier.moveType() == soldierModel.moveType() && 
-					seachSoldier.img().indexOf("common") < 0){
-						soldierModel.data.img = seachSoldier.img();
-						break;
-					}
-				}
-			}
-			soldierList.push(soldierModel);
-		}
-	}
 	for (var i = 0, l = soldierList.length; i < l; i++) {
 		var soldierModel = soldierList[i];
 		var child = new SoldiersChildView(soldierModel,self.characterModel,self.size.x, self, i);
 		items.push(child);
 	}
-	/*if(purchaseHasBuy(productIdConfig.soldier_special)){
-		for(var i=0, l=specialSoldiersConfig.length;i<l;i++){
-			var soldierId = specialSoldiersConfig[i];
-			var soldierModel = soldierList.find(function(c){
-				return c.id() == soldierId;
-			});
-			if(!soldierModel){
-				soldierModel = new SoldierModel(null, {id:soldierId,proficiency:0});
-			}
-			var child = new SoldiersChildView(soldierModel,self.characterModel,self.size.x, self, items.length);
-			items.push(child);
-		}
-	}*/
 	self.listView.updateList(items);
 };
 SoldiersView.prototype.updateView = function() {

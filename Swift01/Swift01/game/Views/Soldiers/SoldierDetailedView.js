@@ -92,17 +92,17 @@ SoldierDetailedView.prototype.set=function(){
 	
 	var buttonRestraint = getButton(Language.get("restraint_attack"),120);
 	buttonRestraint.x = icon.x;
-	buttonRestraint.y = lblExplanation.y + lblExplanation.getHeight() + 25;
+	buttonRestraint.y = lblExplanation.y + lblExplanation.getHeight() + 10;
 	layer.addChild(buttonRestraint);
 	buttonRestraint.addEventListener(LMouseEvent.MOUSE_UP, self.onClickRestraintButton);
 	var buttonRestraintPassive = getButton(Language.get("restraint_attack_passive"),120);
 	buttonRestraintPassive.x = icon.x + 130;
-	buttonRestraintPassive.y = lblExplanation.y + lblExplanation.getHeight() + 25;
+	buttonRestraintPassive.y = lblExplanation.y + lblExplanation.getHeight() + 10;
 	layer.addChild(buttonRestraintPassive);
 	buttonRestraintPassive.addEventListener(LMouseEvent.MOUSE_UP, self.onClickRestraintPassiveButton);
 	var buttonTerrain = getButton(Language.get("terrain"),80);
 	buttonTerrain.x = icon.x + 260;
-	buttonTerrain.y = lblExplanation.y + lblExplanation.getHeight() + 25;
+	buttonTerrain.y = lblExplanation.y + lblExplanation.getHeight() + 10;
 	layer.addChild(buttonTerrain);
 	buttonTerrain.addEventListener(LMouseEvent.MOUSE_UP, self.onClickTerrainButton);
 	self.addChild(layer);

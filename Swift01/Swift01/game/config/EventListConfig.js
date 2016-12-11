@@ -1,6 +1,7 @@
 var EventListConfig = [
 {
 	id:1,
+	index:1,
 	name:"桃园结义",
 	condition:{
 		from:{year:184,month:1},
@@ -24,6 +25,7 @@ var EventListConfig = [
 },
 {
 	id:2,
+	index:2,
 	name:"反董卓联盟",
 	condition:{
 		from:{year:190,month:3},
@@ -42,6 +44,7 @@ var EventListConfig = [
 },
 {
 	id:3,
+	index:3,
 	name:"迁都长安",
 	condition:{
 		from:{year:190,month:10},
@@ -66,6 +69,7 @@ var EventListConfig = [
 },
 {
 	id:4,
+	index:4,
 	name:"连环计",
 	condition:{
 		from:{year:191,month:6},
@@ -91,6 +95,7 @@ var EventListConfig = [
 },
 {
 	id:5,
+	index:5,
 	name:"报仇雪恨",
 	condition:{
 		from:{year:193,month:9},
@@ -118,6 +123,7 @@ var EventListConfig = [
 },
 {
 	id:6,
+	index:6,
 	name:"三让徐州",
 	condition:{
 		from:{year:194,month:4},
@@ -142,6 +148,7 @@ var EventListConfig = [
 },
 {
 	id:7,
+	index:7,
 	name:"白门楼",
 	condition:{
 		from:{year:197,month:1},
@@ -165,6 +172,7 @@ var EventListConfig = [
 },
 {
 	id:8,
+	index:8,
 	name:"煮酒论英雄",
 	condition:{
 		from:{year:194,month:1},
@@ -183,6 +191,7 @@ var EventListConfig = [
 },
 {
 	id:9,
+	index:9,
 	name:"官渡之战",
 	condition:{
 		from:{year:200,month:3},
@@ -201,6 +210,7 @@ var EventListConfig = [
 },
 {
 	id:10,
+	index:10,
 	name:"乌巢急袭",
 	condition:{
 		from:{year:200,month:10},
@@ -228,6 +238,7 @@ var EventListConfig = [
 },
 {
 	id:11,
+	index:11,
 	name:"一顾茅庐",
 	condition:{
 		from:{year:207,month:2},
@@ -250,6 +261,7 @@ var EventListConfig = [
 },
 {
 	id:12,
+	index:12,
 	name:"二顾茅庐",
 	condition:{
 		from:{year:207,month:4},
@@ -271,6 +283,7 @@ var EventListConfig = [
 },
 {
 	id:13,
+	index:13,
 	name:"三顾茅庐",
 	condition:{
 		from:{year:207,month:6},
@@ -293,6 +306,7 @@ var EventListConfig = [
 },
 {
 	id:14,
+	index:14,
 	name:"刘表之死",
 	condition:{
 		from:{year:208,month:2},
@@ -328,6 +342,7 @@ var EventListConfig = [
 },
 {
 	id:15,
+	index:15,
 	name:"舌战群儒",
 	condition:{
 		from:{year:208,month:4},
@@ -350,6 +365,7 @@ var EventListConfig = [
 },
 {
 	id:16,
+	index:16,
 	name:"苦肉の計",
 	condition:{
 		from:{year:208,month:7},
@@ -371,6 +387,7 @@ var EventListConfig = [
 },
 {
 	id:17,
+	index:17,
 	name:"赤壁之战",
 	condition:{
 		from:{year:208,month:10},
@@ -402,6 +419,7 @@ var EventListConfig = [
 },
 {
 	id:18,
+	index:18,
 	name:"士别三日",
 	condition:{
 		from:{year:207,month:1},
@@ -419,6 +437,7 @@ var EventListConfig = [
 },
 {
 	id:19,
+	index:19,
 	name:"西凉锦马超",
 	condition:{
 		from:{year:211,month:3},
@@ -436,6 +455,7 @@ var EventListConfig = [
 },
 {
 	id:20,
+	index:20,
 	name:"失荆州",
 	condition:{
 		from:{year:219,month:6},
@@ -476,6 +496,7 @@ var EventListConfig = [
 },
 {
 	id:21,
+	index:21,
 	name:"七擒孟获",
 	condition:{
 		from:{year:225,month:5},
@@ -499,6 +520,7 @@ var EventListConfig = [
 },
 {
 	id:22,
+	index:22,
 	name:"出师表",
 	condition:{
 		from:{year:228,month:1},
@@ -518,6 +540,7 @@ var EventListConfig = [
 },
 {
 	id:23,
+	index:23,
 	name:"蜀灭亡",
 	condition:{
 		noSeignior:620,
@@ -545,6 +568,7 @@ var EventListConfig = [
 },
 {
 	id:24,
+	index:24,
 	name:"五虎上将",
 	condition:{
 		seignior:0,
@@ -559,8 +583,9 @@ var EventListConfig = [
 	result:[{type:"reputation",generals:[],reputation:1}]
 },
 {
-	id:25,
-	name:"结局:蛮族入侵,战乱四起,最终灭亡",
+	id:25,//一
+	index:25,
+	name:"结局:蛮族入侵之灭亡",
 	condition:{
 		seignior:0,
 		generals:[
@@ -571,11 +596,12 @@ var EventListConfig = [
 		tribe:[3, 5],//五个或三个外族存在
 		troopsVsTribe:{from:0, to:1.5}//兵力低于五个外族出兵总兵力的1.5倍
 	},
-	script:"Data/Event/{0}/mzrq.txt",
+	script:"Data/Event/{0}/mzrq_mw.txt",
 	result:[{type:"gameClear"}]
 },
 {
-	id:26,
+	id:26,//三
+	index:27,
 	name:"结局:远征蛮族,平定蛮族,蛮族年年进贡",
 	condition:{
 		seignior:0,
@@ -592,7 +618,8 @@ var EventListConfig = [
 	result:[{type:"gameClear"}]
 },
 {
-	id:27,
+	id:27,//五
+	index:29,
 	name:"结局:昏君-灭亡",
 	condition:{
 		seignior:0,
@@ -601,6 +628,9 @@ var EventListConfig = [
 		citys:[
 		],
 		clear:1,
+		revival:0,
+		cityCount:[{maxDefense:1,to:0}],//没有LV防御力MAX的城池
+		generalsCount:{force:90, to:0, noMaxLoyalty:1},//武将属性90以上的武将忠诚度未全满
 		behead:{from:20},//斩首武将超过20人
 		police:{from:0,to:69},//平均治安小于70 
 		beheadOrPolice:1//behead和police为或的关系
@@ -609,23 +639,23 @@ var EventListConfig = [
 	result:[{type:"gameClear"}]
 },
 {
-	id:28,
-	name:"结局:贤君",//平均治安90以上,天下太平
+	id:28,//十二,不满足以上条件
+	index:36,
+	name:"结局:新政权",
 	condition:{
 		seignior:0,
 		generals:[
 		],
 		citys:[
 		],
-		clear:1,
-		tribe:{from:0,to:5},
-		police:{from:90,to:100}
+		clear:1
 	},
 	script:"Data/Event/{0}/xj.txt",
 	result:[{type:"gameClear"}]
 },
 {
-	id:29,
+	id:29,//二
+	index:26,
 	name:"结局:蛮族入侵-割地称臣",
 	condition:{
 		seignior:0,
@@ -634,14 +664,15 @@ var EventListConfig = [
 		citys:[
 		],
 		clear:1,
-		tribe:[3, 5],
-		troopsVsTribe:{from:1.5, to:3}
+		tribe:[3, 5],//五个或三个外族存在
+		troopsVsTribe:{from:1.5, to:3}//兵力高于五个外族出兵总兵力的1.5倍且低于3倍
 	},
-	script:"Data/Event/{0}/xj.txt",
+	script:"Data/Event/{0}/mzrq_cc.txt",
 	result:[{type:"gameClear"}]
 },
 {
-	id:30,
+	id:30,//四
+	index:28,
 	name:"结局:远征蛮族-失败",
 	condition:{
 		seignior:0,
@@ -650,16 +681,17 @@ var EventListConfig = [
 		citys:[
 		],
 		clear:1,
-		tribe:[2, 4],
-		troopsVsTribe:{from:0, to:3},
-		generalsCount:{basicPropertiesSum:360, to:19}
+		tribe:[2, 4],//二个或四个外族存在
+		troopsVsTribe:{from:0, to:3},//兵力小于外族兵力的3倍
+		generalsCount:{basicPropertiesSum:360, to:19}//属性平均值超过90的武将小于20人
 	},
 	script:"Data/Event/{0}/xj.txt",
 	result:[{type:"gameClear"}]
 },
 {
-	id:31,
-	name:"结局:贤君",//远征蛮族-失败
+	id:31,//六
+	index:30,
+	name:"结局:昏君-长期分裂",
 	condition:{
 		seignior:0,
 		generals:[
@@ -667,15 +699,20 @@ var EventListConfig = [
 		citys:[
 		],
 		clear:1,
-		tribe:{from:0,to:5},
-		police:{from:90,to:100}
+		revival:0,//不满足汉室复兴条件
+		cityCount:[{maxDefense:1,from:1}],//至少有一个LV防御力MAX的城池
+		generalsCount:{force:90, to:0, maxLoyalty:1},//武将属性90以上的武将忠诚度全满
+		behead:{from:20},//斩首武将超过20人
+		police:{from:0,to:69},//平均治安小于70 
+		beheadOrPolice:1//behead和police为或的关系
 	},
 	script:"Data/Event/{0}/xj.txt",
 	result:[{type:"gameClear"}]
 },
 {
-	id:32,
-	name:"结局:贤君",//贤君-商业大国
+	id:32,//七
+	index:31,
+	name:"结局:贤君-商业大国",
 	condition:{
 		seignior:0,
 		generals:[
@@ -683,15 +720,20 @@ var EventListConfig = [
 		citys:[
 		],
 		clear:1,
-		tribe:{from:0,to:5},
-		police:{from:90,to:100}
+		revival:0,//不满足汉室复兴条件
+		behead:{to:19},//斩首武将不超过20人
+		police:{from:80},//平均治安大于80
+		business:{from:0.7},//商业平均值超过最大值的70%
+		agriculture:{from:0.7},//农业平均值超过最大值的70%
+		treasure:{to:0.8}//未集齐80%宝物
 	},
 	script:"Data/Event/{0}/xj.txt",
 	result:[{type:"gameClear"}]
 },
 {
-	id:33,
-	name:"结局:贤君",//贤君-商业大国
+	id:33,//八
+	index:32,
+	name:"结局:贤君-文明大国",
 	condition:{
 		seignior:0,
 		generals:[
@@ -699,15 +741,19 @@ var EventListConfig = [
 		citys:[
 		],
 		clear:1,
-		tribe:{from:0,to:5},
-		police:{from:90,to:100}
+		revival:0,//不满足汉室复兴条件
+		behead:{to:19},//斩首武将不超过20人
+		police:{from:80},//平均治安大于80
+		technology:{from:0.7},//技术平均值超过最大值的70%
+		treasure:{from:0.8}//集齐80%宝物
 	},
 	script:"Data/Event/{0}/xj.txt",
 	result:[{type:"gameClear"}]
 },
 {
-	id:34,
-	name:"结局:贤君",//贤君-文明大国
+	id:34,//九
+	index:33,
+	name:"结局:贤君-超级强国",
 	condition:{
 		seignior:0,
 		generals:[
@@ -715,15 +761,22 @@ var EventListConfig = [
 		citys:[
 		],
 		clear:1,
-		tribe:{from:0,to:5},
-		police:{from:90,to:100}
+		revival:0,//不满足汉室复兴条件
+		behead:{to:19},//斩首武将不超过20人
+		police:{from:80},//平均治安大于80
+		technology:{from:0.7},//技术平均值超过最大值的70%
+		business:{from:0.7},//商业平均值超过最大值的70%
+		agriculture:{from:0.7},//农业平均值超过最大值的70%
+		treasure:{from:0.8},//集齐80%宝物
+		tribe:[0]//外族全灭
 	},
 	script:"Data/Event/{0}/xj.txt",
 	result:[{type:"gameClear"}]
 },
 {
-	id:35,
-	name:"结局:贤君",//汉室复兴-汉室延长
+	id:35,//十
+	index:34,
+	name:"结局:汉室复兴-汉室延长",
 	condition:{
 		seignior:0,
 		generals:[
@@ -731,15 +784,16 @@ var EventListConfig = [
 		citys:[
 		],
 		clear:1,
-		tribe:{from:0,to:5},
-		police:{from:90,to:100}
+		revival:1,//满足汉室复兴条件-君主姓刘且手下有姓刘武将，且姓刘武将忠诚全满
+		conditionRevival:1//汉室延长条件-商业农业技术平均值超过最大值的50%,商业农业技术平均值,治安超过80
 	},
 	script:"Data/Event/{0}/xj.txt",
 	result:[{type:"gameClear"}]
 },
 {
-	id:36,
-	name:"结局:贤君",//汉室复兴-苟延残喘
+	id:36,//十一
+	index:35,
+	name:"结局:汉室复兴-苟延残喘",
 	condition:{
 		seignior:0,
 		generals:[
@@ -747,10 +801,11 @@ var EventListConfig = [
 		citys:[
 		],
 		clear:1,
-		tribe:{from:0,to:5},
-		police:{from:90,to:100}
+		revival:1,//满足汉室复兴条件-君主姓刘且手下姓刘武将超过5人且忠诚全满
+		conditionRevival:0//不满足汉室延长条件
 	},
 	script:"Data/Event/{0}/xj.txt",
 	result:[{type:"gameClear"}]
 }
 ];
+EventListConfig = EventListConfig.sort(function(a,b){return a.index - b.index;});

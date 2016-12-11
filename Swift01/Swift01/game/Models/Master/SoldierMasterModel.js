@@ -39,7 +39,16 @@ SoldierMasterModel.prototype.name = function() {
 	return Language.getSoldier("name_" + this.data.sign);
 };
 SoldierMasterModel.prototype.explanation = function() {
-	return Language.getSoldier("explanation_" + this.data.sign);
+	var self = this;
+	var result = Language.getSoldier("explanation_" + this.data.sign);
+	if(self.data.newcount){
+		result += String.format(Language.getSoldier("explanation_newcount"), self.name());
+	}
+	if(self.data.skill){
+		var skill = SkillMasterModel.getMaster(self.data.skill);
+		result += String.format(Language.getSoldier("explanation_skill"), skill.name(),skill.explanation(),skill.probability());
+	}
+	return result;
 };
 SoldierMasterModel.prototype.technology = function() {
 	return this.data.technology;
