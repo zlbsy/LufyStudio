@@ -99,6 +99,7 @@ function trainingRun(characterModel, soldierId){
 function levelUpCityRun(characterModel){
 	var city = characterModel.city();
 	city.level(1);
+	city.population(10000);
 	characterModel.featPlus(JobFeatCoefficient.NORMAL);
 	characterModel.job(Job.IDLE);
 	LMvc.MapController.view.resetAreaIcon(city.id());
