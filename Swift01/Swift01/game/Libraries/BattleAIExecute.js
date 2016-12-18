@@ -138,13 +138,24 @@ BattleAIExecute.prototype.result=function(isWin){
 		var winSeigniorId = toCity.seignior().chara_id();
 		var failSeigniorId = fromSeignior.chara_id();
 		var retreatCityId = fromCity.id();
-		var charaTroops = 0;
+		var charaTroops = 0, troopsValue;
+		var canHeal = self.targetData._characterList.find(function(chara){
+			return HealSoldiers.indexOf(chara.currentSoldierId())>=0;
+		});
 		self.targetData._characterList.forEach(function(child){
 			if(child.isDefCharacter()){
 				return;
 			}
-			charaTroops += child.troops();
+			troopsValue = child.troops();
+			if(canHeal){
+				troopsValue += child.wounded();
+			}else{
+				troopsValue += child.wounded() * (0.2 + 0.6 * Math.fakeRandom());
+				troopsValue = troopsValue >>> 0;
+			}
+			charaTroops += troopsValue;
 			child.troops(0);
+			child.wounded(0);
 		});
 		toCity.troops(toCity.troops() + charaTroops);
 		var leaderId = self.targetData._characterList[0].id();

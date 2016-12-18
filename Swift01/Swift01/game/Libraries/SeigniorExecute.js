@@ -207,32 +207,39 @@ SeigniorExecute.prototype.disasterRun=function(area){
 };
 SeigniorExecute.prototype.areaRun=function(area){
 	var self = this;
-	if(self.disasterRun(area)){//灾难
-		return;
-	}
-	if(!self.areaPrizedOver){//褒奖
-		self.generalsPrizedRun(area);
-	}
-	if(!self.areaGainOver){//城池收获
-		self.areaGainRun(area);
-	}
-	if(!self.areaChangeLoyaltyOver){//每年3月份，武将忠诚度变化一次
-		if(LMvc.chapterData.month == 3){
-			generalsChangeLoyalty(area.generals());
+	if(area.isTribe()){
+		var minTroops = area.seignior().character().maxTroops() * 20;
+		if(area.troops() < minTroops){
+			area.troops(minTroops - area.troops());
 		}
-		self.areaChangeLoyaltyOver = true;
-	}
-	if(!self.areaPrefectureFeatOver){//太守功绩
-		if(area.prefecture() > 0){
-			var prefectureCharacter = CharacterModel.getChara(area.prefecture());
-			prefectureCharacter.featPlus(5);
-		}
-		self.areaPrefectureFeatOver = true;
-	}
-	if(!self.areaJobOver){//任务
-		var areaJobReturn= self.areaJobRun(area);
-		if(areaJobReturn){
+	}else{
+		if(self.disasterRun(area)){//灾难
 			return;
+		}
+		if(!self.areaPrizedOver){//褒奖
+			self.generalsPrizedRun(area);
+		}
+		if(!self.areaGainOver){//城池收获
+			self.areaGainRun(area);
+		}
+		if(!self.areaChangeLoyaltyOver){//每年3月份，武将忠诚度变化一次
+			if(LMvc.chapterData.month == 3){
+				generalsChangeLoyalty(area.generals());
+			}
+			self.areaChangeLoyaltyOver = true;
+		}
+		if(!self.areaPrefectureFeatOver){//太守功绩
+			if(area.prefecture() > 0){
+				var prefectureCharacter = CharacterModel.getChara(area.prefecture());
+				prefectureCharacter.featPlus(5);
+			}
+			self.areaPrefectureFeatOver = true;
+		}
+		if(!self.areaJobOver){//任务
+			var areaJobReturn= self.areaJobRun(area);
+			if(areaJobReturn){
+				return;
+			}
 		}
 	}
 	self.areaIndex++;
@@ -282,10 +289,6 @@ SeigniorExecute.addMessage = function(value){
 SeigniorExecute.prototype.areaJobRun=function(area){
 	var self = this, chara, job;
 	var generals = area.generals().concat();
-	/*if(LMvc.chapterData.month == 3){
-		//每年3月份，武将忠诚度变化一次
-		generalsChangeLoyalty(generals);
-	}*/
 	var list = [];
 	for(var i=0;i<generals.length;i++){
 		chara = generals[i];
@@ -640,11 +643,7 @@ SeigniorExecute.prototype.areaAIRun=function(areaModel){
 				var child = interiorList[0];
 				self.jobAiFunction(areaModel,self.characters,child.fun,child.params);
 			}
-			/*for(var i = 0;i<interiorList.length;i++){
-				child = interiorList[i];
-				self.jobAiFunction(areaModel,self.characters,child.fun,child.params);
-			}*/
-		}else{
+		}else if(areaModel.level() < areaModel.maxLevel()){
 			//升级城池
 			jobAiLevelUpCity(areaModel,self.characters);
 		}

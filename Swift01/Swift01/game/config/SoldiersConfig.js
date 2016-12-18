@@ -20,7 +20,7 @@ var EnlistSetting = {
 var TrainingSetting = {
 	MAX:500//训练最大熟练度
 };
-var HealSoldiers = [10];
+var HealSoldiers = [10, 34];
 var SoldierImages = [];
 SoldierImages[AttackType.NEAR] = [
 ["4-2"], 

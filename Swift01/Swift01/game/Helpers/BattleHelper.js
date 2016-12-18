@@ -666,19 +666,8 @@ function battleExpeditionMove(city, retreatCity){
  * 战斗后移动到指定城池
  */
 function battleCityChange(winSeigniorId, failSeigniorId, retreatCityId, expeditionList, city, captives){
-	//var battleData = controller.battleData;
-	//var city = battleData.toCity;
 	var generals = city.generals();
 	var moveCharas = generals.slice();
-	/*
-	var captives;
-	if(LMvc.BattleController){
-		var model = controller.model;
-		captives = winSeigniorId == LMvc.selectSeignorId ? model.selfCaptive : model.enemyCaptive;
-	}else{
-		captives = controller.captives;
-	}
-	*/
 	if(retreatCityId){
 		var retreatCity = AreaModel.getArea(retreatCityId);
 		if(!retreatCity.seigniorCharaId()){
@@ -728,18 +717,27 @@ function battleCityChange(winSeigniorId, failSeigniorId, retreatCityId, expediti
 	var fromCityId = prefectureChara.cityId();
 	city.prefecture(prefectureChara.id());
 	generals = expeditionList.slice();
+	var canHeal = generals.find(function(chara){
+		return HealSoldiers.indexOf(chara.currentSoldierId())>=0;
+	});
 	for(var i=0,l=generals.length;i<l;i++){
-		var chara = generals[i];
+		var chara = generals[i], troopsValue = chara.troops();
+		if(canHeal){
+			troopsValue += chara.wounded();
+		}else{
+			troopsValue += chara.wounded() * (0.2 + 0.6 * Math.fakeRandom());
+			troopsValue = troopsValue >>> 0;
+		}
 		if(chara.cityId() == fromCityId){
-			city.troops(city.troops() + chara.troops());
-			chara.troops(0);
+			city.troops(city.troops() + troopsValue);
 			chara.moveTo(city.id());
 			chara.moveTo();
 		}else{
 			var charaCity = chara.city();
-			charaCity.troops(charaCity.troops() + chara.troops());
-			chara.troops(0);
+			charaCity.troops(charaCity.troops() + troopsValue);
 		}
+		chara.troops(0);
+		chara.wounded(0);
 	}
 };
 /*战斗失败,撤退城池搜索及处理*/
@@ -900,12 +898,23 @@ function allCharactersToRetreat(){
 	var toCity = controller.battleData.toCity;
 	var isSelfDef = toCity.seigniorCharaId() == LMvc.selectSeignorId;
 	var characters = controller.view.charaLayer.getCharactersFromBelong(Belong.SELF);
+	var canHeal = characters.find(function(chara){
+		return HealSoldiers.indexOf(chara.data.currentSoldierId())>=0;
+	});
 	for(var i=0,l=characters.length;i<l;i++){
 		if(characters[i].data.isDefCharacter()){
 			continue;
 		}
-		var troops = characters[i].data.troops();
-		characters[i].data.troops(0);
+		var charaModel = characters[i].data;
+		var troops = charaModel.troops();
+		if(canHeal){
+			troops += charaModel.wounded();
+		}else{
+			troops += charaModel.wounded() * (0.2 + 0.6 * Math.fakeRandom());
+			troops = troops >>> 0;
+		}
+		charaModel.troops(0);
+		charaModel.wounded(0);
 		if(isSelfDef){
 			characters[i].data.city().troops(toCity.troops() + troops);
 		}else{

@@ -138,3 +138,9 @@ SoldierModel.prototype.icon=function(size,callback){
 	icon.addChild(winPanel);
 	return icon;
 };
+SoldierModel.prototype.skill = function(type) {
+	return this.master().skill(type);
+};
+SoldierModel.prototype.hasSkill = function(subType) {
+	return this.master().hasSkill(subType);
+};

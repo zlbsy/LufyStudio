@@ -129,7 +129,7 @@ ItemMasterModel.prototype.luck = function(){
 	return this.data.luck?this.data.luck:0;
 };
 ItemMasterModel.prototype.price = function(){
-	return 100 + (this.data.rarity - 1) * 50;
+	return 20 + (this.data.rarity - 1) * 20;
 };
 ItemMasterModel.prototype.businessPrice = function(){
 	return this.price() * 10;
@@ -142,11 +142,8 @@ ItemMasterModel.prototype.icon=function(size,callback){
 		size = new LPoint(60, 60);
 	}
 	var icon = new BitmapSprite(LMvc.IMG_PATH + "item/" + this.id() + ".png", null,size);
-	//var icon = new BitmapSprite(LMvc.IMG_PATH + "item/1.png", null,size);
 	if(typeof callback == "function")icon.addEventListener(LEvent.COMPLETE, callback);
 	var winPanel = getPanel("win06",size.x,size.y);
-	//new LPanel(new LBitmapData(LMvc.datalist["win06"]),size.x,size.y);
-	//winPanel.cacheAsBitmap(true);
 	icon.addChild(winPanel);
 	LPlugin.openStamp(this.id());
 	return icon;

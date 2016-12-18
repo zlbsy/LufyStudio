@@ -86,7 +86,7 @@ function checkEventList() {
 			continue;
 		}
 		//武将个数判定
-		if(!checkEventListGeneralsCount(currentEvent.condition)){
+		if(!checkEventListGeneralsCount(currentEvent)){
 			continue;
 		}
 		if (!LPlugin.eventIsOpen(currentEvent.id)) {

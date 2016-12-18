@@ -1268,34 +1268,45 @@ CharacterModel.prototype.groupSkill = function() {
 CharacterModel.prototype.skillCoefficient = function() {
 	return (this.data.skill ? 1 : 0) + (this.data.groupSkill ? 1 : 0);
 };
+CharacterModel.prototype.soldiersSkill = function(type) {
+	var currentSoldiers = this.currentSoldiers();
+	return currentSoldiers.skill(type);
+};
 CharacterModel.prototype.skill = function(type) {
 	var self = this;
-	if(!self.data.skill){
+	if(LMvc.BattleController && self.troops() == 0){
 		return null;
+	}
+	if(!self.data.skill){
+		return self.soldiersSkill(type);
 	}
 	var skill = SkillMasterModel.getMaster(self.data.skill);
 	var skillType = skill.mainType();
 	if(type && (
 		(typeof skillType == "string" && skillType != type) || 
 		(Array.isArray(skillType) && skillType.indexOf(type) < 0))){
-		return null;
+		return self.soldiersSkill(type);
 	}
 	if(skill.probability() < 100){
 		var rand = Math.fakeRandom();
 		if(type && rand > skill.probability()*0.01){
-			return null;
+			return self.soldiersSkill(type);
 		}
 	}
 	return skill;
 };
+CharacterModel.prototype.hasSoldiersSkill = function(subType) {
+	var currentSoldiers = this.currentSoldiers();
+	return currentSoldiers.hasSkill(subType);
+};
 CharacterModel.prototype.hasSkill = function(subType) {
 	var self = this;
 	if(!self.data.skill){
-		return false;
+		return self.hasSoldiersSkill(subType);
 	}
 	var skill = SkillMasterModel.getMaster(self.data.skill);
 	if(subType && skill.isSubType(subType)){
 		return true;
 	}
-	return false;
+	return self.hasSoldiersSkill(subType);
 };

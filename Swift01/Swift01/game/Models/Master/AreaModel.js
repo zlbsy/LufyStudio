@@ -58,7 +58,9 @@ AreaModel.getPowerfulCharacters = function(generals, init){
 	list = list.sort(function(a,b){return b.value - a.value;});
 	return list;
 };
-
+AreaModel.prototype.isTribe = function(){
+	return this.seigniorCharaId() && this.seignior().isTribe();
+};
 AreaModel.prototype.datas=function(){
 	var self = this;
 	var saveData = {
@@ -483,8 +485,6 @@ AreaModel.prototype.icon=function(){
 	var self = this;
 	var iconLayer = new LSprite();
 	var bitmapData = new LBitmapData(LMvc.datalist["area-1"]);
-	//self.iconWidth(bitmapData.width);
-	//bitmapData.setProperties(0, 0, self.iconWidth(), bitmapData.height);
 	var bitmap = new LBitmap(bitmapData);
 	bitmap.scaleX = bitmap.scaleY = (5+this.data.level)*0.08;
 	bitmap.x = (CityIconConfig.width - bitmap.getWidth())*0.5;
@@ -715,7 +715,7 @@ AreaModel.prototype.canIncome=function(value){
 	for(var i=0,l=self.data.generals.length;i<l;i++){
 		var chara = self.data.generals[i];
 		var skill = chara.skill();
-		if(skill.isSubType(SkillSubType.INCOME) && skill.income() == value){
+		if(skill && skill.isSubType(SkillSubType.INCOME) && skill.income() == value){
 			return true;
 		}
 	}

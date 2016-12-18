@@ -891,8 +891,8 @@ function childsHasGrowup(areaModel){
 			childModel.cityId(areaModel.id());
 			childModel.seigniorId(areaModel.seigniorCharaId());
 			childModel.loyalty(chara.loyalty());
-			childModel.feat(0);
 			areaModel.addGenerals(childModel);
+			setCharacterInitFeat(childModel);
 			if(areaModel.seigniorCharaId() == LMvc.selectSeignorId){
 				var obj = {title:Language.get("confirm"),messageHtml:String.format(Language.get("child_growup"), childModel.name(), chara.name()),height:240, okEvent:function(event){
 					event.currentTarget.parent.remove();

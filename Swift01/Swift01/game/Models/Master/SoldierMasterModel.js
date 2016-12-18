@@ -50,6 +50,37 @@ SoldierMasterModel.prototype.explanation = function() {
 	}
 	return result;
 };
+SoldierMasterModel.prototype.skill = function(type) {
+	var self = this;
+	if(!self.data.skill){
+		return null;
+	}
+	var skill = SkillMasterModel.getMaster(self.data.skill);
+	var skillType = skill.mainType();
+	if(type && (
+		(typeof skillType == "string" && skillType != type) || 
+		(Array.isArray(skillType) && skillType.indexOf(type) < 0))){
+		return null;
+	}
+	if(skill.probability() < 100){
+		var rand = Math.fakeRandom();
+		if(type && rand > skill.probability()*0.01){
+			return null;
+		}
+	}
+	return skill;
+};
+SoldierMasterModel.prototype.hasSkill = function(subType) {
+	var self = this;
+	if(!self.data.skill){
+		return false;
+	}
+	var skill = SkillMasterModel.getMaster(self.data.skill);
+	if(subType && skill.isSubType(subType)){
+		return true;
+	}
+	return false;
+};
 SoldierMasterModel.prototype.technology = function() {
 	return this.data.technology;
 };

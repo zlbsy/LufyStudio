@@ -739,6 +739,18 @@ function SeigniorExecuteChangeCityResources(area){
 		area.food(-(area.food()*0.05 >>> 0));
 		area.police(-3);
 	}
+	var plusValue = 1;
+	if(area.seigniorCharaId() != LMvc.selectSeignorId){
+		switch(LMvc.chapterData.trouble){
+			case TroubleConfig.HARD:
+				plusValue = 1.5;
+				break;
+			case TroubleConfig.NORMAL:
+				plusValue = 1.2;
+				break;
+			default:
+		}
+	}
 	var population = area.population();
 	//金钱
 	var maxBusiness = AreaModel.businessList[AreaModel.businessList.length - 1];
@@ -748,7 +760,7 @@ function SeigniorExecuteChangeCityResources(area){
 		if(area.canIncome("money")){
 			addMoney *= 1.2;
 		}
-		area.money(addMoney >>> 0);
+		area.money(addMoney * plusValue >>> 0);
 	}
 	//粮食
 	var maxAgriculture = AreaModel.agricultureList[AreaModel.agricultureList.length - 1];
@@ -761,7 +773,7 @@ function SeigniorExecuteChangeCityResources(area){
 		if(area.canIncome("food")){
 			addFood *= 1.2;
 		}
-		area.food(addFood >>> 0);
+		area.food(addFood * plusValue >>> 0);
 	}
 	var police = area.police();
 	var minPolice = 40;
@@ -1183,6 +1195,9 @@ function tournamentsGet(result){
 	LMvc.layer.addChild(windowLayer);
 }
 function disasterMonthsExecute(area){
+	if(area.isTribe()){
+		return false;
+	}
 	if(area.isFlood()){
 		area.flood(area.flood() - (area.canSacrifice() ? 2 : 1));
 		if(area.flood()<=0){
