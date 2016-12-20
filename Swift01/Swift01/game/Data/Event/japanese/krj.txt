@@ -1,3 +1,9 @@
 SGJEvent.mapShow(1);
-SGJEvent.messageShow(苦肉の計。,3);
+SGJEvent.addCharacter(2,150,100,fade);
+SGJEvent.messageShow(孫権軍の陣営では、火計準備を進める周瑜のもとを老将・黄蓋が訪れていた。,3);
+SGJEvent.addCharacter(123,350,100,fade);
+SGJEvent.talk(123,周瑜殿、何やら思い悩んでおろう？わしに遠慮はいらぬゆえ、役に立つならばいかようにも使ってもらいたい。);
+SGJEvent.talk(2,でしたら一つ、お願いしたいことが......);
+SGJEvent.messageShow(あくる日、諸将が集まる軍議の席で、黄蓋はあえて「降伏」を口にした。,3);
+SGJEvent.messageShow(激怒した周瑜は、黄蓋に死罪を申し渡したが、諸将にたしなめられて棒罰百丈に。,3);
 Mark.EventEnd;
