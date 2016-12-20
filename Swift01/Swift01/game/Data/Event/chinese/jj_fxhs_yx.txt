@@ -1,0 +1,11 @@
+SGJEvent.mapShow(7);
+SGJEvent.addCharacter(@id0,150,100,fade);
+SGJEvent.messageShow(经过了多年的争斗，@name0终于扫除了各地军阀，为天下带来了和平。,3);
+SGJEvent.addCharacter(@id1,350,100,fade);
+SGJEvent.messageShow(而一心想要兴复汉室的@name0，派人迎回了汉献帝，因为功劳太大，献帝不但任@name0为丞相，还封@name0为@prince王。,3);
+SGJEvent.messageShow(@name0担任丞相期间，安抚百姓，制定法典，有功必赏，有罪必罚。献帝也在@name0的影响下，勤政爱民，汉朝又重新强大了起来。,3);
+SGJEvent.addCharacter(622,0,200,fade);
+SGJEvent.messageShow(胡人部落虽然多次尝试侵入中原，但都被轻松击退。,3);
+SGJEvent.removeCharacter(622,fade);
+SGJEvent.messageShow(汉朝终于延续了数十年，而@name0也成了一代功臣，为后世效仿。,3);
+Mark.EventEnd;

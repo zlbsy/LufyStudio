@@ -596,7 +596,7 @@ var EventListConfig = [
 		tribe:[3, 5],//五个或三个外族存在
 		troopsVsTribe:{from:0, to:1.5}//兵力低于五个外族出兵总兵力的1.5倍
 	},
-	script:"Data/Event/{0}/mzrq_mw.txt",
+	script:"Data/Event/{0}/jj_mzrq_mw.txt",
 	result:[{type:"gameClear"}]
 },
 {
@@ -667,7 +667,7 @@ var EventListConfig = [
 		tribe:[3, 5],//五个或三个外族存在
 		troopsVsTribe:{from:1.5, to:3}//兵力高于五个外族出兵总兵力的1.5倍且低于3倍
 	},
-	script:"Data/Event/{0}/mzrq_cc.txt",
+	script:"Data/Event/{0}/jj_mzrq_cc.txt",
 	result:[{type:"gameClear"}]
 },
 {
@@ -787,7 +787,7 @@ var EventListConfig = [
 		revival:1,//满足汉室复兴条件-君主姓刘且手下有姓刘武将，且姓刘武将忠诚全满
 		conditionRevival:1//汉室延长条件-商业农业技术平均值超过最大值的50%,商业农业技术平均值,治安超过80
 	},
-	script:"Data/Event/{0}/xj.txt",
+	script:"Data/Event/{0}/jj_fxhs_yx.txt",
 	result:[{type:"gameClear"}]
 },
 {
@@ -804,7 +804,7 @@ var EventListConfig = [
 		revival:1,//满足汉室复兴条件-君主姓刘且手下姓刘武将超过5人且忠诚全满
 		conditionRevival:0//不满足汉室延长条件
 	},
-	script:"Data/Event/{0}/xj.txt",
+	script:"Data/Event/{0}/jj_mzrq_cc.txt",
 	result:[{type:"gameClear"}]
 }
 ];

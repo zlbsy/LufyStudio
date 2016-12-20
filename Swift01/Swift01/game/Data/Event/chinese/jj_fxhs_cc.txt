@@ -1,0 +1,11 @@
+SGJEvent.mapShow(7);
+SGJEvent.addCharacter(@id0,150,100,fade);
+SGJEvent.messageShow(经过了多年的争斗，@name0终于扫除了各地军阀，为天下带来了和平。,3);
+SGJEvent.addCharacter(@id1,350,100,fade);
+SGJEvent.messageShow(而一心想要兴复汉室的@name0，派人迎回了汉献帝，因为功劳太大，献帝不但任@name0为丞相，还封@name0为@prince王。,3);
+SGJEvent.messageShow(虽然@name0担任丞相期间，安抚百姓，制定法典。但是由于献帝依然亲近宦官，远离贤臣，不听忠谏，荒淫无度。@name0终于心力憔悴，带着亲随远离了朝廷。,3);
+SGJEvent.removeCharacter(@id0,fade);
+SGJEvent.messageShow(而失去了@name0的汉朝，国立日益衰弱，最终还是没有摆脱灭亡的命运。,3);
+SGJEvent.addCharacter(622,0,200,fade);
+SGJEvent.messageShow(在汉朝灭亡后，华北地区战火纷飞，掠夺与屠杀不断。五胡纷纷举兵，史称五胡乱华。,3);
+Mark.EventEnd;
