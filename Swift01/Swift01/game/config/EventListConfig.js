@@ -614,7 +614,7 @@ var EventListConfig = [
 		troopsVsTribe:{from:3, to:1000},//兵力大于外族兵力的3倍
 		generalsCount:{basicPropertiesSum:360, from:20}//属性平均值超过90的武将大于20人
 	},
-	script:"Data/Event/{0}/yzmz.txt",
+	script:"Data/Event/{0}/jj_yzmz_cg.txt",
 	result:[{type:"gameClear"}]
 },
 {
@@ -635,13 +635,13 @@ var EventListConfig = [
 		police:{from:0,to:69},//平均治安小于70 
 		beheadOrPolice:1//behead和police为或的关系
 	},
-	script:"Data/Event/{0}/hj.txt",
+	script:"Data/Event/{0}/jj_hj_mw.txt",
 	result:[{type:"gameClear"}]
 },
 {
 	id:28,//十二,不满足以上条件
 	index:36,
-	name:"结局:新政权",
+	name:"结局:新政权晋朝",
 	condition:{
 		seignior:0,
 		generals:[
@@ -650,7 +650,7 @@ var EventListConfig = [
 		],
 		clear:1
 	},
-	script:"Data/Event/{0}/xj.txt",
+	script:"Data/Event/{0}/jj_xzq.txt",
 	result:[{type:"gameClear"}]
 },
 {
@@ -685,7 +685,7 @@ var EventListConfig = [
 		troopsVsTribe:{from:0, to:3},//兵力小于外族兵力的3倍
 		generalsCount:{basicPropertiesSum:360, to:19}//属性平均值超过90的武将小于20人
 	},
-	script:"Data/Event/{0}/xj.txt",
+	script:"Data/Event/{0}/jj_yzmz_sb.txt",
 	result:[{type:"gameClear"}]
 },
 {
@@ -706,7 +706,7 @@ var EventListConfig = [
 		police:{from:0,to:69},//平均治安小于70 
 		beheadOrPolice:1//behead和police为或的关系
 	},
-	script:"Data/Event/{0}/xj.txt",
+	script:"Data/Event/{0}/jj_hj_fl.txt",
 	result:[{type:"gameClear"}]
 },
 {
