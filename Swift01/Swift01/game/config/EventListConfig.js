@@ -727,7 +727,7 @@ var EventListConfig = [
 		agriculture:{from:0.7},//农业平均值超过最大值的70%
 		treasure:{to:0.8}//未集齐80%宝物
 	},
-	script:"Data/Event/{0}/xj.txt",
+	script:"Data/Event/{0}/jj_xj_sy.txt",
 	result:[{type:"gameClear"}]
 },
 {
@@ -747,7 +747,7 @@ var EventListConfig = [
 		technology:{from:0.7},//技术平均值超过最大值的70%
 		treasure:{from:0.8}//集齐80%宝物
 	},
-	script:"Data/Event/{0}/xj.txt",
+	script:"Data/Event/{0}/jj_xj_wm.txt",
 	result:[{type:"gameClear"}]
 },
 {
@@ -770,7 +770,7 @@ var EventListConfig = [
 		treasure:{from:0.8},//集齐80%宝物
 		tribe:[0]//外族全灭
 	},
-	script:"Data/Event/{0}/xj.txt",
+	script:"Data/Event/{0}/jj_xj_qg.txt",
 	result:[{type:"gameClear"}]
 },
 {
