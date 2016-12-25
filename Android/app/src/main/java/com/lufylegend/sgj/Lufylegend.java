@@ -398,6 +398,9 @@ public class Lufylegend {
     }
     @JavascriptInterface
     public void playSE(String name, int volume){
+        if(volume == 0){
+        	return;
+        }
         soundPool.play(soundIds.get(name.toLowerCase()), 1.0f, 1.0f, 0, 0, 1);
     }
     @JavascriptInterface
@@ -408,6 +411,9 @@ public class Lufylegend {
     public void playBGM(String name, int volume){
         if(mediaPlayer != null){
             mediaPlayer.stop();
+        }
+        if(volume == 0){
+        	return;
         }
         mediaPlayer = MediaPlayer.create(context, soundIds.get(name.toLowerCase()));
         mediaPlayer.setLooping(true);
