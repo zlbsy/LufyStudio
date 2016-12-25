@@ -438,20 +438,29 @@ var EventListConfig = [
 {
 	id:19,
 	index:19,
-	name:"西凉锦马超",
+	name:"二乔",
 	condition:{
-		from:{year:211,month:3},
-		to:{year:211,month:4},
-		seignior:[1,43],
+		from:{year:195,month:1},
+		to:{year:200,month:12},
+		seignior:24,
 		generals:[
-			{id:1,seignior:1},
-			{id:43,seignior:43}
+			{id:24,seignior:24},
+			{id:2,seignior:24},
+			{id:528,seignior:0},
+			{id:548,seignior:0}
 		],
 		citys:[
+			{id:28,seignior:24},//柴桑属孙策
+			{id:30,seignior:24},//建业属孙策
+			{id:31,seignior:24},//吴属孙策
+			{id:32,seignior:24},//会稽属孙策
 		]
 	},
-	script:"Data/Event/{0}/xljmc.txt",
-	result:[],
+	script:"Data/Event/{0}/eq.txt",
+	result:[
+		{type:"changeSeignior", id:528, seignior:24, loyalty:100, city:28},
+		{type:"changeSeignior", id:548, seignior:24, loyalty:100, city:28}
+	],
 },
 {
 	id:20,

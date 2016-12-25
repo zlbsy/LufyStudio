@@ -1,0 +1,12 @@
+SGJEvent.mapShow(7);
+SGJEvent.addCharacter(@id0,150,100,fade);
+SGJEvent.messageShow(長年の闘争を経て、@name0が天下を統一して、新王朝を作りました。,3);
+SGJEvent.addCharacter(@id1,350,100,fade);
+SGJEvent.messageShow(漢王朝を再興したい@name0は，漢献帝を見つかって、擁立しました。献帝は@name0を丞相に任命し，そして@name0を@prince王に封ぜられた。,3);
+SGJEvent.messageShow(@name0が丞相を務めた間，賦役・刑罰の軽減、三省六部制の整備などを行い。献帝も@name0の影響で、常に自らを律するように勤めて、漢王朝が強くなりました。,3);
+SGJEvent.addCharacter(622,0,200,fade);
+SGJEvent.messageShow(充実した国力を背景に異民族討伐を実施する。,3);
+SGJEvent.removeCharacter(622,fade);
+SGJEvent.messageShow(異民族は崩壊し、遊牧諸部族が新王朝の支配下に入ることとなった。,3);
+SGJEvent.messageShow(漢王朝はそのまま、数十年を延長しました、@name0は中国の名臣になって、死後、廟の建立を求める声が各地から挙がり、@name0の事績を歌にうたいました。,3);
+Mark.EventEnd;

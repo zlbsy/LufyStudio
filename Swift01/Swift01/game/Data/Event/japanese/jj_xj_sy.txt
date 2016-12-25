@@ -1,0 +1,9 @@
+SGJEvent.mapShow(7);
+SGJEvent.addCharacter(@id0,150,100,fade);
+SGJEvent.messageShow(長年の闘争を経て、@name0が天下を統一して、新しい王朝を作って、長安を首都にした。,3);
+SGJEvent.messageShow(新王朝を作った@name0は常に自らを律するように勤めた。,3);
+SGJEvent.messageShow(賦役・刑罰の軽減、三省六部制の整備などを行い、軍事面においても兵の訓練を自ら視察し、成績優秀者には褒賞を与えたため軍事力は強力になった。,3);
+SGJEvent.messageShow(@name0はシルクロードを修復し、海のシルクロードももっと利用しました。,3);
+SGJEvent.messageShow(@name0は中国と欧州の貿易を促進して、遠く隔ったペルシアも通商を行っており、ペルシアの商人も長安に赴いて、色々な製品を持ってきました。,3);
+SGJEvent.messageShow(@name0は中国と欧州の交流に非常に大きな貢献しました，@name0が作った新王朝が中国史上商業が最高な王朝になりました。,3);
+Mark.EventEnd;

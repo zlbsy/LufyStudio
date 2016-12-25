@@ -53,7 +53,9 @@ CharacterDetailedTabStatusView.prototype.showStatus=function(){
 	statusLayer.cacheAsBitmap(true);
 	var backLayer = new LSprite();
 	backLayer.addChild(statusLayer);
-	self.setCtrlButtons(backLayer);
+	if(!LMvc.BattleController){
+		self.setCtrlButtons(backLayer);
+	}
 	var sc = new LScrollbar(backLayer, self.tabWidth, self.tabHeight, 10);
 	self.addChild(sc);
 };
@@ -88,13 +90,44 @@ CharacterDetailedTabStatusView.prototype.setCtrlButtons=function(backLayer){
 		btnBehead.y = 105;
 		backLayer.addChild(btnBehead);
 		btnBehead.addEventListener(LMouseEvent.MOUSE_UP,self.clickBehead);
-	}else if(characterModel.id() != characterModel.seigniorId() && characterModel.loyalty() < 100 && !characterModel.isPrized()){
-		var btnPrized = getButton(Language.get("prize"),200);//褒奖
-		btnPrized.x = LMvc.screenWidth - 260;
-		btnPrized.y = 5;
-		backLayer.addChild(btnPrized);
-		btnPrized.addEventListener(LMouseEvent.MOUSE_UP,self.clickPrized);
+	}else if(characterModel.id() != characterModel.seigniorId()){
+		var btnExile = getButton(Language.get("exile"),200);//流放
+		btnExile.x = LMvc.screenWidth - 260;
+		btnExile.y = 5;
+		backLayer.addChild(btnExile);
+		btnExile.addEventListener(LMouseEvent.MOUSE_UP,self.clickExile);
+		if(characterModel.loyalty() < 100 && !characterModel.isPrized()){
+			var btnPrized = getButton(Language.get("prize"),200);//褒奖
+			btnPrized.x = LMvc.screenWidth - 260;
+			btnPrized.y = 55;
+			backLayer.addChild(btnPrized);
+			btnPrized.addEventListener(LMouseEvent.MOUSE_UP,self.clickPrized);
+		}
 	}
+};
+CharacterDetailedTabStatusView.prototype.clickExile=function(event){
+	var btnExile = event.currentTarget;
+	var self = btnExile.getParentByConstructor(CharacterDetailedTabStatusView);
+	var characterListView = self.getParentByConstructor(CharacterListView);
+	var characterModel = self.controller.getValue("selectedCharacter");
+	var obj = {title:Language.get("confirm"),
+	message:String.format(Language.get("dialog_exile_message"), 
+	characterModel.name()),height:200,
+	okEvent:function(e){
+		e.currentTarget.parent.remove();
+		btnExile.visible = false;
+		self.exileRun(characterListView, characterModel);
+	},cancelEvent:null};
+	var windowLayer = ConfirmWindow(obj);
+	LMvc.layer.addChild(windowLayer);
+};
+CharacterDetailedTabStatusView.prototype.exileRun=function(characterListView, characterModel){
+	var self = this;
+	characterModel.city().addOutOfOfficeCharacter(characterModel.id());
+	self.controller.dispatchEvent(LController.NOTIFY_ALL);
+	var e = new LEvent(CharacterListEvent.LIST_CHANGE);
+	e.characterModel = characterModel;
+	characterListView.dispatchEvent(e);
 };
 CharacterDetailedTabStatusView.prototype.clickPrized=function(event){
 	var btnPrized = event.currentTarget;

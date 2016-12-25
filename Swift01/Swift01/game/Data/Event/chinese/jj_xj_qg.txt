@@ -6,6 +6,6 @@ SGJEvent.messageShow(在政治上，既往不咎，知人善任，从谏如流�
 SGJEvent.addCharacter(622,0,200,fade);
 SGJEvent.messageShow(在军事上，@name0多次对外用兵，先后平定四方的胡人部落。,3);
 SGJEvent.removeCharacter(622,fade);
-SGJEvent.messageShow(由是新王朝声威远播，四方宾服。,3);
-SGJEvent.messageShow(经君臣二十三年的努力，社会安定、经济恢复并稳定发展，对外武功显赫，@name0成为了中国历史上最杰出的皇帝之一。,3);
+SGJEvent.messageShow(而@name0并没有就这样止步，为了进一步扩张领土，@name0发动了西征，先后征服了伏尔加河以西诸国，以及波斯。,3);
+SGJEvent.messageShow(由@name0建立的新王朝，国力非常强盛，社会安定、经济发展迅速，对外武功显赫，成为了一个超级强国。,3);
 Mark.EventEnd;

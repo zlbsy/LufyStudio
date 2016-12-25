@@ -1,0 +1,16 @@
+SGJEvent.mapShow(7);
+SGJEvent.addCharacter(@id0,200,100,fade);
+SGJEvent.messageShow(長年の闘争を経て、@name0が天下を統一して、新王朝を作りました。,3);
+SGJEvent.messageShow(新王朝を作った@name0は常に自らを律するように勤めた。,3);
+SGJEvent.messageShow(でも、@name0が皇族を各地の王に封じた上で軍権をも与えたことは、かえってこれら皇族間の争いを誘発することとなります。,3);
+SGJEvent.messageShow(@name0は晩年に政治への興味を失い、愛妾美人に溺れ、日夜宴会を開いて乱交にふけった。,3);
+SGJEvent.removeCharacter(@id0,fade);
+SGJEvent.messageShow(@name0は死去した後、太子が白痴や無能惰弱で、諸王は皇族同士の内乱が発動しました。,3);
+SGJEvent.addCharacter(@id1,50,50,fade);
+SGJEvent.addCharacter(@id2,50,200,fade);
+SGJEvent.addCharacter(@id3,350,50,fade);
+SGJEvent.addCharacter(@id4,350,200,fade);
+SGJEvent.messageShow(この中に諸侯王は汝南王、楚王、趙王、斉王、長沙王、成都王、河間王、東海王の八王。,3);
+SGJEvent.messageShow(この動乱の時代は十六年続きました，八王の乱の流れはとても複雑であるが、端的に言えば10の事件を総称して八王の乱という。,3);
+SGJEvent.messageShow(八王の乱の際、諸王は異民族の傭兵を戦場に投入した。一見磐石に思えた晋の急速な弱体化は、内乱に参加した異民族に独立への野心を与えることとなる。こうして時代は五胡十六国時代へと突入していく。,3);
+Mark.EventEnd;

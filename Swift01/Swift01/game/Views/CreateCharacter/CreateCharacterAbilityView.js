@@ -17,7 +17,7 @@ CreateCharacterAbilityView.prototype.init=function(data){
 CreateCharacterAbilityView.prototype.updatePoint=function(value){
 	var self = this;
 	self.point += value;
-	self.statusPoint.text = String.format(Language.get("distribute_point"),self.point);
+	self.statusPoint.text = String.format(Language.get("distribute_point"),self.point + "/"+self.sumPoint);
 };
 CreateCharacterAbilityView.prototype.onRefreshStatus=function(event){
 	var self = event.currentTarget.parent.parent;
@@ -27,7 +27,7 @@ CreateCharacterAbilityView.prototype.onRefreshStatus=function(event){
 		var child = items[i];
 		child.setStatus(data[child.name]);
 	}
-	self.statusPoint.text = String.format(Language.get("distribute_point"),self.point);
+	self.statusPoint.text = String.format(Language.get("distribute_point"),self.point + "/"+self.sumPoint);
 };
 CreateCharacterAbilityView.prototype.refreshStatus=function(){
 	var self = this;
@@ -42,6 +42,7 @@ CreateCharacterAbilityView.prototype.refreshStatus=function(){
 			data[key] = chara.data[key];
 		}
 	}
+	self.sumPoint = self.point + self.getSumPoint(data);
 	return data;
 };
 CreateCharacterAbilityView.prototype.abilityInit=function(data){
@@ -51,13 +52,13 @@ CreateCharacterAbilityView.prototype.abilityInit=function(data){
 	}else{
 		self.point = data.statusPoint;
 	}
-	
-	self.statusPoint = getStrokeLabel(String.format(Language.get("distribute_point"),self.point),20,"#FFFFFF","#000000",3);
+	self.sumPoint = self.point + self.getSumPoint(data);
+	self.statusPoint = getStrokeLabel(String.format(Language.get("distribute_point"),self.point + "/"+self.sumPoint),19,"#FFFFFF","#000000",3);
 	self.statusPoint.x = 10;
 	self.statusPoint.y = 12;
 	self.baseLayer.addChild(self.statusPoint);
 	var refreshButton = getSizeButton(Language.get("refresh"),80,40);
-	refreshButton.x = 180;
+	refreshButton.x = 200;
 	refreshButton.y = 5;
 	self.baseLayer.addChild(refreshButton);
 	refreshButton.addEventListener(LMouseEvent.MOUSE_UP, self.onRefreshStatus);
@@ -81,6 +82,9 @@ CreateCharacterAbilityView.prototype.abilityInit=function(data){
 	items.push(child);
 	self.listView.resize(200, 45 * items.length);
 	self.listView.updateList(items);
+};
+CreateCharacterAbilityView.prototype.getSumPoint=function(data){
+	return data.force + data.intelligence + data.command + data.agility + data.luck;
 };
 CreateCharacterAbilityView.prototype.skillInit=function(data){
 	var self = this;
