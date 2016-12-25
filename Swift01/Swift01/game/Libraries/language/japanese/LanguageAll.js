@@ -121,10 +121,18 @@ Language.data = {
 	"event_22":"出師の表",
 	"event_23":"蜀滅亡",
 	"event_24":"五虎将軍",
-	"event_25":"結局:蛮族造反",
-	"event_26":"結局:蛮族征伐",
-	"event_27":"結局:昏君",
-	"event_28":"結局:贤君",
+	"event_25":"结局:蛮族造反の滅亡",
+	"event_26":"结局:蛮族征伐の勝利",
+	"event_27":"结局:昏君の滅亡",
+	"event_28":"结局:西晋の王朝",
+	"event_29":"结局:蛮族造反の講和",
+	"event_30":"结局:蛮族征伐の失敗",
+	"event_31":"结局:昏君の分裂",
+	"event_32":"结局:商業大国",
+	"event_33":"结局:文明大国",
+	"event_34":"结局:強い国の大陸制覇",
+	"event_35":"结局:漢王朝の再興(成功)",
+	"event_36":"结局:漢王朝の再興(失敗)",
 	
 	"prompt":"提示",
 	"def_single_combat_error":"建築物は一騎討ちができません!",
@@ -140,6 +148,7 @@ Language.data = {
 	"tab_lineups":"陣形",
 	"tab_status":"状態",
 	"tab_properties":"属性",
+	"tab_introduction":"紹介",
 	"tab_all":"全",
 	
 	"terrain_0":"平地",
@@ -563,7 +572,10 @@ Language.data = {
 	"reinforcement_defense_quantity_message":"防衛戦は最大武将数が{0}になります！残る増援部隊が{1}人送れます！",
 	"riot_message":"{0}にいる群衆は不満が爆発して、暴動起きました!",
 	"no_food_talk":"やばい！食糧がなくなったから、兵士の戦闘力が下降しました。",
-	"child_growup":"<font size='22' color='#FFFFFF'><font color='#FF0000'> {0} </font>が大人になったから、<font color='#FF0000'> {1} </font>に従って、味方に参加しました！</font>"
+	"child_growup":"<font size='22' color='#FFFFFF'><font color='#FF0000'> {0} </font>が大人になったから、<font color='#FF0000'> {1} </font>に従って、味方に参加しました！</font>",
+	"militaryConfirm":"<font size='21' color='#FFFFFF'>軍師の妙策【<font size='21' color='#FAFAD2'>{0}</font>】を使いますか？</font>",
+	"militaryNode":"※軍師の妙策は一回しか使えません。",
+	"military":"軍師の妙策",
 };
 Language.itemData = {
 	"item_name_1":"方壶",
