@@ -576,6 +576,7 @@ Language.data = {
 	"militaryConfirm":"<font size='21' color='#FFFFFF'>使用军师计【<font size='21' color='#FAFAD2'>{0}</font>】吗？</font>",
 	"militaryNode":"※军师计在战斗中只能使用一次。",
 	"military":"军师计",
+	"breakthrough":"突破成长",
 };
 Language.itemData = {
 	"item_name_1":"方壶",

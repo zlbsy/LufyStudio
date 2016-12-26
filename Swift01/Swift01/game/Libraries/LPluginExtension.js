@@ -87,9 +87,14 @@ LPlugin.GetData = function(key, defaultData){
 		}
 	}
 	if(!data){
-		return (typeof defaultData != UNDEFINED) ? defaultData : {};
+		return (typeof defaultData != UNDEFINED) ? defaultData : "{}";
 	}
-	return JSON.parse(data);
+	try{
+		return JSON.parse(data);
+	}catch(e){
+		console.error("not json error", data);
+	}
+	return {};
 };
 LPlugin.DeleteData = function(key){
 	if(LPlugin.deleteFileInDomain){

@@ -57,6 +57,9 @@ and open the template in the editor.
 				LGlobal.canvasObj.width  = LGlobal.width;
 				LGlobal.canvasObj.height  = LGlobal.height;
 				LGlobal.stage.scaleX = LGlobal.stage.scaleY = mobileScale;
+			}else{
+				LMvc.screenWidth = 480;
+				LMvc.screenHeight = 800;
 			}
 			LGlobal.align = LStageAlign.TOP_LEFT;
 			LGlobal.stageScale = LStageScaleMode.SHOW_ALL;
