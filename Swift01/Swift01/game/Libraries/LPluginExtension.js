@@ -6,6 +6,12 @@ if(!LPlugin.bundleVersion){
 		return LMvc.ver;
 	};
 }
+LPlugin.DictionaryIsRead = function(key){
+	return LPlugin.GetData("Dictionary_" + key + "_" + LMvc.ver);
+};
+LPlugin.ReadDictionary = function(key){
+	return LPlugin.SetData("Dictionary_" + key + "_" + LMvc.ver, 1);
+};
 LPlugin.stamps = function(){
 	if(!LPlugin._stamps){
 		LPlugin._stamps = LPlugin.GetData(LPlugin.KEY_STAMP_LIST);
@@ -87,14 +93,16 @@ LPlugin.GetData = function(key, defaultData){
 		}
 	}
 	if(!data){
-		return (typeof defaultData != UNDEFINED) ? defaultData : "{}";
+		return (typeof defaultData != UNDEFINED) ? defaultData : {};
 	}
+	var result;
 	try{
-		return JSON.parse(data);
+		result = JSON.parse(data);
 	}catch(e){
+		result = {};
 		console.error("not json error", data);
 	}
-	return {};
+	return result;
 };
 LPlugin.DeleteData = function(key){
 	if(LPlugin.deleteFileInDomain){

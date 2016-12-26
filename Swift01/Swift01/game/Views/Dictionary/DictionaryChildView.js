@@ -33,7 +33,8 @@ DictionaryChildView.prototype.set=function(){
 	lblName.text = Language.get(self.word.key);
 	lblName.x = (110 - lblName.getWidth()) * 0.5;
 	lblName.y = (50 - lblName.getHeight()) * 0.5;
-	if(self.word.ver <= LMvc.ver){
+	if(LPlugin.dataVer(self.word.ver) <= LPlugin.dataVer(LMvc.ver) 
+	|| LPlugin.DictionaryIsRead(self.word.key)){
 		return;
 	}
 	if(self.getChildByName("newMark") != null){
@@ -50,6 +51,7 @@ DictionaryChildView.prototype.onClick = function(event) {
 	var listView = event.currentTarget;
 	var newMark = self.getChildByName("newMark");
 	if(newMark){
+		LPlugin.ReadDictionary(self.word.key);
 		newMark.visible = false;
 		self.cacheAsBitmap(false);
 		self.updateView();
