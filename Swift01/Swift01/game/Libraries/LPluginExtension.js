@@ -12,7 +12,7 @@ LPlugin.DictionaryIsRead = function(key){
 	}
 	for(var i=0,l=dictionaryConfig.length;i<l;i++){
 		var word = dictionaryConfig[i];
-		if(LPlugin.dataVer(self.word.ver) >= LPlugin.dataVer(LMvc.ver) && !LPlugin.GetData("Dictionary_" + word.key + "_" + LMvc.ver, 0)){
+		if(LPlugin.dataVer(word.ver) >= LPlugin.dataVer(LMvc.ver) && !LPlugin.GetData("Dictionary_" + word.key + "_" + LMvc.ver, 0)){
 			return 0;
 		}
 	}

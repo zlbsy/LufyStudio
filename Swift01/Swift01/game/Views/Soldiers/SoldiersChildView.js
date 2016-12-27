@@ -59,7 +59,7 @@ SoldiersChildView.prototype.setLvUpButton=function(){
 		var img = canLvUp ? "win01" : "win07";
 		var btnLvUp = getPanel(img,60, 40);
 		btnLvUp.img = img;
-		var textLabel = getStrokeLabel(Language.get("levelUp"),18,canLvUp ? "#FFFFFF" : "#666666","#000000",3);
+		var textLabel = getStrokeLabel(Language.get("evolution"),18,canLvUp ? "#FFFFFF" : "#666666","#000000",3);
 		textLabel.x = (60 - textLabel.getWidth()) * 0.5;
 		textLabel.y = (40 - textLabel.getHeight()) * 0.5;
 		btnLvUp.addChild(textLabel);
@@ -227,7 +227,7 @@ SoldiersChildView.prototype.onClick = function(event) {
 			};
 			if(canLvUp){
 				var nextSoldiers = SoldierMasterModel.getMaster(self.soldierModel.next());
-				obj.messageHtml = String.format(Language.get("<font size='21' color='#D3D3D3'>将兵种升级为 「<font size='21' color='#FAFAD2'>{0}</font>」 吗？</font>"), nextSoldiers.name());
+				obj.messageHtml = String.format(Language.get("dialog_arm_level_confirm"), nextSoldiers.name());
 				obj.okEvent = function(e) {
 					e.currentTarget.parent.remove();
 					var nextSoldiersData = {id:nextSoldiers.id(),proficiency:self.soldierModel.maxProficiency(), img:self.soldierModel.img()};
@@ -238,7 +238,7 @@ SoldiersChildView.prototype.onClick = function(event) {
 				};
 				obj.cancelEvent = null;
 			}else{
-				obj.messageHtml = String.format(Language.get("<font size='21' color='#D3D3D3'>兵种升级需要熟练度达到 「<font size='21' color='#FAFAD2'>{0}</font>」 。</font>"), self.soldierModel.maxProficiency());
+				obj.messageHtml = String.format(Language.get("dialog_arm_level_error"), self.soldierModel.maxProficiency());
 			}
 			var windowLayer = ConfirmWindow(obj);
 			LMvc.layer.addChild(windowLayer);

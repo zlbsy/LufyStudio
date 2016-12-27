@@ -10,7 +10,7 @@ MapController.prototype.construct=function(){
 };
 MapController.prototype.configLoad=function(){
 	var self = this;
-	self.load.config(["Character","CharacterListType","characterList","Job","Items","Event","Strategy","Soldiers","Reputation","Military"],self.helperLoad);
+	self.load.config(["Character","CharacterListType","characterList","Job","Items","Event","Strategy","Soldiers","Reputation","Military","Dictionary"],self.helperLoad);
 };
 MapController.prototype.helperLoad=function(){
 	var self = this;

@@ -19,9 +19,12 @@ DictionaryView.prototype.init=function(){
 	self.contentLabel = getStrokeLabel("",20,"#FFFFFF","#000000",2);
 	self.contentLabel.width = LMvc.screenWidth - 40;
 	self.contentLabel.setWordWrap(true,27);
-	self.contentLabel.x = 20;
-	self.contentLabel.y = 100;
-	self.addChild(self.contentLabel);
+	var contentLayer = new LSprite();
+	self.scrollContent = new LScrollbar(contentLayer,LMvc.screenWidth - 40,LMvc.screenHeight - 120,10);
+	self.scrollContent.x = 20;
+	self.scrollContent.y = 100;
+	contentLayer.addChild(self.contentLabel);
+	self.addChild(self.scrollContent);
 	self.ctrlLayer = new LSprite();
 	self.addChild(self.ctrlLayer);
 	self.ctrlLayerInit();
