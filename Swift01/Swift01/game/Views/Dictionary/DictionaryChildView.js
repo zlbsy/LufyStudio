@@ -33,7 +33,7 @@ DictionaryChildView.prototype.set=function(){
 	lblName.text = Language.get(self.word.key);
 	lblName.x = (110 - lblName.getWidth()) * 0.5;
 	lblName.y = (50 - lblName.getHeight()) * 0.5;
-	if(LPlugin.dataVer(self.word.ver) <= LPlugin.dataVer(LMvc.ver) 
+	if(LPlugin.dataVer(self.word.ver) < LPlugin.dataVer(LMvc.ver) 
 	|| LPlugin.DictionaryIsRead(self.word.key)){
 		return;
 	}

@@ -7,7 +7,16 @@ if(!LPlugin.bundleVersion){
 	};
 }
 LPlugin.DictionaryIsRead = function(key){
-	return LPlugin.GetData("Dictionary_" + key + "_" + LMvc.ver);
+	if(key){
+		return LPlugin.GetData("Dictionary_" + key + "_" + LMvc.ver, 0);
+	}
+	for(var i=0,l=dictionaryConfig.length;i<l;i++){
+		var word = dictionaryConfig[i];
+		if(LPlugin.dataVer(self.word.ver) >= LPlugin.dataVer(LMvc.ver) && !LPlugin.GetData("Dictionary_" + word.key + "_" + LMvc.ver, 0)){
+			return 0;
+		}
+	}
+	return 1;
 };
 LPlugin.ReadDictionary = function(key){
 	return LPlugin.SetData("Dictionary_" + key + "_" + LMvc.ver, 1);
