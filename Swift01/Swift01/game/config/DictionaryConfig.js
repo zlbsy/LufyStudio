@@ -25,5 +25,6 @@ var dictionaryConfig = [
 	{key:"treat",ver:"1.8.2"},
 	{key:"single_command_heal",ver:"1.8.2"},
 	{key:"wounded",ver:"1.8.2"},
+	{key:"growing",ver:"1.9.0"},
 	{key:"breakthrough",ver:"1.9.0"},
 	];

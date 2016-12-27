@@ -27,9 +27,9 @@ CharacterModel.newcountUpValue = function(value, standard, newcount) {
 CharacterModel.upValue = function(type, value, newcount) {
 	if (type == "S") {
 		if (value < 50) {
-			return 1;
-		} else if (value < 70) {
 			return 2;
+		} else if (value < 70) {
+			return 3;
 		} else if (value < 90) {
 			return 3;
 		}else{
@@ -37,7 +37,7 @@ CharacterModel.upValue = function(type, value, newcount) {
 		}
 	} else if (type == "A") {
 		if (value < 50) {
-			return 1;
+			return 2;
 		} else if (value < 70) {
 			return 2;
 		} else {
