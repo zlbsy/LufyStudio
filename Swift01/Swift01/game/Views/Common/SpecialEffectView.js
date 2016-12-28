@@ -1,6 +1,8 @@
-function SpecialEffectView(controller){
+function SpecialEffectView(controller, charaModel){
 	var self = this;
 	base(self,LView,[controller]);
+	var se = charaModel.isMale() ? "man_attack" : "woman_attack";
+	LPlugin.playSE(se, LPlugin.gameSetting.SE);
 	self.set();
 }
 SpecialEffectView.prototype.set=function(){

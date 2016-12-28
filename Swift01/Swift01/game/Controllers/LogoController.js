@@ -143,6 +143,8 @@ LogoController.prototype.start=function(event){
 		{name:"Se_strategy_warter",path:LMvc.MVC_PATH+"Sound/Se_strategy_warter.wav"},
 		{name:"Se_strategy_wind",path:LMvc.MVC_PATH+"Sound/Se_strategy_wind.wav"},
 		{name:"Se_swing",path:LMvc.MVC_PATH+"Sound/Se_swing.wav"},
+		{name:"woman_attack",path:LMvc.MVC_PATH+"Sound/woman_attack.wav"},
+		{name:"man_attack",path:LMvc.MVC_PATH+"Sound/man_attack.wav"},
 		];
 		LLoadManage.load(soundDatas, null, self.soundComplete);
 	}
