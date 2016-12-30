@@ -160,7 +160,7 @@ CharacterModel.prototype.datas=function(){
 		job:self.getJobData(),//根据任务内容变化
 		loyalty:self.loyalty(),//忠诚度
 		soldiers:self.soldiersData(),//所有兵种熟练度
-		saveSoldiers:self.data.saveSoldiers;
+		saveSoldiers:self.data.saveSoldiers,
 		isPrized:self.isPrized(),
 		stopIn:self.stopIn(),
 		reputation:self.data.reputation,
@@ -1155,6 +1155,8 @@ CharacterModel.prototype.battleSoldierSelect = function(id, proficiency) {
 	self.data.saveSoldiers = self.data.soldiers;
 	var soldier = {id:id,proficiency:proficiency};
 	self.data.soldiers = [soldier];
+	self.data._currentSoldiers = null;
+	self._soldiers = null;
 	self.currentSoldierId(id);
 };
 CharacterModel.prototype.battleSoldierReset = function() {
@@ -1164,6 +1166,8 @@ CharacterModel.prototype.battleSoldierReset = function() {
 	}
 	self.data.soldiers = self.data.saveSoldiers;
 	self.data.saveSoldiers = null;
+	self.data._currentSoldiers = null;
+	self._soldiers = null;
 	self.data.currentSoldierId = null;
 };
 CharacterModel.prototype.underArrestTalk = function() {
