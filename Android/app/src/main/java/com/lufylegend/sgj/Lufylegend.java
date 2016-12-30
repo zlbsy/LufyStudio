@@ -465,6 +465,8 @@ public class Lufylegend {
             {put(R.raw.se_strategy_warter, "se_strategy_warter");}
             {put(R.raw.se_strategy_wind, "se_strategy_wind");}
             {put(R.raw.se_swing, "se_swing");}
+            {put(R.raw.man_attack, "man_attack");}
+            {put(R.raw.woman_attack, "woman_attack");}
         };
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             audioAttributes = new AudioAttributes.Builder()

@@ -35,7 +35,7 @@ BattleCharacterLayerView.prototype.charactersBoutEnd = function(event) {
 			mapLayer.setWakeRoads(event.belong,skill.wakeRects(),child.locationX(),child.locationY());
 		}else{
 			var strategySkill = child.data.currentSoldiers().strategySkill();
-			if(strategySkill.strategyType() == StrategyType.Wake){
+			if(strategySkill && strategySkill.strategyType() == StrategyType.Wake){
 				var rect = [{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}];
 				mapLayer.setWakeRoads(event.belong,rect,child.locationX(),child.locationY());
 			}

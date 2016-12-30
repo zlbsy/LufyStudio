@@ -465,6 +465,9 @@ CharacterModel.prototype.statusChange = function(name) {
 	}
 	return 1 + self.data.hertVsStatus.value * (self.maxTroops() - self.troops()) / self.maxTroops();
 };
+CharacterModel.prototype.isMale = function() {
+	return femaleCharacters.indexOf(this.id()) < 0;
+};
 CharacterModel.prototype.isTribeCharacter = function() {
 	return this.id() >= TribeCharacter[0] && this.id() <= TribeCharacter[1];
 };

@@ -63,7 +63,7 @@ var CharacterFaceSize = {
 	width:220,height:320
 };
 var CharacterLevelConfig = {
-	initLevel:30,
+	initLevel:3,
 	exp:100,
 	maxLevel:100
 };
@@ -120,4 +120,5 @@ var charactersParentConfig = [
 	{id:4,parent:21},//关羽-刘备
 	{id:19,parent:21},//张飞-刘备
 ];
+var femaleCharacters = [36,37,139,241,380,524,528,548];
 var sCharacterImages = ["zpftmd748"];
