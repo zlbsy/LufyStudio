@@ -220,6 +220,7 @@ BattleController.prototype.charactersInit = function(){
 		var chara = enemyCharas[i];
 		var charaId = chara.id();
 		self.addEnemyCharacter(charaId,child.direction,child.x,child.y);
+		//chara.battleSoldierSelect();
 		chara.HP(chara.maxHP());
 		chara.MP(chara.maxMP());
 		var battleCharacter = self.view.charaLayer.getCharacter(Belong.ENEMY, charaId);
@@ -255,6 +256,10 @@ BattleController.prototype.defCharactersInit=function(){
 		charaIndexObj[key] += 1;
 		var chara = CharacterModel.getChara(charaId);
 		chara.isDefCharacter(1);
+		if(LMvc.chapterData.trouble == TroubleConfig.HARD){
+			var currentSoldiers = chara.currentSoldiers();
+			chara.battleSoldierSelect(currentSoldiers.next());
+		}
 		chara.currentSoldiers().data.img =  "common/" + DefCharacterImage[key] + (isSelfDef ? "-1" : "-2");
 		chara.seigniorId(self.battleData.toCity.seigniorCharaId());
 		chara.cityId(self.battleData.toCity.id());

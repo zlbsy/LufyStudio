@@ -1130,3 +1130,10 @@ function isNeedSupplyMilitaryFromCharacters(charas){
 	}
 	return count >= charas.length * 0.5;
 }
+//战斗结束后特殊兵种取消
+function resetAllBattleSoldier(characterModels){
+	for(var i=0,l=characterModels.length;i<l;i++){
+		var character = characterModels[i];
+		character.battleSoldierReset();
+	}
+}

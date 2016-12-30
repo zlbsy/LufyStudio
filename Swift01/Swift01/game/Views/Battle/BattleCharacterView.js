@@ -347,6 +347,7 @@ BattleCharacterView.prototype.toDie = function() {
 	var script = "";
 	self.data.troops(0);
 	self.data.wounded(0);
+	self.data.battleSoldierReset();
 	if(self.data.isDefCharacter()){
 		//防御设施被摧毁,城防降低
 		self.data.city().cityDefense(-DefenseCharacterCost * 0.5);
