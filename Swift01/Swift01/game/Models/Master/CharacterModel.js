@@ -1147,13 +1147,16 @@ CharacterModel.prototype.currentSoldiers = function(id) {
 	}
 	return self.data._currentSoldiers;
 };
-CharacterModel.prototype.battleSoldierSelect = function(id, proficiency) {
+CharacterModel.prototype.battleSoldierSelect = function(id, proficiency, img) {
 	var self = this;
 	if(self.currentSoldierId() == id){
 		return;
 	}
 	self.data.saveSoldiers = self.data.soldiers;
 	var soldier = {id:id,proficiency:proficiency};
+	if(img && img.indexOf("common") < 0){
+		soldier.img = img;
+	}
 	self.data.soldiers = [soldier];
 	self.data._currentSoldiers = null;
 	self._soldiers = null;

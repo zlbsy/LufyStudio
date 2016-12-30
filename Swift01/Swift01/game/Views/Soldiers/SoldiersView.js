@@ -7,7 +7,10 @@ function SoldiersView(controller, characterModel, size) {
 SoldiersView.prototype.setSpecialSoldiers = function(characterModel) {
 	var self = this;
 	var soldierList = characterModel.soldiers();
-	if(purchaseHasBuy(productIdConfig.soldier_special)){
+	if(characterModel.seigniorId() != LMvc.selectSeignorId){
+		return;
+	}
+	//if(purchaseHasBuy(productIdConfig.soldier_special)){
 		for(var i=0, l=specialSoldiersConfig.length;i<l;i++){
 			var soldierId = specialSoldiersConfig[i];
 			var soldierModel = soldierList.find(function(c){
@@ -28,7 +31,7 @@ SoldiersView.prototype.setSpecialSoldiers = function(characterModel) {
 				soldierList.push(soldierModel);
 			}
 		}
-	}
+	//}
 };
 SoldiersView.prototype.setSoldierList = function(characterModel) {
 	var self = this;

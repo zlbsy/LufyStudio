@@ -115,7 +115,7 @@ SoldierModel.prototype.img = function(isSelf) {
 	var self = this;
 	var imgIndex = self.data.img;
 	if(!imgIndex){
-		imgIndex = "common/" + self.master().id() + (isSelf ? "-1" : "-2");
+		imgIndex = "common/" + self.master().img() + (isSelf ? "-1" : "-2");
 	}
 	return imgIndex;
 };
@@ -125,11 +125,12 @@ SoldierModel.prototype.icon=function(size,callback){
 	if(!size){
 		size = new LPoint(100,100);
 	}
-	//var imgIndex = self.master().id();
-	var imgIndex = self.data.img;
+	var imgIndex = self.img();
+	console.log(imgIndex);
+	/*var imgIndex = self.data.img;
 	if(!imgIndex){
 		imgIndex = "common/" + self.master().id() + "-1";
-	}
+	}*/
 	var icon = new BitmapSprite(LMvc.IMG_PATH + "character/s/"+imgIndex+".png", [64*18,0,64,64],size);
 	if(typeof callback == "function")icon.addEventListener(LEvent.COMPLETE, callback);
 	var winPanel = getPanel("win06",size.x,size.y);

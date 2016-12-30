@@ -219,11 +219,11 @@ BattleController.prototype.charactersInit = function(){
 		var child = enemyPositions[i];
 		var chara = enemyCharas[i];
 		var charaId = chara.id();
-		self.addEnemyCharacter(charaId,child.direction,child.x,child.y);
 		if(LMvc.chapterData.trouble == TroubleConfig.HARD){
 			var currentSoldiers = chara.currentSoldiers();
-			chara.battleSoldierSelect(currentSoldiers.next(), currentSoldiers.proficiency());
+			chara.battleSoldierSelect(currentSoldiers.next(), currentSoldiers.proficiency(), currentSoldiers.img());
 		}
+		self.addEnemyCharacter(charaId,child.direction,child.x,child.y);
 		chara.HP(chara.maxHP());
 		chara.MP(chara.maxMP());
 		var battleCharacter = self.view.charaLayer.getCharacter(Belong.ENEMY, charaId);
