@@ -430,7 +430,7 @@ var SoldierDatas = [
 	restrain:[{id:3,value:150},{id:17,value:150},{id:18,value:150},{id:19,value:150},
 			{id:27,value:150},{id:41,value:150}],
 	terrain:[{id:7,value:100,moveCost:2},{id:8,value:100,moveCost:2},{id:10,value:110,moveCost:1},{id:11,value:110,moveCost:2}],
-	rangeAttack:[{x:0,y:-1},{x:0,y:-2},{x:0,y:-3},{x:0,y:1},{x:0,y:2},{x:0,y:3},{x:-1,y:0},{x:-2,y:0},{x:-3,y:0},{x:1,y:0},{x:2,y:0},{x:3,y:0},{x:-1,y:-1},{x:1,y:-1},{x:-1,y:1},{x:1,y:1},{x:1,y:2},{x:-1,y:-2},{x:1,y:-2},{x:-1,y:2},{x:2,y:1},{x:-2,y:-1},{x:2,y:-1},{x:-2,y:1}],
+	rangeAttack:[{x:0,y:-2},{x:0,y:-3},{x:0,y:2},{x:0,y:3},{x:-2,y:0},{x:-3,y:0},{x:2,y:0},{x:3,y:0},{x:-1,y:-1},{x:1,y:-1},{x:-1,y:1},{x:1,y:1},{x:1,y:2},{x:-1,y:-2},{x:1,y:-2},{x:-1,y:2},{x:2,y:1},{x:-2,y:-1},{x:2,y:-1},{x:-2,y:1}],
 	rangeAttackTarget:[{x:0,y:0}],
 	strategy:[],
 	sign:"nub",

@@ -220,12 +220,9 @@ BattleController.prototype.charactersInit = function(){
 		var chara = enemyCharas[i];
 		var charaId = chara.id();
 		self.addEnemyCharacter(charaId,child.direction,child.x,child.y);
-		//chara.battleSoldierSelect();
 		if(LMvc.chapterData.trouble == TroubleConfig.HARD){
 			var currentSoldiers = chara.currentSoldiers();
-			console.error(chara.name(),currentSoldiers.id(),currentSoldiers.next());
 			chara.battleSoldierSelect(currentSoldiers.next(), currentSoldiers.proficiency());
-			console.error("battleSoldier:",chara.currentSoldiers().id());
 		}
 		chara.HP(chara.maxHP());
 		chara.MP(chara.maxMP());
@@ -262,9 +259,14 @@ BattleController.prototype.defCharactersInit=function(){
 		charaIndexObj[key] += 1;
 		var chara = CharacterModel.getChara(charaId);
 		chara.isDefCharacter(1);
-		if(LMvc.chapterData.trouble == TroubleConfig.HARD){
+		if(LMvc.chapterData.trouble == TroubleConfig.HARD || LMvc.chapterData.trouble == TroubleConfig.NORMAL){
 			var currentSoldiers = chara.currentSoldiers();
 			chara.battleSoldierSelect(currentSoldiers.next(), currentSoldiers.proficiency());
+		}
+		if(LMvc.chapterData.trouble == TroubleConfig.HARD){
+			chara.data.skill = 98;
+		}else{
+			chara.data.skill = 0;
 		}
 		chara.currentSoldiers().data.img =  "common/" + DefCharacterImage[key] + (isSelfDef ? "-1" : "-2");
 		chara.seigniorId(self.battleData.toCity.seigniorCharaId());
