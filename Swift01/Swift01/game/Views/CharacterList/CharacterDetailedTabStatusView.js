@@ -36,10 +36,15 @@ CharacterDetailedTabStatusView.prototype.showStatus=function(){
 		labels.push("stunt");
 		datas.push(String.format(Language.get("skill_explanation"),skill.name(),skill.explanation(),skill.probability()));
 	}
+	var military = characterModel.military();
+	if(military){
+		labels.push("military");
+		datas.push(String.format(Language.get("military_explanation"),military.name(),military.explanation()));
+	}
 	for(var i=0;i<labels.length;i++){
 		var height = txtHeight;
 		var lblCost = getStrokeLabel(String.format("{0} : {1}",Language.get(labels[i]), datas[i]),20,"#FFFFFF","#000000",4);
-		if(labels[i] == "stunt" || labels[i] == "status"){
+		if(labels[i] == "stunt" || labels[i] == "status" || labels[i] == "military"){
 			lblCost.width = LMvc.screenWidth - 60;
 			lblCost.setWordWrap(true, txtHeight);
 			height = lblCost.getHeight();

@@ -73,8 +73,8 @@ var DefCharacterList = {//防御设施范围
 	"soldier_6":[677,678,679,680,681,682]
 };
 var DefCharacterImage = {
-	"soldier_4":200,
-	"soldier_6":6
+	"soldier_4":"jinglan",
+	"soldier_6":"paoche"
 };
 var MaxHistoryCharacterIndex = 620;//历史人物范围
 var TribeCharacter = [621,670];//外族范围

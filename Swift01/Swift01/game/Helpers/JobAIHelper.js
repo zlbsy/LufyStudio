@@ -11,7 +11,7 @@ function getWeakBattleCity(areaModel){
 		if(SeigniorExecute.Instance().eventCitys.indexOf(neighbors[i])>=0){
 			continue;
 		}
-		if(child.seigniorCharaId() != areaModel.seigniorCharaId() && !areaModel.seignior().isStopBattle(child.seigniorCharaId())){
+		if(!child.isTribe() && child.seigniorCharaId() != areaModel.seigniorCharaId() && !areaModel.seignior().isStopBattle(child.seigniorCharaId())){
 			enemyCitys.push(child);
 		}
 	}
@@ -405,7 +405,8 @@ function jobAiNeedToEnlist(areaModel){
 	}
 	var charas = areaModel.getDefenseEnemies();
 	var minToops = 0;
-	for(var i = 0,l=charas.length;i<l;i++){
+	var quantityEnlist = Math.min(charas.length, BattleMapConfig.DefenseQuantity + BattleMapConfig.AttackQuantity);
+	for(var i = 0;i<quantityEnlist;i++){
 		var chara = charas[i];
 		minToops += chara.maxTroops();
 	}

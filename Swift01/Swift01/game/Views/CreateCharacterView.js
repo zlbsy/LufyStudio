@@ -89,7 +89,15 @@ CreateCharacterView.prototype.showDetailed=function(event){
 };
 CreateCharacterView.prototype.toShowDetailed=function(data){
 	var self = this;
+	var obj = {title:"确认",message:"武将作成画面暂时出了点儿问题，正在修正中，请稍等！",width:300,height:300};
+	var windowLayer = ConfirmWindow(obj);
+	self.addChild(windowLayer);
+	return;
 	var detailedView = new CreateCharacterDetailedView(self.controller, data);
+	self.parent.addChild(detailedView);
+	self.baseLayer.visible = false;
+	self.visible = false;
+	return;
 	var obj = {title:Language.get(data?"update_character":"create_character"),subWindow:detailedView,contentStartY:60,width:LMvc.screenWidth,height:560,okEvent:self.saveCharacter,cancelEvent:self.cancelEvent};
 	var windowLayer = ConfirmWindow(obj);
 	self.addChild(windowLayer);

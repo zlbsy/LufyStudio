@@ -186,6 +186,9 @@ BattleController.prototype.charactersInit = function(){
 			if(!employCharacters){
 				employCharacters = self.battleData.toCity.getEmployCharacters();
 			}
+			if(employCharacters.length <= 0){
+				break;
+			}
 			var chara = employCharacters.shift();
 			if(self.battleData.toCity.money() < chara.employPrice()){
 				break;
@@ -195,7 +198,14 @@ BattleController.prototype.charactersInit = function(){
 			}
 			chara.troops(chara.maxTroops());
 			self.battleData.toCity.troops(self.battleData.toCity.troops() - chara.maxTroops());
-			self.battleData.toCity.money(-chara.employPrice());
+			var multiplier = 1;
+			if(LMvc.chapterData.trouble == TroubleConfig.HARD){
+				multiplier = 0;
+			}else if(LMvc.chapterData.trouble == TroubleConfig.NORMAL){
+				multiplier = 0.5;
+			}
+			var price = chara.employPrice() * multiplier >>> 0;
+			self.battleData.toCity.money(-price);
 			enemyCharas.push(chara);
 		}
 	
@@ -215,13 +225,25 @@ BattleController.prototype.charactersInit = function(){
 		return v;
 	});
 	self.battleData.expeditionEnemyCharacterList = enemyCharas;
+	var coreCount = Math.max(enemyCharas.length / 3 >>> 0, 1);
 	for(var i = 0;i<enemyCharas.length;i++){
 		var child = enemyPositions[i];
 		var chara = enemyCharas[i];
 		var charaId = chara.id();
-		if(LMvc.chapterData.trouble == TroubleConfig.HARD){
-			var currentSoldiers = chara.currentSoldiers();
-			chara.battleSoldierSelect(currentSoldiers.next(), currentSoldiers.proficiency(), currentSoldiers.img());
+		if(LMvc.chapterData.trouble == TroubleConfig.HARD || LMvc.chapterData.trouble == TroubleConfig.NORMAL){
+			if(LMvc.chapterData.trouble == TroubleConfig.HARD && i < coreCount){
+				var currentSoldiers = chara.currentSoldiers();
+				var specialSoldierId = getBattleSoldierSelectId(currentSoldiers, chara);
+				var img = currentSoldiers.img();
+				if(img && [5,29,6,30].indexOf(currentSoldiers.id()) >= 0){
+					var soldierData = chara.data.soldiers.find(function(c){return c.id == 4;});
+					img = (soldierData && soldierData.img) ? soldierData.img : null;
+				}
+				chara.battleSoldierSelect(specialSoldierId, currentSoldiers.proficiency(), img);
+			}else{
+				var currentSoldiers = chara.currentSoldiers();
+				chara.battleSoldierSelect(currentSoldiers.next(), currentSoldiers.proficiency(), currentSoldiers.img());
+			}
 		}
 		self.addEnemyCharacter(charaId,child.direction,child.x,child.y);
 		chara.HP(chara.maxHP());
@@ -259,16 +281,19 @@ BattleController.prototype.defCharactersInit=function(){
 		charaIndexObj[key] += 1;
 		var chara = CharacterModel.getChara(charaId);
 		chara.isDefCharacter(1);
-		if(LMvc.chapterData.trouble == TroubleConfig.HARD || LMvc.chapterData.trouble == TroubleConfig.NORMAL){
-			var currentSoldiers = chara.currentSoldiers();
-			chara.battleSoldierSelect(currentSoldiers.next(), currentSoldiers.proficiency());
+		chara.data.skill = 0;
+		if(!isSelfDef || self.battleData.toCity.level() >= 4){
+			if(LMvc.chapterData.trouble == TroubleConfig.HARD || LMvc.chapterData.trouble == TroubleConfig.NORMAL){
+				var currentSoldiers = chara.currentSoldiers();
+				chara.battleSoldierSelect(currentSoldiers.next(), currentSoldiers.proficiency());
+			}
+			if(!isSelfDef || self.battleData.toCity.level() >= 5){
+				if(LMvc.chapterData.trouble == TroubleConfig.HARD){
+					chara.data.skill = 98;
+				}
+			}
 		}
-		if(LMvc.chapterData.trouble == TroubleConfig.HARD){
-			chara.data.skill = 98;
-		}else{
-			chara.data.skill = 0;
-		}
-		chara.currentSoldiers().data.img =  "common/" + DefCharacterImage[key] + (isSelfDef ? "-1" : "-2");
+		chara.currentSoldiers().data.img =  DefCharacterImage[key] + (isSelfDef ? "-1" : "-2");
 		chara.seigniorId(self.battleData.toCity.seigniorCharaId());
 		chara.cityId(self.battleData.toCity.id());
 		chara.calculation(true);

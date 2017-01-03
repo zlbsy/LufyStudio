@@ -46,16 +46,6 @@ SoldierModel.prototype.proficiency = function(value) {
 	var self = this;
 	var maxProficiency = self.maxProficiency();
 	return self._dataValue("proficiency",value,0,0,maxProficiency);
-	/*if(typeof value != UNDEFINED && value > 1000){
-		value = 1000;
-	}
-	var result = self._dataValue("proficiency",value,0,0,maxProficiency);
-	if(typeof value == UNDEFINED){
-		if(result > 1000){
-			return 1000;
-		}
-	}
-	return result;*/
 };
 SoldierModel.prototype.name = function() {
 	return this.master().name();
@@ -114,7 +104,7 @@ SoldierModel.prototype.strategySkill = function() {
 SoldierModel.prototype.img = function(isSelf) {
 	var self = this;
 	var imgIndex = self.data.img;
-	if(!imgIndex){
+	if(!imgIndex || (imgIndex.indexOf("common") >= 0 && imgIndex.indexOf("common/200") < 0)){
 		imgIndex = "common/" + self.master().img() + (isSelf ? "-1" : "-2");
 	}
 	return imgIndex;
@@ -126,16 +116,9 @@ SoldierModel.prototype.icon=function(size,callback){
 		size = new LPoint(100,100);
 	}
 	var imgIndex = self.img();
-	console.log(imgIndex);
-	/*var imgIndex = self.data.img;
-	if(!imgIndex){
-		imgIndex = "common/" + self.master().id() + "-1";
-	}*/
 	var icon = new BitmapSprite(LMvc.IMG_PATH + "character/s/"+imgIndex+".png", [64*18,0,64,64],size);
 	if(typeof callback == "function")icon.addEventListener(LEvent.COMPLETE, callback);
 	var winPanel = getPanel("win06",size.x,size.y);
-	//var winPanel = new LPanel(new LBitmapData(LMvc.datalist["win06"]),size.x,size.y);
-	//winPanel.cacheAsBitmap(true);
 	icon.addChild(winPanel);
 	return icon;
 };

@@ -37,17 +37,18 @@ SoldiersView.prototype.setSoldierList = function(characterModel) {
 	var self = this;
 	self.setSpecialSoldiers(characterModel);
 	if(self.listView){
-		if(characterModel && characterModel.id() != self.characterModel.id()){
+		var items = self.listView.getItems();
+		var checkbox = items[0].checkbox && items[0].checkbox.visible;
+		var needUpdateAll = (checkbox && LMvc.BattleController) || (!checkbox && !LMvc.BattleController);
+		if(needUpdateAll || (characterModel && characterModel.id() != self.characterModel.id())){
 			self.updateItems(characterModel);
 		}else{
 			var soldierId = characterModel.currentSoldiers().id();
-			var items = self.listView.getItems();
 			var item = items.find(function(child){
 				return soldierId == child.soldierModel.id();
 			});
 			item.cacheAsBitmap(false);
 			item.updateView();
-			//self.listView.updateView();
 		}
 		return;
 	}
@@ -74,15 +75,29 @@ SoldiersView.prototype.updateItems = function(characterModel) {
 	var self = this;
 	var items = self.listView.getItems();
 	var soldierList = characterModel.soldiers();
-	for(var i=0,l=items.length;i<l;i++){
-		items[i].soldierModel = soldierList[i];
-		items[i].characterModel = characterModel;
-		items[i].cacheAsBitmap(false);
+	while(items.length > soldierList.length){
+		self.listView.deleteChildView(items[items.length - 1]);
+	}
+	for(var i=0,l=soldierList.length;i<l;i++){
+		var item;
+		if(i < items.length){
+			item = items[i];
+		}else{
+			var soldierModel = soldierList[i];
+			item = new SoldiersChildView(soldierModel,characterModel,self.size.x, self, i);
+			self.listView.insertChildView(item);
+		}
+		item.soldierModel = soldierList[i];
+		item.characterModel = characterModel;
+		item.cacheAsBitmap(false);
 		if(!self.listView.isInClipping(i)){
 			continue;
 		}
-		items[i].set();
-		items[i].updateView();
+		item.set();
+		item.updateView();
+	}
+	if(self.characterModel.id() != characterModel.id()){
+		self.listView.clipping.y = 0;
 	}
 	self.characterModel = characterModel;
 };

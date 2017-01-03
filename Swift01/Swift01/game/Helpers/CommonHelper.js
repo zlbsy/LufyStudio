@@ -8,7 +8,7 @@ function calculateHitrateCaptive(chara, nearCharas){
 	var rate = 1;
 	if(chara.data.hasSkill(SkillSubType.RETREAT)){
 		rate = 0.2;
-	}else if(LMvc.BattleController){
+	}else if(chara instanceof BattleCharacterView){
 		var positions = [[-1,-1],[0,-1],[1,-1],[-1,0],[1,0],[-1,1],[0,1],[1,1]];
 		var locationX = chara.locationX();
 		var locationY = chara.locationY();

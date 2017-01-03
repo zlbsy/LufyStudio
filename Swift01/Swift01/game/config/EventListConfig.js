@@ -47,7 +47,7 @@ var EventListConfig = [
 	index:3,
 	name:"迁都长安",
 	condition:{
-		from:{year:190,month:10},
+		from:{year:190,month:9},
 		to:{year:190,month:12},
 		seignior:0,
 		generals:[

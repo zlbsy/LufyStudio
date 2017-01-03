@@ -76,6 +76,7 @@ SoldiersChildView.prototype.setLvUpButton=function(){
 			self.btnLvUp.getChildAt(1).color = "#FFFFFF";
 		}
 	}
+	self.btnLvUp.visible = true;
 };
 SoldiersChildView.prototype.getLevel=function(){
 	var self = this;
@@ -97,6 +98,7 @@ SoldiersChildView.prototype.getCurrent=function(){
 		self.layer.addChild(lblCurrent);
 		self.lblCurrent = lblCurrent;
 	}
+	self.lblCurrent.visible = true;
 	return self.lblCurrent;
 };
 SoldiersChildView.prototype.getCheckBox=function(){
@@ -114,6 +116,7 @@ SoldiersChildView.prototype.getCheckBox=function(){
 		self.layer.addChild(check);
 		self.checkbox = check;
 	}
+	self.checkbox.visible = true;
 	return self.checkbox;
 };
 SoldiersChildView.prototype.setLockIcon=function(){
@@ -135,11 +138,19 @@ SoldiersChildView.prototype.set=function(){
 	var lblLevel = self.getLevel();
 	lblLevel.text = Language.get("proficiency") + ": " + self.soldierModel.proficiency();
 	self.drawLine();
-
 	if(LMvc.BattleController){
+		if(self.checkbox){
+			self.checkbox.visible = false;
+		}
+		if(self.btnLvUp){
+			self.btnLvUp.visible = false;
+		}
 		var lblCurrent = self.getCurrent();
 		lblCurrent.text = self.soldierModel.id() == self.characterModel.currentSoldierId() ? Language.get("current") : "";
 	}else{
+		if(self.lblCurrent){
+			self.lblCurrent.visible = false;
+		}
 		self.setLvUpButton();
 		if(self.soldierModel.isSpecialSoldiers()){
 			if(purchaseHasBuy(productIdConfig.soldier_special)){

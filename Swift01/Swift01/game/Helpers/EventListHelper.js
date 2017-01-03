@@ -14,6 +14,7 @@ function checkEventList() {
 	}
 	for (var ii = 0, ll = EventListConfig.length; ii < ll; ii++) {
 		var currentEvent = EventListConfig[ii];
+		console.log("currentEvent",currentEvent.name);
 		if (eventListFinished.findIndex(function(child) {
 			return child == currentEvent.id;
 		}) >= 0) {
@@ -67,26 +68,32 @@ function checkEventList() {
 		}
 		//时间判定
 		if(!checkEventListTimeIn(currentEvent.condition)){
+			console.log("时间判定");
 			continue;
 		}
 		//势力判定
 		if(!checkEventListSeignor(currentEvent.condition)){
+			console.log("势力判定");
 			continue;
 		}
 		//武将判定
 		if(!checkEventListGenerals(currentEvent.condition)){
+			console.log("武将判定");
 			continue;
 		}
 		//城池判定
 		if(!checkEventListCitys(currentEvent.condition)){
+			console.log("城池判定");
 			continue;
 		}
 		//停战判定
 		if(!checkEventListStopBattle(currentEvent.condition)){
+			console.log("停战判定");
 			continue;
 		}
 		//武将个数判定
 		if(!checkEventListGeneralsCount(currentEvent)){
+			console.log("武将个数判定");
 			continue;
 		}
 		if (!LPlugin.eventIsOpen(currentEvent.id)) {
@@ -102,9 +109,10 @@ function checkEventList() {
 function checkEventListGeneralsCount(currentEvent){
 	var generalsCount = currentEvent.condition.generalsCount;
 	if(typeof generalsCount == UNDEFINED){
-		return false;
+		return true;
 	}
-	if (generalsCount.isSelect && SeigniorModel.list[SeigniorExecute.Instance().seigniorIndex].chara_id() != LMvc.selectSeignorId) {
+	if (generalsCount.isSelect && 
+		SeigniorModel.list[SeigniorExecute.Instance().seigniorIndex].chara_id() != LMvc.selectSeignorId) {
 		return false;
 	}
 	var seignior = SeigniorModel.getSeignior(LMvc.selectSeignorId);

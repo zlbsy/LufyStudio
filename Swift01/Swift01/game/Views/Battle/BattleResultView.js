@@ -5,8 +5,12 @@ function BattleResultView(controller, result){
 	self.backInit();
 	self.result = result;
 	self.checkCaptives = [];
-	
-	experienceToFeat(self.controller.battleData.expeditionEnemyCharacterList);
+	var charas = self.controller.battleData.expeditionEnemyCharacterList;
+	for(var i=0;charas && i<charas.length;i++){
+		var chara = charas[i];
+		chara.battleSoldierReset();
+	}
+	experienceToFeat(charas);
 	self.setEvent();
 	if(result){
 		self.winInit();

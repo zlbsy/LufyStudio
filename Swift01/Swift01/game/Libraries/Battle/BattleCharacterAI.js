@@ -21,6 +21,7 @@ BattleCharacterAI.prototype.magicAttack = function(target){
 	self.chara.data.propertiesExp("intelligence", 1);
 	//console.log("magicAttack",self.chara.data.name(),target.data.name());
 	LMvc.running = true;
+	LMvc.BattleController.startAttack = true;
 	self.attackTarget = target;
 	LMvc.currentAttackCharacter = self.chara;
 	LMvc.currentAttackTarget = target;
@@ -121,6 +122,7 @@ BattleCharacterAI.prototype.physicalAttack = function(target) {
 	//武力经验
 	self.chara.data.propertiesExp("force", 1);
 	LMvc.running = true;
+	LMvc.BattleController.startAttack = true;
 	LMvc.currentAttackCharacter = self.chara;
 	LMvc.currentAttackTarget = target;
 	var soldier = self.chara.data.currentSoldiers();
@@ -419,7 +421,7 @@ BattleCharacterAI.prototype.attackActionComplete = function(event) {
 			var condition = skill ? skill.condition() : null;
 			if(condition){
 				if(condition.type == "SoldierId"){
-					if(condition.value != obj.chara.data.currentSoldiers().id()){
+					if(condition.value.indexOf(obj.chara.data.currentSoldiers().id()) < 0){
 						skill = null;
 					}
 				}

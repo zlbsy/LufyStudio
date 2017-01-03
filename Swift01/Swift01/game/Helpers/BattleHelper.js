@@ -467,6 +467,8 @@ function getBattleSaveData(){
 	data.toCityId = battleData.toCity.id();
 	data.fromCityId = battleData.fromCity.id();
 	data.bout = LMvc.BattleController.getValue("bout");
+	data.startAttack = LMvc.BattleController.startAttack;
+	data.militaryOver = LMvc.BattleController.militaryOver;
 	
 	data.expeditionCharacterList=[];
 	for(var i=0,l=battleData.expeditionCharacterList.length;i<l;i++){
@@ -558,6 +560,8 @@ function getBattleSaveData(){
 }
 function setBattleSaveData(){
 	var data = LMvc.areaData.battleData;
+	LMvc.BattleController.startAttack = data.startAttack;
+	LMvc.BattleController.militaryOver = data.militaryOver;
 	var battleData = LMvc.BattleController.battleData;
 	LMvc.BattleController.setValue("bout", data.bout);
 	LMvc.BattleController.setValue("currentBelong", Belong.SELF);
@@ -813,8 +817,6 @@ function experienceToFeat(characterModels){
 		datas.push({name:character.name(), exp:character.exp(), character:character});
 		sumExp += character.exp();
 	}
-	//var seignior = characterModels[0].seignior();
-	//seignior.exp(seignior.exp() + sumExp);
 	var average = sumExp / datas.length;
 	var feat = average * 0.2;
 	var minFeat = feat > 20 ? 15 : 10;
@@ -832,7 +834,6 @@ function experienceToFeat(characterModels){
 		}
 		feat -= 5;
 		data.feat = data.feat >>> 0;
-		//data.character.feat(data.character.feat() + data.feat);
 		data.character.featPlus(data.feat);
 		data.character.exp(0);
 		delete data.character;
@@ -976,6 +977,13 @@ function militaryAdviserStart(characterModel){
 	LMvc.BattleController.militaryOver = true;
 	var militaryModel = characterModel.military();
 	var image = LMvc.datalist["military-"+militaryModel.image()];
+	if(!image){
+		var list = [{name:"military-"+militaryModel.image(),path:LMvc.IMG_PATH+"military/" + militaryModel.image() + ".png"}];
+		LMvc.BattleController.load.image(list,function(){
+			militaryAdviserStart(characterModel);
+		});
+		return;
+	}
     var data = new LBitmapData(image);
     var list = LGlobal.divideCoordinate(data.width, data.height, 1, militaryModel.imageCount());
 	var animation = new LAnimationTimeline(data, list);
@@ -993,6 +1001,7 @@ function militaryAdviserStart(characterModel){
 	.to(animationLayer,2,{delay:0.5,scaleX:720/data.width,scaleY:720/data.width,alpha:0,ease:LEasing.Quart.easeOut,onComplete:militaryAdviserEnd});
 }
 function militaryAdviserStrategy(chara, strategy){
+	console.log("militaryAdviserStrategy",chara.data.name(),strategy.name());
 	switch(strategy.effectType()){
 		case StrategyEffectType.Status:
 			chara.status.addStatus(strategy.strategyType(), strategy.hert());
@@ -1041,17 +1050,36 @@ function militaryAdviserStrategy(chara, strategy){
 			break;
 	}
 }
+function getStrategyBelong(belong,targetBelong){
+	if(belong == Belong.ENEMY){
+		if(targetBelong == Belong.ENEMY){
+			return Belong.SELF;
+		}else{
+			return Belong.ENEMY;
+		}
+	}else{
+		if(targetBelong == Belong.ENEMY){
+			return Belong.ENEMY;
+		}else{
+			return Belong.SELF;
+		}
+	}
+}
 function militaryAdviserEnd(event){
 	event.target.remove();
 	var characterModel = BattleController.ctrlChara.data;
 	var militaryModel = characterModel.military();
-	var charas = LMvc.BattleController.view.charaLayer.getCharactersFromBelong(militaryModel.belong());
+	var belong = getStrategyBelong(militaryModel.belong(), BattleController.ctrlChara.belong);
+	var charas = LMvc.BattleController.view.charaLayer.getCharactersFromBelong(belong);
 	militaryAdviserSelect(characterModel, charas);
 }
 function militaryAdviserSelect(characterModel, charas){
 	//event.target.remove();
 	//var characterModel = BattleController.ctrlChara.data;
 	var militaryModel = characterModel.military();
+	console.log("STRATEGY",militaryModel.isType(MilitaryType.STRATEGY));
+	console.log("WOOD_CATTLE",militaryModel.isType(MilitaryType.WOOD_CATTLE));
+	console.log("BARRIER",militaryModel.isType(MilitaryType.BARRIER));
 	//var charas = LMvc.BattleController.view.charaLayer.getCharactersFromBelong(militaryModel.belong());
 	if(militaryModel.isType(MilitaryType.STRATEGY)){
 		for(var i=0, l= charas.length;i<l;i++){
@@ -1136,4 +1164,64 @@ function resetAllBattleSoldier(characterModels){
 		var character = characterModels[i];
 		character.battleSoldierReset();
 	}
+}
+//普通兵种对应特殊兵种
+function getBattleSoldierSelectId(currentSoldiers, characterModel){
+	if([20, 21, 22, 23, 24].indexOf(currentSoldiers.id()) >= 0){//佣兵专用兵种
+		return currentSoldiers.id();
+	}
+	if(currentSoldiers.attackType() == AttackType.MAGIC){
+		return 51;//仙人
+	}else if(currentSoldiers.attackType() == AttackType.FAR){
+		return 42;//丹阳兵
+	}
+	if([74, 33].indexOf(characterModel.id()) >= 0){//典韦，许褚
+		return 46;//虎卫军
+	}
+	if([14, 124, 171, 293, 79, 165, 105].indexOf(characterModel.id()) >= 0){//曹仁,曹洪,曹纯,夏侯惇,曹真,曹休,夏侯尚
+		return 45;//虎豹骑
+	}
+	if([14, 38].indexOf(currentSoldiers.id()) >= 0){//海盗，大海盗
+		if(characterModel.skillId() == 32){
+			return 46;//虎卫军
+		}else{
+			return 47;//解烦兵
+		}
+	}
+	if([18, 19].indexOf(currentSoldiers.id()) >= 0){//驯熊师,驯虎师
+		return 49;//飞熊军
+	}
+	if([7, 31, 8, 32, 13, 37].indexOf(currentSoldiers.id()) >= 0){//武术家,贼兵
+		if(characterModel.skillId() == 42){
+			return 46;//虎卫军
+		}else{
+			return 44;//无当飞军
+		}
+	}
+	if([2,26].indexOf(currentSoldiers.id()) >= 0){//步兵
+		if(characterModel.skillId() == 85){
+			return 46;//虎卫军
+		}else if(characterModel.skillId() == 21){
+			return 43;//白耳兵
+		}
+		if(characterModel.compatibility() >= 60 && characterModel.compatibility() <= 90){
+			return 43;//白耳兵
+		}else{
+			return 46;//虎卫军
+		}
+	}else{
+		if([17,41].indexOf(currentSoldiers.id()) >= 0){//西凉骑兵
+			if(characterModel.skillId() == 39){
+				return 45;//虎豹骑
+			}else{
+				return 50;//陷阵营
+			}
+		}
+		if(characterModel.compatibility() >= 60 && characterModel.compatibility() <= 70){
+			return 48;//白马义从
+		}else{
+			return 45;//虎豹骑
+		}
+	}
+	return currentSoldiers.id();
 }

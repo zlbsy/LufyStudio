@@ -500,7 +500,13 @@ function enlistRun(characterModel, targetEnlist){
 	}
 	quantity = (quantity >>> 0);
 	area.population(-quantity);
-	troop += quantity;
+	var multiplier = 1;
+	if(LMvc.chapterData.trouble == TroubleConfig.HARD){
+		multiplier = 1.5;
+	}else if(LMvc.chapterData.trouble == TroubleConfig.NORMAL){
+		multiplier = 1.2;
+	}
+	troop += (quantity * multiplier >>> 0);
 	area.troops(troop);
 	area.police(-(quantity * 0.05 >>> 0));
 	var feat = JobFeatCoefficient.NORMAL * quantity / JobFeatCoefficient.ENLIST;
@@ -1041,7 +1047,7 @@ function toPrizedByMoney(characterModel){
 	var personalLoyaltyValue = 5;
 	var compatibilityValue = 3;
 	var value1 = personalLoyaltyValue * characterModel.personalLoyalty()/15;
-	console.log(characterModel.name());
+	//console.log(characterModel.name());
 	var value2 = compatibilityValue * (150 - Math.abs(characterModel.compatibility() - characterModel.seignior().character().compatibility())) / 150;
 	var upValue = (value1 + value2) >>> 0;
 	var value = (value1 + value2 - upValue)*0.5 + 0.5;

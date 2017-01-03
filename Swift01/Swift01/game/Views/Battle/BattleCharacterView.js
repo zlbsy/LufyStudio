@@ -89,7 +89,7 @@ BattleCharacterView.prototype.getBitmapData = function() {
 	if(self.hideByCloud){
 		return null;
 	}
-	var key = self.data.currentSoldiers().img() + "_" + self.belong+ + "_" + self.action+"_"+self.direction + "_" + self.anime.colIndex, 
+	var key = self.data.currentSoldiers().img(self.isSelf()) + "_" + self.belong+ + "_" + self.action+"_"+self.direction + "_" + self.anime.colIndex, 
 	endKey = key + "_end";
 	var resultBitmapData;
 	if(self.mode == CharacterMode.END_ACTION){
@@ -190,15 +190,23 @@ BattleCharacterView.prototype.addAnimation = function() {
 	self.anime.addFrameScript(String.format("{0}-{1}",CharacterAction.ATTACK,CharacterDirection.UP),self.attackSpecialCheck,[]);
 	self.anime.addFrameScript(String.format("{0}-{1}",CharacterAction.ATTACK,CharacterDirection.LEFT),self.attackSpecialCheck,[]);
 	self.anime.addFrameScript(String.format("{0}-{1}",CharacterAction.ATTACK,CharacterDirection.RIGHT),self.attackSpecialCheck,[]);
-	var isSelf = self.data.seigniorId() == LMvc.selectSeignorId;
-	if(self.data.isEmploy()){
-		isSelf = self.data.city().seigniorCharaId() == LMvc.selectSeignorId;
-	}
-	var img = self.data.currentSoldiers().img(isSelf);
+	var img = self.data.currentSoldiers().img(self.isSelf());
 	var loader = new LLoader();
 	loader.parent = self;
 	loader.addEventListener(LEvent.COMPLETE, self.loadSOver);
 	loader.load(LMvc.IMG_PATH + "character/s/"+img+".png", "bitmapData");
+};
+BattleCharacterView.prototype.isSelf = function() {
+	var self = this;
+	if(typeof self._isSelf != UNDEFINED){
+		return self._isSelf;
+	}
+	var isSelf = self.data.seigniorId() == LMvc.selectSeignorId;
+	if(self.data.isEmploy()){
+		isSelf = self.data.city().seigniorCharaId() == LMvc.selectSeignorId;
+	}
+	self._isSelf = isSelf;
+	return isSelf;
 };
 BattleCharacterView.prototype.setAnimationLabel = function() {
 	var self = this;

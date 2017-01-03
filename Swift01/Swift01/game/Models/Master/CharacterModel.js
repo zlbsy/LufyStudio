@@ -143,9 +143,6 @@ CharacterModel.getChara=function(chara_id){
 };
 CharacterModel.prototype.datas=function(){
 	var self = this;
-	if(self.id() == 4){
-		console.error(self.soldiersData());
-	}
 	var saveData = {
 		chara_id:self.id(),
 		seignior_id:self.seigniorId(),
@@ -337,8 +334,10 @@ CharacterModel.prototype.plusPropertiesExp = function(key) {
 	var exp = (typeof self.data[expKey] == UNDEFINED ? 0 : self.data[expKey]);
 	var plusExp = 1;
 	if(exp < 200){
-		plusExp = 12 - (Math.fakeRandom() * 4) >>> 0;
-	}else if(exp < 400){
+		plusExp = 20 - (Math.fakeRandom() * 4) >>> 0;
+	}else if(exp < 500){
+		plusExp = 15 - (Math.fakeRandom() * 4) >>> 0;
+	}else if(exp < 800){
 		plusExp = 10 - (Math.fakeRandom() * 4) >>> 0;
 	}else{
 		plusExp = 8 - (Math.fakeRandom() * 4) >>> 0;
@@ -444,7 +443,7 @@ CharacterModel.prototype.calculation = function(init) {
 		var condition = skill.condition();
 		if(condition){
 			if((condition.type == "AttackType" && condition.value == currentSoldiers.attackType()) || 
-			(condition.type == "SoldierId" && condition.value == currentSoldiers.id())){
+			(condition.type == "SoldierId" && condition.value.indexOf(currentSoldiers.id()) >= 0)){
 				self.data.rangeAttack = skill.rangeAttack().concat();
 				var ranges = currentSoldiers.rangeAttack();
 				for(var i=0,l=ranges.length;i<l;i++){
@@ -731,10 +730,32 @@ CharacterModel.prototype.troops = function(value, proportionWounded) {
 	return self._dataValue("troops", value,0);
 };
 CharacterModel.prototype.military = function(){
-	return MilitaryModel.getMaster(this.data.military);
+	var self = this;
+	var military = self.data.military;
+	if(!military){
+		if(self.intelligence() < 60){
+			return null;
+		}else if(self.intelligence() < 80 && self.intelligence() <= self.force()){
+			return null;
+		}
+		var objs = [[65,12],[70,7],[75,13],[80,8],[85,14],[90,9],[95,15],[100,10],[105,16],[1000,11]];
+		for(var i=0;i<objs.length;i++){
+			var obj = objs[i];
+			if(self.intelligence() <= obj[0]){
+				military = obj[1];
+				break;
+			}
+		}
+	}
+	return MilitaryModel.getMaster(military);
 };
 CharacterModel.prototype.militaryId = function(){
-	return this.data.military;
+	var self = this;
+	var militaryModel = self.military();
+	if(!militaryModel){
+		return 0;
+	}
+	return militaryModel.id();
 };
 CharacterModel.prototype.HP = function(value) {
 	return this._dataValue("hp", value);
@@ -1340,4 +1361,7 @@ CharacterModel.prototype.hasSkill = function(subType) {
 		return true;
 	}
 	return self.hasSoldiersSkill(subType);
+};
+CharacterModel.prototype.skillId = function() {
+	return this.data.skill;
 };

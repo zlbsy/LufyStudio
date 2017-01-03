@@ -331,9 +331,9 @@ AreaModel.prototype.setSeignor = function(seignior,areaData){
 			for(var i=0,l=areaData[key].length;i<l;i++){
 				var charaData = areaData[key][i];
 				var chara = CharacterModel.getChara(charaData.chara_id);
+				charaData.cityId = this.data.id;
 				chara.setDatas(charaData);
 				chara.seigniorId(0);
-				charaData.cityId = this.data.id;
 				out_of_offices.push(chara);
 			}
 			this.data[key] = out_of_offices;

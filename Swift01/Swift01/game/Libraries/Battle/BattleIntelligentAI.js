@@ -164,6 +164,9 @@ BattleIntelligentAI.prototype.run = function() {
 					}else if(militaryModel.condition() == MilitaryCondition.HERT && isNeedSupplyMilitary(self.chara.belong)){
 						militaryAdviserStart(self.chara.data);
 						return;
+					}else if(LMvc.BattleController.startAttack && militaryModel.condition() == MilitaryCondition.NEAR){
+						militaryAdviserStart(self.chara.data);
+						return;
 					}
 				}
 				self.moveRoadsShow();
@@ -186,14 +189,6 @@ BattleIntelligentAI.prototype.run = function() {
 				self.physicalAttack();
 				return;
 			case CharacterMode.MOVING:
-				var militaryModel = getMaxMilitary(self.chara.belong);
-				if(militaryModel && militaryModel.id() == self.chara.data.militaryId()){
-					//军师计
-					if(militaryModel.condition() == MilitaryCondition.NEAR){
-						militaryAdviserStart(self.chara.data);
-						return;
-					}
-				}
 				self.moveStart();
 				return;
 			case CharacterMode.STRATEGY_SELECT:
