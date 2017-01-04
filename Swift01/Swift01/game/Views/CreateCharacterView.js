@@ -89,26 +89,12 @@ CreateCharacterView.prototype.showDetailed=function(event){
 };
 CreateCharacterView.prototype.toShowDetailed=function(data){
 	var self = this;
-	var obj = {title:"确认",message:"武将作成画面暂时出了点儿问题，正在修正中，请稍等！",width:300,height:300};
-	var windowLayer = ConfirmWindow(obj);
-	self.addChild(windowLayer);
-	return;
 	var detailedView = new CreateCharacterDetailedView(self.controller, data);
 	self.parent.addChild(detailedView);
-	self.baseLayer.visible = false;
 	self.visible = false;
-	return;
-	var obj = {title:Language.get(data?"update_character":"create_character"),subWindow:detailedView,contentStartY:60,width:LMvc.screenWidth,height:560,okEvent:self.saveCharacter,cancelEvent:self.cancelEvent};
-	var windowLayer = ConfirmWindow(obj);
-	self.addChild(windowLayer);
-	self.baseLayer.visible = false;
 };
-CreateCharacterView.prototype.saveCharacter=function(event){
-	var windowLayer = event.currentTarget.parent;
-	var detailedView = windowLayer.childList.find(function(child){
-		return child.constructor.name == "CreateCharacterDetailedView";
-	});
-	var self = windowLayer.parent;
+CreateCharacterView.prototype.saveCharacter=function(detailedView){
+	var self = this;
 	var charaData = detailedView.getData();
 	if(charaData == null){
 		return;
@@ -130,15 +116,11 @@ CreateCharacterView.prototype.saveCharacter=function(event){
 		self.listView.insertChildView(view);
 		view.updateView();
 	}
-	self.baseLayer.visible = true;
-	windowLayer.remove();
+	self.visible = true;
+	detailedView.remove();
 };
-CreateCharacterView.prototype.cancelEvent=function(event){
-	var windowLayer = event.currentTarget.parent;
-	var detailedView = windowLayer.childList.find(function(child){
-		return child.constructor.name == "CreateCharacterDetailedView";
-	});
-	var self = windowLayer.parent;
-	self.baseLayer.visible = true;
-	windowLayer.remove();
+CreateCharacterView.prototype.cancelEvent=function(detailedView){
+	var self = this;
+	self.visible = true;
+	detailedView.remove();
 };

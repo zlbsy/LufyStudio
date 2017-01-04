@@ -116,6 +116,12 @@ CreateCharacterAbilityView.prototype.skillInit=function(data){
 	com.y = 277;
 	self.baseLayer.addChild(com);
 	com.addEventListener(LComboBox.ON_CHANGE, self.onSkillChange);
+	com.addEventListener(LComboBox.PRE_OPEN, function(){
+		LMvc.keepLoading(true);
+	});
+	com.addEventListener(LComboBox.END_OPEN, function(){
+		LMvc.keepLoading(false);
+	});
 	
 	var skillTextField = getStrokeLabel("",14,"#FFFFFF","#000000",2);
 	skillTextField.width = 260;

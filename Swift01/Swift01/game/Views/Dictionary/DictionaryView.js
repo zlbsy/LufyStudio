@@ -64,6 +64,7 @@ DictionaryView.prototype.showDetailedDialog = function(word) {
 	self.listLayer.visible = false;
 	self.contentLabel.visible = true;
 	self.contentLabel.text = String.format("【{0}】{1}",Language.get(word),Language.getDictionary(word));
+	self.scrollContent.scrollToTop();
 };
 DictionaryView.prototype.ctrlLayerInit=function(){
 	var self = this;

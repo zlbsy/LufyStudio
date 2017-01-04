@@ -1170,7 +1170,7 @@ CharacterModel.prototype.currentSoldiers = function(id) {
 };
 CharacterModel.prototype.battleSoldierSelect = function(id, proficiency, img) {
 	var self = this;
-	if(self.currentSoldierId() == id){
+	if(self.currentSoldierId() == id || self.data.saveSoldiers){
 		return;
 	}
 	self.data.saveSoldiers = self.data.soldiers;

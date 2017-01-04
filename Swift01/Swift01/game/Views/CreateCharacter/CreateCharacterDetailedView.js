@@ -1,6 +1,7 @@
 function CreateCharacterDetailedView(controller, data){
 	var self = this;
 	base(self,LView,[controller]);
+	self.name = "CreateCharacterDetailedView";
 	self.data = data;
 	self.init();
 }
@@ -61,10 +62,12 @@ CreateCharacterDetailedView.prototype.layerInit=function(){
 	var self = this;
 	self.baseLayer = new LSprite();
 	self.addChild(self.baseLayer);
+	self.backLayerInit();
 	self.tabLayer = new LSprite();
+	self.tabLayer.y = 10;
 	self.baseLayer.addChild(self.tabLayer);
 	self.contentLayer = new LSprite();
-	self.contentLayer.y = 40;
+	self.contentLayer.y = 50;
 	self.baseLayer.addChild(self.contentLayer);
 	self.basicLayer = new LSprite();
 	self.contentLayer.addChild(self.basicLayer);
@@ -72,6 +75,37 @@ CreateCharacterDetailedView.prototype.layerInit=function(){
 	self.contentLayer.addChild(self.abilityLayer);
 	self.armLayer = new LSprite();
 	self.contentLayer.addChild(self.armLayer);
+	self.ctrlLayer = new LSprite();
+	self.ctrlLayer.y = LMvc.screenHeight - 80;
+	self.baseLayer.addChild(self.ctrlLayer);
+	self.ctrlLayerInit();
+};
+CreateCharacterDetailedView.prototype.backLayerInit=function(){
+	var self = this;
+	self.baseLayer.addChild(getPanel("win04",LMvc.screenWidth,LMvc.screenHeight));
+};
+CreateCharacterDetailedView.prototype.ctrlLayerInit=function(){
+	var self = this;
+	var okButton = getButton(Language.get("yes"), 100);
+	okButton.x = LMvc.screenWidth*0.5 - 120;
+	self.ctrlLayer.addChild(okButton);
+	var noButton = getButton(Language.get("no"), 100);
+	noButton.x = LMvc.screenWidth*0.5 + 20;
+	self.ctrlLayer.addChild(noButton);
+	okButton.addEventListener(LMouseEvent.MOUSE_UP, self.saveCharacter);
+	noButton.addEventListener(LMouseEvent.MOUSE_UP, self.cancelCharacter);
+};
+CreateCharacterDetailedView.prototype.saveCharacter=function(event){
+	var button = event.currentTarget;
+	var self = button.getParentByConstructor(CreateCharacterDetailedView);
+	var createCharacterView = LMvc.logoStage.parent.getChildByName("CreateCharacterView");
+	createCharacterView.saveCharacter(self);
+};
+CreateCharacterDetailedView.prototype.cancelCharacter=function(event){
+	var button = event.currentTarget;
+	var self = button.getParentByConstructor(CreateCharacterDetailedView);
+	var createCharacterView = LMvc.logoStage.parent.getChildByName("CreateCharacterView");
+	createCharacterView.cancelEvent(self);
 };
 CreateCharacterDetailedView.prototype.showBasic=function(){
 	var self = this;

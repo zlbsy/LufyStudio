@@ -102,13 +102,110 @@ LView.prototype.die = function() {
 		}
 	}
 };
+LComboBox.PRE_OPEN = "pre_open";
+LComboBox.END_OPEN = "end_open";
 LComboBox.prototype._showChildList = function (event) {
 	var s = event.currentTarget;
 	if(!s.list || s.list.length == 0){
 		return;
 	}
-	s.showChildList();
+	s.dispatchEvent(LComboBox.PRE_OPEN);
+	setTimeout(function(){
+		s.showChildList();
+	}, 1)
 };
+LComboBox.prototype.showChildList = function (textLayer, index) {
+		var s = this, i, l, child, w, selectLayer, listBack;
+		if(!textLayer){
+			textLayer = new LSprite();
+			listBack = s.params.listBackground.clone();
+			listBack.name = "listBack";
+			textLayer.addChild(listBack);
+			selectLayer = s.params.listSelected.clone();
+			textLayer.addChild(selectLayer);
+			textLayer.selectLayer = selectLayer;
+			textLayer.childHeight = s.size * 1.5 >>> 0;
+			index = 0;
+		}
+		i = index;
+		child = s.list[i];
+		var text = new LTextField();
+		text.size = s.size;
+		text.color = s.color;
+		text.font = s.font;
+		text.text = child.label;
+		text.x = 5;
+		text.y = 5 + textLayer.childHeight * i;
+		textLayer.addChild(text);
+		
+		if(index < s.list.length){
+			setTimeout(function(){
+				s.showChildList(textLayer, index + 1);
+			}, 1)
+			return;
+		}
+		selectLayer = textLayer.selectLayer;
+		listBack = textLayer.getChildByName("listBack");
+		
+		w = textLayer.getWidth();
+		if (w < s.minWidth) {
+			w = s.minWidth;
+		}
+		listBack.resize(w + 4,textLayer.childHeight * s.list.length + 4);
+		selectLayer.resize(w, textLayer.childHeight);
+		listBack.cacheAsBitmap(true);
+		selectLayer.cacheAsBitmap(true);
+		
+		selectLayer.y = textLayer.childHeight * s.selectIndex;
+		var coordinate = s.getRootCoordinate();
+		textLayer.comboBox = s;
+		var translucent = new LSprite();
+		translucent.graphics.drawRect(0, "#000000", [0, 0, LGlobal.width, LGlobal.height], true, "#000000");
+		translucent.alpha = 0;
+		LGlobal.stage.addChild(translucent);
+		translucent.addEventListener(LMouseEvent.MOUSE_UP, function (e) {
+			var cnt = LGlobal.stage.numChildren;
+			if(e.target.constructor.name == "LScrollbar"){
+				return;
+			}
+			LGlobal.stage.removeChildAt(cnt - 1);
+			LGlobal.stage.removeChildAt(cnt - 2);
+		});
+		translucent.addEventListener(LMouseEvent.MOUSE_DOWN, function (e) {});
+		translucent.addEventListener(LMouseEvent.MOUSE_MOVE, function (e) {});
+		translucent.addEventListener(LMouseEvent.MOUSE_OVER, function (e) {});
+		translucent.addEventListener(LMouseEvent.MOUSE_OUT, function (e) {});
+		if (s.list.length > s.maxIndex) {
+			var sc = new LScrollbar(textLayer, w, textLayer.childHeight * s.maxIndex, s._ll_getScrollbar());
+			sc.excluding = true;
+			sc.x = coordinate.x;
+			sc.y = coordinate.y + s.layer.getHeight();
+			if (sc.y + textLayer.childHeight * s.maxIndex > LGlobal.height) {
+				sc.y = LGlobal.height - textLayer.childHeight * s.maxIndex;
+			}
+			sc.resizeHeight(sc._maskH);
+			sc._key["down"] = true;
+			sc._key["up"] = false;
+			sc._tager = {x : 0, y : 40};
+			sc._speed = Math.abs(sc._tager.y - sc._showObject.y);
+			sc.setSpeed();
+			sc.setScrollY(textLayer.childHeight * s.selectIndex);
+			sc._ll_scroll_y = sc.getScrollY();
+			LGlobal.stage.addChild(sc);
+		} else {
+			textLayer.x = coordinate.x;
+			textLayer.y = coordinate.y + s.layer.getHeight();
+			if (textLayer.y + textLayer.getHeight() > LGlobal.height) {
+				textLayer.y = LGlobal.height - textLayer.getHeight();
+			}
+			LGlobal.stage.addChild(textLayer);
+		}
+		textLayer._isChanged = false;
+		textLayer.addEventListener(LMouseEvent.MOUSE_MOVE, s._childSelecting);
+		textLayer.addEventListener(LMouseEvent.MOUSE_UP, s._childSelected);
+		
+		s.dispatchEvent(LComboBox.END_OPEN);
+	};
 LRadio.ON_CHANGE = "onchange";
 LRadio.prototype.setValue = function (value) {
 	var s = this, child, k;

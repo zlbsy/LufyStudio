@@ -51,9 +51,12 @@ CreateCharacterArmItemView.prototype.onClickIcon=function(){
 		items.push(child);
 	}
 	iconListView.updateList(items);
-	var createCharacterView = LMvc.logoStage.parent.getChildByName("CreateCharacterView");
-	createCharacterView.visible = false;
-	var obj = {width:340, height:440, subWindow:iconListView, title:Language.get("形象指定"), noButton:true};
+	var createCharacterDetailed = LMvc.logoStage.parent.getChildByName("CreateCharacterDetailedView");
+	createCharacterDetailed.visible = false;
+	var obj = {width:340, height:440, subWindow:iconListView, title:Language.get("形象指定"), noButton:true,cancelEvent:function(e){
+		e.currentTarget.parent.remove();
+		LMvc.logoStage.parent.getChildByName("CreateCharacterDetailedView").visible = true;
+	}};
 	var dialog = ConfirmWindow(obj);
 	LMvc.layer.addChild(dialog);
 };

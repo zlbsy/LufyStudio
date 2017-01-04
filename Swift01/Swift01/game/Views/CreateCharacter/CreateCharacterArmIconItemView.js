@@ -8,12 +8,8 @@ function CreateCharacterArmIconItemView(listView, soldierMaster, img){
 }
 CreateCharacterArmIconItemView.prototype.onClick=function(event){
 	var self = event.target;
-	var createCharacterView = LMvc.logoStage.parent.getChildByName("CreateCharacterView");
-	createCharacterView.visible = true;
-	var windowLayer = createCharacterView.getChildByName("ConfirmWindow");
-	var detailedView = windowLayer.childList.find(function(child){
-		return child.constructor.name == "CreateCharacterDetailedView";
-	});
+	var detailedView = LMvc.logoStage.parent.getChildByName("CreateCharacterDetailedView");
+	detailedView.visible = true;
 	var armView = detailedView.armView;
 	var armItemView = armView.listView.getItems().find(function(child){
 		return child.soldierMaster.id() == self.soldierMaster.id();
