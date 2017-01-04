@@ -5,8 +5,7 @@ function CreateCharacterFaceView(controller, data){
 CreateCharacterFaceView.prototype.init=function(data){
 	var self = this;
 	self.females = femaleCharacters;
-	var backgroundData = new LBitmapData(LMvc.datalist["win05"]);
-	var panel = getBitmap(new LPanel(backgroundData,186, 266));
+	var panel = getPanel("win05",186, 266);
 	self.addChild(panel);
 	if(!data){
 		data = {faceImg:1, gender:1};

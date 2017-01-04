@@ -10,7 +10,8 @@ CreateCharacterView.prototype.layerInit=function(){
 	//self.addChild(getTranslucentMask());
 	self.baseLayer = new LSprite();
 	self.addChild(self.baseLayer);
-	var panel = getBitmap(new LPanel(new LBitmapData(LMvc.datalist["win05"]),LMvc.screenWidth, LMvc.screenHeight));
+	//var panel = getBitmap(new LPanel(new LBitmapData(LMvc.datalist["win05"]),LMvc.screenWidth, LMvc.screenHeight));
+	var panel = getPanel("win05",LMvc.screenWidth, LMvc.screenHeight);
 	//panel.y = 20;
 	self.baseLayer.addChild(panel);
 	

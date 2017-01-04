@@ -481,6 +481,11 @@ function calculateSpreadPointsLoop(targetCharacter, x, y, points, speadRects, sp
 	if(!targetChara || !isSameBelong(targetCharacter.belong, targetChara.belong)){
 		return;
 	}
+	if(points.find(function(c){
+		return c.x == x && c.y == y;
+	})){
+		return;
+	}
 	points.push({x:x,y:y});
 	for(var i = 0; i < speadRects.length; i++){
 		var point = speadRects[i];

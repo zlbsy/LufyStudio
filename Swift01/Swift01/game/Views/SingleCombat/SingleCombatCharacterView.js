@@ -180,7 +180,7 @@ SingleCombatCharacterView.prototype.showLightComplete = function(event){
 	var self = event.target;
 	self.filters = null;
 	if(self.currentCommand == SingleCombatCommand.SPECIAL_ATTACK){
-		var effect = new SpecialEffectView(self.controller);
+		var effect = new SpecialEffectView(self.controller, self.data);
 		self.parent.parent.addChild(effect);
 		effect.addEventListener(LEvent.COMPLETE,function(e){
 			self.changeAction(CharacterAction.ATTACK);

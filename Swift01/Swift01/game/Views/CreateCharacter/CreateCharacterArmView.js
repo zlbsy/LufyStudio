@@ -119,7 +119,11 @@ CreateCharacterArmView.prototype.armInit=function(data){
 };
 CreateCharacterArmView.prototype.resetSoliderImage=function(isRefresh){
 	var self = this;
+	var point = self.point;
 	var soldiers = self.refreshStatus().soldiers;
+	if(isRefresh){
+		self.point = point;
+	}
 	var items = self.listView.getItems();
 	for(var i=0;i<items.length;i++){
 		var item = items[i];

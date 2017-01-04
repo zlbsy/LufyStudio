@@ -59,6 +59,9 @@ MilitaryModel.prototype.healCount = function() {
 MilitaryModel.prototype.strategys = function() {
 	return this.data.strategys;
 };
+MilitaryModel.prototype.healTroops = function() {
+	return this.data.healTroops;
+};
 MilitaryModel.prototype.name = function() {
 	return Language.getSkill("m_"+this.data.id);
 };

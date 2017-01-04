@@ -129,13 +129,15 @@ CreateCharacterDetailedView.prototype.showArms=function(){
 	var self = this;
 	self.armLayer.visible = true;
 	if(self.armView){
-		self.armView.resetSoliderImage();
+		//self.armView.resetSoliderImage();
 		return;
 	}
 	self.armView = new CreateCharacterArmView(null);
 	self.armLayer.addChild(self.armView);
 	self.armView.init(self.data);
-	self.armView.resetSoliderImage();
+	if(!self.data){
+		self.armView.resetSoliderImage();
+	}
 };
 CreateCharacterDetailedView.prototype.hideTabs=function(){
 	var self = this;
@@ -195,7 +197,7 @@ CreateCharacterDetailedView.prototype.getData=function(){
 		if(/*data.gender == 2 && */child.soldier.data.img){
 			soldierData.img = child.soldier.data.img;
 		}
-	console.error("getData",soldierData);
+		//console.error("getData",soldierData);
 		soldiers.push(soldierData);
 	}
 	data.soldiers = soldiers;

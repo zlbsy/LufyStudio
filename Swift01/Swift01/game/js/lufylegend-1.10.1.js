@@ -6710,7 +6710,7 @@ var LTweenLite = (function () {
 		init : function($target, $duration, $vars) {
 			var s = this, k = null;
 			if (typeof $vars["tweenTimeline"] == UNDEFINED) {
-				$vars["tweenTimeline"] = LTweenLite.TYPE_TIMER;
+				$vars["tweenTimeline"] = LTweenLite.TYPE_FRAME;
 			}
 			s.target = $target;
 			s.duration = $duration || 0.001;

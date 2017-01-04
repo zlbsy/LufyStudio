@@ -305,7 +305,7 @@ BattleResultConfirmView.prototype.setCharacter = function(){
 	statusLayer.x = faceW + 10;
 	statusLayer.y = 5;
 	self.baseLayer.addChild(statusLayer);
-	var skill = self.characterModel.skill();
+	var skill = SkillMasterModel.getMaster(self.characterModel.data.skill);
 	var labels = ["name","force","command","intelligence","agility","luck","stunt"];
 	var datas = [
 	self.characterModel.name(),
@@ -323,8 +323,20 @@ BattleResultConfirmView.prototype.setCharacter = function(){
 		lblLeft.y = startY;
 		statusLayer.addChild(lblLeft);
 	}
-	
 	var soldiers = self.characterModel.soldiers();
+	console.log(self.characterModel.name(),"soldiers:",soldiers);
+	if(soldiers.length == 1){
+		self.characterModel.battleSoldierReset();
+		var charaData = characterListConfig.find(function(child){
+			return child.id == self.characterModel.id();
+		});
+	console.log(self.characterModel.name(),"charaData:",charaData);
+		self.characterModel.data.soldiers = charaData.soldiers;
+		self.characterModel.data.saveSoldiers = null;
+		self.characterModel.data._currentSoldiers = null;
+		self.characterModel._soldiers = null;
+		self.characterModel.data.currentSoldierId = null;
+	}
 	var soldierList = [];
 	for(var i=0;i<soldiers.length;i++){
 		var soldier = soldiers[i];
@@ -332,6 +344,7 @@ BattleResultConfirmView.prototype.setCharacter = function(){
 		soldierList.push({label:label,proficiency:soldier.proficiency()});
 	}
 	soldierList = soldierList.sort(function(a, b) {return b.proficiency - a.proficiency;});
+	console.error(self.characterModel.id(), self.characterModel.name(), soldierList);
 	startY += 10;
 	for(var i=0;i<2;i++){
 		var soldier = soldierList[i];

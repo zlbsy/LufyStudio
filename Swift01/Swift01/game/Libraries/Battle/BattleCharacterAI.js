@@ -112,6 +112,7 @@ BattleCharacterAI.prototype.magicAttack = function(target){
 		var chara = obj.chara;
 		chara.hertIndex = l - i;
 		var effectView = new EffectStrategyView(null, self.chara, chara, obj.hertValue, skill);
+		effectView.isTarget = chara.data.id() == target.data.id();
 		effectView.x = chara.x;
 		effectView.y = chara.y;
 		LMvc.BattleController.view.effectLayer.addChild(effectView);
