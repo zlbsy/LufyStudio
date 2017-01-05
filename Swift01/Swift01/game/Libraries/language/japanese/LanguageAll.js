@@ -79,6 +79,8 @@ Language.data = {
 	"use_strategy_belong_error":"{0}に使用できません!",
 	
 	"quantity_of_month":"({0}ヶ月)",
+	"delete":"削除",
+	"dialog_error_delete_chara":"この武将はレポート{0}の中に使用されているため，削除できません。",
 	"item":"道具",
 	"exp":"経験",
 	"treat":"治療",

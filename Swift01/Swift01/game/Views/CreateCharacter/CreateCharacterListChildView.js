@@ -13,6 +13,10 @@ CreateCharacterListChildView.prototype.set = function(data) {
 CreateCharacterListChildView.prototype.onClick = function(event) {
 	var self = event.target;
 	var parentView = event.currentTarget.parent.parent;
+	if(event.selfX > 400){
+		parentView.toDeleteChild(self.data);
+		return;
+	}
 	parentView.toShowDetailed(self.data);
 };
 CreateCharacterListChildView.prototype.setStatus = function() {
@@ -25,8 +29,9 @@ CreateCharacterListChildView.prototype.setStatus = function() {
 	layer.addChild(bitmapLine);
 	var list = ["name", 20, "force", 110, "intelligence", 160, "command", 210, "agility", 260, "luck", 310];
 	for(var i=0,l=list.length;i<l;i+=2){
-		label = getStrokeLabel(self.data[list[i]],18,"#FFFFFF","#000000",4);
+		label = getStrokeLabel(self.data[list[i]],17,"#FFFFFF","#000000",4);
 		label.x = list[i + 1] - list[1];
+		label.x *= 0.9;
 		label.y = 5;
 		layer.addChild(label);
 	}
@@ -36,11 +41,18 @@ CreateCharacterListChildView.prototype.setStatus = function() {
 	}else{
 		skillName = Language.get("null");
 	}
-	label = getStrokeLabel(skillName,18,"#FFFFFF","#000000",4);
+	label = getStrokeLabel(skillName,17,"#FFFFFF","#000000",4);
 	label.x = 360 - list[1];
+	label.x *= 0.9;
 	label.y = 5;
 	layer.addChild(label);
-
+	
+	label = getStrokeLabel("×",20,"#FF0000","#000000",4);
+	label.x = 460 - list[1];
+	label.x *= 0.9;
+	label.y = 5;
+	layer.addChild(label);
+	
 	layer.x = 10;
 	layer.y = 10;
 	self.addChild(layer);

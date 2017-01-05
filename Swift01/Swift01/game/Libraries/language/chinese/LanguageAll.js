@@ -79,6 +79,8 @@ Language.data = {
 	"use_strategy_belong_error":"不可对{0}使用!",
 	
 	"quantity_of_month":"({0}个月)",
+	"delete":"删除",
+	"dialog_error_delete_chara":"此武将在存档{0}中被使用着，所以不能删除。",
 	"item":"物品",
 	"exp":"经验",
 	"treat":"治疗",

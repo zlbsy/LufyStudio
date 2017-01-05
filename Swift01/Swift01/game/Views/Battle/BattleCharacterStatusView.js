@@ -62,7 +62,7 @@ BattleCharacterStatusView.prototype.showCharacterStatus=function(confirmStatus){
 	var characterModel = self.character.data, belong = self.belong;
 	var layer = new LSprite();
 	
-	var setH = 30;
+	var setH = 35;
 	
 	var troopsStatus = new LSprite();
 	troopsStatus.x = 10;
@@ -116,12 +116,18 @@ BattleCharacterStatusView.prototype.showCharacterStatus=function(confirmStatus){
 		}
 	}
 	
-	var background = getTranslucentBitmap(self.width, 10 + 20 * layer.numChildren);
+	var background = getTranslucentBitmap(self.width, 15 + 20 * layer.numChildren);
 	layer.addChildAt(background, 0);
 	var name = getStrokeLabel(characterModel.name(), 14, "#FFFFFF", "#FF8C00", 1);
 	name.x = 5;
 	name.y = 5;
 	layer.addChild(name);
+	var buffY = name.y + name.getHeight();
+	var test = new LBitmap(new LBitmapData(LMvc.datalist["battle_status"]));
+	test.scaleX = test.scaleY = 12 / test.getHeight();
+	test.x = name.x;
+	test.y = buffY;
+	layer.addChild(test);
 	
 	if(confirmStatus){
 		var terrain = self.character.getTerrain();
