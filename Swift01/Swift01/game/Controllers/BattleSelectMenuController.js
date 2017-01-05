@@ -65,6 +65,8 @@ BattleSelectMenuController.prototype.militaryAdviserSelect = function(event){
 BattleSelectMenuController.prototype.militaryAdviserCancel = function(event){
 	event.currentTarget.parent.remove();
 	LMvc.running = false;
+	var self = BattleSelectMenuController.instance();
+	self.show();
 };
 BattleSelectMenuController.prototype.magicSelect = function(event){
 	var self = BattleSelectMenuController.instance();

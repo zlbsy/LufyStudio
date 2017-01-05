@@ -114,6 +114,7 @@ CharacterModel.getSoldierType = function(type, value){
 CharacterModel.setChara=function(list){
 	var fathers = [];
 	for(var i=0,l=list.length;i<l;i++){
+		list[i].initSoldiers = list[i].soldiers;
 		var chara = new CharacterModel(null,list[i]);
 		chara.job(Job.IDLE);
 		chara.feat(0);
@@ -238,6 +239,10 @@ CharacterModel.prototype.setDatas=function(charaData){
 	}
 	if(charaData.currentSoldierId){
 		self.data.currentSoldierId = charaData.currentSoldierId;
+	}
+	if(!self.data.saveSoldiers  && self.data.soldiers.length == 1){
+		self.initSoldiers();
+		self.data.currentSoldierId = 0;
 	}
 	self.data.equipments = [];
 	if(charaData.equipments){
@@ -1113,9 +1118,24 @@ CharacterModel.prototype.agility = function() {
 CharacterModel.prototype.luck = function() {
 	return this.getBasicProperties("luck");
 };
+CharacterModel.prototype.initSoldiers = function() {
+	var self = this;
+	var charaData = characterListConfig.find(function(c){
+		return c.id == self.id();
+	});
+	self.data.soldiers = [];
+	for(var i=0;i<charaData.initSoldiers.length;i++){
+		self.data.soldiers.push(charaData.initSoldiers[i]);
+	}
+	self._soldiers = null;
+	return self.soldiers();
+};
 CharacterModel.prototype.maxProficiencySoldier = function() {
 	var self = this;
 	var soldiers = self.soldiers();
+	if(soldiers.length == 1 && !soldiers[0].id()){
+		soldiers = self.initSoldiers();
+	}
 	var proficiency = 0, soldier;
 	for(var i=0,l=soldiers.length;i<l;i++){
 		var child = soldiers[i];
@@ -1197,6 +1217,9 @@ CharacterModel.prototype.battleSoldierReset = function() {
 	self.data._currentSoldiers = null;
 	self._soldiers = null;
 	self.data.currentSoldierId = null;
+	if(self.data.soldiers.length == 1){
+		self.initSoldiers();
+	}
 };
 CharacterModel.prototype.underArrestTalk = function() {
 	var self = this, index, list;

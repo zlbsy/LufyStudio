@@ -961,6 +961,9 @@ function resetTribeCity(city){
 	city.money(1000);
 }
 function tweenTextShow(chara, label, y){
+	if(!isPlayerBattle()){
+		return;
+	}
 	if(typeof y == UNDEFINED){
 		y = 0;
 	}
@@ -1001,7 +1004,7 @@ function militaryAdviserStart(characterModel){
 	.to(animationLayer,2,{delay:0.5,scaleX:720/data.width,scaleY:720/data.width,alpha:0,ease:LEasing.Quart.easeOut,onComplete:militaryAdviserEnd});
 }
 function militaryAdviserStrategy(chara, strategy){
-	console.log("militaryAdviserStrategy",chara.data.name(),strategy.name());
+	//console.log("militaryAdviserStrategy",chara.data.name(),strategy.name());
 	switch(strategy.effectType()){
 		case StrategyEffectType.Status:
 			chara.status.addStatus(strategy.strategyType(), strategy.hert());
@@ -1009,7 +1012,8 @@ function militaryAdviserStrategy(chara, strategy){
 				break;
 			}
 		case StrategyEffectType.Attack:
-			var hertValue = calculateHertStrategyValue(BattleController.ctrlChara, chara, strategy, 1);
+			var currentChara = isPlayerBattle() ? BattleController.ctrlChara : BattleAIExecute.Instance().currentChara;
+			var hertValue = calculateHertStrategyValue(currentChara, chara, strategy, 1);
 			var troops = chara.data.troops();
 			if(troops < hertValue){
 				hertValue = troops;
@@ -1077,9 +1081,9 @@ function militaryAdviserSelect(characterModel, charas){
 	//event.target.remove();
 	//var characterModel = BattleController.ctrlChara.data;
 	var militaryModel = characterModel.military();
-	console.log("STRATEGY",militaryModel.isType(MilitaryType.STRATEGY));
-	console.log("WOOD_CATTLE",militaryModel.isType(MilitaryType.WOOD_CATTLE));
-	console.log("BARRIER",militaryModel.isType(MilitaryType.BARRIER));
+	//console.log("STRATEGY",militaryModel.isType(MilitaryType.STRATEGY));
+	//console.log("WOOD_CATTLE",militaryModel.isType(MilitaryType.WOOD_CATTLE));
+	//console.log("BARRIER",militaryModel.isType(MilitaryType.BARRIER));
 	//var charas = LMvc.BattleController.view.charaLayer.getCharactersFromBelong(militaryModel.belong());
 	if(militaryModel.isType(MilitaryType.STRATEGY)){
 		for(var i=0, l= charas.length;i<l;i++){
@@ -1104,7 +1108,7 @@ function militaryAdviserSelect(characterModel, charas){
 		}
 	}
 	LMvc.running = false;
-	if(BattleController.ctrlChara){
+	if(isPlayerBattle()){
 		BattleController.ctrlChara.AI.endAction();
 	}
 }
@@ -1224,4 +1228,7 @@ function getBattleSoldierSelectId(currentSoldiers, characterModel){
 		}
 	}
 	return currentSoldiers.id();
+}
+function isPlayerBattle(){
+	return (typeof BattleController != UNDEFINED) && (LMvc.BattleController instanceof BattleController);
 }

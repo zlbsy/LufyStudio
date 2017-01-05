@@ -123,11 +123,26 @@ BattleCharacterStatusView.prototype.showCharacterStatus=function(confirmStatus){
 	name.y = 5;
 	layer.addChild(name);
 	var buffY = name.y + name.getHeight();
-	var test = new LBitmap(new LBitmapData(LMvc.datalist["battle_status"]));
-	test.scaleX = test.scaleY = 12 / test.getHeight();
-	test.x = name.x;
-	test.y = buffY;
-	layer.addChild(test);
+	var aids = ["AttackAid","DefenseAid","BreakoutAid","MoraleAid","ApiritAid"];
+	var charaStatus = self.character.status;
+	var index = 0;
+	for(var i=0;i<aids.length;i++){
+		var aidKey = aids[i];
+		var aid = charaStatus.getStatus(StrategyType[aidKey]);
+		if(!aid){
+			continue;
+		}
+		var aidBitmap = new LBitmap(new LBitmapData(LMvc.datalist["buff"],12 * i, 0, 12, 12));
+		aidBitmap.x = name.x + index * 12;
+		if(aid.value < 0){
+			aidBitmap.scaleY = -1;
+			aidBitmap.y = buffY + 12;
+		}else{
+			aidBitmap.y = buffY;
+		}
+		layer.addChild(aidBitmap);
+		index++;
+	}
 	
 	if(confirmStatus){
 		var terrain = self.character.getTerrain();

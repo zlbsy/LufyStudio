@@ -40,6 +40,7 @@ BattleModel.prototype.getImages=function(){
 	list.push({name:"sMenu",path:LMvc.IMG_PATH+"sousou/menu.png"});*/
 	list.push({name:"battle-menu",path:LMvc.IMG_PATH+"battle/menu.png"});
 	list.push({name:"rect",path:LMvc.IMG_PATH+"battle/rect.png"});
+	list.push({name:"buff",path:LMvc.IMG_PATH+"battle/buff.png"});
 	list.push({name:"character-s-default",path:LMvc.IMG_PATH+"character/s/default.png"});
 	list.push({name:"tile_map",path:LMvc.IMG_PATH+"smap/tile_map.png"});
 	list.push({name:"boat",path:LMvc.IMG_PATH+"smap/boat.png"});
