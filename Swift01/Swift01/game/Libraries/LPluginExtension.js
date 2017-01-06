@@ -56,6 +56,17 @@ LPlugin.openEvent = function(key){
 	LPlugin.events()[key] = 1;
 	LPlugin.SetData(LPlugin.KEY_EVENT_LIST, LPlugin.events());
 };
+LPlugin.deleteCharacter = function(id){
+	var data = LPlugin.characters();
+	var index = data.list.findIndex(function(child){
+		return child.id == id;
+	});
+	if(index < 0){
+		return;
+	}
+	data.list.splice(index, 1);
+	LPlugin.SetData(LPlugin.KEY_CHARACTER_LIST, data);
+};
 LPlugin.setCharacter = function(charaData){
 	var data = LPlugin.characters();
 	var index = charaData.id ? data.list.findIndex(function(child){

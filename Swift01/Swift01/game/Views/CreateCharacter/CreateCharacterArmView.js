@@ -110,12 +110,34 @@ CreateCharacterArmView.prototype.armInit=function(data){
 	var items = [], child;
 	for(var i=0,l=soldiers.length;i<l;i++){
 		var soldier = soldiers[i];
+		var item = items.find(function(child){
+			return child.soldier.next() == soldier.id;
+		});
+		if(item){
+			continue;
+		}
 		child = new CreateCharacterArmItemView(self.listView, soldier);
 		items.push(child);
 	}
-	
+	self.setSpecialSoldiers(items);
 	self.listView.resize(260, 50 * 6);
 	self.listView.updateList(items);
+};
+CreateCharacterArmView.prototype.setSpecialSoldiers = function(items) {
+	var self = this;
+	//if(purchaseHasBuy(productIdConfig.soldier_special)){
+	for(var i=0, l=specialSoldiersConfig.length;i<l;i++){
+		var soldierId = specialSoldiersConfig[i];
+		var item = items.find(function(child){
+			return child.soldier.id() == soldierId || child.soldier.next() == soldierId;
+		});
+		if(item){
+			continue;
+		}
+		child = new CreateCharacterArmItemView(self.listView, {id:soldierId,proficiency:0});
+		items.push(child);
+	}
+	//}
 };
 CreateCharacterArmView.prototype.resetSoliderImage=function(isRefresh){
 	var self = this;

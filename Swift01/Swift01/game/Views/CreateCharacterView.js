@@ -115,7 +115,15 @@ CreateCharacterView.prototype.toDeleteChild=function(data){
 			return;
 		}
 	}
-	self.listView.deleteChildView(item);
+	var obj = {width:300, height:240, message:String.format(Language.get("确定要删除武将{0}吗?"), data.name), title:Language.get("confirm")};
+	obj.okEvent = function(e){
+		e.currentTarget.parent.remove();
+		LPlugin.deleteCharacter(data.id);
+		self.listView.deleteChildView(item);
+	};
+	obj.cancelEvent = null;
+	var dialog = ConfirmWindow(obj);
+	LMvc.layer.addChild(dialog);
 };
 CreateCharacterView.prototype.getCharacterFromRecord=function(index, id){
 	var self = this;
@@ -171,7 +179,6 @@ CreateCharacterView.prototype.getCharacterFromArea=function(areaData, id){
 	}
 	return false;
 };
-
 CreateCharacterView.prototype.saveCharacter=function(detailedView){
 	var self = this;
 	var charaData = detailedView.getData();
@@ -180,7 +187,6 @@ CreateCharacterView.prototype.saveCharacter=function(detailedView){
 	}
 	
 	var length = LPlugin.characters().list.length;
-	//console.log("saveCharacter",charaData);
 	LPlugin.setCharacter(charaData);
 	var characters = LPlugin.characters();
 	if(characters.list.length == length){
