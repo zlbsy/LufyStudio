@@ -89,7 +89,7 @@ BattleCharacterView.prototype.getBitmapData = function() {
 	if(self.hideByCloud){
 		return null;
 	}
-	var key = self.data.currentSoldiers().img(self.isSelf()) + "_" + self.belong+ + "_" + self.action+"_"+self.direction + "_" + self.anime.colIndex, 
+	var key = self.data.currentSoldiers().img(self.isSelf()) + "_" + self.data.currentSoldiers().level() + "_" + self.belong+ + "_" + self.action+"_"+self.direction + "_" + self.anime.colIndex, 
 	endKey = key + "_end";
 	var resultBitmapData;
 	if(self.mode == CharacterMode.END_ACTION){
@@ -265,7 +265,20 @@ BattleCharacterView.prototype.setAnimationLabel = function() {
 BattleCharacterView.prototype.loadSOver = function(event){
 	var self = event.currentTarget.parent;
 	var animeBitmapData = self.anime.bitmap.bitmapData;
-	var bitmapData = new LBitmapData(event.target,animeBitmapData.x,animeBitmapData.y,animeBitmapData.width,animeBitmapData.height);
+	var bitmapData;
+	if(self.data.currentSoldiers().level() > 1){
+		var baseData = new LBitmapData(event.target);
+		var dataLayer = new LSprite();
+		dataLayer.graphics.drawRect(0, "#ff0000", [0, 0, baseData.width, baseData.height]);
+		dataLayer.addChild(new LBitmap(baseData));
+		var shadow = new LDropShadowFilter(0,0,self.belong == Belong.SELF?"#FF0000":"#0000FF",10);
+		dataLayer.filters = [shadow];
+		bitmapData = new LBitmapData(null, 0, 0, baseData.width, baseData.height, LBitmapData.DATA_CANVAS);
+		bitmapData.draw(dataLayer);
+		bitmapData.setProperties(animeBitmapData.x,animeBitmapData.y,animeBitmapData.width,animeBitmapData.height);
+	}else{
+		bitmapData = new LBitmapData(event.target,animeBitmapData.x,animeBitmapData.y,animeBitmapData.width,animeBitmapData.height);
+	}
 	self.anime.bitmap.bitmapData = bitmapData;
 	self.toStatic(true);
 };
