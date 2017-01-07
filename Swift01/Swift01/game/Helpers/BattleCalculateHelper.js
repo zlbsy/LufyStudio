@@ -421,6 +421,9 @@ function calculateSkillSurpriseAmend(chara, target, attacks){
  特技的法术减免伤害加成值计算
  **************************************************************/
 function calculateStrategyCharasCorrection(currentChara){
+	if(isSameBelong(LMvc.currentAttackCharacter.belong,currentChara.belong)){
+		return 1;
+	}
 	var strategyCharas = currentChara.model.getMinusStrategyCharas(currentChara.belong);
 	if(strategyCharas.length == 0){
 		return 1;
@@ -445,8 +448,8 @@ function calculateStrategyCharasCorrection(currentChara){
 			hertCorrect = skill.hert();
 			continue;
 		}
-		for(var i = 0;i<minusRects.length;i++){
-			var point = minusRects[i];
+		for(var j = 0;j<minusRects.length;j++){
+			var point = minusRects[j];
 			if(x + point.x == locationX && y + point.y == locationY){
 				hertCorrect = skill.hert();
 				break;

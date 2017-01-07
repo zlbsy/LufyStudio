@@ -74,7 +74,6 @@ BattleCharacterAI.prototype.magicAttack = function(target){
 			}else{
 				ranges = rangeAttackTarget;
 			}
-			
 			for(var i = 0;i<ranges.length;i++){
 				var range = ranges[i];
 				var chara = LMvc.BattleController.view.charaLayer.getCharacterFromLocation(target.locationX()+range.x, target.locationY()+range.y);

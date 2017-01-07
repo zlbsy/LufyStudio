@@ -29,6 +29,9 @@ SoldierMasterModel.getMaster=function(id){
 SoldierMasterModel.prototype.id = function() {
 	return this.data.id;
 };
+SoldierMasterModel.prototype.level = function() {
+	return this.data.level ? this.data.level : 1;
+};
 SoldierMasterModel.prototype.isSpecialSoldiers = function() {
 	return specialSoldiersConfig.indexOf(this.data.id) >= 0;
 };

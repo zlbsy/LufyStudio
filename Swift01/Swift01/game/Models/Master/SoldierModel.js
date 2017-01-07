@@ -18,6 +18,9 @@ SoldierModel.prototype.getData = function() {
 SoldierModel.prototype.id = function() {
 	return this.data.id;
 };
+SoldierModel.prototype.level = function() {
+	return this.master().level();
+};
 SoldierModel.prototype.readyQuantity = function(value) {
 	if(typeof value != UNDEFINED){
 		this.data.readyQuantity = value;

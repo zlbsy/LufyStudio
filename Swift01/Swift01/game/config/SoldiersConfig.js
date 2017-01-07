@@ -412,6 +412,7 @@ var SoldierDatas = [
 	rangeAttackTarget:[{x:0,y:0}],
 	strategy:[{id:33,lv:5},{id:34,lv:10},{id:42,lv:20}],
 	sign:"jw",
+	level:2,
 	maxProficiency:1000,
 	newcount:1
 	},
@@ -427,6 +428,7 @@ var SoldierDatas = [
 	strategy:[],
 	maxProficiency:1200,
 	sign:"zbb",
+	level:2,
 	newcount:1
 	},
 	{id:27,name:"重骑兵",img:3,type:SoldierType.Physical,attackType:AttackType.NEAR,moveType:MoveType.CAVALRY,movePower:6,
@@ -441,6 +443,7 @@ var SoldierDatas = [
 	strategy:[],
 	maxProficiency:1200,
 	sign:"zqb",
+	level:2,
 	newcount:1
 	},
 	{id:28,name:"驽兵",img:4,type:SoldierType.Physical,attackType:AttackType.FAR,moveType:MoveType.INFANTRY,movePower:4,
@@ -454,6 +457,7 @@ var SoldierDatas = [
 	strategy:[],
 	maxProficiency:1200,
 	sign:"nub",
+	level:2,
 	newcount:1
 	},
 	{id:29,name:"驽骑兵",img:5,type:SoldierType.Physical,attackType:AttackType.FAR,moveType:MoveType.CAVALRY,movePower:6,
@@ -469,6 +473,7 @@ var SoldierDatas = [
 	strategy:[],
 	maxProficiency:1200,
 	sign:"nqb",
+	level:2,
 	newcount:1
 	},
 	{id:30,name:"重炮车",img:6,type:SoldierType.Physical,attackType:AttackType.FAR,moveType:MoveType.CAR,movePower:3,
@@ -487,6 +492,7 @@ var SoldierDatas = [
 	strategy:[],
 	maxProficiency:1200,
 	sign:"zpc",
+	level:2,
 	newcount:1
 	},
 	{id:31,name:"拳士",img:7,type:SoldierType.Physical,attackType:AttackType.NEAR,moveType:MoveType.INFANTRY,movePower:5,
@@ -500,6 +506,7 @@ var SoldierDatas = [
 	rangeAttackTarget:[{x:0,y:0}],
 	strategy:[{id:47,lv:10}],
 	sign:"qs",
+	level:2,
 	maxProficiency:1200,
 	newcount:1
 	},
@@ -515,6 +522,7 @@ var SoldierDatas = [
 	rangeAttackTarget:[{x:0,y:0}],
 	strategy:[{id:4,lv:15},{id:36,lv:10}],
 	sign:"yz",
+	level:2,
 	maxProficiency:1200,
 	newcount:1
 	},
@@ -530,6 +538,7 @@ var SoldierDatas = [
 	rangeAttackTarget:[{x:0,y:0}],
 	strategy:[{id:33,lv:0},{id:34,lv:0},{id:35,lv:5},{id:36,lv:10},{id:37,lv:15},{id:38,lv:20},{id:39,lv:25},{id:40,lv:30},{id:41,lv:5},{id:42,lv:20},{id:48,lv:20}],
 	sign:"cm",
+	level:2,
 	maxProficiency:1200,
 	newcount:1
 	},
@@ -545,6 +554,7 @@ var SoldierDatas = [
 	strategy:[{id:1,lv:5},{id:3,lv:10},{id:5,lv:15},{id:7,lv:20},{id:9,lv:25},{id:11,lv:30},{id:13,lv:35},{id:15,lv:40},{id:17,lv:45},{id:19,lv:50},{id:31,lv:10},{id:32,lv:50},
 	{id:41,lv:0},{id:42,lv:0},{id:43,lv:10},{id:44,lv:10},{id:45,lv:20},{id:46,lv:20}],
 	sign:"fss",
+	level:2,
 	maxProficiency:1200,
 	newcount:1
 	},
@@ -562,6 +572,7 @@ var SoldierDatas = [
 	{id:21,lv:30},{id:22,lv:10},{id:23,lv:0},{id:24,lv:20},{id:26,lv:50},{id:27,lv:40},{id:28,lv:35},{id:29,lv:45},
 	{id:41,lv:5}],
 	sign:"hss",
+	level:2,
 	maxProficiency:1200,
 	newcount:1
 	},
@@ -577,6 +588,7 @@ var SoldierDatas = [
 	rangeAttackTarget:[{x:0,y:0}],
 	strategy:[{id:4,lv:20},{id:6,lv:30},{id:10,lv:40},{id:33,lv:0},{id:34,lv:5},{id:35,lv:10},{id:36,lv:15},{id:38,lv:25},{id:40,lv:35},{id:41,lv:5},{id:42,lv:20}],
 	sign:"qmcm",
+	level:2,
 	maxProficiency:1200,
 	newcount:1
 	},
@@ -592,6 +604,7 @@ var SoldierDatas = [
 	strategy:[{id:47,lv:10},{id:49,lv:20}],
 	strategySkill:31,
 	sign:"nvj",
+	level:2,
 	maxProficiency:1200,
 	newcount:1
 	},
@@ -607,6 +620,7 @@ var SoldierDatas = [
 	rangeAttackTarget:[{x:0,y:0}],
 	strategy:[{id:35,lv:10},{id:39,lv:40}],
 	sign:"dhd",
+	level:2,
 	maxProficiency:1200,
 	newcount:1
 	},
@@ -621,6 +635,7 @@ var SoldierDatas = [
 	rangeAttackTarget:[{x:0,y:0}],
 	strategy:[{id:33,lv:5},{id:34,lv:10},{id:35,lv:0},{id:36,lv:15},{id:37,lv:25},{id:38,lv:30},{id:39,lv:20},{id:41,lv:5},{id:42,lv:20}],
 	sign:"ddd",
+	level:2,
 	maxProficiency:1200,
 	newcount:1
 	},
@@ -638,6 +653,7 @@ var SoldierDatas = [
 	{id:33,lv:0},{id:34,lv:10},{id:35,lv:20},{id:36,lv:30},{id:37,lv:40},
 	{id:41,lv:5},{id:42,lv:0},{id:45,lv:45},{id:46,lv:40}],
 	sign:"kzss",
+	level:2,
 	maxProficiency:1200,
 	newcount:1
 	},
@@ -654,6 +670,7 @@ var SoldierDatas = [
 	strategy:[],
 	strategyHert:1.5,
 	sign:"xltq",
+	level:2,
 	maxProficiency:1200,
 	newcount:1
 	},
