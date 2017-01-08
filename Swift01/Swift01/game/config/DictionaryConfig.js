@@ -25,6 +25,8 @@ var dictionaryConfig = [
 	{key:"treat",ver:"0.0.1"},
 	{key:"single_command_heal",ver:"0.0.1"},
 	{key:"wounded",ver:"0.0.1"},
+	{key:"military",ver:"1.9.0"},
+	{key:"soldiers_image",ver:"1.9.0"},
 	{key:"growing",ver:"1.9.0"},
 	{key:"breakthrough",ver:"1.9.0"},
 	];

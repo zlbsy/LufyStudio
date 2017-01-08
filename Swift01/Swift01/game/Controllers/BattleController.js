@@ -190,14 +190,6 @@ BattleController.prototype.charactersInit = function(){
 				break;
 			}
 			var chara = employCharacters.shift();
-			if(self.battleData.toCity.money() < chara.employPrice()){
-				break;
-			}
-			if(self.battleData.toCity.troops() < chara.maxTroops()){
-				break;
-			}
-			chara.troops(chara.maxTroops());
-			self.battleData.toCity.troops(self.battleData.toCity.troops() - chara.maxTroops());
 			var multiplier = 1;
 			if(LMvc.chapterData.trouble == TroubleConfig.HARD){
 				multiplier = 0;
@@ -205,6 +197,14 @@ BattleController.prototype.charactersInit = function(){
 				multiplier = 0.5;
 			}
 			var price = chara.employPrice() * multiplier >>> 0;
+			if(self.battleData.toCity.money() < price){
+				break;
+			}
+			if(self.battleData.toCity.troops() < chara.maxTroops()){
+				break;
+			}
+			chara.troops(chara.maxTroops());
+			self.battleData.toCity.troops(self.battleData.toCity.troops() - chara.maxTroops());
 			self.battleData.toCity.money(-price);
 			enemyCharas.push(chara);
 		}
@@ -242,7 +242,9 @@ BattleController.prototype.charactersInit = function(){
 				chara.battleSoldierSelect(specialSoldierId, currentSoldiers.proficiency(), img);
 			}else{
 				var currentSoldiers = chara.currentSoldiers();
-				chara.battleSoldierSelect(currentSoldiers.next(), currentSoldiers.proficiency(), currentSoldiers.img());
+				 if(currentSoldiers.next()){
+					chara.battleSoldierSelect(currentSoldiers.next(), currentSoldiers.proficiency(), currentSoldiers.img());
+				}
 			}
 		}
 		self.addEnemyCharacter(charaId,child.direction,child.x,child.y);

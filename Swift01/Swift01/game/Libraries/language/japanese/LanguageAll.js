@@ -581,6 +581,7 @@ Language.data = {
 	"militaryConfirm":"<font size='21' color='#FFFFFF'>軍師の策【<font size='21' color='#FAFAD2'>{0}</font>】を使いますか？</font>",
 	"militaryNode":"※軍師の策は一回しか使えません。",
 	"military":"軍師の策",
+	"soldiers_image":"兵科画像",
 	"growing":"能力の成長",
 	"breakthrough":"成長限界突破",
 };

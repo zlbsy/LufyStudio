@@ -430,6 +430,21 @@ LogoView.prototype.showNews=function(newsURL){
 	newsBackground.x = x - 10;
 	newsBackground.y = y - 10;
 	self.addChild(newsBackground);
+	
+	var noShowBackground = new LSprite();
+	noShowBackground.x = x - 10;
+	noShowBackground.y = newsBackground.y + h + 20;
+	self.addChild(noShowBackground);
+	var message = getStrokeLabel("今天不再显示！",20,"#FFFFFF","#000000",4);
+	message.x = w - 25 - message.getWidth();
+	message.y = 8;
+	noShowBackground.addChild(message);
+	var checkNews = new LCheckBox();
+	checkNews.x = w - 15;
+	checkNews.y = 8;
+	noShowBackground.addChild(checkNews);
+
+	
 	var webview = new LStageWebView();
 	webview.setViewPort(new LRectangle(x, y, w, h));
 	webview.loadURL(newsURL);
@@ -439,9 +454,15 @@ LogoView.prototype.showNews=function(newsURL){
 	closeButton.y = y - closeButton.getHeight();
 	self.addChild(closeButton);
 	closeButton.addEventListener(LMouseEvent.MOUSE_UP,function(event){
+		var checked = checkNews.checked;
 		event.currentTarget.remove();
+		noShowBackground.remove();
 		newsBackMask.remove();
 		newsBackground.remove();
-		webview.hide();
+		webview.hide();console.log(checked);
+		if(checked){
+			var today = formatDate(new Date(), "YYYY-MM-DD 00:00:00");
+			LPlugin.SetData("newsShowDay", today);
+		}
 	});
 };

@@ -29,27 +29,9 @@ MapView.prototype.mapInit=function(){
 	self.mapLayer.removeAllChild();
 	self.mapLayer.die();
 	//TODO::ver1.1春夏秋冬
-	var bitmapData = GameCacher.getAreaMap("area-map-1");//new LBitmapData(LMvc.datalist["area-map-1"],null,null,null,null,LBitmapData.DATA_CANVAS);
+	var bitmapData = GameCacher.getAreaMap("area-map-1");
 	self.backgroundWidth = bitmapData.width;
 	self.backgroundHeight = bitmapData.height;
-	/*var roadLayer = new LShape();
-	roadLayer.alpha = 0.7;
-	roadLayer.graphics.drawRect(0,"#FFFFFF",[0, 0, self.backgroundWidth, self.backgroundHeight]);
-	for(var i=0,l=AreaModel.list.length;i<l;i++){
-		var areaStatus = AreaModel.list[i];
-		var neighbor = areaStatus.neighbor();
-		for(var j=0;j<neighbor.length;j++){
-			var neighborId = neighbor[j];
-			if(areaStatus.id() < neighborId){
-				continue;
-			}
-			var neighborArea = AreaModel.getArea(neighborId);
-			//roadLayer.graphics.drawLine(10, "#FFFFFF", [75 + areaStatus.position().x - 40, 65 + areaStatus.position().y - 40, 75 + neighborArea.position().x - 40, 65 + neighborArea.position().y - 40]);
-		}
-	}
-	roadLayer.cacheAsBitmap(true);
-	//bitmapData.copyPixels(roadLayer._ll_cacheAsBitmap.bitmapData, new LRectangle(0, 0, self.backgroundWidth, self.backgroundHeight), new LPoint(0,0));
-	*/
 	self.mapBitmapData = bitmapData;
 	var background = new BackgroundView();
 	background.set(bitmapData, self.baseLayer);
@@ -148,6 +130,7 @@ MapView.prototype.areaLayerInit=function(){
 	var self = this;
 	self.mapInit();
 	self.areaLayer.removeAllChild();
+	GameCacher.resetAreaMap("area-map-1");
 	for(var i=0,l=AreaModel.list.length;i<l;i++){
 		var areaStatus = AreaModel.list[i];
 		var area = new AreaIconView(self.controller,areaStatus);

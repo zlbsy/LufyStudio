@@ -1120,6 +1120,9 @@ CharacterModel.prototype.luck = function() {
 };
 CharacterModel.prototype.initSoldiers = function() {
 	var self = this;
+	if(self.isEmploy()){
+		return self.soldiers();
+	}
 	var charaData = characterListConfig.find(function(c){
 		return c.id == self.id();
 	});
@@ -1194,7 +1197,7 @@ CharacterModel.prototype.currentSoldiers = function(id) {
 };
 CharacterModel.prototype.battleSoldierSelect = function(id, proficiency, img) {
 	var self = this;
-	if(self.currentSoldierId() == id || self.data.saveSoldiers){
+	if(!id || self.currentSoldierId() == id || self.data.saveSoldiers){
 		return;
 	}
 	self.data.saveSoldiers = self.data.soldiers;

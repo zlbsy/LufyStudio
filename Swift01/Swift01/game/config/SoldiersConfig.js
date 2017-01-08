@@ -20,6 +20,7 @@ var EnlistSetting = {
 var TrainingSetting = {
 	MAX:500//训练最大熟练度
 };
+var SpecializedSoldiers = [20, 21, 22, 23, 24];
 var HealSoldiers = [10, 34];
 var SoldierImages = [];//SoldierImages[AttackType][MoveType]
 SoldierImages[AttackType.NEAR] = [
@@ -349,7 +350,8 @@ var SoldierDatas = [
 	strategy:[],
 	maxProficiency:1000,
 	strategyHert:1.5,
-	sign:"tjb"
+	sign:"tjb",
+	newcount:1
 	},
 	{id:21,name:"游牧骑",img:21,type:SoldierType.Physical,attackType:AttackType.NEAR,moveType:MoveType.CAVALRY,movePower:6,
 	property:{attack:"S",spirit:"C",defense:"B",breakout:"S",morale:"B",troops:5,strategy:1},
@@ -363,7 +365,8 @@ var SoldierDatas = [
 	rangeAttackTarget:[{x:0,y:0}],
 	strategy:[],
 	maxProficiency:1000,
-	sign:"ymq"
+	sign:"ymq",
+	newcount:1
 	},
 	{id:22,name:"飞刀兵",img:22,type:SoldierType.Physical,attackType:AttackType.FAR,moveType:MoveType.INFANTRY,movePower:5,
 	property:{attack:"S",spirit:"B",defense:"B",breakout:"B",morale:"A",troops:4,strategy:1},
@@ -374,7 +377,8 @@ var SoldierDatas = [
 	rangeAttack:[{x:-1,y:-1},{x:-1,y:1},{x:1,y:1},{x:1,y:-1},{x:0,y:-2},{x:0,y:2},{x:-2,y:0},{x:2,y:0}],
 	rangeAttackTarget:[{x:0,y:0}],
 	strategy:[],
-	sign:"fdb"
+	sign:"fdb",
+	newcount:1
 	},
 	{id:23,name:"野蛮人",img:23,type:SoldierType.Physical,attackType:AttackType.NEAR,moveType:MoveType.INFANTRY,movePower:5,
 	property:{attack:"S",spirit:"C",defense:"S",breakout:"B",morale:"C",troops:4,strategy:1},
@@ -387,7 +391,8 @@ var SoldierDatas = [
 	rangeAttackTarget:[{x:0,y:0}],
 	strategy:[],
 	maxProficiency:1000,
-	sign:"ymr"
+	sign:"ymr",
+	newcount:1
 	},
 	{id:24,name:"青州兵",img:24,type:SoldierType.Physical,attackType:AttackType.NEAR,moveType:MoveType.INFANTRY,movePower:4,
 	property:{attack:"S",spirit:"C",defense:"A",breakout:"A",morale:"B",troops:4,strategy:1},
@@ -398,7 +403,8 @@ var SoldierDatas = [
 	rangeAttackTarget:[{x:0,y:0}],
 	strategy:[],
 	maxProficiency:1000,
-	sign:"qzb"
+	sign:"qzb",
+	newcount:1
 	},
 	{id:25,name:"君王",img:1,type:SoldierType.Physical,attackType:AttackType.NEAR,moveType:MoveType.CAVALRY,movePower:6,
 	property:{attack:"A",spirit:"A",defense:"A",breakout:"A",morale:"A",troops:5,strategy:1},

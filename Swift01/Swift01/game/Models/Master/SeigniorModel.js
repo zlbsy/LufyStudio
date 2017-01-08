@@ -284,7 +284,7 @@ SeigniorModel.prototype.checkSpyCitys = function(){
 	for(var i = self.data.spyAreas.length - 1;i>=0;i--){
 		var city = self.data.spyAreas[i];
 		city.month -= 1;
-		if(city.month == 0){
+		if(city.month <= 0){
 			self.data.spyAreas.splice(i, 1);
 		}
 	}

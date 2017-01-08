@@ -324,13 +324,11 @@ BattleResultConfirmView.prototype.setCharacter = function(){
 		statusLayer.addChild(lblLeft);
 	}
 	var soldiers = self.characterModel.soldiers();
-	console.log(self.characterModel.name(),"soldiers:",soldiers);
 	if(soldiers.length == 1){
 		self.characterModel.battleSoldierReset();
 		var charaData = characterListConfig.find(function(child){
 			return child.id == self.characterModel.id();
 		});
-	console.log(self.characterModel.name(),"charaData:",charaData);
 		self.characterModel.data.soldiers = charaData.soldiers;
 		self.characterModel.data.saveSoldiers = null;
 		self.characterModel.data._currentSoldiers = null;

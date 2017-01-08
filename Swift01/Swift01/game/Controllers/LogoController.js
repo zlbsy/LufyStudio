@@ -197,7 +197,7 @@ LogoController.prototype.updateCheck = function(){
 			}
 			if(newsShowDay < today || forceNewsShow){
 				self.view.showNews(data.newsURL + "&l=" + LPlugin.language());
-				LPlugin.SetData("newsShowDay", today);
+				//LPlugin.SetData("newsShowDay", today);
 			}
 		}
 		if(LPlugin.dataVer() >= LPlugin.dataVer(data.ver)){

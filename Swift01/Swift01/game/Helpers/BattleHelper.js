@@ -1171,7 +1171,7 @@ function resetAllBattleSoldier(characterModels){
 }
 //普通兵种对应特殊兵种
 function getBattleSoldierSelectId(currentSoldiers, characterModel){
-	if([20, 21, 22, 23, 24].indexOf(currentSoldiers.id()) >= 0){//佣兵专用兵种
+	if(SpecializedSoldiers.indexOf(currentSoldiers.id()) >= 0){//佣兵专用兵种
 		return currentSoldiers.id();
 	}
 	if(currentSoldiers.attackType() == AttackType.MAGIC){

@@ -271,7 +271,7 @@ BattleCharacterView.prototype.loadSOver = function(event){
 		var dataLayer = new LSprite();
 		dataLayer.graphics.drawRect(0, "#ff0000", [0, 0, baseData.width, baseData.height]);
 		dataLayer.addChild(new LBitmap(baseData));
-		var shadow = new LDropShadowFilter(0,0,self.belong == Belong.SELF?"#FF0000":"#0000FF",10);
+		var shadow = new LDropShadowFilter(0,0,self.belong == Belong.SELF?"#FF0000":"#2a2af8",10);
 		dataLayer.filters = [shadow];
 		bitmapData = new LBitmapData(null, 0, 0, baseData.width, baseData.height, LBitmapData.DATA_CANVAS);
 		bitmapData.draw(dataLayer);

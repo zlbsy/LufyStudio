@@ -114,9 +114,11 @@ AreaModel.prototype.getDefenseEnemiesAndPowerful = function(){
 AreaModel.prototype.getEmployCharacters = function(){
 	var self = this;
 	var charas = [];
+	var specialized = SpecializedSoldiers;
+	var specializedId = specialized[specialized.length*Math.fakeRandom() >>> 0];
 	for(var i=EmployCharacter[0];i<=EmployCharacter[1];i++){
 		var employSoldiers = self.employSoldiers();
-		var soldierId = employSoldiers[employSoldiers.length*Math.fakeRandom() >>> 0];
+		var soldierId = (i == EmployCharacter[0] ? specializedId : employSoldiers[employSoldiers.length*Math.fakeRandom() >>> 0]);
 		var chara = CharacterModel.createEmployCharacter(i, soldierId, self.id());
 		charas.push(chara);
 	}
