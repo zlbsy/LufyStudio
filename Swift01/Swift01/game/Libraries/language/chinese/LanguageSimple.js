@@ -27,6 +27,8 @@ Language.dataSimple = {
 	"chapter_message":"该剧本共包含 {0} 个势力。",
 	"confirm":"确认",
 	"dialog_quip_confirm_message":"要退出游戏吗？",
+	"img_copyright":"形象版权",
+	"dialog_img_copyright":"本游戏的战场形象取自下列制作者，或者在其形象基础上做了修改，在此表示感谢。\n无所畏惧，yejingtang，zpftmd748，Sunok706，张博，小白猎人，drinksun",
 	"opinion":"交流论坛",
 	"tieba":"百度贴吧",
 	"bug_report":"提交错误报告",

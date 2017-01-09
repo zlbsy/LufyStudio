@@ -172,7 +172,22 @@ LogoView.prototype.showMenu=function(){
 	
 	menuLayer.y = LMvc.screenHeight - menuY;
 	
+	var buttonStart = getSizeButton(Language.get("img_copyright"),100, 45);
+	buttonStart.x = LMvc.screenWidth - menuLayer.x - buttonStart.getWidth();
+	buttonStart.y = -menuLayer.y;
+	menuLayer.addChild(buttonStart);
+	buttonStart.addEventListener(LMouseEvent.MOUSE_UP, self.showImgCopyright);
+	
 	self.topMenuLayer = menuLayer;
+};
+LogoView.prototype.showImgCopyright=function(event){
+	var button = event.currentTarget;
+	var self = button.getParentByConstructor(LogoView);
+	
+	var obj = {width:400, height:300, 
+		message:Language.get("dialog_img_copyright"), title:Language.get("confirm")};
+	var dialog = ConfirmWindow(obj);
+	LMvc.layer.addChild(dialog);
 };
 LogoView.prototype.reportUpdateChick=function(event){
 	var button = event.currentTarget;
