@@ -510,6 +510,9 @@ CharacterListView.prototype.charactersPush = function(pageIndex) {
 	var self = this;
 	self.pageIndex = pageIndex;
 	var scHeight = 0, maxNum = 50;
+	if(self.controller.characterListType == CharacterListType.EXPEDITION){
+		maxNum = 500;
+	}
 	var child, length = self.dataList.length < pageIndex * maxNum + maxNum ? self.dataList.length : pageIndex * maxNum + maxNum;
 	var cityModel = self.controller.getValue("cityData");
 	var items = [];

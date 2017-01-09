@@ -11,7 +11,7 @@ function getWeakBattleCity(areaModel){
 		if(SeigniorExecute.Instance().eventCitys.indexOf(neighbors[i])>=0){
 			continue;
 		}
-		if(child.seigniorCharaId() != areaModel.seigniorCharaId() && !areaModel.seignior().isStopBattle(child.seigniorCharaId())){
+		if(!child.isTribe() && child.seigniorCharaId() != areaModel.seigniorCharaId() && !areaModel.seignior().isStopBattle(child.seigniorCharaId())){
 			enemyCitys.push(child);
 		}
 	}
@@ -107,7 +107,6 @@ function getIdleCharacters(areaModel){
 }
 /*出战准备*/
 function jobAiToBattle(areaModel,baseCharacters,targetCity){
-	//targetCity = AreaModel.getArea(22);//TODO::测试用
 	var attackQuantity = BattleMapConfig.AttackQuantity;
 	var generalCount = areaModel.generalsSum();
 	if(generalCount - attackQuantity < BattleMapConfig.DetachmentQuantity){
@@ -405,7 +404,8 @@ function jobAiNeedToEnlist(areaModel){
 	}
 	var charas = areaModel.getDefenseEnemies();
 	var minToops = 0;
-	for(var i = 0,l=charas.length;i<l;i++){
+	var quantityEnlist = Math.min(charas.length, BattleMapConfig.DefenseQuantity + BattleMapConfig.AttackQuantity);
+	for(var i = 0;i<quantityEnlist;i++){
 		var chara = charas[i];
 		minToops += chara.maxTroops();
 	}
@@ -891,8 +891,8 @@ function childsHasGrowup(areaModel){
 			childModel.cityId(areaModel.id());
 			childModel.seigniorId(areaModel.seigniorCharaId());
 			childModel.loyalty(chara.loyalty());
-			childModel.feat(0);
 			areaModel.addGenerals(childModel);
+			setCharacterInitFeat(childModel);
 			if(areaModel.seigniorCharaId() == LMvc.selectSeignorId){
 				var obj = {title:Language.get("confirm"),messageHtml:String.format(Language.get("child_growup"), childModel.name(), chara.name()),height:240, okEvent:function(event){
 					event.currentTarget.parent.remove();

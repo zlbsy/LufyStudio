@@ -102,13 +102,69 @@ LView.prototype.die = function() {
 		}
 	}
 };
+LComboBox.PRE_OPEN = "pre_open";
+LComboBox.END_OPEN = "end_open";
 LComboBox.prototype._showChildList = function (event) {
 	var s = event.currentTarget;
 	if(!s.list || s.list.length == 0){
 		return;
 	}
-	s.showChildList();
+	s.dispatchEvent(LComboBox.PRE_OPEN);
+	setTimeout(function(){
+		s.showChildList();
+	}, 0);
 };
+LComboBox.prototype.showChildList = function(list, index) {
+	var s = this, i, l, child, w;
+	if (!list) {
+		var translucent = new LSprite();
+		translucent.graphics.drawRect(0, "#000000", [0, 0, LGlobal.width, LGlobal.height], true, "#000000");
+		translucent.alpha = 0;
+		LGlobal.stage.addChild(translucent);
+		translucent.addEventListener(LMouseEvent.MOUSE_UP, function(e) {
+			var cnt = LGlobal.stage.numChildren;
+			if (e.target.constructor.name == "LListView") {
+				return;
+			}
+			var destroy = LGlobal.destroy;
+			LGlobal.destroy = false;
+			LGlobal.stage.removeChildAt(cnt - 1);
+			LGlobal.destroy = destroy;
+			LGlobal.stage.removeChildAt(cnt - 2);
+		});
+		translucent.addEventListener(LMouseEvent.MOUSE_DOWN, function(e) {});
+		translucent.addEventListener(LMouseEvent.MOUSE_MOVE, function(e) {});
+		translucent.addEventListener(LMouseEvent.MOUSE_OVER, function(e) {});
+		translucent.addEventListener(LMouseEvent.MOUSE_OUT, function(e) {});
+
+		var coordinate = s.getRootCoordinate();
+		s.listView.x = coordinate.x;
+		s.listView.y = coordinate.y + s.layer.getHeight();
+		LGlobal.stage.addChild(s.listView);
+		if ( typeof s.listView._ll_saveY != UNDEFINED) {
+			s.listView.clipping.y = s.listView._ll_saveY;
+		}
+		list = [];
+		index = 0;
+	}
+	i = index;
+	var selected = s.value === s.list[i].value;
+	child = new s.listChildView(s.list[i], s, selected);
+	if (selected) {
+		s.listView._ll_selectedChild = child;
+	}
+	list.push(child);
+	if (index < s.list.length - 1) {
+		setTimeout(function() {
+			s.showChildList(list, index + 1);
+		}, 0);
+		return;
+	}
+	s.listView.resize(s.listView.cellWidth, s.listView.cellHeight * (s.list.length > s.maxIndex ? s.maxIndex : s.list.length));
+	s.listView.updateList(list);
+	s.dispatchEvent(LComboBox.END_OPEN);
+}; 
+
 LRadio.ON_CHANGE = "onchange";
 LRadio.prototype.setValue = function (value) {
 	var s = this, child, k;

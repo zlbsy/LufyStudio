@@ -5,18 +5,12 @@ function BattleResultView(controller, result){
 	self.backInit();
 	self.result = result;
 	self.checkCaptives = [];
-	//TODO:test code
-	//var from = self.controller.battleData.fromCity;
-	//self.controller.battleData.fromCity = self.controller.battleData.toCity;
-	//self.controller.battleData.toCity = from;
-	//self.model.enemyList[0].isLeader = true;
-	//TODO:test code end
-	//self.result = result=0;
-	//controller.addEnemyCharacter(243,"up",3,3);
-	//self.model.enemyList[0].isLeader = true;
-	//self.model.enemyCaptive.push(4);
-	
-	experienceToFeat(self.controller.battleData.expeditionEnemyCharacterList);
+	var charas = self.controller.battleData.expeditionEnemyCharacterList;
+	for(var i=0;charas && i<charas.length;i++){
+		var chara = charas[i];
+		chara.battleSoldierReset();
+	}
+	experienceToFeat(charas);
 	self.setEvent();
 	if(result){
 		self.winInit();
@@ -24,6 +18,28 @@ function BattleResultView(controller, result){
 		self.failInit();
 	}
 	self.showExpDialog();
+};
+BattleResultView.characterListTroopsCtrl=function(list){
+	var charaTroops = 0;
+	var canHeal = list.find(function(chara){
+		return HealSoldiers.indexOf(chara.data.currentSoldierId())>=0;
+	});
+	list.forEach(function(child){
+		if(child.data.isDefCharacter()){
+			return;
+		}
+		var troops = child.data.troops();
+		if(canHeal){
+			troops += child.data.wounded();
+		}else{
+			troops += child.data.wounded() * (0.2 + 0.6 * Math.fakeRandom());
+			troops = troops >>> 0;
+		}
+		charaTroops += troops;
+		child.data.troops(0);
+		child.data.wounded(0);
+	});
+	return charaTroops;
 };
 BattleResultView.prototype.selfChangeCity=function(){
 	var self = this;
@@ -138,14 +154,7 @@ BattleResultView.prototype.setEvent=function(){
 };
 BattleResultView.prototype.cityWin=function(event){
 	var self = event.currentTarget;
-	var charaTroops = 0;
-	self.model.ourList.forEach(function(child){
-		if(child.data.isDefCharacter()){
-			return;
-		}
-		charaTroops += child.data.troops();
-		child.data.troops(0);
-	});
+	var charaTroops = BattleResultView.characterListTroopsCtrl(self.model.ourList);
 	var message;
 	var battleData = self.controller.battleData;
 	var cityName = battleData.toCity.name();
@@ -175,14 +184,7 @@ BattleResultView.prototype.cityWin=function(event){
 };
 BattleResultView.prototype.cityFail=function(event){
 	var self = event.currentTarget;
-	var charaTroops = 0;
-	self.model.enemyList.forEach(function(child){
-		if(child.data.isDefCharacter()){
-			return;
-		}
-		charaTroops += child.data.troops();
-		child.data.troops(0);
-	});
+	var charaTroops = BattleResultView.characterListTroopsCtrl(self.model.enemyList);
 	var message;
 	var seignior = CharacterModel.getChara(self.winSeigniorId);
 	var battleData = self.controller.battleData;

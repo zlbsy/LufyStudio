@@ -36,10 +36,15 @@ CharacterDetailedTabStatusView.prototype.showStatus=function(){
 		labels.push("stunt");
 		datas.push(String.format(Language.get("skill_explanation"),skill.name(),skill.explanation(),skill.probability()));
 	}
+	var military = characterModel.military();
+	if(military){
+		labels.push("military");
+		datas.push(String.format(Language.get("military_explanation"),military.name(),military.explanation()));
+	}
 	for(var i=0;i<labels.length;i++){
 		var height = txtHeight;
 		var lblCost = getStrokeLabel(String.format("{0} : {1}",Language.get(labels[i]), datas[i]),20,"#FFFFFF","#000000",4);
-		if(labels[i] == "stunt" || labels[i] == "status"){
+		if(labels[i] == "stunt" || labels[i] == "status" || labels[i] == "military"){
 			lblCost.width = LMvc.screenWidth - 60;
 			lblCost.setWordWrap(true, txtHeight);
 			height = lblCost.getHeight();
@@ -53,7 +58,9 @@ CharacterDetailedTabStatusView.prototype.showStatus=function(){
 	statusLayer.cacheAsBitmap(true);
 	var backLayer = new LSprite();
 	backLayer.addChild(statusLayer);
-	self.setCtrlButtons(backLayer);
+	if(!LMvc.BattleController){
+		self.setCtrlButtons(backLayer);
+	}
 	var sc = new LScrollbar(backLayer, self.tabWidth, self.tabHeight, 10);
 	self.addChild(sc);
 };
@@ -68,11 +75,12 @@ CharacterDetailedTabStatusView.prototype.setCtrlButtons=function(backLayer){
 		return;
 	}
 	if(characterModel.seigniorId() != LMvc.selectSeignorId){
-		var btnRecruit = getButton(Language.get("recruit"),200, characterModel.job() == Job.END ? "win07" : "win01");//招降
+		var recruitDisable = characterModel.job() != Job.IDLE;
+		var btnRecruit = getButton(Language.get("recruit"),200, recruitDisable ? "win07" : "win01");//招降
 		btnRecruit.x = LMvc.screenWidth - 260;
 		btnRecruit.y = 5;
 		backLayer.addChild(btnRecruit);
-		if(characterModel.job() == Job.END){
+		if(recruitDisable){
 			btnRecruit.staticMode = true;
 		}else{
 			btnRecruit.addEventListener(LMouseEvent.MOUSE_UP,self.clickRecruit);
@@ -87,13 +95,44 @@ CharacterDetailedTabStatusView.prototype.setCtrlButtons=function(backLayer){
 		btnBehead.y = 105;
 		backLayer.addChild(btnBehead);
 		btnBehead.addEventListener(LMouseEvent.MOUSE_UP,self.clickBehead);
-	}else if(characterModel.id() != characterModel.seigniorId() && characterModel.loyalty() < 100 && !characterModel.isPrized()){
-		var btnPrized = getButton(Language.get("prize"),200);//褒奖
-		btnPrized.x = LMvc.screenWidth - 260;
-		btnPrized.y = 5;
-		backLayer.addChild(btnPrized);
-		btnPrized.addEventListener(LMouseEvent.MOUSE_UP,self.clickPrized);
+	}else if(characterModel.id() != characterModel.seigniorId()){
+		var btnExile = getButton(Language.get("exile"),200);//流放
+		btnExile.x = LMvc.screenWidth - 260;
+		btnExile.y = 5;
+		backLayer.addChild(btnExile);
+		btnExile.addEventListener(LMouseEvent.MOUSE_UP,self.clickExile);
+		if(characterModel.loyalty() < 100 && !characterModel.isPrized()){
+			var btnPrized = getButton(Language.get("prize"),200);//褒奖
+			btnPrized.x = LMvc.screenWidth - 260;
+			btnPrized.y = 55;
+			backLayer.addChild(btnPrized);
+			btnPrized.addEventListener(LMouseEvent.MOUSE_UP,self.clickPrized);
+		}
 	}
+};
+CharacterDetailedTabStatusView.prototype.clickExile=function(event){
+	var btnExile = event.currentTarget;
+	var self = btnExile.getParentByConstructor(CharacterDetailedTabStatusView);
+	var characterListView = self.getParentByConstructor(CharacterListView);
+	var characterModel = self.controller.getValue("selectedCharacter");
+	var obj = {title:Language.get("confirm"),
+	message:String.format(Language.get("dialog_exile_message"), 
+	characterModel.name()),height:200,
+	okEvent:function(e){
+		e.currentTarget.parent.remove();
+		btnExile.visible = false;
+		self.exileRun(characterListView, characterModel);
+	},cancelEvent:null};
+	var windowLayer = ConfirmWindow(obj);
+	LMvc.layer.addChild(windowLayer);
+};
+CharacterDetailedTabStatusView.prototype.exileRun=function(characterListView, characterModel){
+	var self = this;
+	characterModel.city().addOutOfOfficeCharacter(characterModel.id());
+	self.controller.dispatchEvent(LController.NOTIFY_ALL);
+	var e = new LEvent(CharacterListEvent.LIST_CHANGE);
+	e.characterModel = characterModel;
+	characterListView.dispatchEvent(e);
 };
 CharacterDetailedTabStatusView.prototype.clickPrized=function(event){
 	var btnPrized = event.currentTarget;
@@ -145,15 +184,6 @@ CharacterDetailedTabStatusView.prototype.clickRecruit=function(event){
 		characterModel.seigniorId(LMvc.selectSeignorId);
 		cityData.removeCaptives(characterModel.id());
 		cityData.addGenerals(characterModel);
-		//list更新
-		var listView = self.controller.view.listView;
-		var items = listView.getItems();
-		var item = items.find(function(child){
-			return characterModel.id() == child.charaModel.id();
-		});
-		item.set(characterModel);
-		item.cacheAsBitmap(false);
-		item.updateView();
 		//详细更新
 		detailedView.changeCharacter(0);
 		script = "SGJTalk.show(" + characterModel.id() + ",0,"+Language.get("dialog_recruit_success_message")+");";//愿效犬马之劳!
@@ -171,6 +201,15 @@ CharacterDetailedTabStatusView.prototype.clickRecruit=function(event){
 		script = "SGJTalk.show(" + characterModel.id() + ",0,"+Language.get("dialog_recruit_fail_message")+");";//少废话!忠臣不事二主!
 		script += "SGJBattleResult.selfCaptiveWin(1);";
 	}
+	//list更新
+	var listView = self.controller.view.listView;
+	var items = listView.getItems();
+	var item = items.find(function(child){
+		return characterModel.id() == child.charaModel.id();
+	});
+	item.set(characterModel);
+	item.cacheAsBitmap(false);
+	item.updateView();
 	LGlobal.script.addScript(script);
 };
 CharacterDetailedTabStatusView.prototype.clickRelease=function(event){
@@ -204,8 +243,7 @@ CharacterDetailedTabStatusView.prototype.clickBehead=function(event){
 	var detailedView = self.getParentByConstructor(CharacterDetailedView);
 	var characterModel = self.controller.getValue("selectedCharacter");
 	characterModel.toDie();
-	/*var cityData = self.controller.getValue("cityData");
-	cityData.removeCaptives(characterModel.id());*/
+	beheadCountPlus();
 	detailedView.deleteChildFromList(characterModel.id());
 	//武将{0}被斩首了!
 	var obj = {title:Language.get("confirm"),message:String.format(Language.get("dialog_behead_message"), characterModel.name()),height:200,okEvent:null};

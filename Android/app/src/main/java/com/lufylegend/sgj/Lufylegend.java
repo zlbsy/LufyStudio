@@ -1,6 +1,7 @@
 package com.lufylegend.sgj;
 
 import android.app.Activity;
+import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.media.AudioAttributes;
@@ -268,6 +269,15 @@ public class Lufylegend {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+    public void quitConfirm(){
+        String script = "LPlugin.quitConfirmShow();";
+        javascriptRun(script);
+    }
+    @JavascriptInterface
+    public void quitApplication(){
+        android.os.Process.killProcess(android.os.Process.myPid());
+        System.exit(0);
     }
     @JavascriptInterface
     public void openURL(String url){

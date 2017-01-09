@@ -509,7 +509,6 @@ BattleController.prototype.notClickOnRoadLayer = function(event){
 		case CharacterMode.SHOW_MOVE_ROAD:
 		default:
 			BattleController.ctrlChara.removeAllEventListener();
-			BattleController.ctrlChara.toStatic(true);
 			self.view.mainMenu.visible = true;
 	}
 };
@@ -551,7 +550,6 @@ BattleController.prototype.clickSelfCharacter = function(chara){
 	if(chara.mode == CharacterMode.END_ACTION){
 		return;
 	}
-	chara.toStatic(false);
 	chara.mode = CharacterMode.SHOW_MOVE_ROAD;
 	BattleController.ctrlChara.saveShowMoveRoadObject();
 };

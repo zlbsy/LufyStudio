@@ -41,8 +41,15 @@ StrategyView.prototype.updateItems = function(strategyList) {
 StrategyView.prototype.updateView = function() {
 	var self = this;
 	var characterModel = self.controller.getValue("selectedCharacter");
+	var isUpdate = false;
+	if(self.characterModel && self.characterModel.id() != characterModel.id()){
+		isUpdate = true;
+	}
 	self.characterModel = characterModel;
 	self.setStrategyList();
+	if(isUpdate){
+		self.listView.clipping.y = 0;
+	}
 };
 StrategyView.prototype.setStrategyList = function() {
 	var self = this;

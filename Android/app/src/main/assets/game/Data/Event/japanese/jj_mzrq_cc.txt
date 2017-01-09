@@ -1,0 +1,13 @@
+SGJEvent.mapShow(7);
+SGJEvent.addCharacter(@id0,150,100,fade);
+SGJEvent.messageShow(長年の闘争を経て、@name0が天下を統一して、新しい王朝を作りました。,3);
+SGJEvent.messageShow(でも、これまでの平和は、一時的なものです。異民族は中原にの侵略が始まった。,3);
+SGJEvent.addCharacter(621,0,50,fade);
+SGJEvent.addCharacter(622,0,200,fade);
+SGJEvent.addCharacter(624,350,50,fade);
+SGJEvent.addCharacter(626,350,200,fade);
+SGJEvent.messageShow(@name0が作った王朝はまだ不安定ですから、異民族を抵抗実力が足りなかった。,3);
+SGJEvent.messageShow(@name0は異民族と講和し、西凉，幽州，云南などの国土を割譲し、異民族に毎年銀25万両と絹25万疋を金に貢げるという、屈辱的な内容の和議を結んだ。,3);
+SGJEvent.removeCharacter(@id0,fade);
+SGJEvent.messageShow(新王朝は生きていますが、もう有名無実であった。,3);
+Mark.EventEnd;

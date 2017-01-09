@@ -108,7 +108,14 @@ BugReportView.prototype.toUpdate = function(event){
 		LMvc.logoStage.addChild(dialog);
 		return;
 	}
-	LAjax.post(LMvc.uploadURL, {email:self.mail.text, message:self.message.text, ver:LMvc.ver, report:JSON.stringify(self.record), charas:JSON.stringify(LPlugin.characters())}, function(data){
+	var identificationId = (typeof LPlugin.identificationId == UNDEFINED) ? "ios" : LPlugin.identificationId();
+	LAjax.post(LMvc.uploadURL, {email:self.mail.text, 
+		message:self.message.text, 
+		ver:LMvc.ver, 
+		identificationId:identificationId, 
+		report:JSON.stringify(self.record), 
+		charas:JSON.stringify(LPlugin.characters())
+		}, function(data){
 		var obj;
 		if(parseInt(data)>0){
 			obj = {width:300, height:240, message:Language.get("dialog_success_report"), title:Language.get("dialog_success_report_title"), okEvent:function(e){

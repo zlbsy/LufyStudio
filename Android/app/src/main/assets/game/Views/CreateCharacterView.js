@@ -1,5 +1,6 @@
 function CreateCharacterView(controller){
 	base(this,LView,[controller]);
+	this.name = "CreateCharacterView";
 }
 CreateCharacterView.prototype.construct=function(){
 	this.controller.addEventListener(LEvent.COMPLETE, this.init.bind(this));
@@ -9,7 +10,8 @@ CreateCharacterView.prototype.layerInit=function(){
 	//self.addChild(getTranslucentMask());
 	self.baseLayer = new LSprite();
 	self.addChild(self.baseLayer);
-	var panel = getBitmap(new LPanel(new LBitmapData(LMvc.datalist["win05"]),LMvc.screenWidth, LMvc.screenHeight));
+	//var panel = getBitmap(new LPanel(new LBitmapData(LMvc.datalist["win05"]),LMvc.screenWidth, LMvc.screenHeight));
+	var panel = getPanel("win05",LMvc.screenWidth, LMvc.screenHeight);
 	//panel.y = 20;
 	self.baseLayer.addChild(panel);
 	
@@ -22,10 +24,11 @@ CreateCharacterView.prototype.titleInit=function(){
 	label.x = 15;
 	label.y = 15;
 	self.titleLayer.addChild(label);
-	var list = ["name", 20, "force", 110, "intelligence", 160, "command", 210, "agility", 260, "luck", 310, "stunt", 360];
+	var list = ["name", 20, "force", 110, "intelligence", 160, "command", 210, "agility", 260, "luck", 310, "stunt", 360,"delete",440];
 	for(var i=0,l=list.length;i<l;i+=2){
-		label = getStrokeLabel(Language.get(list[i]),20,"#CDD4AF","#000000",4);
+		label = getStrokeLabel(Language.get(list[i]),18,"#CDD4AF","#000000",4);
 		label.x = list[i + 1];
+		label.x *= 0.9;
 		label.y = 60;
 		self.titleLayer.addChild(label);
 		if(i+2 >= l){
@@ -35,6 +38,7 @@ CreateCharacterView.prototype.titleInit=function(){
 		bitmapLine.scaleX = 2;
 		bitmapLine.scaleY = 20;
 		bitmapLine.x = list[i + 3] - 5;
+		bitmapLine.x *= 0.9;
 		bitmapLine.y = 60;
 		self.titleLayer.addChild(bitmapLine);
 	}
@@ -89,17 +93,94 @@ CreateCharacterView.prototype.showDetailed=function(event){
 CreateCharacterView.prototype.toShowDetailed=function(data){
 	var self = this;
 	var detailedView = new CreateCharacterDetailedView(self.controller, data);
-	var obj = {title:Language.get(data?"update_character":"create_character"),subWindow:detailedView,contentStartY:60,width:LMvc.screenWidth,height:560,okEvent:self.saveCharacter,cancelEvent:self.cancelEvent};
-	var windowLayer = ConfirmWindow(obj);
-	self.addChild(windowLayer);
-	self.baseLayer.visible = false;
+	self.parent.addChild(detailedView);
+	self.visible = false;
 };
-CreateCharacterView.prototype.saveCharacter=function(event){
-	var windowLayer = event.currentTarget.parent;
-	var detailedView = windowLayer.childList.find(function(child){
-		return child.constructor.name == "CreateCharacterDetailedView";
+CreateCharacterView.prototype.toDeleteChild=function(data){
+	var self = this;
+	var items = self.listView.getItems();
+	var item = items.find(function(child) {
+		return child.data.id == data.id;
 	});
-	var self = windowLayer.parent;
+	var recortMax = RecordController.RECORD_MAX;
+	if(!LPlugin.native){
+		recortMax = RecordController.RECORD_MAX_WEB;
+	}
+	for(var i=0;i<=recortMax;i++){
+		var isIn = self.getCharacterFromRecord(i, data.id);
+		if(isIn){
+			var obj = {width:300, height:240, message:String.format(Language.get("dialog_error_delete_chara"), i), title:Language.get("confirm")};
+			var dialog = ConfirmWindow(obj);
+			LMvc.layer.addChild(dialog);
+			return;
+		}
+	}
+	var obj = {width:300, height:240, message:String.format(Language.get("确定要删除武将{0}吗?"), data.name), title:Language.get("confirm")};
+	obj.okEvent = function(e){
+		e.currentTarget.parent.remove();
+		LPlugin.deleteCharacter(data.id);
+		self.listView.deleteChildView(item);
+	};
+	obj.cancelEvent = null;
+	var dialog = ConfirmWindow(obj);
+	LMvc.layer.addChild(dialog);
+};
+CreateCharacterView.prototype.getCharacterFromRecord=function(index, id){
+	var self = this;
+	var record = GameManager.read(index);
+	if(!record){
+		return false;
+	}
+	for(var i=0,l=record.seigniors.length;i<l;i++){
+		var seignior = record.seigniors[i];
+		var areas = seignior.areas;
+		for(var j = 0;j < areas.length;j++){
+			var area = areas[j];
+			var isIn = self.getCharacterFromArea(area, id);
+			if(isIn){
+				return true;
+			}
+		}
+	}
+	return false;
+};
+CreateCharacterView.prototype.getCharacterFromArea=function(areaData, id){
+	var self = this;
+	for(var key in areaData){
+		if(key == "generals"){
+			for(var i=0,l=areaData[key].length;i<l;i++){
+				var charaData = areaData[key][i];
+				if(charaData.chara_id == id){
+					return true;
+				}
+			}
+		}else if(key == "out_of_offices"){
+			for(var i=0,l=areaData[key].length;i<l;i++){
+				var charaData = areaData[key][i];
+				if(charaData.chara_id == id){
+					return true;
+				}
+			}
+		}else if(key == "not_debut"){
+			for(var i=0,l=areaData[key].length;i<l;i++){
+				var charaData = areaData[key][i];
+				if(charaData.chara_id == id){
+					return true;
+				}
+			}
+		}else if(key == "captives"){
+			for(var i=0,l=areaData[key].length;i<l;i++){
+				var charaData = areaData[key][i];
+				if(charaData.chara_id == id){
+					return true;
+				}
+			}
+		}
+	}
+	return false;
+};
+CreateCharacterView.prototype.saveCharacter=function(detailedView){
+	var self = this;
 	var charaData = detailedView.getData();
 	if(charaData == null){
 		return;
@@ -120,15 +201,11 @@ CreateCharacterView.prototype.saveCharacter=function(event){
 		self.listView.insertChildView(view);
 		view.updateView();
 	}
-	self.baseLayer.visible = true;
-	windowLayer.remove();
+	self.visible = true;
+	detailedView.remove();
 };
-CreateCharacterView.prototype.cancelEvent=function(event){
-	var windowLayer = event.currentTarget.parent;
-	var detailedView = windowLayer.childList.find(function(child){
-		return child.constructor.name == "CreateCharacterDetailedView";
-	});
-	var self = windowLayer.parent;
-	self.baseLayer.visible = true;
-	windowLayer.remove();
+CreateCharacterView.prototype.cancelEvent=function(detailedView){
+	var self = this;
+	self.visible = true;
+	detailedView.remove();
 };

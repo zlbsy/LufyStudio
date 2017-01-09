@@ -1,0 +1,11 @@
+SGJEvent.mapShow(7);
+SGJEvent.addCharacter(@id0,150,100,fade);
+SGJEvent.messageShow(長年の闘争を経て、@name0が天下を統一して、新王朝を作りました。,3);
+SGJEvent.addCharacter(@id1,350,100,fade);
+SGJEvent.messageShow(漢王朝を再興したい@name0は，漢献帝を見つかって、擁立しました。献帝は@name0を丞相に任命し，そして@name0を@prince王に封ぜられた。,3);
+SGJEvent.messageShow(@name0が丞相を務めた間，賦役・刑罰の軽減、三省六部制の整備などを行い。ただ、献帝は佞臣を重用するまま、忠臣を排除されている。@name0が失望し、朝廷に離れていた。,3);
+SGJEvent.removeCharacter(@id0,fade);
+SGJEvent.messageShow(@name0を失った漢王朝は、国力がだんだん弱くなって、王朝が滅ぶ運命を逃げれませんでした。,3);
+SGJEvent.addCharacter(622,0,200,fade);
+SGJEvent.messageShow(漢王朝が滅ぶ後、華北一帯はお互いに攻略し、国内は大騒乱となった。五胡が前後に反乱を起こした、これは「五胡乱華」と呼ばれる。,3);
+Mark.EventEnd;

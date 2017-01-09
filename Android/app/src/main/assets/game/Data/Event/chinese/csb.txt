@@ -1,3 +1,14 @@
 SGJEvent.mapShow(1);
-SGJEvent.messageShow(出师表。,3);
+SGJEvent.addCharacter(21,50,100,fade);
+SGJEvent.addCharacter(10,200,100,fade);
+SGJEvent.messageShow(公元221年，刘备称帝，诸葛亮为丞相。,3);
+SGJEvent.removeCharacter(21,fade);
+SGJEvent.addCharacter(620,50,100,fade);
+SGJEvent.messageShow(223年，刘备病死，将刘禅托付给诸葛亮。,3);
+SGJEvent.messageShow(诸葛亮实行了一系列比较正确的政治和经济措施，使蜀汉境内呈现兴旺景象。,3);
+SGJEvent.messageShow(为了实现全国统一，诸葛亮在平息南方叛乱之后，于227年决定北上伐魏，拟夺取魏的长安，临行之前上书后主。,3);
+SGJEvent.talk(10,臣亮言：先帝创业未半而中道崩殂......);
+SGJEvent.messageShow(这就是著名的「出师表」,3);
+SGJEvent.messageShow(文中以恳切委婉的言辞劝勉后主要广开言路、严明赏罚、亲贤远佞，以此兴复汉室；同时也表达自己以身许国，忠贞不二的思想。,3);
+SGJEvent.messageShow(为了天下统一，这场堵上了国家命运的战争，正式拉开序幕了......,3);
 Mark.EventEnd;

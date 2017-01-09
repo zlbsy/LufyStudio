@@ -19,7 +19,7 @@ SingleCombatCharacterView.prototype.moveTo = function(x,y){
 	var self = this;
 	self.setRoad([{x:x/BattleCharacterSize.width,y:y/BattleCharacterSize.height}]);
 };
-SingleCombatCharacterView.prototype.toStatic = function(value){
+SingleCombatCharacterView.prototype.toEnd = function(value){
 	//覆盖父类处理
 };
 SingleCombatCharacterView.prototype.checkBuffer = function(){

@@ -51,6 +51,13 @@ MenuView.prototype.init=function(){
 	var buttonDictionary = getButton(Language.get("game_dictionary"),200);
 	buttonDictionary.y = menuY;
 	layer.addChild(buttonDictionary);
+	if(!LPlugin.DictionaryIsRead()){
+		var newMark = new LBitmap(new LBitmapData(LMvc.datalist["red_ball"]));
+		newMark.name = "newMark";
+		newMark.x = 180;
+		newMark.y = 30;
+		buttonDictionary.addChild(newMark);
+	}
 	buttonDictionary.addEventListener(LMouseEvent.MOUSE_UP, self.onClickDictionary);
 	
 	menuY += menuHeight;
@@ -85,7 +92,12 @@ MenuView.prototype.hide=function(event){
 	MenuController.instance().hide();
 };
 MenuView.prototype.onClickDictionary=function(event){
-	var self = event.currentTarget.parent.parent.parent;
+	var button = event.currentTarget;
+	var newMark = button.getChildByName("newMark");
+	if(newMark){
+		newMark.visible = false;
+	}
+	var self = button.getParentByConstructor(MenuView);
 	self.hide();
 	self.controller.loadDictionary();
 };

@@ -2,9 +2,12 @@ function CharacterDetailedView(controller,param){
 	var self = this;
 	base(self,LView,[controller]);
 	self.nowTab = CharacterDetailedView.TAB_STATUS;
+	self.tabWidth = 76;
 	self.layerInit();
 	self.ctrlLayerInit();
-	self.tabs = [CharacterDetailedView.TAB_STATUS,CharacterDetailedView.TAB_PROPERTIES,CharacterDetailedView.TAB_SKILL,CharacterDetailedView.TAB_ARMS,CharacterDetailedView.TAB_EQUIPMENT];
+	self.tabs = [CharacterDetailedView.TAB_STATUS,CharacterDetailedView.TAB_PROPERTIES,
+	CharacterDetailedView.TAB_SKILL,CharacterDetailedView.TAB_ARMS,
+	CharacterDetailedView.TAB_EQUIPMENT,CharacterDetailedView.TAB_INTRODUCTION];
 	
 	self.setTabButtons();
 	self.tabLayerInit();
@@ -16,6 +19,7 @@ CharacterDetailedView.TAB_ARMS = "tab_arms";
 CharacterDetailedView.TAB_LINEUPS = "tab_lineups";
 CharacterDetailedView.TAB_STATUS = "tab_status";
 CharacterDetailedView.TAB_PROPERTIES = "tab_properties";
+CharacterDetailedView.TAB_INTRODUCTION = "tab_introduction";
 CharacterDetailedView.prototype.layerInit=function(){
 	var self = this;
 	self.backLayer = getTranslucentMask();
@@ -122,7 +126,7 @@ CharacterDetailedView.prototype.setTabButtons=function(){
 	var tabs = self.tabs;
 	for(var i=0,l=self.tabs.length;i<l;i++){
 		if(!GameCacher.hasPanelBitmapData("tab_no_selected")){
-			var panel = new LPanel(new LBitmapData(LMvc.datalist["win08"],0,0,51,34),90,40);
+			var panel = new LPanel(new LBitmapData(LMvc.datalist["win08"],0,0,51,34),self.tabWidth,40);
 			var bitmapData = getBitmapData(panel,true);
 			panel.removeAllChild();
 			panel.cached();
@@ -130,10 +134,10 @@ CharacterDetailedView.prototype.setTabButtons=function(){
 		}
 		layer = getPanel("tab_no_selected");
 		var label = getStrokeLabel(Language.get(tabs[i]),22,"#FFFFFF","#000000",2);
-		label.x = (86 - label.getWidth()) * 0.5;
+		label.x = ((self.tabWidth - 4) - label.getWidth()) * 0.5;
 		label.y = 10;
 		layer.addChild(label);
-		layer.x = 86 * i + 4;
+		layer.x = (self.tabWidth - 4) * i + 4;
 		self.tabButtonCacheLayer.addChild(layer);
 	}
 	self.tabButtonCacheLayer.cacheAsBitmap(true);
@@ -143,7 +147,7 @@ CharacterDetailedView.prototype.selectedTab=function(key){
 	self.selectedTabLayer.cacheAsBitmap(false);
 	if(self.selectedTabLayer.numChildren == 0){
 		if(!GameCacher.hasPanelBitmapData("tab_selected")){
-			var panel = new LPanel(new LBitmapData(LMvc.datalist["win08"],0,0,51,34),90,50);
+			var panel = new LPanel(new LBitmapData(LMvc.datalist["win08"],0,0,51,34),self.tabWidth,50);
 			var bitmapData = getBitmapData(panel,true);
 			panel.removeAllChild();
 			panel.cached();
@@ -158,7 +162,7 @@ CharacterDetailedView.prototype.selectedTab=function(key){
 	}
 	label = self.selectedTabLayer.getChildAt(1); 
 	label.text = Language.get(key);
-	label.x = (86 - label.getWidth()) * 0.5;
+	label.x = ((self.tabWidth - 4) - label.getWidth()) * 0.5;
 	self.selectedTabLayer.cacheAsBitmap(true);
 };
 CharacterDetailedView.prototype.tabLayerInit=function(){
@@ -182,12 +186,12 @@ CharacterDetailedView.prototype.TabShow=function(tab){
 	for(var i=0,l=tabs.length;i<l;i++){
 		if(tabs[i] == tab){
 			self.selectedTab(tab);
-			self.selectedTabLayer.x = self.tabButtonCacheLayer.x + 86 * i + 4;
+			self.selectedTabLayer.x = self.tabButtonCacheLayer.x + (self.tabWidth - 4) * i + 4;
 		}else{
 			layer = new LSprite();
 			layer.tabName = tabs[i];
-			layer.addShape(LShape.RECT,[0,0,90,40]);
-			layer.x = 90 * i;
+			layer.addShape(LShape.RECT,[0,0,(self.tabWidth - 4),40]);
+			layer.x = (self.tabWidth - 4) * i + 6;
 			self.tabButtonLayer.addChild(layer);
 			layer.addEventListener(LMouseEvent.MOUSE_UP,self.TabClick);
 		}
@@ -211,7 +215,23 @@ CharacterDetailedView.prototype.TabShow=function(tab){
 		case CharacterDetailedView.TAB_STATUS:
 			self.showStatus();
 			break;
+		case CharacterDetailedView.TAB_INTRODUCTION:
+			self.showIntroduction();
+			break;
 	}
+};
+CharacterDetailedView.prototype.showIntroduction=function(){
+	var self = this;
+	var introductionView = self.tabLayer.childList.find(function(child){
+		return child instanceof CharacterDetailedTabIntroductionView;
+	});
+	if(introductionView){
+		introductionView.addController(self.controller);
+		introductionView.visible = true;
+		return;
+	}
+	introductionView = new CharacterDetailedTabIntroductionView(self.controller, LMvc.screenWidth - 50, LMvc.screenHeight - self.tabLayer.y - 10);
+	self.tabLayer.addChild(introductionView);
 };
 CharacterDetailedView.prototype.showEquipment=function(){
 	var self = this;

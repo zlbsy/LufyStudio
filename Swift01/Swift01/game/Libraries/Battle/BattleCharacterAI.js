@@ -297,7 +297,8 @@ BattleCharacterAI.prototype.physicalAttack = function(target) {
 		if(!skill){
 			skill = self.chara.data.skill(SkillType.ANGRY_ATTACK);
 			if(skill && skill.isSubType(SkillSubType.ATTACK_COUNT)){
-				value = (skill.attacks())[0];
+				var valueS = (skill.attacks())[0];
+				value = value > valueS ? value : valueS;
 			}
 		}
 		hertParams.list[0].hertValue = hertParams.list[0].hertValue*value >>> 0;
@@ -324,9 +325,7 @@ BattleCharacterAI.prototype.singleCombat = function(target) {
 	target.AI.attackTarget = self.chara;
 	var direction = getDirectionFromTarget(self.chara, target);
 	var directionTarget = getDirectionFromTarget(target, self.chara);
-	target.toStatic(false);
 	target.changeDirection(directionTarget);
-	target.toStatic(true);
 	self.chara.changeDirection(direction);
 	if(self.chara.belong == Belong.SELF){
 		battleSingleCombatCheck(self.chara);
@@ -378,7 +377,6 @@ BattleCharacterAI.prototype.attackActionComplete = function(event) {
 			if(cost < 100){
 				var charaTarget = charaLayer.getCharacterFromLocation(lx, ly);
 				if(!charaTarget){
-					self.attackTarget.toStatic(false);
 					charaLayer.setToPosition(self.attackTarget, lx, ly);
 				}
 			}
@@ -392,7 +390,6 @@ BattleCharacterAI.prototype.attackActionComplete = function(event) {
 			if(cost < 100){
 				var charaTarget = charaLayer.getCharacterFromLocation(lx, ly);
 				if(!charaTarget){
-					chara.toStatic(false);
 					charaLayer.setToPosition(chara, lx, ly);
 				}
 			}
@@ -400,7 +397,6 @@ BattleCharacterAI.prototype.attackActionComplete = function(event) {
 	}
 	for(var i = 0,l = hertParams.list.length;i<l;i++){
 		var obj = hertParams.list[i];
-		obj.chara.toStatic(false);
 		obj.chara.hertIndex = l - i;
 		if(hardships > 0){
 			obj.hertValue *= (1 + hardships);
@@ -561,7 +557,6 @@ BattleCharacterAI.prototype.hertActionComplete = function(event) {
 		chara.controller.view.baseLayer.addChild(statusView);
 		statusView.startTween();
 		if(!isCurrentAttackTarget(chara)){
-			chara.toStatic(true);
 			return;
 		}
 		statusView.addEventListener(BattleCharacterStatusEvent.CHANGE_COMPLETE,LMvc.currentAttackCharacter.AI.plusExp);
@@ -651,7 +646,6 @@ BattleCharacterAI.prototype.endAction = function() {
 		target.AI.attackTarget = null;
 		target.AI.herts = null;
 		target.removeAllEventListener();
-		target.toStatic(true);
 	}
 	self.attackTarget = null;
 	self.herts = null;
@@ -661,7 +655,7 @@ BattleCharacterAI.prototype.endAction = function() {
 	var view = LMvc.BattleController.view;
 	view.charaLayer.resetCharacterPositions();
 	chara.currentSelectStrategy = null;
-	chara.toStatic(true);
+	chara.toEnd(true);
 	chara.inteAI.init();
 	chara.moveAttackStep = 0;
 	LMvc.running = false;

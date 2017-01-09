@@ -92,6 +92,9 @@ CreateCharacterArmView.prototype.armInit=function(data){
 	self.statusPoint.x = 10;
 	self.statusPoint.y = 12;
 	self.baseLayer.addChild(self.statusPoint);
+	self.imgLabel = getStrokeLabel("点击兵种形象可以选择其它形象！",18,"#FAFAD2","#000000",2);
+	self.imgLabel.y = 360;
+	self.baseLayer.addChild(self.imgLabel);
 	var refreshButton = getSizeButton(Language.get("refresh"),80,40);
 	refreshButton.x = 180;
 	refreshButton.y = 5;
@@ -107,23 +110,51 @@ CreateCharacterArmView.prototype.armInit=function(data){
 	var items = [], child;
 	for(var i=0,l=soldiers.length;i<l;i++){
 		var soldier = soldiers[i];
+		var item = items.find(function(child){
+			return child.soldier.next() == soldier.id;
+		});
+		if(item){
+			continue;
+		}
 		child = new CreateCharacterArmItemView(self.listView, soldier);
 		items.push(child);
 	}
-	
+	self.setSpecialSoldiers(items);
 	self.listView.resize(260, 50 * 6);
 	self.listView.updateList(items);
 };
-CreateCharacterArmView.prototype.resetSoliderImage=function(data){
+CreateCharacterArmView.prototype.setSpecialSoldiers = function(items) {
 	var self = this;
+	//if(purchaseHasBuy(productIdConfig.soldier_special)){
+	for(var i=0, l=specialSoldiersConfig.length;i<l;i++){
+		var soldierId = specialSoldiersConfig[i];
+		var item = items.find(function(child){
+			return child.soldier.id() == soldierId || child.soldier.next() == soldierId;
+		});
+		if(item){
+			continue;
+		}
+		child = new CreateCharacterArmItemView(self.listView, {id:soldierId,proficiency:0});
+		items.push(child);
+	}
+	//}
+};
+CreateCharacterArmView.prototype.resetSoliderImage=function(isRefresh){
+	var self = this;
+	var point = self.point;
 	var soldiers = self.refreshStatus().soldiers;
+	if(isRefresh){
+		self.point = point;
+	}
 	var items = self.listView.getItems();
 	for(var i=0;i<items.length;i++){
 		var item = items[i];
 		var soldier = soldiers.find(function(child){
 			return child.id == item.soldier.id();
 		});
-		item.soldier.data.img = soldier ? soldier.img : null;
+		if(isRefresh){
+			item.soldier.data.img = soldier ? soldier.img : null;
+		}
 		item.setIcon();
 	}
 };

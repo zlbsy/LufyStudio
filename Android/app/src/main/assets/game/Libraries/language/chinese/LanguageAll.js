@@ -79,6 +79,8 @@ Language.data = {
 	"use_strategy_belong_error":"不可对{0}使用!",
 	
 	"quantity_of_month":"({0}个月)",
+	"delete":"删除",
+	"dialog_error_delete_chara":"此武将在存档{0}中被使用着，所以不能删除。",
 	"item":"物品",
 	"exp":"经验",
 	"treat":"治疗",
@@ -115,16 +117,24 @@ Language.data = {
 	"event_16":"苦肉计",
 	"event_17":"赤壁之战",
 	"event_18":"刮目相看",
-	"event_19":"西凉锦马超",
+	"event_19":"二乔",
 	"event_20":"失荆州",
 	"event_21":"七擒孟获",
 	"event_22":"出师表",
 	"event_23":"蜀灭亡",
 	"event_24":"五虎上将",
-	"event_25":"结局:蛮族入侵",
-	"event_26":"结局:远征蛮族",
-	"event_27":"结局:昏君",
-	"event_28":"结局:贤君",
+	"event_25":"结局:蛮族入侵之灭亡",
+	"event_26":"结局:远征蛮族之大胜",
+	"event_27":"结局:昏君之灭亡",
+	"event_28":"结局:西晋王朝",
+	"event_29":"结局:蛮族入侵之割地",
+	"event_30":"结局:远征蛮族之败归",
+	"event_31":"结局:昏君之分裂",
+	"event_32":"结局:商业大国",
+	"event_33":"结局:文明大国",
+	"event_34":"结局:超级强国",
+	"event_35":"结局:汉室复兴之延续",
+	"event_36":"结局:汉室复兴之残喘",
 	
 	"prompt":"提示",
 	"def_single_combat_error":"建筑物不可以单挑!",
@@ -140,6 +150,7 @@ Language.data = {
 	"tab_lineups":"阵型",
 	"tab_status":"状态",
 	"tab_properties":"属性",
+	"tab_introduction":"简介",
 	"tab_all":"全",
 	
 	"terrain_0":"平原",
@@ -247,6 +258,7 @@ Language.data = {
 	"battle_save_record":"战场保存",
 	"return_top":"回主页面",
 	"hurt_preview":"伤:{0}\n命:{1}%",
+	"dialog_exile_message":"要将{0}流放吗？",
 	"dialog_select_generals":"请选择武将！",
 	"dialog_no_captived_error":"没有被俘虏的武将！",
 	"dialog_character_troops_error":"{0}没有分配士兵!",
@@ -291,6 +303,9 @@ Language.data = {
 	"dialog_behead_message":"武将{0}被斩首了!",
 	"dialog_tribe_invasion_self_message":"{0}被外族入侵，城池遭到破坏，资源损失严重!",
 	"dialog_tribe_invasion_message":"{0}的{1}遭到了{2}的掠夺,损失惨重!",
+	"dialog_arm_level_error":"<font size='21' color='#D3D3D3'>无法进化兵种，需要熟练度达到 「<font size='21' color='#FAFAD2'>{0}</font>」 。</font>",
+	"dialog_arm_level_confirm":"<font size='21' color='#D3D3D3'>将兵种进化为 「<font size='21' color='#FAFAD2'>{0}</font>」 吗？</font>",
+	"evolution":"进化",
 	"prize":"褒奖",
 	"name":"姓名",
 	"age":"年龄",
@@ -418,6 +433,7 @@ Language.data = {
 	"identity":"身份",
 	"status":"状态",
 	"effect":"效果",
+	"exile":"流放",
 	
 	"force":"武力",
 	"command":"统率",
@@ -546,6 +562,7 @@ Language.data = {
 	"bout_end_confirm":"结束本回合吗？",
 	"gameover":"游戏结束",
 	"skill_explanation":"【{0}】{1}(发动率:{2}％)",
+	"military_explanation":"【{0}】{1}",
 	"building":"建築物",
 	"buy_food":"买进粮食",
 	"sell_food":"卖出粮食",
@@ -561,7 +578,14 @@ Language.data = {
 	"reinforcement_defense_quantity_message":"防守战最多只能{0}人出战！还可以派出援兵{1}人！",
 	"riot_message":"{0}的百姓发生暴动了!",
 	"no_food_talk":"糟糕！没有兵粮了，士兵的战斗力开始下降了。",
-	"child_growup":"<font size='22' color='#FFFFFF'><font color='#FF0000'> {0} </font>成年了，随<font color='#FF0000'> {1} </font>加入我军！</font>"
+	"child_growup":"<font size='22' color='#FFFFFF'><font color='#FF0000'> {0} </font>成年了，随<font color='#FF0000'> {1} </font>加入我军！</font>",
+	"militaryConfirm":"<font size='21' color='#FFFFFF'>使用军师计【<font size='21' color='#FAFAD2'>{0}</font>】吗？</font>",
+	"militaryNode":"※军师计在战斗中只能使用一次。",
+	"military":"军师计",
+	"military_started":"军师计【{0}】发动！",
+	"soldiers_image":"兵种形象",
+	"growing":"能力成长",
+	"breakthrough":"突破成长",
 };
 Language.itemData = {
 	"item_name_1":"方壶",
@@ -572,11 +596,11 @@ Language.itemData = {
 	"item_explanation_3":"提升武将的忠诚度。",
 	"item_name_4":"玉环",
 	"item_explanation_4":"提升武将的忠诚度。",
-	"item_name_5":"修炼符",
-	"item_name_6":"修炼符",
-	"item_name_7":"修炼符",
-	"item_name_8":"修炼符",
-	"item_name_9":"修炼符",
+	"item_name_5":"修炼符(武力)",
+	"item_name_6":"修炼符(统率)",
+	"item_name_7":"修炼符(智力)",
+	"item_name_8":"修炼符(敏捷)",
+	"item_name_9":"修炼符(运气)",
 	"item_name_10":"练兵金令",
 	"item_explanation_10":"提高当前兵种的熟练度",
 	"item_name_11":"练兵铜令",
@@ -749,10 +773,33 @@ Language.soldierData = {
 	"name_fdb":"飞刀兵",
 	"name_ymr":"野蛮人",
 	"name_qzb":"青州兵",
-	"name_qlq":"青龙骑兵",
-	"name_bhq":"白虎步兵",
-	"name_xwn":"玄武弩兵",
-	"name_zqn":"朱雀弩骑",
+	"name_jw":"君王",
+	"name_zbb":"重步兵",
+	"name_nub":"驽兵",
+	"name_zqb":"重骑兵",
+	"name_nqb":"驽骑兵",
+	"name_zpc":"重炮车",
+	"name_qs":"拳士",
+	"name_yz":"义贼",
+	"name_cm":"参谋",
+	"name_fss":"方术士",
+	"name_hss":"幻术士",
+	"name_qmcm":"骑马参谋",
+	"name_nvj":"女将",
+	"name_dhd":"大海盗",
+	"name_ddd":"大都督",
+	"name_kzss":"狂咒术士",
+	"name_xltq":"西凉铁骑",
+	"name_dyb":"丹阳兵",//步
+	"name_ber":"白耳兵",//步
+	"name_wdfj":"无当飞军",//骑
+	"name_hbq":"虎豹骑",//骑
+	"name_hwj":"虎卫军",//步
+	"name_jfb":"解烦兵",//步
+	"name_bmyc":"白马义从",//骑
+	"name_fxj":"飞熊军",//骑
+	"name_xzy":"陷阵营",
+	"name_xr":"仙人",
 	"explanation_jj":"均衡发展的万能型部队。在攻击、策略两方面都相当活跃。",
 	"explanation_qbb":"防御力优秀的部队。对付弓兵类时，以强大的攻击力为傲；但是攻击骑兵类的部队时，表现一般。",
 	"explanation_gb":"擅长远距攻击的部队。对骑兵类的攻击效果极高，但相反地对步兵类的防御效果极弱，这点还请留意。",
@@ -767,10 +814,9 @@ Language.soldierData = {
 	"explanation_qcs":"施展攻击类策略的文官部队，擅长火类、风类的策略，以移动力与骑兵类相同而自豪。",
 	"explanation_wun":"就能力而言，可说是武术家的女性翻版。可恢复周遭我军部队的异常状态。",
 	"explanation_xlqb":"攻击力、防御力均出众的部队。说它是武官类最强的部队，一点也不为过。缺点是对策略较无抵抗力。",
-	"explanation_hjz":"以武力揭竿而起的太平道信徒。由于头裹黄巾，人称黄巾军。",
 	"explanation_hd":"可在水上地形发挥强大战力的部队。不在敌人有利的地形作战，是其作战的要诀。",
-	"explanation_xxs":"率领攻击力强大的熊作战的部队。每次攻击还具有令敌人麻痹的附加效果。对弓箭和策略的抵抗力差。",
-	"explanation_xhs":"率领爆发力出众的虎作战的部队。每次攻击还具有令敌人中毒的附加效果。对弓箭和策略的抵抗力差。",
+	"explanation_xxs":"率领攻击力强大的熊作战的部队。每次攻击还有20%几率令敌人麻痹的附加效果。对弓箭和策略的抵抗力差。",
+	"explanation_xhs":"率领爆发力出众的虎作战的部队。每次攻击还有20%几率令敌人中毒的附加效果。对弓箭和策略的抵抗力差。",
 	"explanation_dd":"可在水上地形发挥战力的文官部队。攻击力也很高，如果轻视文官，是会吃大亏的。",
 	"explanation_zss":"可以施展攻击、妨碍、恢复三类策略的文官部队。可说是文官类最强的。千万要留意！",
 	"explanation_tjb":"身着藤甲的士兵，此甲又轻又坚，善能防箭，刀砍枪刺不入，遇水不沉，战场之上所向无敌！",
@@ -778,10 +824,37 @@ Language.soldierData = {
 	"explanation_fdb":"攻击力非常出色的远距离攻击部队，但是其它方面表现一般，没有弓兵那样高昂的士气！",
 	"explanation_ymr":"攻击力、防御力均出众的部队。地形适应力也很强，但是除了对策略抵抗力差之外，也很容易被人打出致命一击！",
 	"explanation_qzb":"曹操将青州黄巾军的精锐进行收编，组成了战斗力极强的青州兵，青州兵每人手持长枪，跟一般的步兵相比，虽然只能攻击四个方向，但是攻击范围更远！",
-	"explanation_qlq":"青龙骑兵",
-	"explanation_bhq":"白虎步兵",
-	"explanation_xwn":"玄武弩兵",
-	"explanation_zqn":"朱雀弩骑",
+
+	"explanation_jw":"均衡发展的万能型部队。在攻击、策略两方面都相当活跃。",
+	"explanation_zbb":"防御力优秀的部队。对付弓兵类时，以强大的攻击力为傲；但是攻击骑兵类的部队时，表现一般。",
+	"explanation_nub":"擅长远距攻击的部队。对骑兵类的攻击效果极高，但相反地对步兵类的防御效果极弱，这点还请留意。",
+	"explanation_zqb":"移动力与攻击力优异的部队。对步兵类的防御力很强，但是对弓箭、炮车的抵抗力较弱。",
+	"explanation_nqb":"移动力出色的远距攻击部队。所有远距攻击部队对付骑兵类时，具有值得夸耀的强大攻击力。",
+	"explanation_zpc":"射程无与伦比的远距攻击部队。用心锻炼的话，将来会有相当强的战力。",
+	"explanation_qs":"爆发力出色的部队。成功率高的防御和两段攻击是其魅力所在，也可以施展策略。",
+	"explanation_yz":"攻击力强大、士气高昂的部队。在山地、荒地可以发挥其真正的本领。对付敌军时，致命一击很值得期待。",
+	"explanation_cm":"施展攻击类策略的文官部队。擅长火类、水类、地类的策略。",
+	"explanation_fss":"施展恢复类策略的文官部队。是作战时不可缺少的后方支援部队。",
+	"explanation_hss":"施展妨碍类策略的文官部队。可运用诡异的策略削减敌人的战力。",
+	"explanation_qmcm":"施展攻击类策略的文官部队，擅长火类、风类的策略，以移动力与骑兵类相同而自豪。",
+	"explanation_nvj":"就能力而言，可说是武术家的女性翻版。可恢复周遭我军部队的异常状态。",
+	"explanation_xltq":"攻击力、防御力均出众的部队。说它是武官类最强的部队，一点也不为过。缺点是对策略较无抵抗力。",
+	"explanation_dhd":"可在水上地形发挥强大战力的部队。不在敌人有利的地形作战，是其作战的要诀。",
+	"explanation_ddd":"可在水上地形发挥战力的文官部队。攻击力也很高，如果轻视文官，是会吃大亏的。",
+	"explanation_kzss":"可以施展攻击、妨碍、恢复三类策略的文官部队。可说是文官类最强的。千万要留意！",
+	"explanation_dyb":"擅长远距攻击的强力部队。",
+	"explanation_ber":"防御力优秀的部队，爆发力也不弱。",
+	"explanation_wdfj":"攻击力强大、士气高昂的部队。在山地、荒地可以发挥其真正的本领。对付敌军时，致命一击很值得期待。",
+	"explanation_hbq":"攻击力、防御力均出众的部队。",
+	"explanation_hwj":"防御力优秀的部队。对付弓兵类时，以强大的攻击力为傲。",
+	"explanation_jfb":"可在水上地形发挥强大战力的部队。",
+	"explanation_bmyc":"移动力与攻击力优异的部队。",
+	"explanation_fxj":"率领攻击力强大的熊作战的部队。",
+	"explanation_xzy":"攻击力和爆发力都很优异的骑兵部队。",
+	"explanation_xr":"攻击力一点都不弱的文官部队。",
+	
+	"explanation_skill":"拥有特技【{0}】{1}(发动率:{2}％)",
+	"explanation_newcount":" {0}可以突破原有的成长，让高能力武将获得更优秀的成长。"
 };
 Language.singleCombatData = {
 	"Debut0":"做我{0}的刀下鬼吧！",
@@ -1019,6 +1092,47 @@ Language.skillData = {
 	"se_93":"将受到的伤害减少为0，且治愈自身所有伤兵。",
 	"s_94":"贤龙之气",
 	"se_94":"将受到的伤害减少为0，并为自己提高一种能力。",
+	"s_95":"经商",
+	"se_95":"大幅增加城池金钱收入。",
+	"s_96":"生产",
+	"se_96":"大幅增加城池粮食收入。",
+	"s_97":"祭祀",
+	"se_97":"所在城池不会发生灾害。",
+	"s_98":"短刀",
+	"se_98":"装备了短刀，在使用远程兵种时，可以近身攻击。",
+	
+	"m_1":"炎海",//周瑜
+	"mi_1":"召唤火神火烧敌军，并让敌军全体进入燃烧状态。",
+	"m_2":"毒云",//郭嘉
+	"mi_2":"用毒云罩住所有敌军，对敌军全体进行一次毒计攻击。",
+	"m_3":"济世",//华佗
+	"mi_3":"己军伤兵全恢复，异常全解除。",
+	"m_4":"机关",//黄月英
+	"mi_4":"黄月英研制的特殊机关，对每个敌军进行一次随机法术攻击。",
+	"m_5":"木牛流马",//诸葛亮
+	"mi_5":"触发后，己军全体每回合恢复3%的兵力，且不消耗兵粮，持续5个回合。",
+	"m_6":"屏障",//司马懿
+	"mi_6":"为己军全体制造一个特殊的屏障，可以阻挡一次物理或法术攻击，受到攻击后屏障会消失。",
+	"m_7":"强身I",//普通
+	"mi_7":"为己军全体提升一种能力，【士气】。",
+	"m_8":"强身II",//普通
+	"mi_8":"为己军全体提升一种能力，【士气，敏捷】。",
+	"m_9":"强身III",//普通
+	"mi_9":"为己军全体提升一种能力，【士气，敏捷，防御】。",
+	"m_10":"强身IV",//普通
+	"mi_10":"为己军全体提升一种能力，【士气，敏捷，防御，攻击】。",
+	"m_11":"强身V",//普通
+	"mi_11":"为己军全体提升一种能力，【士气，敏捷，防御，攻击，精神】。",
+	"m_12":"压迫I",//普通
+	"mi_12":"令敌军全体降低一种能力，【士气】。",
+	"m_13":"压迫II",//普通
+	"mi_13":"令敌军全体降低一种能力，【士气，敏捷】。",
+	"m_14":"压迫III",//普通
+	"mi_14":"令敌军全体降低一种能力，【士气，敏捷，防御】。",
+	"m_15":"压迫IV",//普通
+	"mi_15":"令敌军全体降低一种能力，【士气，敏捷，防御，攻击】。",
+	"m_16":"压迫V",//普通
+	"mi_16":"令敌军全体降低一种能力，【士气，敏捷，防御，攻击，精神】。",
 };
 Language.groupSkillTalkData = [
 	"痛快，一起上!",

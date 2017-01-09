@@ -39,12 +39,14 @@ and open the template in the editor.
 			LMvc.updateURL = "http://sgj.lufylegend.com/update/iMahm5Z_Mhr2HaAFPuU2/";
 			LMvc.uploadURL = "http://sgj.lufylegend.com/upload/iMahm5Z_Mhr2HaAFPuU2/";
 			LMvc.downloadURL = "http://sgj.lufylegend.com/download/iMahm5Z_Mhr2HaAFPuU2/index.php";
+			LMvc.introductionURL = "http://sgj.lufylegend.com/download/iMahm5Z_Mhr2HaAFPuU2/introduction.php";
 			LMvc.forumURL = "http://lufylegend.com/forum/forum.php?mod=forumdisplay&fid=38";
 			LMvc.tiebaURL = "http://tieba.baidu.com/f?ie=utf-8&kw=%E4%B8%89%E5%9B%BD%E8%AE%B0%E6%89%8B%E6%B8%B8";
 			if(typeof LPurchaseInit == "function"){
 				LPurchaseInit();
 			}else{
 				LGlobal.setDebug(true);
+				//setTimeout(function(){LPlugin.testVersion=true;},1000);
 			}
 			if(LGlobal.mobile){
 				LMvc.screenWidth = 480;
@@ -55,6 +57,9 @@ and open the template in the editor.
 				LGlobal.canvasObj.width  = LGlobal.width;
 				LGlobal.canvasObj.height  = LGlobal.height;
 				LGlobal.stage.scaleX = LGlobal.stage.scaleY = mobileScale;
+			}else{
+				LMvc.screenWidth = 480;
+				LMvc.screenHeight = 800;
 			}
 			LGlobal.align = LStageAlign.TOP_LEFT;
 			LGlobal.stageScale = LStageScaleMode.SHOW_ALL;
@@ -83,7 +88,7 @@ and open the template in the editor.
 					LMvc.init();
 					return;
 					var fps = new FPS();
-					LTweenLiteTimeline.to(fps,1,{delay:1,alpha:0,loop:true}).to(fps,1,{delay:5,alpha:1});
+					//LTweenLiteTimeline.to(fps,1,{delay:1,alpha:0,loop:true}).to(fps,1,{delay:5,alpha:1});
 					addChild(fps);
 				}
 			);

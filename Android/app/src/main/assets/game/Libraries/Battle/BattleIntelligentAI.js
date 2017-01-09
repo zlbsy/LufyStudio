@@ -108,11 +108,9 @@ BattleIntelligentAI.execute = function() {
 	}
 	chara = chatacters[0];
 	BattleController.ctrlChara = chara;
-	//console.log("ctrlChara",chara.data.name());
 	BattleIntelligentAI.strategyList = chara.data.strategies();
 	chara.inteAI.locationX = chara.locationX();
 	chara.inteAI.locationY = chara.locationY();
-	chara.toStatic(false);
 	LMvc.BattleController.view.resetMapPosition(chara);
 	chara.inteAI.run();
 };
@@ -139,8 +137,38 @@ BattleIntelligentAI.prototype.run = function() {
 		self.chara.AI.endAction();
 		return;
 	}else{
+		/*var militaryModel = getMaxMilitary(self.chara.belong);
+		if(militaryModel && militaryModel.id() == self.chara.data.militaryId()){
+			//军师计
+			if(militaryModel.condition() == MilitaryCondition.START){
+				militaryAdviserStart(self.chara.data);
+				return;
+			}else if(militaryModel.isType(MilitaryType.WOOD_CATTLE) && LMvc.BattleController.battleData.toCity.food() == 0){
+				militaryAdviserStart(self.chara.data);
+				return;
+			}
+		}*/
 		switch(self.chara.mode){
 			case CharacterMode.NONE:
+				if(!LMvc.BattleController.militaryOver){
+					var militaryModel = getMaxMilitary(self.chara.belong);
+					if(militaryModel && militaryModel.id() == self.chara.data.militaryId()){
+						//军师计
+						if(militaryModel.condition() == MilitaryCondition.START){
+							militaryAdviserStart(self.chara.data);
+							return;
+						}else if(militaryModel.isType(MilitaryType.WOOD_CATTLE) && LMvc.BattleController.battleData.toCity.food() == 0){
+							militaryAdviserStart(self.chara.data);
+							return;
+						}else if(militaryModel.condition() == MilitaryCondition.HERT && isNeedSupplyMilitary(self.chara.belong)){
+							militaryAdviserStart(self.chara.data);
+							return;
+						}else if(LMvc.BattleController.startAttack && militaryModel.condition() == MilitaryCondition.NEAR){
+							militaryAdviserStart(self.chara.data);
+							return;
+						}
+					}
+				}
 				self.moveRoadsShow();
 				break;
 			case CharacterMode.SHOW_MOVE_ROAD:
@@ -205,7 +233,6 @@ BattleIntelligentAI.prototype.moveRoadsShow = function() {
 		view.roadLayer.alpha = 0;
 	}
 	self.chara.mode = CharacterMode.SHOW_MOVE_ROAD;
-	
 };
 BattleIntelligentAI.prototype.findMagicAttackTarget = function() {
 	var self = this;
@@ -576,11 +603,6 @@ BattleIntelligentAI.prototype.useHertStrategy = function() {
 };
 BattleIntelligentAI.prototype.findPhysicalAttackTarget = function() {
 	var self = this, chara = self.chara;
-	/*var rangeAttack = chara.data.currentSoldiers().rangeAttack();
-	rangeAttack = rangeAttack.sort(function(a, b){
-		return Math.abs(b.x) + Math.abs(b.y) - Math.abs(a.x) - Math.abs(a.y);
-	});
-	var targetLength = Math.abs(rangeAttack[0].x) + Math.abs(rangeAttack[0].y) - 1;*/
 	switch(self.physicalFlag){
 		case BattleIntelligentAI.PHYSICAL_PANT:
 			self.findPhysicalPant();

@@ -41,6 +41,15 @@ SeigniorExecute.getSaveData = function(){
 		stop:self.stop,
 		seigniors:self.seigniors,
 		citys:self.citys,
+		areaDisasterOver:self.areaDisasterOver,
+		areaGainOver:self.areaGainOver,
+		areaJobOver:self.areaJobOver,
+		areaPrizedOver:self.areaPrizedOver,
+		areaChangeLoyaltyOver:self.areaChangeLoyaltyOver,
+		areaPrefectureFeatOver:self.areaPrefectureFeatOver,
+		areaDieOver:self.areaDieOver,
+		appointExploreOver:self.appointExploreOver,
+		isCheckedSpy:self.isCheckedSpy,
 		childsCheckedCitys:self.childsCheckedCitys,
 		captivesChecked:self.captivesChecked
 	};
@@ -59,6 +68,16 @@ SeigniorExecute.setSaveData = function(data){
 	self.citys = data.citys;
 	self.childsCheckedCitys = data.childsCheckedCitys;
 	self.captivesChecked = data.captivesChecked;
+	
+	self.areaDisasterOver = data.areaDisasterOver;
+	self.areaGainOver = data.areaGainOver;
+	self.areaJobOver = data.areaJobOver;
+	self.areaPrizedOver = data.areaPrizedOver;
+	self.areaChangeLoyaltyOver = data.areaChangeLoyaltyOver;
+	self.areaPrefectureFeatOver = data.areaPrefectureFeatOver;
+	self.areaDieOver = data.areaDieOver;
+	self.appointExploreOver = data.appointExploreOver;
+	self.isCheckedSpy = data.isCheckedSpy;
 };
 SeigniorExecute.removeSeignior=function(seigniorId){
 	var self = SeigniorExecute.Instance();
@@ -148,7 +167,6 @@ SeigniorExecute.run=function(){
 	if(checkSeigniorIsDie(LMvc.selectSeignorId)){
 		return;
 	}
-	//self.maskHide();
 	self.seigniorIndex = 0;
 	self.areaIndex = 0;
 	self.timeAdded = false;
@@ -158,9 +176,6 @@ SeigniorExecute.run=function(){
 	self.tournamentsOver = false;
 	SeigniorExecute.running = false;
 	SeigniorExecute.clearCheck = false;
-	/*var buttonClose = self.backLayer.childList.find(function(child){
-		return child.constructor.name == "LButton";
-	});*/
 	var buttonClose = self.backLayer.getChildByName("closeButton");
 	buttonClose.visible = true;
 	self.msgView.clearSeignior();
@@ -207,32 +222,39 @@ SeigniorExecute.prototype.disasterRun=function(area){
 };
 SeigniorExecute.prototype.areaRun=function(area){
 	var self = this;
-	if(self.disasterRun(area)){//灾难
-		return;
-	}
-	if(!self.areaPrizedOver){//褒奖
-		self.generalsPrizedRun(area);
-	}
-	if(!self.areaGainOver){//城池收获
-		self.areaGainRun(area);
-	}
-	if(!self.areaChangeLoyaltyOver){//每年3月份，武将忠诚度变化一次
-		if(LMvc.chapterData.month == 3){
-			generalsChangeLoyalty(area.generals());
+	if(area.isTribe()){
+		var minTroops = area.seignior().character().maxTroops() * 20;
+		if(area.troops() < minTroops){
+			area.troops(minTroops - area.troops());
 		}
-		self.areaChangeLoyaltyOver = true;
-	}
-	if(!self.areaPrefectureFeatOver){//太守功绩
-		if(area.prefecture() > 0){
-			var prefectureCharacter = CharacterModel.getChara(area.prefecture());
-			prefectureCharacter.featPlus(5);
-		}
-		self.areaPrefectureFeatOver = true;
-	}
-	if(!self.areaJobOver){//任务
-		var areaJobReturn= self.areaJobRun(area);
-		if(areaJobReturn){
+	}else{
+		if(self.disasterRun(area)){//灾难
 			return;
+		}
+		if(!self.areaPrizedOver){//褒奖
+			self.generalsPrizedRun(area);
+		}
+		if(!self.areaGainOver){//城池收获
+			self.areaGainRun(area);
+		}
+		if(!self.areaChangeLoyaltyOver){//每年3月份，武将忠诚度变化一次
+			if(LMvc.chapterData.month == 3){
+				generalsChangeLoyalty(area.generals());
+			}
+			self.areaChangeLoyaltyOver = true;
+		}
+		if(!self.areaPrefectureFeatOver){//太守功绩
+			if(area.prefecture() > 0){
+				var prefectureCharacter = CharacterModel.getChara(area.prefecture());
+				prefectureCharacter.featPlus(5);
+			}
+			self.areaPrefectureFeatOver = true;
+		}
+		if(!self.areaJobOver){//任务
+			var areaJobReturn= self.areaJobRun(area);
+			if(areaJobReturn){
+				return;
+			}
 		}
 	}
 	self.areaIndex++;
@@ -244,6 +266,7 @@ SeigniorExecute.prototype.areaRun=function(area){
 	self.areaPrefectureFeatOver = false;
 	self.areaDieOver = false;
 	self.appointExploreOver = false;
+	self.isCheckedSpy = false;
 	self.timer.reset();
 	self.timer.start();
 };
@@ -282,10 +305,6 @@ SeigniorExecute.addMessage = function(value){
 SeigniorExecute.prototype.areaJobRun=function(area){
 	var self = this, chara, job;
 	var generals = area.generals().concat();
-	/*if(LMvc.chapterData.month == 3){
-		//每年3月份，武将忠诚度变化一次
-		generalsChangeLoyalty(generals);
-	}*/
 	var list = [];
 	for(var i=0;i<generals.length;i++){
 		chara = generals[i];
@@ -386,15 +405,27 @@ SeigniorExecute.prototype.areaJobRun=function(area){
 			}
 		}
 	}
+	//俘虏移动
+	var captives = area.captives();
+	for(var i=0;i<captives.length;i++){
+		chara = captives[i];
+		if(chara.job() == Job.MOVE){
+			var toCity = AreaModel.getArea(chara.data.targetCity);
+			chara.data.targetCity = null;
+			chara.job(Job.IDLE);
+			toCity.addCaptives(chara);
+		}
+	}
 	captivesChangeLoyalty(area);
 	self.areaJobOver = true;
 	return false;
 };
 SeigniorExecute.prototype.areasRun=function(seigniorModel){
 	var self = this;
-	if(self.areaIndex == 0){
+	if(self.areaIndex == 0 && !self.isCheckedSpy){
 		seigniorModel.checkSpyCitys();
 		seigniorModel.checkStopBattleSeigniors();
+		self.isCheckedSpy = true;
 	}
 	var areas = seigniorModel.areas();
 	if(self.areaIndex < areas.length){
@@ -629,11 +660,7 @@ SeigniorExecute.prototype.areaAIRun=function(areaModel){
 				var child = interiorList[0];
 				self.jobAiFunction(areaModel,self.characters,child.fun,child.params);
 			}
-			/*for(var i = 0;i<interiorList.length;i++){
-				child = interiorList[i];
-				self.jobAiFunction(areaModel,self.characters,child.fun,child.params);
-			}*/
-		}else{
+		}else if(areaModel.level() < areaModel.maxLevel()){
 			//升级城池
 			jobAiLevelUpCity(areaModel,self.characters);
 		}
@@ -653,7 +680,6 @@ SeigniorExecute.prototype.areaAIRun=function(areaModel){
 		}
 	}
 	self.areaAIIndex++;
-	//console.log("self.areaAIIndex:"+self.areaAIIndex);
 	self.timer.reset();
 	self.timer.start();
 };
@@ -681,7 +707,7 @@ SeigniorExecute.prototype.maskShow=function(){
 	self.msgView.showSeignior();
 	self.msgView.listView.clipping.y = 0;
 	self.backLayer.addChild(self.msgView);
-	LMvc.MapController.view.parent.addChild(self.backLayer);
+	LMvc.layer.addChild(self.backLayer);
 	
 	var bitmapClose = new LBitmap(new LBitmapData(LMvc.datalist["close"]));
 	buttonClose = new LButton(bitmapClose);
@@ -697,19 +723,12 @@ SeigniorExecute.prototype.maskHide=function(){
 	var self = this;
 	if(self.msgView.timer != null){
 		self.msgView.timer.stop();
-		//self.msgView.timer.destroy();
 	}
 	self.messageCitys = [];
 	self._backLayer = self.backLayer;
 	self._backLayer.visible = false;
 	self.backLayer = null;
 	self.msgView.listView.clear();
-	//self.msgView.remove();
-	//self.msgView = null;
-	////self.backLayer.remove();
-	//self.backLayer = null;
-	//MessageView._Instance.die();
-	//MessageView._Instance = null;
 };
 
 SeigniorExecute.prototype.loadSeigniorExecute=function(){

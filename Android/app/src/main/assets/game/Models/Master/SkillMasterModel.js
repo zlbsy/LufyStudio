@@ -44,6 +44,9 @@ SkillMasterModel.prototype.subType = function() {
 SkillMasterModel.prototype.isSubType = function(subType) {
 	return this.data.subType.indexOf(subType) >= 0;
 };
+SkillMasterModel.prototype.belong = function() {
+	return this.data.belong;
+};
 SkillMasterModel.prototype.attacks = function() {
 	return this.data.attacks;
 };
@@ -143,6 +146,9 @@ SkillMasterModel.prototype.healRects = function() {
 };
 SkillMasterModel.prototype.changeProbability = function() {
 	return this.data.changeProbability;
+};
+SkillMasterModel.prototype.income = function() {
+	return this.data.income;
 };
 SkillMasterModel.prototype.powerful = function() {
 	return this.data.powerful ? this.data.powerful : 0;

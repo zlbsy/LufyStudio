@@ -23,8 +23,10 @@ BattleCharacterStatusView.healCharactersStrategy = function(){
 BattleCharacterStatusView.healCharactersCheck = function(){
 	if(BattleCharacterStatusView.healCharacters.length == 0){
 		var callback = BattleCharacterStatusView.callback;
-		BattleCharacterStatusView.callback = null;
-		callback();
+		if(callback){
+			BattleCharacterStatusView.callback = null;
+			callback();
+		}
 		return;
 	}
 	var obj = BattleCharacterStatusView.healCharacters.shift();
@@ -60,7 +62,7 @@ BattleCharacterStatusView.prototype.showCharacterStatus=function(confirmStatus){
 	var characterModel = self.character.data, belong = self.belong;
 	var layer = new LSprite();
 	
-	var setH = 30;
+	var setH = 35;
 	
 	var troopsStatus = new LSprite();
 	troopsStatus.x = 10;
@@ -114,12 +116,33 @@ BattleCharacterStatusView.prototype.showCharacterStatus=function(confirmStatus){
 		}
 	}
 	
-	var background = getTranslucentBitmap(self.width, 10 + 20 * layer.numChildren);
+	var background = getTranslucentBitmap(self.width, 15 + 20 * layer.numChildren);
 	layer.addChildAt(background, 0);
 	var name = getStrokeLabel(characterModel.name(), 14, "#FFFFFF", "#FF8C00", 1);
 	name.x = 5;
 	name.y = 5;
 	layer.addChild(name);
+	var buffY = name.y + name.getHeight();
+	var aids = ["AttackAid","DefenseAid","BreakoutAid","MoraleAid","ApiritAid"];
+	var charaStatus = self.character.status;
+	var index = 0;
+	for(var i=0;i<aids.length;i++){
+		var aidKey = aids[i];
+		var aid = charaStatus.getStatus(StrategyType[aidKey]);
+		if(!aid){
+			continue;
+		}
+		var aidBitmap = new LBitmap(new LBitmapData(LMvc.datalist["buff"],12 * i, 0, 12, 12));
+		aidBitmap.x = name.x + index * 12;
+		if(aid.value < 0){
+			aidBitmap.scaleY = -1;
+			aidBitmap.y = buffY + 12;
+		}else{
+			aidBitmap.y = buffY;
+		}
+		layer.addChild(aidBitmap);
+		index++;
+	}
 	
 	if(confirmStatus){
 		var terrain = self.character.getTerrain();

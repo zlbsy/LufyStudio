@@ -1,3 +1,12 @@
 SGJEvent.mapShow(1);
-SGJEvent.messageShow(七擒孟获。,3);
+SGJEvent.addCharacter(10,0,100,fade);
+SGJEvent.messageShow(刘备在夷陵战败之后，蜀国国力受到沉重的打击。诸葛亮制定了一系列富国强兵的措施，终于让蜀国的国力逐渐恢复。,3);
+SGJEvent.messageShow(接着，诸葛亮派邓芝及陈震赴东吴，修复了和东吴的同盟关系。之后，诸葛亮为了为北伐扫清障碍，准备率军南征。,3);
+SGJEvent.addCharacter(150,100,100,fade);
+SGJEvent.talk(150,攻心为上，攻城为下，心战为上，兵战为下。);
+SGJEvent.messageShow(诸葛亮采取参军马谡的建议，以攻心为主。,3);
+SGJEvent.addCharacter(336,300,100,fade);
+SGJEvent.messageShow(孟获和诸葛亮一次次的进行了对战，虽然利用了自然和地利的优势，又又原住民的协助，但是每次都被打败了。,3);
+SGJEvent.removeCharacter(336,fade);
+SGJEvent.messageShow(孟获终于在被诸葛亮率领大军七擒七纵后降服，此后不再叛乱。,3);
 Mark.EventEnd;

@@ -27,12 +27,17 @@ BattleCharacterLayerView.prototype.charactersBoutEnd = function(event) {
 	for(var i=0,l=childList.length;i<l;i++){
 		child = childList[i];
 		child.mode = CharacterMode.NONE;
-		child.toStatic(false);
+		child.toEnd(false);
 		child.changeAction(child.data.isPantTroops()?CharacterAction.PANT:CharacterAction.MOVE);
-		child.toStatic(true);
 		if(child.data.hasSkill(SkillSubType.WAKE)){
 			var skill = child.data.skill();
 			mapLayer.setWakeRoads(event.belong,skill.wakeRects(),child.locationX(),child.locationY());
+		}else{
+			var strategySkill = child.data.currentSoldiers().strategySkill();
+			if(strategySkill && strategySkill.strategyType() == StrategyType.Wake){
+				var rect = [{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}];
+				mapLayer.setWakeRoads(event.belong,rect,child.locationX(),child.locationY());
+			}
 		}
 	}
 	for(var i=0,l=self.childList.length;i<l;i++){

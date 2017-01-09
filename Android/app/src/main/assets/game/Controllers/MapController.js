@@ -10,7 +10,7 @@ MapController.prototype.construct=function(){
 };
 MapController.prototype.configLoad=function(){
 	var self = this;
-	self.load.config(["Character","CharacterListType","characterList","Job","Items","Event","Strategy","Soldiers","Reputation"],self.helperLoad);
+	self.load.config(["Character","CharacterListType","characterList","Job","Items","Event","Strategy","Soldiers","Reputation","Military","Dictionary"],self.helperLoad);
 };
 MapController.prototype.helperLoad=function(){
 	var self = this;
@@ -18,7 +18,7 @@ MapController.prototype.helperLoad=function(){
 };
 MapController.prototype.modelLoad=function(){
 	var self = this;
-	self.load.model(["Master/Area","Master/SoldierMaster","Master/Soldier","Master/Seignior","Master/Character","Master/ItemMaster","Items/Item","Master/StrategyMaster","Master/Strategy","Master/Reputation"],self.libraryLoad);
+	self.load.model(["Master/Area","Master/SoldierMaster","Master/Soldier","Master/Seignior","Master/Character","Master/ItemMaster","Items/Item","Master/StrategyMaster","Master/Strategy","Master/Reputation","Master/Military"],self.libraryLoad);
 };
 MapController.prototype.libraryLoad=function(){
 	var self = this;
@@ -39,6 +39,7 @@ MapController.prototype.getAreaData=function(){
 	CharacterModel.setChara(characterListConfig);
 	ItemMasterModel.setMaster(ItemDatas);
 	StrategyMasterModel.setMaster(StrategyDatas);
+	MilitaryModel.setMaster(MilitaryDatas);
 	ReputationModel.setReputation(reputationConfig);
 	if(LMvc.isRead){
 		gameDataInit();
@@ -60,6 +61,9 @@ MapController.prototype.init=function(status){
 	/*if(LMvc.logoStage.visible){
 		LMvc.logoStage.visible = false;
 	}*/
+	var seignior = SeigniorModel.getSeignior(LMvc.selectSeignorId);
+	var item = new ItemModel(null,{item_id:10,count:1});
+	seignior.addItem(item);
 	LMvc.chapterController.view.visible = false;
 	LMvc.stageLayer.x = 0;
 	if(LMvc.isRead){

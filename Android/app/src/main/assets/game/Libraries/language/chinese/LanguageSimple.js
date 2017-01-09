@@ -26,6 +26,7 @@ Language.dataSimple = {
 	"generals":"武将",
 	"chapter_message":"该剧本共包含 {0} 个势力。",
 	"confirm":"确认",
+	"dialog_quip_confirm_message":"要退出游戏吗？",
 	"opinion":"交流论坛",
 	"tieba":"百度贴吧",
 	"bug_report":"提交错误报告",
@@ -50,6 +51,8 @@ Language.dataSimple = {
 	"select_behead_title":"是否允许AI斩杀武将？",
 	"yes":"是",
 	"no":"否",
+	"not_show_today":"今天不再显示！",
+	"Could Not Connect to Internet Error !!":"此功能需要联网，请检查您的网络！！",
 	"purchase_buy_fail":"购买失败了！",
 	"restore_confirm_message":"<font size='21' color='#FFFFFF'>恢复<font color='#FF0000'>已购买</font>的功能吗？（此操作<font color='#FF0000'>免费</font>）</font>",
 	"purchase_confirm_native_message":"<font size='21' color='#FFFFFF'>开通<font color='#FF0000'>{0}</font>功能需要花费<font color='#FF0000'>{1}</font>，要开通此功能吗?</font>",
@@ -72,4 +75,5 @@ Language.dataSimple = {
 	"chapter_12":"时空错乱",
 	"chapter_group":"购买多个剧本",
 	"new_script":"新剧本({0})",
+	"soldier_special":"特殊兵种(全部)",
 };

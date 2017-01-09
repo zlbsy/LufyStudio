@@ -1,3 +1,12 @@
 SGJEvent.mapShow(1);
-SGJEvent.messageShow(士别三日。,3);
+SGJEvent.addCharacter(13,0,100,fade);
+SGJEvent.messageShow(呉の大将の呂蒙は武勇一点張りだった、主君の孫権から教養の大切さを諭されて勉学に励んだ。,3);
+SGJEvent.addCharacter(17,200,100,fade);
+SGJEvent.talk(17,武勇ばかりではなく学問も修めたほうがよい。);
+SGJEvent.removeCharacter(17,fade);
+SGJEvent.messageShow(すると彼は、孫権の意に応えるために猛勉強を始め、高い教養を身につけていった。,3);
+SGJEvent.addCharacter(82,200,100,fade);
+SGJEvent.messageShow(それからしばらくしたある日、彼は参謀の魯粛と対談したのだが、魯粛は彼の高い見識と知識に大いに驚いていた。,3);
+SGJEvent.talk(17,すでに武略のみの呉の蒙君ではなくなったな、士別れて三日ならば、即ち更に刮目して相待つべし。);
+SGJEvent.messageShow(呂蒙の知力が40上昇しました、ある兵科の熟練度を上昇しました。,3);
 Mark.EventEnd;

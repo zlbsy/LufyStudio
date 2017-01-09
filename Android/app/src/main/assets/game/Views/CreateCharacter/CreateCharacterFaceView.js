@@ -4,9 +4,8 @@ function CreateCharacterFaceView(controller, data){
 }
 CreateCharacterFaceView.prototype.init=function(data){
 	var self = this;
-	self.females = [36,37,380,524,528,548];
-	var backgroundData = new LBitmapData(LMvc.datalist["win05"]);
-	var panel = getBitmap(new LPanel(backgroundData,186, 266));
+	self.females = femaleCharacters;
+	var panel = getPanel("win05",186, 266);
 	self.addChild(panel);
 	if(!data){
 		data = {faceImg:1, gender:1};
@@ -42,7 +41,7 @@ CreateCharacterFaceView.prototype.changeGender=function(event){
 	var self = event.currentTarget.parent;
 	var detailedView = self.getParentByConstructor(CreateCharacterDetailedView);
 	if(detailedView.armView && detailedView.armView.visible){
-		detailedView.armView.resetSoliderImage();
+		detailedView.armView.resetSoliderImage(true);
 	}
 };
 CreateCharacterFaceView.prototype.changeFace=function(event){

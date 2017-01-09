@@ -30,14 +30,32 @@ DictionaryChildView.prototype.getName=function(){
 DictionaryChildView.prototype.set=function(){
 	var self = this;
 	var lblName = self.getName();
-	lblName.text = Language.get(self.word);
+	lblName.text = Language.get(self.word.key);
 	lblName.x = (110 - lblName.getWidth()) * 0.5;
 	lblName.y = (50 - lblName.getHeight()) * 0.5;
+	if(LPlugin.dataVer(self.word.ver) < LPlugin.dataVer(LMvc.ver) 
+	|| LPlugin.DictionaryIsRead(self.word.key)){
+		return;
+	}
+	if(self.getChildByName("newMark") != null){
+		return;
+	}
+	var newMark = new LBitmap(new LBitmapData(LMvc.datalist["red_ball"]));
+	newMark.name = "newMark";
+	newMark.x = 90;
+	newMark.y = 30;
+	self.addChild(newMark);
 };
 DictionaryChildView.prototype.onClick = function(event) {
 	var self = event.target;
-	
 	var listView = event.currentTarget;
+	var newMark = self.getChildByName("newMark");
+	if(newMark){
+		LPlugin.ReadDictionary(self.word.key);
+		newMark.visible = false;
+		self.cacheAsBitmap(false);
+		self.updateView();
+	}
 	var dictionaryView = listView.getParentByConstructor(DictionaryView);
-	dictionaryView.showDetailedDialog(self.word);
+	dictionaryView.showDetailedDialog(self.word.key);
 };

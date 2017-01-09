@@ -73,12 +73,12 @@ var DefCharacterList = {//防御设施范围
 	"soldier_6":[677,678,679,680,681,682]
 };
 var DefCharacterImage = {
-	"soldier_4":200,
-	"soldier_6":6
+	"soldier_4":"jinglan",
+	"soldier_6":"paoche"
 };
 var MaxHistoryCharacterIndex = 620;//历史人物范围
 var TribeCharacter = [621,670];//外族范围
-var EmployCharacter = [683,692];//援兵范围
+var EmployCharacter = [683,692];//佣兵范围
 var DefenseCharacterCost = 500;//每个防御设施所需城防
 var BattleCharacterStatusConfig = {};
 BattleCharacterStatusConfig.FADE_TIME = 0.2;
@@ -120,3 +120,5 @@ var charactersParentConfig = [
 	{id:4,parent:21},//关羽-刘备
 	{id:19,parent:21},//张飞-刘备
 ];
+var femaleCharacters = [36,37,139,241,380,524,528,548];
+var sCharacterImages = ["zpftmd748"];

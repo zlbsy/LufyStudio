@@ -42,7 +42,6 @@ ItemDetailedView.prototype.set=function(){
 	var self = this;
 	self.layerInit();
 	
-	//var titleData = new LBitmapData(LMvc.datalist["win02"]);
 	var titlePanel = getPanel("win02",160,60);
 	titlePanel.x = (LMvc.screenWidth - titlePanel.getWidth()) * 0.5;
 	titlePanel.y = self.backLayer.getChildByName("windowBackground").y - 20;
@@ -80,12 +79,13 @@ ItemDetailedView.prototype.set=function(){
 		btnEquip.x = (320 - btnEquip.getWidth())*0.5;
 		btnEquip.y = 200;
 		layer.addChild(btnEquip);
-		btnEquip.addEventListener(LMouseEvent.MOUSE_UP, self.use.bind(self));
+		btnEquip.addEventListener(LMouseEvent.MOUSE_UP, self.use);
 	}
 	self.layer.addChild(layer);
 };
 ItemDetailedView.prototype.use=function(event){
-	var self = this;
+	var button = event.currentTarget;
+	var self = button.getParentByConstructor(ItemDetailedView);
 	var e = new LEvent(ItemEvent.USE_ITEM);
 	e.item = self.itemModel;
 	self.dispatchEvent(e);

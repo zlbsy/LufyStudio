@@ -284,7 +284,7 @@ SeigniorModel.prototype.checkSpyCitys = function(){
 	for(var i = self.data.spyAreas.length - 1;i>=0;i--){
 		var city = self.data.spyAreas[i];
 		city.month -= 1;
-		if(city.month == 0){
+		if(city.month <= 0){
 			self.data.spyAreas.splice(i, 1);
 		}
 	}
@@ -391,6 +391,14 @@ SeigniorModel.prototype.generalsCount = function(){
 	});
 	return count;
 };
+SeigniorModel.prototype.troops = function(){
+	var areas = this.data.areas;
+	var count = 0;
+	areas.forEach(function(city){
+		count += city.troops();
+	});
+	return count;
+};
 SeigniorModel.prototype.items = function(){
 	if(!this.data.items){
 		this.data.items = [];
@@ -426,7 +434,7 @@ SeigniorModel.prototype.removeItem = function(item){
 		var child = items[i];
 		if(child.id() == item.id()){
 			child.count(child.count() - 1);
-			if(child.count() == 0){
+			if(child.count() <= 0){
 				items.splice(i,1);
 			}
 			break;

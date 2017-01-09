@@ -287,7 +287,7 @@ function calculateHertStrategyValue(attChara,hertChara,currentSelectStrategy,cor
 	//特技等系数加成
 	r = r * correctionFactor;
 	//兵种伤害系数加成
-	r = r * attCharaModel.currentSoldiers().strategyHert();
+	r = r * hertCharaModel.currentSoldiers().strategyHert();
 	//TODO:宝物加成
 	if(r < 1){
 		r = 1;
@@ -421,6 +421,9 @@ function calculateSkillSurpriseAmend(chara, target, attacks){
  特技的法术减免伤害加成值计算
  **************************************************************/
 function calculateStrategyCharasCorrection(currentChara){
+	if(isSameBelong(LMvc.currentAttackCharacter.belong,currentChara.belong)){
+		return 1;
+	}
 	var strategyCharas = currentChara.model.getMinusStrategyCharas(currentChara.belong);
 	if(strategyCharas.length == 0){
 		return 1;
@@ -445,8 +448,8 @@ function calculateStrategyCharasCorrection(currentChara){
 			hertCorrect = skill.hert();
 			continue;
 		}
-		for(var i = 0;i<minusRects.length;i++){
-			var point = minusRects[i];
+		for(var j = 0;j<minusRects.length;j++){
+			var point = minusRects[j];
 			if(x + point.x == locationX && y + point.y == locationY){
 				hertCorrect = skill.hert();
 				break;
@@ -479,6 +482,11 @@ function calculateSpreadPointsLoop(targetCharacter, x, y, points, speadRects, sp
 	pointsCheck[x+","+y]=1;
 	var targetChara = LMvc.BattleController.view.charaLayer.hasCharacterInPosition(targetCharacter.locationX() + x, targetCharacter.locationY() + y);
 	if(!targetChara || !isSameBelong(targetCharacter.belong, targetChara.belong)){
+		return;
+	}
+	if(points.find(function(c){
+		return c.x == x && c.y == y;
+	})){
 		return;
 	}
 	points.push({x:x,y:y});

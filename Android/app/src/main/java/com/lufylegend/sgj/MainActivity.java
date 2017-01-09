@@ -10,4 +10,8 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         Lufylegend.initialize("game/",this);
     }
+    @Override
+    public void onBackPressed(){
+        Lufylegend.instance.quitConfirm();
+    }
 }

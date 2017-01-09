@@ -12,7 +12,8 @@ var productIdConfig = {
 	"com.lufylegend.sgj.chapter_11",
 	"com.lufylegend.sgj.chapter_12",
 	"com.lufylegend.sgj.chapter_194_211",
-	"com.lufylegend.sgj.chapter_219_263"
+	"com.lufylegend.sgj.chapter_219_263",
+	"com.lufylegend.sgj.soldier_special"
 	],
 	createCharacter : "com.lufylegend.sgj.newWujiang",
 	saveReport : "com.lufylegend.sgj.saveReport",
@@ -27,5 +28,6 @@ var productIdConfig = {
 	chapter_11 : "com.lufylegend.sgj.chapter_11",
 	chapter_12 : "com.lufylegend.sgj.chapter_12",
 	chapter_194_211 : "com.lufylegend.sgj.chapter_194_211",
-	chapter_219_263 : "com.lufylegend.sgj.chapter_219_263"
+	chapter_219_263 : "com.lufylegend.sgj.chapter_219_263",
+	soldier_special : "com.lufylegend.sgj.soldier_special"
 };

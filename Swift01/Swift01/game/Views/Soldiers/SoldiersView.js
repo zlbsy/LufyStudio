@@ -39,9 +39,10 @@ SoldiersView.prototype.setSoldierList = function(characterModel) {
 	if(self.listView){
 		var items = self.listView.getItems();
 		var checkbox = items[0].checkbox && items[0].checkbox.visible;
-		var needUpdateAll = (checkbox && LMvc.BattleController) || (!checkbox && !LMvc.BattleController);
+		var needUpdateAll = SoldiersView.updateAll || (checkbox && LMvc.BattleController) || (!checkbox && !LMvc.BattleController);
 		if(needUpdateAll || (characterModel && characterModel.id() != self.characterModel.id())){
 			self.updateItems(characterModel);
+			SoldiersView.updateAll = null;
 		}else{
 			var soldierId = characterModel.currentSoldiers().id();
 			var item = items.find(function(child){
@@ -52,6 +53,7 @@ SoldiersView.prototype.setSoldierList = function(characterModel) {
 		}
 		return;
 	}
+	SoldiersView.updateAll = null;
 	self.listView = new LListView();
 	self.listView.resize(self.size.x, self.size.y);
 	self.listView.cellWidth = self.size.x;

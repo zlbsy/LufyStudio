@@ -11,12 +11,9 @@ function BattleMapView(controller){
 };
 BattleMapView.prototype.init = function(){
 	var self = this;
-	self.bitmapData = self.model.mapBitmapData;
-	self.map = new LBitmap(self.bitmapData);
+	self.map = new LBitmap(self.model.mapBitmapData);
 	self.addChild(self.map);
 	
-	self.datas = [BattleModel.bitmapDatas[1], BattleModel.bitmapDatas[2]];
-	self.dataIndex = 0;
 	self.addEventListener(LEvent.ENTER_FRAME, self.onframe);
 };
 
@@ -24,35 +21,7 @@ BattleMapView.prototype.onframe = function(event){
 	var self = event.currentTarget;
 	self.map.x = -self.parent.x;
 	self.map.y = -self.parent.y;
-	var bitmapData = self.datas[self.dataIndex];
-	bitmapData.setProperties(self.map.x,self.map.y,LMvc.screenWidth,LMvc.screenHeight);
-	self.map.bitmapData = bitmapData;
-	if(self._speed++ < self.speed){
-		return;
-	}
-	self._speed = 0;
-	if(++self.dataIndex >= self.datas.length){
-		self.dataIndex = 0;
-	}
-};
-BattleMapView.prototype.characterIn = function(chara){
-	var self = this;
-	if(chara.hideByCloud){
-		return true;
-	}
-	var bitmapData = self.datas[0];
-	bitmapData.copyPixels(chara.getBitmapData(),new LRectangle(8,8,BattleCharacterSize.width,BattleCharacterSize.height),new LPoint(chara.x,chara.y));
-	chara.anime.onframe();
-	bitmapData = self.datas[1];
-	bitmapData.copyPixels(chara.getBitmapData(),new LRectangle(8,8,BattleCharacterSize.width,BattleCharacterSize.height),new LPoint(chara.x,chara.y));
-	return true;
-};
-BattleMapView.prototype.characterOut = function(chara){
-	var self = this;
-	var data = self.model.map.data[chara.locationY()][chara.locationX()];
-	var tileData = getMapTile(data);
-	self.datas[0].copyPixels(tileData,new LRectangle(0, 0, BattleCharacterSize.width, BattleCharacterSize.height),new LPoint(chara.x,chara.y));
-	self.datas[1].copyPixels(tileData,new LRectangle(0, 0, BattleCharacterSize.width, BattleCharacterSize.height),new LPoint(chara.x,chara.y));
+	self.map.bitmapData.setProperties(self.map.x,self.map.y,LMvc.screenWidth,LMvc.screenHeight);
 };
 BattleMapView.prototype.canUseStrategyOnTerrain=function(currentSelectStrategy, locationX, locationY){
 	var self = this;

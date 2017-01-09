@@ -103,11 +103,10 @@ ItemsView.prototype.itemDetailedDialog = function(itemModel) {
 };
 ItemsView.prototype.itemUse = function(event) {
 	var itemModel = event.item;
-	var equipmentDetailed = event.currentTarget;
-	var self = equipmentDetailed.getParentByConstructor(ItemsView);
+	var itemDetailed = event.currentTarget;
+	var self = itemDetailed.getParentByConstructor(ItemsView);
 	var characterDetailedView = self.getParentByConstructor(CharacterDetailedView);
 	var characterModel = characterDetailedView.controller.getValue("selectedCharacter");
-	var subView;
 	if(itemModel.itemType() == ItemType.FEAT){
 		if(characterModel.level() >= characterModel.seignior().level()){
 			var obj = {title:Language.get("confirm"),
@@ -117,12 +116,6 @@ ItemsView.prototype.itemUse = function(event) {
 			return;
 		}
 		characterModel.featPlus(itemModel.feat());
-		subView = characterDetailedView.tabLayer.childList.find(function(child){
-			return child instanceof CharacterDetailedTabPropertiesView;
-		});
-		if(subView){
-			subView.updateView();
-		}
 	}else if(itemModel.itemType() == ItemType.LOYALTY){
 		if(characterModel.loyalty() >= 100){
 			var obj = {title:Language.get("confirm"),
@@ -132,16 +125,12 @@ ItemsView.prototype.itemUse = function(event) {
 			return;
 		}
 		characterModel.loyalty(characterModel.loyalty() + itemModel.loyalty());
-		subView = characterDetailedView.tabLayer.childList.find(function(child){
-			return child instanceof CharacterDetailedTabStatusView;
-		});
-		if(subView){
-			subView.updateView();
-		}
 		var characterListView = self.getParentByConstructor(CharacterListView);
-		var e = new LEvent(CharacterListEvent.LIST_CHANGE);
-		e.characterModel = characterModel;
-		characterListView.dispatchEvent(e);
+		if(characterListView){
+			var e = new LEvent(CharacterListEvent.LIST_CHANGE);
+			e.characterModel = characterModel;
+			characterListView.dispatchEvent(e);
+		}
 	}else if(itemModel.itemType() == ItemType.PROFICIENCY){
 		var proficiency = characterModel.currentSoldiers().proficiency();
 		if(proficiency >= itemModel.upperLimit()){
@@ -152,21 +141,18 @@ ItemsView.prototype.itemUse = function(event) {
 			return;
 		}
 		characterModel.currentSoldiers().proficiency(proficiency + itemModel.proficiency());
-		subView = characterDetailedView.tabLayer.childList.find(function(child){
-			return child instanceof SoldiersView;
-		});
-		if(subView){
-			subView.updateView();
-		}
-		subView = characterDetailedView.tabLayer.childList.find(function(child){
-			return child instanceof CharacterDetailedTabPropertiesView;
-		});
-		if(subView){
-			subView.updateView();
-		}
 	}
+	itemDetailed.remove();
 	var seignior = SeigniorModel.getSeignior(LMvc.selectSeignorId);
 	seignior.removeItem(itemModel);
-	equipmentDetailed.remove();
 	self.updateView();
+	if(characterDetailedView && characterDetailedView.tabLayer){
+		var childList = characterDetailedView.tabLayer.childList;
+		for(var i=0;i<childList.length;i++){
+			var subView = childList[i];
+			if(subView && subView.visible && subView.updateView){
+				subView.updateView();
+			}
+		}
+	}
 };

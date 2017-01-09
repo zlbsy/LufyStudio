@@ -36,10 +36,9 @@ BattleModel.prototype.loadMapFileOver=function(event,callback){
 BattleModel.prototype.getImages=function(){
 	var self = this;
 	var list = [];
-	/*list.push({name:"talkbox",path:LMvc.IMG_PATH+"common/talkbox.png"});
-	list.push({name:"sMenu",path:LMvc.IMG_PATH+"sousou/menu.png"});*/
 	list.push({name:"battle-menu",path:LMvc.IMG_PATH+"battle/menu.png"});
 	list.push({name:"rect",path:LMvc.IMG_PATH+"battle/rect.png"});
+	list.push({name:"buff",path:LMvc.IMG_PATH+"battle/buff.png"});
 	list.push({name:"character-s-default",path:LMvc.IMG_PATH+"character/s/default.png"});
 	list.push({name:"tile_map",path:LMvc.IMG_PATH+"smap/tile_map.png"});
 	list.push({name:"boat",path:LMvc.IMG_PATH+"smap/boat.png"});
@@ -105,24 +104,17 @@ BattleModel.prototype.createMap = function(callback){
 	if(!BattleModel.bitmapDatas){
 		BattleModel.bitmapDatas = [
 			new LBitmapData(null,0,0,self.map.width,self.map.height, LBitmapData.DATA_CANVAS)
-			,new LBitmapData(null,0,0,self.map.width,self.map.height, LBitmapData.DATA_CANVAS)
-			,new LBitmapData(null,0,0,self.map.width,self.map.height, LBitmapData.DATA_CANVAS)
+			//,new LBitmapData(null,0,0,self.map.width,self.map.height, LBitmapData.DATA_CANVAS)
+			//,new LBitmapData(null,0,0,self.map.width,self.map.height, LBitmapData.DATA_CANVAS)
 		];
 	}
-	for(var i=0;i<3;i++){
+	//for(var i=0;i<3;i++){
+	for(var i=0;i<1;i++){
 		var data = BattleModel.bitmapDatas[i];
 		data.image.width = self.map.width;
 		data.image.height = self.map.height;
 	}
 	self.createMapTile(0, callback);
-	/*
-	for(var i=0;i<h;i++){
-		for(var j=0;j<w;j++){
-			var data = maps[i][j];
-			var bitmapData = getMapTile(data);
-			self.mapBitmapData.copyPixels(bitmapData,new LRectangle(0, 0, BattleCharacterSize.width, BattleCharacterSize.height),new LPoint(j*BattleCharacterSize.width,i*BattleCharacterSize.height, BattleCharacterSize.width, BattleCharacterSize.height));
-		}
-	}*/
 };
 BattleModel.prototype.createMapTile = function(index, callback){
 	var self = this;
@@ -138,11 +130,10 @@ BattleModel.prototype.createMapTile = function(index, callback){
 			var bitmapData = getMapTile(data);
 			var rect = new LRectangle(0, 0, BattleCharacterSize.width, BattleCharacterSize.height);
 			var point = new LPoint(j*BattleCharacterSize.width,i*BattleCharacterSize.height, BattleCharacterSize.width, BattleCharacterSize.height);
-			for(var dataIndex=0;dataIndex<3;dataIndex++){
+			for(var dataIndex=0;dataIndex<BattleModel.bitmapDatas.length;dataIndex++){
 				var data = BattleModel.bitmapDatas[dataIndex];
 				data.copyPixels(bitmapData,rect,point);
 			}
-			//self.mapBitmapData.copyPixels(bitmapData,rect,point);
 			if(++index > endIndex){
 				break;
 			}

@@ -1,0 +1,16 @@
+SGJEvent.mapShow(7);
+SGJEvent.addCharacter(@id0,350,100,fade);
+SGJEvent.messageShow(長年の闘争を経て、@name0が天下を統一して、新しい王朝を作りました。,3);
+SGJEvent.messageShow(でも、これまでの平和は、一時的なものです。異民族は中原にの侵略が始まった。,3);
+SGJEvent.addCharacter(624,100,100,fade);
+SGJEvent.messageShow(完全に天下平和のため、@name0が異民族を滅亡させるため、遠征を決めました。,3);
+SGJEvent.removeCharacter(@id0,fade);
+SGJEvent.addCharacter(@id0,250,100,fade);
+SGJEvent.messageShow(@name0の兵士が強いですが、異民族の人数が多すぎで、そして新王朝はまだ不安定ですから、遠征が失敗しました。,3);
+SGJEvent.removeCharacter(@id0,fade);
+SGJEvent.addCharacter(@id0,350,100,fade);
+SGJEvent.messageShow(勝利した異民族は士気が旺盛で、華北一帯に攻略し、国内は大騒乱となった。,3);
+SGJEvent.addCharacter(621,0,50,fade);
+SGJEvent.addCharacter(622,0,200,fade);
+SGJEvent.messageShow(五胡が前後に反乱を起こした、これは「五胡乱華」と呼ばれる。,3);
+Mark.EventEnd;

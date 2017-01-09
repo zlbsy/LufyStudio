@@ -175,7 +175,7 @@ LogoController.prototype.updateCheck = function(){
 				self.view.showNews(data.newsURL + "&l=" + LPlugin.language());
 			}
 		},function(){
-			self.testVersionOver("Could Not Connect to Internet Error !!");
+			self.testVersionOver(Language.get("Could Not Connect to Internet Error !!"));
 			//LMvc.keepLoading(false);
 		});
 		return;

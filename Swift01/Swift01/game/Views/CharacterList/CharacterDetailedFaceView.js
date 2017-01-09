@@ -69,6 +69,9 @@ CharacterDetailedFaceView.prototype.showLabel=function(characterModel){
 };
 CharacterDetailedFaceView.prototype.showFace=function(){
 	var self = this;
+	if(!self.controller || !self.controller.getValue){
+		return;
+	}
 	var characterModel = self.controller.getValue("selectedCharacter");
 	var face = characterModel.face();
 	self.faceLayer.addChild(face);

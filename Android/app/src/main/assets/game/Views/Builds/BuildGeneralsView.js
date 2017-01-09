@@ -73,7 +73,15 @@ BuildGeneralsView.prototype.moveSelectCharacter=function(event){
 	self.controller.setValue("cityId", event.cityId);
 	controller.removeEventListener(LCityEvent.SELECT_CITY, self.moveSelectCharacter);
 	var cityModel = self.controller.getValue("cityData");
-	self.controller.loadCharacterList(CharacterListType.CHARACTER_MOVE, cityModel.generals(Job.IDLE), {buttonLabel:"move_start"});
+	var characters = cityModel.generals(Job.IDLE);
+	var captives = cityModel.captives();
+	for(var i=0,l=captives.length;i<l;i++){
+		var chara = captives[i];
+		if(chara.job() == Job.IDLE){
+			characters.push(chara);
+		}
+	}
+	self.controller.loadCharacterList(CharacterListType.CHARACTER_MOVE, characters, {buttonLabel:"move_start"});
 };
 BuildGeneralsView.prototype.selectComplete=function(event){
 	var self = this;

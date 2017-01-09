@@ -17,33 +17,40 @@ CharacterModel.list = [];
 CharacterModel.commonAngryTalks = ["angry_talk_0_0","angry_talk_0_1","angry_talk_0_2"];
 CharacterModel.commonDieTalks = ["die_talk_0_0","die_talk_0_1","die_talk_0_2"];
 CharacterModel.commonUnderArrestTalks = ["under_arrest_talk_0_0", "under_arrest_talk_0_1", "under_arrest_talk_0_2"];
-CharacterModel.upValue = function(type, value) {
+CharacterModel.newcountUpValue = function(value, standard, newcount) {
+	if(value < standard){
+		return 0;
+	}
+	var newcountValue = 0.02;
+	return newcount ? (value - standard)*newcountValue : 0;
+};
+CharacterModel.upValue = function(type, value, newcount) {
 	if (type == "S") {
 		if (value < 50) {
-			return 1;
-		} else if (value < 70) {
 			return 2;
+		} else if (value < 70) {
+			return 3;
 		} else if (value < 90) {
 			return 3;
 		}else{
-			return 4;
+			return 4 + CharacterModel.newcountUpValue(value, 90, newcount);
 		}
 	} else if (type == "A") {
 		if (value < 50) {
-			return 1;
+			return 2;
 		} else if (value < 70) {
 			return 2;
 		} else {
-			return 3;
+			return 3 + CharacterModel.newcountUpValue(value, 70, newcount);
 		}
 	} else if (type == "B") {
 		if (value < 50) {
 			return 1;
 		} else {
-			return value >= 90 ? 3 : 2;
+			return value >= 90 ? 3 + CharacterModel.newcountUpValue(value, 90, newcount) : 2 + CharacterModel.newcountUpValue(value, 50, newcount);
 		}
 	} else if (type == "C") {
-		return value >= 70 ? 2 : 1;
+		return value >= 70 ? 2 + CharacterModel.newcountUpValue(value, 70, newcount) : 1 + CharacterModel.newcountUpValue(value, 30, newcount);
 	}
 	return 0;
 };
@@ -107,6 +114,9 @@ CharacterModel.getSoldierType = function(type, value){
 CharacterModel.setChara=function(list){
 	var fathers = [];
 	for(var i=0,l=list.length;i<l;i++){
+		if(!list[i].initSoldiers){
+			list[i].initSoldiers = list[i].soldiers;
+		}
 		var chara = new CharacterModel(null,list[i]);
 		chara.job(Job.IDLE);
 		chara.feat(0);
@@ -149,7 +159,8 @@ CharacterModel.prototype.datas=function(){
 		isDefCharacter:self.isDefCharacter(),
 		job:self.getJobData(),//根据任务内容变化
 		loyalty:self.loyalty(),//忠诚度
-		soldiers:self.data.soldiers,//所有兵种熟练度
+		soldiers:self.soldiersData(),//所有兵种熟练度
+		saveSoldiers:self.data.saveSoldiers,
 		isPrized:self.isPrized(),
 		stopIn:self.stopIn(),
 		reputation:self.data.reputation,
@@ -198,11 +209,17 @@ CharacterModel.prototype.setDatas=function(charaData){
 	self.seigniorId(charaData.seignior_id);
 	if(charaData.soldiers){
 		self.data.soldiers = charaData.soldiers;
+	}else{
+		self.data.soldiers = self.data.initSoldiers;
 	}
+	if(typeof SoldiersView != UNDEFINED){
+		SoldiersView.updateAll = true;
+	}
+	self._soldiers = null;
 	self.feat(charaData.feat);
 	self.exp(charaData.exp);
-	self.MP(charaData.mp);
-	self.HP(charaData.hp);
+	self.MP(charaData.mp ? charaData.mp : 0);
+	self.HP(charaData.hp ? charaData.hp : 100);
 	self.troops(charaData.troops);
 	self.wounded(charaData.wounded);
 	self.hardships(charaData.hardships);
@@ -210,10 +227,12 @@ CharacterModel.prototype.setDatas=function(charaData){
 	self.loyalty(charaData.loyalty);
 	self.data.isPrized = charaData.isPrized;
 	self.data.stopIn = charaData.stopIn;
+	self.data.saveSoldiers = charaData.saveSoldiers;
 	var keys = ["command","force","intelligence","agility","luck"];
 	for(var i=0,l=keys.length;i<l;i++){
 		var key = keys[i];
 		self.data[key+"_exp"] = charaData[key+"_exp"];
+		self.data["_"+key] = null;
 	}
 	if(charaData.job){
 		self.setJobData(charaData.job);
@@ -229,6 +248,10 @@ CharacterModel.prototype.setDatas=function(charaData){
 	}
 	if(charaData.currentSoldierId){
 		self.data.currentSoldierId = charaData.currentSoldierId;
+	}
+	if(!self.data.saveSoldiers  && self.data.soldiers.length == 1){
+		self.initSoldiers();
+		self.data.currentSoldierId = 0;
 	}
 	self.data.equipments = [];
 	if(charaData.equipments){
@@ -325,8 +348,10 @@ CharacterModel.prototype.plusPropertiesExp = function(key) {
 	var exp = (typeof self.data[expKey] == UNDEFINED ? 0 : self.data[expKey]);
 	var plusExp = 1;
 	if(exp < 200){
-		plusExp = 12 - (Math.fakeRandom() * 4) >>> 0;
-	}else if(exp < 400){
+		plusExp = 20 - (Math.fakeRandom() * 4) >>> 0;
+	}else if(exp < 500){
+		plusExp = 15 - (Math.fakeRandom() * 4) >>> 0;
+	}else if(exp < 800){
 		plusExp = 10 - (Math.fakeRandom() * 4) >>> 0;
 	}else{
 		plusExp = 8 - (Math.fakeRandom() * 4) >>> 0;
@@ -365,6 +390,10 @@ CharacterModel.prototype.basicPropertiesCalculation = function() {
 		self.data["_"+key] += self.getReputationPlus(key);
 	}
 };
+CharacterModel.prototype.maxPropertie = function(){
+	var self = this;
+	return Math.max(self.force(), self.intelligence(), self.command(), self.agility(), self.luck());
+};
 CharacterModel.prototype.basicPropertiesSum = function(){
 	var self = this;
 	return self.force() + self.intelligence() + self.command() + self.agility() + self.luck();
@@ -386,11 +415,11 @@ CharacterModel.prototype.calculation = function(init) {
 	*************/
 	var lv = self.seigniorLevel();
 	self.basicPropertiesCalculation();
-	self.data.attack = self.force() * 0.5 + CharacterModel.upValue(property.attack, self.force()) * lv;
-	self.data.spirit = self.intelligence() * 0.5 + CharacterModel.upValue(property.spirit, self.intelligence()) * lv;
-	self.data.defense = self.command() * 0.5 + CharacterModel.upValue(property.defense, self.command()) * lv;
-	self.data.breakout = self.agility() * 0.5 + CharacterModel.upValue(property.breakout, self.agility()) * lv;
-	self.data.morale = self.luck() * 0.5 + CharacterModel.upValue(property.morale, self.luck()) * lv;
+	self.data.attack = self.force() * 0.5 + CharacterModel.upValue(property.attack, self.force(), currentSoldiers.newcount()) * lv;
+	self.data.spirit = self.intelligence() * 0.5 + CharacterModel.upValue(property.spirit, self.intelligence(), currentSoldiers.newcount()) * lv;
+	self.data.defense = self.command() * 0.5 + CharacterModel.upValue(property.defense, self.command(), currentSoldiers.newcount()) * lv;
+	self.data.breakout = self.agility() * 0.5 + CharacterModel.upValue(property.breakout, self.agility(), currentSoldiers.newcount()) * lv;
+	self.data.morale = self.luck() * 0.5 + CharacterModel.upValue(property.morale, self.luck(), currentSoldiers.newcount()) * lv;
 	
 	//self.data.maxTroops = self.initTroops() + property.troops * self.lv();
 	//self.data.maxStrategy = self.initStrategy() + property.strategy * self.lv();
@@ -428,7 +457,7 @@ CharacterModel.prototype.calculation = function(init) {
 		var condition = skill.condition();
 		if(condition){
 			if((condition.type == "AttackType" && condition.value == currentSoldiers.attackType()) || 
-			(condition.type == "SoldierId" && condition.value == currentSoldiers.id())){
+			(condition.type == "SoldierId" && condition.value.indexOf(currentSoldiers.id()) >= 0)){
 				self.data.rangeAttack = skill.rangeAttack().concat();
 				var ranges = currentSoldiers.rangeAttack();
 				for(var i=0,l=ranges.length;i<l;i++){
@@ -448,6 +477,13 @@ CharacterModel.prototype.statusChange = function(name) {
 		return 1;
 	}
 	return 1 + self.data.hertVsStatus.value * (self.maxTroops() - self.troops()) / self.maxTroops();
+};
+CharacterModel.prototype.isMale = function() {
+	var self = this;
+	if(self.id() < 1000){
+		return femaleCharacters.indexOf(self.id()) < 0;
+	}
+	return self.data.gender == 1;
 };
 CharacterModel.prototype.isTribeCharacter = function() {
 	return this.id() >= TribeCharacter[0] && this.id() <= TribeCharacter[1];
@@ -710,6 +746,34 @@ CharacterModel.prototype.troops = function(value, proportionWounded) {
 		}
 	}
 	return self._dataValue("troops", value,0);
+};
+CharacterModel.prototype.military = function(){
+	var self = this;
+	var military = self.data.military;
+	if(!military){
+		if(self.intelligence() < 60){
+			return null;
+		}else if(self.intelligence() < 80 && self.intelligence() <= self.force()){
+			return null;
+		}
+		var objs = [[65,12],[70,7],[75,13],[80,8],[85,14],[90,9],[95,15],[100,10],[105,16],[1000,11]];
+		for(var i=0;i<objs.length;i++){
+			var obj = objs[i];
+			if(self.intelligence() <= obj[0]){
+				military = obj[1];
+				break;
+			}
+		}
+	}
+	return MilitaryModel.getMaster(military);
+};
+CharacterModel.prototype.militaryId = function(){
+	var self = this;
+	var militaryModel = self.military();
+	if(!militaryModel){
+		return 0;
+	}
+	return militaryModel.id();
 };
 CharacterModel.prototype.HP = function(value) {
 	return this._dataValue("hp", value);
@@ -1063,11 +1127,35 @@ CharacterModel.prototype.agility = function() {
 CharacterModel.prototype.luck = function() {
 	return this.getBasicProperties("luck");
 };
+CharacterModel.prototype.initSoldiers = function() {
+	var self = this;
+	if(self.isEmploy()){
+		return self.soldiers();
+	}
+	var charaData = characterListConfig.find(function(c){
+		return c.id == self.id();
+	});
+	self.data.soldiers = [];
+	for(var i=0;i<charaData.initSoldiers.length;i++){
+		self.data.soldiers.push(charaData.initSoldiers[i]);
+	}
+	self._soldiers = null;
+	return self.soldiers();
+};
 CharacterModel.prototype.maxProficiencySoldier = function() {
-	var soldiers = this.soldiers();
+	var self = this;
+	var soldiers = self.soldiers();
+	if(soldiers.length == 1 && !soldiers[0].id()){
+		soldiers = self.initSoldiers();
+	}
 	var proficiency = 0, soldier;
 	for(var i=0,l=soldiers.length;i<l;i++){
 		var child = soldiers[i];
+		if(specialSoldiersConfig.indexOf(child.id()) >= 0 
+			&& self.seigniorId() == LMvc.selectSeignorId
+			&& !purchaseHasBuy(productIdConfig.soldier_special)){
+			continue;
+		}
 		if(i == 0 || proficiency < child.proficiency()){
 			proficiency = child.proficiency();
 			soldier = child;
@@ -1080,6 +1168,13 @@ CharacterModel.prototype.currentSoldierId = function(value) {
 	if(value){
 		self.data.currentSoldierId = value;
 		return;
+	}
+	if(self.data.currentSoldierId){
+		if(specialSoldiersConfig.indexOf(self.data.currentSoldierId) >= 0 
+			&& self.seigniorId() == LMvc.selectSeignorId
+			&& !purchaseHasBuy(productIdConfig.soldier_special)){
+			self.data.currentSoldierId = null;
+		}
 	}
 	if(!self.data.currentSoldierId){
 		var soldier = self.maxProficiencySoldier();
@@ -1103,7 +1198,40 @@ CharacterModel.prototype.currentSoldiers = function(id) {
 			return child.id() == currentSoldierId;
 		});
 	}
+	if(!self.data._currentSoldiers){
+		self.data.currentSoldierId = null;
+		return self.currentSoldiers();
+	}
 	return self.data._currentSoldiers;
+};
+CharacterModel.prototype.battleSoldierSelect = function(id, proficiency, img) {
+	var self = this;
+	if(!id || self.currentSoldierId() == id || self.data.saveSoldiers){
+		return;
+	}
+	self.data.saveSoldiers = self.data.soldiers;
+	var soldier = {id:id,proficiency:proficiency};
+	if(img && img.indexOf("common") < 0){
+		soldier.img = img;
+	}
+	self.data.soldiers = [soldier];
+	self.data._currentSoldiers = null;
+	self._soldiers = null;
+	self.currentSoldierId(id);
+};
+CharacterModel.prototype.battleSoldierReset = function() {
+	var self = this;
+	if(!self.data.saveSoldiers){
+		return;
+	}
+	self.data.soldiers = self.data.saveSoldiers;
+	self.data.saveSoldiers = null;
+	self.data._currentSoldiers = null;
+	self._soldiers = null;
+	self.data.currentSoldierId = null;
+	if(self.data.soldiers.length == 1){
+		self.initSoldiers();
+	}
 };
 CharacterModel.prototype.underArrestTalk = function() {
 	var self = this, index, list;
@@ -1122,6 +1250,16 @@ CharacterModel.prototype.angryTalk = function() {
 	list = (self.data.angryTalks && self.data.angryTalks.length) ? self.data.angryTalks : CharacterModel.commonAngryTalks;
 	index = Math.random()*list.length >>> 0;
 	return Language.getAngryTalk(list[index]);
+};
+CharacterModel.prototype.soldiersData = function() {
+	var self = this;
+	var models = self.soldiers();
+	var datas = [];
+	for(var i=0,l=models.length;i<l;i++){
+		var model = models[i];
+		datas.push(model.getData());
+	}
+	return datas;
 };
 CharacterModel.prototype.soldiers = function() {
 	var self = this;
@@ -1221,34 +1359,48 @@ CharacterModel.prototype.groupSkill = function() {
 CharacterModel.prototype.skillCoefficient = function() {
 	return (this.data.skill ? 1 : 0) + (this.data.groupSkill ? 1 : 0);
 };
+CharacterModel.prototype.soldiersSkill = function(type) {
+	var currentSoldiers = this.currentSoldiers();
+	return currentSoldiers.skill(type);
+};
 CharacterModel.prototype.skill = function(type) {
 	var self = this;
-	if(!self.data.skill){
+	if(LMvc.BattleController && self.troops() == 0){
 		return null;
+	}
+	if(!self.data.skill){
+		return self.soldiersSkill(type);
 	}
 	var skill = SkillMasterModel.getMaster(self.data.skill);
 	var skillType = skill.mainType();
 	if(type && (
 		(typeof skillType == "string" && skillType != type) || 
 		(Array.isArray(skillType) && skillType.indexOf(type) < 0))){
-		return null;
+		return self.soldiersSkill(type);
 	}
 	if(skill.probability() < 100){
 		var rand = Math.fakeRandom();
 		if(type && rand > skill.probability()*0.01){
-			return null;
+			return self.soldiersSkill(type);
 		}
 	}
 	return skill;
 };
+CharacterModel.prototype.hasSoldiersSkill = function(subType) {
+	var currentSoldiers = this.currentSoldiers();
+	return currentSoldiers.hasSkill(subType);
+};
 CharacterModel.prototype.hasSkill = function(subType) {
 	var self = this;
 	if(!self.data.skill){
-		return false;
+		return self.hasSoldiersSkill(subType);
 	}
 	var skill = SkillMasterModel.getMaster(self.data.skill);
 	if(subType && skill.isSubType(subType)){
 		return true;
 	}
-	return false;
+	return self.hasSoldiersSkill(subType);
+};
+CharacterModel.prototype.skillId = function() {
+	return this.data.skill;
 };

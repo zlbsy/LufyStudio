@@ -1,3 +1,12 @@
 SGJEvent.mapShow(1);
-SGJEvent.messageShow(士别三日。,3);
+SGJEvent.addCharacter(13,0,100,fade);
+SGJEvent.messageShow(东吴的大将吕蒙作战非常勇猛，但是只在武勇上努力，从不读书，为人也缺乏教养。于是孙权劝吕蒙多读书，学习经典。,3);
+SGJEvent.addCharacter(17,200,100,fade);
+SGJEvent.talk(17,为将者不可光有武勇而无智谋，并且要提高自身修养，汝需多习经典和兵法才可成为将帅。);
+SGJEvent.removeCharacter(17,fade);
+SGJEvent.messageShow(此后，吕蒙便潜心博览群书，识见精博，渐能克己让人，有国士之风。,3);
+SGJEvent.addCharacter(82,200,100,fade);
+SGJEvent.messageShow(一日，鲁肃和吕蒙讨论议事，十分惊奇他的才能。,3);
+SGJEvent.talk(17,吕子明，吾不知卿才略所及乃至于此也。吾谓大弟但有武略耳，至于今者，学识英博，非复吴下阿蒙。);
+SGJEvent.messageShow(呂蒙的智力上升了40，一些兵种的熟练度也上升了。,3);
 Mark.EventEnd;

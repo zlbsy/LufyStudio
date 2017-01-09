@@ -106,7 +106,7 @@ ExpeditionReadyView.prototype.setFoodValue=function(value){
 };
 ExpeditionReadyView.prototype.updateFoodLabel=function(){
 	var self = this;
-	var unitFood = self.selectTroops + self.sumTroops * 2;
+	var unitFood = (self.selectTroops + self.sumTroops * 2) * 0.5;
 	self.food.text = String.format(Language.get("expedition_ready_food"),self.selectFood,self.foodSum, self.selectFood * self.multiple / unitFood >>> 0);
 };
 ExpeditionReadyView.prototype.onMoneyChange=function(event){

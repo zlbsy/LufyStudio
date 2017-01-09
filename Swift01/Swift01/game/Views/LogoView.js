@@ -435,7 +435,7 @@ LogoView.prototype.showNews=function(newsURL){
 	noShowBackground.x = x - 10;
 	noShowBackground.y = newsBackground.y + h + 20;
 	self.addChild(noShowBackground);
-	var message = getStrokeLabel("今天不再显示！",20,"#FFFFFF","#000000",4);
+	var message = getStrokeLabel(Language.get("not_show_today"),20,"#FFFFFF","#000000",4);
 	message.x = w - 25 - message.getWidth();
 	message.y = 8;
 	noShowBackground.addChild(message);
@@ -459,7 +459,7 @@ LogoView.prototype.showNews=function(newsURL){
 		noShowBackground.remove();
 		newsBackMask.remove();
 		newsBackground.remove();
-		webview.hide();console.log(checked);
+		webview.hide();
 		if(checked){
 			var today = formatDate(new Date(), "YYYY-MM-DD 00:00:00");
 			LPlugin.SetData("newsShowDay", today);

@@ -1,0 +1,16 @@
+SGJEvent.mapShow(7);
+SGJEvent.addCharacter(@id0,350,100,fade);
+SGJEvent.messageShow(经过了多年的争斗，@name0终于统一了天下，建立了新的王朝。,3);
+SGJEvent.messageShow(然而，天下依然没有太平，统一只是短暂的，不久，四方的胡人部落开始侵入中原。,3);
+SGJEvent.addCharacter(624,100,100,fade);
+SGJEvent.messageShow(但是为了彻底实现天平的天下，@name0决定亲自远征胡人。,3);
+SGJEvent.removeCharacter(@id0,fade);
+SGJEvent.addCharacter(@id0,250,100,fade);
+SGJEvent.messageShow(虽然@name0率领的军队作战勇猛，然而，胡人毕竟人数众多，加上新王朝的根基还不稳固，胡人逐渐占据上风，远征失败了。,3);
+SGJEvent.removeCharacter(@id0,fade);
+SGJEvent.addCharacter(@id0,350,100,fade);
+SGJEvent.messageShow(而获得了胜利的胡人则更加猖狂，华北地区战火纷飞，掠夺与屠杀不断。,3);
+SGJEvent.addCharacter(621,0,50,fade);
+SGJEvent.addCharacter(622,0,200,fade);
+SGJEvent.messageShow(五胡纷纷举兵，史称五胡乱华。,3);
+Mark.EventEnd;

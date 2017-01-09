@@ -1,3 +1,12 @@
-SGJEvent.mapShow(1);
-SGJEvent.messageShow(赤壁之战。,3);
+SGJEvent.mapShow(8);
+SGJEvent.messageShow(在长江的南岸，战船上的周瑜，凝视着对岸的曹军强大的阵容，思索着，等待着。,3);
+SGJEvent.addCharacter(2,100,100,fade);
+SGJEvent.messageShow(火计是破敌的唯一的计策，一切都已经准备就绪，只欠一阵东南风。,3);
+SGJEvent.messageShow(一瞬间的寂静过后，风向突然改变了，军旗激烈的摆动了起来。,3);
+SGJEvent.talk(2,就是现在！);
+SGJEvent.messageShow(周瑜迅速采取了措施，率领水军向曹军发动了奇袭。,3);
+SGJEvent.mapShow(5);
+SGJEvent.messageShow(战鼓激烈的敲打着，无数的火箭划过天空，飞向曹营。,3);
+SGJEvent.messageShow(曹营的船全被火焰包围了起来，迅速成了一片火海，染红了整个江面。,3);
+SGJEvent.messageShow(赤壁之战的使曹操失去了在短时间内统一全国的可能性，也让赤壁成了一个传说。,3);
 Mark.EventEnd;

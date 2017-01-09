@@ -1,3 +1,12 @@
-SGJEvent.mapShow(1);
-SGJEvent.messageShow(赤壁之战。,3);
+SGJEvent.mapShow(8);
+SGJEvent.messageShow(長江の南岸に布陣する軍船、その船の上から、周瑜は対岸の陣容を見つめていた。,3);
+SGJEvent.addCharacter(2,100,100,fade);
+SGJEvent.messageShow(火計こそ敵の大軍を被る唯一の策、ただ東南の風を待つのみ。,3);
+SGJEvent.messageShow(一瞬の静寂の後、風は向きを変え、軍旗を激しくあおった。,3);
+SGJEvent.talk(2,今だ！);
+SGJEvent.messageShow(周瑜は采配を振り下がるし、水軍を駆って対岸に襲いかかった。,3);
+SGJEvent.mapShow(5);
+SGJEvent.messageShow(戦鼓が激しく打ち鳴らされ、無数の火矢が宙を舞う。,3);
+SGJEvent.messageShow(船団が炎に包まれ、夕闇を赤く染め上げた。,3);
+SGJEvent.messageShow(長江を下らんとした野望は焼き尽くされ、赤壁は伝説になった。,3);
 Mark.EventEnd;

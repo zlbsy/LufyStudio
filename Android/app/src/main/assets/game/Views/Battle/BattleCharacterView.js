@@ -89,7 +89,7 @@ BattleCharacterView.prototype.getBitmapData = function() {
 	if(self.hideByCloud){
 		return null;
 	}
-	var key = self.data.currentSoldiers().img() + "_" + self.belong+ + "_" + self.action+"_"+self.direction + "_" + self.anime.colIndex, 
+	var key = self.data.currentSoldiers().img(self.isSelf()) + "_" + self.data.currentSoldiers().level() + "_" + self.belong+ + "_" + self.action+"_"+self.direction + "_" + self.anime.colIndex, 
 	endKey = key + "_end";
 	var resultBitmapData;
 	if(self.mode == CharacterMode.END_ACTION){
@@ -175,6 +175,7 @@ BattleCharacterView.prototype.showLightComplete = function(event){
 BattleCharacterView.prototype.addAnimation = function() {
 	var self = this;
 	var bitmapData = new LBitmapData(LMvc.datalist[BattleCharacterView.DEFAULT_IMG], 0, 0, BattleCharacterSize.width, BattleCharacterSize.height);
+	
 	self.anime = new LAnimationTimeline(bitmapData, BattleCharacterView.getAnimationData());
 	self.anime.speed = BattleMapConfig.SPEED;
 	self.layer.addChild(self.anime);
@@ -190,15 +191,23 @@ BattleCharacterView.prototype.addAnimation = function() {
 	self.anime.addFrameScript(String.format("{0}-{1}",CharacterAction.ATTACK,CharacterDirection.UP),self.attackSpecialCheck,[]);
 	self.anime.addFrameScript(String.format("{0}-{1}",CharacterAction.ATTACK,CharacterDirection.LEFT),self.attackSpecialCheck,[]);
 	self.anime.addFrameScript(String.format("{0}-{1}",CharacterAction.ATTACK,CharacterDirection.RIGHT),self.attackSpecialCheck,[]);
-	var isSelf = self.data.seigniorId() == LMvc.selectSeignorId;
-	if(self.data.isEmploy()){
-		isSelf = self.data.city().seigniorCharaId() == LMvc.selectSeignorId;
-	}
-	var img = self.data.currentSoldiers().img(isSelf);
+	var img = self.data.currentSoldiers().img(self.isSelf());
 	var loader = new LLoader();
 	loader.parent = self;
 	loader.addEventListener(LEvent.COMPLETE, self.loadSOver);
 	loader.load(LMvc.IMG_PATH + "character/s/"+img+".png", "bitmapData");
+};
+BattleCharacterView.prototype.isSelf = function() {
+	var self = this;
+	if(typeof self._isSelf != UNDEFINED){
+		return self._isSelf;
+	}
+	var isSelf = self.data.seigniorId() == LMvc.selectSeignorId;
+	if(self.data.isEmploy()){
+		isSelf = self.data.city().seigniorCharaId() == LMvc.selectSeignorId;
+	}
+	self._isSelf = isSelf;
+	return isSelf;
 };
 BattleCharacterView.prototype.setAnimationLabel = function() {
 	var self = this;
@@ -257,29 +266,40 @@ BattleCharacterView.prototype.setAnimationLabel = function() {
 BattleCharacterView.prototype.loadSOver = function(event){
 	var self = event.currentTarget.parent;
 	var animeBitmapData = self.anime.bitmap.bitmapData;
-	var bitmapData = new LBitmapData(event.target,animeBitmapData.x,animeBitmapData.y,animeBitmapData.width,animeBitmapData.height);
+	var bitmapData;
+	if(self.data.currentSoldiers().level() > 1){
+		var baseData = new LBitmapData(event.target);
+		var dataLayer = new LSprite();
+		dataLayer.graphics.drawRect(0, "#ff0000", [0, 0, baseData.width, baseData.height]);
+		dataLayer.addChild(new LBitmap(baseData));
+		var shadow = new LDropShadowFilter(0,0,self.belong == Belong.SELF?"#FF0000":"#2a2af8",10);
+		dataLayer.filters = [shadow];
+		bitmapData = new LBitmapData(null, 0, 0, baseData.width, baseData.height, LBitmapData.DATA_CANVAS);
+		bitmapData.draw(dataLayer);
+		bitmapData.setProperties(animeBitmapData.x,animeBitmapData.y,animeBitmapData.width,animeBitmapData.height);
+	}else{
+		bitmapData = new LBitmapData(event.target,animeBitmapData.x,animeBitmapData.y,animeBitmapData.width,animeBitmapData.height);
+	}
 	self.anime.bitmap.bitmapData = bitmapData;
-	self.toStatic(true);
+	self.toEnd(self.mode == CharacterMode.END_ACTION);
 };
-BattleCharacterView.prototype.toStatic = function(value){
+BattleCharacterView.prototype.toEnd = function(value){
 	var self = this;
-	if(self.controller.constructor.name != "BattleController"){
+	self.anime.visible = !value;
+	if(self.endBitmap){
+		self.endBitmap.visible = value;
+	}
+	if(!value){
 		return;
 	}
-	self.isStatic = value;
-	if(value){
-		if(self.anime.visible){
-			var result = self.controller.view.mapLayer.characterIn(self);
-			if(result){
-				self.anime.visible = false;
-			}
-		}
+	var bitmapData = self.getBitmapData();
+	if(!self.endBitmap){
+		self.endBitmap = new LBitmap(bitmapData);
+		self.layer.addChild(self.endBitmap);
 	}else{
-		if(!self.anime.visible){
-			self.controller.view.mapLayer.characterOut(self);
-			self.anime.visible = true;
-		}
+		self.endBitmap.bitmapData = self.getBitmapData();
 	}
+	
 };
 BattleCharacterView.prototype.onframe = function(event){
 	var self = event.currentTarget.parent;
@@ -347,6 +367,7 @@ BattleCharacterView.prototype.toDie = function() {
 	var script = "";
 	self.data.troops(0);
 	self.data.wounded(0);
+	self.data.battleSoldierReset();
 	if(self.data.isDefCharacter()){
 		//防御设施被摧毁,城防降低
 		self.data.city().cityDefense(-DefenseCharacterCost * 0.5);

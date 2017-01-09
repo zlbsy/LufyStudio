@@ -29,11 +29,60 @@ SoldierMasterModel.getMaster=function(id){
 SoldierMasterModel.prototype.id = function() {
 	return this.data.id;
 };
+SoldierMasterModel.prototype.level = function() {
+	return this.data.level ? this.data.level : 1;
+};
+SoldierMasterModel.prototype.isSpecialSoldiers = function() {
+	return specialSoldiersConfig.indexOf(this.data.id) >= 0;
+};
+SoldierMasterModel.prototype.newcount = function() {
+	return this.data.newcount;
+};
 SoldierMasterModel.prototype.name = function() {
 	return Language.getSoldier("name_" + this.data.sign);
 };
 SoldierMasterModel.prototype.explanation = function() {
-	return Language.getSoldier("explanation_" + this.data.sign);
+	var self = this;
+	var result = Language.getSoldier("explanation_" + this.data.sign);
+	if(self.data.newcount){
+		result += String.format(Language.getSoldier("explanation_newcount"), self.name());
+	}
+	if(self.data.skill){
+		var skill = SkillMasterModel.getMaster(self.data.skill);
+		result += String.format(Language.getSoldier("explanation_skill"), skill.name(),skill.explanation(),skill.probability());
+	}
+	return result;
+};
+SoldierMasterModel.prototype.skill = function(type) {
+	var self = this;
+	if(!self.data.skill){
+		return null;
+	}
+	var skill = SkillMasterModel.getMaster(self.data.skill);
+	var skillType = skill.mainType();
+	if(type && (
+		(typeof skillType == "string" && skillType != type) || 
+		(Array.isArray(skillType) && skillType.indexOf(type) < 0))){
+		return null;
+	}
+	if(skill.probability() < 100){
+		var rand = Math.fakeRandom();
+		if(type && rand > skill.probability()*0.01){
+			return null;
+		}
+	}
+	return skill;
+};
+SoldierMasterModel.prototype.hasSkill = function(subType) {
+	var self = this;
+	if(!self.data.skill){
+		return false;
+	}
+	var skill = SkillMasterModel.getMaster(self.data.skill);
+	if(subType && skill.isSubType(subType)){
+		return true;
+	}
+	return false;
 };
 SoldierMasterModel.prototype.technology = function() {
 	return this.data.technology;
@@ -116,6 +165,22 @@ SoldierMasterModel.prototype.next = function() {
 };
 SoldierMasterModel.prototype.img=function(){
 	return this.data.img;
+};
+SoldierMasterModel.prototype.maxProficiency=function(){
+	return this.data.maxProficiency;
+};
+SoldierMasterModel.prototype.strategySkill = function() {
+	var strategyId = this.data.strategySkill;
+	if(!strategyId){
+		return null;
+	}
+	if(this.data.strategySkillProbability && this.data.strategySkillProbability < 100){
+		var rand = Math.fakeRandom();
+		if(rand > this.data.strategySkillProbability*0.01){
+			return null;
+		}
+	}
+	return StrategyMasterModel.getMaster(strategyId);
 };
 SoldierMasterModel.prototype.maxTroops = function(charaModel) {
 	var self = this;

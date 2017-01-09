@@ -1,0 +1,8 @@
+SGJEvent.mapShow(7);
+SGJEvent.addCharacter(@id0,150,100,fade);
+SGJEvent.messageShow(長年の闘争を経て、@name0が天下を統一して、新しい王朝を作って、長安を首都にした。,3);
+SGJEvent.messageShow(新王朝を作った@name0は常に自らを律するように勤めた。,3);
+SGJEvent.messageShow(文学について、「建安三杰」の《短歌行》、《洛神赋》......などの名著を整理しました。,3);
+SGJEvent.messageShow(科学技術について、指南車を立派に完成させた、諸葛亮が開発した連弩を改良して5倍の性能を持たせることができた、発石車の欠点を改善し、さらに連発式に改良して実験を行った......,3);
+SGJEvent.messageShow(@name0は文学と科学技術を非常に重視していて、@name0が作った新王朝は中国が「世界四大文明」になるため、大きな貢献しました。,3);
+Mark.EventEnd;

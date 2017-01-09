@@ -39,6 +39,7 @@ BattleSelectMenuEvent.ATTACK = "attack";
 BattleSelectMenuEvent.MAGIC_SELECT = "magic_select";
 BattleSelectMenuEvent.MAGIC_ATTACK = "magic_attack";
 BattleSelectMenuEvent.SINGLE_COMBAT = "single_combat";
+BattleSelectMenuEvent.MILITARY_ADVISER = "military_adviser";
 BattleSelectMenuEvent.STANDBY = "standby";
 BattleSelectMenuEvent.CANCEL = "cancel";
 BattleSelectMenuEvent.SELECT_MENU_SHOW = "select_menu_show";

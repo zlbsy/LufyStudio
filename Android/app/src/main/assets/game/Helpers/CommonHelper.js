@@ -8,7 +8,7 @@ function calculateHitrateCaptive(chara, nearCharas){
 	var rate = 1;
 	if(chara.data.hasSkill(SkillSubType.RETREAT)){
 		rate = 0.2;
-	}else if(LMvc.BattleController){
+	}else if(isPlayerBattle()){
 		var positions = [[-1,-1],[0,-1],[1,-1],[-1,0],[1,0],[-1,1],[0,1],[1,1]];
 		var locationX = chara.locationX();
 		var locationY = chara.locationY();
@@ -105,6 +105,12 @@ function calculateHitrateBehead(leaderId, charaModel){
 		compatibility = sum;
 	}
 	return Math.fakeRandom() < compatibility/sum;
+}
+function beheadCountPlus(){
+	if(typeof LMvc.chapterData.behead == UNDEFINED){
+		LMvc.chapterData.behead = 0;
+	}
+	LMvc.chapterData.behead++;
 }
 /**
  * 释放概率
@@ -244,7 +250,7 @@ function setCharacterInitFeat(chara){
 	}
 	var minFeat = CharacterLevelConfig.exp * CharacterLevelConfig.maxLevel;
 	for(var i=0;i<generals.length;i++){
-		var child = generals[0];
+		var child = generals[i];
 		if(child.id() == chara.id()){
 			continue;
 		}

@@ -117,10 +117,18 @@ EventMapView.prototype.mapShow=function(mapIndex){
 			path = data;
 		}
 	}
+	var oldBackground = self.mapLayer.getChildByName("background");
+	if(oldBackground){
+		LTweenLite.to(oldBackground,0.5,{alpha:0,ease:LEasing.None.easeIn,onComplete:self.removeBackground});
+	}
 	var bitmapSprite = new BitmapSprite(path);
+	bitmapSprite.name = "background";
 	bitmapSprite.alpha = 0;
 	bitmapSprite.addEventListener(LEvent.COMPLETE, self.loadMapOver);
 	self.mapLayer.addChild(bitmapSprite);
+};
+EventMapView.prototype.removeBackground=function(event){
+	event.target.remove();
 };
 EventMapView.prototype.loadMapOver=function(event){
 	var bitmapSprite = event.currentTarget;

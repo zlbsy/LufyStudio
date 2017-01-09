@@ -99,6 +99,7 @@ function trainingRun(characterModel, soldierId){
 function levelUpCityRun(characterModel){
 	var city = characterModel.city();
 	city.level(1);
+	city.population(10000);
 	characterModel.featPlus(JobFeatCoefficient.NORMAL);
 	characterModel.job(Job.IDLE);
 	LMvc.MapController.view.resetAreaIcon(city.id());
@@ -499,7 +500,13 @@ function enlistRun(characterModel, targetEnlist){
 	}
 	quantity = (quantity >>> 0);
 	area.population(-quantity);
-	troop += quantity;
+	var multiplier = 1;
+	if(LMvc.chapterData.trouble == TroubleConfig.HARD){
+		multiplier = 1.5;
+	}else if(LMvc.chapterData.trouble == TroubleConfig.NORMAL){
+		multiplier = 1.2;
+	}
+	troop += (quantity * multiplier >>> 0);
 	area.troops(troop);
 	area.police(-(quantity * 0.05 >>> 0));
 	var feat = JobFeatCoefficient.NORMAL * quantity / JobFeatCoefficient.ENLIST;
@@ -738,14 +745,28 @@ function SeigniorExecuteChangeCityResources(area){
 		area.food(-(area.food()*0.05 >>> 0));
 		area.police(-3);
 	}
+	var plusValue = 1;
+	if(area.seigniorCharaId() != LMvc.selectSeignorId){
+		switch(LMvc.chapterData.trouble){
+			case TroubleConfig.HARD:
+				plusValue = 1.5;
+				break;
+			case TroubleConfig.NORMAL:
+				plusValue = 1.2;
+				break;
+			default:
+		}
+	}
 	var population = area.population();
 	//金钱
 	var maxBusiness = AreaModel.businessList[AreaModel.businessList.length - 1];
 	if(HarvestMonths.Money.indexOf(LMvc.chapterData.month) >= 0){
 		var addMoney = 600 + 3500*area.business()/maxBusiness;
 		addMoney *= (1 + population * 0.3 / maxPopulation);
-		//console.log(area.name(), addMoney);
-		area.money(addMoney >>> 0);
+		if(area.canIncome("money")){
+			addMoney *= 1.2;
+		}
+		area.money(addMoney * plusValue >>> 0);
 	}
 	//粮食
 	var maxAgriculture = AreaModel.agricultureList[AreaModel.agricultureList.length - 1];
@@ -755,7 +776,10 @@ function SeigniorExecuteChangeCityResources(area){
 		if(area.isPlagueOfLocusts()){
 			addFood *= (1 - 0.05 * area.plagueOfLocusts());
 		}
-		area.food(addFood >>> 0);
+		if(area.canIncome("food")){
+			addFood *= 1.2;
+		}
+		area.food(addFood * plusValue >>> 0);
 	}
 	var police = area.police();
 	var minPolice = 40;
@@ -1023,6 +1047,7 @@ function toPrizedByMoney(characterModel){
 	var personalLoyaltyValue = 5;
 	var compatibilityValue = 3;
 	var value1 = personalLoyaltyValue * characterModel.personalLoyalty()/15;
+	//console.log(characterModel.name());
 	var value2 = compatibilityValue * (150 - Math.abs(characterModel.compatibility() - characterModel.seignior().character().compatibility())) / 150;
 	var upValue = (value1 + value2) >>> 0;
 	var value = (value1 + value2 - upValue)*0.5 + 0.5;
@@ -1176,12 +1201,15 @@ function tournamentsGet(result){
 	LMvc.layer.addChild(windowLayer);
 }
 function disasterMonthsExecute(area){
+	if(area.isTribe()){
+		return false;
+	}
 	if(area.isFlood()){
-		area.flood(area.flood() - 1);
+		area.flood(area.flood() - (area.canSacrifice() ? 2 : 1));
 		if(area.flood()<=0){
 			area.isFlood(0);
 		}
-	}else{
+	}else if(!area.canSacrifice()){
 		if(Math.fakeRandom() < 0.1){
 			area.flood(area.flood() + 1);
 		}
@@ -1203,11 +1231,11 @@ function disasterMonthsExecute(area){
 		}
 	}
 	if(area.isPlagueOfLocusts()){
-		area.plagueOfLocusts(area.plagueOfLocusts() - 1);
+		area.plagueOfLocusts(area.plagueOfLocusts() - (area.canSacrifice() ? 2 : 1));
 		if(area.plagueOfLocusts()<=0){
 			area.isPlagueOfLocusts(0);
 		}
-	}else{
+	}else if(!area.canSacrifice()){
 		if(Math.fakeRandom() < 0.1){
 			area.plagueOfLocusts(area.plagueOfLocusts() + 1);
 		}

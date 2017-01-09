@@ -11,13 +11,7 @@ function cloudWeatherCharacterShow(characterId){
 	if(!weatherLayer.isWeather(BattleWeatherConfig.CLOUD)){
 		for(var i=0,l=characters.length;i<l;i++){
 			var character = characters[i];
-			if(!character.hideByCloud){
-				continue;
-			};
 			character.anime.parent.alpha = 1;
-			character.hideByCloud = false;
-			character.toStatic(false);
-			character.toStatic(true);
 		}
 		return;
 	}
@@ -31,15 +25,8 @@ function cloudWeatherCharacterShow(characterId){
 		});
 		if(findIndex >= 0){
 			character.anime.parent.alpha = 1;
-			character.hideByCloud = false;
-			character.toStatic(false);
-			if(character.isStatic){
-				character.toStatic(true);
-			}
 		}else{
 			character.anime.parent.alpha = 0.01;
-			character.hideByCloud = true;
-			character.toStatic(false);
 		}
 	}
 }
@@ -1002,6 +989,9 @@ function militaryAdviserStart(characterModel){
 	LMvc.layer.addChild(animationLayer);
 	LTweenLite.to(animationLayer,0.5,{scaleX:360/data.width,scaleY:360/data.width,alpha:1})
 	.to(animationLayer,2,{delay:0.5,scaleX:720/data.width,scaleY:720/data.width,alpha:0,ease:LEasing.Quart.easeOut,onComplete:militaryAdviserEnd});
+	if(isPlayerBattle()){
+		Toast.makeText(String.format(Language.get("military_started"), militaryModel.name())).show();
+	}
 }
 function militaryAdviserStrategy(chara, strategy){
 	//console.log("militaryAdviserStrategy",chara.data.name(),strategy.name());

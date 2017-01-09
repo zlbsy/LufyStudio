@@ -114,7 +114,9 @@ CharacterModel.getSoldierType = function(type, value){
 CharacterModel.setChara=function(list){
 	var fathers = [];
 	for(var i=0,l=list.length;i<l;i++){
-		list[i].initSoldiers = list[i].soldiers;
+		if(!list[i].initSoldiers){
+			list[i].initSoldiers = list[i].soldiers;
+		}
 		var chara = new CharacterModel(null,list[i]);
 		chara.job(Job.IDLE);
 		chara.feat(0);
@@ -207,11 +209,17 @@ CharacterModel.prototype.setDatas=function(charaData){
 	self.seigniorId(charaData.seignior_id);
 	if(charaData.soldiers){
 		self.data.soldiers = charaData.soldiers;
+	}else{
+		self.data.soldiers = self.data.initSoldiers;
 	}
+	if(typeof SoldiersView != UNDEFINED){
+		SoldiersView.updateAll = true;
+	}
+	self._soldiers = null;
 	self.feat(charaData.feat);
 	self.exp(charaData.exp);
-	self.MP(charaData.mp);
-	self.HP(charaData.hp);
+	self.MP(charaData.mp ? charaData.mp : 0);
+	self.HP(charaData.hp ? charaData.hp : 100);
 	self.troops(charaData.troops);
 	self.wounded(charaData.wounded);
 	self.hardships(charaData.hardships);
@@ -224,6 +232,7 @@ CharacterModel.prototype.setDatas=function(charaData){
 	for(var i=0,l=keys.length;i<l;i++){
 		var key = keys[i];
 		self.data[key+"_exp"] = charaData[key+"_exp"];
+		self.data["_"+key] = null;
 	}
 	if(charaData.job){
 		self.setJobData(charaData.job);

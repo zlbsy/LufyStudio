@@ -1,0 +1,9 @@
+SGJEvent.mapShow(7);
+SGJEvent.addCharacter(@id0,150,100,fade);
+SGJEvent.messageShow(经过了多年的争斗，@name0终于统一了天下，建立了新的王朝，将长安设为都城。,3);
+SGJEvent.messageShow(建立了新王朝的@name0经常注意叮咛自我克制欲望，嘱咐臣下莫恐上不悦而停止进谏，励精图治。,3);
+SGJEvent.messageShow(在政治上，既往不咎，知人善任，从谏如流，整饬吏治；经济上，薄赋尚俭，为政谨慎；亲自选派都督、刺史等地方官，并将其功过写在宫内屏风上，作为升降奖惩的依据。,3);
+SGJEvent.messageShow(@name0派人修复和发展丝绸之路，海上丝绸之路进一步发展。,3);
+SGJEvent.messageShow(@name0促进了中西方之间经济贸易，与遥远的波斯建立了联系，波斯使团抵达长安，为中国带来了玻璃制品工艺。,3);
+SGJEvent.messageShow(@name0通过努力，为中西之间的交流做出了非常大的贡献，由@name0建立的新王朝也成为了中国历史上商业最发达的王朝之一。,3);
+Mark.EventEnd;

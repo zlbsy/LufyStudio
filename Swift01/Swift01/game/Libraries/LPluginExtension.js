@@ -167,6 +167,15 @@ if(!LPlugin.openURL){
 		window.open(url);
 	};
 }
+LPlugin.quitConfirmShow = function(){
+	var obj = {width:300, height:200, 
+		message:Language.get("dialog_quip_confirm_message"), title:Language.get("confirm"),
+		okEvent:function(){
+			LPlugin.quitApplication();
+		},cancelEvent:null};
+	var dialog = ConfirmWindow(obj);
+	LMvc.layer.addChild(dialog);
+};
 LPlugin.sounds = {};
 LPlugin.volumeSE = 1;
 LPlugin.volumeBGM = 1;

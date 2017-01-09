@@ -22,6 +22,7 @@ CharacterDetailedFaceView.prototype.init=function(controller){
 	}
 	if(!self.textFieldName){
 		self.textLayer = new LSprite();
+		self.textLayer.graphics.drawRect(0, "#ff0000", [0, 0, 200, 80]);
 		self.addChild(self.textLayer);
 		
 		var name = getStrokeLabel("", 20, "#FFFFFF", "#000000", 4);
@@ -68,6 +69,9 @@ CharacterDetailedFaceView.prototype.showLabel=function(characterModel){
 };
 CharacterDetailedFaceView.prototype.showFace=function(){
 	var self = this;
+	if(!self.controller || !self.controller.getValue){
+		return;
+	}
 	var characterModel = self.controller.getValue("selectedCharacter");
 	var face = characterModel.face();
 	self.faceLayer.addChild(face);

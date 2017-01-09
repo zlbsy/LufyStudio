@@ -92,24 +92,24 @@ SoldierDetailedView.prototype.set=function(){
 	
 	var buttonRestraint = getButton(Language.get("restraint_attack"),120);
 	buttonRestraint.x = icon.x;
-	buttonRestraint.y = lblExplanation.y + lblExplanation.getHeight() + 25;
+	buttonRestraint.y = lblExplanation.y + lblExplanation.getHeight() + 10;
 	layer.addChild(buttonRestraint);
 	buttonRestraint.addEventListener(LMouseEvent.MOUSE_UP, self.onClickRestraintButton);
 	var buttonRestraintPassive = getButton(Language.get("restraint_attack_passive"),120);
 	buttonRestraintPassive.x = icon.x + 130;
-	buttonRestraintPassive.y = lblExplanation.y + lblExplanation.getHeight() + 25;
+	buttonRestraintPassive.y = lblExplanation.y + lblExplanation.getHeight() + 10;
 	layer.addChild(buttonRestraintPassive);
 	buttonRestraintPassive.addEventListener(LMouseEvent.MOUSE_UP, self.onClickRestraintPassiveButton);
 	var buttonTerrain = getButton(Language.get("terrain"),80);
 	buttonTerrain.x = icon.x + 260;
-	buttonTerrain.y = lblExplanation.y + lblExplanation.getHeight() + 25;
+	buttonTerrain.y = lblExplanation.y + lblExplanation.getHeight() + 10;
 	layer.addChild(buttonTerrain);
 	buttonTerrain.addEventListener(LMouseEvent.MOUSE_UP, self.onClickTerrainButton);
 	self.addChild(layer);
 };
 SoldierDetailedView.prototype.onClickTerrainButton=function(event){
 	var self = event.currentTarget.getParentByConstructor(SoldierDetailedView);
-	var startX = 10, startY = 60, w = 140, h = 35, index = 0, color;
+	var startX = 10, startY = 50, w = 140, h = 29, index = 0, color;
 	var layer = new LSprite();
 	var msg = String.format(Language.get("soldier_terrain_message"), self.soldierModel.name());
 	var label = getStrokeLabel(msg,18,"#FFFFFF","#000000",4);
@@ -141,7 +141,7 @@ SoldierDetailedView.prototype.onClickTerrainButton=function(event){
 };
 SoldierDetailedView.prototype.onClickRestraintButton=function(event){
 	var self = event.currentTarget.getParentByConstructor(SoldierDetailedView);
-	var startX = 10, startY = 60, w = 140, h = 35;
+	var startX = 10, startY = 50, w = 140, h = 29;
 	var layer = new LSprite();
 	var msg = String.format(Language.get("restraint_attack_message"), self.soldierModel.name());
 	var label = getStrokeLabel(msg,18,"#FFFFFF","#000000",4);
@@ -167,7 +167,7 @@ SoldierDetailedView.prototype.onClickRestraintButton=function(event){
 };
 SoldierDetailedView.prototype.onClickRestraintPassiveButton=function(event){
 	var self = event.currentTarget.getParentByConstructor(SoldierDetailedView);
-	var startX = 10, startY = 60, w = 140, h = 35;
+	var startX = 10, startY = 50, w = 140, h = 29;
 	var layer = new LSprite();
 	var msg = String.format(Language.get("restraint_attack_passive_message"), self.soldierModel.name());
 	var label = getStrokeLabel(msg,18,"#FFFFFF","#000000",4);

@@ -12,32 +12,25 @@ BattleAIExecute.Instance = function(){
 	return BattleAIExecute._Instance;
 };
 BattleAIExecute.set = function(attackData, targetData){
-	//console.log("BattleAIExecute.set Start ",attackData, targetData);
+	LMvc.BattleController = {};
 	BattleAIExecute.Instance()._set(attackData, targetData);
 };
 BattleAIExecute.run=function(){
-	//console.log("BattleAIExecute.run");
 	var self = BattleAIExecute.Instance();
 	self.attackIndex = 0;
 	self.targetIndex = 0;
 	var attackCharacters = self.attackData.expeditionCharacterList;
 	var targetCharacters = self.targetData.expeditionCharacterList;
-	//console.log("run attackCharacters.length:"+attackCharacters.length);
-	//console.log("run targetCharacters.length:"+targetCharacters.length);
 	if(attackCharacters.length==0){
 		self.result(false);
-		//SeigniorExecute.run();
 		return;
 	}else if(targetCharacters.length==0){
 		self.result(true);
-		//SeigniorExecute.run();
 		return;
 	}
 	self.battleFoodCheck(attackCharacters, true, self.attackData);
 	self.battleFoodCheck(targetCharacters, false, self.attackData);
 	while(self.attackIndex < attackCharacters.length || self.targetIndex < targetCharacters.length){
-		//console.log("while attackCharacters.length:"+attackCharacters.length);
-		//console.log("while targetCharacters.length:"+targetCharacters.length);
 		if(attackCharacters.length==0 && targetCharacters.length==0){
 			break;
 		}
@@ -50,13 +43,11 @@ BattleAIExecute.run=function(){
 			rand = Math.fakeRandom();
 		}
 		if(rand < 0.5){
-			//console.log("attackIndex:"+self.attackIndex + ",currentChara:"+attackCharacters[self.attackIndex]);
 			self.currentChara = attackCharacters[self.attackIndex++];
-			self.characterExec(self.currentChara, self.attackData, self.targetData);
+			self.characterExec(self.currentChara, self.attackData, self.targetData, false);
 		}else{
-			//console.log("targetIndex:"+self.targetIndex + ",currentChara:"+targetCharacters[self.targetIndex]);
 			self.currentChara = targetCharacters[self.targetIndex++];
-			self.characterExec(self.currentChara, self.targetData, self.attackData);
+			self.characterExec(self.currentChara, self.targetData, self.attackData, true);
 		}
 		self.currentChara.herts = null;
 		if(self.currentChara.attackTarget){
@@ -78,8 +69,6 @@ BattleAIExecute.run=function(){
 };
 BattleAIExecute.prototype.result=function(isWin){
 	var self = this;
-	//console.log("result isWin:"+isWin);
-	//console.log("self.attackData:",self.attackData);
 	var fromCity = self.attackData.fromCity;
 	var toCity = self.attackData.toCity;
 	var fromSeignior = fromCity.seignior();
@@ -91,6 +80,7 @@ BattleAIExecute.prototype.result=function(isWin){
 	experienceToFeat(self.attackData._characterList);
 	experienceToFeat(self.targetData._characterList);
 	SeigniorExecute.Instance().msgView.showSeignior();
+	LMvc.BattleController = null;
 	if(isWin){
 		var winSeigniorId = fromSeignior.chara_id();
 		var failSeigniorId = toCity.seigniorCharaId();
@@ -128,7 +118,6 @@ BattleAIExecute.prototype.result=function(isWin){
 			self.attackData._characterList,
 			toCity,
 			self.attackData.captives);
-			//console.warn("self.attackData.captives=" , self.attackData.captives);
 			retreatCityId = battleCheckRetreatCity(retreatCity, failSeigniorId, toCity);
 			
 			toCity.food(self.attackData.food);
@@ -149,13 +138,24 @@ BattleAIExecute.prototype.result=function(isWin){
 		var winSeigniorId = toCity.seignior().chara_id();
 		var failSeigniorId = fromSeignior.chara_id();
 		var retreatCityId = fromCity.id();
-		var charaTroops = 0;
+		var charaTroops = 0, troopsValue;
+		var canHeal = self.targetData._characterList.find(function(chara){
+			return HealSoldiers.indexOf(chara.currentSoldierId())>=0;
+		});
 		self.targetData._characterList.forEach(function(child){
 			if(child.isDefCharacter()){
 				return;
 			}
-			charaTroops += child.troops();
+			troopsValue = child.troops();
+			if(canHeal){
+				troopsValue += child.wounded();
+			}else{
+				troopsValue += child.wounded() * (0.2 + 0.6 * Math.fakeRandom());
+				troopsValue = troopsValue >>> 0;
+			}
+			charaTroops += troopsValue;
 			child.troops(0);
+			child.wounded(0);
 		});
 		toCity.troops(toCity.troops() + charaTroops);
 		var leaderId = self.targetData._characterList[0].id();
@@ -270,11 +270,25 @@ BattleAIExecute.prototype.removeChara = function(chara){
 	}
 	//console.log("removeChara Over, length=" + charaList.length);
 };
-BattleAIExecute.prototype.characterExec=function(currentCharacter, currentData, enemyData){
+BattleAIExecute.prototype.characterExec=function(currentCharacter, currentData, enemyData, checkMilitary){
 	var self = this;
-	//console.log("characterExec:",currentCharacter);
 	var currentCharacters = currentData.expeditionCharacterList;
 	var enemyCharacters = enemyData.expeditionCharacterList;
+	var militaryModel = checkMilitary ? getMaxMilitaryFromCharacters(currentCharacters) : null;
+	if(militaryModel && militaryModel.id() == currentCharacter.data.militaryId()){
+		//军师计判断
+		if(militaryModel.condition() == MilitaryCondition.START){
+			militaryAdviserSelect(currentCharacter.data, currentCharacters);
+			return;
+		}else if(militaryModel.isType(MilitaryType.WOOD_CATTLE) && currentData.toCity && currentData.toCity.food() == 0){
+			militaryAdviserSelect(currentCharacter.data, currentCharacters);
+			return;
+		}else if(militaryModel.condition() == MilitaryCondition.HERT && isNeedSupplyMilitaryFromCharacters(currentCharacters)){
+			militaryAdviserSelect(currentCharacter.data, currentCharacters);
+			return;
+		}
+	}
+		
 	var enemyPants = self.getPantCharacter(enemyCharacters);
 	//有虚弱敌军->攻击
 	if(enemyPants.length > 0 && Math.fakeRandom() > 0.8){
@@ -357,7 +371,15 @@ BattleAIExecute.prototype.useHertStrategy = function(chara, target, attack) {
 	if(strategys.length == 0){
 		return false;
 	}
-	var hitrate = calculateHitrateStrategy(chara, target);
+	var hitrate = false;
+	if(target.militaryModel && target.militaryModel.isType(MilitaryType.BARRIER)){
+		target.militaryValidLimit--;
+		if(target.militaryValidLimit <= 0){
+			target.militaryModel = null;
+		}
+	}else{
+		hitrate = calculateHitrateStrategy(chara, target);
+	}
 	if(!hitrate){
 		return true;
 	}
@@ -546,7 +568,6 @@ BattleAIExecute.prototype.physicalAttack = function(currentChara, targetChara) {
 };
 BattleAIExecute.prototype.physicalAttackStart = function(currentChara, targetChara){
 	var self = this;
-	//console.log("physicalAttackStart:",currentChara.herts);
 	var selfSkill = currentChara.data.skill(SkillType.ATTACK_END);
 	if(selfSkill && selfSkill.isSubType(SkillSubType.SELF_AID)){
 		var aids = Array.getRandomArrays(selfSkill.aids(),selfSkill.aidCount());
@@ -559,8 +580,16 @@ BattleAIExecute.prototype.physicalAttackStart = function(currentChara, targetCha
 	currentChara.herts.shift();
 	for(var i = 0,l = hertParams.list.length;i<l;i++){
 		var obj = hertParams.list[i];
-		var hitrate = calculateHitrate(currentChara,obj.chara);
-		//console.log("命中率 : "+currentChara.data.name() +" - "+obj.chara.data.name() + "="+hitrate);
+		var hitrate = false;
+		if(obj.chara.militaryModel && obj.chara.militaryModel.isType(MilitaryType.BARRIER)){
+			tweenTextShow(obj.chara, obj.chara.militaryModel.name());
+			obj.chara.militaryValidLimit--;
+			if(obj.chara.militaryValidLimit <= 0){
+				obj.chara.militaryModel = null;
+			}
+		}else{
+			hitrate = calculateHitrate(currentChara,obj.chara);
+		}
 		if(!hitrate){
 			continue;
 		}
@@ -710,8 +739,19 @@ BattleAIExecute.prototype.battleFoodCheck=function(charas, attackFlag, battleDat
 	var self = this;
 	var needFood = 0;
 	var thrift = 1;
+	var militaryModel = LMvc.BattleController.militaryModel;
 	for(var i=0,l=charas.length;i<l;i++){
 		var charaModel = charas[i].data;
+		if(militaryModel && militaryModel.isType(MilitaryType.WOOD_CATTLE)){
+			var troops = charaModel.troops();
+			var troopsAdd = charaModel.maxTroops() * militaryModel.healTroops() >>> 0;
+			if(charaModel.maxTroops() < troops + troopsAdd){
+				charaModel.troops(charaModel.maxTroops());
+			}else{
+				charaModel.troops(troops + troopsAdd);
+			}
+			continue;
+		}
 		needFood += charaModel.troops();
 		if(charaModel.hasSkill(SkillSubType.THRIFT)){
 			thrift = 0.5;

@@ -19,7 +19,7 @@ SingleCombatCharacterView.prototype.moveTo = function(x,y){
 	var self = this;
 	self.setRoad([{x:x/BattleCharacterSize.width,y:y/BattleCharacterSize.height}]);
 };
-SingleCombatCharacterView.prototype.toStatic = function(value){
+SingleCombatCharacterView.prototype.toEnd = function(value){
 	//覆盖父类处理
 };
 SingleCombatCharacterView.prototype.checkBuffer = function(){
@@ -180,7 +180,7 @@ SingleCombatCharacterView.prototype.showLightComplete = function(event){
 	var self = event.target;
 	self.filters = null;
 	if(self.currentCommand == SingleCombatCommand.SPECIAL_ATTACK){
-		var effect = new SpecialEffectView(self.controller);
+		var effect = new SpecialEffectView(self.controller, self.data);
 		self.parent.parent.addChild(effect);
 		effect.addEventListener(LEvent.COMPLETE,function(e){
 			self.changeAction(CharacterAction.ATTACK);

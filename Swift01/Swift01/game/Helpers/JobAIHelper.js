@@ -107,7 +107,6 @@ function getIdleCharacters(areaModel){
 }
 /*出战准备*/
 function jobAiToBattle(areaModel,baseCharacters,targetCity){
-	//targetCity = AreaModel.getArea(22);//TODO::测试用
 	var attackQuantity = BattleMapConfig.AttackQuantity;
 	var generalCount = areaModel.generalsSum();
 	if(generalCount - attackQuantity < BattleMapConfig.DetachmentQuantity){

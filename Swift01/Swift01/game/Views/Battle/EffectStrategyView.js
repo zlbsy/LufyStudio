@@ -28,7 +28,6 @@ EffectStrategyView.prototype.init = function(){
 EffectStrategyView.prototype.becomeEffective = function(anime){
 	var self = anime.parent;
 	anime.removeFrameScript("effect");
-	self.currentTargetCharacter.toStatic(false);
 	self.effectType = self.currentCharacter.currentSelectStrategy.effectType();
 	var se = self.currentCharacter.currentSelectStrategy.se();
 	LPlugin.playSE(se, LPlugin.gameSetting.SE);
@@ -174,7 +173,6 @@ EffectStrategyView.prototype.removeSelf = function(event){
 		}else{
 			self.currentTargetCharacter.changeAction(CharacterAction.MOVE);
 		}
-		self.currentTargetCharacter.toStatic(true);
 	}
 	if(self.effectType == StrategyEffectType.Attack){
 		LTweenLite.to(self.currentTargetCharacter, self.currentTargetCharacter.hertIndex * stepTime,

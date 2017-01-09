@@ -175,6 +175,7 @@ BattleCharacterView.prototype.showLightComplete = function(event){
 BattleCharacterView.prototype.addAnimation = function() {
 	var self = this;
 	var bitmapData = new LBitmapData(LMvc.datalist[BattleCharacterView.DEFAULT_IMG], 0, 0, BattleCharacterSize.width, BattleCharacterSize.height);
+	
 	self.anime = new LAnimationTimeline(bitmapData, BattleCharacterView.getAnimationData());
 	self.anime.speed = BattleMapConfig.SPEED;
 	self.layer.addChild(self.anime);
@@ -280,27 +281,25 @@ BattleCharacterView.prototype.loadSOver = function(event){
 		bitmapData = new LBitmapData(event.target,animeBitmapData.x,animeBitmapData.y,animeBitmapData.width,animeBitmapData.height);
 	}
 	self.anime.bitmap.bitmapData = bitmapData;
-	self.toStatic(true);
+	self.toEnd(self.mode == CharacterMode.END_ACTION);
 };
-BattleCharacterView.prototype.toStatic = function(value){
+BattleCharacterView.prototype.toEnd = function(value){
 	var self = this;
-	if(self.controller.constructor.name != "BattleController"){
+	self.anime.visible = !value;
+	if(self.endBitmap){
+		self.endBitmap.visible = value;
+	}
+	if(!value){
 		return;
 	}
-	self.isStatic = value;
-	if(value){
-		if(self.anime.visible){
-			var result = self.controller.view.mapLayer.characterIn(self);
-			if(result){
-				self.anime.visible = false;
-			}
-		}
+	var bitmapData = self.getBitmapData();
+	if(!self.endBitmap){
+		self.endBitmap = new LBitmap(bitmapData);
+		self.layer.addChild(self.endBitmap);
 	}else{
-		if(!self.anime.visible){
-			self.controller.view.mapLayer.characterOut(self);
-			self.anime.visible = true;
-		}
+		self.endBitmap.bitmapData = self.getBitmapData();
 	}
+	
 };
 BattleCharacterView.prototype.onframe = function(event){
 	var self = event.currentTarget.parent;

@@ -21,7 +21,8 @@ function BattleMiniPreviewView(controller){
 	self.map.y = 40;
 	self.addChild(self.map);
 	self.characterLayer = new LSprite();
-	self.characterLayer.x = self.characterLayer.y = 10;
+	self.characterLayer.x = self.map.x;
+	self.characterLayer.y = self.map.y;
 	self.addChild(self.characterLayer);
 	
 	self.characterLayer.graphics.add(function(c){

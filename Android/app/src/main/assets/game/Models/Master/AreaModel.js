@@ -58,7 +58,9 @@ AreaModel.getPowerfulCharacters = function(generals, init){
 	list = list.sort(function(a,b){return b.value - a.value;});
 	return list;
 };
-
+AreaModel.prototype.isTribe = function(){
+	return this.seigniorCharaId() && this.seignior().isTribe();
+};
 AreaModel.prototype.datas=function(){
 	var self = this;
 	var saveData = {
@@ -112,9 +114,11 @@ AreaModel.prototype.getDefenseEnemiesAndPowerful = function(){
 AreaModel.prototype.getEmployCharacters = function(){
 	var self = this;
 	var charas = [];
+	var specialized = SpecializedSoldiers;
+	var specializedId = specialized[specialized.length*Math.fakeRandom() >>> 0];
 	for(var i=EmployCharacter[0];i<=EmployCharacter[1];i++){
 		var employSoldiers = self.employSoldiers();
-		var soldierId = employSoldiers[employSoldiers.length*Math.fakeRandom() >>> 0];
+		var soldierId = (i == EmployCharacter[0] ? specializedId : employSoldiers[employSoldiers.length*Math.fakeRandom() >>> 0]);
 		var chara = CharacterModel.createEmployCharacter(i, soldierId, self.id());
 		charas.push(chara);
 	}
@@ -129,9 +133,9 @@ AreaModel.prototype.employSoldiers = function(){
 		soldierIds = self.data.employSoldiers.concat();
 	}
 	while(soldierIds.length < 4){
-		var soldier = SoldierMasterModel.master[SoldierMasterModel.master.length * Math.fakeRandom() >>> 0];
-		if(soldierIds.indexOf(soldier.id()) < 0){
-			soldierIds.push(soldier.id());
+		var soldierId = employCommonSoldiersConfig[employCommonSoldiersConfig.length * Math.fakeRandom() >>> 0];
+		if(soldierIds.indexOf(soldierId) < 0){
+			soldierIds.push(soldierId);
 		}
 	}
 	return soldierIds;
@@ -317,10 +321,8 @@ AreaModel.prototype.setSeignor = function(seignior,areaData){
 			for(var i=0,l=areaData[key].length;i<l;i++){
 				var charaData = areaData[key][i];
 				var chara = CharacterModel.getChara(charaData.chara_id);
-				if(!charaData.seignior_id){
-					charaData.seignior_id = seignior.chara_id;
-				}
-				charaData.cityId = areaData.area_id;
+				charaData.seignior_id = seignior.chara_id;
+				charaData.cityId = this.data.id;
 				chara.setDatas(charaData);
 				generals.push(chara);
 			}
@@ -331,9 +333,9 @@ AreaModel.prototype.setSeignor = function(seignior,areaData){
 			for(var i=0,l=areaData[key].length;i<l;i++){
 				var charaData = areaData[key][i];
 				var chara = CharacterModel.getChara(charaData.chara_id);
-				chara.seigniorId(0);
-				charaData.cityId = areaData.area_id;
+				charaData.cityId = this.data.id;
 				chara.setDatas(charaData);
+				chara.seigniorId(0);
 				out_of_offices.push(chara);
 			}
 			this.data[key] = out_of_offices;
@@ -485,8 +487,6 @@ AreaModel.prototype.icon=function(){
 	var self = this;
 	var iconLayer = new LSprite();
 	var bitmapData = new LBitmapData(LMvc.datalist["area-1"]);
-	//self.iconWidth(bitmapData.width);
-	//bitmapData.setProperties(0, 0, self.iconWidth(), bitmapData.height);
 	var bitmap = new LBitmap(bitmapData);
 	bitmap.scaleX = bitmap.scaleY = (5+this.data.level)*0.08;
 	bitmap.x = (CityIconConfig.width - bitmap.getWidth())*0.5;
@@ -711,6 +711,27 @@ AreaModel.prototype.generalsData=function(){
 		list.push(chara.datas());
 	}
 	return list;
+};
+AreaModel.prototype.canIncome=function(value){
+	var self = this;
+	for(var i=0,l=self.data.generals.length;i<l;i++){
+		var chara = self.data.generals[i];
+		var skill = chara.skill();
+		if(skill && skill.isSubType(SkillSubType.INCOME) && skill.income() == value){
+			return true;
+		}
+	}
+	return false;
+};
+AreaModel.prototype.canSacrifice=function(){
+	var self = this;
+	for(var i=0,l=self.data.generals.length;i<l;i++){
+		var chara = self.data.generals[i];
+		if(chara.hasSkill(SkillSubType.SACRIFICE)){
+			return true;
+		}
+	}
+	return false;
 };
 AreaModel.prototype.generals=function(job){
 	var self = this;

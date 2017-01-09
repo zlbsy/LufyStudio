@@ -36,6 +36,12 @@ BattleSelectMenuView.prototype.showSelectMenu=function(){
 		self.layerInit();
 		self.setMenu();
 	}
+	if(LMvc.BattleController.militaryOver || 
+		LMvc.BattleController.battleData.fromCity.seigniorCharaId() == LMvc.selectSeignorId){
+		self.hideMilitaryAdviser();
+	}else{
+		self.showMilitaryAdviser();
+	}
 	self.setPosition();
 };
 BattleSelectMenuView.prototype.setPosition=function(){
@@ -55,45 +61,80 @@ BattleSelectMenuView.prototype.setMenu=function(){
 	var self = this;
 	
 	var layer = new LSprite(), menuY = 10, menuWidth = 120, menuHeight = 50;
-	
+	layer.name = "buttonLayer";
 	self.mainLayer.addChild(layer);
 	layer.x = menuY;
-	var menuButton = getIconButton("battle-menu",new LRectangle(0,0,35,35),Language.get("attack"),menuWidth);
-	menuButton.name = "attack";
-	menuButton.y = menuY;
-	layer.addChild(menuButton);
-	menuButton.addEventListener(LMouseEvent.MOUSE_UP, self.clickAttack);
+	var attackButton = getIconButton("battle-menu",new LRectangle(0,0,35,35),Language.get("attack"),menuWidth);
+	attackButton.name = "attack";
+	attackButton.y = menuY;
+	layer.addChild(attackButton);
+	attackButton.addEventListener(LMouseEvent.MOUSE_UP, self.clickAttack);
 	
 	menuY += menuHeight;
-	var menuButton = getIconButton("battle-menu",new LRectangle(35,0,35,35),Language.get("strategy"),menuWidth);
-	menuButton.name = "spirit";
-	menuButton.y = menuY;
-	layer.addChild(menuButton);
-	menuButton.addEventListener(LMouseEvent.MOUSE_UP, self.clickMagicSelect);
+	var strategyButton = getIconButton("battle-menu",new LRectangle(35,0,35,35),Language.get("strategy"),menuWidth);
+	strategyButton.name = "spirit";
+	strategyButton.y = menuY;
+	layer.addChild(strategyButton);
+	strategyButton.addEventListener(LMouseEvent.MOUSE_UP, self.clickMagicSelect);
 	
 	menuY += menuHeight;
-	var menuButton = getIconButton("battle-menu",new LRectangle(70,0,35,35),Language.get("singleCombat"),menuWidth);
-	menuButton.name = "singleCombat";
-	menuButton.y = menuY;
-	layer.addChild(menuButton);
-	menuButton.addEventListener(LMouseEvent.MOUSE_UP, self.clickSingleCombat);
-	/*
+	var singleCombatButton = getIconButton("battle-menu",new LRectangle(70,0,35,35),Language.get("singleCombat"),menuWidth);
+	singleCombatButton.name = "singleCombat";
+	singleCombatButton.y = menuY;
+	layer.addChild(singleCombatButton);
+	singleCombatButton.addEventListener(LMouseEvent.MOUSE_UP, self.clickSingleCombat);
+	
 	menuY += menuHeight;
-	var menuButton = getIconButton("battle-menu",new LRectangle(105,0,35,35),"物品",menuWidth);
-	menuButton.y = menuY;
-	layer.addChild(menuButton);
-	menuButton.addEventListener(LMouseEvent.MOUSE_UP, self.clickItem);*/
+	self.menuHeight = menuHeight;
+	self.separationY = menuY;
+	var militaryAdviserButton = getIconButton("battle-menu",new LRectangle(140,0,35,35),Language.get("military"),menuWidth);
+	militaryAdviserButton.name = "militaryAdviser";
+	militaryAdviserButton.y = menuY;
+	layer.addChild(militaryAdviserButton);
+	militaryAdviserButton.addEventListener(LMouseEvent.MOUSE_UP, self.clickMilitaryAdviser);
+	var noMilitaryAdviserBackground = getPanel("win05",menuWidth + 20, menuHeight * (((menuY - 10) / menuHeight >> 0) + 1) + 20);
+	noMilitaryAdviserBackground.name = "noMilitaryAdviserBackground";
+	self.mainLayer.addChildAt(noMilitaryAdviserBackground, 0);
 
 	menuY += menuHeight;
-	var menuButton = getIconButton("battle-menu",new LRectangle(175,0,35,35),Language.get("standby"),menuWidth);
-	menuButton.name = "standby";
-	menuButton.y = menuY;
-	layer.addChild(menuButton);
-	menuButton.addEventListener(LMouseEvent.MOUSE_UP, self.clickStandby);
+	var standbyButton = getIconButton("battle-menu",new LRectangle(175,0,35,35),Language.get("standby"),menuWidth);
+	standbyButton.name = "standby";
+	standbyButton.y = menuY;
+	layer.addChild(standbyButton);
+	standbyButton.addEventListener(LMouseEvent.MOUSE_UP, self.clickStandby);
 	
-	//var win = new LPanel(new LBitmapData(LMvc.datalist["win05"]),menuWidth + 20, menuHeight * (((menuY - 10) / menuHeight >> 0) + 1) + 30);
-	var winBitmap = getPanel("win05",menuWidth + 20, menuHeight * (((menuY - 10) / menuHeight >> 0) + 1) + 30);
-	self.mainLayer.addChildAt(winBitmap, 0);
+	var militaryAdviserBackground = getPanel("win05",menuWidth + 20, menuHeight * (((menuY - 10) / menuHeight >> 0) + 1) + 20);
+	militaryAdviserBackground.name = "militaryAdviserBackground";
+	self.mainLayer.addChildAt(militaryAdviserBackground, 0);
+};
+BattleSelectMenuView.prototype.showMilitaryAdviser=function(){
+	var self = this;
+	var buttonLayer = self.mainLayer.getChildByName("buttonLayer");
+	var militaryAdviserButton = buttonLayer.getChildByName("militaryAdviser");
+	var standbyButton = buttonLayer.getChildByName("standby");
+	var militaryAdviserBackground = self.mainLayer.getChildByName("militaryAdviserBackground");
+	var noMilitaryAdviserBackground = self.mainLayer.getChildByName("noMilitaryAdviserBackground");
+	militaryAdviserBackground.visible = true;
+	noMilitaryAdviserBackground.visible = false;
+	militaryAdviserButton.visible = true;
+	standbyButton.y = self.separationY + self.menuHeight;
+};
+BattleSelectMenuView.prototype.hideMilitaryAdviser=function(){
+	var self = this;
+	var buttonLayer = self.mainLayer.getChildByName("buttonLayer");
+	var militaryAdviserButton = buttonLayer.getChildByName("militaryAdviser");
+	var standbyButton = buttonLayer.getChildByName("standby");
+	var militaryAdviserBackground = self.mainLayer.getChildByName("militaryAdviserBackground");
+	var noMilitaryAdviserBackground = self.mainLayer.getChildByName("noMilitaryAdviserBackground");
+	militaryAdviserBackground.visible = false;
+	noMilitaryAdviserBackground.visible = true;
+	militaryAdviserButton.visible = false;
+	standbyButton.y = self.separationY;
+};
+BattleSelectMenuView.prototype.clickMilitaryAdviser=function(event){
+	var self = event.currentTarget.getParentByConstructor(BattleSelectMenuView);
+	self.closeSelectMenu();
+	self.controller.dispatchEvent(BattleSelectMenuEvent.MILITARY_ADVISER);
 };
 BattleSelectMenuView.prototype.clickAttack=function(event){
 	var self = event ? event.currentTarget.parent.parent.parent : this;

@@ -1,3 +1,12 @@
 SGJEvent.mapShow(1);
-SGJEvent.messageShow(七擒孟获。,3);
+SGJEvent.addCharacter(10,0,100,fade);
+SGJEvent.messageShow(諸葛亮は疲弊しきった蜀を立て直すべく、富国強兵策を実施し、国力を充実させることに成功していました。,3);
+SGJEvent.messageShow(またこの間に呉と同盟関係の修復にも成功していました。そして、遂に諸葛亮は南中平定の軍を動かすに至ります。,3);
+SGJEvent.addCharacter(150,100,100,fade);
+SGJEvent.talk(150,城を攻めるより心を攻めるのが上策。);
+SGJEvent.messageShow(諸葛亮は馬謖の進言を同意して、南蛮軍の心を攻める事にしました。,3);
+SGJEvent.addCharacter(336,300,100,fade);
+SGJEvent.messageShow(孟獲が何度も諸葛亮と戦い、自然と地の利を味方につけた原住民の協力も得て善戦もするが、毎回最後は破れ。,3);
+SGJEvent.removeCharacter(336,fade);
+SGJEvent.messageShow(孟獲は七度目に放された時、ついに諸葛亮に心服し蜀漢への帰順を誓った。,3);
 Mark.EventEnd;
