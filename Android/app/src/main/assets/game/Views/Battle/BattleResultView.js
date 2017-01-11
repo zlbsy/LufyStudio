@@ -29,6 +29,9 @@ BattleResultView.characterListTroopsCtrl=function(list){
 			return;
 		}
 		var troops = child.data.troops();
+		if(child.data.isHardEmploy()){
+			troops = 0;
+		}
 		if(canHeal){
 			troops += child.data.wounded();
 		}else{

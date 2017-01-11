@@ -274,7 +274,7 @@ BattleCharacterView.prototype.loadSOver = function(event){
 		dataLayer.addChild(new LBitmap(baseData));
 		var shadow = new LDropShadowFilter(0,0,self.belong == Belong.SELF?"#FF0000":"#2a2af8",10);
 		dataLayer.filters = [shadow];
-		bitmapData = new LBitmapData(null, 0, 0, baseData.width, baseData.height, LBitmapData.DATA_CANVAS);
+		bitmapData = new LBitmapData(null, 0, 0, baseData.width, baseData.height);
 		bitmapData.draw(dataLayer);
 		bitmapData.setProperties(animeBitmapData.x,animeBitmapData.y,animeBitmapData.width,animeBitmapData.height);
 	}else{
@@ -370,7 +370,8 @@ BattleCharacterView.prototype.toDie = function() {
 	self.data.battleSoldierReset();
 	if(self.data.isDefCharacter()){
 		//防御设施被摧毁,城防降低
-		self.data.city().cityDefense(-DefenseCharacterCost * 0.5);
+		var defCostValue = DefenseCharacterCost;
+		self.data.city().cityDefense(-(defCostValue * 0.5 >>> 0));
 	}
 	if(!self.data.isDefCharacter() && !self.data.isTribeCharacter() && !self.data.isEmploy()){
 		var talkMsg;

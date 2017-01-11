@@ -12,6 +12,7 @@ function BattleMapView(controller){
 BattleMapView.prototype.init = function(){
 	var self = this;
 	self.map = new LBitmap(self.model.mapBitmapData);
+	//self.map = new LBitmap(bitmapData);
 	self.addChild(self.map);
 	
 	self.addEventListener(LEvent.ENTER_FRAME, self.onframe);

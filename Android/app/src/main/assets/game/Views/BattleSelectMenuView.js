@@ -36,7 +36,7 @@ BattleSelectMenuView.prototype.showSelectMenu=function(){
 		self.layerInit();
 		self.setMenu();
 	}
-	if(LMvc.BattleController.militaryOver || 
+	if(LMvc.BattleController.militaryOver || BattleController.ctrlChara.data.militaryId() == 0 || 
 		LMvc.BattleController.battleData.fromCity.seigniorCharaId() == LMvc.selectSeignorId){
 		self.hideMilitaryAdviser();
 	}else{

@@ -114,6 +114,9 @@ BattleModel.prototype.createMap = function(callback){
 		data.image.width = self.map.width;
 		data.image.height = self.map.height;
 	}
+	for(var dataIndex=0;dataIndex<BattleModel.bitmapDatas.length;dataIndex++){
+		BattleModel.bitmapDatas[dataIndex].lock();
+	}
 	self.createMapTile(0, callback);
 };
 BattleModel.prototype.createMapTile = function(index, callback){
@@ -148,7 +151,9 @@ BattleModel.prototype.createMapTile = function(index, callback){
 			self.createMapTile(index, callback);
 		});
 	}else{
-		self.mapBitmapData = BattleModel.bitmapDatas[0];
+		self.mapBitmapData = new LBitmapData(null, 0, 0, BattleModel.bitmapDatas[0].width, BattleModel.bitmapDatas[0].height);
+		self.mapBitmapData.draw(new LBitmap(BattleModel.bitmapDatas[0]));
+		BattleModel.bitmapDatas.length = 0;
 		callback.apply(self.controller,[]);
 	}
 };

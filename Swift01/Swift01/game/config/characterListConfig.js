@@ -839,8 +839,11 @@ var characterListConfig = [{id:1,faceImg:1,force:72,intelligence:92,command:99,a
 ,{id:856,faceImg:856,force:52,intelligence:49,command:61,agility:64,luck:61,born:235,life:77,personalLoyalty:6,ambition:8,disposition:0,childs:[],skill:0,compatibility:130,soldiers:[{id:1,proficiency:0},{id:2,proficiency:700},{id:3,proficiency:0},{id:4,proficiency:0},{id:5,proficiency:0},{id:6,proficiency:0},{id:7,proficiency:0},{id:8,proficiency:0},{id:9,proficiency:0},{id:10,proficiency:0},{id:11,proficiency:0},{id:12,proficiency:0},{id:13,proficiency:0},{id:14,proficiency:500},{id:15,proficiency:0},{id:16,proficiency:0},{id:17,proficiency:0},{id:18,proficiency:0},{id:19,proficiency:0}],groupSkill:0,military:0}
 ];
 (function(){
-	var l =  683;
-	for (var i = l; i < l + 10; i++) {
+	for (var i = EmployCharacter[0]; i <= EmployCharacter[1]; i++) {
+		var id = i;
+		characterListConfig.push({id:id,faceImg:682,force:70,intelligence:70,command:70,agility:70,luck:70,born:0,life:0,personalLoyalty:0,ambition:15,disposition:0,childs:[],skill:0,compatibility:0,soldiers:[],groupSkill:0});
+	}
+	for (var i = HardEmployCharacter[0]; i <= HardEmployCharacter[1]; i++) {
 		var id = i;
 		characterListConfig.push({id:id,faceImg:682,force:70,intelligence:70,command:70,agility:70,luck:70,born:0,life:0,personalLoyalty:0,ambition:15,disposition:0,childs:[],skill:0,compatibility:0,soldiers:[],groupSkill:0});
 	}

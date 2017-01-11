@@ -208,7 +208,14 @@ BattleController.prototype.charactersInit = function(){
 			self.battleData.toCity.money(-price);
 			enemyCharas.push(chara);
 		}
-	
+		if(!LMvc.TutorialController && selfAttack && LMvc.chapterData.trouble == TroubleConfig.HARD){
+			for(var i=HardEmployCharacter[0];i<HardEmployCharacter[0] + 2;i++){
+				var soldierId = SpecializedSoldiers[SpecializedSoldiers.length * Math.fakeRandom() >>> 0];
+				var chara = CharacterModel.createEmployCharacter(i, soldierId, self.battleData.toCity.id());
+				chara.troops(chara.maxTroops());
+				enemyCharas.push(chara);
+			}
+		}
 	}else{
 		enemyCharas = self.battleData.expeditionEnemyData.expeditionCharacterList;
 		self.battleData.food = self.battleData.expeditionEnemyData.food;
@@ -271,7 +278,8 @@ BattleController.prototype.defCharactersInit=function(){
 	var charaIndexObj = {};
 	var defense = self.battleData.toCity.cityDefense();
 	var isSelfDef = self.battleData.toCity.seigniorCharaId() == LMvc.selectSeignorId;
-	for(var i = 0;defense >= DefenseCharacterCost && i<defCharas.length;i++){
+	var defCostValue = DefenseCharacterCost;
+	for(var i = 0;defense >= defCostValue && i<defCharas.length;i++){
 		var child = defCharas[i];
 		var soldierId = child.id;
 		var key = "soldier_" + soldierId;
@@ -307,7 +315,7 @@ BattleController.prototype.defCharactersInit=function(){
 		}
 		var battleCharacter = self.view.charaLayer.getCharacter(null, charaId);
 		battleCharacter.mission = BattleCharacterMission.Defensive;
-		defense -= DefenseCharacterCost;
+		defense -= defCostValue;
 	}
 };
 BattleController.prototype.boutEnd=function(){

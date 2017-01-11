@@ -1,6 +1,9 @@
 function CharacterModel(controller, data) {
 	var self = this;
 	base(self, MyModel, [controller]);
+	if(!data.initSoldiers){
+		data.initSoldiers = data.soldiers;
+	}
 	self.data = data;
 	if(!self.data.feat){
 		self.data.feat = 0;
@@ -114,9 +117,6 @@ CharacterModel.getSoldierType = function(type, value){
 CharacterModel.setChara=function(list){
 	var fathers = [];
 	for(var i=0,l=list.length;i<l;i++){
-		if(!list[i].initSoldiers){
-			list[i].initSoldiers = list[i].soldiers;
-		}
 		var chara = new CharacterModel(null,list[i]);
 		chara.job(Job.IDLE);
 		chara.feat(0);
@@ -540,7 +540,13 @@ CharacterModel.prototype.employPrice = function() {
 	return ((100 + 5 * self.level()) * ((10 + self.data.employLevel) / 10)) >>> 0;
 };
 CharacterModel.prototype.isEmploy = function() {
-	return this.id() >= EmployCharacter[0] && this.id()<=EmployCharacter[1];
+	var self = this;
+	return (self.id() >= EmployCharacter[0] && self.id()<=EmployCharacter[1]) || 
+	(self.id() >= HardEmployCharacter[0] && self.id()<=HardEmployCharacter[1]);
+};
+CharacterModel.prototype.isHardEmploy = function() {
+	var self = this;
+	return self.id() >= HardEmployCharacter[0] && self.id()<=HardEmployCharacter[1];
 };
 CharacterModel.prototype.isDefCharacter = function(value) {
 	return this._dataValue("isDefCharacter", value, 0);
@@ -1132,9 +1138,20 @@ CharacterModel.prototype.initSoldiers = function() {
 	if(self.isEmploy()){
 		return self.soldiers();
 	}
-	var charaData = characterListConfig.find(function(c){
-		return c.id == self.id();
-	});
+	var charaData;
+	if(self.id() >= 1000){
+		var characters = LPlugin.characters();
+		charaData = characters.list.find(function(c){
+			return c.id == self.id();
+		});
+	}else{
+		charaData = characterListConfig.find(function(c){
+			return c.id == self.id();
+		});
+	}
+	if(!charaData || !charaData.initSoldiers){
+		return self.soldiers();
+	}
 	self.data.soldiers = [];
 	for(var i=0;i<charaData.initSoldiers.length;i++){
 		self.data.soldiers.push(charaData.initSoldiers[i]);
@@ -1265,6 +1282,11 @@ CharacterModel.prototype.soldiers = function() {
 	var self = this;
 	if(!self._soldiers){
 		self._soldiers = [];
+		try{
+			var test = self.data.soldiers.length;
+		}catch(e){
+			console.log(self.id(),self.name(),self.data);
+		}
 		for(var i=0;i<self.data.soldiers.length;i++){
 			var soldier = new SoldierModel(null, self.data.soldiers[i]);
 			self._soldiers.push(soldier);

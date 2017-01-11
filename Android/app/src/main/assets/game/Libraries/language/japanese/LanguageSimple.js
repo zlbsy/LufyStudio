@@ -27,6 +27,8 @@ Language.dataSimple = {
 	"chapter_message":"該当シナリオに势力が {0} 個あります。",
 	"confirm":"确认",
 	"dialog_quip_confirm_message":"ゲームを終了しますか？",
+	"img_copyright":"素材著作権",
+	"dialog_img_copyright":"戦闘用の素材は下記の作成者の作品から取得しました、感謝いたします。\n无所畏惧，yejingtang，zpftmd748，张博，小白猎人，drinksun",
 	"opinion":"交流/意見",
 	"tieba":"百度掲示板",
 	"bug_report":"バグ報告",

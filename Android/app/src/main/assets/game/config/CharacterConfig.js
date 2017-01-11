@@ -79,6 +79,7 @@ var DefCharacterImage = {
 var MaxHistoryCharacterIndex = 620;//历史人物范围
 var TribeCharacter = [621,670];//外族范围
 var EmployCharacter = [683,692];//佣兵范围
+var HardEmployCharacter = [857,860];//特殊佣兵范围
 var DefenseCharacterCost = 500;//每个防御设施所需城防
 var BattleCharacterStatusConfig = {};
 BattleCharacterStatusConfig.FADE_TIME = 0.2;
