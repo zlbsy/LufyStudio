@@ -375,6 +375,9 @@ CharacterModel.prototype.propertiesExp = function(key, plusValue) {
 CharacterModel.prototype.getFullPropertiesValue = function(key) {
 	var self = this;
 	var value = self.data[key];
+	if(self.id() == NewYearPresent_Boss){
+		return value;
+	}
 	var expKey = key +"_exp";
 	var exp = (typeof self.data[expKey] == UNDEFINED ? 0 : self.data[expKey]);
 	var expValue = exp / 100 >>> 0;
@@ -432,7 +435,7 @@ CharacterModel.prototype.calculation = function(init) {
 		//self.data.hp = self.maxHP();
 		//self.data.mp = self.maxMP();
 	}
-	var keys = ["attack","spirit","defense","breakout","morale"];
+	var keys = ["attack","spirit","defense","breakout","morale","movePower"];
 	for(var i=0,l=keys.length;i<l;i++){
 		var key = keys[i];
 		self.data["_equipment_"+key] = self.getEquipmentPlus(key);
@@ -633,7 +636,8 @@ CharacterModel.prototype.movePower = function() {
 	if(self.isDefCharacter()){
 		return 1;
 	}
-	return self.skillAmend(self.data.movePower, "movePower");
+	var value = self.data.movePower + (self.data._equipment_movePower ? self.data._equipment_movePower : 0);
+	return self.skillAmend(value, "movePower");
 };
 CharacterModel.prototype.dispositionLabel = function(){
 	return Language.get("disposition_"+this.data.disposition);
@@ -1335,6 +1339,9 @@ CharacterModel.prototype.equip = function(itemModel) {
 		for(var i=0;i<datas.length;i++){
 			itemModel = new ItemModel(null, datas[i]);
 			equipments.push(itemModel);
+			if(self.seigniorId() == LMvc.selectSeignorId){
+				LMvc.chapterData["treasure_" + itemModel.id()] = 1;
+			}
 		}
 	}else if(itemModel.constructor.name == "ItemModel"){
 		for(var i=0;i<equipments.length;i++){
@@ -1345,6 +1352,9 @@ CharacterModel.prototype.equip = function(itemModel) {
 			}
 		}
 		var item = new ItemModel(null, {item_id:itemModel.id(), count:1});
+		if(self.seigniorId() == LMvc.selectSeignorId){
+			LMvc.chapterData["treasure_" + item.id()] = 1;
+		}
 		var loyalty = self.loyalty();
 		self.loyalty(loyalty + itemExchangeLoyalty(item));
 		equipments.push(item);

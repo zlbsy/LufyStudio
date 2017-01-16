@@ -1119,6 +1119,13 @@ function generalsChangeLoyalty(generals){
 		chara.loyalty(toLoyalty);
 	}
 }
+function isInNewYearTrem(){
+	var time = formatDate(new Date(), "YYYYMMDD");
+	if(time >= NewYearPresent_TERM.start && time <= NewYearPresent_TERM.end){
+		return true;
+	}
+	return false;
+}
 //比武大会报酬
 function tournamentsGet(result){
 	var message = Language.get("tournaments_get_message_"+result);
@@ -1175,6 +1182,14 @@ function tournamentsGet(result){
 		ids.push(arr[i]);
 		arr.splice(i, 1);
 	}
+	if(result == 1){
+		var NewYearPresent = LMvc.chapterData["NewYearPresent_item_92"];
+		var time = formatDate(new Date(), "YYYYMMDD");
+		if(!NewYearPresent && isInNewYearTrem()){
+			ids.push({id:92,q:1});
+			LMvc.chapterData["NewYearPresent_item_92"] = 1;
+		}
+	}
 	var seignior = SeigniorModel.getSeignior(LMvc.selectSeignorId);
 	var getLabels = [];
 	for(var i=0;i<ids.length;i++){
@@ -1192,7 +1207,7 @@ function tournamentsGet(result){
 	
 	var obj = {title:Language.get("confirm"),
 	message:message,
-	height:320,okEvent:function(event){
+	height:350,okEvent:function(event){
 		event.currentTarget.parent.remove();
 		SeigniorExecute.Instance().msgView.showSeignior();
 		SeigniorExecute.run();

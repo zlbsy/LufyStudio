@@ -107,5 +107,10 @@ var ItemDatas = [
 	{id:88,name:"铁盔",type:ItemType.EQUIPMENT,rarity:3,stamp:1,position:PositionConfig.Head,luck:3},
 	{id:89,name:"皮盔",type:ItemType.EQUIPMENT,rarity:2,stamp:1,position:PositionConfig.Head,luck:2},
 	{id:90,name:"头巾",type:ItemType.EQUIPMENT,rarity:1,stamp:1,position:PositionConfig.Head,luck:1},
-	{id:91,name:"延寿符",type:ItemType.EQUIPMENT,rarity:10,stamp:1,position:PositionConfig.Accessories,life:10}
+	{id:91,name:"延寿符",type:ItemType.EQUIPMENT,rarity:10,stamp:1,position:PositionConfig.Accessories,life:10},
+	{id:92,name:"鸡毛掸子",type:ItemType.EQUIPMENT,rarity:10,position:PositionConfig.Hand,force:15,spirit:10},
+	{id:93,name:"心灵鸡汤",type:ItemType.EQUIPMENT,rarity:10,position:PositionConfig.Accessories,intelligence:15,morale:10},
+	{id:94,name:"飞翅服",type:ItemType.EQUIPMENT,rarity:10,position:PositionConfig.Body,command:15,movePower:2},
+	{id:95,name:"拜年鸡",type:ItemType.EQUIPMENT,rarity:10,position:PositionConfig.Foot,agility:15,attack:10},
+	{id:96,name:"鸡冠帽",type:ItemType.EQUIPMENT,rarity:10,position:PositionConfig.Head,luck:15,breakout:10},
 ];

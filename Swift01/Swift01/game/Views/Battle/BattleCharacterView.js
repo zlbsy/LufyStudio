@@ -295,7 +295,7 @@ BattleCharacterView.prototype.toEnd = function(value){
 	var bitmapData = self.getBitmapData();
 	if(!self.endBitmap){
 		self.endBitmap = new LBitmap(bitmapData);
-		self.layer.addChild(self.endBitmap);
+		self.layer.addChildAt(self.endBitmap, 0);
 	}else{
 		self.endBitmap.bitmapData = self.getBitmapData();
 	}

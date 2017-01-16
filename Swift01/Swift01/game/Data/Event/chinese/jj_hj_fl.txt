@@ -6,10 +6,10 @@ SGJEvent.messageShow(然而，@name0为了巩固政权，大封同宗子弟为�
 SGJEvent.messageShow(晚年的@name0又逐渐开始享乐，忽略祭祀，加重赋税，国力日渐衰退。,3);
 SGJEvent.removeCharacter(@id0,fade);
 SGJEvent.messageShow(在@name0死后，新皇帝年幼，诸王为争夺中央政权而引发了内乱。,3);
-SGJEvent.addCharacter(@id1,50,50,fade);
-SGJEvent.addCharacter(@id2,50,200,fade);
-SGJEvent.addCharacter(@id3,350,50,fade);
-SGJEvent.addCharacter(@id4,350,200,fade);
+SGJEvent.addCharacter(@zhuhou1,50,50,fade);
+SGJEvent.addCharacter(@zhuhou2,50,200,fade);
+SGJEvent.addCharacter(@zhuhou3,350,50,fade);
+SGJEvent.addCharacter(@zhuhou4,350,200,fade);
 SGJEvent.messageShow(其核心人物有汝南王、楚王、赵王、齐王、长沙王、成都王、河间王、东海王八王。,3);
 SGJEvent.messageShow(这次动乱共历时十六年，成为中国历史上最为严重的皇族内乱之一，史称“八王之乱”。,3);
 SGJEvent.messageShow(八王之乱导致了新王朝的亡国以及近三百年的动乱，使之后的中国进入五胡十六国时期。,3);

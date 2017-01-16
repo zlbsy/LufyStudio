@@ -14,7 +14,6 @@ function checkEventList() {
 	}
 	for (var ii = 0, ll = EventListConfig.length; ii < ll; ii++) {
 		var currentEvent = EventListConfig[ii];
-		console.log("currentEvent",currentEvent.name);
 		if (eventListFinished.findIndex(function(child) {
 			return child == currentEvent.id;
 		}) >= 0) {
@@ -25,11 +24,11 @@ function checkEventList() {
 				continue;
 			}
 			//汉室复兴条件
-			if(!checkEventListRevival(currentEvent.condition)){
+			if(!checkEventListRevival(currentEvent)){
 				continue;
 			}
 			//汉室复兴延长条件
-			if(!checkEventListConditionRevival(currentEvent.condition, tribeSeignior)){
+			if(!checkEventListConditionRevival(currentEvent, tribeSeignior)){
 				continue;
 			}
 			//兵力判定
@@ -54,6 +53,26 @@ function checkEventList() {
 			if (!currentEvent.condition.beheadOrPolice && !beheadOk) {
 				continue;
 			}
+			//商业判定
+			var businessOk = getEventListBusiness(currentEvent.condition);
+			if (!businessOk) {
+				continue;
+			}
+			//农业判定
+			var agricultureOk = getEventListAgriculture(currentEvent.condition);
+			if (!agricultureOk) {
+				continue;
+			}
+			//技术判定
+			var technologyOk = getEventListTechnology(currentEvent.condition);
+			if (!technologyOk) {
+				continue;
+			}
+			//宝物判定
+			var treasureOk = getEventListTreasure(currentEvent.condition);
+			if (!treasureOk) {
+				continue;
+			}
 			//治安判定
 			var policeOk = getEventListPolice(currentEvent.condition);
 			if (!currentEvent.condition.beheadOrPolice && !policeOk) {
@@ -68,32 +87,26 @@ function checkEventList() {
 		}
 		//时间判定
 		if(!checkEventListTimeIn(currentEvent.condition)){
-			console.log("时间判定");
 			continue;
 		}
 		//势力判定
 		if(!checkEventListSeignor(currentEvent.condition)){
-			console.log("势力判定");
 			continue;
 		}
 		//武将判定
 		if(!checkEventListGenerals(currentEvent.condition)){
-			console.log("武将判定");
 			continue;
 		}
 		//城池判定
 		if(!checkEventListCitys(currentEvent.condition)){
-			console.log("城池判定");
 			continue;
 		}
 		//停战判定
 		if(!checkEventListStopBattle(currentEvent.condition)){
-			console.log("停战判定");
 			continue;
 		}
 		//武将个数判定
 		if(!checkEventListGeneralsCount(currentEvent)){
-			console.log("武将个数判定");
 			continue;
 		}
 		if (!LPlugin.eventIsOpen(currentEvent.id)) {
@@ -272,10 +285,87 @@ function checkEventListTimeIn(condition){
 	var now = LMvc.chapterData.year * 12 + LMvc.chapterData.month;
 	return (from <= now && to >= now);
 }
+function getEventListTreasure(condition){
+	var treasureObj = condition.treasure;
+	if(typeof treasureObj == UNDEFINED){
+		return true;
+	}
+	var itemMax = 0, itemCount = 0;
+	for(var i=0;i<ItemDatas.length;i++){
+		var child = ItemDatas[i];
+		if(!child.stamp || child.type != ItemType.EQUIPMENT){
+			continue;
+		}
+		itemMax++;
+		if(LMvc.chapterData["treasure_" + child.id]){
+			itemCount++;
+		}
+	}
+	var averageTreasure = itemCount / itemMax;
+	if (( typeof treasureObj.from != UNDEFINED && treasureObj.from > averageTreasure) || 
+		( typeof treasureObj.to != UNDEFINED && treasureObj.to < averageTreasure)) {
+		return false;
+	}
+	return true;
+}
+function getEventListTechnology(condition){
+	var technologyObj = condition.technology;
+	if(typeof technologyObj == UNDEFINED){
+		return true;
+	}
+	var seignior = SeigniorModel.getSeignior(LMvc.selectSeignorId);
+	var areas = seignior.areas();
+	var averageTechnology = 0;
+	for (var i = 0, l = areas.length; i < l; i++) {
+		averageTechnology += (areas[i].technology() / areas[i].maxTechnology());
+	}
+	averageTechnology = averageTechnology / areas.length;
+	if (( typeof technologyObj.from != UNDEFINED && technologyObj.from > averageTechnology) || 
+		( typeof technologyObj.to != UNDEFINED && technologyObj.to < averageTechnology)) {
+		return false;
+	}
+	return true;
+}
+function getEventListAgriculture(condition){
+	var agricultureObj = condition.agriculture;
+	if(typeof agricultureObj == UNDEFINED){
+		return true;
+	}
+	var seignior = SeigniorModel.getSeignior(LMvc.selectSeignorId);
+	var areas = seignior.areas();
+	var averageAgriculture = 0;
+	for (var i = 0, l = areas.length; i < l; i++) {
+		averageAgriculture += (areas[i].agriculture() / areas[i].maxAgriculture());
+	}
+	averageAgriculture = averageAgriculture / areas.length;
+	if (( typeof agricultureObj.from != UNDEFINED && agricultureObj.from > averageAgriculture) || 
+		( typeof agricultureObj.to != UNDEFINED && agricultureObj.to < averageAgriculture)) {
+		return false;
+	}
+	return true;
+}
+function getEventListBusiness(condition){
+	var businessObj = condition.business;
+	if(typeof businessObj == UNDEFINED){
+		return true;
+	}
+	var seignior = SeigniorModel.getSeignior(LMvc.selectSeignorId);
+	var areas = seignior.areas();
+	var averageBusiness = 0;
+	for (var i = 0, l = areas.length; i < l; i++) {
+		averageBusiness += (areas[i].business() / areas[i].maxBusiness());
+	}
+	averageBusiness = averageBusiness / areas.length;
+	if (( typeof businessObj.from != UNDEFINED && businessObj.from > averageBusiness) || 
+		( typeof businessObj.to != UNDEFINED && businessObj.to < averageBusiness)) {
+		return false;
+	}
+	return true;
+}
 function getEventListPolice(condition){
 	var policeObj = condition.police;
 	if(typeof policeObj == UNDEFINED){
-		return false;
+		return true;
 	}
 	var seignior = SeigniorModel.getSeignior(LMvc.selectSeignorId);
 	var areas = seignior.areas();
@@ -285,29 +375,31 @@ function getEventListPolice(condition){
 		averagePolice += police;
 	}
 	averagePolice = averagePolice / areas.length;
-	if (( typeof policeObj != UNDEFINED && policeObj.from > averagePolice) || 
-		( typeof policeObj != UNDEFINED && policeObj.to < averagePolice)) {
+	if (( typeof policeObj.from != UNDEFINED && policeObj.from > averagePolice) || 
+		( typeof policeObj.to != UNDEFINED && policeObj.to < averagePolice)) {
 		return false;
 	}
 	return true;
 }
 function getEventListBehead(condition){
 	var behead = condition.behead;
-	if (behead && LMvc.chapterData.behead) {
-		if (behead.from && LMvc.chapterData.behead < behead.from) {
+	if (behead) {
+		var hasBehead = LMvc.chapterData.behead ? LMvc.chapterData.behead : 0;
+		if (behead.from && hasBehead <= behead.from) {
 			return false;
-		} else if (behead.to && LMvc.chapterData.behead > behead.to) {
+		} else if (behead.to && hasBehead >= behead.to) {
 			return false;
 		}
 	}
 	return true;
 }
-function checkEventListConditionRevival(condition, tribeSeignior){
+function checkEventListConditionRevival(currentEvent, tribeSeignior){
+	var condition = currentEvent.condition;
 	if ( typeof condition.conditionRevival == UNDEFINED) {
-		return false;
+		return true;
 	}
 	var conditionRevival = condition.conditionRevival;
-	var isTribeOk = (currentEvent.condition.tribe.indexOf(tribeSeignior) >= 0);
+	var isTribeOk = (typeof condition.tribe == UNDEFINED || condition.tribe.indexOf(tribeSeignior) >= 0);
 	var seignior = SeigniorModel.getSeignior(LMvc.selectSeignorId);
 	var areas = seignior.areas();
 	var technologySum = 0;
@@ -334,9 +426,10 @@ function checkEventListConditionRevival(condition, tribeSeignior){
 	}
 	return true;
 }
-function checkEventListRevival(condition){
+function checkEventListRevival(currentEvent){
+	var condition = currentEvent.condition;
 	if ( typeof condition.revival == UNDEFINED) {
-		return false;
+		return true;
 	}
 	var seignior = SeigniorModel.getSeignior(LMvc.selectSeignorId);
 	var seigniorName = seignior.name();
@@ -350,7 +443,7 @@ function checkEventListRevival(condition){
 			continue;
 		}
 		lastName = character.name().substring(0, 1);
-		if (lastName == "刘" && lastName == "劉") {
+		if (lastName == "刘" || lastName == "劉") {
 			if(character.loyalty() < 100){
 				isSubordinatesOk = false;
 				break;
@@ -426,6 +519,17 @@ function dispatchEventList(currentEvent) {
 				v : charas[i]
 			});
 		}
+		//司马后人 司马炎70
+		var id_sima = 70, name_sima;
+		var chara = CharacterModel.getChara(id_sima);
+		if(!chara.seigniorId()){
+			name_sima = chara.name();
+		}else{
+			eval( "var wordRandomSima=" +  '"\\u' + (Math.round(Math.random() * 20901) + 19968).toString(16)+'"');
+			name_sima = "司马" + wordRandomSima;
+		}
+		params.push({n : "id_sima", v : id_sima});
+		params.push({n : "name_sima", v : name_sima});
 	}
 	LPlugin.SetData("event_params_" + currentEvent.id, params);
 	if (params && params.length) {

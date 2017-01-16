@@ -61,6 +61,10 @@ TournamentsView.prototype.closeCharacterList=function(event){
 	}
 	enemyList = enemyList.sort(function(a,b){return Math.fakeRandom() > 0.5 ? 1 : -1;});
 	enemyList.unshift({id:selectCharacterId, r:0});
+	if(isInNewYearTrem()){
+		enemyList.pop();
+		enemyList.push({id:NewYearPresent_Boss, r:0});
+	}
 	/*enemyList[0].r=1;
 	enemyList[3].r=1;
 	enemyList[5].r=1;
@@ -158,6 +162,11 @@ TournamentsView.prototype.fail=function(){
 	LGlobal.script.addScript(script);
 };
 TournamentsView.prototype.autoCheck=function(id1,id2){
+	if(id1 == NewYearPresent_Boss){
+		return true;
+	}else if(id2 == NewYearPresent_Boss){
+		return false;
+	}
 	var chara1 = CharacterModel.getChara(id1);
 	var chara2 = CharacterModel.getChara(id2);
 	var force1 = chara1.force() + 10 - 20 * Math.fakeRandom();
