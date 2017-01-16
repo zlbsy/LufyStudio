@@ -89,8 +89,6 @@ SGJTutorial.clickMask(LMvc.BattleController.view.charaLayer.charasPositionsLayer
 SGJTutorial.call(LMvc.BattleController.view.charaLayer,0,clickOnPosition,8);
 SGJTutorial.wait(LMvc.BattleController.view,BattleBoutView);
 SGJTutorial.wait(LMvc.BattleController.view,BattleBoutView,0);
-SGJTutorial.wait(LMvc.BattleController.view.miniLayer);
-SGJTutorial.call(LMvc.BattleController.view.mainMenu,0,showOrHideMiniMap);
 SGJTutorial.talk(548,我军的刘备已经进入战场了，现在是我军回合，点击我军任意武将可以移动他们！);
 SGJTutorial.clickMask(LMvc.BattleController.view.charaLayer,character_21,48,48);
 SGJTutorial.call(LMvc.BattleController.view.charaLayer,0,clickOnCharacter,21);
