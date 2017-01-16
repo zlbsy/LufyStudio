@@ -1119,13 +1119,6 @@ function generalsChangeLoyalty(generals){
 		chara.loyalty(toLoyalty);
 	}
 }
-function isInNewYearTrem(){
-	var time = formatDate(new Date(), "YYYYMMDD");
-	if(time >= NewYearPresent_TERM.start && time <= NewYearPresent_TERM.end){
-		return true;
-	}
-	return false;
-}
 //比武大会报酬
 function tournamentsGet(result){
 	var message = Language.get("tournaments_get_message_"+result);
