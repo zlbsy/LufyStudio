@@ -291,9 +291,40 @@ CityView.prototype.updateView = function(){
 	self.appointContent.visible = self.iconAppoint.visible;
 	self.appointContent.text = Language.get(cityModel.appointType());
 };
+CityView.prototype.getNewYearPresent = function(){
+	if(!isInNewYearTrem()){
+		return false;
+	}
+	var present = LMvc.chapterData["NewYearPresent_"+time];
+	if(present){
+		return false;
+	}
+	var count = LMvc.chapterData["NewYearPresent_2017_count"];
+	if(!count){
+		count = 0;
+	}
+	var items = [94, 93, 94, 95, 96];
+	if(count >= items.length){
+		return false;
+	}
+	var seignior = SeigniorModel.getSeignior(LMvc.selectSeignorId);
+	var item = new ItemModel(null,{item_id:items[count],count:1});
+	seignior.addItem(item);
+	var msg = String.format(Language.get("auto_talk_NewYearPresent"), item.name());
+	Talk(self, seignior.character().id(), 0, msg, function() {
+		LMvc.talkOver = true;
+	});
+	
+	LMvc.chapterData["NewYearPresent_"+time] = 1;
+	LMvc.chapterData["NewYearPresent_2017_count"] = count + 1;
+	return true;
+};
 CityView.prototype.autoTalkCheck = function(){
 	var self = this;
 	if(!self.controller.getValue("selfCity") || SeigniorExecute.running || LMvc.TutorialController){
+		return;
+	}
+	if(self.getNewYearPresent()){
 		return;
 	}
 	var cityModel = self.controller.getValue("cityData");

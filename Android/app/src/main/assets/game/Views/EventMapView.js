@@ -60,6 +60,9 @@ EventMapView.prototype.onClickSkipButton=function(event){
 EventMapView.prototype.addCharacter=function(id,x,y,animation,waitClick){
 	var self = this;
 	var characterModel = CharacterModel.getChara(id);
+	if(!characterModel && id >= 1000){
+		characterModel = CharacterModel.getChara(1);
+	}
 	var face = characterModel.face();
 	face.characterId = characterModel.id();
 	face.y = y;
@@ -88,6 +91,11 @@ EventMapView.prototype.removeCharacter=function(id,animation){
 	var face = self.charaLayer.childList.find(function(child){
 		return child.characterId == id;
 	});
+	if(!face && id >= 1000){
+		face = self.charaLayer.childList.find(function(child){
+			return child.characterId == 1;
+		});
+	}
 	if(!face){
 		LGlobal.script.analysis();
 		return;

@@ -103,3 +103,4 @@ var DisasterMonths = {
 var MapSettingMaxCharacters = [20, 20, 20, 16, 20, 22, 18, 18, 22, 20, 16, 20, 20, 20, 15, 22, 18, 20];
 var TribeAIProbability = 0.1;
 var TribeFriendlyCharacters = [23, 43, 73, 141, 145, 317, 336, 351, 516];
+var NewYearPresent_TERM = {start:"20170128",end:"20170211"};

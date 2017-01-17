@@ -603,7 +603,7 @@ var EventListConfig = [
 		],
 		clear:1,
 		tribe:[3, 5],//五个或三个外族存在
-		troopsVsTribe:{from:0, to:1.5}//兵力低于五个外族出兵总兵力的1.5倍
+		troopsVsTribe:{from:0, to:2}//兵力低于五个外族出兵总兵力的1.5倍
 	},
 	script:"Data/Event/{0}/jj_mzrq_mw.txt",
 	result:[{type:"gameClear"}]
@@ -620,7 +620,7 @@ var EventListConfig = [
 		],
 		clear:1,
 		tribe:[2, 4],//二个或四个外族存在
-		troopsVsTribe:{from:3, to:1000},//兵力大于外族兵力的3倍
+		troopsVsTribe:{from:4, to:1000},//兵力大于外族兵力的4倍
 		generalsCount:{basicPropertiesSum:360, from:20}//属性平均值超过90的武将大于20人
 	},
 	script:"Data/Event/{0}/jj_yzmz_cg.txt",
@@ -674,7 +674,7 @@ var EventListConfig = [
 		],
 		clear:1,
 		tribe:[3, 5],//五个或三个外族存在
-		troopsVsTribe:{from:1.5, to:3}//兵力高于五个外族出兵总兵力的1.5倍且低于3倍
+		troopsVsTribe:{from:2, to:4}//兵力高于五个外族出兵总兵力的1.5倍且低于3倍
 	},
 	script:"Data/Event/{0}/jj_mzrq_cc.txt",
 	result:[{type:"gameClear"}]
@@ -732,9 +732,10 @@ var EventListConfig = [
 		revival:0,//不满足汉室复兴条件
 		behead:{to:19},//斩首武将不超过20人
 		police:{from:80},//平均治安大于80
-		business:{from:0.7},//商业平均值超过最大值的70%
-		agriculture:{from:0.7},//农业平均值超过最大值的70%
-		treasure:{to:0.8}//未集齐80%宝物
+		business:{from:0.8},//商业平均值超过最大值的70%
+		agriculture:{from:0.8},//农业平均值超过最大值的70%
+		treasure:{to:0.8},//未集齐80%宝物
+		tribe:[1,2,3,4,5]//外族全灭
 	},
 	script:"Data/Event/{0}/jj_xj_sy.txt",
 	result:[{type:"gameClear"}]
@@ -753,8 +754,9 @@ var EventListConfig = [
 		revival:0,//不满足汉室复兴条件
 		behead:{to:19},//斩首武将不超过20人
 		police:{from:80},//平均治安大于80
-		technology:{from:0.7},//技术平均值超过最大值的70%
-		treasure:{from:0.8}//集齐80%宝物
+		technology:{from:0.8},//技术平均值超过最大值的70%
+		treasure:{from:0.8},//集齐80%宝物
+		tribe:[1,2,3,4,5]//外族全灭
 	},
 	script:"Data/Event/{0}/jj_xj_wm.txt",
 	result:[{type:"gameClear"}]
@@ -773,9 +775,9 @@ var EventListConfig = [
 		revival:0,//不满足汉室复兴条件
 		behead:{to:19},//斩首武将不超过20人
 		police:{from:80},//平均治安大于80
-		technology:{from:0.7},//技术平均值超过最大值的70%
-		business:{from:0.7},//商业平均值超过最大值的70%
-		agriculture:{from:0.7},//农业平均值超过最大值的70%
+		technology:{from:0.8},//技术平均值超过最大值的70%
+		business:{from:0.8},//商业平均值超过最大值的70%
+		agriculture:{from:0.8},//农业平均值超过最大值的70%
 		treasure:{from:0.8},//集齐80%宝物
 		tribe:[0]//外族全灭
 	},

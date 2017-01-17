@@ -5,7 +5,7 @@ function BattleMainMenuView(controller){
 }
 BattleMainMenuView.prototype.init = function(){
 	var self = this;
-	self.miniMapVisible = true;
+	self.miniMapVisible = false;
 	var mainLayer = new LSprite();
 	self.addChild(mainLayer);
 	var mainMenu = self.getMainMenu();

@@ -207,6 +207,7 @@ CharacterListChildView.prototype.setArmProperties = function() {
 	if(self.armProperties){
 		self.troops.text = String.format("{0}/{1}",self.charaModel.troops(),soldierModel.maxTroops(self.charaModel));
 		self.soldierName.text = soldierModel.name();
+		self.cityNameLabel.text = !self.charaModel.city() ? "" : self.charaModel.city().name();
 		var panel = self.soldierName.parent;
 		self.soldierName.x = (panel.getWidth() - self.soldierName.getWidth())*0.5;
 		return;
@@ -217,6 +218,7 @@ CharacterListChildView.prototype.setArmProperties = function() {
 	var cityName = getStrokeLabel(self.charaModel.city().name(), 18, "#FFFFFF", "#000000", 4);
 	cityName.x = 2;
 	cityName.y = 10;
+	self.cityNameLabel = cityName;
 	layer.addChild(cityName);
 	
 	var troops = getStrokeLabel( String.format("{0}/{1}",self.charaModel.troops(),soldierModel.maxTroops(self.charaModel)), 18, "#FFFFFF", "#000000", 4);

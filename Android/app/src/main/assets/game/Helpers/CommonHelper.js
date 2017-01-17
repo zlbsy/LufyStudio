@@ -422,3 +422,10 @@ function beheadIsValid(){
 	}
 	return LMvc.chapterData.validBehead;
 }
+function isInNewYearTrem(){
+	var time = formatDate(new Date(), "YYYYMMDD");
+	if(time >= NewYearPresent_TERM.start && time <= NewYearPresent_TERM.end){
+		return true;
+	}
+	return false;
+}

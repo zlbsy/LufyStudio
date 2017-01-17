@@ -82,6 +82,9 @@ ItemModel.prototype.agility = function(){
 ItemModel.prototype.luck = function(){
 	return this.master().luck();
 };
+ItemModel.prototype.movePower = function(){
+	return this.master().movePower();
+};
 ItemModel.prototype.position = function(){
 	return this.master().position();
 };

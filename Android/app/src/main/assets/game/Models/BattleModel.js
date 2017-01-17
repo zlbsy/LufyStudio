@@ -101,13 +101,13 @@ BattleModel.prototype.createMap = function(callback){
 	var w = maps[0].length;
 	self.map.width = BattleCharacterSize.width * w;
 	self.map.height = BattleCharacterSize.height * h;
-	if(!BattleModel.bitmapDatas){
-		BattleModel.bitmapDatas = [
-			new LBitmapData(null,0,0,self.map.width,self.map.height, LBitmapData.DATA_CANVAS)
+	//if(!BattleModel.bitmapDatas){
+	BattleModel.bitmapDatas = [
+		new LBitmapData(null,0,0,self.map.width,self.map.height, LBitmapData.DATA_CANVAS)
 			//,new LBitmapData(null,0,0,self.map.width,self.map.height, LBitmapData.DATA_CANVAS)
 			//,new LBitmapData(null,0,0,self.map.width,self.map.height, LBitmapData.DATA_CANVAS)
-		];
-	}
+	];
+	//}
 	//for(var i=0;i<3;i++){
 	for(var i=0;i<1;i++){
 		var data = BattleModel.bitmapDatas[i];

@@ -51,7 +51,7 @@ CharacterDetailedTabPropertiesView.prototype.showRight=function(characterModel){
 	self.getStatusAsList(characterModel, "defense", "DefenseAid"),
 	self.getStatusAsList(characterModel, "breakout", "BreakoutAid"),
 	self.getStatusAsList(characterModel, "morale", "MoraleAid"),
-	[characterModel.currentSoldiers().movePower(),characterModel.currentSoldiers().movePower(),10]
+	[characterModel.movePower(),characterModel.movePower(),10]
 	];
 	for(var i=0;i<self.rightLayer.numChildren;i++){
 		var bar = self.rightLayer.childList[i];

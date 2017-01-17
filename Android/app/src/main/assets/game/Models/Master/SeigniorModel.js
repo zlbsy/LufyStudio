@@ -180,6 +180,9 @@ SeigniorModel.prototype.name = function(){
 SeigniorModel.prototype.isTribe = function(){
 	return this.character().isTribeCharacter();
 };
+SeigniorModel.prototype.isPlayer = function(){
+	return this.chara_id() == LMvc.selectSeignorId;
+};
 SeigniorModel.prototype.exp = function(value){
 	return this._dataValue("exp", value, 0);
 };
@@ -417,6 +420,9 @@ SeigniorModel.prototype.itemsData = function(){
 };
 SeigniorModel.prototype.addItem = function(item){
 	var self = this;
+	if(self.isPlayer()){
+		LMvc.chapterData["treasure_" + item.id()] = 1;
+	}
 	var items = self.items();
 	for(var i=0;i<items.length;i++){
 		var child = items[i];

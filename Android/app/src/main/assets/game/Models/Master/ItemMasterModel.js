@@ -82,7 +82,7 @@ ItemMasterModel.prototype.position = function(){
 };
 ItemMasterModel.prototype.params = function(){
 	var self = this, keys;
-	keys = ["force","intelligence","command","agility","luck","attack","defense","breakout","morale","spirit",
+	keys = ["force","intelligence","command","agility","luck","attack","defense","breakout","morale","spirit","movePower",
 	"life","feat","proficiency","upper_limit","loyalty"];
 	var result = [];
 	for(var i=0,l=keys.length;i<l;i++){
@@ -94,6 +94,9 @@ ItemMasterModel.prototype.params = function(){
 };
 ItemMasterModel.prototype.getParam = function(key){
 	return this.data[key];
+};
+ItemMasterModel.prototype.movePower = function(){
+	return this.data.movePower?this.data.movePower:0;
 };
 ItemMasterModel.prototype.life = function(){
 	return this.data.life?this.data.life:0;
