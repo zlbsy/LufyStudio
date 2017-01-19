@@ -51,6 +51,7 @@ SoldiersChildView.prototype.setLvUpButton=function(){
 	if(!self.soldierModel.next()){
 		if(self.btnLvUp){
 			self.btnLvUp.remove();
+			self.btnLvUp = null;
 		}
 		return;
 	}
@@ -68,11 +69,17 @@ SoldiersChildView.prototype.setLvUpButton=function(){
 		self.layer.addChild(btnLvUp);
 		self.btnLvUp = btnLvUp;
 	}else{
-		if(self.soldierModel.proficiency() >= self.soldierModel.maxProficiency() && self.btnLvUp.img == "win07"){
-			var data = GameCacher.getPanelBitmapData("win01",60, 40);
+		var img;
+		if(self.soldierModel.proficiency() >= self.soldierModel.maxProficiency()){
+			img = "win01";
+		}else{
+			img = "win07";
+		}
+		if(self.btnLvUp.img != img){
+			var data = GameCacher.getPanelBitmapData(img,60, 40);
 			self.btnLvUp.removeChildAt(0);
 			self.btnLvUp.addChildAt(new LBitmap(data), 0);
-			self.btnLvUp.img = "win01";
+			self.btnLvUp.img = img;
 			self.btnLvUp.getChildAt(1).color = "#FFFFFF";
 		}
 	}
