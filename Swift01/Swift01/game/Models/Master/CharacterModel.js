@@ -1286,11 +1286,7 @@ CharacterModel.prototype.soldiers = function() {
 	var self = this;
 	if(!self._soldiers){
 		self._soldiers = [];
-		try{
-			var test = self.data.soldiers.length;
-		}catch(e){
-			console.log(self.id(),self.name(),self.data);
-		}
+		self.data._currentSoldiers = null;
 		for(var i=0;i<self.data.soldiers.length;i++){
 			var soldier = new SoldierModel(null, self.data.soldiers[i]);
 			self._soldiers.push(soldier);
