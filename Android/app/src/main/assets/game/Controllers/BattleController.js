@@ -106,9 +106,17 @@ BattleController.prototype.init = function(){
 	BattleController.timer.addEventListener(LTimerEvent.TIMER, self.showCharacterDetailed);
 
 	var enemyTroops = self.battleData.toCity.troops();
-	var generals = self.battleData.toCity.generals();
-	for(var i=0,l=generals.length;i<l;i++){
-		enemyTroops += generals[i].troops();
+	if(LMvc.areaData && LMvc.areaData.battleData){
+		var charaIds = LMvc.areaData.battleData.expeditionEnemyCharacterList;
+		for(var i=0,l=charaIds.length;i<l;i++){
+			var chara = CharacterModel.getChara(charaIds[i]);
+			enemyTroops += chara.troops();
+		}
+	}else{
+		var generals = self.battleData.toCity.generals();
+		for(var i=0,l=generals.length;i<l;i++){
+			enemyTroops += generals[i].troops();
+		}
 	}
 	if(self.battleData.toCity.seigniorCharaId() == 0 || enemyTroops == 0 || 
 		self.battleData.toCity.generalsSum() == 0){

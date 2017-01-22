@@ -14,9 +14,17 @@ BattleView.prototype.init=function(){
 	var battleData = self.controller.battleData;
 	var city = battleData.toCity;
 	var enemyTroops = city.troops();
-	var generals = city.generals();
-	for(var i=0,l=generals.length;i<l;i++){
-		enemyTroops += generals[i].troops();
+	if(LMvc.areaData && LMvc.areaData.battleData){
+		var charaIds = LMvc.areaData.battleData.expeditionEnemyCharacterList;
+		for(var i=0,l=charaIds.length;i<l;i++){
+			var chara = CharacterModel.getChara(charaIds[i]);
+			enemyTroops += chara.troops();
+		}
+	}else{
+		var generals = city.generals();
+		for(var i=0,l=generals.length;i<l;i++){
+			enemyTroops += generals[i].troops();
+		}
 	}
 	if(city.seigniorCharaId() == 0 || enemyTroops == 0 || city.generals() == 0){
 		self.showResult(battleData.fromCity.seigniorCharaId() == LMvc.selectSeignorId);
