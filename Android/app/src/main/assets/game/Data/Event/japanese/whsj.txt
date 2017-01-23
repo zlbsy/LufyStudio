@@ -19,5 +19,5 @@ SGJEvent.talk(@id0,@name4に后将军を任命します!);
 SGJEvent.talk(@id4,かしこまりました!);
 SGJEvent.talk(@id0,@name5に诩军将军を任命します!);
 SGJEvent.talk(@id5,かしこまりました!);
-SGJEvent.messageShow(@name1，@name2，@name3，@name4，@name5五人の将軍は＜五虎上将＞という称号をもらいました，攻撃力は20アップしました。,3);
+SGJEvent.messageShow(@name1，@name2，@name3，@name4，@name5五人の将軍は＜五虎上将＞という称号をもらいました，武力は5アップしました。,3);
 Mark.EventEnd;

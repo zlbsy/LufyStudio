@@ -472,7 +472,7 @@ function dispatchEventList(currentEvent) {
 		v : SeigniorModel.getSeignior(LMvc.selectSeignorId).character().name()
 	});
 	if (currentEvent.feat_characters && SeigniorExecute.running) {
-		for (var i = 0, l = currentEvent.condition.feat_generals.count; i < l; i++) {
+		for (var i = 0, l = currentEvent.condition.generalsCount.from; i < l; i++) {
 			var character = currentEvent.feat_characters[i];
 			params.push({
 				n : "id" + (i + 1),

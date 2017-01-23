@@ -1,6 +1,7 @@
 var reputationConfig = [
 {
 	id : 1,
+	force:5,
 	name : "reputation_tiger",
 },
 {

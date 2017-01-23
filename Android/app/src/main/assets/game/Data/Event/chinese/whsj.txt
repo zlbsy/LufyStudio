@@ -19,5 +19,5 @@ SGJEvent.talk(@id0,封@name4为后将军!);
 SGJEvent.talk(@id4,多谢主公!);
 SGJEvent.talk(@id0,封@name5为诩军将军!);
 SGJEvent.talk(@id5,多谢主公!);
-SGJEvent.messageShow(@name1，@name2，@name3，@name4，@name5五位将领获得了五虎上将的称号，攻击力提升20。,3);
+SGJEvent.messageShow(@name1，@name2，@name3，@name4，@name5五位将领获得了五虎上将的称号，武力提升5。,3);
 Mark.EventEnd;

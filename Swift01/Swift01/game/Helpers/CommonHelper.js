@@ -258,7 +258,7 @@ function setCharacterInitFeat(chara){
 			minFeat = child.feat();
 		}
 	}
-	chara.feat(minFeat);
+	chara.feat(minFeat * 0.9 >>> 0);
 }
 function getMonarchChangeId(seignior){
 	var chara;
