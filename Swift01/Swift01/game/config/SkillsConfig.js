@@ -348,5 +348,5 @@ var SkillsData = [
 {id:95,name:"经商",powerful:0,type:SkillType.NULL,subType:[SkillSubType.INCOME],income:"money",probability:100,explanation:"大幅增加城池金钱收入。"},
 {id:96,name:"生产",powerful:0,type:SkillType.NULL,subType:[SkillSubType.INCOME],income:"food",probability:100,explanation:"大幅增加城池粮食收入。"},
 {id:97,name:"祭祀",powerful:0,type:SkillType.NULL,subType:[SkillSubType.SACRIFICE],probability:100,explanation:"所在城池不会发生灾害。"},
-{id:98,name:"短刀",powerful:80,type:SkillType.CREATE,subType:[SkillSubType.SOLDIERS_ATTACK_RECT],condition:{type:"SoldierId",value:[4,28,5,29,6,30,22]},rangeAttack:[{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0}],explanation:"装备了短刀，在使用远程兵种时，可以近身攻击。"},
+{id:98,name:"短刀",powerful:80,type:SkillType.CREATE,subType:[SkillSubType.SOLDIERS_ATTACK_RECT],condition:{type:"SoldierId",value:[4,28,5,29,6,30,22,42]},rangeAttack:[{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0}],explanation:"装备了短刀，在使用远程兵种时，可以近身攻击。"},
 ];
