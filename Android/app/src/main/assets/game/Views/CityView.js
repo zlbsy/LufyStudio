@@ -295,6 +295,7 @@ CityView.prototype.getNewYearPresent = function(){
 	if(!isInNewYearTrem()){
 		return false;
 	}
+	var time = formatDate(new Date(), "YYYYMMDD");
 	var present = LMvc.chapterData["NewYearPresent_"+time];
 	if(present){
 		return false;
