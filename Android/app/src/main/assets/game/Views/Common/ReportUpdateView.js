@@ -92,6 +92,12 @@ ReportUpdateView.prototype.toUpdate = function(event){
 			LGlobal.preventDefault = true;
 			self.parent.remove();
 			RecordController.instance().hide();
+			if(Array.isArray(data.record)){
+				var arr = data.record;
+				var charas = arr[1];
+				data.record = arr[0];
+				LPlugin.SetData("characterList", charas);
+			}
 			LMvc.isRead = true;
 			Math.fakeSeed = data.record.fakeSeed;
 			LMvc.mapX = data.record.mapX;

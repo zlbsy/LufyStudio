@@ -3,10 +3,10 @@ apply plugin: 'com.android.application'
 android {
     signingConfigs {
         config {
-            keyAlias 'sanguoji'
+            keyAlias 'lufy'
             keyPassword 'zs1984717'
-            storeFile file('/Users/zhanglubin/git/sgj/set/sgj_release.jks')
-            storePassword 'zs1984717'
+            storeFile file('/Users/zhanglubin/git/sgj/set/sgj.jks')
+            storePassword 'buzhidao'
         }
     }
     compileSdkVersion 23
@@ -16,7 +16,7 @@ android {
         minSdkVersion 9
         targetSdkVersion 9
         versionName '1.9.3'
-        versionCode 12
+        versionCode 13
     }
     buildTypes {
         release {
