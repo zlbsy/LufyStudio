@@ -419,7 +419,7 @@ var SoldierDatas = [
 	strategy:[{id:33,lv:5},{id:34,lv:10},{id:42,lv:20}],
 	sign:"jw",
 	level:2,
-	maxProficiency:1000,
+	maxProficiency:1200,
 	newcount:1
 	},
 	{id:26,name:"重步兵",img:2,type:SoldierType.Physical,attackType:AttackType.NEAR,moveType:MoveType.INFANTRY,movePower:4,

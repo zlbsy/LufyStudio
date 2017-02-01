@@ -855,7 +855,7 @@ Language.soldierData = {
 	"explanation_hwj":"防御力优秀的部队。对付弓兵类时，以强大的攻击力为傲。",
 	"explanation_jfb":"可在水上地形发挥强大战力的部队。",
 	"explanation_bmyc":"移动力与攻击力优异的部队。",
-	"explanation_fxj":"率领攻击力强大的熊作战的部队。",
+	"explanation_fxj":"攻击力强大的部队，并且擅长森林和山地作战。",
 	"explanation_xzy":"攻击力和爆发力都很优异的骑兵部队。",
 	"explanation_xr":"攻击力一点都不弱的文官部队。",
 	

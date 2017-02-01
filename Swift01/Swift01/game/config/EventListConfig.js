@@ -580,6 +580,7 @@ var EventListConfig = [
 	index:24,
 	name:"五虎上将",
 	condition:{
+		noHistory:1,
 		seignior:0,
 		generals:[
 		],
