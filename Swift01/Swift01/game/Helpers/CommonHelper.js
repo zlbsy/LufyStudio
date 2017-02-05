@@ -134,6 +134,7 @@ function gameDataInit(){
 	}
 	SeigniorModel.setSeignior(data.seigniors);
 	var setAreas = [];
+	var setCharas = [];
 	for(var i=0,l=data.seigniors.length;i<l;i++){
 		var seignior = data.seigniors[i];
 		var areas = seignior.areas;
@@ -144,7 +145,7 @@ function gameDataInit(){
 			}
 			setAreas.push(child.area_id);
 			var area = AreaModel.getArea(child.area_id);
-			area.setSeignor(seignior,child);
+			area.setSeignor(seignior,child,setCharas);
 			areaList.push(area);
 		});
 		seignior.areas = areaList;

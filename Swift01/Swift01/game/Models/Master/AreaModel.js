@@ -310,7 +310,7 @@ AreaModel.prototype.isAppoint = function(value){
 	}
 	return self._dataValue("isAppoint", value, 0);
 };
-AreaModel.prototype.setSeignor = function(seignior,areaData){
+AreaModel.prototype.setSeignor = function(seignior,areaData,setCharas){
 	this.data.seignior_chara_id = seignior.chara_id;
 	for(var key in areaData){
 		if(typeof areaData[key] == "function"){
@@ -320,6 +320,13 @@ AreaModel.prototype.setSeignor = function(seignior,areaData){
 			var generals = [];
 			for(var i=0,l=areaData[key].length;i<l;i++){
 				var charaData = areaData[key][i];
+				if(setCharas){
+					if(setCharas.indexOf(charaData.chara_id) >= 0){
+						continue;
+					}else{
+						setCharas.push(charaData.chara_id);
+					}
+				}
 				var chara = CharacterModel.getChara(charaData.chara_id);
 				charaData.seignior_id = seignior.chara_id;
 				charaData.cityId = this.data.id;
@@ -332,6 +339,13 @@ AreaModel.prototype.setSeignor = function(seignior,areaData){
 			var out_of_offices = [];
 			for(var i=0,l=areaData[key].length;i<l;i++){
 				var charaData = areaData[key][i];
+				if(setCharas){
+					if(setCharas.indexOf(charaData.chara_id) >= 0){
+						continue;
+					}else{
+						setCharas.push(charaData.chara_id);
+					}
+				}
 				var chara = CharacterModel.getChara(charaData.chara_id);
 				charaData.cityId = this.data.id;
 				chara.setDatas(charaData);
@@ -343,6 +357,13 @@ AreaModel.prototype.setSeignor = function(seignior,areaData){
 		}else if(key == "not_debut"){
 			for(var i=0,l=areaData[key].length;i<l;i++){
 				var charaData = areaData[key][i];
+				if(setCharas){
+					if(setCharas.indexOf(charaData.chara_id) >= 0){
+						continue;
+					}else{
+						setCharas.push(charaData.chara_id);
+					}
+				}
 				var chara = CharacterModel.getChara(charaData.chara_id);
 				chara.data.equipments = [];
 				if(charaData.equipments){
@@ -356,6 +377,13 @@ AreaModel.prototype.setSeignor = function(seignior,areaData){
 			var captives = [];
 			for(var i=0,l=areaData[key].length;i<l;i++){
 				var charaData = areaData[key][i];
+				if(setCharas){
+					if(setCharas.indexOf(charaData.chara_id) >= 0){
+						continue;
+					}else{
+						setCharas.push(charaData.chara_id);
+					}
+				}
 				var chara = CharacterModel.getChara(charaData.chara_id);
 				if(!charaData.seignior_id){
 					charaData.seignior_id = seignior.chara_id;
