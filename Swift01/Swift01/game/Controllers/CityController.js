@@ -42,6 +42,10 @@ CityController.prototype.init=function(initFunc){
 	self.setValue("selfCity",selfCity);
 	if(selfCity){
 		self.setValue("isAppoint",cityData.isAppoint());
+		var item = new ItemModel(null,{item_id:97,count:3});
+		SeigniorModel.getSeignior(LMvc.selectSeignorId).addItem(item);
+		var item = new ItemModel(null,{item_id:106,count:1});
+		SeigniorModel.getSeignior(LMvc.selectSeignorId).addItem(item);
 	}
 	//TODO::测试用
 	if(LGlobal.traceDebug){

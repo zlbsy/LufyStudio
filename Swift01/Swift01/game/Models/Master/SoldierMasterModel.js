@@ -65,9 +65,9 @@ SoldierMasterModel.prototype.skill = function(type) {
 		(Array.isArray(skillType) && skillType.indexOf(type) < 0))){
 		return null;
 	}
-	if(skill.probability() < 100){
+	if(type && skill.probability() < 100){
 		var rand = Math.fakeRandom();
-		if(type && rand > skill.probability()*0.01){
+		if(rand > skill.probability()*0.01){
 			return null;
 		}
 	}

@@ -36,7 +36,7 @@ EquipmentsChildView.prototype.getParams=function(){
 	if(!self.lblParams){
 		var lblParams = getStrokeLabel("",16,"#FFFFFF","#000000",3);
 		lblParams.setWordWrap(true, 23);
-		lblParams.x = 300;
+		lblParams.x = 200;
 		lblParams.y = 5;
 		self.layer.addChild(lblParams);
 		self.lblParams = lblParams;
@@ -63,10 +63,14 @@ EquipmentsChildView.prototype.set=function(){
 	var lblParams = self.getParams();
 	var txtParams = "", add = "";
 	var params = self.itemModel.params();
-	for(var i = 0;i < params.length && i<2;i++){
+	for(var i = 0;i < params.length;i++){
 		var key = params[i];
-		txtParams += add + Language.get(key) + " + " + self.itemModel.getParam(key);
-		add = "\n";
+		txtParams += Language.get(key) + " + " + self.itemModel.getParam(key);
+		if(i % 2 == 0){
+			txtParams += "  ";
+		}else{
+			txtParams += "\n";
+		}
 	}
 	lblParams.text = txtParams;
 	self.drawLine();

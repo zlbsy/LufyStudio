@@ -8,7 +8,7 @@ ItemsView.prototype.getItemList = function() {
 	var seignior = SeigniorModel.getSeignior(LMvc.selectSeignorId);
 	var itemList = seignior.items();
 	var items = [];
-	var types = [ItemType.FEAT, ItemType.PROFICIENCY, ItemType.LOYALTY];
+	var types = [ItemType.FEAT, ItemType.PROFICIENCY, ItemType.LOYALTY, ItemType.STONE];
 	for(var i=0;i<itemList.length;i++){
 		var item = itemList[i];
 		if(types.indexOf(item.itemType()) < 0){

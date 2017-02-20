@@ -62,6 +62,9 @@ ItemMasterModel.prototype.stamp = function(){
 ItemMasterModel.prototype.itemType = function(){
 	return this.data.type;
 };
+ItemMasterModel.prototype.stoneType = function(){
+	return this.data.stoneType;
+};
 ItemMasterModel.prototype.loyalty = function(){
 	return this.data.loyalty;
 };
@@ -93,6 +96,9 @@ ItemMasterModel.prototype.params = function(){
 	return result;
 };
 ItemMasterModel.prototype.getParam = function(key){
+	if(!this.data[key]){
+		return 0;
+	}
 	return this.data[key];
 };
 ItemMasterModel.prototype.movePower = function(){

@@ -414,7 +414,8 @@ SeigniorModel.prototype.itemsData = function(){
 	var datas = [];
 	for(var i=0;i<items.length;i++){
 		var item = items[i];
-		datas.push({item_id:item.id(),count:item.count()});
+		datas.push(item.datas());
+		//datas.push({item_id:item.id(),count:item.count()});
 	}
 	return datas;
 };
@@ -426,7 +427,7 @@ SeigniorModel.prototype.addItem = function(item){
 	var items = self.items();
 	for(var i=0;i<items.length;i++){
 		var child = items[i];
-		if(child.id() == item.id()){
+		if(child.id() == item.id() && !child.stone() && !item.stone()){
 			child.count(child.count() + 1);
 			return;
 		}
@@ -438,7 +439,7 @@ SeigniorModel.prototype.removeItem = function(item){
 	var items = self.items();
 	for(var i=0;i<items.length;i++){
 		var child = items[i];
-		if(child.id() == item.id()){
+		if(child.equal(item)){
 			child.count(child.count() - 1);
 			if(child.count() <= 0){
 				items.splice(i,1);
@@ -454,6 +455,19 @@ SeigniorModel.prototype.equipments = function() {
 	for(var i=0;i<items.length;i++){
 		var item = items[i];
 		if(item.itemType() != ItemType.EQUIPMENT){
+			continue;
+		}
+		equipmentList.push(item);
+	}
+	return equipmentList;
+};
+SeigniorModel.prototype.stones = function() {
+	var self = this;
+	var items = self.items();
+	var equipmentList = [];
+	for(var i=0;i<items.length;i++){
+		var item = items[i];
+		if(item.itemType() != ItemType.STONE){
 			continue;
 		}
 		equipmentList.push(item);
