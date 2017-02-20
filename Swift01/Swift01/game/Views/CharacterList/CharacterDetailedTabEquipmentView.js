@@ -37,7 +37,6 @@ CharacterDetailedTabEquipmentView.prototype.showEquipments=function(){
 			icon.addEventListener(LMouseEvent.MOUSE_UP,self.confirmEquipment);
 		}else{
 			icon = getPanel("win03",iconSize,iconSize);
-			//icon = new LPanel(new LBitmapData(LMvc.datalist["win03"]),iconSize,iconSize);
 		}
 		icon.x = detailedView.faceView.x + coordinate.x - detailedView.tabLayer.x - self.x;
 		icon.y = detailedView.faceView.y + coordinate.y - detailedView.tabLayer.y - self.y;
@@ -71,13 +70,14 @@ CharacterDetailedTabEquipmentView.prototype.showEquipmentList=function(){
 CharacterDetailedTabEquipmentView.prototype.dressEquipment=function(event){
 	var self = event.currentTarget.getParentByConstructor(CharacterDetailedTabEquipmentView);
 	var selectItemModel = event.selectItemModel;
+	
 	var itemCount = selectItemModel.count();
 	var characterModel = self.controller.getValue("selectedCharacter");
 	characterModel.equip(selectItemModel);
+	
 	characterModel.calculation();
 	var cityData = self.controller.getValue("cityData");
 	cityData.removeItem(selectItemModel);
-	
 	var detailedView = self.getParentByConstructor(CharacterDetailedView);
 	detailedView.changeCharacter(0);
 	var characterListView = self.getParentByConstructor(CharacterListView);
@@ -109,7 +109,12 @@ CharacterDetailedTabEquipmentView.prototype.confirmEquipment=function(event){
 		
 	if(canRemove){
 		obj.okEvent = self.removeEquipmentRun;
+		obj.otherEvent = self.strengthenEquipmentRun;
 		obj.cancelEvent = null;
+		obj.width = 400;
+		obj.okText = "remove_equip";
+		obj.otherText = "strengthen";
+		obj.cancelText = "cancel";
 	}else{
 		obj.okEvent = null;
 	}
@@ -130,4 +135,16 @@ CharacterDetailedTabEquipmentView.prototype.removeEquipmentRun=function(event){
 	var e = new LEvent(CharacterListEvent.LIST_CHANGE);
 	e.characterModel = characterModel;
 	characterListView.dispatchEvent(e);
+};
+CharacterDetailedTabEquipmentView.prototype.strengthenEquipmentRun=function(event){
+	var detailedView = event.currentTarget.getParentByConstructor(CharacterDetailedView);
+	var removeItemId = detailedView.removeItemId;
+	var characterModel = detailedView.controller.getValue("selectedCharacter");
+	var equipment = characterModel.equipments().find(function(child){
+		return child.id() == removeItemId;
+	});
+	event.currentTarget.parent.remove();
+	var stoneView = new EquipmentsStoneView(self.controller, equipment);
+	detailedView.parent.addChild(stoneView);
+	detailedView.visible = false;
 };

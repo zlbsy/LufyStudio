@@ -6,10 +6,18 @@ var ItemType = {
 	,EXP:"item_exp"/*增加属性经验*/
 	,LOYALTY:"item_loyalty"/*增加忠诚度*/
 	,EQUIPMENT:"item_equipment"/*装备*/
+	,STONE:"item_stone"/*宝石*/
 };
 var ItemSubType = {
 	
 };
+var StoneType = {
+	RED:"red"/*红宝石:加特技*/
+	,PURPLE:"purple"/*紫宝石:加武力智力或特技20%特技*/
+	,BLUE:"blue"/*蓝宝石:加攻防属性或特技10%特技*/
+	,GREEN:"green"/*绿宝石:加武力智力等属性*/
+	,YELLOW:"yellow"/*黄宝石:加攻防等属性*/
+}; 
 var BusinessSaleItems = [3,4];
 //PositionConfig.Hand 武器
 //PositionConfig.Body 身
@@ -113,4 +121,25 @@ var ItemDatas = [
 	{id:94,name:"飞翅服",type:ItemType.EQUIPMENT,rarity:10,position:PositionConfig.Body,command:15,movePower:2},
 	{id:95,name:"拜年鸡",type:ItemType.EQUIPMENT,rarity:10,position:PositionConfig.Foot,agility:15,attack:10},
 	{id:96,name:"鸡冠帽",type:ItemType.EQUIPMENT,rarity:10,position:PositionConfig.Head,luck:15,breakout:10},
+	
+	{id:97,name:"红战石",rarity:5,type:ItemType.STONE,stoneType:StoneType.RED,skill:[],property:[],status:[]},//物理攻击宝石
+	{id:98,name:"红法石",rarity:5,type:ItemType.STONE,stoneType:StoneType.RED},//法术攻击宝石
+	{id:99,name:"红辅石",rarity:5,type:ItemType.STONE,stoneType:StoneType.RED},//除攻击类和内政类宝石
+	{id:100,name:"红佐石",rarity:5,type:ItemType.STONE,stoneType:StoneType.RED},//内政宝石
+	{id:101,name:"紫战石",rarity:4,type:ItemType.STONE,stoneType:StoneType.PURPLE},
+	{id:102,name:"紫法石",rarity:4,type:ItemType.STONE,stoneType:StoneType.PURPLE},
+	{id:103,name:"紫辅石",rarity:4,type:ItemType.STONE,stoneType:StoneType.PURPLE},
+	{id:104,name:"紫佐石",rarity:4,type:ItemType.STONE,stoneType:StoneType.PURPLE},
+	{id:105,name:"蓝战石",rarity:3,type:ItemType.STONE,stoneType:StoneType.BLUE},
+	{id:106,name:"蓝法石",rarity:3,type:ItemType.STONE,stoneType:StoneType.BLUE},
+	{id:107,name:"蓝辅石",rarity:3,type:ItemType.STONE,stoneType:StoneType.BLUE},
+	{id:108,name:"蓝佐石",rarity:3,type:ItemType.STONE,stoneType:StoneType.BLUE},
+	{id:109,name:"绿战石",rarity:2,type:ItemType.STONE,stoneType:StoneType.GREEN},
+	{id:110,name:"绿法石",rarity:2,type:ItemType.STONE,stoneType:StoneType.GREEN},
+	{id:111,name:"绿辅石",rarity:2,type:ItemType.STONE,stoneType:StoneType.GREEN},
+	{id:112,name:"绿佐石",rarity:2,type:ItemType.STONE,stoneType:StoneType.GREEN},
+	{id:113,name:"黄战石",rarity:1,type:ItemType.STONE,stoneType:StoneType.YELLOW},
+	{id:114,name:"黄法石",rarity:1,type:ItemType.STONE,stoneType:StoneType.YELLOW},
+	{id:115,name:"黄辅石",rarity:1,type:ItemType.STONE,stoneType:StoneType.YELLOW},
+	{id:116,name:"黄佐石",rarity:1,type:ItemType.STONE,stoneType:StoneType.YELLOW},
 ];

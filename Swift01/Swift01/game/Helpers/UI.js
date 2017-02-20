@@ -88,10 +88,7 @@ function getBlackBitmap(width,height){
  *title,message,okEvent,cancelEvent 
  */
 function ConfirmWindow(obj){
-	//console.log("ConfirmWindow",obj);
 	var windowLayer = getTranslucentMask();
-	
-	//var backgroundData = new LBitmapData(LMvc.datalist["win05"]);
 	if(!obj.width){
 		obj.width = 320;
 	}
@@ -103,8 +100,6 @@ function ConfirmWindow(obj){
 	panel.y = (LMvc.screenHeight - obj.height) * 0.5;
 	windowLayer.addChild(panel);
 	var titlePanel = getPanel("win02",obj.titleWidth ? obj.titleWidth : 160,60);
-	//var titleData = new LBitmapData(LMvc.datalist["win02"]);
-	//var titlePanel = getBitmap(new LPanel(titleData,160,60));
 	titlePanel.x = (LMvc.screenWidth - titlePanel.getWidth()) * 0.5;
 	titlePanel.y = panel.y - 10;
 	windowLayer.addChild(titlePanel);
@@ -147,12 +142,12 @@ function ConfirmWindow(obj){
 		closePanel.addEventListener(LMouseEvent.MOUSE_UP,obj.cancelEvent);
 		return windowLayer;
 	}
-	var okPanel = getButton(Language.get("yes"), 100);//new LButton(new LBitmap(new LBitmapData(LMvc.datalist["ok"])));
+	var okPanel = getButton(Language.get(obj.okText?obj.okText:"yes"), 100);
 	okPanel.y = panel.y + panel.getHeight() - okPanel.getHeight() - 20;
 	windowLayer.addChild(okPanel);
 	okPanel.name = "okButton";
 	if(typeof obj.cancelEvent != UNDEFINED){
-		var cancelPanel = getButton(Language.get("no"), 100);//new LButton(new LBitmap(new LBitmapData(LMvc.datalist["close"])));
+		var cancelPanel = getButton(Language.get(obj.cancelText?obj.cancelText:"no"), 100);
 		cancelPanel.se = "Se_cancel";
 		cancelPanel.y = panel.y + panel.getHeight() - cancelPanel.getHeight() - 20;
 		windowLayer.addChild(cancelPanel);
@@ -169,6 +164,15 @@ function ConfirmWindow(obj){
 	okPanel.addEventListener(LMouseEvent.MOUSE_UP, obj.okEvent?obj.okEvent:function(event){
 		event.currentTarget.parent.remove();
 	});
+	if(typeof obj.otherText != UNDEFINED && typeof obj.otherEvent != UNDEFINED){
+		var otherPanel = getButton(Language.get(obj.otherText), 100);
+		otherPanel.x = (LMvc.screenWidth - otherPanel.getWidth())*0.5;
+		otherPanel.y = panel.y + panel.getHeight() - otherPanel.getHeight() - 20;
+		windowLayer.addChild(otherPanel);
+		otherPanel.addEventListener(LMouseEvent.MOUSE_UP, obj.otherEvent);
+		okPanel.x = LMvc.screenWidth*0.5 - okPanel.getWidth() -otherPanel.getWidth()*0.5 - 10;
+		cancelPanel.x = LMvc.screenWidth*0.5 + otherPanel.getWidth()*0.5 + 10;
+	}
 	windowLayer.name = "ConfirmWindow";
 	return windowLayer;
 }

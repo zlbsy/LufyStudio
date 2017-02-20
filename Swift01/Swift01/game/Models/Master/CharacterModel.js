@@ -1300,7 +1300,8 @@ CharacterModel.prototype.equipmentsData = function() {
 	var list = [];
 	for(var i=0,l=equipments.length;i<l;i++){
 		var equipment = equipments[i];
-		list.push({item_id:equipment.id(), count:1});
+		list.push(equipment.datas());
+		//list.push({item_id:equipment.id(), count:1});
 	}
 	return list;
 };
@@ -1347,7 +1348,7 @@ CharacterModel.prototype.equip = function(itemModel) {
 				break;
 			}
 		}
-		var item = new ItemModel(null, {item_id:itemModel.id(), count:1});
+		var item = new ItemModel(null,itemModel.dates());
 		if(self.seigniorId() == LMvc.selectSeignorId){
 			LMvc.chapterData["treasure_" + item.id()] = 1;
 		}
@@ -1406,9 +1407,9 @@ CharacterModel.prototype.skill = function(type) {
 		(Array.isArray(skillType) && skillType.indexOf(type) < 0))){
 		return self.soldiersSkill(type);
 	}
-	if(skill.probability() < 100){
+	if(type && skill.probability() < 100){
 		var rand = Math.fakeRandom();
-		if(type && rand > skill.probability()*0.01){
+		if(rand > skill.probability()*0.01){
 			return self.soldiersSkill(type);
 		}
 	}

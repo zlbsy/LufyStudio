@@ -74,7 +74,7 @@ ItemDetailedView.prototype.set=function(){
 	lblExplanation.y = equipment.y + height + 10;
 	layer.addChild(lblExplanation);
 	
-	if(self.fromView.constructor.name != "ItemListView"){
+	if(self.fromView.constructor.name != "ItemListView" && self.itemModel.itemType() != ItemType.STONE){
 		var btnEquip = getButton(Language.get("label_use"), 120);
 		btnEquip.x = (320 - btnEquip.getWidth())*0.5;
 		btnEquip.y = 200;
