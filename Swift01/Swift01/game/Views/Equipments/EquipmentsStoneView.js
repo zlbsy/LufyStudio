@@ -4,7 +4,7 @@ function EquipmentsStoneView(controller, equipmentModel) {
 	self.equipmentModel = equipmentModel;
 	self.iconWidth = 50;
 	self.iconHeight = 50;
-	self.equipmentLayerHeight = 100;
+	self.equipmentLayerHeight = 134;
 	self.size = new LPoint(LMvc.screenWidth - 20, LMvc.screenHeight - self.equipmentLayerHeight);
 	self.init();
 }
@@ -36,6 +36,11 @@ EquipmentsStoneView.prototype.onClickCloseButton = function(event) {
 	var self = event.currentTarget.getParentByConstructor(EquipmentsStoneView);
 	self.remove();
 	CharacterDetailedView.instance.visible = true;
+	var tabLayer = CharacterDetailedView.instance.tabLayer;
+	var equipmentView = tabLayer.childList.find(function(child){
+		return child instanceof CharacterDetailedTabEquipmentView;
+	});
+	equipmentView.updateView();
 };
 EquipmentsStoneView.prototype.setEquipment = function() {
 	var self = this;
@@ -52,7 +57,9 @@ EquipmentsStoneView.prototype.setEquipment = function() {
 	lblParams.text = txtParams;
 	var lblSkill = self.getSkill();
 	if(lblSkill){
-		lblSkill.text = String.format("{0} : {1}",Language.get("stunt"), self.equipmentModel.skill().name());
+		var skill = self.equipmentModel.skill();
+		lblSkill.text = String.format(Language.get("skill_explanation"),skill.name(),skill.explanation(),skill.probability());
+		//String.format("{0} : {1}",Language.get("stunt"), self.equipmentModel.skill().name());
 	}
 	if(!self.equipmentId || self.equipmentId != self.equipmentModel.id() 
 	 || self.stone != self.equipmentModel.stone()){
@@ -62,7 +69,8 @@ EquipmentsStoneView.prototype.setEquipment = function() {
 		self.equipmentId =self.equipmentModel.id();
 		self.stone =self.equipmentModel.stone();
 		self.icon = self.equipmentModel.icon(new LPoint(self.iconWidth, self.iconHeight),self.iconComplete);
-		self.icon.x = self.icon.y = 10;
+		self.icon.x = 20;
+		self.icon.y = 50;
 		self.equipmentLayer.addChild(self.icon);
 	}
 };
@@ -100,7 +108,7 @@ EquipmentsStoneView.prototype.getName=function(){
 	var self = this;
 	if(!self.lblName){
 		var lblName = getStrokeLabel("",23,"#FFFFFF","#000000",3);
-		lblName.x = self.iconWidth + 15;
+		lblName.x = 15;
 		lblName.y = 15;
 		self.equipmentLayer.addChild(lblName);
 		self.lblName = lblName;
@@ -114,7 +122,9 @@ EquipmentsStoneView.prototype.getSkill=function(){
 			return null;
 		}
 		var lblSkill = getStrokeLabel("",16,"#FFFFFF","#000000",3);
-		lblSkill.x = 200;
+		lblSkill.width = 300;
+		lblSkill.setWordWrap(true,20);
+		lblSkill.x = 150;
 		lblSkill.y = self.lblParams.y + self.lblParams.getHeight() + 5;
 		self.equipmentLayer.addChild(lblSkill);
 		self.lblSkill = lblSkill;
@@ -126,7 +136,7 @@ EquipmentsStoneView.prototype.getParams=function(){
 	if(!self.lblParams){
 		var lblParams = getStrokeLabel("",16,"#FFFFFF","#000000",3);
 		lblParams.setWordWrap(true, 23);
-		lblParams.x = 200;
+		lblParams.x = 150;
 		lblParams.y = 15;
 		self.equipmentLayer.addChild(lblParams);
 		self.lblParams = lblParams;

@@ -83,22 +83,37 @@ StoneChildView.prototype.onClick = function(event) {
 	var self = event.target;
 	var listView = event.currentTarget;
 	var equipmentsStoneView = listView.getParentByConstructor(EquipmentsStoneView);
-	if(equipmentsStoneView.equipmentModel.stone()){
-		obj = {width:300, height:240,
-		message:Language.get("强化后，原有的强化效果会消失，要继续强化吗？"), 
-		title:Language.get("strengthen"), 
+	var obj = {width:300, height:240,title:Language.get("strengthen"), 
 		okEvent:function(e){
 			e.currentTarget.parent.remove();
 			self.equipStone(equipmentsStoneView);
 		},
 		cancel:null};
-		var dialog = ConfirmWindow(obj);
-		LMvc.layer.addChild(dialog);
-		return;
+	if(equipmentsStoneView.equipmentModel.stone()){
+		obj.message=Language.get("强化后，原有的强化效果会消失，要继续强化吗？");
+	}else{
+		obj.message=Language.get("消化强化石进行强化吗？");
 	}
-	self.equipStone(equipmentsStoneView);
+	var dialog = ConfirmWindow(obj);
+	LMvc.layer.addChild(dialog);
 };
 StoneChildView.prototype.equipStone=function(equipmentsStoneView){
 	var self = this;
-	equipmentsStoneView.equipStone(self.itemModel);
+	var strengthBitmap = new LBitmap(new LBitmapData(LMvc.datalist["strength"]));
+	strengthBitmap.x = -0.5*strengthBitmap.getWidth();
+	strengthBitmap.y = -0.5*strengthBitmap.getHeight();
+	var strength = new LSprite();
+	strength.x = equipmentsStoneView.icon.x + equipmentsStoneView.icon.getWidth() * 0.5;
+	strength.y = equipmentsStoneView.icon.y + equipmentsStoneView.icon.getHeight() * 0.5;
+	strength.scaleX = strength.scaleY = 0.5;
+	strength.alpha = 0;
+	strength.addChild(strengthBitmap);
+	
+	LMvc.layer.addChild(strength);
+	LTweenLite.to(strength,0.1,{alpha:1})
+	.to(strength,0.3,{scaleX:2,scaleY:2,ease:Back.easeIn})
+	.to(strength,0.1,{alpha:0,onComplete:function(event){
+		event.target.remove();
+		equipmentsStoneView.equipStone(self.itemModel);
+	}});
 };
