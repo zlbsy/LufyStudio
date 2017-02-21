@@ -20,5 +20,6 @@ CharacterListModel.prototype.getImages=function(){
 	list.push({name:"win08",path:LMvc.IMG_PATH+"win/win08.png"});
 	list.push({name:"icon-line",path:LMvc.IMG_PATH+"icon/line.png"});
 	list.push({name:"arrow",path:LMvc.IMG_PATH+"icon/arrow.png"});
+	list.push({name:"strength",path:LMvc.IMG_PATH+"effect/strength.png"});
 	return list;
 };
