@@ -88,11 +88,11 @@ StoneChildView.prototype.onClick = function(event) {
 			e.currentTarget.parent.remove();
 			self.equipStone(equipmentsStoneView);
 		},
-		cancel:null};
+		cancelEvent:null};
 	if(equipmentsStoneView.equipmentModel.stone()){
 		obj.message=Language.get("强化后，原有的强化效果会消失，要继续强化吗？");
 	}else{
-		obj.message=Language.get("消化强化石进行强化吗？");
+		obj.messageHtml=String.format(Language.get("<font size='22' color='#FFFFFF'>消耗<font color='#FF0000'>{0}</font>对<font color='#FF0000'>{1}</font>进行强化吗？</font>"),self.itemModel.name(), equipmentsStoneView.equipmentModel.name());
 	}
 	var dialog = ConfirmWindow(obj);
 	LMvc.layer.addChild(dialog);
