@@ -285,6 +285,9 @@ function calculateHertStrategyValue(attChara,hertChara,currentSelectStrategy,cor
 	//法术系数加成
 	r = r * currentSelectStrategy.hert();
 	//特技等系数加成
+	if(typeof correctionFactor == UNDEFINED){
+		correctionFactor = 1;
+	}
 	r = r * correctionFactor;
 	//兵种伤害系数加成
 	r = r * hertCharaModel.currentSoldiers().strategyHert();
