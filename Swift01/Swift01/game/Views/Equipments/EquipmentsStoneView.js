@@ -117,18 +117,22 @@ EquipmentsStoneView.prototype.getName=function(){
 };
 EquipmentsStoneView.prototype.getSkill=function(){
 	var self = this;
-	if(!self.lblSkill){
-		if(!self.equipmentModel.skill()){
-			return null;
+	if(!self.equipmentModel.skill()){
+		if(self.lblSkill){
+			self.lblSkill.visible = false;
 		}
+		return null;
+	}
+	if(!self.lblSkill){
 		var lblSkill = getStrokeLabel("",16,"#FFFFFF","#000000",3);
 		lblSkill.width = 300;
 		lblSkill.setWordWrap(true,20);
 		lblSkill.x = 150;
-		lblSkill.y = self.lblParams.y + self.lblParams.getHeight() + 5;
 		self.equipmentLayer.addChild(lblSkill);
 		self.lblSkill = lblSkill;
 	}
+	self.lblSkill.y = self.lblParams.y + self.lblParams.getHeight() + 5;
+	self.lblSkill.visible = true;
 	return self.lblSkill;
 };
 EquipmentsStoneView.prototype.getParams=function(){
@@ -182,7 +186,40 @@ EquipmentsStoneView.prototype.updateItems = function(stoneList) {
 EquipmentsStoneView.prototype.equipStone = function(itemModel) {
 	var self = this;
 	self.equipmentModel.stone(itemModel.id());
-	self.equipmentModel.stonePlus({skill:10,type:ItemType.EQUIPMENT});
+	var stoneValue = itemModel.stoneValue();
+	var rand = Math.fakeRandom()*100;
+	var p = 0;
+	var skillList;
+	for (var i = 0; i < stoneValue.length; i++) {
+		var child = stoneValue[i];
+		p += child.p;
+		if(rand <= p){
+			skillList = child.list;
+			break;
+		}
+	}
+	var sum = 0;
+	for (var i = 0; i < skillList.length; i++) {
+		var child = skillList[i];
+		sum += child.p;
+	}
+	p = 0;
+	rand = Math.fakeRandom()*sum;
+	var data;
+	for (var i = 0; i < skillList.length; i++) {
+		var child = skillList[i];
+		p += child.p;
+		if(rand <= p){
+			data = {type:ItemType.EQUIPMENT};
+			for (k in child) {
+				if(k != "p"){
+					data[k] = child[k];
+				}
+			}
+			break;
+		}
+	}
+	self.equipmentModel.stonePlus(data);
 	var seignior = SeigniorModel.getSeignior(LMvc.selectSeignorId);
 	seignior.removeItem(itemModel);
 	self.updateView();
