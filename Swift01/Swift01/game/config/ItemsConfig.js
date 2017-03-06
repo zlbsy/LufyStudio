@@ -140,33 +140,66 @@ var ItemDatas = [
 	{p:0,list:[]}]},//内政宝石
 	{id:101,name:"紫战石",rarity:4,type:ItemType.STONE,stoneType:StoneType.PURPLE,stoneValue:[
 	{p:20,list:[{skill:1,p:10},{skill:2,p:10},{skill:3,p:10}]},
-	{p:80,list:[{attack:10},{defense:10}]},
+	{p:80,list:[{force:10,p:10},{command:10,p:10},{agility:10,p:10}]},
 	{p:0,list:[]}]},
 	{id:102,name:"紫法石",rarity:4,type:ItemType.STONE,stoneType:StoneType.PURPLE,stoneValue:[
 	{p:20,list:[{skill:1,p:10},{skill:2,p:10},{skill:3,p:10}]},
-	{p:80,list:[{attack:10},{defense:10}]},
+	{p:80,list:[{intelligence:10,p:10},{command:10,p:10},{luck:10,p:10}]},
 	{p:0,list:[]}]},
 	{id:103,name:"紫辅石",rarity:4,type:ItemType.STONE,stoneType:StoneType.PURPLE,stoneValue:[
 	{p:20,list:[{skill:1,p:10},{skill:2,p:10},{skill:3,p:10}]},
-	{p:80,list:[{attack:10},{defense:10}]},
+	{p:80,list:[{intelligence:10,p:10},{agility:10,p:10},{luck:10,p:10}]},
 	{p:0,list:[]}]},
 	{id:104,name:"紫佐石",rarity:4,type:ItemType.STONE,stoneType:StoneType.PURPLE,stoneValue:[
 	{p:20,list:[{skill:1,p:10},{skill:2,p:10},{skill:3,p:10}]},
-	{p:80,list:[{attack:10},{defense:10}]},
+	{p:80,list:[{agility:10,p:10},{luck:10,p:10},{command:10,p:10}]},
 	{p:0,list:[]}]},
 	{id:105,name:"蓝战石",rarity:3,type:ItemType.STONE,stoneType:StoneType.BLUE,stoneValue:[
-	{p:20,list:[{skill:1,p:10},{skill:2,p:10},{skill:3,p:10}]},
+	{p:10,list:[{skill:1,p:10},{skill:2,p:10},{skill:3,p:10}]},
 	{p:0,list:[]},
-	{p:80,list:[{force:10},{defense:10}]}]},
-	{id:106,name:"蓝法石",rarity:3,type:ItemType.STONE,stoneType:StoneType.BLUE},
-	{id:107,name:"蓝辅石",rarity:3,type:ItemType.STONE,stoneType:StoneType.BLUE},
-	{id:108,name:"蓝佐石",rarity:3,type:ItemType.STONE,stoneType:StoneType.BLUE},
-	{id:109,name:"绿战石",rarity:2,type:ItemType.STONE,stoneType:StoneType.GREEN},
-	{id:110,name:"绿法石",rarity:2,type:ItemType.STONE,stoneType:StoneType.GREEN},
-	{id:111,name:"绿辅石",rarity:2,type:ItemType.STONE,stoneType:StoneType.GREEN},
-	{id:112,name:"绿佐石",rarity:2,type:ItemType.STONE,stoneType:StoneType.GREEN},
-	{id:113,name:"黄战石",rarity:1,type:ItemType.STONE,stoneType:StoneType.YELLOW},
-	{id:114,name:"黄法石",rarity:1,type:ItemType.STONE,stoneType:StoneType.YELLOW},
-	{id:115,name:"黄辅石",rarity:1,type:ItemType.STONE,stoneType:StoneType.YELLOW},
-	{id:116,name:"黄佐石",rarity:1,type:ItemType.STONE,stoneType:StoneType.YELLOW},
+	{p:80,list:[{attack:10,p:10},{defense:10,p:10},{morale:10,p:10}]}]},
+	{id:106,name:"蓝法石",rarity:3,type:ItemType.STONE,stoneType:StoneType.BLUE,stoneValue:[
+	{p:10,list:[{skill:1,p:10},{skill:2,p:10},{skill:3,p:10}]},
+	{p:0,list:[]},
+	{p:80,list:[{attack:10,p:10},{defense:10,p:10},{spirit:10,p:10}]}]},
+	{id:107,name:"蓝辅石",rarity:3,type:ItemType.STONE,stoneType:StoneType.BLUE,stoneValue:[
+	{p:10,list:[{skill:1,p:10},{skill:2,p:10},{skill:3,p:10}]},
+	{p:0,list:[]},
+	{p:80,list:[{attack:10,p:10},{defense:10,p:10},{spirit:10,p:10}]}]},
+	{id:108,name:"蓝佐石",rarity:3,type:ItemType.STONE,stoneType:StoneType.BLUE,stoneValue:[
+	{p:10,list:[{skill:1,p:10},{skill:2,p:10},{skill:3,p:10}]},
+	{p:0,list:[]},
+	{p:80,list:[{attack:10,p:10},{defense:10,p:10},{spirit:10,p:10}]}]},
+	{id:109,name:"绿战石",rarity:2,type:ItemType.STONE,stoneType:StoneType.GREEN,stoneValue:[
+	{p:0,list:[]},
+	{p:100,list:[{force:10,p:10},{command:10,p:10},{agility:10,p:10}]},
+	{p:0,list:[]}]},
+	{id:110,name:"绿法石",rarity:2,type:ItemType.STONE,stoneType:StoneType.GREEN,stoneValue:[
+	{p:0,list:[]},
+	{p:100,list:[{force:10,p:10},{command:10,p:10},{agility:10,p:10}]},
+	{p:0,list:[]}]},
+	{id:111,name:"绿辅石",rarity:2,type:ItemType.STONE,stoneType:StoneType.GREEN,stoneValue:[
+	{p:0,list:[]},
+	{p:100,list:[{force:10,p:10},{command:10,p:10},{agility:10,p:10}]},
+	{p:0,list:[]}]},
+	{id:112,name:"绿佐石",rarity:2,type:ItemType.STONE,stoneType:StoneType.GREEN,stoneValue:[
+	{p:0,list:[]},
+	{p:100,list:[{force:10,p:10},{command:10,p:10},{agility:10,p:10}]},
+	{p:0,list:[]}]},
+	{id:113,name:"黄战石",rarity:1,type:ItemType.STONE,stoneType:StoneType.YELLOW,stoneValue:[
+	{p:0,list:[]},
+	{p:0,list:[]},
+	{p:100,list:[{attack:10,p:10},{defense:10,p:10},{spirit:10,p:10}]}]},
+	{id:114,name:"黄法石",rarity:1,type:ItemType.STONE,stoneType:StoneType.YELLOW,stoneValue:[
+	{p:0,list:[]},
+	{p:0,list:[]},
+	{p:100,list:[{attack:10,p:10},{defense:10,p:10},{spirit:10,p:10}]}]},
+	{id:115,name:"黄辅石",rarity:1,type:ItemType.STONE,stoneType:StoneType.YELLOW,stoneValue:[
+	{p:0,list:[]},
+	{p:0,list:[]},
+	{p:100,list:[{attack:10,p:10},{defense:10,p:10},{spirit:10,p:10}]}]},
+	{id:116,name:"黄佐石",rarity:1,type:ItemType.STONE,stoneType:StoneType.YELLOW,stoneValue:[
+	{p:0,list:[]},
+	{p:0,list:[]},
+	{p:100,list:[{attack:10,p:10},{defense:10,p:10},{spirit:10,p:10}]}]},
 ];
