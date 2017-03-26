@@ -742,6 +742,8 @@ CharacterModel.prototype.troops = function(value, proportionWounded) {
 	if(typeof value != UNDEFINED){
 		if(value > self.maxTroops()){
 			value = self.maxTroops();
+		}else if(value < 0){
+			value = 0;
 		}
 		if(proportionWounded){
 			var addWounded = (self.data.troops - value) * proportionWounded >>> 0;
