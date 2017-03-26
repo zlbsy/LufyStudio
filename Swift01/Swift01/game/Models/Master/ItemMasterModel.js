@@ -104,6 +104,9 @@ ItemMasterModel.prototype.getParam = function(key){
 ItemMasterModel.prototype.movePower = function(){
 	return this.data.movePower?this.data.movePower:0;
 };
+ItemMasterModel.prototype.stoneValue = function(){
+	return this.data.stoneValue?this.data.stoneValue:0;
+};
 ItemMasterModel.prototype.life = function(){
 	return this.data.life?this.data.life:0;
 };

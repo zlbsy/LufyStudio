@@ -53,6 +53,9 @@ ItemModel.prototype.stonePlusItem = function(value){
 	}
 	return self._stonePlusItem;
 };
+ItemModel.prototype.stoneValue = function(){
+	return this.master().stoneValue();
+};
 ItemModel.prototype.count = function(value){
 	return this._dataValue("count", value, 0);
 };

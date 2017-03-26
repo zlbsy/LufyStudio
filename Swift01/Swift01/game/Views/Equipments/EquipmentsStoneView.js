@@ -131,6 +131,7 @@ EquipmentsStoneView.prototype.getSkill=function(){
 		self.equipmentLayer.addChild(lblSkill);
 		self.lblSkill = lblSkill;
 	}
+	self.lblParams.height = 0;
 	self.lblSkill.y = self.lblParams.y + self.lblParams.getHeight() + 5;
 	self.lblSkill.visible = true;
 	return self.lblSkill;

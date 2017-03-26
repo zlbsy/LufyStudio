@@ -591,6 +591,7 @@ Language.data = {
 	"soldiers_image":"兵种形象",
 	"growing":"能力成长",
 	"breakthrough":"突破成长",
+	"running_get_message":"{0}在执行{1}的时候,百姓进献了{2}。"
 };
 Language.itemData = {
 	"item_name_1":"方壶",
@@ -1192,6 +1193,10 @@ Language.skillData = {
 	"mi_19":"令敌军粮食消耗加倍,持续五个回合。",
 	"m_20":"凝聚",//陆逊
 	"mi_20":"己方所有特技必然发动,持续两个回合。",
+	"m_21":"众志成城",//审配
+	"mi_21":"己军全体所受伤害减少10%,持续五个回合。",
+	"m_22":"埋伏",//李儒
+	"mi_22":"埋伏两个精锐佣兵,对防御较弱的敌军进行伏击,伏兵进行一次攻击后自动撤退。",
 };
 Language.groupSkillTalkData = [
 	"痛快，一起上!",
