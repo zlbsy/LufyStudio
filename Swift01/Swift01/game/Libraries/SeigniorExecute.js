@@ -273,6 +273,18 @@ SeigniorExecute.prototype.areaRun=function(area){
 SeigniorExecute.prototype.areaGainRun=function(area){
 	var self = this;
 	SeigniorExecuteChangeCityResources(area);
+	var generals = area.generals();
+	for(var i=0;i<generals.length;i++){
+		var chara = generals[i];
+		var skill = chara.skill();
+		if(skill && skill.isSubType(SkillSubType.ADDITIONAL)){
+			var additional = skill.additional();
+			if(additional.type == "food"){
+				area.food(additional.value * area.level());
+				break;
+			}
+		}
+	}
 	self.areaGainOver = true;
 };
 SeigniorExecute.prototype.generalsPrizedRun=function(area){

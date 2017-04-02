@@ -479,7 +479,7 @@ function agricultureRun(characterModel){
 				itemId = 104;
 			}
 			var item = ItemMasterModel.getMaster(itemId);
-			cityModel.addItem(item);
+			characterModel.city().addItem(new ItemModel(null, {item_id:item.id(),count:1}));
 			if(characterModel.city().isAppoint()){
 				var msg = String.format(Language.get("running_get_message"), characterModel.name(),Language.get("agriculture"),item.name());
 				SeigniorExecute.addMessage(msg);
@@ -523,7 +523,7 @@ function businessRun(characterModel){
 					itemId = 104;
 				}
 				var item = ItemMasterModel.getMaster(itemId);
-				cityModel.addItem(item);
+				characterModel.city().addItem(new ItemModel(null, {item_id:item.id(),count:1}));
 				if(characterModel.city().isAppoint()){
 					var msg = String.format(Language.get("running_get_message"), characterModel.name(),Language.get("business"),item.name());
 					SeigniorExecute.addMessage(msg);
@@ -577,7 +577,7 @@ function technologyRun(characterModel){
 				itemId = 104;
 			}
 			var item = ItemMasterModel.getMaster(itemId);
-			cityModel.addItem(item);
+			cityModel.addItem(new ItemModel(null, {item_id:item.id(),count:1}));
 			if(characterModel.city().isAppoint()){
 				var msg = String.format(Language.get("running_get_message"), characterModel.name(),Language.get("technology"),item.name());
 				SeigniorExecute.addMessage(msg);

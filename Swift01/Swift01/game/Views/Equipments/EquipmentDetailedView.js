@@ -80,23 +80,17 @@ EquipmentDetailedView.prototype.set=function(){
 	if(self.fromView.constructor.name != "ItemListView"){
 		var btnEquip = getButton(Language.get("label_equip"), 100);
 		self.btnEquip = btnEquip;
-		btnEquip.x = (340 - btnEquip.getWidth())*0.5 - btnEquip.getWidth() - 5;
+		btnEquip.x = (340 - btnEquip.getWidth())*0.5 - 65;
 		btnEquip.y = 280;
 		layer.addChild(btnEquip);
 		btnEquip.addEventListener(LMouseEvent.MOUSE_UP, self.equip);
 		if(self.itemModel.rarity() <= 4){
 			var btnSale = getButton(Language.get("label_sale"), 100);
 			self.btnSale = btnSale;
-			btnSale.x = (340 - btnSale.getWidth())*0.5;
+			btnSale.x = (340 - btnSale.getWidth())*0.5 + 65;
 			btnSale.y = 280;
 			layer.addChild(btnSale);
 			btnSale.addEventListener(LMouseEvent.MOUSE_UP, self.sale);
-			var btnResolve = getButton(Language.get("resolve"), 100);
-			self.btnResolve = btnResolve;
-			btnResolve.x = (340 - btnResolve.getWidth())*0.5 + btnEquip.getWidth() + 5;
-			btnResolve.y = 280;
-			layer.addChild(btnResolve);
-			btnResolve.addEventListener(LMouseEvent.MOUSE_UP, self.resolve);
 		}else{
 			btnEquip.x = (340 - btnEquip.getWidth())*0.5;
 		}
@@ -145,34 +139,11 @@ EquipmentDetailedView.prototype.sale=function(event){
 	var btnSale = event.currentTarget;
 	var self = btnSale.getParentByConstructor(EquipmentDetailedView);
 	self.btnEquip.remove();
-	self.btnResolve.remove();
 	self.additionLayer.remove();
 	btnSale.x = (340 - btnSale.getWidth())*0.5;
 	btnSale.removeEventListener(LMouseEvent.MOUSE_UP, self.sale);
 	self.saleContentInit();
 	btnSale.addEventListener(LMouseEvent.MOUSE_UP, self.saleRun);
-};
-EquipmentDetailedView.prototype.resolveRun=function(event){
-	var self = event.currentTarget.getParentByConstructor(EquipmentDetailedView);
-	var cityData = self.controller.getValue("cityData");
-	var saleMoney = self.number*self.itemModel.price();
-	while(self.number-- > 0){
-		cityData.removeItem(self.itemModel);
-	}
-	cityData.money(saleMoney);
-	self.controller.dispatchEvent(LController.NOTIFY_ALL);
-	self.remove();
-};
-EquipmentDetailedView.prototype.resolve=function(event){
-	var btnResolve = event.currentTarget;
-	var self = btnResolve.getParentByConstructor(EquipmentDetailedView);
-	self.btnEquip.remove();
-	self.btnSale.remove();
-	self.additionLayer.remove();
-	btnResolve.x = (340 - btnResolve.getWidth())*0.5;
-	btnResolve.removeEventListener(LMouseEvent.MOUSE_UP, self.sale);
-	self.saleContentInit(true);
-	btnResolve.addEventListener(LMouseEvent.MOUSE_UP, self.resolveRun);
 };
 EquipmentDetailedView.prototype.saleContentInit=function(isResolve){
 	var self = this;

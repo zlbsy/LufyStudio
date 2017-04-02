@@ -39,6 +39,9 @@ function calculateDoubleAtt(attChara,hertChara){
 	}else if(rate >= 3){
 		h = 100;
 	}
+	if(isMilitaryHappened(attCharaModel.seigniorId(), MilitaryType.CONTINUE)){
+		h *= 2;
+	}
 	if(Math.fakeRandom()*100 <= h){
 		return true;
 	}
@@ -89,6 +92,9 @@ function calculateFatalAtt(attChara,hertChara){
 	var skill = attCharaModel.skill(SkillType.ATTACK_FATAL);
 	if(skill && h < skill.hit()){
 		h = skill.hit();
+	}
+	if(isMilitaryHappened(attCharaModel.seigniorId(), MilitaryType.ANGER)){
+		h *= 2;
 	}
 	if(Math.fakeRandom()*100 <= h){
 		return true;

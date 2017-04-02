@@ -44,6 +44,9 @@ SkillMasterModel.prototype.subType = function() {
 SkillMasterModel.prototype.isSubType = function(subType) {
 	return this.data.subType.indexOf(subType) >= 0;
 };
+SkillMasterModel.prototype.additional = function() {
+	return this.data.additional;
+};
 SkillMasterModel.prototype.belong = function() {
 	return this.data.belong;
 };

@@ -1409,6 +1409,11 @@ CharacterModel.prototype.skill = function(type) {
 		(Array.isArray(skillType) && skillType.indexOf(type) < 0))){
 		return self.soldiersSkill(type);
 	}
+	if(type){
+		if(isMilitaryHappened(self.seigniorId(), MilitaryType.SKILL)){
+			return skill;
+		}
+	}
 	if(type && skill.probability() < 100){
 		var rand = Math.fakeRandom();
 		if(rand > skill.probability()*0.01){

@@ -318,7 +318,15 @@ function battleDefCharactersToAttack(belong, battleData){
 function battleFoodCheck(belong){
 	var battleData = LMvc.BattleController.battleData;
 	var charas = LMvc.BattleController.view.charaLayer.getCharactersFromBelong(belong);
-	var militaryModel = LMvc.BattleController.militaryModel;
+	var cityFood = (belong == Belong.SELF && battleData.fromCity.seigniorCharaId() != LMvc.selectSeignorId) || 
+		(belong == Belong.ENEMY && battleData.fromCity.seigniorCharaId() == LMvc.selectSeignorId);
+	var militaryModel = cityFood ? LMvc.BattleController.militaryModel : null;
+	if(militaryModel && LMvc.BattleController.militaryModel){
+		LMvc.BattleController.militaryValidLimit--;
+		if(LMvc.BattleController.militaryValidLimit <= 0){
+			LMvc.BattleController.militaryModel = null;
+		}
+	}
 	battleDefCharactersToAttack(belong, battleData);
 	var needFood = 0;
 	var thrift = 1;
@@ -342,15 +350,9 @@ function battleFoodCheck(belong){
 			thrift = 0.5;
 		}
 	}
-	var cityFood = (belong == Belong.SELF && battleData.fromCity.seigniorCharaId() != LMvc.selectSeignorId) || 
-		(belong == Belong.ENEMY && battleData.fromCity.seigniorCharaId() == LMvc.selectSeignorId);
 	if(cityFood){
 		if(militaryModel && militaryModel.isType(MilitaryType.WOOD_CATTLE)){
 			thrift = 0;
-			LMvc.BattleController.militaryValidLimit--;
-			if(LMvc.BattleController.militaryValidLimit <= 0){
-				LMvc.BattleController.militaryType = null;
-			}
 		}
 		needFood = (needFood * thrift >>> 0);
 		if(battleData.toCity.food() > needFood){
@@ -1068,13 +1070,7 @@ function militaryAdviserEnd(event){
 	militaryAdviserSelect(characterModel, charas);
 }
 function militaryAdviserSelect(characterModel, charas){
-	//event.target.remove();
-	//var characterModel = BattleController.ctrlChara.data;
 	var militaryModel = characterModel.military();
-	//console.log("STRATEGY",militaryModel.isType(MilitaryType.STRATEGY));
-	//console.log("WOOD_CATTLE",militaryModel.isType(MilitaryType.WOOD_CATTLE));
-	//console.log("BARRIER",militaryModel.isType(MilitaryType.BARRIER));
-	//var charas = LMvc.BattleController.view.charaLayer.getCharactersFromBelong(militaryModel.belong());
 	if(militaryModel.isType(MilitaryType.STRATEGY)){
 		for(var i=0, l= charas.length;i<l;i++){
 			var chara = charas[i];
@@ -1087,7 +1083,9 @@ function militaryAdviserSelect(characterModel, charas){
 				}
 			}
 		}
-	}else if(militaryModel.isType(MilitaryType.WOOD_CATTLE)){
+	}else if(militaryModel.isType(MilitaryType.WOOD_CATTLE) || militaryModel.isType(MilitaryType.CONTINUE) || 
+	militaryModel.isType(MilitaryType.ANGER) || militaryModel.isType(MilitaryType.CONSUMPTION) || 
+	militaryModel.isType(MilitaryType.SKILL) || militaryModel.isType(MilitaryType.SURMOUNT)){
 		LMvc.BattleController.militaryModel = militaryModel;
 		LMvc.BattleController.militaryValidLimit = militaryModel.validLimit();
 	}else if(militaryModel.isType(MilitaryType.BARRIER)){
@@ -1221,4 +1219,10 @@ function getBattleSoldierSelectId(currentSoldiers, characterModel){
 }
 function isPlayerBattle(){
 	return (typeof BattleController != UNDEFINED) && (LMvc.BattleController instanceof BattleController);
+}
+function isMilitaryHappened(seigniorId, militaryType){
+	if(!LMvc.BattleController || !LMvc.BattleController.militaryModel || !LMvc.BattleController.toCity || !LMvc.BattleController.toCity.seigniorCharaId){
+		return false;
+	}
+	return LMvc.BattleController.militaryModel.isType(militaryType) && LMvc.BattleController.toCity.seigniorCharaId() == seigniorId;
 }

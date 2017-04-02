@@ -2,6 +2,11 @@ var MilitaryType = {
 	STRATEGY:1,//一般策略
 	WOOD_CATTLE:2,//木牛流马
 	BARRIER:3,//屏障
+	CONTINUE:4,//连锁
+	ANGER:5,//高昂
+	CONSUMPTION:6,//耗粮
+	SKILL:7,//凝聚
+	SURMOUNT:8,//众志成城
 };
 var MilitaryCondition = {
 	HERT:1,//受伤
@@ -141,7 +146,7 @@ var MilitaryDatas = [
 	strategys:[[6],[10],[4],[2],[8]],strategyCount:1,
 	},
 	{id:17,name:"连锁",belong:Belong.SELF,
-	type:[MilitaryType.STRATEGY],
+	type:[MilitaryType.CONTINUE],
 	imageCount:7,
 	image:"up",
 	powerful:16,
@@ -150,7 +155,7 @@ var MilitaryDatas = [
 	strategys:[[6],[10],[4],[2],[8]],strategyCount:1,
 	},
 	{id:18,name:"高昂",belong:Belong.SELF,
-	type:[MilitaryType.STRATEGY],
+	type:[MilitaryType.ANGER],
 	imageCount:7,
 	image:"up",
 	powerful:15,
@@ -159,7 +164,7 @@ var MilitaryDatas = [
 	strategys:[[6],[10],[4],[2],[8]],strategyCount:1,
 	},
 	{id:19,name:"耗粮",belong:Belong.ENEMY,
-	type:[MilitaryType.STRATEGY],
+	type:[MilitaryType.CONSUMPTION],
 	imageCount:7,
 	image:"down",
 	powerful:12,
@@ -168,7 +173,16 @@ var MilitaryDatas = [
 	strategys:[[6],[10],[4],[2],[8]],strategyCount:1,
 	},
 	{id:20,name:"凝聚",belong:Belong.SELF,
-	type:[MilitaryType.STRATEGY],
+	type:[MilitaryType.SKILL],
+	imageCount:7,
+	image:"up",
+	powerful:14,
+	validLimit:2,
+	condition:MilitaryCondition.NEAR,
+	strategys:[[6],[10],[4],[2],[8]],strategyCount:1,
+	},
+	{id:21,name:"众志成城",belong:Belong.SELF,
+	type:[MilitaryType.SURMOUNT],
 	imageCount:7,
 	image:"up",
 	powerful:14,
