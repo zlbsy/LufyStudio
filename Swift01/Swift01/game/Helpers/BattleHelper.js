@@ -320,13 +320,14 @@ function battleFoodCheck(belong){
 	var charas = LMvc.BattleController.view.charaLayer.getCharactersFromBelong(belong);
 	var cityFood = (belong == Belong.SELF && battleData.fromCity.seigniorCharaId() != LMvc.selectSeignorId) || 
 		(belong == Belong.ENEMY && battleData.fromCity.seigniorCharaId() == LMvc.selectSeignorId);
-	var militaryModel = cityFood ? LMvc.BattleController.militaryModel : null;
-	if(militaryModel && LMvc.BattleController.militaryModel){
+	var militaryModel = LMvc.BattleController.militaryModel;
+	/*if(militaryModel && LMvc.BattleController.militaryModel){
+	 TODO::
 		LMvc.BattleController.militaryValidLimit--;
 		if(LMvc.BattleController.militaryValidLimit <= 0){
 			LMvc.BattleController.militaryModel = null;
 		}
-	}
+	}*/
 	battleDefCharactersToAttack(belong, battleData);
 	var needFood = 0;
 	var thrift = 1;
@@ -335,7 +336,7 @@ function battleFoodCheck(belong){
 		if(charaModel.hasSkill(SkillSubType.RICE)){
 			continue;
 		}
-		if(militaryModel && militaryModel.isType(MilitaryType.WOOD_CATTLE)){
+		if(cityFood && militaryModel && militaryModel.isType(MilitaryType.WOOD_CATTLE)){
 			var troops = charaModel.troops();
 			var troopsAdd = charaModel.maxTroops() * militaryModel.healTroops() >>> 0;
 			if(charaModel.maxTroops() < troops + troopsAdd){
@@ -361,6 +362,9 @@ function battleFoodCheck(belong){
 		}
 		battleData.toCity.food(-battleData.toCity.food());
 	}else{
+		if(militaryModel && militaryModel.isType(MilitaryType.CONSUMPTION)){
+			thrift *= 2;
+		}
 		needFood += (battleData.troops * 0.5);
 		needFood = (needFood * thrift >>> 0);
 		if(battleData.food > needFood){

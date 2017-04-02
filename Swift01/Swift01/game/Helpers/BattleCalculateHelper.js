@@ -297,7 +297,9 @@ function calculateHertStrategyValue(attChara,hertChara,currentSelectStrategy,cor
 	r = r * correctionFactor;
 	//兵种伤害系数加成
 	r = r * hertCharaModel.currentSoldiers().strategyHert();
-	//TODO:宝物加成
+	if(isMilitaryHappened(hertCharaModel.seigniorId(), MilitaryType.SURMOUNT)){
+		r *= LMvc.BattleController.militaryModel.hert();
+	}
 	if(r < 1){
 		r = 1;
 	}
@@ -387,6 +389,9 @@ function calculateHertValue(attChara,hertChara,correctionFactor, isView){
 	}
 	//修正系数
 	r *= correctionFactor;
+	if(isMilitaryHappened(hertCharaModel.seigniorId(), MilitaryType.SURMOUNT)){
+		r *= LMvc.BattleController.militaryModel.hert();
+	}
 	if(!isView){
 		//随即系数
 		r = (11 - Math.fakeRandom() * 2) * 0.1 * r;

@@ -56,6 +56,9 @@ MilitaryModel.prototype.heals = function() {
 MilitaryModel.prototype.healCount = function() {
 	return this.data.healCount;
 };
+MilitaryModel.prototype.hert = function() {
+	return this.data.hert;
+};
 MilitaryModel.prototype.strategys = function() {
 	return this.data.strategys;
 };
