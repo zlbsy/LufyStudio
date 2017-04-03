@@ -72,6 +72,11 @@ EquipmentsChildView.prototype.set=function(){
 			txtParams += "\n";
 		}
 	}
+	var skill = self.itemModel.skill();
+	if(skill){
+		txtParams = LString.trim(txtParams) + String.format("\n{0} : {1}",Language.get("stunt"), skill.name());
+	}
+	
 	lblParams.text = txtParams;
 	self.drawLine();
 	

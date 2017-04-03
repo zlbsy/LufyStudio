@@ -1410,7 +1410,7 @@ CharacterModel.prototype.skill = function(type) {
 		return self.soldiersSkill(type);
 	}
 	if(type){
-		if(isMilitaryHappened(self.seigniorId(), MilitaryType.SKILL)){
+		if(LMvc.BattleController && isMilitaryHappened(self.seigniorId(), MilitaryType.SKILL)){
 			return skill;
 		}
 	}

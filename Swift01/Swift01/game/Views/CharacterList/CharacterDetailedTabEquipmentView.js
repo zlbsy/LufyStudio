@@ -104,8 +104,16 @@ CharacterDetailedTabEquipmentView.prototype.confirmEquipment=function(event){
 		var format = "<font size='22' color='#FFFFFF'>{0} "+(canRemove ? "-" : "+")+"{1}</font>";
 		msg += "\n" + String.format(format, Language.get(key), equipment.getParam(key));
 	}
+	var skill = equipment.skill();
+	var height = 270;
+	if(skill){
+		msg += "\n<font size='22' color='#FFFFFF'>" 
+		+ String.format(Language.get("skill_explanation"),skill.name(),skill.explanation(),skill.probability())
+		+ "</font>";
+		height += 100;
+	}
 	
-	var obj = {title:Language.get("confirm"),messageHtml:msg,height:270};
+	var obj = {title:Language.get("confirm"),messageHtml:msg,height:height};
 		
 	if(canRemove){
 		obj.okEvent = self.removeEquipmentRun;

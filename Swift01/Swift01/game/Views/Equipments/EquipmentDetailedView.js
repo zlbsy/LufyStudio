@@ -68,15 +68,20 @@ EquipmentDetailedView.prototype.set=function(){
 	additionLayer.y = equipment.y;
 	layer.addChild(additionLayer);
 	
-	//TODO::ver1.1增加物品介绍
-	/*var explanation = self.itemModel.explanation();
-	var lblExplanation = getStrokeLabel(explanation,18,"#FFFFFF","#000000",4);
-	lblExplanation.width = 280;
-	lblExplanation.setWordWrap(true, 25);
-	lblExplanation.x = equipment.x;
-	lblExplanation.y = equipment.y + height + 10;
-	layer.addChild(lblExplanation);
-	*/
+	var skill = self.itemModel.skill();
+	if(skill){
+		var skillText = String.format(Language.get("skill_explanation"),skill.name(),skill.explanation(),skill.probability());
+		var lblSkill = getStrokeLabel(skillText,18,"#FFFFFF","#000000",4);
+		self.lblSkill = lblSkill;
+		lblSkill.width = 280;
+		lblSkill.setWordWrap(true, 25);
+		lblSkill.x = equipment.x;
+		lblSkill.y = equipment.y + height + 10;
+		layer.addChild(lblSkill);
+	}else{
+		self.lblSkill = null;
+	}
+	
 	if(self.fromView.constructor.name != "ItemListView"){
 		var btnEquip = getButton(Language.get("label_equip"), 100);
 		self.btnEquip = btnEquip;
@@ -140,6 +145,9 @@ EquipmentDetailedView.prototype.sale=function(event){
 	var self = btnSale.getParentByConstructor(EquipmentDetailedView);
 	self.btnEquip.remove();
 	self.additionLayer.remove();
+	if(self.lblSkill){
+		self.lblSkill.remove();
+	}
 	btnSale.x = (340 - btnSale.getWidth())*0.5;
 	btnSale.removeEventListener(LMouseEvent.MOUSE_UP, self.sale);
 	self.saleContentInit();

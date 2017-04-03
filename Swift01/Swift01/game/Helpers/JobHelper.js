@@ -1288,7 +1288,6 @@ function tournamentsGet(result){
 	}
 	if(result == 1){
 		var NewYearPresent = LMvc.chapterData["NewYearPresent_item_92"];
-		var time = formatDate(new Date(), "YYYYMMDD");
 		if(!NewYearPresent && isInNewYearTrem()){
 			ids.push({id:92,q:1});
 			LMvc.chapterData["NewYearPresent_item_92"] = 1;
@@ -1297,8 +1296,9 @@ function tournamentsGet(result){
 		//id:99,name:"红辅石" id:100,name:"红佐石"
 		var stones = [97, 98, 99, 100];
 		var itemId = stones[stones.length * Math.fakeRandom() >>> 0];
-		ids.push(itemId);
+		ids.push({id:itemId,q:1});
 	}
+	
 	var seignior = SeigniorModel.getSeignior(LMvc.selectSeignorId);
 	var getLabels = [];
 	for(var i=0;i<ids.length;i++){
