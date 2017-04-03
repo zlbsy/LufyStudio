@@ -321,13 +321,6 @@ function battleFoodCheck(belong){
 	var cityFood = (belong == Belong.SELF && battleData.fromCity.seigniorCharaId() != LMvc.selectSeignorId) || 
 		(belong == Belong.ENEMY && battleData.fromCity.seigniorCharaId() == LMvc.selectSeignorId);
 	var militaryModel = LMvc.BattleController.militaryModel;
-	/*if(militaryModel && LMvc.BattleController.militaryModel){
-	 TODO::
-		LMvc.BattleController.militaryValidLimit--;
-		if(LMvc.BattleController.militaryValidLimit <= 0){
-			LMvc.BattleController.militaryModel = null;
-		}
-	}*/
 	battleDefCharactersToAttack(belong, battleData);
 	var needFood = 0;
 	var thrift = 1;

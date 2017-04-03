@@ -1282,7 +1282,7 @@ function tournamentsGet(result){
 	}
 	ids = [];
 	while(ids.length < 4 && arr.length > 0){
-		var i = arr.length * Math.random() >>> 0;
+		var i = arr.length * Math.fakeRandom() >>> 0;
 		ids.push(arr[i]);
 		arr.splice(i, 1);
 	}
@@ -1293,6 +1293,11 @@ function tournamentsGet(result){
 			ids.push({id:92,q:1});
 			LMvc.chapterData["NewYearPresent_item_92"] = 1;
 		}
+		//id:97,name:"红战石" id:98,name:"红法石"
+		//id:99,name:"红辅石" id:100,name:"红佐石"
+		var stones = [97, 98, 99, 100];
+		var itemId = stones[stones.length * Math.fakeRandom() >>> 0];
+		ids.push(itemId);
 	}
 	var seignior = SeigniorModel.getSeignior(LMvc.selectSeignorId);
 	var getLabels = [];
