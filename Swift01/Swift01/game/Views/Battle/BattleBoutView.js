@@ -46,8 +46,8 @@ BattleBoutView.prototype.removeSelf=function(event){
 	var belong = self.belong;
 	LMvc.running = false;
 	if(LMvc.BattleController.militaryModel){
-		var cityBelong = (belong == Belong.SELF && battleData.fromCity.seigniorCharaId() != LMvc.selectSeignorId) || 
-		(belong == Belong.ENEMY && battleData.fromCity.seigniorCharaId() == LMvc.selectSeignorId);
+		var cityBelong = (belong == Belong.SELF && LMvc.BattleController.battleData.fromCity.seigniorCharaId() != LMvc.selectSeignorId) || 
+		(belong == Belong.ENEMY && LMvc.BattleController.battleData.fromCity.seigniorCharaId() == LMvc.selectSeignorId);
 		if(cityBelong){
 			LMvc.BattleController.militaryValidLimit--;
 			if(LMvc.BattleController.militaryValidLimit <= 0){

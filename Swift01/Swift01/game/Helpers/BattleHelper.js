@@ -455,7 +455,10 @@ function getBattleSaveData(){
 	data.bout = LMvc.BattleController.getValue("bout");
 	data.startAttack = LMvc.BattleController.startAttack;
 	data.militaryOver = LMvc.BattleController.militaryOver;
-	
+	if(LMvc.BattleController.militaryModel){
+		data.militaryId = LMvc.BattleController.militaryModel.id();
+		data.militaryValidLimit = LMvc.BattleController.militaryValidLimit;
+	}
 	data.expeditionCharacterList=[];
 	for(var i=0,l=battleData.expeditionCharacterList.length;i<l;i++){
 		var character = battleData.expeditionCharacterList[i];
@@ -632,6 +635,12 @@ function setBattleSaveData(){
 	LMvc.BattleController.view.weatherLayer.setData(data.weather);
 	LMvc.BattleController.view.mainMenu.visible = true;
 	LMvc.BattleController.view.miniLayer.visible = true;
+	
+	if(data.militaryId){
+		LMvc.BattleController.militaryModel = MilitaryModel.getMaster(data.militaryId);
+		LMvc.BattleController.militaryValidLimit = data.militaryValidLimit;
+	}
+	
 	if(BattleSelectMenuController._instance){
 		if(BattleSelectMenuController._instance.view.parent){
 			BattleSelectMenuController._instance.view.remove();
@@ -1218,8 +1227,9 @@ function isPlayerBattle(){
 	return (typeof BattleController != UNDEFINED) && (LMvc.BattleController instanceof BattleController);
 }
 function isMilitaryHappened(seigniorId, militaryType){
-	if(!LMvc.BattleController || !LMvc.BattleController.militaryModel || !LMvc.BattleController.toCity || !LMvc.BattleController.toCity.seigniorCharaId){
+	if(!LMvc.BattleController || !LMvc.BattleController.militaryModel || !LMvc.BattleController.battleData.toCity || !LMvc.BattleController.battleData.toCity.seigniorCharaId){
+		console.log("check",LMvc.BattleController.militaryModel,LMvc.BattleController.battleData.toCity,LMvc.BattleController.battleData.toCity?LMvc.BattleController.battleData.toCity.seigniorCharaId:null);
 		return false;
 	}
-	return LMvc.BattleController.militaryModel.isType(militaryType) && LMvc.BattleController.toCity.seigniorCharaId() == seigniorId;
+	return LMvc.BattleController.militaryModel.isType(militaryType) && LMvc.BattleController.battleData.toCity.seigniorCharaId() == seigniorId;
 }
