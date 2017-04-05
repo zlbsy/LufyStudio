@@ -485,6 +485,10 @@ function getBattleSaveData(){
 			x:character.locationX(),
 			y:character.locationY()
 		};
+		if(character.militaryModel){
+			childData.militaryId = character.militaryModel.id();
+			childData.militaryValidLimit = character.militaryValidLimit;
+		}
 		if(childData.isDefCharacter){
 			childData.data = character.data.datas();
 		}else if(character.data.isEmploy()){
@@ -506,6 +510,10 @@ function getBattleSaveData(){
 			x:character.locationX(),
 			y:character.locationY()
 		};
+		if(character.militaryModel){
+			childData.militaryId = character.militaryModel.id();
+			childData.militaryValidLimit = character.militaryValidLimit;
+		}
 		if(childData.isDefCharacter){
 			childData.data = character.data.datas();
 		}else if(character.data.isEmploy()){
@@ -583,6 +591,10 @@ function setBattleSaveData(){
 		chara.mode = charaData.mode;
 		chara.mission = charaData.mission;
 		chara.status.setData(charaData.status);
+		if(charaData.militaryId){
+			chara.militaryModel = MilitaryModel.getMaster(charaData.militaryId);
+			chara.militaryValidLimit = charaData.militaryValidLimit;
+		}
 		if(charaData.id == data.selfLeader){
 			chara.isLeader = true;
 		}
@@ -603,6 +615,10 @@ function setBattleSaveData(){
 		chara.changeAction(charaData.action);
 		chara.status.setData(charaData.status);
 		chara.mission = charaData.mission;
+		if(charaData.militaryId){
+			chara.militaryModel = MilitaryModel.getMaster(charaData.militaryId);
+			chara.militaryValidLimit = charaData.militaryValidLimit;
+		}
 		if(charaData.id == data.enemyLeader){
 			chara.isLeader = true;
 		}
@@ -1228,8 +1244,7 @@ function isPlayerBattle(){
 }
 function isMilitaryHappened(seigniorId, militaryType){
 	if(!LMvc.BattleController || !LMvc.BattleController.militaryModel || !LMvc.BattleController.battleData.toCity || !LMvc.BattleController.battleData.toCity.seigniorCharaId){
-		console.log("check",LMvc.BattleController.militaryModel,LMvc.BattleController.battleData.toCity,LMvc.BattleController.battleData.toCity?LMvc.BattleController.battleData.toCity.seigniorCharaId:null);
 		return false;
 	}
-	return LMvc.BattleController.militaryModel.isType(militaryType) && LMvc.BattleController.battleData.toCity.seigniorCharaId() == seigniorId;
+	return LMvc.BattleController.militaryModel.isType(militaryType) && (seigniorId == 0 || LMvc.BattleController.battleData.toCity.seigniorCharaId() == seigniorId);
 }
