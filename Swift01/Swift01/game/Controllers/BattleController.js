@@ -245,6 +245,7 @@ BattleController.prototype.charactersInit = function(){
 		var child = enemyPositions[i];
 		var chara = enemyCharas[i];
 		var charaId = chara.id();
+		var equipments = chara.equipments();
 		if(LMvc.chapterData.trouble == TroubleConfig.HARD || LMvc.chapterData.trouble == TroubleConfig.NORMAL){
 			if(LMvc.chapterData.trouble == TroubleConfig.HARD && i < coreCount){
 				var currentSoldiers = chara.currentSoldiers();
@@ -255,11 +256,24 @@ BattleController.prototype.charactersInit = function(){
 					img = (soldierData && soldierData.img) ? soldierData.img : null;
 				}
 				chara.battleSoldierSelect(specialSoldierId, currentSoldiers.proficiency(), img);
+				
+				for(var i=0;i<equipments.length;i++){
+					
+				}
 			}else{
 				var currentSoldiers = chara.currentSoldiers();
 				 if(currentSoldiers.next()){
 					chara.battleSoldierSelect(currentSoldiers.next(), currentSoldiers.proficiency(), currentSoldiers.img());
 				}
+				
+				for(var i=0;i<equipments.length;i++){
+					
+				}
+			}
+		}else{
+			
+			for(var i=0;i<equipments.length;i++){
+				
 			}
 		}
 		self.addEnemyCharacter(charaId,child.direction,child.x,child.y);
