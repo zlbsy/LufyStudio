@@ -1239,6 +1239,99 @@ function getBattleSoldierSelectId(currentSoldiers, characterModel){
 	}
 	return currentSoldiers.id();
 }
+function setEquipmentsStoneItem(characterModel, level, isSpecial){
+	var equipments = characterModel.equipments();
+	characterModel.calculation(true);
+	var stoneTypes = [];
+	var skills = [0,0,0,0,0];
+	var status = [];
+	if(level > 45){
+		stoneTypes.push(StoneType.RED,StoneType.RED,StoneType.RED,StoneType.RED,StoneType.RED);
+		status.push({p:"attack",k:"force",v:5},{p:"spirit",k:"intelligence",v:5},{p:"defense",k:"command",v:5},{p:"breakout",k:"agility",v:5},{p:"morale",k:"luck",v:5});
+		if(LMvc.chapterData.trouble == TroubleConfig.HARD){
+			skills = [StoneType.RED,StoneType.RED,StoneType.RED,StoneType.RED,0];
+		}else if(LMvc.chapterData.trouble == TroubleConfig.NORMAL){
+			skills = [StoneType.RED,StoneType.RED,0,0,0];
+		}else{
+			skills = [StoneType.RED,0,0,0,0];
+		}
+	}else if(level > 35){
+		stoneTypes.push(StoneType.PURPLE,StoneType.PURPLE,StoneType.PURPLE,StoneType.PURPLE,StoneType.PURPLE);
+		status.push({p:"attack",k:"force",v:4},{p:"spirit",k:"intelligence",v:4},{p:"defense",k:"command",v:4},{p:"breakout",k:"agility",v:4},{p:"morale",k:"luck",v:4});
+		if(LMvc.chapterData.trouble == TroubleConfig.HARD){
+			skills = [StoneType.PURPLE,StoneType.PURPLE,StoneType.PURPLE,0,0];
+		}else if(LMvc.chapterData.trouble == TroubleConfig.NORMAL){
+			skills = [StoneType.PURPLE,0,0,0,0];
+		}
+	}else if(level > 25){
+		stoneTypes.push(StoneType.BLUE,StoneType.BLUE,StoneType.BLUE,StoneType.BLUE,StoneType.BLUE);
+		status.push({k:"attack",v:4},{k:"spirit",v:4},{k:"defense",v:4},{k:"breakout",v:4},{k:"morale",v:4});
+		if(LMvc.chapterData.trouble == TroubleConfig.HARD){
+			skills = [StoneType.BLUE,StoneType.BLUE,0,0,0];
+		}
+	}else if(level > 15){
+		stoneTypes.push(StoneType.GREEN,StoneType.GREEN,StoneType.GREEN,StoneType.GREEN,StoneType.GREEN);
+		status.push({p:"attack",k:"force",v:2},{p:"spirit",k:"intelligence",v:2},{p:"defense",k:"command",v:2},{p:"breakout",k:"agility",v:2},{p:"morale",k:"luck",v:2});
+		if(LMvc.chapterData.trouble == TroubleConfig.HARD){
+			skills = [StoneType.BLUE,0,0,0,0];
+		}
+	}else if(level > 5){
+		stoneTypes.push(StoneType.YELLOW,StoneType.YELLOW,StoneType.YELLOW,StoneType.YELLOW,StoneType.YELLOW);
+		status.push({k:"attack",v:2},{k:"spirit",v:2},{k:"defense",v:2},{k:"breakout",v:2},{k:"morale",v:2});
+	}
+	var currentSoldiers = characterModel.currentSoldiers();
+	var property = currentSoldiers.property();
+	for(var i=0;i<equipments.length;i++){
+		var equipment = equipments[i];
+		if(!isSpecial && i>0){
+			continue;
+		}
+		if(equipment.stone() && equipment.stonePlus().ai && equipment.stonePlus().level >= (level/10 >>> 0)){
+			continue;
+		}
+		var stoneId = 0, stoneData = {type:ItemType.EQUIPMENT, ai:1, level:(level/10 >>> 0)};
+		var stoneType = stoneTypes[i];
+		var skill = skills[i];
+		if(!skill){
+			for(var j=0;j<status.length;j++){
+				var child = status[j];
+				if(!child.p){
+					continue;
+				}
+				var old_v = CharacterModel.upValue(property[child.p], characterModel[child.k](), 0);
+				var new_v = CharacterModel.upValue(property[child.p], characterModel[child.k]() + child.v, 0);
+				if(new_v > old_v){
+					stoneData[child.p] = child.v;
+					stoneId = ItemDatas.find(function(c){return c.stoneType == stoneType;});
+					break;
+				}
+			}
+			if(stoneId == 0){
+				var child = status[status.length * Math.fakeRandom() >>> 0];
+				stoneData[child.p] = child.v;
+				stoneId = ItemDatas.find(function(c){return c.stoneType == stoneType;});
+			}
+		}else{
+			stoneId = ItemDatas.find(function(c){return c.stoneType == skill;});
+			getEquipmentStoneItem(characterModel, skill, stoneData);
+		}
+		equipment.stone(stoneId);
+		equipment.stonePlus(stoneData);
+	}
+}
+function getEquipmentStoneItem(characterModel, stoneType, stoneData){
+	var currentSoldiers = characterModel.currentSoldiers();
+	var property = currentSoldiers.property();
+	var skills = [];
+	ItemDatas.forEach(function(child){
+		if(child.soldierType.indexOf(currentSoldiers.soldierType()) >= 0){
+			skills.push(child.stoneValue[0].list);
+		}
+	});
+	skills = skills[skills.length >>> 0];
+	var child = skills[skills.length >>> 0];
+	stoneData.skill = child.skill;
+}
 function isPlayerBattle(){
 	return (typeof BattleController != UNDEFINED) && (LMvc.BattleController instanceof BattleController);
 }
