@@ -181,12 +181,12 @@ ItemModel.prototype.skill=function(type){
 	if(type && (
 		(typeof skillType == "string" && skillType != type) || 
 		(Array.isArray(skillType) && skillType.indexOf(type) < 0))){
-		return self.soldiersSkill(type);
+		return null;
 	}
 	if(type && skill.probability() < 100){
 		var rand = Math.fakeRandom();
 		if(rand > skill.probability()*0.01){
-			return self.soldiersSkill(type);
+			return null;
 		}
 	}
 	return skill;

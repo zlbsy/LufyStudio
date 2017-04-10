@@ -1300,19 +1300,19 @@ function setEquipmentsStoneItem(characterModel, level, isSpecial){
 				}
 				var old_v = CharacterModel.upValue(property[child.p], characterModel[child.k](), 0);
 				var new_v = CharacterModel.upValue(property[child.p], characterModel[child.k]() + child.v, 0);
-				if(new_v > old_v){
-					stoneData[child.p] = child.v;
-					stoneId = ItemDatas.find(function(c){return c.stoneType == stoneType;});
+				if(new_v > old_v){console.log(child);
+					stoneData[child.k] = child.v;
+					stoneId = ItemDatas.find(function(c){return c.stoneType == stoneType;}).id;
 					break;
 				}
 			}
 			if(stoneId == 0){
 				var child = status[status.length * Math.fakeRandom() >>> 0];
-				stoneData[child.p] = child.v;
-				stoneId = ItemDatas.find(function(c){return c.stoneType == stoneType;});
+				stoneData[child.k] = child.v;
+				stoneId = ItemDatas.find(function(c){return c.stoneType == stoneType;}).id;
 			}
 		}else{
-			stoneId = ItemDatas.find(function(c){return c.stoneType == skill;});
+			stoneId = ItemDatas.find(function(c){return c.stoneType == skill;}).id;
 			getEquipmentStoneItem(characterModel, skill, stoneData);
 		}
 		equipment.stone(stoneId);
@@ -1324,12 +1324,15 @@ function getEquipmentStoneItem(characterModel, stoneType, stoneData){
 	var property = currentSoldiers.property();
 	var skills = [];
 	ItemDatas.forEach(function(child){
-		if(child.soldierType.indexOf(currentSoldiers.soldierType()) >= 0){
+		if(child.soldierType && child.soldierType.indexOf(currentSoldiers.soldierType()) >= 0){
+			if(!child.stoneValue[0].list || child.stoneValue[0].list.length == 0){
+				return;
+			}
 			skills.push(child.stoneValue[0].list);
 		}
 	});
-	skills = skills[skills.length >>> 0];
-	var child = skills[skills.length >>> 0];
+	skills = skills[skills.length * Math.fakeRandom() >>> 0];
+	var child = skills[skills.length * Math.fakeRandom() >>> 0];
 	stoneData.skill = child.skill;
 }
 function isPlayerBattle(){

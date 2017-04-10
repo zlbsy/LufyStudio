@@ -445,30 +445,50 @@ CharacterModel.prototype.calculation = function(init) {
 	self.data["_skill_add_status_prop_maxTroops"] = 1;
 	self.data["_skill_add_status_num_maxTroops"] = 0;
 	
-	var skill = self.skill(SkillType.CREATE);
-	self.data.moveAssault = (skill && skill.isSubType(SkillSubType.MOVE_ASSAULT));
-	self.data.moveKnow = (skill && skill.isSubType(SkillSubType.MOVE_KNOW));
-	if(skill && skill.isSubType(SkillSubType.STATUS_ADD_NUM)){
-		//self.data[skill.statusName()] += skill.statusValue();
-		self.data["_skill_add_status_num_" + skill.statusName()] = skill.statusValue();
-	}else if(skill && skill.isSubType(SkillSubType.STATUS_ADD_PROP)){
-		//self.data[skill.statusName()] = self.data[skill.statusName()] * (1 + skill.statusValue()) >>> 0;
-		self.data["_skill_add_status_prop_" + skill.statusName()] = 1 + skill.statusValue();
-	}else if (skill && skill.isSubType(SkillSubType.HERT_VS_STATUS)) {
-		self.data.hertVsStatus = skill.hertVsStatus();
-	}else if (skill && skill.isSubType(SkillSubType.SOLDIERS_ATTACK_RECT)) {
-		var condition = skill.condition();
-		if(condition){
-			if((condition.type == "AttackType" && condition.value == currentSoldiers.attackType()) || 
-			(condition.type == "SoldierId" && condition.value.indexOf(currentSoldiers.id()) >= 0)){
-				self.data.rangeAttack = skill.rangeAttack().concat();
-				var ranges = currentSoldiers.rangeAttack();
-				for(var i=0,l=ranges.length;i<l;i++){
-					var range = ranges[i];
-					if(self.data.rangeAttack.findIndex(function(child){return range.x == child.x && range.y == child.y;}) >= 0){
-						return;
+	var createSkills = [], skill;
+	if(self.data.skill){
+		skill = SkillMasterModel.getMaster(self.data.skill);
+		if(skill.isMainType(SkillType.CREATE)){
+			createSkills.push(skill);
+		}
+	}
+	var currentSoldiers = self.currentSoldiers();
+	var skill = currentSoldiers.skill(SkillType.CREATE);
+	if(skill){
+		createSkills.push(skill);
+	}
+	var equipments = self.equipments();
+	for(var i=0;i<equipments.length;i++){
+		var equipment = equipments[i];
+		skill = equipment.skill(SkillType.CREATE);
+		if(skill){
+			createSkills.push(skill);
+		}
+	}
+	for(var i=0;i<createSkills.length;i++){
+		skill = createSkills[i];
+		self.data.moveAssault = (skill && skill.isSubType(SkillSubType.MOVE_ASSAULT));
+		self.data.moveKnow = (skill && skill.isSubType(SkillSubType.MOVE_KNOW));
+		if(skill && skill.isSubType(SkillSubType.STATUS_ADD_NUM)){
+			self.data["_skill_add_status_num_" + skill.statusName()] = skill.statusValue();
+		}else if(skill && skill.isSubType(SkillSubType.STATUS_ADD_PROP)){
+			self.data["_skill_add_status_prop_" + skill.statusName()] = 1 + skill.statusValue();
+		}else if (skill && skill.isSubType(SkillSubType.HERT_VS_STATUS)) {
+			self.data.hertVsStatus = skill.hertVsStatus();
+		}else if (skill && skill.isSubType(SkillSubType.SOLDIERS_ATTACK_RECT)) {
+			var condition = skill.condition();
+			if(condition){
+				if((condition.type == "AttackType" && condition.value == currentSoldiers.attackType()) || 
+				(condition.type == "SoldierId" && condition.value.indexOf(currentSoldiers.id()) >= 0)){
+					self.data.rangeAttack = skill.rangeAttack().concat();
+					var ranges = currentSoldiers.rangeAttack();
+					for(var i=0,l=ranges.length;i<l;i++){
+						var range = ranges[i];
+						if(self.data.rangeAttack.findIndex(function(child){return range.x == child.x && range.y == child.y;}) >= 0){
+							return;
+						}
+						self.data.rangeAttack.push(range);
 					}
-					self.data.rangeAttack.push(range);
 				}
 			}
 		}
@@ -1391,8 +1411,26 @@ CharacterModel.prototype.skillCoefficient = function() {
 	return (this.data.skill ? 1 : 0) + (this.data.groupSkill ? 1 : 0);
 };
 CharacterModel.prototype.soldiersSkill = function(type) {
+	var self = this;
 	var currentSoldiers = this.currentSoldiers();
-	return currentSoldiers.skill(type);
+	var soldiersSkill = currentSoldiers.skill(type);
+	if(soldiersSkill){
+		return soldiersSkill;
+	}else{
+		return self.equipmentSkill(type);
+	}
+};
+CharacterModel.prototype.equipmentSkill = function(type) {
+	var self = this;
+	var equipments = self.equipments();
+	for(var i=0;i<equipments.length;i++){
+		var equipment = equipments[i];
+		var skill = equipment.skill(type);
+		if(skill){
+			return skill;
+		}
+	}
+	return null;
 };
 CharacterModel.prototype.skill = function(type) {
 	var self = this;

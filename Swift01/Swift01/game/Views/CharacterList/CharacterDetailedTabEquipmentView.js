@@ -96,7 +96,7 @@ CharacterDetailedTabEquipmentView.prototype.confirmEquipment=function(event){
 	var canRemove = (!LMvc.BattleController && characterModel.city() &&  characterModel.city().seigniorCharaId() == LMvc.selectSeignorId);
 	var msg = String.format(Language.get("dialog_remove_equipment_confirm"),equipment.name());
 	if(!canRemove){
-		msg = String.format("<font color='#FF0000'>{0}</font>",equipment.name());
+		msg = String.format("<font size='22' color='#FF0000'>{0}</font>",equipment.name());
 	}
 	var params = equipment.params();
 	for(var i = 0;i < params.length;i++){
@@ -107,7 +107,7 @@ CharacterDetailedTabEquipmentView.prototype.confirmEquipment=function(event){
 	var skill = equipment.skill();
 	var height = 270;
 	if(skill){
-		msg += "\n<font size='22' color='#FFFFFF'>" 
+		msg += "\n<font size='20' color='#FFFFFF'>" 
 		+ String.format(Language.get("skill_explanation"),skill.name(),skill.explanation(),skill.probability())
 		+ "</font>";
 		height += 100;

@@ -35,6 +35,14 @@ SkillMasterModel.prototype.name = function() {
 SkillMasterModel.prototype.explanation = function() {
 	return Language.getSkill("se_"+this.data.id);
 };
+SkillMasterModel.prototype.isMainType = function(type) {
+	var mainType = this.data.type;
+	if((typeof mainType == "string" && mainType == type) || 
+	(Array.isArray(mainType) && mainType.indexOf(type) >= 0)){
+		return true;
+	}
+	return false;
+};
 SkillMasterModel.prototype.mainType = function() {
 	return this.data.type;
 };
