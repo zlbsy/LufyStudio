@@ -9,14 +9,14 @@ android {
             storePassword 'buzhidao'
         }
     }
-    compileSdkVersion 23
+    compileSdkVersion 24
     buildToolsVersion "24.0.2"
     defaultConfig {
         applicationId "com.lufylegend.sgj"
         minSdkVersion 9
         targetSdkVersion 9
-        versionName '1.9.3'
-        versionCode 13
+        versionName '1.9.4'
+        versionCode 14
     }
     buildTypes {
         release {
