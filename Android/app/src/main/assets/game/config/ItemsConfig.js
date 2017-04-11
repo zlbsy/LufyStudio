@@ -6,10 +6,18 @@ var ItemType = {
 	,EXP:"item_exp"/*增加属性经验*/
 	,LOYALTY:"item_loyalty"/*增加忠诚度*/
 	,EQUIPMENT:"item_equipment"/*装备*/
+	,STONE:"item_stone"/*宝石*/
 };
 var ItemSubType = {
 	
 };
+var StoneType = {
+	RED:"red"/*红宝石:加特技*/
+	,PURPLE:"purple"/*紫宝石:加武力智力或特技20%特技*/
+	,BLUE:"blue"/*蓝宝石:加攻防属性或特技10%特技*/
+	,GREEN:"green"/*绿宝石:加武力智力等属性*/
+	,YELLOW:"yellow"/*黄宝石:加攻防等属性*/
+}; 
 var BusinessSaleItems = [3,4];
 //PositionConfig.Hand 武器
 //PositionConfig.Body 身
@@ -113,4 +121,110 @@ var ItemDatas = [
 	{id:94,name:"飞翅服",type:ItemType.EQUIPMENT,rarity:10,position:PositionConfig.Body,command:15,movePower:2},
 	{id:95,name:"拜年鸡",type:ItemType.EQUIPMENT,rarity:10,position:PositionConfig.Foot,agility:15,attack:10},
 	{id:96,name:"鸡冠帽",type:ItemType.EQUIPMENT,rarity:10,position:PositionConfig.Head,luck:15,breakout:10},
+	
+	{id:97,name:"红战石",rarity:5,soldierType:[SoldierType.Physical, SoldierType.Comprehensive],type:ItemType.STONE,stoneType:StoneType.RED,stoneValue:[
+	{p:100,list:[{skill:1,p:5},{skill:3,p:5},{skill:4,p:5},{skill:5,p:10},{skill:6,p:10},{skill:8,p:5},{skill:9,p:5},{skill:10,p:5},
+	{skill:26,p:10},{skill:31,p:10},{skill:32,p:10},{skill:33,p:10},{skill:39,p:5},{skill:41,p:10},{skill:42,p:10},{skill:43,p:10},
+	{skill:44,p:10},{skill:50,p:10},{skill:52,p:10},{skill:56,p:10},{skill:67,p:10},{skill:71,p:5},{skill:72,p:10},{skill:73,p:10},
+	{skill:74,p:10},{skill:75,p:10},{skill:77,p:5},{skill:78,p:5},{skill:80,p:5},{skill:81,p:5},{skill:82,p:5},{skill:83,p:5},
+	{skill:85,p:5},{skill:86,p:10},{skill:87,p:10},{skill:91,p:10}]},
+	{p:0,list:[]},
+	{p:0,list:[]}]},//物理攻击宝石
+	{id:98,name:"红法石",rarity:5,soldierType:[SoldierType.Magic, SoldierType.Comprehensive],type:ItemType.STONE,stoneType:StoneType.RED,stoneValue:[
+	{p:100,list:[{skill:11,p:5},{skill:12,p:5},{skill:14,p:10},{skill:16,p:5},{skill:17,p:5},{skill:18,p:10},{skill:19,p:10},
+	{skill:23,p:10},{skill:24,p:5},{skill:25,p:10},{skill:27,p:10},{skill:76,p:10},{skill:79,p:5},{skill:80,p:5},{skill:84,p:5}]},
+	{p:0,list:[]},
+	{p:0,list:[]}]},//法术攻击宝石
+	{id:99,name:"红辅石",rarity:5,soldierType:[SoldierType.Physical, SoldierType.Magic, SoldierType.Comprehensive],type:ItemType.STONE,stoneType:StoneType.RED,stoneValue:[
+	{p:100,list:[{skill:2,p:5},{skill:7,p:10},{skill:13,p:5},{skill:15,p:10},{skill:20,p:10},{skill:21,p:10},{skill:22,p:10},
+	{skill:28,p:10},{skill:29,p:10},{skill:30,p:10},{skill:34,p:10},{skill:35,p:10},{skill:36,p:10},{skill:37,p:10},{skill:38,p:10},
+	{skill:40,p:10},{skill:45,p:10},{skill:51,p:10},{skill:53,p:10},{skill:57,p:10},{skill:58,p:10},{skill:59,p:10},{skill:60,p:10},
+	{skill:61,p:10},{skill:62,p:10},{skill:63,p:10},{skill:64,p:10},{skill:65,p:10},{skill:66,p:10},{skill:68,p:10},{skill:69,p:10},
+	{skill:70,p:10},{skill:88,p:10},{skill:89,p:10},{skill:90,p:10},{skill:92,p:5},{skill:93,p:5},{skill:94,p:5},{skill:98,p:10}]},
+	{p:0,list:[]},
+	{p:0,list:[]}]},//除攻击类和内政类宝石
+	{id:100,name:"红佐石",rarity:5,soldierType:[],type:ItemType.STONE,stoneType:StoneType.RED,stoneValue:[
+	{p:100,list:[{skill:46,p:10},{skill:47,p:10},{skill:48,p:10},{skill:49,p:10},{skill:95,p:10},{skill:96,p:10},{skill:97,p:10}]},
+	{p:0,list:[]},
+	{p:0,list:[]}]},//内政宝石
+	{id:101,name:"紫战石",rarity:4,soldierType:[SoldierType.Physical, SoldierType.Comprehensive],type:ItemType.STONE,stoneType:StoneType.PURPLE,stoneValue:[
+	{p:20,list:[{skill:1,p:5},{skill:3,p:5},{skill:4,p:5},{skill:5,p:10},{skill:6,p:10},{skill:8,p:5},{skill:9,p:5},{skill:10,p:5},
+	{skill:26,p:10},{skill:31,p:10},{skill:32,p:10},{skill:33,p:10},{skill:39,p:5},{skill:41,p:10},{skill:42,p:10},{skill:43,p:10},
+	{skill:44,p:10},{skill:50,p:10},{skill:52,p:10},{skill:56,p:10},{skill:67,p:10},{skill:71,p:5},{skill:72,p:10},{skill:73,p:10},
+	{skill:74,p:10},{skill:75,p:10},{skill:77,p:5},{skill:78,p:5},{skill:80,p:5},{skill:81,p:5},{skill:82,p:5},{skill:83,p:5},
+	{skill:85,p:5},{skill:86,p:10},{skill:87,p:10},{skill:91,p:10}]},
+	{p:80,list:[{force:5,p:10},{command:5,p:10},{agility:5,p:10},{force:4,p:50},{command:4,p:50},{agility:4,p:50},{force:3,p:100},{command:3,p:100},{agility:3,p:100}]},
+	{p:0,list:[]}]},
+	{id:102,name:"紫法石",rarity:4,soldierType:[SoldierType.Magic, SoldierType.Comprehensive],type:ItemType.STONE,stoneType:StoneType.PURPLE,stoneValue:[
+	{p:20,list:[{skill:11,p:5},{skill:12,p:5},{skill:14,p:10},{skill:16,p:5},{skill:17,p:5},{skill:18,p:10},{skill:19,p:10},
+	{skill:23,p:10},{skill:24,p:5},{skill:25,p:10},{skill:27,p:10},{skill:76,p:10},{skill:79,p:5},{skill:80,p:5},{skill:84,p:5}]},
+	{p:80,list:[{intelligence:5,p:10},{command:5,p:10},{luck:5,p:10},{intelligence:4,p:50},{command:4,p:50},{luck:4,p:50},{intelligence:3,p:100},{command:3,p:100},{luck:3,p:100}]},
+	{p:0,list:[]}]},
+	{id:103,name:"紫辅石",rarity:4,soldierType:[SoldierType.Physical, SoldierType.Magic, SoldierType.Comprehensive],type:ItemType.STONE,stoneType:StoneType.PURPLE,stoneValue:[
+	{p:20,list:[{skill:2,p:5},{skill:7,p:10},{skill:13,p:5},{skill:15,p:10},{skill:20,p:10},{skill:21,p:10},{skill:22,p:10},
+	{skill:28,p:10},{skill:29,p:10},{skill:30,p:10},{skill:34,p:10},{skill:35,p:10},{skill:36,p:10},{skill:37,p:10},{skill:38,p:10},
+	{skill:40,p:10},{skill:45,p:10},{skill:51,p:10},{skill:53,p:10},{skill:57,p:10},{skill:58,p:10},{skill:59,p:10},{skill:60,p:10},
+	{skill:61,p:10},{skill:62,p:10},{skill:63,p:10},{skill:64,p:10},{skill:65,p:10},{skill:66,p:10},{skill:68,p:10},{skill:69,p:10},
+	{skill:70,p:10},{skill:88,p:10},{skill:89,p:10},{skill:90,p:10},{skill:92,p:5},{skill:93,p:5},{skill:94,p:5},{skill:98,p:10}]},
+	{p:80,list:[{intelligence:5,p:10},{agility:5,p:10},{luck:5,p:10},{intelligence:4,p:50},{agility:4,p:50},{luck:4,p:50},{intelligence:3,p:100},{agility:3,p:100},{luck:3,p:100}]},
+	{p:0,list:[]}]},
+	{id:104,name:"紫佐石",rarity:4,soldierType:[],type:ItemType.STONE,stoneType:StoneType.PURPLE,stoneValue:[
+	{p:20,list:[{skill:46,p:10},{skill:47,p:10},{skill:48,p:10},{skill:49,p:10},{skill:95,p:10},{skill:96,p:10},{skill:97,p:10}]},
+	{p:80,list:[{agility:5,p:10},{luck:5,p:10},{command:5,p:10},{agility:4,p:50},{luck:4,p:50},{command:4,p:50},{agility:3,p:100},{luck:3,p:100},{command:3,p:100}]},
+	{p:0,list:[]}]},
+	{id:105,name:"蓝战石",rarity:3,soldierType:[SoldierType.Physical, SoldierType.Comprehensive],type:ItemType.STONE,stoneType:StoneType.BLUE,stoneValue:[
+	{p:10,list:[{skill:5,p:10},{skill:6,p:10},{skill:26,p:10},{skill:31,p:10},{skill:32,p:10},{skill:33,p:10},{skill:41,p:10},{skill:42,p:10},{skill:43,p:10},
+	{skill:44,p:10},{skill:50,p:10},{skill:52,p:10},{skill:56,p:10},{skill:67,p:10},{skill:72,p:10},{skill:73,p:10},
+	{skill:74,p:10},{skill:75,p:10},{skill:86,p:10},{skill:87,p:10},{skill:91,p:10}]},
+	{p:0,list:[]},
+	{p:90,list:[{attack:6,p:10},{defense:6,p:10},{breakout:6,p:10},{attack:5,p:50},{defense:5,p:50},{breakout:5,p:50},{attack:4,p:100},{defense:4,p:100},{breakout:4,p:100},{attack:3,p:100},{defense:3,p:100},{breakout:3,p:100}]}]},
+	{id:106,name:"蓝法石",rarity:3,soldierType:[SoldierType.Magic, SoldierType.Comprehensive],type:ItemType.STONE,stoneType:StoneType.BLUE,stoneValue:[
+	{p:10,list:[{skill:14,p:10},{skill:18,p:10},{skill:19,p:10},{skill:23,p:10},{skill:25,p:10},{skill:27,p:10},{skill:76,p:10}]},
+	{p:0,list:[]},
+	{p:90,list:[{spirit:6,p:10},{defense:6,p:10},{morale:6,p:10},{spirit:5,p:50},{defense:5,p:50},{morale:5,p:50},{spirit:4,p:100},{defense:4,p:100},{morale:4,p:100},{spirit:3,p:100},{defense:3,p:100},{morale:3,p:100}]}]},
+	{id:107,name:"蓝辅石",rarity:3,soldierType:[SoldierType.Physical, SoldierType.Magic, SoldierType.Comprehensive],type:ItemType.STONE,stoneType:StoneType.BLUE,stoneValue:[
+	{p:10,list:[{skill:7,p:10},{skill:15,p:10},{skill:20,p:10},{skill:21,p:10},{skill:22,p:10},
+	{skill:28,p:10},{skill:29,p:10},{skill:30,p:10},{skill:34,p:10},{skill:35,p:10},{skill:36,p:10},{skill:37,p:10},{skill:38,p:10},
+	{skill:40,p:10},{skill:45,p:10},{skill:51,p:10},{skill:53,p:10},{skill:57,p:10},{skill:58,p:10},{skill:59,p:10},{skill:60,p:10},
+	{skill:61,p:10},{skill:62,p:10},{skill:63,p:10},{skill:64,p:10},{skill:65,p:10},{skill:66,p:10},{skill:68,p:10},{skill:69,p:10},
+	{skill:70,p:10},{skill:88,p:10},{skill:89,p:10},{skill:90,p:10},{skill:98,p:10}]},
+	{p:0,list:[]},
+	{p:90,list:[{spirit:6,p:10},{breakout:6,p:10},{morale:6,p:10},{spirit:5,p:50},{breakout:5,p:50},{morale:5,p:50},{spirit:4,p:100},{breakout:4,p:100},{morale:4,p:100},{spirit:3,p:100},{breakout:3,p:100},{morale:3,p:100}]}]},
+	{id:108,name:"蓝佐石",rarity:3,soldierType:[],type:ItemType.STONE,stoneType:StoneType.BLUE,stoneValue:[
+	{p:10,list:[{skill:46,p:10},{skill:47,p:10},{skill:48,p:10},{skill:49,p:10},{skill:95,p:10},{skill:96,p:10},{skill:97,p:10}]},
+	{p:0,list:[]},
+	{p:90,list:[{breakout:6,p:10},{morale:6,p:10},{defense:6,p:10},{breakout:5,p:50},{morale:5,p:50},{defense:5,p:50},{breakout:4,p:100},{morale:4,p:100},{defense:4,p:100},{breakout:3,p:100},{morale:3,p:100},{defense:3,p:100}]}]},
+	{id:109,name:"绿战石",rarity:2,soldierType:[SoldierType.Physical, SoldierType.Comprehensive],type:ItemType.STONE,stoneType:StoneType.GREEN,stoneValue:[
+	{p:0,list:[]},
+	{p:100,list:[{force:3,p:10},{command:3,p:10},{agility:3,p:10},{force:2,p:50},{command:2,p:50},{agility:2,p:50},{force:1,p:100},{command:1,p:100},{agility:1,p:100}]},
+	{p:0,list:[]}]},
+	{id:110,name:"绿法石",rarity:2,soldierType:[SoldierType.Magic, SoldierType.Comprehensive],type:ItemType.STONE,stoneType:StoneType.GREEN,stoneValue:[
+	{p:0,list:[]},
+	{p:100,list:[{intelligence:3,p:10},{command:3,p:10},{luck:3,p:10},{intelligence:2,p:50},{command:2,p:50},{luck:2,p:50},{intelligence:1,p:100},{command:1,p:100},{luck:1,p:100}]},
+	{p:0,list:[]}]},
+	{id:111,name:"绿辅石",rarity:2,soldierType:[SoldierType.Physical, SoldierType.Magic, SoldierType.Comprehensive],type:ItemType.STONE,stoneType:StoneType.GREEN,stoneValue:[
+	{p:0,list:[]},
+	{p:100,list:[{intelligence:3,p:10},{agility:3,p:10},{luck:3,p:10},{intelligence:2,p:50},{agility:2,p:50},{luck:2,p:50},{intelligence:1,p:100},{agility:1,p:100},{luck:1,p:100}]},
+	{p:0,list:[]}]},
+	{id:112,name:"绿佐石",rarity:2,soldierType:[],type:ItemType.STONE,stoneType:StoneType.GREEN,stoneValue:[
+	{p:0,list:[]},
+	{p:100,list:[{agility:3,p:10},{luck:3,p:10},{command:3,p:10},{agility:2,p:50},{luck:2,p:50},{command:2,p:50},{agility:1,p:100},{luck:1,p:100},{command:1,p:100}]},
+	{p:0,list:[]}]},
+	{id:113,name:"黄战石",rarity:1,soldierType:[SoldierType.Physical, SoldierType.Comprehensive],type:ItemType.STONE,stoneType:StoneType.YELLOW,stoneValue:[
+	{p:0,list:[]},
+	{p:0,list:[]},
+	{p:100,list:[{attack:4,p:10},{defense:4,p:10},{breakout:4,p:10},{attack:3,p:50},{defense:3,p:50},{breakout:3,p:50},{attack:2,p:100},{defense:2,p:100},{breakout:2,p:100},{attack:1,p:100},{defense:1,p:100},{breakout:1,p:100}]}]},
+	{id:114,name:"黄法石",rarity:1,soldierType:[SoldierType.Magic, SoldierType.Comprehensive],type:ItemType.STONE,stoneType:StoneType.YELLOW,stoneValue:[
+	{p:0,
+	list:[]},
+	{p:0,list:[]},
+	{p:100,list:[{spirit:4,p:10},{defense:4,p:10},{morale:4,p:10},{spirit:3,p:50},{defense:3,p:50},{morale:3,p:50},{spirit:2,p:100},{defense:2,p:100},{morale:2,p:100},{spirit:1,p:100},{defense:1,p:100},{morale:1,p:100}]}]},
+	{id:115,name:"黄辅石",rarity:1,soldierType:[SoldierType.Physical, SoldierType.Magic, SoldierType.Comprehensive],type:ItemType.STONE,stoneType:StoneType.YELLOW,stoneValue:[
+	{p:0,list:[]},
+	{p:0,list:[]},
+	{p:100,list:[{spirit:4,p:10},{breakout:4,p:10},{morale:4,p:10},{spirit:3,p:50},{breakout:3,p:50},{morale:3,p:50},{spirit:2,p:100},{breakout:2,p:100},{morale:2,p:100},{spirit:1,p:100},{breakout:1,p:100},{morale:1,p:100}]}]},
+	{id:116,name:"黄佐石",rarity:1,soldierType:[],type:ItemType.STONE,stoneType:StoneType.YELLOW,stoneValue:[
+	{p:0,list:[]},
+	{p:0,list:[]},
+	{p:100,list:[{breakout:4,p:10},{morale:4,p:10},{defense:4,p:10},{breakout:3,p:50},{morale:3,p:50},{defense:3,p:50},{breakout:2,p:100},{morale:2,p:100},{defense:2,p:100},{breakout:1,p:100},{morale:1,p:100},{defense:1,p:100}]}]},
 ];

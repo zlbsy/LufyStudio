@@ -10,11 +10,11 @@ MapController.prototype.construct=function(){
 };
 MapController.prototype.configLoad=function(){
 	var self = this;
-	self.load.config(["Character","CharacterListType","Job","Items","Event","Strategy","Soldiers","Reputation","Military","Dictionary"],self.configLoad2);
+	self.load.config(["Character","CharacterListType","Job","Event","Strategy","Soldiers","Reputation","Military","Dictionary"],self.configLoad2);
 };
 MapController.prototype.configLoad2=function(){
 	var self = this;
-	self.load.config(["characterList"],self.helperLoad);
+	self.load.config(["characterList","Items"],self.helperLoad);
 };
 MapController.prototype.helperLoad=function(){
 	var self = this;

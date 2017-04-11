@@ -12,7 +12,7 @@ EquipmentDetailedView.prototype.layerInit=function(){
 	self.translucentLayer.addChild(getTranslucentBitmap());
 	self.translucentLayer.addEventListener(LMouseEvent.MOUSE_DOWN, self.click);
 	self.translucentLayer.addEventListener(LMouseEvent.MOUSE_UP, self.closeClick);
-	var width = 320, height = 350;
+	var width = 340, height = 350;
 	self.backLayer = new LSprite();
 	self.addChild(self.backLayer);
 	//var backgroundData = new LBitmapData(LMvc.datalist["win05"]);
@@ -68,30 +68,36 @@ EquipmentDetailedView.prototype.set=function(){
 	additionLayer.y = equipment.y;
 	layer.addChild(additionLayer);
 	
-	//TODO::ver1.1增加物品介绍
-	/*var explanation = self.itemModel.explanation();
-	var lblExplanation = getStrokeLabel(explanation,18,"#FFFFFF","#000000",4);
-	lblExplanation.width = 280;
-	lblExplanation.setWordWrap(true, 25);
-	lblExplanation.x = equipment.x;
-	lblExplanation.y = equipment.y + height + 10;
-	layer.addChild(lblExplanation);
-	*/
+	var skill = self.itemModel.skill();
+	if(skill){
+		var skillText = String.format(Language.get("skill_explanation"),skill.name(),skill.explanation(),skill.probability());
+		var lblSkill = getStrokeLabel(skillText,18,"#FFFFFF","#000000",4);
+		self.lblSkill = lblSkill;
+		lblSkill.width = 280;
+		lblSkill.setWordWrap(true, 25);
+		lblSkill.x = equipment.x;
+		lblSkill.y = equipment.y + height + 10;
+		layer.addChild(lblSkill);
+	}else{
+		self.lblSkill = null;
+	}
+	
 	if(self.fromView.constructor.name != "ItemListView"){
-		var btnEquip = getButton(Language.get("label_equip"), 120);
+		var btnEquip = getButton(Language.get("label_equip"), 100);
 		self.btnEquip = btnEquip;
-		btnEquip.x = (320 - btnEquip.getWidth())*0.5 - 65;
+		btnEquip.x = (340 - btnEquip.getWidth())*0.5 - 65;
 		btnEquip.y = 280;
 		layer.addChild(btnEquip);
 		btnEquip.addEventListener(LMouseEvent.MOUSE_UP, self.equip);
 		if(self.itemModel.rarity() <= 4){
-			var btnSale = getButton(Language.get("label_sale"), 120);
-			btnSale.x = (320 - btnSale.getWidth())*0.5 + 65;
+			var btnSale = getButton(Language.get("label_sale"), 100);
+			self.btnSale = btnSale;
+			btnSale.x = (340 - btnSale.getWidth())*0.5 + 65;
 			btnSale.y = 280;
 			layer.addChild(btnSale);
 			btnSale.addEventListener(LMouseEvent.MOUSE_UP, self.sale);
 		}else{
-			btnEquip.x = (320 - btnEquip.getWidth())*0.5;
+			btnEquip.x = (340 - btnEquip.getWidth())*0.5;
 		}
 	}
 	self.layer.addChild(layer);
@@ -139,12 +145,15 @@ EquipmentDetailedView.prototype.sale=function(event){
 	var self = btnSale.getParentByConstructor(EquipmentDetailedView);
 	self.btnEquip.remove();
 	self.additionLayer.remove();
-	btnSale.x = (320 - btnSale.getWidth())*0.5;
+	if(self.lblSkill){
+		self.lblSkill.remove();
+	}
+	btnSale.x = (340 - btnSale.getWidth())*0.5;
 	btnSale.removeEventListener(LMouseEvent.MOUSE_UP, self.sale);
 	self.saleContentInit();
 	btnSale.addEventListener(LMouseEvent.MOUSE_UP, self.saleRun);
 };
-EquipmentDetailedView.prototype.saleContentInit=function(){
+EquipmentDetailedView.prototype.saleContentInit=function(isResolve){
 	var self = this;
 	
 	var layer = new LSprite();
@@ -153,14 +162,16 @@ EquipmentDetailedView.prototype.saleContentInit=function(){
 	var detailedLayer = new LSprite();
 	var lblCount = getStrokeLabel(String.format(Language.get("hav_quantity"), self.itemModel.count()),20,"#FFFFFF","#000000",4);
 	detailedLayer.addChild(lblCount);
-	var lblPrice = getStrokeLabel(String.format(Language.get("sale_unit_price"), self.itemModel.price()),20,"#FFFFFF","#000000",4);
-	lblPrice.y = 30;
-	detailedLayer.addChild(lblPrice);
+	if(!isResolve){
+		var lblPrice = getStrokeLabel(String.format(Language.get("sale_unit_price"), self.itemModel.price()),20,"#FFFFFF","#000000",4);
+		lblPrice.y = 30;
+		detailedLayer.addChild(lblPrice);
+	}
 	detailedLayer.x = width + 30;
 	detailedLayer.y = 50;
 	layer.addChild(detailedLayer);
-	
-	var lblExplanation = getStrokeLabel(Language.get("sale_quantity_select"),20,"#FFFFFF","#000000",4);
+		
+	var lblExplanation = getStrokeLabel(Language.get(isResolve?"resolve_quantity_select":"sale_quantity_select"),20,"#FFFFFF","#000000",4);
 	lblExplanation.x = 20;
 	lblExplanation.y = 50 + height + 10;
 	layer.addChild(lblExplanation);

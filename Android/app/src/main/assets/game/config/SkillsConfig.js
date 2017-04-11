@@ -12,6 +12,11 @@ var SkillType = {
 	 **/
 	STRATEGY_ATTACK:"strategyAttack",
 	/**
+	 * 法术攻击时发动
+	 * 为了让法术连击可以叠加
+	 **/
+	STRATEGY_COUNT_ATTACK:"strategyCountAttack",
+	/**
 	 * 法术攻击结束时发动
 	 **/
 	STRATEGY_ATTACK_END:"strategyAttackEnd",
@@ -69,6 +74,10 @@ var SkillSubType = {
 	 * 祭祀
 	 **/
 	SACRIFICE:"sacrifice",
+	/**
+	 * 城池额外收入
+	 **/
+	ADDITIONAL:"additional",
 	/**
 	 * 自身状态改变
 	 **/
@@ -260,22 +269,22 @@ var SkillsData = [
 {id:7,name:"鼓舞(张辽,张任)",powerful:100,type:SkillType.BOUT_START,subType:[SkillSubType.SELF_AID],aids:[5],aidCount:1,aidRects:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],probability:50,explanation:"{probability}几率在回合开始时提升自身以及周围友军的士气。"},
 {id:8,name:"苍龙苏醒(赵云)",powerful:200,type:SkillType.ATTACK,subType:[SkillSubType.ENEMY_AID,SkillSubType.WAKE,SkillSubType.ATTACK_COUNT],attacks:[1.5],aids:[2,4,6,8,10],aidCount:1,aidRects:[{x:0,y:0}],wakeRects:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],probability:50,explanation:"{probability}几率在攻击时使敌人降低一种能力，且自身及周围友军不会陷入任何不良状态。"},
 {id:9,name:"幻影(黄忠)",powerful:200,type:SkillType.ATTACK,subType:[SkillSubType.ENEMY_AID,SkillSubType.ATTACK_COUNT],attacks:[2],aids:[21],aidCount:1,aidRects:[{x:0,y:0}],probability:30,explanation:"{probability}几率给对方2倍攻击，且使对方陷入昏迷状态。"},
-{id:10,name:"噬血(马超)",powerful:200,type:SkillType.ATTACK_END,subType:[SkillSubType.VAMPIRE],vampire:0.5,probability:40,explanation:"{probability}几率给在物理攻击对方时将敌军兵力转换为己方兵力。"},
+{id:10,name:"噬血(马超)",powerful:200,type:SkillType.ATTACK_END,subType:[SkillSubType.VAMPIRE],vampire:0.3,probability:100,explanation:"{probability}几率给在物理攻击对方时将敌军兵力转换为己方兵力。"},
 {id:11,name:"神算(诸葛亮)",powerful:200,type:SkillType.STRATEGY_ATTACK,subType:[SkillSubType.STRATEGY_COUNT,SkillSubType.STRATEGY_HERT_MINUS],strategy_attacks:[1.5],hert:0.5,minusRects:[],probability:100,explanation:"法术攻击时必暴击，我军全员法术伤害减半。"},
 {id:12,name:"火神(周瑜)",powerful:200,type:SkillType.STRATEGY_ATTACK,subType:[SkillSubType.STRATEGY_COUNT,SkillSubType.ENEMY_AID],belong:Belong.ENEMY,strategy_attacks:[2],condition:{type:"StrategyType",value:StrategyType.Fire},aids:[25],aidCount:1,aidRects:[{x:0,y:0}],probability:100,explanation:"{probability}几率使用火系策略伤害加倍，且另对方进入燃烧状态。"},
 {id:13,name:"医神(华佗)",powerful:100,type:SkillType.BOUT_START,subType:[SkillSubType.HEAL],healId:42,healRects:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],probability:100,explanation:"{probability}几率回合开始时对自身及相邻友军进行治疗。"},
-{id:14,name:"反间计(陆逊,陆抗)",powerful:150,type:SkillType.STRATEGY_ATTACK_END,subType:[SkillSubType.VAMPIRE],vampire:0.5,probability:50,explanation:"{probability}几率在法术攻击对方时将敌军兵力转换为己方兵力。"},
+{id:14,name:"反间计(陆逊,陆抗)",powerful:150,type:SkillType.STRATEGY_ATTACK_END,subType:[SkillSubType.VAMPIRE],vampire:0.3,probability:100,explanation:"{probability}几率在法术攻击对方时将敌军兵力转换为己方兵力。"},
 {id:15,name:"识破(荀攸)",powerful:100,type:SkillType.NULL,subType:[SkillSubType.STRATEGY_HERT_MINUS],hert:0.5,minusRects:[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],probability:100,explanation:"{probability}几率令自身及相邻的友军受到的法术伤害减半。"},
-{id:16,name:"连珠(法正)",powerful:200,type:SkillType.STRATEGY_ATTACK,subType:[SkillSubType.STRATEGY_COUNT],belong:Belong.ENEMY,strategy_attacks:[1,1],probability:60,explanation:"{probability}几率法术连击。"},
+{id:16,name:"连珠(法正)",powerful:200,type:[SkillType.STRATEGY_ATTACK, SkillType.STRATEGY_COUNT_ATTACK],subType:[SkillSubType.STRATEGY_COUNT],belong:Belong.ENEMY,strategy_attacks:[1,1],probability:60,explanation:"{probability}几率法术连击。"},
 {id:17,name:"连环计(庞统)",powerful:200,type:SkillType.STRATEGY_ATTACK,subType:[SkillSubType.SPREAD],belong:Belong.ENEMY,speadProbability:10.5,speadRects:[{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0}],probability:60,explanation:"{probability}几率法术攻击时不断蔓延到其他相邻的敌军。"},
 {id:18,name:"鬼策(贾诩)",powerful:150,type:SkillType.STRATEGY_ATTACK,subType:[SkillSubType.STRATEGY_COUNT,SkillSubType.ENEMY_AID],belong:Belong.ENEMY,strategy_attacks:[1.5],aids:[2,4,6,8,10],aidCount:1,aidRects:[{x:0,y:0}],probability:50,explanation:"{probability}几率1.5倍法术暴击，且降低敌军状态。"},
 {id:19,name:"鬼谋(郭嘉)",powerful:150,type:SkillType.STRATEGY_ATTACK,subType:[SkillSubType.STRATEGY_COUNT,SkillSubType.ENEMY_AID],belong:Belong.ENEMY,strategy_attacks:[1.5],aids:[21,22,23,24,25],aidCount:1,aidRects:[{x:0,y:0}],probability:50,explanation:"{probability}几率1.5倍法术暴击，且令敌军陷入不良状态。"},
-{id:20,name:"逆嗜血(许褚)",powerful:150,type:SkillType.BACK_ATTACK_END,subType:[SkillSubType.VAMPIRE],vampire:0.5,probability:40,explanation:"{probability}几率反击时将敌军兵力转化为自身兵力。"},
+{id:20,name:"逆嗜血(许褚)",powerful:150,type:SkillType.BACK_ATTACK_END,subType:[SkillSubType.VAMPIRE],vampire:0.3,probability:100,explanation:"{probability}几率反击时将敌军兵力转化为自身兵力。"},
 {id:21,name:"反弹(典韦)",powerful:150,type:SkillType.HERT,subType:[SkillSubType.BOUNCE],bounce:0.5,probability:100,explanation:"{probability}几率被攻击时令敌军也受到一定程度伤害。"},
 {id:22,name:"血路(廖化)",powerful:20,type:SkillType.NULL,subType:[SkillSubType.RETREAT],probability:100,explanation:"降低自身及周围被俘虏概率。"},
 {id:23,name:"十面埋伏(程昱)",powerful:150,type:SkillType.STRATEGY_ATTACK,subType:[SkillSubType.AMBUSH],belong:Belong.ENEMY,ambush:0.2,ambushRects:[{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],probability:100,explanation:"{probability}几率在使用法术攻击敌军时，如果攻击目标的周围有友军存在，可以借助友军的力量提高法术伤害，友军越多，加成越多。"},
 {id:24,name:"决胜(司马懿)",powerful:200,type:SkillType.STRATEGY_ATTACK,subType:[SkillSubType.STRATEGY_COUNT,SkillSubType.THRIFT_MP],belong:Belong.ENEMY,strategy_attacks:[2],aidCount:1,thrift:1,probability:50,explanation:"{probability}几率在使用法术攻击敌军时2倍暴击，且不消化MP。"},
-{id:25,name:"摆尾(荀彧)",powerful:150,type:SkillType.STRATEGY_ATTACK,subType:[SkillSubType.PENETRATE],belong:Belong.ENEMY,probability:30,explanation:"使用法术攻击时附带穿透效果。"},
+{id:25,name:"摆尾(荀彧)",powerful:150,type:SkillType.STRATEGY_ATTACK,subType:[SkillSubType.PENETRATE],belong:Belong.ENEMY,probability:50,explanation:"使用法术攻击时附带穿透效果。"},
 {id:26,name:"毒箭(夏侯渊)",powerful:160,type:SkillType.ATTACK,subType:[SkillSubType.ENEMY_AID],condition:{type:"AttackType",value:AttackType.FAR},aids:[23],aidCount:1,aidRects:[{x:0,y:0}],probability:100,explanation:"{probability}几率在使用弓箭类兵种攻击时令敌军中毒。"},
 {id:27,name:"毒计(徐庶,审配)",powerful:150,type:SkillType.STRATEGY_ATTACK,subType:[SkillSubType.ENEMY_AID],belong:Belong.ENEMY,aids:[23],aidCount:1,aidRects:[{x:0,y:0}],probability:60,explanation:"{probability}几率在使用法术攻击时令敌军中毒。"},
 {id:28,name:"灵敏(魏延,文鸳)",powerful:80,type:SkillType.ATTACK_END,subType:[SkillSubType.SELF_AID],aids:[9],aidCount:1,aidRects:[{x:0,y:0}],probability:100,explanation:"{probability}几率攻击结束时提升自身爆发力。"},
@@ -301,9 +310,9 @@ var SkillsData = [
 {id:48,name:"农业(简雍)",powerful:0,type:SkillType.NULL,subType:[SkillSubType.AGRICULTURE],explanation:"内政农业加成。"},
 {id:49,name:"征兵(陈到)",powerful:0,type:SkillType.NULL,subType:[SkillSubType.ENLIST],explanation:"内政征兵加成。"},
 {id:50,name:"肉搏(周泰)",powerful:100,type:SkillType.BACK_ATTACK,subType:[SkillSubType.PENETRATE],probability:50,explanation:"反击时附带穿透效果。"},
-{id:51,name:"死战(凌统)",powerful:100,type:SkillType.CREATE,subType:[SkillSubType.HERT_VS_STATUS],hert_vs_status:{name:"attack",value:0.5},probability:100,explanation:"士兵越少攻击越高。"},
+{id:51,name:"死战(凌统)",powerful:100,type:SkillType.CREATE,subType:[SkillSubType.HERT_VS_STATUS],hert_vs_status:{name:"attack",value:0.3},probability:100,explanation:"士兵越少攻击越高。"},
 {id:52,name:"顺势(程普)",powerful:80,type:SkillType.ANGRY_ATTACK,subType:[SkillSubType.ATTACK_COUNT],attacks:[2.5],probability:100,explanation:"致命一击发动时有几率将攻击提高一倍。"},
-{id:53,name:"忍耐(黄盖)",powerful:80,type:SkillType.CREATE,subType:[SkillSubType.HERT_VS_STATUS],hert_vs_status:{name:"defense",value:0.5},probability:100,explanation:"士兵越少防御越高。"},
+{id:53,name:"忍耐(黄盖)",powerful:80,type:SkillType.CREATE,subType:[SkillSubType.HERT_VS_STATUS],hert_vs_status:{name:"defense",value:0.3},probability:100,explanation:"士兵越少防御越高。"},
 {id:54,name:"倾国(貂蝉)",powerful:80,type:[SkillType.ATTACK, SkillType.HERT],subType:[SkillSubType.HERT_MINUS,SkillSubType.ENEMY_AID],hert:0.5,condition:{type:"SoldierId",value:[13]},aids:[22],aidCount:1,aidRects:[{x:0,y:0}],probability:100,explanation:"使用女兵兵种时,受到攻击时有几率将伤害减半,其倾国的美色让敌军无法动弹(定身效果)。"},
 {id:55,name:"倾城(大乔,小乔)",powerful:50,type:SkillType.HERT,subType:[SkillSubType.HERT_MINUS],hert:0.5,condition:{type:"SoldierId",value:[13]},aids:[22],aidCount:1,probability:100,explanation:"使用女兵兵种时,受到攻击时有几率将伤害减半。"},
 {id:56,name:"巾帼(孙尚香)",powerful:120,type:SkillType.ATTACK,subType:[SkillSubType.ATTACK_COUNT],attacks:[1,0.75],probability:100,explanation:"巾帼不让须眉，每次攻击必定双击。"},
@@ -335,7 +344,7 @@ var SkillsData = [
 {id:82,name:"横扫",powerful:200,type:SkillType.ATTACK,subType:[SkillSubType.ATTACK_IN_RECT],probability:40,explanation:"物理攻击时，一次性攻击所有攻击范围内的敌军。"},
 {id:83,name:"百步穿杨",powerful:160,type:[SkillType.ATTACK,SkillType.ATTACK_HIT],subType:[SkillSubType.HIT,SkillSubType.ATTACK_COUNT],attacks:[1.1],hit:100,condition:{type:"AttackType",value:AttackType.FAR},probability:100,explanation:"使用弓箭类兵种时，攻击伤害提升10%，且100%命中。"},
 {id:84,name:"兵神",powerful:210,type:[SkillType.STRATEGY_HIT,SkillType.STRATEGY_ATTACK],subType:[SkillSubType.STRATEGY_HIT,SkillSubType.STRATEGY_COUNT],belong:Belong.ENEMY,strategy_attacks:[1,0.8,0.7],hit:100,probability:50,explanation:"法术三次连击，且命中100%。"},
-{id:85,name:"奋战",powerful:150,type:SkillType.ATTACK_FATAL,subType:[SkillSubType.ATTACK_FATAL],hit:100,probability:100,explanation:"致命攻击。"},
+{id:85,name:"奋战",powerful:200,type:SkillType.ATTACK_FATAL,subType:[SkillSubType.ATTACK_FATAL],hit:100,probability:100,explanation:"致命攻击。"},
 {id:86,name:"卧薪尝胆",powerful:110,type:SkillType.NULL,subType:[SkillSubType.HARDSHIPS],probability:100,explanation:"敌方回合每受到一次攻击，自己的攻击伤害提升10%。"},
 {id:87,name:"快速连击",powerful:100,type:SkillType.ATTACK,subType:[SkillSubType.ATTACK_COUNT],attacks:[0.6,0.6],probability:50,explanation:"通过减轻力量来快速攻击两次，但是每次攻击只有普通攻击的0.6倍。"},
 {id:88,name:"防守",powerful:100,type:SkillType.HERT,subType:[SkillSubType.HERT_MINUS],hert:0.8,probability:50,explanation:"受到的伤害减少10%。"},
@@ -349,4 +358,5 @@ var SkillsData = [
 {id:96,name:"生产",powerful:0,type:SkillType.NULL,subType:[SkillSubType.INCOME],income:"food",probability:100,explanation:"大幅增加城池粮食收入。"},
 {id:97,name:"祭祀",powerful:0,type:SkillType.NULL,subType:[SkillSubType.SACRIFICE],probability:100,explanation:"所在城池不会发生灾害。"},
 {id:98,name:"短刀",powerful:80,type:SkillType.CREATE,subType:[SkillSubType.SOLDIERS_ATTACK_RECT],condition:{type:"SoldierId",value:[4,28,5,29,6,30,22]},rangeAttack:[{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0}],explanation:"装备了短刀，在使用远程兵种时，可以近身攻击。"},
+{id:99,name:"筹粮",powerful:0,type:SkillType.NULL,subType:[SkillSubType.THRIFT,SkillSubType.ADDITIONAL],additional:{type:"food",value:2000},probability:100,explanation:"每月可获得粮食，战斗时候粮草消耗减半。"},
 ];

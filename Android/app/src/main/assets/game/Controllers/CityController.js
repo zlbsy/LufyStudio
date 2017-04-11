@@ -46,6 +46,14 @@ CityController.prototype.init=function(initFunc){
 	//TODO::测试用
 	if(LGlobal.traceDebug){
 		self.setValue("cityFree",true);
+		/*var item = new ItemModel(null,{item_id:97,count:3});
+		SeigniorModel.getSeignior(LMvc.selectSeignorId).addItem(item);
+		var item = new ItemModel(null,{item_id:101,count:10});
+		SeigniorModel.getSeignior(LMvc.selectSeignorId).addItem(item);
+		var item = new ItemModel(null,{item_id:106,count:10});
+		SeigniorModel.getSeignior(LMvc.selectSeignorId).addItem(item);
+		var item = new ItemModel(null,{item_id:112,count:10});
+		SeigniorModel.getSeignior(LMvc.selectSeignorId).addItem(item);*/
 	}
 	LMvc.keepLoading(false);
 	LMvc.CityController = self;

@@ -82,7 +82,7 @@ function checkEventList() {
 			if (currentEvent.condition.beheadOrPolice && !beheadOk && !policeOk) {
 				continue;
 			}
-		} else if (LMvc.chapterData.noLife) {
+		} else if (LMvc.chapterData.noLife && !currentEvent.condition.noHistory) {
 			continue;
 		}
 		//时间判定

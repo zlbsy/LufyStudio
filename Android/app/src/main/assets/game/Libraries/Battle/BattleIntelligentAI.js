@@ -137,17 +137,6 @@ BattleIntelligentAI.prototype.run = function() {
 		self.chara.AI.endAction();
 		return;
 	}else{
-		/*var militaryModel = getMaxMilitary(self.chara.belong);
-		if(militaryModel && militaryModel.id() == self.chara.data.militaryId()){
-			//军师计
-			if(militaryModel.condition() == MilitaryCondition.START){
-				militaryAdviserStart(self.chara.data);
-				return;
-			}else if(militaryModel.isType(MilitaryType.WOOD_CATTLE) && LMvc.BattleController.battleData.toCity.food() == 0){
-				militaryAdviserStart(self.chara.data);
-				return;
-			}
-		}*/
 		switch(self.chara.mode){
 			case CharacterMode.NONE:
 				if(!LMvc.BattleController.militaryOver){

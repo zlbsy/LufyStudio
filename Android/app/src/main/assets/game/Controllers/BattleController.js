@@ -240,11 +240,14 @@ BattleController.prototype.charactersInit = function(){
 		return v;
 	});
 	self.battleData.expeditionEnemyCharacterList = enemyCharas;
+	var seignior = SeigniorModel.getSeignior(LMvc.selectSeignorId);
+	var seigniorLevel = seignior.level();
 	var coreCount = Math.max(enemyCharas.length / 3 >>> 0, 1);
 	for(var i = 0;i<enemyCharas.length;i++){
 		var child = enemyPositions[i];
 		var chara = enemyCharas[i];
 		var charaId = chara.id();
+		setEquipmentsStoneItem(chara, seigniorLevel, i < coreCount);
 		if(LMvc.chapterData.trouble == TroubleConfig.HARD || LMvc.chapterData.trouble == TroubleConfig.NORMAL){
 			if(LMvc.chapterData.trouble == TroubleConfig.HARD && i < coreCount){
 				var currentSoldiers = chara.currentSoldiers();

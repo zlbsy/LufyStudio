@@ -35,6 +35,14 @@ SkillMasterModel.prototype.name = function() {
 SkillMasterModel.prototype.explanation = function() {
 	return Language.getSkill("se_"+this.data.id);
 };
+SkillMasterModel.prototype.isMainType = function(type) {
+	var mainType = this.data.type;
+	if((typeof mainType == "string" && mainType == type) || 
+	(Array.isArray(mainType) && mainType.indexOf(type) >= 0)){
+		return true;
+	}
+	return false;
+};
 SkillMasterModel.prototype.mainType = function() {
 	return this.data.type;
 };
@@ -43,6 +51,9 @@ SkillMasterModel.prototype.subType = function() {
 };
 SkillMasterModel.prototype.isSubType = function(subType) {
 	return this.data.subType.indexOf(subType) >= 0;
+};
+SkillMasterModel.prototype.additional = function() {
+	return this.data.additional;
 };
 SkillMasterModel.prototype.belong = function() {
 	return this.data.belong;

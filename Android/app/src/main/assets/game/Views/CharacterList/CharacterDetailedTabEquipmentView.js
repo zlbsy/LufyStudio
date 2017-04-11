@@ -37,7 +37,6 @@ CharacterDetailedTabEquipmentView.prototype.showEquipments=function(){
 			icon.addEventListener(LMouseEvent.MOUSE_UP,self.confirmEquipment);
 		}else{
 			icon = getPanel("win03",iconSize,iconSize);
-			//icon = new LPanel(new LBitmapData(LMvc.datalist["win03"]),iconSize,iconSize);
 		}
 		icon.x = detailedView.faceView.x + coordinate.x - detailedView.tabLayer.x - self.x;
 		icon.y = detailedView.faceView.y + coordinate.y - detailedView.tabLayer.y - self.y;
@@ -71,13 +70,14 @@ CharacterDetailedTabEquipmentView.prototype.showEquipmentList=function(){
 CharacterDetailedTabEquipmentView.prototype.dressEquipment=function(event){
 	var self = event.currentTarget.getParentByConstructor(CharacterDetailedTabEquipmentView);
 	var selectItemModel = event.selectItemModel;
+	
 	var itemCount = selectItemModel.count();
 	var characterModel = self.controller.getValue("selectedCharacter");
 	characterModel.equip(selectItemModel);
+	
 	characterModel.calculation();
 	var cityData = self.controller.getValue("cityData");
 	cityData.removeItem(selectItemModel);
-	
 	var detailedView = self.getParentByConstructor(CharacterDetailedView);
 	detailedView.changeCharacter(0);
 	var characterListView = self.getParentByConstructor(CharacterListView);
@@ -96,7 +96,7 @@ CharacterDetailedTabEquipmentView.prototype.confirmEquipment=function(event){
 	var canRemove = (!LMvc.BattleController && characterModel.city() &&  characterModel.city().seigniorCharaId() == LMvc.selectSeignorId);
 	var msg = String.format(Language.get("dialog_remove_equipment_confirm"),equipment.name());
 	if(!canRemove){
-		msg = String.format("<font color='#FF0000'>{0}</font>",equipment.name());
+		msg = String.format("<font size='22' color='#FF0000'>{0}</font>",equipment.name());
 	}
 	var params = equipment.params();
 	for(var i = 0;i < params.length;i++){
@@ -104,12 +104,25 @@ CharacterDetailedTabEquipmentView.prototype.confirmEquipment=function(event){
 		var format = "<font size='22' color='#FFFFFF'>{0} "+(canRemove ? "-" : "+")+"{1}</font>";
 		msg += "\n" + String.format(format, Language.get(key), equipment.getParam(key));
 	}
+	var skill = equipment.skill();
+	var height = 270;
+	if(skill){
+		msg += "\n<font size='20' color='#FFFFFF'>" 
+		+ String.format(Language.get("skill_explanation"),skill.name(),skill.explanation(),skill.probability())
+		+ "</font>";
+		height += 100;
+	}
 	
-	var obj = {title:Language.get("confirm"),messageHtml:msg,height:270};
+	var obj = {title:Language.get("confirm"),messageHtml:msg,height:height};
 		
 	if(canRemove){
 		obj.okEvent = self.removeEquipmentRun;
+		obj.otherEvent = self.strengthenEquipmentRun;
 		obj.cancelEvent = null;
+		obj.width = 400;
+		obj.okText = "remove_equip";
+		obj.otherText = "strengthen";
+		obj.cancelText = "cancel";
 	}else{
 		obj.okEvent = null;
 	}
@@ -130,4 +143,16 @@ CharacterDetailedTabEquipmentView.prototype.removeEquipmentRun=function(event){
 	var e = new LEvent(CharacterListEvent.LIST_CHANGE);
 	e.characterModel = characterModel;
 	characterListView.dispatchEvent(e);
+};
+CharacterDetailedTabEquipmentView.prototype.strengthenEquipmentRun=function(event){
+	var detailedView = event.currentTarget.getParentByConstructor(CharacterDetailedView);
+	var removeItemId = detailedView.removeItemId;
+	var characterModel = detailedView.controller.getValue("selectedCharacter");
+	var equipment = characterModel.equipments().find(function(child){
+		return child.id() == removeItemId;
+	});
+	event.currentTarget.parent.remove();
+	var stoneView = new EquipmentsStoneView(self.controller, equipment);
+	detailedView.parent.addChild(stoneView);
+	detailedView.visible = false;
 };

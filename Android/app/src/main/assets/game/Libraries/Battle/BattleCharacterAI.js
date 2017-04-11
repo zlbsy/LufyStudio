@@ -60,6 +60,17 @@ BattleCharacterAI.prototype.magicAttack = function(target){
 		}else{
 			hertValues = [1];
 		}
+		//法术连击和其他效果叠加
+		if(hertValues.length == 1){
+			var skill2 = self.chara.data.skill(SkillType.STRATEGY_COUNT_ATTACK);
+			if(skill2 && skill2.isSubType(SkillSubType.STRATEGY_COUNT)){
+				var v = hertValues[0];
+				hertValues = skill2.strategyAttacks();
+				for(var i=0;i<hertValues.length;i++){
+					hertValues[i] *= v;
+				}
+			}
+		}
 		if(skill && skill.isSubType(SkillSubType.AMBUSH)){
 			hertValues[0] += calculateAmbush(skill, target.locationX(), target.locationY(), self.chara.belong, 0);
 		}

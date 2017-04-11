@@ -245,19 +245,39 @@ function exploreAgricultureRun(characterModel){
 		exploreAgricultureFailRun(cityModel, characterModel, food);
 		return;
 	}
-	var items = cityModel.itemsFarmland();
-	var index = exploreItems(items, characterModel.intelligence() + characterModel.force() + characterModel.luck());
-	if(index < 0){
-		var food = getValueByExploreFail(800,200);
-		exploreAgricultureFailRun(cityModel, characterModel, food);
-		return;
+	var itemId;
+	if(characterModel.seigniorId() == LMvc.selectSeignorId){
+		rand = Math.fakeRandom();
+	}else{
+		rand = 1;
 	}
-	var itemId = items[index].item_id;
-	items[index].quantity -= 1;
-	if(items[index].quantity == 0){
-		items.splice(index, 1);
+	if(rand <= 0.1){
+		//id:113,name:"黄战石" id:115,name:"黄辅石"
+		//id:109,name:"绿战石" id:111,name:"绿辅石"
+		if(rand <= 0.03){
+			itemId = 113;
+		}else if(rand <= 0.06){
+			itemId = 115;
+		}else if(rand <= 0.08){
+			itemId = 109;
+		}else{
+			itemId = 111;
+		}
+	}else{
+		var items = cityModel.itemsFarmland();
+		var index = exploreItems(items, characterModel.intelligence() + characterModel.force() + characterModel.luck());
+		if(index < 0){
+			var food = getValueByExploreFail(800,200);
+			exploreAgricultureFailRun(cityModel, characterModel, food);
+			return;
+		}
+		itemId = items[index].item_id;
+		items[index].quantity -= 1;
+		if(items[index].quantity == 0){
+			items.splice(index, 1);
+		}
+		cityModel.itemsFarmland(items);
 	}
-	cityModel.itemsFarmland(items);
 	var item = new ItemModel(null,{item_id:itemId,count:1});
 	if(characterModel.seigniorId() == LMvc.selectSeignorId && !cityModel.isAppoint()){
 		cityModel.addItem(item);
@@ -328,20 +348,40 @@ function exploreBusinessRun(characterModel){
 		exploreBusinessFailRun(cityModel, characterModel, money);
 		return;
 	}
-	var items = cityModel.itemsMarket();
-	var index = exploreItems(items, characterModel.intelligence() + characterModel.agility() + characterModel.luck());
-	if(index < 0){
-		var money = getValueByExploreFail(200,100);
-		exploreBusinessFailRun(cityModel, characterModel, money);
-		return;
+	var itemId;
+	if(characterModel.seigniorId() == LMvc.selectSeignorId){
+		rand = Math.fakeRandom();
+	}else{
+		rand = 1;
 	}
-	var itemId = items[index].item_id;
-	items[index].quantity -= 1;
-	if(items[index].quantity == 0){
-		items.splice(index, 1);
-	}
-	cityModel.itemsMarket(items);
 	
+	if(rand <= 0.1){
+		//id:114,name:"黄法石" id:116,name:"黄佐石"
+		//id:110,name:"绿法石" id:112,name:"绿佐石"
+		if(rand <= 0.03){
+			itemId = 114;
+		}else if(rand <= 0.06){
+			itemId = 116;
+		}else if(rand <= 0.08){
+			itemId = 110;
+		}else{
+			itemId = 112;
+		}
+	}else{
+		var items = cityModel.itemsMarket();
+		var index = exploreItems(items, characterModel.intelligence() + characterModel.agility() + characterModel.luck());
+		if(index < 0){
+			var money = getValueByExploreFail(200,100);
+			exploreBusinessFailRun(cityModel, characterModel, money);
+			return;
+		}
+		itemId = items[index].item_id;
+		items[index].quantity -= 1;
+		if(items[index].quantity == 0){
+			items.splice(index, 1);
+		}
+		cityModel.itemsMarket(items);
+	}
 	var item = new ItemModel(null,{item_id:itemId,count:1});
 	if(characterModel.seigniorId() == LMvc.selectSeignorId && !cityModel.isAppoint()){
 		cityModel.addItem(item);
@@ -417,11 +457,33 @@ function agricultureRun(characterModel){
 	//敏捷经验
 	characterModel.plusPropertiesExp("agility");
 	var city = characterModel.city();
-	if(!city.isPlagueOfLocusts() && city.plagueOfLocusts() > 0 && Math.fakeRandom() < 0.2){
+	var rand = Math.fakeRandom();
+	if(!city.isPlagueOfLocusts() && city.plagueOfLocusts() > 0 && rand < 0.2){
 		//治理蝗害
 		city.plagueOfLocusts(-1);
 		if(characterModel.seigniorId() == LMvc.selectSeignorId && !city.isAppoint()){
 			SeigniorExecute.addMessage(String.format(Language.get("plagueOfLocustsControlMessage"),characterModel.name(),city.name()));
+		}
+	}else if (characterModel.seigniorId() == LMvc.selectSeignorId && rand < 0.01) {
+		rand = Math.fakeRandom();
+		if(rand > 0.5){
+			//id:105,name:"蓝战石" id:108,name:"蓝佐石"
+			//id:101,name:"紫战石" id:104,name:"紫佐石"
+			if(rand <= 0.65){
+				itemId = 105;
+			}else if(rand <= 0.8){
+				itemId = 108;
+			}else if(rand <= 0.9){
+				itemId = 101;
+			}else{
+				itemId = 104;
+			}
+			var item = ItemMasterModel.getMaster(itemId);
+			characterModel.city().addItem(new ItemModel(null, {item_id:item.id(),count:1}));
+			if(characterModel.city().isAppoint()){
+				var msg = String.format(Language.get("running_get_message"), characterModel.name(),Language.get("agriculture"),item.name());
+				SeigniorExecute.addMessage(msg);
+			}
 		}
 	}
 	return false;
@@ -436,13 +498,37 @@ function businessRun(characterModel){
 	characterModel.featPlus(feat);
 	//运气经验
 	characterModel.plusPropertiesExp("luck");
-	if(characterModel.seigniorId() == LMvc.selectSeignorId && !characterModel.city().isAppoint() && Math.fakeRandom() < 10.01){
-		//交易
-		var itemId = BusinessSaleItems[BusinessSaleItems.length*Math.fakeRandom() >>> 0];
-		var item = ItemMasterModel.getMaster(itemId);
-		if(item.businessPrice() <= characterModel.city().money()){
-			LMvc.MapController.businessItemsShow(characterModel, item);
-			return true;
+	if(characterModel.seigniorId() == LMvc.selectSeignorId){
+		var rand = Math.fakeRandom();
+		if(rand < 0.01){
+			rand = Math.fakeRandom();
+			if(rand <= 0.5 && !characterModel.city().isAppoint()){
+				//交易
+				var itemId = BusinessSaleItems[BusinessSaleItems.length*Math.fakeRandom() >>> 0];
+				var item = ItemMasterModel.getMaster(itemId);
+				if(item.businessPrice() <= characterModel.city().money()){
+					LMvc.MapController.businessItemsShow(characterModel, item);
+					return true;
+				}
+			}else if(rand > 0.5){
+				//id:107,name:"蓝辅石" id:108,name:"蓝佐石"
+				//id:103,name:"紫辅石" id:104,name:"紫佐石"
+				if(rand <= 0.65){
+					itemId = 107;
+				}else if(rand <= 0.8){
+					itemId = 108;
+				}else if(rand <= 0.9){
+					itemId = 103;
+				}else{
+					itemId = 104;
+				}
+				var item = ItemMasterModel.getMaster(itemId);
+				characterModel.city().addItem(new ItemModel(null, {item_id:item.id(),count:1}));
+				if(characterModel.city().isAppoint()){
+					var msg = String.format(Language.get("running_get_message"), characterModel.name(),Language.get("business"),item.name());
+					SeigniorExecute.addMessage(msg);
+				}
+			}
 		}
 	}
 	return false;
@@ -469,11 +555,33 @@ function technologyRun(characterModel){
 	characterModel.featPlus(feat);
 	//智力经验
 	characterModel.plusPropertiesExp("intelligence");
-	if(!city.isFlood() && city.flood() > 0 && Math.fakeRandom() < 0.2){
+	var rand = Math.fakeRandom();
+	if(!city.isFlood() && city.flood() > 0 && rand < 0.2){
 		//治水
 		city.flood(-1);
 		if(characterModel.seigniorId() == LMvc.selectSeignorId && !city.isAppoint()){
 			SeigniorExecute.addMessage(String.format(Language.get("floodControlMessage"),characterModel.name(),city.name()));
+		}
+	}else if (characterModel.seigniorId() == LMvc.selectSeignorId && rand < 0.01) {
+		rand = Math.fakeRandom();
+		if(rand > 0.5){
+			//id:106,name:"蓝法石" id:108,name:"蓝佐石"
+			//id:102,name:"紫法石" id:104,name:"紫佐石"
+			if(rand <= 0.65){
+				itemId = 106;
+			}else if(rand <= 0.8){
+				itemId = 108;
+			}else if(rand <= 0.9){
+				itemId = 102;
+			}else{
+				itemId = 104;
+			}
+			var item = ItemMasterModel.getMaster(itemId);
+			cityModel.addItem(new ItemModel(null, {item_id:item.id(),count:1}));
+			if(characterModel.city().isAppoint()){
+				var msg = String.format(Language.get("running_get_message"), characterModel.name(),Language.get("technology"),item.name());
+				SeigniorExecute.addMessage(msg);
+			}
 		}
 	}
 	return false;
@@ -838,6 +946,9 @@ function toEquipmentItem(item, characterModel){
 }
 //装备
 function toEquipmentCityItem(item, cityModel){
+	if(item.itemType() == ItemType.STONE){
+		return false;
+	}
 	var generals = cityModel.generals();
 	var length = generals.length;
 	var key = item.params()[0];
@@ -1171,18 +1282,23 @@ function tournamentsGet(result){
 	}
 	ids = [];
 	while(ids.length < 4 && arr.length > 0){
-		var i = arr.length * Math.random() >>> 0;
+		var i = arr.length * Math.fakeRandom() >>> 0;
 		ids.push(arr[i]);
 		arr.splice(i, 1);
 	}
 	if(result == 1){
 		var NewYearPresent = LMvc.chapterData["NewYearPresent_item_92"];
-		var time = formatDate(new Date(), "YYYYMMDD");
 		if(!NewYearPresent && isInNewYearTrem()){
 			ids.push({id:92,q:1});
 			LMvc.chapterData["NewYearPresent_item_92"] = 1;
 		}
+		//id:97,name:"红战石" id:98,name:"红法石"
+		//id:99,name:"红辅石" id:100,name:"红佐石"
+		var stones = [97, 98, 99, 100];
+		var itemId = stones[stones.length * Math.fakeRandom() >>> 0];
+		ids.push({id:itemId,q:1});
 	}
+	
 	var seignior = SeigniorModel.getSeignior(LMvc.selectSeignorId);
 	var getLabels = [];
 	for(var i=0;i<ids.length;i++){

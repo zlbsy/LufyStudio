@@ -377,6 +377,7 @@ var SoldierDatas = [
 	rangeAttack:[{x:-1,y:-1},{x:-1,y:1},{x:1,y:1},{x:1,y:-1},{x:0,y:-2},{x:0,y:2},{x:-2,y:0},{x:2,y:0}],
 	rangeAttackTarget:[{x:0,y:0}],
 	strategy:[],
+	maxProficiency:1000,
 	sign:"fdb",
 	newcount:1
 	},
@@ -419,7 +420,7 @@ var SoldierDatas = [
 	strategy:[{id:33,lv:5},{id:34,lv:10},{id:42,lv:20}],
 	sign:"jw",
 	level:2,
-	maxProficiency:1000,
+	maxProficiency:1200,
 	newcount:1
 	},
 	{id:26,name:"重步兵",img:2,type:SoldierType.Physical,attackType:AttackType.NEAR,moveType:MoveType.INFANTRY,movePower:4,
@@ -680,7 +681,7 @@ var SoldierDatas = [
 	maxProficiency:1200,
 	newcount:1
 	},
-	{id:42,name:"丹阳兵",img:42,type:SoldierType.Physical,attackType:AttackType.FAR,moveType:MoveType.INFANTRY,movePower:5,
+	{id:42,name:"无当飞军",img:42,type:SoldierType.Physical,attackType:AttackType.FAR,moveType:MoveType.INFANTRY,movePower:5,
 	property:{attack:"S",spirit:"B",defense:"B",breakout:"B",morale:"S",troops:4,strategy:1},
 	equipment:{head:0,hand:0,body:0,foot:0,accessories:0},
 	restrain:[{id:3,value:150},{id:17,value:150},{id:18,value:150},{id:19,value:150},{id:27,value:150},{id:41,value:150}
@@ -690,7 +691,7 @@ var SoldierDatas = [
 	{x:-1,y:-1},{x:1,y:-1},{x:-1,y:1},{x:1,y:1},{x:1,y:2},{x:-1,y:-2},{x:1,y:-2},{x:-1,y:2},{x:2,y:1},{x:-2,y:-1},{x:2,y:-1},{x:-2,y:1}],
 	rangeAttackTarget:[{x:0,y:0}],
 	strategy:[],
-	sign:"dyb",
+	sign:"wdfj",
 	maxProficiency:1200,
 	skill:85,//奋战
 	newcount:1
@@ -708,7 +709,7 @@ var SoldierDatas = [
 	skill:74,//白耳
 	newcount:1
 	},
-	{id:44,name:"无当飞军",img:44,type:SoldierType.Physical,attackType:AttackType.NEAR,moveType:MoveType.INFANTRY,movePower:5,
+	{id:44,name:"丹阳兵",img:44,type:SoldierType.Physical,attackType:AttackType.NEAR,moveType:MoveType.INFANTRY,movePower:5,
 	property:{attack:"S",spirit:"C",defense:"B",breakout:"B",morale:"S",troops:5,strategy:1},
 	equipment:{head:0,hand:0,body:0,foot:0,accessories:0},
 	restrain:[],
@@ -719,7 +720,7 @@ var SoldierDatas = [
 	rangeAttack:[{x:-1,y:-1},{x:-1,y:1},{x:1,y:1},{x:1,y:-1},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0}],
 	rangeAttackTarget:[{x:0,y:0}],
 	strategy:[{id:4,lv:15},{id:36,lv:10}],
-	sign:"wdfj",
+	sign:"dyb",
 	maxProficiency:1200,
 	skill:42,//逆击
 	newcount:1
@@ -780,7 +781,7 @@ var SoldierDatas = [
 	terrain:[
 	{id:0,value:110,moveCost:1},{id:1,value:110,moveCost:1},{id:2,value:90,moveCost:2},{id:3,value:90,moveCost:2},{id:4,value:80,moveCost:3},
 	{id:5,value:100,moveCost:2},{id:6,value:110,moveCost:1},{id:7,value:90,moveCost:2},{id:8,value:80,moveCost:3},{id:9,value:80,moveCost:2},{id:11,value:90,moveCost:3}],
-	rangeAttack:[{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0}],
+	rangeAttack:[{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:-1,y:1},{x:1,y:1},{x:1,y:-1},{x:0,y:-2},{x:0,y:2},{x:-2,y:0},{x:2,y:0}],
 	rangeAttackTarget:[{x:0,y:0}],
 	strategy:[],
 	sign:"bmyc",

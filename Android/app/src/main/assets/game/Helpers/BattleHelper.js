@@ -318,6 +318,8 @@ function battleDefCharactersToAttack(belong, battleData){
 function battleFoodCheck(belong){
 	var battleData = LMvc.BattleController.battleData;
 	var charas = LMvc.BattleController.view.charaLayer.getCharactersFromBelong(belong);
+	var cityFood = (belong == Belong.SELF && battleData.fromCity.seigniorCharaId() != LMvc.selectSeignorId) || 
+		(belong == Belong.ENEMY && battleData.fromCity.seigniorCharaId() == LMvc.selectSeignorId);
 	var militaryModel = LMvc.BattleController.militaryModel;
 	battleDefCharactersToAttack(belong, battleData);
 	var needFood = 0;
@@ -327,7 +329,7 @@ function battleFoodCheck(belong){
 		if(charaModel.hasSkill(SkillSubType.RICE)){
 			continue;
 		}
-		if(militaryModel && militaryModel.isType(MilitaryType.WOOD_CATTLE)){
+		if(cityFood && militaryModel && militaryModel.isType(MilitaryType.WOOD_CATTLE)){
 			var troops = charaModel.troops();
 			var troopsAdd = charaModel.maxTroops() * militaryModel.healTroops() >>> 0;
 			if(charaModel.maxTroops() < troops + troopsAdd){
@@ -342,15 +344,9 @@ function battleFoodCheck(belong){
 			thrift = 0.5;
 		}
 	}
-	var cityFood = (belong == Belong.SELF && battleData.fromCity.seigniorCharaId() != LMvc.selectSeignorId) || 
-		(belong == Belong.ENEMY && battleData.fromCity.seigniorCharaId() == LMvc.selectSeignorId);
 	if(cityFood){
 		if(militaryModel && militaryModel.isType(MilitaryType.WOOD_CATTLE)){
 			thrift = 0;
-			LMvc.BattleController.militaryValidLimit--;
-			if(LMvc.BattleController.militaryValidLimit <= 0){
-				LMvc.BattleController.militaryType = null;
-			}
 		}
 		needFood = (needFood * thrift >>> 0);
 		if(battleData.toCity.food() > needFood){
@@ -359,6 +355,9 @@ function battleFoodCheck(belong){
 		}
 		battleData.toCity.food(-battleData.toCity.food());
 	}else{
+		if(militaryModel && militaryModel.isType(MilitaryType.CONSUMPTION)){
+			thrift *= 2;
+		}
 		needFood += (battleData.troops * 0.5);
 		needFood = (needFood * thrift >>> 0);
 		if(battleData.food > needFood){
@@ -456,7 +455,10 @@ function getBattleSaveData(){
 	data.bout = LMvc.BattleController.getValue("bout");
 	data.startAttack = LMvc.BattleController.startAttack;
 	data.militaryOver = LMvc.BattleController.militaryOver;
-	
+	if(LMvc.BattleController.militaryModel){
+		data.militaryId = LMvc.BattleController.militaryModel.id();
+		data.militaryValidLimit = LMvc.BattleController.militaryValidLimit;
+	}
 	data.expeditionCharacterList=[];
 	for(var i=0,l=battleData.expeditionCharacterList.length;i<l;i++){
 		var character = battleData.expeditionCharacterList[i];
@@ -483,6 +485,10 @@ function getBattleSaveData(){
 			x:character.locationX(),
 			y:character.locationY()
 		};
+		if(character.militaryModel){
+			childData.militaryId = character.militaryModel.id();
+			childData.militaryValidLimit = character.militaryValidLimit;
+		}
 		if(childData.isDefCharacter){
 			childData.data = character.data.datas();
 		}else if(character.data.isEmploy()){
@@ -504,6 +510,10 @@ function getBattleSaveData(){
 			x:character.locationX(),
 			y:character.locationY()
 		};
+		if(character.militaryModel){
+			childData.militaryId = character.militaryModel.id();
+			childData.militaryValidLimit = character.militaryValidLimit;
+		}
 		if(childData.isDefCharacter){
 			childData.data = character.data.datas();
 		}else if(character.data.isEmploy()){
@@ -581,6 +591,10 @@ function setBattleSaveData(){
 		chara.mode = charaData.mode;
 		chara.mission = charaData.mission;
 		chara.status.setData(charaData.status);
+		if(charaData.militaryId){
+			chara.militaryModel = MilitaryModel.getMaster(charaData.militaryId);
+			chara.militaryValidLimit = charaData.militaryValidLimit;
+		}
 		if(charaData.id == data.selfLeader){
 			chara.isLeader = true;
 		}
@@ -601,6 +615,10 @@ function setBattleSaveData(){
 		chara.changeAction(charaData.action);
 		chara.status.setData(charaData.status);
 		chara.mission = charaData.mission;
+		if(charaData.militaryId){
+			chara.militaryModel = MilitaryModel.getMaster(charaData.militaryId);
+			chara.militaryValidLimit = charaData.militaryValidLimit;
+		}
 		if(charaData.id == data.enemyLeader){
 			chara.isLeader = true;
 		}
@@ -633,6 +651,12 @@ function setBattleSaveData(){
 	LMvc.BattleController.view.weatherLayer.setData(data.weather);
 	LMvc.BattleController.view.mainMenu.visible = true;
 	LMvc.BattleController.view.miniLayer.visible = true;
+	
+	if(data.militaryId){
+		LMvc.BattleController.militaryModel = MilitaryModel.getMaster(data.militaryId);
+		LMvc.BattleController.militaryValidLimit = data.militaryValidLimit;
+	}
+	
 	if(BattleSelectMenuController._instance){
 		if(BattleSelectMenuController._instance.view.parent){
 			BattleSelectMenuController._instance.view.remove();
@@ -1068,13 +1092,7 @@ function militaryAdviserEnd(event){
 	militaryAdviserSelect(characterModel, charas);
 }
 function militaryAdviserSelect(characterModel, charas){
-	//event.target.remove();
-	//var characterModel = BattleController.ctrlChara.data;
 	var militaryModel = characterModel.military();
-	//console.log("STRATEGY",militaryModel.isType(MilitaryType.STRATEGY));
-	//console.log("WOOD_CATTLE",militaryModel.isType(MilitaryType.WOOD_CATTLE));
-	//console.log("BARRIER",militaryModel.isType(MilitaryType.BARRIER));
-	//var charas = LMvc.BattleController.view.charaLayer.getCharactersFromBelong(militaryModel.belong());
 	if(militaryModel.isType(MilitaryType.STRATEGY)){
 		for(var i=0, l= charas.length;i<l;i++){
 			var chara = charas[i];
@@ -1087,7 +1105,9 @@ function militaryAdviserSelect(characterModel, charas){
 				}
 			}
 		}
-	}else if(militaryModel.isType(MilitaryType.WOOD_CATTLE)){
+	}else if(militaryModel.isType(MilitaryType.WOOD_CATTLE) || militaryModel.isType(MilitaryType.CONTINUE) || 
+	militaryModel.isType(MilitaryType.ANGER) || militaryModel.isType(MilitaryType.CONSUMPTION) || 
+	militaryModel.isType(MilitaryType.SKILL) || militaryModel.isType(MilitaryType.SURMOUNT)){
 		LMvc.BattleController.militaryModel = militaryModel;
 		LMvc.BattleController.militaryValidLimit = militaryModel.validLimit();
 	}else if(militaryModel.isType(MilitaryType.BARRIER)){
@@ -1219,6 +1239,108 @@ function getBattleSoldierSelectId(currentSoldiers, characterModel){
 	}
 	return currentSoldiers.id();
 }
+function setEquipmentsStoneItem(characterModel, level, isSpecial){
+	var equipments = characterModel.equipments();
+	characterModel.calculation(true);
+	var stoneTypes = [];
+	var skills = [0,0,0,0,0];
+	var status = [];
+	if(level > 45){
+		stoneTypes.push(StoneType.RED,StoneType.RED,StoneType.RED,StoneType.RED,StoneType.RED);
+		status.push({p:"attack",k:"force",v:5},{p:"spirit",k:"intelligence",v:5},{p:"defense",k:"command",v:5},{p:"breakout",k:"agility",v:5},{p:"morale",k:"luck",v:5});
+		if(LMvc.chapterData.trouble == TroubleConfig.HARD){
+			skills = [StoneType.RED,StoneType.RED,StoneType.RED,StoneType.RED,0];
+		}else if(LMvc.chapterData.trouble == TroubleConfig.NORMAL){
+			skills = [StoneType.RED,StoneType.RED,0,0,0];
+		}else{
+			skills = [StoneType.RED,0,0,0,0];
+		}
+	}else if(level > 35){
+		stoneTypes.push(StoneType.PURPLE,StoneType.PURPLE,StoneType.PURPLE,StoneType.PURPLE,StoneType.PURPLE);
+		status.push({p:"attack",k:"force",v:4},{p:"spirit",k:"intelligence",v:4},{p:"defense",k:"command",v:4},{p:"breakout",k:"agility",v:4},{p:"morale",k:"luck",v:4});
+		if(LMvc.chapterData.trouble == TroubleConfig.HARD){
+			skills = [StoneType.PURPLE,StoneType.PURPLE,StoneType.PURPLE,0,0];
+		}else if(LMvc.chapterData.trouble == TroubleConfig.NORMAL){
+			skills = [StoneType.PURPLE,0,0,0,0];
+		}
+	}else if(level > 25){
+		stoneTypes.push(StoneType.BLUE,StoneType.BLUE,StoneType.BLUE,StoneType.BLUE,StoneType.BLUE);
+		status.push({k:"attack",v:4},{k:"spirit",v:4},{k:"defense",v:4},{k:"breakout",v:4},{k:"morale",v:4});
+		if(LMvc.chapterData.trouble == TroubleConfig.HARD){
+			skills = [StoneType.BLUE,StoneType.BLUE,0,0,0];
+		}
+	}else if(level > 15){
+		stoneTypes.push(StoneType.GREEN,StoneType.GREEN,StoneType.GREEN,StoneType.GREEN,StoneType.GREEN);
+		status.push({p:"attack",k:"force",v:2},{p:"spirit",k:"intelligence",v:2},{p:"defense",k:"command",v:2},{p:"breakout",k:"agility",v:2},{p:"morale",k:"luck",v:2});
+		if(LMvc.chapterData.trouble == TroubleConfig.HARD){
+			skills = [StoneType.BLUE,0,0,0,0];
+		}
+	}else if(level > 5){
+		stoneTypes.push(StoneType.YELLOW,StoneType.YELLOW,StoneType.YELLOW,StoneType.YELLOW,StoneType.YELLOW);
+		status.push({k:"attack",v:2},{k:"spirit",v:2},{k:"defense",v:2},{k:"breakout",v:2},{k:"morale",v:2});
+	}
+	var currentSoldiers = characterModel.currentSoldiers();
+	var property = currentSoldiers.property();
+	for(var i=0;i<equipments.length;i++){
+		var equipment = equipments[i];
+		if(!isSpecial && i>0){
+			continue;
+		}
+		if(equipment.stone() && equipment.stonePlus().ai && equipment.stonePlus().level >= (level/10 >>> 0)){
+			continue;
+		}
+		var stoneId = 0, stoneData = {type:ItemType.EQUIPMENT, ai:1, level:(level/10 >>> 0)};
+		var stoneType = stoneTypes[i];
+		var skill = skills[i];
+		if(!skill){
+			for(var j=0;j<status.length;j++){
+				var child = status[j];
+				if(!child.p){
+					continue;
+				}
+				var old_v = CharacterModel.upValue(property[child.p], characterModel[child.k](), 0);
+				var new_v = CharacterModel.upValue(property[child.p], characterModel[child.k]() + child.v, 0);
+				if(new_v > old_v){console.log(child);
+					stoneData[child.k] = child.v;
+					stoneId = ItemDatas.find(function(c){return c.stoneType == stoneType;}).id;
+					break;
+				}
+			}
+			if(stoneId == 0){
+				var child = status[status.length * Math.fakeRandom() >>> 0];
+				stoneData[child.k] = child.v;
+				stoneId = ItemDatas.find(function(c){return c.stoneType == stoneType;}).id;
+			}
+		}else{
+			stoneId = ItemDatas.find(function(c){return c.stoneType == skill;}).id;
+			getEquipmentStoneItem(characterModel, skill, stoneData);
+		}
+		equipment.stone(stoneId);
+		equipment.stonePlus(stoneData);
+	}
+}
+function getEquipmentStoneItem(characterModel, stoneType, stoneData){
+	var currentSoldiers = characterModel.currentSoldiers();
+	var property = currentSoldiers.property();
+	var skills = [];
+	ItemDatas.forEach(function(child){
+		if(child.soldierType && child.soldierType.indexOf(currentSoldiers.soldierType()) >= 0){
+			if(!child.stoneValue[0].list || child.stoneValue[0].list.length == 0){
+				return;
+			}
+			skills.push(child.stoneValue[0].list);
+		}
+	});
+	skills = skills[skills.length * Math.fakeRandom() >>> 0];
+	var child = skills[skills.length * Math.fakeRandom() >>> 0];
+	stoneData.skill = child.skill;
+}
 function isPlayerBattle(){
 	return (typeof BattleController != UNDEFINED) && (LMvc.BattleController instanceof BattleController);
+}
+function isMilitaryHappened(seigniorId, militaryType){
+	if(!LMvc.BattleController || !LMvc.BattleController.militaryModel || !LMvc.BattleController.battleData.toCity || !LMvc.BattleController.battleData.toCity.seigniorCharaId){
+		return false;
+	}
+	return LMvc.BattleController.militaryModel.isType(militaryType) && (seigniorId == 0 || LMvc.BattleController.battleData.toCity.seigniorCharaId() == seigniorId);
 }

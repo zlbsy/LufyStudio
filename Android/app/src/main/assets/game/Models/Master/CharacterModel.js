@@ -445,30 +445,50 @@ CharacterModel.prototype.calculation = function(init) {
 	self.data["_skill_add_status_prop_maxTroops"] = 1;
 	self.data["_skill_add_status_num_maxTroops"] = 0;
 	
-	var skill = self.skill(SkillType.CREATE);
-	self.data.moveAssault = (skill && skill.isSubType(SkillSubType.MOVE_ASSAULT));
-	self.data.moveKnow = (skill && skill.isSubType(SkillSubType.MOVE_KNOW));
-	if(skill && skill.isSubType(SkillSubType.STATUS_ADD_NUM)){
-		//self.data[skill.statusName()] += skill.statusValue();
-		self.data["_skill_add_status_num_" + skill.statusName()] = skill.statusValue();
-	}else if(skill && skill.isSubType(SkillSubType.STATUS_ADD_PROP)){
-		//self.data[skill.statusName()] = self.data[skill.statusName()] * (1 + skill.statusValue()) >>> 0;
-		self.data["_skill_add_status_prop_" + skill.statusName()] = 1 + skill.statusValue();
-	}else if (skill && skill.isSubType(SkillSubType.HERT_VS_STATUS)) {
-		self.data.hertVsStatus = skill.hertVsStatus();
-	}else if (skill && skill.isSubType(SkillSubType.SOLDIERS_ATTACK_RECT)) {
-		var condition = skill.condition();
-		if(condition){
-			if((condition.type == "AttackType" && condition.value == currentSoldiers.attackType()) || 
-			(condition.type == "SoldierId" && condition.value.indexOf(currentSoldiers.id()) >= 0)){
-				self.data.rangeAttack = skill.rangeAttack().concat();
-				var ranges = currentSoldiers.rangeAttack();
-				for(var i=0,l=ranges.length;i<l;i++){
-					var range = ranges[i];
-					if(self.data.rangeAttack.findIndex(function(child){return range.x == child.x && range.y == child.y;}) >= 0){
-						return;
+	var createSkills = [], skill;
+	if(self.data.skill){
+		skill = SkillMasterModel.getMaster(self.data.skill);
+		if(skill.isMainType(SkillType.CREATE)){
+			createSkills.push(skill);
+		}
+	}
+	var currentSoldiers = self.currentSoldiers();
+	var skill = currentSoldiers.skill(SkillType.CREATE);
+	if(skill){
+		createSkills.push(skill);
+	}
+	var equipments = self.equipments();
+	for(var i=0;i<equipments.length;i++){
+		var equipment = equipments[i];
+		skill = equipment.skill(SkillType.CREATE);
+		if(skill){
+			createSkills.push(skill);
+		}
+	}
+	for(var i=0;i<createSkills.length;i++){
+		skill = createSkills[i];
+		self.data.moveAssault = (skill && skill.isSubType(SkillSubType.MOVE_ASSAULT));
+		self.data.moveKnow = (skill && skill.isSubType(SkillSubType.MOVE_KNOW));
+		if(skill && skill.isSubType(SkillSubType.STATUS_ADD_NUM)){
+			self.data["_skill_add_status_num_" + skill.statusName()] = skill.statusValue();
+		}else if(skill && skill.isSubType(SkillSubType.STATUS_ADD_PROP)){
+			self.data["_skill_add_status_prop_" + skill.statusName()] = 1 + skill.statusValue();
+		}else if (skill && skill.isSubType(SkillSubType.HERT_VS_STATUS)) {
+			self.data.hertVsStatus = skill.hertVsStatus();
+		}else if (skill && skill.isSubType(SkillSubType.SOLDIERS_ATTACK_RECT)) {
+			var condition = skill.condition();
+			if(condition){
+				if((condition.type == "AttackType" && condition.value == currentSoldiers.attackType()) || 
+				(condition.type == "SoldierId" && condition.value.indexOf(currentSoldiers.id()) >= 0)){
+					self.data.rangeAttack = skill.rangeAttack().concat();
+					var ranges = currentSoldiers.rangeAttack();
+					for(var i=0,l=ranges.length;i<l;i++){
+						var range = ranges[i];
+						if(self.data.rangeAttack.findIndex(function(child){return range.x == child.x && range.y == child.y;}) >= 0){
+							return;
+						}
+						self.data.rangeAttack.push(range);
 					}
-					self.data.rangeAttack.push(range);
 				}
 			}
 		}
@@ -742,6 +762,8 @@ CharacterModel.prototype.troops = function(value, proportionWounded) {
 	if(typeof value != UNDEFINED){
 		if(value > self.maxTroops()){
 			value = self.maxTroops();
+		}else if(value < 0){
+			value = 0;
 		}
 		if(proportionWounded){
 			var addWounded = (self.data.troops - value) * proportionWounded >>> 0;
@@ -1300,7 +1322,8 @@ CharacterModel.prototype.equipmentsData = function() {
 	var list = [];
 	for(var i=0,l=equipments.length;i<l;i++){
 		var equipment = equipments[i];
-		list.push({item_id:equipment.id(), count:1});
+		list.push(equipment.datas());
+		//list.push({item_id:equipment.id(), count:1});
 	}
 	return list;
 };
@@ -1347,7 +1370,7 @@ CharacterModel.prototype.equip = function(itemModel) {
 				break;
 			}
 		}
-		var item = new ItemModel(null, {item_id:itemModel.id(), count:1});
+		var item = new ItemModel(null,itemModel.datas());
 		if(self.seigniorId() == LMvc.selectSeignorId){
 			LMvc.chapterData["treasure_" + item.id()] = 1;
 		}
@@ -1388,8 +1411,26 @@ CharacterModel.prototype.skillCoefficient = function() {
 	return (this.data.skill ? 1 : 0) + (this.data.groupSkill ? 1 : 0);
 };
 CharacterModel.prototype.soldiersSkill = function(type) {
+	var self = this;
 	var currentSoldiers = this.currentSoldiers();
-	return currentSoldiers.skill(type);
+	var soldiersSkill = currentSoldiers.skill(type);
+	if(soldiersSkill){
+		return soldiersSkill;
+	}else{
+		return self.equipmentSkill(type);
+	}
+};
+CharacterModel.prototype.equipmentSkill = function(type) {
+	var self = this;
+	var equipments = self.equipments();
+	for(var i=0;i<equipments.length;i++){
+		var equipment = equipments[i];
+		var skill = equipment.skill(type);
+		if(skill){
+			return skill;
+		}
+	}
+	return null;
 };
 CharacterModel.prototype.skill = function(type) {
 	var self = this;
@@ -1406,9 +1447,14 @@ CharacterModel.prototype.skill = function(type) {
 		(Array.isArray(skillType) && skillType.indexOf(type) < 0))){
 		return self.soldiersSkill(type);
 	}
-	if(skill.probability() < 100){
+	if(type){
+		if(LMvc.BattleController && isMilitaryHappened(self.seigniorId(), MilitaryType.SKILL)){
+			return skill;
+		}
+	}
+	if(type && skill.probability() < 100){
 		var rand = Math.fakeRandom();
-		if(type && rand > skill.probability()*0.01){
+		if(rand > skill.probability()*0.01){
 			return self.soldiersSkill(type);
 		}
 	}
