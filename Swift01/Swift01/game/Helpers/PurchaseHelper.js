@@ -186,5 +186,49 @@ function purchaseConfirmShow(productId, name, group, callback) {
 		};
 	}
 	var windowLayer = ConfirmWindow(obj);
+	if(LPlugin.language() == "japanese"){
+		var fundSettlementLaw = getButton(Language.get("資金決済法に基づく表示"), obj.width);
+		fundSettlementLaw.x = (LMvc.screenWidth - obj.width) * 0.5;
+		fundSettlementLaw.y =  (LMvc.screenHeight + obj.height) * 0.5 + 5;
+		windowLayer.addChild(fundSettlementLaw);
+		fundSettlementLaw.addEventListener(LMouseEvent.MOUSE_UP, function(event){
+			purchaseConfirmLawShow(LMvc.fundSettlementLawURL);
+		});
+		var specifiedCommercialTransactionLaw = getButton(Language.get("特定商取引法に基づく表記"), obj.width);
+		specifiedCommercialTransactionLaw.x = (LMvc.screenWidth - obj.width) * 0.5;
+		specifiedCommercialTransactionLaw.y =  fundSettlementLaw.y + fundSettlementLaw.getHeight() + 5;
+		windowLayer.addChild(specifiedCommercialTransactionLaw);
+		specifiedCommercialTransactionLaw.addEventListener(LMouseEvent.MOUSE_UP, function(event){
+			purchaseConfirmLawShow(LMvc.specifiedCommercialTransactionLawURL);
+		});
+	}
 	LMvc.layer.addChild(windowLayer);
 }
+
+function purchaseConfirmLawShow(url){
+	var lawWindow = new LSprite();
+	var newsBackMask = getTranslucentMask();
+	lawWindow.addChild(newsBackMask);
+	var w = 400, h = LMvc.screenHeight - 100, x, y;
+	x = (LMvc.screenWidth - w) * 0.5;
+	y = (LMvc.screenHeight - h) * 0.5;
+	var newsBackground = getPanel("win02", w + 20, h + 20);
+	newsBackground.x = x - 10;
+	newsBackground.y = y - 10;
+	lawWindow.addChild(newsBackground);
+	
+	var webview = new LStageWebView();
+	webview.setViewPort(new LRectangle(x, y, w, h));
+	webview.loadURL(url);
+	webview.show();
+	var closeButton = new LButton(new LBitmap(new LBitmapData(LMvc.datalist["close"])));
+	closeButton.x = x + w - 10;// - closeButton.getWidth() + 10;
+	closeButton.y = y - closeButton.getHeight();
+	self.addChild(closeButton);
+	closeButton.addEventListener(LMouseEvent.MOUSE_UP,function(event){
+		event.currentTarget.remove();
+		newsBackMask.remove();
+		newsBackground.remove();
+		webview.hide();
+	});
+};

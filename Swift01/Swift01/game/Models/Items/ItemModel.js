@@ -32,7 +32,7 @@ ItemModel.prototype.equal = function(item){
 };
 ItemModel.prototype.stonePlus = function(value){
 	var self = this;
-	if(value){
+	if(typeof value != UNDEFINED){
 		self.data.stonePlus = value;
 		self._stonePlusItem = null;
 		return;

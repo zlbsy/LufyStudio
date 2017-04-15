@@ -190,6 +190,8 @@ BattleCharacterStatusView.prototype.getCharacterStatusChild=function(mode,layer)
 			currentValue = self.character.data.troops();
 			if(statusObject){
 				self.character.data.troops(currentValue + statusObject.value, statusObject.value >= 0 ? 0 : calculateWounded(0.5, 0.2));
+			}else{
+				currentValue += "("+self.character.data.wounded()+")";
 			}
 			break;
 		case BattleCharacterStatusConfig.MP:

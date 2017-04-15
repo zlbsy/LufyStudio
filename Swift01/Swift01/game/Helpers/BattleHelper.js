@@ -827,6 +827,7 @@ function experienceToFeat(characterModels){
 		var character = characterModels[i];
 		datas.push({name:character.name(), exp:character.exp(), character:character});
 		sumExp += character.exp();
+		character.equipmentStoneClear();
 	}
 	var average = sumExp / datas.length;
 	var feat = average * 0.2;
@@ -1275,7 +1276,7 @@ function setEquipmentsStoneItem(characterModel, level, isSpecial){
 		if(LMvc.chapterData.trouble == TroubleConfig.HARD){
 			skills = [StoneType.BLUE,0,0,0,0];
 		}
-	}else if(level > 5){
+	}else{
 		stoneTypes.push(StoneType.YELLOW,StoneType.YELLOW,StoneType.YELLOW,StoneType.YELLOW,StoneType.YELLOW);
 		status.push({k:"attack",v:2},{k:"spirit",v:2},{k:"defense",v:2},{k:"breakout",v:2},{k:"morale",v:2});
 	}

@@ -316,7 +316,7 @@ BattleCharacterAI.prototype.physicalAttack = function(target) {
 	}
 	self.chara.changeDirection(direction);
 	if(skill){
-		var specialEffect = new SpecialEffectView(null, self.chara.data);
+		var specialEffect = new SpecialEffectView(null, self.chara.data, skill.name());
 		specialEffect.addEventListener(LEvent.COMPLETE, function(){
 			self.physicalAttackStart();
 		});

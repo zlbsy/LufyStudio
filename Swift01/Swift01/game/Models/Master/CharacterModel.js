@@ -1316,6 +1316,17 @@ CharacterModel.prototype.soldiers = function() {
 	}
 	return self._soldiers;
 };
+CharacterModel.prototype.equipmentStoneClear = function() {
+	var self = this;
+	var equipments = self.equipments();
+	for(var i=0;i<equipments.length;i++){
+		var equipment = equipments[i];
+		if(equipment.stone() && equipment.stonePlus().ai){
+			equipment.stone(0);
+			equipment.stonePlus(null);
+		}
+	}
+};
 CharacterModel.prototype.equipmentsData = function() {
 	var self = this;
 	var equipments = self.equipments();

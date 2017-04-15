@@ -29,4 +29,6 @@ var dictionaryConfig = [
 	{key:"soldiers_image",ver:"1.9.0"},
 	{key:"growing",ver:"1.9.0"},
 	{key:"breakthrough",ver:"1.9.0"},
+	{key:"equipment_strengthen",ver:"1.10.0"},
+	{key:"strengthen_stone",ver:"1.10.0"},
 	];
