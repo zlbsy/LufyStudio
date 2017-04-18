@@ -16,7 +16,8 @@ import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
-import android.webkit.JavascriptInterface;
+//import android.webkit.JavascriptInterface;
+import org.xwalk.core.JavascriptInterface;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
@@ -36,6 +37,9 @@ import com.lufylegend.sgj.AliPayAPI;
 import com.lufylegend.sgj.AliPayResult;
 
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
+import org.xwalk.core.XWalkPreferences;
+import org.xwalk.core.XWalkResourceClient;
+import org.xwalk.core.XWalkView;
 
 import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;
@@ -47,7 +51,7 @@ import javax.crypto.spec.SecretKeySpec;
 public class Lufylegend {
     private static final String API_URL = "http://sgj.lufylegend.com/android_purchase/r7ahGNe_A8QLDKKd3Ys7/";
     public static String gamePath;
-    public static WebView myWebView;
+    public static XWalkView myWebView;
     public static Lufylegend instance = null;
     private String purchaseParams;
     private Activity context;
@@ -65,17 +69,19 @@ public class Lufylegend {
         activity.requestWindowFeature(Window.FEATURE_NO_TITLE);
         activity.setContentView(R.layout.activity_main);
         //レイアウトで指定したWebViewのIDを指定する。
-        WebView myWebView = (WebView)activity.findViewById(R.id.webView1);
+        XWalkView myWebView = (XWalkView)activity.findViewById(R.id.webView1);
         Lufylegend.myWebView = myWebView;
         //jacascriptを許可する
-        myWebView.getSettings().setJavaScriptEnabled(true);
+        XWalkPreferences.setValue("enable-javascript", true);
+        //myWebView.getSettings().setJavaScriptEnabled(true);
         Lufylegend.instance = new Lufylegend(activity);
         myWebView.addJavascriptInterface(Lufylegend.instance, "LPlugin");
         //リンクをタップしたときに標準ブラウザを起動させない
-        myWebView.setWebViewClient(new WebViewClient());
+        //myWebView.setWebViewClient(new WebViewClient());
+        myWebView.setResourceClient(new XWalkResourceClient(myWebView));
         //ページを表示する。
         String url = String.format("%sindex.html", String.format("file:///android_asset/%s", path));
-        myWebView.loadUrl(url);
+        myWebView.load(url, null);
         //instance.startAlipay("123", instance.getOutTradeNo(), "test", "test", "0.1");
     }
 
@@ -290,7 +296,8 @@ public class Lufylegend {
         Lufylegend.myWebView.post(new Runnable() {
             @Override
             public void run() {
-                Lufylegend.myWebView.loadUrl("javascript:" + strScript);
+                //Lufylegend.myWebView.loadUrl("javascript:" + strScript);
+                Lufylegend.myWebView.load("javascript:" + strScript, null);
             }
         });
     }
