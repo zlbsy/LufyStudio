@@ -10,7 +10,11 @@ SingleCombatArenaController.prototype.construct=function(){
 };
 SingleCombatArenaController.prototype.configLoad=function(){
 	var self = this;
-	self.load.config(["CharacterListType","Job","Character","characterList","BattleMap"],self.libraryLoad);
+	self.load.config(["CharacterListType","Job","Character","BattleMap"],self.configLoad2);
+};
+SingleCombatArenaController.prototype.configLoad2=function(){
+	var self = this;
+	self.load.config(["characterList"],self.libraryLoad);
 };
 SingleCombatArenaController.prototype.libraryLoad=function(){
 	var self = this;

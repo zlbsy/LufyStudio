@@ -179,7 +179,7 @@ BattleCharacterStatusView.prototype.showCharacterStatus=function(confirmStatus){
 };
 BattleCharacterStatusView.prototype.getCharacterStatusChild=function(mode,layer){
 	var self = this;
-	var icon, frontBar, label, value, maxValue, currentValue,statusLayer;
+	var icon, frontBar, label, value, maxValue, currentValue,statusLayer, currentNumValue;
 	var statusObject = self.get(mode);
 	switch(mode){
 		case BattleCharacterStatusConfig.TROOPS:
@@ -191,6 +191,7 @@ BattleCharacterStatusView.prototype.getCharacterStatusChild=function(mode,layer)
 			if(statusObject){
 				self.character.data.troops(currentValue + statusObject.value, statusObject.value >= 0 ? 0 : calculateWounded(0.5, 0.2));
 			}else{
+				currentNumValue = currentValue;
 				currentValue += "("+self.character.data.wounded()+")";
 			}
 			break;
@@ -240,7 +241,7 @@ BattleCharacterStatusView.prototype.getCharacterStatusChild=function(mode,layer)
 	}else{
 		statusLayer = layer;
 	}
-	value = currentValue / maxValue;
+	value = (typeof currentValue == "string" ? currentNumValue : currentValue) / maxValue;
 	value = value < 0.001 ? 0.001 : value;
 	var barSize = BattleCharacterStatusView.BAR_SIZE * value;
 	var showSize = barSize < iconBitmapData.width ? iconBitmapData.width : barSize;

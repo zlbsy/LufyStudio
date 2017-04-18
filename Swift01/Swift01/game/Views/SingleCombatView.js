@@ -158,20 +158,19 @@ SingleCombatView.prototype.execute=function(event){
 	self.executeIndex++;
 	singleCombatCommandExecute(self.leftCharacter,self.rightCharacter);
 };
-SingleCombatView.prototype.characterDebut=function(event){
-	var character = event.target;
-	var self = character.parent.parent;
+SingleCombatView.prototype.characterDebut=function(character, over){
+	var self = this;
 	character.getDebutTalk();
 	character.changeAction(CharacterAction.ATTACK);
+	if(!over){
+		return;
+	}
 	character.addEventListener(LEvent.COMPLETE, self.characterDebutComplete);
 };
 SingleCombatView.prototype.characterDebutComplete=function(event){
 	var character = event.currentTarget;
 	var self = character.parent.parent;
 	character.removeEventListener(LEvent.COMPLETE, self.characterDebutComplete);
-	if(character.isLeft){
-		return;
-	}
 	self.leftCharacter.anime.play();
 	self.rightCharacter.anime.play();
 	self.leftCharacter.moveTo(LMvc.screenWidth * 0.5 - 96, self.leftCharacter.y);
@@ -190,8 +189,11 @@ SingleCombatView.prototype.startSingleCombat=function(event){
 	});
 	self.leftCharacter.alpha = 0;
 	self.rightCharacter.alpha = 0;
-	LTweenLite.to(self.leftCharacter,1,{alpha:1,delay:1,onComplete:self.characterDebut});
-	LTweenLite.to(self.rightCharacter,1,{alpha:1,delay:2,onComplete:self.characterDebut});
+	LTweenLite.to(self.leftCharacter,1,{alpha:1,delay:1,onComplete:function(){
+		self.characterDebut(self.leftCharacter, false);
+	}}).to(self.rightCharacter,1,{alpha:1,onComplete:function(){
+		self.characterDebut(self.rightCharacter, true);
+	}});
 };
 SingleCombatView.prototype.faceLayerInit=function(characterModel,isLeft){
 	var self = this;

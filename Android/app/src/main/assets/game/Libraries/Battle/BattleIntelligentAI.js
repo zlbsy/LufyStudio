@@ -528,7 +528,7 @@ BattleIntelligentAI.prototype.useDownStatusStrategy = function() {
 };
 BattleIntelligentAI.prototype.useAidStrategy = function(charas, strategyEffectType, strategyFlag) {
 	var self = this, chara = self.chara;
-	if((chara.data.currentSoldiers().soldierType() == SoldierType.Physical) || (chara.data.currentSoldiers().soldierType() == SoldierType.Comprehensive && Math.fakeRandom() < 0.5) || Math.fakeRandom() < 0.8){
+	if((chara.data.currentSoldiers().soldierType() == SoldierType.Physical) || (chara.data.currentSoldiers().soldierType() == SoldierType.Comprehensive && Math.fakeRandom() < 0.8) || Math.fakeRandom() < 0.8){
 		self.strategyFlag = strategyFlag;
 		return;
 	}
@@ -557,7 +557,7 @@ BattleIntelligentAI.prototype.useAidStrategy = function(charas, strategyEffectTy
 };
 BattleIntelligentAI.prototype.useHertStrategy = function() {
 	var self = this, chara = self.chara;
-	if((chara.data.currentSoldiers().soldierType() == SoldierType.Physical) || (chara.data.currentSoldiers().soldierType() == SoldierType.Comprehensive && Math.fakeRandom() < 0.5)){
+	if((chara.data.currentSoldiers().soldierType() == SoldierType.Physical) || (chara.data.currentSoldiers().soldierType() == SoldierType.Comprehensive && Math.fakeRandom() < 0.4)){
 		chara.mode = CharacterMode.WAIT_ATTACK;
 		return;
 	}
