@@ -1,5 +1,16 @@
 apply plugin: 'com.android.application'
 
+repositories {
+    mavenLocal()
+    maven {
+        url 'https://download.01.org/crosswalk/releases/crosswalk/android/maven2'
+    }
+}
+
+dependencies {
+    compile 'org.xwalk:xwalk_core_library:15.44.384.13'
+}
+
 android {
     signingConfigs {
         config {
@@ -9,12 +20,12 @@ android {
             storePassword 'buzhidao'
         }
     }
-    compileSdkVersion 24
-    buildToolsVersion "24.0.2"
+    compileSdkVersion 23
+    buildToolsVersion "23.0.1"
     defaultConfig {
         applicationId "com.lufylegend.sgj"
-        minSdkVersion 9
-        targetSdkVersion 9
+        minSdkVersion 15
+        targetSdkVersion 23
         versionName '1.10.0'
         versionCode 15
     }
@@ -26,6 +37,18 @@ android {
         }
     }
     productFlavors {
+        armv7 {
+            versionCode defaultConfig.versionCode + 2
+            ndk {
+                abiFilters "armeabi-v7a", ""
+            }
+        }
+        x86 {
+            versionCode defaultConfig.versionCode + 4
+            ndk {
+                abiFilters "x86", ""
+            }
+        }
     }
 }
 
