@@ -109,6 +109,7 @@ BugReportView.prototype.toUpdate = function(event){
 		return;
 	}
 	var identificationId = (typeof LPlugin.identificationId == UNDEFINED) ? "ios" : LPlugin.identificationId();
+	LMvc.keepLoading(true);
 	LAjax.post(LMvc.uploadURL, {email:self.mail.text, 
 		message:self.message.text, 
 		ver:LMvc.ver, 
@@ -128,9 +129,11 @@ BugReportView.prototype.toUpdate = function(event){
 		}
 		var dialog = ConfirmWindow(obj);
 		LMvc.logoStage.addChild(dialog);
+		LMvc.keepLoading(false);
 	},function(){
 		obj = {width:300, height:200, message:Language.get("dialog_fail_net"), title:Language.get("dialog_fail_net")};
 		var dialog = ConfirmWindow(obj);
 		LMvc.logoStage.addChild(dialog);
+		LMvc.keepLoading(false);
 	});
 };

@@ -28,7 +28,7 @@ Language.dataSimple = {
 	"confirm":"确认",
 	"dialog_quip_confirm_message":"ゲームを終了しますか？",
 	"img_copyright":"ゲームについて",
-	"dialog_img_copyright":"戦闘用の素材は下記の作成者の作品から取得しました、感謝いたします。\n无所畏惧，yejingtang，zpftmd748，张博，小白猎人，drinksun\n\nゲームに貢献した人たちに感謝いたします、下記は代表の三人です：\n樱木小道，烟仔，flier007\n\n特に、黄雄剑（紫薇剑圣）は全武将の紹介を追加してくれて、すごく感謝いたします。",
+	"dialog_img_copyright":"戦闘用の素材は下記の作成者の作品から取得しました、感謝いたします。\n无所畏惧，yejingtang，zpftmd748，张博，小白猎人，drinksun\n\nゲームに貢献した人たちに感謝いたします、下記は代表の数人です：\n樱木小道，烟仔，flier007，1+1=3\n\n特に、黄雄剑（紫薇剑圣）は全武将の紹介を追加してくれて、すごく感謝いたします。",
 	"opinion":"交流/意見",
 	"tieba":"百度掲示板",
 	"bug_report":"バグ報告",

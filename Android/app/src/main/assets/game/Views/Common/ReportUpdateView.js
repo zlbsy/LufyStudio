@@ -76,12 +76,14 @@ ReportUpdateView.prototype.toUpdate = function(event){
 		LMvc.logoStage.addChild(dialog);
 		return;
 	}
+	LMvc.keepLoading(true);
 	LAjax.post(LMvc.downloadURL, {reportId:self.idText.text}, function(data){
 		var errorFun = function(){
 			var obj = {width:300, height:200, message:Language.get("error_update_report"), title:Language.get("confirm")};
 			var dialog = ConfirmWindow(obj);
 			LMvc.logoStage.addChild(dialog);
 		};
+		LMvc.keepLoading(false);
 		try{
 			data = JSON.parse(data);
 		}catch(e){
@@ -114,5 +116,6 @@ ReportUpdateView.prototype.toUpdate = function(event){
 		var obj = {width:300, height:200, message:Language.get("dialog_fail_net"), title:Language.get("dialog_fail_net")};
 		var dialog = ConfirmWindow(obj);
 		LMvc.logoStage.addChild(dialog);
+		LMvc.keepLoading(false);
 	});
 };
