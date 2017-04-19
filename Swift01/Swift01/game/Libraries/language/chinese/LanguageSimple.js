@@ -28,7 +28,7 @@ Language.dataSimple = {
 	"confirm":"确认",
 	"dialog_quip_confirm_message":"要退出游戏吗？",
 	"img_copyright":"关于",
-	"dialog_img_copyright":"本游戏的战场形象取自下列制作者，或者在其形象基础上做了修改，在此表示感谢。\n无所畏惧，yejingtang，zpftmd748，张博，小白猎人，drinksun\n\n感谢众多网友们对游戏做出的帮助及建议，无法一一列出，以下为仅为代表：\n樱木小道，烟仔，flier007等\n\n特别感谢网友黄雄剑（紫薇剑圣）为游戏完善了所有的武将介绍。",
+	"dialog_img_copyright":"本游戏的战场形象取自下列制作者，或者在其形象基础上做了修改，在此表示感谢。\n无所畏惧，yejingtang，zpftmd748，张博，小白猎人，drinksun\n\n感谢众多网友们对游戏做出的帮助及建议，无法一一列出，以下为仅为代表：\n樱木小道，烟仔，flier007，1+1=3等\n\n特别感谢网友黄雄剑（紫薇剑圣）为游戏整理了所有的武将介绍。",
 	"opinion":"交流论坛",
 	"tieba":"百度贴吧",
 	"bug_report":"提交错误报告",
