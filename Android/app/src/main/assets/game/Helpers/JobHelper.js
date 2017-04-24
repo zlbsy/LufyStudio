@@ -466,21 +466,21 @@ function agricultureRun(characterModel){
 		}
 	}else if (characterModel.seigniorId() == LMvc.selectSeignorId && rand < 0.01) {
 		rand = Math.fakeRandom();
-		if(rand > 0.5){
+		if(rand > 0.7){
 			//id:105,name:"蓝战石" id:108,name:"蓝佐石"
 			//id:101,name:"紫战石" id:104,name:"紫佐石"
-			if(rand <= 0.65){
+			if(rand <= 0.8){
 				itemId = 105;
-			}else if(rand <= 0.8){
-				itemId = 108;
 			}else if(rand <= 0.9){
+				itemId = 108;
+			}else if(rand <= 0.95){
 				itemId = 101;
 			}else{
 				itemId = 104;
 			}
 			var item = ItemMasterModel.getMaster(itemId);
-			characterModel.city().addItem(new ItemModel(null, {item_id:item.id(),count:1}));
-			if(characterModel.city().isAppoint()){
+			city.addItem(new ItemModel(null, {item_id:item.id(),count:1}));
+			if(city.isAppoint()){
 				var msg = String.format(Language.get("running_get_message"), characterModel.name(),Language.get("agriculture"),item.name());
 				SeigniorExecute.addMessage(msg);
 			}
@@ -510,14 +510,14 @@ function businessRun(characterModel){
 					LMvc.MapController.businessItemsShow(characterModel, item);
 					return true;
 				}
-			}else if(rand > 0.5){
+			}else if(rand > 0.7){
 				//id:107,name:"蓝辅石" id:108,name:"蓝佐石"
 				//id:103,name:"紫辅石" id:104,name:"紫佐石"
-				if(rand <= 0.65){
+				if(rand <= 0.8){
 					itemId = 107;
-				}else if(rand <= 0.8){
-					itemId = 108;
 				}else if(rand <= 0.9){
+					itemId = 108;
+				}else if(rand <= 0.95){
 					itemId = 103;
 				}else{
 					itemId = 104;
@@ -564,20 +564,20 @@ function technologyRun(characterModel){
 		}
 	}else if (characterModel.seigniorId() == LMvc.selectSeignorId && rand < 0.01) {
 		rand = Math.fakeRandom();
-		if(rand > 0.5){
+		if(rand > 0.7){
 			//id:106,name:"蓝法石" id:108,name:"蓝佐石"
 			//id:102,name:"紫法石" id:104,name:"紫佐石"
-			if(rand <= 0.65){
+			if(rand <= 0.8){
 				itemId = 106;
-			}else if(rand <= 0.8){
-				itemId = 108;
 			}else if(rand <= 0.9){
+				itemId = 108;
+			}else if(rand <= 0.95){
 				itemId = 102;
 			}else{
 				itemId = 104;
 			}
 			var item = ItemMasterModel.getMaster(itemId);
-			cityModel.addItem(new ItemModel(null, {item_id:item.id(),count:1}));
+			city.addItem(new ItemModel(null, {item_id:item.id(),count:1}));
 			if(characterModel.city().isAppoint()){
 				var msg = String.format(Language.get("running_get_message"), characterModel.name(),Language.get("technology"),item.name());
 				SeigniorExecute.addMessage(msg);

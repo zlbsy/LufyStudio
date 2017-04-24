@@ -348,7 +348,7 @@ var SkillsData = [
 {id:86,name:"卧薪尝胆",powerful:110,type:SkillType.NULL,subType:[SkillSubType.HARDSHIPS],probability:100,explanation:"敌方回合每受到一次攻击，自己的攻击伤害提升10%。"},
 {id:87,name:"快速连击",powerful:100,type:SkillType.ATTACK,subType:[SkillSubType.ATTACK_COUNT],attacks:[0.6,0.6],probability:50,explanation:"通过减轻力量来快速攻击两次，但是每次攻击只有普通攻击的0.6倍。"},
 {id:88,name:"防守",powerful:100,type:SkillType.HERT,subType:[SkillSubType.HERT_MINUS],hert:0.8,probability:50,explanation:"受到的伤害减少10%。"},
-{id:89,name:"骑术",powerful:80,type:SkillType.CREATE,subType:[SkillSubType.SOLDIERS_ATTACK_RECT],condition:{type:"SoldierId",value:[3,27]},rangeAttack:[{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}],explanation:"掌握了超凡的骑术，在使用骑兵时，将攻击范围扩大至8格。"},
+{id:89,name:"骑术",powerful:80,type:SkillType.CREATE,subType:[SkillSubType.SOLDIERS_ATTACK_RECT],condition:{type:"MoveType",value:1},rangeAttack:[{x:0,y:-2},{x:0,y:2},{x:-2,y:0},{x:2,y:0}],explanation:"掌握了超凡的骑术，在使用骑兵时，攻击范围扩大1格。"},
 {id:90,name:"米袋",powerful:50,type:SkillType.NULL,subType:[SkillSubType.RICE],probability:100,explanation:"自备口粮，不消耗军队的粮食。"},
 {id:91,name:"移动攻击",powerful:100,type:SkillType.NULL,subType:[SkillSubType.MOVE_ATTACK],probability:100,explanation:"移动距离越长攻击越高。"},
 {id:92,name:"英龙之气(曹操)",powerful:180,type:SkillType.HERT,subType:[SkillSubType.HERT_MINUS,SkillSubType.BOUNCE],bounce:0.5,hert:0,probability:30,explanation:"将受到的一部分伤害反射给对方，自身承受的伤害减少为0。"},

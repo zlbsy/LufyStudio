@@ -1340,7 +1340,7 @@ function isPlayerBattle(){
 	return (typeof BattleController != UNDEFINED) && (LMvc.BattleController instanceof BattleController);
 }
 function isMilitaryHappened(seigniorId, militaryType){
-	if(!LMvc.BattleController || !LMvc.BattleController.militaryModel || !LMvc.BattleController.battleData.toCity || !LMvc.BattleController.battleData.toCity.seigniorCharaId){
+	if(!LMvc.BattleController || !LMvc.BattleController.militaryModel || !LMvc.BattleController.battleData || !LMvc.BattleController.battleData.toCity || !LMvc.BattleController.battleData.toCity.seigniorCharaId){
 		return false;
 	}
 	return LMvc.BattleController.militaryModel.isType(militaryType) && (seigniorId == 0 || LMvc.BattleController.battleData.toCity.seigniorCharaId() == seigniorId);

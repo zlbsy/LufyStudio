@@ -45,7 +45,7 @@ CharacterDetailedTabPropertiesView.prototype.showRight=function(characterModel){
 	[String.format("{0}({1})",characterModel.troops() == 0 ? characterModel.maxTroops() : characterModel.troops(),characterModel.wounded()),characterModel.maxTroops(),characterModel.maxTroops()],
 	[characterModel.MP(),characterModel.maxMP(),characterModel.maxMP()],
 	LMvc.BattleController ? [characterModel.exp(),characterModel.maxExp(),characterModel.maxExp()] : [characterModel.feat(),characterModel.maxFeat(),characterModel.maxFeat()],
-	[characterModel.currentSoldiers().proficiency(),characterModel.currentSoldiers().proficiency(),1000],
+	[characterModel.currentSoldiers().proficiency(),characterModel.currentSoldiers().proficiency(),characterModel.currentSoldiers().maxProficiency()],
 	self.getStatusAsList(characterModel, "attack", "AttackAid"),
 	self.getStatusAsList(characterModel, "spirit", "ApiritAid"),
 	self.getStatusAsList(characterModel, "defense", "DefenseAid"),

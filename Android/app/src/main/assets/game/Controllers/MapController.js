@@ -67,8 +67,8 @@ MapController.prototype.init=function(status){
 		LMvc.logoStage.visible = false;
 	}*/
 	var seignior = SeigniorModel.getSeignior(LMvc.selectSeignorId);
-	var item = new ItemModel(null,{item_id:10,count:1});
-	seignior.addItem(item);
+	//var item = new ItemModel(null,{item_id:10,count:1});
+	//seignior.addItem(item);
 	LMvc.chapterController.view.visible = false;
 	LMvc.stageLayer.x = 0;
 	if(LMvc.isRead){

@@ -692,7 +692,7 @@ var EventListConfig = [
 		],
 		clear:1,
 		tribe:[2, 4],//二个或四个外族存在
-		troopsVsTribe:{from:0, to:3},//兵力小于外族兵力的3倍
+		troopsVsTribe:{from:0, to:4},//兵力小于外族兵力的3倍
 		generalsCount:{basicPropertiesSum:360, to:19}//属性平均值超过90的武将小于20人
 	},
 	script:"Data/Event/{0}/jj_yzmz_sb.txt",
@@ -813,7 +813,7 @@ var EventListConfig = [
 		citys:[
 		],
 		clear:1,
-		revival:1,//满足汉室复兴条件-君主姓刘且手下姓刘武将超过5人且忠诚全满
+		revival:1,//君主姓刘且手下有姓刘武将，且姓刘武将忠诚全满
 		conditionRevival:0//不满足汉室延长条件
 	},
 	script:"Data/Event/{0}/jj_mzrq_cc.txt",
