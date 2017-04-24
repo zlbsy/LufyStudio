@@ -164,6 +164,7 @@ CharacterModel.prototype.datas=function(){
 		isPrized:self.isPrized(),
 		stopIn:self.stopIn(),
 		reputation:self.data.reputation,
+		trainingSoldier:self.trainingSoldier(),
 		equipments:self.equipmentsData()
 	};
 	var keys = ["command","force","intelligence","agility","luck"];
@@ -176,6 +177,9 @@ CharacterModel.prototype.datas=function(){
 		saveData.currentSoldierId = self.data.currentSoldierId;
 	}
 	return saveData;
+};
+CharacterModel.prototype.trainingSoldier = function(value){
+	return this._dataValue("trainingSoldier", value, 0);
 };
 CharacterModel.prototype.employDatas=function(){
 	var self = this;
@@ -237,6 +241,7 @@ CharacterModel.prototype.setDatas=function(charaData){
 	if(charaData.job){
 		self.setJobData(charaData.job);
 	}
+	self.trainingSoldier(charaData.trainingSoldier ? charaData.trainingSoldier : 0);
 	if(charaData.reputation){
 		var n = [];
 		for(var i = 0; i < charaData.reputation.length; i++){
@@ -465,6 +470,7 @@ CharacterModel.prototype.calculation = function(init) {
 			createSkills.push(skill);
 		}
 	}
+	self.data.rangeAttack = currentSoldiers.rangeAttack().concat();
 	for(var i=0;i<createSkills.length;i++){
 		skill = createSkills[i];
 		self.data.moveAssault = (skill && skill.isSubType(SkillSubType.MOVE_ASSAULT));
@@ -479,13 +485,13 @@ CharacterModel.prototype.calculation = function(init) {
 			var condition = skill.condition();
 			if(condition){
 				if((condition.type == "AttackType" && condition.value == currentSoldiers.attackType()) || 
+				(condition.type == "MoveType" && condition.value == currentSoldiers.moveType()) || 
 				(condition.type == "SoldierId" && condition.value.indexOf(currentSoldiers.id()) >= 0)){
-					self.data.rangeAttack = skill.rangeAttack().concat();
-					var ranges = currentSoldiers.rangeAttack();
+					var ranges = skill.rangeAttack();
 					for(var i=0,l=ranges.length;i<l;i++){
 						var range = ranges[i];
 						if(self.data.rangeAttack.findIndex(function(child){return range.x == child.x && range.y == child.y;}) >= 0){
-							return;
+							continue;
 						}
 						self.data.rangeAttack.push(range);
 					}

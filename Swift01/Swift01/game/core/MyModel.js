@@ -16,8 +16,15 @@ MyModel.prototype._dataValue = function(name, value, defaultValue, min, max){
 			value = max;
 		}
 		this.data[name] = value;
+		return;
 	}
-	return typeof this.data[name] == UNDEFINED ? defaultValue : this.data[name];
+	var res = typeof this.data[name] == UNDEFINED ? defaultValue : this.data[name];
+	if(typeof min != UNDEFINED && res < min){
+		res = min;
+	}else if(typeof max != UNDEFINED && res > max){
+		res = max;
+	}
+	return res;
 };
 MyModel.prototype.post=function(url,params,callback){
 	var self = this;

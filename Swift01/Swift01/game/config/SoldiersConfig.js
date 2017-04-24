@@ -18,7 +18,7 @@ var EnlistSetting = {
 	ENLIST_TO:200//征兵范围
 };
 var TrainingSetting = {
-	MAX:500//训练最大熟练度
+	MAX:700//训练最大熟练度
 };
 var SpecializedSoldiers = [20, 21, 22, 23, 24];
 var HealSoldiers = [10, 34];
@@ -812,7 +812,7 @@ var SoldierDatas = [
 	{id:2,value:80,moveCost:2},{id:3,value:110,moveCost:1},
 	{id:4,value:110,moveCost:1},{id:5,value:110,moveCost:1},{id:7,value:80,moveCost:2},
 	{id:8,value:80,moveCost:2},{id:9,value:80,moveCost:2},{id:11,value:90,moveCost:3}],
-	rangeAttack:[{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0}],
+	rangeAttack:[{x:-1,y:-1},{x:-1,y:1},{x:1,y:1},{x:1,y:-1},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0}],
 	rangeAttackTarget:[{x:0,y:0}],
 	strategy:[],
 	maxProficiency:1200,

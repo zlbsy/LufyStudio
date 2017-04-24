@@ -91,6 +91,10 @@ BuildBarrackView.prototype.showSoldiers=function(){
 		var label = String.format("{0} {1}({2})", soldierModel.name(), Language.get("proficiency"),soldierModel.proficiency());
 		com.setChild({label:label,value:soldierModel.id()});
 	}
+	var selectCharacter = self.controller.getValue("selectCharacter");
+	if(selectCharacter.trainingSoldier()){
+		com.setValue(selectCharacter.trainingSoldier());
+	}
 	com.y = 55;
 	layer.addChild(com);
 	var obj = {title:Language.get("confirm"),subWindow:layer,height:300,okEvent:self.selectSoldier,cancelEvent:null};
@@ -110,6 +114,7 @@ BuildBarrackView.prototype.selectSoldier=function(event){
 	var com = layer.getChildAt(1);
 	var index = com.value;
 	var selectCharacter = self.controller.getValue("selectCharacter");
+	selectCharacter.trainingSoldier(index);
 	var cityModel = self.controller.getValue("cityData");
 	var soldiers = selectCharacter.soldiers();
 	var soldier = soldiers.find(function(child){

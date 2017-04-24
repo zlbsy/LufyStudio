@@ -51,6 +51,12 @@ RecordChildView.prototype.set=function(record){
 	generalsCount.y = 31;
 	self.labelsLayer.addChild(generalsCount);
 	
+	if(labels.trouble){
+		var trouble = getStrokeLabel(labels.trouble,18,"#FFFFFF","#000000",3);
+		trouble.x = 300;
+		trouble.y = 31;
+		self.labelsLayer.addChild(trouble);
+	}
 	if(labels.battleTitle){
 		var battleTitle = getStrokeLabel(labels.battleTitle,18,"#FFFFFF","#000000",3);
 		battleTitle.x = 40;

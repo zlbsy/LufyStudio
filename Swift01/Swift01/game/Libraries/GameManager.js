@@ -14,6 +14,13 @@ GameManager.save = function(index){
 	var selectSeignor = SeigniorModel.getSeignior(LMvc.selectSeignorId);
 	data.labels.name = selectSeignor.character().name();
 	data.labels.color = selectSeignor.color();
+	var troubleKey = "trouble_easy";
+	if(LMvc.chapterData.trouble == TroubleConfig.HARD){
+		troubleKey = "trouble_hard";
+	}else if(LMvc.chapterData.trouble == TroubleConfig.NORMAL){
+		troubleKey = "trouble_normail";
+	}
+	data.labels.trouble = Language.get(troubleKey);
 	data.labels.cityCount = Language.get("city") + " : " + selectSeignor.areas().length;
 	data.labels.generalsCount = Language.get("generals") + " : " + selectSeignor.generalsCount();
 	var city_title_format = Language.get("city_title").replace("(","").replace(")","");

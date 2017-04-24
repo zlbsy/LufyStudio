@@ -65,7 +65,7 @@ BattleCharacterAI.prototype.magicAttack = function(target){
 			var skill2 = self.chara.data.skill(SkillType.STRATEGY_COUNT_ATTACK);
 			if(skill2 && skill2.isSubType(SkillSubType.STRATEGY_COUNT)){
 				var v = hertValues[0];
-				hertValues = skill2.strategyAttacks();
+				hertValues = skill2.strategyAttacks().concat();
 				for(var i=0;i<hertValues.length;i++){
 					hertValues[i] *= v;
 				}
