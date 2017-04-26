@@ -1334,7 +1334,7 @@ function disasterMonthsExecute(area){
 			area.isFlood(0);
 		}
 	}else if(!area.canSacrifice()){
-		if(Math.fakeRandom() < 0.1){
+		if(area.technology() < area.maxTechnology() * 0.9 && Math.fakeRandom() < 0.1){
 			area.flood(area.flood() + 1);
 		}
 		if(DisasterMonths.Flood.indexOf(LMvc.chapterData.month) >= 0){
@@ -1360,7 +1360,7 @@ function disasterMonthsExecute(area){
 			area.isPlagueOfLocusts(0);
 		}
 	}else if(!area.canSacrifice()){
-		if(Math.fakeRandom() < 0.1){
+		if(area.agriculture() < area.maxAgriculture() * 0.9 && Math.fakeRandom() < 0.1){
 			area.plagueOfLocusts(area.plagueOfLocusts() + 1);
 		}
 		if(DisasterMonths.PlagueOfLocusts.indexOf(LMvc.chapterData.month) >= 0){

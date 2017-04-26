@@ -163,7 +163,7 @@ function jobAiToBattle(areaModel,baseCharacters,targetCity){
 			data.expeditionCharacterList = data.expeditionCharacterList.concat(generals);
 		}
 	}
-	if(data.expeditionCharacterList.length < BattleMapConfig.AttackQuantity && selfNoAppoints.length > 0){
+	if(data.expeditionCharacterList.length < BattleMapConfig.AttackQuantity && selfNoAppoints.length > 0 && targetCity.seignior()){
 		SeigniorExecute.Instance().stop = true;
 		//进入战斗
 		var attackSeignior = areaModel.seignior();

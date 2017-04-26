@@ -88,10 +88,6 @@ CityView.prototype.buildLayerInit=function(){
 	var self = this;
 	var selfCity = self.controller.getValue("selfCity");
 	var cityData = self.controller.getValue("cityData");
-	/*self.buildLayer.removeEventListener(LMouseEvent.MOUSE_UP);
-	if(selfCity){
-		self.buildLayer.addEventListener(LMouseEvent.MOUSE_UP, self.onBuildClick);
-	}*/
 	if(!self.buildLayerCacher){
 		self.buildLayerCacher = {};
 	}
@@ -119,19 +115,22 @@ CityView.prototype.buildLayerInit=function(){
 	official.x = (LMvc.screenWidth - official.width)*0.5;
 	official.y = (LMvc.screenHeight - official.height) * 0.4;
 	layer.addChild(official);
-	var iconAppoint = new LBitmap(new LBitmapData(LMvc.datalist["icon-appoint"]));
-	iconAppoint.name = "official";
-	iconAppoint.x = (official.getWidth() - iconAppoint.getWidth()) * 0.5;
-	iconAppoint.y = (official.getHeight() - iconAppoint.getHeight()) * 0.5;
-	official.addChild(iconAppoint);
-	self.iconAppoint = iconAppoint;
+	if(!self.iconAppoint){
+		var iconAppoint = new LBitmap(new LBitmapData(LMvc.datalist["icon-appoint"]));
+		iconAppoint.name = "official";
+		iconAppoint.x = (official.getWidth() - iconAppoint.getWidth()) * 0.5;
+		iconAppoint.y = (official.getHeight() - iconAppoint.getHeight()) * 0.5;
+		official.addChild(iconAppoint);
+		self.iconAppoint = iconAppoint;
+		
+		var appointContent = getStrokeLabel(Language.get(cityData.appointType()),20,"#FFFFFF","#000000",4);
+		appointContent.x = iconAppoint.x + (iconAppoint.getWidth() - appointContent.getWidth())*0.5;
+		appointContent.y = iconAppoint.y;
+		official.addChild(appointContent);
+		self.appointContent = appointContent;
+	}
 	self.iconAppoint.visible = self.controller.getValue("isAppoint");
-	var appointContent = getStrokeLabel(Language.get(cityData.appointType()),20,"#FFFFFF","#000000",4);
-	appointContent.x = iconAppoint.x + (iconAppoint.getWidth() - appointContent.getWidth())*0.5;
-	appointContent.y = iconAppoint.y;
-	official.addChild(appointContent);
-	appointContent.visible = self.iconAppoint.visible;
-	self.appointContent = appointContent;
+	self.appointContent.visible = self.iconAppoint.visible;
 	
 	var institute = new BuildView(self.controller,"main-institute","institute");
 	institute.x = 0;
