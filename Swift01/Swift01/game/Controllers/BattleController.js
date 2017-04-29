@@ -118,10 +118,13 @@ BattleController.prototype.init = function(){
 			enemyTroops += generals[i].troops();
 		}
 	}
+	var selfAttack = (self.battleData.fromCity.seigniorCharaId() == LMvc.selectSeignorId);
+	if(selfAttack){
+		self.battleData.fromCity.expeditionCount(1);
+	}
 	if(self.battleData.toCity.seigniorCharaId() == 0 || enemyTroops == 0 || 
 		self.battleData.toCity.generalsSum() == 0){
 		self.noBattle = true;
-		var selfAttack = (self.battleData.fromCity.seigniorCharaId() == LMvc.selectSeignorId);
 		if(!selfAttack){
 			self.battleData.expeditionEnemyCharacterList = self.battleData.expeditionEnemyData.expeditionCharacterList;
 		}

@@ -82,6 +82,7 @@ AreaModel.prototype.datas=function(){
 		isFlood:self.isFlood(),
 		isPlagueOfLocusts:self.isPlagueOfLocusts(),
 		flood:self.flood(),
+		expeditionCount:self.expeditionCount(),
 		plagueOfLocusts:self.plagueOfLocusts(),
 		out_of_offices:self.outOfOfficeData(),
 		not_debut:self.data.not_debut,
@@ -287,6 +288,9 @@ AreaModel.prototype.addGenerals = function(param){
 	if(self.data.generals.length == 1){
 		self.prefecture(chara.id());
 	}
+};
+AreaModel.prototype.expeditionCount = function(value){//当前回合出战次数
+	return this._dataValue("expeditionCount", value, 0);
 };
 AreaModel.prototype.isFlood = function(value){//水灾
 	return this._dataValue("isFlood", value, 0);

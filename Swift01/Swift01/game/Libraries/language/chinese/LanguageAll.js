@@ -197,6 +197,7 @@ Language.data = {
 	"single_command_backstroke_attack":"诈败",
 	"single_command_special_attack":"怒击",
 	"expedition_reinforcement":"援兵",
+	"expedition_onlyone_error":"每个月，每个城池只能出征一次！",
 	"action_end_error":"行动已结束！",
 	"can_not_operating":"不可操作{0}",
 	"belong_self":"我军",

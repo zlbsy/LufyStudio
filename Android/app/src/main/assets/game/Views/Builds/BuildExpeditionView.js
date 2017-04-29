@@ -13,6 +13,17 @@ BuildExpeditionView.prototype.run=function(){
 	if(SeigniorExecute.running){
 		return;
 	}
+	var cityData = self.controller.getValue("cityData");
+	if(cityData.expeditionCount() > 0){
+		self.controller.nextFrameExecute(function(){
+			var cityView = self.getParentByConstructor(CityView);
+			cityView.clearContentLayer();
+		});
+		var obj = {width:300, height:200, message:Language.get("expedition_onlyone_error"), title:Language.get("confirm")};
+		var dialog = ConfirmWindow(obj);
+		LMvc.layer.addChild(dialog);
+		return;
+	}
 	self.characterListType = CharacterListType.EXPEDITION;
 	self.controller.removeEventListener(LCityEvent.SELECT_CITY);
 	self.controller.addEventListener(LCityEvent.SELECT_CITY, self.expeditionSelectCharacter);
@@ -45,6 +56,7 @@ BuildExpeditionView.prototype.selectComplete=function(event){
 	if(!characterList){
 		return true;
 	}
+			
 	var cityId = self.controller.getValue("cityId");
 	if(event.characterListType == CharacterListType.EXPEDITION_REINFORCEMENT){
 		var characterList = event.characterList;
@@ -151,6 +163,8 @@ BuildExpeditionView.prototype.showBuild=function(event){
 	if(!result){
 		return;
 	}
+	
+	
 	if(event.subEventType == "return"){
 		if(event.characterListType == CharacterListType.EXPEDITION){
 			var cityData = self.controller.getValue("cityData");

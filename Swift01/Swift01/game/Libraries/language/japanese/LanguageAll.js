@@ -197,6 +197,7 @@ Language.data = {
 	"single_command_backstroke_attack":"詐欺",
 	"single_command_special_attack":"会心",
 	"expedition_reinforcement":"増援部隊",
+	"expedition_onlyone_error":"同じ城は月に一回しか出征できません！",
 	"action_end_error":"もう行動済みです！",
 	"can_not_operating":"操作不可:{0}",
 	"belong_self":"自軍",

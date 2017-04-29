@@ -256,6 +256,7 @@ SeigniorExecute.prototype.areaRun=function(area){
 				return;
 			}
 		}
+		area.expeditionCount(0);
 	}
 	self.areaIndex++;
 	self.areaDisasterOver = false;
