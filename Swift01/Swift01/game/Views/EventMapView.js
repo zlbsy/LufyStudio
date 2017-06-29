@@ -33,6 +33,7 @@ EventMapView.prototype.layerInit=function(){
 	self.baseLayer.addChild(self.menuLayer);
 };
 EventMapView.prototype.clickToNextScript=function(event){
+	console.log("clickToNextScript");
 	var self = event.currentTarget.getParentByConstructor(EventMapView);
 	if(self.messageLayer.numChildren > 0){
 		var msgText = self.messageLayer.getChildAt(0).getChildByName("message");
@@ -129,6 +130,7 @@ EventMapView.prototype.mapShow=function(mapIndex){
 	if(oldBackground){
 		LTweenLite.to(oldBackground,0.5,{alpha:0,ease:LEasing.None.easeIn,onComplete:self.removeBackground});
 	}
+	console.log(path);
 	var bitmapSprite = new BitmapSprite(path);
 	bitmapSprite.name = "background";
 	bitmapSprite.alpha = 0;
@@ -159,6 +161,7 @@ EventMapView.prototype.messageShow=function(msg, speed){
 	label.wind();
 	self.clickLayer.visible = true;
 	self.messageLayer.addChild(panel);
+	console.log("messageShow");
 };
 EventMapView.prototype.talk=function(id,message){
 	var self = this;

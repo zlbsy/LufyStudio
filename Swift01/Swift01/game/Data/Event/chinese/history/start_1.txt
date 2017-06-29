@@ -1,0 +1,8 @@
+SGJEvent.mapShow(1);
+SGJEvent.messageShow(测试测试测试测试测试......,3);
+SGJEvent.addCharacter(18,50,100,fade);
+SGJEvent.talk(18,测试测试测试测试测试！);
+SGJEvent.removeCharacter(18,fade);
+Mark.EventEnd;
+SGJEvent.end();
+SGJHistory.battleStart();

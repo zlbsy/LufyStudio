@@ -669,10 +669,57 @@ BattleCharacterAI.prototype.endAction = function() {
 	chara.toEnd(true);
 	chara.inteAI.init();
 	chara.moveAttackStep = 0;
-	LMvc.running = false;
 	if(view.weatherLayer.isWeather(BattleWeatherConfig.CLOUD)){
 		cloudWeatherCharacterShow(chara.belong == Belong.SELF ? null : chara.data.id());
 	}
+	self.hitChecked = {};
+	self.checkEvent(chara, target);
+};
+BattleCharacterAI.prototype.isNear = function(chara, target) {
+	var self = this,id1,id2;
+	if(chara.data.id() < target.data.id()){
+		id1 = chara.data.id();
+		id2 = target.data.id();
+	}else{
+		id1 = target.data.id();
+		id2 = chara.data.id();
+	}
+	var index = LMvc.BattleController.model.hits.findIndex(function(arr){
+		return arr[0] == id1 && arr[1] == id2;
+	});
+	if(index >= 0){
+		LMvc.BattleController.model.hits.splice(index, 1);
+		var script = "Call.hit("+id1+","+id2+");";
+		script += "SGJBattleCharacter.endAction("+chara.belong+","+chara.data.id()+");";
+		LGlobal.script.addScript(script);
+		//LGlobal.script.analysis();
+		console.log("isNear="+id1+","+id2);
+		return true;
+	}
+	return false;
+};
+BattleCharacterAI.prototype.checkEvent = function(chara, target) {
+	var self = this, arr = [];
+	//相遇
+	var ranges = [{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}];
+	if(chara && chara.data.troops() > 0){
+		arr.push(chara);
+	}
+	if(target && target.data.troops() > 0){
+		arr.push(target);
+	}
+	for(var i = 0;i < arr.length;i++){
+		var child = arr[i];
+		for(var j = 0;j<ranges.length;j++){
+			var range = ranges[j];
+			var nearChara = LMvc.BattleController.view.charaLayer.getCharacterFromLocation(child.locationX()+range.x, child.locationY()+range.y);
+			if(!nearChara || self.isNear(child,nearChara)){
+				continue;
+			}
+			return;
+		}
+	}
+	LMvc.running = false;
 	self.endBoutCheck();
 };
 BattleCharacterAI.prototype.endBoutCheck = function() {

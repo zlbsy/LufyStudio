@@ -11,15 +11,20 @@ BattleController.prototype.construct=function(){
 	self.setValue("bout", 0);
 	LMvc.keepLoading(true);
 	LMvc.changeLoading(BattleLoading);
-	var city = self.battleData.toCity;
-	LMvc.loading.setTitle(String.format(Language.get("battle_title"), city.name()));
+	if(self.battleData.historyId){
+		LMvc.loading.setTitle(Language.get("history_" + self.battleData.historyId));
+	}else{
+		var city = self.battleData.toCity;
+		LMvc.loading.setTitle(String.format(Language.get("battle_title"), city.name()));
+	}
+	
 	if(Toast.layer){
 		Toast.layer.removeAllChild();
 	}
 	self.mvcLoad();
 };
 BattleController.prototype.mvcLoad=function(){
-	var self = this;
+	var self = this;console.log("BattleController.prototype.mvcLoad");
 	self.loadMvc(["BattleSelectMenu","SingleCombat"],self.configLoad);
 };
 BattleController.prototype.configLoad=function(){
@@ -47,8 +52,12 @@ BattleController.prototype.viewLoad=function(){
 	"Battle/BattleExpChange","Battle/BattleField","Battle/MilitaryAdviser"],self.addMap);
 };
 BattleController.prototype.addMap=function(){
-	var self = this;
-	var mapPath = String.format("{0}.js", self.battleData.toCity.smap());
+	var self = this, mapPath;
+	if(self.battleData.historyId){
+		mapPath = String.format("history/{0}.js", self.battleData.historyId);
+	}else{
+		mapPath = String.format("{0}.js", self.battleData.toCity.smap());
+	}console.log("addMap mapPath="+mapPath);
 	self.model.loadMapFile(mapPath,self.globalFilesLoad);
 };
 BattleController.prototype.globalFilesLoad = function(){
@@ -57,7 +66,7 @@ BattleController.prototype.globalFilesLoad = function(){
 	self.load.image(list,self.createMapData);
 };
 BattleController.prototype.createMapData = function(){
-	var self = this;
+	var self = this;console.log("createMapData");
 	self.model.createMap(self.init);
 };
 BattleController.prototype.showCharacterDetailed = function(){
@@ -157,7 +166,11 @@ BattleController.prototype.charactersInit = function(){
 				chara.troops(0);
 			}
 		}
-		enemyCharas = self.battleData.toCity.getDefenseEnemies();
+		if(self.battleData.historyId){
+			enemyCharas = self.battleData.toCity.generals();
+		}else{
+			enemyCharas = self.battleData.toCity.getDefenseEnemies();
+		}
 		enemyPositions = self.model.map.charas;
 		selfPositions = self.model.map.enemys;
 		var sumTroops = self.battleData.toCity.troops();
@@ -280,10 +293,23 @@ BattleController.prototype.charactersInit = function(){
 	if(selfAttack){
 		self.model.enemyList[0].mission = BattleCharacterMission.Defensive;
 	}
-	self.defCharactersInit();
-	for(var i=0,l=selfPositions.length;i<l;i++){
-		var charaObjs = selfPositions[i];
-		self.view.charaLayer.addCharacterPosition(charaObjs.direction,charaObjs.x,charaObjs.y,i);
+	if(self.battleData.historyId){
+		var charas = self.battleData.expeditionCharacterList;
+		for(var i=0,l=charas.length;i<l;i++){
+			var child = selfPositions[i];
+			//self.view.charaLayer.addCharacterPosition(charaObjs.direction,charaObjs.x,charaObjs.y,i);
+			var chara = charas[i];
+			self.addOurCharacter(chara.id(),child.direction,child.x,child.y);
+			chara.troops(chara.maxTroops());
+			chara.HP(chara.maxHP());
+			chara.MP(chara.maxMP());
+		}
+	}else{
+		self.defCharactersInit();
+		for(var i=0,l=selfPositions.length;i<l;i++){
+			var charaObjs = selfPositions[i];
+			self.view.charaLayer.addCharacterPosition(charaObjs.direction,charaObjs.x,charaObjs.y,i);
+		}
 	}
 };
 BattleController.prototype.defCharactersInit=function(){

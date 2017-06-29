@@ -1,0 +1,6 @@
+function hit(id1,id2);
+	if(@id1==21&&@id2==853);
+		SGJTalk.show(@id1,0,测试测试测试测试);
+		SGJTalk.show(@id2,0,测试测试测试测试);
+	endif;
+endfunction;

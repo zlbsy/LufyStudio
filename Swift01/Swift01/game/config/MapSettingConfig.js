@@ -52,6 +52,7 @@ var MapSetting = [
 	{id:51,smap:12,position:{x:200,y:650},neighbor:[5],maxLevel:3,business:0,agriculture:0,technology:0,police:0, food : 0, population : 0,troops:0,generals:[],captives:[],out_of_offices:[],not_debut:[], city_defense : 1000,employSoldiers:[20,21,22,23]},
 	{id:52,smap:12,position:{x:950,y:350},neighbor:[4,42],maxLevel:3,business:0,agriculture:0,technology:0,police:0, food : 0, population : 0,troops:0,generals:[],captives:[],out_of_offices:[],not_debut:[], city_defense : 1000,employSoldiers:[20,21,22,23]},
 	{id:53,smap:6,position:{x:800,y:650},neighbor:[7,13,15],maxLevel:3,business:0,agriculture:0,technology:0,police:0, food : 0, population : 0,troops:0,generals:[],captives:[],out_of_offices:[],not_debut:[], city_defense : 1000},
+	{id:54,smap:1,position:{x:-200,y:-200},neighbor:[],maxLevel:5,business:0,agriculture:0,technology:0,police:0, food : 0, population : 0,troops:0,generals:[],captives:[],out_of_offices:[],not_debut:[], city_defense : 1000},
 ];
 MapSetting.sort(function(a,b){return a.position.y - b.position.y;});
 var CityIconConfig = {width:80, height:80};

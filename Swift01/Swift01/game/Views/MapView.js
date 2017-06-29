@@ -142,7 +142,7 @@ MapView.prototype.changeMode=function(mode){
 	LMvc.MapController.mode = mode; 
 	self.ctrlLayer.childList.forEach(function(child){
 		child.visible = false;
-		if(mode == MapController.MODE_MAP && (child.name == "menu" || child.name == "go")){
+		if(mode == MapController.MODE_MAP && (child.name == "menu" || child.name == "go" || child.name == "history")){
 			child.visible = true;
 		}else if(mode == MapController.MODE_CHARACTER_MOVE && child.name == "close"){
 			child.visible = true;
@@ -162,11 +162,17 @@ MapView.prototype.ctrlLayerInit=function(){
 	buttonMenu.name = "menu";
 	buttonMenu.x = LMvc.screenWidth - buttonMenu.getWidth();
 	self.ctrlLayer.addChild(buttonMenu);
+	var buttonHistory = getButton(Language.get("历史遗迹"),100);
+	buttonHistory.addEventListener(LMouseEvent.MOUSE_UP,self.gotoHistory);
+	buttonHistory.name = "history";
+	buttonHistory.x = LMvc.screenWidth - buttonHistory.getWidth();
+	buttonHistory.y = 50;
+	self.ctrlLayer.addChild(buttonHistory);
 	var buttonGo = getButton(Language.get("go"),100);
 	buttonGo.addEventListener(LMouseEvent.MOUSE_UP,self.gotoExecute);
 	buttonGo.name = "go";
 	buttonGo.x = LMvc.screenWidth - buttonGo.getWidth();
-	buttonGo.y = 50;
+	buttonGo.y = 100;
 	self.ctrlLayer.addChild(buttonGo);
 	
 	var bitmapClose = new LBitmap(new LBitmapData(LMvc.datalist["close"]));
@@ -177,6 +183,10 @@ MapView.prototype.ctrlLayerInit=function(){
 	buttonClose.y = 5;
 	self.ctrlLayer.addChild(buttonClose);
 	self.changeMode(MapController.MODE_MAP);
+};
+MapView.prototype.gotoHistory=function(event){
+	var self = event ? event.currentTarget.getParentByConstructor(MapView) : this;
+	self.controller.loadHistoryList();
 };
 MapView.prototype.gotoExecute=function(event){
 	var self = event ? event.currentTarget.getParentByConstructor(MapView) : this;

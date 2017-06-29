@@ -1,0 +1,7 @@
+SGJBattleCharacter.focus(21);
+SGJTalk.show(21,0,测试测试测试测试);
+SGJBattleCharacter.focus(19);
+SGJTalk.show(19,0,测试测试测试测试);
+//Call.hit(1,2);
+SGJBattleCharacter.addHit(21,853);
+SGJHistory.boutStart();
