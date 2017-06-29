@@ -1,6 +1,6 @@
 function HistoryListController(){
 	var self = this;
-	base(self,MyController,[]);
+	base(self,OpenCharacterListController,[]);
 }
 HistoryListController.prototype.construct=function(){
 	var self = this;
@@ -22,7 +22,7 @@ HistoryListController.prototype.libraryLoad=function(){
 };
 HistoryListController.prototype.viewLoad=function(){
 	var self = this;
-	self.load.view(["HistoryList/HistoryListChild","HistoryList/HistoryListDetailed","HistoryList/HistoryListSelectChild","HistoryList/HistoryListSubChild"],self.init);
+	self.load.view(["HistoryList/HistoryListChild","HistoryList/HistoryListDetailed","HistoryList/HistoryListSelectChild","HistoryList/HistoryListSubChild","HistoryList/HistoryListPayChild"],self.init);
 };
 HistoryListController.prototype.init=function(){
 	var self = this;

@@ -26,7 +26,7 @@ HistoryListSelectChildView.prototype.getWidth=function(){
 	return 440;
 };
 HistoryListSelectChildView.prototype.getHeight=function(){
-	return 65;
+	return 56;
 };
 HistoryListSelectChildView.prototype.set=function(){
 	var self = this;
@@ -41,7 +41,7 @@ HistoryListSelectChildView.prototype.set=function(){
 		self.layer.addChild(charaImg);
 		var name = getStrokeLabel(characterModel.name(),14,"#FFFFFF","#000000",4);
 		name.x = charaImg.x + (48-name.getWidth())*0.5;
-		name.y = 48;
+		name.y = 39;
 		self.layer.addChild(name);
 	}
 };

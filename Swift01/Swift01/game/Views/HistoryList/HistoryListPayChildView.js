@@ -1,48 +1,49 @@
-function HistoryListSubChildView(characterId) {
-	var self = this;console.log("HistoryListSubChildView");
+function HistoryListPayChildView(characterId) {
+	var self = this;console.log("HistoryListPayChildView");
 	base(self, LListChildView, []);
 	self.characterId = characterId;
 	self.set();
 }
-HistoryListSubChildView.prototype.layerInit=function(){
+HistoryListPayChildView.prototype.layerInit=function(){
 	var self = this;
 	self.layer = new LSprite();
 	self.addChild(self.layer);
 };
-HistoryListSubChildView.prototype.iconComplete=function(event){
-	var self = event.currentTarget.getParentByConstructor(HistoryListSubChildView);
+HistoryListPayChildView.prototype.iconComplete=function(event){
+	var self = event.currentTarget.getParentByConstructor(HistoryListPayChildView);
 	self.cacheAsBitmap(false);
 	self.updateView();
 };
-HistoryListSubChildView.prototype.getWidth=function(){
-	return 55;
+HistoryListPayChildView.prototype.getWidth=function(){
+	return 65;
 };
-HistoryListSubChildView.prototype.getHeight=function(){
+HistoryListPayChildView.prototype.getHeight=function(){
 	return 56;
 };
-HistoryListSubChildView.prototype.set=function(){
+HistoryListPayChildView.prototype.set=function(){
 	var self = this;
 	self.layerInit();
 	var characterModel = CharacterModel.getChara(self.characterId);
 	var charaImg = characterModel.currentSoldiers().icon(new LPoint(48, 48),self.iconComplete);
-	self.hasCharacter = (characterModel.seigniorId() == LMvc.selectSeignorId);
-	charaImg.alpha = self.hasCharacter ? 1 : 0.4;
-	//charaImg.x = j * 55;
+	charaImg.x=(self.getWidth() - 48)*0.5;
 	self.layer.addChild(charaImg);
+	if(!purchaseHasBuy(productIdConfig["history_"+self.characterId])){
+		lockedButton(self.layer, 0.3);
+	}
 	var name = getStrokeLabel(characterModel.name(),14,"#FFFFFF","#000000",4);
 	name.x = charaImg.x + (48-name.getWidth())*0.5;
 	name.y = 39;
 	self.layer.addChild(name);
 };
-HistoryListSubChildView.prototype.onClick = function(event) {
+HistoryListPayChildView.prototype.onClick = function(event) {
 	var self = event.target;
-	if(!self.hasCharacter){
+	if(self.lock){
 		return;
 	}
 	if(!self.focus){
-		self.focus = getPanel("focus",60,65);
+		self.focus = getPanel("focus",65,65);
 		self.layer.addChild(self.focus);
-		self.focus.x = -5;
+		//self.focus.x = -5;
 		self.focus.y = -6;
 		self.focus.visible = false;
 	}
