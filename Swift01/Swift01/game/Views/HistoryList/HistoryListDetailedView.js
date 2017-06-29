@@ -247,7 +247,7 @@ HistoryListDetailedView.prototype.onClickPayGenerals=function(event){
 	var characters = historyPurchaseCharacters;
 	for(var i=0,l=characters.length;i<l;i++){
 		var child = CharacterModel.getChara(characters[i]);
-		console.log(child.name()+"="+(child.basicPropertiesSum()));
+		//console.log(child.name()+"="+(child.basicPropertiesSum()));
 		generals.push(child);
 	}
 	self.controller.loadCharacterList(CharacterListType.OWN_CHARACTER_LIST, generals, {showOnly:true,showAbility:true,cutoverName:"ability_properties", noCutover:true});

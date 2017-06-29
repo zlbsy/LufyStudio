@@ -3,6 +3,7 @@ function HistoryListView(controller){
 }
 HistoryListView.prototype.construct=function(){
 	this.controller.addEventListener(LEvent.COMPLETE, this.init.bind(this));
+	this.controller.addEventListener(CharacterListEvent.CLOSE, self.closeCharacterList);
 };
 HistoryListView.prototype.init=function(){
 	var self = this;
@@ -71,4 +72,19 @@ HistoryListView.prototype.ctrlLayerInit=function(){
 	
 	self.ctrlLayer.addChild(buttonClose);
 	buttonClose.addEventListener(LMouseEvent.MOUSE_UP,self.onClickCloseButton);
+};
+HistoryListView.prototype.addCharacterListView=function(characterListView){
+	var self = this;
+	var detailedView = self.getChildByName("historyListDetailedView");
+	detailedView.visible = false;
+	characterListView.name = "characterListView";
+	self.addChild(characterListView);
+};
+HistoryListView.prototype.closeCharacterList=function(event){
+	var self = event.currentTarget.view;
+	var detailedView = self.getChildByName("historyListDetailedView");
+	detailedView.visible = true;
+	var characterListView = self.getChildByName("characterListView");
+	characterListView.visible = false;
+	return true;
 };

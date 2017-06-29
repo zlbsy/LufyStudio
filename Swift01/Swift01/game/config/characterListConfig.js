@@ -842,7 +842,7 @@ var characterListConfig = [{id:1,faceImg:1,force:72,intelligence:92,command:99,a
 ,{id:900,faceImg:900,force:95,intelligence:88,command:100,agility:79,luck:72,born:235,life:77,personalLoyalty:6,ambition:8,disposition:0,childs:[],skill:0,compatibility:130,soldiers:[{id:48,proficiency:1200,img:"900-3"}],groupSkill:0,military:0}
 ,{id:901,faceImg:900,force:70,intelligence:96,command:91,agility:86,luck:90,born:235,life:77,personalLoyalty:6,ambition:8,disposition:0,childs:[],skill:0,compatibility:130,soldiers:[{id:46,proficiency:1200,img:"901-2"}],groupSkill:0,military:0}
 ,{id:902,faceImg:900,force:98,intelligence:51,command:90,agility:93,luck:68,born:235,life:77,personalLoyalty:6,ambition:8,disposition:0,childs:[],skill:0,compatibility:130,soldiers:[{id:45,proficiency:1200,img:"902-3"}],groupSkill:0,military:0}
-,{id:903,faceImg:900,force:97,intelligence:69,command:98,agility:87,luck:80,born:235,life:77,personalLoyalty:6,ambition:8,disposition:0,childs:[],skill:0,compatibility:130,soldiers:[{id:29,proficiency:1200,img:"903-5"}],groupSkill:0,military:0}
+,{id:903,faceImg:900,force:100,intelligence:69,command:98,agility:87,luck:80,born:235,life:77,personalLoyalty:6,ambition:8,disposition:0,childs:[],skill:0,compatibility:130,soldiers:[{id:29,proficiency:1200,img:"903-5"}],groupSkill:0,military:0}
 ,{id:904,faceImg:900,force:99,intelligence:92,command:66,agility:92,luck:91,born:235,life:77,personalLoyalty:6,ambition:8,disposition:0,childs:[],skill:0,compatibility:130,soldiers:[{id:51,proficiency:1200,img:"904-16"}],groupSkill:0,military:0}
 
 ];
