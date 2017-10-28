@@ -4,6 +4,7 @@ function BattleModel(){
 BattleModel.prototype.construct=function(){
 	var self = this;
 	self.map = null;
+	self.hits = [];
 	self.selfCaptive = [];
 	self.enemyCaptive = [];
 	self.ourList = [];
@@ -92,10 +93,11 @@ BattleModel.prototype.getMinusStrategyCharas=function(belong){
 };
 BattleModel.prototype.createMap = function(callback){
 	var self = this;
+	console.log("BattleModel.prototype.createMap");
 	if(!MapHelperSetting.bitmapData){
 		MapHelperSetting.bitmapData = new LBitmapData(LMvc.datalist["tile_map"]);
 	}
-	
+	console.log("self.map="+self.map);
 	var maps = self.map.data;
 	var h = maps.length;
 	var w = maps[0].length;
@@ -118,6 +120,9 @@ BattleModel.prototype.createMap = function(callback){
 		BattleModel.bitmapDatas[dataIndex].lock();
 	}
 	self.createMapTile(0, callback);
+};
+BattleModel.prototype.addHit = function(id1,id2){
+	this.hits.push([id1,id2]);
 };
 BattleModel.prototype.createMapTile = function(index, callback){
 	var self = this;

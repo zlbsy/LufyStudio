@@ -13,7 +13,12 @@ var productIdConfig = {
 	"com.lufylegend.sgj.chapter_12",
 	"com.lufylegend.sgj.chapter_194_211",
 	"com.lufylegend.sgj.chapter_219_263",
-	"com.lufylegend.sgj.soldier_special"
+	"com.lufylegend.sgj.soldier_special",
+	"com.lufylegend.sgj.history_900",
+	"com.lufylegend.sgj.history_901",
+	"com.lufylegend.sgj.history_902",
+	"com.lufylegend.sgj.history_903",
+	"com.lufylegend.sgj.history_904"
 	],
 	createCharacter : "com.lufylegend.sgj.newWujiang",
 	saveReport : "com.lufylegend.sgj.saveReport",
@@ -29,5 +34,10 @@ var productIdConfig = {
 	chapter_12 : "com.lufylegend.sgj.chapter_12",
 	chapter_194_211 : "com.lufylegend.sgj.chapter_194_211",
 	chapter_219_263 : "com.lufylegend.sgj.chapter_219_263",
-	soldier_special : "com.lufylegend.sgj.soldier_special"
+	soldier_special : "com.lufylegend.sgj.soldier_special",
+	history_900 : "com.lufylegend.sgj.history_900",
+	history_901 : "com.lufylegend.sgj.history_901",
+	history_902 : "com.lufylegend.sgj.history_902",
+	history_903 : "com.lufylegend.sgj.history_903",
+	history_904 : "com.lufylegend.sgj.history_904"
 };

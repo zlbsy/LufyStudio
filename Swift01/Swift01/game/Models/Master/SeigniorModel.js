@@ -20,7 +20,6 @@ function SeigniorModel(controller, data) {
 
 SeigniorModel.list = [];
 SeigniorModel.setSeignior=function(list){
-	var self = this;
 	for(var i=0, l= SeigniorModel.list.length;i<l;i++){
 		var flag = SeigniorModel.list[i]._flag;
 		if(flag){
@@ -29,32 +28,34 @@ SeigniorModel.setSeignior=function(list){
 	}
 	SeigniorModel.list = [];
 	for(var i=0,l=list.length;i<l;i++){
-		if(!list[i].chara_id){
-			continue;
-		}
-		var areas = list[i].areas;
-		if(areas.length == 0){
-			list[i].chara_id = 0;
-			continue;
-		}
-		var generalsCount = 0;
-		for(var j=0, jl=areas.length;j<jl;j++){
-			var generalLength = areas[j].generals.length;
-			if(generalLength == 0){
-				areas[j].prefecture = 0;
-			}
-			generalsCount += generalLength;
-		}
-		if(generalsCount == 0){
-			list[i].chara_id = 0;
-			continue;
-		}
-		var seignior = new SeigniorModel(null,list[i]);
-		SeigniorModel.list.push(seignior);
+		SeigniorModel.setSingleSeignior(list[i]);
 	}
 };
+SeigniorModel.setSingleSeignior=function(data){
+	if(!data.chara_id){
+		return;
+	}
+	var areas = data.areas;
+	if(areas.length == 0){
+		data.chara_id = 0;
+		return;
+	}
+	var generalsCount = 0;
+	for(var j=0, jl=areas.length;j<jl;j++){
+		var generalLength = areas[j].generals.length;
+		if(generalLength == 0){
+			areas[j].prefecture = 0;
+		}
+		generalsCount += generalLength;
+	}
+	if(generalsCount == 0){
+		data.chara_id = 0;
+		return;
+	}
+	var seignior = new SeigniorModel(null,data);
+	SeigniorModel.list.push(seignior);
+};
 SeigniorModel.getSeignior=function(chara_id){
-	var self = this;
 	for(var i=0,l=SeigniorModel.list.length;i<l;i++){
 		var seignior = SeigniorModel.list[i];
 		if(seignior.chara_id() != chara_id){
@@ -65,7 +66,6 @@ SeigniorModel.getSeignior=function(chara_id){
 	return null;
 };
 SeigniorModel.getSeigniors=function(seignior_id){
-	var self = this;
 	var characters = [];
 	for(var i=0,l=SeigniorModel.list.length;i<l;i++){
 		var seignior = SeigniorModel.list[i];
@@ -77,7 +77,6 @@ SeigniorModel.getSeigniors=function(seignior_id){
 	return characters;
 };
 SeigniorModel.removeSeignior = function(seigniorId){
-	var self = this;
 	for(var i=0,l=SeigniorModel.list.length;i<l;i++){
 		var seignior = SeigniorModel.list[i];
 		if(seignior.chara_id() != seigniorId){
@@ -111,7 +110,6 @@ SeigniorModel.removeSeignior = function(seigniorId){
 	}
 };
 SeigniorModel.getCharactersIsCaptives = function(seigniorId){
-	var self = this;
 	var list = [];
 	for(var i=0,l=AreaModel.list.length;i<l;i++){
 		var area = AreaModel.list[i];

@@ -1738,6 +1738,7 @@ LRPGCharacter.moveTo = function(value, start, end) {
 var LScriptSGJ = function() {
 };
 LScriptSGJ.analysis = function(childType, lineValue) {
+console.log("LScriptSGJ.analysis="+childType);
 	var start, end, params;
 	switch(childType) {
 		case "SGJTalk":
@@ -1760,6 +1761,9 @@ LScriptSGJ.analysis = function(childType, lineValue) {
 			break;
 		case "SGJTutorial":
 			LSGJTutorialScript.analysis(lineValue);
+			break;
+		case "SGJHistory":
+			LSGJHistoryScript.analysis(lineValue);
 			break;
 		default:
 			LGlobal.script.analysis();
@@ -1816,6 +1820,7 @@ LSGJEventScript.analysis = function(value) {
 			method.apply(LMvc.EventMapController, params);
 			break;*/
 		default:
+			console.log("LMvc.EventMapController="+LMvc.EventMapController);
 			var startMethod = value.indexOf(".");
 			var method = value.substring(startMethod + 1, start);
 			var argumentsArray = value.substring(start + 1, end).split(",");
@@ -1975,6 +1980,25 @@ LSGJBattleCharacterScript.characterToDie = function(value, start, end) {
 			LMvc.BattleController.view.charaLayer.removeCharacter(obj.belong,obj.data.id());
 			battleEndCheck(obj.belong);
 		}});
+};
+/*
+ * LSGJHistoryScript.js
+ **/
+LSGJHistoryScript = function() {
+};
+LSGJHistoryScript.analysis = function(value) {
+	var start = value.indexOf("(");
+	var end = value.indexOf(")");
+	switch(value.substr(0,start)) {
+		case "SGJHistory.boutStart":
+			LMvc.BattleController.view.charaLayer.boutStart();
+			break;
+		case "SGJHistory.battleStart":
+			LMvc.HistoryListController.battleStart();
+			break;
+		default:
+			LGlobal.script.analysis();
+	}
 };
 /*
  * LSGJSingleCombatScript.js

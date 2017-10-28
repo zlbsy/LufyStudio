@@ -234,3 +234,13 @@ MapController.prototype.businessItemsViewShow=function(){
 	self.item = null;
 	self.view.addChild(businessItemsView);
 };
+MapController.prototype.loadHistoryList=function(){
+	var self = this;
+	LMvc.keepLoading(true);
+	self.loadMvc("HistoryList",self.showHistoryList);
+};
+MapController.prototype.showHistoryList=function(){
+	var self = this;
+	var historyListController = new HistoryListController();
+	LMvc.layer.addChild(historyListController.view);
+};

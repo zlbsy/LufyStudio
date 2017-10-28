@@ -1,0 +1,12 @@
+SGJEvent.mapShow(1);
+SGJEvent.messageShow(董卓对于各诸侯成立反董卓联盟非常愤怒，派出猛将华雄镇守汜水关。,3);
+SGJEvent.addCharacter(39,50,100,fade);
+SGJEvent.talk(39,前面就是汜水关，我军谁敢做先锋？);
+SGJEvent.addCharacter(8,200,100,fade);
+SGJEvent.talk(8,听说汜水关守将华雄是员猛将，那就让我去会一会他吧！);
+SGJEvent.talk(39,文台勇烈，必然可以担当此重任！粮草就交给公路负责吧。);
+SGJEvent.addCharacter(375,300,100,fade);
+SGJEvent.talk(375,（哼哼，孙坚这个乡吧老也想立功？我不给你粮食看你怎么打仗！）);
+Mark.EventEnd;
+SGJEvent.end();
+SGJHistory.battleStart();

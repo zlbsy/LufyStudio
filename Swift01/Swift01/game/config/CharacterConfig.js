@@ -124,3 +124,4 @@ var charactersParentConfig = [
 var femaleCharacters = [36,37,139,241,380,524,528,548];
 var sCharacterImages = ["zpftmd748"];
 var NewYearPresent_Boss = 861;
+var historyPurchaseCharacters = [900,901,902,903,904];
