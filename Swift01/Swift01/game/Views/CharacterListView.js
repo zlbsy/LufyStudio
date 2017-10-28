@@ -234,7 +234,16 @@ CharacterListView.prototype.onChangeChildSelect=function(event){
 };
 CharacterListView.prototype.onClickExecuteButton=function(event){
 	var self = event ? event.currentTarget.parent.parent : this;
-	if(self.selectedCount <= 0){
+	if(self.controller.params.prizeAll){
+		var obj = {title:Language.get("confirm"),message:Language.get("dialog_prize_all_confirm"),height:250,
+		okEvent:function(e){
+			e.currentTarget.parent.remove();
+			self.selectExecute();
+		},cancelEvent:null};
+		var windowLayer = ConfirmWindow(obj);
+		self.addChild(windowLayer);
+		return;
+	}else if(self.selectedCount <= 0){
 		var obj = {title:Language.get("confirm"),message:Language.get("dialog_select_generals"),height:200,okEvent:null};
 		var windowLayer = ConfirmWindow(obj);
 		self.addChild(windowLayer);
@@ -252,7 +261,7 @@ CharacterListView.prototype.selectExecute=function(){
 	var characterListType = self.controller.characterListType;
 	var characterList = [];
 	self.listView.getItems().forEach(function(child){
-		if(!child.checkbox.checked){
+		if(!child.checkbox || !child.checkbox.checked){
 			return;
 		}
 		characterList.push(child.charaModel);

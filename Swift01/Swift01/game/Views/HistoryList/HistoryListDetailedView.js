@@ -133,15 +133,25 @@ HistoryListDetailedView.prototype.gotoBattle = function(event){
 		LMvc.layer.addChild(dialog);
 		return;
 	}
+	var script = "";
+	for(var i = 0;i<10;i++){
+		script += "Var.set(main_character_"+i+",0);";
+		script += "Var.set(sub_character_"+i+",0);";
+	}
+	for(var i = 0;i<items.length;i++){
+		var item = items[i];
+		script += "Var.set(main_character_"+i+","+item.selectCharacter.id()+");";
+	}
 	items = self.subListView.getItems();
 	for(var i = 0;i<items.length;i++){
 		var item = items[i];
 		if(item.focus){
 			var chara = CharacterModel.getChara(item.characterId);
 			expeditionCharacterList.push(chara);
+			script += "Var.set(sub_character_"+i+","+item.characterId+");";
 		}
 	}
-	
+	LGlobal.script.addScript(script);
 	var battleData = {historyId:self.historyObject.id};
 	battleData.fromCity = seignior.character().city();
 	battleData.expeditionCharacterList = expeditionCharacterList;

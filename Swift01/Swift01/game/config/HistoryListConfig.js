@@ -3,20 +3,20 @@ var HistoryListConfig = [
 	id:1,
 	index:1,
 	name:"汜水关之战",
-	level:20,
+	level:1,
 	troops:1000,
 	maxSubCharacter:4,
 	characters:[
 		[8,24,17],//孙坚，孙策，孙权，孙休
 	],
 	subCharacters:[72,123,80,178,44,234,167],//程普,黄盖,韩当,祖茂,丁奉,虞汜,陆凯
-	enemy:{chara_id : 851,color : "0,0,0",generals_count:6,areas : [
-	  {  area_id : 54,prefecture : 851,
+	enemy:{chara_id : 910,color : "0,0,0",generals_count:6,areas : [
+	  {  area_id : 54,prefecture : 910,
 	  generals:[
-	    {chara_id:851,name:"华雄",feat:0,loyalty:100},
-	    {chara_id:852,name:"李肃",feat:0,loyalty:100},
-	    {chara_id:853,name:"徐荣",feat:0,loyalty:100},
-	    {chara_id:854,name:"胡轸",feat:0,loyalty:100},
+	    {chara_id:910,name:"华雄",feat:0,loyalty:100},
+	    {chara_id:911,name:"李肃",feat:0,loyalty:100},
+	    {chara_id:912,name:"徐荣",feat:0,loyalty:100},
+	    {chara_id:913,name:"胡轸",feat:0,loyalty:100},
 	    {chara_id:855,name:"步兵",feat:0,loyalty:100},
 	    {chara_id:856,name:"步兵",feat:0,loyalty:100},
 	    {chara_id:855,name:"弓兵",feat:0,loyalty:100},
@@ -62,11 +62,12 @@ var HistoryListConfig = [
 	maxSubCharacter:2,
 	characters:[
 		[21,226,620],//刘备，刘封，刘禅
-		[1,2,3,4,10],//关羽，关平，关兴，关索,关彝
-		[21,226,620],//张飞，张苞，张绍,张尊
-		[21,226,620],//赵云,赵統,赵广
+		[4,89,154,175,332,502],//关羽，关平，关兴，关索,关统,关彝
+		[19,153,598,239],//张飞，张苞，张绍,张遵
+		[3,226,620],//赵云,赵統,赵广
+		[75,226,620],//公孙瓒,赵統,赵广
 	],
-	subCharacters:[30,31,32],//公孙瓒,陈到
+	subCharacters:[30,31,32],//严纲,陈到
 	script:"Data/Event/{0}/tyjy.txt",
 	result:[
 		{type:"changeSeignior", id:21, seignior:604, loyalty:100, city:45},
@@ -82,7 +83,7 @@ var HistoryListConfig = [
 	troops:1000,
 	maxSubCharacter:2,
 	characters:[
-		[21,226,620],//曹操,曹丕,曹植,曹睿,曹奂
+		[1,35,463,129,103,228,611],//曹操,曹丕,曹植,曹睿,曹奂
 		[1,2,3,4,10],//夏侯惇
 		[21,226,620],//夏侯渊
 		[21,226,620],//钟
@@ -104,7 +105,7 @@ var HistoryListConfig = [
 	troops:1000,
 	maxSubCharacter:2,
 	characters:[
-		[1,2,3,4,10],//曹操,曹丕,曹植,曹睿,曹奂
+		[1,35,463,129,103,228,611],//曹操,曹丕,曹植,曹睿,曹奂
 		[21,226,620],//孙策，孙权,孙休
 		[1,2,3,4,10],//刘备，刘封，刘禅
 	],
@@ -124,8 +125,8 @@ var HistoryListConfig = [
 	troops:1000,
 	maxSubCharacter:2,
 	characters:[
-		[21,226,620],//孙策，孙权,孙休
-		[1,2,3,4,10],//周瑜,陆逊,陆抗
+		[8,24,17,85,240,464],//孙坚，孙策，孙权,孙休
+		[1,2,3,4,10],//周瑜,鲁肃,陆逊,陆抗
 	],
 	subCharacters:[30,31,32],//周泰,陈武
 	script:"Data/Event/{0}/tyjy.txt",

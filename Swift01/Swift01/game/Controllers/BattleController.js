@@ -24,7 +24,7 @@ BattleController.prototype.construct=function(){
 	self.mvcLoad();
 };
 BattleController.prototype.mvcLoad=function(){
-	var self = this;console.log("BattleController.prototype.mvcLoad");
+	var self = this;
 	self.loadMvc(["BattleSelectMenu","SingleCombat"],self.configLoad);
 };
 BattleController.prototype.configLoad=function(){
@@ -57,7 +57,7 @@ BattleController.prototype.addMap=function(){
 		mapPath = String.format("history/{0}.js", self.battleData.historyId);
 	}else{
 		mapPath = String.format("{0}.js", self.battleData.toCity.smap());
-	}console.log("addMap mapPath="+mapPath);
+	}
 	self.model.loadMapFile(mapPath,self.globalFilesLoad);
 };
 BattleController.prototype.globalFilesLoad = function(){
@@ -66,7 +66,7 @@ BattleController.prototype.globalFilesLoad = function(){
 	self.load.image(list,self.createMapData);
 };
 BattleController.prototype.createMapData = function(){
-	var self = this;console.log("createMapData");
+	var self = this;
 	self.model.createMap(self.init);
 };
 BattleController.prototype.showCharacterDetailed = function(){

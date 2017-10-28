@@ -50,7 +50,7 @@ HistoryListPayChildView.prototype.onClick = function(event) {
 	self.focus.visible = !self.focus.visible;
 	self.cacheAsBitmap(false);
 	self.updateView();
-	var listView = event.currentTarget;
+	/*var listView = event.currentTarget;
 	var detailView = listView.getParentByConstructor(HistoryListDetailedView);
-	detailView.changeSubCount(self.focus.visible?1:-1);
+	detailView.changeSubCount(self.focus.visible?1:-1);*/
 };

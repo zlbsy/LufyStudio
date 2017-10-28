@@ -44,6 +44,9 @@ BattleBoutView.prototype.removeSelf=function(event){
 	var self = event.target.parent;
 	var view = self.parent;
 	var belong = self.belong;
+	if(belong == Belong.SELF){
+		LMvc.BattleController.setValue("autoPlay",false);
+	}
 	LMvc.running = false;
 	if(LMvc.BattleController.militaryModel){
 		var cityBelong = (belong == Belong.SELF && LMvc.BattleController.battleData.fromCity.seigniorCharaId() != LMvc.selectSeignorId) || 

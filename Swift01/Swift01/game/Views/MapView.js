@@ -218,16 +218,17 @@ MapView.prototype.hideMapLayer=function(event){
 };
 MapView.prototype.showMapLayer=function(event){
 	var self = event.currentTarget.view;
-	/*if(event.characterList.length > 1){
-		var obj = {title:Language.get("confirm"),message:Language.get("dialog_select_onlyone_error"),height:200,okEvent:null};
-		var windowLayer = ConfirmWindow(obj);
-		LMvc.layer.addChild(windowLayer);
-		return;
-	}*/
 	if(event.characterListType == CharacterListType.SELECT_MONARCH){
 		var character = event.characterList[0];
 		monarchChange(LMvc.selectSeignorId, character.id());
 		LMvc.selectSeignorId = character.id();
+	}else if(event.characterListType == CharacterListType.OWN_CHARACTER_LIST && event.subEventType != "return"){
+		var seignior = SeigniorModel.getSeignior(LMvc.selectSeignorId);
+		seignior.generals().forEach(function(child){
+			if(!child.isPrized() && child.city().money() >= JobPrice.PRIZE){
+				var loyaltyUpValue = toPrizedByMoney(child);
+			}
+		});
 	}
 	self.baseLayer.visible = true;
 	self.ctrlLayer.visible = true;

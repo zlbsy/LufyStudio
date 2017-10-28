@@ -2,8 +2,9 @@ function HistoryListView(controller){
 	base(this,LView,[controller]);
 }
 HistoryListView.prototype.construct=function(){
-	this.controller.addEventListener(LEvent.COMPLETE, this.init.bind(this));
-	this.controller.addEventListener(CharacterListEvent.CLOSE, self.closeCharacterList);
+	var self = this;
+	self.controller.addEventListener(LEvent.COMPLETE, this.init.bind(this));
+	self.controller.addEventListener(CharacterListEvent.CLOSE, self.closeCharacterList);
 };
 HistoryListView.prototype.init=function(){
 	var self = this;
@@ -85,6 +86,6 @@ HistoryListView.prototype.closeCharacterList=function(event){
 	var detailedView = self.getChildByName("historyListDetailedView");
 	detailedView.visible = true;
 	var characterListView = self.getChildByName("characterListView");
-	characterListView.visible = false;
+	characterListView.remove();
 	return true;
 };
