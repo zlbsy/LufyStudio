@@ -1820,7 +1820,6 @@ LSGJEventScript.analysis = function(value) {
 			method.apply(LMvc.EventMapController, params);
 			break;*/
 		default:
-			console.log("LMvc.EventMapController="+LMvc.EventMapController);
 			var startMethod = value.indexOf(".");
 			var method = value.substring(startMethod + 1, start);
 			var argumentsArray = value.substring(start + 1, end).split(",");
@@ -1903,7 +1902,7 @@ LSGJTalkScript.analysis = function(value) {
 };
 LSGJTalkScript.show = function(value, start, end) {
 	var params = value.substring(start + 1, end).split(",");
-	Talk(params[0], params[1], params[2], function() {
+	Talk(params[0], 0, params[params.length - 1], function() {
 		LMvc.talkOver = true;
 		//TalkRemove();
 	});
@@ -1936,12 +1935,33 @@ LSGJBattleCharacterScript.analysis = function(value) {
 		case "SGJBattleCharacter.boutSkillRun":
 			LSGJBattleCharacterScript.boutSkillRun(value, start, end);
 			break;
+		case "SGJBattleCharacter.focus":
+			LSGJBattleCharacterScript.focus(value, start, end);
+			break;
+		case "SGJBattleCharacter.addHit":
+			LSGJBattleCharacterScript.addHit(value, start, end);
+			break;
 		case "SGJBattleCharacter.askSingleCombat":
 			BattleController.ctrlChara.inteAI.askSingleCombat();
 			break;
 		default:
 			LGlobal.script.analysis();
 	}
+};
+LSGJBattleCharacterScript.addHit = function(value, start, end) {
+	var params = value.substring(start + 1, end).split(",");
+	var id1 = params[0];
+	var id2 = params[1];
+	LMvc.BattleController.model.addHit(id1,id2);
+	LGlobal.script.analysis();
+};
+LSGJBattleCharacterScript.focus = function(value, start, end) {
+	var params = value.substring(start + 1, end).split(",");
+	var charaLayer = LMvc.BattleController.view.charaLayer;
+	var id = params[0];
+	var chara = charaLayer.getCharacter(null, id);
+	LMvc.BattleController.view.resetMapPosition(chara);
+	LGlobal.script.analysis();
 };
 LSGJBattleCharacterScript.boutSkillRun = function(value, start, end) {
 	var params = value.substring(start + 1, end).split(",");
