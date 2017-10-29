@@ -1920,6 +1920,9 @@ LSGJBattleCharacterScript.analysis = function(value) {
 		case "SGJBattleCharacter.endAction":
 			LSGJBattleCharacterScript.endAction(value, start, end);
 			break;
+		case "SGJBattleCharacter.changeAction":
+			LSGJBattleCharacterScript.changeAction(value, start, end);
+			break;
 		case "SGJBattleCharacter.singleCombatStart":
 			LSGJBattleCharacterScript.singleCombatStart(value, start, end);
 			break;
@@ -1977,6 +1980,21 @@ LSGJBattleCharacterScript.endAction = function(value, start, end) {
 	var params = value.substring(start + 1, end).split(",");
 	var character = LMvc.BattleController.view.charaLayer.getCharacter(params[0],parseInt(params[1]));
 	character.AI.endAction();
+};
+LSGJBattleCharacterScript.changeAction = function(value, start, end) {
+	var params = value.substring(start + 1, end).split(",");
+	var character = LMvc.BattleController.view.charaLayer.getCharacter(params[0],parseInt(params[1]));
+	var action = params[2];
+	character.setActionDirection(action, character.direction);
+	var time = 500;
+	switch(action){
+		case CharacterAction.PANT:
+			time = 1000;
+			break;
+	}
+	setTimeout(function(){
+		LGlobal.script.analysis();
+	}, time);
 };
 LSGJBattleCharacterScript.singleCombatStart = function(value, start, end) {
 	var params = value.substring(start + 1, end).split(",");

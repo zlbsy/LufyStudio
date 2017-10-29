@@ -149,11 +149,11 @@ BattleView.prototype.resetMapPosition=function(chara){
 	if(chara.hideByCloud){
 		return;
 	}
-	if(LMvc.screenHeight >= self.model.map.height){
+	if(LMvc.screenHeight >= self.model.map.height && LMvc.screenWidth >= self.model.map.width){
 		return;
 	}
 	var baseLayer = self.baseLayer;
-	LTweenLite.to(baseLayer,0.2,{x:LMvc.screenWidth*0.5 - chara.x,y:LMvc.screenHeight*0.5 - chara.y,});
+	LTweenLite.to(baseLayer,0.2,{x:LMvc.screenWidth*0.5 - chara.x,y:LMvc.screenHeight*0.5 - chara.y});
 };
 BattleView.prototype.checkPosition=function(){
 	var self = this;

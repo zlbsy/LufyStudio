@@ -12,6 +12,7 @@ function cloudWeatherCharacterShow(characterId){
 		for(var i=0,l=characters.length;i<l;i++){
 			var character = characters[i];
 			character.anime.parent.alpha = 1;
+			character.hideByCloud = false;
 		}
 		return;
 	}
@@ -25,8 +26,10 @@ function cloudWeatherCharacterShow(characterId){
 		});
 		if(findIndex >= 0){
 			character.anime.parent.alpha = 1;
+			character.hideByCloud = false;
 		}else{
 			character.anime.parent.alpha = 0.01;
+			character.hideByCloud = true;
 		}
 	}
 }
