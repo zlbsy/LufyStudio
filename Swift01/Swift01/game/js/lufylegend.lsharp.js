@@ -1923,6 +1923,9 @@ LSGJBattleCharacterScript.analysis = function(value) {
 		case "SGJBattleCharacter.changeAction":
 			LSGJBattleCharacterScript.changeAction(value, start, end);
 			break;
+		case "SGJBattleCharacter.moveTo":
+			LSGJBattleCharacterScript.moveTo(value, start, end);
+			break;
 		case "SGJBattleCharacter.singleCombatStart":
 			LSGJBattleCharacterScript.singleCombatStart(value, start, end);
 			break;
@@ -1981,11 +1984,43 @@ LSGJBattleCharacterScript.endAction = function(value, start, end) {
 	var character = LMvc.BattleController.view.charaLayer.getCharacter(params[0],parseInt(params[1]));
 	character.AI.endAction();
 };
+LSGJBattleCharacterScript.moveTo = function(value, start, end) {
+	var params = value.substring(start + 1, end).split(",");
+	var character = LMvc.BattleController.view.charaLayer.getCharacter(params[0],parseInt(params[1]));
+	var toX = params[2];
+	var toY = params[3];
+	var x = character.locationX();
+	var y = character.locationY();
+	var list = [];
+	while(x != toX || y != toY){
+		console.log(x+","+y+","+toX+","+toY);
+		if(toX > x){
+			toX -= 1;
+		}else if(toX < x){
+			toX += 1;
+		}else if(toY > y){
+			toY -= 1;
+		}else if(toY < y){
+			toY += 1;
+		}
+		list.push({x:toX, y:toY});
+	}
+	list.shift();
+	console.log("moveTo",list);
+	character.setRoad(list);
+	character.addEventListener(CharacterActionEvent.MOVE_COMPLETE, LSGJBattleCharacterScript.moveComplete);
+	
+};
+LSGJBattleCharacterScript.moveComplete = function(event){
+	var character = event.currentTarget;
+	character.removeEventListener(CharacterActionEvent.MOVE_COMPLETE, LSGJBattleCharacterScript.moveComplete);
+	LGlobal.script.analysis();
+};
 LSGJBattleCharacterScript.changeAction = function(value, start, end) {
 	var params = value.substring(start + 1, end).split(",");
 	var character = LMvc.BattleController.view.charaLayer.getCharacter(params[0],parseInt(params[1]));
 	var action = params[2];
-	character.setActionDirection(action, character.direction);
+	character.changeAction(action);
 	var time = 500;
 	switch(action){
 		case CharacterAction.PANT:
@@ -2138,7 +2173,7 @@ LSGJSingleCombatScript.playSE = function(value, start, end) {
 	LGlobal.script.analysis();
 };
 LSGJSingleCombatScript.moveComplete = function(event) {
-	event.currentTarget.addEventListener(CharacterActionEvent.MOVE_COMPLETE,LSGJSingleCombatScript.moveComplete);
+	event.currentTarget.removeEventListener(CharacterActionEvent.MOVE_COMPLETE,LSGJSingleCombatScript.moveComplete);
 	LGlobal.script.analysis();
 };
 LSGJSingleCombatScript.moveTo = function(value, start, end) {
