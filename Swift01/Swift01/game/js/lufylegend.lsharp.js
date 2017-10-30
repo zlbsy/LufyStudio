@@ -1987,34 +1987,38 @@ LSGJBattleCharacterScript.endAction = function(value, start, end) {
 LSGJBattleCharacterScript.moveTo = function(value, start, end) {
 	var params = value.substring(start + 1, end).split(",");
 	var character = LMvc.BattleController.view.charaLayer.getCharacter(params[0],parseInt(params[1]));
-	var toX = params[2];
-	var toY = params[3];
+	LMvc.BattleController.view.resetMapPosition(character);
+	var toX = parseInt(params[2]);
+	var toY = parseInt(params[3]);
 	var x = character.locationX();
 	var y = character.locationY();
 	var list = [];
 	while(x != toX || y != toY){
-		console.log(x+","+y+","+toX+","+toY);
 		if(toX > x){
-			toX -= 1;
+			x += 1;
 		}else if(toX < x){
-			toX += 1;
+			x -= 1;
 		}else if(toY > y){
-			toY -= 1;
+			y += 1;
 		}else if(toY < y){
-			toY += 1;
+			y -= 1;
 		}
-		list.push({x:toX, y:toY});
+		list.push({x:x, y:y});
 	}
 	list.shift();
-	console.log("moveTo",list);
-	character.setRoad(list);
 	character.addEventListener(CharacterActionEvent.MOVE_COMPLETE, LSGJBattleCharacterScript.moveComplete);
+	setTimeout(function(){
+		character.setRoad(list);
+	}, 300);
 	
 };
 LSGJBattleCharacterScript.moveComplete = function(event){
 	var character = event.currentTarget;
 	character.removeEventListener(CharacterActionEvent.MOVE_COMPLETE, LSGJBattleCharacterScript.moveComplete);
-	LGlobal.script.analysis();
+	LMvc.BattleController.view.resetMapPosition(character);
+	setTimeout(function(){
+		LGlobal.script.analysis();
+	}, 300);
 };
 LSGJBattleCharacterScript.changeAction = function(value, start, end) {
 	var params = value.substring(start + 1, end).split(",");
