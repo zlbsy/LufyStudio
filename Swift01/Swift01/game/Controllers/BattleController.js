@@ -248,7 +248,7 @@ BattleController.prototype.charactersInit = function(){
 		enemyPositions = self.model.map.enemys;
 		selfPositions = self.model.map.charas;
 	}
-	enemyPositions = enemyPositions.sort(function(a,b){
+	enemyPositions = self.battleData.historyId ? enemyPositions : enemyPositions.sort(function(a,b){
 		var v = b.index - a.index;
 		if(v == 0){
 			return Math.fakeRandom() - 0.5;
