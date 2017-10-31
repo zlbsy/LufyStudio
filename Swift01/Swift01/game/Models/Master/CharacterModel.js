@@ -509,7 +509,7 @@ CharacterModel.prototype.statusChange = function(name) {
 };
 CharacterModel.prototype.isMale = function() {
 	var self = this;
-	if(self.id() < 1000){
+	if(self.id() < 1000 && self.id() < 10000){
 		return femaleCharacters.indexOf(self.id()) < 0;
 	}
 	return self.data.gender == 1;
