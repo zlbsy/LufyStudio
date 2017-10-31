@@ -713,7 +713,7 @@ BattleCharacterAI.prototype.checkEvent = function(chara, target) {
 		for(var j = 0;j<ranges.length;j++){
 			var range = ranges[j];
 			var nearChara = LMvc.BattleController.view.charaLayer.getCharacterFromLocation(child.locationX()+range.x, child.locationY()+range.y);
-			if(!nearChara || self.isNear(child,nearChara)){
+			if(!nearChara || !self.isNear(child,nearChara)){
 				continue;
 			}
 			return;
