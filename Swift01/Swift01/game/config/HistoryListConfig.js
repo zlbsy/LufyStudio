@@ -5,13 +5,14 @@ var HistoryListConfig = [
 	name:"汜水关之战",
 	level:1,
 	troops:1000,
+	food:0,
 	maxSubCharacter:4,
 	characters:[
 		[8,24,17],//孙坚，孙策，孙权，孙休
 	],
 	subCharacters:[72,123,80,178,44,234,167],//程普,黄盖,韩当,祖茂,丁奉,虞汜,陆凯
-	enemy:{chara_id : 910,color : "0,0,0",generals_count:6,areas : [
-	  {  area_id : 54,prefecture : 910,
+	enemy:{chara_id : 265,color : "0,0,0",generals_count:6,areas : [
+	  {  area_id : 54,troops:1000,prefecture : 910,food:100000,
 	  generals:[
 	    {chara_id:10001,name:"华雄",feat:0,loyalty:100},
 	    {chara_id:10002,name:"李肃",feat:0,loyalty:100},

@@ -508,8 +508,7 @@ AreaModel.prototype.neighbor = function(){
 };
 AreaModel.prototype.flag = function(){
 	var self = this;
-	var color = self.color();
-	if(!color){
+	if(!self.color() || !self.seignior() || !self.seignior().chara_id()){
 		return new LBitmap(SeigniorModel.getWhiteFlag());
 	}
 	var bitmapData = self.seignior().flag();

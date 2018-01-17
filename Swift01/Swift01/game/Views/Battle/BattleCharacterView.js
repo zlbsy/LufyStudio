@@ -373,7 +373,8 @@ BattleCharacterView.prototype.toDie = function() {
 		var defCostValue = DefenseCharacterCost;
 		self.data.city().cityDefense(-(defCostValue * 0.5 >>> 0));
 	}
-	if(!self.data.isDefCharacter() && !self.data.isTribeCharacter() && !self.data.isEmploy()){
+	if(!self.data.isDefCharacter() && !self.data.isTribeCharacter() && !self.data.isEmploy() 
+		&& !LMvc.BattleController.battleData.historyId){
 		var talkMsg;
 		if(self.isSingleCombat || calculateHitrateCaptive(self)){
 			self.isSingleCombat = false;

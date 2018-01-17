@@ -114,6 +114,9 @@ CharacterModel.getSoldierType = function(type, value){
 	}
 	return String.format("{0}({1})",type,endType);
 };
+CharacterModel.isHistoryPurchaseCharacter=function(id){
+	return historyPurchaseCharacters.indexOf(id) >= 0;
+};
 CharacterModel.setChara=function(list){
 	var fathers = [];
 	for(var i=0,l=list.length;i<l;i++){
@@ -600,7 +603,7 @@ CharacterModel.prototype.stopIn = function(value) {
 	return this._dataValue("stopIn", value, 0);
 };
 CharacterModel.prototype.age = function() {
-	if(this.data.born == 0 || !LMvc.chapterData){
+	if(this.data.born == 0 || !LMvc.chapterData || historyPurchaseCharacters.indexOf(this.id()) >= 0){
 		return "--";
 	}
 	return LMvc.chapterData.year - this.data.born;
@@ -669,7 +672,7 @@ CharacterModel.prototype.dispositionLabel = function(){
 	return Language.get("disposition_"+this.data.disposition);
 };
 CharacterModel.prototype.name = function() {
-	if(this.data.id >= 1000){
+	if(this.data.id >= 1000 && this.data.id < 10000){
 		return this.data.name;
 	}
 	if(this.isEmploy()){
@@ -695,7 +698,8 @@ CharacterModel.prototype.seignior = function(chara_id) {
 };
 CharacterModel.prototype.seigniorName = function(){
 	var self = this;
-	if(self.seignior() && self.seignior().character().seigniorId() > 0){
+	if(self.seignior() && self.seignior().character() 
+		&& self.seignior().character().seigniorId() > 0){
 		return self.seignior().character().name();
 	}
 	return Language.get("nothing");
@@ -868,6 +872,9 @@ CharacterModel.prototype.strategies = function(isAll) {
 };
 CharacterModel.prototype.identity = function(value) {
 	var self = this;
+	if(historyPurchaseCharacters.indexOf(self.id()) >= 0){
+		return "-";
+	}
 	if(self.isEmploy()){
 		return Language.get("employ");
 	}

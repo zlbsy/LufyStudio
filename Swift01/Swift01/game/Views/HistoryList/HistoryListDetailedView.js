@@ -40,19 +40,18 @@ HistoryListDetailedView.prototype.set=function(){
 	level.y = 45;
 	self.backLayer.addChild(level);
 	*/
-	var rangeBackground = getPanel("win04",300,40);
+	var rangeBackground = getPanel("win04",200,40);
 	var rangeSelect = new LBitmap(new LBitmapData(LMvc.datalist["range"]));
 	var troopsLayer = new LSprite();
 	troopsLayer.x = 10;
 	troopsLayer.y = 70;
 	self.backLayer.addChild(troopsLayer);
 	var troopsLabel = getStrokeLabel(Language.get("可用预备兵力"), 16, "#FFFFFF", "#000000", 4);
-	//troopsLabel.x = 10;
 	troopsLayer.addChild(troopsLabel);
 	var seignior = SeigniorModel.getSeignior(LMvc.selectSeignorId);
 	var cityModel = seignior.character().city();
 	self.troopsSum = cityModel.troops() > self.historyObject.troops ? self.historyObject.troops : cityModel.troops();
-	var troops = getStrokeLabel( String.format("{0}/{1}",0,self.historyObject.troops), 18, "#FFFFFF", "#000000", 4);
+	var troops = getStrokeLabel( String.format("{0}/{1}",0,self.troopsSum), 18, "#FFFFFF", "#000000", 4);
 	troops.x = 130;
 	troopsLayer.addChild(troops);
 	self.troops = troops;
@@ -61,8 +60,29 @@ HistoryListDetailedView.prototype.set=function(){
 	rangeTroops.y = 18;
 	troopsLayer.addChild(rangeTroops);
 	rangeTroops.addEventListener(LRange.ON_CHANGE, self.onTroopsChange);
-	
-	var msg = getStrokeLabel("*所消耗的预备兵力为我方君主所在城池兵力。",14,"#ff0000","#000000",2);
+	if(self.troopsSum == 0){
+		rangeTroops.visible = false;
+	}
+	var foodLayer = new LSprite();
+	foodLayer.x = 250;
+	foodLayer.y = 70;
+	self.backLayer.addChild(foodLayer);
+	var foodLabel = getStrokeLabel(Language.get("可用兵粮"), 16, "#FFFFFF", "#000000", 4);
+	foodLayer.addChild(foodLabel);
+	self.foodSum = cityModel.food() > self.historyObject.food ? self.historyObject.food : cityModel.food();
+	var food = getStrokeLabel( String.format("{0}/{1}",0,self.foodSum), 18, "#FFFFFF", "#000000", 4);
+	food.x = 130;
+	foodLayer.addChild(food);
+	self.food = food;
+	var rangeFood = new LRange(rangeBackground.clone(), rangeSelect.clone());
+	rangeFood.x = 10;
+	rangeFood.y = 18;
+	foodLayer.addChild(rangeFood);
+	rangeFood.addEventListener(LRange.ON_CHANGE, self.onFoodChange);
+	if(self.foodSum == 0){
+		rangeFood.visible = false;
+	}
+	var msg = getStrokeLabel("*所消耗的预备兵力和兵粮取自我方君主所在城池。",14,"#ff0000","#000000",2);
 	msg.width = 460;
 	msg.x = 10;
 	msg.y = 128;
@@ -110,6 +130,12 @@ HistoryListDetailedView.prototype.onTroopsChange=function(event){
 	self.selectTroops = self.troopsSum*rangeTroops.value*0.01>>0;
 	self.troops.text = String.format("{0}/{1}",self.selectTroops,self.troopsSum);
 };
+HistoryListDetailedView.prototype.onFoodChange=function(event){
+	var rangeFood = event.currentTarget;
+	var self = rangeFood.parent.parent.parent;
+	self.selectFood = self.foodSum*rangeFood.value*0.01>>0;
+	self.food.text = String.format("{0}/{1}",self.selectFood,self.foodSum);
+};
 HistoryListDetailedView.prototype.gotoBattle = function(event){
 	var self = event.currentTarget.getParentByConstructor(HistoryListDetailedView);
 	var seignior = SeigniorModel.getSeignior(LMvc.selectSeignorId);
@@ -152,10 +178,21 @@ HistoryListDetailedView.prototype.gotoBattle = function(event){
 		}
 	}
 	LGlobal.script.addScript(script);
+	items = self.payListView.getItems();
+	for(var i = 0;i<items.length;i++){
+		var item = items[i];
+		if(item.focus){
+			var chara = CharacterModel.getChara(item.characterId);
+			expeditionCharacterList.push(chara);
+		}
+	}
 	var battleData = {historyId:self.historyObject.id};
 	battleData.fromCity = seignior.character().city();
 	battleData.expeditionCharacterList = expeditionCharacterList;
 	battleData.expeditionLeader = expeditionCharacterList[0];
+	battleData.money = 0;
+	battleData.food = 0;
+	battleData.troops = 0;
 	var areas = self.historyObject.enemy.areas;
 	self.historyObject.enemy.areasBaseData = areas;
 	var areaList = [];

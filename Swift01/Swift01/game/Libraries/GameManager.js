@@ -36,10 +36,14 @@ GameManager.save = function(index){
 	if(LMvc.BattleController){
 		data.battleData = getBattleSaveData();
 		var city = AreaModel.getArea(data.battleData.toCityId);
-		data.labels.battleTitle = 
-		String.format(Language.get("battle_title"), city.name()) + "("+
-		String.format(Language.get("bout_label"),data.battleData.bout) + ")";
-		//data.labels.boutLabel = String.format(Language.get("bout_label"),data.battleData.bout);
+		var boutStr = "("+ String.format(Language.get("bout_label"),data.battleData.bout) + ")";
+		var battle_title;
+		if(data.battleData.historyId){
+			battle_title = Language.get("history_" + data.battleData.historyId);
+		}else{
+			battle_title = String.format(Language.get("battle_title"), city.name());
+		}
+		data.labels.battleTitle = battle_title + boutStr;
 	}
 	var recordName = String.format("gameRecord_{0}", index);
 	LPlugin.SetData(recordName, data);

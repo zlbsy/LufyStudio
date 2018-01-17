@@ -1,5 +1,5 @@
 /*版本升级后加到引擎中，暂时添加*/
-LTextField.prototype.windComplete = function() {
+/*LTextField.prototype.windComplete = function() {
 	var s = this;
 	s._speedIndex = s.speed;
 	s.text = s._ll_wind_text;
@@ -183,8 +183,10 @@ LRadio.prototype.setValue = function (value) {
 		s.dispatchEvent(LRadio.ON_CHANGE);
 	}
 };
+*/
 //////////////////////华丽的分界线////////////////////
 /*引擎中需调整*/
+/*
 LButton.prototype.ll_button_mode = function(){
 	return;
 };
@@ -216,7 +218,7 @@ function init (s, c, w, h, f, t) {
 			window.mozRequestAnimationFrame ||
 			window.oRequestAnimationFrame ||
 			window.msRequestAnimationFrame ||
-			function(/* function FrameRequestCallback */ callback, /* DOMElement Element */ element) {
+			function(callback, element) {
 				window.setTimeout(callback, 1000/60);
 			};
 		})();
@@ -243,6 +245,7 @@ function init (s, c, w, h, f, t) {
 	}
 }
 var LInit = init;
+*/
 //////////////////////华丽的分界线////////////////////
 
 /*不需要加到引擎中，只在本游戏中使用*/

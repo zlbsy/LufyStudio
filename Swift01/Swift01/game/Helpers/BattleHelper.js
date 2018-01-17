@@ -450,6 +450,7 @@ function battleHealTroopsRun(troopsAdd, woundedAdd, currentTargetCharacter){
 function getBattleSaveData(){
 	var data = {};
 	var battleData = LMvc.BattleController.battleData;
+	data.historyId = battleData.historyId;
 	data.food = battleData.food;
 	data.money = battleData.money;
 	data.troops = battleData.troops;
@@ -492,7 +493,7 @@ function getBattleSaveData(){
 			childData.militaryId = character.militaryModel.id();
 			childData.militaryValidLimit = character.militaryValidLimit;
 		}
-		if(childData.isDefCharacter){
+		if(childData.isDefCharacter || CharacterModel.isHistoryPurchaseCharacter(childData.id)){
 			childData.data = character.data.datas();
 		}else if(character.data.isEmploy()){
 			childData.employDatas = character.data.employDatas();
@@ -560,9 +561,11 @@ function getBattleSaveData(){
 }
 function setBattleSaveData(){
 	var data = LMvc.areaData.battleData;
+	console.error("setBattleSaveData",data);
 	LMvc.BattleController.startAttack = data.startAttack;
 	LMvc.BattleController.militaryOver = data.militaryOver;
 	var battleData = LMvc.BattleController.battleData;
+	battleData.historyId = data.historyId;
 	LMvc.BattleController.setValue("bout", data.bout);
 	LMvc.BattleController.setValue("currentBelong", Belong.SELF);
 	battleData.expeditionCharacterList = [];
@@ -579,11 +582,15 @@ function setBattleSaveData(){
 	var charaLayer = LMvc.BattleController.view.charaLayer;
 	for(var i=0,l=data.ourList.length;i<l;i++){
 		var charaData = data.ourList[i];
+		console.log("charaData",charaData.name, charaData);
 		if(charaData.isDefCharacter){
 			var chara = CharacterModel.getChara(charaData.id);
 			chara.isDefCharacter(1);
 			chara.seigniorId(battleData.toCity.seigniorCharaId());
 			chara.cityId(battleData.toCity.id());
+			chara.setDatas(charaData.data);
+		}else if(CharacterModel.isHistoryPurchaseCharacter(charaData.id)){
+			var chara = CharacterModel.getChara(charaData.id);
 			chara.setDatas(charaData.data);
 		}else if(charaData.isEmploy){
 			var chara = CharacterModel.getChara(charaData.id);

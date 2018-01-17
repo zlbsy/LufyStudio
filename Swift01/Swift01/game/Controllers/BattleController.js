@@ -52,9 +52,13 @@ BattleController.prototype.viewLoad=function(){
 	"Battle/BattleExpChange","Battle/BattleField","Battle/MilitaryAdviser"],self.addMap);
 };
 BattleController.prototype.addMap=function(){
-	var self = this, mapPath;
-	if(self.battleData.historyId){
-		mapPath = String.format("history/{0}.js", self.battleData.historyId);
+	var self = this, mapPath, historyId = self.battleData.historyId;
+	if(LMvc.areaData && LMvc.areaData.battleData){
+		historyId = LMvc.areaData.battleData.historyId;
+	}
+	console.log("self.battleData.historyId",historyId);
+	if(historyId){
+		mapPath = String.format("history/{0}.js", historyId);
 	}else{
 		mapPath = String.format("{0}.js", self.battleData.toCity.smap());
 	}

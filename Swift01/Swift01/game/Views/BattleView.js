@@ -133,9 +133,15 @@ BattleView.prototype.addCharacterListView=function(characterListView){
 	self.contentLayer.addChild(characterListView);
 };
 BattleView.prototype.showBattleField=function(){
-	var self = this;
+	var self = this, title;
 	var battleField = new BattleFieldView(self.controller);
-	var obj = {title:self.controller.battleData.toCity.name()+Language.get("battleField"),subWindow:battleField,width:480,height:540,okEvent:null};
+	var battleData = self.controller.battleData;
+	if(battleData.historyId){
+		title = Language.get("history_" + battleData.historyId);
+	}else{
+		title = battleData.toCity.name() + Language.get("battleField");
+	}
+	var obj = {title:title,subWindow:battleField,width:480,height:540,okEvent:null};
 	var windowLayer = ConfirmWindow(obj);
 	self.addChild(windowLayer);
 };

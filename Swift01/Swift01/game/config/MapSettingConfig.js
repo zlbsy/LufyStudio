@@ -56,3 +56,4 @@ var MapSetting = [
 ];
 MapSetting.sort(function(a,b){return a.position.y - b.position.y;});
 var CityIconConfig = {width:80, height:80};
+var HistoryCityConfig = {cityId:54};

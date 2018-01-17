@@ -2024,12 +2024,20 @@ LSGJBattleCharacterScript.changeAction = function(value, start, end) {
 	var params = value.substring(start + 1, end).split(",");
 	var character = LMvc.BattleController.view.charaLayer.getCharacter(params[0],parseInt(params[1]));
 	var action = params[2];
-	character.changeAction(action);
+	if(params.length > 3){
+		var direction = params[3];
+		character.setActionDirection(action, direction);
+	}else{
+		character.changeAction(action);
+	}
 	var time = 500;
 	switch(action){
 		case CharacterAction.PANT:
 			time = 1000;
 			break;
+		case CharacterAction.MOVE:
+			LGlobal.script.analysis();
+			return;
 	}
 	setTimeout(function(){
 		LGlobal.script.analysis();
