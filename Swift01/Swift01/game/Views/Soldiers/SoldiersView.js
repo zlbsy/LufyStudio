@@ -6,6 +6,9 @@ function SoldiersView(controller, characterModel, size) {
 }
 SoldiersView.prototype.setSpecialSoldiers = function(characterModel) {
 	var self = this;
+	if(characterModel.isHistoryPurchase()){
+		return;
+	}
 	var soldierList = characterModel.soldiers();
 	if(characterModel.seigniorId() != LMvc.selectSeignorId){
 		return;

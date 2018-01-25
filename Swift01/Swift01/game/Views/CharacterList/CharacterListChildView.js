@@ -210,6 +210,7 @@ CharacterListChildView.prototype.setArmProperties = function() {
 		self.cityNameLabel.text = !self.charaModel.city() ? "" : self.charaModel.city().name();
 		var panel = self.soldierName.parent;
 		self.soldierName.x = (panel.getWidth() - self.soldierName.getWidth())*0.5;
+		self.armProperties.cacheAsBitmap(false);
 		return;
 	}
 	var layer = new LSprite();
@@ -247,9 +248,11 @@ CharacterListChildView.prototype.setBasicProperties = function() {
 	if(self.basicProperties){
 		self.seigniorName.text = self.charaModel.seigniorName();
 		self.identity.text = self.charaModel.identity();
-		self.cityNameLabel.text = !self.charaModel.city() ? "" : self.charaModel.city().name();
+		var cityName = !self.charaModel.city() ? "" : self.charaModel.city().name();
+		self.basicCityNameLabel.text = !self.charaModel.city() ? "" : self.charaModel.city().name();
 		self.loyalty.text = seigniorId>0 ? self.charaModel.loyalty() : "--";
 		self.jobLabel.text = self.charaModel.jobLabel();
+		self.basicProperties.cacheAsBitmap(false);
 		return;
 	}
 	var layer = new LSprite();
@@ -266,11 +269,12 @@ CharacterListChildView.prototype.setBasicProperties = function() {
 	identity.y = 5;
 	layer.addChild(identity);
 	self.identity = identity;
-	var cityNameLabel = getStrokeLabel(!self.charaModel.city() ? "" : self.charaModel.city().name(), 18, "#FFFFFF", "#000000", 4);
+	var cityName = !self.charaModel.city() ? "" : self.charaModel.city().name();
+	var cityNameLabel = getStrokeLabel(cityName, 18, "#FFFFFF", "#000000", 4);
 	cityNameLabel.x = 60 * 2 + 2;
 	cityNameLabel.y = 5;
 	layer.addChild(cityNameLabel);
-	self.cityNameLabel = cityNameLabel;
+	self.basicCityNameLabel = cityNameLabel;
 	var loyalty = getStrokeLabel( seigniorId>0 ? self.charaModel.loyalty() : "--", 18, "#FFFFFF", "#000000", 4);
 	loyalty.x = 60 * 3 + 2;
 	loyalty.y = 5;
@@ -295,6 +299,7 @@ CharacterListChildView.prototype.setAbilityProperties = function() {
 		self.intelligence.text = self.charaModel.intelligence();
 		self.agility.text = self.charaModel.agility();
 		self.luck.text = self.charaModel.luck();
+		self.abilityProperties.cacheAsBitmap(false);
 		return;
 	}
 	var layer = new LSprite();

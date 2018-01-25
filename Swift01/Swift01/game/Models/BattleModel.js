@@ -93,11 +93,9 @@ BattleModel.prototype.getMinusStrategyCharas=function(belong){
 };
 BattleModel.prototype.createMap = function(callback){
 	var self = this;
-	console.log("BattleModel.prototype.createMap");
 	if(!MapHelperSetting.bitmapData){
 		MapHelperSetting.bitmapData = new LBitmapData(LMvc.datalist["tile_map"]);
 	}
-	console.log("self.map="+self.map);
 	var maps = self.map.data;
 	var h = maps.length;
 	var w = maps[0].length;

@@ -56,6 +56,10 @@ BattleResultView.prototype.winInit=function(){
 	var self = this;
 	var battleData = self.controller.battleData;
 	self.winSeigniorId = LMvc.selectSeignorId;
+	if(battleData.historyId){
+		self.showResultTitle("battle_win");
+		return;
+	}
 	if(battleData.fromCity.seigniorCharaId() == LMvc.selectSeignorId){
 		self.failSeigniorId = battleData.toCity.seigniorCharaId();
 		var city = battleData.toCity;
@@ -155,13 +159,38 @@ BattleResultView.prototype.setEvent=function(){
 	}
 	self.addEventListener(BattleResultEvent.ATTACK_AND_OCCUPY, self.showMap);
 };
+BattleResultView.prototype.getHistoryReward=function(historyId){
+	var self = this, history = HistoryListConfig.find(function(child){
+		return child.id == historyId;
+	});
+	var rewards = history.rewards;
+	var message = Language.get("history_reward_message");
+	var getLabels = [];
+	var seignior = SeigniorModel.getSeignior(LMvc.selectSeignorId);
+	for(var i=0;i<rewards.length;i++){
+		var reward = rewards[i];
+		var items = Array.getRandomArrays(reward.items, reward.count);
+		for(var j=0;j<items.length;j++){
+			var item = new ItemModel(null,{item_id:items[j],count:1});
+			seignior.addItem(item);
+			getLabels.push(item.name() + "x1");
+		}
+	}
+	message = String.format(message, getLabels.join("\n"));
+	return message;
+};
 BattleResultView.prototype.cityWin=function(event){
 	var self = event.currentTarget;
 	var charaTroops = BattleResultView.characterListTroopsCtrl(self.model.ourList);
 	var message;
 	var battleData = self.controller.battleData;
 	var cityName = battleData.toCity.name();
-	if(battleData.fromCity.seigniorCharaId() == LMvc.selectSeignorId){
+	if(battleData.historyId){
+		message = self.getHistoryReward(battleData.historyId);
+		battleData.fromCity.food(battleData.food);
+		battleData.fromCity.money(battleData.money);
+		battleData.fromCity.troops(battleData.fromCity.troops() + battleData.troops);
+	}else if(battleData.fromCity.seigniorCharaId() == LMvc.selectSeignorId){
 		if(!self.failSeigniorId){
 			message = String.format(Language.get("win_attack_and_occupy_null"),Language.get("belong_self"),cityName);//{0}攻占了{1}!
 		}else{

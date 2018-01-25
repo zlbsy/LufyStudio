@@ -561,7 +561,6 @@ function getBattleSaveData(){
 }
 function setBattleSaveData(){
 	var data = LMvc.areaData.battleData;
-	console.error("setBattleSaveData",data);
 	LMvc.BattleController.startAttack = data.startAttack;
 	LMvc.BattleController.militaryOver = data.militaryOver;
 	var battleData = LMvc.BattleController.battleData;
@@ -582,7 +581,6 @@ function setBattleSaveData(){
 	var charaLayer = LMvc.BattleController.view.charaLayer;
 	for(var i=0,l=data.ourList.length;i<l;i++){
 		var charaData = data.ourList[i];
-		console.log("charaData",charaData.name, charaData);
 		if(charaData.isDefCharacter){
 			var chara = CharacterModel.getChara(charaData.id);
 			chara.isDefCharacter(1);

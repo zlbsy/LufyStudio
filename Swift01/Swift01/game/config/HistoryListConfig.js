@@ -8,7 +8,7 @@ var HistoryListConfig = [
 	food:0,
 	maxSubCharacter:4,
 	characters:[
-		[8,24,17],//孙坚，孙策，孙权，孙休
+		[8,24,17,240],//孙坚，孙策，孙权，孙休
 	],
 	subCharacters:[72,123,80,178,44,234,167],//程普,黄盖,韩当,祖茂,丁奉,虞汜,陆凯
 	enemy:{chara_id : 265,color : "0,0,0",generals_count:6,areas : [
@@ -31,12 +31,7 @@ var HistoryListConfig = [
 	    ],
 	  },
 	]},
-	script:"Data/Event/{0}/tyjy.txt",
-	result:[
-		{type:"changeSeignior", id:21, seignior:604, loyalty:100, city:45},
-		{type:"changeSeignior", id:4, seignior:604, loyalty:100, city:45},
-		{type:"changeSeignior", id:19, seignior:604, loyalty:100, city:45},
-	]
+	rewards:[{count:1, items:[101, 102, 103, 104]}, {count:2, items:[105, 106, 107, 108]}, {count:5, items:[117, 118, 119, 120, 121]}]
 },
 {
 	id:2,

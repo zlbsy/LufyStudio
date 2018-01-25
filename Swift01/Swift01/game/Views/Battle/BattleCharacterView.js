@@ -108,9 +108,8 @@ BattleCharacterView.prototype.getBitmapData = function() {
 		resultBitmapData = self.anime.bitmap.bitmapData;
 	}
 	if(self.mode == CharacterMode.END_ACTION){
-		BattleCharacterView.cacheBitmapDatas[endKey] = new LBitmapData(null,0,0,resultBitmapData.width,resultBitmapData.height,LBitmapData.DATA_CANVAS);
-		BattleCharacterView.cacheBitmapDatas[endKey].copyPixels(resultBitmapData,new LRectangle(0, 0, resultBitmapData.width, resultBitmapData.height), new LPoint(0,0));
-	    BattleCharacterView.cacheBitmapDatas[endKey].colorTransform(new LRectangle(0, 0, resultBitmapData.width, resultBitmapData.height), new LColorTransform(0.4, 0.4, 0.4, 1, 0, 0, 0, 0));
+		BattleCharacterView.cacheBitmapDatas[endKey] = new LBitmapData(self.anime.bitmap.bitmapData.image,resultBitmapData.x,resultBitmapData.y,resultBitmapData.width,resultBitmapData.height,LBitmapData.DATA_CANVAS);
+		BattleCharacterView.cacheBitmapDatas[endKey].colorTransform(new LRectangle(0, 0, resultBitmapData.width, resultBitmapData.height), new LColorTransform(0.4, 0.4, 0.4, 1, 0, 0, 0, 0));
 		resultBitmapData = BattleCharacterView.cacheBitmapDatas[endKey];
 	}
 	return resultBitmapData;

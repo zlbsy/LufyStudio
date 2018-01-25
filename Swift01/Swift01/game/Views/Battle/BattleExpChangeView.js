@@ -108,7 +108,7 @@ BattleExpChangeView.prototype.setData = function(index){
 		
 		var rewardLabel;
 		if(data.reward){
-			rewardLabel = getStrokeLabel("首功",20,"#FF0000","#000000",4);
+			rewardLabel = getStrokeLabel(Language.get("maxFeat"),20,"#FF0000","#000000",4);
 			rewardLabel.x = xs[4];
 			layer.addChild(rewardLabel);
 		}

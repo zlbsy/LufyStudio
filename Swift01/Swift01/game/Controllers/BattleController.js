@@ -7,12 +7,16 @@ function BattleController(battleData, fromController){
 }
 BattleController.prototype.construct=function(){
 	var self = this;
+	var historyId = self.battleData.historyId;
+	if(LMvc.areaData && LMvc.areaData.battleData){
+		historyId = LMvc.areaData.battleData.historyId;
+	}
 	self.downX = self.downY = 0;
 	self.setValue("bout", 0);
 	LMvc.keepLoading(true);
 	LMvc.changeLoading(BattleLoading);
-	if(self.battleData.historyId){
-		LMvc.loading.setTitle(Language.get("history_" + self.battleData.historyId));
+	if(historyId){
+		LMvc.loading.setTitle(Language.get("history_" + historyId));
 	}else{
 		var city = self.battleData.toCity;
 		LMvc.loading.setTitle(String.format(Language.get("battle_title"), city.name()));
@@ -29,7 +33,7 @@ BattleController.prototype.mvcLoad=function(){
 };
 BattleController.prototype.configLoad=function(){
 	var self = this;
-	self.load.config(["Soldiers","Character","GroupSkills","Terrain"],self.libraryLoad);
+	self.load.config(["Soldiers","Character","GroupSkills","Terrain","HistoryList"],self.libraryLoad);
 };
 BattleController.prototype.libraryLoad=function(){
 	var self = this;
@@ -56,7 +60,6 @@ BattleController.prototype.addMap=function(){
 	if(LMvc.areaData && LMvc.areaData.battleData){
 		historyId = LMvc.areaData.battleData.historyId;
 	}
-	console.log("self.battleData.historyId",historyId);
 	if(historyId){
 		mapPath = String.format("history/{0}.js", historyId);
 	}else{

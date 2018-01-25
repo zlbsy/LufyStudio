@@ -227,4 +227,11 @@ var ItemDatas = [
 	{p:0,list:[]},
 	{p:0,list:[]},
 	{p:100,list:[{breakout:4,p:10},{morale:4,p:10},{defense:4,p:10},{breakout:3,p:50},{morale:3,p:50},{defense:3,p:50},{breakout:2,p:100},{morale:2,p:100},{defense:2,p:100},{breakout:1,p:100},{morale:1,p:100},{defense:1,p:100}]}]},
+	
+	{id:117,name:"打狗棒",type:ItemType.EQUIPMENT,rarity:10,position:PositionConfig.Hand,force:15,breakout:10},
+	{id:118,name:"打狗棒法",type:ItemType.EQUIPMENT,rarity:10,position:PositionConfig.Accessories,intelligence:15,morale:10},
+	{id:119,name:"天狗披风",type:ItemType.EQUIPMENT,rarity:10,position:PositionConfig.Body,command:15,defense:10},
+	{id:120,name:"哮天犬",type:ItemType.EQUIPMENT,rarity:10,position:PositionConfig.Foot,agility:15,force:5},
+	{id:121,name:"烈犬战盔",type:ItemType.EQUIPMENT,rarity:10,position:PositionConfig.Head,luck:15,attack:10},
+	
 ];

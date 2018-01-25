@@ -683,16 +683,22 @@ CharacterModel.prototype.name = function() {
 CharacterModel.prototype.compatibility = function() {
 	return this.data.compatibility;
 };
+CharacterModel.prototype.isHistoryPurchase = function() {
+	return CharacterModel.isHistoryPurchaseCharacter(this.id());
+};
 CharacterModel.prototype.seigniorId = function(value){
+	if(typeof value == UNDEFINED && this.isHistoryPurchase()){
+		return LMvc.selectSeignorId;
+	}
 	return this._dataValue("seignior_id", value, 0);
 };
 CharacterModel.prototype.seignior = function(chara_id) {
 	var self = this;
-	if(!self.data.seignior_id){
+	if(!self.seigniorId()){
 		return null;
 	}
-	if(!self.data._seignior || self.data._seignior.chara_id() != self.data.seignior_id){
-		self.data._seignior = SeigniorModel.getSeignior(self.data.seignior_id);
+	if(!self.data._seignior || self.data._seignior.chara_id() != self.seigniorId()){
+		self.data._seignior = SeigniorModel.getSeignior(self.seigniorId());
 	}
 	return self.data._seignior;
 };
@@ -844,12 +850,15 @@ CharacterModel.prototype.maxMP = function(init) {
 	}
 	return self.data._maxStrategy;
 };
+CharacterModel.prototype.isHistoryCity = function() {
+	return this.cityId() == HistoryCityConfig.cityId;
+};
 CharacterModel.prototype.lv = function() {
 	return this.level();
 };
 CharacterModel.prototype.level = function() {
 	var self = this;
-	if(self.isDefCharacter() || self.isTribeCharacter() || self.isEmploy()){
+	if(self.isDefCharacter() || self.isTribeCharacter() || self.isEmploy() || self.isHistoryPurchase() || self.isHistoryCity()){
 		return self.seigniorLevel();
 	}
 	var lv = (self.data.feat / CharacterLevelConfig.exp >>> 0) + CharacterLevelConfig.initLevel;
@@ -921,6 +930,7 @@ CharacterModel.prototype.loyalty = function(value) {
 	if(LMvc.isRead || self.seigniorId() == 0 || self.validLoyalty() >= 90){
 		return;
 	}
+	console.log("cityId",self.cityId());
 	if(self.seigniorId() != self.city().seigniorCharaId()){
 		return;
 	}
@@ -1106,8 +1116,8 @@ CharacterModel.prototype.cityId = function(value) {
 };
 CharacterModel.prototype.city = function() {
 	var self = this;
-	if(!self._city || self._city.id() != self.data.cityId){
-		self._city = AreaModel.getArea(self.data.cityId);
+	if(!self._city || self._city.id() != self.cityId()){
+		self._city = AreaModel.getArea(self.cityId());
 	}
 	return self._city;
 };
