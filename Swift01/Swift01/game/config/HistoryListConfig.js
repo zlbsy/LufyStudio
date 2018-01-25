@@ -44,14 +44,37 @@ var HistoryListConfig = [
 		[21,226,620],//刘备，刘封，刘禅
 		[4,89,154,175,332,502],//关羽，关平，关兴，关索,关统,关彝
 		[19,153,598,239],//张飞，张苞，张绍,张遵
-		[8,24,17,85,240,464],//孙坚，孙策，孙权,孙休
-		[1,35,463,129,103,228,611],//曹操,曹丕,曹植,曹睿,曹奂
 	],
-	subCharacters:[39,375,451,75,160,110,602,495,562,408,237,328,273,315,251],//袁绍,袁术,陶谦,公孙瓒,韩馥,孔由,刘岱,张貌,乔瑁,王匡,鲍信,孔融,马腾,张扬
-	script:"Data/Event/{0}/fdzlm.txt",
-	result:[
-		{type:"stopBattle", seigniors:[160,602,451,39,375,1,453,237,8,495,562,446,484,367,408,21,75,144], month:7}
-	]
+	subCharacters:[39,375,451,75,160,110,602,495,562,408,237,328,273,315,251],//袁绍,曹操,袁术,陶谦,公孙瓒,韩馥,孔由,刘岱,张貌,乔瑁,王匡,鲍信,孔融,马腾,张扬,曹丕,曹植,曹睿,曹奂
+    enemy:{chara_id : 265,color : "0,0,0",generals_count:6,areas : [
+      {  area_id : 54,troops:1000,prefecture : 910,food:100000,
+      generals:[
+        {chara_id:10005,name:"吕布",feat:0,loyalty:100},
+        {chara_id:10002,name:"李肃",feat:0,loyalty:100},
+        {chara_id:10003,name:"徐荣",feat:0,loyalty:100},
+        {chara_id:10004,name:"胡轸",feat:0,loyalty:100},
+        {chara_id:10006,name:"李榷",feat:0,loyalty:100},
+        {chara_id:10007,name:"郭汜",feat:0,loyalty:100},
+        {chara_id:10008,name:"张济",feat:0,loyalty:100},
+        {chara_id:10009,name:"樊稠",feat:0,loyalty:100},
+        {chara_id:10010,name:"董卓",feat:0,loyalty:100},
+        {chara_id:10011,name:"李儒",feat:0,loyalty:100},
+        {chara_id:10012,name:"董昱",feat:0,loyalty:100},
+        {chara_id:10013,name:"贾诩",feat:0,loyalty:100},
+        {chara_id:11001,name:"步兵",feat:0,loyalty:100},
+        {chara_id:11002,name:"步兵",feat:0,loyalty:100},
+        {chara_id:11003,name:"步兵",feat:0,loyalty:100},
+        {chara_id:11004,name:"步兵",feat:0,loyalty:100},
+        {chara_id:11005,name:"步兵",feat:0,loyalty:100},
+        {chara_id:11101,name:"弓兵",feat:0,loyalty:100},
+        {chara_id:11102,name:"弓兵",feat:0,loyalty:100},
+        {chara_id:11201,name:"骑兵",feat:0,loyalty:100},
+        {chara_id:11202,name:"骑兵",feat:0,loyalty:100},
+        {chara_id:11203,name:"骑兵",feat:0,loyalty:100},
+        ],
+      },
+	]},
+	rewards:[{count:1, items:[101, 102, 103, 104]}, {count:2, items:[105, 106, 107, 108]}, {count:5, items:[117, 118, 119, 120, 121]}]
 },
 {
 	id:3,
@@ -65,7 +88,7 @@ var HistoryListConfig = [
 		[4,89,154,175,332,502],//关羽，关平，关兴，关索,关统,关彝
 		[19,153,598,239],//张飞，张苞，张绍,张遵
 		[3,226,620],//赵云,赵統,赵广
-		[75,226,620],//公孙瓒,赵統,赵广
+		[75,226,620],//公孙瓒,公孙
 	],
 	subCharacters:[30,31,32],//严纲,陈到
 	script:"Data/Event/{0}/tyjy.txt",
@@ -86,16 +109,29 @@ var HistoryListConfig = [
 		[1,35,463,129,103,228,611],//曹操,曹丕,曹植,曹睿,曹奂
 		[1,2,3,4,10],//夏侯惇
 		[21,226,620],//夏侯渊
-		[21,226,620],//钟
-		[21,226,620],//许褚
 	],
-	subCharacters:[30,31,32],//公孙瓒,陈到
-	script:"Data/Event/{0}/tyjy.txt",
-	result:[
-		{type:"changeSeignior", id:21, seignior:604, loyalty:100, city:45},
-		{type:"changeSeignior", id:4, seignior:604, loyalty:100, city:45},
-		{type:"changeSeignior", id:19, seignior:604, loyalty:100, city:45},
-	]
+	subCharacters:[30,31,32],//许褚,钟繇
+	enemy:{chara_id : 265,color : "0,0,0",generals_count:6,areas : [
+	  {  area_id : 54,troops:1000,prefecture : 910,food:100000,
+	  generals:[
+	    {chara_id:10001,name:"华雄",feat:0,loyalty:100},
+	    {chara_id:10002,name:"李肃",feat:0,loyalty:100},
+	    {chara_id:10003,name:"徐荣",feat:0,loyalty:100},
+	    {chara_id:10004,name:"胡轸",feat:0,loyalty:100},
+	    {chara_id:11001,name:"步兵",feat:0,loyalty:100},
+	    {chara_id:11002,name:"步兵",feat:0,loyalty:100},
+	    {chara_id:11101,name:"弓兵",feat:0,loyalty:100},
+	    {chara_id:11102,name:"弓兵",feat:0,loyalty:100},
+	    {chara_id:11201,name:"骑兵",feat:0,loyalty:100},
+	    {chara_id:11202,name:"骑兵",feat:0,loyalty:100},
+	    {chara_id:11203,name:"骑兵",feat:0,loyalty:100},
+	    {chara_id:11204,name:"骑兵",feat:0,loyalty:100},
+	    {chara_id:11205,name:"骑兵",feat:0,loyalty:100},
+	    {chara_id:11206,name:"骑兵",feat:0,loyalty:100},
+	    ],
+	  },
+	]},
+	rewards:[{count:1, items:[101, 102, 103, 104]}, {count:2, items:[105, 106, 107, 108]}, {count:5, items:[117, 118, 119, 120, 121]}]
 },
 {
 	id:5,
@@ -110,12 +146,27 @@ var HistoryListConfig = [
 		[1,2,3,4,10],//刘备，刘封，刘禅
 	],
 	subCharacters:[30,31,32],//关羽,张飞,
-	script:"Data/Event/{0}/tyjy.txt",
-	result:[
-		{type:"changeSeignior", id:21, seignior:604, loyalty:100, city:45},
-		{type:"changeSeignior", id:4, seignior:604, loyalty:100, city:45},
-		{type:"changeSeignior", id:19, seignior:604, loyalty:100, city:45},
-	]
+	enemy:{chara_id : 265,color : "0,0,0",generals_count:6,areas : [
+	  {  area_id : 54,troops:1000,prefecture : 910,food:100000,
+	  generals:[
+	    {chara_id:10001,name:"华雄",feat:0,loyalty:100},
+	    {chara_id:10002,name:"李肃",feat:0,loyalty:100},
+	    {chara_id:10003,name:"徐荣",feat:0,loyalty:100},
+	    {chara_id:10004,name:"胡轸",feat:0,loyalty:100},
+	    {chara_id:11001,name:"步兵",feat:0,loyalty:100},
+	    {chara_id:11002,name:"步兵",feat:0,loyalty:100},
+	    {chara_id:11101,name:"弓兵",feat:0,loyalty:100},
+	    {chara_id:11102,name:"弓兵",feat:0,loyalty:100},
+	    {chara_id:11201,name:"骑兵",feat:0,loyalty:100},
+	    {chara_id:11202,name:"骑兵",feat:0,loyalty:100},
+	    {chara_id:11203,name:"骑兵",feat:0,loyalty:100},
+	    {chara_id:11204,name:"骑兵",feat:0,loyalty:100},
+	    {chara_id:11205,name:"骑兵",feat:0,loyalty:100},
+	    {chara_id:11206,name:"骑兵",feat:0,loyalty:100},
+	    ],
+	  },
+	]},
+	rewards:[{count:1, items:[101, 102, 103, 104]}, {count:2, items:[105, 106, 107, 108]}, {count:5, items:[117, 118, 119, 120, 121]}]
 },
 {
 	id:6,
@@ -129,12 +180,27 @@ var HistoryListConfig = [
 		[1,2,3,4,10],//周瑜,鲁肃,陆逊,陆抗
 	],
 	subCharacters:[30,31,32],//周泰,陈武
-	script:"Data/Event/{0}/tyjy.txt",
-	result:[
-		{type:"changeSeignior", id:21, seignior:604, loyalty:100, city:45},
-		{type:"changeSeignior", id:4, seignior:604, loyalty:100, city:45},
-		{type:"changeSeignior", id:19, seignior:604, loyalty:100, city:45},
-	]
+	enemy:{chara_id : 265,color : "0,0,0",generals_count:6,areas : [
+	  {  area_id : 54,troops:1000,prefecture : 910,food:100000,
+	  generals:[
+	    {chara_id:10001,name:"华雄",feat:0,loyalty:100},
+	    {chara_id:10002,name:"李肃",feat:0,loyalty:100},
+	    {chara_id:10003,name:"徐荣",feat:0,loyalty:100},
+	    {chara_id:10004,name:"胡轸",feat:0,loyalty:100},
+	    {chara_id:11001,name:"步兵",feat:0,loyalty:100},
+	    {chara_id:11002,name:"步兵",feat:0,loyalty:100},
+	    {chara_id:11101,name:"弓兵",feat:0,loyalty:100},
+	    {chara_id:11102,name:"弓兵",feat:0,loyalty:100},
+	    {chara_id:11201,name:"骑兵",feat:0,loyalty:100},
+	    {chara_id:11202,name:"骑兵",feat:0,loyalty:100},
+	    {chara_id:11203,name:"骑兵",feat:0,loyalty:100},
+	    {chara_id:11204,name:"骑兵",feat:0,loyalty:100},
+	    {chara_id:11205,name:"骑兵",feat:0,loyalty:100},
+	    {chara_id:11206,name:"骑兵",feat:0,loyalty:100},
+	    ],
+	  },
+	]},
+	rewards:[{count:1, items:[101, 102, 103, 104]}, {count:2, items:[105, 106, 107, 108]}, {count:5, items:[117, 118, 119, 120, 121]}]
 },
 {
 	id:7,
