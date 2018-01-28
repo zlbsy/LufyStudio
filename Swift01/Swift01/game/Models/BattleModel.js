@@ -5,6 +5,8 @@ BattleModel.prototype.construct=function(){
 	var self = this;
 	self.map = null;
 	self.hits = [];
+	self.startBouts = [];
+	self.moveInEvents = [];
 	self.selfCaptive = [];
 	self.enemyCaptive = [];
 	self.ourList = [];
@@ -121,6 +123,12 @@ BattleModel.prototype.createMap = function(callback){
 };
 BattleModel.prototype.addHit = function(id1,id2){
 	this.hits.push([id1,id2]);
+};
+BattleModel.prototype.addStartBout = function(bout, belong){
+	this.startBouts.push({bout:bout, belong:belong});
+};
+BattleModel.prototype.addMoveInEvent = function(belong, minX, minY, maxX, maxY){
+	this.moveInEvents.push({belong:belong, minX:minX, minY:minY, maxX:maxX, maxY:maxY});
 };
 BattleModel.prototype.createMapTile = function(index, callback){
 	var self = this;

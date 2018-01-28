@@ -56,7 +56,7 @@ HistoryListController.prototype.battleLoadComplete=function(){
 	//LGlobal.script.analysis();
 };
 HistoryListController.prototype.battleStart=function(){
-	var self = this;console.log("battleStart");
+	var self = this;
 	var battleData = self.getValue("battleData");
 	var battle = new BattleController(battleData, LMvc.MapController);
 	self.clearValue();

@@ -672,7 +672,6 @@ BattleCharacterAI.prototype.endAction = function() {
 	if(view.weatherLayer.isWeather(BattleWeatherConfig.CLOUD)){
 		cloudWeatherCharacterShow(chara.belong == Belong.SELF ? null : chara.data.id());
 	}
-	self.hitChecked = {};
 	self.checkEvent(chara, target);
 };
 BattleCharacterAI.prototype.isNear = function(chara, target) {
@@ -690,15 +689,14 @@ BattleCharacterAI.prototype.isNear = function(chara, target) {
 	if(index >= 0){
 		LMvc.BattleController.model.hits.splice(index, 1);
 		var script = "Call.hit("+id1+","+id2+");";
-		script += "SGJBattleCharacter.endAction("+chara.belong+","+chara.data.id()+");";
+		//script += "SGJBattleCharacter.endAction("+chara.belong+","+chara.data.id()+");";
 		LGlobal.script.addScript(script);
-		//LGlobal.script.analysis();
 		console.log("isNear="+id1+","+id2);
 		return true;
 	}
 	return false;
 };
-BattleCharacterAI.prototype.checkEvent = function(chara, target) {
+BattleCharacterAI.prototype.checkNear = function(chara, target) {
 	var self = this, arr = [];
 	//相遇
 	var ranges = [{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0},{x:-1,y:-1},{x:1,y:1},{x:-1,y:1},{x:1,y:-1}];
@@ -716,8 +714,36 @@ BattleCharacterAI.prototype.checkEvent = function(chara, target) {
 			if(!nearChara || !self.isNear(child,nearChara)){
 				continue;
 			}
-			return;
+			return true;
 		}
+	}
+	return false;
+};
+BattleCharacterAI.prototype.checkMoveIn = function(chara) {
+	var self = this, moveInEvents = LMvc.BattleController.model.moveInEvents;
+	var index = moveInEvents.findIndex(function(child){
+		var locationX = chara.locationX(), locationY = chara.locationY();
+		return child.belong == chara.belong && 
+			child.minX < locationX && child.maxX > locationX && 
+			child.minY < locationY && child.maxY > locationY;
+	});
+	if(index >= 0){
+		var eve = moveInEvents[index];
+		moveInEvents.splice(index, 1);
+		var intBelong = eve.belong == Belong.SELF ? 0 : eve.belong == Belong.FRIEND ? 1 : 2;
+		var script = "Call.moveIn("+intBelong+","+eve.minX+","+eve.minY+","+eve.maxX+","+eve.maxY+");";
+		LGlobal.script.addScript(script);
+		console.log("checkMoveIn="+eve.belong+","+eve.minX+","+eve.minY+","+eve.maxX+","+eve.maxY);
+	}
+	return false;
+};
+BattleCharacterAI.prototype.checkEvent = function(chara, target) {
+	var self = this;
+	if(self.checkNear(chara, target)){
+		return;
+	}
+	if(self.checkMoveIn(chara)){
+		return;
 	}
 	LMvc.running = false;
 	self.endBoutCheck();

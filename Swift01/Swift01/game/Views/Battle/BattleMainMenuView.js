@@ -90,7 +90,7 @@ BattleMainMenuView.prototype.setMenu=function(){
 	menuButton.addEventListener(LMouseEvent.MOUSE_UP, self.showOrHideMiniMap);
 	
 	menuY += menuHeight;
-	var autoButton = getButton(Language.get("自动战斗"),menuWidth);
+	var autoButton = getButton(Language.get("auto_battle"),menuWidth);
 	autoButton.y = menuY;
 	layer.addChild(autoButton);
 	autoButton.addEventListener(LMouseEvent.MOUSE_UP, self.autoPlay);

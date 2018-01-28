@@ -451,6 +451,9 @@ function getBattleSaveData(){
 	var data = {};
 	var battleData = LMvc.BattleController.battleData;
 	data.historyId = battleData.historyId;
+	data.hits = LMvc.BattleController.model.hits;
+	data.startBouts = LMvc.BattleController.model.startBouts;
+	data.moveInEvents = LMvc.BattleController.model.moveInEvents;
 	data.food = battleData.food;
 	data.money = battleData.money;
 	data.troops = battleData.troops;
@@ -459,6 +462,20 @@ function getBattleSaveData(){
 	data.bout = LMvc.BattleController.getValue("bout");
 	data.startAttack = LMvc.BattleController.startAttack;
 	data.militaryOver = LMvc.BattleController.militaryOver;
+	if(data.historyId){
+		var mainVals = [], subVals = [], battleVals = [];
+		var varList = LGlobal.script.scriptArray.varList;
+		for(var i = 0;i<10;i++){
+			mainVals.push(varList["main_character_"+i]);
+			subVals.push(varList["sub_character_"+i]);
+		}
+		for(var i = 0;i<50;i++){
+			battleVals.push(varList["battle_value_"+i]);
+		}
+		data.mainVals = mainVals;
+		data.subVals = subVals;
+		data.battleVals = battleVals;
+	}
 	if(LMvc.BattleController.militaryModel){
 		data.militaryId = LMvc.BattleController.militaryModel.id();
 		data.militaryValidLimit = LMvc.BattleController.militaryValidLimit;
@@ -565,6 +582,19 @@ function setBattleSaveData(){
 	LMvc.BattleController.militaryOver = data.militaryOver;
 	var battleData = LMvc.BattleController.battleData;
 	battleData.historyId = data.historyId;
+	if(data.historyId){
+		var varList = LGlobal.script.scriptArray.varList;
+		for(var i = 0;i<10;i++){
+			varList["main_character_"+i] = data.mainVals[i];
+			varList["sub_character_"+i] = data.subVals[i];
+		}
+		for(var i = 0;i<50;i++){
+			varList["battle_value_"+i] = data.battleVals[i];
+		}
+	}
+	LMvc.BattleController.model.hits = data.hits;
+	LMvc.BattleController.model.startBouts = data.startBouts;
+	LMvc.BattleController.model.moveInEvents = data.moveInEvents;
 	LMvc.BattleController.setValue("bout", data.bout);
 	LMvc.BattleController.setValue("currentBelong", Belong.SELF);
 	battleData.expeditionCharacterList = [];
@@ -1352,4 +1382,23 @@ function isMilitaryHappened(seigniorId, militaryType){
 		return false;
 	}
 	return LMvc.BattleController.militaryModel.isType(militaryType) && (seigniorId == 0 || LMvc.BattleController.battleData.toCity.seigniorCharaId() == seigniorId);
+}
+function checkEventStartBoutEvent(){
+	var currentBelong = LMvc.BattleController.getValue("currentBelong");
+	var currentBout = LMvc.BattleController.getValue("bout");
+	var index = LMvc.BattleController.model.startBouts.findIndex(function(obj){
+		console.log(obj, currentBelong, currentBout, parseInt(obj.bout) == currentBout, obj.belong == currentBelong);
+		return parseInt(obj.bout) == currentBout && obj.belong == currentBelong;
+	});
+	console.error("checkEventStartBoutEvent index", index);
+	if(index >= 0){
+		LMvc.BattleController.model.startBouts.splice(index, 1);
+		var intBelong = currentBelong == Belong.SELF ? 0 : currentBelong == Belong.FRIEND ? 1 : 2;
+		var script = "Call.startBout("+currentBout+","+intBelong+");";
+		script += "SGJHistory.checkEventStartBoutEvent();";
+		LGlobal.script.addScript(script);
+		return true;
+	}
+	BattleIntelligentAI.execute();
+	return false;
 }

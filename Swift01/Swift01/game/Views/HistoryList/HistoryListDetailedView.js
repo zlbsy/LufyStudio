@@ -1,5 +1,5 @@
 function HistoryListDetailedView(controller,historyObject) {
-	var self = this;console.log("HistoryListDetailedView");
+	var self = this;
 	base(self, LView, [controller]);
 	self.historyObject = historyObject;
 	//self.lock = !LPlugin.eventIsOpen(historyObject.id);
@@ -31,22 +31,17 @@ HistoryListDetailedView.prototype.set=function(){
 	title.y = 10;
 	self.backLayer.addChild(title);
 	
-	var level = getStrokeLabel(String.format("势力等级要求:{0}",self.historyObject.level),18,"#666666","#000000",4);
+	var level = getStrokeLabel(String.format(Language.get("seignior_level_condition"),self.historyObject.level),18,"#666666","#000000",4);
 	level.x = 10;
 	level.y = 45;
 	self.backLayer.addChild(level);
-	/*var level = getStrokeLabel(String.format("可用预备兵力:{0}/{1}",0,self.historyObject.troops),20,"#999999","#000000",4);
-	level.x = 200;
-	level.y = 45;
-	self.backLayer.addChild(level);
-	*/
 	var rangeBackground = getPanel("win04",200,40);
 	var rangeSelect = new LBitmap(new LBitmapData(LMvc.datalist["range"]));
 	var troopsLayer = new LSprite();
 	troopsLayer.x = 10;
 	troopsLayer.y = 70;
 	self.backLayer.addChild(troopsLayer);
-	var troopsLabel = getStrokeLabel(Language.get("可用预备兵力"), 16, "#FFFFFF", "#000000", 4);
+	var troopsLabel = getStrokeLabel(Language.get("arm_expedition_condition"), 16, "#FFFFFF", "#000000", 4);
 	troopsLayer.addChild(troopsLabel);
 	var seignior = SeigniorModel.getSeignior(LMvc.selectSeignorId);
 	var cityModel = seignior.character().city();
@@ -67,7 +62,7 @@ HistoryListDetailedView.prototype.set=function(){
 	foodLayer.x = 250;
 	foodLayer.y = 70;
 	self.backLayer.addChild(foodLayer);
-	var foodLabel = getStrokeLabel(Language.get("可用兵粮"), 16, "#FFFFFF", "#000000", 4);
+	var foodLabel = getStrokeLabel(Language.get("food_condition"), 16, "#FFFFFF", "#000000", 4);
 	foodLayer.addChild(foodLabel);
 	self.foodSum = cityModel.food() > self.historyObject.food ? self.historyObject.food : cityModel.food();
 	var food = getStrokeLabel( String.format("{0}/{1}",0,self.foodSum), 18, "#FFFFFF", "#000000", 4);
@@ -82,14 +77,14 @@ HistoryListDetailedView.prototype.set=function(){
 	if(self.foodSum == 0){
 		rangeFood.visible = false;
 	}
-	var msg = getStrokeLabel("*所消耗的预备兵力和兵粮取自我方君主所在城池。",14,"#ff0000","#000000",2);
+	var msg = getStrokeLabel(Language.get("historical_food_message"),14,"#ff0000","#000000",2);
 	msg.width = 460;
 	msg.x = 10;
 	msg.y = 128;
 	msg.setWordWrap(true,17);
 	self.backLayer.addChild(msg);
 	self.mustCount = 0;
-	var mustLabel = getStrokeLabel(String.format("必须参战武将:{0}/{1}",self.mustCount,self.historyObject.characters.length),16,"#ffffff","#000000",2);
+	var mustLabel = getStrokeLabel(String.format(Language.get("must_battle_generals"),self.mustCount,self.historyObject.characters.length),16,"#ffffff","#000000",2);
 	mustLabel.x = 10;
 	mustLabel.y = 148;
 	self.mustLabel = mustLabel;
@@ -98,7 +93,7 @@ HistoryListDetailedView.prototype.set=function(){
 	self.mustLayer.y = 170;
 	self.listLayerInit();
 	self.subCount=0;
-	var canLabel = getStrokeLabel(String.format("选择参战武将:{0}/{1}",self.subCount,self.historyObject.maxSubCharacter),16,"#ffffff","#000000",2);
+	var canLabel = getStrokeLabel(String.format(Language.get("can_battle_generals"),self.subCount,self.historyObject.maxSubCharacter),16,"#ffffff","#000000",2);
 	canLabel.x = 10;
 	canLabel.y = 346;
 	self.canLabel = canLabel;
@@ -107,7 +102,7 @@ HistoryListDetailedView.prototype.set=function(){
 	self.canLayer.y = 368;
 	self.subListLayerInit();
 	
-	var payLabel = getStrokeLabel(String.format("特殊支援武将"),16,"#ffffff","#000000",2);
+	var payLabel = getStrokeLabel(String.format(Language.get("special_support_generals")),16,"#ffffff","#000000",2);
 	payLabel.x = 10;
 	payLabel.y = 434;
 	self.payLabel = payLabel;
@@ -118,7 +113,7 @@ HistoryListDetailedView.prototype.set=function(){
 	
 	self.ctrlLayerInit();
 	
-	var buttonOk = getSizeButton(Language.get("出战"),180, 45);
+	var buttonOk = getSizeButton(Language.get("battle_play"),180, 45);
 	buttonOk.x = (LMvc.screenWidth - 180)*0.5;
 	buttonOk.y = LMvc.screenHeight - 70;
 	self.backLayer.addChild(buttonOk);
@@ -140,7 +135,7 @@ HistoryListDetailedView.prototype.gotoBattle = function(event){
 	var self = event.currentTarget.getParentByConstructor(HistoryListDetailedView);
 	var seignior = SeigniorModel.getSeignior(LMvc.selectSeignorId);
 	if(self.historyObject.level > seignior.level()){
-		var obj = {width:300, height:200, message:Language.get("势力等级不够!"), title:Language.get("confirm")};
+		var obj = {width:300, height:200, message:Language.get("seignior_level_error"), title:Language.get("confirm")};
 		var dialog = ConfirmWindow(obj);
 		LMvc.layer.addChild(dialog);
 		return;
@@ -154,7 +149,7 @@ HistoryListDetailedView.prototype.gotoBattle = function(event){
 		}
 	}
 	if(expeditionCharacterList.length < self.historyObject.characters.length){
-		var obj = {width:300, height:200, message:Language.get("必须出战武将"), title:Language.get("confirm")};
+		var obj = {width:300, height:200, message:Language.get("must_battle_generals_label"), title:Language.get("confirm")};
 		var dialog = ConfirmWindow(obj);
 		LMvc.layer.addChild(dialog);
 		return;
@@ -163,6 +158,9 @@ HistoryListDetailedView.prototype.gotoBattle = function(event){
 	for(var i = 0;i<10;i++){
 		script += "Var.set(main_character_"+i+",0);";
 		script += "Var.set(sub_character_"+i+",0);";
+	}
+	for(var i = 0;i<50;i++){
+		script += "Var.set(battle_value_"+i+",0);";
 	}
 	for(var i = 0;i<items.length;i++){
 		var item = items[i];
@@ -191,8 +189,8 @@ HistoryListDetailedView.prototype.gotoBattle = function(event){
 	battleData.expeditionCharacterList = expeditionCharacterList;
 	battleData.expeditionLeader = expeditionCharacterList[0];
 	battleData.money = 0;
-	battleData.food = 0;
-	battleData.troops = 0;
+	battleData.food = self.selectFood;
+	battleData.troops = self.selectTroops;
 	var areas = self.historyObject.enemy.areas;
 	self.historyObject.enemy.areasBaseData = areas;
 	var areaList = [];
@@ -281,7 +279,7 @@ HistoryListDetailedView.prototype.payListLayerInit=function(){
 	}
 	self.payListView.updateList(items);
 	
-	var buttonList = getSizeButton(Language.get("详情"),100, 45);
+	var buttonList = getSizeButton(Language.get("detail"),100, 45);
 	buttonList.x = background.getWidth() + 5 ;
 	//buttonList.y = LMvc.screenHeight - 70;
 	self.payLayer.addChild(buttonList);
@@ -317,10 +315,10 @@ HistoryListDetailedView.prototype.onClickCloseButton=function(event){
 HistoryListDetailedView.prototype.changeSubCount=function(num){
 	var self = this;
 	self.subCount += num;
-	self.canLabel.text = String.format("选择参战武将:{0}/{1}",self.subCount,self.historyObject.maxSubCharacter);
+	self.canLabel.text = String.format(Language.get("can_battle_generals"),self.subCount,self.historyObject.maxSubCharacter);
 };
 HistoryListDetailedView.prototype.changeMustCount=function(){
 	var self = this;
 	self.mustCount += 1;
-	self.mustLabel.text = String.format("必须参战武将:{0}/{1}",self.mustCount,self.historyObject.characters.length);
+	self.mustLabel.text = String.format(Language.get("must_battle_generals"),self.mustCount,self.historyObject.characters.length);
 };

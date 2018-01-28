@@ -14,7 +14,7 @@ HistoryListView.prototype.init=function(){
 	var windowBackgrond = getBlackBitmap();
 	self.baseLayer.addChild(windowBackgrond);
 	
-	var title = Language.get("历史遗迹");
+	var title = Language.get("historical_battle");
 	var txtTitle = getStrokeLabel(title,30,"#FFFFFF","#CCCCCC",1);
 	txtTitle.x = (LMvc.screenWidth - txtTitle.getWidth()) * 0.5;
 	txtTitle.y = 20;

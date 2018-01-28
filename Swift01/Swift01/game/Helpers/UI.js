@@ -52,7 +52,7 @@ function lockedButton(button,scale){
 	var lock = new LBitmap(new LBitmapData(LMvc.datalist["lock"]));
 	lock.name = "lock";
 	if(scale){
-		lock.scaleX = lock.scaleY = scale
+		lock.scaleX = lock.scaleY = scale;
 	}else{
 		lock.scaleX = lock.scaleY = (button.getHeight() - 20) / lock.getHeight();
 	}

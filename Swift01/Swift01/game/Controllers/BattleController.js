@@ -11,6 +11,7 @@ BattleController.prototype.construct=function(){
 	if(LMvc.areaData && LMvc.areaData.battleData){
 		historyId = LMvc.areaData.battleData.historyId;
 	}
+	self.setValue("historyId", historyId);
 	self.downX = self.downY = 0;
 	self.setValue("bout", 0);
 	LMvc.keepLoading(true);
@@ -156,6 +157,7 @@ BattleController.prototype.init = function(){
 		Math.fakeReset();
 		self.charactersInit();
 	}
+	self.setValue("currentBelong", Belong.SELF);
 	LPlugin.playBGM("battle" + ((2 * Math.random() >>> 0) + 1), LPlugin.gameSetting.BGM);
 };
 BattleController.prototype.charactersInit = function(){
@@ -255,7 +257,7 @@ BattleController.prototype.charactersInit = function(){
 		enemyPositions = self.model.map.enemys;
 		selfPositions = self.model.map.charas;
 	}
-	enemyPositions = self.battleData.historyId ? enemyPositions : enemyPositions.sort(function(a,b){
+	enemyPositions = enemyPositions.sort(function(a,b){
 		var v = b.index - a.index;
 		if(v == 0){
 			return Math.fakeRandom() - 0.5;
@@ -265,6 +267,7 @@ BattleController.prototype.charactersInit = function(){
 	self.battleData.expeditionEnemyCharacterList = enemyCharas;
 	var seignior = SeigniorModel.getSeignior(LMvc.selectSeignorId);
 	var seigniorLevel = seignior.level();
+	
 	var coreCount = Math.max(enemyCharas.length / 3 >>> 0, 1);
 	for(var i = 0;i<enemyCharas.length;i++){
 		var child = enemyPositions[i];
@@ -626,7 +629,7 @@ BattleController.prototype.loadSingleCombat = function(){
 BattleController.prototype.loadSingleCombatComplete=function(){
 	var self = this;
 	var singleCombat;
-	if(self,BattleController.ctrlChara.belong == Belong.SELF){
+	if(BattleController.ctrlChara.belong == Belong.SELF){
 		singleCombat = new SingleCombatController(self,BattleController.ctrlChara.data.id(),BattleController.ctrlChara.AI.attackTarget.data.id());
 	}else{
 		singleCombat = new SingleCombatController(self, BattleController.ctrlChara.AI.attackTarget.data.id(), BattleController.ctrlChara.data.id());

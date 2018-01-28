@@ -13,7 +13,7 @@ BattleCharacterStatusView.healCharactersPush = function(healCharacter, troops){
 	BattleCharacterStatusView.healCharacters.push({healCharacter : healCharacter, troops : troops});
 };
 BattleCharacterStatusView.healCharactersBout = function(){
-	BattleCharacterStatusView.callback = BattleIntelligentAI.execute;
+	BattleCharacterStatusView.callback = checkEventStartBoutEvent;
 	BattleCharacterStatusView.healCharactersCheck();
 };
 BattleCharacterStatusView.healCharactersStrategy = function(){

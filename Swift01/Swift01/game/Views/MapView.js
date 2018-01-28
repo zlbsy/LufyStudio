@@ -162,7 +162,7 @@ MapView.prototype.ctrlLayerInit=function(){
 	buttonMenu.name = "menu";
 	buttonMenu.x = LMvc.screenWidth - buttonMenu.getWidth();
 	self.ctrlLayer.addChild(buttonMenu);
-	var buttonHistory = getButton(Language.get("历史遗迹"),100);
+	var buttonHistory = getButton(Language.get("historical_battle"),100);
 	buttonHistory.addEventListener(LMouseEvent.MOUSE_UP,self.gotoHistory);
 	buttonHistory.name = "history";
 	buttonHistory.x = LMvc.screenWidth - buttonHistory.getWidth();

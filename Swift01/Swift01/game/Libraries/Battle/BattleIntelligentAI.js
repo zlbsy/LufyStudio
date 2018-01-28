@@ -200,6 +200,7 @@ BattleIntelligentAI.prototype.moveRoadsShow = function() {
 	var view = LMvc.BattleController.view;
 	var path = [];
 	//定身及原地防守判断
+	console.log(self.chara.data.id(),self.chara.mission, BattleCharacterMission.Defensive, self.chara.status.hasStatus(StrategyType.Fixed),self.chara.mission != BattleCharacterMission.Defensive);
 	if(!self.chara.status.hasStatus(StrategyType.Fixed) && self.chara.mission != BattleCharacterMission.Defensive){
 		path = LMvc.BattleController.query.makePath(self.chara);
 	}else{

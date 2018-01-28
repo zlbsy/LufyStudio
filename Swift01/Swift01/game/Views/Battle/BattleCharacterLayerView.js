@@ -9,16 +9,19 @@ function BattleCharacterLayerView(controller) {
 	}
 	self.charasPositions = {};
 	self.controller.addEventListener(BattleBoutEvent.END, self.charactersBoutEnd);
+	var historyId = self.controller.getValue("historyId");
+	if(historyId){
+		var path1 = String.format("Data/Event/{0}/history/battle_fun_{1}.txt",LPlugin.language(),historyId);
+		var script = "Load.script("+path1+");";
+		LGlobal.script.addScript(script);
+	}
 	if(self.controller.battleData.expeditionCharacterList && self.controller.battleData.expeditionCharacterList.length > 0){
-		if(self.controller.battleData.historyId){
+		if(historyId){
 			self.controller.nextFrameExecute(function(){
 				//self.boutStart();
-				var script = "";
-				var battleData = self.controller.getValue("battleData");
-				var path2 = String.format("Data/Event/{0}/history/battle_{1}.txt",LPlugin.language(),self.controller.battleData.historyId);
-				var path1 = String.format("Data/Event/{0}/history/battle_fun_{1}.txt",LPlugin.language(),self.controller.battleData.historyId);
-				script += "Load.script("+path1+");";
-				script += "Load.script("+path2+");";
+				var historyId = self.controller.getValue("historyId");
+				var path2 = String.format("Data/Event/{0}/history/battle_{1}.txt",LPlugin.language(),historyId);
+				var script = "Load.script("+path2+");";
 				LGlobal.script.addScript(script);
 				//LGlobal.script.analysis();
 			});
