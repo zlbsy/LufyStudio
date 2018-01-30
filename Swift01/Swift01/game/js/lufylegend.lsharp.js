@@ -2095,7 +2095,8 @@ LSGJBattleCharacterScript.characterToDie = function(value, start, end) {
 		.to(character,0.2,{alpha:0})
 		.to(character,0.2,{alpha:1,onComplete:function(obj){
 			LMvc.BattleController.view.charaLayer.removeCharacter(obj.belong,obj.data.id());
-			battleEndCheck(obj.belong);
+			//battleEndCheck(obj.belong);
+			LGlobal.script.analysis();
 		}});
 };
 /*
@@ -2115,6 +2116,9 @@ LSGJHistoryScript.analysis = function(value) {
 			break;
 		case "SGJHistory.addMoveInEvent":
 			LSGJHistoryScript.addMoveInEvent(value, start, end);
+			break;
+		case "SGJHistory.addDieEvent":
+			LSGJHistoryScript.addDieEvent(value, start, end);
 			break;
 		case "SGJHistory.boutStart":
 			LMvc.BattleController.view.charaLayer.boutStart();
@@ -2154,6 +2158,12 @@ LSGJHistoryScript.addHitEvent = function(value, start, end) {
 	var id1 = params[0];
 	var id2 = params[1];
 	LMvc.BattleController.model.addHit(id1,id2);
+	LGlobal.script.analysis();
+};
+LSGJHistoryScript.addDieEvent = function(value, start, end) {
+	var params = value.substring(start + 1, end).split(",");
+	var id = parseInt(params[0]);
+	LMvc.BattleController.model.addDieEvent(id);
 	LGlobal.script.analysis();
 };
 /*

@@ -454,6 +454,7 @@ function getBattleSaveData(){
 	data.hits = LMvc.BattleController.model.hits;
 	data.startBouts = LMvc.BattleController.model.startBouts;
 	data.moveInEvents = LMvc.BattleController.model.moveInEvents;
+	data.dieEvents = LMvc.BattleController.model.dieEvents;
 	data.food = battleData.food;
 	data.money = battleData.money;
 	data.troops = battleData.troops;
@@ -595,6 +596,7 @@ function setBattleSaveData(){
 	LMvc.BattleController.model.hits = data.hits;
 	LMvc.BattleController.model.startBouts = data.startBouts;
 	LMvc.BattleController.model.moveInEvents = data.moveInEvents;
+	LMvc.BattleController.model.dieEvents = data.dieEvents;
 	LMvc.BattleController.setValue("bout", data.bout);
 	LMvc.BattleController.setValue("currentBelong", Belong.SELF);
 	battleData.expeditionCharacterList = [];

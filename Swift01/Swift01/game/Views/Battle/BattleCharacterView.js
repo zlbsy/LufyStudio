@@ -393,7 +393,29 @@ BattleCharacterView.prototype.toDie = function() {
 		script += "SGJTalk.show(" + self.data.id() + ",0," + talkMsg + ");";
 	}
 	script += "SGJBattleCharacter.characterToDie(" + self.belong + ","+ self.data.id() + ");";
+	if(self.dieEventCheck(script)){
+		return;
+	}
+	script += "SGJBattleCharacter.battleEndCheck(" + self.belong + ");";
 	LGlobal.script.addScript(script);
+};
+BattleCharacterView.prototype.dieEventCheck = function(script) {
+	var self = this, dieEvents = LMvc.BattleController.model.dieEvents;
+	console.log("dieEventCheck",dieEvents);
+	var index = dieEvents.findIndex(function(id){
+		return id == self.data.id();
+	});
+	console.log("index",index);
+	if(index >= 0){
+		var eve = dieEvents[index];
+		dieEvents.splice(index, 1);
+		script += "Call.dieEvent("+self.data.id()+");";
+		script += "SGJBattleCharacter.battleEndCheck(" + self.belong + ");";
+		LGlobal.script.addScript(script);
+		console.log("dieEventCheck="+self.data.id());
+		return true;
+	}
+	return false;
 };
 BattleCharacterView.prototype.setTo = function(){
 	var self = this;

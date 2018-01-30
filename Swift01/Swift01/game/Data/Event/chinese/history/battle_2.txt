@@ -30,4 +30,5 @@ SGJBattleCharacter.changeMission(belong_enemy,11202,0);
 SGJBattleCharacter.changeMission(belong_enemy,11203,0);
 SGJHistory.addHitEvent(@main_character_2,10005);
 SGJHistory.addMoveInEvent(belong_self,0,0,10,6);
+SGJHistory.addDieEvent(10005);
 SGJHistory.boutStart();
