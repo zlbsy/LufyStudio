@@ -12,7 +12,7 @@ var HistoryListConfig = [
 	],
 	subCharacters:[72,123,80,178,44,234,167],//程普,黄盖,韩当,祖茂,丁奉,虞汜,陆凯
 	enemy:{chara_id : 265,color : "0,0,0",generals_count:6,areas : [
-	  {  area_id : 54,troops:1000,prefecture : 910,food:100000,
+	  {  area_id : 54,troops:20000,prefecture : 910,food:100000,
 	  generals:[
 	    {chara_id:10001,name:"华雄",feat:0,loyalty:100},
 	    {chara_id:10002,name:"李肃",feat:0,loyalty:100},
@@ -48,7 +48,7 @@ var HistoryListConfig = [
 	subCharacters:[39,371,504,317,1,375,75,160,110,251,137,144,229,36,43,202,35,463,228,611,464],
 	//袁绍,袁尚,袁谭,袁熙,曹操,袁术,公孙瓒,公孙康,公孙度,公孙渊,鲍信,马腾,马云鹭,马超,马岱,曹丕,曹植,曹睿,曹奂，孙亮
     enemy:{chara_id : 265,color : "0,0,0",generals_count:6,areas : [
-      {  area_id : 54,troops:1000,prefecture : 910,food:100000,
+      {  area_id : 54,troops:20000,prefecture : 910,food:100000,
       generals:[
         {chara_id:10005,name:"吕布",feat:0,loyalty:100},
         {chara_id:10002,name:"李肃",feat:0,loyalty:100},
@@ -83,14 +83,14 @@ var HistoryListConfig = [
 	name:"界桥之战",
 	level:0,
 	troops:1000,
-	maxSubCharacter:2,
+	maxSubCharacter:5,
 	characters:[
 		[21,226,620],//刘备，刘封，刘禅
-		[3,226,620],//赵云,赵統,赵广
+		[3,184,280],//赵云,赵統,赵广
 	],
 	subCharacters:[286,138,4,89,154,175,332,502,19,153,598,239],//严纲,陈到,关羽，关平，关兴，关索,关统,关彝,张飞，张苞，张绍,张遵
     enemy:{chara_id : 39,color : "0,0,0",generals_count:17,areas : [
-      {  area_id : 54,troops:1000,prefecture : 910,food:100000,
+      {  area_id : 54,troops:20000,prefecture : 910,food:100000,
       generals:[
         {chara_id:10014,name:"袁绍",feat:0,loyalty:100},
         {chara_id:10015,name:"颜良",feat:0,loyalty:100},
@@ -108,8 +108,15 @@ var HistoryListConfig = [
         {chara_id:11004,name:"步兵",feat:0,loyalty:100},
         {chara_id:11101,name:"弓兵",feat:0,loyalty:100},
         {chara_id:11102,name:"弓兵",feat:0,loyalty:100},
+        {chara_id:11005,name:"步兵",feat:0,loyalty:100},
+        {chara_id:11006,name:"步兵",feat:0,loyalty:100},
+        {chara_id:11007,name:"步兵",feat:0,loyalty:100},
         {chara_id:11201,name:"骑兵",feat:0,loyalty:100},
         {chara_id:11202,name:"骑兵",feat:0,loyalty:100},
+        {chara_id:11203,name:"骑兵",feat:0,loyalty:100},
+        {chara_id:11204,name:"骑兵",feat:0,loyalty:100},
+        {chara_id:11205,name:"骑兵",feat:0,loyalty:100},
+        {chara_id:11206,name:"骑兵",feat:0,loyalty:100},
         ],
       },
 	]},
@@ -119,22 +126,23 @@ var HistoryListConfig = [
 	id:4,
 	index:4,
 	name:"徐州入侵战",
-	level:20,
+	level:0,
 	troops:1000,
-	maxSubCharacter:2,
+	maxSubCharacter:7,
 	characters:[
 		[1,35,463,129,103,228,611],//曹操,曹丕,曹植,曹睿,曹奂
 	],
-	subCharacters:[30,31,32],//典韦，典满,钟繇,钟会,郭嘉
-	enemy:{chara_id : 10001,color : "0,0,0",generals_count:6,areas : [
-	  {  area_id : 54,troops:1000,prefecture : 910,food:100000,
+	subCharacters:[14,148,41,30,94,74,31,78,171,311,254,86,377,442,246,65,105,183,312,425,434,609,554],
+	//夏侯惇,郭嘉,夏侯渊,李典,乐进,典韦,于禁,刘晔,曹洪,毛玠,吕虔,钟会,钟毓,典满,乐綝,许仪,夏侯霸,夏侯尚,夏侯玄,夏侯威,夏侯惠,夏侯和,夏侯楙
+	enemy:{chara_id : 10001,color : "0,0,0",generals_count:6, level:4, areas : [
+	  {  area_id : 54,troops:20000,prefecture : 10023,food:100000,
 	  generals:[
 	    {chara_id:10023,name:"淘谦",feat:0,loyalty:100},
-	    {chara_id:10024,name:"麋竹",feat:0,loyalty:100},
-	    {chara_id:10025,name:"糜芳",feat:0,loyalty:100},
+	    {chara_id:10024,name:"糜竺",feat:0,loyalty:100},
 	    {chara_id:10026,name:"陈登",feat:0,loyalty:100},
-	    {chara_id:10027,name:"曹豹",feat:0,loyalty:100},
 	    {chara_id:10028,name:"陈桂",feat:0,loyalty:100},
+	    {chara_id:10025,name:"糜芳",feat:0,loyalty:100},
+	    {chara_id:10027,name:"曹豹",feat:0,loyalty:100},
 	    {chara_id:10029,name:"刘备",feat:0,loyalty:100},
 	    {chara_id:10030,name:"关羽",feat:0,loyalty:100},
 	    {chara_id:10031,name:"张飞",feat:0,loyalty:100},
@@ -143,12 +151,16 @@ var HistoryListConfig = [
 	    {chara_id:11002,name:"步兵",feat:0,loyalty:100},
 	    {chara_id:11101,name:"弓兵",feat:0,loyalty:100},
 	    {chara_id:11102,name:"弓兵",feat:0,loyalty:100},
+	    {chara_id:11103,name:"弓兵",feat:0,loyalty:100},
+	    {chara_id:11104,name:"弓兵",feat:0,loyalty:100},
 	    {chara_id:11201,name:"骑兵",feat:0,loyalty:100},
 	    {chara_id:11202,name:"骑兵",feat:0,loyalty:100},
 	    {chara_id:11203,name:"骑兵",feat:0,loyalty:100},
 	    {chara_id:11204,name:"骑兵",feat:0,loyalty:100},
 	    {chara_id:11205,name:"骑兵",feat:0,loyalty:100},
 	    {chara_id:11206,name:"骑兵",feat:0,loyalty:100},
+	    {chara_id:11301,name:"炮车",feat:0,loyalty:100},
+	    {chara_id:11302,name:"炮车",feat:0,loyalty:100},
 	    ],
 	  },
 	]},
@@ -158,30 +170,33 @@ var HistoryListConfig = [
 	id:5,
 	index:5,
 	name:"濮阳逃出战",
-	level:20,
+	level:0,
 	troops:1000,
-	maxSubCharacter:2,
+	maxSubCharacter:6,
 	characters:[
 		[1,35,463,129,103,228,611],//曹操,曹丕,曹植,曹睿,曹奂
 	],
-	subCharacters:[30,31,32],//典韦,典满
+	subCharacters:[14,148,41,30,94,74,31,78,171,311,254,86,377,442,246,65,105,183,312,425,434,609,554],
+	//夏侯惇,郭嘉,夏侯渊,李典,乐进,典韦,于禁,刘晔,曹洪,毛玠,吕虔,钟会,钟毓,典满,乐綝,许仪,夏侯霸,夏侯尚,夏侯玄,夏侯威,夏侯惠,夏侯和,夏侯楙
 	enemy:{chara_id : 265,color : "0,0,0",generals_count:6,areas : [
-	  {  area_id : 54,troops:1000,prefecture : 910,food:100000,
+	  {  area_id : 54,troops:20000,prefecture : 10005,food:100000,
 	  generals:[
 	    {chara_id:10005,name:"吕布",feat:0,loyalty:100},
 	    {chara_id:10033,name:"陈宫",feat:0,loyalty:100},
+	    {chara_id:10038,name:"貂蝉",feat:0,loyalty:100},
 	    {chara_id:10034,name:"张辽",feat:0,loyalty:100},
 	    {chara_id:10035,name:"臧霸",feat:0,loyalty:100},
 	    {chara_id:10036,name:"高顺",feat:0,loyalty:100},
 	    {chara_id:10037,name:"侯成",feat:0,loyalty:100},
-	    {chara_id:10038,name:"貂蝉",feat:0,loyalty:100},
 	    {chara_id:10039,name:"魏续",feat:0,loyalty:100},
 	    {chara_id:10040,name:"曹性",feat:0,loyalty:100},
 	    {chara_id:10041,name:"宋宪",feat:0,loyalty:100},
 	    {chara_id:11001,name:"步兵",feat:0,loyalty:100},
-	    {chara_id:11002,name:"步兵",feat:0,loyalty:100},
+	    {chara_id:11104,name:"弓兵",feat:0,loyalty:100},
 	    {chara_id:11101,name:"弓兵",feat:0,loyalty:100},
 	    {chara_id:11102,name:"弓兵",feat:0,loyalty:100},
+	    {chara_id:11103,name:"弓兵",feat:0,loyalty:100},
+	    {chara_id:11207,name:"骑兵",feat:0,loyalty:100},
 	    {chara_id:11201,name:"骑兵",feat:0,loyalty:100},
 	    {chara_id:11202,name:"骑兵",feat:0,loyalty:100},
 	    {chara_id:11203,name:"骑兵",feat:0,loyalty:100},
@@ -197,15 +212,16 @@ var HistoryListConfig = [
 	id:6,
 	index:6,
 	name:"江东平定战",
-	level:20,
+	level:0,
 	troops:1000,
 	maxSubCharacter:2,
 	characters:[
 		[8,24,17,240],//孙坚，孙策，孙权，孙休
 	],
-	subCharacters:[30,31,32],//周泰,陈武
+	subCharacters:[72,123,80,178,44,234,167,81,149,100,356,145,104,509,466,189,9,26,278,464,542,597],
+	//程普,黄盖,韩当,祖茂,丁奉,虞汜,陆凯,周泰,陈武,孙瑜,孙静,朱治,朱然,张昭,张紘,凌统,陆逊,陆抗,丁封,孙亮,张布,孙皓
 	enemy:{chara_id : 265,color : "0,0,0",generals_count:6,areas : [
-	  {  area_id : 54,troops:1000,prefecture : 910,food:100000,
+	  {  area_id : 54,troops:20000,prefecture : 910,food:100000,
 	  generals:[
 	    {chara_id:10042,name:"刘繇",feat:0,loyalty:100},
 	    {chara_id:10043,name:"太史慈",feat:0,loyalty:100},
@@ -220,16 +236,29 @@ var HistoryListConfig = [
 	    {chara_id:10052,name:"王朗",feat:0,loyalty:100},
 	    {chara_id:10053,name:"虞翻",feat:0,loyalty:100},
 	    {chara_id:10054,name:"周听",feat:0,loyalty:100},
-	    {chara_id:11001,name:"步兵",feat:0,loyalty:100},
-	    {chara_id:11002,name:"步兵",feat:0,loyalty:100},
+	    {chara_id:11401,name:"道士",feat:0,loyalty:100},
+	    {chara_id:11402,name:"道士",feat:0,loyalty:100},
+	    {chara_id:11501,name:"策士",feat:0,loyalty:100},
+	    {chara_id:11601,name:"风水士",feat:0,loyalty:100},
+	    {chara_id:11602,name:"风水士",feat:0,loyalty:100},
+	    {chara_id:11603,name:"风水士",feat:0,loyalty:100},
+	    {chara_id:11604,name:"风水士",feat:0,loyalty:100},
+	    {chara_id:11701,name:"水兵",feat:0,loyalty:100},
+	    {chara_id:11702,name:"水兵",feat:0,loyalty:100},
+	    {chara_id:11703,name:"水兵",feat:0,loyalty:100},
+	    {chara_id:11704,name:"水兵",feat:0,loyalty:100},
+	    {chara_id:11705,name:"水兵",feat:0,loyalty:100},
+	    {chara_id:11706,name:"水兵",feat:0,loyalty:100},
 	    {chara_id:11101,name:"弓兵",feat:0,loyalty:100},
 	    {chara_id:11102,name:"弓兵",feat:0,loyalty:100},
-	    {chara_id:11201,name:"骑兵",feat:0,loyalty:100},
-	    {chara_id:11202,name:"骑兵",feat:0,loyalty:100},
-	    {chara_id:11203,name:"骑兵",feat:0,loyalty:100},
-	    {chara_id:11204,name:"骑兵",feat:0,loyalty:100},
-	    {chara_id:11205,name:"骑兵",feat:0,loyalty:100},
-	    {chara_id:11206,name:"骑兵",feat:0,loyalty:100},
+	    {chara_id:11103,name:"弓兵",feat:0,loyalty:100},
+	    {chara_id:11104,name:"弓兵",feat:0,loyalty:100},
+	    {chara_id:11105,name:"弓兵",feat:0,loyalty:100},
+	    {chara_id:11106,name:"弓兵",feat:0,loyalty:100},
+	    {chara_id:11107,name:"弓兵",feat:0,loyalty:100},
+	    {chara_id:11108,name:"弓兵",feat:0,loyalty:100},
+	    {chara_id:11001,name:"步兵",feat:0,loyalty:100},
+	    {chara_id:11002,name:"步兵",feat:0,loyalty:100},
 	    ],
 	  },
 	]},
@@ -240,6 +269,7 @@ var HistoryListConfig = [
 	index:7,
 	name:"宛城逃亡战",
 	level:20,
+	lock:true,
 	troops:1000,
 	maxSubCharacter:2,
 	characters:[
@@ -259,6 +289,7 @@ var HistoryListConfig = [
 	index:8,
 	name:"伪帝讨伐战",
 	level:20,
+	lock:true,
 	troops:1000,
 	maxSubCharacter:2,
 	characters:[
@@ -279,6 +310,7 @@ var HistoryListConfig = [
 	index:9,
 	name:"水淹下邳",
 	level:20,
+	lock:true,
 	troops:1000,
 	maxSubCharacter:2,
 	characters:[
@@ -298,6 +330,7 @@ var HistoryListConfig = [
 	index:10,
 	name:"官渡之战",
 	level:20,
+	lock:true,
 	troops:1000,
 	maxSubCharacter:2,
 	characters:[
@@ -318,6 +351,7 @@ var HistoryListConfig = [
 	index:11,
 	name:"赤壁之战(曹)",
 	level:20,
+	lock:true,
 	troops:1000,
 	maxSubCharacter:2,
 	characters:[
@@ -338,6 +372,7 @@ var HistoryListConfig = [
 	index:12,
 	name:"赤壁之战(孙刘)",
 	level:20,
+	lock:true,
 	troops:1000,
 	maxSubCharacter:2,
 	characters:[
@@ -359,6 +394,7 @@ var HistoryListConfig = [
 	index:13,
 	name:"马超讨伐战",
 	level:20,
+	lock:true,
 	troops:1000,
 	maxSubCharacter:2,
 	characters:[
@@ -378,6 +414,7 @@ var HistoryListConfig = [
 	index:14,
 	name:"兵败合肥",
 	level:20,
+	lock:true,
 	troops:1000,
 	maxSubCharacter:2,
 	characters:[
@@ -397,6 +434,7 @@ var HistoryListConfig = [
 	index:15,
 	name:"败走麦城",
 	level:20,
+	lock:true,
 	troops:1000,
 	maxSubCharacter:2,
 	characters:[
@@ -416,6 +454,7 @@ var HistoryListConfig = [
 	index:16,
 	name:"陆逊火烧连营(刘)",
 	level:20,
+	lock:true,
 	troops:1000,
 	maxSubCharacter:2,
 	characters:[
@@ -435,6 +474,7 @@ var HistoryListConfig = [
 	index:17,
 	name:"陆逊火烧连营(孙)",
 	level:20,
+	lock:true,
 	troops:1000,
 	maxSubCharacter:2,
 	characters:[
@@ -454,6 +494,7 @@ var HistoryListConfig = [
 	index:18,
 	name:"平南蛮",
 	level:20,
+	lock:true,
 	troops:1000,
 	maxSubCharacter:2,
 	characters:[
@@ -473,6 +514,7 @@ var HistoryListConfig = [
 	index:19,
 	name:"北伐",
 	level:20,
+	lock:true,
 	troops:1000,
 	maxSubCharacter:2,
 	characters:[
@@ -492,6 +534,7 @@ var HistoryListConfig = [
 	index:20,
 	name:"灭蜀",
 	level:20,
+	lock:true,
 	troops:1000,
 	maxSubCharacter:2,
 	characters:[

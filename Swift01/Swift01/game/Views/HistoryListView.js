@@ -46,6 +46,9 @@ HistoryListView.prototype.listLayerInit=function(){
 	var items = [];
 	for(var i=0,l=HistoryListConfig.length;i<l;i++){
 		var historyObject = HistoryListConfig[i];
+		if(historyObject.lock){
+			continue;
+		}
 		var child = new HistoryListChildView(historyObject);
 		items.push(child);
 	}

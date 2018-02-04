@@ -165,6 +165,7 @@ HistoryListDetailedView.prototype.gotoBattle = function(event){
 	for(var i = 0;i<items.length;i++){
 		var item = items[i];
 		script += "Var.set(main_character_"+i+","+item.selectCharacter.id()+");";
+		script += "Var.set(main_character_name_"+i+","+item.selectCharacter.name()+");";
 	}
 	items = self.subListView.getItems();
 	for(var i = 0;i<items.length;i++){
@@ -189,15 +190,14 @@ HistoryListDetailedView.prototype.gotoBattle = function(event){
 	battleData.expeditionCharacterList = expeditionCharacterList;
 	battleData.expeditionLeader = expeditionCharacterList[0];
 	battleData.money = 0;
-	battleData.food = self.selectFood;
-	battleData.troops = self.selectTroops;
+	battleData.food = self.selectFood || 0;
+	battleData.troops = self.selectTroops || 0;
 	var areas = self.historyObject.enemy.areas;
 	self.historyObject.enemy.areasBaseData = areas;
 	var areaList = [];
 	areas.forEach(function(child){
 		var area = AreaModel.getArea(child.area_id);
 		area.setSeignor(self.historyObject.enemy,child);
-		area.troops(5000);
 		areaList.push(area);
 	});
 	self.historyObject.enemy.areas = areaList;

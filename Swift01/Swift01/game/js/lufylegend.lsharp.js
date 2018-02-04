@@ -1958,12 +1958,40 @@ LSGJBattleCharacterScript.analysis = function(value) {
 		case "SGJBattleCharacter.focus":
 			LSGJBattleCharacterScript.focus(value, start, end);
 			break;
+		case "SGJBattleCharacter.hide":
+			LSGJBattleCharacterScript.hide(value, start, end);
+			break;
+		case "SGJBattleCharacter.show":
+			LSGJBattleCharacterScript.show(value, start, end);
+			break;
 		case "SGJBattleCharacter.askSingleCombat":
 			BattleController.ctrlChara.inteAI.askSingleCombat();
 			break;
 		default:
 			LGlobal.script.analysis();
 	}
+};
+LSGJBattleCharacterScript.show = function(value, start, end) {
+	var params = value.substring(start + 1, end).split(",");
+	LSGJBattleCharacterScript.visible(params, true);
+};
+LSGJBattleCharacterScript.hide = function(value, start, end) {
+	var params = value.substring(start + 1, end).split(",");
+	LSGJBattleCharacterScript.visible(params, false);
+};
+LSGJBattleCharacterScript.visible = function(params, value) {
+	//belong,id
+	var characters;
+	if(params.length > 1){
+		var character = LMvc.BattleController.view.charaLayer.getCharacter(params[0],parseInt(params[1]));
+		characters = character ? [character] : [];
+	}else{
+		characters = LMvc.BattleController.view.charaLayer.getCharactersFromBelong(params[0]);
+	}
+	characters.forEach(function(child){
+		child.visible = value;
+	});
+	LGlobal.script.analysis();
 };
 LSGJBattleCharacterScript.changeMission = function(value, start, end) {
 	//params:belong,charaId,mission
@@ -2018,7 +2046,7 @@ LSGJBattleCharacterScript.moveTo = function(value, start, end) {
 		}
 		list.push({x:x, y:y});
 	}
-	list.shift();
+	//list.shift();
 	character.addEventListener(CharacterActionEvent.MOVE_COMPLETE, LSGJBattleCharacterScript.moveComplete);
 	setTimeout(function(){
 		character.setRoad(list);
@@ -2061,7 +2089,8 @@ LSGJBattleCharacterScript.singleCombatStartEvent = function(value, start, end) {
 	var id1 = parseInt(params[0]);
 	var id2 = parseInt(params[1]);
 	var attackTarget;
-	if(BattleController.ctrlChara.belong == Belong.SELF){
+	if(!BattleController.ctrlChara || BattleController.ctrlChara.belong == Belong.SELF){
+		BattleController.ctrlChara = LMvc.BattleController.view.charaLayer.getCharacter(Belong.SELF, id1);
 		attackTarget = LMvc.BattleController.view.charaLayer.getCharacter(Belong.ENEMY, id2);
 	}else{
 		attackTarget = LMvc.BattleController.view.charaLayer.getCharacter(Belong.SELF, id1);

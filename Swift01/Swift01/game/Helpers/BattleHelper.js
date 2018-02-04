@@ -464,11 +464,13 @@ function getBattleSaveData(){
 	data.startAttack = LMvc.BattleController.startAttack;
 	data.militaryOver = LMvc.BattleController.militaryOver;
 	if(data.historyId){
-		var mainVals = [], subVals = [], battleVals = [];
+		var mainVals = [], subVals = [], battleVals = [], mainNames = [], subNames = [];
 		var varList = LGlobal.script.scriptArray.varList;
 		for(var i = 0;i<10;i++){
 			mainVals.push(varList["main_character_"+i]);
 			subVals.push(varList["sub_character_"+i]);
+			mainNames.push(varList["main_character_name_"+i]);
+			subNames.push(varList["sub_character_name_"+i]);
 		}
 		for(var i = 0;i<50;i++){
 			battleVals.push(varList["battle_value_"+i]);
@@ -588,6 +590,8 @@ function setBattleSaveData(){
 		for(var i = 0;i<10;i++){
 			varList["main_character_"+i] = data.mainVals[i];
 			varList["sub_character_"+i] = data.subVals[i];
+			varList["main_character_name_"+i] = data.mainNames[i];
+			varList["sub_character_name_"+i] = data.subNames[i];
 		}
 		for(var i = 0;i<50;i++){
 			varList["battle_value_"+i] = data.battleVals[i];
@@ -1164,6 +1168,9 @@ function militaryAdviserSelect(characterModel, charas){
 	}
 }
 function getMaxMilitary(belong){
+	if(LMvc.BattleController.historyId){
+		return null;
+	}
 	var selfAttack = (LMvc.BattleController.battleData.fromCity.seigniorCharaId() == LMvc.selectSeignorId);
 	if(!selfAttack || LMvc.BattleController.militaryOver){
 		return null;

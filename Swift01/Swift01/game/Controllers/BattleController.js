@@ -183,6 +183,7 @@ BattleController.prototype.charactersInit = function(){
 		enemyPositions = self.model.map.charas;
 		selfPositions = self.model.map.enemys;
 		var sumTroops = self.battleData.toCity.troops();
+		console.log("enemyCharas",enemyCharas.length, sumTroops, self.battleData.toCity.maxTroops());
 		for(var i = 0;i<enemyCharas.length;i++){
 			var charaId = enemyCharas[i].id();
 			var chara = CharacterModel.getChara(charaId);
@@ -196,9 +197,11 @@ BattleController.prototype.charactersInit = function(){
 			if(sumTroops > 0 || i == enemyCharas.length - 1){
 				continue;
 			}
+	console.log("sumTroops ",sumTroops, enemyCharas.length);
 			enemyCharas = enemyCharas.splice(0, i + 1);
 			break;
 		}
+	console.log("enemyCharas b ",enemyCharas.length);
 		if(!LMvc.TutorialController && enemyCharas.length < BattleMapConfig.DefenseQuantity){
 			var neighbor = self.battleData.toCity.neighbor();
 			neighbor = neighbor.sort(function(){
@@ -269,8 +272,10 @@ BattleController.prototype.charactersInit = function(){
 	var seigniorLevel = seignior.level();
 	
 	var coreCount = Math.max(enemyCharas.length / 3 >>> 0, 1);
+	console.log("enemyCharas a ",enemyCharas.length);
 	for(var i = 0;i<enemyCharas.length;i++){
 		var child = enemyPositions[i];
+		console.log(child);
 		var chara = enemyCharas[i];
 		var charaId = chara.id();
 		setEquipmentsStoneItem(chara, seigniorLevel, i < coreCount);

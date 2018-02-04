@@ -317,6 +317,9 @@ function singleCombatCommandSpecialAttack(currentCharacter, targetCharacter) {
 	}
 }
 function checkSingleCombatCommandEnd(){
+	setTimeout(checkSingleCombatCommandEndSync, 100);
+}
+function checkSingleCombatCommandEndSync(){
 	var view = LMvc.SingleCombatController.view;
 	if(view.commandEnd){
 		return;

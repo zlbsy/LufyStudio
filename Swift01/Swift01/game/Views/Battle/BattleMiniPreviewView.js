@@ -3,7 +3,11 @@ function BattleMiniPreviewView(controller){
 	LExtends(self,LView,[controller]);
 	self.alpha = 0.7;
 	self.maxSize = 200;
-	var bitmapData = self.model.mapBitmapData;
+	var bitmapData = self.model.mapBitmapData.clone();
+	bitmapData.x = 0;
+	bitmapData.y = 0;
+	bitmapData.width = bitmapData.image.width;
+	bitmapData.height = bitmapData.image.height;
 	var bitmap = new LBitmap(bitmapData);
 	if(self.model.map.width > self.model.map.height){
 		self.scaleValue = self.maxSize / bitmapData.width;
@@ -16,7 +20,10 @@ function BattleMiniPreviewView(controller){
 	self.map = new LSprite();
 	var background = getBlackBitmap(LMvc.screenWidth,LMvc.screenHeight);
 	self.map.addChild(bitmap);
-	self.map.cacheAsBitmap(true);
+	
+	self.controller.nextFrameExecute(function(){
+		self.map.cacheAsBitmap(true);
+	});
 	self.map.x = 10;
 	self.map.y = 40;
 	self.addChild(self.map);

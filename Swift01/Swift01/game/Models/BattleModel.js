@@ -31,7 +31,6 @@ BattleModel.prototype.loadMapFileOver=function(event,callback){
 	var self = event.currentTarget.parent;
 	//保存战场地图文件内容
 	self.map = LMvc.mapData;
-	
 
 	self.stepWidth = BattleCharacterSize.width;
 	self.stepHeight = BattleCharacterSize.height;
