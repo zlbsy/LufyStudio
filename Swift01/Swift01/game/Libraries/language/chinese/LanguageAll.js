@@ -399,6 +399,7 @@ Language.data = {
 	"win_attack_and_occupy_self":"我军在{0}击退了{1}军的进攻!",
 	"fail_attack_and_occupy_enemy":"{0}攻占{1}军的{2}失败了!",
 	"fail_attack_and_occupy_self":"我军的{0}被{1}军攻占了!",
+	"fail_history_battle":"{0}失败了!",
 	"seignor_die_other":"{0}势力灭亡了！！",
 	"seignor_die_self":"{0}势力灭亡了！游戏结束了！",
 	"jobai_tavern_message":"{0}的{1}在招贤纳士!",

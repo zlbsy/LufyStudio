@@ -221,7 +221,9 @@ BattleResultView.prototype.cityFail=function(event){
 	var seignior = CharacterModel.getChara(self.winSeigniorId);
 	var battleData = self.controller.battleData;
 	var cityName = battleData.toCity.name();
-	if(battleData.fromCity.seigniorCharaId() == LMvc.selectSeignorId){
+	if(battleData.historyId){
+		message = String.format(Language.get("fail_history_battle"),Language.get("history_" + battleData.historyId));//{0}失败了!
+	}else if(battleData.fromCity.seigniorCharaId() == LMvc.selectSeignorId){
 		message = String.format(Language.get("fail_attack_and_occupy_enemy"),Language.get("belong_self"),seignior.name(),cityName);//{0}攻占{1}军的{2}失败了!
 		battleData.toCity.troops(battleData.toCity.troops() + charaTroops);
 	}else{

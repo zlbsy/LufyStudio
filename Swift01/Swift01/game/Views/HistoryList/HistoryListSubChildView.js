@@ -39,7 +39,12 @@ HistoryListSubChildView.prototype.onClick = function(event) {
 	if(!self.hasCharacter){
 		return;
 	}
+	var listView = event.currentTarget;
+	var detailView = listView.getParentByConstructor(HistoryListDetailedView);
 	if(!self.focus){
+		if(detailView.subCount >= detailView.historyObject.maxSubCharacter){
+			return;
+		}
 		self.focus = getPanel("focus",60,65);
 		self.layer.addChild(self.focus);
 		self.focus.x = -5;
@@ -49,7 +54,5 @@ HistoryListSubChildView.prototype.onClick = function(event) {
 	self.focus.visible = !self.focus.visible;
 	self.cacheAsBitmap(false);
 	self.updateView();
-	var listView = event.currentTarget;
-	var detailView = listView.getParentByConstructor(HistoryListDetailedView);
 	detailView.changeSubCount(self.focus.visible?1:-1);
 };

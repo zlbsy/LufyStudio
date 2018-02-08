@@ -2155,12 +2155,18 @@ LSGJHistoryScript.analysis = function(value) {
 		case "SGJHistory.battleStart":
 			LMvc.HistoryListController.battleStart();
 			break;
+		case "SGJHistory.battleFail":
+			LSGJHistoryScript.battleFail();
+			break;
 		case "SGJHistory.checkEventStartBoutEvent":
 			LSGJHistoryScript.checkEventStartBoutEvent(value, start, end);
 			break;
 		default:
 			LGlobal.script.analysis();
 	}
+};
+LSGJHistoryScript.battleFail = function(value, start, end) {
+	allCharactersToRetreat();
 };
 LSGJHistoryScript.checkEventStartBoutEvent = function(value, start, end) {
 	checkEventStartBoutEvent();

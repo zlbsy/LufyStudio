@@ -47,7 +47,8 @@ HistoryListDetailedView.prototype.set=function(){
 	var cityModel = seignior.character().city();
 	self.troopsSum = cityModel.troops() > self.historyObject.troops ? self.historyObject.troops : cityModel.troops();
 	var troops = getStrokeLabel( String.format("{0}/{1}",0,self.troopsSum), 18, "#FFFFFF", "#000000", 4);
-	troops.x = 130;
+	troops.textAlign = "right";
+	troops.x = 200;
 	troopsLayer.addChild(troops);
 	self.troops = troops;
 	var rangeTroops = new LRange(rangeBackground.clone(), rangeSelect.clone());
@@ -66,7 +67,8 @@ HistoryListDetailedView.prototype.set=function(){
 	foodLayer.addChild(foodLabel);
 	self.foodSum = cityModel.food() > self.historyObject.food ? self.historyObject.food : cityModel.food();
 	var food = getStrokeLabel( String.format("{0}/{1}",0,self.foodSum), 18, "#FFFFFF", "#000000", 4);
-	food.x = 130;
+	food.textAlign = "right";
+	food.x = 200;
 	foodLayer.addChild(food);
 	self.food = food;
 	var rangeFood = new LRange(rangeBackground.clone(), rangeSelect.clone());
