@@ -1996,10 +1996,21 @@ LSGJBattleCharacterScript.visible = function(params, value) {
 LSGJBattleCharacterScript.changeMission = function(value, start, end) {
 	//params:belong,charaId,mission
 	var params = value.substring(start + 1, end).split(",");
-	var character = LMvc.BattleController.view.charaLayer.getCharacter(params[0],parseInt(params[1]));
-	if(character){
-		character.mission = parseInt(params[2]);
+	var belong = params[0];
+	var characterId = parseInt(params[1]);
+	var mission = parseInt(params[2]);
+	var characters = [];
+	if(characterId > 0){
+		var character = LMvc.BattleController.view.charaLayer.getCharacter(belong,characterId);
+		if(character){
+			characters.push(character);
+		}
+	}else{
+		characters = self.getCharactersFromBelong(belong);
 	}
+	characters.forEach(function(chara){
+		character.mission = mission;
+	});
 	LGlobal.script.analysis();
 };
 LSGJBattleCharacterScript.focus = function(value, start, end) {

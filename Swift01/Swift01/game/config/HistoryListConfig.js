@@ -12,7 +12,7 @@ var HistoryListConfig = [
 	],
 	subCharacters:[72,123,80,178,44,234,167],//程普,黄盖,韩当,祖茂,丁奉,虞汜,陆凯
 	enemy:{chara_id : 265,color : "0,0,0",generals_count:6,areas : [
-	  {  area_id : 54,troops:20000,prefecture : 910,food:100000,
+	  {  area_id : 54,troops:50000,food:1000000,
 	  generals:[
 	    {chara_id:10001,name:"华雄",feat:0,loyalty:100},
 	    {chara_id:10002,name:"李肃",feat:0,loyalty:100},
@@ -48,7 +48,7 @@ var HistoryListConfig = [
 	subCharacters:[39,371,504,317,1,375,75,160,110,251,137,144,229,36,43,202,35,463,228,611,464],
 	//袁绍,袁尚,袁谭,袁熙,曹操,袁术,公孙瓒,公孙康,公孙度,公孙渊,鲍信,马腾,马云鹭,马超,马岱,曹丕,曹植,曹睿,曹奂，孙亮
     enemy:{chara_id : 265,color : "0,0,0",generals_count:6,areas : [
-      {  area_id : 54,troops:20000,prefecture : 910,food:100000,
+      {  area_id : 54,troops:50000,food:1000000,
       generals:[
         {chara_id:10005,name:"吕布",feat:0,loyalty:100},
         {chara_id:10002,name:"李肃",feat:0,loyalty:100},
@@ -90,7 +90,7 @@ var HistoryListConfig = [
 	],
 	subCharacters:[286,138,4,89,154,175,332,502,19,153,598,239],//严纲,陈到,关羽，关平，关兴，关索,关统,关彝,张飞，张苞，张绍,张遵
     enemy:{chara_id : 39,color : "0,0,0",generals_count:17,areas : [
-      {  area_id : 54,troops:20000,prefecture : 910,food:100000,
+      {  area_id : 54,troops:50000,food:1000000,
       generals:[
         {chara_id:10014,name:"袁绍",feat:0,loyalty:100},
         {chara_id:10015,name:"颜良",feat:0,loyalty:100},
@@ -107,7 +107,7 @@ var HistoryListConfig = [
         {chara_id:11003,name:"步兵",feat:0,loyalty:100},
         {chara_id:11004,name:"步兵",feat:0,loyalty:100},
         {chara_id:11101,name:"弓兵",feat:0,loyalty:100},
-        {chara_id:11102,name:"弓兵",feat:0,loyalty:100},
+        {chara_id:11102,name:"弓兵",feat:0,loyalty:100},//9
         {chara_id:11005,name:"步兵",feat:0,loyalty:100},
         {chara_id:11006,name:"步兵",feat:0,loyalty:100},
         {chara_id:11007,name:"步兵",feat:0,loyalty:100},
@@ -135,20 +135,20 @@ var HistoryListConfig = [
 	subCharacters:[14,148,41,30,94,74,31,78,171,311,254,86,377,442,246,65,105,183,312,425,434,609,554],
 	//夏侯惇,郭嘉,夏侯渊,李典,乐进,典韦,于禁,刘晔,曹洪,毛玠,吕虔,钟会,钟毓,典满,乐綝,许仪,夏侯霸,夏侯尚,夏侯玄,夏侯威,夏侯惠,夏侯和,夏侯楙
 	enemy:{chara_id : 10001,color : "0,0,0",generals_count:6, level:4, areas : [
-	  {  area_id : 54,troops:20000,prefecture : 10023,food:100000,
+	  {  area_id : 54,troops:50000,prefecture : 10023,food:1000000,
 	  generals:[
 	    {chara_id:10023,name:"淘谦",feat:0,loyalty:100},
 	    {chara_id:10024,name:"糜竺",feat:0,loyalty:100},
 	    {chara_id:10026,name:"陈登",feat:0,loyalty:100},
 	    {chara_id:10028,name:"陈桂",feat:0,loyalty:100},
-	    {chara_id:10025,name:"糜芳",feat:0,loyalty:100},
-	    {chara_id:10027,name:"曹豹",feat:0,loyalty:100},
+	    {chara_id:10056,name:"田楷",feat:0,loyalty:100},
+	    {chara_id:10057,name:"孔融",feat:0,loyalty:100},
 	    {chara_id:10029,name:"刘备",feat:0,loyalty:100},
 	    {chara_id:10030,name:"关羽",feat:0,loyalty:100},
 	    {chara_id:10031,name:"张飞",feat:0,loyalty:100},
 	    {chara_id:10032,name:"赵云",feat:0,loyalty:100},
-	    {chara_id:11001,name:"步兵",feat:0,loyalty:100},
-	    {chara_id:11002,name:"步兵",feat:0,loyalty:100},
+	    {chara_id:10025,name:"糜芳",feat:0,loyalty:100},
+	    {chara_id:10027,name:"曹豹",feat:0,loyalty:100},
 	    {chara_id:11101,name:"弓兵",feat:0,loyalty:100},
 	    {chara_id:11102,name:"弓兵",feat:0,loyalty:100},
 	    {chara_id:11103,name:"弓兵",feat:0,loyalty:100},
@@ -179,7 +179,7 @@ var HistoryListConfig = [
 	subCharacters:[14,148,41,30,94,74,31,78,171,311,254,86,377,442,246,65,105,183,312,425,434,609,554],
 	//夏侯惇,郭嘉,夏侯渊,李典,乐进,典韦,于禁,刘晔,曹洪,毛玠,吕虔,钟会,钟毓,典满,乐綝,许仪,夏侯霸,夏侯尚,夏侯玄,夏侯威,夏侯惠,夏侯和,夏侯楙
 	enemy:{chara_id : 265,color : "0,0,0",generals_count:6,areas : [
-	  {  area_id : 54,troops:20000,prefecture : 10005,food:100000,
+	  {  area_id : 54,troops:50000,prefecture : 10005,food:1000000,
 	  generals:[
 	    {chara_id:10005,name:"吕布",feat:0,loyalty:100},
 	    {chara_id:10033,name:"陈宫",feat:0,loyalty:100},
@@ -221,7 +221,7 @@ var HistoryListConfig = [
 	subCharacters:[72,123,80,178,44,234,167,81,149,100,356,145,104,509,466,189,9,26,278,464,542,597],
 	//程普,黄盖,韩当,祖茂,丁奉,虞汜,陆凯,周泰,陈武,孙瑜,孙静,朱治,朱然,张昭,张紘,凌统,陆逊,陆抗,丁封,孙亮,张布,孙皓
 	enemy:{chara_id : 265,color : "0,0,0",generals_count:6,areas : [
-	  {  area_id : 54,troops:20000,prefecture : 910,food:100000,
+	  {  area_id : 54,troops:50000,food:1000000,
 	  generals:[
 	    {chara_id:10042,name:"刘繇",feat:0,loyalty:100},
 	    {chara_id:10043,name:"太史慈",feat:0,loyalty:100},

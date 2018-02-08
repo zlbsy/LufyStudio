@@ -15,11 +15,12 @@ SGJTalk.show(10024,主公不必自责，曹军恐怕不光是为了报仇，更�
 SGJBattleCharacter.focus(10023);
 SGJTalk.show(10023,这可如何是好...);
 SGJBattleCharacter.focus(10024);
-SGJTalk.show(10024,主公放心，田楷太守和孔融太守两路援兵都已经到了，平原的刘备也正在赶来，我们一定能击退曹军的！);
+SGJTalk.show(10024,主公放心，青州的田楷和北海的孔融两路援兵都已经到了，平原的刘备也正在赶来，我们一定能击退曹军的！);
 SGJBattleCharacter.focus(10023);
 SGJTalk.show(10023,听说刘备是汉室宗亲，十分了得，希望他能帮助我们击退曹军！);
 SGJBattleCharacter.focus(@main_character_0);
 SGJBattleCharacter.changeAction(belong_self,@main_character_0,attack,right);
 SGJTalk.show(@main_character_0,全军听令!进攻！);
 SGJBattleCharacter.changeAction(belong_self,@main_character_0,move,right);
+SGJHistory.addStartBoutEvent(5,belong_enemy);
 SGJHistory.boutStart();

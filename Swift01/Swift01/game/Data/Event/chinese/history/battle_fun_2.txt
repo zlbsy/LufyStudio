@@ -21,7 +21,7 @@ function dieEvent(id);
 endfunction;
 function moveIn(belong,minX,minY,maxX,maxY);
 	if(@belong==0);
-		if(@minX==0&&@maxX==10&&@minY==0&&@maxY==6);
+		if(@minX==0&&@minY==0&&@maxX==10&&@maxY==6);
 			Call.armyAttack();
 		endif;
 	endif;

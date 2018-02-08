@@ -1,3 +1,7 @@
+SGJBattleCharacter.changeMission(belong_enemy,10016,0);
+SGJBattleCharacter.changeMission(belong_enemy,11201,0);
+SGJBattleCharacter.changeMission(belong_enemy,11202,0);
+SGJBattleCharacter.changeMission(belong_enemy,11203,0);
 SGJBattleCharacter.hide(belong_self);
 SGJBattleCharacter.focus(10055);
 SGJBattleCharacter.changeAction(belong_enemy,10055,attack,right);
@@ -88,3 +92,6 @@ function singleCombatEndEvent(dieId);
 		SGJHistory.boutStart();
 	endif;
 endfunction;
+SGJHistory.addMoveInEvent(belong_self,12,7,19,14);
+SGJHistory.addMoveInEvent(belong_self,12,0,19,6);
+SGJHistory.addStartBoutEvent(10,belong_enemy);
