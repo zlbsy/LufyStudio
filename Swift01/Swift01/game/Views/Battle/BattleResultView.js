@@ -186,6 +186,8 @@ BattleResultView.prototype.cityWin=function(event){
 	var battleData = self.controller.battleData;
 	var cityName = battleData.toCity.name();
 	if(battleData.historyId){
+		LPlugin.clearHistory("history_"+battleData.historyId+"_"+LMvc.chapterData.trouble);
+		LMvc.chapterData["history_"+battleData.historyId] = 1;
 		message = self.getHistoryReward(battleData.historyId);
 		battleData.fromCity.food(battleData.food);
 		battleData.fromCity.money(battleData.money);

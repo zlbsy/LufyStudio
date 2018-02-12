@@ -1,0 +1,19 @@
+function hit(id1,id2);
+endfunction;
+function startBout(num,belong);
+	if(@belong==0);
+	elseif(@belong==2);
+		if(@num==5);
+			SGJBattleCharacter.show(belong_enemy);
+			SGJBattleCharacter.changeMission(belong_enemy,0,0);
+			SGJTalk.show(10029,终于赶上了。);
+			SGJTalk.show(10024,主公，刘备的援兵已经到了。);
+			SGJTalk.show(10023,好!太好了!我们出城接应刘备军。);
+		endif;
+	endif;
+endfunction;
+function dieEvent(id);
+endfunction;
+function moveIn(belong,minX,minY,maxX,maxY);
+endfunction;
+

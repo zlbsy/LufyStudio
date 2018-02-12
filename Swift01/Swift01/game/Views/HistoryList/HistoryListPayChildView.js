@@ -1,5 +1,5 @@
 function HistoryListPayChildView(characterId) {
-	var self = this;console.log("HistoryListPayChildView");
+	var self = this;
 	base(self, LListChildView, []);
 	self.characterId = characterId;
 	self.set();
@@ -24,6 +24,14 @@ HistoryListPayChildView.prototype.set=function(){
 	var self = this;
 	self.layerInit();
 	var characterModel = CharacterModel.getChara(self.characterId);
+	if(characterModel.isHistoryPurchase() && characterModel.equipments().length == 0){
+		var equipment = historyPurchaseCharactersEquipment[characterModel.id()];
+		if(equipment.id > 0){
+		var item = new ItemModel(null,{item_id:equipment.id,count:1});
+		item.stone(equipment.stone);
+		item.stonePlus(equipment.stonePlus);
+		characterModel.equip(item);}
+	}
 	var charaImg = characterModel.currentSoldiers().icon(new LPoint(48, 48),self.iconComplete);
 	charaImg.x=(self.getWidth() - 48)*0.5;
 	self.layer.addChild(charaImg);

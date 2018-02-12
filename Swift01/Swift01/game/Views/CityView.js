@@ -294,16 +294,18 @@ CityView.prototype.getNewYearPresent = function(){
 	if(!isInNewYearTrem()){
 		return false;
 	}
-	var time = formatDate(new Date(), "YYYYMMDD");
+	var now = new Date();
+	var time = formatDate(now, "YYYYMMDD");
 	var present = LMvc.chapterData["NewYearPresent_"+time];
 	if(present){
 		return false;
 	}
-	var count = LMvc.chapterData["NewYearPresent_2017_count"];
+	var key = "NewYearPresent_"+now.getFullYear()+"_count";
+	var count = LMvc.chapterData[key];
 	if(!count){
 		count = 0;
 	}
-	var items = [94, 93, 94, 95, 96];
+	var items = NewYearPresentConfig.items;
 	if(count >= items.length){
 		return false;
 	}
@@ -316,7 +318,7 @@ CityView.prototype.getNewYearPresent = function(){
 	});
 	
 	LMvc.chapterData["NewYearPresent_"+time] = 1;
-	LMvc.chapterData["NewYearPresent_2017_count"] = count + 1;
+	LMvc.chapterData[key] = count + 1;
 	return true;
 };
 CityView.prototype.autoTalkCheck = function(){

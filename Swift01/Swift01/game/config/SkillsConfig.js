@@ -61,6 +61,10 @@ var SkillType = {
 	 **/
 	CREATE:"create",
 	/**
+	 * 单挑时
+	 **/
+	SINGLE_COMBAT:"singleCombat",
+	/**
 	 * 特定时刻，被动调用
 	 **/
 	NULL:"null"
@@ -258,6 +262,10 @@ var SkillSubType = {
 	 * 招募
 	 **/
 	ENLIST:"enlist",
+	/**
+	 * 单挑增加怒气
+	 **/
+	ANGRY_BOUT_TURN:"angryBoutTurn",
 };
 var SkillsData = [
 {id:1,name:"雷霆怒击(张飞)",powerful:200,type:SkillType.ATTACK,subType:[SkillSubType.ATTACK_COUNT],attacks:[1,0.8,0.7],probability:40,explanation:"{probability}几率连续攻击三次。"},
@@ -359,4 +367,5 @@ var SkillsData = [
 {id:97,name:"祭祀",powerful:0,type:SkillType.NULL,subType:[SkillSubType.SACRIFICE],probability:100,explanation:"所在城池不会发生灾害。"},
 {id:98,name:"短刀",powerful:80,type:SkillType.CREATE,subType:[SkillSubType.SOLDIERS_ATTACK_RECT],condition:{type:"SoldierId",value:[4,28,5,29,6,30,22]},rangeAttack:[{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0}],explanation:"装备了短刀，在使用远程兵种时，可以近身攻击。"},
 {id:99,name:"筹粮",powerful:0,type:SkillType.NULL,subType:[SkillSubType.THRIFT,SkillSubType.ADDITIONAL],additional:{type:"food",value:2000},probability:100,explanation:"每月可获得粮食，战斗时候粮草消耗减半。"},
+{id:100,name:"愤怒",powerful:0,type:SkillType.SINGLE_COMBAT,subType:[SkillSubType.ANGRY_BOUT_TURN],addAngry:10,probability:100,explanation:"每回合增加怒气。"},
 ];

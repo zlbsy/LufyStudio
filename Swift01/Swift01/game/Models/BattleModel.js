@@ -127,8 +127,8 @@ BattleModel.prototype.addHit = function(id1,id2){
 BattleModel.prototype.addStartBout = function(bout, belong){
 	this.startBouts.push({bout:bout, belong:belong});
 };
-BattleModel.prototype.addMoveInEvent = function(belong, minX, minY, maxX, maxY){
-	this.moveInEvents.push({belong:belong, minX:minX, minY:minY, maxX:maxX, maxY:maxY});
+BattleModel.prototype.addMoveInEvent = function(belong, minX, minY, maxX, maxY,id){
+	this.moveInEvents.push({belong:belong, minX:minX, minY:minY, maxX:maxX, maxY:maxY,id:id||0});
 };
 BattleModel.prototype.addDieEvent = function(id){
 	this.dieEvents.push(id);

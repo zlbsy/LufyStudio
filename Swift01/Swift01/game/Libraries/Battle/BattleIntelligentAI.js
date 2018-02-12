@@ -24,7 +24,8 @@ BattleIntelligentAI.strategyList = null;
 BattleIntelligentAI.execute = function() {
 	var self = this;
 	var currentBelong = LMvc.BattleController.getValue("currentBelong");
-	if(currentBelong == Belong.SELF){
+	var autoPlay = LMvc.BattleController.getValue("autoPlay");
+	if(currentBelong == Belong.SELF && !autoPlay){
 		LMvc.BattleController.view.mainMenu.visible = true;
 		LMvc.BattleController.view.miniLayer.visible = LMvc.BattleController.view.mainMenu.miniMapVisible;
 		return;

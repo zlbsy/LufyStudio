@@ -2006,7 +2006,7 @@ LSGJBattleCharacterScript.changeMission = function(value, start, end) {
 			characters.push(character);
 		}
 	}else{
-		characters = self.getCharactersFromBelong(belong);
+		characters = LMvc.BattleController.view.charaLayer.getCharactersFromBelong(belong);
 	}
 	characters.forEach(function(chara){
 		character.mission = mission;
@@ -2169,12 +2169,19 @@ LSGJHistoryScript.analysis = function(value) {
 		case "SGJHistory.battleFail":
 			LSGJHistoryScript.battleFail();
 			break;
+		case "SGJHistory.battleWin":
+			LSGJHistoryScript.battleWin();
+			break;
 		case "SGJHistory.checkEventStartBoutEvent":
 			LSGJHistoryScript.checkEventStartBoutEvent(value, start, end);
 			break;
 		default:
 			LGlobal.script.analysis();
 	}
+};
+LSGJHistoryScript.battleWin = function(value, start, end) {
+	var resultView = new BattleResultView(LMvc.BattleController,1);
+	LMvc.BattleController.view.addChild(resultView);
 };
 LSGJHistoryScript.battleFail = function(value, start, end) {
 	allCharactersToRetreat();
@@ -2189,7 +2196,8 @@ LSGJHistoryScript.addMoveInEvent = function(value, start, end) {
 	var minY = parseInt(params[2]);
 	var maxX = parseInt(params[3]);
 	var maxY = parseInt(params[4]);
-	LMvc.BattleController.model.addMoveInEvent(belong, minX, minY, maxX, maxY);
+	var characterId = params.length==6?parseInt(params[5]):0;
+	LMvc.BattleController.model.addMoveInEvent(belong, minX, minY, maxX, maxY,characterId);
 	LGlobal.script.analysis();
 };
 LSGJHistoryScript.addStartBoutEvent = function(value, start, end) {

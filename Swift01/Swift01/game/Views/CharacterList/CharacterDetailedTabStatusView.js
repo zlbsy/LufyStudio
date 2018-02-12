@@ -31,19 +31,43 @@ CharacterDetailedTabStatusView.prototype.showStatus=function(){
 		labels.push("reputation");
 		datas.push(characterModel.reputationLabel());
 	}
-	var skill = characterModel.skill();
+	var skill;
+	if(characterModel.skillId()){
+		skill = SkillMasterModel.getMaster(characterModel.skillId());
+		labels.push("stunt");
+		datas.push(String.format(Language.get("skill_explanation"),skill.name(),skill.explanation(),skill.probability()));
+	}
+	var currentSoldiers = characterModel.currentSoldiers();
+	skill = currentSoldiers.skill();
 	if(skill){
 		labels.push("stunt");
 		datas.push(String.format(Language.get("skill_explanation"),skill.name(),skill.explanation(),skill.probability()));
 	}
+	var equipments = characterModel.equipments();
+	for(var i=0;i<equipments.length;i++){
+		var equipment = equipments[i];
+		skill = equipment.skill();
+		if(skill){
+			labels.push("stunt");
+			datas.push(String.format(Language.get("skill_explanation"),skill.name(),skill.explanation(),skill.probability()));
+		}
+	}
+	/*
+	var skill = characterModel.skill();
+	if(skill){
+		labels.push("stunt");
+		datas.push(String.format(Language.get("skill_explanation"),skill.name(),skill.explanation(),skill.probability()));
+	}*/
 	var military = characterModel.military();
 	if(military){
 		labels.push("military");
 		datas.push(String.format(Language.get("military_explanation"),military.name(),military.explanation()));
 	}
+	var skillIndex = 1;
 	for(var i=0;i<labels.length;i++){
 		var height = txtHeight;
-		var lblCost = getStrokeLabel(String.format("{0} : {1}",Language.get(labels[i]), datas[i]),20,"#FFFFFF","#000000",4);
+		var labelChild = Language.get(labels[i]) + (labels[i] == "stunt" ? skillIndex++ : "");
+		var lblCost = getStrokeLabel(String.format("{0} : {1}",labelChild, datas[i]),20,"#FFFFFF","#000000",4);
 		if(labels[i] == "stunt" || labels[i] == "status" || labels[i] == "military"){
 			lblCost.width = LMvc.screenWidth - 60;
 			lblCost.setWordWrap(true, txtHeight);

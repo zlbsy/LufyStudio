@@ -351,7 +351,10 @@ SeigniorExecute.prototype.areaJobRun=function(area){
 				technologyRun(chara);
 				break;
 			case Job.REPAIR:
-				repairRun(chara);
+				var stop = repairRun(chara);
+				if(stop){
+					return true;
+				}
 				break;
 			case Job.ACCESS:
 				var stop = accessRun(chara);

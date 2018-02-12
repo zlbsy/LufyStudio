@@ -32,4 +32,5 @@ var dictionaryConfig = [
 	{key:"equipment_strengthen",ver:"1.10.0"},
 	{key:"strengthen_stone",ver:"1.10.0"},
 	{key:"game_endding",ver:"1.10.0"},
+	{key:"historical_battle",ver:"2.0.0"},
 	];

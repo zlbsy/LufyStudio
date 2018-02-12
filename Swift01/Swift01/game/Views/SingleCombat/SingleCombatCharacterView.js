@@ -53,7 +53,11 @@ SingleCombatCharacterView.prototype.buffer = function(){
 SingleCombatCharacterView.prototype.setCommands=function(){
 	var self = this, command, oldCommand;
 	if(self.barAngry){
-		self.barAngry.changeValue(self.addAngry);
+		var skill = self.data.skill(SkillType.SINGLE_COMBAT), addAngry = 0;
+		if(skill && skill.isSubType(SkillSubType.ANGRY_BOUT_TURN)){
+			addAngry = skill.addAngry();
+		}
+		self.barAngry.changeValue(self.addAngry + addAngry);
 		self.addAngry = 10;
 	}
 	if(self.addHP > 0){

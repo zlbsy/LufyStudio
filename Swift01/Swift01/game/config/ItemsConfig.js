@@ -144,7 +144,7 @@ var ItemDatas = [
 	{p:0,list:[]},
 	{p:0,list:[]}]},//除攻击类和内政类宝石
 	{id:100,name:"红佐石",rarity:5,soldierType:[],type:ItemType.STONE,stoneType:StoneType.RED,stoneValue:[
-	{p:100,list:[{skill:46,p:10},{skill:47,p:10},{skill:48,p:10},{skill:49,p:10},{skill:95,p:10},{skill:96,p:10},{skill:97,p:10}]},
+	{p:100,list:[{skill:46,p:10},{skill:47,p:10},{skill:48,p:10},{skill:49,p:10},{skill:95,p:10},{skill:96,p:10},{skill:97,p:10},{skill:100,p:10}]},
 	{p:0,list:[]},
 	{p:0,list:[]}]},//内政宝石
 	{id:101,name:"紫战石",rarity:4,soldierType:[SoldierType.Physical, SoldierType.Comprehensive],type:ItemType.STONE,stoneType:StoneType.PURPLE,stoneValue:[
@@ -169,7 +169,7 @@ var ItemDatas = [
 	{p:80,list:[{intelligence:5,p:10},{agility:5,p:10},{luck:5,p:10},{intelligence:4,p:50},{agility:4,p:50},{luck:4,p:50},{intelligence:3,p:100},{agility:3,p:100},{luck:3,p:100}]},
 	{p:0,list:[]}]},
 	{id:104,name:"紫佐石",rarity:4,soldierType:[],type:ItemType.STONE,stoneType:StoneType.PURPLE,stoneValue:[
-	{p:20,list:[{skill:46,p:10},{skill:47,p:10},{skill:48,p:10},{skill:49,p:10},{skill:95,p:10},{skill:96,p:10},{skill:97,p:10}]},
+	{p:20,list:[{skill:46,p:10},{skill:47,p:10},{skill:48,p:10},{skill:49,p:10},{skill:95,p:10},{skill:96,p:10},{skill:97,p:10},{skill:100,p:10}]},
 	{p:80,list:[{agility:5,p:10},{luck:5,p:10},{command:5,p:10},{agility:4,p:50},{luck:4,p:50},{command:4,p:50},{agility:3,p:100},{luck:3,p:100},{command:3,p:100}]},
 	{p:0,list:[]}]},
 	{id:105,name:"蓝战石",rarity:3,soldierType:[SoldierType.Physical, SoldierType.Comprehensive],type:ItemType.STONE,stoneType:StoneType.BLUE,stoneValue:[
@@ -191,7 +191,7 @@ var ItemDatas = [
 	{p:0,list:[]},
 	{p:90,list:[{spirit:6,p:10},{breakout:6,p:10},{morale:6,p:10},{spirit:5,p:50},{breakout:5,p:50},{morale:5,p:50},{spirit:4,p:100},{breakout:4,p:100},{morale:4,p:100},{spirit:3,p:100},{breakout:3,p:100},{morale:3,p:100}]}]},
 	{id:108,name:"蓝佐石",rarity:3,soldierType:[],type:ItemType.STONE,stoneType:StoneType.BLUE,stoneValue:[
-	{p:10,list:[{skill:46,p:10},{skill:47,p:10},{skill:48,p:10},{skill:49,p:10},{skill:95,p:10},{skill:96,p:10},{skill:97,p:10}]},
+	{p:10,list:[{skill:46,p:10},{skill:47,p:10},{skill:48,p:10},{skill:49,p:10},{skill:95,p:10},{skill:96,p:10},{skill:97,p:10},{skill:100,p:10}]},
 	{p:0,list:[]},
 	{p:90,list:[{breakout:6,p:10},{morale:6,p:10},{defense:6,p:10},{breakout:5,p:50},{morale:5,p:50},{defense:5,p:50},{breakout:4,p:100},{morale:4,p:100},{defense:4,p:100},{breakout:3,p:100},{morale:3,p:100},{defense:3,p:100}]}]},
 	{id:109,name:"绿战石",rarity:2,soldierType:[SoldierType.Physical, SoldierType.Comprehensive],type:ItemType.STONE,stoneType:StoneType.GREEN,stoneValue:[

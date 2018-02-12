@@ -478,6 +478,8 @@ function getBattleSaveData(){
 		data.mainVals = mainVals;
 		data.subVals = subVals;
 		data.battleVals = battleVals;
+		data.mainNames = mainNames;
+		data.subNames = subNames;
 	}
 	if(LMvc.BattleController.militaryModel){
 		data.militaryId = LMvc.BattleController.militaryModel.id();
@@ -1396,10 +1398,8 @@ function checkEventStartBoutEvent(){
 	var currentBelong = LMvc.BattleController.getValue("currentBelong");
 	var currentBout = LMvc.BattleController.getValue("bout");
 	var index = LMvc.BattleController.model.startBouts.findIndex(function(obj){
-		console.log(obj, currentBelong, currentBout, parseInt(obj.bout) == currentBout, obj.belong == currentBelong);
 		return parseInt(obj.bout) == currentBout && obj.belong == currentBelong;
 	});
-	console.error("checkEventStartBoutEvent index", index);
 	if(index >= 0){
 		LMvc.BattleController.model.startBouts.splice(index, 1);
 		var intBelong = currentBelong == Belong.SELF ? 0 : currentBelong == Belong.FRIEND ? 1 : 2;

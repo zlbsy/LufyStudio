@@ -383,7 +383,7 @@ CharacterModel.prototype.propertiesExp = function(key, plusValue) {
 CharacterModel.prototype.getFullPropertiesValue = function(key) {
 	var self = this;
 	var value = self.data[key];
-	if(self.id() == NewYearPresent_Boss){
+	if(NewYearPresentConfig && self.id() == NewYearPresentConfig.boss){
 		return value;
 	}
 	var expKey = key +"_exp";
@@ -930,8 +930,7 @@ CharacterModel.prototype.loyalty = function(value) {
 	if(LMvc.isRead || self.seigniorId() == 0 || self.validLoyalty() >= 90){
 		return;
 	}
-	console.log("cityId",self.cityId());
-	if(self.seigniorId() != self.city().seigniorCharaId()){
+	if(self.cityId() > 0 && self.seigniorId() != self.city().seigniorCharaId()){
 		return;
 	}
 	var v = self.validLoyalty();

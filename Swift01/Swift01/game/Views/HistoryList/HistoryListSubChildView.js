@@ -1,5 +1,5 @@
 function HistoryListSubChildView(characterId) {
-	var self = this;console.log("HistoryListSubChildView");
+	var self = this;
 	base(self, LListChildView, []);
 	self.characterId = characterId;
 	self.set();

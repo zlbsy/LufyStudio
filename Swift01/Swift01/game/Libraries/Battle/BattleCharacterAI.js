@@ -722,16 +722,19 @@ BattleCharacterAI.prototype.checkNear = function(chara, target) {
 BattleCharacterAI.prototype.checkMoveIn = function(chara) {
 	var self = this, moveInEvents = LMvc.BattleController.model.moveInEvents;
 	var index = moveInEvents.findIndex(function(child){
+		if(child.id > 0 && child.id != chara.data.id()){
+			return false;
+		}
 		var locationX = chara.locationX(), locationY = chara.locationY();
 		return child.belong == chara.belong && 
-			child.minX < locationX && child.maxX > locationX && 
-			child.minY < locationY && child.maxY > locationY;
+			child.minX <= locationX && child.maxX >= locationX && 
+			child.minY <= locationY && child.maxY >= locationY;
 	});
 	if(index >= 0){
 		var eve = moveInEvents[index];
 		moveInEvents.splice(index, 1);
 		var intBelong = eve.belong == Belong.SELF ? 0 : eve.belong == Belong.FRIEND ? 1 : 2;
-		var script = "Call.moveIn("+intBelong+","+eve.minX+","+eve.minY+","+eve.maxX+","+eve.maxY+");";
+		var script = "Call.moveIn("+intBelong+","+eve.minX+","+eve.minY+","+eve.maxX+","+eve.maxY+","+chara.data.id()+");";
 		LGlobal.script.addScript(script);
 		console.log("checkMoveIn="+eve.belong+","+eve.minX+","+eve.minY+","+eve.maxX+","+eve.maxY);
 	}

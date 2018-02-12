@@ -89,6 +89,9 @@ SkillMasterModel.prototype.probability = function() {
 SkillMasterModel.prototype.hert = function() {
 	return this.data.hert;
 };
+SkillMasterModel.prototype.addAngry = function() {
+	return this.data.addAngry;
+};
 SkillMasterModel.prototype.aids = function() {
 	return this.data.aids;
 };

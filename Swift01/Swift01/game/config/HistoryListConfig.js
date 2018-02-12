@@ -3,7 +3,7 @@ var HistoryListConfig = [
 	id:1,
 	index:1,
 	name:"汜水关之战",
-	level:1,
+	level:10,
 	troops:1000,
 	food:0,
 	maxSubCharacter:4,
@@ -31,15 +31,15 @@ var HistoryListConfig = [
 	    ],
 	  },
 	]},
-	rewards:[{count:1, items:[101, 102, 103, 104]}, {count:2, items:[105, 106, 107, 108]}, {count:5, items:[117, 118, 119, 120, 121]}]
+	rewards:[{count:1, items:[101, 102, 103, 104]}, {count:2, items:[105, 106, 107, 108]}]
 },
 {
 	id:2,
 	index:2,
 	name:"虎牢关之战",
-	level:0,
+	level:10,
 	troops:1000,
-	maxSubCharacter:3,
+	maxSubCharacter:4,
 	characters:[
 		[21,226,620],//刘备，刘封，刘禅
 		[4,89,154,175,332,502],//关羽，关平，关兴，关索,关统,关彝
@@ -75,13 +75,13 @@ var HistoryListConfig = [
         ],
       },
 	]},
-	rewards:[{count:1, items:[101, 102, 103, 104]}, {count:2, items:[105, 106, 107, 108]}, {count:5, items:[117, 118, 119, 120, 121]}]
+	rewards:[{count:1, items:[101, 102, 103, 104]}, {count:2, items:[105, 106, 107, 108]}]
 },
 {
 	id:3,
 	index:3,
 	name:"界桥之战",
-	level:0,
+	level:20,
 	troops:1000,
 	maxSubCharacter:5,
 	characters:[
@@ -120,15 +120,15 @@ var HistoryListConfig = [
         ],
       },
 	]},
-	rewards:[{count:1, items:[101, 102, 103, 104]}, {count:2, items:[105, 106, 107, 108]}, {count:5, items:[117, 118, 119, 120, 121]}]
+	rewards:[{count:1, items:[101, 102, 103, 104]}, {count:2, items:[105, 106, 107, 108]}]
 },
 {
 	id:4,
 	index:4,
 	name:"徐州入侵战",
-	level:0,
+	level:10,
 	troops:1000,
-	maxSubCharacter:7,
+	maxSubCharacter:6,
 	characters:[
 		[1,35,463,129,103,228,611],//曹操,曹丕,曹植,曹睿,曹奂
 	],
@@ -164,13 +164,13 @@ var HistoryListConfig = [
 	    ],
 	  },
 	]},
-	rewards:[{count:1, items:[101, 102, 103, 104]}, {count:2, items:[105, 106, 107, 108]}, {count:5, items:[117, 118, 119, 120, 121]}]
+	rewards:[{count:1, items:[101, 102, 103, 104]}, {count:2, items:[105, 106, 107, 108]}]
 },
 {
 	id:5,
 	index:5,
 	name:"濮阳逃出战",
-	level:0,
+	level:20,
 	troops:1000,
 	maxSubCharacter:6,
 	characters:[
@@ -206,20 +206,20 @@ var HistoryListConfig = [
 	    ],
 	  },
 	]},
-	rewards:[{count:1, items:[101, 102, 103, 104]}, {count:2, items:[105, 106, 107, 108]}, {count:5, items:[117, 118, 119, 120, 121]}]
+	rewards:[{count:1, items:[101, 102, 103, 104]}, {count:2, items:[105, 106, 107, 108]}]
 },
 {
 	id:6,
 	index:6,
 	name:"江东平定战",
-	level:0,
+	level:20,
 	troops:1000,
-	maxSubCharacter:2,
+	maxSubCharacter:6,
 	characters:[
-		[8,24,17,240],//孙坚，孙策，孙权，孙休
+		[24,17,240],//孙策，孙权，孙休
 	],
-	subCharacters:[72,123,80,178,44,234,167,81,149,100,356,145,104,509,466,189,9,26,278,464,542,597],
-	//程普,黄盖,韩当,祖茂,丁奉,虞汜,陆凯,周泰,陈武,孙瑜,孙静,朱治,朱然,张昭,张紘,凌统,陆逊,陆抗,丁封,孙亮,张布,孙皓
+	subCharacters:[72,123,80,178,44,234,167,81,149,100,356,145,104,509,466,189,9,26,278,464,542,597,156],
+	//程普,黄盖,韩当,祖茂,丁奉,虞汜,陆凯,周泰,陈武,孙瑜,孙静,朱治,朱然,张昭,张紘,凌统,陆逊,陆抗,丁封,孙亮,张布,孙皓,吕范
 	enemy:{chara_id : 265,color : "0,0,0",generals_count:6,areas : [
 	  {  area_id : 54,troops:50000,food:1000000,
 	  generals:[
@@ -228,41 +228,41 @@ var HistoryListConfig = [
 	    {chara_id:10044,name:"张英",feat:0,loyalty:100},
 	    {chara_id:10045,name:"于麋",feat:0,loyalty:100},
 	    {chara_id:10046,name:"樊能",feat:0,loyalty:100},
-	    {chara_id:10047,name:"笮融",feat:0,loyalty:100},
+	    {chara_id:10047,name:"笮融",feat:0,loyalty:100},//30
 	    {chara_id:10048,name:"薛礼",feat:0,loyalty:100},
 	    {chara_id:10049,name:"陈横",feat:0,loyalty:100},
 	    {chara_id:10050,name:"严白虎",feat:0,loyalty:100},
 	    {chara_id:10051,name:"严兴",feat:0,loyalty:100},
-	    {chara_id:10052,name:"王朗",feat:0,loyalty:100},
+	    {chara_id:10052,name:"王朗",feat:0,loyalty:100},//25
 	    {chara_id:10053,name:"虞翻",feat:0,loyalty:100},
 	    {chara_id:10054,name:"周听",feat:0,loyalty:100},
 	    {chara_id:11401,name:"道士",feat:0,loyalty:100},
 	    {chara_id:11402,name:"道士",feat:0,loyalty:100},
-	    {chara_id:11501,name:"策士",feat:0,loyalty:100},
+	    {chara_id:11501,name:"策士",feat:0,loyalty:100},//20
 	    {chara_id:11601,name:"风水士",feat:0,loyalty:100},
 	    {chara_id:11602,name:"风水士",feat:0,loyalty:100},
 	    {chara_id:11603,name:"风水士",feat:0,loyalty:100},
 	    {chara_id:11604,name:"风水士",feat:0,loyalty:100},
-	    {chara_id:11701,name:"水兵",feat:0,loyalty:100},
+	    {chara_id:11701,name:"水兵",feat:0,loyalty:100},//15
 	    {chara_id:11702,name:"水兵",feat:0,loyalty:100},
 	    {chara_id:11703,name:"水兵",feat:0,loyalty:100},
 	    {chara_id:11704,name:"水兵",feat:0,loyalty:100},
 	    {chara_id:11705,name:"水兵",feat:0,loyalty:100},
-	    {chara_id:11706,name:"水兵",feat:0,loyalty:100},
+	    {chara_id:11706,name:"水兵",feat:0,loyalty:100},//10
 	    {chara_id:11101,name:"弓兵",feat:0,loyalty:100},
 	    {chara_id:11102,name:"弓兵",feat:0,loyalty:100},
 	    {chara_id:11103,name:"弓兵",feat:0,loyalty:100},
 	    {chara_id:11104,name:"弓兵",feat:0,loyalty:100},
-	    {chara_id:11105,name:"弓兵",feat:0,loyalty:100},
+	    {chara_id:11105,name:"弓兵",feat:0,loyalty:100},//5
 	    {chara_id:11106,name:"弓兵",feat:0,loyalty:100},
 	    {chara_id:11107,name:"弓兵",feat:0,loyalty:100},
 	    {chara_id:11108,name:"弓兵",feat:0,loyalty:100},
 	    {chara_id:11001,name:"步兵",feat:0,loyalty:100},
-	    {chara_id:11002,name:"步兵",feat:0,loyalty:100},
+	    {chara_id:11002,name:"步兵",feat:0,loyalty:100},//0
 	    ],
 	  },
 	]},
-	rewards:[{count:1, items:[101, 102, 103, 104]}, {count:2, items:[105, 106, 107, 108]}, {count:5, items:[117, 118, 119, 120, 121]}]
+	rewards:[{count:1, items:[101, 102, 103, 104]}, {count:2, items:[105, 106, 107, 108]}]
 },
 {
 	id:7,

@@ -1,4 +1,5 @@
 LPlugin.KEY_STAMP_LIST = "stampList";
+LPlugin.KEY_HISTORY_LIST = "historyList";
 LPlugin.KEY_EVENT_LIST = "eventList";
 LPlugin.KEY_CHARACTER_LIST = "characterList";
 if(!LPlugin.bundleVersion){
@@ -21,6 +22,12 @@ LPlugin.DictionaryIsRead = function(key){
 LPlugin.ReadDictionary = function(key){
 	return LPlugin.SetData("Dictionary_" + key + "_" + LMvc.ver, 1);
 };
+LPlugin.historys = function(){
+	if(!LPlugin._historys){
+		LPlugin._historys = LPlugin.GetData(LPlugin.KEY_HISTORY_LIST);
+	}
+	return LPlugin._historys;
+};
 LPlugin.stamps = function(){
 	if(!LPlugin._stamps){
 		LPlugin._stamps = LPlugin.GetData(LPlugin.KEY_STAMP_LIST);
@@ -37,8 +44,8 @@ LPlugin.characters = function(){
 	if(!LPlugin._characters){
 		LPlugin._characters = LPlugin.GetData(LPlugin.KEY_CHARACTER_LIST, null) || LPlugin.GetData(LPlugin.KEY_EVENT_LIST);
 		if(!LPlugin._characters.list){
-		LPlugin._characters.list = [];
-	}
+			LPlugin._characters.list = [];
+		}
 	}
 	return LPlugin._characters;
 };
@@ -48,6 +55,13 @@ LPlugin.stampIsOpen = function(key){
 LPlugin.openStamp = function(key){
 	LPlugin.stamps()[key] = 1;
 	LPlugin.SetData(LPlugin.KEY_STAMP_LIST, LPlugin.stamps());
+};
+LPlugin.historyIsClear = function(key){
+	return LPlugin.historys()[key] ? true : false;
+};
+LPlugin.clearHistory = function(key){
+	LPlugin.historys()[key] = 1;
+	LPlugin.SetData(LPlugin.KEY_HISTORY_LIST, LPlugin.historys());
 };
 LPlugin.eventIsOpen = function(key){
 	return LPlugin.events()[key] ? true : false;

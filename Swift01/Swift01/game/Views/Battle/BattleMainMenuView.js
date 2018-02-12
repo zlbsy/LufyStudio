@@ -160,7 +160,7 @@ BattleMainMenuView.prototype.showOrHideMiniMap=function(event){
 BattleMainMenuView.prototype.autoPlay=function(event){
 	var self = event.currentTarget.getParentByConstructor(BattleMainMenuView);
 	self.hideMenu();
-	var obj = {title:Language.get("confirm"),message:Language.get("自动进行战斗一个回合，要继续吗？"),height:200,
+	var obj = {title:Language.get("confirm"),message:Language.get("auto_play_confirm_message"),height:200,
 		okEvent:function(e){
 			e.currentTarget.parent.remove();
 			LMvc.BattleController.view.mainMenu.visible = false;
