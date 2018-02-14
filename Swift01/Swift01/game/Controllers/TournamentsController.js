@@ -5,7 +5,11 @@ function TournamentsController(){
 TournamentsController.prototype.construct=function(){
 	var self = this;
 	var list = self.model.getImages();
-	self.load.image(list,self.mvcLoad);
+	self.load.image(list,self.configLoad);
+};
+TournamentsController.prototype.configLoad=function(){
+	var self = this;
+	self.load.config(["MapSetting","HistoryList"],self.mvcLoad);
 };
 TournamentsController.prototype.mvcLoad=function(){
 	var self = this;

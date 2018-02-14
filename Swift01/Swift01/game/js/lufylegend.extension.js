@@ -186,10 +186,10 @@ LRadio.prototype.setValue = function (value) {
 */
 //////////////////////华丽的分界线////////////////////
 /*引擎中需调整*/
-/*
 LButton.prototype.ll_button_mode = function(){
 	return;
 };
+/*
 function init (s, c, w, h, f, t) {
 	LGlobal.speed = s;
 	var _f = function () {

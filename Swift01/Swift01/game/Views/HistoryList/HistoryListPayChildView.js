@@ -2,6 +2,7 @@ function HistoryListPayChildView(characterId) {
 	var self = this;
 	base(self, LListChildView, []);
 	self.characterId = characterId;
+	self.layerInit();
 	self.set();
 }
 HistoryListPayChildView.prototype.layerInit=function(){
@@ -22,8 +23,8 @@ HistoryListPayChildView.prototype.getHeight=function(){
 };
 HistoryListPayChildView.prototype.set=function(){
 	var self = this;
-	self.layerInit();
 	var characterModel = CharacterModel.getChara(self.characterId);
+	self.characterName = characterModel.name();
 	if(characterModel.isHistoryPurchase() && characterModel.equipments().length == 0){
 		var equipment = historyPurchaseCharactersEquipment[characterModel.id()];
 		if(equipment.id > 0){
@@ -38,14 +39,26 @@ HistoryListPayChildView.prototype.set=function(){
 	if(!purchaseHasBuy(productIdConfig["history_"+self.characterId])){
 		lockedButton(self.layer, 0.3);
 	}
-	var name = getStrokeLabel(characterModel.name(),14,"#FFFFFF","#000000",4);
+	var name = getStrokeLabel(self.characterName,14,"#FFFFFF","#000000",4);
 	name.x = charaImg.x + (48-name.getWidth())*0.5;
 	name.y = 39;
 	self.layer.addChild(name);
 };
 HistoryListPayChildView.prototype.onClick = function(event) {
 	var self = event.target;
-	if(self.lock){
+	if(self.layer.getChildByName("lock")){
+		if(LPlugin.native){
+			purchaseConfirm(productIdConfig["history_"+self.characterId], self.characterName, function(productId){
+				self.layer.removeAllChild();
+				self.set();
+				self.cacheAsBitmap(false);
+				self.updateView();
+			});
+		}else{
+			purchaseConfirm(null, self.characterName, function(){
+				window.open(LMvc.homeURL);
+			});
+		}
 		return;
 	}
 	if(!self.focus){

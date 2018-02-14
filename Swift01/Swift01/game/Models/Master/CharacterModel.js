@@ -603,7 +603,7 @@ CharacterModel.prototype.stopIn = function(value) {
 	return this._dataValue("stopIn", value, 0);
 };
 CharacterModel.prototype.age = function() {
-	if(this.data.born == 0 || !LMvc.chapterData || historyPurchaseCharacters.indexOf(this.id()) >= 0){
+	if(this.data.born == 0 || !LMvc.chapterData || this.isHistoryPurchase()){
 		return "--";
 	}
 	return LMvc.chapterData.year - this.data.born;
@@ -881,7 +881,7 @@ CharacterModel.prototype.strategies = function(isAll) {
 };
 CharacterModel.prototype.identity = function(value) {
 	var self = this;
-	if(historyPurchaseCharacters.indexOf(self.id()) >= 0){
+	if(self.isHistoryPurchase()){
 		return "-";
 	}
 	if(self.isEmploy()){
@@ -896,9 +896,9 @@ CharacterModel.prototype.identity = function(value) {
 		identity = "building";
 	} else if(self.id() == seigniorId && self.seignior()){
 		identity = "monarch";
-	}else if(self.id() == self.city().prefecture()){
+	}else if(self.city() && self.id() == self.city().prefecture()){
 		identity = "prefecture";
-	}else if(self.seigniorId() != self.city().seigniorCharaId()){
+	}else if(self.city() && self.seigniorId() != self.city().seigniorCharaId()){
 		identity = "captive";
 	}
 	return Language.get(identity);
@@ -1213,10 +1213,12 @@ CharacterModel.prototype.maxProficiencySoldier = function() {
 	if(soldiers.length == 1 && !soldiers[0].id()){
 		soldiers = self.initSoldiers();
 	}
+	var isHistory = self.isHistoryPurchase();
 	var proficiency = 0, soldier;
 	for(var i=0,l=soldiers.length;i<l;i++){
 		var child = soldiers[i];
-		if(specialSoldiersConfig.indexOf(child.id()) >= 0 
+		if(!isHistory
+			&& specialSoldiersConfig.indexOf(child.id()) >= 0 
 			&& self.seigniorId() == LMvc.selectSeignorId
 			&& !purchaseHasBuy(productIdConfig.soldier_special)){
 			continue;
@@ -1234,8 +1236,10 @@ CharacterModel.prototype.currentSoldierId = function(value) {
 		self.data.currentSoldierId = value;
 		return;
 	}
+	var isHistory = self.isHistoryPurchase();
 	if(self.data.currentSoldierId){
-		if(specialSoldiersConfig.indexOf(self.data.currentSoldierId) >= 0 
+		if(!isHistory
+			&& specialSoldiersConfig.indexOf(self.data.currentSoldierId) >= 0 
 			&& self.seigniorId() == LMvc.selectSeignorId
 			&& !purchaseHasBuy(productIdConfig.soldier_special)){
 			self.data.currentSoldierId = null;
