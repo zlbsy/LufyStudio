@@ -26,8 +26,8 @@ android {
         applicationId "com.lufylegend.sgj"
         minSdkVersion 15
         targetSdkVersion 23
-        versionName '1.10.0'
-        versionCode 16
+        versionName '2.0.0'
+        versionCode 20
     }
     buildTypes {
         release {
