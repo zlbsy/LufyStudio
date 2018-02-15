@@ -90,6 +90,12 @@ BattleMainMenuView.prototype.setMenu=function(){
 	menuButton.addEventListener(LMouseEvent.MOUSE_UP, self.showOrHideMiniMap);
 	
 	menuY += menuHeight;
+	var autoButton = getButton(Language.get("auto_battle"),menuWidth);
+	autoButton.y = menuY;
+	layer.addChild(autoButton);
+	autoButton.addEventListener(LMouseEvent.MOUSE_UP, self.autoPlay);
+	
+	menuY += menuHeight;
 	var menuButton = getButton(Language.get("battleField"),menuWidth);
 	menuButton.y = menuY;
 	layer.addChild(menuButton);
@@ -150,6 +156,19 @@ BattleMainMenuView.prototype.showOrHideMiniMap=function(event){
 	var miniLayer = self.controller.view.miniLayer;
 	miniLayer.visible = !miniLayer.visible;
 	self.miniMapVisible = miniLayer.visible;
+};
+BattleMainMenuView.prototype.autoPlay=function(event){
+	var self = event.currentTarget.getParentByConstructor(BattleMainMenuView);
+	self.hideMenu();
+	var obj = {title:Language.get("confirm"),message:Language.get("auto_play_confirm_message"),height:200,
+		okEvent:function(e){
+			e.currentTarget.parent.remove();
+			LMvc.BattleController.view.mainMenu.visible = false;
+			LMvc.BattleController.setValue("autoPlay",true);
+			BattleIntelligentAI.execute();
+		},cancelEvent:null};
+	var windowLayer = ConfirmWindow(obj);
+	LMvc.layer.addChild(windowLayer);
 };
 BattleMainMenuView.prototype.toRetreat=function(event){
 	var self = event.currentTarget.getParentByConstructor(BattleMainMenuView);

@@ -642,12 +642,14 @@ ScriptFunction.analysis = function(value) {
 		script.scriptArray.varList[param[i]] = _data[i];
 	}
 	var funLineArr = funArr["function"];
-	for ( i = funLineArr.length - 1; i >= 0; i--)
+	for ( i = funLineArr.length - 1; i >= 0; i--){
 		script.lineList.unshift(funLineArr[i]);
+	}
 	script.analysis();
 
 };
 ScriptFunction.setFunction = function(value, callback) {
+	console.error("setFunction", value);
 	var script = LGlobal.script;
 	var startNameIndex = value.indexOf(" ");
 	var child;
@@ -667,13 +669,19 @@ ScriptFunction.setFunction = function(value, callback) {
 	funArr["name"] = LMath.trim(value.substring(startNameIndex + 1, start));
 
 	var funLineArr = new Array();
-	while (script.lineList[0].indexOf("endfunction") < 0) {
+	var endfunctionIndex = 0;
+	while (script.lineList[0].indexOf("endfunction") < 0 || endfunctionIndex > 0) {
 		child = script.lineList.shift();
 		for ( i = 0; i < param.length; i++) {
 			if (param[i].length > 0)
 				child = child.replace("@" + param[i], "@param_" + param[i]);
 		}
 		funLineArr.push(child);
+		if(child.indexOf("endfunction") >= 0){
+			endfunctionIndex--;
+		}else if(child.indexOf("function") >= 0){
+			endfunctionIndex++;
+		}
 	}
 	script.lineList.shift();
 	funArr["function"] = funLineArr;
@@ -1738,6 +1746,7 @@ LRPGCharacter.moveTo = function(value, start, end) {
 var LScriptSGJ = function() {
 };
 LScriptSGJ.analysis = function(childType, lineValue) {
+console.log("LScriptSGJ.analysis="+childType);
 	var start, end, params;
 	switch(childType) {
 		case "SGJTalk":
@@ -1760,6 +1769,9 @@ LScriptSGJ.analysis = function(childType, lineValue) {
 			break;
 		case "SGJTutorial":
 			LSGJTutorialScript.analysis(lineValue);
+			break;
+		case "SGJHistory":
+			LSGJHistoryScript.analysis(lineValue);
 			break;
 		default:
 			LGlobal.script.analysis();
@@ -1898,7 +1910,7 @@ LSGJTalkScript.analysis = function(value) {
 };
 LSGJTalkScript.show = function(value, start, end) {
 	var params = value.substring(start + 1, end).split(",");
-	Talk(params[0], params[1], params[2], function() {
+	Talk(params[0], 0, params[params.length - 1], function() {
 		LMvc.talkOver = true;
 		//TalkRemove();
 	});
@@ -1916,6 +1928,18 @@ LSGJBattleCharacterScript.analysis = function(value) {
 		case "SGJBattleCharacter.endAction":
 			LSGJBattleCharacterScript.endAction(value, start, end);
 			break;
+		case "SGJBattleCharacter.changeAction":
+			LSGJBattleCharacterScript.changeAction(value, start, end);
+			break;
+		case "SGJBattleCharacter.changeMission":
+			LSGJBattleCharacterScript.changeMission(value, start, end);
+			break;
+		case "SGJBattleCharacter.moveTo":
+			LSGJBattleCharacterScript.moveTo(value, start, end);
+			break;
+		case "SGJBattleCharacter.singleCombatStartEvent":
+			LSGJBattleCharacterScript.singleCombatStartEvent(value, start, end);
+			break;
 		case "SGJBattleCharacter.singleCombatStart":
 			LSGJBattleCharacterScript.singleCombatStart(value, start, end);
 			break;
@@ -1931,12 +1955,71 @@ LSGJBattleCharacterScript.analysis = function(value) {
 		case "SGJBattleCharacter.boutSkillRun":
 			LSGJBattleCharacterScript.boutSkillRun(value, start, end);
 			break;
+		case "SGJBattleCharacter.focus":
+			LSGJBattleCharacterScript.focus(value, start, end);
+			break;
+		case "SGJBattleCharacter.hide":
+			LSGJBattleCharacterScript.hide(value, start, end);
+			break;
+		case "SGJBattleCharacter.show":
+			LSGJBattleCharacterScript.show(value, start, end);
+			break;
 		case "SGJBattleCharacter.askSingleCombat":
 			BattleController.ctrlChara.inteAI.askSingleCombat();
 			break;
 		default:
 			LGlobal.script.analysis();
 	}
+};
+LSGJBattleCharacterScript.show = function(value, start, end) {
+	var params = value.substring(start + 1, end).split(",");
+	LSGJBattleCharacterScript.visible(params, true);
+};
+LSGJBattleCharacterScript.hide = function(value, start, end) {
+	var params = value.substring(start + 1, end).split(",");
+	LSGJBattleCharacterScript.visible(params, false);
+};
+LSGJBattleCharacterScript.visible = function(params, value) {
+	//belong,id
+	var characters;
+	if(params.length > 1){
+		var character = LMvc.BattleController.view.charaLayer.getCharacter(params[0],parseInt(params[1]));
+		characters = character ? [character] : [];
+	}else{
+		characters = LMvc.BattleController.view.charaLayer.getCharactersFromBelong(params[0]);
+	}
+	characters.forEach(function(child){
+		child.visible = value;
+	});
+	LGlobal.script.analysis();
+};
+LSGJBattleCharacterScript.changeMission = function(value, start, end) {
+	//params:belong,charaId,mission
+	var params = value.substring(start + 1, end).split(",");
+	var belong = params[0];
+	var characterId = parseInt(params[1]);
+	var mission = parseInt(params[2]);
+	var characters = [];
+	if(characterId > 0){
+		var character = LMvc.BattleController.view.charaLayer.getCharacter(belong,characterId);
+		if(character){
+			characters.push(character);
+		}
+	}else{
+		characters = LMvc.BattleController.view.charaLayer.getCharactersFromBelong(belong);
+	}
+	characters.forEach(function(chara){
+		character.mission = mission;
+	});
+	LGlobal.script.analysis();
+};
+LSGJBattleCharacterScript.focus = function(value, start, end) {
+	var params = value.substring(start + 1, end).split(",");
+	var charaLayer = LMvc.BattleController.view.charaLayer;
+	var id = params[0];
+	var chara = charaLayer.getCharacter(null, id);
+	LMvc.BattleController.view.resetMapPosition(chara);
+	LGlobal.script.analysis();
 };
 LSGJBattleCharacterScript.boutSkillRun = function(value, start, end) {
 	var params = value.substring(start + 1, end).split(",");
@@ -1950,8 +2033,87 @@ LSGJBattleCharacterScript.battleEndCheck = function(value, start, end) {
 };
 LSGJBattleCharacterScript.endAction = function(value, start, end) {
 	var params = value.substring(start + 1, end).split(",");
-	var character = LMvc.BattleController.view.charaLayer.getCharacter(params[0],parseInt(params[1]));
+	var character = LMvc.BattleController.view.charaLayer.getCharacter(params[0],parseInt(params[1]), true);
 	character.AI.endAction();
+};
+LSGJBattleCharacterScript.moveTo = function(value, start, end) {
+	var params = value.substring(start + 1, end).split(",");
+	var character = LMvc.BattleController.view.charaLayer.getCharacter(params[0],parseInt(params[1]));
+	LMvc.BattleController.view.resetMapPosition(character);
+	var toX = parseInt(params[2]);
+	var toY = parseInt(params[3]);
+	var x = character.locationX();
+	var y = character.locationY();
+	var list = [];
+	while(x != toX || y != toY){
+		if(toX > x){
+			x += 1;
+		}else if(toX < x){
+			x -= 1;
+		}else if(toY > y){
+			y += 1;
+		}else if(toY < y){
+			y -= 1;
+		}
+		list.push({x:x, y:y});
+	}
+	//list.shift();
+	character.addEventListener(CharacterActionEvent.MOVE_COMPLETE, LSGJBattleCharacterScript.moveComplete);
+	setTimeout(function(){
+		character.setRoad(list);
+	}, 300);
+	
+};
+LSGJBattleCharacterScript.moveComplete = function(event){
+	var character = event.currentTarget;
+	character.removeEventListener(CharacterActionEvent.MOVE_COMPLETE, LSGJBattleCharacterScript.moveComplete);
+	LMvc.BattleController.view.resetMapPosition(character);
+	setTimeout(function(){
+		LGlobal.script.analysis();
+	}, 300);
+};
+LSGJBattleCharacterScript.changeAction = function(value, start, end) {
+	var params = value.substring(start + 1, end).split(",");
+	var character = LMvc.BattleController.view.charaLayer.getCharacter(params[0],parseInt(params[1]));
+	var action = params[2];
+	if(params.length > 3){
+		var direction = params[3];
+		character.setActionDirection(action, direction);
+	}else{
+		character.changeAction(action);
+	}
+	var time = 500;
+	switch(action){
+		case CharacterAction.PANT:
+			time = 1000;
+			break;
+		case CharacterAction.MOVE:
+			LGlobal.script.analysis();
+			return;
+	}
+	setTimeout(function(){
+		LGlobal.script.analysis();
+	}, time);
+};
+LSGJBattleCharacterScript.singleCombatStartEvent = function(value, start, end) {
+	var params = value.substring(start + 1, end).split(",");
+	var id1 = parseInt(params[0]);
+	var id2 = parseInt(params[1]);
+	var attackTarget;
+	if(!BattleController.ctrlChara || BattleController.ctrlChara.belong == Belong.SELF){
+		BattleController.ctrlChara = LMvc.BattleController.view.charaLayer.getCharacter(Belong.SELF, id1);
+		attackTarget = LMvc.BattleController.view.charaLayer.getCharacter(Belong.ENEMY, id2);
+	}else{
+		attackTarget = LMvc.BattleController.view.charaLayer.getCharacter(Belong.SELF, id1);
+	}
+	BattleController.ctrlChara.AI.attackTarget = attackTarget;
+	BattleController.ctrlChara.AI.singleCombatStart();
+	delete LGlobal.script.scriptArray.funList["singleCombatEndEvent"];
+	/*
+	var script = "function singleCombatEndEvent();endfunction;";
+	script += "Wait.ctrl();";
+	LGlobal.script.addScript("function singleCombatEndEvent();");
+	LGlobal.script.addScript("Wait.ctrl();");*/
 };
 LSGJBattleCharacterScript.singleCombatStart = function(value, start, end) {
 	var params = value.substring(start + 1, end).split(",");
@@ -1973,8 +2135,90 @@ LSGJBattleCharacterScript.characterToDie = function(value, start, end) {
 		.to(character,0.2,{alpha:0})
 		.to(character,0.2,{alpha:1,onComplete:function(obj){
 			LMvc.BattleController.view.charaLayer.removeCharacter(obj.belong,obj.data.id());
-			battleEndCheck(obj.belong);
+			//battleEndCheck(obj.belong);
+			LGlobal.script.analysis();
 		}});
+};
+/*
+ * LSGJHistoryScript.js
+ **/
+LSGJHistoryScript = function() {
+};
+LSGJHistoryScript.analysis = function(value) {
+	var start = value.indexOf("(");
+	var end = value.indexOf(")");
+	switch(value.substr(0,start)) {
+		case "SGJHistory.addStartBoutEvent":
+			LSGJHistoryScript.addStartBoutEvent(value, start, end);
+			break;
+		case "SGJHistory.addHitEvent":
+			LSGJHistoryScript.addHitEvent(value, start, end);
+			break;
+		case "SGJHistory.addMoveInEvent":
+			LSGJHistoryScript.addMoveInEvent(value, start, end);
+			break;
+		case "SGJHistory.addDieEvent":
+			LSGJHistoryScript.addDieEvent(value, start, end);
+			break;
+		case "SGJHistory.boutStart":
+			LMvc.BattleController.view.charaLayer.boutStart();
+			break;
+		case "SGJHistory.battleStart":
+			LMvc.HistoryListController.battleStart();
+			break;
+		case "SGJHistory.battleFail":
+			LSGJHistoryScript.battleFail();
+			break;
+		case "SGJHistory.battleWin":
+			LSGJHistoryScript.battleWin();
+			break;
+		case "SGJHistory.checkEventStartBoutEvent":
+			LSGJHistoryScript.checkEventStartBoutEvent(value, start, end);
+			break;
+		default:
+			LGlobal.script.analysis();
+	}
+};
+LSGJHistoryScript.battleWin = function(value, start, end) {
+	var resultView = new BattleResultView(LMvc.BattleController,1);
+	LMvc.BattleController.view.addChild(resultView);
+};
+LSGJHistoryScript.battleFail = function(value, start, end) {
+	allCharactersToRetreat();
+};
+LSGJHistoryScript.checkEventStartBoutEvent = function(value, start, end) {
+	checkEventStartBoutEvent();
+};
+LSGJHistoryScript.addMoveInEvent = function(value, start, end) {
+	var params = value.substring(start + 1, end).split(",");
+	var belong = params[0];
+	var minX = parseInt(params[1]);
+	var minY = parseInt(params[2]);
+	var maxX = parseInt(params[3]);
+	var maxY = parseInt(params[4]);
+	var characterId = params.length==6?parseInt(params[5]):0;
+	LMvc.BattleController.model.addMoveInEvent(belong, minX, minY, maxX, maxY,characterId);
+	LGlobal.script.analysis();
+};
+LSGJHistoryScript.addStartBoutEvent = function(value, start, end) {
+	var params = value.substring(start + 1, end).split(",");
+	var bout = params[0];
+	var belong = params[1];
+	LMvc.BattleController.model.addStartBout(bout, belong);
+	LGlobal.script.analysis();
+};
+LSGJHistoryScript.addHitEvent = function(value, start, end) {
+	var params = value.substring(start + 1, end).split(",");
+	var id1 = params[0];
+	var id2 = params[1];
+	LMvc.BattleController.model.addHit(id1,id2);
+	LGlobal.script.analysis();
+};
+LSGJHistoryScript.addDieEvent = function(value, start, end) {
+	var params = value.substring(start + 1, end).split(",");
+	var id = parseInt(params[0]);
+	LMvc.BattleController.model.addDieEvent(id);
+	LGlobal.script.analysis();
 };
 /*
  * LSGJSingleCombatScript.js
@@ -2007,9 +2251,20 @@ LSGJSingleCombatScript.analysis = function(value) {
 		case "SGJSingleCombat.checkCommandEnd":
 			LSGJSingleCombatScript.checkCommandEnd(value, start, end);
 			break;
+		case "SGJSingleCombat.die":
+			LSGJSingleCombatScript.die(value, start, end);
+			break;
 		default:
 			LGlobal.script.analysis();
 	}
+};
+LSGJSingleCombatScript.die = function(value, start, end) {
+	var params = value.substring(start + 1, end).split(",");
+	var character = LMvc.BattleController.view.charaLayer.getCharacter(params[0],parseInt(params[1]));
+	character.data.troops(0);
+	character.data.wounded(0);
+	console.log(character.data);
+	LGlobal.script.analysis();
 };
 LSGJSingleCombatScript.checkCommandEnd = function(value, start, end) {
 	checkSingleCombatCommandEnd();
@@ -2076,7 +2331,7 @@ LSGJSingleCombatScript.playSE = function(value, start, end) {
 	LGlobal.script.analysis();
 };
 LSGJSingleCombatScript.moveComplete = function(event) {
-	event.currentTarget.addEventListener(CharacterActionEvent.MOVE_COMPLETE,LSGJSingleCombatScript.moveComplete);
+	event.currentTarget.removeEventListener(CharacterActionEvent.MOVE_COMPLETE,LSGJSingleCombatScript.moveComplete);
 	LGlobal.script.analysis();
 };
 LSGJSingleCombatScript.moveTo = function(value, start, end) {

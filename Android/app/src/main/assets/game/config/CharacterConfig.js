@@ -123,4 +123,12 @@ var charactersParentConfig = [
 ];
 var femaleCharacters = [36,37,139,241,380,524,528,548];
 var sCharacterImages = ["zpftmd748"];
-var NewYearPresent_Boss = 861;
+//var NewYearPresent_Boss = 861;
+var historyPurchaseCharacters = [900,901,902,903,904];
+var historyPurchaseCharactersEquipment = {
+	"900":{id:45,stone:99,stonePlus:{type:"item_equipment",skill:38}},
+	"901":{id:74,stone:99,stonePlus:{type:"item_equipment",skill:30}},
+	"902":{id:16,stone:99,stonePlus:{type:"item_equipment",skill:20}},
+	"903":{id:77,stone:99,stonePlus:{type:"item_equipment",skill:98}},
+	"904":{id:61,stone:98,stonePlus:{type:"item_equipment",skill:14}}
+};

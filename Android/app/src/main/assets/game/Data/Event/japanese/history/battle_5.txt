@@ -1,0 +1,15 @@
+SGJBattleCharacter.focus(10005);
+SGJTalk.show(10005,曹操，你今天插翅难飞了，留下你的脑袋吧，哈哈哈哈！);
+if(@sub_character_0==0);
+SGJBattleCharacter.focus(@main_character_0);
+SGJTalk.show(@main_character_0,不好了，到处都是大火，四周又被敌军重重包围......);
+else;
+SGJBattleCharacter.focus(@sub_character_0);
+SGJTalk.show(@sub_character_0,主公，不好了，到处都是大火，四周又被敌军重重包围，我们该怎么办啊？);
+endif;
+SGJBattleCharacter.focus(@main_character_0);
+SGJBattleCharacter.changeAction(belong_self,@main_character_0,attack,left);
+SGJTalk.show(@main_character_0,杀开一条路，冲出去！);
+SGJBattleCharacter.changeAction(belong_self,@main_character_0,move,left);
+SGJHistory.addMoveInEvent(belong_self,0,0,2,1,@main_character_0);
+SGJHistory.boutStart();

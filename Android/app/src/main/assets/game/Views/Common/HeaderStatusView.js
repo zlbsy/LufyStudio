@@ -14,6 +14,9 @@ HeaderStatusView.prototype.set=function(){
 	self.stepHeight = 30;
 	self.cityFree = self.controller.getValue("cityFree");
 	var cityModel = self.controller.getValue("cityData");
+	if(cityModel.id() == HistoryCityConfig.cityId){
+		return;
+	}
 	var panel = new LPanel(new LBitmapData(LMvc.datalist["background-header"]),300,50);
 	panel.x = 5;
 	self.addChild(panel);
@@ -21,6 +24,7 @@ HeaderStatusView.prototype.set=function(){
 	title.x = 5;
 	title.y = 10;
 	panel.addChild(title);
+	
 	var seigniorCharacterName = "***";
 	if(cityModel.seignior_chara_id()){
 		 seigniorCharacterName = CharacterModel.getChara(cityModel.seignior_chara_id()).name();

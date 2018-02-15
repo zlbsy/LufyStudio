@@ -63,7 +63,7 @@ TournamentsView.prototype.closeCharacterList=function(event){
 	enemyList.unshift({id:selectCharacterId, r:0});
 	if(isInNewYearTrem()){
 		enemyList.pop();
-		enemyList.push({id:NewYearPresent_Boss, r:0});
+		enemyList.push({id:NewYearPresentConfig.boss, r:0});
 	}
 	/*enemyList[0].r=1;
 	enemyList[3].r=1;

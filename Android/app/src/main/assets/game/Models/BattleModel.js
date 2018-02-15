@@ -4,6 +4,10 @@ function BattleModel(){
 BattleModel.prototype.construct=function(){
 	var self = this;
 	self.map = null;
+	self.hits = [];
+	self.startBouts = [];
+	self.moveInEvents = [];
+	self.dieEvents = [];
 	self.selfCaptive = [];
 	self.enemyCaptive = [];
 	self.ourList = [];
@@ -27,7 +31,6 @@ BattleModel.prototype.loadMapFileOver=function(event,callback){
 	var self = event.currentTarget.parent;
 	//保存战场地图文件内容
 	self.map = LMvc.mapData;
-	
 
 	self.stepWidth = BattleCharacterSize.width;
 	self.stepHeight = BattleCharacterSize.height;
@@ -95,7 +98,6 @@ BattleModel.prototype.createMap = function(callback){
 	if(!MapHelperSetting.bitmapData){
 		MapHelperSetting.bitmapData = new LBitmapData(LMvc.datalist["tile_map"]);
 	}
-	
 	var maps = self.map.data;
 	var h = maps.length;
 	var w = maps[0].length;
@@ -118,6 +120,18 @@ BattleModel.prototype.createMap = function(callback){
 		BattleModel.bitmapDatas[dataIndex].lock();
 	}
 	self.createMapTile(0, callback);
+};
+BattleModel.prototype.addHit = function(id1,id2){
+	this.hits.push([id1,id2]);
+};
+BattleModel.prototype.addStartBout = function(bout, belong){
+	this.startBouts.push({bout:bout, belong:belong});
+};
+BattleModel.prototype.addMoveInEvent = function(belong, minX, minY, maxX, maxY,id){
+	this.moveInEvents.push({belong:belong, minX:minX, minY:minY, maxX:maxX, maxY:maxY,id:id||0});
+};
+BattleModel.prototype.addDieEvent = function(id){
+	this.dieEvents.push(id);
 };
 BattleModel.prototype.createMapTile = function(index, callback){
 	var self = this;

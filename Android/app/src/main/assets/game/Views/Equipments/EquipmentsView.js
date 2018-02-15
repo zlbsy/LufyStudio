@@ -7,6 +7,9 @@ function EquipmentsView(controller, equipmentListType, size) {
 EquipmentsView.prototype.getEquipmentList = function() {
 	var self = this;
 	var cityData = self.controller.getValue("cityData");
+	if(!cityData){
+		return [];
+	}
 	var equipmentList = cityData.equipments();
 	equipmentList = equipmentList.sort(function(a, b){
 		var v = b.rarity() - a.rarity();

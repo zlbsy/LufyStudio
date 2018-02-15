@@ -141,7 +141,7 @@ SoldierDetailedView.prototype.onClickTerrainButton=function(event){
 };
 SoldierDetailedView.prototype.onClickRestraintButton=function(event){
 	var self = event.currentTarget.getParentByConstructor(SoldierDetailedView);
-	var startX = 10, startY = 50, w = 140, h = 29;
+	var startX = 10, startY = 50, w = 140, h = 25, color;
 	var layer = new LSprite();
 	var msg = String.format(Language.get("restraint_attack_message"), self.soldierModel.name());
 	var label = getStrokeLabel(msg,18,"#FFFFFF","#000000",4);
@@ -151,11 +151,19 @@ SoldierDetailedView.prototype.onClickRestraintButton=function(event){
 		var soldier = SoldierMasterModel.master[i];
 		var restrain = self.soldierModel.restrain(soldier.id());
 		var restrainLabel = "-";
-		if(restrain.value != 100){
+		color = "#FFFFFF";
+		if(restrain.value > 100){
+			color = "#87CEEB";
+			restrainLabel = restrain.value + "%";
+		}else if(restrain.value < 100){
+			color = "#FF0000";
 			restrainLabel = restrain.value + "%";
 		}
+		/*if(restrain.value != 100){
+			restrainLabel = restrain.value + "%";
+		}*/
 		msg = String.format("{0} : {1}", soldier.name(), restrainLabel);
-		label = getStrokeLabel(msg,18,"#FFFFFF","#000000",2);
+		label = getStrokeLabel(msg,18,color,"#000000",2);
 		label.x = startX + w*(i%3);
 		label.y = startY + h*(i/3 >>> 0);
 		layer.addChild(label);
@@ -167,7 +175,7 @@ SoldierDetailedView.prototype.onClickRestraintButton=function(event){
 };
 SoldierDetailedView.prototype.onClickRestraintPassiveButton=function(event){
 	var self = event.currentTarget.getParentByConstructor(SoldierDetailedView);
-	var startX = 10, startY = 50, w = 140, h = 29;
+	var startX = 10, startY = 50, w = 140, h = 25, color;
 	var layer = new LSprite();
 	var msg = String.format(Language.get("restraint_attack_passive_message"), self.soldierModel.name());
 	var label = getStrokeLabel(msg,18,"#FFFFFF","#000000",4);
@@ -177,11 +185,19 @@ SoldierDetailedView.prototype.onClickRestraintPassiveButton=function(event){
 		var soldier = SoldierMasterModel.master[i];
 		var restrain = soldier.restrain(self.soldierModel.id());
 		var restrainLabel = "-";
-		if(restrain.value != 100){
+		color = "#FFFFFF";
+		if(restrain.value < 100){
+			color = "#87CEEB";
+			restrainLabel = restrain.value + "%";
+		}else if(restrain.value > 100){
+			color = "#FF0000";
 			restrainLabel = restrain.value + "%";
 		}
+		/*if(restrain.value != 100){
+			restrainLabel = restrain.value + "%";
+		}*/
 		msg = String.format("{0} : {1}", soldier.name(), restrainLabel);
-		label = getStrokeLabel(msg,18,"#FFFFFF","#000000",2);
+		label = getStrokeLabel(msg,18,color,"#000000",2);
 		label.x = startX + w*(i%3);
 		label.y = startY + h*(i/3 >>> 0);
 		layer.addChild(label);

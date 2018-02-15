@@ -24,7 +24,8 @@ BattleIntelligentAI.strategyList = null;
 BattleIntelligentAI.execute = function() {
 	var self = this;
 	var currentBelong = LMvc.BattleController.getValue("currentBelong");
-	if(currentBelong == Belong.SELF){
+	var autoPlay = LMvc.BattleController.getValue("autoPlay");
+	if(currentBelong == Belong.SELF && !autoPlay){
 		LMvc.BattleController.view.mainMenu.visible = true;
 		LMvc.BattleController.view.miniLayer.visible = LMvc.BattleController.view.mainMenu.miniMapVisible;
 		return;
@@ -200,6 +201,7 @@ BattleIntelligentAI.prototype.moveRoadsShow = function() {
 	var view = LMvc.BattleController.view;
 	var path = [];
 	//定身及原地防守判断
+	console.log(self.chara.data.id(),self.chara.mission, BattleCharacterMission.Defensive, self.chara.status.hasStatus(StrategyType.Fixed),self.chara.mission != BattleCharacterMission.Defensive);
 	if(!self.chara.status.hasStatus(StrategyType.Fixed) && self.chara.mission != BattleCharacterMission.Defensive){
 		path = LMvc.BattleController.query.makePath(self.chara);
 	}else{

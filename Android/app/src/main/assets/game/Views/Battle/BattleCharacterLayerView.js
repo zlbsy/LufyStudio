@@ -9,7 +9,24 @@ function BattleCharacterLayerView(controller) {
 	}
 	self.charasPositions = {};
 	self.controller.addEventListener(BattleBoutEvent.END, self.charactersBoutEnd);
+	var historyId = self.controller.getValue("historyId");
+	if(historyId){
+		var path1 = String.format("Data/Event/{0}/history/battle_fun_{1}.txt",LPlugin.language(),historyId);
+		var script = "Load.script("+path1+");";
+		LGlobal.script.addScript(script);
+	}
 	if(self.controller.battleData.expeditionCharacterList && self.controller.battleData.expeditionCharacterList.length > 0){
+		if(historyId){
+			self.controller.nextFrameExecute(function(){
+				//self.boutStart();
+				var historyId = self.controller.getValue("historyId");
+				var path2 = String.format("Data/Event/{0}/history/battle_{1}.txt",LPlugin.language(),historyId);
+				var script = "Load.script("+path2+");";
+				LGlobal.script.addScript(script);
+				//LGlobal.script.analysis();
+			});
+			return;
+		}
 		Toast.makeText(String.format(Language.get("toast_appearances_position_select"), self.controller.battleData.expeditionCharacterList[0].name())).show();
 	}
 };
@@ -159,13 +176,21 @@ BattleCharacterLayerView.prototype.addOurCharacterOnClick=function(locationX,loc
 	length++;
 	LPlugin.playSE("Se_set", LPlugin.gameSetting.SE);
 	if(length == self.controller.battleData.expeditionCharacterList.length){
-		self.charasPositionsLayer.remove();
+		self.boutStart();
+		/*self.charasPositionsLayer.remove();
 		self.charasPositionsLayer = null;
 		self.getCharacter(Belong.SELF, self.controller.battleData.expeditionLeader.id()).isLeader = true;
-		self.controller.boutNotify(Belong.SELF);
+		self.controller.boutNotify(Belong.SELF);*/
 	}else{
 		Toast.makeText(String.format(Language.get("toast_appearances_position_select"), self.controller.battleData.expeditionCharacterList[length].name())).show();
 	}
+};
+BattleCharacterLayerView.prototype.boutStart=function(){
+	var self = this;
+	self.charasPositionsLayer.remove();
+	self.charasPositionsLayer = null;
+	self.getCharacter(Belong.SELF, self.controller.battleData.expeditionLeader.id()).isLeader = true;
+	self.controller.boutNotify(Belong.SELF);
 };
 BattleCharacterLayerView.prototype.getCharacterFromLocation=function(locationX,locationY){
 	var self = this;

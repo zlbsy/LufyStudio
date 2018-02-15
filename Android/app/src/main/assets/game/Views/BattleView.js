@@ -133,9 +133,15 @@ BattleView.prototype.addCharacterListView=function(characterListView){
 	self.contentLayer.addChild(characterListView);
 };
 BattleView.prototype.showBattleField=function(){
-	var self = this;
+	var self = this, title;
 	var battleField = new BattleFieldView(self.controller);
-	var obj = {title:self.controller.battleData.toCity.name()+Language.get("battleField"),subWindow:battleField,width:480,height:540,okEvent:null};
+	var battleData = self.controller.battleData;
+	if(battleData.historyId){
+		title = Language.get("history_" + battleData.historyId);
+	}else{
+		title = battleData.toCity.name() + Language.get("battleField");
+	}
+	var obj = {title:title,subWindow:battleField,width:480,height:540,okEvent:null};
 	var windowLayer = ConfirmWindow(obj);
 	self.addChild(windowLayer);
 };
@@ -149,11 +155,11 @@ BattleView.prototype.resetMapPosition=function(chara){
 	if(chara.hideByCloud){
 		return;
 	}
-	if(LMvc.screenHeight >= self.model.map.height){
+	if(LMvc.screenHeight >= self.model.map.height && LMvc.screenWidth >= self.model.map.width){
 		return;
 	}
 	var baseLayer = self.baseLayer;
-	LTweenLite.to(baseLayer,0.2,{x:LMvc.screenWidth*0.5 - chara.x,y:LMvc.screenHeight*0.5 - chara.y,});
+	LTweenLite.to(baseLayer,0.2,{x:LMvc.screenWidth*0.5 - chara.x,y:LMvc.screenHeight*0.5 - chara.y});
 };
 BattleView.prototype.checkPosition=function(){
 	var self = this;

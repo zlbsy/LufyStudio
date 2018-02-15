@@ -50,7 +50,8 @@ CharacterDetailedTabEquipmentView.prototype.showEquipmentList=function(){
 		return child instanceof EquipmentsView;
 	});
 	var cityData = self.controller.getValue("cityData");
-	if(LMvc.BattleController || characterModel.seigniorId() != LMvc.selectSeignorId || cityData.seigniorCharaId() != LMvc.selectSeignorId){
+	if(LMvc.BattleController || characterModel.seigniorId() != LMvc.selectSeignorId || 
+		(cityData && cityData.seigniorCharaId() != LMvc.selectSeignorId)){
 		if(equipmentsView){
 			equipmentsView.visible = false;
 		}

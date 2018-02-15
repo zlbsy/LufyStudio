@@ -413,6 +413,27 @@ function repairRun(characterModel){
 	characterModel.featPlus(feat);
 	//武力经验
 	characterModel.plusPropertiesExp("force");
+	//TODO::出现强盗
+	/*
+	if(characterModel.seigniorId() == LMvc.selectSeignorId){
+		var rand = Math.fakeRandom();
+		if(rand < 0.01){
+			var obj = {title:Language.get("confirm"),height:200,
+				message:String.format(Language.get("repair_robber_confirm_message"), characterModel.name()),
+				okEvent:function(e){
+					e.currentTarget.parent.remove();
+					
+				},
+				cancelEvent:function(e){
+					e.currentTarget.parent.remove();
+					SeigniorExecute.run();
+				}};
+			var windowLayer = ConfirmWindow(obj);
+			LMvc.layer.addChild(windowLayer);
+			return true;
+		}
+	}*/
+	return false;
 }
 function floodRun(characterModel){
 	//治水：智力+统率
@@ -835,7 +856,6 @@ function hireRun2(characterModel, hireCharacter, area, isAccess){
 	return false;
 }
 function SeigniorExecuteChangeCityResources(area){
-	//TODO::待处理城防:城防过低会几率出现强盗,影响人口和兵力
 	var disaster = false;
 	var minPopulation = AreaModel.populationList[0][0];
 	var maxPopulation = AreaModel.populationList[AreaModel.populationList.length - 1][1];
@@ -1286,11 +1306,13 @@ function tournamentsGet(result){
 		ids.push(arr[i]);
 		arr.splice(i, 1);
 	}
+	var isNewYear = isInNewYearTrem();
 	if(result == 1){
-		var NewYearPresent = LMvc.chapterData["NewYearPresent_item_92"];
-		if(!NewYearPresent && isInNewYearTrem()){
-			ids.push({id:92,q:1});
-			LMvc.chapterData["NewYearPresent_item_92"] = 1;
+		var NewYearPresentId = NewYearPresentConfig.tournamentsItem.id;
+		var NewYearPresent = LMvc.chapterData["NewYearPresent_item_"+NewYearPresentId];
+		if(!NewYearPresent && isNewYear){
+			ids.push(NewYearPresentConfig.tournamentsItem);
+			LMvc.chapterData["NewYearPresent_item_"+NewYearPresentId] = 1;
 		}
 		//id:97,name:"红战石" id:98,name:"红法石"
 		//id:99,name:"红辅石" id:100,name:"红佐石"
@@ -1305,6 +1327,10 @@ function tournamentsGet(result){
 		var itemData = ids[i];
 		for(var j=0;j<itemData.q;j++){
 			var item = new ItemModel(null,{item_id:itemData.id,count:1});
+			if(isNewYear && NewYearPresentConfig.tournamentsItem.id == itemData.id && NewYearPresentConfig.tournamentsItem.stone){
+				item.stone(NewYearPresentConfig.tournamentsItem.stone);
+				item.stonePlus(NewYearPresentConfig.tournamentsItem.stonePlus);
+			}
 			seignior.addItem(item);
 			if(j > 0){
 				continue;

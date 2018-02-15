@@ -1,0 +1,18 @@
+function hit(id1,id2);
+endfunction;
+function startBout(num,belong);
+	if(@belong==0);
+	elseif(@belong==2);
+		if(@num==3);
+			SGJBattleCharacter.focus(10001);
+			SGJBattleCharacter.changeAction(belong_enemy,10001,block);
+			SGJTalk.show(10001,全军听令，我们一起出击，杀他们个片甲不留！);
+			SGJBattleCharacter.changeMission(belong_enemy,10001,0);
+			SGJBattleCharacter.changeMission(belong_enemy,10002,0);
+			SGJBattleCharacter.changeMission(belong_enemy,11001,0);
+			SGJBattleCharacter.changeMission(belong_enemy,11002,0);
+			SGJBattleCharacter.changeMission(belong_enemy,11101,0);
+			SGJBattleCharacter.changeMission(belong_enemy,11102,0);
+		endif;
+	endif;
+endfunction;

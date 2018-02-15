@@ -103,4 +103,24 @@ var DisasterMonths = {
 var MapSettingMaxCharacters = [20, 20, 20, 16, 20, 22, 18, 18, 22, 20, 16, 20, 20, 20, 15, 22, 18, 20];
 var TribeAIProbability = 0.1;
 var TribeFriendlyCharacters = [23, 43, 73, 141, 145, 317, 336, 351, 516];
-var NewYearPresent_TERM = {start:"20170128",end:"20170225"};
+var NewYearPresentsConfig = {
+	from:2017,
+	list:[
+		{boss:861, tournamentsItem:{id:92,q:1}, items:[93, 94, 95, 96]},
+		{boss:862, tournamentsItem:{id:117,q:1,stone:100,stonePlus:{type:"item_equipment",skill:100}}, items:[118, 119, 120, 121]},
+	]
+};
+var NewYearPresentConfig, NewYearPresent_Boss;
+(function(){
+	var now = new Date();
+	LMvc.converter = LMvc.converter || new LunarSolarConverter();
+    LMvc.solar = LMvc.solar || new Solar();
+    LMvc.solar.solarYear = now.getFullYear();
+    LMvc.solar.solarMonth = now.getMonth() + 1;
+    LMvc.solar.solarDay = now.getDate();
+    var lunar = LMvc.converter.SolarToLunar(LMvc.solar);
+	var newYearPresentIndex = (lunar.lunarYear - NewYearPresentsConfig.from) % 12;
+	NewYearPresentConfig = newYearPresentIndex < NewYearPresentsConfig.list.length ? NewYearPresentsConfig.list[newYearPresentIndex] : null;
+	NewYearPresent_Boss = NewYearPresentConfig ? NewYearPresentConfig.boss : 0;
+	LMvc.lunar = lunar;
+})();

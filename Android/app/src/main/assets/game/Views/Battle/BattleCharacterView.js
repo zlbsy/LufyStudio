@@ -108,9 +108,8 @@ BattleCharacterView.prototype.getBitmapData = function() {
 		resultBitmapData = self.anime.bitmap.bitmapData;
 	}
 	if(self.mode == CharacterMode.END_ACTION){
-		BattleCharacterView.cacheBitmapDatas[endKey] = new LBitmapData(null,0,0,resultBitmapData.width,resultBitmapData.height,LBitmapData.DATA_CANVAS);
-		BattleCharacterView.cacheBitmapDatas[endKey].copyPixels(resultBitmapData,new LRectangle(0, 0, resultBitmapData.width, resultBitmapData.height), new LPoint(0,0));
-	    BattleCharacterView.cacheBitmapDatas[endKey].colorTransform(new LRectangle(0, 0, resultBitmapData.width, resultBitmapData.height), new LColorTransform(0.4, 0.4, 0.4, 1, 0, 0, 0, 0));
+		BattleCharacterView.cacheBitmapDatas[endKey] = new LBitmapData(self.anime.bitmap.bitmapData.image,resultBitmapData.x,resultBitmapData.y,resultBitmapData.width,resultBitmapData.height,LBitmapData.DATA_CANVAS);
+		BattleCharacterView.cacheBitmapDatas[endKey].colorTransform(new LRectangle(0, 0, resultBitmapData.width, resultBitmapData.height), new LColorTransform(0.4, 0.4, 0.4, 1, 0, 0, 0, 0));
 		resultBitmapData = BattleCharacterView.cacheBitmapDatas[endKey];
 	}
 	return resultBitmapData;
@@ -315,7 +314,6 @@ BattleCharacterView.prototype.setActionDirection = function(action, direction) {
 	}
 	self.anime._send_complete = false;
 	var label = action + "-" + direction;
-	
 	self.anime.gotoAndPlay(label);
 	
 	self.action = action;
@@ -373,7 +371,8 @@ BattleCharacterView.prototype.toDie = function() {
 		var defCostValue = DefenseCharacterCost;
 		self.data.city().cityDefense(-(defCostValue * 0.5 >>> 0));
 	}
-	if(!self.data.isDefCharacter() && !self.data.isTribeCharacter() && !self.data.isEmploy()){
+	if(!self.data.isDefCharacter() && !self.data.isTribeCharacter() && !self.data.isEmploy() 
+		&& !LMvc.BattleController.battleData.historyId){
 		var talkMsg;
 		if(self.isSingleCombat || calculateHitrateCaptive(self)){
 			self.isSingleCombat = false;
@@ -393,7 +392,29 @@ BattleCharacterView.prototype.toDie = function() {
 		script += "SGJTalk.show(" + self.data.id() + ",0," + talkMsg + ");";
 	}
 	script += "SGJBattleCharacter.characterToDie(" + self.belong + ","+ self.data.id() + ");";
+	if(self.dieEventCheck(script)){
+		return;
+	}
+	script += "SGJBattleCharacter.battleEndCheck(" + self.belong + ");";
 	LGlobal.script.addScript(script);
+};
+BattleCharacterView.prototype.dieEventCheck = function(script) {
+	var self = this, dieEvents = LMvc.BattleController.model.dieEvents;
+	console.log("dieEventCheck",dieEvents);
+	var index = dieEvents.findIndex(function(id){
+		return id == self.data.id();
+	});
+	console.log("index",index);
+	if(index >= 0){
+		var eve = dieEvents[index];
+		dieEvents.splice(index, 1);
+		script += "Call.dieEvent("+self.data.id()+");";
+		script += "SGJBattleCharacter.battleEndCheck(" + self.belong + ");";
+		LGlobal.script.addScript(script);
+		console.log("dieEventCheck="+self.data.id());
+		return true;
+	}
+	return false;
 };
 BattleCharacterView.prototype.setTo = function(){
 	var self = this;

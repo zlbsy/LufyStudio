@@ -48,10 +48,14 @@ function getSizeButton(text,width,height,img){
 function getButton(text,width,img){
 	return getSizeButton(text,width,50,img);
 }
-function lockedButton(button){
+function lockedButton(button,scale){
 	var lock = new LBitmap(new LBitmapData(LMvc.datalist["lock"]));
 	lock.name = "lock";
-	lock.scaleX = lock.scaleY = (button.getHeight() - 20) / lock.getHeight();
+	if(scale){
+		lock.scaleX = lock.scaleY = scale;
+	}else{
+		lock.scaleX = lock.scaleY = (button.getHeight() - 20) / lock.getHeight();
+	}
 	lock.x = button.getWidth() - lock.getWidth() - 10;
 	lock.y = 10;
 	button.addChild(lock);

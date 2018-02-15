@@ -57,7 +57,7 @@ BuildGeneralsView.prototype.onClickGeneralsListButton=function(event){
 	var cityModel = self.controller.getValue("cityData");
 	generals = cityModel.generals();
 	var characterList = generals.concat(cityModel.outOfOffice()).concat(cityModel.captives());
-	self.controller.loadCharacterList(CharacterListType.CHARACTER_LIST, characterList, {showOnly:true});
+	self.controller.loadCharacterList(CharacterListType.CHARACTER_LIST, characterList, {showOnly:true,prizeAll:true,buttonLabel:"prize_all"});
 };
 BuildGeneralsView.prototype.onClickGeneralsMoveButton=function(event){
 	var self = event.currentTarget.getParentByConstructor(BuildGeneralsView);
@@ -85,13 +85,20 @@ BuildGeneralsView.prototype.moveSelectCharacter=function(event){
 };
 BuildGeneralsView.prototype.selectComplete=function(event){
 	var self = this;
-	
 	var characterList = event.characterList;
 	var cityId = self.controller.getValue("cityId");
 	if(!characterList){
 		return true;
 	}
-	if(event.characterListType == CharacterListType.CHARACTER_MOVE){
+	if(event.characterListType == CharacterListType.CHARACTER_LIST && event.subEventType != "return"){
+		self.controller.setValue("cityId", null);
+		var cityModel = self.controller.getValue("cityData");
+		cityModel.generals().forEach(function(child){
+			if(!child.isPrized() && child.city().money() >= JobPrice.PRIZE){
+				var loyaltyUpValue = toPrizedByMoney(child);
+			}
+		});
+	}else if(event.characterListType == CharacterListType.CHARACTER_MOVE){
 		self.controller.setValue("cityId", null);
 		event.characterList.forEach(function(child){
 			child.moveTo(cityId);

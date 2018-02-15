@@ -53,7 +53,11 @@ SingleCombatCharacterView.prototype.buffer = function(){
 SingleCombatCharacterView.prototype.setCommands=function(){
 	var self = this, command, oldCommand;
 	if(self.barAngry){
-		self.barAngry.changeValue(self.addAngry);
+		var skill = self.data.skill(SkillType.SINGLE_COMBAT), addAngry = 0;
+		if(skill && skill.isSubType(SkillSubType.ANGRY_BOUT_TURN)){
+			addAngry = skill.addAngry();
+		}
+		self.barAngry.changeValue(self.addAngry + addAngry);
 		self.addAngry = 10;
 	}
 	if(self.addHP > 0){
@@ -194,6 +198,7 @@ SingleCombatCharacterView.prototype.showRunningCommand = function(index){
 	});
 	self.selectedButtons[index].alpha = 1;
 	self.currentCommand = self.selectedCommands[index];
+	console.log(self.data.name(), self.currentCommand);
 };
 SingleCombatCharacterView.prototype.commandExecute = function(){
 	var self = this;
@@ -267,20 +272,24 @@ SingleCombatCharacterView.prototype.singleCombatEnd = function(event){
 	dieChara.isSingleCombat = true;
 	dieChara.data.troops(0);
 	dieChara.data.wounded(0);
+	var script = "";
+	if(LMvc.BattleController.getValue("historyId")){
+		script += "Call.singleCombatEndEvent("+dieChara.data.id()+");";
+	}
+	script += "SGJBattleCharacter.endAction("+BattleController.ctrlChara.belong+","+BattleController.ctrlChara.data.id()+");";
 	if(dieChara.data.id() == BattleController.ctrlChara.data.id()){
-		BattleController.ctrlChara.AI.endAction();
+		LGlobal.script.addScript(script);
 	}else{
 		var statusView = new BattleCharacterStatusView(LMvc.BattleController,BattleController.ctrlChara);
 		var exp = calculateExp(BattleController.ctrlChara, dieChara) * 3;
 		statusView.push(BattleCharacterStatusConfig.EXP, exp);
 		
 		statusView.addEventListener(BattleCharacterStatusEvent.CHANGE_COMPLETE,function(){
-			BattleController.ctrlChara.AI.endAction();
+			LGlobal.script.addScript(script);
 		});
 		LMvc.BattleController.view.baseLayer.addChild(statusView);
 		statusView.startTween();
 	}
-	//BattleController.ctrlChara.AI.endAction();
 };
 SingleCombatCharacterView.prototype.fail = function(event){
 	var self = this, obj;

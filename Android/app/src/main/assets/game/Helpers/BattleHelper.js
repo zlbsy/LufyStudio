@@ -12,6 +12,7 @@ function cloudWeatherCharacterShow(characterId){
 		for(var i=0,l=characters.length;i<l;i++){
 			var character = characters[i];
 			character.anime.parent.alpha = 1;
+			character.hideByCloud = false;
 		}
 		return;
 	}
@@ -25,8 +26,10 @@ function cloudWeatherCharacterShow(characterId){
 		});
 		if(findIndex >= 0){
 			character.anime.parent.alpha = 1;
+			character.hideByCloud = false;
 		}else{
 			character.anime.parent.alpha = 0.01;
+			character.hideByCloud = true;
 		}
 	}
 }
@@ -447,6 +450,11 @@ function battleHealTroopsRun(troopsAdd, woundedAdd, currentTargetCharacter){
 function getBattleSaveData(){
 	var data = {};
 	var battleData = LMvc.BattleController.battleData;
+	data.historyId = battleData.historyId;
+	data.hits = LMvc.BattleController.model.hits;
+	data.startBouts = LMvc.BattleController.model.startBouts;
+	data.moveInEvents = LMvc.BattleController.model.moveInEvents;
+	data.dieEvents = LMvc.BattleController.model.dieEvents;
 	data.food = battleData.food;
 	data.money = battleData.money;
 	data.troops = battleData.troops;
@@ -455,6 +463,24 @@ function getBattleSaveData(){
 	data.bout = LMvc.BattleController.getValue("bout");
 	data.startAttack = LMvc.BattleController.startAttack;
 	data.militaryOver = LMvc.BattleController.militaryOver;
+	if(data.historyId){
+		var mainVals = [], subVals = [], battleVals = [], mainNames = [], subNames = [];
+		var varList = LGlobal.script.scriptArray.varList;
+		for(var i = 0;i<10;i++){
+			mainVals.push(varList["main_character_"+i]);
+			subVals.push(varList["sub_character_"+i]);
+			mainNames.push(varList["main_character_name_"+i]);
+			subNames.push(varList["sub_character_name_"+i]);
+		}
+		for(var i = 0;i<50;i++){
+			battleVals.push(varList["battle_value_"+i]);
+		}
+		data.mainVals = mainVals;
+		data.subVals = subVals;
+		data.battleVals = battleVals;
+		data.mainNames = mainNames;
+		data.subNames = subNames;
+	}
 	if(LMvc.BattleController.militaryModel){
 		data.militaryId = LMvc.BattleController.militaryModel.id();
 		data.militaryValidLimit = LMvc.BattleController.militaryValidLimit;
@@ -489,7 +515,7 @@ function getBattleSaveData(){
 			childData.militaryId = character.militaryModel.id();
 			childData.militaryValidLimit = character.militaryValidLimit;
 		}
-		if(childData.isDefCharacter){
+		if(childData.isDefCharacter || CharacterModel.isHistoryPurchaseCharacter(childData.id)){
 			childData.data = character.data.datas();
 		}else if(character.data.isEmploy()){
 			childData.employDatas = character.data.employDatas();
@@ -560,6 +586,23 @@ function setBattleSaveData(){
 	LMvc.BattleController.startAttack = data.startAttack;
 	LMvc.BattleController.militaryOver = data.militaryOver;
 	var battleData = LMvc.BattleController.battleData;
+	battleData.historyId = data.historyId;
+	if(data.historyId){
+		var varList = LGlobal.script.scriptArray.varList;
+		for(var i = 0;i<10;i++){
+			varList["main_character_"+i] = data.mainVals[i];
+			varList["sub_character_"+i] = data.subVals[i];
+			varList["main_character_name_"+i] = data.mainNames[i];
+			varList["sub_character_name_"+i] = data.subNames[i];
+		}
+		for(var i = 0;i<50;i++){
+			varList["battle_value_"+i] = data.battleVals[i];
+		}
+	}
+	LMvc.BattleController.model.hits = data.hits;
+	LMvc.BattleController.model.startBouts = data.startBouts;
+	LMvc.BattleController.model.moveInEvents = data.moveInEvents;
+	LMvc.BattleController.model.dieEvents = data.dieEvents;
 	LMvc.BattleController.setValue("bout", data.bout);
 	LMvc.BattleController.setValue("currentBelong", Belong.SELF);
 	battleData.expeditionCharacterList = [];
@@ -581,6 +624,9 @@ function setBattleSaveData(){
 			chara.isDefCharacter(1);
 			chara.seigniorId(battleData.toCity.seigniorCharaId());
 			chara.cityId(battleData.toCity.id());
+			chara.setDatas(charaData.data);
+		}else if(CharacterModel.isHistoryPurchaseCharacter(charaData.id)){
+			var chara = CharacterModel.getChara(charaData.id);
 			chara.setDatas(charaData.data);
 		}else if(charaData.isEmploy){
 			var chara = CharacterModel.getChara(charaData.id);
@@ -1124,6 +1170,9 @@ function militaryAdviserSelect(characterModel, charas){
 	}
 }
 function getMaxMilitary(belong){
+	if(LMvc.BattleController.historyId){
+		return null;
+	}
 	var selfAttack = (LMvc.BattleController.battleData.fromCity.seigniorCharaId() == LMvc.selectSeignorId);
 	if(!selfAttack || LMvc.BattleController.militaryOver){
 		return null;
@@ -1344,4 +1393,21 @@ function isMilitaryHappened(seigniorId, militaryType){
 		return false;
 	}
 	return LMvc.BattleController.militaryModel.isType(militaryType) && (seigniorId == 0 || LMvc.BattleController.battleData.toCity.seigniorCharaId() == seigniorId);
+}
+function checkEventStartBoutEvent(){
+	var currentBelong = LMvc.BattleController.getValue("currentBelong");
+	var currentBout = LMvc.BattleController.getValue("bout");
+	var index = LMvc.BattleController.model.startBouts.findIndex(function(obj){
+		return parseInt(obj.bout) == currentBout && obj.belong == currentBelong;
+	});
+	if(index >= 0){
+		LMvc.BattleController.model.startBouts.splice(index, 1);
+		var intBelong = currentBelong == Belong.SELF ? 0 : currentBelong == Belong.FRIEND ? 1 : 2;
+		var script = "Call.startBout("+currentBout+","+intBelong+");";
+		script += "SGJHistory.checkEventStartBoutEvent();";
+		LGlobal.script.addScript(script);
+		return true;
+	}
+	BattleIntelligentAI.execute();
+	return false;
 }

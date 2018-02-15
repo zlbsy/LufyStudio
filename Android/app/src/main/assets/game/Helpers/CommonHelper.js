@@ -424,9 +424,6 @@ function beheadIsValid(){
 	return LMvc.chapterData.validBehead;
 }
 function isInNewYearTrem(){
-	var time = formatDate(new Date(), "YYYYMMDD");
-	if(time >= NewYearPresent_TERM.start && time <= NewYearPresent_TERM.end){
-		return true;
-	}
-	return false;
+    var lunar = LMvc.lunar;
+    return lunar.lunarMonth == 1 && lunar.lunarDay <= 15;
 }

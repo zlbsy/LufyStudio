@@ -106,7 +106,7 @@ MenuView.prototype.onClickAllGenerals=function(event){
 	self.hide();
 	var seignior = SeigniorModel.getSeignior(LMvc.selectSeignorId);
 	var generals = seignior.generals();
-	LMvc.MapController.loadCharacterList(CharacterListType.OWN_CHARACTER_LIST, generals, {showOnly:true});
+	LMvc.MapController.loadCharacterList(CharacterListType.OWN_CHARACTER_LIST, generals, {showOnly:true,prizeAll:true,buttonLabel:"prize_all"});
 };
 MenuView.prototype.onClickAllSeignior=function(event){
 	var self = event.currentTarget.parent.parent.parent;

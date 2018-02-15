@@ -14,7 +14,7 @@ SingleCombatArenaController.prototype.configLoad=function(){
 };
 SingleCombatArenaController.prototype.configLoad2=function(){
 	var self = this;
-	self.load.config(["characterList"],self.libraryLoad);
+	self.load.config(["MapSetting","HistoryList","characterList"],self.libraryLoad);
 };
 SingleCombatArenaController.prototype.libraryLoad=function(){
 	var self = this;

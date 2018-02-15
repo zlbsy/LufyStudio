@@ -201,6 +201,9 @@ AreaModel.prototype.isBasicType = function(data){
 	return type == "number" || type == "string" || type == "boolean";
 };
 AreaModel.prototype.name = function(){
+	if(this.id() == HistoryCityConfig.cityId){
+		return "--";
+	}
 	return Language.getCity("city_"+this.data.id);
 };
 AreaModel.prototype.id = function(){
@@ -508,8 +511,7 @@ AreaModel.prototype.neighbor = function(){
 };
 AreaModel.prototype.flag = function(){
 	var self = this;
-	var color = self.color();
-	if(!color){
+	if(!self.color() || !self.seignior() || !self.seignior().chara_id()){
 		return new LBitmap(SeigniorModel.getWhiteFlag());
 	}
 	var bitmapData = self.seignior().flag();

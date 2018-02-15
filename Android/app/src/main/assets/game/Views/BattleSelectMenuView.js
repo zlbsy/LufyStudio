@@ -77,12 +77,15 @@ BattleSelectMenuView.prototype.setMenu=function(){
 	layer.addChild(strategyButton);
 	strategyButton.addEventListener(LMouseEvent.MOUSE_UP, self.clickMagicSelect);
 	
-	menuY += menuHeight;
-	var singleCombatButton = getIconButton("battle-menu",new LRectangle(70,0,35,35),Language.get("singleCombat"),menuWidth);
-	singleCombatButton.name = "singleCombat";
-	singleCombatButton.y = menuY;
-	layer.addChild(singleCombatButton);
-	singleCombatButton.addEventListener(LMouseEvent.MOUSE_UP, self.clickSingleCombat);
+	var historyId = LMvc.BattleController.getValue("historyId");
+	if(!historyId){
+		menuY += menuHeight;
+		var singleCombatButton = getIconButton("battle-menu",new LRectangle(70,0,35,35),Language.get("singleCombat"),menuWidth);
+		singleCombatButton.name = "singleCombat";
+		singleCombatButton.y = menuY;
+		layer.addChild(singleCombatButton);
+		singleCombatButton.addEventListener(LMouseEvent.MOUSE_UP, self.clickSingleCombat);
+	}
 	
 	menuY += menuHeight;
 	self.menuHeight = menuHeight;

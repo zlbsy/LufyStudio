@@ -37,6 +37,9 @@ EventMapController.prototype.close=function(){
 		SeigniorExecute.run();
 	}else if(LMvc.EventListController){
 		LMvc.EventListController.view.visible = true;
+	}else if(LMvc.HistoryListController){
+		console.log("LGlobal.script.analysis();");
+		LGlobal.script.analysis();
 	}else{
 		LMvc.MapController.view.visible = true;
 	}

@@ -1,0 +1,24 @@
+function hit(id1,id2);
+	if(@id1==@main_character_0&&@id2==10005);
+		SGJTalk.show(10005,站住，曹贼在哪里？);
+		SGJTalk.show(@main_character_0,那边那个骑黄马的就是他。);
+		SGJTalk.show(10005,哼，曹贼，我看你往哪里跑！);
+		SGJTalk.show(@main_character_0,（捡了一条命，还好吕布没有认出我...）);
+	endif;
+endfunction;
+function startBout(num,belong);
+endfunction;
+function dieEvent(id);
+	if(@id==@main_character_0);
+		SGJHistory.battleFail();
+	endif;
+endfunction;
+function moveIn(belong,minX,minY,maxX,maxY,id);
+	if(@belong==0);
+		if(@minX==0&&@minY==0&&@maxX==2&&@maxY==1&&@main_character_0==@id);
+			SGJTalk.show(@main_character_0,终于逃出来了。);
+			SGJHistory.battleWin();
+		endif;
+	endif;
+endfunction;
+

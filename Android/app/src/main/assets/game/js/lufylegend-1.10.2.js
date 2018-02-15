@@ -1,6 +1,6 @@
 /**
 * lufylegend
-* @version 1.10.1
+* @version 1.10.2
 * @Explain lufylegend是一个HTML5开源引擎，利用它可以快速方便的进行HTML5的开发
 * @author lufy(lufy_legend)
 * @blog http://blog.csdn.net/lufy_Legend
@@ -299,7 +299,6 @@ var LMouseEventContainer = (function () {
 		},
 		_mouseEnabled : function (sp) {
 			var self = this;
-			var name = sp.name;
 			if (!sp || !sp.parent) {
 				return false;
 			}
@@ -333,10 +332,6 @@ var LMouseEventContainer = (function () {
 				event.selfX = (event.offsetX - o.co.x - o.sp.x) / (o.co.scaleX * o.sp.scaleX);
 				event.selfY = (event.offsetY - o.co.y - o.sp.y) / (o.co.scaleY * o.sp.scaleY);
 				o.listener(event, o.sp);
-				/*if(!LMvc.BattleController){
-					return;
-				}
-				console.error(o.sp);*/
 			}
 		},
 		dispatchEvent : function (event, list, type) {
@@ -543,6 +538,10 @@ var LGlobal = ( function () {
 			LGlobal.os = OS_BLACK_BERRY;
 			LGlobal.canTouch = true;
 		}
+		if(LGlobal.ios){
+			var v = n.match(/OS\s(\d+)_(\d+)_?(\d+)?/);
+			LGlobal.iOSversion = [parseInt(v[1], 10), parseInt(v[2], 10), parseInt(v[3] || 0, 10)];
+		}
 		LGlobal.mobile = LGlobal.canTouch;
 	})(navigator.userAgent);
 	LGlobal.setDebug = function (v) {
@@ -574,7 +573,7 @@ var LGlobal = ( function () {
 		LGlobal.id = id;
 		LGlobal.object = document.getElementById(id);
 		LGlobal.object.innerHTML = '<div style="position:absolute;margin:0;padding:0;overflow:visible;-webkit-transform: translateZ(0);z-index:0;">' +
-		'<canvas id="' + LGlobal.id + '_canvas" style="margin:0;padding:0;width:' + w + 'px;height:' + h + 'px;transform: translate3d(0,0,0);-webkit-transform: translate3d(0,0,0);">' +
+		'<canvas id="' + LGlobal.id + '_canvas" style="margin:0;padding:0;width:' + w + 'px;height:' + h + 'px;">' +
 		'<div id="noCanvas">' +
 		"<p>Hey there, it looks like you're using Microsoft's Internet Explorer. Microsoft hates the Web and doesn't support HTML5 :(</p>" + 
 		'</div>' +  
@@ -731,8 +730,8 @@ var LGlobal = ( function () {
 		}
 		if (!eve) {
 			eve = {offsetX : LGlobal.offsetX, offsetY : LGlobal.offsetY};
+			LGlobal.mouseEvent(eve, LMouseEvent.MOUSE_UP);
 		}
-		LGlobal.mouseEvent(eve, LMouseEvent.MOUSE_UP);
 		LGlobal.touchHandler(event);
 		LGlobal.buttonStatusEvent = null;
 		if (LGlobal.mouseJoint_end) {
@@ -1536,7 +1535,6 @@ function init (s, c, w, h, f, t) {
 	};
 	var loop;
 	if(typeof s == "function"){
-		LGlobal.setCanvas(c, w, h);
 		_f();
 		loop = function(){
 			s(loop);
@@ -1544,18 +1542,35 @@ function init (s, c, w, h, f, t) {
 		};
 		LGlobal.speed = 1000 / 60;
 	}else{
+		var _requestAF = (function() {
+			return window.requestAnimationFrame ||
+			window.webkitRequestAnimationFrame ||
+			window.mozRequestAnimationFrame ||
+			window.oRequestAnimationFrame ||
+			window.msRequestAnimationFrame ||
+			function( callback,  element) {
+				window.setTimeout(callback, 1000/60);
+			};
+		})();
+		LGlobal._requestAFBaseTime = (new Date()).getTime();
+		_f();
 		loop = function(){
-			LGlobal.frameRate = setInterval(function () {
+			var now = (new Date()).getTime();
+			var check = now - LGlobal._requestAFBaseTime;
+			if( check / s >= 1 ) {
+				LGlobal._requestAFBaseTime += s;
 				LGlobal.onShow();
-			}, s);
-			LGlobal.setCanvas(c, w, h);
-			_f();
+			}
+			_requestAF(loop, s);
 		};
 	}
 	if (document.readyState === "complete") {
+		LGlobal.setCanvas(c, w, h);
 		loop();
 	}else{
 		LEvent.addEventListener(window, "load", function () {
+			LGlobal._requestAFBaseTime = (new Date()).getTime();
+			LGlobal.setCanvas(c, w, h);
 			loop();
 		});
 	}
@@ -1576,7 +1591,11 @@ function base (d, b, a) {
 	}
 	for (p in b.prototype) {
 		if (!h[p]) {
-			o[p] = b.prototype[p];
+			if(p != "callParent" && b.prototype[p].toString().indexOf("callParent") > 0){
+				o[p] = new Function('return this.callParent("'+p+'", arguments);');
+			}else{
+				o[p] = b.prototype[p];
+			}
 		}
 	}
 	if (o.toString == Object.prototype.toString) {
@@ -2475,6 +2494,17 @@ var LDisplayObjectContainer = (function () {
 		s.numChildren = 0;
 		s.mouseChildren = true;
 	}
+	LDisplayObjectContainer.destroy = function (d) {
+		if (!LGlobal.destroy) {
+			return;
+		}
+		if (d.die) {
+			d.die();
+		}
+		if (d.removeAllChild) {
+			d.removeAllChild();
+		}
+	};
 	var p = {
 		addChild : function (d) {
 			var s  = this,t;
@@ -2511,15 +2541,14 @@ var LDisplayObjectContainer = (function () {
 			var s  = this, c = s.childList, i, l;
 			for (i = 0, l = c.length; i < l; i++) {
 				if (d.objectIndex == c[i].objectIndex) {
-					if (LGlobal.destroy && d.die) {
-						d.die();
-					}
+					LDisplayObjectContainer.destroy(d);
 					s.childList.splice(i, 1);
 					break;
 				}
 			}
 			s.numChildren = s.childList.length;
 			delete d.parent;
+			LTweenLite.removeTarget(d);
 		},
 		getChildAt : function (i) {
 			var s  = this, c = s.childList;
@@ -2541,16 +2570,15 @@ var LDisplayObjectContainer = (function () {
 			return null;
 		},
 		removeChildAt : function (i) {
-			var s  = this, c = s.childList;
-			if (c.length <= i) {
+			var s  = this, c = s.childList, d;
+			if (c.length <= i || i < 0) {
 				return;
 			}
-			if (LGlobal.destroy && c[i].die) {
-				c[i].die();
-			}
-			var d = s.childList.splice(i, 1);
-			d = d[0];
+			d = c[i];
+			LDisplayObjectContainer.destroy(d);
+			s.childList.splice(i, 1);
 			delete d.parent;
+			LTweenLite.removeTarget(d);
 			s.numChildren = s.childList.length;
 			return d;
 		},
@@ -2588,10 +2616,10 @@ var LDisplayObjectContainer = (function () {
 		removeAllChild : function () {
 			var s  = this, c = s.childList, i, l;
 			for (i = 0, l = c.length; i < l; i++) {
-				if (LGlobal.destroy && c[i].die) {
-					c[i].die();
-				}
-				delete c[i].parent;
+				var d = c[i];
+				LDisplayObjectContainer.destroy(d);
+				delete d.parent;
+				LTweenLite.removeTarget(d);
 			}
 			s.childList.length = 0;
 			s.width = 0;
@@ -2923,7 +2951,7 @@ var LWebAudio = (function () {
 						var event = new LEvent(LEvent.PROGRESS);
 						event.currentTarget = s;
 						event.target = e.currentTarget;
-						event.loaded = e.loaded;
+						event.loaded = e.loaded * 0.5;
 						event.total = e.total;
 						event.responseURL = e.responseURL;
 						s.dispatchEvent(event);
@@ -3332,10 +3360,16 @@ var LVideo = (function () {
 		s._type = "video";
 		s.rotatex = 0;
 		s.rotatey = 0;
-		s.data = document.createElement("video");
-		s.data.style.display = "none";
-		document.body.appendChild(s.data);
-		s.data.id = "video_" + s.objectIndex;
+		var strTag = "";
+		if(LGlobal.os == OS_IPHONE && LGlobal.iOSversion[0] >= 10){
+			s.sound = new LSound();
+			strTag = " muted playsinline ";
+		}
+		var div = document.createElement("div");
+		div.id = "div_video_" + s.objectIndex;
+		div.innerHTML = '<video id="video_'+s.objectIndex+'" '+strTag+' style="opacity: 1;width:0px;height:0px;position:absolute;index-z:-999;">';
+		document.body.appendChild(div);
+		s.data = document.getElementById("video_" + s.objectIndex);
 		s.data.loop = false;
 		s.data.autoplay = false;
 		if (u) {
@@ -3347,10 +3381,55 @@ var LVideo = (function () {
 			var s = this;
 			c.drawImage(s.data, s.x, s.y);
 		},
+		load : function(u){
+			var s = this;
+			s.callParent("load", arguments);
+			if(s.sound){
+				s.sound.load(u);
+			}
+		},
+		play : function (c, l, to) {
+			var s = this;
+			s.callParent("play", arguments);
+			if(s.sound){
+				s.sound.play(c, l, to);
+			}
+		},
+		stop : function () {
+			var s = this;
+			s.callParent("stop", arguments);
+			if(s.sound){
+				s.sound.stop();
+			}
+		},
+		setVolume : function (v) {
+			var s = this;
+			if(s.sound){
+				s.sound.setVolume(v);
+			}else{
+				s.callParent("setVolume", arguments);
+			}
+		},
+		getVolume : function () {
+			var s = this;
+			if(s.sound){
+				return s.sound.getVolume();
+			}else{
+				return s.callParent("getVolume", arguments);
+			}
+		},
+		close : function () {
+			var s = this;
+			s.callParent("close", arguments);
+			if(s.sound){
+				s.sound.close();
+			}
+		},
 		die : function () {
 			var s = this;
-			document.body.removeChild(s.data);
+			document.body.removeChild(document.getElementById("div_video_" + s.objectIndex));
 			delete s.data;
+			delete s.sound;
 		},
 		getWidth : function () {
 			return this.data.width;
@@ -4201,6 +4280,7 @@ var LShape = (function () {
 		die : function () {
 			var s = this;
 			s.graphics.clear();
+			s.callParent("die",arguments);
 		}
 	};
 	for (var k in p) {
@@ -4704,7 +4784,7 @@ var LButton = (function () {
 				return false;
 			}
 			var s = this;
-			if (type == LMouseEvent.MOUSE_MOVE && s.ll_button_mode) {
+			if (LGlobal.os == OS_PC && type == LMouseEvent.MOUSE_MOVE && s.ll_button_mode) {
 				s.ll_button_mode(e);
 			}
 			return this.callParent("mouseEvent",arguments);
@@ -4739,6 +4819,9 @@ var LButton = (function () {
 			s._tweenOver = s.ll_modeOver;
 			onComplete = function(obj){
 				var s = obj.parent;
+				if(!s || !s.tween){
+					return;
+				}
 				delete s.tween;
 				s._tweenOver({clickTarget : s});
 				delete s._tweenOver;
@@ -5248,6 +5331,9 @@ var LTextField = (function () {
 				LGlobal.inputTextField.text = LGlobal.inputTextBox.value;
 				LEvent.removeEventListener(LGlobal.inputTextBox, LKeyboardEvent.KEY_DOWN, LGlobal.inputTextField._ll_input);
 				LGlobal.inputBox.style.display = NONE;
+				if(typeof LGlobal.inputTextField.preventDefault != UNDEFINED){
+					LGlobal.preventDefault=LGlobal.inputTextField.preventDefault;
+				}
 				LGlobal.inputTextField.dispatchEvent(LFocusEvent.FOCUS_OUT);
 				LGlobal.inputTextField = null;
 			}
@@ -5312,6 +5398,10 @@ var LTextField = (function () {
 				}
 			}
 			setTimeout(function () {
+				if(LGlobal.ios){
+					s.preventDefault = LGlobal.preventDefault;
+					LGlobal.preventDefault=false;
+				}
 				LGlobal.inputTextBox.focus();
 			}, 0);
 		},
@@ -5339,6 +5429,14 @@ var LTextField = (function () {
 				}
 			}
 			return w;
+		},
+		_startX : function (maskSize) {
+			var s = this;
+			if(s.textAlign == "left"){
+				return s.x;
+			}
+			var w = s.getWidth(maskSize);
+			return s.x + (s.textAlign == "right" ? -w : -w * 0.5);
 		},
 		_getHeight : function () {
 			var s = this, c = LGlobal.canvas, i, l, j, k, m, enter;
@@ -5412,6 +5510,13 @@ var LTextField = (function () {
 			}
 			s.text = s._ll_wind_text.substring(0, s._ll_wind_length);
 			s._ll_wind_length++;
+		},
+		windComplete : function() {
+			var s = this;
+			s._speedIndex = s.speed;
+			s.text = s._ll_wind_text;
+			s._ll_wind_length = s._ll_wind_text.length + 1;
+			s._ll_windRun();
 		},
 		die : function () {
 			LMouseEventContainer.removeInputBox(this);
@@ -6307,6 +6412,7 @@ var LLoadManage = (function () {
 			}
 			s.loadIndex = 0;
 			s.loadStart();
+			s.reloadtime = setTimeout(s.loadInit.bind(s), 10000);
 		},
 		loadStart : function () {
 			var s = this, d, ph, phs, ext;
@@ -6314,7 +6420,9 @@ var LLoadManage = (function () {
 				return;
 			}
 			d = s.list[s.loadIndex];
-			d.progress = 0;
+			if(typeof d.progress == UNDEFINED){
+				d.progress = 0;
+			}
 			if (!d.name) {
 				d.name = s.llname + s.loadIndex;
 			}
@@ -6415,6 +6523,9 @@ var LLoadManage = (function () {
 			s._loadProgress(e);
 			delete e.currentTarget.parent;
 			if (s.index >= s.list.length) {
+				if (s.reloadtime) {
+					clearTimeout(s.reloadtime);
+				}
 				var event = new LEvent(LEvent.COMPLETE);
 				event.currentTarget = s;
 				event.target = s.result;
@@ -6713,6 +6824,9 @@ var LTweenLite = (function () {
 				$vars["tweenTimeline"] = LTweenLite.TYPE_FRAME;
 			}
 			s.target = $target;
+			if(!s.target.objectIndex){
+				s.target.objectIndex = ++LGlobal.objectIndex;
+			}
 			s.duration = $duration || 0.001;
 			s.vars = $vars;
 			s.delay = s.vars.delay || 0;
@@ -6740,17 +6854,23 @@ var LTweenLite = (function () {
 			}
 			s.ease = s.vars.ease;
 			delete s.vars.ease;
-			if (s.vars.onComplete) {
+			if (typeof s.vars.onComplete == "function") {
 				s.onComplete = s.vars.onComplete;
 				delete s.vars.onComplete;
+			}else{
+				s.onComplete = null;
 			}
-			if (s.vars.onUpdate) {
+			if (typeof s.vars.onUpdate == "function") {
 				s.onUpdate = s.vars.onUpdate;
 				delete s.vars.onUpdate;
+			}else{
+				s.onUpdate = null;
 			}
-			if (s.vars.onStart) {
+			if (typeof s.vars.onStart == "function") {
 				s.onStart = s.vars.onStart;
 				delete s.vars.onStart;
+			}else{
+				s.onStart = null;
 			}
 			for (k in s.vars) {
 				if (k == "coordinate" && Array.isArray(s.vars[k])) {
@@ -6846,7 +6966,7 @@ var LTweenLite = (function () {
 					s.target[tweentype] = s.varsto[tweentype];
 				}
 				if (s.onComplete) {
-					s._dispatchEvent(s.onComplete);
+					s._dispatchEvent(s.onComplete, true);
 				}
 				return true;
 			} else if (s.onUpdate) {
@@ -6854,13 +6974,23 @@ var LTweenLite = (function () {
 			}
 			return false;
 		},
-		_dispatchEvent : function (f) {
+		_dispatchEvent : function (f, wait) {
 			var s = this;
-			s.target.target = s.target;
-			s.target.currentTarget = s;
-			f(s.target);
-			delete s.target.currentTarget;
-			delete s.target.target;
+			var target = s.target;
+			var fun = function(){
+				target.target = target;
+				target.currentTarget = s;
+				f(target);
+				delete target.currentTarget;
+				delete target.target;
+			};
+			if(wait){
+				setTimeout(function(){
+					fun();
+				}, 1);
+			}else{
+				fun();
+			}
 		},
 		to : function ($target, $duration, $vars, $data) {
 			var s = this;
@@ -6953,6 +7083,15 @@ var LTweenLite = (function () {
 			}
 			for (var i = 0, l = s.tweens.length; i < l; i++) {
 				if (tween.objectIndex == s.tweens[i].objectIndex) {
+					s.tweens.splice(i, 1);
+					break;
+				}
+			}
+		},
+		removeTarget : function (target) {
+			var s = this;
+			for (var i = 0, l = s.tweens.length; i < l; i++) {
+				if (target.objectIndex == s.tweens[i].target.objectIndex) {
 					s.tweens.splice(i, 1);
 					break;
 				}

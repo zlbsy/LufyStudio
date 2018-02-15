@@ -142,7 +142,7 @@ MapView.prototype.changeMode=function(mode){
 	LMvc.MapController.mode = mode; 
 	self.ctrlLayer.childList.forEach(function(child){
 		child.visible = false;
-		if(mode == MapController.MODE_MAP && (child.name == "menu" || child.name == "go")){
+		if(mode == MapController.MODE_MAP && (child.name == "menu" || child.name == "go" || child.name == "history")){
 			child.visible = true;
 		}else if(mode == MapController.MODE_CHARACTER_MOVE && child.name == "close"){
 			child.visible = true;
@@ -162,11 +162,17 @@ MapView.prototype.ctrlLayerInit=function(){
 	buttonMenu.name = "menu";
 	buttonMenu.x = LMvc.screenWidth - buttonMenu.getWidth();
 	self.ctrlLayer.addChild(buttonMenu);
+	var buttonHistory = getButton(Language.get("historical_battle"),100);
+	buttonHistory.addEventListener(LMouseEvent.MOUSE_UP,self.gotoHistory);
+	buttonHistory.name = "history";
+	buttonHistory.x = LMvc.screenWidth - buttonHistory.getWidth();
+	buttonHistory.y = 50;
+	self.ctrlLayer.addChild(buttonHistory);
 	var buttonGo = getButton(Language.get("go"),100);
 	buttonGo.addEventListener(LMouseEvent.MOUSE_UP,self.gotoExecute);
 	buttonGo.name = "go";
 	buttonGo.x = LMvc.screenWidth - buttonGo.getWidth();
-	buttonGo.y = 50;
+	buttonGo.y = 100;
 	self.ctrlLayer.addChild(buttonGo);
 	
 	var bitmapClose = new LBitmap(new LBitmapData(LMvc.datalist["close"]));
@@ -177,6 +183,10 @@ MapView.prototype.ctrlLayerInit=function(){
 	buttonClose.y = 5;
 	self.ctrlLayer.addChild(buttonClose);
 	self.changeMode(MapController.MODE_MAP);
+};
+MapView.prototype.gotoHistory=function(event){
+	var self = event ? event.currentTarget.getParentByConstructor(MapView) : this;
+	self.controller.loadHistoryList();
 };
 MapView.prototype.gotoExecute=function(event){
 	var self = event ? event.currentTarget.getParentByConstructor(MapView) : this;
@@ -208,16 +218,17 @@ MapView.prototype.hideMapLayer=function(event){
 };
 MapView.prototype.showMapLayer=function(event){
 	var self = event.currentTarget.view;
-	/*if(event.characterList.length > 1){
-		var obj = {title:Language.get("confirm"),message:Language.get("dialog_select_onlyone_error"),height:200,okEvent:null};
-		var windowLayer = ConfirmWindow(obj);
-		LMvc.layer.addChild(windowLayer);
-		return;
-	}*/
 	if(event.characterListType == CharacterListType.SELECT_MONARCH){
 		var character = event.characterList[0];
 		monarchChange(LMvc.selectSeignorId, character.id());
 		LMvc.selectSeignorId = character.id();
+	}else if(event.characterListType == CharacterListType.OWN_CHARACTER_LIST && event.subEventType != "return"){
+		var seignior = SeigniorModel.getSeignior(LMvc.selectSeignorId);
+		seignior.generals().forEach(function(child){
+			if(!child.isPrized() && child.city().money() >= JobPrice.PRIZE){
+				var loyaltyUpValue = toPrizedByMoney(child);
+			}
+		});
 	}
 	self.baseLayer.visible = true;
 	self.ctrlLayer.visible = true;

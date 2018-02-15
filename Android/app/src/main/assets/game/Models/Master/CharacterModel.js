@@ -114,6 +114,9 @@ CharacterModel.getSoldierType = function(type, value){
 	}
 	return String.format("{0}({1})",type,endType);
 };
+CharacterModel.isHistoryPurchaseCharacter=function(id){
+	return historyPurchaseCharacters.indexOf(id) >= 0;
+};
 CharacterModel.setChara=function(list){
 	var fathers = [];
 	for(var i=0,l=list.length;i<l;i++){
@@ -380,7 +383,7 @@ CharacterModel.prototype.propertiesExp = function(key, plusValue) {
 CharacterModel.prototype.getFullPropertiesValue = function(key) {
 	var self = this;
 	var value = self.data[key];
-	if(self.id() == NewYearPresent_Boss){
+	if(NewYearPresentConfig && self.id() == NewYearPresentConfig.boss){
 		return value;
 	}
 	var expKey = key +"_exp";
@@ -509,7 +512,7 @@ CharacterModel.prototype.statusChange = function(name) {
 };
 CharacterModel.prototype.isMale = function() {
 	var self = this;
-	if(self.id() < 1000){
+	if(self.id() < 1000 && self.id() < 10000){
 		return femaleCharacters.indexOf(self.id()) < 0;
 	}
 	return self.data.gender == 1;
@@ -600,7 +603,7 @@ CharacterModel.prototype.stopIn = function(value) {
 	return this._dataValue("stopIn", value, 0);
 };
 CharacterModel.prototype.age = function() {
-	if(this.data.born == 0 || !LMvc.chapterData){
+	if(this.data.born == 0 || !LMvc.chapterData || this.isHistoryPurchase()){
 		return "--";
 	}
 	return LMvc.chapterData.year - this.data.born;
@@ -669,7 +672,7 @@ CharacterModel.prototype.dispositionLabel = function(){
 	return Language.get("disposition_"+this.data.disposition);
 };
 CharacterModel.prototype.name = function() {
-	if(this.data.id >= 1000){
+	if(this.data.id >= 1000 && this.data.id < 10000){
 		return this.data.name;
 	}
 	if(this.isEmploy()){
@@ -680,22 +683,29 @@ CharacterModel.prototype.name = function() {
 CharacterModel.prototype.compatibility = function() {
 	return this.data.compatibility;
 };
+CharacterModel.prototype.isHistoryPurchase = function() {
+	return CharacterModel.isHistoryPurchaseCharacter(this.id());
+};
 CharacterModel.prototype.seigniorId = function(value){
+	if(typeof value == UNDEFINED && this.isHistoryPurchase()){
+		return LMvc.selectSeignorId;
+	}
 	return this._dataValue("seignior_id", value, 0);
 };
 CharacterModel.prototype.seignior = function(chara_id) {
 	var self = this;
-	if(!self.data.seignior_id){
+	if(!self.seigniorId()){
 		return null;
 	}
-	if(!self.data._seignior || self.data._seignior.chara_id() != self.data.seignior_id){
-		self.data._seignior = SeigniorModel.getSeignior(self.data.seignior_id);
+	if(!self.data._seignior || self.data._seignior.chara_id() != self.seigniorId()){
+		self.data._seignior = SeigniorModel.getSeignior(self.seigniorId());
 	}
 	return self.data._seignior;
 };
 CharacterModel.prototype.seigniorName = function(){
 	var self = this;
-	if(self.seignior() && self.seignior().character().seigniorId() > 0){
+	if(self.seignior() && self.seignior().character() 
+		&& self.seignior().character().seigniorId() > 0){
 		return self.seignior().character().name();
 	}
 	return Language.get("nothing");
@@ -840,12 +850,15 @@ CharacterModel.prototype.maxMP = function(init) {
 	}
 	return self.data._maxStrategy;
 };
+CharacterModel.prototype.isHistoryCity = function() {
+	return this.cityId() == HistoryCityConfig.cityId;
+};
 CharacterModel.prototype.lv = function() {
 	return this.level();
 };
 CharacterModel.prototype.level = function() {
 	var self = this;
-	if(self.isDefCharacter() || self.isTribeCharacter() || self.isEmploy()){
+	if(self.isDefCharacter() || self.isTribeCharacter() || self.isEmploy() || self.isHistoryPurchase() || self.isHistoryCity()){
 		return self.seigniorLevel();
 	}
 	var lv = (self.data.feat / CharacterLevelConfig.exp >>> 0) + CharacterLevelConfig.initLevel;
@@ -868,6 +881,9 @@ CharacterModel.prototype.strategies = function(isAll) {
 };
 CharacterModel.prototype.identity = function(value) {
 	var self = this;
+	if(self.isHistoryPurchase()){
+		return "-";
+	}
 	if(self.isEmploy()){
 		return Language.get("employ");
 	}
@@ -880,9 +896,9 @@ CharacterModel.prototype.identity = function(value) {
 		identity = "building";
 	} else if(self.id() == seigniorId && self.seignior()){
 		identity = "monarch";
-	}else if(self.id() == self.city().prefecture()){
+	}else if(self.city() && self.id() == self.city().prefecture()){
 		identity = "prefecture";
-	}else if(self.seigniorId() != self.city().seigniorCharaId()){
+	}else if(self.city() && self.seigniorId() != self.city().seigniorCharaId()){
 		identity = "captive";
 	}
 	return Language.get(identity);
@@ -914,7 +930,7 @@ CharacterModel.prototype.loyalty = function(value) {
 	if(LMvc.isRead || self.seigniorId() == 0 || self.validLoyalty() >= 90){
 		return;
 	}
-	if(self.seigniorId() != self.city().seigniorCharaId()){
+	if(self.cityId() > 0 && self.seigniorId() != self.city().seigniorCharaId()){
 		return;
 	}
 	var v = self.validLoyalty();
@@ -1099,8 +1115,8 @@ CharacterModel.prototype.cityId = function(value) {
 };
 CharacterModel.prototype.city = function() {
 	var self = this;
-	if(!self._city || self._city.id() != self.data.cityId){
-		self._city = AreaModel.getArea(self.data.cityId);
+	if(!self._city || self._city.id() != self.cityId()){
+		self._city = AreaModel.getArea(self.cityId());
 	}
 	return self._city;
 };
@@ -1197,10 +1213,12 @@ CharacterModel.prototype.maxProficiencySoldier = function() {
 	if(soldiers.length == 1 && !soldiers[0].id()){
 		soldiers = self.initSoldiers();
 	}
+	var isHistory = self.isHistoryPurchase();
 	var proficiency = 0, soldier;
 	for(var i=0,l=soldiers.length;i<l;i++){
 		var child = soldiers[i];
-		if(specialSoldiersConfig.indexOf(child.id()) >= 0 
+		if(!isHistory
+			&& specialSoldiersConfig.indexOf(child.id()) >= 0 
 			&& self.seigniorId() == LMvc.selectSeignorId
 			&& !purchaseHasBuy(productIdConfig.soldier_special)){
 			continue;
@@ -1218,8 +1236,10 @@ CharacterModel.prototype.currentSoldierId = function(value) {
 		self.data.currentSoldierId = value;
 		return;
 	}
+	var isHistory = self.isHistoryPurchase();
 	if(self.data.currentSoldierId){
-		if(specialSoldiersConfig.indexOf(self.data.currentSoldierId) >= 0 
+		if(!isHistory
+			&& specialSoldiersConfig.indexOf(self.data.currentSoldierId) >= 0 
 			&& self.seigniorId() == LMvc.selectSeignorId
 			&& !purchaseHasBuy(productIdConfig.soldier_special)){
 			self.data.currentSoldierId = null;

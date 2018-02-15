@@ -7,12 +7,23 @@ function BattleController(battleData, fromController){
 }
 BattleController.prototype.construct=function(){
 	var self = this;
+	var historyId = self.battleData.historyId;
+	if(!historyId && (LMvc.areaData && LMvc.areaData.battleData)){
+		historyId = LMvc.areaData.battleData.historyId;
+	}
+	self.setValue("historyId", historyId);
 	self.downX = self.downY = 0;
 	self.setValue("bout", 0);
 	LMvc.keepLoading(true);
 	LMvc.changeLoading(BattleLoading);
-	var city = self.battleData.toCity;
-	LMvc.loading.setTitle(String.format(Language.get("battle_title"), city.name()));
+	if(historyId){
+		self.militaryOver = true;
+		LMvc.loading.setTitle(Language.get("history_" + historyId));
+	}else{
+		var city = self.battleData.toCity;
+		LMvc.loading.setTitle(String.format(Language.get("battle_title"), city.name()));
+	}
+	
 	if(Toast.layer){
 		Toast.layer.removeAllChild();
 	}
@@ -24,7 +35,7 @@ BattleController.prototype.mvcLoad=function(){
 };
 BattleController.prototype.configLoad=function(){
 	var self = this;
-	self.load.config(["Soldiers","Character","GroupSkills","Terrain"],self.libraryLoad);
+	self.load.config(["Soldiers","Character","GroupSkills","Terrain","HistoryList"],self.libraryLoad);
 };
 BattleController.prototype.libraryLoad=function(){
 	var self = this;
@@ -47,8 +58,15 @@ BattleController.prototype.viewLoad=function(){
 	"Battle/BattleExpChange","Battle/BattleField","Battle/MilitaryAdviser"],self.addMap);
 };
 BattleController.prototype.addMap=function(){
-	var self = this;
-	var mapPath = String.format("{0}.js", self.battleData.toCity.smap());
+	var self = this, mapPath, historyId = self.battleData.historyId;
+	if(LMvc.areaData && LMvc.areaData.battleData){
+		historyId = LMvc.areaData.battleData.historyId;
+	}
+	if(historyId){
+		mapPath = String.format("history/{0}.js", historyId);
+	}else{
+		mapPath = String.format("{0}.js", self.battleData.toCity.smap());
+	}
 	self.model.loadMapFile(mapPath,self.globalFilesLoad);
 };
 BattleController.prototype.globalFilesLoad = function(){
@@ -140,6 +158,7 @@ BattleController.prototype.init = function(){
 		Math.fakeReset();
 		self.charactersInit();
 	}
+	self.setValue("currentBelong", Belong.SELF);
 	LPlugin.playBGM("battle" + ((2 * Math.random() >>> 0) + 1), LPlugin.gameSetting.BGM);
 };
 BattleController.prototype.charactersInit = function(){
@@ -157,7 +176,11 @@ BattleController.prototype.charactersInit = function(){
 				chara.troops(0);
 			}
 		}
-		enemyCharas = self.battleData.toCity.getDefenseEnemies();
+		if(self.battleData.historyId){
+			enemyCharas = self.battleData.toCity.generals();
+		}else{
+			enemyCharas = self.battleData.toCity.getDefenseEnemies();
+		}
 		enemyPositions = self.model.map.charas;
 		selfPositions = self.model.map.enemys;
 		var sumTroops = self.battleData.toCity.troops();
@@ -245,6 +268,7 @@ BattleController.prototype.charactersInit = function(){
 	self.battleData.expeditionEnemyCharacterList = enemyCharas;
 	var seignior = SeigniorModel.getSeignior(LMvc.selectSeignorId);
 	var seigniorLevel = seignior.level();
+	
 	var coreCount = Math.max(enemyCharas.length / 3 >>> 0, 1);
 	for(var i = 0;i<enemyCharas.length;i++){
 		var child = enemyPositions[i];
@@ -280,10 +304,23 @@ BattleController.prototype.charactersInit = function(){
 	if(selfAttack){
 		self.model.enemyList[0].mission = BattleCharacterMission.Defensive;
 	}
-	self.defCharactersInit();
-	for(var i=0,l=selfPositions.length;i<l;i++){
-		var charaObjs = selfPositions[i];
-		self.view.charaLayer.addCharacterPosition(charaObjs.direction,charaObjs.x,charaObjs.y,i);
+	if(self.battleData.historyId){
+		var charas = self.battleData.expeditionCharacterList;
+		for(var i=0,l=charas.length;i<l;i++){
+			var child = selfPositions[i];
+			//self.view.charaLayer.addCharacterPosition(charaObjs.direction,charaObjs.x,charaObjs.y,i);
+			var chara = charas[i];
+			self.addOurCharacter(chara.id(),child.direction,child.x,child.y);
+			chara.troops(chara.maxTroops());
+			chara.HP(chara.maxHP());
+			chara.MP(chara.maxMP());
+		}
+	}else{
+		self.defCharactersInit();
+		for(var i=0,l=selfPositions.length;i<l;i++){
+			var charaObjs = selfPositions[i];
+			self.view.charaLayer.addCharacterPosition(charaObjs.direction,charaObjs.x,charaObjs.y,i);
+		}
 	}
 };
 BattleController.prototype.defCharactersInit=function(){
@@ -593,7 +630,7 @@ BattleController.prototype.loadSingleCombat = function(){
 BattleController.prototype.loadSingleCombatComplete=function(){
 	var self = this;
 	var singleCombat;
-	if(self,BattleController.ctrlChara.belong == Belong.SELF){
+	if(BattleController.ctrlChara.belong == Belong.SELF){
 		singleCombat = new SingleCombatController(self,BattleController.ctrlChara.data.id(),BattleController.ctrlChara.AI.attackTarget.data.id());
 	}else{
 		singleCombat = new SingleCombatController(self, BattleController.ctrlChara.AI.attackTarget.data.id(), BattleController.ctrlChara.data.id());
