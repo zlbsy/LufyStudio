@@ -380,8 +380,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "Apple Code Signing Certification Authority";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Code Signing Certification Authority";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: lubin zhang (487MZ6R5X8)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: lubin zhang (487MZ6R5X8)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
@@ -404,7 +404,8 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "1d0a283d-4a87-4c8d-9c44-1c64bc3b416c";
+				PROVISIONING_PROFILE = "2b5b12e1-9f2a-4fa1-89e7-05427c331d9c";
+				PROVISIONING_PROFILE_SPECIFIER = ios_distribution;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -427,8 +428,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "Apple Code Signing Certification Authority";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Code Signing Certification Authority";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: lubin zhang (487MZ6R5X8)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: lubin zhang (487MZ6R5X8)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
@@ -444,7 +445,8 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PROVISIONING_PROFILE = "1d0a283d-4a87-4c8d-9c44-1c64bc3b416c";
+				PROVISIONING_PROFILE = "2b5b12e1-9f2a-4fa1-89e7-05427c331d9c";
+				PROVISIONING_PROFILE_SPECIFIER = ios_distribution;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};

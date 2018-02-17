@@ -215,7 +215,7 @@ Language.data = {
 	"terrain_comment_nomove":"禁止移动",
 	"distribution_troops":"分配兵力",
 	"can_use_troops":"可用兵力",
-	
+	"dialog_prize_all_confirm":"褒奖全部武将吗？（忠诚度100的武将除外）",
 	"single_command_attack":"轻击",
 	"single_command_double_attack":"连击",
 	"single_command_big_attack":"重击",

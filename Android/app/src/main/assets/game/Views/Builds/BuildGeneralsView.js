@@ -94,7 +94,7 @@ BuildGeneralsView.prototype.selectComplete=function(event){
 		self.controller.setValue("cityId", null);
 		var cityModel = self.controller.getValue("cityData");
 		cityModel.generals().forEach(function(child){
-			if(!child.isPrized() && child.city().money() >= JobPrice.PRIZE){
+			if(child.loyalty() < 100 && !child.isPrized() && child.city().money() >= JobPrice.PRIZE){
 				var loyaltyUpValue = toPrizedByMoney(child);
 			}
 		});

@@ -26,8 +26,8 @@ android {
         applicationId "com.lufylegend.sgj"
         minSdkVersion 15
         targetSdkVersion 23
-        versionName '2.0.0'
-        versionCode 20
+        versionName '2.0.1'
+        versionCode 21
     }
     buildTypes {
         release {
@@ -37,18 +37,6 @@ android {
         }
     }
     productFlavors {
-        armv7 {
-            versionCode defaultConfig.versionCode + 2
-            ndk {
-                abiFilters "armeabi-v7a", ""
-            }
-        }
-        x86 {
-            versionCode defaultConfig.versionCode + 4
-            ndk {
-                abiFilters "x86", ""
-            }
-        }
     }
 }
 

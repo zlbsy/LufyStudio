@@ -215,7 +215,7 @@ Language.data = {
 	"terrain_comment_nomove":"移動禁止",
 	"distribution_troops":"分配可能の兵力",
 	"can_use_troops":"使用可能の兵力",
-	
+	"dialog_prize_all_confirm":"全ての武将を褒賞しますか？（忠誠度が100である武将は対象外です）",
 	"single_command_attack":"軽撃",
 	"single_command_double_attack":"連撃",
 	"single_command_big_attack":"重撃",

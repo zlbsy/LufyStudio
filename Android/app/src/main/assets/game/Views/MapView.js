@@ -225,7 +225,7 @@ MapView.prototype.showMapLayer=function(event){
 	}else if(event.characterListType == CharacterListType.OWN_CHARACTER_LIST && event.subEventType != "return"){
 		var seignior = SeigniorModel.getSeignior(LMvc.selectSeignorId);
 		seignior.generals().forEach(function(child){
-			if(!child.isPrized() && child.city().money() >= JobPrice.PRIZE){
+			if(child.loyalty() < 100 && !child.isPrized() && child.city().money() >= JobPrice.PRIZE){
 				var loyaltyUpValue = toPrizedByMoney(child);
 			}
 		});
