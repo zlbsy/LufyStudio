@@ -365,6 +365,7 @@ BattleResultView.prototype.showMap=function(event){
 	}else{
 		LMvc.MapController.checkSeigniorWin();
 	}
+	SeigniorModel.removeHistorySeignior();
 };
 BattleResultView.prototype.changeCharactersStatus=function(){
 	var self = this;

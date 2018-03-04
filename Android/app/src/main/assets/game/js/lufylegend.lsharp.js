@@ -649,7 +649,6 @@ ScriptFunction.analysis = function(value) {
 
 };
 ScriptFunction.setFunction = function(value, callback) {
-	console.error("setFunction", value);
 	var script = LGlobal.script;
 	var startNameIndex = value.indexOf(" ");
 	var child;
@@ -2008,7 +2007,7 @@ LSGJBattleCharacterScript.changeMission = function(value, start, end) {
 	}else{
 		characters = LMvc.BattleController.view.charaLayer.getCharactersFromBelong(belong);
 	}
-	characters.forEach(function(chara){
+	characters.forEach(function(character){
 		character.mission = mission;
 	});
 	LGlobal.script.analysis();
@@ -2074,7 +2073,8 @@ LSGJBattleCharacterScript.moveComplete = function(event){
 };
 LSGJBattleCharacterScript.changeAction = function(value, start, end) {
 	var params = value.substring(start + 1, end).split(",");
-	var character = LMvc.BattleController.view.charaLayer.getCharacter(params[0],parseInt(params[1]));
+	var character = LMvc.BattleController.view.charaLayer.getCharacter(params[0],parseInt(params[1]),true);
+	console.error(params, character, LMvc.BattleController.model.enemyList);
 	var action = params[2];
 	if(params.length > 3){
 		var direction = params[3];

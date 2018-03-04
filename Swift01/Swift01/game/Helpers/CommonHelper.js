@@ -150,6 +150,9 @@ function gameDataInit(){
 		});
 		seignior.areas = areaList;
 	}
+	if(!data.battleData){
+		SeigniorModel.removeHistorySeignior();
+	}
 }
 function addCreateCharactersToGame(){
 	var characters = LPlugin.characters();

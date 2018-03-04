@@ -200,7 +200,7 @@ BattleController.prototype.charactersInit = function(){
 			enemyCharas = enemyCharas.splice(0, i + 1);
 			break;
 		}
-		if(!LMvc.TutorialController && enemyCharas.length < BattleMapConfig.DefenseQuantity){
+		if(!self.battleData.historyId && !LMvc.TutorialController && enemyCharas.length < BattleMapConfig.DefenseQuantity){
 			var neighbor = self.battleData.toCity.neighbor();
 			neighbor = neighbor.sort(function(){
 				return Math.fakeRandom()>0.5?1:-1;
@@ -216,7 +216,7 @@ BattleController.prototype.charactersInit = function(){
 		}
 		
 		var employCharacters;
-		while(!LMvc.TutorialController && enemyCharas.length < BattleMapConfig.DefenseQuantity){
+		while(!self.battleData.historyId && !LMvc.TutorialController && enemyCharas.length < BattleMapConfig.DefenseQuantity){
 			if(!employCharacters){
 				employCharacters = self.battleData.toCity.getEmployCharacters();
 			}
@@ -242,7 +242,7 @@ BattleController.prototype.charactersInit = function(){
 			self.battleData.toCity.money(-price);
 			enemyCharas.push(chara);
 		}
-		if(!LMvc.TutorialController && selfAttack && LMvc.chapterData.trouble == TroubleConfig.HARD){
+		if(!self.battleData.historyId && !LMvc.TutorialController && selfAttack && LMvc.chapterData.trouble == TroubleConfig.HARD){
 			for(var i=HardEmployCharacter[0];i<HardEmployCharacter[0] + 2;i++){
 				var soldierId = SpecializedSoldiers[SpecializedSoldiers.length * Math.fakeRandom() >>> 0];
 				var chara = CharacterModel.createEmployCharacter(i, soldierId, self.battleData.toCity.id());

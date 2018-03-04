@@ -1,5 +1,7 @@
 CharacterListType = {};
 CharacterListType.OWN_CHARACTER_LIST = "own_generals_list";//我方武将一览
+CharacterListType.MARRY_CHARACTER_LIST = "marry";//婚配武将一览
+CharacterListType.MARRY_TARGET_LIST = "marry_target";//婚配对象
 CharacterListType.CHARACTER_LIST = "generals_list";//武将一览
 CharacterListType.CHARACTER_MOVE = "generals_move";//武将移到
 CharacterListType.ARM_ENLIST = "arm_enlist";//部队一览

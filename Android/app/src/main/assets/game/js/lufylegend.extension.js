@@ -1,4 +1,59 @@
 /*版本升级后加到引擎中，暂时添加*/
+function init (s, c, w, h, f, t) {
+	LGlobal.speed = s;
+	var _f = function () {
+		if (LGlobal.canTouch && LGlobal.aspectRatio == LANDSCAPE && window.innerWidth < window.innerHeight) {
+			LGlobal.horizontalError();
+		} else if (LGlobal.canTouch && LGlobal.aspectRatio == PORTRAIT && window.innerWidth > window.innerHeight) {
+			LGlobal.verticalError();
+		} else {
+			setTimeout(f, 100);
+		}
+		LGlobal.startTimer = (new Date()).getTime();
+	};
+	var loop;
+	if(typeof s == "function"){
+		loop = function(){
+			s(loop);
+			LGlobal.onShow();
+		};
+		LGlobal.speed = 1000 / 60;
+	}else{
+		var _requestAF = (function() {
+			return window.requestAnimationFrame ||
+			window.webkitRequestAnimationFrame ||
+			window.mozRequestAnimationFrame ||
+			window.oRequestAnimationFrame ||
+			window.msRequestAnimationFrame ||
+			function( callback,  element) {
+				window.setTimeout(callback, 1000/60);
+			};
+		})();
+		LGlobal._requestAFBaseTime = (new Date()).getTime();
+		loop = function(){
+			var now = (new Date()).getTime();
+			var check = now - LGlobal._requestAFBaseTime;
+			if( check / s >= 1 ) {
+				LGlobal._requestAFBaseTime += s;
+				LGlobal.onShow();
+			}
+			_requestAF(loop, s);
+		};
+	}
+	if (document.readyState === "complete") {
+		LGlobal.setCanvas(c, w, h);
+		_f();
+		loop();
+	}else{
+		LEvent.addEventListener(window, "load", function () {
+			LGlobal._requestAFBaseTime = (new Date()).getTime();
+			LGlobal.setCanvas(c, w, h);
+			_f();
+			loop();
+		});
+	}
+}
+var LInit = init;
 /*LTextField.prototype.windComplete = function() {
 	var s = this;
 	s._speedIndex = s.speed;

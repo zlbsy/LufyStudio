@@ -133,6 +133,9 @@ MapView.prototype.areaLayerInit=function(){
 	GameCacher.resetAreaMap("area-map-1");
 	for(var i=0,l=AreaModel.list.length;i<l;i++){
 		var areaStatus = AreaModel.list[i];
+		if(areaStatus.id() == HistoryCityConfig.cityId){
+			continue;
+		}
 		var area = new AreaIconView(self.controller,areaStatus);
 		self.areaLayer.addChild(area);
 	}
@@ -225,7 +228,7 @@ MapView.prototype.showMapLayer=function(event){
 	}else if(event.characterListType == CharacterListType.OWN_CHARACTER_LIST && event.subEventType != "return"){
 		var seignior = SeigniorModel.getSeignior(LMvc.selectSeignorId);
 		seignior.generals().forEach(function(child){
-			if(child.loyalty() < 100 && !child.isPrized() && child.city().money() >= JobPrice.PRIZE){
+			if(child.seigniorId() == LMvc.selectSeignorId && child.loyalty() < 100 && !child.isPrized() && child.city().money() >= JobPrice.PRIZE){
 				var loyaltyUpValue = toPrizedByMoney(child);
 			}
 		});

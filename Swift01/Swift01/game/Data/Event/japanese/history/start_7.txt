@@ -1,0 +1,14 @@
+SGJEvent.mapShow(1);
+SGJEvent.addCharacter(1,350,100,fade);
+SGJEvent.messageShow(公元197年，曹操趁袁绍在河北正和公孙瓒火拼，率军讨伐张绣。,3);
+SGJEvent.addCharacter(50,50,100,fade);
+SGJEvent.messageShow(张绣自知不是曹操对手，于是率部众投降曹操。,3);
+SGJEvent.addCharacter(524,200,100,fade);
+SGJEvent.messageShow(而曹操却收纳张绣族叔张济的遗孀邹夫人为姬妾。,3);
+SGJEvent.messageShow(这让张绣感到非常恼恨，决定反水。,3);
+SGJEvent.removeCharacter(524,fade);
+SGJEvent.addCharacter(45,170,100,fade);
+SGJEvent.messageShow(于是在谋士贾诩的建议下，先派胡车儿盗取了大将典韦的兵器，而后奇袭曹操之营，曹操被杀的措手不及。,3);
+Mark.EventEnd;
+SGJEvent.end();
+SGJHistory.battleStart();

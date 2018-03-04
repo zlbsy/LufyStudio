@@ -48,6 +48,7 @@ TournamentsView.prototype.closeCharacterList=function(event){
 	var maxLength = 8;
 	var enemyList = [];
 	var killedEnemyList = [];
+	console.error(self.characters);
 	self.characters.forEach(function(child){
 		if(child.id() == selectCharacterId || enemyList.length >= maxLength - 1){
 			return;

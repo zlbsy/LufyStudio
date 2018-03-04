@@ -696,6 +696,9 @@ AreaModel.prototype.troops=function(value){
 	return result;
 };
 AreaModel.prototype.maxTroops=function(){
+	if(HistoryCityConfig.cityId == this.id()){
+		return Number.MAX_VALUE;
+	}
 	return AreaModel.troopsList[this.level()-1];
 };
 AreaModel.prototype.technologyLabel=function(){

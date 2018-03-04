@@ -21,6 +21,11 @@ BuildOfficialView.prototype.showMenu=function(){
 	buttonGeneralsMove.y = menuY;
 	layer.addChild(buttonGeneralsMove);
 	buttonGeneralsMove.addEventListener(LMouseEvent.MOUSE_UP, self.onClickTransportButton);
+	
+	var buttonMarry = getButton(Language.get("marry"),200);
+	buttonMarry.y = menuY;
+	layer.addChild(buttonMarry);
+	buttonMarry.addEventListener(LMouseEvent.MOUSE_UP, self.onClickMarry);
 		
 	menuY += menuHeight;
 	var buttonSpy = getButton(Language.get("spy"),200);
@@ -44,6 +49,28 @@ BuildOfficialView.prototype.showMenu=function(){
 	menuY += menuHeight;
 	self.addAppointButton(layer, menuY);
 	return layer;
+};
+BuildOfficialView.prototype.onClickMarry=function(event){
+	var self = event.currentTarget.getParentByConstructor(BuildOfficialView);
+	var cityModel = self.controller.getValue("cityData");
+	var generals = cityModel.generals();
+	var characterList = [];
+	for(var i=0;i<generals.length;i++){
+		var general = generals[i];
+		if(general.id() == LMvc.selectSeignorId || general.marryTarget() || !general.isMale() || general.feat() < 1000){
+			continue;
+		}
+		characterList.push(general);
+	}
+	if(characterList.length > 0){
+		self.controller.loadCharacterList(CharacterListType.MARRY_CHARACTER_LIST, characterList, {isOnlyOne:true, buttonLabel:"execute"});
+	}else{
+		var obj = {title:Language.get("confirm"),
+		message:Language.get("dialog_marry_error_message"),
+		height:200};
+		var windowLayer = ConfirmWindow(obj);
+		LMvc.layer.addChild(windowLayer);
+	}
 };
 BuildOfficialView.prototype.onClickFloodButton=function(event){
 	var self = event.currentTarget.getParentByConstructor(BuildOfficialView);
@@ -242,6 +269,30 @@ BuildOfficialView.prototype.showBuild=function(event){
 	}
 	if(event.characterListType == CharacterListType.TRANSPORT){
 		self.load.view(["Builds/ExpeditionReady"],self.expeditionReady);
+	}else if(event.characterListType == CharacterListType.MARRY_CHARACTER_LIST){
+		self.controller.setValue("marryCharacter",event.characterList[0]);
+		var cityModel = self.controller.getValue("cityData");
+		var characters = [];
+		for(var i=0;i<MarryCharacters.length;i++){
+			var chara = CharacterModel.getChara(MarryCharacters[i]);
+			if(chara.marryTarget()){
+				continue;
+			}
+			characters.push(chara);
+		}
+		self.controller.loadCharacterList(CharacterListType.MARRY_TARGET_LIST, characters, {isOnlyOne:true,buttonLabel:"marry"});
+		
+	}else if(event.characterListType == CharacterListType.MARRY_TARGET_LIST){
+		var marryCharacter = self.controller.getValue("marryCharacter");
+		var marryTarget = event.characterList[0];
+		marryCharacter.marryTarget(marryTarget.id());
+		marryTarget.marryTarget(marryCharacter.id());
+		marryCharacter.featPlus(10);
+		var obj = {title:Language.get("confirm"),
+		message:String.format(Language.get("dialog_marry_message"), marryCharacter.name(), marryTarget.name()),
+		height:200};
+		var windowLayer = ConfirmWindow(obj);
+		LMvc.layer.addChild(windowLayer);
 	}
 };
 BuildOfficialView.prototype.expeditionReady=function(){

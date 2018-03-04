@@ -89,7 +89,7 @@ var HistoryListConfig = [
 		[3,184,280],//赵云,赵統,赵广
 	],
 	subCharacters:[286,138,4,89,154,175,332,502,19,153,598,239],//严纲,陈到,关羽，关平，关兴，关索,关统,关彝,张飞，张苞，张绍,张遵
-    enemy:{chara_id : 39,color : "0,0,0",generals_count:17,areas : [
+    enemy:{chara_id : 10014,color : "0,0,0",generals_count:17,areas : [
       {  area_id : 54,troops:50000,food:1000000,
       generals:[
         {chara_id:10014,name:"袁绍",feat:0,loyalty:100},
@@ -134,7 +134,7 @@ var HistoryListConfig = [
 	],
 	subCharacters:[14,148,41,30,94,74,31,78,171,311,254,86,377,442,246,65,105,183,312,425,434,609,554],
 	//夏侯惇,郭嘉,夏侯渊,李典,乐进,典韦,于禁,刘晔,曹洪,毛玠,吕虔,钟会,钟毓,典满,乐綝,许仪,夏侯霸,夏侯尚,夏侯玄,夏侯威,夏侯惠,夏侯和,夏侯楙
-	enemy:{chara_id : 10001,color : "0,0,0",generals_count:6, level:4, areas : [
+	enemy:{chara_id : 10023,color : "0,0,0",generals_count:6, level:4, areas : [
 	  {  area_id : 54,troops:50000,prefecture : 10023,food:1000000,
 	  generals:[
 	    {chara_id:10023,name:"淘谦",feat:0,loyalty:100},
@@ -178,7 +178,7 @@ var HistoryListConfig = [
 	],
 	subCharacters:[14,148,41,30,94,74,31,78,171,311,254,86,377,442,246,65,105,183,312,425,434,609,554],
 	//夏侯惇,郭嘉,夏侯渊,李典,乐进,典韦,于禁,刘晔,曹洪,毛玠,吕虔,钟会,钟毓,典满,乐綝,许仪,夏侯霸,夏侯尚,夏侯玄,夏侯威,夏侯惠,夏侯和,夏侯楙
-	enemy:{chara_id : 265,color : "0,0,0",generals_count:6,areas : [
+	enemy:{chara_id : 10005,color : "0,0,0",generals_count:6,areas : [
 	  {  area_id : 54,troops:50000,prefecture : 10005,food:1000000,
 	  generals:[
 	    {chara_id:10005,name:"吕布",feat:0,loyalty:100},
@@ -220,7 +220,7 @@ var HistoryListConfig = [
 	],
 	subCharacters:[72,123,80,178,44,234,167,81,149,100,356,145,104,509,466,189,9,26,278,464,542,597,156],
 	//程普,黄盖,韩当,祖茂,丁奉,虞汜,陆凯,周泰,陈武,孙瑜,孙静,朱治,朱然,张昭,张紘,凌统,陆逊,陆抗,丁封,孙亮,张布,孙皓,吕范
-	enemy:{chara_id : 265,color : "0,0,0",generals_count:6,areas : [
+	enemy:{chara_id : 10042,color : "0,0,0",generals_count:6,areas : [
 	  {  area_id : 54,troops:50000,food:1000000,
 	  generals:[
 	    {chara_id:10042,name:"刘繇",feat:0,loyalty:100},
@@ -269,20 +269,36 @@ var HistoryListConfig = [
 	index:7,
 	name:"宛城逃亡战",
 	level:20,
-	lock:true,
 	troops:1000,
-	maxSubCharacter:2,
+	maxSubCharacter:5,
 	characters:[
-		[21,226,620],//曹操,曹丕,曹植,曹睿,曹奂
-		[1,2,3,4,10],//典韦,典满,许褚,许仪
+		[1,35,463,129,103,228,611],//曹操,曹丕,曹植,曹睿,曹奂
 	],
-	subCharacters:[30,31,32],//周泰,陈武
-	script:"Data/Event/{0}/tyjy.txt",
-	result:[
-		{type:"changeSeignior", id:21, seignior:604, loyalty:100, city:45},
-		{type:"changeSeignior", id:4, seignior:604, loyalty:100, city:45},
-		{type:"changeSeignior", id:19, seignior:604, loyalty:100, city:45},
-	]
+	subCharacters:[74,377,14,148,41,30,94,31,78,171,311,254,86,442,246,65,105,183,312,425,434,609,554],
+	//夏侯惇,郭嘉,夏侯渊,李典,乐进,典韦,于禁,刘晔,曹洪,毛玠,吕虔,钟会,钟毓,典满,乐綝,许仪,夏侯霸,夏侯尚,夏侯玄,夏侯威,夏侯惠,夏侯和,夏侯楙
+	enemy:{chara_id : 10058,color : "0,0,0",generals_count:6,areas : [
+	  {  area_id : 54,troops:50000,prefecture : 10058,food:1000000,
+	  generals:[
+	    {chara_id:10058,name:"张绣",feat:0,loyalty:100},//15
+	    {chara_id:10013,name:"贾诩",feat:0,loyalty:100},//14
+	    {chara_id:10059,name:"胡车儿",feat:0,loyalty:100},//13
+	    {chara_id:11201,name:"骑兵",feat:0,loyalty:100},//12
+	    {chara_id:11202,name:"骑兵",feat:0,loyalty:100},//11
+	    {chara_id:11001,name:"步兵",feat:0,loyalty:100},//10
+	    {chara_id:11002,name:"步兵",feat:0,loyalty:100},//9
+	    {chara_id:11003,name:"步兵",feat:0,loyalty:100},//8
+	    {chara_id:11203,name:"骑兵",feat:0,loyalty:100},//7
+	    {chara_id:11204,name:"骑兵",feat:0,loyalty:100},//6
+	    {chara_id:11205,name:"骑兵",feat:0,loyalty:100},//5
+	    {chara_id:11206,name:"骑兵",feat:0,loyalty:100},//4
+	    {chara_id:11004,name:"步兵",feat:0,loyalty:100},//3
+	    {chara_id:11005,name:"步兵",feat:0,loyalty:100},//2
+	    {chara_id:11101,name:"弓兵",feat:0,loyalty:100},//1
+	    {chara_id:11102,name:"弓兵",feat:0,loyalty:100},//0
+	    ],
+	  },
+	]},
+	rewards:[{count:1, items:[101, 102, 103, 104]}, {count:2, items:[105, 106, 107, 108]}]
 },
 {
 	id:8,
@@ -392,22 +408,46 @@ var HistoryListConfig = [
 {
 	id:13,
 	index:13,
-	name:"马超讨伐战",
+	name:"潼关之战",
 	level:20,
-	lock:true,
 	troops:1000,
-	maxSubCharacter:2,
+	maxSubCharacter:5,
 	characters:[
-		[1,2,3,4,10],//曹操,曹丕,曹植,曹睿,曹奂
-		[21,226,620],//许褚，许仪
+		[43,202,617],//马超,马袋,马邈
 	],
-	subCharacters:[30,31,32],//关羽,张飞,
-	script:"Data/Event/{0}/tyjy.txt",
-	result:[
-		{type:"changeSeignior", id:21, seignior:604, loyalty:100, city:45},
-		{type:"changeSeignior", id:4, seignior:604, loyalty:100, city:45},
-		{type:"changeSeignior", id:19, seignior:604, loyalty:100, city:45},
-	]
+	subCharacters:[42,323,36,95,456,321,420,515,362,429,423,224,337],
+	//庞德,庞会,马云鹭,韩遂,侯选,杨秋,李堪,张横,成宜,马玩,梁兴,程银,杨欣
+	enemy:{chara_id : 10060,color : "0,0,0",generals_count:6,areas : [
+	  {  area_id : 54,troops:50000,prefecture : 10060,food:1000000,
+	  generals:[
+	    {chara_id:10060,name:"曹操",feat:0,loyalty:100},//23
+	    {chara_id:10061,name:"程昱",feat:0,loyalty:100},//22
+	    {chara_id:10062,name:"曹洪",feat:0,loyalty:100},//21
+	    {chara_id:10063,name:"许褚",feat:0,loyalty:100},//20
+	    {chara_id:10064,name:"夏侯渊",feat:0,loyalty:100},//19
+	    {chara_id:10065,name:"刘晔",feat:0,loyalty:100},//18
+	    {chara_id:11003,name:"步兵",feat:0,loyalty:100},//17
+	    {chara_id:11004,name:"步兵",feat:0,loyalty:100},//16
+	    {chara_id:11101,name:"弓兵",feat:0,loyalty:100},//15
+	    {chara_id:11102,name:"弓兵",feat:0,loyalty:100},//14
+	    {chara_id:11103,name:"弓兵",feat:0,loyalty:100},//13
+	    {chara_id:10066,name:"张辽",feat:0,loyalty:100},//12
+	    {chara_id:10067,name:"乐进",feat:0,loyalty:100},//11
+	    {chara_id:11104,name:"弓兵",feat:0,loyalty:100},//10
+	    {chara_id:11001,name:"步兵",feat:0,loyalty:100},//9
+	    {chara_id:10068,name:"李典",feat:0,loyalty:100},//8
+	    {chara_id:10069,name:"张郃",feat:0,loyalty:100},//7
+	    {chara_id:11002,name:"步兵",feat:0,loyalty:100},//6
+	    {chara_id:10070,name:"徐晃",feat:0,loyalty:100},//5
+	    {chara_id:10071,name:"朱灵",feat:0,loyalty:100},//4
+	    {chara_id:11201,name:"骑兵",feat:0,loyalty:100},//3
+	    {chara_id:11202,name:"骑兵",feat:0,loyalty:100},//2
+	    {chara_id:11203,name:"骑兵",feat:0,loyalty:100},//1
+	    {chara_id:11204,name:"骑兵",feat:0,loyalty:100},//0
+	    ],
+	  },
+	]},
+	rewards:[{count:1, items:[101, 102, 103, 104]}, {count:2, items:[105, 106, 107, 108]}]
 },
 {
 	id:14,

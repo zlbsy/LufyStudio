@@ -76,6 +76,15 @@ SeigniorModel.getSeigniors=function(seignior_id){
 	}
 	return characters;
 };
+SeigniorModel.removeHistorySeignior = function(){
+	for(var i=SeigniorModel.list.length - 1;i >= 0;i--){
+		var seignior = SeigniorModel.list[i];
+		var areas = seignior.areas();
+		if(areas.length == 0 || (areas.length == 1 && areas[0].id() == HistoryCityConfig.cityId)){
+			SeigniorModel.list.splice(i, 1);
+		}
+	}
+};
 SeigniorModel.removeSeignior = function(seigniorId){
 	for(var i=0,l=SeigniorModel.list.length;i<l;i++){
 		var seignior = SeigniorModel.list[i];

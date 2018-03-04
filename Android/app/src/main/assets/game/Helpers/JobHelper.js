@@ -1319,6 +1319,14 @@ function tournamentsGet(result){
 		var stones = [97, 98, 99, 100];
 		var itemId = stones[stones.length * Math.fakeRandom() >>> 0];
 		ids.push({id:itemId,q:1});
+	}else if(result == 2){
+		var stones = [101, 102, 103, 104];
+		var itemId = stones[stones.length * Math.fakeRandom() >>> 0];
+		ids.push({id:itemId,q:1});
+	}else if(result == 3){
+		var stones = [105, 106, 107, 108];
+		var itemId = stones[stones.length * Math.fakeRandom() >>> 0];
+		ids.push({id:itemId,q:1});
 	}
 	
 	var seignior = SeigniorModel.getSeignior(LMvc.selectSeignorId);

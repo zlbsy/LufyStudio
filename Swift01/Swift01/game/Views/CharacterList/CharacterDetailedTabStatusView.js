@@ -15,13 +15,14 @@ CharacterDetailedTabStatusView.prototype.showStatus=function(){
 	var characterModel = self.controller.getValue("selectedCharacter");
 	var battleStatus = self.controller.getValue("battleStatus");
 	var txtHeight = 27, startY = 5, startX = 5;
-	var labels = ["belong","identity","age","city","loyalty","status"];
+	var labels = ["belong","identity","age","couples","city","loyalty","status"];
 	var seigniorId = characterModel.seigniorId();
  	var loyaltyLabel = (seigniorId > 0 && characterModel.id() != seigniorId) ? characterModel.loyalty() : "--";
 	var datas = [
 	characterModel.seigniorName(),
 	characterModel.identity(),
 	LMvc.chapterData.noLife ? "--" : characterModel.age(),
+	characterModel.marryTargetName(),
 	characterModel.cityId() > 0 ? characterModel.city().name() : "--",
 	loyaltyLabel,
 	battleStatus ? battleStatus : characterModel.jobLabel()
@@ -68,6 +69,9 @@ CharacterDetailedTabStatusView.prototype.showStatus=function(){
 		var height = txtHeight;
 		var labelChild = Language.get(labels[i]) + (labels[i] == "stunt" ? skillIndex++ : "");
 		var lblCost = getStrokeLabel(String.format("{0} : {1}",labelChild, datas[i]),20,"#FFFFFF","#000000",4);
+		if(labels[i] == "couples" && !datas[i]){
+			continue;
+		}
 		if(labels[i] == "stunt" || labels[i] == "status" || labels[i] == "military"){
 			lblCost.width = LMvc.screenWidth - 60;
 			lblCost.setWordWrap(true, txtHeight);

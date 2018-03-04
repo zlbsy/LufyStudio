@@ -152,6 +152,7 @@ CharacterModel.prototype.datas=function(){
 	var saveData = {
 		chara_id:self.id(),
 		seignior_id:self.seigniorId(),
+		marryTarget:self.marryTarget(),
 		feat:self.feat(),//功绩
 		troops:self.troops(),
 		wounded:self.wounded(),
@@ -223,6 +224,7 @@ CharacterModel.prototype.setDatas=function(charaData){
 		SoldiersView.updateAll = true;
 	}
 	self._soldiers = null;
+	self.marryTarget(charaData.marryTarget);
 	self.feat(charaData.feat);
 	self.exp(charaData.exp);
 	self.MP(charaData.mp ? charaData.mp : 0);
@@ -391,6 +393,13 @@ CharacterModel.prototype.getFullPropertiesValue = function(key) {
 	var expValue = exp / 100 >>> 0;
 	return (value + expValue > 100 ? 100 : value + expValue);
 };
+CharacterModel.prototype.getMarryPlus = function(){
+	var self = this;
+	if(self.marryTarget() == 0){
+		return 0;
+	}
+	return 2;
+};
 CharacterModel.prototype.basicPropertiesCalculation = function() {
 	var self = this;
 	var keys = ["command","force","intelligence","agility","luck"];
@@ -399,6 +408,7 @@ CharacterModel.prototype.basicPropertiesCalculation = function() {
 		self.data["_"+key] = self.getFullPropertiesValue(key);
 		self.data["_"+key] += self.getEquipmentPlus(key);
 		self.data["_"+key] += self.getReputationPlus(key);
+		self.data["_"+key] += self.getMarryPlus();
 	}
 };
 CharacterModel.prototype.maxPropertie = function(){
@@ -512,7 +522,7 @@ CharacterModel.prototype.statusChange = function(name) {
 };
 CharacterModel.prototype.isMale = function() {
 	var self = this;
-	if(self.id() < 1000 && self.id() < 10000){
+	if(self.id() < 1000 || self.id() >= 10000){
 		return femaleCharacters.indexOf(self.id()) < 0;
 	}
 	return self.data.gender == 1;
@@ -554,6 +564,16 @@ CharacterModel.prototype.rangeAttack = function() {
  */
 CharacterModel.prototype.hardships = function(value) {
 	return this._dataValue("hardships", value, 0);
+};
+CharacterModel.prototype.marryTarget = function(value) {
+	return this._dataValue("marryTarget", value, 0);
+};
+CharacterModel.prototype.marryTargetName = function() {
+	if(this.marryTarget() == 0){
+		return null;
+	}
+	var chara = CharacterModel.getChara(this.marryTarget());
+	return chara.name();
 };
 CharacterModel.prototype.moveKnow = function() {
 	return this.data.moveKnow;
@@ -603,7 +623,7 @@ CharacterModel.prototype.stopIn = function(value) {
 	return this._dataValue("stopIn", value, 0);
 };
 CharacterModel.prototype.age = function() {
-	if(this.data.born == 0 || !LMvc.chapterData || this.isHistoryPurchase()){
+	if(this.data.born == 0 || !LMvc.chapterData || this.isHistoryPurchase() || MarryCharacters.indexOf(this.id()) >= 0){
 		return "--";
 	}
 	return LMvc.chapterData.year - this.data.born;
@@ -1146,7 +1166,7 @@ CharacterModel.prototype.face = function() {
 };
 CharacterModel.prototype.getBasicProperties = function(key) {
 	var self = this;
-	if(!self.data["_"+key]){
+	if(typeof self.data["_"+key] == UNDEFINED){
 		self.calculation(false);
 	}
 	return self.data["_"+key];

@@ -1,0 +1,15 @@
+SGJEvent.mapShow(1);
+SGJEvent.addCharacter(1,300,100,fade);
+SGJEvent.messageShow(曹操想要南征，却又害怕马腾攻击他的后方。,3);
+SGJEvent.addCharacter(160,50,100,fade);
+SGJEvent.messageShow(于是将马腾诱入洛阳杀害。,3);
+SGJEvent.removeCharacter(160,fade);
+SGJEvent.messageShow(这彻底激怒了在西凉留守的马超。,3);
+SGJEvent.addCharacter(43,50,100,fade);
+SGJEvent.talk(43,父仇不共戴天，我定要让曹贼血债血偿！);
+SGJEvent.addCharacter(95,100,150,fade);
+SGJEvent.messageShow(马超联合韩遂共同起兵伐曹，由于西凉铁骑骁勇善战，先后攻陷了长安和潼关。,3);
+SGJEvent.messageShow(曹操只能亲自带兵来与马超决战，又被马超以逸待劳大胜数场，杀的曹操割须弃袍，几乎丧命。,3);
+Mark.EventEnd;
+SGJEvent.end();
+SGJHistory.battleStart();

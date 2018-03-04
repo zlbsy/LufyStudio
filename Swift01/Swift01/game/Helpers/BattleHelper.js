@@ -505,6 +505,7 @@ function getBattleSaveData(){
 			direction:character.direction,
 			action:character.action,
 			mode:character.mode,
+			visible:character.visible,
 			mission:character.mission,
 			isDefCharacter:character.data.isDefCharacter(),
 			isEmploy:character.data.isEmploy(),
@@ -531,6 +532,7 @@ function getBattleSaveData(){
 			direction:character.direction,
 			action:character.action,
 			mission:character.mission,
+			visible:character.visible,
 			isDefCharacter:character.data.isDefCharacter(),
 			isEmploy:character.data.isEmploy(),
 			x:character.locationX(),
@@ -636,6 +638,7 @@ function setBattleSaveData(){
 		chara.changeAction(charaData.action);
 		chara.mode = charaData.mode;
 		chara.mission = charaData.mission;
+		chara.visible = charaData.visible;
 		chara.status.setData(charaData.status);
 		if(charaData.militaryId){
 			chara.militaryModel = MilitaryModel.getMaster(charaData.militaryId);
@@ -661,6 +664,7 @@ function setBattleSaveData(){
 		chara.changeAction(charaData.action);
 		chara.status.setData(charaData.status);
 		chara.mission = charaData.mission;
+		chara.visible = charaData.visible;
 		if(charaData.militaryId){
 			chara.militaryModel = MilitaryModel.getMaster(charaData.militaryId);
 			chara.militaryValidLimit = charaData.militaryValidLimit;

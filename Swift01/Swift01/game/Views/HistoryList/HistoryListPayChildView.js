@@ -26,12 +26,18 @@ HistoryListPayChildView.prototype.set=function(){
 	var characterModel = CharacterModel.getChara(self.characterId);
 	self.characterName = characterModel.name();
 	if(characterModel.isHistoryPurchase() && characterModel.equipments().length == 0){
-		var equipment = historyPurchaseCharactersEquipment[characterModel.id()];
-		if(equipment.id > 0){
-		var item = new ItemModel(null,{item_id:equipment.id,count:1});
-		item.stone(equipment.stone);
-		item.stonePlus(equipment.stonePlus);
-		characterModel.equip(item);}
+		var equipments = historyPurchaseCharactersEquipment[characterModel.id()];
+		if(equipments){
+			for(var i=0;i<equipments.length;i++){
+				var equipment = equipments[i];
+				if(equipment.id > 0){
+					var item = new ItemModel(null,{item_id:equipment.id,count:1});
+					item.stone(equipment.stone);
+					item.stonePlus(equipment.stonePlus);
+					characterModel.equip(item);
+				}
+			}
+		}
 	}
 	var charaImg = characterModel.currentSoldiers().icon(new LPoint(48, 48),self.iconComplete);
 	charaImg.x=(self.getWidth() - 48)*0.5;
