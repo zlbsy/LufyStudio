@@ -22,6 +22,7 @@ BuildOfficialView.prototype.showMenu=function(){
 	layer.addChild(buttonGeneralsMove);
 	buttonGeneralsMove.addEventListener(LMouseEvent.MOUSE_UP, self.onClickTransportButton);
 	
+	menuY += menuHeight;
 	var buttonMarry = getButton(Language.get("marry"),200);
 	buttonMarry.y = menuY;
 	layer.addChild(buttonMarry);

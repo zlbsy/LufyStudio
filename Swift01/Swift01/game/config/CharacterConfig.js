@@ -126,6 +126,11 @@ var sCharacterImages = ["zpftmd748"];
 //var NewYearPresent_Boss = 861;
 var historyPurchaseCharacters = [900,901,902,903,904];
 var MarryCharacters = [873,874,875,876,877];
+var MarryConfig = {
+	skillId:101,
+	femaleCharacters : [873,874,875,876,877],
+	maleCharacters : [878,879,880,881,882]
+};
 var historyPurchaseCharactersEquipment = {
 	"900":[{id:45,stone:99,stonePlus:{type:"item_equipment",skill:38}}],
 	"901":[{id:74,stone:99,stonePlus:{type:"item_equipment",skill:30}}],

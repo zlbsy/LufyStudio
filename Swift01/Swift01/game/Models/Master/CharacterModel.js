@@ -1166,7 +1166,7 @@ CharacterModel.prototype.face = function() {
 };
 CharacterModel.prototype.getBasicProperties = function(key) {
 	var self = this;
-	if(typeof self.data["_"+key] == UNDEFINED){
+	if(typeof self.data["_"+key] != 'number'){
 		self.calculation(false);
 	}
 	return self.data["_"+key];
