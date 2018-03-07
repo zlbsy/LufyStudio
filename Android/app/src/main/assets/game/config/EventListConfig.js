@@ -88,6 +88,8 @@ var EventListConfig = [
 	},
 	script:"Data/Event/{0}/lhj.txt",
 	result:[
+		{type:"marry",general:18,target:380},//吕布貂蝉
+		{type:"marry",general:380,target:18},
 		{type:"generalsDie", generals:[543]},//王允死亡
 		{type:"moveGeneralsToSeignior", generals:[18,380], to:237, loyalty:90},//吕布貂蝉移动到张扬手下
 		{type:"monarchDie", monarch:265, newMonarch:[465]}//董卓死亡，由李郭继承
@@ -458,6 +460,10 @@ var EventListConfig = [
 	},
 	script:"Data/Event/{0}/eq.txt",
 	result:[
+		{type:"marry",general:528,target:24},//孙策大乔
+		{type:"marry",general:24,target:528},
+		{type:"marry",general:548,target:2},//周瑜小乔
+		{type:"marry",general:2,target:548},
 		{type:"changeSeignior", id:528, seignior:24, loyalty:100, city:28},
 		{type:"changeSeignior", id:548, seignior:24, loyalty:100, city:28}
 	],

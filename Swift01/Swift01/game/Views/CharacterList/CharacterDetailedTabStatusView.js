@@ -38,6 +38,11 @@ CharacterDetailedTabStatusView.prototype.showStatus=function(){
 		labels.push("stunt");
 		datas.push(String.format(Language.get("skill_explanation"),skill.name(),skill.explanation(),skill.probability()));
 	}
+	if(characterModel.marryTarget() > 0){
+		skill = characterModel.marrySkill();
+		labels.push("stunt");
+		datas.push(String.format(Language.get("skill_explanation"),skill.name(),skill.explanation(),skill.probability()));
+	}
 	var currentSoldiers = characterModel.currentSoldiers();
 	skill = currentSoldiers.skill();
 	if(skill){

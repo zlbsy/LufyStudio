@@ -58,7 +58,7 @@ BuildOfficialView.prototype.onClickMarry=function(event){
 	var characterList = [];
 	for(var i=0;i<generals.length;i++){
 		var general = generals[i];
-		if(general.id() == LMvc.selectSeignorId || general.marryTarget() || !general.isMale() || general.feat() < 1000){
+		if(general.id() == LMvc.selectSeignorId || general.marryTarget()/* || !general.isMale()*/ || general.feat() < 1000){
 			continue;
 		}
 		characterList.push(general);
@@ -271,15 +271,41 @@ BuildOfficialView.prototype.showBuild=function(event){
 	if(event.characterListType == CharacterListType.TRANSPORT){
 		self.load.view(["Builds/ExpeditionReady"],self.expeditionReady);
 	}else if(event.characterListType == CharacterListType.MARRY_CHARACTER_LIST){
-		self.controller.setValue("marryCharacter",event.characterList[0]);
+		var marryCharacter = event.characterList[0];
+		self.controller.setValue("marryCharacter",marryCharacter);
 		var cityModel = self.controller.getValue("cityData");
 		var characters = [];
-		for(var i=0;i<MarryCharacters.length;i++){
-			var chara = CharacterModel.getChara(MarryCharacters[i]);
+		if(!MarryConfig.femaleModels){
+			MarryConfig.femaleModels = [];
+			MarryConfig.femaleCharacters.forEach(function(id){
+				var chara = CharacterModel.getChara(id);
+				MarryConfig.femaleModels.push(chara);
+			});
+		}
+		if(!MarryConfig.maleModels){
+			MarryConfig.maleModels = [];
+			MarryConfig.maleCharacters.forEach(function(id){
+				var chara = CharacterModel.getChara(id);
+				MarryConfig.maleModels.push(chara);
+			});
+		}
+		var marryCount = 0;
+		MarryConfig.femaleModels.forEach(function(chara){
+			marryCount += chara.marryTarget() ? 1 : 0;
+		});
+		MarryConfig.maleModels.forEach(function(chara){
+			marryCount += chara.marryTarget() ? 1 : 0;
+		});
+		var marryCharacters = marryCharacter.isMale() ? MarryConfig.femaleModels : MarryConfig.maleModels;
+		for(var i=0;i<marryCharacters.length;i++){
+			var chara = marryCharacters[i];
 			if(chara.marryTarget()){
 				continue;
 			}
 			characters.push(chara);
+			if(characters.length >= MarryConfig.maxCount - marryCount){
+				break;
+			}
 		}
 		self.controller.loadCharacterList(CharacterListType.MARRY_TARGET_LIST, characters, {isOnlyOne:true,buttonLabel:"marry"});
 		
@@ -288,10 +314,12 @@ BuildOfficialView.prototype.showBuild=function(event){
 		var marryTarget = event.characterList[0];
 		marryCharacter.marryTarget(marryTarget.id());
 		marryTarget.marryTarget(marryCharacter.id());
-		marryCharacter.featPlus(10);
+		var loyalty = marryCharacter.loyalty() + 10;
+		loyalty = loyalty > 100 ? 100 : loyalty;
+		marryCharacter.loyalty(loyalty);
 		var obj = {title:Language.get("confirm"),
 		message:String.format(Language.get("dialog_marry_message"), marryCharacter.name(), marryTarget.name()),
-		height:200};
+		height:250};
 		var windowLayer = ConfirmWindow(obj);
 		LMvc.layer.addChild(windowLayer);
 	}

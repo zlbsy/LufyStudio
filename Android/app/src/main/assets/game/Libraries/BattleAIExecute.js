@@ -717,6 +717,9 @@ BattleAIExecute.prototype.getCanUseStrategy = function(chara, target,type) {
 		if(strategy.effectType() != type || strategy.belong() != target.belong){
 			continue;
 		}
+		if(strategy.cost() > chara.data.MP()){
+			continue;
+		}
 		//TODO::地形判断
 		/*var weathers = strategy.weathers();
 		if(weathers && weathers.length > 0 && weathers.indexOf(LMvc.BattleController.view.weatherLayer.currentWeather.weather) < 0){

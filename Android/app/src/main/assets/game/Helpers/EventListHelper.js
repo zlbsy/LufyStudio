@@ -568,6 +568,10 @@ function dispatchEventListResult(eventId, currentEvent) {
 				//称号
 				dispatchEventListResultReputation(child);
 				break;
+			case "marry":
+				//结婚
+				dispatchEventListResultMarry(child);
+				break;
 			case "moveGeneralsToCity":
 				//武将移动到城池
 				dispatchEventListResultMoveGeneralsToCity(child);
@@ -837,6 +841,10 @@ function dispatchEventListResultReputation(child) {
 			}
 		}
 	}
+}
+function dispatchEventListResultMarry(child) {
+	var character = CharacterModel.getChara(child.general);
+	character.marryTarget(child.target);
 }
 
 function dispatchEventListResultStopBattle(child) {

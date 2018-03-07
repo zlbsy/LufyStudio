@@ -268,7 +268,7 @@ var HistoryListConfig = [
 	id:7,
 	index:7,
 	name:"宛城逃亡战",
-	level:0,
+	level:20,
 	troops:1000,
 	maxSubCharacter:5,
 	characters:[
@@ -409,7 +409,7 @@ var HistoryListConfig = [
 	id:13,
 	index:13,
 	name:"潼关之战",
-	level:0,
+	level:20,
 	troops:1000,
 	maxSubCharacter:5,
 	characters:[

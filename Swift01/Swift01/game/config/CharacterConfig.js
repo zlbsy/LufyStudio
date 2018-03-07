@@ -128,6 +128,7 @@ var historyPurchaseCharacters = [900,901,902,903,904];
 var MarryCharacters = [873,874,875,876,877];
 var MarryConfig = {
 	skillId:101,
+	maxCount:5,
 	femaleCharacters : [873,874,875,876,877],
 	maleCharacters : [878,879,880,881,882]
 };

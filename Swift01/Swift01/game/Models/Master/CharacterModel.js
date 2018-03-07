@@ -470,8 +470,14 @@ CharacterModel.prototype.calculation = function(init) {
 			createSkills.push(skill);
 		}
 	}
+	if(self.marryTarget() > 0){
+		skill = SkillMasterModel.getMaster(MarryConfig.skillId);
+		if(skill.isMainType(SkillType.CREATE)){
+			createSkills.push(skill);
+		}
+	}
 	var currentSoldiers = self.currentSoldiers();
-	var skill = currentSoldiers.skill(SkillType.CREATE);
+	skill = currentSoldiers.skill(SkillType.CREATE);
 	if(skill){
 		createSkills.push(skill);
 	}
@@ -1490,20 +1496,40 @@ CharacterModel.prototype.equipmentSkill = function(type) {
 	}
 	return null;
 };
+CharacterModel.prototype.marrySkill = function(type) {
+	var self = this;
+	if(self.marryTarget() == 0){
+		return self.soldiersSkill(type);
+	}
+	var skill = SkillMasterModel.getMaster(MarryConfig.skillId);
+	var skillType = skill.mainType();
+	if(type && (
+		(typeof skillType == "string" && skillType != type) || 
+		(Array.isArray(skillType) && skillType.indexOf(type) < 0))){
+		return self.soldiersSkill(type);
+	}
+	if(type && skill.probability() < 100){
+		var rand = Math.fakeRandom();
+		if(rand > skill.probability()*0.01){
+			return self.soldiersSkill(type);
+		}
+	}
+	return skill;
+};
 CharacterModel.prototype.skill = function(type) {
 	var self = this;
 	if(LMvc.BattleController && self.troops() == 0){
 		return null;
 	}
 	if(!self.data.skill){
-		return self.soldiersSkill(type);
+		return self.marrySkill(type);
 	}
 	var skill = SkillMasterModel.getMaster(self.data.skill);
 	var skillType = skill.mainType();
 	if(type && (
 		(typeof skillType == "string" && skillType != type) || 
 		(Array.isArray(skillType) && skillType.indexOf(type) < 0))){
-		return self.soldiersSkill(type);
+		return self.marrySkill(type);
 	}
 	if(type){
 		if(LMvc.BattleController && isMilitaryHappened(self.seigniorId(), MilitaryType.SKILL)){
@@ -1513,7 +1539,7 @@ CharacterModel.prototype.skill = function(type) {
 	if(type && skill.probability() < 100){
 		var rand = Math.fakeRandom();
 		if(rand > skill.probability()*0.01){
-			return self.soldiersSkill(type);
+			return self.marrySkill(type);
 		}
 	}
 	return skill;

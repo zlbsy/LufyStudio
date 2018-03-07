@@ -304,7 +304,6 @@ CharacterListChildView.prototype.setAbilityProperties = function() {
 	}
 	var layer = new LSprite();
 	layer.graphics.drawRect(0, "#ff0000", [0, 0, LMvc.screenWidth - 200, 50]);
-	console.error(self.charaModel);
 	var command = getStrokeLabel(self.charaModel.command(), 18, "#FFFFFF", "#000000", 4);
 	command.x = 5;
 	command.y = 5;
