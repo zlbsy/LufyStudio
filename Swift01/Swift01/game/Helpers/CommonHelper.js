@@ -150,6 +150,12 @@ function gameDataInit(){
 		});
 		seignior.areas = areaList;
 	}
+	if(data.marryCharacters){
+		data.marryCharacters.forEach(function(charaData){
+			var chara = CharacterModel.getChara(charaData.chara_id);
+			chara.setDatas(charaData);
+		});
+	}
 	if(!data.battleData){
 		SeigniorModel.removeHistorySeignior();
 	}
@@ -429,4 +435,20 @@ function beheadIsValid(){
 function isInNewYearTrem(){
     var lunar = LMvc.lunar;
     return lunar.lunarMonth == 1 && lunar.lunarDay <= 15;
+}
+function marryCharacterModelsInit(){
+	if(!MarryConfig.femaleModels){
+		MarryConfig.femaleModels = [];
+		MarryConfig.femaleCharacters.forEach(function(id){
+			var chara = CharacterModel.getChara(id);
+			MarryConfig.femaleModels.push(chara);
+		});
+	}
+	if(!MarryConfig.maleModels){
+		MarryConfig.maleModels = [];
+		MarryConfig.maleCharacters.forEach(function(id){
+			var chara = CharacterModel.getChara(id);
+			MarryConfig.maleModels.push(chara);
+		});
+	}
 }

@@ -6,6 +6,7 @@ var dictionaryConfig = [
 	{key:"city_defense",ver:"0.0.1"},
 	{key:"repair",ver:"0.0.1"},
 	{key:"spy",ver:"0.0.1"},
+	{key:"enlist",ver:"2.3.0"},
 	{key:"transport",ver:"0.0.1"},
 	{key:"training",ver:"0.0.1"},
 	{key:"population",ver:"0.0.1"},

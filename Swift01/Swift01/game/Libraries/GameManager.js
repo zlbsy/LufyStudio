@@ -9,6 +9,15 @@ GameManager.save = function(index){
 	data.mapX = LMvc.mapX;
 	data.mapY = LMvc.mapY;
 	data.seigniorExecute = SeigniorExecute.getSaveData();
+	marryCharacterModelsInit();
+	data.marryCharacters = [];
+	MarryConfig.femaleModels.forEach(function(chara){
+		data.marryCharacters.push(chara.datas());
+	});
+	MarryConfig.maleModels.forEach(function(chara){
+		data.marryCharacters.push(chara.datas());
+	});
+
 	//console.warn("data.seigniorExecute", data.seigniorExecute);
 	data.labels = {};
 	var selectSeignor = SeigniorModel.getSeignior(LMvc.selectSeignorId);

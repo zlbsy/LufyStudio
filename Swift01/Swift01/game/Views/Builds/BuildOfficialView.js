@@ -58,7 +58,7 @@ BuildOfficialView.prototype.onClickMarry=function(event){
 	var characterList = [];
 	for(var i=0;i<generals.length;i++){
 		var general = generals[i];
-		if(general.id() == LMvc.selectSeignorId || general.marryTarget()/* || !general.isMale()*/ || general.feat() < 1000){
+		if(general.id() == LMvc.selectSeignorId || general.marryTarget()/* || !general.isMale() || general.feat() < 1000*/){
 			continue;
 		}
 		characterList.push(general);
@@ -275,20 +275,7 @@ BuildOfficialView.prototype.showBuild=function(event){
 		self.controller.setValue("marryCharacter",marryCharacter);
 		var cityModel = self.controller.getValue("cityData");
 		var characters = [];
-		if(!MarryConfig.femaleModels){
-			MarryConfig.femaleModels = [];
-			MarryConfig.femaleCharacters.forEach(function(id){
-				var chara = CharacterModel.getChara(id);
-				MarryConfig.femaleModels.push(chara);
-			});
-		}
-		if(!MarryConfig.maleModels){
-			MarryConfig.maleModels = [];
-			MarryConfig.maleCharacters.forEach(function(id){
-				var chara = CharacterModel.getChara(id);
-				MarryConfig.maleModels.push(chara);
-			});
-		}
+		marryCharacterModelsInit();
 		var marryCount = 0;
 		MarryConfig.femaleModels.forEach(function(chara){
 			marryCount += chara.marryTarget() ? 1 : 0;
